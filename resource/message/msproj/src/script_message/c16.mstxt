@@ -555,13 +555,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かしこまりました
-[Name:ResortGreet ]！▼
+[Name:ResortMayor ]！▼
 それでは
 じゅんびが　ととのいましたら▽
 はなしかけて　いただけますか▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T05:10:29" />
+				Time="2011-09-14T10:25:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -570,13 +570,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>かしこまりました
-[Name:ResortGreet ]！▼
+[Name:ResortMayor ]！▼
 それでは
 じゅんびが　ととのいましたら▽
 はなしかけて　いただけますか▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T05:12:20" />
+				Time="2011-09-14T10:25:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -602,11 +602,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:22:16" />
+				Time="2011-09-14T10:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -614,11 +615,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:00:54" />
+				Time="2011-09-14T10:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -626,10 +628,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>0：市長名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T10:16:08" />
+				User="shimoyamada:W00184"
+				Time="2011-09-14T10:28:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -914,11 +916,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:19" />
+				Time="2011-09-14T10:25:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -926,11 +929,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -956,11 +960,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:19" />
+				Time="2011-09-14T10:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -968,11 +973,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -998,11 +1004,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:19" />
+				Time="2011-09-14T10:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1010,11 +1017,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1040,11 +1048,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:19" />
+				Time="2011-09-14T10:25:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1052,11 +1061,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1082,11 +1092,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:11" />
+				Time="2011-09-14T10:25:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1094,11 +1105,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1124,11 +1136,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:21" />
+				Time="2011-09-14T10:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1136,11 +1149,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　チュートリアルを
+			<Text>[Name:ResortMayor ]！▼
+あなたは　チュートリアルを
 している　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:23:23" />
+				Time="2011-09-14T10:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
