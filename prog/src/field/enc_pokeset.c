@@ -960,8 +960,12 @@ static u32 eps_EncPokeCalcPersonalRand(
     }
   }
 
-  //レア指定（レア指定はＢＷではありません）
-  if ( poke->rare == POKE_RARE_SEL_NOT ) rare_spec = PTL_RARE_SPEC_FALSE; //レア禁止
+  //レア指定
+  if ( poke->rare == POKE_RARE_SEL_NOT ){
+    rare_spec = PTL_RARE_SPEC_FALSE; //レア禁止
+  }else if( poke->rare == POKE_RARE_SEL_MUST ){
+    rare_spec = PTL_RARE_SPEC_TRUE;  //レア指定
+  }
   else  rare_spec = PTL_RARE_SPEC_BOTH; //どちらでも可
 
   p_rnd = POKETOOL_CalcPersonalRandSpec( efp->myID, poke->monsNo, poke->form,
@@ -971,7 +975,7 @@ static u32 eps_EncPokeCalcPersonalRand(
   
   //レア禁止してる場合の処理
   if ( poke->rare == POKE_RARE_SEL_NOT ){
-    return p_rnd;
+    return p_rnd; //この時点ですでにレアにしない乱数を引いているので、このまま帰る
   }
   { //HGSS以前よりレアを出しやすくする処理
 
