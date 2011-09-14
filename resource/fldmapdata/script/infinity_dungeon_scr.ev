@@ -2030,7 +2030,10 @@ talk_hint:
 
   // エリアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
-
+ 
+  // ROMバージョンでの判断
+	_INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+  
   // エリアごとのボスポケモン名をセット
   IF $LWK_D_VERSION == VERSION_B2 THEN
       SWITCH $LWK_NOW_AREA
