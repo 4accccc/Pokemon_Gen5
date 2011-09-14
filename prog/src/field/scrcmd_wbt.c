@@ -58,6 +58,14 @@
 #include "field/zonedata.h" //ZONEDATA_GetPlaceNameID
 
 #include "scrcmd_menuwin.h" //EvCmdBmpMenuStart
+#include "savedata/etc_save.h"    //ETC_SAVE_WORK
+//============================================================================================
+//============================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  RIVALNAME_BUF_IDX = 1,    ///<ライバル名を埋め込むバッファの場所は固定
+};
 //============================================================================================
 //============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
@@ -206,6 +214,16 @@ static void wordset_pokename( void * wk, POKEPARTY * party, u8 poke_pos, u8 idx 
   WORDSET *wordset = SCRIPT_GetWordSet( sc );
   POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, poke_pos );
   WORDSET_RegisterPokeMonsName( wordset, idx, pp );
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void wordset_rivalname( void * wk, WORDSET * wordset, u8 idx )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK * sv_ctrl_work = GAMEDATA_GetSaveControlWork( gamedata );
+  ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );
+  WORDSET_RegisterRivalName( wordset, idx, EtcSave_GetRivalName( etcsave ) );
 }
 //============================================================================================
 //============================================================================================
@@ -1154,6 +1172,7 @@ VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
 
     WBTSYS_GetTrainerMsg( wbtsys, type, tmpbuf );
 
+    wordset_rivalname( work, wordset, RIVALNAME_BUF_IDX );
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   TAMADA_Printf("EvCmdWBTTrainerMsg(type = %d, obj_id =%d )\n", type, obj_id );
@@ -1208,6 +1227,7 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
 
     WBTSYS_GetTrainerMsg( wbtsys, WBT_TRMSG_ANNOUNCE, tmpbuf );
 
+    wordset_rivalname( work, wordset, RIVALNAME_BUF_IDX );
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
   TAMADA_Printf("EvCmdWBTAnnounce(%d)\n", up_down );
