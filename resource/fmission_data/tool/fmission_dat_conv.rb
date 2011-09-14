@@ -341,21 +341,27 @@ class CMission
 
     param = work[COLUMN_BASE_PARAM]
     case @type_str
-    when "POKEBTL"
+    when "EFFECT_ENC"
       @base_param = $monsno_hash.fetch( param, 0 )
-      print("type POKEBTL\n")
+      print("type EFFECT_ENC\n")
+    when "MUSHROOM_ENC"
+      @base_param = $monsno_hash.fetch( param, 0 )
+      print("type MUSHROOM_ENC\n")
     when "EVENT"
       @base_param = c_def_list.search( param, "パラメータ->イベントID")
       print("type EVENT\n")
     when "ITEM"
-      @base_param = 0
+      @base_param = c_def_list.search( param, "パラメータ->アイテムセットタイプ")
       print("type ITEM\n")
     when "NPC"
-      @base_param = 0
+      @base_param = c_def_list.search( param, "パラメータ->NPCイベントタイプ")
       print("type NPC\n")
     when "TRBTL"
       @base_param = 0
       print("type TRBTL\n")
+    else
+      print("ミッションタイプが不正です #{@type_str}\n")
+      exit 1
     end
     
     @ex_param = work[COLUMN_EX_PARAM].to_i

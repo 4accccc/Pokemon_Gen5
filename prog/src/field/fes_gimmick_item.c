@@ -164,7 +164,12 @@ BOOL FES_GIMMICK_ITEM_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32
   VecFx32 vec;
   FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)sys_wk->wk_buf;
   FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
-  FES_GIMMICK_ITEM_FLAG* f_tbl = sub_FlagTableGet( wk, wk->zone_id );
+  FES_GIMMICK_ITEM_FLAG* f_tbl;
+  
+  if( wk->point_max == 0 ){
+    return;
+  }
+  f_tbl = sub_FlagTableGet( wk, wk->zone_id );
 
   for( i = 0;i < wk->point_max; i++)
   {

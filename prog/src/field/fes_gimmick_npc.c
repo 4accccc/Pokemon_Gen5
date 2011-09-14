@@ -82,6 +82,29 @@ void FES_GIMMICK_NPC_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WOR
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェス　NPCミッションギミック　イベントクリアフラグセット
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16 zone_id, u16 idx )
+{
+  FES_GIMMICK_NPC_FLAG* f_tbl;
+  if( wk->point_max == 0 ){
+    return;
+  }
+  f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, zone_id );
+
+  f_tbl->flag[idx] = TRUE;
+  
+  //非表示設定
+  MMDL_SetStatusBitVanish( wk->mmdl_tbl[idx], TRUE );
+  //OBJ削除
+  MMDL_Delete( wk->mmdl_tbl[idx] );
+  wk->mmdl_tbl[idx] = NULL;
+}
+
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェス　NPCミッションギミック　ミッション終了時処理
  */
 //----------------------------------------------------------------------

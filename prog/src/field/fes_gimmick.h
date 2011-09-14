@@ -63,6 +63,13 @@ extern void FES_GIMMICK_SYS_FldEffSetup( FES_GIMMICK* wk, FLDEFF_CTRL* fectrl, F
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック ミッション開始時初期化　
+ */
+//----------------------------------------------------------------------
+extern void FES_GIMMICK_MissionInitSetup( FES_GIMMICK* wk );
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェスミッションギミック　フェス用フィールドエフェクトを削除
  */
 //----------------------------------------------------------------------
@@ -117,5 +124,5 @@ extern BOOL FES_GIMMICK_CheckHitGridPos( FES_GIMMICK* wk, u16 gx, u16 gz, fx32 h
  *  @brief  フェスミッションギミック　フラグセット
  */
 //----------------------------------------------------------------------
-extern void FES_GIMMICK_FlagSet( LINK_FESTIVAL* fest_sys, u16 zone_id, u16 idx );
+extern void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx );
 

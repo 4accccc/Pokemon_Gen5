@@ -388,6 +388,7 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
   case 2:
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
+    FES_GIMMICK_MissionInitSetup( FIELDMAP_GetFesGimmickSys( wk->fieldmap ) ); //Å‰‚Ì1‰ñ‚¾‚¯‚Ì‰Šú‰»
     FES_GIMMICK_ZoneChangeSetup( wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
 #if 0
     TIMEICON_Exit( wk->timeIcon );

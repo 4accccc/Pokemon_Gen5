@@ -37,12 +37,10 @@ FS_EXTERN_OVERLAY(fieldmap);
 enum _EVENT_FMISSION_APP {
   _FIELD_FADE_START,
   _FIELD_FADE_CLOSE,
-  _PUSH_BGM,
   _CALL_FMISSION_APP,
   _WAIT_FMISSION_APP,
   _FIELD_OPEN,
   _FIELD_FADEIN,
-  _BGM_WAIT,
   _FIELD_END,
 };
 
@@ -91,11 +89,10 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fwork));
     (*seq)++;
     break;
-  case _PUSH_BGM:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_FAST, FSND_FADE_NONE));
-    (*seq)++;
-    //break throw
   case _CALL_FMISSION_APP:
+    FSND_HoldBGMVolume_forApp(
+      GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(gsys) );
+
     sub_AppCallWorkInit( &faw->prm, faw->gsys, faw->gdata, faw->mode );
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fmission_app), &FMissionAppProcData, &faw->prm);
     (*seq)++;
@@ -104,7 +101,8 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGMNoWait(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
+    FSND_ReleaseBGMVolume_fromApp(
+      GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(gsys) );
     (*seq)++;
     break;
   case _FIELD_OPEN:
@@ -129,10 +127,6 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
       
       GMEVENT_CallEvent(event, fade_event);
     }
-    (*seq) ++;
-    break;
-  case _BGM_WAIT:
-    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMPop(gsys));
     (*seq) ++;
     break;
   case _FIELD_END: 

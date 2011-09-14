@@ -276,6 +276,7 @@
  */
 //--------------------------------------------------------------
   .macro _ASM_EASY_BGWIN_MSG msg_id, bg_type
+  _ASM_FMISSION_LOG_ACTION FMISSION_LOG_ACT_WATCH_SIGNBOARD,0
   _ASM_TALK_START_SE_PLAY
   _ASM_BGWIN_MSG \msg_id, \bg_type
   _ASM_BGWIN_CLOSE

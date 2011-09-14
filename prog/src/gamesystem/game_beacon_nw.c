@@ -870,8 +870,8 @@ void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno )
 //==================================================================
 void GAMEBEACON_Set_Shoping(void)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_SHOPING, 0 ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_SHOPING, 0 );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_SHOPPING, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_SHOPPING, 0 );
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SHOPING) == FALSE){ return; };
@@ -1286,13 +1286,13 @@ void GAMEBEACON_Set_GameOver( void )
 //==================================================================
 void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param )
 {
-  if( log_act < FMISSION_LOG_ACT_WP_START ){
+  if( log_act < FMISSION_LOG_ACT_GRP_BEACON ){
     GF_ASSERT(0);
     return; //NotBeaconのアクションはリクエスト不可
   }
   if(  GAMEBEACON_SUB_FMissionCheckScore( log_act, param ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send,
-      GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START+log_act, param );
+      GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START+(log_act-FMISSION_LOG_ACT_GRP_BEACON), param );
   }
 }
 
@@ -1310,21 +1310,6 @@ void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
 
   if( ret == FM_CHECK_SCORE_SUCCESS_UP ){ //スコアアップした時のみ送信
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN, ev_id );
-  }
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：フェスミッション　ミッションアイテムゲット
- *
- * @param   gamedata		
- * @param   item_no    アイテムNo
- */
-//==================================================================
-void GAMEBEACON_Set_FMissionItemGet( u16 item_no )
-{
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_KIRA_ITEM_GET, item_no ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET, item_no );
   }
 }
 

@@ -28,7 +28,6 @@ typedef BOOL (*MISSION_SCORE_CALC_FUNC)( const FEST_MISSION* fmwk, u16 param );
 
 typedef struct _MISSION_SCORE_CALC_PARAM{
   MISSION_SCORE_CALC_FUNC func;
-  u32 log_act_f;  //どのログアクションがスコアアップに対応しているか？
 }MISSION_SCORE_CALC_PARAM;
 
 
@@ -36,8 +35,7 @@ typedef struct _MISSION_SCORE_CALC_PARAM{
 ///ミッションタイプ別スコアインクリメントチェック関数
 static u32 score_CalcTimeBonus( FEST_MISSION* fmwk );
 static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param );
-static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param );
-static BOOL score_CalcItem( const FEST_MISSION* fmwk, u16 param );
+static BOOL score_CalcCommon( const FEST_MISSION* fmwk, u16 param );
 
 /*
  *  ミッションスコア計算に必要なパラメータテーブル
@@ -45,10 +43,13 @@ static BOOL score_CalcItem( const FEST_MISSION* fmwk, u16 param );
  *  @todo いずれ外部化する予定
  */
 static const MISSION_SCORE_CALC_PARAM DATA_ScoreCalcParamTbl[] = {
-  { NULL, 0 },
-  { score_CalcWildBtlWin, (1<<FMISSION_LOG_ACT_POKE_WIN)|(1<<FMISSION_LOG_ACT_POKE_CAPTURE)},
-  { score_CalcEvent, (1<<FMISSION_LOG_ACT_EVENT_CLEAR) },
-  { score_CalcItem, (1<<FMISSION_LOG_ACT_ITEM_GET) },
+  { NULL },
+  { score_CalcWildBtlWin },
+  { score_CalcWildBtlWin },
+  { score_CalcCommon },
+  { score_CalcCommon },
+  { score_CalcCommon },
+  { score_CalcCommon },
 };
 
 //---------------------------------------------------------
@@ -180,16 +181,23 @@ BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk )
 BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION action, u16 value )
 {
   const MISSION_SCORE_CALC_PARAM* prm = &DATA_ScoreCalcParamTbl[ fmwk->arc.m_type ];
+  IWASAWA_Printf("FMSUp a=%d,\n", action );
 
   switch( fmwk->arc.m_type ){
-  case FMISSION_TYPE_POKEBTL:
+  case FMISSION_TYPE_EFFECT_ENC:
     if( action != FMISSION_LOG_ACT_EFF_ENC_WIN && 
         action != FMISSION_LOG_ACT_EFF_ENC_CAPTURE ){
       return FALSE;
     }
     break;
+  case FMISSION_TYPE_MUSHROOM_ENC:
+    if( action != FMISSION_LOG_ACT_MUSHROOM_WIN && 
+        action != FMISSION_LOG_ACT_MUSHROOM_CAPTURE ){
+      return FALSE;
+    }
+    break;
   case FMISSION_TYPE_EVENT:
-    if( (action-FMISSION_LOG_ACT_TOWER_OF_HEAVEN) != fmwk->beacon.base_param ){
+    if( (action-FMISSION_LOG_ACT_GRP_EVENT) != fmwk->beacon.base_param ){
       return FALSE;
     }
     break;
@@ -199,7 +207,7 @@ BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION action, u16
     }
     break;
   case FMISSION_TYPE_NPC:
-    if( (action-FMISSION_LOG_ACT_HELP_CHILD) != fmwk->beacon.base_param ){
+    if( (action-FMISSION_LOG_ACT_GRP_NPC) != fmwk->beacon.base_param ){
       return FALSE;
     }
     break;
@@ -222,9 +230,6 @@ BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u1
   }
   if( !FEST_MISSION_IsScoreUp( fmwk, action, param )){
     return FALSE;
-  }
-  if( arc->m_type == FMISSION_TYPE_EVENT && beacon->my_score > 0){
-    return FALSE; //イベントタイプは一回しかスコアがあがらない
   }
   if( (beacon->my_score + inc ) > FMISSION_SCORE_MAX ){
     beacon->my_score = FMISSION_SCORE_MAX;
@@ -310,22 +315,12 @@ static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param )
 
 //---------------------------------------------------------
 /*
- * @brief スコア計算 イベントクリア 
+ * @brief スコア計算 パラメータはチェックしない
  */
 //---------------------------------------------------------
-static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param )
+static BOOL score_CalcCommon( const FEST_MISSION* fmwk, u16 param )
 {
-  return ( fmwk->beacon.base_param == param );
-}
-
-//---------------------------------------------------------
-/*
- * @brief スコア計算 アイテムゲット
- */
-//---------------------------------------------------------
-static BOOL score_CalcItem( const FEST_MISSION* fmwk, u16 param )
-{
-  return ( fmwk->beacon.base_param == 0 || fmwk->beacon.base_param == param );
+  return TRUE;
 }
 
 //=================================================

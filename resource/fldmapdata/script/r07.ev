@@ -24,7 +24,16 @@ _EVENT_DATA ev_bg_r07_board_01
 _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
 _EVENT_DATA ev_r07_fightrew_01
+_EVENT_DATA ev_zone_r07
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            ZONE_CHANGE_SCRIPT                               */
+/**************************************************************/
+INIT_EVENT_START ev_zone_r07
+  //フェスミッション用 タワーオブヘブンの鐘を鳴らしたフラグをリセット
+  _FLAG_RESET ( FE_FMISSION_EV_TOH_CLEAR )
+INIT_EVENT_END
 
 /**************************************************************/
 /*  わざマシンくれる格闘家女子                          */

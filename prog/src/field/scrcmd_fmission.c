@@ -53,7 +53,7 @@
 
 //==================================================================
 /**
- * フェスミッション　指定イベント起動時スコアアップ監視
+ * フェスミッション　指定ログアクションビーコン送信リクエスト
  *
  * @param   core		
  * @param   wk		
@@ -61,22 +61,23 @@
  * @retval  VMCMD_RESULT		
  */
 //==================================================================
-VMCMD_RESULT EvCmdFMissionEventClearCheck( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdFMissionLogAction( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   
-  u16 ev_id = SCRCMD_GetVMWorkValue( core, wk );
+  FMISSION_LOG_ACTION log_act = (u8)SCRCMD_GetVMWorkValue( core, wk );
+  u16 param = SCRCMD_GetVMWorkValue( core, wk );
 
-  GAMEBEACON_Set_FMissionEventClear( ev_id );
+  GAMEBEACON_Set_FMissionLogAction( log_act, param );
 
   return VMCMD_RESULT_SUSPEND;
 }
 
 //==================================================================
 /**
- * フェスミッション アイテムサーチミッションのアイテム取得処理
+ * フェスミッション NPCミッション 人物mmdl削除とクリアフラグOn処理 
  *
  * @param   core		
  * @param   wk		
@@ -84,33 +85,20 @@ VMCMD_RESULT EvCmdFMissionEventClearCheck( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT		
  */
 //==================================================================
-VMCMD_RESULT EvCmdFMissionItemGet( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdFMissionNpcEventClear( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
   u16 zone_id = SCRCMD_WORK_GetZoneID( work );
   MMDL *mmdl = SCRIPT_GetTargetObj( scw );
  
-//  u16 ev_id = SCRCMD_GetVMWorkValue( core, wk );
-  u16* ret_wk = SCRCMD_GetVMWork( core, wk );
+  u8 obj_idx = ( MMDL_GetOBJID(mmdl)-MMDL_ID_FMISSION_OBJ_01 );
 
-  { //取得済みフラグセット
-    u8 obj_id = MMDL_GetOBJID( mmdl );
-    FES_GIMMICK_FlagSet( GAMESYSTEM_GetLinkFestivalWork( gsys ), zone_id, obj_id-MMDL_ID_FMISSION_OBJ_01 );
-  }
-  //非表示設定
-  MMDL_SetStatusBitVanish( mmdl, TRUE );
-
-  { //取得するアイテムナンバーを返す
-    u16 param = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
-    *ret_wk = ITEM_AKAIKAKERA+param;
-
-    //ビーコンリクエスト
-//    GAMEBEACON_Set_FMissionEventClear( ev_id );
-  }
-  //OBJ削除
-  MMDL_Delete( mmdl );
+  //取得済みフラグセットと動作モデルの削除
+  FES_GIMMICK_FlagSet( FIELDMAP_GetFesGimmickSys( fieldmap ), zone_id, obj_idx );
 
   return VMCMD_RESULT_SUSPEND;
 }

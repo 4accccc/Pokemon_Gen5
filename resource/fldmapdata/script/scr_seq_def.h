@@ -9480,30 +9480,31 @@
 
 //--------------------------------------------------------------
 /**
- * フェスミッション系コマンド　フェスミッション規定イベントクリアチェック
+ * フェスミッション系コマンド ログアクションリクエスト　
  *
  * @param ev_id フェスミッションイベントID
  */
 //--------------------------------------------------------------
-#define _FMISSION_EVENT_CLEAR_CHECK(ev_id) _ASM_FMISSION_EVENT_CLEAR_CHECK ev_id
+#define _FMISSION_LOG_ACTION( log_act ) _ASM_FMISSION_LOG_ACTION log_act, 0
+#define _FMISSION_LOG_ACTION_EX( log_act, param ) _ASM_FMISSION_LOG_ACTION log_act, param
 
-  .macro  _ASM_FMISSION_EVENT_CLEAR_CHECK  ev_id
-  .short  EV_SEQ_FMISSION_EVENT_CLEAR_CHECK
-  .short  \ev_id    
+  .macro  _ASM_FMISSION_LOG_ACTION  log_act, param
+  .short  EV_SEQ_FMISSION_LOG_ACTION
+  .short  \log_act    
+  .short  \param    
   .endm
 
 //--------------------------------------------------------------
 /**
- * フェスミッション系コマンド　アイテム取得処理
+ * フェスミッション系コマンド NPCイベントクリア　
  *
  * @param ev_id フェスミッションイベントID
  */
 //--------------------------------------------------------------
-#define _FMISSION_ITEM_GET( ret_wk ) _ASM_FMISSION_ITEM_GET ret_wk
+#define _FMISSION_NPC_EVENT_CLEAR() _ASM_FMISSION_NPC_EVENT_CLEAR
 
-  .macro  _ASM_FMISSION_ITEM_GET  ret_wk
-  .short  EV_SEQ_FMISSION_ITEM_GET
-  .short  \ret_wk    
+  .macro  _ASM_FMISSION_NPC_EVENT_CLEAR
+  .short  EV_SEQ_FMISSION_NPC_EVENT_CLEAR
   .endm
 
 //--------------------------------------------------------------

@@ -16,7 +16,8 @@
 //=========================================
 typedef enum{
   FMISSION_TYPE_NULL,  ///<
-  FMISSION_TYPE_POKEBTL,  ///<指定ポケモンを倒すか捕まえる
+  FMISSION_TYPE_EFFECT_ENC,  ///<エフェクトエンカウントで指定ポケモンを倒すか捕まえる
+  FMISSION_TYPE_MUSHROOM_ENC,  ///<タマゲタケシンボルエンカウントで指定ポケモンを倒すか捕まえる
   FMISSION_TYPE_EVENT,  ///<指定イベントをクリアする
   FMISSION_TYPE_ITEM,  ///<アイテムミッション
   FMISSION_TYPE_NPC,  ///<NPCミッション
@@ -114,10 +115,20 @@ typedef enum{
 ///アイテムミッション　セット名定義
 //=========================================
 typedef enum{
-  FMISSION_ITEM_SET_KAKERA,  ///<イロのカケラセット
-  FMISSION_ITEM_SET_MBALL,  ///<モンスターボールセット
+  FMISSION_ITEM_SET_KAKERA1,  ///<イロのカケラセット1
+  FMISSION_ITEM_SET_KAKERA2,  ///<イロのカケラセット2
+  FMISSION_ITEM_SET_LOST_ITEM,  ///<落し物
+  FMISSION_ITEM_SET_LOST_ITEM_W,  ///<落し物W
+  FMISSION_ITEM_SET_LOST_ITEM_B,  ///<落し物B
   FMISSION_ITEM_SET_KINOMI1,  ///<きのみセット１
   FMISSION_ITEM_SET_KINOMI2,  ///<きのみセット２
+  FMISSION_ITEM_SET_STONE_W,  ///<進化の石セットW
+  FMISSION_ITEM_SET_STONE_B,  ///<進化の石セットB
+  FMISSION_ITEM_SET_HERB,  ///<漢方薬セット
+  FMISSION_ITEM_SET_MANURE,  ///<○○のこやし
+  FMISSION_ITEM_SET_HEART,  ///<ハートのうろこ他
+  FMISSION_ITEM_SET_KINOMI_D,  ///<きのみ配信
+  FMISSION_ITEM_SET_LOST_ITEM_D,  ///<落し物配信
   FMISSION_ITEM_SET_MAX,  ///<
 }FMISSION_ITEM_SET;
 
@@ -127,14 +138,13 @@ typedef enum{
 ///ミッションイベントID
 //=========================================
 #define  FMISSION_EVID_TOWER_OF_HEAVEN  ( 0 )   ///<タワーオブヘブンの鐘を鳴らせ
-#define  FMISSION_EVID_MUSHROOM_ENCOUNT  ( 1 )   ///<きのこ大収穫(タマゲタケシンボルエンカウント)
-#define  FMISSION_EVID_ENCEFF_FEATHER  ( 2 )   ///<ホドモエに舞い落ちる羽
-#define  FMISSION_EVID_ENCEFF_JUWEL  ( 3 )   ///<ジュエルを採掘せよ
-#define  FMISSION_EVID_EGG_HATCH  ( 4 )   ///<タマゴ孵化
-#define  FMISSION_EVID_FISHING  ( 5 )   ///<釣り大会
-#define  FMISSION_EVID_ANIMAL_TRAIL  ( 6 )   ///<獣道調査
-#define  FMISSION_EVID_MAX  ( 7 )   ///<
-#define  FMISSION_EVID_END  ( FMISSION_EVID_MAX-1 )   ///<
+#define  FMISSION_EVID_ENCEFF_FEATHER  ( 1 )   ///<ホドモエに舞い落ちる羽
+#define  FMISSION_EVID_ENCEFF_JUWEL  ( 2 )   ///<ジュエルを採掘せよ
+#define  FMISSION_EVID_EGG_HATCH  ( 3 )   ///<タマゴ孵化
+#define  FMISSION_EVID_FISHING  ( 4 )   ///<釣り大会
+#define  FMISSION_EVID_ANIMAL_TRAIL  ( 5 )   ///<獣道調査
+#define  FMISSION_MAX  ( 6 )   ///<
+#define  FMISSION_END  ( FMISSION_EVID_MAX-1 )   ///<
 
 
 //=========================================
@@ -143,12 +153,12 @@ typedef enum{
 #define  FMISSION_NPC_TYPE_LOST_CHILDREN  ( 0 )   ///<迷子を捜せ
 #define  FMISSION_NPC_TYPE_PRESENT_ITEM  ( 1 )   ///<アイテムをプレゼントする
 #define  FMISSION_NPC_TYPE_ITEM_TRADE  ( 2 )   ///<アイテム交換
-#define  FMISSION_NPC_TYPE_ITEM_BUY  ( 3 )   ///<アイテム購入
+#define  FMISSION_NPC_TYPE_SHOPPING  ( 3 )   ///<アイテム購入
 #define  FMISSION_NPC_TYPE_RPS  ( 4 )   ///<じゃんけん
 #define  FMISSION_NPC_TYPE_MEMORY_QUIZ  ( 5 )   ///<記憶クイズ
-#define  FMISSION_NPC_TYPE_BATTLE  ( 6 )   ///<バトル
+#define  FMISSION_NPC_TYPE_TR_BATTLE  ( 6 )   ///<トレーナーバトル
 #define  FMISSION_NPC_TYPE_GET_A_PRESENT  ( 7 )   ///<アイテムをもらう
-#define  FMISSION_NPC_TYPE_ZUKAN_QUIZ  ( 8 )   ///<ポケモン図鑑クイズ
+#define  FMISSION_NPC_TYPE_POKE_QUIZ  ( 8 )   ///<ポケモン図鑑クイズ
 #define  FMISSION_NPC_TYPE_MAX  ( 9 )   ///<
 #define  FMISSION_NPC_END  ( FMISSION_NPC_TYPE_MAX-1 )   ///<
 

@@ -214,119 +214,119 @@ static const struct{
 		2,		//priority
 		5 * 60,		//life
 	},
-	{	//52  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)
+	{	//52  フェスタミッション配布(GAMEBEACON_ACTION_DISTRIBUTION_FMISSION)
+		255,		//priority
+		20 * 60,		//life
+	},
+	{	//53  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//53  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_WIN)
+	{	//54  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//54  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE)
+	{	//55  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//55  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE)
+	{	//56  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//56  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT)
+	{	//57  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//57  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_WIN)
+	{	//58  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//58  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GAMEOVER)
+	{	//59  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GAMEOVER)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//59  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_USE)
+	{	//60  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_USE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//60  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
+	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FIELD_SKILL)
+	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FIELD_SKILL)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SHOPING)
+	{	//63  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SHOPING)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//63  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GPOWER_USE)
+	{	//64  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GPOWER_USE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//64  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL)
+	{	//65  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//65  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_WATCH_SIGNBOARD)
+	{	//66  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_WATCH_SIGNBOARD)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//66  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG)
+	{	//67  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//67  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN)
+	{	//68  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//68  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE)
+	{	//69  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//69  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET)
+	{	//70  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//70  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN)
+	{	//71  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//71  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FEATHER_GET)
+	{	//72  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//72  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_JEWEL_GET)
+	{	//73  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//73  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EGG_HATCH)
+	{	//74  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FEATHER_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//74  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FISHING_ENCOUNT)
+	{	//75  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_JEWEL_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//75  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ANIMAL_TRAIL_ENCOUNT)
+	{	//76  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EGG_HATCH)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//76  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN)
+	{	//77  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FISHING_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//77  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE)
+	{	//78  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ANIMAL_TRAIL_ENCOUNT)
+		6,		//priority
+		20 * 60,		//life
+	},
+	{	//79  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_HELP_CHILD)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//78  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_HELP_CHILD)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//79  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_HAND_A_PRESENT)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//80  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ELITE_TR_WIN)
+	{	//80  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_PRESENT_ITEM)
 		5,		//priority
 		20 * 60,		//life
 	},
@@ -338,39 +338,47 @@ static const struct{
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//83  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_QUIZ_CLEAR)
+	{	//83  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//84  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_WIN)
+	{	//84  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MEMORY_QUIZ_CLEAR)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//85  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GET_A_PRESENT)
+	{	//85  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_BATTLE_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//86  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
+	{	//86  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GET_A_PRESENT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//87  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_LOSE)
+	{	//87  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ZUKAN_QUIZ_CLEAR)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//88  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
+	{	//88  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//89  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
+	{	//89  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_LOSE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//90  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
+	{	//90  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//91  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+	{	//91  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//92  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//93  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
 		5,		//priority
 		20 * 60,		//life
 	},

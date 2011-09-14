@@ -9,14 +9,14 @@
 #ifndef __H_FMISSION_DATA_ID_H__
 #define __H_FMISSION_DATA_ID_H__
 
-#define  FMISSION_ID_POKEBTL_TABUNNE01  ( 0 )  ///<ƒ^ƒuƒ“ƒl‚ð’T‚¹‚P
-#define  FMISSION_ID_POKEBTL_EMONGA01  ( 1 )  ///<ƒGƒ‚ƒ“ƒK‚ð’T‚¹‚P
+#define  FMISSION_ID_EFFECT_ENC_TABUNNE01  ( 0 )  ///<ƒ^ƒuƒ“ƒl‚ð’T‚¹‚P
+#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 1 )  ///<ƒGƒ‚ƒ“ƒK‚ð’T‚¹‚P
 #define  FMISSION_ID_ITEM_KAKERA01  ( 2 )  ///<ƒJƒPƒ‰‚ð‹‚ß‚Ä‚P
 #define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 3 )  ///<à‚ð@–Â‚ç‚µ‚Ä
-#define  FMISSION_ID_POKEBTL_POKEBTL_FREE_01  ( 4 )  ///<—h‚ê‘‚ð’T‚¹‚P
+#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 4 )  ///<—h‚ê‘‚ð’T‚¹‚P
 #define  FMISSION_ID_ITEM_ITEM_KAKERA_02  ( 5 )  ///<ƒJƒPƒ‰‚ð‹‚ß‚Ä‚Q
-#define  FMISSION_ID_POKEBTL_POKEBTL_FREE_02  ( 6 )  ///<ƒ_ƒ~[
-#define  FMISSION_ID_POKEBTL_POKEBTL_FREE_03  ( 7 )  ///<ƒ_ƒ~[
+#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_02  ( 6 )  ///<ƒ_ƒ~[
+#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_03  ( 7 )  ///<ƒ_ƒ~[
 #define  FMISSION_ID_ITEM_KAKERA_01  ( 8 )  ///<‚©‚¯‚ç‚P
 #define  FMISSION_ID_ITEM_KAKERA_02  ( 9 )  ///<‚©‚¯‚ç‚Q
 #define  FMISSION_ID_ITEM_KAKERA_03B  ( 10 )  ///<‚©‚¯‚ç‚a
@@ -43,14 +43,14 @@
 #define  FMISSION_ID_NPC_JANKEN_01  ( 31 )  ///<‚¶‚á‚ñ‚¯‚ñ‚P
 #define  FMISSION_ID_NPC_POKEQUIZ_01  ( 32 )  ///<}ŠÓƒNƒCƒY‚P
 #define  FMISSION_ID_NPC_POKEQUIZ_02  ( 33 )  ///<}ŠÓƒNƒCƒY‚Q
-#define  FMISSION_ID_POKEBTL_GLASS_01  ( 34 )  ///<—h‚ê‘‚ð’T‚¹
-#define  FMISSION_ID_POKEBTL_TARGET_01  ( 35 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚P
-#define  FMISSION_ID_POKEBTL_TARGET_02  ( 36 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚Q
-#define  FMISSION_ID_POKEBTL_TARGET_03  ( 37 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚R
-#define  FMISSION_ID_POKEBTL_TARGET_04  ( 38 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚S
-#define  FMISSION_ID_POKEBTL_TARGET_05  ( 39 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚T
+#define  FMISSION_ID_EFFECT_ENC_GLASS_01  ( 34 )  ///<—h‚ê‘‚ð’T‚¹
+#define  FMISSION_ID_EFFECT_ENC_TARGET_01  ( 35 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚P
+#define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 36 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚Q
+#define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 37 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚R
+#define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 38 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚S
+#define  FMISSION_ID_EFFECT_ENC_TARGET_05  ( 39 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚T
 #define  FMISSION_ID_EVENT_TOH_01  ( 40 )  ///<TOH‚Ìà‚ð–Â‚ç‚·
-#define  FMISSION_ID_EVENT_KINOKO_01  ( 41 )  ///<‚«‚Ì‚±‘åŽûŠn
+#define  FMISSION_ID_MUSHROOM_ENC_KINOKO_01  ( 41 )  ///<‚«‚Ì‚±‘åŽûŠn
 #define  FMISSION_ID_EVENT_FEATHER_01  ( 42 )  ///<ƒzƒhƒ‚ƒG‚Ì‰H
 #define  FMISSION_ID_EVENT_JEWEL_01  ( 43 )  ///<ƒWƒ…ƒGƒ‹ÌŒ@
 #define  FMISSION_ID_EVENT_EGG_01  ( 44 )  ///<ƒ^ƒ}ƒS›z‰»

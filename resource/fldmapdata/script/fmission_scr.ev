@@ -109,16 +109,12 @@ EVENT_END
 //--------------------------------------------------------
 sub_fmission_npc_vanish:
 {
-  //話しかけ相手に登録されている非表示フラグを取得
-  //【fes仮】
-  
   //暗転開始
   _BLACK_OUT()
   _DISP_FADE_END_CHECK()
   
   _TIME_WAIT( 8 )
-  _OBJ_DEL( SCWK_TARGET_OBJID )  //話しかけ相手を消す
-  //非表示フラグをセット
+  _FMISSION_NPC_EVENT_CLEAR() //フラグセット&ObjDelとかこの中
   
   //暗転復帰
   _BLACK_IN()
@@ -148,6 +144,7 @@ sub_npc_lost_children_main:
   _MSGWIN_CLOSE()
   
   //暗転復帰でNPC消す
+  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_HELP_CHILD )
   _CALL	sub_fmission_npc_vanish
   
   //きえさった・・・

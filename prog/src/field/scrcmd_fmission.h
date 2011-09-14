@@ -9,6 +9,6 @@
 
 #pragma once
 
-extern VMCMD_RESULT EvCmdFMissionEventClearCheck( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdFMissionItemGet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFMissionLogAction( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFMissionNpcEventClear( VMHANDLE *core, void *wk );
 

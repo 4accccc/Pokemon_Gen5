@@ -716,7 +716,7 @@ ev_item_event_fmission_item_get:
   _ADD_ITEM_CHK( i_item, 1, i_get )
  
   $SCWK_TEMP0 = $i_item
-  _BEACON_SET_REQ_FMISSION_ITEM_GET( i_item )
+  _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_KIRA_ITEM_GET, i_item )
   _ADD_ITEM( i_item, 1, SCWK_ANSWER )
 
   //››‚Í~~‚ğè‚É“ü‚ê‚½

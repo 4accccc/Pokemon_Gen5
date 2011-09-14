@@ -14,7 +14,8 @@
 #include "field/fes_gimmick_npc.h"
 
 typedef union _FES_GIMMICK_WORK{
-  FES_GIMMICK_ITEM_WORK item_wk;  ///<アイテムミッション用ワーク 
+  FES_GIMMICK_ITEM_WORK item_wk;  ///<アイテムミッション用ワーク
+  FES_GIMMICK_NPC_WORK npc_work;  ///<NPCミッションワーク
 }FES_GIMMICK_WORK;
 
 typedef union _FES_GIMMICK_FLAG_WORK{

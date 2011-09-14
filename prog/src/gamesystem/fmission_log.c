@@ -357,10 +357,11 @@ static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *in
   case FMISSION_LOG_SET_MAP:
     return FMISSION_LOG_ACT_MAP_CHANGE;
   }
-  if( info->action.action_no == GAMEBEACON_ACTION_FMISSION){
+  if( info->action.action_no == GAMEBEACON_ACTION_FMISSION ||
+      info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_FMISSION ){
     return FMISSION_LOG_ACT_NULL; //Ï‚Ü‚È‚¢
   }
-  return FMISSION_LOG_ACT_WP_START + (info->action.action_no-(GAMEBEACON_ACTION_FEST_BEACON_START+1));
+  return FMISSION_LOG_ACT_GRP_BEACON + (info->action.action_no-GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START );
 }
 
 //------------------------------------------------------------------

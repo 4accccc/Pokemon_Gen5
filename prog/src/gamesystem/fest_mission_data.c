@@ -46,18 +46,14 @@ typedef enum{
 
 #define WORDSET_FMISSION_BUFLEN (18*2*2+EOM_SIZE)
 
-typedef struct _FMISSION_DATA_TYPE{
-  u8  mission_type; ///<ミッションタイプ
-  u8  param_wset;   ///<ミッションタイトルワードセットタイプ
-}FMISSION_DATA_TYPE;
-
-static const FMISSION_DATA_TYPE DATA_FMissionDataType[FMISSION_TYPE_MAX] = {
-  { 0, 0 },
-  { FMISSION_TYPE_POKEBTL, FMISSION_WSET_MONSNAME },
-  { FMISSION_TYPE_EVENT, FMISSION_WSET_EVENT },
-  { FMISSION_TYPE_ITEM, FMISSION_WSET_ITEMNAME },
-  { FMISSION_TYPE_NPC, FMISSION_WSET_ITEMNAME },
-  { FMISSION_TYPE_TRBTL, FMISSION_WSET_ITEMNAME },
+static const u8 DATA_FMissionDataType[FMISSION_TYPE_MAX] = {
+  { 0 },
+  { FMISSION_WSET_MONSNAME }, //TYPE_EFFECT_ENC
+  { FMISSION_WSET_MONSNAME }, //TYPE_MUSHROOM_ENC
+  { FMISSION_WSET_EVENT },    //TYPE_EVENT
+  { FMISSION_WSET_ITEMNAME }, //TYPE_ITEM
+  { FMISSION_WSET_ITEMNAME }, //TYPE_NPC
+  { FMISSION_WSET_ITEMNAME }, //TYPE_TRBTL
 };
 
 static void wset_MissionParam( WORDSET* wset, STRBUF* tmp, u8 bufID, FMISSION_WSET type, int value );
@@ -246,11 +242,6 @@ void FMISSION_DATA_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
   FEST_BEACON* beacon = &fmwk->beacon;
   int sec = LINKFEST_FRAME2SEC(beacon->life);
 
-#if 0
-  WORDSET_RegisterNumber( wset, 0, beacon->m_time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 1, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  wset_MissionParam( wset, 2, DATA_FMissionDataType[beacon->m_type].param_wset,beacon->param, WSET_MODE_TITLE );
-#endif
   WORDSET_RegisterItemName( wset, 3, beacon->item );
   WORDSET_RegisterNumber( wset, 4, beacon->pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 5, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -272,7 +263,7 @@ void FMISSION_DATA_GetTitleStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, GFL_HEAP_LOWID(heapID) );
   
   //パラメータ
-  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
+  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type], beacon->base_param ); 
   IWASAWA_Printf("FmissionTitle type%d\n", arc->m_type );
 
   //目標
@@ -300,7 +291,7 @@ void FMISSION_DATA_GetExpStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_MI
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_EXP, GFL_HEAP_LOWID(heapID) );
  
   //パラメータ
-  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type].param_wset, beacon->base_param ); 
+  wset_MissionParam( wset, tmp, 0, DATA_FMissionDataType[arc->m_type], beacon->base_param ); 
   
   //目標
   WORDSET_RegisterNumber( wset, 1, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );

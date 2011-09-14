@@ -42,6 +42,7 @@
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"
 #include "../../../resource/fldmapdata/script/fmission_scr_def.h" //SCRID_～
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "field/fes_gimmick.h"
 #include "field/fes_gimmick_def.h"
@@ -101,6 +102,8 @@ static const FES_GIMMICK_DATA  DATA_FMissionGimmickData[FES_GIMMICK_DATA_MAX] = 
     },
   },
 };
+
+static void mission_init_mushroom_enc( FES_GIMMICK* wk );
 
 static u16 sub_GetZoneIdx( u16 zone_id );
 
@@ -202,7 +205,36 @@ void FES_GIMMICK_SYS_FldEffDelete( FES_GIMMICK* wk )
   }
 }
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック ミッション開始時初期化　
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_MissionInitSetup( FES_GIMMICK* wk )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return;
+  }
+  MI_CpuClear8( LINK_FESTIVAL_GetMissionGimmickWork( wk->fest_sys ), sizeof(FES_GIMMICK_WORK) );
 
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_MUSHROOM_ENC ){
+    mission_init_mushroom_enc( wk );
+  }
+}
+
+/*
+ * @brief タマゲタケシンボルエンカウントミッション用初期化処理
+ * これ一つのためにファイルを用意するほどでもなかったのでここに置く
+ */
+static void mission_init_mushroom_enc( FES_GIMMICK* wk )
+{
+  int i;
+
+  //フィールド上のすべてのタマゲタケを復活させる
+  for( i = FV_FLDMONS_01; i <= FV_FLDMONS_12; i++ ){
+    EVENTWORK_ResetEventFlag( wk->evwork, i );
+  }
+}
 
 //----------------------------------------------------------------------
 /*
@@ -216,8 +248,6 @@ void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
   }
   if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
     FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
-
-//    itemball_Setup( fest_sys, fmwk, gsys, zone_id );
   }else if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
     FES_GIMMICK_NPC_FieldRecoverSetup( wk, wk->wk_buf );
   }
@@ -299,15 +329,16 @@ BOOL FES_GIMMICK_CheckHitGridPos( FES_GIMMICK* wk, u16 gx, u16 gz, fx32 height )
  *  @brief  フェスミッションギミック　フラグセット
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_FlagSet( LINK_FESTIVAL* fest_sys, u16 zone_id, u16 idx )
+void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx )
 {
-#if 0
-  u16 zone_idx = sub_GetZoneIdx( zone_id );
-
-  if( zone_idx != ZONE_ERROR ){
-    LINK_FESTIVAL_MissionFlagSet( fest_sys, zone_idx, idx );
+  void* gmk_wk = LINK_FESTIVAL_GetMissionGimmickWork( wk->fest_sys );
+  
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return;
   }
-#endif
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
+    FES_GIMMICK_NPC_FlagSet( wk, (FES_GIMMICK_NPC_WORK*)gmk_wk, zone_id, idx );
+  }
 }
 
 //======================================================================
