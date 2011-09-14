@@ -341,8 +341,15 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
   //すべての優勝回数カウンタ用のオープン条件をセット
   for ( i = 0; i < WBTWIN_COUNT_MAX; i ++ )
   {
-    WBTCUP wbtcup = WBTTOOL_WBTWinCountToCup( i );
-    wr_param->open_flag[ i ] = WBTTOOL_CheckCupEnable( gamedata, wbtcup );
+    if ( i == WBTWIN_COUNT_WCS )
+    {
+      wr_param->open_flag[ i ] = FALSE;
+    }
+    else
+    {
+      WBTCUP wbtcup = WBTTOOL_WBTWinCountToCup( i );
+      wr_param->open_flag[ i ] = WBTTOOL_CheckCupEnable( gamedata, wbtcup );
+    }
   }
 
   wr_param->result_work = res_work;

@@ -840,12 +840,12 @@ u32 WBTTOOL_GetDLTrtype( u8 wbt_dl_tr_type )
     TRTYPE_OL,            //	29	OL	~	Š	‚n‚k	
     TRTYPE_MAID,          //	30	MAID	~	Š	ƒƒCƒh	
   };
-  if( wbt_dl_tr_type >= NELEMS(id2trtype) )
+  if( wbt_dl_tr_type > NELEMS(id2trtype) || wbt_dl_tr_type <= 0 )
   {
     GF_ASSERT( 0 );
-    wbt_dl_tr_type = 0;
+    wbt_dl_tr_type = 1; //1origin‚È‚Ì‚Å
   }
-  return id2trtype[ wbt_dl_tr_type ];
+  return id2trtype[ wbt_dl_tr_type - 1 ];
 }
 
 
