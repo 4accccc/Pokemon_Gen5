@@ -13623,6 +13623,31 @@
   .short \id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　オーバーレイを通常からお店用へ
+ */
+//--------------------------------------------------------------
+#define _RESORT_CHANGE_OV_TO_SHOP() \
+    _ASM_RESORT_CHANGE_OV_TO_SHOP
+
+  .macro _ASM_RESORT_CHANGE_OV_TO_SHOP
+  .short EV_SEQ_RESORT_CHANGE_OV_TO_SHOP
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　オーバーレイをお店用から通常へ
+ */
+//--------------------------------------------------------------
+#define _RESORT_CHANGE_OV_TO_COMMON() \
+    _ASM_RESORT_CHANGE_OV_TO_COMMON
+
+  .macro _ASM_RESORT_CHANGE_OV_TO_COMMON
+  .short EV_SEQ_RESORT_CHANGE_OV_TO_COMMON
+  .endm
+
 //======================================================================
 //
 //  レゾナンスリゾート関連  レゾナンスリゾートギミックでしか動かない

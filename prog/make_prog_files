@@ -514,7 +514,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_dataconvert.c \
         field/scrcmd_walk_count.c \
         field/animal_trail_data.c \
-        field/scrcmd_h06_gmk.c
+        field/scrcmd_h06_gmk.c \
+        field/scrcmd_resort_st.c
 
 
 ###########################################################
@@ -1032,10 +1033,18 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
 # スクリプトコマンド並列化　レゾナンスリゾート
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
-SRCS_OVERLAY_SCRCMD_RESORT =  field/resonance_resort/scrcmd_resort.c \
-                              field/resonance_resort/scrcmd_resort_shop.c \
-                              field/resonance_resort/scrcmd_medalinfo.c \
-                              field/scrcmd_resort_table.c
+SRCS_OVERLAY_SCRCMD_RESORT =  field/scrcmd_resort_table.c
+
+# スクリプトコマンド並列化　レゾナンスリゾート通常
+#===> SRCS_OVERLAY_SCRCMD_RESORT
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_RESORT_COMMON = field/resonance_resort/scrcmd_resort.c \
+                                    field/resonance_resort/scrcmd_medalinfo.c
+
+# スクリプトコマンド並列化　レゾナンスリゾートお店
+#===> SRCS_OVERLAY_SCRCMD_RESORT
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_RESORT_SHOP = field/resonance_resort/scrcmd_resort_shop.c
 
 # スクリプトコマンド並列化  無限ダンジョン
 #===> GROUP_OVERLAY_DEBUGMENU

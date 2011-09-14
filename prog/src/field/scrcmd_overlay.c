@@ -51,6 +51,7 @@ FS_EXTERN_OVERLAY( scrcmd_palpark );
 FS_EXTERN_OVERLAY( scrcmd_seatemple );
 FS_EXTERN_OVERLAY( scrcmd_wbt );
 FS_EXTERN_OVERLAY( scrcmd_resort );
+FS_EXTERN_OVERLAY( scrcmd_resort_common );
 FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
 FS_EXTERN_OVERLAY( scrcmd_pokewood );
 FS_EXTERN_OVERLAY( scrcmd_bgate );
@@ -146,21 +147,6 @@ static const ZONEID UseZoneIDTbl_resort[] =
 {
   ZONE_ID_C16,
   ZONE_ID_C16R0101,
-  ZONE_ID_C16R0201,
-  ZONE_ID_C16R0301,
-  ZONE_ID_C16R0401,
-  ZONE_ID_C16R0501,
-  ZONE_ID_C16R0601,
-  ZONE_ID_C16R0701,
-  ZONE_ID_C16R0801,
-  ZONE_ID_C16R0901,
-  ZONE_ID_C16R1001,
-  ZONE_ID_C16R1101,
-  ZONE_ID_C16R1201,
-  ZONE_ID_C16R1301,
-  ZONE_ID_C16R1401,
-  ZONE_ID_C16R1501,
-  ZONE_ID_C16R1601,
 };
 
 //-------------------------------------
@@ -229,6 +215,7 @@ static const struct
   const ZONEID  *zoneIDTbl;         //テーブルが読み込まれるゾーンIDのテーブル
   u32 zoneIDTblMax;                 //ゾーンIDテーブルの要素数
   FSOverlayID overlayID;            //テーブルとコマンドが属するオーバーレイID
+  FSOverlayID sub_overlayID;        //テーブルとコマンドが属するオーバーレイIDサブ
 } ScrCmd_Overlay_table[] =
 {
   //NONE
@@ -236,6 +223,7 @@ static const struct
     NULL,
     NULL,
     0,
+    GFL_OVERLAY_BLANK_ID,
   },
   //BSUBWAY
   {
@@ -243,6 +231,7 @@ static const struct
     UseZoneIDTbl_bsubway,
     NELEMS( UseZoneIDTbl_bsubway ),
     FS_OVERLAY_ID( scrcmd_bsubway ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //UN
   {
@@ -250,6 +239,7 @@ static const struct
     UseZoneIDTbl_un,
     NELEMS( UseZoneIDTbl_un ),
     FS_OVERLAY_ID( scrcmd_un ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //PL_BOAT
   {
@@ -257,6 +247,7 @@ static const struct
     UseZoneIDTbl_pl_boat,
     NELEMS(UseZoneIDTbl_pl_boat),
     FS_OVERLAY_ID( scrcmd_pl_boat ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //FOURKINGS
   {
@@ -264,6 +255,7 @@ static const struct
     UseZoneIDTbl_fourkings,
     NELEMS( UseZoneIDTbl_fourkings ),
     FS_OVERLAY_ID( scrcmd_fourkings ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //PALPARK
   {
@@ -271,6 +263,7 @@ static const struct
     UseZoneIDTbl_palpark,
     NELEMS( UseZoneIDTbl_palpark ),
     FS_OVERLAY_ID( scrcmd_palpark ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //SEATEMPLE
   {
@@ -278,12 +271,14 @@ static const struct
     UseZoneIDTbl_seatemple,
     NELEMS(UseZoneIDTbl_seatemple),
     FS_OVERLAY_ID( scrcmd_seatemple ),
+    GFL_OVERLAY_BLANK_ID,
   },
   {
     ScriptCmdTbl_wbt,
     UseZoneIDTbl_wbt,
     NELEMS(UseZoneIDTbl_wbt),
     FS_OVERLAY_ID( scrcmd_wbt ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //RESONANCE_RESORT
   {
@@ -291,6 +286,7 @@ static const struct
     UseZoneIDTbl_resort,
     NELEMS(UseZoneIDTbl_resort),
     FS_OVERLAY_ID( scrcmd_resort ),
+    FS_OVERLAY_ID( scrcmd_resort_common ),
   },
   //INFINITY_DUNGEON
   {
@@ -298,6 +294,7 @@ static const struct
     UseZoneIDTbl_infinitydungeon,
     NELEMS(UseZoneIDTbl_infinitydungeon),
     FS_OVERLAY_ID( scrcmd_infinity_dungeon ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //POKEWOOD
   {
@@ -305,6 +302,7 @@ static const struct
     UseZoneIDTbl_pokewood,
     NELEMS(UseZoneIDTbl_pokewood),
     FS_OVERLAY_ID( scrcmd_pokewood ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //BADGE_CHECK_GATE
   {
@@ -312,6 +310,7 @@ static const struct
     UseZoneIDTbl_badge_gate,
     NELEMS(UseZoneIDTbl_badge_gate),
     FS_OVERLAY_ID( scrcmd_bgate ),
+    GFL_OVERLAY_BLANK_ID,
   },
   //HIDE_SHIP
   {
@@ -319,6 +318,7 @@ static const struct
     UseZoneIDTbl_hide_ship,
     NELEMS(UseZoneIDTbl_hide_ship),
     FS_OVERLAY_ID( scrcmd_hide_ship ),
+    GFL_OVERLAY_BLANK_ID,
   },
 };
 //=============================================================================
@@ -377,10 +377,15 @@ void SCRCMD_OVERLAY_SetUp( GAMEDATA  *p_gamedata )
     return;
   }
   
-  if( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID != NULL )
+  if( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID != GFL_OVERLAY_BLANK_ID )
   {
     SCRCMD_OV_Printf( "スクリプトコマンドオーバーレイ読込み=%d\n", scrCmdTableID );
     GFL_OVERLAY_Load( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID );
+  }
+  if( ScrCmd_Overlay_table[ scrCmdTableID ].sub_overlayID != GFL_OVERLAY_BLANK_ID )
+  {
+    SCRCMD_OV_Printf( "スクリプトコマンドオーバーレイ読込み【サブ】=%d\n", scrCmdTableID );
+    GFL_OVERLAY_Load( ScrCmd_Overlay_table[ scrCmdTableID ].sub_overlayID );
   }
 }
 //----------------------------------------------------------------------------
@@ -400,7 +405,12 @@ void SCRCMD_OVERLAY_CleanUp( GAMEDATA  *p_gamedata )
   {
     return;
   }
-  if( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID != NULL )
+  if( ScrCmd_Overlay_table[ scrCmdTableID ].sub_overlayID != GFL_OVERLAY_BLANK_ID )
+  {
+    SCRCMD_OV_Printf( "スクリプトコマンドオーバーレイ破棄【サブ】=%d\n", scrCmdTableID );
+    GFL_OVERLAY_Unload( ScrCmd_Overlay_table[ scrCmdTableID ].sub_overlayID );
+  }
+  if( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID != GFL_OVERLAY_BLANK_ID )
   {
     SCRCMD_OV_Printf( "スクリプトコマンドオーバーレイ破棄=%d\n", scrCmdTableID );
     GFL_OVERLAY_Unload( ScrCmd_Overlay_table[ scrCmdTableID ].overlayID );

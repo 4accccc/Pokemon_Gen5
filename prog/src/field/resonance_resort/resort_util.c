@@ -1677,3 +1677,46 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_tal
     }
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  システムを取得
+ *
+ *	@param	FIELDMAP_WORK *p_field   フィールド
+ *
+ *	@return システム
+ */
+//-----------------------------------------------------------------------------
+RESORT_SYSTEM * RESORT_UTIL_GetSystem( FIELDMAP_WORK *p_field )
+{
+  if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    return RESORT_FIELD_GetResortSys( p_field );
+  }
+  else
+  {
+    return RESORT_RECEPTION_GetResortSys( p_field );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前の人物を取得
+ *
+ *	@param	FIELDMAP_WORK *p_field フィールド
+ *	@param	*p_people_sys             人物システム
+ *
+ *	@return 目の前の人物を取
+ *
+ *	@note   field_event_check.cのgetFrontTalkOBJ関数とほぼ同じことをしています
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE * RESORT_UTIL_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys )
+{
+  SCRIPT_WORK *p_sc = SCRCMD_WORK_GetScriptWork( p_wk );
+  MMDL *p_mmdl = SCRIPT_GetTargetObj( p_sc );
+  RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_mmdl );
+  //GF_ASSERT( p_people != NULL );  TalkEndで人が消えることがあるため
+  return p_people;
+}

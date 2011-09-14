@@ -327,10 +327,6 @@ static BOOL CameraNormal_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldm
 static BOOL CameraShop_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
 static BOOL CameraShop_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, u32 *p_seq );
 
-//scrcmd_resort.cのソースを使う
-extern RESORT_SYSTEM * Resort_Scrcmd_GetSystem( FIELDMAP_WORK *p_field );
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
-
 //--------------------------------------------------------------------
 /**
  * @brief ショップ購入イベント呼び出し 
@@ -358,7 +354,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
   FLDMSGBG *     fldmsg   = FIELDMAP_GetFldMsgBG( fieldmap );
-  RESORT_SYSTEM *resort_sys = Resort_Scrcmd_GetSystem( fieldmap );
+  RESORT_SYSTEM *resort_sys = RESORT_UTIL_GetSystem( fieldmap );
 
   // ショップ用ワーク確保
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
@@ -383,7 +379,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.camera_type = camera_type;
   sbw->wk.p_people_sys = Resort_ScrcmdShop_GetPeopleSys( fieldmap );
   sbw->gsys = gsys;
-  sbw->wk.p_people  = Resort_Scrcmd_GetFrontPeople( work, sbw->wk.p_people_sys );
+  sbw->wk.p_people  = RESORT_UTIL_GetFrontPeople( work, sbw->wk.p_people_sys );
   //sbw->Camera_StartMove   = CameraNormal_StartMove;
   //sbw->Camera_EndMove     = CameraNormal_EndMove;
   sbw->Camera_StartMove   = CameraShop_StartMove;

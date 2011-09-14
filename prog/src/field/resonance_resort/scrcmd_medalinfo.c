@@ -37,6 +37,7 @@
 #include "resort_binary.h"
 #include "resort_reception.h"
 #include "resort_field.h"
+#include "resort_util.h"
 #include "../gmk_tmp_wk.h"
 
 //#define VOLUMECONTROL // アプリ起動時の音量調整(OFFだとボリュームの調整を行いません
@@ -48,8 +49,6 @@
 //=============================================================================
 static void MedalInfoEndCallback( void* p_work );
 
-//scrcmd_resort.cのソースを使う
-extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
 static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, SCRCMD_WORK *p_scrcmd );
 
 //-------------------------------------
@@ -184,5 +183,5 @@ static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_f
     GF_ASSERT( p_people_sys != NULL );
   }
 
-  return Resort_Scrcmd_GetFrontPeople( p_scrcmd, p_people_sys );
+  return RESORT_UTIL_GetFrontPeople( p_scrcmd, p_people_sys );
 }

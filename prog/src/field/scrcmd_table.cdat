@@ -1092,13 +1092,13 @@
 
   //  レゾナンスリゾート常駐
   DEF_CMD( EvCmdResortSetRecord, EV_SEQ_RESORT_SET_RECORD )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdResortChangeOverlayCommonToShop, EV_SEQ_RESORT_CHANGE_OV_TO_SHOP )
+  DEF_CMD( EvCmdResortChangeOverlayShopToCommon, EV_SEQ_RESORT_CHANGE_OV_TO_COMMON )
   NO_CMD()
   NO_CMD()
 
   // すれ違い調査隊で自慢メッセージを入力
-  DEF_CMD( EvCmdCrossCommBoastMessageInputCall, EV_SEQ_CALL_CROSS_COMM_BOAST_MSG_INPUT ) 
+  DEF_CMD( EvCmdCrossCommBoastMessageInputCall, EV_SEQ_CALL_CROSS_COMM_BOAST_MSG_INPUT )
 
   END_CMD
   //スクリプトコマンドテーブル終了

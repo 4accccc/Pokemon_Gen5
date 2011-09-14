@@ -56,3 +56,7 @@ typedef enum
   RESORT_UTIL_VISIBLE_LIST, //リストモードの時は話しかけている人と住民以外を全部非表示
 }RESORT_UTIL_VISIBLE;
 extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );
+
+//scrcmd_resort.cのソースを使う
+extern RESORT_SYSTEM * RESORT_UTIL_GetSystem( FIELDMAP_WORK *p_field );
+extern RESORT_PEOPLE * RESORT_UTIL_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
