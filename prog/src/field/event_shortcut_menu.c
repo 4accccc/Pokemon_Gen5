@@ -882,6 +882,14 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
 		p_param->data	= ZUKAN_MODE_FORM;
 		return CALLTYPE_PROC;
+  case SHORTCUT_ID_ZUKAN_HABITAT_LIST:				//ずかん＞生息地リスト
+		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_HABITAT_LIST;
+		return CALLTYPE_PROC;
+  case SHORTCUT_ID_ZUKAN_HABITAT_ZONE:				//ずかん＞生息地詳細
+		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
+		p_param->data	= ZUKAN_MODE_HABITAT_ZONE;
+		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_FRONT:			//トレーナーカード＞ぜんめん
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
     p_param->data = TRCARD_SHORTCUT_FRONT;

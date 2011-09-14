@@ -39,6 +39,8 @@ enum {
 	ZUKAN_MODE_VOICE,				// 鳴き声
 	ZUKAN_MODE_FORM,				// 姿
 	ZUKAN_MODE_SEARCH,			// 検索
+	ZUKAN_MODE_HABITAT_LIST,	// 生息地リスト
+	ZUKAN_MODE_HABITAT_ZONE,  // 生息地詳細
 };
 
 // 終了モード

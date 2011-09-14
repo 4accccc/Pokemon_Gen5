@@ -33,6 +33,8 @@
 #define FCOL_WP01WN		( PRINTSYS_LSB_Make(0xF,0x1,0x2) )	// フォントカラー：両用０１白抜
 #define FCOL_BP01WN		( PRINTSYS_LSB_Make(0x1,0x2,0xF) )	// フォントカラー：両用０１黒抜
 
+#include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
+
 
 //=============================================================================
 /**
@@ -318,6 +320,8 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk );
 static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index );
 static HABITATLIST_STATUS CheckCompleteEvent( HABITAT_ZONE_WK *p_wk );
 static s32 GetSaveDataIndex( u16 zone_group_id );
+static void SetShortCut( HABITAT_ZONE_WK *p_wk );
+static void SetShortCutButtonCutAnmSeq( HABITAT_ZONE_WK *p_wk );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
@@ -527,7 +531,8 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
   {
   case TPID_BUTTON_Y:
     {
-      ONOUE_Printf("TP_BUTTON_Y\n");
+      PMSND_PlaySE( ZKNLIST_SE_Y );
+      SetShortCut( p_wk );
     }
     break;
   case TPID_BUTTON_X:
@@ -720,7 +725,8 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
       }
       else if( key_trg & PAD_BUTTON_Y )
       {
-        ONOUE_Printf("ショートカット登録ON/OFF\n");
+        PMSND_PlaySE( ZKNLIST_SE_Y );
+        SetShortCut( p_wk );
       }
     }
   }
@@ -990,6 +996,9 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
  
   // コンプリートアイコンをセットする
   SetCompIcon( p_wk );
+
+  // ショートカットアイコンを設定
+  SetShortCutButtonCutAnmSeq( p_wk );
 
   // フェードシーケンスに移行
   SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
@@ -2842,5 +2851,49 @@ static s32 GetSaveDataIndex( u16 zone_group_id )
   }
   GF_ASSERT(0);
   return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief		ショートカット設定
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetShortCut( HABITAT_ZONE_WK *p_wk )
+{
+  GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_ZONE ) == TRUE ){
+    GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_ZONE, FALSE );
+    HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+        OBJ_WK_CHECK_BOX,APP_COMMON_BARICON_CHECK_OFF );
+	}else{
+		GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_ZONE, TRUE );
+    HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+        OBJ_WK_CHECK_BOX,APP_COMMON_BARICON_CHECK_ON );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のショートカットボタンの状態を反映する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetShortCutButtonCutAnmSeq( HABITAT_ZONE_WK *p_wk )
+{
+  GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_ZONE ) == TRUE ){
+    HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+        OBJ_WK_CHECK_BOX,APP_COMMON_BARICON_CHECK_ON );
+	}else{
+    HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+        OBJ_WK_CHECK_BOX,APP_COMMON_BARICON_CHECK_OFF );
+	}
 }
 

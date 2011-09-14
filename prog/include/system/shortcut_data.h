@@ -52,6 +52,8 @@ typedef enum
   SHORTCUT_ID_LIVECASTER,       //ライブキャスター
   SHORTCUT_ID_MEDALBOX,         //メダルボックス
   SHORTCUT_ID_POKELIST,         //ポケモンリスト
+	SHORTCUT_ID_ZUKAN_HABITAT_LIST,				//ずかん＞せいそくちリスト
+	SHORTCUT_ID_ZUKAN_HABITAT_ZONE,				//ずかん＞せいそくちじょうほう
 
 	SHORTCUT_ID_MAX,
 	SHORTCUT_ID_NULL	= SHORTCUT_ID_MAX,	//データなし

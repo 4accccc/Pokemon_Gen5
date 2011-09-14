@@ -64,6 +64,8 @@ static HABITAT_GROUND_TYPE GetButtonType(
 static void CallCellAnm( HABITAT_LIST_WK *p_wk ,u16 clwk_id, u16 anm_seq,
               u16 next_seq_id,SEQ_CHANGE_PARAM param,SEQ_CHANGE_PARAM next_param );
 static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode );
+static void SetShortCut( HABITAT_LIST_WK *p_wk );
+static void SetShortCutButtonCutAnmSeq( HABITAT_LIST_WK *p_wk );
 
 //--------------------------------------------------
 // ID定義
@@ -392,6 +394,9 @@ static void MAINSEQ_AppInit( HABITAT_LIST_WK *p_wk )
   // ボタン描画
   InitModeButton( p_wk );
 
+  // ショートカットボタンを設定
+  SetShortCutButtonCutAnmSeq( p_wk );
+
   // フェードシーケンスに移行
   SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
 
@@ -671,7 +676,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 
   case HABITATLIST_UI_BUTTON_Y:
     PMSND_PlaySE( ZKNLIST_SE_Y );
-    ONOUE_Printf("Yタッチ\n");
+    SetShortCut( p_wk );
     break;
 
   case HABITATLIST_UI_BUTTON_RETURN:
@@ -752,7 +757,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       else if( trg & PAD_BUTTON_Y )
       {
 				PMSND_PlaySE( ZKNLIST_SE_Y );
-        ONOUE_Printf("Yボタン\n");
+        SetShortCut( p_wk );
       }
       else if( trg & PAD_BUTTON_SELECT )
       {
@@ -1119,5 +1124,49 @@ static void CallCellAnm( HABITAT_LIST_WK *p_wk ,u16 clwk_id, u16 anm_seq,
 static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode )
 {
   p_wk->p_init_param->ret_mode = ret_mode;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief		ショートカット設定
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetShortCut( HABITAT_LIST_WK *p_wk )
+{
+  GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST ) == TRUE ){
+    GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST, FALSE );
+    HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+        CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_OFF );
+	}else{
+		GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST, TRUE );
+    HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+        CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_ON );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のショートカットボタンの状態を反映する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetShortCutButtonCutAnmSeq( HABITAT_LIST_WK *p_wk )
+{
+  GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST ) == TRUE ){
+    HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+        CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_ON );
+	}else{
+    HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
+        CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_OFF );
+	}
 }
 

@@ -196,13 +196,13 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	}else if( wk->prm->callMode == ZUKAN_MODE_FORM ){
 		wk->mainSeq = SEQ_INFO_CALL;
     wk->detail_type = ZUKAN_DETAIL_TYPE_FORM;
+	}else if( wk->prm->callMode == ZUKAN_MODE_HABITAT_LIST ){
+		wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
+	}else if( wk->prm->callMode == ZUKAN_MODE_HABITAT_ZONE ){
+		wk->mainSeq = SEQ_HABITAT_ZONE_CALL;
 	}else{
 		wk->mainSeq = SEQ_SEARCH_CALL;
 	}
-
-#ifdef DEBUG_ONLY_FOR_onoue_masayuki
-	//wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
-#endif
 
 	return GFL_PROC_RES_FINISH;
 }
