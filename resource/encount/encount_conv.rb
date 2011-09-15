@@ -43,6 +43,9 @@ $groud_type_id = [GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_T
 # 特殊地形タイプ用
 $groud_type_id_ex = [GROUDN_TYPE_NONE,GROUDN_TYPE_CAVE,GROUDN_TYPE_BRIDGE]
 
+$ground_type_id = [GTYPE_GROUND,GTYPE_GROUND,
+      GTYPE_GROUND,GTYPE_WATER,GTYPE_WATER,GTYPE_FISHING,GTYPE_FISHING]
+
 #エンカウントテーブル
 class CEncTable
   MONSNO_BIT_NUM = 11
@@ -554,13 +557,11 @@ class CEncountData
 
   # ハッシュデータ登録
   def set_mons_data( table , dest ,season )
-    ground_type_id = [GTYPE_GROUND,GTYPE_GROUND,
-      GTYPE_GROUND,GTYPE_WATER,GTYPE_WATER,GTYPE_FISHING,GTYPE_FISHING]
-
+ 
     # データ登録
     IDX_MAX.times{|i|
       ml = table[i].get_mons_list
-      type_id = ground_type_id[i]
+      type_id = $ground_type_id[i]
 
       # モンスターが存在しない場合は出力しない
       if ml.size <= 0 then next end
@@ -575,6 +576,81 @@ class CEncountData
 
       # データをユニークにする
       dest[type_id][season].uniq!
+    }
+  end
+
+  # フォルムデータを出力
+  def output_enc_form_marshall_data f_name,path
+
+    zone_hash = Hash.new
+
+    for n in @zone_list do
+      season = n.get_season_code()
+      zone_name = n.get_zone_name()
+      black_enable = n.get_black_enable
+      white = n.get_white_mapdata
+      black = n.get_black_mapdata
+      white_table = white.get_table_data
+      black_table = black.get_table_data
+      white_data = nil
+      black_data = nil
+      
+      # ゾーンハッシュを生成
+      unless zone_hash.key?(zone_name) then
+        zone_hash[zone_name] = Array.new
+      end
+
+      # ホワイトデータを登録
+      puts zone_name
+      puts "--------"
+      set_form_data( white_table , zone_hash[zone_name] ,season,true)
+      puts "--------"
+
+      # ブラックデータ登録
+      if black_enable == true then
+        set_form_data( black_table , zone_hash[zone_name] ,season,false)
+      else
+        set_form_data( white_table , zone_hash[zone_name] ,season,false)
+      end
+    end
+    
+    File.open(path+f_name,"wb"){ |file|
+      file << Marshal.dump(zone_hash)
+    }
+  end
+    
+  # フォルムデータセット
+  def set_form_data( table , dest ,season,is_white )
+    # データ登録
+    IDX_MAX.times{|i|
+      ml = table[i].get_mons_list
+      type_id = $ground_type_id[i]
+
+      for pl in ml do
+        add_flg = false
+        dest.each{|dd|
+          if dd.monsno == pl.monsno then
+            if dd.type_id == type_id then
+              if dd.season == season then
+                if dd.is_white == is_white then
+                  add_flg = true
+                end
+              end
+            end
+          end
+        }
+
+        if add_flg == false then
+          data = CFormData.new
+          data.monsno   = pl.monsno
+          data.formno   = pl.form
+          data.type_id  = type_id
+          data.season   = season
+          data.is_white = is_white
+          dest << data
+          puts "%d,%d,%d,%d"%[data.monsno,data.formno,season,type_id]
+        end
+      end
     }
   end
 
@@ -636,6 +712,7 @@ def convert
 
   # エンカウントデータ出力
   c_enc.output_marshall_data(ENCOUNT_DATA_MARSHAL,"./")
+  c_enc.output_enc_form_marshall_data(ENCOUNT_FORM_DATA_MARSHAL,"./")
 end
 
 #実行

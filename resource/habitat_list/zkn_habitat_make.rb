@@ -9,19 +9,31 @@
 # */
 #//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
+$KCODE = "SJIS" #文字コードをSJISに設定。monsno_hash.rbの読み込みに必要
+
 # データハッシュ型を取得
 load    File.dirname(__FILE__) + '/../encount/encount_common.def'
 require File.dirname(__FILE__) + '/../encount/enc_hash_data.rb'
 require File.dirname(__FILE__) + '/../fldmapdata/zonetable/zonegroup_hash/zone_group_hash.rb'
+require File.dirname(__FILE__) + '/../personal/monsno_hash.rb'
+
+# 季節名
+$season_name = ["四季なし","春","夏","秋","冬"]
+# 地形名
+$ground_type_name = ["土","海","釣"]
+# 地形名詳細
+$info_ground_type_name = ["草地","砂地","沼","洞窟","混合","なし"]
 
 # 出力形式用モンスターデータ
 class CMonsterData
   attr_accessor :season_enable ,:id ,:is_appear
   
   def initialize
-
     # is_appear[季節][地形]
-    @is_appear = Array.new( 4, Array.new(3,false) )
+    @is_appear = Array.new
+    SEASON_WINTER.times{
+      @is_appear << [false,false,false]
+    }
     # 季節の存在情報
     @season_enable = false
   end
@@ -53,8 +65,9 @@ def set_mons_array_data( group_data ,mons_array ,mons_data )
           # 登録されていない場合は生成
           unless mons_array.key?(id) then
             mons_array[id] =  CMonsterData.new
+            mons_array[id].season_enable = true
           end
-          mons_array[id].is_appear[season-SEASON_SPRING][g_type] = true
+          mons_array[id].is_appear[(season-SEASON_SPRING)][g_type] = true
         }
       }
     }
@@ -62,7 +75,7 @@ def set_mons_array_data( group_data ,mons_array ,mons_data )
 end
 
 # バイナリデータを出力する
-def put_bin_file( f_name ,group_data ,mons_array ,group_type )
+def put_bin_file( f_name ,group_data ,mons_array ,group_type ,zone_group,is_white)
   bin = open(f_name,"w")
   
   # 季節の有効状態
@@ -97,11 +110,23 @@ def put_bin_file( f_name ,group_data ,mons_array ,group_type )
   mons_array.each_key{|key|
     # モンスター番号
     bin << [ key.to_i ].pack( "s" )
+    # 出現条件
     for season in SEASON_SPRING..SEASON_WINTER
       GTYPE_MAX.times{|g_type|
         flg = mons_array[key].is_appear[season - SEASON_SPRING][g_type]
         if flg == true then
           bin << [ 1 ].pack( "c" ) 
+        else
+          bin << [ 0 ].pack( "c" ) 
+        end
+      }
+    end
+    # フォルム
+    for season in SEASON_SPRING..SEASON_WINTER
+      GTYPE_MAX.times{|g_type|
+        flg = mons_array[key].is_appear[season - SEASON_SPRING][g_type]
+        if flg == true then
+          bin << [ search_form( key,season,g_type,zone_group ,is_white ,group_data.season_enable) ].pack("c")
         else
           bin << [ 0 ].pack( "c" ) 
         end
@@ -113,27 +138,52 @@ def put_bin_file( f_name ,group_data ,mons_array ,group_type )
   bin.close
 end
 
+# フォルム取得
+def search_form( monsno,season,g_type ,zone_group,is_white,season_enable)
+  $zone_group_fom_data[zone_group].each{|data|
+    if data.monsno == monsno then
+      if data.is_white == is_white then
+        if (season == SEASON_NONE) || (data.season == SEASON_NONE) || (data.season == season) || (season_enable == false) then
+          if data.type_id == g_type then
+            return data.formno
+          end
+        end
+      end
+    end
+  }
 
-# 季節名
-season_name = ["四季なし","春","夏","秋","冬"]
-# 地形名
-ground_type_name = ["土","海","釣"]
-# 地形名詳細
-info_ground_type_name = ["草地","砂地","沼","洞窟","混合","なし"]
+  puts "%s"%zone_group
+  puts "検索対象:%s %d %s %d"%[$monsname[monsno],season,is_white,g_type]
+  puts "季節判定%s"%season_enable
+  $zone_group_fom_data[zone_group].each{|data|
+    if monsno == data.monsno then
+      puts "%s %d %s %d"%[$monsname[data.monsno],data.season,data.is_white,data.type_id]
+    end
+  }
+  raise "フォルムを探せませんでした"
+end
+
 
 # エンカウントデータの読み込み
 encount_data          = nil
+form_hash             = nil
 FNAME_MARSHALL        = ARGV[0].to_s
 FNAME_DATA_INDEX      = ARGV[1].to_s
 ARC_FILE_LIST_W_NAME  = ARGV[2].to_s
 ARC_FILE_LIST_B_NAME  = ARGV[3].to_s
+FORM_FNAME_MARSHALL   = ARGV[4].to_s
 open(FNAME_MARSHALL,"rb"){|file|
   str =  file.read
   encount_data = Marshal.load(str)
 }
+open(FORM_FNAME_MARSHALL,"rb"){|file|
+  str =  file.read
+  form_hash = Marshal.load(str)
+}
 
 # ゾーングループごとの格納先
 zone_group_data = Hash.new
+$zone_group_fom_data = Hash.new
 
 # ゾーングループごとにデータをマージする
 encount_data.each_key{|zone_id|
@@ -150,13 +200,29 @@ encount_data.each_key{|zone_id|
   end
 }
 
+
 # 四季あり、四季なしデータが共存している場合をまとめる
 zone_group_data.each_key{|zone_group|
   zone_group_data[zone_group].merge_season
 }
 
 
-#=begin
+# ゾーングループごとにデータをマージする(フォルム)
+form_hash.each_key{|zone_id|
+  # エラーチェック
+  unless $zohe_id_to_zone_group.key?(zone_id.upcase) then raise "不明なゾーンID" end
+  zone_group = $zohe_id_to_zone_group[zone_id.upcase]
+  # キーが存在しない場合は、データ格納先を作成する
+  unless $zone_group_fom_data.key?(zone_group) then
+    # コピーを生成
+    $zone_group_fom_data[zone_group] = Marshal.load(Marshal.dump(form_hash[zone_id]))
+  else
+    # 単純追加
+    $zone_group_fom_data[zone_group].concat(form_hash[zone_id])
+  end
+}
+
+=begin
 
 # マージしたデータを格納する
 zone_group_data.each_key{|zone_group|
@@ -166,20 +232,20 @@ zone_group_data.each_key{|zone_group|
   puts "【 %s(ホワイト) 】"%[zone_group]
   puts " 四季 :%s"%[data.season_enable]
   puts " 黒有 :%s"%[data.black_enable]
-  puts " 白地形 :%s"%[info_ground_type_name[data.white_ground_type]]
-  puts " 黒地形 :%s"%[info_ground_type_name[data.black_ground_type]]
+  puts " 白地形 :%s"%[$info_ground_type_name[data.white_ground_type]]
+  puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
   GTYPE_MAX.times{|g_type|
     unless data.white_data[g_type] == nil then
-      puts "【 %s 】"%[ground_type_name[g_type]]
+      puts "【 %s 】"%[$ground_type_name[g_type]]
       data.white_data[g_type].each_key{|season|
-        print "%s(%2d種類):"%[season_name[season],data.white_data[g_type][season].size]
+        print "%s(%2d種類):"%[$season_name[season],data.white_data[g_type][season].size]
         if data.white_data[g_type][season].size > 20 then
           raise "20種類以上使用されています"
         end
         data.white_data[g_type][season].each{|mons_data|
-          print "%s,"%[mons_data]
+          print "%s,"%[$monsname[mons_data]]
         }
         print "\n"
       }
@@ -193,11 +259,11 @@ zone_group_data.each_key{|zone_group|
   puts "【 %s(ブラック) 】"%[zone_group]
   GTYPE_MAX.times{|g_type|
     unless data.black_data[g_type] == nil then
-      puts "【 %s 】"%[ground_type_name[g_type]]
+      puts "【 %s 】"%[$ground_type_name[g_type]]
       data.black_data[g_type].each_key{|season|
-        print "%s(%2d種類):"%[season_name[season],data.black_data[g_type][season].size]
+        print "%s(%2d種類):"%[$season_name[season],data.black_data[g_type][season].size]
         data.black_data[g_type][season].each{|mons_data|
-          print "%s,"%[mons_data]
+          print "%s,"%[$monsname[mons_data]]
         }
         print "\n"
         if data.black_data[g_type][season].size > 20 then
@@ -210,7 +276,7 @@ zone_group_data.each_key{|zone_group|
   print "\n"
 }
 
-#=end
+=end
 
 # バイナリデータの出力
 zone_group_data.each_key{|zone_group|
@@ -222,12 +288,11 @@ zone_group_data.each_key{|zone_group|
 
   # ブラック用データ作成
   set_mons_array_data( group_data,b_mons_array ,b_mons_data )
-  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type )
-
+  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type ,zone_group,false)
 
   # ホワイト用データ作成
   set_mons_array_data( group_data,w_mons_array ,w_mons_data)
-  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type )
+  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type ,zone_group ,true)
 }
 
 # データインデックステーブルを作成

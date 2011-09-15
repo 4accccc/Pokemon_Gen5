@@ -20,6 +20,7 @@ habitat_data_index = habitat_data_index.rb
 habitat_data_list_w = habitat_data_file_list_w.list
 habitat_data_list_b = habitat_data_file_list_b.list
 encout_marshal 	 = $(PROJECT_RSCDIR)/encount/encount_data.marshal
+encout_form_marshal 	 = $(PROJECT_RSCDIR)/encount/encount_form_data.marshal
 habitat_data				= habitat_list_data.cdat
 habitat_data_h			= habitat_list_data.h
 
@@ -71,7 +72,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 # コピー先のnarcが古い場合実行する
 
 $(habitat_data_b).narc: $(sources_data) $(encout_marshal) zkn_habitat_make.rb
-	ruby zkn_habitat_make.rb $(encout_marshal) $(habitat_data_index) $(habitat_data_list_w) $(habitat_data_list_b)
+	ruby zkn_habitat_make.rb $(encout_marshal) $(habitat_data_index) $(habitat_data_list_w) $(habitat_data_list_b) $(encout_form_marshal)
 	nnsarc -r -l -n -i $(habitat_data_b) -S $(habitat_data_list_b)
 	$(NAIXCUT) $(habitat_data_b).naix
 

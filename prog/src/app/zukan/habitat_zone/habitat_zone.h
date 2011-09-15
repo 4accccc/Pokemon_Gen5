@@ -54,6 +54,7 @@ typedef enum{
 typedef struct {
   u16   monsno; // モンスターナンバー
   u8    is_appear[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 出現条件 
+  u8    form[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 優先フォルム
   u8    padding[2];
 }ARC_HABITAT_MONS_DATA;
 
@@ -70,6 +71,7 @@ typedef struct {
 typedef struct {
   u16   monsno; // モンスターナンバー
   u8  is_appear[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 出現条件 
+  u8  form[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 季節ごとのフォルム
   u8 status; // 見た、捕獲、知らない
 }HABITAT_ZONE_POKE_DATA;
 

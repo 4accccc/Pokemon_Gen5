@@ -110,7 +110,7 @@ static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_GetPokeIconPos( u8 index ,GFL_CLACTPOS *p_pos );
 static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk );
-static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index );
+static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u32 form_no, u32 sex,u8 index );
 static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk );
 static GFL_BMPWIN* GetBmpWin( HABITAT_ZONE_GRA_WK *p_wk ,PRINT_UTIL_WIN win_id);
 static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk );
@@ -883,7 +883,7 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
  *	@retval 生成したセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 index )
+static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no , u32 form_no, u32 sex,u8 index )
 {
   // ポケアイコン本体
   {
@@ -894,7 +894,8 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 in
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
     prm.arc_id    = ARCID_POKEICON;
     prm.pltt_id   = POKEICON_GetPalArcIndex();
-    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons_no, 0, 0, 0 );
+    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons_no, form_no, sex, FALSE );
+    ONOUE_Printf("フォルム%d\n",form_no);
     prm.cell_id   = POKEICON_GetCellArcIndex(); 
     prm.anm_id    = POKEICON_GetAnmArcIndex();
     prm.pltt_line = 7;
@@ -914,7 +915,7 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u8 in
     GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk_poke_icon[index], FALSE );
 
     {
-      u8 pal_num = POKEICON_GetPalNum( mons_no, 0, 0, 0 );
+      u8 pal_num = POKEICON_GetPalNum( mons_no, form_no, sex, FALSE );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk_poke_icon[index], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     }
   }
@@ -1399,11 +1400,11 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u8 index )
+void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u32 form_no, u32 sex,u8 index )
 {
   // リソース読み込み
   GFL_CLACTPOS pos;
-  GFL_CLWK *p_clwk = GRA_LoadPokeIcon( p_wk , monsno, index );
+  GFL_CLWK *p_clwk = GRA_LoadPokeIcon( p_wk , monsno,form_no,sex,index );
   GRA_GetPokeIconPos( index ,&pos );
   GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
 }

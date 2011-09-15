@@ -309,8 +309,7 @@ extern GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk(
                                         HABITAT_ZONE_GRA_WK *p_wk ,s32 obj_id );
 extern void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
                       GRA_LANDICON_TYPE icon_type, GRA_LANDICON_STATUS status );
-extern void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
-                                                          u16 monsno ,u8 index );
+extern void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u32 form_no, u32 sex,u8 index );
 extern void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index );
 extern void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,
                                     u8 index ,GRA_POKEICON_CURSOR_STATUS status );

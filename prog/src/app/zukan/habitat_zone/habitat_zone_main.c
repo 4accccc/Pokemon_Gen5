@@ -2285,8 +2285,24 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
     }
     else if( p_pk[i].status >= HABITAT_POKE_STATUS_LOOK )        // 見たか、捕獲のみ
     {
+
+      u32 sex;
+      u32 form;
+      BOOL rare;
+      BOOL is_look;
+
+      // 閲覧中のフォルムデータ取得
+      ZUKANSAVE_GetDrawData( p_wk->p_zkn_sv ,p_pk[i].monsno,&sex,&rare,&form,HEAPID_ZUKAN_HABITAT_ZONE);
+      // 優先フォルムを見たことがあるかチェック
+      is_look = ZUKANSAVE_CheckPokeSeeForm( p_wk->p_zkn_sv ,p_pk[i].monsno,sex,rare,p_pk[i].form[p_wk->season][p_wk->land_type]);
+
+      if( is_look == TRUE )
+      {
+        form = p_pk[i].form[p_wk->season][p_wk->land_type];
+      }
+
       // ポケモンアイコンをセット
-      HABITAT_ZONE_GRA_SetPokeIcon( &p_wk->gra_sys ,p_pk[i].monsno, index );
+      HABITAT_ZONE_GRA_SetPokeIcon( &p_wk->gra_sys ,p_pk[i].monsno,form,sex, index );
 
       // カーソルをOFF状態にする
       HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,

@@ -34,6 +34,7 @@ BM_ARCHIVER_DIR			= "area_build_model"
 
 #エンカウントデータファイル
 ENCOUNT_DATA_MARSHAL	= "encount_data.marshal"
+ENCOUNT_FORM_DATA_MARSHAL	= "encount_form_data.marshal"
 
 #------------------------------------------------------------------------------
 #	サブディレクトリ：

@@ -517,6 +517,7 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
               {
                 p_poke_data->is_appear[season_id][ground_id] = 
                   (arc_data.mons_data[n].is_appear[season_id][ground_id] & is_vanish[ground_id]);
+                p_poke_data->form[season_id][ground_id] = arc_data.mons_data[n].form[season_id][ground_id];
               }
             }
 

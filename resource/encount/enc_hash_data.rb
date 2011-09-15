@@ -105,3 +105,7 @@ class CEncHashData
 
 end
 
+class CFormData
+  attr_accessor :monsno ,:formno ,:is_white ,:season ,:type_id
+end
+
