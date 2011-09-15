@@ -9,6 +9,7 @@
 #ifndef ZONE_C03R1301_EVC_H
 #define ZONE_C03R1301_EVC_H
 
+#define C03R1301_SUNGLASSES_01             0
 
 #endif //ZONE_C03R1301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

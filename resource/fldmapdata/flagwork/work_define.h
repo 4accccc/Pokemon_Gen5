@@ -275,6 +275,8 @@
 #define WK_SCENE_R07R0105_SPPOKE2_01     16663 /* 0x4117 タワーオブヘブン：エムリットイベント制御 */
 #define WK_SCENE_D26_SPPOKE3_01          16664 /* 0x4118 チャンピオンロード：アグノムイベント制御 */
 #define WK_SCENE_C16R0101_PRIZE          16665 /* 0x4119 ジョインアベニュー：ご褒美イベントSECNE制御ワーク */
+#define WK_SCENE_C03R1301_SUNGLASSES     16666 /* 0x411a ヒウンシティお金持ちビル：ボディチェックPOS制御ワーク */
+#define WK_SCENE_D08R0901_LEGEND         16667 /* 0x411b リュウラセンの塔最上階：レシラム・ゼクロムPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

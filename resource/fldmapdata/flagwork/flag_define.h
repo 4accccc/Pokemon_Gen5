@@ -425,6 +425,8 @@
 #define FE_C01GYM0101_LEADER1A_FIRST       409 /* 0x0199 サンヨウレストラン：ポッド初回会話フラグ */
 #define FE_C01GYM0101_LEADER1B_FIRST       410 /* 0x019a サンヨウレストラン：コーン初回会話フラグ */
 #define FE_C01GYM0101_LEADER1C_FIRST       411 /* 0x019b サンヨウレストラン：デント初回会話フラグ */
+#define FE_R04_POKETRADE_01                412 /* 0x019c 4番道路：ポケモン交換フラグ */
+#define FE_T01R0301_ITEMGET_01             413 /* 0x019d カノコタウン：アイテム入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -776,6 +778,7 @@
 #define FV_FLDMONS_12                      840 /* 0x0348 タマゲタケ（フィールドアイテム型）１２匹目 */
 #define FV_N01R0501_BOSS_01                841 /* 0x0349 Ｎ城謁見の間フロア：N */
 #define FV_C01GYM0101_SARU_01              842 /* 0x034a サンヨウシティ：サルショー */
+#define FV_R18_ITEM_01                     843 /* 0x034b 18版道路：どうぐ（モンスターボール） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
