@@ -314,8 +314,19 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 
     break;
   case RESORT_SECRETARY_BYE_MSGID:
-    return SexGetMsgID( sex, resort_secretary_bye_00_m, resort_secretary_bye_00_f );
-    break;
+    switch( type )
+    {
+    default:
+      GF_ASSERT(0);
+    case RESORT_SECRETARY_TYPE_WORK:
+      return SexGetMsgID( sex, resort_secretary_bye_00_m, resort_secretary_bye_00_f );
+    case RESORT_SECRETARY_TYPE_MOVE:
+      return SexGetMsgID( sex, resort_secretary_bye_01_m, resort_secretary_bye_01_f );
+    case RESORT_SECRETARY_TYPE_CENTER:
+      return SexGetMsgID( sex, resort_secretary_bye_02_m, resort_secretary_bye_02_f );
+    case RESORT_SECRETARY_TYPE_PC:
+      return SexGetMsgID( sex, resort_secretary_bye_03_m, resort_secretary_bye_03_f );
+    }
   case RESORT_SECRETARY_CITYLV_MSGID:
     return SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
     break;
@@ -333,9 +344,6 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     break;
   case RESORT_SECRETARY_RANK_SEL_MSGID:
     return SexGetMsgID( sex, resort_secretary_talk_08_m, resort_secretary_talk_08_f );
-    break;
-  case RESORT_SECRETARY_SEL_BYE_MSGID:
-    return SexGetMsgID( sex, resort_secretary_bye_01_m, resort_secretary_bye_01_f );
     break;
   case RESORT_SECRETARY_SEL_SELECT:
     return SexGetMsgID( sex, resort_secretary_talk_03_m, resort_secretary_talk_03_f );
