@@ -1776,8 +1776,6 @@ static BOOL SubSeq_Yesno_Normal( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   int result;
   if((result=_yesno_wait(wk))>=0){
     if(result==0){
-        // ã‰fÏ‚Ý‚É‚·‚é
-        POKEWOOD_SAVEDATA_SetMovieShowed( wk->param->pokewood_sv, wk->nowpos, TRUE );
         wk->seq = MENU_FADEOUT;
         *wk->param->result = wk->nowpos;
     }else{
