@@ -428,6 +428,9 @@
 #define FE_R04_POKETRADE_01                412 /* 0x019c 4番道路：ポケモン交換フラグ */
 #define FE_T01R0301_ITEMGET_01             413 /* 0x019d カノコタウン：アイテム入手フラグ */
 #define FE_T04_ITEMGET_01                  414 /* 0x019e サザナミタウン：アイテム入手フラグ */
+#define FE_N01R0401_HEYA_END_01            415 /* 0x019f N城：子ども部屋イベント終了フラグ */
+#define FE_C03R1302_ITEMGET_01             416 /* 0x01a0 ヒウンシティ：アイテム入手フラグ */
+#define FE_T04_SWRIVAL_WIN_01              417 /* 0x01a1 サザナミタウン：アイテム入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -781,6 +784,7 @@
 #define FV_C01GYM0101_SARU_01              842 /* 0x034a サンヨウシティ：サルショー */
 #define FV_R18_ITEM_01                     843 /* 0x034b 18版道路：どうぐ（モンスターボール） */
 #define FV_T04_SWRIVAL_01                  844 /* 0x034c サザナミタウン：ライバル */
+#define FV_C03R0502_POKE38_01              845 /* 0x034d ヒウンシティ：ズルッグ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
