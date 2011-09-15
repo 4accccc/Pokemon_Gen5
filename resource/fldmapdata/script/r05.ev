@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r05.h"
   .include  "r05.h"
   .include  "musical_scr_def.h"
+  
+  //@author	suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体

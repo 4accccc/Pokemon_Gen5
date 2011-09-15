@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r07.h"
   .include  "r07.h"
   .include  "r07r0301_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

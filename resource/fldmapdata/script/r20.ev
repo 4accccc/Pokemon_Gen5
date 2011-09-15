@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_r20.h"
   .include  "r20.h"
+  
+  //@author Mizuguchi_Mai
 
 //LOCALWORK0‚Í—Ž‚¿—t‚ÅŽg—p‚µ‚Ä‚¢‚Ü‚·
 

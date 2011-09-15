@@ -13,6 +13,8 @@
   .include  "r06.h"
   .include  "r06r0101.h"  //季節研究所reserve用
   .include  "r06r0101_def.h"  //季節研究所reserve用
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
