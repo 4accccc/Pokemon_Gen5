@@ -91,12 +91,13 @@ EVENT_START   ev_t01r0401_hakase2_01
 
     //アララギ娘：わざわざ　きてくれたのね！
     _BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_01 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    
+    //図鑑評価（アララギ娘）へ
+    _GLOBAL_CALL SCRID_ZUKAN_DAUGHTER
 
     //========================================//
     //会話済みフラグON
-    _FLAG_SET( FE_T02_LOW_TALK_01 )
+    _FLAG_SET( FE_T01R0401_HAKASE2_TALK )
     //========================================//
 
   ELSE
@@ -126,12 +127,13 @@ EVENT_START   ev_t01r0401_hakase1_01
 
     //アララギ父：ポケモンと　であっておるか？▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_01 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    
+    //図鑑評価（アララギ娘）へ
+    _GLOBAL_CALL SCRID_ZUKAN_FATHER
 
     //========================================//
     //会話済みフラグON
-    _FLAG_SET( FE_T02_LOW_TALK_01 )
+    _FLAG_SET( FE_T01R0401_HAKASE1_TALK )
     //========================================//
 
   ELSE
@@ -140,7 +142,7 @@ EVENT_START   ev_t01r0401_hakase1_01
     _BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_02 )
 
     //図鑑評価（アララギ父）へ【仮】コール先で停止が発生したので一時しのぎ
-    //_GLOBAL_CALL SCRID_ZUKAN_FATHER
+    _GLOBAL_CALL SCRID_ZUKAN_FATHER
 
   ENDIF
 
