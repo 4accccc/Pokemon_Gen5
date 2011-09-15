@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/28 18:36:19
+#save date:2011/09/14 21:27:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r13r0301.wms
 #SECTION START:OBJ_EVENT
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 R13R0301_POKE_01
 #OBJ CODE Number
-POKE19
+POKE35
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
