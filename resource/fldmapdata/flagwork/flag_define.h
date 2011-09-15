@@ -2258,7 +2258,7 @@
 #define SYS_FLAG_C08GYM_BUTTON_L          2434 /* 0x0982 ドラゴンジム：左ボタン */
 #define SYS_FLAG_C08GYM_BUTTON_R          2435 /* 0x0983 ドラゴンジム：右ボタン */
 #define SYS_FLAG_C08GYM_BUTTON_C          2436 /* 0x0984 ドラゴンジム：中ボタン */
-		/* not used  2437(0x0985) */
+#define SYS_FLAG_SUGOI_TSURI_GET          2437 /* 0x0985 すごいつりざお入手フラグ */
 #define SYS_FLAG_FES_TUTORIAL_CLEAR       2438 /* 0x0986 ハイリンクフェス：ミッションを初めてクリアしたフラグ */
 		/* not used  2439(0x0987) */
 		/* not used  2440(0x0988) */

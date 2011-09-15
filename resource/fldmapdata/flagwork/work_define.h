@@ -278,6 +278,7 @@
 #define WK_SCENE_C03R1301_SUNGLASSES     16666 /* 0x411a ヒウンシティお金持ちビル：ボディチェックPOS制御ワーク */
 #define WK_SCENE_D08R0901_LEGEND         16667 /* 0x411b リュウラセンの塔最上階：レシラム・ゼクロムPOS制御ワーク */
 #define WK_SCENE_R09R0101_STOP_01        16668 /* 0x411c 9番道路ゲート：シリンダーブリッジのストッパーPOS制御 */
+#define WK_SCENE_N01R0501_BOSS           16669 /* 0x411d N城：謁見の間前イベント進行制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
