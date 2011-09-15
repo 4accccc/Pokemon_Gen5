@@ -3378,6 +3378,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店の種類名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:25:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：施設名</Text>
@@ -3429,6 +3436,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店の種類名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:25:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：施設名</Text>
@@ -3527,10 +3541,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>やったー！
-がんばります</Text>
+がんばります▼
+[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3539,15 +3555,25 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったー！
-がんばります</Text>
+がんばります▼
+[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：クチグセ
+1：カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:29:47" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -3562,10 +3588,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>やったー！
-がんばります</Text>
+がんばります▼
+[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3574,15 +3602,25 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったー！
-がんばります</Text>
+がんばります▼
+[Name:ResortGreet ]！
+[Name:ResortGreet Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：クチグセ
+1：カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:30:00" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -3666,10 +3704,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+いってきますー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3677,15 +3716,24 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+いってきますー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：旅行者
+1：カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:33:23" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：観光客名
@@ -3714,10 +3762,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+いってきますー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3725,15 +3774,24 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+いってきますー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：旅行者
+1：カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:33:30" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：観光客名
@@ -3784,6 +3842,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：街名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:34:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：観光客名
@@ -3812,10 +3878,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>げんざい　[Name:ResortTown ]は
+サービス　きかんちゅうです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3823,10 +3890,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『いってきますー！▼</Text>
+			<Text>げんざい　[Name:ResortTown ]は
+サービス　きかんちゅうです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:34:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3860,9 +3928,9 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
+つぎの　ランクに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3871,14 +3939,14 @@ BW♀
 				Time="2011-09-01T06:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
+つぎの　ランクに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3887,9 +3955,19 @@ BW♀
 				Time="2011-09-01T06:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:19" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+1：店のランク
+2：人気
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:35:06" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：観光客名
@@ -3918,9 +3996,9 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
+つぎの　ランクに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3929,14 +4007,14 @@ BW♀
 				Time="2011-09-01T06:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　レベルは
+			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 げんざい　[Digit:2digits Idx="2" ]　です▼
-つぎの　レベルに　なるには
+つぎの　ランクに　なるには
 にんきが　あと　[Digit:3digits Idx="0" ]　ひつよう　です▼
 どんどん　『[Name:ResortShop Idx="1" ]』を
 おすすめして　ください▼</Text>
@@ -3945,9 +4023,19 @@ BW♀
 				Time="2011-09-01T06:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+1：店のランク
+2：人気
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:35:40" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：観光客名
@@ -4000,6 +4088,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:41:11" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4025,10 +4123,11 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+ぴったり　おにあいの▽
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:40" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4038,15 +4137,26 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+ぴったり　おにあいの▽
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:44" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書2セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:41:15" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4071,11 +4181,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:40" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4084,16 +4194,26 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:44" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書3セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:41:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4118,11 +4238,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:40" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4131,16 +4251,26 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:44" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書4セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:41:23" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4188,6 +4318,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4213,10 +4353,11 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+ぴったり　おにあいの▽
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4226,15 +4367,26 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+ぴったり　おにあいの▽
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書2セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4266,11 +4418,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4279,16 +4431,26 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書3セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4320,11 +4482,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4333,16 +4495,26 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
-[Name:ResortMayor Idx="2" ]に
-ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+[Name:ResortMayor Idx="2" ]！
+ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:27:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書4セリフ
+0：秘書名
+1：クチグセ
+2：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：秘書名
@@ -4395,6 +4567,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:34" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：市長名</Text>
@@ -4437,6 +4616,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：市長名</Text>
@@ -4479,6 +4665,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：市長名</Text>
@@ -4521,6 +4714,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:43:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：市長名</Text>
@@ -4541,32 +4741,41 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　レベルまで
+つぎの　ランクまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　レベルまで
+つぎの　ランクまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:24" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ランク数
+1：リゾート肩書き
+2：必要な人気</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:49:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -4608,6 +4817,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗種類名
+1：街名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:54:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -4862,31 +5079,31 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　レベルまで
+つぎの　ランクまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんざい　レベル　[Digit:2digits Idx="0" ]
+			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
 『[Name:ResortGreet Idx="2" ]』です▼
-つぎの　レベルまで
+つぎの　ランクまで
 にんきは　あと[Digit:4digits Idx="1" ]ひつようです▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:26" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -8771,7 +8988,7 @@ BW♀
 			<Text>0：旧施設名
 1：
 2：
-3：レベル
+3：ランク
 4：新施設名</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8798,33 +9015,33 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]の
-レベルが　あがった！</Text>
+ランクが　あがった！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]の
-レベルが　あがった！</Text>
+ランクが　あがった！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：旧施設名
 1：
 2：
-3：レベル
+3：ランク
 4：新施設名</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8851,33 +9068,33 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-レベル　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
+ランク　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]は
-レベル　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
+ランク　[Digit:3digits Idx="6" ]　に　なった！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
 			<Text>0：旧施設名
 1：
 2：
-3：レベル
+3：ランク
 4：新施設名</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8933,9 +9150,9 @@ BW♀
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>0：レベル数
+			<Text>0：ランク数
 1：リゾート名
-2：現在の施設レベル</Text>
+2：現在の施設ランク</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -9094,7 +9311,7 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>店レベル
+			<Text>店ランク
 
 0：施設名
 1：経験値</Text>
@@ -9146,7 +9363,7 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
 1：経験値</Text>
@@ -9196,10 +9413,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9226,33 +9443,33 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown Idx="0" ]の
-レベルが　あがった！</Text>
+ランクが　あがった！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortTown Idx="0" ]の
-レベルが　あがった！</Text>
+ランクが　あがった！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-14T13:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9279,33 +9496,33 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown Idx="0" ]は
-レベル　[Digit:4digits Idx="8" ]に　なった！▼</Text>
+ランク　[Digit:4digits Idx="8" ]に　なった！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-15T06:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortTown Idx="0" ]は
-レベル　[Digit:4digits Idx="8" ]に　なった！▼</Text>
+ランク　[Digit:4digits Idx="8" ]に　なった！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-15T06:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:12:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9357,10 +9574,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9408,10 +9625,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9461,10 +9678,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9520,10 +9737,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9576,10 +9793,10 @@ BW♀
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
-			<Text>街レベル
+			<Text>街ランク
 
 0：リゾート名
-1：リゾートレベル
+1：リゾートランク
 2：リゾート肩書き</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
