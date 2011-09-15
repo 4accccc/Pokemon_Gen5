@@ -48,8 +48,8 @@ EVENT_END
 /*  バトルガール：話しかけ（アイテム入手）                    */
 /**************************************************************/
 EVENT_START   ev_c07pc0101_fighterw_01
-  //【仮】アイテム未定　ひとまず技マシン「かわらわり」のまま
-  _EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN31, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_fighterw_01, msg_c07pc0101_fighterw_02, msg_c07pc0101_fighterw_02 )
+  //どうぐ入手処理：くろおび
+  _EASY_TALK_ITEM_EVENT( ITEM_KUROOBI, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_fighterw_01, msg_c07pc0101_fighterw_02, msg_c07pc0101_fighterw_02 )
 EVENT_END
 
 /**************************************************************/

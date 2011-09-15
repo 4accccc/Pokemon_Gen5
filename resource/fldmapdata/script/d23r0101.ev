@@ -402,8 +402,8 @@ _TALK_START_TURN_NOT()
 			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_06 )
 			_MSGWIN_CLOSE()
 			
-			//【仮】とりあえず、きずぐすりにしています。
-			_ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+			//どうぐ入手処理：ピーピーエイド
+			_ITEM_EVENT_KEYWAIT( ITEM_PIIPIIEIDO, 1 )
 			
 			//========================================/
 			

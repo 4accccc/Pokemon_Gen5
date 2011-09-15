@@ -58,8 +58,9 @@ EVENT_END
 /**************************************************************/
 /*  ウェイター：話しかけ（アイテム入手）                      */
 /**************************************************************/
-EVENT_START   ev_c05r0303_waiter_01   //【仮】アイテムは仮です
-  _EASY_TALK_ITEM_EVENT( ITEM_KIZUGUSURI, 1, FE_C05R0303_ITEMGET_01, msg_c05r0303_waiter_01, msg_c05r0303_waiter_02, msg_c05r0303_waiter_02 )
+EVENT_START   ev_c05r0303_waiter_01
+  //どうぐ入手処理：かわらずの石
+  _EASY_TALK_ITEM_EVENT( ITEM_KAWARAZUNOISI, 1, FE_C05R0303_ITEMGET_01, msg_c05r0303_waiter_01, msg_c05r0303_waiter_02, msg_c05r0303_waiter_02 )
 EVENT_END
 
 

@@ -90,7 +90,7 @@ _RET
 /*  c06r0201_veteranw_01　アイテム入手イベント*/
 /**************************************************************/
 EVENT_START   ev_c06r0201_veteranw_01
-	//【仮】入手内容を変更
+	//どうぐ入手処理：するどいクチバシ
 	_EASY_TALK_ITEM_EVENT( ITEM_SURUDOIKUTIBASI, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
 
 EVENT_END
@@ -223,12 +223,11 @@ EVENT_START   ev_c06r0201_swleader6_01
 EVENT_END
 
 /************************************************************/
-/*  フウロ話しかけ（ヤマジタウンへ）                        */
+/*  アララギ娘：話しかけ（ヤマジタウンへ）                        */
 /************************************************************/
 EVENT_START   ev_c06r0201_hakase2_01
 
   _TALK_OBJ_START()
-  //アララギ：かりメッセージ【仮】
   _BALLOONWIN_OBJMSG( msg_c06r0201_hakase2_03, C06R0201_HAKASE2_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()

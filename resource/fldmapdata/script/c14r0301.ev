@@ -134,8 +134,8 @@ EVENT_START   ev_c14r0301_boy4_01
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    //名所ご褒美受け取り【仮】アイテムは仮です
-    _ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+    //どうぐ入手処理：げんきのかけら
+    _ITEM_EVENT_KEYWAIT( ITEM_GENKINOKAKERA, 1 )
 
     //========================================//
     //イベント進行

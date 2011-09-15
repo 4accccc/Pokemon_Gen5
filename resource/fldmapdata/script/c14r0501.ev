@@ -186,8 +186,8 @@ EVENT_START ev_c14r0501_lady_01
    _AB_KEYWAIT_MARK()
    _MSGWIN_CLOSE()
    
-    //【仮】アイテム入手処理
-    _ITEM_EVENT_KEYWAIT( ITEM_MASUTAABOORU, 1 )
+    //アイテム入手処理：しんじゅ
+    _ITEM_EVENT_KEYWAIT( ITEM_SINZYU, 1 )
     
     //連れ歩き解除
     _PAIR_TRAINER_FREE( SCRID_C14R0501_POKE45_01, MV_DMY )
