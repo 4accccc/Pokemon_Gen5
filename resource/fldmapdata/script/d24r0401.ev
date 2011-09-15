@@ -38,7 +38,7 @@ DEFINE_LOCAL  LCW_POSZ
 INIT_EVENT_START  ev_zone_d24r0401
 
   //ヒードランを呼び出した状態でゾーンチェンジした場合、再度POSイベントから
-  IF FLAG_OFF( FV_D24_POKE485 ) && $WK_SCENE_D24_POKE485 == 2 THEN
+  IF $WK_SCENE_D24_POKE485 == 2 && FLAG_OFF( FV_D24_POKE485 ) THEN
 
     //==================================//
     //ヒードラン非表示

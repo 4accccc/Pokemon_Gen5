@@ -13,6 +13,7 @@ _EVENT_DATA ev_init_gameclear_script
 _EVENT_DATA ev_init_debug_script
 _EVENT_DATA_END
 
+
 //=====================================================================
 //  ゲーム開始スクリプト
 //  ※非常駐プログラム類の呼び出しは禁止
@@ -275,6 +276,8 @@ init_flags:
   _FLAG_SET( FV_C07_NINJA_02 )
   _FLAG_SET( FV_C07_NINJA_03 )
 
+  //T04:サザナミタウン
+  _FLAG_SET ( FV_T04_SWRIVAL_01 )
 
 }
 _RET
@@ -391,13 +394,13 @@ INIT_EVENT_START  ev_init_gameclear_script
   ENDIF
 
   //ヒードラン未捕獲時の復活処理
-  IF FLAG_OFF( FE_D24_POKE485_GET_01 ) THEN    //【仮】「かざんのおきいし」入手フラグ待ち
-    //POSイベントリセット
-    $WK_SCENE_D24_POKE485 = 1
+  IF FLAG_OFF( FE_D24_POKE485_GET_01 ) && $WK_SCENE_D24_POKE485 == 3 THEN
+      //POSイベントリセット
+      $WK_SCENE_D24_POKE485 = 1
   ENDIF
 
   //クレセリア未捕獲時の復活処理
-  IF FLAG_OFF( FE_H05_POKE488_GET_01 ) THEN    //【仮】「みかづきのはね」入手フラグ待ち
+  IF FLAG_OFF( FE_H05_POKE488_GET_01 ) && $WK_SCENE_H05_POKE488 == 3 THEN
     //POSイベントリセット
     $WK_SCENE_H05_POKE488 = 1
   ENDIF
@@ -488,6 +491,9 @@ ev_first_gameclear:
 
   //D33:心の空洞にアララギ娘を表示
   _FLAG_RESET( FV_D33R0101_HAKASE2_01 )
+
+  //シリンダーブリッジのストッパーPOS解除
+  $WK_SCENE_R09R0101_STOP_01 = 1
 
 _RET
 

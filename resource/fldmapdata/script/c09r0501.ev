@@ -146,6 +146,10 @@ EVENT_START ev_c09r0501_swchampion_01
 
       _CAMERA_WAIT_MOVE()  //カメラ移動待ち
 */
+
+      //主人公画面中央へ
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 13, 40, DIR_RIGHT )
+
       _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
     ELSE
       _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -204,7 +208,7 @@ EVENT_START ev_c09r0501_swchampion_01
 
   //アニメ：チャンピオン移動（殿堂入り部屋へ）
   _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )
-  _TIME_WAIT( 8 )
+  _TIME_WAIT( 16 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_01 )
   _OBJ_ANIME_WAIT()
 
@@ -253,7 +257,6 @@ _ANIME_LABEL  anm_vs_champion_stairs_up_x17
 //主人公：殿堂入り部屋へ01
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_player_work_up_01
-  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_WALK_U_8F,21
   _ANIME_DATA ACMD_END,0
 
@@ -286,8 +289,9 @@ _ANIME_LABEL  anm_champion_walk_b
 //チャンピオン：殿堂入り部屋へ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_champion_walk_up_01
+  _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,21
+  _ANIME_DATA AC_WALK_U_8F,20
   _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
 

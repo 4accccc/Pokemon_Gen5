@@ -19,6 +19,7 @@
 #define TR_VETERANM_14                     7
 #define TR_BATTLEG_15                      8
 #define TR_VETERANW_10                     9
+#define R18_ITEM_01                       10
 
 #endif //ZONE_R18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

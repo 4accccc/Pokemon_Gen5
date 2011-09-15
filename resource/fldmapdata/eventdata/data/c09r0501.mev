@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/12 19:40:08
+#save date:2011/09/14 17:08:18
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c09r0501.wms
 #SECTION START:OBJ_EVENT
@@ -60,7 +60,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+6
 #event number: 0
 #Pos Event Label
 POSID_C09R0501_LIGHTING
@@ -110,6 +110,57 @@ LOCALWORK0
 EVENTDATA_POSTYPE_RAIL
 #position
 0 0 1
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POS_C09R0501_LIGHTING_01R
+#Pos Script Name
+SCRID_POS_C09R0501_LIGHTING_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 208 -440
+#size
+1 1
+#event number: 4
+#Pos Event Label
+POS_C09R0501_LIGHTING_02R
+#Pos Script Name
+SCRID_POS_C09R0501_LIGHTING_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 208 -440
+#size
+1 1
+#event number: 5
+#Pos Event Label
+POS_C09R0501_LIGHTING_03R
+#Pos Script Name
+SCRID_POS_C09R0501_LIGHTING_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 208 -440
 #size
 1 1
 #Map Event List Data End
