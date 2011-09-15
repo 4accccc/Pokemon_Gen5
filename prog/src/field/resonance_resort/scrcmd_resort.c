@@ -196,8 +196,16 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( p_people );
       u16 shopID = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
 
+
+      const RESORT_BINARY_SHOP_DATA *cp_want_data = RESORT_BINARY_SHOP_GetData( p_shop, want_job );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, shopID );
+      
+      u16 want_type = RESORT_BINARY_SHOP_DATA_GetData( cp_want_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+      u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+
+
       BOOL is_job_change = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, NULL );
-      *p_ret_wk = (want_job != shopID) && (is_job_change == FALSE);
+      *p_ret_wk = (want_type != shop_type) && (is_job_change == FALSE);
     }
     break;
   case RESORT_GET_PARAM_PRESENT_ID:
@@ -2092,14 +2100,14 @@ static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
     {
       PMSND_PlaySE( SEQ_SE_SELECT1 );
       p_subwk->param++;
-      p_subwk->param %= 8;
+      p_subwk->param %= 9;
       p_subwk->seq  = SEQ_START_DRAW;
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
       PMSND_PlaySE( SEQ_SE_SELECT1 );
       p_subwk->param--;
-      p_subwk->param = p_subwk->param < 0? 7: p_subwk->param;
+      p_subwk->param = p_subwk->param < 0? 8: p_subwk->param;
       p_subwk->seq  = SEQ_START_DRAW;
     }
     break;

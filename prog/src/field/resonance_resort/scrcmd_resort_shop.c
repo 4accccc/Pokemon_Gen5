@@ -1253,7 +1253,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     else
     {
       //その他のサービスは選んだら終了。あとでスクリプト側から料金とフラグを建てる
-      PMSND_PlaySE( SEQ_SE_SYS_22 );
+      PMSND_PlaySE( SEQ_SE_DECIDE1 );
       ShopPrintMsg( wk, mes_shop_02_07_03_m + wk->sex );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_END;
@@ -1395,7 +1395,22 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
     }
     break;
   case SHOPSELECT_SEQ_BUY:
-    PMSND_PlaySE( SEQ_SE_SYS_22 );
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );
+
+    if( RESORT_LIST_SELECT_INSTATITUTION_DEL )
+    {
+      STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
+      u8 sex;
+      STRBUF *p_name_str = GFL_STR_CreateBuffer( 64, wk->heapId );
+
+      RESORT_RESIDENT_DATA_GetData( wk->cp_select->p_data_adrs, RESORT_DATA_PARAM_NAME, name );
+      GFL_STR_SetStringCode( p_name_str ,name );
+      sex = RESORT_RESIDENT_DATA_GetData( wk->cp_select->p_data_adrs, RESORT_DATA_PARAM_SEX, NULL );
+
+      WORDSET_RegisterWord( wk->wordSet, 2, p_name_str, sex, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer( p_name_str );
+    }
     ShopPrintMsg( wk, wk->msg_decide );
     wk->seq  = SHOPSELECT_SEQ_MSG_WAIT;
     wk->next = SHOPSELECT_SEQ_END;

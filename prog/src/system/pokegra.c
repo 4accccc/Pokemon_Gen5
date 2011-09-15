@@ -412,7 +412,9 @@ void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
  */
 //=============================================================================
 
-#define MONS_GRANO_TAMAGO ( 674 )   // pokegra_wb.naixから算出(NARC_pokegra_wb_pfwb_egg_normal_m_NCGR/20)
+#define MONS_GRANO_TAMAGO ( (NARC_pokegra_wb_pfwb_egg_normal_m_NCGR/POKEGRA_FILE_MAX) )   // pokegra_wb.naixから算出(NARC_pokegra_wb_pfwb_egg_normal_m_NCGR/20)
+
+
                                     // 20は１匹分のpokegraリソース数
 //----------------------------------------------------------------------------
 /**

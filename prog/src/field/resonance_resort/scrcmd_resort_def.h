@@ -186,7 +186,6 @@
 #define RESORT_SECRETARY_NEON_SEL_MSGID       (106) //ネオン選択
 #define RESORT_SECRETARY_RANK_SEL_MSGID       (107) //ランキング画面選択
 
-#define RESORT_SECRETARY_SEL_GREET_MSGID      (110) //挨拶
 #define RESORT_SECRETARY_SEL_BYE_MSGID        (111) //またね
 #define RESORT_SECRETARY_SEL_SELECT           (112) //なにがしたいですか？
 #define RESORT_SECRETARY_SEL_ONE              (113) //１つだけ
@@ -296,6 +295,8 @@
 #define RESORT_SET_SPOT_CITY_LVUP             (1)
 #define RESORT_SET_SPOT_CITY_LVMAX            (2)
 #define RESORT_SET_SPOT_CITY_LVUP_PRIZE       (3)
+#define RESORT_SET_SPOT_CITY_LVUP_RANK        (4)
+#define RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK  (5)
 
 //_RESORT_GET_INSTITUTION_DATA用
 #define RESORT_INSTITUTION_SHOPTYPE            (0)

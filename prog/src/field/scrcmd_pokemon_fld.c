@@ -87,7 +87,7 @@ VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
     MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM));
     prm.retDecide = ret_decide;
     prm.retPos = ret_wk;
-    prm.mode  = mode==0? PL_MODE_SET: PL_MODE_GURU2;
+    prm.mode  = mode==0? PL_MODE_SET: PL_MODE_SET_TAMAGO;
     
     event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelect, (void*)&prm );

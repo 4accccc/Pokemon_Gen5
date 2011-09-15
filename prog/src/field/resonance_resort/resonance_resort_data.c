@@ -406,7 +406,14 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->language  = cp_beacon_info->language;
   p_wk->nation    = cp_beacon_info->nation;
   p_wk->area      = cp_beacon_info->area;
-  p_wk->objcode  = UnionView_GetObjCode( cp_beacon_info->trainer_view );
+  if( p_wk->sex == PM_MALE )
+  {
+    p_wk->objcode  = UnionView_GetObjCode( cp_beacon_info->trainer_view );
+  }
+  else
+  {
+    p_wk->objcode  = UnionView_GetObjCode( cp_beacon_info->trainer_view + UNION_VIEW_INDEX_WOMAN_START );
+  }
   {
     const QUESTIONNAIRE_ANSWER_WORK *cp_ques_ans = &cp_beacon_info->question_answer;
     p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB) + 1;

@@ -296,6 +296,15 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
     work->isSetMusicalMode = FALSE;
   }
   
+  if( work->plData->mode == PL_MODE_SET_TAMAGO )
+  {
+    //work->plData->mode = PL_MODE_SET;
+    work->is_set_tamago = TRUE;
+  }
+  else
+  {
+    work->is_set_tamago = FALSE;
+  }
 
   if( work->plData->mode == PL_MODE_SET_WAZA )
   {
@@ -439,6 +448,10 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   if( work->isSetMusicalMode == TRUE )
   {
     work->plData->mode = PL_MODE_SET_MUSICAL;
+  }
+  if( work->is_set_tamago == TRUE )
+  {
+    work->plData->mode = PL_MODE_SET_TAMAGO;
   }
   if( work->isFinishSync == TRUE )
   {
@@ -1368,6 +1381,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_SODATEYA:
   case PL_MODE_GURU2:
   case PL_MODE_SET_MUSICAL:
+  case PL_MODE_SET_TAMAGO:
     //‘I‘ð‰æ–Ê‚Ö
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
@@ -1650,6 +1664,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     work->canExit = FALSE;
     break;
   
+  case PL_MODE_SET_TAMAGO:
   case PL_MODE_GURU2:
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_10_02_01 );
@@ -1977,6 +1992,8 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
 
     }
     break;
+
+  case PL_MODE_SET_TAMAGO:
   case PL_MODE_SET:
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = work->pokeCursor;

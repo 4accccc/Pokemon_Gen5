@@ -251,6 +251,7 @@ struct _PLIST_WORK
   BOOL isFinishSync;      //終了時に通信同期をとる(WifiBattle
   BOOL reqPlaySe;         //フェード後にSEを鳴らすため(全体復活アイテム
   BOOL canSelectEgg;      //タマゴ選択可？
+  BOOL  is_set_tamago;    //PL_MODE_SET_TAMAGOか？
   
   PL_SELECT_POS pokeCursor;
   PL_SELECT_POS changeTarget;
