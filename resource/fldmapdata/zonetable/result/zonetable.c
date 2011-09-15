@@ -5669,7 +5669,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D03,
 		MAPNAME_D3,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_STORM,
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -5705,7 +5705,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D03,
 		MAPNAME_D3,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_STORMHIGH,
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -8297,7 +8297,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D10,
 		MAPNAME_D10,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -8369,7 +8369,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D10,
 		MAPNAME_D10,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -11769,7 +11769,7 @@ static const ZONEDATA ZoneData[] = {
     0,
 		430,
 		0,
-		13,
+		490,
 	},
 	{//ZONE_ID_R04R0101 = 327
 		RSC_GRID_NOSCROLL,
@@ -17225,7 +17225,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_R23,
 		MAPNAME_R23,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -18057,7 +18057,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		5,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -18093,7 +18093,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		5,
+		9,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -18129,7 +18129,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		5,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -18165,7 +18165,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		5,
+		9,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -18201,7 +18201,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		5,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -20717,7 +20717,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_R04,
 		MAPNAME_R4,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_STORM,
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -21113,7 +21113,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D27R0101,
 		MAPNAME_D27,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     FALSE,
 		0,        // camera id
 		MC_TYPE_DUNGEON,  // map_chg_type
