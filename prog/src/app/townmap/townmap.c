@@ -1450,6 +1450,12 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 				p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
 				p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
 
+        //—áŠOˆ—  ZONE_ID_C16‚Ì‚Ý”ò‚Ñæ‚Íˆá‚¤
+        if( p_wk->p_param->zoneID == ZONE_ID_C16 )
+        {
+          p_wk->p_param->zoneID = ZONE_ID_R04;
+        }
+
 				PMSND_PlaySE( TOWNMAP_SE_DECIDE );
 				SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 			}

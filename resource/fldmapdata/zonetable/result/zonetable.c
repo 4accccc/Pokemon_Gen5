@@ -11769,7 +11769,7 @@ static const ZONEDATA ZoneData[] = {
     0,
 		430,
 		0,
-		595,
+		13,
 	},
 	{//ZONE_ID_R04R0101 = 327
 		RSC_GRID_NOSCROLL,
