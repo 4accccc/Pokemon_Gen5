@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-06-09T15:35:31" source="c03_slamp_01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-13T20:01:20" source="c03_slamp_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-06-09T15:35:31" source="c03_slamp_01.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="ibe_mana" host="W00191" date="2011-09-13T20:01:20" source="c03_slamp_01.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="6"
@@ -34,7 +34,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="c03_slamp01_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_01/tex/c03_slamp01.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_01/tex/c03_slamp01.tga"
 	>
 		<bitmap size="128">
 			00f9 0000 0000 0000 0000 0000 0000 0000
@@ -60,17 +60,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_ramp_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_01/tex/c3_ramp.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_01/tex/c3_ramp.tga"
 	>
 		<bitmap size="64">
-			3333 3333 3333 3333 2222 2222 4444 4444
-			3333 3333 3333 3333 3333 3333 3333 3333
-			2332 2332 1221 1221 1111 1111 4444 4444
-			3333 3333 3333 3333 0000 0000 1000 0001
-			1000 0001 1122 2221 1133 3321 1133 3321
-			1133 3321 2233 3322 3333 3333 4444 4444
-			3333 3333 3333 3333 1111 1111 2222 2222
-			3333 3333 4444 4444 3333 3333 3333 3333
+			2222 2222 2222 2222 1111 1111 3333 3333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1221 1221 0110 0110 0000 0000 3333 3333
+			2222 2222 2222 2222 0000 0000 0000 0000
+			0000 0000 0011 1110 0022 2210 0022 2210
+			0022 2210 1122 2211 2222 2222 3333 3333
+			2222 2222 2222 2222 0000 0000 1111 1111
+			2222 2222 3333 3333 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -80,7 +80,7 @@
 		63df 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="c3_ramp_pl" color_size="8">
-		0c42 0c62 1ca2 28e3 3146 7fff 7fff 7fff
+		0c62 1ce2 2943 2d86 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 

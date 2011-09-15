@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-06-01T17:58:36" source="c03_slamp_03.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-13T20:14:47" source="c03_slamp_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-06-01T17:58:36" source="c03_slamp_03.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="ibe_mana" host="W00191" date="2011-09-13T20:14:47" source="c03_slamp_03.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="3"
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="2 2"
-	compress_material="on" material_size="5 5"
+	compress_node="none" node_size="2 2"
+	compress_material="off" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -34,7 +34,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="c03_slamp03_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_03/tex/c03_slamp03.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_03/tex/c03_slamp03.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -55,12 +55,25 @@
 			0300 130b 3323 5b4b 8b73 b39b d3c3 f3e3
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="c3_hata.2"
+	<tex_image index="1" name="c03_slampkg"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="c03_slampkg_pl"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_02/tex/c03_slampkg.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="c3_hata.2"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_hata.2_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_03/tex/c3_hata.2.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_03/tex/c3_hata.2.tga"
 	>
 		<bitmap size="512">
 			0000 4442 4444 4444 4444 4444 2444 0000
@@ -129,35 +142,22 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="c3_ramp"
+	<tex_image index="3" name="c3_ramp"
 		width="8" height="32" original_width="8" original_height="32"
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_ramp_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_03/tex/c3_ramp.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_03/tex/c3_ramp.tga"
 	>
 		<bitmap size="64">
-			3333 3333 3333 3333 2222 2222 4444 4444
-			3333 3333 3333 3333 3333 3333 3333 3333
-			2332 2332 1221 1221 1111 1111 4444 4444
-			3333 3333 3333 3333 0000 0000 1000 0001
-			1000 0001 1122 2221 1133 3321 1133 3321
-			1133 3321 2233 3322 3333 3333 4444 4444
-			3333 3333 3333 3333 1111 1111 2222 2222
-			3333 3333 4444 4444 3333 3333 3333 3333
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="in40_kage"
-		width="8" height="8" original_width="8" original_height="8"
-		format="a3i5"
-		palette_name="in40_kage_pl"
-		path="C:/home/wb_data3d/field/in40/chip/tex/in40_kage.tga"
-	>
-		<bitmap size="32">
-			2020 2020 2020 2020 2020 2020 2020 2020
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
+			2222 2222 2222 2222 1111 1111 3333 3333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1221 1221 0110 0110 0000 0000 3333 3333
+			2222 2222 2222 2222 0000 0000 0000 0000
+			0000 0000 0011 1110 0022 2210 0022 2210
+			0022 2210 1122 2211 2222 2222 3333 3333
+			2222 2222 2222 2222 0000 0000 1111 1111
+			2222 2222 3333 3333 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="white"
@@ -165,7 +165,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="white_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c03_slamp_03/tex/white.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c03_slamp_03/tex/white.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -177,15 +177,15 @@
 	<tex_palette index="0" name="c03_slamp03_pl" color_size="8">
 		7fff 4bbf 377d 63df 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="c3_hata.2_pl" color_size="16">
+	<tex_palette index="1" name="c03_slampkg_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="c3_hata.2_pl" color_size="16">
 		0000 2925 39aa 56b5 5ad6 5d89 5ef7 6318
 		6dcb 6f7b 739c 77bd 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="c3_ramp_pl" color_size="8">
-		0c42 0c62 1ca2 28e3 3146 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="3" name="in40_kage_pl" color_size="8">
-		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="3" name="c3_ramp_pl" color_size="8">
+		0c62 1ce2 2943 2d86 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="white_pl" color_size="4">
 		7fff 7fff 7fff 7fff
@@ -210,7 +210,7 @@
 		specular="0 0 0"
 		emission="6 6 6"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="3" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -234,7 +234,7 @@
 		specular="0 0 0"
 		emission="6 6 6"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="flip flip"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -258,7 +258,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
