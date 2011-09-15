@@ -6,16 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]しおかぜ　ただよう　はとば
+[Ctrl1:xcenter ]いっせきの　ごうかきゃくせん
+[Ctrl1:xcenter ]つきあかりに　てらされる
+[Ctrl1:xcenter ]じょうせんを　いそぐ　じょうきゃく
+[Ctrl1:xcenter ]ひとごみ　まぎれる　あやしいかげ
+[Ctrl1:xcenter ]そう　それは　じけんの　まくあけ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +22,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]潮風　ただよう　波止場
+[Ctrl1:xcenter ]巨大な　豪華客船
+[Ctrl1:xcenter ]月明りに　てらされ
+[Ctrl1:xcenter ]乗船を　急ぐ　乗客
+[Ctrl1:xcenter ]人ごみ　まぎれる　怪しい影</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T09:13:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +55,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
+[Ctrl1:xcenter ]かげあるところに　ひかりあり！
+[Ctrl1:xcenter ]あのヒーローが　あらわれた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +68,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
+[Ctrl1:xcenter ]影あるところに　光あり！
+[Ctrl1:xcenter ]あのヒーローが　現れた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +85,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　なは！
+[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！！
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T09:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +98,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　名は！
+[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T09:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +297,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]しおかぜ　ただよう　はとば
+[Ctrl1:xcenter ]いっせきの　ごうかきゃくせん
+[Ctrl1:xcenter ]つきあかりに　てらされる
+[Ctrl1:xcenter ]じょうせんを　いそぐ　じょうきゃく
+[Ctrl1:xcenter ]ひとごみ　まぎれる　あやしいかげ
+[Ctrl1:xcenter ]そう　それは　じけんの　まくあけ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +313,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]潮風　ただよう　波止場
+[Ctrl1:xcenter ]巨大な　豪華客船
+[Ctrl1:xcenter ]月明りに　てらされ
+[Ctrl1:xcenter ]乗船を　急ぐ　乗客
+[Ctrl1:xcenter ]人ごみ　まぎれる　怪しい影</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -335,10 +328,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>あらすじ♀用</Comment>
+			<Comment>あらすじ♂</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:30" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -346,13 +339,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
+[Ctrl1:xcenter ]かげあるところに　ひかりあり！
+[Ctrl1:xcenter ]あのヒロインが　あらわれた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +352,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
+[Ctrl1:xcenter ]影あるところに　光あり！
+[Ctrl1:xcenter ]あのヒロインが　現れた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:29:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +369,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
+			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　なは！
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +382,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　名は！
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T11:30:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

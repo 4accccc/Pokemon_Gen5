@@ -4962,11 +4962,11 @@
 		Label="pw_plot_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいじんに　ねらわれる　ゆうえんち
-そこに　せいぎのみかたが　とうじょう</Text>
+			<Text>ごうかきゃくせんの　とまる　はとば
+そこに　あらわれる　かいじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-08T04:00:32" />
+				Time="2011-09-15T12:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4974,11 +4974,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪人に　ねらわれる　遊園地
-そこに　正義の味方が　登場</Text>
+			<Text>豪華客船の　停まる　波止場
+怪人が　出現</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-08T04:00:32" />
+				Time="2011-09-15T12:18:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4988,20 +4988,21 @@
 			Language="JPN">
 			<Comment>台本トップ画面
 あらすじ
-アクション１－１</Comment>
+アクション１－２</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-08T04:00:32" />
+				Time="2011-09-15T12:16:40" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_plot_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>プロット　ダミー</Text>
+			<Text>かいじん　VS　ヒーローの
+うんめいを　かけた　たたかい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:53:06" />
+				Time="2011-09-15T12:19:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5009,10 +5010,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プロット　ダミー</Text>
+			<Text>怪人　VS　ヒーローの
+運命を　かけた　戦い</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:23:06" />
+				Time="2011-09-15T12:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -15,6 +15,18 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:16:35" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ジャンプスーツは
+ＶＦＸに　欠かせないのだっ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂pwmoji
@@ -46,6 +58,18 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:16:35" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最新技術なのは　いいけど
+けっこう　はずかしいわよね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀pwmoji
@@ -67,17 +91,31 @@
 		Label="msg_c15r0101_man3_01_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれは　ＶＦＸの　スペシャリスト！▼
-ここで　さつえいした
-キミの　えいぞうも▽
-スゲー　さくひんに　かえちゃうぜ！</Text>
+			<Text>ＶＦＸとは　コンピュータを　つかった
+えいぞうを　かこうする　ぎじゅつ！▼
+ポケウッドの　えいがは
+このVFXが　いのちなのだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:31:52" />
+				Time="2011-09-13T02:41:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:20:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＶＦＸとは　コンピュータを　つかった
+えいぞうを　かこうする　ぎじゅつ！▼
+ポケウッドの　えいがは
+このVFXが　いのちなのだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:41:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -87,32 +125,6 @@
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:27:57" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0101_man3_02_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>ＶＦＸとは　コンピュータを　つかった
-えいぞうを　かこうする　ぎじゅつ！▼
-ポケウッドの　えいがは
-このVFXが　いのちなのだ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:31:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:27:59" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀man3
-
-撮影バトル時にもいる</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:43:06" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -131,6 +143,21 @@
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:28:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたくしは　ライター▼
+えいがの　ストーリーに　なる
+だいほんを　つくっています▼
+あたまの　なかは　いつだって
+おはなしで　パツンパツンですわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -158,6 +185,20 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:43:46" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わしは　ビックな　おおおとこ！
+でも　しごとは　こどうぐ　だ！▼
+やくしゃが　つかう　こものや
+セットのかぐを　つくることも　あるぞ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂middeman2
@@ -182,6 +223,19 @@
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:48:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうも　シネマトグラファーです▼
+いや　まあ　かんたんに　いうと
+カメラマン　なんですけどね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -211,6 +265,22 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T08:56:09" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボクは　ろくおんぎし！▼
+やくしゃさんの　セリフを
+とったりするのが　しごとさ！▼
+ポケウッドの　えいがさくひんは
+ほとんどが　アフレコだから▽
+いまは　ヒマ　なんだけどね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂middeman1
@@ -237,6 +307,21 @@
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-08T09:05:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もう……　どこ　いったのよ……▼
+メガホンが　ないと　かんとくに
+また　しかられるよ……▼
+アナタ　やくしゃさん？
+ワタシは　ＡＤ　やってます</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-11T09:12:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">

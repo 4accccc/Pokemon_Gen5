@@ -27,11 +27,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+(x13,z12)に配置
+
 受付話しかけメッセージ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:07" />
+				Time="2011-09-15T08:34:25" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -43,11 +46,13 @@
 えいがは　だいヒット　しただろ！▼
 おかげで　ライターが　ぞくへんの
 だいほんを　かいたんだぜっ！▼
+じかいさくの　タイトルは　ずばり
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
 ぜひ　チャレンジして　こんども
-だいヒットを　とばしてくれよな！</Text>
+だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T09:33:56" />
+				Time="2011-09-15T09:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -72,11 +77,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
-台本追加される時のメッセージ</Comment>
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+台本追加される時のメッセージ
+
+条件：台本のGOOD ENDクリア</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:09" />
+				Time="2011-09-15T08:27:34" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -107,7 +115,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 映画撮影挑戦確認メッセージ
 「チャレンジする」
 →msg_pw_studio_07
@@ -119,7 +128,7 @@
 →msg_pw_studio_11</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:12" />
+				Time="2011-09-15T08:27:36" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -143,10 +152,10 @@
 ちがうから　きを　つけてくれよ！▼
 かんせいした　えいがは　ポケウッドに
 シアターで　じょうえい　されるから▽
-チェック　してくれよな！</Text>
+チェック　してくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:48:03" />
+				Time="2011-09-15T09:10:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -227,7 +236,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 撮影終了後の保存データが
 いっぱいだったときのメッセージ
 
@@ -236,7 +246,7 @@
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:21" />
+				Time="2011-09-15T08:27:41" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -267,12 +277,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 消す保存データを決めるメッセージ
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:23" />
+				Time="2011-09-15T08:27:43" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -305,14 +316,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 台本選択メッセージ
 
 終了後　台本画面へ
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:29" />
+				Time="2011-09-15T08:27:45" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -343,7 +355,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 レンタルor手持ちの選択メッセージ
 
 「じぶんのポケモン」or
@@ -363,7 +376,7 @@
 →msg_pw_studio_15</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:32" />
+				Time="2011-09-15T08:27:49" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -394,7 +407,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 参加ポケモン種類選択メッセージ
 
 リスト画面へ移項し選択後
@@ -402,7 +416,7 @@
 選択後→msg_pw_studio_09</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:41" />
+				Time="2011-09-15T08:27:51" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -435,13 +449,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 レンタルポケモン貸し出しメッセージ
 
 終了後→msg_pw_studio_09</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:44" />
+				Time="2011-09-15T08:27:53" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -476,11 +491,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 イベント終了メッセージ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:48" />
+				Time="2011-09-15T08:27:57" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -511,7 +527,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 撮影開始直前のメッセージ
 
 終了後へスタジオへ移動
@@ -519,7 +536,7 @@
 移動後→監督メッセージ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:51" />
+				Time="2011-09-15T08:28:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -554,7 +571,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 撮影終了時のセリフ
 
 「はい」→映画データチェック
@@ -565,7 +583,7 @@
 「いいえ」→msg_pw_studio_17</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:28:55" />
+				Time="2011-09-15T08:28:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -598,11 +616,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 スターランクアップ時の台詞</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:29:03" />
+				Time="2011-09-15T08:28:05" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -639,13 +658,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 台本に自分のポケモンで挑戦できない場合のメッセージ
 
 終了後→msg_pw_studio_09</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:29:12" />
+				Time="2011-09-15T08:28:08" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -678,14 +698,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 レギュレーションではじけない参加できない自分のポケモンを選択した場合
 
 終了後→リスト画面に戻る
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:29:18" />
+				Time="2011-09-15T08:28:12" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -716,14 +737,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 撮影データのセーブ確認
 
 「はい」→msg_pw_studio_11
 「いいえ」→msg_pw_studio_13</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:29:22" />
+				Time="2011-09-15T08:28:14" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -763,14 +785,423 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂スタジオ受付
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
 撮影データのセーブ後にシアターに行くかの確認
 
 「はい」→暗転→シアターのマップ（座標）に遷移してイベント終了
 「いいえ」→msg_pw_studio_11</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:29:30" />
+				Time="2011-09-15T08:28:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+ビックニュース　だぜ！▼
+キミの　しゅつえんした　えいがが
+れきだいの　こうぎょうせいせきを▽
+ぬりかえちまったんだっ！▼
+ウッドウさんも　おおよろび　でさ
+きねんさくひんを　つくることが▽
+けってい　したんだ！▼
+その　タイトルは　ずばり
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　こんども
+だいヒットを　とばしてくれよな！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T09:10:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:25:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+ビックニュース　だぜ！▼
+キミの　出演した　映画が
+歴代の　興行成績を▽
+ぬりかえちまったんだっ！▼
+ウッドウさんも　大喜び　でさ
+記念作品を　つくることが▽
+決定　したんだ！▼
+その　タイトルは　ずばり
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　今度も
+大ヒットを　飛ばしてくれよな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:25:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+台本追加される時のメッセージ
+
+条件：興行成績が一定の値をクリア</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T08:28:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+さいきん　キミの　にんきが　すごくてさ！
+キミだからこそ　できる　さくひんの▽
+せいさくが　けってい　したんだぜ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　こんども
+だいヒットを　とばしてくれよな！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T09:10:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:43:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+最近　キミの　人気が　すごくてさ！
+キミだからこそ　できる　作品の▽
+制作が　決定　したんだぜ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　今度も
+大ヒットを　飛ばしてくれよな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:34:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:23:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+台本追加される時のメッセージ
+
+条件：主人公のスターランク上昇</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T08:28:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_21">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+キミの　ポケウッドの　キャリアも
+けっこう　ながく　なってきたよな！▼
+そんな　ベテラン　まぢかの
+キミこそに　ふさわしい▽
+だいほんが　できたんだぜ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　こんども
+だいヒットを　とばしてくれよな！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T09:10:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:46:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+キミの　ポケウッドの　キャリアも
+けっこう　長く　なってきたよな！▼
+そんな　ベテラン　間近の
+キミこそに　相応しい▽
+台本が　できたんだぜ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　今度も
+大ヒットを　飛ばしてくれよな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:34:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:23:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+台本追加される時のメッセージ
+
+条件：全ての台本のGOOD ENDクリア</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T08:28:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_22">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+きょうは　あたらしい　だいほんの
+プレゼントが　あるぜっ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　こんども
+だいヒットを　とばしてくれよな！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T09:10:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:48:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+きょうは　新しい　台本の
+プレゼントが　あるぜっ！▼
+その　タイトルは　ズバリ
+[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+ぜひ　チャレンジして　今度も
+大ヒットを　飛ばしてくれよな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:23:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂スタジオ受付(SUNGLASSES)
+
+台本追加される時のメッセージ
+
+条件：殿堂入り</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T08:31:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_23">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうした……？　やめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:23:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:09:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうした……？　止めるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:23:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂OLDMAN1
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_01へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_24">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！　どうしたんだ！？
+もう　あきらめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:21:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:19:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！　どうしたんだ！？
+もう　あきらめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂SUNGLASSES
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_02へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_25">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　だいじょうぶ　ですか？
+とりなおしますかね？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:24:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　大丈夫ですか？
+撮り直しますかね？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:23:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MIDDLEMAN2
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_03へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_26">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうしたんじゃ？
+ほんとに　さつえいを　あきらめるか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:06:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:06:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうしたんじゃ？
+ほんとに　撮影を　あきらめるか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:24:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂GENTLEMAN
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_27">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドウシタノ？　アキラメルノ？
+アキラメタラ　ソコデ▽
+サツエイ　シッパイ　ダヨ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:24:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:11:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドウシタノ？　アキラメルノ？
+アキラメタラ　ソコデ▽
+撮影　失敗ダヨ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:24:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW
+
+監督：撮影中断した時のセリフ
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -902,10 +1333,10 @@
 		Label="msg_pw_director_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>さつえい……　はじめ……</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -913,10 +1344,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>撮影……　始め……</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -924,20 +1355,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>監督：開始のセリフ</Comment>
+			<Comment>♂OLDMAN1
+
+監督：開始のセリフ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:56:04" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_director_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>じゅんびは　いいかっ！？
+さつえい　スタートっ！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T10:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -945,10 +1379,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>準備は　ええかっ！？
+撮影　スタートやっ！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -956,20 +1391,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>監督：開始のセリフ</Comment>
+			<Comment>♂SUNGLASSES
+
+監督：開始のセリフ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:57:11" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_director_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>じゃあ　はじめますかねえ
+よーい！　スタートです！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T13:02:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -977,10 +1415,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>じゃあ　始めますかねえ
+よーい！　スタートです！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T02:22:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -988,20 +1427,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>監督：開始のセリフ</Comment>
+			<Comment>♂MIDDLEMAN2
+
+監督：開始のセリフ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T12:59:55" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_director_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>じゃ　さつえい　はじめるぞい！
+３　２　１　アクショーーン！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1009,10 +1451,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>じゃ　撮影　始めるぞい！
+３　２　１　アクショーーン！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1020,20 +1463,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>監督：開始のセリフ</Comment>
+			<Comment>♂GENTLEMAN
+
+監督：開始のセリフ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T13:00:10" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_director_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>アー　ユー　ＯＫ？
+レッツ！　シューティング！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T10:54:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1041,10 +1487,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとくのセリフ（仮）▼</Text>
+			<Text>アー　ユー　ＯＫ？
+レッツ！　シューティング！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:43:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-13T10:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1052,10 +1499,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>監督：開始のセリフ</Comment>
+			<Comment>♀ADULTW
+
+監督：開始のセリフ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T13:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-12T13:00:22" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1342,11 +1791,11 @@ msg_pw_theater_tes_04</Comment>
 		Label="msg_pw_theater_tes_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:PokewoodScenarioName ]』を
+			<Text>『[Name:Undefined ]』を
 見てみるのね？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-13T04:03:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1354,11 +1803,11 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:PokewoodScenarioName ]』を
+			<Text>『[Name:Undefined ]』を
 見てみるのね？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-13T04:03:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1709,11 +2158,10 @@ msg_pw_theater_tes_04</Comment>
 さくひんが　いっぽんも　ありません▼
 ああ……▼
 どなたかが　あたらしい　えいがを
-つくって　くださらない　かしら……
-</Text>
+つくって　くださらない　かしら……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:06:17" />
+				Time="2011-09-15T08:50:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1940,14 +2388,10 @@ msg_pw_theater_tes_04</Comment>
 			<Comment>♀　シアター受付（INFORMATIONW）
 撮影してから初めて鑑賞した作品に対するコメント（GOODEND）
 
-終了後→自分のポケモンで参加している場合
-→msg_pw_starnpc_04
-
-終了後→自分のポケモンで参加している場合
-→msg_pw_starnpc_05</Comment>
+終了後→msg_pw_theater_06</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:08:41" />
+				Time="2011-09-15T08:55:43" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1955,10 +2399,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>いやあー　ちょっと！！
-[Name:TrainerName ]ちゃん　じゃないー！</Text>
+[Name:TrainerName ]ちゃーん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:15:10" />
+				Time="2011-09-13T07:12:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1978,7 +2422,7 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 出現時イベント
 
 条件を満たした状態で自機が（X14,Y26/X15,Y26/X16,Y26）に
@@ -1992,7 +2436,7 @@ GOOD ENDの場合→msg_pw_starnpc_04
 BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:23:02" />
+				Time="2011-09-13T10:55:54" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2002,10 +2446,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
 さくひん　だけど　さあ……▼
 なかなか　オリジナリティが　あって
-よかったとおもうよ　ボクはさ！</Text>
+よかったとおもうよ　ボクはさ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T12:44:35" />
+				Time="2011-09-15T08:49:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2027,7 +2471,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 撮影してから初めて鑑賞した作品に対するコメント（BAD END）
 
 終了後→自分のポケモンで参加している場合
@@ -2037,7 +2481,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 →msg_pw_starnpc_06</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:21:47" />
+				Time="2011-09-13T10:55:57" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2050,10 +2494,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 ちまたで　わだいに　なってんのよー▼
 こんな　さくひん　とっちゃったら
 おきゃくさんにも　スタッフにも▽
-いちもく　おかれちゃうよ！</Text>
+いちもく　おかれちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T12:46:45" />
+				Time="2011-09-15T08:49:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2078,7 +2522,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 撮影してから初めて鑑賞した作品に対するコメント（STRANGE END）
 
 終了後→自分のポケモンで参加している場合
@@ -2088,7 +2532,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 →msg_pw_starnpc_06</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:21:44" />
+				Time="2011-09-13T10:56:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2101,10 +2545,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 さすが　１２３４５ちゃん　だよー▼
 こうやって　イイさくひんに　でてれば
 おきゃくさんにも　スタッフにも▽
-あいされて　いくとおもうよー</Text>
+あいされて　いくとおもうよー▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T12:50:44" />
+				Time="2011-09-15T08:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2129,7 +2573,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 撮影してから初めて鑑賞した作品に対するコメント（GOOD END）
 
 終了後→自分のポケモンで参加している場合
@@ -2139,7 +2583,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 →msg_pw_starnpc_06</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:21:42" />
+				Time="2011-09-13T10:56:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2149,10 +2593,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			<Text>んー　そうねー
 こんかいの　さくひんに　さんかした▽
 [Name:TrainerName ]ちゃんの　ポケモンにも▽
-やくしゃとして　へんかが　ありそうだねー</Text>
+やくしゃとして　へんかが　ありそうだねー▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T12:58:51" />
+				Time="2011-09-15T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2174,13 +2618,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 自分のポケモンで撮影に参加させていたときのコメント
 
 終了後→msg_pw_starnpc_06へ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:21:08" />
+				Time="2011-09-13T10:56:12" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2211,11 +2655,190 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　シアターに出現するポケウッド関係者（
+			<Comment>♂　シアターに出現するポケウッド関係者（pwowner）
 イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:21:23" />
+				Time="2011-09-13T10:56:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>よし……　クランクアップだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:21:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よし……　クランクアップだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:26:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂OLDMAN1
+
+監督：撮影終了のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よーし！　クランクアップだっ！
+みんな　てっしゅう！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:26:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:25:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よーし！　クランクアップだっ！
+さあ　てっしゅうだっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:29:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:26:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂SUNGLASSES
+
+監督：撮影終了のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>これにて　クランクアップです！
+みなさん　おつかれさまで　ございます</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:28:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:27:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これにて　クランクアップです！
+みなさん　おつかれさまで　ございます</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:28:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MIDDLEMAN2
+
+監督：撮影終了のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:42" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>みんな　おつかれじゃの！
+これにて　さつえいしゅうりょうじゃ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:23:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みんな　お疲れじゃの！
+これにて　撮影終了じゃ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂GENTLEMAN
+
+監督：撮影終了のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:44:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>コレデ　サツエイ　フィニッシュ！
+ミンナ　ゴクロウサマ　デス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:24:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:23:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コレデ　撮影　フィニッシュ！
+ミンナ　ゴ苦労様　デス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:30:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW
+
+監督：撮影終了のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T06:55:49" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
