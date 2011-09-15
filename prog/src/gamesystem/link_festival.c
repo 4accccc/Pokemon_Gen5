@@ -520,23 +520,23 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     pl->item = wk->m_beacon->item;
 
     pl->item_num = wk->m_beacon->pay;
-   switch( wk->m_beacon->pay_bonus ){
-    case FMISSION_PAY_BONUS_TIME: //タイムボーナス
-      { //(トータルスコア-目標値)/人数*ミッションレベル
-        u32 score = (pl->score-wk->m_beacon->goal)/(wk->log_num+1);
-        pl->bonus_num += score*(wk->m_beacon->m_level+1);
-      }
-      //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
-      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
-     break;
-    case FMISSION_PAY_BONUS_SCORE: //スコアボーナス
-      { //(残り時間frame/600)*ミッションレベル
-        u32 frame = wk->m_beacon->life/600;
-        pl->bonus_num += frame*(wk->m_beacon->m_level+1);
-      }
-      //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
-      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (LINKFEST_FRAME2SEC(wk->m_beacon->life) >= (mission_time_sec)));
+    switch( wk->m_beacon->pay_bonus ){
+     case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
+       { //(残り時間frame/600)*ミッションレベル
+         u32 frame = wk->m_beacon->life/600;
+         pl->bonus_num += frame*(wk->m_beacon->m_level+1);
+       }
+       //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
+       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (LINKFEST_FRAME2SEC(wk->m_beacon->life) >= (mission_time_sec)));
       break;
+     case FMISSION_PAY_BONUS_SCORE: //スコアボーナス(トータルスコアに依存するボーナス)
+       { //(トータルスコア-目標値)/人数*ミッションレベル
+         u32 score = (pl->score-wk->m_beacon->goal)/(wk->log_num+1);
+         pl->bonus_num += score*(wk->m_beacon->m_level+1);
+       }
+       //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
+       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
+       break;
     }
     if( sp_bonus ){
       pl->sp_item = wk->m_beacon->sp_item;
@@ -602,9 +602,15 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION action, u16 param )
 {
+  BOOL ret;
   LINK_FESTIVAL* wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
-  return FEST_MISSION_ScoreCalc( &wk->mission, action, param, 1 );  //スコア加算は1固定
+  ret = FEST_MISSION_ScoreCalc( &wk->mission, action, param, 1 );  //スコア加算は1固定
+
+  if( ret ){
+    LINK_FESTIVAL_TopScoreUpdate( wk, 0, wk->m_beacon->my_score, NULL );
+  }
+  return ret;
 }
 
 //---------------------------------------------------------

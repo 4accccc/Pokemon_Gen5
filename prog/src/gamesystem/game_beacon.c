@@ -571,6 +571,10 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
       FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_MAP, FALSE );
     }
     FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_NORMAL, FALSE );
+    
+    //トップスコア更新
+    GFL_STR_SetStringCodeOrderLength( bsys->sbuf_person_name, info->name, PERSON_NAME_SIZE+EOM_SIZE );
+    LINK_FESTIVAL_TopScoreUpdate( fest_sys, info->trainer_id, log_score, bsys->sbuf_person_name );
   }
 }
 
@@ -1144,26 +1148,6 @@ BOOL GAMEBEACON_Check_FestMissionWithParam(const GAMEBEACON_INFO *info)
   }
   return TRUE;
 }
-
-#if 0 
-//--------------------------------------------------------------
-/**
- * フェスビーコン送信をセットした時の共通処理
- *
- * @param   send		
- * @param   info		
- */
-//--------------------------------------------------------------
-void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param )
-{
-  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
-  info->action.action_no = action;
-  info->action.fmission = (LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon);
-  info->action.fmission.act_param = param;
-
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
-}
-#endif
 
 //--------------------------------------------------------------
 /**
