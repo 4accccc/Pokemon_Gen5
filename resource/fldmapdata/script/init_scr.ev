@@ -279,6 +279,9 @@ init_flags:
   //T04:サザナミタウン
   _FLAG_SET ( FV_T04_SWRIVAL_01 )
 
+  //C01GYM0101：サルショー
+  _FLAG_SET(FV_C01GYM0101_SARU_01)
+
 }
 _RET
 
