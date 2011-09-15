@@ -4120,6 +4120,41 @@
 		<language name="JPN_KANJI" width="216">ライバル</language>
 	</row>
 
+	<row id="mini_24">
+		<language name="JPN" width="216">ハツネ</language>
+		<language name="JPN_KANJI" width="216">ハツネ</language>
+	</row>
+
+	<row id="mini_25">
+		<language name="JPN" width="216">ハツネ</language>
+		<language name="JPN_KANJI" width="216">ハツネ</language>
+	</row>
+
+	<row id="swrival_25">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_26">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_27">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swsage3_04">
+		<language name="JPN" width="216">ヴィオ</language>
+		<language name="JPN_KANJI" width="216">ヴィオ</language>
+	</row>
+
+	<row id="swplazmam_35">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
