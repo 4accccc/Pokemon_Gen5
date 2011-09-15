@@ -3679,6 +3679,100 @@ GTSで　こうかんしたこと
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="resort_secretary_greet_02_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：秘書名
+1：秘書クチグセ
+2：市長名
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_greet_03_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：秘書名
+1：秘書クチグセ
+2：市長名
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="resort_secretary_greet_00_f"
 		Style="Large">
 		<LanguageCell
@@ -3727,6 +3821,114 @@ GTSで　こうかんしたこと
 	</TextRow>
 	<TextRow
 		Label="resort_secretary_greet_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：秘書名
+1：秘書クチグセ
+2：市長名
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_greet_02_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+[Name:ResortMayor Idx="2" ]に
+ぴったり　おにあいの　おみせを　おおしえしましょう！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-02T09:27:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：秘書名
+1：秘書クチグセ
+2：市長名
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_greet_03_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
