@@ -313,7 +313,9 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_22, 21 )	//W21・W21アジト船表示（タラップなし）
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_23, 22 )	//W21・W21アジト船表示（タラップあり）
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_24, 23 )	//W21・W21アジト船非表示
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_25, 24 )	//W21・W21アジト船非表示
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_25, 24 )	//トロフィー
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_25, 25 )	//テスト用
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_25, 26 )	//テスト用
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -492,8 +494,10 @@ EVENT_START   ev_debug_mizuguchi
         
       ENDIF
       
+      //D10イベント開始状態
+      _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
       //マップ遷移
-      _MAP_CHANGE( ZONE_ID_D27R0101, 11, 31, DIR_RIGHT )
+      _MAP_CHANGE( ZONE_ID_D27R1101, 11, 31, DIR_RIGHT )
       
     ELSIF $SCWK_TEMP2 == 11 THEN
       
@@ -580,6 +584,10 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
     
     ELSIF $SCWK_TEMP2 == 19 THEN
+      //D05イベント進行状態を進めて接続を作成
+      $WK_SCENE_D05 = 3
+      $WK_SCENE_W21_01 = 0
+      _FLAG_RESET( FV_D05_SWBOSS_01 )
       //D05アジト船出現
       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
       //マップ遷移
@@ -599,6 +607,9 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
       
     ELSIF $SCWK_TEMP2 == 22 THEN
+      //W21のイベント進行状態を進めて接続を作成
+      $WK_SCENE_W21_01 = 3
+      $WK_SCENE_D05 = 0
       //W21アジト船表示（タラップあり）
       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
@@ -628,7 +639,18 @@ EVENT_START   ev_debug_mizuguchi
         _FLAG_SET( FV_C12R0101_PRIZE1_01 )
         _FLAG_SET( FV_C12R0101_PRIZE2_01 )
       ENDIF
+    
+    ELSIF $SCWK_TEMP2 == 25 THEN
+      $WK_SCENE_W21_01 = 1
+      //W21アジト船表示（タラップなし）
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
       
+    ELSIF $SCWK_TEMP2 == 26 THEN
+      //プラズマフリゲート・内部状態変更
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+      //プラズマフリゲート・キュレム非表示
+      _FLAG_SET( FV_D27R1001_R1301_POKE10_01 )
     ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1
