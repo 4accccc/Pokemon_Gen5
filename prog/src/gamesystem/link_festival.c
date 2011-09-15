@@ -761,7 +761,7 @@ void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRB
 {
   LINKFEST_LOG_TOP_SCORE* tsp = wk->top_score;
 
-  if( name != NULL ){ //プレイヤー
+  if( name == NULL ){ //プレイヤー
     MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
 
     if( tsp->score > wk->m_beacon->my_score ){
