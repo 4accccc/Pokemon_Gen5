@@ -15,6 +15,8 @@
 #define TR_RANGERM_19                      3
 #define TR_ELITEM_30                       4
 #define TR_ELITEW_30                       5
+#define FLD_ITEM_308                       6
+#define FLD_ITEM_307                       7
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -15,6 +15,9 @@
 #define TR_SWIMMERM_11                     3
 #define TR_SWIMMERM_12                     4
 #define TR_SWIMMERW_11                     5
+#define FLD_ITEM_310                       6
+#define FLD_ITEM_311                       7
+#define FLD_ITEM_312                       8
 
 #endif //ZONE_W17_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/w17.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

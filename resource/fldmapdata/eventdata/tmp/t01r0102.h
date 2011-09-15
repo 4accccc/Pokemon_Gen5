@@ -14,6 +14,7 @@
 #define T01R0102_TRORHY1_01                2
 #define T01R0102_PRIZE2_01                 3
 #define T01R0102_PRIZE1_01                 4
+#define FLD_ITEM_309                       5
 
 #endif //ZONE_T01R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
