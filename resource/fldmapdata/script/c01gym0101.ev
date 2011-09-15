@@ -11,6 +11,8 @@
   .include  "../../message/dst/script/msg_c01gym0101.h"
   .include  "c01gym0101.h"
 
+//@author Suginaka katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -18,4 +20,1569 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_c01gym0101_leader1a_01
+_EVENT_DATA		ev_c01gym0101_leader1b_01
+_EVENT_DATA		ev_c01gym0101_leader1c_01
+_EVENT_DATA		ev_c01gym0101_glasses_01
+_EVENT_DATA		ev_c01gym0101_waitress_01
+_EVENT_DATA		ev_c01gym0101_woman2_01
+_EVENT_DATA		ev_c01gym0101_wkobjcode00
+_EVENT_DATA		ev_c01gym0101_wkobjcode01
+_EVENT_DATA		ev_c01gym0101_wkobjcode02
+_EVENT_DATA		ev_c01gym0101_poke29a_01
+_EVENT_DATA		ev_c01gym0101_poke29b_01
+_EVENT_DATA		ev_c01gym0101_man3_01
+_EVENT_DATA		ev_c01gym0101_woman3_01
+_EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_SARUHIT
+
+//LOCALWORK10をリーダーの会話分岐に使用しています。
+//LOCALWORK11、LOCALWORK12をサルショーで使用しています。
+
+/**************************************************************/
+/*			ZONE CHANGE LABEL								  */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_c01gym0101
+	
+	_GET_RND( WK_OTHER_C01GYM0101_SARU, 3 )
+
+	SWITCH $WK_OTHER_C01GYM0101_SARU
+	CASE 0 THEN
+		//可変OBJの見た目をヤナップ
+		$OBJCHRWORK0 = POKE33
+		$OBJCHRWORK1 = POKE33
+		$OBJCHRWORK2 = POKE33
+	CASE 1 THEN
+		//可変OBJの見た目をバオップ
+		$OBJCHRWORK0 = POKE34
+		$OBJCHRWORK1 = POKE34
+		$OBJCHRWORK2 = POKE34
+	CASE 2 THEN
+		//可変OBJの見た目をヒヤップ
+		$OBJCHRWORK0 = POKE35
+		$OBJCHRWORK1 = POKE35
+		$OBJCHRWORK2 = POKE35
+	ENDSWITCH
+
+	_DEBUG_PRINT_WK(WK_OTHER_C01GYM0101_SARU)
+
+	//再戦可能になっている場合はワークの値を０にする
+	IF FLAG_OFF( TMFLG_C01GYM0101_LEADER1_BT ) THEN
+	
+		$WK_OTHER_C01GYM0101_BTL = 0
+	
+	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	LEADER1A							  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_leader1a_01
+
+//========================================/
+//ワークにポッド選択を定義
+$LOCALWORK10 = 1
+//========================================/
+
+_CALL	ev_leader1_btl
+
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	LEADER1B							  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_leader1b_01
+
+//========================================/
+//ワークにコーン選択を定義
+$LOCALWORK10 = 2
+//========================================/
+
+_CALL	ev_leader1_btl
+
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	LEADER1C							  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_leader1c_01
+
+//========================================/
+//ワークにデント選択を定義
+$LOCALWORK10 = 3
+//========================================/
+
+_CALL	ev_leader1_btl
+
+EVENT_END
+
+ev_leader1_btl:
+
+//既に戦っている場合（日付リセット）
+IF FLAG_ON( TMFLG_C01GYM0101_LEADER1_BT ) THEN
+
+	SWITCH $LOCALWORK10
+	CASE 1 THEN	//ポッド
+		//パートナーだった場合
+		IF $WK_OTHER_C01GYM0101_BTL == 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_06 )
+		//パートナーではない場合
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_07 )
+		ENDIF
+	CASE 2 THEN	//コーン
+		//パートナーだった場合
+		IF $WK_OTHER_C01GYM0101_BTL == 2 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_06 )
+		//パートナーではない場合
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_07 )
+		ENDIF
+	CASE 3 THEN	//デント
+		//パートナーだった場合
+		IF $WK_OTHER_C01GYM0101_BTL == 3 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_06 )
+		//パートナーではない場合
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_07 )
+		ENDIF
+	ENDSWITCH
+
+ELSE
+
+	_TALK_OBJ_START()
+
+	//相棒決めメッセージ
+	SWITCH $LOCALWORK10
+	CASE 1 THEN	//ポッド
+		
+		//初回会話の場合
+		IF FLAG_OFF( FE_C01GYM0101_LEADER1A_FIRST ) THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_01 )
+			
+			//========================================/
+			
+			//初回会話フラグセット
+			_FLAG_SET(FE_C01GYM0101_LEADER1A_FIRST)
+			
+			//========================================/
+			
+			
+		//既会話の場合
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_08 )
+		ENDIF	
+	
+	CASE 2 THEN	//コーン
+		
+		//初回会話の場合
+		IF FLAG_OFF( FE_C01GYM0101_LEADER1B_FIRST ) THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_01 )
+			
+			//========================================/
+			
+			//初回会話フラグセット
+			_FLAG_SET(FE_C01GYM0101_LEADER1B_FIRST)
+			
+			//========================================/
+			
+		//既会話の場合
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_08 )
+		ENDIF
+
+	CASE 3 THEN	//デント
+
+		//初回会話の場合
+		IF FLAG_OFF( FE_C01GYM0101_LEADER1C_FIRST ) THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_01 )
+			
+			//========================================/
+			
+			//初回会話フラグセット
+			_FLAG_SET(FE_C01GYM0101_LEADER1C_FIRST)
+			
+			//========================================/
+			
+		//既会話の場合
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_08 )
+		ENDIF
+
+	ENDSWITCH
+
+	_YES_NO_WIN( SCWK_ANSWER )
+
+	//はい
+	IF $SCWK_ANSWER == SCR_YES THEN	
+
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_02 )
+		CASE 2 THEN	//コーン
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_02 )
+		CASE 3 THEN	//デント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_02 )
+		ENDSWITCH
+
+		_MSGWIN_CLOSE()
+
+		//暗転処理
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+	
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+	
+		//カメラ操作　ステージ中央に移動
+		_CAMERA_MOVE( 9688,0,970752,753664,65551,163840,1 )	//一番最後の引数は移動にかかるフレーム数
+		_CAMERA_WAIT_MOVE()
+	
+		//プレイヤー・観客移動
+		
+		//========================================/
+		
+		//バニシュリセット　サル表示
+		_FLAG_RESET(FV_C01GYM0101_SARU_01)
+
+		_OBJ_ADD( C01GYM0101_WKOBJCODE00 )
+		_OBJ_ADD( C01GYM0101_WKOBJCODE01 )
+		_OBJ_ADD( C01GYM0101_WKOBJCODE02 )
+		
+		//========================================/
+		
+		
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 9, 1, 2, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C01GYM0101_WOMAN2_01, 9, 0, 5, DIR_UP )
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE00, 10, 0, 5, DIR_UP )
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE01, 11, 0, 5, DIR_UP )	
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE02, 12, 0, 5, DIR_UP )
+		_OBJ_POS_CHANGE( C01GYM0101_MAN3_01, 13, 0, 5, DIR_UP )
+		_OBJ_POS_CHANGE( C01GYM0101_WOMAN3_01, 8, 0, 5, DIR_UP )
+
+		//ジムリーダー１移動
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 9, 1, 1, DIR_RIGHT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 13, 1, 1, DIR_LEFT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 13, 1, 2, DIR_LEFT )
+		CASE 2 THEN	//コーン
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 9, 1, 1, DIR_RIGHT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 13, 1, 1, DIR_LEFT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 13, 1, 2, DIR_LEFT )
+		CASE 3 THEN	//デント
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 9, 1, 1, DIR_RIGHT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 13, 1, 1, DIR_LEFT )
+			_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 13, 1, 2, DIR_LEFT )
+		ENDSWITCH
+	
+		_TIME_WAIT( 60 )
+	
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_04 )
+			_MSGWIN_CLOSE()
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_walk_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_walk_l )
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_walk_l )
+		CASE 2 THEN	//コーン
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_04 )
+			_MSGWIN_CLOSE()
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_walk_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_walk_l )
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_walk_l )
+		CASE 3 THEN	//デント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_04 )
+			_MSGWIN_CLOSE()
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_walk_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_walk_l )
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_walk_l )
+		ENDSWITCH
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+		_OBJ_ANIME_WAIT()
+		
+		//トレーナー戦呼び出し分岐
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_TRAINER_MULTI_BTL_SET( TRID_LEADER1A_01, TRID_LEADER1B_01, TRID_LEADER1C_01 )
+		CASE 2 THEN	//コーン
+			_TRAINER_MULTI_BTL_SET( TRID_LEADER1B_01, TRID_LEADER1A_01, TRID_LEADER1C_01 )
+		CASE 3 THEN	//デント
+			_TRAINER_MULTI_BTL_SET( TRID_LEADER1C_01, TRID_LEADER1A_01, TRID_LEADER1B_01 )
+		ENDSWITCH
+	
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+		
+		//まけて１歩下がるアニメ
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッドパートナー時
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_back_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_back_r )
+		CASE 2 THEN	//コーンパートナー時
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_back_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_back_r )
+		CASE 3 THEN	//デントパートナー時
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_back_r )
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_back_r )
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT( 60 )
+		
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_stay_r )
+			_OBJ_ANIME_WAIT()
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_05 )
+		CASE 2 THEN	//コーン
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_stay_r )
+			_OBJ_ANIME_WAIT()
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_05 )
+		CASE 3 THEN	//デント
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_stay_r )
+			_OBJ_ANIME_WAIT()
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_05 )
+		ENDSWITCH
+
+		_MSGWIN_CLOSE()
+
+		//暗転処理
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+	
+		//プレイヤー・戻り場所分岐
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッドパートナー時
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 5, 0, 9, DIR_UP )
+		CASE 2 THEN	//コーンパートナー時
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 14, DIR_RIGHT )
+		CASE 3 THEN	//デントパートナー時
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 13, 0, 11, DIR_UP )
+		ENDSWITCH
+	
+		//他リーダー・観客を元に戻す
+		_OBJ_POS_CHANGE( C01GYM0101_WOMAN2_01, 11, 1, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE00, 11, 1, 1, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE01, 11, 1, 1, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE02, 11, 1, 1, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_MAN3_01, 13, 0, 5, DIR_UP )
+		_OBJ_POS_CHANGE( C01GYM0101_WOMAN3_01, 4, 0, 14, DIR_RIGHT )
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 5, 0, 8, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 16, 0, 14, DIR_LEFT )
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 13, 0, 10, DIR_DOWN )
+
+		//========================================/
+		
+		//バニシュリセット　サル表示
+		_FLAG_RESET(FV_C01GYM0101_SARU_01)
+
+		_OBJ_DEL( C01GYM0101_WKOBJCODE00 )
+		_OBJ_DEL( C01GYM0101_WKOBJCODE01 )
+		_OBJ_DEL( C01GYM0101_WKOBJCODE02 )
+		
+		//========================================/
+
+		_TIME_WAIT( 60 )
+	
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+		
+		_CAMERA_BIND()		//カメラのバインドを解く
+		_CAMERA_END()
+
+		//========================================/
+		
+		//バトルフラグセット
+		_FLAG_SET(TMFLG_C01GYM0101_LEADER1_BT)
+		
+		//パートナーによってワーク値に代入
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッドパートナー時
+			$WK_OTHER_C01GYM0101_BTL = 1
+		CASE 2 THEN	//コーンパートナー時
+			$WK_OTHER_C01GYM0101_BTL = 2
+		CASE 3 THEN	//デントパートナー時
+			$WK_OTHER_C01GYM0101_BTL = 3
+		ENDSWITCH
+
+		//========================================/
+
+
+	//いいえ
+	ELSE
+
+		SWITCH $LOCALWORK10
+		CASE 1 THEN	//ポッド
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1a_03 )
+		CASE 2 THEN	//コーン
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1b_03 )
+		CASE 3 THEN	//デント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_03 )
+		ENDSWITCH
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	ENDIF
+
+ENDIF
+
+//========================================/
+
+//ローカルワークを初期化する。
+$LOCALWORK10 = 0
+
+//========================================/
+
+_RET
+
+/**************************************************************/
+/*			C01GYM0101	GLASSES								  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_glasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_glasses_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	WAITRESS							  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_waitress_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	WOMAN2	サルショーのお姉さん		  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_woman2_01
+
+SWITCH $WK_OTHER_C01GYM0101_SARU
+CASE 0 THEN
+	_MONS_NAME( 1, MONSNO_593 )	//ヤナップ
+CASE 1 THEN
+	_MONS_NAME( 1, MONSNO_595 )	//バオップ
+CASE 2 THEN
+	_MONS_NAME( 1, MONSNO_597 )	//ヒヤップ
+ENDSWITCH
+
+_DEBUG_PRINT_WK( WK_OTHER_C01GYM0101_SARU )
+
+//１日１回制限・既にイベントをしている場合
+IF FLAG_ON( TMFLG_C01GYM0101_SHOW ) THEN
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_14 )
+
+ELSE
+	
+	//サルショー開始前
+	IF $LOCALWORK12 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//サルショー　みていかない？
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		//はい選択の場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+	
+			_CALL ev_saru_show
+
+		//いいえ選択の場合
+		ELSE
+		
+			//そっかー……
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
+		ENDIF
+	
+	//サルショー中
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_09 )
+	
+	ENDIF
+	
+ENDIF
+
+//========================================/
+
+//バニシュセット
+_FLAG_SET(FV_C01GYM0101_SARU_01)
+
+//========================================/
+
+
+EVENT_END
+
+/**************************************************************/
+/*		サルショー処理・シャッフル前					  */
+/**************************************************************/
+ev_saru_show:
+
+//オッケー　おねえさん
+_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_02 )
+
+//ぜんいん　しゅうごーう！
+_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_04 )
+_MSGWIN_CLOSE()
+
+//おねえさん：踊る
+_OBJ_ANIME( C01GYM0101_WOMAN2_01, anm_common_dance )
+_OBJ_ANIME_WAIT()
+
+//サルＯＢＪ・鳴き声と共に現れる
+_CALL ev_saru_voice
+
+//バニシュリセット　サル表示
+_FLAG_RESET(FV_C01GYM0101_SARU_01)
+
+_OBJ_ADD( C01GYM0101_WKOBJCODE00 )
+_OBJ_ADD( C01GYM0101_WKOBJCODE01 )
+_OBJ_ADD( C01GYM0101_WKOBJCODE02 )
+
+_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_wkobjcode01_appear )
+_TIME_WAIT( 10 )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_wkobjcode02_appear )
+_TIME_WAIT( 10 )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_wkobjcode00_appear )
+_VOICE_WAIT()
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 11, 3, FORCE_TYPE_NOT, 8, DIR_UD )
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+_OBJ_ANIME_WAIT()
+
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+_CAMERA_MOVE( 8152,0,970752,753664,65551,12288,30 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+_OBJ_ANIME_WAIT()
+
+//この　なかで
+_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_05 )
+_MSGWIN_CLOSE()
+
+//正解取得・乱数
+DEFINE_LOCAL	LWK_SHOW
+_GET_RND( LWK_SHOW,3 )
+_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+
+//乱数分岐
+SWITCH	$LWK_SHOW
+CASE 0 THEN
+	//サル：ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_jump_d )
+	_OBJ_ANIME_WAIT()
+	
+	//きあいの　はいった
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_06 )
+	_MSGWIN_CLOSE()
+
+	//サル：２回ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_jump_d2 )
+	_OBJ_ANIME_WAIT()
+	
+	_CALL ev_saru_voice
+	_VOICE_WAIT()
+
+	//========================================/
+	
+	$LOCALWORK11 = 10
+	
+	//========================================/
+	
+	
+CASE 1 THEN
+	//サル：ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_jump_d )
+	_OBJ_ANIME_WAIT()
+	
+	//つぶらな　ひとみの
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_07 )
+	_MSGWIN_CLOSE()
+
+	//サル：２回ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_jump_d2 )
+	_OBJ_ANIME_WAIT()
+	
+	_CALL ev_saru_voice
+	_VOICE_WAIT()
+
+	//========================================/
+	
+	$LOCALWORK11 = 20
+	
+	//========================================/
+
+CASE 2 THEN
+	//サル：ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_jump_d )
+	_OBJ_ANIME_WAIT()
+	
+	//しっぽが　プリティな
+	_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_08 )
+	_MSGWIN_CLOSE()
+
+	//サル：２回ジャンプアニメ
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_jump_d2 )
+	_OBJ_ANIME_WAIT()
+	
+	_CALL ev_saru_voice
+	_VOICE_WAIT()
+	
+	//========================================/
+	
+	$LOCALWORK11 = 30
+	
+	//========================================/
+
+ENDSWITCH
+
+_CALL ev_shuffle
+
+//========================================/
+
+$LOCALWORK12 = 1
+
+//========================================/
+
+_RET
+
+ev_saru_voice:
+
+SWITCH $WK_OTHER_C01GYM0101_SARU
+CASE 0 THEN
+	_VOICE_PLAY( MONSNO_593, 0 )
+CASE 1 THEN
+	_VOICE_PLAY( MONSNO_595, 0 )
+CASE 2 THEN
+	_VOICE_PLAY( MONSNO_597, 0 )
+ENDSWITCH
+
+_RET
+
+ev_shuffle:
+
+//正解取得・乱数
+DEFINE_LOCAL	LWK_SHUFFLE
+_GET_RND( LWK_SHUFFLE,3 )
+
+//乱数分岐
+SWITCH	$LWK_SHUFFLE
+CASE 0 THEN		//1パターン目
+	//１ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//２ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//３ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//４ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_d_0 )
+	_OBJ_ANIME_WAIT()
+
+	//５ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_r_1 )
+	_OBJ_ANIME_WAIT()
+
+	//６ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//７ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//８ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//９ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_l_1 )
+	_OBJ_ANIME_WAIT()
+
+CASE 1 THEN		//2パターン目
+	//１ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//２ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//３ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//４ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//５ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_r_1 )
+	_OBJ_ANIME_WAIT()
+
+	//６ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_d_0 )
+	_OBJ_ANIME_WAIT()
+
+	//７ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//８ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//９ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_l_1 )
+	_OBJ_ANIME_WAIT()
+
+CASE 2 THEN		//3パターン目
+	//１ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//２ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_r_1 )
+	_OBJ_ANIME_WAIT()
+
+	//３ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_1st_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_1st_l_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_1st_l_1 )
+	_OBJ_ANIME_WAIT()
+
+	//４ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//５ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_r_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//６ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_2nd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_2nd_d_0 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_2nd_r_2 )
+	_OBJ_ANIME_WAIT()
+
+	//７ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_l_2 )
+	_OBJ_ANIME_WAIT()
+
+	//８ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_r_1 )
+	_OBJ_ANIME_WAIT()
+
+	//９ターン目
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_3rd_l_2 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_3rd_r_1 )
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_3rd_r_1 )
+	_OBJ_ANIME_WAIT()
+	
+ENDSWITCH
+
+//さあ！　さっきの　ミネズミちゃん　あててみて！
+_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman2_09 )
+_MSGWIN_CLOSE()
+
+//自機にカメラを戻す
+_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+_CAMERA_END()		//カメラ操作終了
+
+_RET
+
+/**************************************************************/
+/*			C01GYM0101	WKOBJCODE00	サル０号				  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_wkobjcode00
+
+//========================================/
+
+$LWK_SARUHIT = 10
+
+//========================================/
+
+_CALL ev_saruhit
+
+
+EVENT_END
+
+
+/**************************************************************/
+/*			C01GYM0101	WKOBJCODE01	サル１号				  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_wkobjcode01
+
+//========================================/
+
+$LWK_SARUHIT = 20
+
+//========================================/
+
+_CALL ev_saruhit
+
+
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	WKOBJCODE02	サル２号				  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_wkobjcode02
+
+//========================================/
+
+$LWK_SARUHIT = 30
+
+//========================================/
+
+_CALL ev_saruhit
+
+EVENT_END
+
+/**************************************************************/
+/*		サルショー　共通処理	サル選択時					  */
+/**************************************************************/
+ev_saruhit:
+
+//まだイベントが済んでいない場合
+IF FLAG_OFF( TMFLG_C01GYM0101_SHOW ) THEN
+
+	_TALK_OBJ_START()
+
+	SWITCH $WK_OTHER_C01GYM0101_SARU
+	CASE 0 THEN
+		_MONS_NAME( 1, MONSNO_593 )	//ヤナップ
+	CASE 1 THEN
+		_MONS_NAME( 1, MONSNO_595 )	//バオップ
+	CASE 2 THEN
+		_MONS_NAME( 1, MONSNO_597 )	//ヒヤップ
+	ENDSWITCH
+
+	_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+
+	//その　サルが
+	_BALLOONWIN_OBJMSG_POS( msg_c01gym0101_woman2_10 , C01GYM0101_WOMAN2_01, POS_DEFAULT )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい選択
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		//あたりの場合
+		IF $LOCALWORK11 == $LWK_SARUHIT THEN
+			_CALL ev_atari
+		//はずれの場合
+		ELSE
+			_CALL ev_hazure
+		ENDIF
+	
+	//いいえ選択
+	ELSE
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
+//イベント後の場合
+ELSE
+/*
+SWITCH $WK_OTHER_C01GYM0101_SARU
+CASE 0 THEN
+	_EASY_TALK_POKEVOICE( MONSNO_593, msg_c01gym0101_poke29a_01 )
+CASE 1 THEN
+	_EASY_TALK_POKEVOICE( MONSNO_595, msg_c01gym0101_poke29a_01 )
+CASE 2 THEN
+	_EASY_TALK_POKEVOICE( MONSNO_597, msg_c01gym0101_poke29a_01 )
+ENDSWITCH
+*/
+ENDIF
+
+
+_RET
+
+
+
+/**************************************************************/
+/*		あたり処理
+/**************************************************************/
+ev_atari:
+
+SWITCH $WK_OTHER_C01GYM0101_SARU
+CASE 0 THEN
+	_MONS_NAME( 1, MONSNO_593 )	//ヤナップ
+CASE 1 THEN
+	_MONS_NAME( 1, MONSNO_595 )	//バオップ
+CASE 2 THEN
+	_MONS_NAME( 1, MONSNO_597 )	//ヒヤップ
+ENDSWITCH
+
+//おおあたりー！
+_ITEM_NAME( 0, ITEM_KODAINODOUKA )
+_BALLOONWIN_OBJMSG_POS( msg_c01gym0101_woman2_11 , C01GYM0101_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+				
+_ITEM_EVENT_KEYWAIT( ITEM_KODAINODOUKA, 1 )
+
+//それでは　サルショー　しゅうりょうになります
+_BALLOONWIN_OBJMSG_POS( msg_c01gym0101_woman2_13 , C01GYM0101_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE00,10,1,1,DIR_DOWN)
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE01,11,1,1,DIR_DOWN)
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE02,12,1,1,DIR_DOWN)
+
+_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_common_dancejump )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_common_dancejump )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_common_dancejump )
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_wkobjcode00_leave )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_wkobjcode02_leave )
+_TIME_WAIT( 20 )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_wkobjcode01_leave )
+_OBJ_ANIME_WAIT()
+
+_OBJ_DEL( C01GYM0101_WKOBJCODE00 )
+_OBJ_DEL( C01GYM0101_WKOBJCODE01 )
+_OBJ_DEL( C01GYM0101_WKOBJCODE02 )
+
+//========================================/
+
+//バニシュフラグセット
+_FLAG_SET(FV_C01GYM0101_SARU_01)
+
+//タイムフラグセット
+$LOCALWORK12 = 0
+$LOCALWORK11 = 0
+_FLAG_SET(TMFLG_C01GYM0101_SHOW)
+
+//========================================/
+
+_RET
+/**************************************************************/
+/*		はずれ処理
+/**************************************************************/
+ev_hazure:
+
+SWITCH $WK_OTHER_C01GYM0101_SARU
+CASE 0 THEN
+	_MONS_NAME( 1, MONSNO_593 )	//ヤナップ
+CASE 1 THEN
+	_MONS_NAME( 1, MONSNO_595 )	//バオップ
+CASE 2 THEN
+	_MONS_NAME( 1, MONSNO_597 )	//ヒヤップ
+ENDSWITCH
+
+//ざんねん　はずれです
+_BALLOONWIN_OBJMSG_POS( msg_c01gym0101_woman2_12 , C01GYM0101_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+SWITCH $LOCALWORK11
+CASE 10 THEN
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_jump_d )
+CASE 20 THEN
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_jump_d )
+CASE 30 THEN
+	_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_jump_d )
+ENDSWITCH
+_OBJ_ANIME_WAIT()
+
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE00,10,1,1,DIR_DOWN)
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE01,11,1,1,DIR_DOWN)
+_OBJ_POS_CHANGE( C01GYM0101_WKOBJCODE02,12,1,1,DIR_DOWN)
+
+//それでは　サルショー　しゅうりょうになります
+_BALLOONWIN_OBJMSG_POS( msg_c01gym0101_woman2_13 , C01GYM0101_WOMAN2_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_common_dancejump )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_common_dancejump )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_common_dancejump )
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME( C01GYM0101_WKOBJCODE00, anm_wkobjcode00_leave )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE02, anm_wkobjcode02_leave )
+_TIME_WAIT( 20 )
+_OBJ_ANIME( C01GYM0101_WKOBJCODE01, anm_wkobjcode01_leave )
+_OBJ_ANIME_WAIT()
+
+_OBJ_DEL( C01GYM0101_WKOBJCODE00 )
+_OBJ_DEL( C01GYM0101_WKOBJCODE01 )
+_OBJ_DEL( C01GYM0101_WKOBJCODE02 )
+
+//========================================/
+
+//バニシュフラグセット
+_FLAG_SET(FV_C01GYM0101_SARU_01)
+
+//タイムフラグセット
+$LOCALWORK12 = 0
+$LOCALWORK11 = 0
+
+//========================================/
+
+/**************************************************************/
+/*			C01GYM0101	POKE29A								  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_poke29a_01
+	_EASY_TALK_POKEVOICE( MONSNO_MIRUHOGGU, msg_c01gym0101_poke29a_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	POKE29B								  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_poke29b_01
+	_EASY_TALK_POKEVOICE( MONSNO_MIRUHOGGU, msg_c01gym0101_poke29b_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	MAN3								  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/*			C01GYM0101	WOMAN3								  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_woman3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_woman3_01 )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d2
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_r
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ショーのお姉さん：専用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_woman2_move
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：踊りアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_dance
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_dancejump
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆サル用：登場・退場アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_wkobjcode00_appear
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_wkobjcode01_appear
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_wkobjcode02_appear
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_JUMP_R_2G_16F,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_wkobjcode00_leave
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_wkobjcode01_leave
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_wkobjcode02_leave
+	_ANIME_DATA	AC_JUMP_L_2G_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆サル用：シャッフル　１段階目
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_1st_r_2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,2
+	_ANIME_DATA	AC_JUMP_R_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1st_l_2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,2
+	_ANIME_DATA	AC_JUMP_L_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1st_r_1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,2
+	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1st_l_1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,2
+	_ANIME_DATA	AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_1st_d_0
+	_ANIME_DATA	AC_STAY_WALK_D_8F,3
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆サル用：シャッフル　２段階目
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_2nd_d_0
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_2nd_r_2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_2nd_l_2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_2nd_r_1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_2nd_l_1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆サル用：シャッフル　２段階目
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_3rd_r_2
+	_ANIME_DATA	AC_JUMP_R_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_3rd_l_2
+	_ANIME_DATA	AC_JUMP_L_2G_16F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_3rd_r_1
+	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_3rd_l_1
+	_ANIME_DATA	AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+
