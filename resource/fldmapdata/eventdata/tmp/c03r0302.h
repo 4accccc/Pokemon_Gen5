@@ -12,6 +12,8 @@
 #define C03R0302_BUSINESSMAN_01            1
 #define FLD_ITEM_23                        2
 #define C03R0302_BUSINESSMAN_02            3
+#define TR_BUSINESS2_03                    4
+#define TR_OL_09                           5
 
 #endif //ZONE_C03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

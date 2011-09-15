@@ -20,6 +20,8 @@
 #define R09R0201_BAKER_01                  7
 #define R09R0201_GIRL4_01                  8
 #define R09R0201_BOY3_01                   9
+#define TR_WAITRESS_02                    10
+#define TR_WAITER_02                      11
 
 #endif //ZONE_R09R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
