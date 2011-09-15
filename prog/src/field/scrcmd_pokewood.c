@@ -634,15 +634,15 @@ VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk )
  * @brief スクリプトコマンド：ポケウッド 初上映データかどうかのチェック
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPokewoodIsNewlyReleaseMovie( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk )
 {
   POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  *ret_wk = POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag( pkwdsave, play_id );
-  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( pkwdsave, play_id );
-  TAMADA_Printf("EvCmdPokewoodIsNewlyReleaseMovie(%d)-->%d\n", play_id, *ret_wk );
+  *ret_wk = POKEWOOD_SAVEDATA_GetMovieShowed( pkwdsave, play_id );
+  POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, play_id, TRUE );
+  TAMADA_Printf("EvCmdPokewoodIsShowedMovie(%d)-->%d\n", play_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 //-----------------------------------------------------------------------------
@@ -656,7 +656,8 @@ VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  *ret_wk = TRUE;  //仮
+  *ret_wk = getRecordInfo( wk, play_id, POKEWOOD_REC_PARAM_RENTAL_FLAG, NULL );
+  OS_Printf("EvCmdPokewoodIsRentalPokeMovie(%d)-->%d\n", play_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -698,12 +699,16 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
 {
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+
   SCRCMD_WORK * work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK * scw  = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT     * next_event;
 
   u16 rec_pos = SCRCMD_GetVMWorkValue( core, work );
+
+  POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, rec_pos, FALSE );
 
   GF_ASSERT( rec_pos < PKWD_REC_POS_MAX );
   next_event = PKWB_EVENT_Save( gsys, rec_pos );

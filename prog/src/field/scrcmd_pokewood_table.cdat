@@ -33,7 +33,7 @@
   DEF_CMD( EvCmdPKWDSetJoinMypoke,              EV_SEQ_PKWD_SET_JOIN_MYPOKE ) // 手持ちポケモンでポケウッドに参加するか？
   DEF_CMD( EvCmdPokewoodCheckNewScenario,       EV_SEQ_PKWD_CHECK_NEW_SCENARIO )
   DEF_CMD( EvCmdPokewoodCheckNewStarRank,       EV_SEQ_PKWD_CHECK_NEW_STAR_RANK )
-  DEF_CMD( EvCmdPokewoodIsNewlyReleaseMovie,    EV_SEQ_PKWD_IS_NEWLY_RELEASED_MOVIE )
+  DEF_CMD( EvCmdPokewoodIsShowedMovie,          EV_SEQ_PKWD_IS_SHOWED_MOVIE )
   DEF_CMD( EvCmdPokewoodIsRentalPokeMovie,      EV_SEQ_PKWD_IS_RENTAL_POKE_MOVIE )
   DEF_CMD( EvCmdPokewoodSetStudioMMdl,          EV_SEQ_PKWD_SET_STUDIO_MMDL )
   

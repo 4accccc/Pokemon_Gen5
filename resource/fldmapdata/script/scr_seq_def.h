@@ -15177,11 +15177,11 @@
  * ※このチェックの中で初上映状態→上映済み状態に変化するので注意
  */
 //--------------------------------------------------------------
-#define _PKWD_IS_NEWLY_RELEASED_MOVIE( ret_wk, play_id )  \
-    _ASM_PKWD_IS_NEWLY_RELEASED_MOVIE ret_wk, play_id
+#define _PKWD_IS_SHOWED_MOVIE( ret_wk, play_id )  \
+    _ASM_PKWD_IS_SHOWED_MOVIE ret_wk, play_id
 
-    .macro  _ASM_PKWD_IS_NEWLY_RELEASED_MOVIE ret_wk, play_id
-    .short  EV_SEQ_PKWD_IS_NEWLY_RELEASED_MOVIE
+    .macro  _ASM_PKWD_IS_SHOWED_MOVIE ret_wk, play_id
+    .short  EV_SEQ_PKWD_IS_SHOWED_MOVIE
     .short  \ret_wk
     .short  \play_id
     .endm

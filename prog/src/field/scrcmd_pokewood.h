@@ -42,7 +42,7 @@ extern VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdPokewoodIsNewlyReleaseMovie( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodSetStudioMMdl( VMHANDLE * core, void * wk );
 
