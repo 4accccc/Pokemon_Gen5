@@ -24,6 +24,7 @@
 #include "app/pkwd_book.h"
 #include "app/pkwd_selectscreen.h"
 #include "app/pkwd_briefing.h"
+#include "app/pkwd_record_monitor.h"
 #include "field_sound_system.h"
 #include "message.naix"
 
@@ -1578,5 +1579,91 @@ void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result,
 int  PKWD_GetScenarioOpenProvision( int scenario_no )
 {
   return ScenarioProvisionTbl[scenario_no].open_provision;
+}
+
+//============================================================================================
+//
+//    PKWD_RECORD_MONITOR画面呼び出し
+//
+//============================================================================================
+//-------------------------------------
+///   PKWD_RECORD_MONITOR_PARAM定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  PKWD_RECORD_MONITOR_PARAM    param;
+} PKWD_RECORD_MONITOR_EVENT_WORK;
+
+static GMEVENT_RESULT eventPkwdRecordMonitor( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PKWD_RECORD_MONITOR呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_RECORD_MONITOR_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_RECORD_MONITOR_PARAM *param = (PKWD_RECORD_MONITOR_PARAM *)parent_work;
+  PKWD_RECORD_MONITOR_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdRecordMonitor, sizeof(PKWD_RECORD_MONITOR_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_RECORD_MONITOR_EVENT_WORK) );
+
+  p_param->gsys      = gsys;
+  p_param->fieldmap  = fieldmap;
+  p_param->param = *param;
+
+  OS_Printf( "PKWD RECORD MONITOR Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdRecordMonitor呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdRecordMonitor( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_RECORD_MONITOR_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_record_monitor ), &PkwdRecordMonitorProcData, &p_wk->param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    OS_Printf( "p_wk = %08x\n", p_wk );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
 }
 

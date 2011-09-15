@@ -163,3 +163,45 @@ void PKWD_BRIEFING_PARAM_Delete( PKWD_BRIEFING_PARAM * param )
 	GFL_HEAP_FreeMemory( param );
 }
 
+
+//=============================================================================
+/**
+ *          PKWD_RECORD_MONITOR 画面関連
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PKWD RECORD_MONITOR用パラメータ削除
+ *
+ *	@param	HEAPID heapID ヒープID
+ *	@param	* gsys        ゲームシステム
+ *
+ *	@return 作成したパラメータ
+ */
+//-----------------------------------------------------------------------------
+PKWD_RECORD_MONITOR_PARAM * PKWD_RECORD_MONITOR_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+	POKEWOOD_SAVEDATA * pokewood_sv = GAMEDATA_GetPokewoodSavedata( gamedata );
+	PKWD_RECORD_MONITOR_PARAM	*pkwd_param;
+	
+	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_RECORD_MONITOR_PARAM) );
+	// 初期化
+//  pkwd_param->gamesys = gsys;
+  pkwd_param->mystatus    = mystatus;
+  pkwd_param->pokewood_sv = pokewood_sv;
+	//
+	return pkwd_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PKWD RECORD_MONITOR用パラメータ削除
+ */
+//-----------------------------------------------------------------------------
+void PKWD_RECORD_MONITOR_PARAM_Delete( PKWD_RECORD_MONITOR_PARAM * pkwd_param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( pkwd_param );
+}
+

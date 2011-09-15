@@ -12210,4 +12210,205 @@
 				Time="2011-07-26T11:51:49" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="pw_record_monitor_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうえいさくひんの　さいこうきろく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>上映作品の　最高記録</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターアプリ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:25" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_record_monitor_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうぎょうせいせき　きろく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:06:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>興行成績　記録</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:06:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターアプリ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:25" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_record_monitor_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]おく円</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:31:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]億円</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:33:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターアプリ
+</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:34:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_record_monitor_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもな　しゅつえんキャスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:07:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>主な　出演キャスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:07:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターアプリ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:25" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_record_monitor_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-14T05:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:04:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-14T12:07:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターアプリ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-09-13T09:05:25" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff40</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

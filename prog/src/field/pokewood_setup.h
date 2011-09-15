@@ -14,6 +14,7 @@
 #include "app/pkwd_book.h"
 #include "app/pkwd_selectscreen.h"
 #include "app/pkwd_briefing.h"
+#include "app/pkwd_record_monitor.h"
 
 //=============================================================================
 //    ŠO•”ŒöŠJ
@@ -34,3 +35,7 @@ extern void PKWD_SELECT_SCREEN_PARAM_Delete( PKWD_SELECT_SCREEN_PARAM * param );
 
 extern PKWD_BRIEFING_PARAM * PKWD_BRIEFING_PARAM_Create( HEAPID heapID, GAMESYS_WORK *gsys, int scenario_no );
 extern void PKWD_BRIEFING_PARAM_Delete( PKWD_BRIEFING_PARAM * param );
+
+extern PKWD_RECORD_MONITOR_PARAM * PKWD_RECORD_MONITOR_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
+extern void PKWD_RECORD_MONITOR_PARAM_Delete( PKWD_RECORD_MONITOR_PARAM * pkwd_param );
+

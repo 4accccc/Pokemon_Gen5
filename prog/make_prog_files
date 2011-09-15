@@ -2787,6 +2787,10 @@ SRCS_OVERLAY_PKWD_SELECTSCREEN = app/pkwd_selectscreen/pkwd_selectscreen.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_PKWD_BRIEFING = app/pkwd_briefing/pkwd_briefing.c
 
+# ポケウッド記録モニターアプリ
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PKWD_RECORD_MONITOR = app/pkwd_record_monitor/pkwd_record_monitor.c \
+                                   app/pkwd_record_monitor/pkwd_record_monitor_graphic.c
 
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON

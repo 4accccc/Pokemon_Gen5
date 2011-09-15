@@ -37,6 +37,7 @@
 #include "savedata/pokewood_rec.h"
 #include "app/pkwd_count.h"
 #include "app/pkwd_book.h"
+#include "app/pkwd_record_monitor.h"
 
 //デバッグ
 #include "event_debug_menu.h"
@@ -80,6 +81,7 @@ static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodRecordMonitor( POKEWOOD_FUNC_WORK * wk );
 
 static BOOL debugMenu_OpenScenario2 (POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario3 (POKEWOOD_FUNC_WORK *wk);
@@ -159,6 +161,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BRIEFING, (void*)debugMenuCallProc_PokewoodBriefing, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_RECORD_MONITOR, (void*)debugMenuCallProc_PokewoodRecordMonitor, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN02, (void*)debugMenu_OpenScenario2, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN03, (void*)debugMenu_OpenScenario3, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN04, (void*)debugMenu_OpenScenario4, GFL_OVERLAY_BLANK_ID },
@@ -575,6 +578,34 @@ static void _open_flag( POKEWOOD_FUNC_WORK *wk, int no )
   POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
   
   POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, no );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  記録モニターアプリ呼び出し
+ *
+ *	@param	POKEWOOD_FUNC_WORK * wk 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PokewoodRecordMonitor( POKEWOOD_FUNC_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+	GMEVENT *new_event;
+	PKWD_RECORD_MONITOR_PARAM *param = PKWD_RECORD_MONITOR_PARAM_Create( HEAPID_PROC, wk->gmSys );
+
+	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_RECORD_MONITOR_EVENT_Call, (void *)param );
+
+  PKWD_RECORD_MONITOR_PARAM_Delete( param );
+
+	GMEVENT_ChangeEvent( event, new_event );
+
+	OS_Printf( "Pkwd RecordMonitro Start\n" );
+  
+	return TRUE;
+  
 }
 
 //----------------------------------------------------------------------------------
