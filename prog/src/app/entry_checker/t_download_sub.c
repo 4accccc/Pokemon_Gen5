@@ -307,7 +307,7 @@ static const T_DOWNLOAD_BGSCN_DATA *td_bgscn_sub_tbl[] = {
 //---------------
 // (printutilと対応)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S,	3,	3,	26,	2,	2,},		// 上：トーナメントリスト名
+	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	2,},		// 上：トーナメントリスト名
 	{ GFL_BG_FRAME1_S,	2,	7,	12,	2,	2,},		// 上：ルール(左)
 	{ GFL_BG_FRAME1_S,	18,	7,	12,	2,	2,},		// 上：ルール(右)
 	{ GFL_BG_FRAME1_S,	2,	9,	28,	6,	2,},		// 上：レベル制限
@@ -324,11 +324,11 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 // (info用)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_00_tbl[] = {
 	// 注意
-	{ GFL_BG_FRAME0_M,	2,	5,	26,	2,	3,},		// 下：項目00
-	{ GFL_BG_FRAME0_M,	2,	8,	26,	2,	3,},		// 下：項目01
-	{ GFL_BG_FRAME0_M,	2, 11,	26,	2,	3,},		// 下：項目02
-	{ GFL_BG_FRAME0_M,	2, 14,	26,	2,	3,},		// 下：項目03
-	{ GFL_BG_FRAME0_M,	2, 17,	26,	2,	3,},		// 下：項目04
+	{ GFL_BG_FRAME0_M,	2,	5,	28,	2,	3,},		// 下：項目00
+	{ GFL_BG_FRAME0_M,	2,	8,	28,	2,	3,},		// 下：項目01
+	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	3,},		// 下：項目02
+	{ GFL_BG_FRAME0_M,	2, 14,	28,	2,	3,},		// 下：項目03
+	{ GFL_BG_FRAME0_M,	2, 17,	28,	2,	3,},		// 下：項目04
 	
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -336,9 +336,9 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_00_tbl[] = {
 // (join用)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_01_tbl[] = {
 	// 注意
-	{ GFL_BG_FRAME2_M,	3,	5,	24,	3,	2,},		// 下：項目00
-	{ GFL_BG_FRAME2_M,	3, 10,	24,	3,	2,},		// 下：項目01
-	{ GFL_BG_FRAME2_M,	3, 15,	24,	3,	2,},		// 下：項目02
+	{ GFL_BG_FRAME2_M,	3,	5,	28,	3,	2,},		// 下：項目00
+	{ GFL_BG_FRAME2_M,	3, 10,	28,	3,	2,},		// 下：項目01
+	{ GFL_BG_FRAME2_M,	3, 15,	28,	3,	2,},		// 下：項目02
 	
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -579,9 +579,9 @@ static const FRAMELIST_HEADER td_frame_list_header = {
   28,   // 項目フレーム表示Ｘサイズ
   3,    // 項目フレーム表示Ｙサイズ
   
-  3,    // フレーム内に表示するBMPWINの表示Ｘ座標
+  2,    // フレーム内に表示するBMPWINの表示Ｘ座標
   0,    // フレーム内に表示するBMPWINの表示Ｙ座標
-  26,   // フレーム内に表示するBMPWINの表示Ｘサイズ
+  28,   // フレーム内に表示するBMPWINの表示Ｘサイズ
   3,    // フレーム内に表示するBMPWINの表示Ｙサイズ(itemSizY)
   2,    // フレーム内に表示するBMPWINのパレット
   
@@ -1821,7 +1821,7 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num 
 	WORDSET_RegisterWord( wk->Wordset, 0, strbuf, 0, TRUE, PM_LANG );
 	strbuf2 = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
 	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf2 );
-	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_TNAME, 104, 0, expbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(12,13,0));
+	TdCmn_disp_string( wk, T_DOWNLOAD_MSG_UP_TNAME, 112, 0, expbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(12,13,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( expbuf );

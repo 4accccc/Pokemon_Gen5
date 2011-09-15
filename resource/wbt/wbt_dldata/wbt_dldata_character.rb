@@ -500,8 +500,8 @@ class WBT_CHARACTER_SINGLE
     # 変換はプログラム側で対応(仕様変更)
     @type_id = num;
     #
-    # 範囲制限(1-30)
-    flg = chk_num_range( @type_id, 1, 30 )
+    # 範囲制限(0-29)
+    flg = chk_num_range( @type_id, 0, 29 )
     if(flg == -1)
       print_error_num( $trainer_str[14], @type_id );
       trainer_exit();

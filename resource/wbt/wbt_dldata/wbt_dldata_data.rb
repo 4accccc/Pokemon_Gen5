@@ -8,7 +8,7 @@ require "wbt_dldata_util.rb"
 #--------------
 # 定義いろいろ
 #--------------
-WBTDL_TOURNAMENT_NAME_LEN	 = 21		# トーナメント名
+WBTDL_TOURNAMENT_NAME_LEN	 = 37		# トーナメント名(21->37)
 WBTDL_TOURNAMENT_REG_EXPLAIN_LEN = 111		# 参加制限
 WBTDL_TOURNAMENT_EXPLAIN_LEN     = 111     	# 説明
 

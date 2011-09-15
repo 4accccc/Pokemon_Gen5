@@ -586,8 +586,8 @@ const WBTLIST_MAPMODEL_DATA wbt_mapmodel_tbl[] = {
 // CANVASの設定
 // (printutilと対応)
 const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
-	{ GFL_BG_FRAME0_S,	4,	4,	24,	2,	2,},		// 下、up
-	{ GFL_BG_FRAME0_S,	4,	17,	24,	2,	2,},		// 下、down
+	{ GFL_BG_FRAME0_S,	2,	4,	28,	2,	2,},		// 下、up
+	{ GFL_BG_FRAME0_S,	2,	17,	28,	2,	2,},		// 下、down
 	//
 	{ GFL_BG_FRAME0_M,	1,	19,	30,	4,	9,},		// 上、meswin
 
@@ -622,8 +622,8 @@ const s16 wbt_move_pos_tbl[] = {
 
 // 文字表示位置
 const u8 wbt_string_pos_tbl[] = {
-	96, 0,					// 下画面(上)
-	96, 0,					// 下画面(下)
+	112, 0,					// 下画面(上)
+	112, 0,					// 下画面(下)
 };
 
 // メッセージ(はじめ、最後、0回目(1回戦のみ有効)、1回目(1回戦のみ有効))
@@ -2330,8 +2330,9 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	WORDSET		*wordset;
 	STRBUF		*strbuf;
 	
-	// WORDSET生成
-	wordset = WORDSET_Create( wk->heapID );
+	// WORDSET生成(トーナメント名がwordsetのdefaultの32を超えるため)
+//	wordset = WORDSET_Create( wk->heapID );
+	wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, 40, wk->heapID );
 	//
 	// 1回戦の1,2回目だけ特別処理
 	flg = 0;

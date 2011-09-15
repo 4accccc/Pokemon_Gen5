@@ -270,9 +270,9 @@ static GFL_PROC_RESULT TDownloadProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//フォント作成
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	
-	// WORDSET生成
-	wk->Wordset = WORDSET_Create( wk->heapID );
-	
+	// WORDSET生成(トーナメント名がwordのdefaultの32を超えるため個別対応)
+//	wk->Wordset = WORDSET_Create( wk->heapID );
+	wk->Wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, 40, wk->heapID );
 	// メッセージ
 	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_download_dat, wk->heapID );
 	wk->msg[1] = 0;
