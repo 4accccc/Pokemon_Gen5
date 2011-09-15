@@ -679,6 +679,8 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 7 )	//過去イベント・ソウリュウ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 8 )	//過去イベント・サザナミ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 9 )	//過去イベント・ホドモエ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_14, 10 )	//せいそくち・水上エンカウント用フラグセット
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_15, 11 )	//せいそくち・釣りエンカウント用フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -814,6 +816,14 @@ EVENT_START   ev_debug_suginaka
 			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC05R0501, 7, 0, 18, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 10 THEN
+
+			_SET_BADGE_FLAG( BADGE_ID_05 )
+
+		ELSIF $SCWK_ANSWER == 11 THEN
+
+			_FLAG_SET(SYS_FLAG_SUGOI_TSURI_GET)
 
 		ELSE
 
