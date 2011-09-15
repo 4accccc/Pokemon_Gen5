@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『この　ゆうしょうで
+			<Text>チェレン『この　たたかいで
 みえたことが　あるよ……▼
 だけど　それは　ほんの　いちぶ▼
 つよいとは　どういうことか……
@@ -14,7 +14,7 @@
 わからない　ことだらけだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:21:21" />
+				Time="2011-09-15T03:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -22,7 +22,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『この　優勝で
+			<Text>チェレン『この　たたかいで
 みえたことが　あるよ……▼
 だけど　それは　ほんの一部▼
 強いとは　どういうことか……
@@ -30,7 +30,7 @@
 わからない　ことだらけだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:21:37" />
+				Time="2011-09-15T03:42:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -67,11 +67,11 @@
 			Language="JPN">
 			<Text>ホミカ『アタシは　いつだって
 ゆうしょうを　ねらっているの！▼
-だから　こんかいも　あたりまえの
-けっかに　なっただけなの！</Text>
+だから　こんかいの　けっかに
+なっとく　してないのっ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:25:41" />
+				Time="2011-09-15T03:45:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -81,11 +81,11 @@
 			Language="JPN_KANJI">
 			<Text>ホミカ『アタシは　いつだって
 優勝を　ねらっているの！▼
-だから　今回も　当たり前の
-結果に　なっただけなの！</Text>
+だから　今回の　結果に
+納得してないのっ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:26:01" />
+				Time="2011-09-15T03:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -121,10 +121,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ『あー　そーだねー
-むしポケモンの　おかげ？　みたいな</Text>
+むしポケモンは　いいよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:30:05" />
+				Time="2011-09-15T03:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -133,10 +133,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーティ『あー　そーだねー
-むしポケモンの　おかげ？　みたいな</Text>
+むしポケモンは　いいよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:30:07" />
+				Time="2011-09-15T03:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -174,10 +174,12 @@
 			<Text>カミツレ『ポケモンたちの
 がんばりに　こたえるため　そして▼
 はなやかな　スポットを
-あびて　もらいたくて……！</Text>
+あびて　もらいたくて……！▼
+そういう　いみで　あなた
+とても　まぶしかったわよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:33:16" />
+				Time="2011-09-15T03:48:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -188,10 +190,12 @@
 			<Text>カミツレ『ポケモンたちの
 がんばりに　応えるため　そして▼
 華やかな　スポットを
-浴びて　もらいたくて……！</Text>
+浴びて　もらいたくて……！▼
+そういう意味で　あなた
+とても　まぶしかったわよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:33:34" />
+				Time="2011-09-15T03:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -226,14 +230,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン『オレさまが　ゆうしょう？▼
+			<Text>ヤーコン『オマエさんが　ゆうしょう▼
 それで　いいのかって？
 もっと　つよいやつが　いるだろ？▼
 そう　おもう　うでじまんは
 ホドモエに　くるんだな！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:36:42" />
+				Time="2011-09-15T03:49:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -241,14 +245,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤーコン『オレさまが　優勝？▼
+			<Text>ヤーコン『オマエさんが　優勝▼
 それで　いいのかって？
 もっと　強い奴が　いるだろ？▼
 そう　思う　腕自慢は
 ホドモエに　来るんだな！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:43:03" />
+				Time="2011-09-15T03:49:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -285,11 +289,12 @@
 			Language="JPN">
 			<Text>フウロ『すごく　ちょうし　よくて
 あいての　うごきが　みえて……▼
-ううん！　すべて　よめて
-それで　かてたような　ものですね</Text>
+それでも　かてないのは
+ポケモンは　おくが　ふかく▽
+あなたは　すごいって　ことですよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:41:24" />
+				Time="2011-09-15T03:51:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -299,11 +304,12 @@
 			Language="JPN_KANJI">
 			<Text>フウロ『すごく　調子　よくて
 相手の　動きが　みえて……▼
-ううん！　すべて　読めて
-それで　勝てたような　ものですね</Text>
+それでも　勝てないのは
+ポケモンは　奥が　深く▽
+あなたは　すごいって　ことですよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:43:21" />
+				Time="2011-09-15T03:51:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -341,10 +347,12 @@
 			<Text>シャガ『おいてなお！
 しょうりを　ほっする！▼
 それこそが　いきる　エネルギー！
-きのうの　じぶんを　こえる　ちから！</Text>
+きのうの　じぶんを　こえる　ちから！▼
+きみを　たたえつつ
+つぎこそは　かつ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:44:17" />
+				Time="2011-09-15T03:51:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -355,10 +363,12 @@
 			<Text>シャガ『老いてなお！
 勝利を　欲する！▼
 それこそが　生きる　エネルギー！
-昨日の　自分を　越える　力！</Text>
+昨日の　自分を　越える　力！▼
+君を　称えつつ
+次こそは　勝つ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:43:52" />
+				Time="2011-09-15T03:52:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -394,10 +404,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シズイ『あらぶる　うみのように
-すべてを　ながしさったたい！</Text>
+すべてを　ながしさったたい！▼
+それが　いまの　おはんよ！
+いやあ　すごかった！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:41:51" />
+				Time="2011-09-15T03:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -406,10 +418,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シズイ『荒ぶる　海のように
-すべてを　流しさったたい！</Text>
+すべてを　流しさったたい！▼
+それが　今の　おはんよ！
+いやあ　すごかった！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T06:44:10" />
+				Time="2011-09-15T03:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -447,11 +461,12 @@
 			<Text>ベル『ポケモンのことを
 ちょっとずつだけど　まなんで▼
 みんなの　いいところを　だせるよう
-かんがえた　けっかが▽
-こうなったのかな？　やったよお！</Text>
+かんがえているけど　まだまだね▼
+あっ　わすれてた！
+ゆうしょう　おめでとう！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:17:56" />
+				Time="2011-09-15T03:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -462,11 +477,12 @@
 			<Text>ベル『ポケモンのことを
 ちょっとずつだけど　学んで▼
 みんなの　いいところを　だせるよう
-考えた　結果が▽
-こうなったのかな？　やったよお！</Text>
+考えているけど　まだまだね▼
+あっ　忘れてた！
+優勝　おめでとう！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:18:03" />
+				Time="2011-09-15T03:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -501,12 +517,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポッド『ゆうしょう　か！▼
-このまま　せかいいちの　ほのおつかい
-ポッド！　ってのも　いいかもな</Text>
+			<Text>ポッド『ゆうしょう　か！
+すごいな！▼
+おれも　ゆうしょう　して
+せかいいちの　ほのおつかい▽
+ポッド！　って　なりたいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:24:32" />
+				Time="2011-09-15T03:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -514,12 +532,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド『優勝　か！▼
-このまま　世界一の　炎使い
-ポッド！　ってのも　いいかもな</Text>
+			<Text>ポッド『ゆうしょう　か！
+すごいな！▼
+おれも　ゆうしょう　して
+せかいいちの　ほのおつかい▽
+ポッド！　って　なりたいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:24:43" />
+				Time="2011-09-15T03:56:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -557,10 +577,12 @@
 			<Text>コーン『トーナメントの
 くみあわせに　たすけられた▽
 ぶぶんも　あるでしょう▼
-まだまだ　きたえつづけますよ</Text>
+まだまだ　きたえつづけてください▼
+つよくなった　あなたに
+かつことを　もくてきと　しますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:22:41" />
+				Time="2011-09-15T03:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -569,12 +591,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コーン『トーナメントの
-組み合わせに　助けられた▽
-部分も　あるでしょう▼
-まだまだ　鍛え続けますよ</Text>
+くみあわせに　たすけられた▽
+ぶぶんも　あるでしょう▼
+まだまだ　きたえつづけてください▼
+つよくなった　あなたに
+かつことを　もくてきと　しますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:25:00" />
+				Time="2011-09-15T03:56:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -611,10 +635,13 @@
 			Language="JPN">
 			<Text>デント『とりあえず　ですけど
 くさポケモンたちの　デリシャスな▽
-みりょくを　ひきだせて　よかったです</Text>
+みりょくを　ひきだせて　よかったです▼
+……まけたんですけどね▼
+それよりも
+コングラッチュレーション　でしたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:24:07" />
+				Time="2011-09-15T03:57:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -624,10 +651,13 @@
 			Language="JPN_KANJI">
 			<Text>デント『とりあえず　ですけど
 くさポケモンたちの　デリシャスな▽
-魅力を　ひきだせて　よかったです</Text>
+みりょくを　ひきだせて　よかったです▼
+……まけたんですけどね▼
+それよりも
+コングラッチュレーション　でしたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:25:05" />
+				Time="2011-09-15T03:57:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -662,11 +692,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アロエ『しぜんに　たたかえたね！
-いがいと　にぶって　いなかったよ</Text>
+			<Text>アロエ『しぜんに　たたかえてたね！▼
+それが　いちばん　だよ
+どんなときでも　どんなばあいでも▼
+その　けっかが
+こんかいの　ゆうしょう　なんだろ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:11:34" />
+				Time="2011-09-15T03:59:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -674,11 +707,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アロエ『自然に　戦えたね！
-意外と　鈍って　いなかったよ</Text>
+			<Text>アロエ『しぜんに　たたかえてたね！▼
+それが　いちばん　だよ
+どんなときでも　どんなばあいでも▼
+その　けっかが
+こんかいの　ゆうしょう　なんだろ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:11:40" />
+				Time="2011-09-15T03:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -713,11 +749,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチク『……この　しょうり
-みんなに　かんしゃする！</Text>
+			<Text>ハチク『……トーナメントも
+ひとつの　ものがたり▼
+そして　こんかいの　しゅやくは
+キミと　キミの　ポケモンだったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:09:20" />
+				Time="2011-09-15T03:59:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -725,11 +763,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチク『……この　勝利
-みんなに　感謝する！</Text>
+			<Text>ハチク『……トーナメントも
+ひとつの　ものがたり▼
+そして　こんかいの　しゅやくは
+キミと　キミの　ポケモンだったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:11:48" />
+				Time="2011-09-15T03:59:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -767,10 +807,12 @@
 			<Text>グリーン『３かい　かてば
 おわり　だからな▼
 うんの　ようそも　あるし
-オレは　まだ　まんぞくしてないぜ！</Text>
+オレは　まだ　まんぞくしてないぜ！▼
+あっ　おまえの　ゆうしょうを
+うん　とは　おもってないけどな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:10:47" />
+				Time="2011-09-15T04:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -781,10 +823,12 @@
 			<Text>グリーン『３回　勝てば
 終わり　だからな▼
 運の　要素も　あるし
-オレは　まだ　満足してないぜ！</Text>
+オレは　まだ　満足してないぜ！▼
+あっ　おまえの　ゆうしょうを
+うん　とは　おもってないけどな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:12:07" />
+				Time="2011-09-15T04:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -821,10 +865,11 @@
 			Language="JPN">
 			<Text>ワタル『しっているだろう▼
 ドラゴンは　せいなる
-でんせつの　いきものだ！</Text>
+でんせつの　いきものだ！▼
+だから　つぎは　まけない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:15:48" />
+				Time="2011-09-15T04:16:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -834,10 +879,11 @@
 			Language="JPN_KANJI">
 			<Text>ワタル『知っているだろう▼
 ドラゴンは　聖なる
-伝説の　生き物だ！</Text>
+伝説の　生き物だ！▼
+だから　つぎは　まけない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:16:12" />
+				Time="2011-09-15T04:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -923,12 +969,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミクリ『しょうりの　りゆう……
+			<Text>ミクリ『はいぼくの　りゆう……
 それは……！▼
-みずの　イリュージョン！！</Text>
+みずの　イリュージョン！！
+それが　たりていなかったのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:17:57" />
+				Time="2011-09-15T04:20:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -936,12 +983,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミクリ『勝利の　理由……
+			<Text>ミクリ『はいぼくの　りゆう……
 それは……！▼
-みずの　イリュージョン！！</Text>
+みずの　イリュージョン！！
+それが　たりていなかったのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:18:05" />
+				Time="2011-09-15T04:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -976,8 +1024,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シロナ『この　トーナメントでの
-ゆうしょうを　ほこりに　おもいます▼
+			<Text>シロナ『あなたの　トーナメントでの
+ゆうしょうを　すなおに　たたえるわ▼
 ですが　せかいには　まだまだ
 きょうごうが　いるはず……▼
 もっともっと　いろんな　ところで▽
@@ -985,7 +1033,7 @@
 であっていきたいわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:17:42" />
+				Time="2011-09-15T04:23:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -993,8 +1041,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シロナ『この　トーナメントでの
-優勝を　誇りに　おもいます▼
+			<Text>シロナ『あなたの　トーナメントでの
+優勝を　素直に　称えます▼
 ですが　世界には　まだまだ
 強豪が　いるはず……▼
 もっともっと　いろんな　ところで▽
@@ -1002,7 +1050,7 @@
 出会っていきたいわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:18:27" />
+				Time="2011-09-15T04:23:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1037,16 +1085,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『さいしょの　パートナー
+			<Text>アデク『あっぱれ！
+みごとな　たたかい　だった▼
+わたしの　さいしょの　パートナー
 メラルバ……　いや▽
 ウルガモスの　たましいは▼
 いまの　パートナーたちにも
 しっかりと　うけつがれている！▼
-そういう　いみで　これまでの
-であいに　しょうりを　ささげよう！</Text>
+そこに　きみの　つよさも
+くわえて　いきたいものだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:20:40" />
+				Time="2011-09-15T04:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1054,16 +1104,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『最初の　パートナー
+			<Text>アデク『あっぱれ！
+みごとな　たたかい　だった▼
+わたしの　さいしょの　パートナー
 メラルバ……　いや▽
-ウルガモスの　魂は▼
+ウルガモスの　たましいは▼
 いまの　パートナーたちにも
-しっかりと　受け継がれている▼
-そういう意味で　これまでの
-出会いに　勝利を　奉げよう！</Text>
+しっかりと　うけつがれている！▼
+そこに　きみの　つよさも
+くわえて　いきたいものだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:20:24" />
+				Time="2011-09-15T04:37:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
