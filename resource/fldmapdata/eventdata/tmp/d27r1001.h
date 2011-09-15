@@ -21,6 +21,10 @@
 #define D27R1001_STOPPER_02               10
 #define D27R1001_SWSAGE7_01               11
 #define D27R1001_SWPLAZMAM_01             12
+#define FLD_ITEM_187                      13
+#define FLD_ITEM_188                      14
+#define FLD_ITEM_190                      15
+#define FLD_ITEM_192                      16
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

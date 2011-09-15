@@ -12,6 +12,7 @@
 
 #define D27R2201_HINT_02                   0
 #define D27R2201_HINT_07                   1
+#define FLD_ITEM_189                       2
 
 #endif //ZONE_D27R2201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r2201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

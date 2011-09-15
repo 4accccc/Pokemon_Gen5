@@ -35,6 +35,10 @@
 #define D27R1301_SWSAGE7_01               10
 #define D27R1301_STOPPER_01               11
 #define D27R1301_STOPPER_02               12
+#define FLD_ITEM_187W                     13
+#define FLD_ITEM_188W                     14
+#define FLD_ITEM_190W                     15
+#define FLD_ITEM_193                      16
 
 #endif //ZONE_D27R1301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
