@@ -25,10 +25,46 @@ _EVENT_DATA		ev_d03r0101_daruma_03
 _EVENT_DATA		ev_d03r0101_daruma_04
 _EVENT_DATA		ev_d03r0101_daruma_05
 _EVENT_DATA		ev_pos_d03r0101_hakase2_01
+_EVENT_DATA		ev_d03r0101_backpackerm_01
+_EVENT_DATA		ev_d03r0101_fighterm_01
+_EVENT_DATA		ev_zone_d03r0101
 _EVENT_DATA_END
 
 //ヒヒダルマの戦闘フラグ指定用ユーザーワークを定義（共通化のためここで定義します）
 DEFINE_LOCAL	LWK_BTL_FLAG
+
+/**************************************************************/
+/*		ZONE CHANGE LABEL									  */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_d03r0101
+
+	IF FLAG_ON( SYS_FLAG_ARRIVE_C06 ) THEN
+	
+		IF $WK_SCENE_D03R0101_AFTER == 0 THEN
+		
+			$WK_SCENE_D03R0101_AFTER = 1
+
+		ENDIF
+	
+	_DEBUG_PRINT_WK(WK_SCENE_D03R0101_AFTER)
+	
+	ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*			バックパッカー♂								  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_backpackerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_backpackerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*			格闘家♂										  */
+/**************************************************************/
+EVENT_START		ev_d03r0101_fighterm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_fighterm_01 )
+EVENT_END
 
 /**************************************************************/
 /*			サングラス	D03R0101イベントスクリプト			  */
@@ -42,7 +78,14 @@ EVENT_START		ev_d03r0101_sunglasses_01
 	
 	//やわらかいすな入手後
 	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
+		
+		//古代の城に入っているか？
+		IF FLAG_ON( SYS_FLAG_ARRIVE_D04R0101) THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
+		//まだはいっていない場合
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
+		ENDIF
 		
 	ENDIF
 
