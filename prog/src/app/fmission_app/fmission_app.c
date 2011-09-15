@@ -1226,12 +1226,12 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 					FmaCmn_disp_arrow( wk, TRUE );
 				}
 				// キー待ち
-				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+				if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+					wk->Flag &= ~FLG_FMA_ME_MES;
 					fma_chk_meswin( wk );
 					wk->Step = STEP_LV2;
 					// SE
 					PMSND_PlaySE( SND_FMA_SKIP );
-					wk->Flag &= ~FLG_FMA_ME_MES;
 				}
 			}
 			break;
@@ -1257,7 +1257,7 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 						if(wk->Flag & FLG_FMA_ME_MES){
 							FmaCmn_disp_arrow( wk, TRUE );
 						}
-						if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+						if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
 							wk->Flag &= ~FLG_FMA_ME_MES;
 							// 次のメッセージがあるかの判定
 							fma_chk_meswin( wk );

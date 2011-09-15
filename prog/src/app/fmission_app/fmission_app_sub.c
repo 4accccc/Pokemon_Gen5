@@ -1446,9 +1446,9 @@ void FmaCmn_disp_winmes( FMISSION_APP_WORK* wk, const s32 mode, const s32 id, co
 	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
 	if(smode == 0){			// ˆê”­‚¾‚µ
-		// ’Êí
+		// ’†‰›‚»‚ë‚¢
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id] );
-		FmaCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+		FmaCmn_disp_string( wk, mode, 120, 0, strbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(1,2,0) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 	else{					// stream•\Ž¦
