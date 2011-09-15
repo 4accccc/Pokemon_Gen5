@@ -97,14 +97,15 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_MSGID_RECENT_02:
   case RESORT_MSGID_RECENT_03:
     {
-      u32 idx = RESORT_MSGID_RECENT_00 - param;
+      u32 idx = param - RESORT_MSGID_RECENT_00;
       u32 msg = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_EXT5_RECORD_00+idx, NULL );
       RESORT_DATE date = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx, NULL );
       
       //”NŒŽ“ú‚ð“o˜^
       WORDSET_RegisterNumber( p_wordset, 0, RESORT_DATE_GET_YEAR(date), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
       WORDSET_RegisterNumber( p_wordset, 2, RESORT_DATE_GET_MONTH(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      WORDSET_RegisterNumber( p_wordset, 4, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 3, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      GF_ASSERT( msg != 0 );
 
       return SexGetMsgID( sex, resort_history_00_m, resort_history_00_f ) + msg;
     }

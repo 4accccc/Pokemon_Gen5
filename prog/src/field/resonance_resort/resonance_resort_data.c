@@ -4347,7 +4347,7 @@ void RESORT_RECORD_AddID( u32 record_id )
 
   GFL_RTC_GetDate( &date );
 
-  resort_date = RESORT_DATE_SET( date.year, date.month, date.day );
+  resort_date = RESORT_DATA_RtcToDate( &date );
 
   //重複チェック
   for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
@@ -4381,6 +4381,7 @@ void RESORT_RECORD_AddID( u32 record_id )
 
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, next_record );
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, next_date );
+      goto RESORT_RECORD_ADD_ID_SORT;
     }
   }
   //後尾にいれる
