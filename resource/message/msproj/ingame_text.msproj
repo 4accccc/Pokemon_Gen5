@@ -394,6 +394,8 @@
 				<ContentItem
 					Name="pw_director_sunglasses.mstxt" />
 				<ContentItem
+					Name="pw_endroll.mstxt" />
+				<ContentItem
 					Name="pw_hint001.mstxt" />
 				<ContentItem
 					Name="pw_hint002.mstxt" />
