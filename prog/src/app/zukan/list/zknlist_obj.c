@@ -718,7 +718,7 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
   else if( (is_zenkoku == TRUE) && (is_habitat == TRUE) )
   {
     // 全国図鑑、生息地リストを両方持っている
-    if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+    if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) != ZUKAN_MODE_ZENKOKU ){
       ZKNLISTOBJ_SetAnm( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_1,ZKNLISTOBJ_ANM_MODE_BUTTON_ANM);
       ZKNLISTOBJ_SetAnmStop( wk ,ZKNLISTOBJ_IDX_MODE_BUTTON_1 );
     }

@@ -702,12 +702,12 @@ BOOL ZUKANSAVE_GetGraphicVersionUpFlag( const ZUKAN_SAVEDATA * zw )
  * @brief		閲覧中の図鑑モードを設定
  *
  * @param		zw		図鑑セーブデータ
- * @param		mode	図鑑モード TRUE = 全国, FALSE = 地方
+ * @param		mode	
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode )
+void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, ZUKAN_MODE mode )
 {
   zukan_incorrect(zw);
 	zw->zukan_mode = mode;
@@ -719,11 +719,10 @@ void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode )
  *
  * @param		zw		図鑑セーブデータ
  *
- * @retval	"TRUE = 全国"
- * @retval	"FALSE = 地方"
+ * @retval	図鑑モード
  */
 //--------------------------------------------------------------------------------------------
-BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw )
+ZUKAN_MODE ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw )
 {
   zukan_incorrect(zw);
 	return zw->zukan_mode;

@@ -48,6 +48,13 @@ enum{
   ZUKANSAVE_LOCAL_COMP_NUM  = ZUKANSAVE_LOCAL_MONSMAX - ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM,
 };
 
+typedef enum
+{
+  ZUKAN_MODE_LOCAL,
+  ZUKAN_MODE_ZENKOKU,
+  ZUKAN_MODE_HABITAT,
+}ZUKAN_MODE;
+
 //----------------------------------------------------------
 // 非公開型 構造体宣言
 //----------------------------------------------------------
@@ -182,12 +189,12 @@ extern BOOL ZUKANSAVE_GetGraphicVersionUpFlag( const ZUKAN_SAVEDATA * zw );
  * @brief		閲覧中の図鑑モードを設定
  *
  * @param		zw		図鑑セーブデータ
- * @param		mode	図鑑モード TRUE = 全国, FALSE = 地方
+ * @param		mode	図鑑モード 
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode );
+extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, ZUKAN_MODE mode );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -195,11 +202,10 @@ extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode );
  *
  * @param		zw		図鑑セーブデータ
  *
- * @retval	"TRUE = 全国"
- * @retval	"FALSE = 地方"
+ * @retval	図鑑モード
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw );
+extern ZUKAN_MODE ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw );
 
 //--------------------------------------------------------------------------------------------
 /**

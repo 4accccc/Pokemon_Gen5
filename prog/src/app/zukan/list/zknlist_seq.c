@@ -391,12 +391,12 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
         SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3,
             ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
 
-        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) != ZUKAN_MODE_ZENKOKU ){
           // ’n•û}ŠÓ‚ð‰{——’† 
           if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
           {
             // ‘S‘}ŠÓ‚Ö
-            ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
+            ZUKANSAVE_SetZukanMode( wk->dat->savedata, ZUKAN_MODE_ZENKOKU );
             wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
             SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
             SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
@@ -407,12 +407,14 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
             wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
             SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
             SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+            ZUKANSAVE_SetZukanMode( wk->dat->savedata, ZUKAN_MODE_HABITAT );
           }
         }else{
           // ‘S‘‚¸‚©‚ñ‚ð‰{——’†->¶‘§’nƒŠƒXƒg‚Ö
           wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
           SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
           SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
+          ZUKANSAVE_SetZukanMode( wk->dat->savedata , ZUKAN_MODE_HABITAT);
         }
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
 
@@ -427,7 +429,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
             ZKNLISTOBJ_ANM_MODE_BUTTON, MAINSEQ_END_SET );
 
         // ’n•û}ŠÓ‚Ö
-        ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
+        ZUKANSAVE_SetZukanMode( wk->dat->savedata, ZUKAN_MODE_LOCAL );
         wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
         SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
         SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
@@ -447,7 +449,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
         if( ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
         {
           // ‘S‘}ŠÓ‚Ö
-          ZUKANSAVE_SetZukanMode( wk->dat->savedata, TRUE );
+          ZUKANSAVE_SetZukanMode( wk->dat->savedata, ZUKAN_MODE_ZENKOKU );
           wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
           SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
         }
@@ -458,6 +460,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
           // ¶‘§’nƒŠƒXƒg‚Ö
           wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
           SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
+          ZUKANSAVE_SetZukanMode( wk->dat->savedata , ZUKAN_MODE_HABITAT);
         }
         SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
@@ -476,6 +479,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
         wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
         SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
         SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
+        ZUKANSAVE_SetZukanMode( wk->dat->savedata , ZUKAN_MODE_HABITAT );
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
 
 			case ZKNLISTUI_ID_Y:					// 10: ‚x

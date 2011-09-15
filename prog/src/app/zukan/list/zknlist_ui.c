@@ -154,7 +154,7 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
       }
 
       // 地方から地方への切り替えは禁止
-      if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+      if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) != ZUKAN_MODE_ZENKOKU ){
         return GFL_UI_TP_HIT_NONE;
       }
       
@@ -175,13 +175,13 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
       // 全国から全国、地方から地方への切替は禁止
       if(ZUKANSAVE_GetZenkokuZukanFlag( wk->dat->savedata ) == TRUE )
       {
-        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == ZUKAN_MODE_ZENKOKU ){
           return GFL_UI_TP_HIT_NONE;
         }
       }
       else
       {
-        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+        if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == ZUKAN_MODE_ZENKOKU ){
           return GFL_UI_TP_HIT_NONE;
         }
       }

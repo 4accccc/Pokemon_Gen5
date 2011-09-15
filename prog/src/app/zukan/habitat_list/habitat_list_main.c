@@ -1138,12 +1138,12 @@ static void SetRetMod( HABITAT_LIST_WK *p_wk ,HABITAT_LIST_RET_MODE ret_mode )
 static void SetShortCut( HABITAT_LIST_WK *p_wk )
 {
   GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
-	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST ) == TRUE ){
-    GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST, FALSE );
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_LIST ) == TRUE ){
+    GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_LIST, FALSE );
     HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
         CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_OFF );
 	}else{
-		GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST, TRUE );
+		GAMEDATA_SetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_LIST, TRUE );
     HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
         CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_ON );
 	}
@@ -1161,7 +1161,7 @@ static void SetShortCut( HABITAT_LIST_WK *p_wk )
 static void SetShortCutButtonCutAnmSeq( HABITAT_LIST_WK *p_wk )
 {
   GAMEDATA *p_gdata = p_wk->p_init_param->p_gdata;
-	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_HABITAT_LIST ) == TRUE ){
+	if( GAMEDATA_GetShortCut( p_gdata, SHORTCUT_ID_ZUKAN_LIST ) == TRUE ){
     HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
         CHECKBOX_CLWKID,APP_COMMON_BARICON_CHECK_ON );
 	}else{

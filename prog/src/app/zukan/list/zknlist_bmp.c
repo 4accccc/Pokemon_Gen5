@@ -327,7 +327,7 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_TITLE );
 
 	// 全国図鑑
-	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == ZUKAN_MODE_ZENKOKU ){
 		StrPrint( wk, ZKNLISTBMP_WINIDX_TITLE, str_title_01, 0, 4, FCOL_SP00WN, PRINTTOOL_MODE_LEFT );
 	// イッシュ図鑑
 	}else{
@@ -386,7 +386,7 @@ void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 	u32	see, get;
 
 	// 全国
-	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == ZUKAN_MODE_ZENKOKU ){
 		see = ZUKANSAVE_GetPokeSeeCount( wk->dat->savedata );
 		get = ZUKANSAVE_GetPokeGetCount( wk->dat->savedata );
 	// イッシュ
@@ -451,7 +451,7 @@ void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * 
 	que = FRAMELIST_GetPrintQue( wk->lwk );
 
 	// 図鑑番号
-	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == FALSE ){
+	if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) != ZUKAN_MODE_ZENKOKU ){
 		num = wk->localNo[num];
 	}
 	str = GFL_MSG_CreateString( wk->mman, str_poek_num );

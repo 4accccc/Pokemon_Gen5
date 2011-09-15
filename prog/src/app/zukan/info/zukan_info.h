@@ -106,21 +106,21 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
 extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             HEAPID                 a_heap_id,
                             u16                    a_monsno,
-                            u16                    a_formno,
-                            u16                    a_sex,
-                            u16                    a_rare,
-                            u32                    a_personal_rnd,
-                            BOOL                   a_zenkoku_flag,
+                            u16                    a_formno,        // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
+                            u16                    a_sex,           // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
+                            u16                    a_rare,          // 0(レアじゃない)か1(レア)  // PP_CheckRare( pp ) 
+                            u32                    a_personal_rnd,  // ?  // personal_rndはmonsno==MONSNO_PATTIIRUのときは必須
+                            ZUKAN_MODE             zukan_mode,
                             BOOL                   a_get_flag,
                             ZUKAN_INFO_LAUNCH      a_launch,
                             ZUKAN_INFO_DISP        a_disp,
                             u8                     a_bg_priority,
                             GFL_CLUNIT*            a_clunit,
                             GFL_FONT*              a_font,
-                            PRINT_QUE*             a_print_que,      // 独自のprint_queを生成することにしたので使用しない
+                            PRINT_QUE*             a_print_que,     // 独自のprint_queを生成することにしたので使用しない
                             GFL_MSGDATA*           a_msgdata_kind,      // 日本語の○○ポケモン
                             GFL_MSGDATA*           a_msgdata_height,    // 日本語の高さ
-                            GFL_MSGDATA*           a_msgdata_weight );  // 日本語の重さ
+                            GFL_MSGDATA*           a_msgdata_weight );   // 日本語の重さ
 
 //-------------------------------------
 /// 終了処理

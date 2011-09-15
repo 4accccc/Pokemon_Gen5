@@ -236,6 +236,7 @@ void HABITAT_LIST_GRA_Init( HABITAT_LIST_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
   GRA_SetBlendAlpha();            // 半透明処理
   GRA_SetWindow();                // ウィンドウ設定
+
 }
 
 //----------------------------------------------------------------------------
@@ -252,6 +253,9 @@ BOOL HABITAT_LIST_GRA_FrameListInit( HABITAT_LIST_GRA_WK *p_wk )
   // リストの初期化待ち
   if( FRAMELIST_Init( p_wk->p_lwk ) == TRUE )
   {
+    // カーソル位置をLRボタンの表示状態を設定
+    SetCursorEnable( p_wk, TRUE );
+    SetLRButtonAnm( p_wk , FALSE);
     return FALSE;
   }
   return TRUE;

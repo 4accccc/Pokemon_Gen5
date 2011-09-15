@@ -74,7 +74,6 @@ typedef struct {
   ZUKAN_DETAIL_TYPE   detail_type;    // SEQ_INFO_CALLのときのみ使用
   BOOL                is_habitat_call;// 生息地リストからの呼び出し 
   BOOL                is_info_call;   // 詳細画面からの呼び出し
-  u16                 habitat_list_index;   // 生息地リストインデックス
 
 	void * work;			// 各処理のワーク
 }ZUKAN_MAIN_WORK;
@@ -183,7 +182,13 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	if( wk->prm->callMode == ZUKAN_MODE_TOP ){
 		wk->mainSeq = SEQ_TOP_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_LIST ){
-		wk->mainSeq = SEQ_LIST_CALL;
+    if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == ZUKAN_MODE_HABITAT ){
+      wk->mainSeq = SEQ_HABITAT_ZONE_LIST_CALL;
+    }
+    else
+    {
+      wk->mainSeq = SEQ_LIST_CALL;
+    }
 	}else if( wk->prm->callMode == ZUKAN_MODE_INFO ){
 		wk->mainSeq = SEQ_INFO_CALL;
     wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
@@ -383,7 +388,13 @@ static int MainSeq_EndTop( ZUKAN_MAIN_WORK * wk )
 		break;
 
 	case ZKNTOP_RET_LIST:			// リスト画面へ
-		ret = SEQ_LIST_CALL;
+    if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == ZUKAN_MODE_HABITAT ){
+      ret = SEQ_HABITAT_ZONE_LIST_CALL;
+    }
+    else
+    {
+      ret = SEQ_LIST_CALL;
+    }
 		break;
 	}
 
@@ -411,6 +422,13 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 
 	list->gamedata = wk->prm->gamedata;
 	list->savedata = wk->prm->savedata;
+
+  // 生息地リストモードで呼ばれていはいけない
+  if( ZUKANSAVE_GetZukanMode( list->savedata ) == ZUKAN_MODE_HABITAT ){
+    // 念のため呼ばれた場合はイッシュ図鑑にしておく
+    ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL);
+    GF_ASSERT( 0 );
+  }
 
 	list->callMode = wk->listMode;
 	if( wk->listMode == ZKNLIST_CALL_NORMAL && ZKNCOMM_CheckLocalListNumberZero(wk->prm->savedata) == FALSE ){
@@ -753,7 +771,6 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     else
     {
       ONOUE_Printf("リスト画面へ戻る\n");
-      //wk->habitat_list_index = p_zone_info->select_index;
       ret = SEQ_HABITAT_ZONE_LIST_CALL;
     }
     wk->is_habitat_call = FALSE;
@@ -809,6 +826,8 @@ static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
 	p_zone_list->p_gdata = wk->prm->gamedata;
 
   // リストデータを作成する
+  FreeListData( wk );
+  FreeHabitatListData( wk );
   ZKNCOMM_MakeHabitatListData( p_habitat_sv,p_zone_list );
 
   GFL_PROC_LOCAL_CallProc( wk->localProc,
@@ -843,27 +862,30 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
     wk->prm->retMode = ZUKAN_RET_NORMAL;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
+    ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_HABITAT);
     ret = SEQ_HABITAT_ZONE_CALL;
     break;
   case HABITAT_LIST_RET_ZENKOKU:
     {
-      // 地方図鑑だった場合は切り替えて呼び出し
-      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == FALSE ){
-        ZUKANSAVE_SetZukanMode( wk->prm->savedata , TRUE);
-        FreeListData( wk );
-        wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
+      // 現在のリストモードは必ず生息地リスト
+      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) != ZUKAN_MODE_HABITAT ){
+        GF_ASSERT(0);
       }
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_ZENKOKU);
+      FreeListData( wk );
+      wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       ret = SEQ_LIST_CALL;
     }
     break;
   case HABITAT_LIST_RET_LOCAL:
     {
-      // 全国図鑑だった場合は切り替えて呼び出し
-      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == TRUE ){
-        ZUKANSAVE_SetZukanMode( wk->prm->savedata , FALSE);
-        FreeListData( wk );
-        wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
+      // 現在のリストモードは必ず生息地リスト
+      if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) != ZUKAN_MODE_HABITAT ){
+        GF_ASSERT(0);
       }
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL);
+      FreeListData( wk );
+      wk->listMax = ZKNCOMM_MakeDefaultList( wk->prm->savedata, &wk->list, HEAPID_ZUKAN_SYS );
       ret = SEQ_LIST_CALL;
     }
     break;

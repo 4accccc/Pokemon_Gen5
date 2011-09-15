@@ -257,7 +257,7 @@ void ZKNCOMM_InitDefaultMons( ZUKAN_SAVEDATA * sv, u16 * list, u16 max )
 BOOL ZKNCOMM_CheckLocalListNumberZero( ZUKAN_SAVEDATA * sv )
 {
 	// 表示モードが全国
-	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
+	if( ZUKANSAVE_GetZukanMode( sv ) == ZUKAN_MODE_ZENKOKU ){
 		return TRUE;
 	}
 
@@ -282,7 +282,7 @@ BOOL ZKNCOMM_CheckLocalListNumberZero( ZUKAN_SAVEDATA * sv )
 //--------------------------------------------------------------------------------------------
 void ZKNCOMM_ResetSortData( const ZUKAN_SAVEDATA * sv, ZKNCOMM_LIST_SORT * sort )
 {
-	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
+	if( ZUKANSAVE_GetZukanMode( sv ) == ZUKAN_MODE_ZENKOKU ){
 		sort->mode = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
 	}else{
 		sort->mode = ZKNCOMM_LIST_SORT_MODE_LOCAL;

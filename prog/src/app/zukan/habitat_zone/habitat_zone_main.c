@@ -79,8 +79,8 @@ static const GFL_UI_TP_HITTBL sc_touch_hit_tbl_top_menu[] =
 	{ TB_PY, TB_PY+TB_SY-1, 0, 24 },		    // 上
 	{ TB_PY, TB_PY+TB_SY-1, 24, 24+24 },		    // 下
 
-	{ 102, 102 + 24, 8 , 32 },		          // 季節L
-	{ 102, 102 + 24, 224 , 240 },		        // 季節R
+	{ 102, 102 + 24, 8 , 32     },		        // 季節L
+	{ 102, 102 + 24, 232 , 248  },		        // 季節R
 	
   // カーソル
   { GET_CURPOS_Y(0) ,GET_CURPOS_Y(0) + POKECURSOR_H,
@@ -476,10 +476,20 @@ static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
       // 文字描画終了を待ってフェードを呼び出す
       if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
+        GFL_CLWK *p_clwk;
+
         p_wk->main_scroll_cnt = 0;
         p_wk->sub_scroll_cnt  = 0;
         // パレットフェードを行う
         HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,0,16 );
+
+        // 説明を見るボタンを削除
+        ClearExplanationMsg( p_wk );
+        // 説明を見る
+        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
+            OBJ_WK_BUTTON_EXPLANATION );
+        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+ 
         p_wk->sub_seq++;
       }
     }
