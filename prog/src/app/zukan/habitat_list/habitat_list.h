@@ -43,6 +43,7 @@ typedef struct {
   u8            is_exist_landtype[ HABITAT_GROUND_MAX ];
   HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  // コンプリートしているか
   HABITAT_LIST_STATUS list_status[ HABITAT_GROUND_MAX ];  // リストの状態
+  BOOL                is_vanish[ HABITAT_GROUND_MAX ];    // リストの表示状態
 }ZUKANHABITAT_LIST_LISTDATA;
 
 //===================================================================================

@@ -1565,9 +1565,12 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   s32 i;
   BOOL is_notice = FALSE;
   BOOL is_cmp;
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ];
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] & 
+    p_data->is_vanish[ HABITAT_GROUND_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] &
+    p_data->is_vanish[ HABITAT_GROUND_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] &
+    p_data->is_vanish[ HABITAT_GROUND_FISHING ];
 
   const BOOL land_type[][HABITAT_GROUND_MAX]=
   {
@@ -1590,13 +1593,14 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
     }
   }
 
+  ONOUE_Printf("%d %d %d\n",p_data->is_exist_landtype[ HABITAT_GROUND_LAND ],p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ],p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ]);
   if( index < 0 )
   {
     GF_ASSERT_MSG(0,"未知の背景タイプが指定されています\n");
     index = 0;
   }
 
-  // コンプリートチェック
+  // コンプリートチェック(非表示でもチェック)
   is_cmp = TRUE; 
   for( i = 0; i < HABITAT_GROUND_MAX ; i++ )
   {
@@ -1746,10 +1750,14 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   GRA_ICON_DATA *p_icondata;
   GFL_CLACTPOS pos;
   ZUKANHABITAT_LIST_LISTDATA *p_data = &p_wk->p_list_data[item_index];
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ];
   
+  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] & 
+    p_data->is_vanish[ HABITAT_GROUND_LAND ];
+  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] &
+    p_data->is_vanish[ HABITAT_GROUND_WATERSIDE ];
+  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] &
+    p_data->is_vanish[ HABITAT_GROUND_FISHING ];
+
   // HABITAT_LIST_STATUSと同じ順番で、アニメーションシーケンスを定義
   u16 anm_seq;
   u16 sc_anm_seq_tbl[] =
@@ -2098,7 +2106,8 @@ static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk )
   // リストアイコンの位置決定
   for( i = 0; i < HABITAT_GROUND_MAX; i++ )
   {
-    if( p_wk->p_list_data[cursor_pos+sc_cnt].is_exist_landtype[i] == TRUE )
+    if( (p_wk->p_list_data[cursor_pos+sc_cnt].is_exist_landtype[i] == TRUE) &&
+        (p_wk->p_list_data[cursor_pos+sc_cnt].is_vanish[i] == TRUE))
     {
       pos.x -= 16;
       exist_cnt ++;

@@ -165,7 +165,7 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 
 //	OS_Printf( "↓↓↓↓↓　図鑑処理開始　↓↓↓↓↓\n" );
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_SYS, 0x8000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_SYS, 0x10000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(ZUKAN_MAIN_WORK), HEAPID_ZUKAN_SYS );
 	GFL_STD_MemClear( wk, sizeof(ZUKAN_MAIN_WORK) );

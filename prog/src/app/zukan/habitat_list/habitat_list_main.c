@@ -827,7 +827,8 @@ static void MAINSEQ_ItemBlink( HABITAT_LIST_WK *p_wk )
 
   for( i = 0; i < HABITAT_GROUND_MAX; i++ )
   {
-    if( p_data->is_exist_landtype[i] == TRUE )
+    if( (p_data->is_exist_landtype[i] == TRUE) 
+        && (p_data->is_vanish[i] == TRUE) )
     {
       if( p_data->is_complete[i] != HABITAT_ZONE_STATUS_GET )
       {
@@ -1065,19 +1066,22 @@ static HABITAT_GROUND_TYPE GetButtonType(
     HABITAT_GROUND_MAX
   };
 
-  if( p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] == TRUE )
+  if( (p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] == TRUE )
+      && ( p_data->is_vanish[HABITAT_GROUND_FISHING] == TRUE ) )
   {
     button_data[ index ] = HABITAT_GROUND_FISHING;
     ONOUE_Printf("íﬁÅ@");
     index--;
   }
-  if( p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] == TRUE )
+  if( (p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] == TRUE) 
+      && ( p_data->is_vanish[HABITAT_GROUND_WATERSIDE] == TRUE ) )
   {
     button_data[ index ] = HABITAT_GROUND_WATERSIDE;
     ONOUE_Printf("êÖÅ@");
     index--;
   }
-  if( p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] == TRUE )
+  if( (p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] == TRUE )
+      && ( p_data->is_vanish[HABITAT_GROUND_LAND] == TRUE ) )
   {
     ONOUE_Printf("ëêÅ@");
     button_data[ index ] = HABITAT_GROUND_LAND;
