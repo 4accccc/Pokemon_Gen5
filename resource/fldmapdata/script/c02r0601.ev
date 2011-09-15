@@ -160,8 +160,8 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
-        //アイテム入手【仮】落し物は仮です
-        _ITEM_EVENT_NOWAIT( ITEM_DUMMY_DATA, 1 )
+        //アイテム入手
+        _ITEM_EVENT_NOWAIT( ITEM_YOGORETAHANKATI, 1 )
 
         //========================================//
         //イベント進行
@@ -187,8 +187,8 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
       _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_05 )
       _MSGWIN_CLOSE()
 
-      //アイテム入手【仮】アイテム（きのみジュース）は仮です
-      _ITEM_EVENT_NOWAIT( ITEM_KINOMIZYUUSU, 1 )
+      //アイテム入手：エネコのしっぽ
+      _ITEM_EVENT_NOWAIT( ITEM_ENEKONOSIPPO, 1 )
 
       //========================================//
       //イベント進行
@@ -264,7 +264,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
 
       //アイテム減算処理【仮】落し物アイテムは仮です
       DEFINE_LOCAL LWK_REDUCE
-      _SUB_ITEM( ITEM_DUMMY_DATA, 1, LWK_REDUCE )
+      _SUB_ITEM( ITEM_YOGORETAHANKATI, 1, LWK_REDUCE )
 
       //男性：おとしもの　みつけてくれて
       _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_03 )

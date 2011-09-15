@@ -70,8 +70,8 @@ EVENT_START   ev_c03p12_informationw_01
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
 
-      //名所ご褒美受け取り【仮】アイテムは仮です
-      _ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+      //名所ご褒美受け取り：こおりなおし
+      _ITEM_EVENT_KEYWAIT( ITEM_KOORINAOSI, 1 )
 
       //========================================//
       //トレーナー戦勝利
@@ -80,6 +80,16 @@ EVENT_START   ev_c03p12_informationw_01
       //C03イベント進行
       $WK_SCENE_C03_RALLY_01 += 1
       //========================================//
+      
+      //進行状況計算
+      DEFINE_LOCAL LWK_POINT_NUM
+      $LWK_POINT_NUM += 6
+      $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
+      
+      //主人公名代入
+      _PLAYER_NAME( 0 )
+      //訪れていない場所の数値を指定タグにセット
+      _NUMBER( 1, LWK_POINT_NUM, 1 )
 
       //戦闘後、全てのポイントをめぐっていた場合
       IF $WK_SCENE_C03_RALLY_01 == 6 THEN

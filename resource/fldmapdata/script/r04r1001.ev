@@ -235,8 +235,8 @@ ev_r04r1001_nakigoe_01:
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
-      //アイテム（おいしいみず）入手    【仮】入手アイテムは仮です
-      _ITEM_EVENT_NOWAIT( ITEM_OISIIMIZU, 1 )
+      //どうぐ入手処理：ポケじゃらし
+      _ITEM_EVENT_NOWAIT( ITEM_POKEZYARASI, 1 )
 
       //========================================//
       //アイテム入手フラグON
