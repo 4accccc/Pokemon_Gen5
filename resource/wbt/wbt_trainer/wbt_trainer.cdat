@@ -2274,7 +2274,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2303,7 +2303,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2332,7 +2332,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2361,7 +2361,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2390,7 +2390,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2419,7 +2419,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2448,7 +2448,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2477,7 +2477,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2506,7 +2506,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2535,7 +2535,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2564,7 +2564,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2593,7 +2593,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2622,7 +2622,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2651,7 +2651,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2680,7 +2680,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2709,7 +2709,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2738,7 +2738,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2767,7 +2767,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2796,7 +2796,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2825,7 +2825,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2854,7 +2854,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2883,7 +2883,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2912,7 +2912,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2941,7 +2941,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2970,7 +2970,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -2999,7 +2999,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3028,7 +3028,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3057,7 +3057,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3086,7 +3086,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3115,7 +3115,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3144,7 +3144,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3173,7 +3173,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3202,7 +3202,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3231,7 +3231,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3260,7 +3260,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3289,7 +3289,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3318,7 +3318,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3347,7 +3347,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3376,7 +3376,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3405,7 +3405,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3434,7 +3434,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3463,7 +3463,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3492,7 +3492,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3521,7 +3521,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3550,7 +3550,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3579,7 +3579,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3608,7 +3608,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3637,7 +3637,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3666,7 +3666,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
@@ -3695,7 +3695,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_WCS, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //パワー乱数
