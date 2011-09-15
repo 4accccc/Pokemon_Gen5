@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-26T15:10:03" source="c7_house_03.mb"/>
+	<create user="fujiwara" host="W00251" date="2011-09-14T17:49:24" source="c7_house_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-26T15:10:03" source="c7_house_03.mb"/>
+<original_create user="fujiwara" host="W00251" date="2011-09-14T17:49:24" source="c7_house_03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c7h3_1_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c7_house_03/tex/c7h3_1.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c7_house_03/tex/c7h3_1.tga"
 	>
 		<bitmap size="512">
 			2221 1222 1111 1111 1111 1111 1111 1111
@@ -109,7 +109,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c7h3_2_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c7_house_03/tex/c7h3_2.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c7_house_03/tex/c7h3_2.tga"
 	>
 		<bitmap size="1024">
 			9999 9999 9999 9999 9999 9999 9999 9999
@@ -247,7 +247,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c7h3_4_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c7_house_03/tex/c7h3_4.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c7_house_03/tex/c7h3_4.tga"
 	>
 		<bitmap size="256">
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -288,7 +288,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_kage.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c7_house_03/tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -302,7 +302,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_mado.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/c7_house_03/tex/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -564,7 +564,7 @@
 					<pos_xz xz="-5.000000 0.000000"/>
 					<pos_xy xy="5.000000 7.250000"/>
 					<tex st="-1536.062500 57.562500"/>
-					<nrm xyz="0.000000 0.783203 0.621094"/>
+					<nrm xyz="0.000000 0.794922 0.605469"/>
 					<pos_s xyz="-5.000000 5.250000 2.625000"/>
 					<tex st="-1392.000000 57.562500"/>
 					<pos_xy xy="5.000000 5.250000"/>
@@ -613,12 +613,10 @@
 					<tex st="340.375000 64.000000"/>
 					<pos_xy xy="-5.000000 4.500000"/>
 					<tex st="461.187500 5.000000"/>
-					<nrm xyz="0.000000 0.783203 0.621094"/>
-					<pos_s xyz="5.000000 5.250000 3.500000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="5.000000 5.250000 3.500000"/>
 					<pos_xz xz="5.000000 2.625000"/>
 					<pos_xy xy="-5.000000 5.250000"/>
-					<nrm xyz="0.000000 0.783203 0.621094"/>
 					<pos_xz xz="-5.000000 3.500000"/>
 					<tex st="324.250000 58.000000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
@@ -630,18 +628,14 @@
 					<tex st="416.000000 58.000000"/>
 					<pos_xy xy="5.000000 7.250000"/>
 					<tex st="320.250000 63.500000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_yz yz="6.500000 -2.000000"/>
 					<tex st="416.000000 63.500000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_yz yz="4.250000 -5.000000"/>
 					<tex st="416.000000 58.500000"/>
 					<pos_xy xy="5.000000 5.000000"/>
 					<tex st="320.250000 58.500000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_yz yz="7.250000 -2.000000"/>
 					<tex st="340.375000 58.000000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_xz xz="5.000000 0.000000"/>
 					<tex st="340.375000 64.000000"/>
 					<pos_xy xy="5.000000 6.500000"/>
@@ -1161,18 +1155,15 @@
 					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_s xyz="3.500000 0.750000 2.000000"/>
 					<tex st="-79.062500 32.625000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="3.500000 3.500000"/>
 					<tex st="-64.437500 32.625000"/>
 					<pos_xz xz="3.500000 4.000000"/>
 					<tex st="-64.437500 63.312500"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_xy xy="3.500000 0.750000"/>
 					<tex st="-62.875000 32.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_yz yz="5.000000 2.000000"/>
 					<tex st="-62.875000 56.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="3.500000 3.500000"/>
 					<tex st="-62.187500 56.000000"/>
 					<pos_xy xy="4.500000 3.500000"/>
@@ -1185,10 +1176,8 @@
 					<tex st="-64.000000 31.125000"/>
 					<pos_xy xy="3.500000 0.750000"/>
 					<tex st="-73.000000 31.125000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="4.500000 0.750000"/>
 					<tex st="-62.125000 56.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-1.000000 3.500000"/>
 					<tex st="-62.687500 56.000000"/>
 					<pos_xy xy="1.000000 3.500000"/>
@@ -1234,12 +1223,10 @@
 					<tex st="-6.000000 0.000000"/>
 					<pos_xy xy="1.000000 5.750000"/>
 					<tex st="-6.000000 26.750000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="1.000000 3.500000"/>
 					<tex st="24.000000 26.750000"/>
 					<pos_xy xy="3.500000 3.500000"/>
 					<tex st="24.000000 0.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="3.500000 5.750000"/>
 				</primitive>
 				<primitive index="1" type="triangles" vertex_size="6">
@@ -1270,7 +1257,7 @@
 				<primitive index="0" type="quads" vertex_size="116">
 					<mtx idx="0"/>
 					<tex st="255.375000 57.562500"/>
-					<nrm xyz="0.000000 0.783203 0.621094"/>
+					<nrm xyz="0.000000 0.794922 0.605469"/>
 					<pos_s xyz="5.000000 -5.750000 -2.000000"/>
 					<tex st="255.375000 0.000000"/>
 					<pos_yz yz="-3.500000 -5.000000"/>
@@ -1348,18 +1335,14 @@
 					<tex st="416.000000 58.000000"/>
 					<pos_xy xy="-5.000000 -6.500000"/>
 					<tex st="320.250000 63.500000"/>
-					<nrm xyz="0.000000 -1.000000 0.000000"/>
 					<pos_yz yz="-5.750000 -2.000000"/>
 					<tex st="416.000000 63.500000"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="-3.500000 -5.000000"/>
 					<tex st="416.000000 58.500000"/>
 					<pos_xy xy="-5.000000 -4.250000"/>
 					<tex st="320.250000 58.500000"/>
-					<nrm xyz="0.000000 -1.000000 0.000000"/>
 					<pos_yz yz="-6.500000 -2.000000"/>
 					<tex st="341.250000 58.000000"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xz xz="-5.000000 0.000000"/>
 					<tex st="341.250000 64.000000"/>
 					<pos_xy xy="-5.000000 -5.750000"/>
