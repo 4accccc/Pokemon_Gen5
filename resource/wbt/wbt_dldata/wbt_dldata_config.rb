@@ -11,6 +11,10 @@ require "wbt_dldata_util.rb"
 CONFIG_START_ROW	= 3
 CONFIG_START_COL	= 3
 
+# 文字列
+$config_str = [ "出力",
+]
+
 #------------------------------------------------
 #------------------------------------------------
 #------------------
@@ -61,8 +65,9 @@ class WBT_CONFIG
       # セット
       id = hash2no( $ox_hash, str );
       if(id == -1)
-        # 該当する性別がない=>エラー
-        print_error( str, 0 );
+        # 該当する「○×」がない=>エラー
+        print_error_str( $config_str[0], str );
+        config_exit();
       else
         @output[i] = id;
       end
@@ -72,6 +77,14 @@ class WBT_CONFIG
       end
     }
     return( @output )
+  end
+  
+  #----------------------------------
+  # 戻る処理
+  #----------------------------------
+  def config_exit()
+    @conv.close_file();
+    exit(1)
   end
   
 end

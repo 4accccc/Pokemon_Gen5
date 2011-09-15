@@ -164,7 +164,7 @@ class WBT_DATA
     ret = chkblank( @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW ),
                                      DATA_UP_START_COL+DATA_TOURNAMENT, $title_str[0] )
     if(ret == -1)
-      wbt_exit();
+      data_exit();
     end
     # セット
     @tournament_id = @conv.get_cell(0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW).to_i;
@@ -173,7 +173,7 @@ class WBT_DATA
     flg = chk_num_range( @tournament_id, 1, 65535 );
     if(flg == -1)
       print_error_num( $title_str[0], @tournament_id );
-      wbt_exit();
+      data_exit();
     end
     
     if(@local_debug == 1)
@@ -190,7 +190,7 @@ class WBT_DATA
       ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW), 
                                         DATA_UP_START_COL+DATA_YEAR+i, $title_str[1+i])
       if(ret == -1)
-        wbt_exit();
+        data_exit();
       end
       # セット
       @day[i] = @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW).to_i;
@@ -210,7 +210,7 @@ class WBT_DATA
       flg = chk_num_range( @day[i], min, max )
       if(flg == -1)
         print_error_num( $title_str[1+i], @day[i] );
-        wbt_exit();
+        data_exit();
       end
       
       if(@local_debug == 1)
@@ -227,12 +227,13 @@ class WBT_DATA
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW),
                                       DATA_UP_START_COL+4, $title_str[4] )
     if(ret == -1)
-      wbt_exit();
+      data_exit();
     end
     # セット
     num = hash2no( $version_hash, @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
     if(num == -1)
-      print_error( $title_str[4], 0 );
+      print_error_str( $title_str[4], @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
+      data_exit();
     else
       @version = num;
     end
@@ -250,7 +251,7 @@ class WBT_DATA
       ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW), 
                       1+DATA_UP_START_COL+DATA_LANG_JPN+i, $title_str[DATA_LANG_JPN+i])
       if(ret == -1)
-        wbt_exit();
+        data_exit();
       end
       # セット
       num = hash2no( $ng_hash, @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW) );
@@ -274,7 +275,7 @@ class WBT_DATA
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW),
                                       DATA_UP_START_COL+14+@local_language, $title_str[12])
     if(ret == -1)
-      wbt_exit();
+      data_exit();
     end
     #
     # 変換
@@ -299,7 +300,7 @@ class WBT_DATA
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW),
                                       DATA_UP_START_COL+23+@local_language, $title_str[13])
     if(ret == -1)
-      wbt_exit();
+      data_exit();
     end
     
     # 変換
@@ -319,7 +320,7 @@ class WBT_DATA
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW), 
                                       DATA_UP_START_COL+32+@local_language, $title_str[14])
     if(ret == -1)
-      wbt_exit();
+      data_exit();
     end
     
     # 変換
@@ -334,7 +335,7 @@ class WBT_DATA
   #----------------------------------
   # 戻る処理
   #----------------------------------
-  def wbt_exit()
+  def data_exit()
     @conv.close_file();
     exit(1)
   end

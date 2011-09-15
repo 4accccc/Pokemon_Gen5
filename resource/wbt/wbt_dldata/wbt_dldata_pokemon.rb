@@ -23,11 +23,34 @@ $poke_str = ["ポケモン名",
              "ボールID",
              "パワー乱数",
              "努力値",
+             
              "技",
              "なつきど",
              "レア",
              "ニックネーム",
              "PPUP",
+             "パワー乱数(HP)",
+             "パワー乱数(ATK)",
+             "パワー乱数(DEF)",
+             "パワー乱数(AGI)",
+             "パワー乱数(SATK)",
+             
+             "パワー乱数(SDEF)",
+             "努力値(HP)",
+             "努力値(ATK)",
+             "努力値(DEF)",
+             "努力値(AGI)",
+             "努力値(SATK)",
+             "努力値(SDEF)",
+             "技1",
+             "技2",
+             "技3",
+              
+             "技4",
+             "PPUP1",
+             "PPUP2",
+             "PPUP3",
+             "PPUP4",
 ]
 
 #------------------------------------------------
@@ -139,7 +162,8 @@ class WBT_POKEMON_SINGLE
     id = hash2no( $monsno_hash, str );
     if(id == -1)
       # 該当するポケモンがない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[0], str );
+      poke_exit();
     else
       @monsno = id;
     end
@@ -162,6 +186,14 @@ class WBT_POKEMON_SINGLE
     end
     # セット
     @form_no = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1).to_i
+    #
+    # 範囲チェック(0-255)(u8)
+    flg = chk_num_range( @form_no, 0, 255 )
+    if(flg == -1)
+      print_error_num( $poke_str[1], @form_no );
+      poke_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d", $poke_str[1], @form_no )
     end
@@ -180,6 +212,14 @@ class WBT_POKEMON_SINGLE
     end
     # セット
     @level = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2).to_i
+    #
+    # 範囲チェック(0-255)(u8)
+    flg = chk_num_range( @level, 0, 255 )
+    if(flg == -1)
+      print_error_num( $poke_str[2], @level );
+      poke_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d", $poke_str[2], @level )
     end
@@ -201,7 +241,8 @@ class WBT_POKEMON_SINGLE
     id = hash2no( $sex_hash, str );
     if(id == -1)
       # 該当する性別がない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[3], str );
+      poke_exit();
     else
       @power_rnd |= id<<30;
     end
@@ -242,12 +283,14 @@ class WBT_POKEMON_SINGLE
     if(ret == -1)
       poke_exit();
     end
+    #
     # セット
     str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5)
     id = hash2no( $seikaku_hash, str );
     if(id == -1)
       # 該当する性格がない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[4], str );
+      poke_exit();
     else
       @seikaku = id;
     end
@@ -273,7 +316,8 @@ class WBT_POKEMON_SINGLE
     id = hash2no( $tokusei_hash, str );
     if(id == -1)
       # 該当する特性がない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[5], str );
+      poke_exit();
     else
       @tokusei = id;
     end
@@ -299,7 +343,8 @@ class WBT_POKEMON_SINGLE
     id = hash2no( $item_hash, str );
     if(id == -1)
       # 該当するアイテムがない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[6], str );
+      poke_exit();
     else
       @item_no = id;
     end
@@ -325,7 +370,8 @@ class WBT_POKEMON_SINGLE
     id = hash2no( $ball_hash, str );
     if(id == -1)
       # 該当するボールがない=>エラー
-      print_error( str, 0 );
+      print_error_str( $poke_str[7], str );
+      poke_exit();
     else
       @ball_id = id;
     end
@@ -343,7 +389,7 @@ class WBT_POKEMON_SINGLE
     offset = 2*@poke_id+17*@trainer_id
     6.times{|i|
       ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i ),
-                                        POKE_START_COL+offset, $poke_str[8] )
+                                        POKE_START_COL+offset, $poke_str[15+i] )
       if(ret == -1)
         poke_exit();
       end
@@ -351,7 +397,13 @@ class WBT_POKEMON_SINGLE
       # セット
       id = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i).to_i
       #
-#      @power_rnd |= (id<<((5-i)*5))
+      # 範囲チェック(0 - 31)
+      flg = chk_num_range( id, 0, 31 )
+      if(flg == -1)
+        print_error_num( $poke_str[15+i], id );
+        poke_exit();
+      end
+      #
       @power_rnd |= (id<<(i*5))
     }
     #
@@ -372,13 +424,20 @@ class WBT_POKEMON_SINGLE
     offset = 2*@poke_id+17*@trainer_id
     6.times{|i|
       ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i ),
-                                        POKE_START_COL+1+offset, $poke_str[9] )
+                                        POKE_START_COL+1+offset, $poke_str[21+i] )
       if(ret == -1)
         poke_exit();
       end
       #
       # セット
       @expbuf[i] = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i).to_i
+      #
+      # 範囲チェック(0 - 255)(u8)
+      flg = chk_num_range( @expbuf[i], 0, 255 )
+      if(flg == -1)
+        print_error_num( $poke_str[21+i], @expbuf[i] );
+        poke_exit();
+      end
     }
     #
     if(@local_debug == 1)
@@ -397,8 +456,9 @@ class WBT_POKEMON_SINGLE
     offset = 2*@poke_id+17*@trainer_id
     #
     PTL_WAZA_MAX.times{|i|
-      ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i ),
-                                        POKE_START_COL+offset, $poke_str[10] )
+      ret = chkblank_no_print( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i ) );
+#      ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i ),
+#                                        POKE_START_COL+offset, $poke_str[27+i] )
       # 空白の場合は「なし」で処理
       if(ret == -1)
         break;
@@ -408,8 +468,9 @@ class WBT_POKEMON_SINGLE
       str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i)
       id = hash2no( $wazano_hash, str );
       if(id == -1)
-        # 該当する性別がない=>エラー
-        print_error( str, 0 );
+        # 該当する技がない=>エラー
+        print_error_str( $poke_str[27+i], str );
+        poke_exit();
       else
         @waza_id[i] = id;
       end
@@ -429,19 +490,20 @@ class WBT_POKEMON_SINGLE
     #
     PTL_WAZA_MAX.times{|i|
       ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i ),
-                                        POKE_START_COL+1+offset, $poke_str[14] )
+                                        POKE_START_COL+1+offset, $poke_str[31+i] )
       # 念のため
       if(ret == -1)
         poke_exit();
       end
+      #
       # セット
       str = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i)
       id = hash2no( $ppup_hash, str );
       if(id == -1)
-        # 該当する性別がない=>エラー
-        print_error( str, 0 );
+        # 該当するPPUPがない=>エラー
+        print_error_str( $poke_str[31+i], str );
+        poke_exit();
       else
-#        @pp_count |= (id<<(3-i)*2);
         @pp_count |= (id<<(i*2));
       end
       #
@@ -464,6 +526,14 @@ class WBT_POKEMON_SINGLE
     end
     # セット
     @friend_rate = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20).to_i
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @friend_rate, 0, 255 )
+    if(flg == -1)
+      print_error_num( $poke_str[11], @friend_rate );
+      poke_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d", $poke_str[11], @friend_rate )
     end

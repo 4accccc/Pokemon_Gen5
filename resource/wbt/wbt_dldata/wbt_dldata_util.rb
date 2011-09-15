@@ -299,7 +299,8 @@ end
 #-------------------------
 def chkblank( str, num, mstr )
   if(str == nil)
-    p sprintf("[%s](%d) %s", mstr,num,$error_str[1])
+#    p sprintf("[%s](%d) %s", mstr,num,$error_str[1])
+    p sprintf("[%s] %s", mstr,$error_str[1])
     return(-1);
   end
   return(0);
@@ -337,17 +338,17 @@ def chk_num_range( input, minnum, maxnum )
 end
 
 #-------------------------
-# エラー表示まとめ
-#-------------------------
-def print_error( str, num )
-  p sprintf("[%s] %s", str, $error_str[num])
-end
-
-#-------------------------
-# エラー表示まとめ
+# エラー表示まとめ(数字)
 #-------------------------
 def print_error_num( str, num )
   p sprintf("[%s] %s : %d", str, $error_str[0], num )
+end
+
+#-------------------------
+# エラー表示まとめ(文字列)
+#-------------------------
+def print_error_str( str, mstr )
+  p sprintf("[%s] %s : %s", str, $error_str[0], mstr )
 end
 
 #-------------------------

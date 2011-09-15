@@ -44,7 +44,7 @@ class WBT_MATCH_SINGLE
     @local_debug = 0;
     # debug
     if($debug_code == 1)
-#      @local_debug = 1;
+      @local_debug = 1;
     end
     #
     set_parameter();
@@ -70,12 +70,13 @@ class WBT_MATCH_SINGLE
     ret = chkblank( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id ), 
                                       MATCH_START_COL, $match_str[0])
     if(ret == -1)
-      wbt_exit();
+      match_exit();
     end
     # セット
     num = hash2no( $match_hash, @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
     if(num == -1)
-      print_error( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id), 0 );
+      print_error_str( $match_str[0], @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
+      match_exit();
     else
       @type = num;
     end
@@ -93,10 +94,16 @@ class WBT_MATCH_SINGLE
     ret = chkblank( @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id ),
                                       MATCH_START_COL+1, $match_str[1] )
     if(ret == -1)
-      poke_exit();
+      match_exit();
     end
     # セット
     @pri = @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id).to_i
+    # 範囲のチェック(0 - 5)
+    flg = chk_num_range( @pri, 0, 5 );
+    if(flg == -1)
+      print_error_num( $match_str[1], @pri );
+      match_exit();
+    end
     #
     if(@local_debug == 1)
       p sprintf("%s :%d", $match_str[1], @pri )
@@ -111,7 +118,7 @@ class WBT_MATCH_SINGLE
     ret = chkblank( @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id ),
                                       MATCH_START_COL+2, $match_str[2] )
     if(ret == -1)
-      poke_exit();
+      match_exit();
     end
     #
     num = hash2no( $skip_hash, @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id) );
@@ -119,6 +126,12 @@ class WBT_MATCH_SINGLE
       @id = @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id).to_i
     else
       @id = 0
+    end
+    # 範囲のチェック(0 - 999)
+    flg = chk_num_range( @id, 0, 999 );
+    if(flg == -1)
+      print_error_num( $match_str[2], @id );
+      match_exit();
     end
     #
     if(@local_debug == 1)

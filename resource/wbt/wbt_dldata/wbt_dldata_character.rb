@@ -28,11 +28,16 @@ $trainer_str = ["トレーナー名",
                 "戦闘後、勝ちメッセージID",
                 "戦闘後、負けメッセージID",
                 "戦闘勝ちメッセージID",
+                
                 "戦闘負けメッセージID",
                 "決勝前口上ID",
                 "国コード",
                 "AI設定",
                 "トレーナータイプ",
+                "AI基本",
+                "AI威力高い",
+                "AIエキスパート",
+                "AIダブルバトルAI",
 ];
 
 # トレーナータイプのhash用のヘッダ
@@ -289,82 +294,122 @@ class WBT_CHARACTER_SINGLE
     end
     # セット
     @msg_before_id = @conv.get_cell(4, TRAINER_START_COL+11, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_before_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[6], @msg_before_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[6],@msg_before_id)
     end
   end
   
-  #--------------------
-  # 戦闘後、勝ちメッセージID()
-  #--------------------
+  #--------------------------
+  # 戦闘勝ちメッセージID(新)
+  #--------------------------
   def chk_after_win_mes_id()
     #
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+23, $trainer_str[7] )
+                                      TRAINER_START_COL+23, $trainer_str[9] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
     @msg_after_win_id = @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_after_win_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[9], @msg_after_win_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[7],@msg_after_win_id)
+      p sprintf("%s :%d", $trainer_str[9],@msg_after_win_id)
     end
   end
   
-  #--------------------
-  # 戦闘後、負けメッセージID
-  #--------------------
+  #------------------------------
+  # 戦闘負けメッセージID(新)
+  #------------------------------
   def chk_after_lose_mes_id()
     #
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+33, $trainer_str[8] )
+                                      TRAINER_START_COL+33, $trainer_str[10] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
     @msg_after_lose_id = @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_after_lose_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[10], @msg_after_lose_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[8],@msg_after_lose_id)
+      p sprintf("%s :%d", $trainer_str[10],@msg_after_lose_id)
     end
   end
   
-  #--------------------
-  # 戦闘勝ちメッセージID
-  #--------------------
+  #-------------------------------
+  # 戦闘後、勝ちメッセージID(新)
+  #-------------------------------
   def chk_win_mes_id()
     #
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+20, $trainer_str[9] )
+                                      TRAINER_START_COL+20, $trainer_str[7] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
     @msg_win_id = @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_win_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[7], @msg_win_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[9],@msg_win_id)
+      p sprintf("%s :%d", $trainer_str[7],@msg_win_id)
     end
   end
   
-  #--------------------
-  # 戦闘負けメッセージID
-  #--------------------
+  #------------------------------
+  # 戦闘後、負けメッセージID(新)
+  #------------------------------
   def chk_lose_mes_id()
     #
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id ),
-                                      TRAINER_START_COL+21, $trainer_str[10] )
+                                      TRAINER_START_COL+21, $trainer_str[8] )
     if(ret == -1)
       trainer_exit();
     end
     # セット
     @msg_lose_id = @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_lose_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[8], @msg_lose_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[10],@msg_lose_id)
+      p sprintf("%s :%d", $trainer_str[8],@msg_lose_id)
     end
   end
   
-  #--------------------
+  #--------------------------
   # 決勝前口上メッセージID
-  #--------------------
+  #--------------------------
   def chk_announce_mes_id()
     #
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id ),
@@ -374,6 +419,14 @@ class WBT_CHARACTER_SINGLE
     end
     # セット
     @msg_announce_id = @conv.get_cell(4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id).to_i;
+    #
+    # 範囲チェック(0 - 255)(u8)
+    flg = chk_num_range( @msg_announce_id, 0, 255 )
+    if(flg == -1)
+      print_error_num( $trainer_str[11], @msg_announce_id );
+      trainer_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[11],@msg_announce_id)
     end
@@ -394,7 +447,8 @@ class WBT_CHARACTER_SINGLE
     id = hash2no( $lang_hash, str );
     if(id == -1)
       # 該当する性別がない=>エラー
-      print_error( str, 0 );
+      print_error_str( $trainer_str[12], str );
+      trainer_exit();
     else
       @lang_id = id;
     end
@@ -411,7 +465,7 @@ class WBT_CHARACTER_SINGLE
     #
     4.times{|i|
       ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+3+i, TRAINER_START_ROW+@char_id ),
-                                        TRAINER_START_COL+3+i, $trainer_str[13] )
+                                        TRAINER_START_COL+3+i, $trainer_str[15+i] )
       if(ret == -1)
         trainer_exit();
       end
@@ -442,18 +496,17 @@ class WBT_CHARACTER_SINGLE
     # 番号を取得
     num = @conv.get_cell(4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id).to_i
     #
-    # 念のため制限
-    if(num < 1)
-        p sprintf("type error :%d",num)
-        num = 1;
-    elsif(num > 30)
-        p sprintf("type error :%d",num)
-        num = 30;
-    end
-    
     # 番号をそのままセット
     # 変換はプログラム側で対応(仕様変更)
     @type_id = num;
+    #
+    # 範囲制限(1-30)
+    flg = chk_num_range( @type_id, 1, 30 )
+    if(flg == -1)
+      print_error_num( $trainer_str[14], @type_id );
+      trainer_exit();
+    end
+    #
 #    # トレーナータイプ指定からトレーナータイプを取得
 #    str = @conv.get_cell(5, TYPE_START_COL+num-1, TYPE_START_ROW)
 #    str = $trtype_header + str
@@ -461,7 +514,6 @@ class WBT_CHARACTER_SINGLE
 #    id = hash2no( $trtype_id_hash, str );
 #    if(id == -1)
 #      # 該当する性別がない=>エラー
-#      print_error( str, 0 );
 #    else
 #      @type_id = id;
 #    end
@@ -552,8 +604,9 @@ class WBT_CHARACTER_SINGLE
     str = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id)
     id = hash2no( $lang_tbl_hash, str );
     if(id == -1)
-      # 該当する性別がない=>エラー
-      print_error( str, 0 );
+      # 該当する国がない=>エラー
+      print_error_str( $trainer_str[12], str );
+      trainer_exit();
     else
       @local_language = id;
     end
