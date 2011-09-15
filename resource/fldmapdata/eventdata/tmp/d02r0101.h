@@ -11,7 +11,7 @@
 #ifndef ZONE_D02R0101_EVC_H
 #define ZONE_D02R0101_EVC_H
 
-#define FLD_ITEM_258                       0
+#define FLD_ITEM_259                       0
 #define FLD_ITEM_266                       1
 #define FLD_ITEM_265                       2
 #define FLD_ITEM_264                       3
@@ -34,6 +34,7 @@
 #define TR_TANPAN_32                      20
 #define TR_RANGERW_27                     21
 #define D02R0101_SWLEADER1_01             22
+#define FLD_ITEM_258                      23
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
