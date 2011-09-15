@@ -239,16 +239,16 @@ EVENT_END
 /*  パイロット：話しかけ（メダル見せイベント）              */
 /************************************************************/
 EVENT_START   ev_c06r0201_pilot_01
-
+{
   _TALK_OBJ_START()
 
   //メダル取得変数
-  DEFINE_LOCAL  MEDAL_CHC
+  DEFINE_LOCAL  LWK_MEDAL_CHC
   //『エースパイロット』のメダルを持っているか
-  _CHECK_MEDAL_GET( MEDAL_CHC, MDLID_SORAWOTOBU )
+  _CHECK_MEDAL_GET( LWK_MEDAL_CHC, MDLID_SORAWOTOBU )
 
   //『エースパイロット』のメダルを持っていない＋初回会話
-  IF $MEDAL_CHC == FALSE THEN
+  IF $LWK_MEDAL_CHC == FALSE THEN
 
     //初回会話か
     IF FLAG_OFF( FE_C06R0201_PILOT_TALK ) THEN
@@ -272,7 +272,7 @@ EVENT_START   ev_c06r0201_pilot_01
 
     ENDIF
 
-  ELSIF $MEDAL_CHC == TRUE THEN
+  ELSIF $LWK_MEDAL_CHC == TRUE THEN
 
     //『エースパイロット』のメダルを持っている＋ほめられていない
     IF FLAG_OFF( FE_C06R0201_PILOT_CLEAR ) THEN
@@ -297,7 +297,7 @@ EVENT_START   ev_c06r0201_pilot_01
     ENDIF
 
   ENDIF
-
+}
 EVENT_END
 
 
