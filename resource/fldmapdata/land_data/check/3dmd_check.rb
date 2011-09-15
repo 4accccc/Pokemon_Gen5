@@ -32,6 +32,7 @@
 
 require 'fileutils'   # FileUtils
 require "csv"
+require "pp"
 
 #グローバル変数
 # 3dmdの格納場所へのﾊﾟｽ
@@ -79,6 +80,7 @@ def GetFileList( dir, dataArray )
 
 end
 
+
 # 配列の中にnameがあるか調べる
 # 調べた後、内容が違うかチェック
 #  ret != "" だと内容が違う
@@ -90,17 +92,100 @@ def SearchName( tmpArray, name )
     # ファイルが見つかった
     if basename1 == basename2
 
+      # 初期化
+      $ret = FILE_SAME    # FILE_SAME = 内容が同じ
+
       if true == FileTest.exist?(tmp) #コピー先が存在する
-        if false == FileUtils.compare_file( tmp, name ) # 内容が違う
-          $ret = tmp
-        else
-          $ret = FILE_SAME
+        # ファイルサイズチェック
+        if File.size?( tmp ) != File.size?( name )
+          # 内容チェック
+          if false == FileUtils.compare_file( tmp, name ) # 内容が違う
+            # 内容を解析してチェック
+            $ret = check3dmd( tmp, name )
+            #$ret = tmp -> 上記関数でチェックしてる
+          end
         end
       end
 
-      break
+      break # 終了
     end
   end
+end
+
+
+# 3dmdの内部解析をし、内容をソートして違いがあるかチェック
+def check3dmd( file1, file2 )
+  h1 = Hash::new
+  h2 = Hash::new
+
+  read3dmd( file1, h1 )
+  read3dmd( file2, h2 )
+
+  # ハッシュが空かどうか
+  if true == h1.empty?
+    return FILE_SAME
+  end
+  if true == h2.empty?
+    return FILE_SAME
+  end
+
+  printf("=================================================================\n")
+  printf("=== HASH ========================================================\n")
+  printf("=================================================================\n")
+  puts file1
+  puts file2
+  puts h1 == h2
+
+=begin
+  # ハッシュソート
+  h1.sort{ | (x1,y1,z1,rotate1,id1), (x2,y2,z2,rotate2,id2) | id1 <=> id2 }
+  h2.sort{ | (x1,y1,z1,rotate1,id1), (x2,y2,z2,rotate2,id2) | id1 <=> id2 }
+
+  printf("sort後\n")
+  puts h1 == h2
+=end
+
+  printf("=== h1 ================\n")
+  pp h1
+  printf("=== h2 ================\n")
+  pp h2
+  printf("=================================================================\n")
+  printf("=================================================================\n")
+
+  if h1 != h2
+    return file1
+  end
+
+  return FILE_SAME
+end
+
+
+# 3dmdの内容を解析しデータをハッシュに入れる
+def read3dmd( file, hash )
+  f = open(file)
+
+  # データ数
+  count = f.read(4).unpack("l")[0]
+  printf("total count = %d\n", count)
+
+  while count > 0
+    x, y, z = f.read(4*3).unpack("l3")
+		printf( "x,y,z = %08x, %08x, %08x\n",x,y,z)
+    rotate = f.read(2).unpack("S")[0]
+    id_u, id_l = f.read(2).unpack("CC")
+    printf( "rotate=%04x id=%03d\n", rotate, id_u * 256 + id_l )
+
+    # hashに格納
+    hash['x'] = x
+    hash['y'] = y
+    hash['z'] = z
+    hash['rotate'] = rotate
+    hash['id'] = id_u * 256 + id_l
+
+    count -= 1
+  end
+  f.close
+
 end
 
 #-----------------------------------------
