@@ -697,6 +697,12 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
     }
     break;
   }
+   
+  // 生息地用リストデータが作成されていた場合は削除
+  if( wk->is_habitat_call == TRUE )
+  {
+    FreeHabitatListData( wk );
+  }
 		
 	GFL_HEAP_FreeMemory( wk->work );
 
@@ -725,6 +731,11 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
 
   // リストをデータを作成
   if( (wk->is_info_call == TRUE) && (wk->is_habitat_call == FALSE) )
+  {
+    ONOUE_Printf("生息地リスト：単一呼出%d\n",0);
+    ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,TRUE );
+  }
+  else if( (wk->is_info_call == TRUE) && (wk->is_habitat_call == TRUE) )
   {
     ONOUE_Printf("生息地リスト：単一呼出%d\n",0);
     ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,TRUE );
@@ -766,6 +777,7 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     if( wk->is_info_call == TRUE )
     {
       ONOUE_Printf("詳細画面へ戻る\n");
+      wk->detail_type = ZUKAN_DETAIL_TYPE_MAP;
       ret = SEQ_INFO_CALL;
     }
     else
@@ -785,7 +797,6 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
       wk->is_habitat_call = TRUE; // 生息地リストモードに切り替え
 
       // 指定ゾーンリストを作成
-      FreeHabitatListData( wk );
       wk->habitatListMax = ZKNCOMM_MakeHabitatList( wk->prm->savedata,p_habitat_sv,&wk->habitatLst, HEAPID_ZUKAN_SYS );
     }
     break;

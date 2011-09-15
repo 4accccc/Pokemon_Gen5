@@ -1563,6 +1563,7 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
 {
   s32 index = -1;
   s32 i;
+  BOOL is_notice = FALSE;
   BOOL is_cmp;
   u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ];
   u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ];
@@ -1597,7 +1598,7 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
 
   // コンプリートチェック
   is_cmp = TRUE; 
-  for( i = 0; i < FLIST_BACK_NORMAL_MAX ; i++ )
+  for( i = 0; i < HABITAT_GROUND_MAX ; i++ )
   {
     if( (p_data->is_exist_landtype[i] == TRUE ) &&
         (p_data->is_complete[i] != HABITAT_ZONE_STATUS_GET ) )
@@ -1607,8 +1608,18 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
     }
   }
 
+  for( i = 0; i < HABITAT_GROUND_MAX ; i++ )
+  {
+    // お知らせマークチェック
+    if( p_data->list_status[i] == HABITAT_LIST_STATUS_NOTICE )
+    {
+      is_notice = TRUE;
+      break;
+    }
+  }
+
   // コンプリートしていた場合はずらす
-  if( is_cmp == TRUE )
+  if( (is_cmp == TRUE) && ( is_notice == FALSE ) )
   {
     index += FLIST_BACK_COMP_OFFSET;
   }

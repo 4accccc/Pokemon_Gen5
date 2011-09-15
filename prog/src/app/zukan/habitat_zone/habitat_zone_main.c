@@ -322,6 +322,7 @@ static HABITATLIST_STATUS CheckCompleteEvent( HABITAT_ZONE_WK *p_wk );
 static s32 GetSaveDataIndex( u16 zone_group_id );
 static void SetShortCut( HABITAT_ZONE_WK *p_wk );
 static void SetShortCutButtonCutAnmSeq( HABITAT_ZONE_WK *p_wk );
+static BOOL CheckCanMoveLandType( HABITAT_ZONE_WK *p_wk );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
@@ -684,13 +685,19 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
       }
       else if( key_trg & PAD_KEY_LEFT )
       {
-        ONOUE_Printf("場所タイプ切替L\n");
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_L );
+        if( CheckCanMoveLandType( p_wk ) )
+        {
+          ONOUE_Printf("場所タイプ切替L\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_L );
+        }
       }
       else if( key_trg & PAD_KEY_RIGHT )
       {
-        ONOUE_Printf("場所タイプ切替R\n");
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_R );
+        if( CheckCanMoveLandType( p_wk ) )
+        {
+          ONOUE_Printf("場所タイプ切替R\n");
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_R );
+        }
       }
       else if( key_trg & PAD_KEY_UP )
       {
@@ -2321,6 +2328,7 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
     HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
                           index ,GRA_POKEICON_CURSOR_OFF );
     index++;
+    break;
   }
 
 //  if( index == 0 )
@@ -2539,7 +2547,7 @@ static void MakeZoneCommonData( HABITAT_ZONE_WK *p_wk )
           // 出現するかどうか
           if( p_pk[i].is_appear[season_id][land_type] == TRUE )
           {
-            ONOUE_Printf("地形有り:%d\n",land_type);
+            //ONOUE_Printf("地形有り:%d\n",land_type);
             p_wk->land_appear[land_type] = TRUE;
 
             // 未発見の場合は、捕獲も見たもコンプリートではない
@@ -2667,12 +2675,25 @@ static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_FISHING );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,
       p_wk->land_appear[HABITAT_GROUND_FISHING]);
-  // 上矢印
-  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_UP_ARROW );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
-  // 下矢印
-  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_DOWN_ARROW );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+
+  if( p_wk->zone_data_cnt > 1 )
+  {
+    // 上矢印
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_UP_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+    // 下矢印
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_DOWN_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+  }
+  else
+  {
+    // 上矢印
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_UP_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+    // 下矢印
+    p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_DOWN_ARROW );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+  }
   // チェックボックス
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_CHECK_BOX );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
@@ -2905,5 +2926,32 @@ static void SetShortCutButtonCutAnmSeq( HABITAT_ZONE_WK *p_wk )
     HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
         OBJ_WK_CHECK_BOX,APP_COMMON_BARICON_CHECK_OFF );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形移動が可能かどうか調べる
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckCanMoveLandType( HABITAT_ZONE_WK *p_wk )
+{
+  s32 cnt = 0;
+  s32 i;
+  for( i = 0; i < HABITAT_GROUND_MAX; i++ )
+  {
+    if( p_wk->land_appear[i] == TRUE )
+    {
+      cnt++;
+    }
+  }
+  if( cnt > 1 )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
