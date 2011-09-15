@@ -290,6 +290,7 @@ ev_pkwd_rec_select_poke:
   CASE 0 THEN
     //「OK!この作品にぴったりのポケモンを手配しとくぜ！」
     _BALLOONWIN_OBJMSG_POS( msg_pw_studio_10, SCWK_TARGET_OBJID, POS_DOWN )
+    _MSGWIN_CLOSE()
     $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
     _PKWD_SET_JOIN_MYPOKE( FALSE )	// レンタルポケモンで参加
   CASE 1 THEN
@@ -690,7 +691,9 @@ ev_pkwd_show_judge_npc:
   _OBJ_ADD_EX( 14, 18, DIR_UP, MMDL_ID_EVENTOBJ_00, DANPEI, MV_DMY )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_appear )
   _OBJ_ANIME_WAIT()
+  _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
 
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_right )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_close )
@@ -712,6 +715,7 @@ ev_pkwd_show_judge_npc:
     _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   ENDIF
   _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
 
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_disappear )
   _OBJ_ANIME_WAIT()
@@ -726,7 +730,7 @@ _ANIME_LABEL  anm_commentator_appear
   _ANIME_DATA ACMD_END, 0
 
 _ANIME_LABEL  anm_commentator_close
-  _ANIME_DATA AC_WALK_L_16F, 4
+  _ANIME_DATA AC_WALK_L_8F, 4
   _ANIME_DATA ACMD_END, 0
 
 _ANIME_LABEL  anm_player_turn_right

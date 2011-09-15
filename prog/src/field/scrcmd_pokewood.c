@@ -42,6 +42,7 @@
 
 #include "../battle/pokewood/pokewood_senario.h"
 #include "tr_tool/trtype_def.h"
+#include "pkwd_scenario_open.h"
 
 //SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
 SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
@@ -602,8 +603,29 @@ VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk )
   if ( POKEWOOD_SAVEDATA_GetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_OPEN, sc_no ) == TRUE
       && POKEWOOD_SAVEDATA_GetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_ANNOUNCED, sc_no ) == FALSE )
   {
+    //告知済み状態にする
     POKEWOOD_SAVEDATA_SetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_ANNOUNCED, sc_no );
-    *msg_type = SCR_PKWD_RESULT_GOOD_END; //仮：実際にはシナリオ情報のテーブルから
+
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(notwifi_event_pokewood) );//仮：scrcmd_pokewoodオーバーレイにない
+    switch ( PKWD_GetScenarioOpenProvision( sc_no ) )
+    {
+    default:
+      GF_ASSERT( 0 );
+      /* FALL THROUGH */
+    case PW_OPEN_PROVISION_SUCCESS:
+      *msg_type = SCR_PKWD_ADDMSG_GOOD_END;
+      break;
+    case PW_OPEN_PROVISION_GAMECLEAR:
+      *msg_type = SCR_PKWD_ADDMSG_GAMECLEAR;
+      break;
+    case PW_OPEN_PROVISION_STARRANK:
+      *msg_type = SCR_PKWD_ADDMSG_STARRANK;
+      break;
+    case PW_OPEN_PROVISION_PROFIT:
+      *msg_type = SCR_PKWD_ADDMSG_PROFITS;
+      break;
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(notwifi_event_pokewood) );//仮：scrcmd_pokewoodオーバーレイにない
     *ret_wk = TRUE;
   }
   OS_Printf("EvCmdPokewoodCheckNewScenario(%d) --> %d, %d\n", sc_no, *msg_type, *ret_wk );
