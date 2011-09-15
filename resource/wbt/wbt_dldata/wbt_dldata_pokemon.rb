@@ -246,7 +246,7 @@ class WBT_POKEMON_SINGLE
     str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5)
     id = hash2no( $seikaku_hash, str );
     if(id == -1)
-      # 該当する性別がない=>エラー
+      # 該当する性格がない=>エラー
       print_error( str, 0 );
     else
       @seikaku = id;
@@ -272,7 +272,7 @@ class WBT_POKEMON_SINGLE
     str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6)
     id = hash2no( $tokusei_hash, str );
     if(id == -1)
-      # 該当する性別がない=>エラー
+      # 該当する特性がない=>エラー
       print_error( str, 0 );
     else
       @tokusei = id;
@@ -298,7 +298,7 @@ class WBT_POKEMON_SINGLE
     str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7)
     id = hash2no( $item_hash, str );
     if(id == -1)
-      # 該当する性別がない=>エラー
+      # 該当するアイテムがない=>エラー
       print_error( str, 0 );
     else
       @item_no = id;
@@ -322,9 +322,9 @@ class WBT_POKEMON_SINGLE
     end
     # セット
     str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8)
-    id = hash2no( $item_hash, str );
+    id = hash2no( $ball_hash, str );
     if(id == -1)
-      # 該当する性別がない=>エラー
+      # 該当するボールがない=>エラー
       print_error( str, 0 );
     else
       @ball_id = id;

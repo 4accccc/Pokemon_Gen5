@@ -442,9 +442,13 @@ class WBT_CHARACTER_SINGLE
     # ”Ô†‚ğæ“¾
     num = @conv.get_cell(4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id).to_i
     #
+    # ”O‚Ì‚½‚ß§ŒÀ
     if(num < 1)
-        p sprintf("%d :error",num)
+        p sprintf("type error :%d",num)
         num = 1;
+    elsif(num > 30)
+        p sprintf("type error :%d",num)
+        num = 30;
     end
     
     # ”Ô†‚ğ‚»‚Ì‚Ü‚ÜƒZƒbƒg

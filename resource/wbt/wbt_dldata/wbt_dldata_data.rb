@@ -162,12 +162,20 @@ class WBT_DATA
   def chk_tournament_id()
     #
     ret = chkblank( @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW ),
-                    1+DATA_UP_START_COL+DATA_TOURNAMENT, $title_str[0] )
+                                     DATA_UP_START_COL+DATA_TOURNAMENT, $title_str[0] )
     if(ret == -1)
       wbt_exit();
     end
     # セット
     @tournament_id = @conv.get_cell(0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW).to_i;
+    
+    # 範囲のチェック(1 - 65535)
+    flg = chk_num_range( @tournament_id, 1, 65535 );
+    if(flg == -1)
+      print_error_num( $title_str[0], @tournament_id );
+      wbt_exit();
+    end
+    
     if(@local_debug == 1)
       p sprintf("%s :%d", $title_str[0],@tournament_id)
     end
@@ -180,12 +188,31 @@ class WBT_DATA
     #
     3.times{|i|
       ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW), 
-                      1+DATA_UP_START_COL+DATA_YEAR+i, $title_str[1+i])
+                                        DATA_UP_START_COL+DATA_YEAR+i, $title_str[1+i])
       if(ret == -1)
         wbt_exit();
       end
       # セット
       @day[i] = @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW).to_i;
+      
+      # 範囲チェック
+      if(i == 0)
+        min = 0
+        max = 99
+      elsif(i == 1)
+        min = 1
+        max = 12
+      elsif(i == 2)
+        min = 1
+        max = 31
+      end
+      #
+      flg = chk_num_range( @day[i], min, max )
+      if(flg == -1)
+        print_error_num( $title_str[1+i], @day[i] );
+        wbt_exit();
+      end
+      
       if(@local_debug == 1)
         p sprintf("%s :%d",$title_str[1+i], @day[i])
       end

@@ -115,7 +115,7 @@ class WBT_RULE
     #
     3.times{|i|
       ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW), 
-                      1+REG_UP_START_COL+i, $rule_error_str[2])
+                                        REG_UP_START_COL+i, $rule_error_str[2])
       if(ret == -1)
          wbt_exit();
       end
