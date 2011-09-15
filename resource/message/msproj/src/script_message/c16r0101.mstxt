@@ -976,6 +976,55 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_prize_owner_greet_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってるね！
+[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:27:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>殿堂開放</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T13:54:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_prize_owner_info_01"
 		Style="Large">
 		<LanguageCell
@@ -1195,6 +1244,58 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_prize_owner_info_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　きみに　じょげんが　あるんだ▼
+きみも　すきなひとを　ひしょに　したいだろう
+まちゆくひとを　ひしょに　してみないか▼
+</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:32:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　きみに　じょげんが　あるんだ▼
+きみも　すきなひとを　ひしょに　したいだろう
+まちゆくひとを　ひしょに　してみないか▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:32:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>殿堂開放</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T13:54:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_prize_owner_bye_01"
 		Style="Large">
 		<LanguageCell
@@ -1389,6 +1490,55 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_prize_owner_bye_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　ひきつづき
+がんばっちゃってよ▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-11T08:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>殿堂開放</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T13:54:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
