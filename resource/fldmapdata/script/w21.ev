@@ -39,12 +39,12 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_w21
-  /*
+  
   //プラズマフリゲートイベント進行中以外は接続を移動させる
   IF $WK_SCENE_W21_01 != 3 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 787, -3, 247 )
   ENDIF
-  */
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -99,7 +99,7 @@ EVENT_START	ev_pos_w21_swrival_01
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
-  _TIME_WAIT( 200 )
+  _TIME_WAIT( 80 )
   
   //自機にカメラを戻す
   _CAMERA_DEF_MOVE (48)
@@ -246,7 +246,7 @@ EVENT_START	ev_reserve_w21_swleader8_01
   _OBJ_DEL( W21_SWRIVAL_01 )
   
   //接続配置変更
-  _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 799, -5, 240 )
+  _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 800, -5, 241 )
   
   //========================================//
   //W21シズイイベント終了

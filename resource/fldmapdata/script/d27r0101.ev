@@ -62,7 +62,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0101
-
+  
   //D10プラズマフリゲート起動中
   IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R0101_EXIT01, 16, 0, 17 )
@@ -70,7 +70,7 @@ INIT_EVENT_START	ev_zone_d27r0101
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R1101_EXIT01, 16, 0, 17 )
   ENDIF
-  /*
+  
   //D05からの搭乗時
   IF $WK_SCENE_D05 == 3 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_W21_EXIT01, 0, 0, 0 )
@@ -84,7 +84,7 @@ INIT_EVENT_START	ev_zone_d27r0101
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D05_EXIT01, 0, 0, 0 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_W21_EXIT01, 0, 0, 0 )
   ENDIF
-  */
+  
 INIT_EVENT_END
 
 /************************************************************/

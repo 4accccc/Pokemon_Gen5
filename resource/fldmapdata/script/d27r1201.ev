@@ -33,7 +33,15 @@ _EVENT_DATA_END
 /*					ZONE_CHANGE_LABEL 						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1201
-  //
+
+  //D10プラズマフリゲート起動中
+  IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R1201_D27R0101_EXIT01, 0, 0, 0 )
+  //プラズマフリゲートいない
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R1201_D27R1101_EXIT01, 0, 0, 0 )
+  ENDIF
+  
 INIT_EVENT_END
 /************************************************************/
 /*					FIELD_INIT_LABEL  						*/
@@ -41,7 +49,7 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_init_d27r1201
 
   // ゲート状態設定
-  _CALL sub_gate_set
+  _CALL sub_exit_change
 
 INIT_EVENT_END
 /************************************************************/
@@ -50,20 +58,15 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_recover_d27r1201
 
   // ゲート状態設定
-  _CALL sub_gate_set
+  _CALL sub_exit_change
 
 INIT_EVENT_END
 
 // ゲート(バリアー)の状態をフラグを見て設定
-sub_gate_set:
+sub_exit_change:
 {
-//パスワード解除済みならゲートを開放
-  IF $WK_SCENE_D27R1201_BARRIER_01 == 1 THEN
-    _HIDE_SHIP_BOW_BUTTON_SET( 0, 1 )
-    _HIDE_SHIP_BOW_BUTTON_SET( 1, 1 )
-    _HIDE_SHIP_BOW_BUTTON_SET( 2, 1 )
-    _HIDE_SHIP_BOW_BUTTON_SET( 3, 1 )
-  ENDIF
+  DEFINE_LOCAL  version   // ROMバージョン
+
 }
 _RET
 
