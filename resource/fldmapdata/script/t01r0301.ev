@@ -27,31 +27,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_t01r0301_middleman2_01
 
-  _TALK_OBJ_START()
-
-  //会話するのは初めてか？【仮】フラグは仮のもの
-  IF FLAG_OFF( FE_T02_LOW_TALK_01 ) THEN
-
-    //チェレンの父：ん？　きみがもつ
-    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_01 )
-    _MSGWIN_CLOSE()
-
-    //========================================//
-    //会話済みフラグON
-    _FLAG_SET( FE_T02_LOW_TALK_01 )
-    //========================================//
-
-    //アイテム「？？？」入手【仮】入手アイテムは仮のもの
-    _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
-
-  ELSE
-
-    //チェレンの父：たびは　いいよ！▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middleman2_02 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ENDIF
+  //アイテム「？？？」入手【仮】入手アイテムは仮のもの
+  _EASY_TALK_ITEM_EVENT( ITEM_MASUTAABOORU, 1, FE_T01R0301_ITEMGET_01, msg_t01r0301_middleman2_01, msg_t01r0301_middleman2_02, msg_t01r0301_middleman2_02 )
 
 EVENT_END
 

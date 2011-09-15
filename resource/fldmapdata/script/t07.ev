@@ -130,21 +130,21 @@ EVENT_END
 /*  働くおじさん                                              */
 /**************************************************************/
 EVENT_START   ev_t07_workman2_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_01_01 )   //【仮】仮メッセージ
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_01_01 ) 
 EVENT_END
 
 /**************************************************************/
 /*  バックパッカー♂                                          */
 /**************************************************************/
 EVENT_START   ev_t07_backpackerm_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_backpackerm_01 )   //【仮】仮メッセージ
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_backpackerm_01 ) 
 EVENT_END
 
 /**************************************************************/
 /*  お姉さん                                                  */
 /**************************************************************/
 EVENT_START   ev_t07_woman1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_woman1_01 )   //【仮】仮メッセージ
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_woman1_01 ) 
 EVENT_END
 
 /**************************************************************/

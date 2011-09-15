@@ -13,7 +13,7 @@
   .include  "d07r0401.h"
 
   //@author fujimura_souichirou（重機マニアイベント追加）
-  //@author Mizuguchi_Mai（カセキイベント移植）
+  //@author Mizuguchi_Mai（カセキイベント移植・重機マニアイベント処理追加）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -196,15 +196,20 @@ DEFINE_LOCAL  LWK_QUIZ1_CLEA
 
   //クイズクリア後
   ELSIF $WK_SCENE_D07R0401_QUIZ_01 == 6 THEN
-
-    //メダル未開放
-    IF FLAG_OFF( TMFLG_D07R0401_QUIZ_TRUE ) THEN   //【仮】フラグは仮のもの
+    
+    //メダルチェック
+    DEFINE_LOCAL  LWK_MEDAL_CHC
+    _CHECK_MEDAL_GET( LWK_MEDAL_CHC, MDLID_JUUKIMANIA )
+    
+    //【仮】メダル未開放（チェック仮）
+    IF $LWK_MEDAL_CHC == FALSE THEN 
 
       //働くおじさん：じゅうきマニアとしての
       _BALLOONWIN_OBJMSG_POS( msg_d07r0401_workman2_15, D07R0401_WORKMAN_02, POS_DOWN )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
-
+    
+    //メダル入手済み
     ELSE
 
       //働くおじさん：しんじだいの　じゅうきマニア
