@@ -109,13 +109,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だれかのせかい　に
-いって　みたかな？▼
-しまにかかる　かけはしから
-だれかのせかいに　いけるはずだ▼</Text>
+			<Text>フェスミッションを　うけてみましたか？▼
+ハイルツリーに　はなしかければ
+かんたんに　うけることが　できますよ▼
+あとは　「すれちがいログ」に
+フェスミッションの　おさそいが▽
+くることも　あるわ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:32:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -171,11 +173,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さて　ハイリンクについて
-ききたいことは　あるかな？</Text>
+			<Text>ハイリンクについて
+ききたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:32:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,11 +185,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　ハイリンクについて
-聞きたいことは　あるかな？</Text>
+			<Text>ハイリンクについて
+ききたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -228,11 +230,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もし　わからないことが　あれば
-むすめたちにも　はなしを　きくといい</Text>
+			<Text>ハイリンクは
+すこしずつ　せいちょうしていくの▼
+わたしたちの　こころと
+きょうめい　するかのように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:38:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -240,11 +244,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もし　わからないことが　あれば
-娘たちにも　話を　聞くといい</Text>
+			<Text>ハイリンクは
+すこしずつ　せいちょうしていくの▼
+わたしたちの　こころと
+きょうめい　するかのように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,11 +302,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だれかの世界に　はいりこみ
-多くの人を　助けるのだ</Text>
+			<Text>だれかのせかいに　はいりこみ
+おおくのひとを　たすけるのだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -340,16 +346,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクは　だれかのせかいと
-つながる　ふしぎな　ばしょ▼
-このハイリンクに　かかる
-かけはしを　わたれば▽
-だれかのせかいに　いけるだろう▼
-そこで　そのせかいの　ぼうけんしゃを
-たすけることが　できるはずだ▼</Text>
+			<Text>ぼうけんしゃたちの　ちからを
+ためす　しれん　といえます▼
+ミッションに　クリアすることで
+デルダマや　デルパワーといった▽
+おおきな　ちからを　えることができます▼
+ハイルツリーに　はなしかけて
+ミッションを　かいさい　するか▼
+Ｃギアの　「すれちがいログ」から
+だれかが　かいさいした　ミッションに▽
+さんか　することも　できます▼
+ちかくにいる　ぼうけんしゃと
+きょうりょく　すれば▽
+よりおおきな　ちからを　えるでしょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:05:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -357,16 +369,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクは　だれかの世界と
-つながる　不思議な　場所▼
-このハイリンクに　架かる
-架け橋を　わたれば▽
-だれかの世界に　行けるだろう▼
-そこで　その世界の　冒険者を
-助けることが　できるはずだ▼</Text>
+			<Text>ぼうけんしゃたちの　ちからを
+ためす　しれん　といえます▼
+ミッションに　クリアすることで
+デルダマや　デルパワーといった▽
+おおきな　ちからを　えることができます▼
+ハイルツリーに　はなしかけて
+ミッションを　かいさい　するか▼
+Ｃギアの　「すれちがいログ」から
+だれかが　かいさいした　ミッションに▽
+さんか　することも　できます▼
+ちかくにいる　ぼうけんしゃと
+きょうりょく　すれば▽
+よりおおきな　ちからを　えるでしょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -407,20 +425,20 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このきが　もっている　パワーを
-デルパワーと　よんでいる▼
-デルパワーは　１つだけ
+デルパワーと　よんでいます▼
+デルパワーは　３つだけ
 Ｃギアに　とうろく　することができ▼
 Ｃギアの
 「すれちがいログ」から▽
 すれちがった　あいてにむけて▽
-つかうことが　できるのだ▼
-いいか？　デルパワーを　つかうには
-デルダマが　ひつようだ▼
-だれかのせかいで　ミッションを
-おこない　デルダマを　あつめるのだ▼</Text>
+つかうことが　できます▼
+いいですか？　デルパワーを　つかうには
+デルダマが　ひつようです▼
+ミッションを　おこない
+デルダマを　あつめてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -428,21 +446,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この木が　もっている　パワーを
-デルパワーと　よんでいる▼
-デルパワーは　１つだけ
-Ｃ－ＧＥＡＲに　登録することができ▼
-Ｃ－ＧＥＡＲの
-「すれ違いログ」から▽
-すれ違った　相手にむけて▽
-使うことが　できるのだ▼
-いいか？　デルパワーを　使うには
-デルダマが　必要だ▼
-だれかの世界で　ミッションを行い
-デルダマを　集めるのだ▼</Text>
+			<Text>このきが　もっている　パワーを
+デルパワーと　よんでいます▼
+デルパワーは　３つだけ
+Ｃギアに　とうろく　することができ▼
+Ｃギアの
+「すれちがいログ」から▽
+すれちがった　あいてにむけて▽
+つかうことが　できます▼
+いいですか？　デルパワーを　つかうには
+デルダマが　ひつようです▼
+ミッションを　おこない
+デルダマを　あつめてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -482,10 +500,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンク　とは？</Text>
+			<Text>フェスミッション　とは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:41:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -493,10 +511,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンク　とは？</Text>
+			<Text>フェスミッション　とは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -644,16 +662,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おやおや
-だれか　きたな……▽
-ようこそ　ハイリンクへ▼
+			<Text>ようこそ　ハイリンクへ▼
 ……　……　……
-……うむ？▽
-そのようすだと　ここが　どこか▽
-わからない　ようだな▼</Text>
+……あら？▼
+そのようすだと　ここが　どこか
+わからない　ようですね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -661,16 +677,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おやおや
-だれか　来たな……▽
-ようこそ　ハイリンクへ▼
+			<Text>ようこそ　ハイリンクへ▼
 ……　……　……
-……うむ？▽
-その様子だと　ここが　どこか▽
-わからない　ようだな▼</Text>
+……あら？▼
+そのようすだと　ここが　どこか
+わからない　ようですね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -703,18 +717,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ここは
-イッシュの　ちゅうしんにある▽
-ハイリンクと　よばれる　しまだ▼
-ハイリンクは　だれかのせかいと
-つながる　ふしぎな　しま▼
-この　しまから　つながる
-だれかのせかいに　いけば▽
-そのせかいの　ぼうけんしゃに▽
-であうことが　できる▼</Text>
+			<Text>ここは　ハイリンク……
+イッシュの　ちゅうしんにある　しま▼
+ハイリンクには　ひとびとの
+おもいが　あつまる……▼
+ひとりひとりの　おもいが
+あつまり　ひびき　きょうめいする▼
+そうして　うまれた　パワーが
+せかいじゅうの　ぼうけんしゃに▽
+ふしぎな　ちからを　あたえている……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T07:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -722,18 +736,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ここは
-イッシュの　中心にある▽
-ハイリンクと　呼ばれる島だ▼
-ハイリンクは　だれかの世界と
-つながる　不思議な島▼
-この　島から　つながる
-だれかの世界に　行けば▽
-その世界の　冒険者に▽
-出会うことが　できる▼</Text>
+			<Text>ここは　ハイリンク……
+イッシュの　ちゅうしんにある　しま▼
+ハイリンクには　ひとびとの
+おもいが　あつまる……▼
+ひとりひとりの　おもいが
+あつまり　ひびき　きょうめいする▼
+そうして　うまれた　パワーが
+せかいじゅうの　ぼうけんしゃに▽
+ふしぎな　ちからを　あたえている……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -766,20 +780,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　おぬしは
-その　ぼうけんしゃを▽
-たすけることが　できるのだ▼
+			<Text>そう　いわれているわ▼
 ……　……　……
-……おぬし！▼
-もし　そのひとを
-たすけたいと　おもうなら▽
-このしまの　かけはしを　わたり▽
-だれかのせかいに　いってみるのだ▼
-そこに　おぬしをまっている
-だれかが　いるはずだ</Text>
+……そうね！▼
+あなたも　ぼうけんしゃ　なら
+ちからを　うけとると　いいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-14T14:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -787,20 +795,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　おぬしは
-その　冒険者を▽
-助けることが　できるのだ▼
+			<Text>そう　いわれているわ▼
 ……　……　……
-……おぬし！▼
-もし　その人を
-助けたいと　思うなら▽
-この島の　架け橋を　わたり▽
-だれかの世界に　行ってみるのだ▼
-そこに　おぬしを待っている
-だれかが　いるはずだ</Text>
+……そうね！▼
+あなたも　ぼうけんしゃ　なら
+ちからを　うけとると　いいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -827,6 +829,37 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_oldman1_01_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけなさい▼
+そして　あなたの　おもいを
+ハイルツリーに　とどけるのよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-14T14:18:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-14T14:17:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけなさい▼
+そして　あなたの　おもいを
+ハイルツリーに　とどけるのよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-14T14:23:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-14T14:23:59" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="plc_girl4_01_01"
@@ -2848,14 +2881,13 @@ plc_girl4_03_06,7,8</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まずは　ハイリンクに
-かかる　かけはしを　わたり▽
-だれかのせかいに　いってみるのだ▼
-そこに　おぬしをまつ
-だれかが　いるはずだ</Text>
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけなさい▼
+そして　あなたの　おもいを
+ハイルツリーに　とどけるのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2863,14 +2895,13 @@ plc_girl4_03_06,7,8</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　ハイリンクに
-架かる　架け橋を　わたり▽
-だれかの世界に　行ってみるのだ▼
-そこに　おぬしを待つ
-だれかが　いるはずだ</Text>
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけなさい▼
+そして　あなたの　おもいを
+ハイルツリーに　とどけるのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-15T08:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

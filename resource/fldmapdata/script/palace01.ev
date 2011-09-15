@@ -256,7 +256,7 @@ EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
 	_OBJ_ANIME_WAIT()
 	
-	//おやおや迷子が
+	//あらあら誰かしら
 	_BALLOONWIN_OBJMSG( plc_oldman1_01_10, PALACE01_OLDMAN1_01 )
 	_MSGWIN_CLOSE()
 	
@@ -266,20 +266,29 @@ EVENT_START ev_scene_palace01_1stguide
 	
 	//ここはイッシュの中心にある…
 	_BALLOONWIN_OBJMSG( plc_oldman1_01_11, PALACE01_OLDMAN1_01 )
-	_MSGWIN_CLOSE()
 	
 	//パレスじじい：主人公を見て
 	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
+	//そう言われているわ
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_12, PALACE01_OLDMAN1_01 )
+	_OBJ_ANIME_WAIT()
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：ハイルツリーをみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_u )
 	_OBJ_ANIME_WAIT()
 	
-	//…こどもよ
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_12, PALACE01_OLDMAN1_01 )
+	//ミッションを受けなさい！
+	_BALLOONWIN_OBJMSG( plc_oldman1_01_13, PALACE01_OLDMAN1_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
 	//========================================//
 	//初回誘導イベントを無効
 	$WK_SCENE_PALACE01 = 1
+	
+	//ハイルツリーを使えるように【仮】
+	_FLAG_SET( SYS_FLAG_PALACE_MISSION_CLEAR )
 	
 	//========================================//
 
@@ -288,6 +297,10 @@ EVENT_END
 //--------------------------------------------------------------------
 //方向転換
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
