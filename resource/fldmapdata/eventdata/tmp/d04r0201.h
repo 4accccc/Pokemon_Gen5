@@ -13,6 +13,7 @@
 
 #define TR_ESPW_09                         0
 #define TR_ESPM_10                         1
+#define FLD_ITEM_318                       2
 
 #endif //ZONE_D04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

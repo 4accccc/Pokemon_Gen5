@@ -11,6 +11,7 @@
 #define ZONE_D26R0801_EVC_H
 
 #define TR_VETERANM_18                     0
+#define FLD_ITEM_322                       1
 
 #endif //ZONE_D26R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

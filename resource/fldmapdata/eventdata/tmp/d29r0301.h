@@ -19,6 +19,8 @@
 #define TR_RANGERW_22                      3
 #define D29R0301_ROCK_01                   4
 #define D29R0301_ROCK_02                   5
+#define FLD_ITEM_320                       6
+#define FLD_ITEM_321                       7
 
 #endif //ZONE_D29R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
