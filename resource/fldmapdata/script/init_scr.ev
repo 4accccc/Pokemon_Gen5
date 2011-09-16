@@ -282,6 +282,10 @@ init_flags:
   //C01GYM0101：サルショー
   _FLAG_SET(FV_C01GYM0101_SARU_01)
 
+  //C03R0502:盗まれていたズルッグ
+  _FLAG_SET( FV_C03R0502_POKE38_01 )
+
+
 }
 _RET
 
@@ -497,6 +501,9 @@ ev_first_gameclear:
 
   //シリンダーブリッジのストッパーPOS解除
   $WK_SCENE_R09R0101_STOP_01 = 1
+
+  //C03R0502:盗まれていたズルッグが帰ってくる
+  _FLAG_RESET( FV_C03R0502_POKE38_01 )
 
 _RET
 

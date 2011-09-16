@@ -12,6 +12,8 @@
   .include  "msg_c03r0502.h"
   .include  "c03r0502.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,78 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c03r0502_businessman_01
+_EVENT_DATA   ev_c03r0502_policeman_01
+_EVENT_DATA   ev_c03r0502_ol_01
+_EVENT_DATA   ev_c03r0502_poke38_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ビジネスマン：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r0502_businessman_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ビジネスマン：モンスターボールが　できるまえからも
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_businessman_02 )
+
+  ELSE
+
+    //ビジネスマン：あたらしい　オフィスには
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_businessman_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ビジネスマン：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r0502_policeman_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //警官：にがそうとした　ポケモンが
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_policeman_02 )
+
+  ELSE
+
+    //警官：ゆくえふめいの　ポケモン……▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_policeman_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ＯＬ：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c03r0502_ol_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ＯＬ：あたしの　ポケモン！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_ol_02 )
+
+  ELSE
+
+    //ＯＬ：あたしの　ポケモン……
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_ol_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ズルッグ：話しかけ（クリア後に登場）                      */
+/**************************************************************/
+EVENT_START   ev_c03r0502_poke38_01
+  _EASY_TALK_POKEVOICE( MONSNO_637, msg_c03r0502_poke38_01 )
+EVENT_END
+
+

@@ -54,8 +54,8 @@ EVENT_START   ev_r04r0801_boy2_01
 {
   _TALK_OBJ_START()
 
-  //ポケモン交換済みか【仮】フラグが仮
-  IF FLAG_ON( FE_R07R0201_TRADE_01 ) THEN
+  //ポケモン交換済みか
+  IF FLAG_ON( FE_R04_POKETRADE_01 ) THEN
 
     //交換したしたポケモンのニックネーム取得【仮】ニックネームを取得する方法がまだ仮
     //_MONS_NAME( 0, SCR_TRPOKE_AFTER_SAVE_C05 )
@@ -114,7 +114,7 @@ EVENT_START   ev_r04r0801_boy2_01
 
           //==================================//
           //交換完了
-          _FLAG_SET ( FE_R07R0201_TRADE_01 )//【仮】仮フラグ使用中
+          _FLAG_SET ( FE_R04_POKETRADE_01 )
           //==================================//
 
         //条件と一致しなかった

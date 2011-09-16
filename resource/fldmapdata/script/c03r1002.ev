@@ -12,6 +12,8 @@
   .include  "msg_c03r1002.h"
   .include  "c03r1002.h"
 
+  //@author fujimura_souichirou（一言メッセージ）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,44 +21,62 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c03r1002_mountain_01
+_EVENT_DATA   ev_c03r1002_man3_01
+_EVENT_DATA   ev_c03r1002_musicianw_01
+_EVENT_DATA   ev_c03r1002_poke31_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*  C03R0302 BUSINES1の会話用イベントスクリプト*/
+/*  男性：話しかけ                                            */
 /**************************************************************/
-EVENT_START   ev_c03r1002_mountain_01
+EVENT_START   ev_c03r1002_man3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1002_man3_01 )
+EVENT_END
 
-	_TALK_OBJ_START()
+/**************************************************************/
+/*  ギタリスト♀：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r1002_musicianw_01
 
-	//初回話しかけ
-	IF FLAG_OFF( FE_C03R1002_ITEMGET_01 ) THEN
-		
-		//むかしのひとはいいこといった
-		_BALLOONWIN_OBJMSG( msg_c03r1002_mountain_01 ,C03R1002_MOUNTAIN_01)
-		_BALLOONWIN_CLOSE()
-		
-		//わざマシン入手：ねむる
-		_ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN44 , 1)
-		
-		//ねても すぐ
-		_BALLOONWIN_OBJMSG( msg_c03r1002_mountain_02 ,C03R1002_MOUNTAIN_01)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-		//==================================//
+  _TALK_OBJ_START()
 
-		//フラグセットしてイベント終了
-		_FLAG_SET( FE_C03R1002_ITEMGET_01 )
+  //初回話しかけ
+  IF FLAG_OFF( FE_C03R1002_ITEMGET_01 ) THEN
 
-		//==================================//
+    //ギタリスト♀：あんた　ねむれてる？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r1002_musicianw_01 )
+    _BALLOONWIN_CLOSE()
 
-	ELSE
+    //わざマシン入手：ねむる
+    _ITEM_EVENT_KEYWAIT ( ITEM_WAZAMASIN44 , 1 )
 
-		//ねても すぐ
-		_BALLOONWIN_OBJMSG( msg_c03r1002_mountain_02 ,C03R1002_MOUNTAIN_01)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ENDIF
+    //ギタリスト♀：ポケモンに　きのみの
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r1002_musicianw_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    //==================================//
+    //フラグセットしてイベント終了
+    _FLAG_SET( FE_C03R1002_ITEMGET_01 )
+    //==================================//
+
+  ELSE
+
+    //ギタリスト♀：ポケモンに　きのみの
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r1002_musicianw_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*  ハーデリア：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c03r1002_poke31_01
+  _EASY_TALK_POKEVOICE( MONSNO_591, msg_c03r1002_poke31_01 )
+EVENT_END
+
+

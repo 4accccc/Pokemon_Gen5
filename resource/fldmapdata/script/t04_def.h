@@ -14,5 +14,6 @@
 #define SCRID_T04_MAID_01 (7)
 #define SCRID_T04_AMBRELLA_01 (8)
 #define SCRID_T04_BABYGIRL1_01 (9)
+#define SCRID_T04_SWRIVAL_01 (10)
 
 #endif //_T04_DEF_H_

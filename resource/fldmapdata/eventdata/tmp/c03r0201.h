@@ -9,6 +9,9 @@
 #ifndef ZONE_C03R0201_EVC_H
 #define ZONE_C03R0201_EVC_H
 
+#define C03R0201_LADY_01                   0
+#define C03R0201_CLOWN_01                  1
+#define C03R0201_SUNGLASSES_01             2
 
 #endif //ZONE_C03R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -26,5 +29,8 @@
 #define BG_C03R0201_PAINTING6_01          8
 #define BG_C03R0201_PAINTING6_02          9
 #define BG_C03R0201_PAINTING6_03         10
+#define BG_C03R0201_STATUE_01            11
+#define BG_C03R0201_STATUE_02            12
+#define BG_C03R0201_STATUE_03            13
 
 #endif //ZONE_C03R0201_EVB_H

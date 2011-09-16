@@ -13,6 +13,8 @@
   .include  "t04.h"
   .include  "t04r0101_def.h"
 
+  //@author fujimura_souichirou（ライバル戦のトレーナーデータ差し替え・クリア後イベント）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -29,6 +31,7 @@ _EVENT_DATA		ev_t04_trainerm_01
 _EVENT_DATA		ev_t04_maid_01
 _EVENT_DATA		ev_t04_ambrella_01
 _EVENT_DATA		ev_t04_babygirl1_01
+_EVENT_DATA   ev_t04_swrival_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -38,6 +41,7 @@ DEFINE_LOCAL  LCW_POSZ
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
+
 
 /************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
@@ -243,13 +247,23 @@ INIT_EVENT_START	ev_zone_t04
 	
 	ENDIF
 
+  //クリア後、ライバルを再配置（なおかつイベントクリア前なら）
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( FE_T04_SWRIVAL_WIN_01 ) THEN
+
+    //==================================//
+    //ライバルを表示
+    _FLAG_RESET ( FV_T04_SWRIVAL_01 )
+    //==================================//
+
+  ENDIF
+
 }
 INIT_EVENT_END
 
 /**************************************************************/
-/*			POS：ライバル戦									  */
+/*  POS：ライバル戦                                           */
 /**************************************************************/
-EVENT_START		ev_pos_t04_swrival_01
+EVENT_START   ev_pos_t04_swrival_01
 
   //プライヤー名代入
   _PLAYER_NAME( 0 )
@@ -432,6 +446,197 @@ EVENT_START		ev_bg_t04_sign1_02
 	_EASY_BGWIN_MSG( msg_t04_sign1_02, TYPE_POST)	//簡易メッセージＢＧ用
 EVENT_END
 
+/**************************************************************/
+/*  ライバル：話しかけ（クリア後に出現）                      */
+/**************************************************************/
+EVENT_START   ev_t04_swrival_01
+
+  _TALK_OBJ_START()
+
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //アイテム受け取り済みか
+  IF FLAG_OFF( FE_T04_ITEMGET_01 ) THEN
+
+    //ライバル：…………なんだよ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_01 )
+    _MSGWIN_CLOSE()
+
+    //秘伝マシン06「ダイビング」入手
+    _ITEM_EVENT_NOWAIT( ITEM_HIDENMASIN06, 1 )
+
+    //========================================//
+    //アイテム入手フラグON
+    _FLAG_SET( FE_T04_ITEMGET_01 )
+    //========================================//
+
+    //ライバル：それは　ダイビング▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_02 )
+
+    //ライバル：でさ　オマエ
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_03 )
+
+    //ライバルと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ライバル：かつのは　オレたち　だぜ！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_04 )
+      _MSGWIN_CLOSE()
+
+      //ライバル戦呼び出し　最初の３匹によって分岐【仮】トレーナーIDは仮
+      IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+        //初期３匹で草タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+      ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+        //初期３匹で炎タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_02, 0 )
+      ELSE
+        //初期３匹で水タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_03, 0 )
+      ENDIF
+
+      //結果チェック
+      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _TRAINER_WIN()
+      ELSE
+        _TRAINER_LOSE()
+      ENDIF
+
+      //プライヤー名代入
+      _PLAYER_NAME( 0 )
+      //ライバル名代入
+      _RIVAL_NAME( 1 )
+
+      //ライバル：……ったく▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_06 )
+      _MSGWIN_CLOSE()
+
+      //自機座標取得
+      _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+      //アニメ：ライバル退場
+      IF $LCW_POSZ == 300  THEN
+        //主人公をよけて歩く
+        _OBJ_ANIME_AUTO( T04_SWRIVAL_01, 752, 296, FORCE_TYPE_NPC, 8, DIR_LR )
+      ELSE
+        _OBJ_ANIME_AUTO( T04_SWRIVAL_01, 753, 296, FORCE_TYPE_NPC, 8, DIR_UD )
+      ENDIF
+
+      _TIME_WAIT( 24 )
+
+      //アニメ：主人公見送り
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+
+      _SE_PLAY( SEQ_SE_KAIDAN )   //階段SE再生
+      _OBJ_DEL( T04_SWRIVAL_01 )  //ライバル動作モデル削除
+      _SE_WAIT()  //SE待ち
+
+      //==================================//
+      //ライバルに勝利した（イベント終了）
+      _FLAG_SET ( FE_T04_SWRIVAL_WIN_01 )
+      //ライバルを非表示
+      _FLAG_SET ( FV_T04_SWRIVAL_01 )
+      //==================================//
+
+    ELSE
+
+      //ライバル：……ッチ
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //会話２回目以降
+  ELSE
+
+    //ライバル：でさ　オマエ
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_03 )
+
+    //ライバルと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ライバル：かつのは　オレたち　だぜ！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_04 )
+      _MSGWIN_CLOSE()
+
+      //ライバル戦呼び出し　最初の３匹によって分岐【仮】トレーナーIDは仮
+      IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+        //初期３匹で草タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+      ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+        //初期３匹で炎タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_02, 0 )
+      ELSE
+        //初期３匹で水タイプを選択
+        _TRAINER_BTL_SET( TRID_SWRIVAL_03, 0 )
+      ENDIF
+
+      //結果チェック
+      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _TRAINER_WIN()
+      ELSE
+        _TRAINER_LOSE()
+      ENDIF
+
+      //プライヤー名代入
+      _PLAYER_NAME( 0 )
+      //ライバル名代入
+      _RIVAL_NAME( 1 )
+
+      //ライバル：……ったく▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_06 )
+      _MSGWIN_CLOSE()
+
+      //自機座標取得
+      _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+      //アニメ：ライバル退場
+      IF $LCW_POSZ == 300  THEN
+        //主人公をよけて歩く
+        _OBJ_ANIME_AUTO( T04_SWRIVAL_01, 752, 296, FORCE_TYPE_NPC, 8, DIR_LR )
+      ELSE
+        _OBJ_ANIME_AUTO( T04_SWRIVAL_01, 753, 296, FORCE_TYPE_NPC, 8, DIR_UD )
+      ENDIF
+
+      _TIME_WAIT( 24 )
+
+      //アニメ：主人公見送り
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+
+      _SE_PLAY( SEQ_SE_KAIDAN )   //階段SE再生
+      _OBJ_DEL( T04_SWRIVAL_01 )  //ライバル動作モデル削除
+      _SE_WAIT()  //SE待ち
+
+      //==================================//
+      //ライバルに勝利した（イベント終了）
+      _FLAG_SET ( FE_T04_SWRIVAL_WIN_01 )
+      //ライバルを非表示
+      _FLAG_SET ( FV_T04_SWRIVAL_01 )
+      //==================================//
+
+    ELSE
+
+      //ライバル：……ッチ
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
@@ -503,3 +708,5 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
+
+

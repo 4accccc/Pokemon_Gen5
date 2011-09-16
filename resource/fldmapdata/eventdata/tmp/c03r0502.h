@@ -8,6 +8,10 @@
 #ifndef ZONE_C03R0502_EVC_H
 #define ZONE_C03R0502_EVC_H
 
+#define C03R0502_BUSINESSMAN_01            0
+#define C03R0502_POKE38_01                 1
+#define C03R0502_POLICEMAN_01              2
+#define C03R0502_OL_01                     3
 
 #endif //ZONE_C03R0502_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0502.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
