@@ -4203,10 +4203,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ポケモンを　かいふく　します▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:16:27" />
+				Time="2011-09-16T11:47:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4217,10 +4217,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ポケモンを　かいふく　します▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:18:37" />
+				Time="2011-09-16T11:47:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4450,10 +4450,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ポケモンを　かいふく　します▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:19:44" />
+				Time="2011-09-16T11:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4464,10 +4464,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ポケモンを　かいふく　します▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:19:44" />
+				Time="2011-09-16T11:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4475,14 +4475,14 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>秘書3セリフ♀
+			<Comment>秘書3セリフ♂
 0：秘書名
 1：クチグセ
 2：市長名
 3：カンゲキ</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:21:02" />
+				Time="2011-09-16T11:48:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -23994,13 +23994,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 チャンピオンを　たおして
 でんどういり　してきました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				Time="2011-09-16T11:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24008,7 +24008,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 チャンピオンを　たおして
 でんどういり　してきました！▼</Text>
@@ -24017,8 +24017,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24059,7 +24059,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 バトルサブウェイに　じょうしゃして
 たいせん　してきました！▼</Text>
@@ -24068,12 +24068,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 バトルサブウェイに　じょうしゃして
 たいせん　してきました！▼</Text>
@@ -24082,8 +24082,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24124,7 +24124,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケウッドで　えいがを
 さつえい　してきました！▼</Text>
@@ -24133,12 +24133,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケウッドで　えいがを
 さつえい　してきました！▼</Text>
@@ -24147,8 +24147,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24189,7 +24189,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 トライアルハウスで▽
 バトルけんてい　してきました！▼</Text>
@@ -24198,12 +24198,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 トライアルハウスで▽
 バトルけんてい　してきました！▼</Text>
@@ -24212,8 +24212,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24254,7 +24254,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンミュージカルで　えんもくを▽
 ひろう　してきました！▼</Text>
@@ -24263,12 +24263,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンミュージカルで　えんもくを▽
 ひろう　してきました！▼</Text>
@@ -24277,8 +24277,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24319,7 +24319,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクで　あいての　せかいへ▽
 しんにゅう　してきました！▼</Text>
@@ -24328,12 +24328,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクで　あいての　せかいへ▽
 しんにゅう　してきました！▼</Text>
@@ -24342,8 +24342,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24384,7 +24384,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクフェスの　ミッションを▽
 ちょうせん　してました！▼</Text>
@@ -24393,12 +24393,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクフェスの　ミッションを▽
 ちょうせん　してました！▼</Text>
@@ -24407,8 +24407,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24449,7 +24449,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　タマゴを▽
 ふか　させてました！▼</Text>
@@ -24458,12 +24458,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　タマゴを▽
 ふか　させてました！▼</Text>
@@ -24472,8 +24472,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24514,7 +24514,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　レベルを▽
 あげていました！▼</Text>
@@ -24523,12 +24523,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　レベルを▽
 あげていました！▼</Text>
@@ -24537,8 +24537,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24579,7 +24579,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 テレビを　みていました！▼</Text>
 			<TextModifiedBy
@@ -24587,12 +24587,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 テレビを　みていました！▼</Text>
 			<TextModifiedBy
@@ -24600,8 +24600,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24642,7 +24642,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゴミばこの　なかみを▽
 しらべていました！▼</Text>
@@ -24651,12 +24651,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゴミばこの　なかみを▽
 しらべていました！▼</Text>
@@ -24665,8 +24665,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24707,7 +24707,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　ニックネームを▽
 つけていました！▼</Text>
@@ -24716,12 +24716,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　ニックネームを▽
 つけていました！▼</Text>
@@ -24730,8 +24730,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24772,7 +24772,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 つりざで　ポケモンを▽
 つりあげました！▼</Text>
@@ -24781,12 +24781,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 つりざで　ポケモンを▽
 つりあげました！▼</Text>
@@ -24795,8 +24795,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24837,7 +24837,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みえない　どうぐを▽
 さがしていました！▼</Text>
@@ -24846,12 +24846,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みえない　どうぐを▽
 さがしていました！▼</Text>
@@ -24860,8 +24860,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:30" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24902,7 +24902,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　かせきを▽
 ふくげん　していました！▼</Text>
@@ -24911,12 +24911,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　かせきを▽
 ふくげん　していました！▼</Text>
@@ -24925,8 +24925,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -24967,7 +24967,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ユニオンルームで▽
 みんなと　つうしん　していました！▼</Text>
@@ -24976,12 +24976,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ユニオンルームで▽
 みんなと　つうしん　していました！▼</Text>
@@ -24990,8 +24990,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25032,7 +25032,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳで▽
 ポケモンこうかん　していました！▼</Text>
@@ -25041,12 +25041,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳで▽
 ポケモンこうかん　していました！▼</Text>
@@ -25055,8 +25055,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25097,7 +25097,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳネゴシエーションで▽
 ポケモンこうかん　していました！▼</Text>
@@ -25106,12 +25106,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳネゴシエーションで▽
 ポケモンこうかん　していました！▼</Text>
@@ -25120,8 +25120,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25162,7 +25162,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みんなの　バトルビデオを▽
 みていました！▼</Text>
@@ -25171,12 +25171,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みんなの　バトルビデオを▽
 みていました！▼</Text>
@@ -25185,8 +25185,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25227,7 +25227,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ランダムマッチで▽
 ポケモンたいせんを　していました！▼</Text>
@@ -25236,12 +25236,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ランダムマッチで▽
 ポケモンたいせんを　していました！▼</Text>
@@ -25250,8 +25250,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25292,7 +25292,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 しりあいと　ゆうえんちで▽
 かんらんしゃに　のっていました！▼</Text>
@@ -25301,12 +25301,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 しりあいと　ゆうえんちで▽
 かんらんしゃに　のっていました！▼</Text>
@@ -25315,8 +25315,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:39" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25357,7 +25357,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 くろのまてんろうに▽
 ちょうせん　していました！▼</Text>
@@ -25366,12 +25366,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 くろのまてんろうに▽
 ちょうせん　していました！▼</Text>
@@ -25380,8 +25380,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25422,7 +25422,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 グローバルバトルトーナメントに▽
 ちょうせん　していました！▼</Text>
@@ -25431,12 +25431,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 グローバルバトルトーナメントに▽
 ちょうせん　していました！▼</Text>
@@ -25445,8 +25445,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:41" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25487,7 +25487,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ジョインアベニューで▽
 まちの　にんきを　あげていました▼</Text>
@@ -25496,12 +25496,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ジョインアベニューで▽
 まちの　にんきを　あげていました▼</Text>
@@ -25510,8 +25510,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:42" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25552,7 +25552,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ライブキャスターで▽
 みんなと　ゲーム　していました！▼</Text>
@@ -25561,12 +25561,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ライブキャスターで▽
 みんなと　ゲーム　していました！▼</Text>
@@ -25575,8 +25575,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25617,7 +25617,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 Ｗｉ－Ｆｉクラブで▽
 みんなと　つうしん　していました！▼</Text>
@@ -25626,12 +25626,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 Ｗｉ－Ｆｉクラブで▽
 みんなと　つうしん　していました！▼</Text>
@@ -25640,8 +25640,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25682,7 +25682,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 けものみちを　さがしていました！▼</Text>
 			<TextModifiedBy
@@ -25690,12 +25690,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 けものみちを　さがしていました！▼</Text>
 			<TextModifiedBy
@@ -25703,8 +25703,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25745,7 +25745,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゲームシンクで▽
 ゆめのせかいへ　つなげてました！▼</Text>
@@ -25754,12 +25754,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゲームシンクで▽
 ゆめのせかいへ　つなげてました！▼</Text>
@@ -25768,8 +25768,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:46" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25810,7 +25810,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ふしぎなおくりものを▽
 はいたついんから　もらってました！▼</Text>
@@ -25819,12 +25819,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ふしぎなおくりものを▽
 はいたついんから　もらってました！▼</Text>
@@ -25833,8 +25833,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:47" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25875,7 +25875,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 せきがいせんを　つかって▽
 つうしん　していました！▼</Text>
@@ -25884,12 +25884,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 せきがいせんを　つかって▽
 つうしん　していました！▼</Text>
@@ -25898,8 +25898,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25940,7 +25940,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 やせい　ポケモンを▽
 つかまえて　いました！▼</Text>
@@ -25949,12 +25949,12 @@ BW♀
 				Time="2011-09-16T06:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 やせい　ポケモンを▽
 つかまえて　いました！▼</Text>
@@ -25963,8 +25963,8 @@ BW♀
 				Time="2011-09-16T06:35:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26066,7 +26066,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 チャンピオンを　たおして
 でんどういり　してきました！▼</Text>
@@ -26075,12 +26075,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 チャンピオンを　たおして
 でんどういり　してきました！▼</Text>
@@ -26089,8 +26089,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26131,7 +26131,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 バトルサブウェイに　じょうしゃして
 たいせん　してきました！▼</Text>
@@ -26140,12 +26140,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 バトルサブウェイに　じょうしゃして
 たいせん　してきました！▼</Text>
@@ -26154,8 +26154,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:52" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26196,7 +26196,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケウッドで　えいがを
 さつえい　してきました！▼</Text>
@@ -26205,12 +26205,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケウッドで　えいがを
 さつえい　してきました！▼</Text>
@@ -26219,8 +26219,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26261,7 +26261,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 トライアルハウスで▽
 バトルけんてい　してきました！▼</Text>
@@ -26270,12 +26270,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 トライアルハウスで▽
 バトルけんてい　してきました！▼</Text>
@@ -26284,8 +26284,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26326,7 +26326,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンミュージカルで　えんもくを▽
 ひろう　してきました！▼</Text>
@@ -26335,12 +26335,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンミュージカルで　えんもくを▽
 ひろう　してきました！▼</Text>
@@ -26349,8 +26349,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:57" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26391,7 +26391,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクで　あいての　せかいへ▽
 しんにゅう　してきました！▼</Text>
@@ -26400,12 +26400,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクで　あいての　せかいへ▽
 しんにゅう　してきました！▼</Text>
@@ -26414,8 +26414,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26456,7 +26456,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクフェスの　ミッションを▽
 ちょうせん　してました！▼</Text>
@@ -26465,12 +26465,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ハイリンクフェスの　ミッションを▽
 ちょうせん　してました！▼</Text>
@@ -26479,8 +26479,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26521,7 +26521,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　タマゴを▽
 ふか　させてました！▼</Text>
@@ -26530,12 +26530,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:50:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　タマゴを▽
 ふか　させてました！▼</Text>
@@ -26544,8 +26544,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:00" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26586,7 +26586,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　レベルを▽
 あげていました！▼</Text>
@@ -26595,12 +26595,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　レベルを▽
 あげていました！▼</Text>
@@ -26609,8 +26609,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26651,7 +26651,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 テレビを　みていました！▼</Text>
 			<TextModifiedBy
@@ -26659,12 +26659,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 テレビを　みていました！▼</Text>
 			<TextModifiedBy
@@ -26672,8 +26672,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:02" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26714,7 +26714,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゴミばこの　なかみを▽
 しらべていました！▼</Text>
@@ -26723,12 +26723,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゴミばこの　なかみを▽
 しらべていました！▼</Text>
@@ -26737,8 +26737,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26779,7 +26779,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　ニックネームを▽
 つけていました！▼</Text>
@@ -26788,12 +26788,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　ニックネームを▽
 つけていました！▼</Text>
@@ -26802,8 +26802,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:04" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26844,7 +26844,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 つりざで　ポケモンを▽
 つりあげました！▼</Text>
@@ -26853,12 +26853,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 つりざで　ポケモンを▽
 つりあげました！▼</Text>
@@ -26867,8 +26867,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26909,7 +26909,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みえない　どうぐを▽
 さがしていました！▼</Text>
@@ -26918,12 +26918,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みえない　どうぐを▽
 さがしていました！▼</Text>
@@ -26932,8 +26932,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26974,7 +26974,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　かせきを▽
 ふくげん　していました！▼</Text>
@@ -26983,12 +26983,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ポケモンの　かせきを▽
 ふくげん　していました！▼</Text>
@@ -26997,8 +26997,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27039,7 +27039,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ユニオンルームで▽
 みんなと　つうしん　していました！▼</Text>
@@ -27048,12 +27048,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ユニオンルームで▽
 みんなと　つうしん　していました！▼</Text>
@@ -27062,8 +27062,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:09" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27104,7 +27104,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳで▽
 ポケモンこうかん　していました！▼</Text>
@@ -27113,12 +27113,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳで▽
 ポケモンこうかん　していました！▼</Text>
@@ -27127,8 +27127,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27169,7 +27169,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳネゴシエーションで▽
 ポケモンこうかん　していました！▼</Text>
@@ -27178,12 +27178,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ＧＴＳネゴシエーションで▽
 ポケモンこうかん　していました！▼</Text>
@@ -27192,8 +27192,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:11" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27234,7 +27234,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みんなの　バトルビデオを▽
 みていました！▼</Text>
@@ -27243,12 +27243,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 みんなの　バトルビデオを▽
 みていました！▼</Text>
@@ -27257,8 +27257,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27299,7 +27299,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ランダムマッチで▽
 ポケモンたいせんを　していました！▼</Text>
@@ -27308,12 +27308,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ランダムマッチで▽
 ポケモンたいせんを　していました！▼</Text>
@@ -27322,8 +27322,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27364,7 +27364,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 しりあいと　ゆうえんちで▽
 かんらんしゃに　のっていました！▼</Text>
@@ -27373,12 +27373,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 しりあいと　ゆうえんちで▽
 かんらんしゃに　のっていました！▼</Text>
@@ -27387,8 +27387,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27429,7 +27429,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 くろのまてんろうに▽
 ちょうせん　していました！▼</Text>
@@ -27438,12 +27438,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 くろのまてんろうに▽
 ちょうせん　していました！▼</Text>
@@ -27452,8 +27452,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27494,7 +27494,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 グローバルバトルトーナメントに▽
 ちょうせん　していました！▼</Text>
@@ -27503,12 +27503,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 グローバルバトルトーナメントに▽
 ちょうせん　していました！▼</Text>
@@ -27517,8 +27517,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27559,7 +27559,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ジョインアベニューで▽
 まちの　にんきを　あげていました▼</Text>
@@ -27568,12 +27568,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ジョインアベニューで▽
 まちの　にんきを　あげていました▼</Text>
@@ -27582,8 +27582,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:17" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27624,7 +27624,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ライブキャスターで▽
 みんなと　ゲーム　していました！▼</Text>
@@ -27633,12 +27633,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ライブキャスターで▽
 みんなと　ゲーム　していました！▼</Text>
@@ -27647,8 +27647,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27689,7 +27689,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 Ｗｉ－Ｆｉクラブで▽
 みんなと　つうしん　していました！▼</Text>
@@ -27698,12 +27698,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 Ｗｉ－Ｆｉクラブで▽
 みんなと　つうしん　していました！▼</Text>
@@ -27712,8 +27712,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27754,7 +27754,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 けものみちを　さがしていました！▼</Text>
 			<TextModifiedBy
@@ -27762,12 +27762,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 けものみちを　さがしていました！▼</Text>
 			<TextModifiedBy
@@ -27775,8 +27775,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27817,7 +27817,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゲームシンクで▽
 ゆめのせかいへ　つなげてました！▼</Text>
@@ -27826,12 +27826,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ゲームシンクで▽
 ゆめのせかいへ　つなげてました！▼</Text>
@@ -27840,8 +27840,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27882,7 +27882,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ふしぎなおくりものを▽
 はいたついんから　もらってました！▼</Text>
@@ -27891,12 +27891,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 ふしぎなおくりものを▽
 はいたついんから　もらってました！▼</Text>
@@ -27905,8 +27905,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -27947,7 +27947,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 せきがいせんを　つかって▽
 つうしん　していました！▼</Text>
@@ -27956,12 +27956,12 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 せきがいせんを　つかって▽
 つうしん　していました！▼</Text>
@@ -27970,8 +27970,8 @@ BW♀
 				Time="2011-09-15T16:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -28012,7 +28012,7 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 やせいポケモンを　つかまえました！▼</Text>
 			<TextModifiedBy
@@ -28020,12 +28020,12 @@ BW♀
 				Time="2011-09-15T16:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さいきんは　ですね……▼
+			<Text>[Name:TrainerName Idx="1" ]『……▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 やせいポケモンを　つかまえました！▼</Text>
 			<TextModifiedBy
@@ -28033,8 +28033,8 @@ BW♀
 				Time="2011-09-15T16:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T11:51:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
