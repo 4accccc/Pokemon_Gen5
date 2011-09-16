@@ -281,6 +281,9 @@
 #define WK_SCENE_N01R0501_BOSS           16669 /* 0x411d N城：謁見の間前イベント進行制御ワーク */
 #define WK_SCENE_T04R101_STOPPER_01      16670 /* 0x411e サザナミゲート：ストッパーPOS制御ワーク */
 #define WK_SCENE_C14GYM0101_STOPPER      16671 /* 0x411f セイガイハシティジム：ストッパーPOS制御ワーク */
+#define WK_SCENE_D24_PAIR_START          16672 /* 0x4120 リバースマウンテン：ベル連れ歩きイベント制御ワーク */
+#define WK_SCENE_D24_BELL_COMMENT        16673 /* 0x4121 リバースマウンテン・ヒードラン部屋：POS制御ワーク */
+#define WK_SCENE_C14_PHOTO_01            16674 /* 0x4122 セイガイハシティ：顔だし看板POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

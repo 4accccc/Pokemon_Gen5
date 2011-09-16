@@ -435,6 +435,11 @@
 #define FE_D08R0901_LEGEND_MEET_01         419 /* 0x01a3 古代の城：ウルガモス遭遇フラグ */
 #define FE_D35R0101_POKE_GET_01            420 /* 0x01a4 自然保護区：黒オノノクス捕獲フラグ */
 #define FE_D35R0101_AREA_01                421 /* 0x01a5 自然保護区：到達フラグ */
+#define FE_D24_PAIR_01                     422 /* 0x01a6 リバースマウンテン：連れ歩きフラグ */
+#define FE_D24_LOOKROOM_01                 423 /* 0x01a7 リバースマウンテン：部屋見たフラグ */
+#define FE_N01R0401_N_FIRSTTALK            424 /* 0x01a8 N城：初回会話フラグ */
+#define FE_R01_ITEMGET_01                  425 /* 0x01a9 1番道路：アイテム入手フラグ */
+#define FE_R06R0101_POKE_GET_01            426 /* 0x01aa 季節研究所：シキジカ入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -801,6 +806,9 @@
 #define FV_D29R0301_WORKMAN2_02A           855 /* 0x0357 ヤーコンロード：トロッコ用 */
 #define FV_D29R0301_WORKMAN2_03            856 /* 0x0358 ヤーコンロード：トロッコ用 */
 #define FV_D29R0301_WORKMAN2_04            857 /* 0x0359 ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_STOP                   858 /* 0x035a ヤーコンロード：ストッパー */
+#define FV_D24_PAIR_START_BELL_01          859 /* 0x035b リバースマウンテン：連れ歩きベル */
+#define FV_D24_PAIR_END_BELL_01            860 /* 0x035c リバースマウンテン：連れ歩きベル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2280,7 +2288,7 @@
 #define SYS_FLAG_C08GYM_BUTTON_C          2436 /* 0x0984 ドラゴンジム：中ボタン */
 #define SYS_FLAG_SUGOI_TSURI_GET          2437 /* 0x0985 すごいつりざお入手フラグ */
 #define SYS_FLAG_FES_TUTORIAL_CLEAR       2438 /* 0x0986 ハイリンクフェス：ミッションを初めてクリアしたフラグ */
-		/* not used  2439(0x0987) */
+#define SYS_FLAG_NAMINORI_GET             2439 /* 0x0987 なみのり入手フラグ */
 		/* not used  2440(0x0988) */
 		/* not used  2441(0x0989) */
 		/* not used  2442(0x098a) */
@@ -2540,6 +2548,7 @@
 #define TMFLG_D20_POKE_536_MEET           2775 /* 0x0ad7 海底神殿海上：１週間に１回出現するブルンゲルに出会った */
 #define TMFLG_C01GYM0101_LEADER1_BT       2776 /* 0x0ad8 サンヨウレストラン：１日１回三つ子ダブルバトルイベント */
 #define TMFLG_C01GYM0101_SHOW             2777 /* 0x0ad9 サンヨウレストラン：サルショーイベント */
+#define TMFLG_C14_PHOTO                   2778 /* 0x0ada セイガイハシティ：顔出し看板 */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
