@@ -714,7 +714,7 @@ static void GRA_LoadBgGraphic(void)
         BGM_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_LIST );
 
     GFL_ARCHDL_UTIL_TransVramScreen(
-        ah, NARC_zukan_gra_list_listbase_bgd_NSCR,
+        ah, NARC_zukan_gra_habitat_list_habitatbase_bgd_NSCR,
         BGM_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_LIST );
 
     // キャラクタ転送（サブタイトルバー）
@@ -742,7 +742,7 @@ static void GRA_LoadBgGraphic(void)
         BGS_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_LIST );
 
     GFL_ARCHDL_UTIL_TransVramScreen(
-        ah, NARC_zukan_gra_list_listbase_bgu_NSCR,
+        ah, NARC_zukan_gra_habitat_list_habitatbase_bgu_NSCR,
         BGS_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_LIST );
 
 
@@ -1713,7 +1713,11 @@ static void ListCallBack_Move( void * work, u32 item_index, BOOL flg )
 {
   HABITAT_LIST_GRA_WK *p_wk = work;
   RefreshCursorPos( p_wk );
-  HABITAT_LIST_GRA_StartMiniMapIconAnm( p_wk );
+
+  if( GFL_UI_TP_GetTrg() )
+  {
+    HABITAT_LIST_GRA_StartMiniMapIconAnm( p_wk );
+  }
 }
 
 //--------------------------------------------------------------------------------------------

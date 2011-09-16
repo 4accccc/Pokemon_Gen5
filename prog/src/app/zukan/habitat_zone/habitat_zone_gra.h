@@ -44,10 +44,10 @@
 // OBJ初期位置
 enum
 {
-  OBJ_POS_L_X = 16,
-  OBJ_POS_L_Y = 110,
-  OBJ_POS_R_X = 240,
-  OBJ_POS_R_Y = 110,
+  OBJ_POS_L_X = 16+4,
+  OBJ_POS_L_Y = 60,
+  OBJ_POS_R_X = 240-4,
+  OBJ_POS_R_Y = 60,
   OBJ_POS_STAMP_BIG_X = 224,
   OBJ_POS_STAMP_BIG_Y = 20,
   OBJ_POS_STAMP_LAND_X = 128,
@@ -99,6 +99,7 @@ enum
   OBJ_ANM_SEQ_BUTTON_FISHING_ANM  = 21,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_ANM  = 29,
+  OBJ_ANM_SEQ_BUTTON_EXPLANATION_OFF  = 41,
   OBJ_ANM_SEQ_MENU_BAR  = 31,
 };
 
@@ -160,6 +161,19 @@ enum{
   MENU_BAR_POS_X   = 256/2,    // メニューバーの位置
   MENU_BAR_POS_Y   = 192/2,     // メニューバーの位置
 
+  TRAY_PAL_START = 9,           // トレイのパレット開始位置
+  TRAY_PAL_NUM    = 3,          // トレイのパレット数
+  TRAY_PAL_LAND_START = 9,      // 草地のパレット開始位置
+  TRAY_PAL_WATERSIDE_START = 0,  // 水辺のパレット開始位置
+  TRAY_PAL_FISHING_START   = 3,  // 釣りのパレット開始位置
+  
+  // メインOBJパレット
+  COMMON_PAL_START   = 0,
+  COMMON_PAL_NUM     = 0x8, 
+  APPCOM_PAL_START   = COMMON_PAL_NUM, 
+  APPCOM_PAL_NUM     = APP_COMMON_BARICON_PLT_NUM, 
+  POKE_PAL_START     = APPCOM_PAL_START +APPCOM_PAL_NUM, 
+  POKE_PAL_NUM       = 3 
 };
 
 // OBJ表示優先度
@@ -327,4 +341,5 @@ extern void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u
 extern void HABITAT_ZONE_GRA_CallFade( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end );
 extern u16 HABITAT_ZONE_GRA_CheckFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL is_main  );
+extern void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type  );
 

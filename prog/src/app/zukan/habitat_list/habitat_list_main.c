@@ -454,8 +454,6 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
  	case FRAMELIST_RET_MOVE:				// カーソル移動
-    {
-    }
     break;
 
   case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
@@ -910,7 +908,7 @@ static void DrawTitleMsg( HABITAT_LIST_WK *p_wk )
   STRBUF       *str;
   
   // メッセージの書き込み
-  str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_list_title );
+  str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_list_top_title );
 
   // メッセージの書き込み
   HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_TITLE_WIN ,str ,&p_wk->gra_sys ,

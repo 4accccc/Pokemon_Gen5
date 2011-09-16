@@ -114,6 +114,7 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no ,u32 f
 static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk );
 static GFL_BMPWIN* GetBmpWin( HABITAT_ZONE_GRA_WK *p_wk ,PRINT_UTIL_WIN win_id);
 static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_ReLoadBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -638,7 +639,7 @@ static void GRA_LoadBgGraphic(void)
         ah, NARC_zukan_gra_list_listbase_bgd_NCGR, BGM_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
 
     GFL_ARCHDL_UTIL_TransVramScreen(
-        ah, NARC_zukan_gra_list_listbase_bgd_NSCR,
+        ah, NARC_zukan_gra_habitat_list_habitatbase_bgd_NSCR,
         BGM_FRAME_SCROLL_WIN, 0, 0, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
 
     // キャラクタ転送（サブタイトルバー）
@@ -718,9 +719,9 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     prm.ncg_id    = NARC_zukan_gra_list_list_objd_NCGR;
     prm.cell_id   = NARC_zukan_gra_list_list_objd_NCER; 
     prm.anm_id    = NARC_zukan_gra_list_list_objd_NANR;
-    prm.pltt_line = 0;
+    prm.pltt_line = COMMON_PAL_START;
     prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num  = 0xB;
+    prm.pltt_src_num  = COMMON_PAL_NUM;
 
     UI_EASY_CLWK_LoadResource( &p_wk->clres_common_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
@@ -736,9 +737,9 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     prm.ncg_id    = APP_COMMON_GetBarIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetBarIconCellArcIdx( APP_COMMON_MAPPING_128K ); 
     prm.anm_id    = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = 10;
+    prm.pltt_line = APPCOM_PAL_START;
     prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num  = APP_COMMON_BARICON_PLT_NUM;
+    prm.pltt_src_num  = APPCOM_PAL_NUM;
 
     UI_EASY_CLWK_LoadResource( &p_wk->clres_app_menu_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
@@ -898,9 +899,9 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no , u32 
     ONOUE_Printf("フォルム%d\n",form_no);
     prm.cell_id   = POKEICON_GetCellArcIndex(); 
     prm.anm_id    = POKEICON_GetAnmArcIndex();
-    prm.pltt_line = 7;
+    prm.pltt_line = POKE_PAL_START;
     prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num = 3;
+    prm.pltt_src_num = POKE_PAL_NUM;
     
     UI_EASY_CLWK_LoadResource( &p_wk->clres_poke_icon[index], &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
 
@@ -1799,6 +1800,95 @@ void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL i
     // BGスクロール
 	  GFL_BG_SetScrollReq( BGS_FRAME_FONT, GFL_BG_SCROLL_Y_DEC, yval );
 	  GFL_BG_SetScrollReq( BGS_FRAME_BAR, GFL_BG_SCROLL_Y_DEC, yval );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 地形に対応したパレットを転送する
+ *
+ *	@param	*p_wk 
+ *	@param	type   
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type   )
+{
+  // パレット転送
+  switch( type )
+  {
+  case HABITAT_GROUND_LAND:
+    GFL_ARC_UTIL_TransVramPaletteEx(
+        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_NCLR, PALTYPE_MAIN_BG,
+        TRAY_PAL_LAND_START*0x20, TRAY_PAL_START*0x20,
+        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+    break;
+  case HABITAT_GROUND_WATERSIDE:
+    GFL_ARC_UTIL_TransVramPaletteEx(
+        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
+        TRAY_PAL_WATERSIDE_START*0x20, TRAY_PAL_START*0x20,
+        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+    break;
+  case HABITAT_GROUND_FISHING:
+    GFL_ARC_UTIL_TransVramPaletteEx(
+        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
+        TRAY_PAL_FISHING_START*0x20, TRAY_PAL_START*0x20,
+        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  // 点滅アニメ読み込み
+  GRA_ReLoadBlinkAnm( p_wk ,type );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレット点滅アニメ作成
+ *
+ *	@param	*p_wk 
+ *	@param	type   
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GRA_ReLoadBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type )
+{
+  // 終了
+  BLINKPALANM_Exit( p_wk->p_blinkanm_wk );
+ 	
+  // 点滅させるパレットの指定
+  p_wk->p_blinkanm_wk = BLINKPALANM_Create( BLINK_PALID_POKE_CURSOR_CHANGE*16  ,
+        BLINK_PAL_SIZE_POKE_CURSOR , BGM_FRAME_BACK, HEAPID_ZUKAN_HABITAT_ZONE );
+
+  // パレットアニメデータの作成
+  switch( type )
+  {
+  case HABITAT_GROUND_LAND:
+    BLINKPALANM_SetPalBufferArc( p_wk->p_blinkanm_wk, ARCID_ZUKAN_GRA,
+        NARC_zukan_gra_list_list_bgd_NCLR, 
+        (TRAY_PAL_LAND_START)*16, 
+        (TRAY_PAL_LAND_START+1)*16 );
+
+    break;
+  case HABITAT_GROUND_WATERSIDE:
+    BLINKPALANM_SetPalBufferArc( p_wk->p_blinkanm_wk, ARCID_ZUKAN_GRA,
+        NARC_zukan_gra_list_list_bgd_other_NCLR, 
+        (TRAY_PAL_WATERSIDE_START)*16, 
+        (TRAY_PAL_WATERSIDE_START+1)*16 );
+    break;
+  case HABITAT_GROUND_FISHING:
+    BLINKPALANM_SetPalBufferArc( p_wk->p_blinkanm_wk, ARCID_ZUKAN_GRA,
+        NARC_zukan_gra_list_list_bgd_other_NCLR, 
+        (TRAY_PAL_FISHING_START)*16, 
+        (TRAY_PAL_FISHING_START+1)*16 );
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
   }
 }
 

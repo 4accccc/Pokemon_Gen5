@@ -32,6 +32,7 @@
 
 #define FCOL_WP01WN		( PRINTSYS_LSB_Make(0xF,0x1,0x2) )	// フォントカラー：両用０１白抜
 #define FCOL_BP01WN		( PRINTSYS_LSB_Make(0x1,0x2,0xF) )	// フォントカラー：両用０１黒抜
+#define FCOL_GP01WN		( PRINTSYS_LSB_Make(0x2,0x1,0x0) )	// フォントカラー：両用０１グレー
 
 #include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
 
@@ -79,8 +80,8 @@ static const GFL_UI_TP_HITTBL sc_touch_hit_tbl_top_menu[] =
 	{ TB_PY, TB_PY+TB_SY-1, 0, 24 },		    // 上
 	{ TB_PY, TB_PY+TB_SY-1, 24, 24+24 },		    // 下
 
-	{ 102, 102 + 24, 8 , 32     },		        // 季節L
-	{ 102, 102 + 24, 232 , 248  },		        // 季節R
+	{ 60-8, 60-8 + 24, 8+4 , 32+4     },		        // 季節L
+	{ 60-8, 60-8 + 24, 232-4 , 248-4  },		        // 季節R
 	
   // カーソル
   { GET_CURPOS_Y(0) ,GET_CURPOS_Y(0) + POKECURSOR_H,
@@ -301,7 +302,7 @@ static const MainFunc MainSeq[] = {
 
 // メッセージ---------------------------------------
 static void DrawLandMsg( HABITAT_ZONE_WK *p_wk );
-static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk );
+static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk ,PRINTSYS_LSB font_colro);
 static void ClearExplanationMsg( HABITAT_ZONE_WK *p_wk );
 static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
 //static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk );
@@ -338,6 +339,7 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk );
 static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk );
 static void RefreshMapWin( HABITAT_ZONE_WK *p_wk );
 static void SetCompIcon( HABITAT_ZONE_WK *p_wk );
+static void SetExplanationButtonStatus( HABITAT_ZONE_WK *p_wk ,BOOL is_active ,BOOL is_visible );
 
 //----------------------------------------------------------------------------
 /**
@@ -560,31 +562,40 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     break;
   case TPID_BUTTON_GROUND_LAND:
     {
-      if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
+      if( CheckCanMoveLandType( p_wk ) )
       {
-        ONOUE_Printf("草地\n");
-        p_wk->land_type = HABITAT_GROUND_LAND;
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
+        {
+          ONOUE_Printf("草地\n");
+          p_wk->land_type = HABITAT_GROUND_LAND;
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        }
       }
     }
     break;
   case TPID_BUTTON_GROUND_WATERSIDE:
     {
-      if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
+      if( CheckCanMoveLandType( p_wk ) )
       {
-        ONOUE_Printf("水辺\n");
-        p_wk->land_type = HABITAT_GROUND_WATERSIDE;
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
+        {
+          ONOUE_Printf("水辺\n");
+          p_wk->land_type = HABITAT_GROUND_WATERSIDE;
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        }
       }
     }
     break;
   case TPID_BUTTON_GROUND_FISHING:
     {
-      if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
+      if( CheckCanMoveLandType( p_wk ) )
       {
-        ONOUE_Printf("釣り\n");
-        p_wk->land_type = HABITAT_GROUND_FISHING;
-        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
+        {
+          ONOUE_Printf("釣り\n");
+          p_wk->land_type = HABITAT_GROUND_FISHING;
+          SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+        }
       }
     }
     break;
@@ -846,6 +857,7 @@ static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk )
       {
         GF_ASSERT(0);
       }
+
       p_wk->sub_seq++;
     }
     break;
@@ -1756,6 +1768,20 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
         }
       }
 
+      // ポケモンを選択しているか調べる
+      // 説明を見るボタン書き換え
+      {
+        s32 mons_no = CheckIsExistPoke( p_wk ,p_wk->select_index );
+        if( mons_no >= 0 )
+        {
+          SetExplanationButtonStatus( p_wk ,TRUE ,TRUE);
+        }
+        else
+        {
+          SetExplanationButtonStatus( p_wk ,FALSE ,TRUE);
+        }
+      }
+
       // サブシーケンスを進める
       p_wk->sub_seq++;
     }
@@ -2119,7 +2145,7 @@ static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INF
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk )
+static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk ,PRINTSYS_LSB font_colro)
 {
   STRBUF        *str;
 
@@ -2130,7 +2156,7 @@ static void DrawExplanationMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
       EXPLANATION_MSG_POS_X , EXPLANATION_MSG_POS_Y,
       EXPLANATION_MSG_W,EXPLANATION_MSG_H ,
-      FCOL_WP01WN );
+      font_colro );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -2446,6 +2472,9 @@ static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
     }
   }
 
+  // 地形タイプに合わせてパレットを転送
+  HABITAT_ZONE_GRA_TransTrayColor( &p_wk->gra_sys,p_wk->land_type);
+
   // 地名メッセージ書き込み
   DrawLandMsg( p_wk );
 }
@@ -2661,8 +2690,6 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk )
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
 
-  // 説明を見るの文字列書き込み
-  DrawExplanationMsg( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -2969,5 +2996,49 @@ static BOOL CheckCanMoveLandType( HABITAT_ZONE_WK *p_wk )
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明を見るボタンの状態を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	is_active   アクティブかどうか
+ *	@param	is_visible  表示するかどうか(アクティブより優先度が高い),FALSEの時非表示
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetExplanationButtonStatus( HABITAT_ZONE_WK *p_wk ,BOOL is_active ,BOOL is_visible )
+{
+  GFL_CLWK *p_clwk;
+
+  // セルアクターワークを取得する
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
+      OBJ_WK_BUTTON_EXPLANATION );
+
+  if( is_visible == FALSE)
+  {
+    // 説明を見るボタンを削除
+    ClearExplanationMsg( p_wk );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+  }
+  else
+  {
+    // アニメーションシーケンスとメッセージ色を変えて表示
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
+    if( is_active == TRUE )
+    {
+      DrawExplanationMsg( p_wk ,FCOL_WP01WN);
+      HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+          OBJ_WK_BUTTON_EXPLANATION,OBJ_ANM_SEQ_BUTTON_EXPLANATION );
+    }
+    else
+    {
+      DrawExplanationMsg( p_wk ,FCOL_GP01WN);
+      HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys,
+          OBJ_WK_BUTTON_EXPLANATION,OBJ_ANM_SEQ_BUTTON_EXPLANATION_OFF );
+    }
+  }
 }
 

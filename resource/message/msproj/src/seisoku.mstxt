@@ -2799,6 +2799,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-24T07:50:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ボタン</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:50" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_list_local"
@@ -2825,6 +2832,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-24T11:28:53" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ボタン</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_list_zenkoku"
@@ -2851,6 +2865,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-24T11:29:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ボタン</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_seisoku_pokeinfo_01"
@@ -2889,6 +2910,46 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_list_top_title"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそくちリスト</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T11:59:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生息地リスト</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T11:59:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>タイトルバーのメッセージ</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-16T12:00:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
