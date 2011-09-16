@@ -15,6 +15,7 @@
 #define ZONE_N01R0401_EVC_H
 
 #define N01R0401_BOSS_01                   0
+#define FLD_ITEM_216                       1
 
 #endif //ZONE_N01R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

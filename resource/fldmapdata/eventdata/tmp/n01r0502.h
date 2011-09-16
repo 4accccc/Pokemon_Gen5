@@ -11,6 +11,7 @@
 
 #define N01R0502_BOSS_01                   0
 #define N01R0502_NPOKE_01                  1
+#define FLD_ITEM_217                       2
 
 #endif //ZONE_N01R0502_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0502.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

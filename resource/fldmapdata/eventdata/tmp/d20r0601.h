@@ -10,17 +10,17 @@
 
 #define D20R0601_STOPPER_01                0
 #define D20R0601_CUBE_01                   1
-#define D20R0601_FLD_ITEM_11               2
-#define D20R0601_FLD_ITEM_07               3
-#define D20R0601_FLD_ITEM_04               4
-#define D20R0601_FLD_ITEM_13               5
-#define D20R0601_FLD_ITEM_08               6
-#define D20R0601_FLD_ITEM_15               7
-#define D20R0601_FLD_ITEM_05               8
-#define D20R0601_FLD_ITEM_02               9
-#define D20R0601_FLD_ITEM_03              10
-#define D20R0601_FLD_ITEM_14              11
-#define D20R0601_FLD_ITEM_09              12
+#define FLD_ITEM_357                       2
+#define FLD_ITEM_354                       3
+#define FLD_ITEM_352                       4
+#define FLD_ITEM_358                       5
+#define FLD_ITEM_355                       6
+#define FLD_ITEM_360                       7
+#define FLD_ITEM_353                       8
+#define FLD_ITEM_350                       9
+#define FLD_ITEM_351                      10
+#define FLD_ITEM_359                      11
+#define FLD_ITEM_356                      12
 
 #endif //ZONE_D20R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d20r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

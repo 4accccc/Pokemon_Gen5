@@ -21,6 +21,13 @@
 #define R02_PIPE_01                        9
 #define TR_TANPAN_26                      10
 #define TR_VETERANW_09                    11
+#define FLD_ITEM_300                      12
+#define FLD_ITEM_301                      13
+#define FLD_ITEM_302                      14
+#define FLD_ITEM_303                      15
+#define FLD_ITEM_304                      16
+#define FLD_ITEM_305                      17
+#define FLD_ITEM_306                      18
 
 #endif //ZONE_R02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
