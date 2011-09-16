@@ -1218,4 +1218,631 @@
 				Time="2011-09-16T08:56:37" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『ここは　あたたかいな▼
+なぜ　わたしが
+ここにいるのか　おしえよう▼
+ゲーチスさまが
+のこされた　しょもつが　ある▼
+これが　あれば　かいていいせきの
+もじが　よめる　という　しろもの▼
+わたしなりの　つみほろぼしだ
+この　しょもつを　よむがいい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:10:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:19:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『ここは　あたたかいな▼
+なぜ　わたしが
+ここにいるのか　おしえよう▼
+ゲーチスさまが
+のこされた　しょもつが　ある▼
+これが　あれば　かいていいせきの
+もじが　よめる　という　しろもの▼
+わたしなりの　つみほろぼしだ
+この　しょもつを　よむがいい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:08:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・ライバル戦闘後に出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:18:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:12:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は　かいていいせきの
+もじが　よめるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:34:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:21:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は　海底遺跡の
+文字が　読めるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:33:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・以降、海底遺跡の文字表示切替</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:22:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねんのため　つたえておくが
+かいていいせきに　いくには▼
+サザナミわんに　でて
+ダイビングを　つかうと　よい▼
+そして　かいていいせきの　なかで
+みつけた　ぶんしょうを▽
+じぶんで　かきとめるのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:22:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:24:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>念のため　伝えておくが
+海底遺跡に　行くには▼
+サザナミ湾に　でて
+ダイビングを　使うと　よい▼
+そして　海底遺跡の　なかで
+みつけた　文章を▽
+自分で　書き留めるのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:22:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・海底遺跡に行く前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:20:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチスさまの　しょもつに　よると
+こだいの　にんげんは　ぶんしょうを▽
+はんたいから　よんだ　という</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:21:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲーチスさまの　書物に　よると
+古代の　人間は　文章を▽
+反対から　読んでいた　という</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:20:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・第２階層到達前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:20:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょもつには
+たしか　こう　しるされていた……▼
+２かいに　あがったなら
+もじを　１つ　ずらして　よむ▼
+３かいに　あがったなら
+もじを　さらに　１つずらすと▼
+このばあい　ずらすとは
+つぎの　もじに　おきかえることだろう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>書物には
+たしか　こう　記されていた……▼
+２階に　あがったなら
+文字を　１つ　ずらして　読む▼
+３階に　あがったなら
+文字を　さらに　１つずらすと▼
+この場合　ずらすとは
+次の　文字に　置き換えることだろう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:25:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・第２階層到達</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:38:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たみの　あらそいを　おさめ
+ひとつに　まとめたのが▽
+おう　という　そんざい　なのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:58:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>民の　争いを　治め
+一つに　まとめたのが▽
+王という　存在　なのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:58:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・第３階層到達</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:38:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　みらいを　よみ
+いきとし　いけるものと　はなし▽
+たみを　まとめていた……▼
+これが　しんじつ　だとすれば
+まさに　えいゆうでは　ないか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:39:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王は　未来を　読み
+生きとし　生けるものと　話し▽
+民を　まとめていた……▼
+これが　真実だとすれば
+まさに　英雄では　ないか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:34:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・第４階層到達</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:38:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんとうの　つかない　もじもあるが
+ぜんごから　さっするに▼
+とんでもなく　すばらしい　おうが
+いせきで　ねむりに　ついたと▼
+もし　おうの　しそんが　いるなら
+とくべつな　ちからも▽
+つたわっておるのかも　しれんな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:39:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>見当の　つかない　文字もあるが
+前後から　察するに▼
+とんでもなく　すばらしい　王が
+遺跡で　眠りに　ついたと▼
+もし　王の　子孫が　いるなら
+特別な　力も▽
+伝わっておるのかも　しれんな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・第４階層到達＋こだいのおうかん入手
+・アイテム入手処理
+　No000</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:38:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なにい！？
+さらに　すすんだというのか！▼
+では　どんな　ぶんしょうが
+のこされていたのだ？▼
+……　……　……
+……　……　……▼
+ふむふむ　なるほどな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:02:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:25:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:55:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T11:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっと　たんさく　してくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:38:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:36:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:36:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:36:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:48:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T12:36:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_sage7_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいていいせきに　ついて
+しりたいことは　あつまった▼
+さて　こくさいけいさつに
+あいに　いくと　しよう▼
+われらの　すべてを
+はなさねば　ならんからな▼
+では　さらばだ！　てきながら
+あっぱれな　ポケモントレーナーめ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・退場する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T13:01:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
