@@ -10,7 +10,7 @@ require "wbt_dldata_util.rb"
 #--------------
 WBTDL_TOURNAMENT_NAME_LEN	 = 37		# トーナメント名(21->37)
 WBTDL_TOURNAMENT_REG_EXPLAIN_LEN = 111		# 参加制限
-WBTDL_TOURNAMENT_EXPLAIN_LEN     = 111     	# 説明
+WBTDL_TOURNAMENT_EXPLAIN_LEN     = 75     	# 説明(111->75)
 
 # パラメータ開始位置
 DATA_UP_START_ROW	= 3
