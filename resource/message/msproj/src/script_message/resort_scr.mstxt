@@ -10802,6 +10802,15 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>くじや１
+
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:21" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10842,6 +10851,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>くじや２</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10882,6 +10898,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>くじや３</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:28" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10969,6 +10992,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>びようしつ1
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:39" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>美容室
@@ -11017,6 +11048,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>びようしつ2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>美容室
@@ -11065,6 +11103,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>びようしつ3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:48" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>美容室
@@ -11160,6 +11205,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ざっかや1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:54" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>マーケット
@@ -11208,6 +11260,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ざっかや2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:38:59" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>マーケット
@@ -11256,6 +11315,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ざっかや3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:02" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>マーケット
@@ -11351,6 +11417,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>花屋1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>花屋</Text>
@@ -11398,6 +11471,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>花屋2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:14" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>花屋</Text>
@@ -11445,6 +11525,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>花屋3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>花屋</Text>
@@ -11539,6 +11626,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>道場1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>道場</Text>
@@ -11586,6 +11680,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>道場2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>道場</Text>
@@ -11633,6 +11734,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>道場3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:32" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>道場</Text>
@@ -11727,6 +11835,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>保育所1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:41" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>保育所</Text>
@@ -11774,6 +11889,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>保育所2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:49" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>保育所</Text>
@@ -11821,6 +11943,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>保育所3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:39:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>保育所</Text>
@@ -11915,6 +12044,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:06" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>古道具屋</Text>
@@ -11962,6 +12098,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:10" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>古道具屋</Text>
@@ -12009,6 +12152,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:16" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>古道具屋</Text>
@@ -12103,6 +12253,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カフェ1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン</Text>
@@ -12150,6 +12307,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カフェ2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン</Text>
@@ -12197,6 +12361,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カフェ3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:30" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン</Text>
@@ -12622,6 +12793,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:40:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモンくじ</Text>
@@ -12671,6 +12850,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>美容室</Text>
@@ -12720,6 +12907,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>マーケット</Text>
@@ -12769,6 +12964,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>花屋</Text>
@@ -12818,6 +13021,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>道場</Text>
@@ -12867,6 +13078,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>保育所</Text>
@@ -12916,6 +13135,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>古道具屋</Text>
@@ -12965,6 +13192,14 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン</Text>
@@ -13014,6 +13249,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:15" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモンくじ</Text>
@@ -13056,6 +13299,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:18" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>美容室</Text>
@@ -13098,6 +13349,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>マーケット</Text>
@@ -13140,6 +13399,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:25" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>花屋</Text>
@@ -13182,6 +13449,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:28" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>道場</Text>
@@ -13224,6 +13499,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:31" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>保育所</Text>
@@ -13266,6 +13549,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:35" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>古道具屋</Text>
@@ -13308,6 +13599,14 @@ BW♀
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：店舗名
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:41:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン</Text>
@@ -18558,6 +18857,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>育て家ＬＶ１
@@ -18659,6 +18968,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>育て家ＬＶ２
@@ -18760,6 +19079,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>育て家ＬＶ３
@@ -18787,6 +19116,853 @@ BW♀
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+ゆけ！　[Name:PokemonNickname Idx="2" ]！▽
+とっくんだ！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:Move Idx="3" ]たいあたり　だ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ダッシュ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ストップ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+ゴー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+たえろ！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+[Name:ResortGreet Idx="1" ]！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+いいぞ　あと　すこしだ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『……　よし！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>育て家ＬＶ３
+
+0：店主名
+1：フリーワード
+2：ニックネーム
+3：手持ち技名１
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:06:07" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_01_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T06:02:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:06:07" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="resort_service_txt_02_01"
@@ -18867,6 +20043,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>孵化ＬＶ１
@@ -18961,6 +20147,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>孵化ＬＶ２
@@ -19037,6 +20233,790 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>孵化ＬＶ３
+
+0：店主名
+1：フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_02_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+さあ　うまれて　おいで▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+[Name:TrainerName Idx="0" ]『……　もうすこしかな？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+スリスリ　サッサ！　スリスリ　サッサ！
+スリスリ　サッサ！　スリスリ　サッサ！▼
+……　！！！！！！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:45:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>孵化ＬＶ３
@@ -19133,6 +21113,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>努力値ＬＶ１
@@ -19230,6 +21220,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>努力値ＬＶ１
@@ -19327,6 +21327,979 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>努力値ＬＶ１
+
+0：店主名
+1：クチグセ
+2：ニックネーム</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_03_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
+[Name:PokemonNickname Idx="2" ]！▽
+がんばろう！！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+がんばれー！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　がんばって！▼
+[Name:TrainerName Idx="0" ]『[Name:PokemonNickname Idx="2" ]！
+もっと　もっと　がんばって！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『もっと　もっと　もっと
+がんばってーーー！▼
+[Name:TrainerName Idx="0" ]『がーんーばっーてーー！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+がんばった！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:28" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>努力値ＬＶ１
@@ -19430,6 +22403,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:47:54" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン・ランチ
@@ -19491,6 +22474,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:48:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン・ランチ
@@ -19552,6 +22545,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:48:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン・ランチ
@@ -19605,6 +22608,16 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -19647,6 +22660,380 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_04_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T02:59:14" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -19689,6 +23076,630 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_service_txt_05_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
+入れます）▼[/System:Color]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：住民名
+1：住民クチグセ
+2：選んだポケモンのニックネーム
+3：住民カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T03:00:55" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -45899,10 +49910,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かけだしのリゾート</Text>
+			<Text>かけだしのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:34:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45910,10 +49921,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけだしのリゾート</Text>
+			<Text>かけだしのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45939,10 +49950,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなばのリゾート</Text>
+			<Text>あなばのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45950,10 +49961,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなばのリゾート</Text>
+			<Text>あなばのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45979,10 +49990,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつうのリゾート</Text>
+			<Text>ふつうのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45990,10 +50001,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふつうのリゾート</Text>
+			<Text>ふつうのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46019,10 +50030,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そこそこのリゾート</Text>
+			<Text>そこそこのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46030,10 +50041,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そこそこのリゾート</Text>
+			<Text>そこそこのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46059,10 +50070,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なのしれたリゾート</Text>
+			<Text>なのしれたアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46070,10 +50081,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なのしれたリゾート</Text>
+			<Text>なのしれたアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46099,10 +50110,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セレブのリゾート</Text>
+			<Text>セレブのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46110,10 +50121,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セレブのリゾート</Text>
+			<Text>セレブのアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:35:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47671,6 +51682,398 @@ BW♀
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_celeb_greet_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_celeb_greet_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ『[Name:ResortTown Idx="1" ]の
+うわさを　きいて　きちゃった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:48:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カミツレ</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-12T12:47:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_celeb_wantshop_00"
 		Style="Large">
 		<LanguageCell
@@ -48153,11 +52556,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48165,11 +52568,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48195,11 +52598,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48207,11 +52610,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48237,11 +52640,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48249,11 +52652,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48279,11 +52682,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48291,11 +52694,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48321,11 +52724,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48333,11 +52736,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48363,11 +52766,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48375,11 +52778,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48405,11 +52808,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48417,11 +52820,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48447,11 +52850,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:23:57" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48459,11 +52862,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]
-へようこそ！</Text>
+			<Text>[Name:ResortShop ]　へ
+ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T08:24:01" />
+				User="shimoyamada:W00184"
+				Time="2011-09-16T05:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48809,10 +53212,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めだるのかず</Text>
+			<Text>もっている　メダルの　かず</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T03:54:49" />
+				Time="2011-09-16T05:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48820,10 +53223,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めだるのかず</Text>
+			<Text>持っている　メダルの数</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T03:54:58" />
+				Time="2011-09-16T05:51:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
