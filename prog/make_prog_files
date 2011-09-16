@@ -1032,8 +1032,7 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
 # スクリプトコマンド並列化  WBT（ロビー内）
 #===> SRCS_OVERLAY_SCRCMD_WBT
 #GROUP_OVERLAY_SCRCMD
-SRCS_OVERLAY_SCRCMD_WBT_LOBBY  =  field/scrcmd_wbt_lobby.c \
-                                  field/wbt_system_lobby.c
+SRCS_OVERLAY_SCRCMD_WBT_LOBBY  =  field/scrcmd_wbt_lobby.c
 
 # スクリプトコマンド並列化  WBT（会場内）
 #===> SRCS_OVERLAY_SCRCMD_WBT
@@ -1382,7 +1381,8 @@ SRCS_OVERLAY_WBT_GIMMICK = field/wbt_gimmick.c \
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_WBT_LOBBY_GIMMICK = field/wbt_makematch.c
+SRCS_OVERLAY_WBT_LOBBY_GIMMICK = field/wbt_makematch.c \
+                                  field/wbt_system_lobby.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
