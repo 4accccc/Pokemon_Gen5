@@ -6,11 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさき　マリンチューブ　です
-こうけいを　たのしんでくださいね！</Text>
+			<Text>このさき　マリンチューブ　です▼
+ただ　あとすこし　もうすこし　
+まってくださいね………</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:40:56" />
+				Time="2011-09-16T09:25:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先　マリンチューブ　です
-光景を　楽しんでくださいね！</Text>
+			<Text>この先　マリンチューブ　です▼
+ただ　あと少し　もう少し　
+待ってくださいね………</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:41:10" />
+				Time="2011-09-16T09:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -31,10 +33,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・ストッパー解除前
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:42:00" />
+				Time="2011-09-16T09:22:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -46,7 +49,51 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_infomationw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさき　マリンチューブ　です
+こうけいを　たのしんでくださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:22:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:22:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この先　マリンチューブ　です
+光景を　楽しんでくださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:22:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:22:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ストッパー解除後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:22:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -54,6 +101,59 @@
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_cleaningm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はやく　そうじを　おわらさねば！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:27:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:49:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はやく　掃除を　終わらさねば！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:28:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:51:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ストッパー解除前
+・GRIDX＝16、GRIDZ＝7～9
+　を倍速で往復
+・posを踏むと主人公に隣接して
+　メッセージ表示、その後、主人公一歩下がる
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T09:30:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLEANINGM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-18T07:49:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_cleaningm_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -66,11 +166,11 @@
 ここの　こうじは　むりだったけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:51:27" />
+				Time="2011-09-16T09:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:49:23" />
+				Time="2011-09-16T09:23:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -83,27 +183,35 @@
 ここの　工事は　無理だったけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:51:57" />
+				Time="2011-09-16T09:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:51:29" />
+				Time="2011-09-16T09:23:00" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・ストッパー解除後
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:49:07" />
+				Time="2011-09-16T09:23:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>CLEANINGM</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:49:02" />
+				Time="2011-09-16T09:23:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_board_01"
