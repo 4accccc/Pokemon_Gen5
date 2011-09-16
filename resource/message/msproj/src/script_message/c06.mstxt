@@ -208,12 +208,12 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No381「わざマシン５４」（みねうち）
+　No001「マスターボール」
 ・0＝主人公名
 ・1＝みつけた匹数</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:19:13" />
+				Time="2011-09-16T03:24:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -236,14 +236,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みねうちは　てかげん　して
-あいての　たいりょくを　のこしつつ▽
-こうげきする　わざ　なの！▼
-やせいの　ポケモンを　つかまえるのに
-やくだちそうな　わざ　でしょ！▼</Text>
+			<Text>マスターボールは
+どんな　ポケモンも　ぜったいに▽
+つかまえられる　さいこうの　ボール▼
+たびは　ポケモンとの　であい！
+チャンスを　のがさないようでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:26:41" />
+				Time="2011-09-16T03:37:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -251,14 +251,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みねうちは　手加減して
-相手の　体力を　残しつつ▽
-攻撃する　技なの！▼
-野生の　ポケモンを　捕まえるのに
-役立ちそうな　技でしょ！▼</Text>
+			<Text>マスターボールは
+どんな　ポケモンも　絶対に▽
+捕まえられる　最高の　ボール▼
+旅は　ポケモンとの　出会い！
+チャンスを　逃さないようでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:26:33" />
+				Time="2011-09-16T03:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

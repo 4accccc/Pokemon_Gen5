@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やあ　ポケモントレーナー▼
-ボクは　せかいじゅうを　まわって
-いろんな　ひとと　はなすのが▽
-だいすきな　たびびと　だよ▼
+ボクは　世界中を　回って
+いろんな　人と　話すのが▽
+大好きな　旅人　だよ▼
 ところで　ゾロアークという
-ポケモンを　しっているかい？</Text>
+ポケモンを　知っているかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:47:53" />
+				Time="2011-09-16T03:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,10 +76,10 @@
 			Language="JPN_KANJI">
 			<Text>すごいね！▼
 やっぱり　だまされないように
-ちえを　つけてるのかな？▼</Text>
+知恵を　つけてるのかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:47:53" />
+				Time="2011-09-16T03:42:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -110,10 +110,10 @@
 			Language="JPN">
 			<Text>おやおや……▼
 せけんしらず　なのかな？
-それだと　だまされたりしない？▼</Text>
+それだと　だまされるかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:48:17" />
+				Time="2011-09-16T03:42:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,11 +122,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おやおや……▼
-せけんしらず　なのかな？
-それだと　だまされたりしない？▼</Text>
+世間知らず　なのかな？
+それだと　だまされるかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:48:19" />
+				Time="2011-09-16T03:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -155,18 +155,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２ねんほどまえ
-ここらに　すみついていて▼
-イリュージョンって　とくせいで
-この　そうげんの　ようすを▼
-まるごと　へんか　させて
-ひとや　ポケモンを　ばかしてたって▼
-とんでもないけど　ウワサには
-なにかしら　じじつが　ひめられている▼
-ゆめゆめ　うたがうことなかれ　だね▼</Text>
+			<Text>フン！　しんじて　うらぎられるのも
+うたがって　いきていくのも▽
+その　ひとの　じゆう▼
+はなせて　たのしかったよ
+これは　ちょっとした　プレゼント▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:44:27" />
+				Time="2011-09-16T03:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -174,6 +170,42 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
+			<Text>フン！　信じて　裏切られるのも
+疑って　生きていくのも▽
+その　人の　自由▼
+話せて　楽しかったよ
+これは　ちょっとした　プレゼント▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T03:47:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No620「わざマシン９５」（バークアウト）
+・続けてbackpackerm_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T03:47:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バックパッカー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-05T11:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16r0201_backpackerm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>２ねんほどまえ
 ここらに　すみついていて▼
 イリュージョンって　とくせいで
@@ -185,11 +217,30 @@
 ゆめゆめ　うたがうことなかれ　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:47:53" />
+				Time="2011-09-16T03:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:47:53" />
+				Time="2011-09-16T03:45:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２年ほど前
+ここらに　すみついていて▼
+イリュージョンって　とくせいで
+この草原の　様子を▼
+まるごと　変化させて
+ひとや　ポケモンを　化かしてたって▼
+とんでもないけど　ウワサには
+なにかしら　事実が　秘められている▼
+努々　疑うことなかれ　だね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T03:45:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T03:45:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -201,14 +252,14 @@
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:47:30" />
+				Time="2011-09-16T03:45:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>バックパッカー♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T11:38:28" />
+				Time="2011-09-16T03:45:13" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
