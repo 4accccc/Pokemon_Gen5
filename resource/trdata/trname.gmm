@@ -4155,6 +4155,96 @@
 		<language name="JPN_KANJI" width="216">したっぱ</language>
 	</row>
 
+	<row id="support_02">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="support_03">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="support_04">
+		<language name="JPN" width="216">ベル</language>
+		<language name="JPN_KANJI" width="216">ベル</language>
+	</row>
+
+	<row id="swleader1_1_03">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="swleader1_1_04">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="swleader1_1_05">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="karate_27">
+		<language name="JPN" width="216">フェス１</language>
+		<language name="JPN_KANJI" width="216">フェス１</language>
+	</row>
+
+	<row id="karate_28">
+		<language name="JPN" width="216">フェス２</language>
+		<language name="JPN_KANJI" width="216">フェス２</language>
+	</row>
+
+	<row id="karate_29">
+		<language name="JPN" width="216">フェス３</language>
+		<language name="JPN_KANJI" width="216">フェス３</language>
+	</row>
+
+	<row id="karate_30">
+		<language name="JPN" width="216">フェス４</language>
+		<language name="JPN_KANJI" width="216">フェス４</language>
+	</row>
+
+	<row id="karate_31">
+		<language name="JPN" width="216">フェス５</language>
+		<language name="JPN_KANJI" width="216">フェス５</language>
+	</row>
+
+	<row id="karate_32">
+		<language name="JPN" width="216">フェス６</language>
+		<language name="JPN_KANJI" width="216">フェス６</language>
+	</row>
+
+	<row id="elitew_44">
+		<language name="JPN" width="216">フェス１</language>
+		<language name="JPN_KANJI" width="216">フェス１</language>
+	</row>
+
+	<row id="elitew_45">
+		<language name="JPN" width="216">フェス２</language>
+		<language name="JPN_KANJI" width="216">フェス２</language>
+	</row>
+
+	<row id="elitew_46">
+		<language name="JPN" width="216">フェス３</language>
+		<language name="JPN_KANJI" width="216">フェス３</language>
+	</row>
+
+	<row id="elitew_47">
+		<language name="JPN" width="216">フェス４</language>
+		<language name="JPN_KANJI" width="216">フェス４</language>
+	</row>
+
+	<row id="elitew_48">
+		<language name="JPN" width="216">フェス５</language>
+		<language name="JPN_KANJI" width="216">フェス５</language>
+	</row>
+
+	<row id="elitew_49">
+		<language name="JPN" width="216">フェス６</language>
+		<language name="JPN_KANJI" width="216">フェス６</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
