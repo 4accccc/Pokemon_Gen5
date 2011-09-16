@@ -2,512 +2,6 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c15r0201_sunglasses_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヘイ！　ボス！▼
-[Name:TrainerName Idx="0" ]さんを　おつれしました！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:35:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:34:24" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヘイ！　ボス！▼
-[Name:TrainerName Idx="0" ]さんを　お連れしました！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:13:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂sunglasses
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_pwowner_01</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:45:57" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハロー！　ハロー！
-キミが　うわさの　[Name:TrainerName Idx="0" ]ちゃんか！▼
-ボクの　なまえは　ウッドウ！
-ここ　ポケウッドの　オーナーさ！▼
-じつは　[Name:TrainerName Idx="0" ]ちゃんに
-ボクから　おねがい　あるんだよー▼
-……まあ　かんたんに　いうと
-キミに　ここ　ポケウッドの　えいがに
-しゅつえんして　ほしいのさ！▼
-ボクの　スカウトマンが　さあ
-キミから　スターの　さいのうが▽
-にじみでてるって　いうし！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:21:59" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:36:53" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハロー！　ハロー！
-キミが　うわさの　[Name:TrainerName Idx="0" ]ちゃんか！▼
-ボクの　なまえは　ウッドウ！
-ここ　ポケウッドの　オーナーさ！▼
-じつは　[Name:TrainerName Idx="0" ]ちゃんに
-ボクから　お願い　あるんだよー▼
-……まあ　シンプルに　いうとね
-キミに　ここ　ポケウッドの　映画に
-出演して　欲しいのさ！▼
-ボクの　スカウトマンが　さあ
-キミから　スターの　才能が▽
-にじみ出てるって　いうし！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:21:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_sunglasses_03</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:46:29" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_sunglasses_02">
-		<LanguageCell
-			Language="JPN">
-			<Text>イエス！　ボス！▼
-このかた　ならば　まちがいなく
-ポケウッドの　ぎんまくに　かがやく▽
-トップスターに　なるでしょう！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:22:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:50:52" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>イエス！　ボス！▼
-この方　ならば　間違いなく
-ポケウッドの　銀幕に　かがやく▽
-トップスターに　なるでしょう！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:23:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂sunglasses
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_pwowner_02
-</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:49:22" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_02">
-		<LanguageCell
-			Language="JPN">
-			<Text>ね？▼
-だからさー　たのむよー！▼
-キミのために　とびっきり
-イカした　きょうえんしゃ　も▽
-よんであるしさ！▼
-オーイ！　ハチクくーん！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:24:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:53:12" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ね？▼
-だからさー　頼むよー！▼
-キミのために　とびっきり
-イカした　共演者　も▽
-呼んであるしさ！▼
-オーイ！　ハチクくーん！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:24:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-撮影スタジオ内からハチクが登場
-→msg_c15r0201_LEADER7_01</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:49:45" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_leader7_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>……ふむ▼
-ハチクだ……
-よろしく　たのむ……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:30:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:59:50" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……ふむ▼
-ハチクだ……
-よろしく　頼む……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:24:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂LEADER7
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_pwowner_02</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:52:54" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_03">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハチクくんはね　わが　ポケウッドが
-ほこる　かんばんスターなんだよ！▼
-そんな　ベテランの　かれと
-ういういしい　キミに　ピッタリの▽
-だいほんも　ようい　してあるのよ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:25:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:00:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハチクくんはね　我がポケウッドが
-ほこる　かんばんスターなんだよ！▼
-そんな　ベテランの　彼と
-初々しい　キミに　ピッタリの▽
-台本も　用意　してあるのよ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:26:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_pwowner_02
-</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:53:08" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_leader7_02">
-		<LanguageCell
-			Language="JPN">
-			<Text>いい　めだ……▼
-きょうえんが　たのしみだな……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T03:15:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:33:22" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いい　目だ……▼
-共演が　楽しみだな……▼
-では　また……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:27:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂LEADER7
-
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0201_pwowner_04</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:26:33" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_04">
-		<LanguageCell
-			Language="JPN">
-			<Text>んー！　あいかわらず　クールねー！▼
-じゃあさ　そういう　わけ　だから！▼
-そこの　スタッフに　はなしかければ
-さつえいに　チャレンジできるしさ！▽
-ドーンと　いってみよー！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:28:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:34:48" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>んー！　相変わらず　クールねー！▼
-じゃあさ　そういう　わけ　だから！▼
-そこの　スタッフに　話しかければ
-撮影に　チャレンジできるしさ！▽
-ドーンと　いってみよー！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:29:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-イベント終了
-
-プレイヤー自由移動可能</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:02:02" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_05">
-		<LanguageCell
-			Language="JPN">
-			<Text>えいが！　それは　アメイジング！▼
-[Name:TrainerName Idx="0" ]ちゃんも
-その　おどろきと　かんどうを▽
-たいけんして　みちゃってよ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:54:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:41:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>映画！　それは　アメイジング！▼
-[Name:TrainerName Idx="0" ]ちゃんも
-その　おどろきと　感動を▽
-体験して　みちゃってよ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:29:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-撮影を終了するまでこのメッセージを
-表示して終了</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:54:09" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_sunglasses_03">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さん！
-さつえい　がんばってください！▼
-あなたなら　きっと　すばらしい
-さくひんを　つくることが　できます！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:30:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:55:01" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さん！
-撮影　がんばってください！▼
-あなたなら　きっと　素晴らしい
-作品を　生み出すことが　できます！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:31:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂sunglasses
-
-チュートリアルイベントキャラ
-
-プレイヤーがロビーから退出しようと
-するとメッセージを表示し終了
-</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:02:15" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0201_pwowner_06">
-		<LanguageCell
-			Language="JPN">
-			<Text>いやー！　さつえい　おつかれ！
-グッとくる　えんぎ　だったよ！▽
-こりゃ　さくひんが　たのしみだね！▼
-でね！　ここからが　ウチの　すごいとこ！
-たった　いま　さつえいした　えいがが▽
-シアターで　みることが　できちゃうのよ！▼
-ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
-シアターに　レッツゴー！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:32:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:56:54" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いやー！　撮影　お疲れ！
-グッとくる　演技　だったよ！▽
-こりゃ　作品が　楽しみだね！▼
-でね！　ここからが　ウチの　すごいとこ！
-たった　いま　撮影した　映画が▽
-シアターで　見ることが　できちゃうのよ！▼
-ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
-シアターに　レッツゴー！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:32:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:09:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-撮影を終了した後
-
-メッセージ終了
-
-マップをＣ１５へ遷移
-
-→msg_c15_pwowner_01_01</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:50:25" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c15r0201_policeman_01_01">
 		<LanguageCell
 			Language="JPN">
@@ -539,12 +33,12 @@
 			Language="JPN">
 			<Comment>♂policeman
 
-（X26,Y27）に配置
+（X26,Z27）に配置
 
 スターランク０～３のメッセージ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:14:14" />
+				Time="2011-09-16T09:30:22" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -626,12 +120,12 @@
 			Language="JPN">
 			<Comment>♂policeman
 
-（X2,Y26）に配置
+（X2,Z26）に配置
 
 全作品を撮影するまで</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T04:45:56" />
+				Time="2011-09-16T09:30:19" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -678,13 +172,13 @@
 			<Comment>♂policeman
 
 
-（X2,Y26）に配置
+（X2,Z26）に配置
 
 全作品を撮影した後のメッセージ
 終了後、移動し入室可能</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T04:46:36" />
+				Time="2011-09-16T09:30:15" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -737,13 +231,13 @@
 			Language="JPN">
 			<Comment>♀woman2
 
-（X7,Y19）に配置
+（X7,Z19）に配置
 
 メッセージ終了後→
 msg_c15r0301_middleman2_01</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T04:58:27" />
+				Time="2011-09-16T09:30:11" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -791,12 +285,12 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN">
 			<Comment>♀boy4
 
-（X7,Y20）に配置
+（X7,Z20）に配置
 
 メッセージ終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:19:01" />
+				Time="2011-09-16T09:30:08" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -827,10 +321,10 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN">
 			<Comment>ポケモン
 
-（X6Y20）に配置</Comment>
+（X6Z20）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T04:59:53" />
+				Time="2011-09-16T09:30:05" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -874,10 +368,10 @@ msg_c15r0301_middleman2_01</Comment>
 プレイヤーの
 スターランク０のメッセージ
 
-（X17Y19）に配置</Comment>
+（X17Z19）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T02:04:31" />
+				Time="2011-09-16T09:30:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -921,10 +415,10 @@ msg_c15r0301_middleman2_01</Comment>
 プレイヤーの
 スターランク１のメッセージ
 
-（X17Y19）に配置</Comment>
+（X17Z19）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T02:04:27" />
+				Time="2011-09-16T09:29:58" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -969,10 +463,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 プレイヤーの
 スターランク２のメッセージ
-（X17Y19）に配置</Comment>
+（X17Z19）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T02:04:24" />
+				Time="2011-09-16T09:29:41" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1019,10 +513,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 プレイヤーの
 スターランク３のメッセージ
-（X17Y19）に配置</Comment>
+（X17Z19）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T02:04:18" />
+				Time="2011-09-16T09:29:37" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1065,10 +559,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 プレイヤーの
 スターランク４のメッセージ
-（X17Y19）に配置</Comment>
+（X17Z19）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T02:04:15" />
+				Time="2011-09-16T09:29:44" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -1113,10 +607,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 プレイヤーの
 スターランク０のメッセージ
-（X19Y05）に配置</Comment>
+（X19Z05）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:17" />
+				Time="2011-09-16T09:29:46" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1153,10 +647,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 プレイヤーの
 スターランク１～３のメッセージ
-（X19Y05）に配置</Comment>
+（X19Z05）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:12" />
+				Time="2011-09-16T09:29:51" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1197,10 +691,10 @@ msg_c15r0301_middleman2_01</Comment>
 
 
 スターランク４のメッセージ
-（X19Y05）に配置</Comment>
+（X19Z05）に配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:21" />
+				Time="2011-09-16T09:29:53" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

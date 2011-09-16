@@ -81,13 +81,12 @@
 
 チュートリアルイベントキャラ
 
-C15に入室と同時にイベント
-起動
+C15に入室と同時にイベント起動
 
-終了後連れ歩き開始</Comment>
+メッセージ終了後連れ歩き開始</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:29:14" />
+				Time="2011-09-16T10:34:38" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -130,10 +129,14 @@ C15に入室と同時にイベント
 			Language="JPN">
 			<Comment>♂sunglasses
 
-チュートリアルイベントキャラ</Comment>
+
+チュートリアルイベントキャラ
+
+連れ歩き中のメッセージ
+立ち止まって話す。</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-07T06:03:44" />
+				Time="2011-09-16T10:35:13" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -221,51 +224,10 @@ C15に入室と同時にイベント
 撮影スタジオ前で停止
 
 メッセージ終了後スタジオ入室
-→msg_c15r0201_sunglasses_01</Comment>
+→msg_pw_tutorial_01</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T02:47:29" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15_pwowner_01_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ！　シアターに　ついたよ！▼
-キミの　はじめての　さくひん！
-うーん！　ワクワク　するねえ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:58:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:48:35" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ！　シアターに　着いたよ！▼
-キミの　初めての　作品！
-うーん！　ワクワク　するねえ！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:59:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:58:27" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-
-チュートリアルイベントキャラ
-
-メッセージ終了後シアター入室
-→msg_c15r0301_pwowner_01</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T11:59:25" />
+				Time="2011-09-16T06:55:44" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1433,11 +1395,10 @@ msg_c15_oldman1_01_04
 			<Text>まいったな……
 もう　３じかんも　まってるのに……▼
 いったい　いつに　なったら
-メイクが　おわるんだ……
-</Text>
+メイクが　おわるんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:53:58" />
+				Time="2011-09-16T07:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1448,11 +1409,10 @@ msg_c15_oldman1_01_04
 			<Text>まいったな……
 もう　３時間も　待ってるのに……▼
 いったい　いつに　なったら
-メイクが　終わるんだ……
-</Text>
+メイクが　終わるんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:59:53" />
+				Time="2011-09-16T07:48:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

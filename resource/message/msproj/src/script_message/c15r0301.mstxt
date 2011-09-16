@@ -2,174 +2,73 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c15r0301_pwowner_01">
+		Label="msg_c15r0301_cleaningm_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホラホラ！　[Name:TrainerName ]ちゃんが
-しゅつえんした　さくひんが▽
-こうかい　してるよ！▼
-うけつけの　とこへ　いってみようか！</Text>
+			<Text>いやあ　えいがって　ホントに
+いいもの　だよねえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T09:16:57" />
+				Time="2011-09-16T07:20:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:05:06" />
+				Time="2011-09-16T06:57:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホラホラ！　[Name:TrainerName ]ちゃんが
-出演した　作品が▽
-公開　してるよ！▼
-受付の　とこへ　行ってみようか！</Text>
+			<Text>いやあ　えいがって　ホントに
+いいもん　だよねえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T09:17:03" />
+				Time="2011-09-16T07:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:08:21" />
+				Time="2011-09-16T07:00:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂pwowner
-チュートリアルイベントキャラ
-
-→msg_c15r0301_sunglasses_01</Comment>
+			<Comment>♂CLEANINGM</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:26:54" />
+				Time="2011-09-16T06:59:53" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0301_sunglasses_01">
+		Label="msg_c15r0301_girl02_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　ボス！
-そろそろ　おじかんが……</Text>
+			<Text>ここにある　ボードには
+ポケウッドで　こうかいされた▽
+えいがの　きろくが　のこるのよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:09:40" />
+				Time="2011-09-16T07:02:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:09:17" />
+				Time="2011-09-16T07:01:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　ボス！
-そろそろ　お時間が……</Text>
+			<Text>ここにある　ボードには
+ポケウッドで　こうかいされた▽
+えいがの　きろくが　のこるのよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:07:03" />
+				Time="2011-09-16T07:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:08:21" />
+				Time="2011-09-16T07:05:29" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
-
-チュートリアルイベントキャラ
-
-
-ロビーに入室してくる
-メッセージ終了
-→msg_c15r0301_pwowner_02</Comment>
+			<Comment>♀GIRL2</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:28:33" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0301_pwowner_02">
-		<LanguageCell
-			Language="JPN">
-			<Text>ん……　わかった……
-すぐに　いこう……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T12:04:26" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:09:55" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ん……　わかった……
-すぐに　行こう……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T12:04:38" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:08:21" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-チュートリアルイベントキャラ
-
-メッセージ終了
-→msg_c15r0301_pwowner_03</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:28:57" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c15r0301_pwowner_03">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
-ボク　いかなくちゃいけないけど
-[Name:TrainerName ]ちゃん　はさ▽
-えいがを　エンジョイ　してきてね！▼
-ポケウッドは　いつでも
-キミを　まってるからさ！▽
-いつでも　あそびに　きてよね！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:23:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:11:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
-ボク　行かなくちゃいけないけど
-[Name:TrainerName ]ちゃん　はさ▽
-映画を　エンジョイ　してきてね！▼
-それに　ポケウッドは　いつでも
-キミを　待ってるからさ！▽
-いつでも　遊びに　きてよね！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:08:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-09T10:08:21" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂pwowner
-チュートリアルイベントキャラ
-
-メッセージ終了
-
-サングラスと一緒に退室
-
-チュートリアルイベント終了</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T03:29:32" />
+				Time="2011-09-16T07:01:40" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

@@ -9941,10 +9941,10 @@
 		Label="pw_movietitle_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんりゃくしゃ</Text>
+			<Text>ハチクマン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-06-17T02:27:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9952,10 +9952,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しんりゃくしゃ</Text>
+			<Text>ハチクマン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-06-17T02:28:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9975,10 +9975,10 @@
 		Label="pw_movietitle_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン</Text>
+			<Text>ハチクマン２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-06-17T02:27:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9986,10 +9986,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン</Text>
+			<Text>ハチクマン２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-06-17T02:27:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10009,10 +10009,10 @@
 		Label="pw_movietitle_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>チュートリアル</Text>
+			<Text>ハチクマン　ファイナル</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-27T06:34:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10020,10 +10020,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チュートリアル</Text>
+			<Text>ハチクマン　ファイナル</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-27T06:34:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10043,10 +10043,10 @@
 		Label="pw_movietitle_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:31" />
+				Time="2011-09-15T12:21:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10054,10 +10054,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				Time="2011-09-15T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10077,10 +10077,10 @@
 		Label="pw_movietitle_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:31" />
+				Time="2011-09-15T12:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10088,10 +10088,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				Time="2011-09-15T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10111,10 +10111,10 @@
 		Label="pw_movietitle_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:31" />
+				Time="2011-09-15T12:22:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10122,10 +10122,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				Time="2011-09-15T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10145,10 +10145,10 @@
 		Label="pw_movietitle_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:31" />
+				Time="2011-09-15T12:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10156,10 +10156,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>フルメタルコップ４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				Time="2011-09-15T12:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10417,10 +10417,10 @@
 		Label="pw_moviesubtitle_02_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>ハチクマン　ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-01T09:34:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:20:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10428,10 +10428,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>ハチクマン　ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-01T09:34:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T12:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

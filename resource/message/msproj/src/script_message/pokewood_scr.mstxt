@@ -2841,4 +2841,776 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				Time="2011-09-15T06:55:49" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　ボス！▼
+[Name:TrainerName Idx="0" ]さんを　おつれしました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　ボス！▼
+[Name:TrainerName Idx="0" ]さんを　お連れしました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_02</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハロー！　ハロー！
+キミが　うわさの　[Name:TrainerName Idx="0" ]ちゃんか！▼
+ボクの　なまえは　ウッドウ！
+ここ　ポケウッドの　オーナーさ！▼
+じつは　[Name:TrainerName Idx="0" ]ちゃんに
+ボクから　おねがい　あるんだよー▼
+……まあ　かんたんに　いうと
+キミに　ここ　ポケウッドの　えいがに
+しゅつえんして　ほしいのさ！▼
+ボクの　スカウトマンが　さあ
+キミから　スターの　さいのうが▽
+にじみでてるって　いうし！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハロー！　ハロー！
+キミが　うわさの　[Name:TrainerName Idx="0" ]ちゃんか！▼
+ボクの　なまえは　ウッドウ！
+ここ　ポケウッドの　オーナーさ！▼
+じつは　[Name:TrainerName Idx="0" ]ちゃんに
+ボクから　お願い　あるんだよー▼
+……まあ　シンプルに　いうとね
+キミに　ここ　ポケウッドの　映画に
+出演して　欲しいのさ！▼
+ボクの　スカウトマンが　さあ
+キミから　スターの　才能が▽
+にじみ出てるって　いうし！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_03</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>イエス！　ボス！▼
+このかた　ならば　まちがいなく
+ポケウッドの　ぎんまくに　かがやく▽
+トップスターに　なるでしょう！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イエス！　ボス！▼
+この方　ならば　間違いなく
+ポケウッドの　銀幕に　かがやく▽
+トップスターに　なるでしょう！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_04
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ね？▼
+だからさー　たのむよー！▼
+キミのために　とびっきり
+イカした　きょうえんしゃ　も▽
+よんであるしさ！▼
+オーイ！　ハチクくーん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ね？▼
+だからさー　頼むよー！▼
+キミのために　とびっきり
+イカした　共演者　も▽
+呼んであるしさ！▼
+オーイ！　ハチクくーん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+撮影スタジオ内からハチクが登場
+→msg_pw_tutorial_05
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:50:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ふむ▼
+ハチクだ……
+よろしく　たのむ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ふむ▼
+ハチクだ……
+よろしく　頼む……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂LEADER7
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_06</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:50:16" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクくんはね　わが　ポケウッドが
+ほこる　かんばんスターなんだよ！▼
+そんな　ベテランの　かれと
+ういういしい　キミに　ピッタリの▽
+だいほんも　ようい　してあるのよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクくんはね　我がポケウッドが
+ほこる　かんばんスターなんだよ！▼
+そんな　ベテランの　彼と
+初々しい　キミに　ピッタリの▽
+台本も　用意　してあるのよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_07
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:50:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>いい　めだ……
+きょうえんが　たのしみだな……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:21:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いい　目だ……▼
+共演が　楽しみだな……▼
+では　また……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂LEADER7
+
+チュートリアルイベントキャラ
+
+メッセージ終了
+
+移動し撮影スタジオへ入る
+→msg_pw_tutorial_07</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:51:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>んー！　あいかわらず　クールねー！▼
+じゃあさ　そういう　わけ　だから！▼
+そこの　スタッフに　はなしかければ
+さつえいに　チャレンジできるしさ！▽
+ドーンと　いってみよー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:34:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>んー！　相変わらず　クールねー！▼
+じゃあさ　そういう　わけ　だから！▼
+そこの　スタッフに　話しかければ
+撮影に　チャレンジできるしさ！▽
+ドーンと　いってみよー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+イベント終了
+
+プレイヤー自由移動可能</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>えいが！　それは　アメイジング！▼
+[Name:TrainerName Idx="0" ]ちゃんも
+その　おどろきと　かんどうを▽
+たいけんして　みちゃってよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>映画！　それは　アメイジング！▼
+[Name:TrainerName Idx="0" ]ちゃんも
+その　おどろきと　感動を▽
+体験して　みちゃってよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+撮影を終了するまでこのメッセージを
+表示して終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]さん！
+さつえい　がんばってください！▼
+あなたなら　きっと　すばらしい
+さくひんを　つくることが　できます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]さん！
+撮影　がんばってください！▼
+あなたなら　きっと　素晴らしい
+作品を　生み出すことが　できます！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ（退出禁止ストッパー）
+
+プレイヤーがロビーから退出しようと
+するとメッセージを表示し終了
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:35:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>いやー！　さつえい　おつかれ！
+グッとくる　えんぎ　だったよ！▽
+こりゃ　さくひんが　たのしみだね！▼
+でね！　ここからが　ウチの　すごいとこ！
+たった　いま　さつえいした　えいがが▽
+シアターで　みることが　できちゃうのよ！▼
+ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
+シアターに　レッツゴー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いやー！　撮影　お疲れ！
+グッとくる　演技　だったよ！▽
+こりゃ　作品が　楽しみだね！▼
+でね！　ここからが　ウチの　すごいとこ！
+たった　いま　撮影した　映画が▽
+シアターで　見ることが　できちゃうのよ！▼
+ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
+シアターに　レッツゴー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:49:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+撮影を終了した後
+
+メッセージ終了
+
+マップＣ１５（x,z）へ遷移
+
+→msg_pw_tutorial_12</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ！　シアターに　ついたよ！▼
+キミの　はじめての　さくひん！
+うーん！　ワクワク　するねえ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ！　シアターに　着いたよ！▼
+キミの　初めての　作品！
+うーん！　ワクワク　するねえ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了後シアター入室
+→msg_pw_tutorial_13</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:54:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホラホラ！　[Name:TrainerName ]ちゃんが
+しゅつえんした　さくひんが▽
+こうかい　してるよ！▼
+うけつけの　とこへ　いってみようか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホラホラ！　[Name:TrainerName ]ちゃんが
+出演した　作品が▽
+公開　してるよ！▼
+受付の　とこへ　行ってみようか！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+→msg_pw_tutorial_14</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　ボス！
+そろそろ　おじかんが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　ボス！
+そろそろ　お時間が……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+チュートリアルイベントキャラ
+
+
+ロビーに入室してくる
+メッセージ終了
+→msg_pw_tutorial_15</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん……　わかった……
+すぐに　いこう……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん……　わかった……
+すぐに　行こう……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+メッセージ終了
+→msg_pw_tutorial_16</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:57" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
+ボク　いかなくちゃいけないけど
+[Name:TrainerName ]ちゃん　はさ▽
+えいがを　エンジョイ　してきてね！▼
+ポケウッドは　いつでも
+キミを　まってるからさ！▽
+いつでも　あそびに　きてよね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴメンね！　[Name:TrainerName ]ちゃん！▼
+ボク　行かなくちゃいけないけど
+[Name:TrainerName ]ちゃん　はさ▽
+映画を　エンジョイ　してきてね！▼
+それに　ポケウッドは　いつでも
+キミを　待ってるからさ！▽
+いつでも　遊びに　きてよね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwowner
+チュートリアルイベントキャラ
+
+メッセージ終了
+
+サングラスと一緒に退室
+
+チュートリアルイベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T06:56:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド……▼
+ここは　えらばれた　トレーナーのみが
+チャレンジできる　ゆめの　ぶたい……▼
+さあ　いりぐちの　おとこと　さつえいの
+てつづきを　すませてくるのだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:47:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:38:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド……▼
+ここは　選ばれた　トレーナーのみが
+チャレンジできる　夢の　舞台……▼
+さあ　入り口の　男と　撮影の
+手続きを　済ませてくるのだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:48:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:47:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂LEADER7
+
+チュートリアルイベントキャラ（撮影スタジオ内）
+
+チュートリアルイベント終了後は表示しない</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-16T07:47:48" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

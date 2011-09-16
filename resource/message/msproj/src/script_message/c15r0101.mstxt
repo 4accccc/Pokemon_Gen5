@@ -6,10 +6,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ジャンプスーツは
-ＶＦＸに　かかせないのだっ！</Text>
+ＶＦＸに　かかせないのだっ！▼
+さいしんぎじゅつなのは　いいけど
+けっこう　はずかしいのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:39:51" />
+				Time="2011-09-16T07:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -18,10 +20,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　ジャンプスーツは
-ＶＦＸに　欠かせないのだっ！</Text>
+ＶＦＸに　欠かせないのだっ！▼
+最新技術なのは　いいけど
+けっこう　はずかしいのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:17" />
+				Time="2011-09-16T07:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -45,59 +49,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_pwmoji_02_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>さいしんぎじゅつなのは　いいけど
-けっこう　はずかしいわよね……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:40:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:16:35" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>最新技術なのは　いいけど
-けっこう　はずかしいわよね……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀pwmoji
-
-撮影バトル時に入室した際は消す</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:17:53" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c15r0101_man3_01_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＦＸとは　コンピュータを　つかった
-えいぞうを　かこうする　ぎじゅつ！▼
+えいぞうを　かこうする　ぎじゅつ▼
 ポケウッドの　えいがは
-このVFXが　いのちなのだ！</Text>
+このVFXが　いのち　なんです</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:41:57" />
+				Time="2011-09-16T07:49:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -105,13 +66,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＦＸとは　コンピュータを　つかった
-えいぞうを　かこうする　ぎじゅつ！▼
-ポケウッドの　えいがは
-このVFXが　いのちなのだ！</Text>
+			<Text>ＶＦＸとは　コンピュータを　使った
+映像を　加工する　技術▼
+ポケウッドの　映画は
+このVFXが　命なんです</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:41:57" />
+				Time="2011-09-16T07:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -146,14 +107,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしは　ライター▼
-えいがの　ストーリーに　なる
-だいほんを　つくっています▼
-あたまの　なかは　いつだって
-おはなしで　パツンパツンですわ</Text>
+			<Text>私は　ライター▼
+映画の　ストーリーに　なる
+台本を　つくっています▼
+頭の　中は　いつだって
+お話で　パツンパツンですわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
+				Time="2011-09-16T08:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -187,13 +148,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わしは　ビックな　おおおとこ！
-でも　しごとは　こどうぐ　だ！▼
-やくしゃが　つかう　こものや
-セットのかぐを　つくることも　あるぞ！</Text>
+			<Text>わしは　ビックな　大男！
+でも　仕事は　小道具　だ！▼
+役者が　使う　小物や
+セットの家具を　作ることも　あるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
+				Time="2011-09-16T08:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -227,11 +188,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうも　シネマトグラファーです▼
-いや　まあ　かんたんに　いうと
+いや　まあ　簡単に　言うと
 カメラマン　なんですけどね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
+				Time="2011-09-16T08:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -267,15 +228,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクは　ろくおんぎし！▼
-やくしゃさんの　セリフを
-とったりするのが　しごとさ！▼
-ポケウッドの　えいがさくひんは
+			<Text>ボクは　録音技師！▼
+役者さんの　セリフを
+録ったりするのが　仕事さ！▼
+ポケウッドの　映画作品は
 ほとんどが　アフレコだから▽
 いまは　ヒマ　なんだけどね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
+				Time="2011-09-16T08:24:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -310,14 +271,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう……　どこ　いったのよ……▼
-メガホンが　ないと　かんとくに
+			<Text>もう……　どこ　行ったのよ……▼
+メガホンが　ないと　カントクに
 また　しかられるよ……▼
-アナタ　やくしゃさん？
+アナタ　役者さん？
 ワタシは　ＡＤ　やってます</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:12:08" />
+				Time="2011-09-16T08:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -325,12 +286,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂middeman1
+			<Comment>♀woman2
 
 撮影バトル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:08:26" />
+				Time="2011-09-16T08:25:37" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
