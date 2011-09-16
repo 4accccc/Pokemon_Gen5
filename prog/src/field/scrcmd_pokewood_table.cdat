@@ -36,6 +36,9 @@
   DEF_CMD( EvCmdPokewoodIsShowedMovie,          EV_SEQ_PKWD_IS_SHOWED_MOVIE )
   DEF_CMD( EvCmdPokewoodIsRentalPokeMovie,      EV_SEQ_PKWD_IS_RENTAL_POKE_MOVIE )
   DEF_CMD( EvCmdPokewoodSetStudioMMdl,          EV_SEQ_PKWD_SET_STUDIO_MMDL )
+  DEF_CMD( EvCmdPokewoodGetDirectorType,        EV_SEQ_PKWD_GET_DIRECTOR_TYPE )
+  DEF_CMD( EvCmdPokewoodCheckAllSuccess,        EV_SEQ_PKWD_CHECK_ALL_SUCCESS )
+  DEF_CMD( EvCmdPokewoodRecordMonitor,          EV_SEQ_PKWD_RECORD_MONITOR )
   
   END_CMD
   //スクリプトコマンドテーブル終了

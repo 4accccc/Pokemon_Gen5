@@ -15197,13 +15197,13 @@
  * ※このチェックの中で初上映状態→上映済み状態に変化するので注意
  */
 //--------------------------------------------------------------
-#define _PKWD_IS_SHOWED_MOVIE( ret_wk, play_id )  \
-    _ASM_PKWD_IS_SHOWED_MOVIE ret_wk, play_id
+#define _PKWD_IS_SHOWED_MOVIE( play_id, ret_wk )  \
+    _ASM_PKWD_IS_SHOWED_MOVIE play_id, ret_wk
 
-    .macro  _ASM_PKWD_IS_SHOWED_MOVIE ret_wk, play_id
+    .macro  _ASM_PKWD_IS_SHOWED_MOVIE play_id, ret_wk
     .short  EV_SEQ_PKWD_IS_SHOWED_MOVIE
-    .short  \ret_wk
     .short  \play_id
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
@@ -15211,13 +15211,13 @@
  * @brief ポケウッド：レンタルポケモンを使った映画かどうかのチェック
  */
 //--------------------------------------------------------------
-#define _PKWD_IS_RENTAL_POKE_MOVIE( ret_wk, play_id )  \
-    _ASM_PKWD_IS_RENTAL_POKE_MOVIE ret_wk, play_id
+#define _PKWD_IS_RENTAL_POKE_MOVIE( play_id, ret_wk )  \
+    _ASM_PKWD_IS_RENTAL_POKE_MOVIE play_id, ret_wk
 
-    .macro  _ASM_PKWD_IS_RENTAL_POKE_MOVIE ret_wk, play_id
+    .macro  _ASM_PKWD_IS_RENTAL_POKE_MOVIE play_id, ret_wk
     .short  EV_SEQ_PKWD_IS_RENTAL_POKE_MOVIE
-    .short  \ret_wk
     .short  \play_id
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
@@ -15270,7 +15270,47 @@
     .endm
 
 
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：監督の種類取得
+ * @param[in]   sc_no シナリオ指定
+ * @param ret_wk  監督の種類（0-4）
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_DIRECTOR_TYPE( sc_no, ret_wk ) \
+    _ASM_PKWD_GET_DIRECTOR_TYPE sc_no, ret_wk
 
+    .macro  _ASM_PKWD_GET_DIRECTOR_TYPE sc_no, ret_wk
+    .short  EV_SEQ_PKWD_GET_DIRECTOR_TYPE
+    .short  \sc_no
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：全シナリオGOODENDしたかどうか
+ * @param[out] ret_wk  TRUEのとき条件達成
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_ALL_SUCCESS( ret_wk ) \
+      _ASM_PKWD_GET_ALL_SUCCESS ret_wk
+
+    .macro  _ASM_PKWD_GET_ALL_SUCCESS ret_wk
+    .short  EV_SEQ_PKWD_GET_ALL_SUCCESS
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：記録モニター画面
+ */
+//--------------------------------------------------------------
+#define _PKWD_RECORD_MONITOR( ret_wk )  \
+    _ASM_PKWD_RECORD_MONITOR ret_wk
+    .macro  _ASM_PKWD_RECORD_MONITOR ret_wk
+    .short  EV_SEQ_PKWD_RECORD_MONITOR
+    .short  \ret_wk
+    .endm
 
 
 

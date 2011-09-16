@@ -31,6 +31,7 @@
 
 #include "app/pkwd_book.h"  //PKWD_BOOK_PARAM
 #include "pokewood_setup.h" //PKWD_BOOK_PARAM_Create
+#include "app/pkwd_record_monitor.h"  //PKWD_RECORD_MONITOR
 
 #include "field/pokewood.h"
 #include "pokewood_system.h"
@@ -43,6 +44,7 @@
 #include "../battle/pokewood/pokewood_senario.h"
 #include "tr_tool/trtype_def.h"
 #include "pkwd_scenario_open.h"
+
 
 //SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
 SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
@@ -659,8 +661,8 @@ VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk )
 {
   POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   *ret_wk = POKEWOOD_SAVEDATA_GetMovieShowed( pkwdsave, play_id );
   POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, play_id, TRUE );
@@ -675,8 +677,8 @@ VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk )
 {
   POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   *ret_wk = getRecordInfo( wk, play_id, POKEWOOD_REC_PARAM_RENTAL_FLAG, NULL );
   OS_Printf("EvCmdPokewoodIsRentalPokeMovie(%d)-->%d\n", play_id, *ret_wk );
@@ -739,6 +741,50 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ポケウッド 監督の種類を取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodGetDirectorType( VMHANDLE *core, void * wk )
+{
+  u16 sc_no     = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk  = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = readScenarioData( sc_no, PKWD_SC_PARAM_DIRECTOR );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodCheckAllSuccess( VMHANDLE *core, void * wk )
+{
+  u16 * ret_wk  = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = FALSE;  //仮
+  return VMCMD_RESULT_CONTINUE;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodRecordMonitor( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  
+  PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gdata );
+
+	GMEVENT *new_event;
+	PKWD_RECORD_MONITOR_PARAM	*pkwd_param = PKWD_RECORD_MONITOR_PARAM_Create( heapID, gsys );
+
+	new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_RECORD_MONITOR_EVENT_Call, (void *)pkwd_param );
+
+  PKWD_RECORD_MONITOR_PARAM_Delete( pkwd_param );
+	SCRIPT_CallEvent( scw, new_event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
 //============================================================================================
 //  PKWD　イベント　映画をコピー
 //============================================================================================

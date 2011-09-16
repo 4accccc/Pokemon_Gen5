@@ -31,7 +31,23 @@ _EVENT_DATA   ev_pokewood_rec
 _EVENT_DATA   ev_pokewood_show
 _EVENT_DATA   ev_pokewood_monitor
 _EVENT_DATA   ev_zone_pokewood_studio_entrance
+_EVENT_DATA   ev_pos_pokewood_owner_appear
 _EVENT_DATA_END
+
+//==============================================================================
+//
+//  C15R0301:シアターでのローカルワーク使途
+//
+//  LOCALWORK0:
+//    1のとき初上映でのオーナー出現イベント発生
+//
+//  LOCALWORK1:
+//    上記イベントでの上映データ位置を記録
+//
+//
+//
+//
+//==============================================================================
 
 //==============================================================================
 //
@@ -56,9 +72,14 @@ INIT_EVENT_END
 DEFINE_LOCAL  LWK_PKWD_SEQ
 DEFINE_LOCAL  LWK_PKWD_MENU
 DEFINE_LOCAL  LWK_PKWD_SCENARIO
+DEFINE_LOCAL  LWK_PKWD_REC_LOOP
 DEFINE_LOCAL  LWK_PKWD_REC_POS
+DEFINE_LOCAL  LWK_PKWD_DIRECTOR
 
 DEFINE_LOCAL  LWK_PKWD_REC_COUNT
+DEFINE_LOCAL  LWK_HEROX
+DEFINE_LOCAL  LWK_HEROZ
+
 
 /**************************************************************/
 //    ポケウッド：撮影所受付
@@ -98,22 +119,20 @@ EVENT_START ev_pokewood_rec
     CASE PKWD_REC_SEQ_SELECT_POKE     THEN
       _CALL ev_pkwd_rec_select_poke
 
+    CASE PKWD_REC_SEQ_POKELIST        THEN
+      _CALL ev_pkwd_rec_pokelist
+
     CASE PKWD_REC_SEQ_SHOOTING        THEN
-      _MSGWIN_CLOSE()
       _REPORT_EVENT_CALL( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
-        $LWK_PKWD_SEQ = PKWD_REC_SEQ_AFTER
       ELSE
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
       ENDIF
 
     CASE PKWD_REC_SEQ_AFTER           THEN
       _CALL ev_pkwd_after_rec
-
-    CASE PKWD_REC_SEQ_POKELIST        THEN
-      _CALL ev_pkwd_rec_pokelist
 
     CASE PKWD_REC_SEQ_GOODBYE         THEN
       //「銀幕はいつだって君を待ってるぜ！」
@@ -137,47 +156,53 @@ EVENT_END
 
 
 /**************************************************************/
+//  スタジオ内イベント
 /**************************************************************/
 ev_pkwd_rec_studio:
+
+  //
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_enter_mat )
   _OBJ_ANIME_WAIT()
 
-  //仮：ここで監督のセリフがある
-  //_PKWD_GET_DIRECTOR_TYPE( SCWK_ANSWER )
-  $SCWK_ANSWER = 0
-  SWITCH $SCWK_ANSWER
-  CASE 0 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_01, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 1 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_02, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_03, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 3 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_04, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 4 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_05, C15R0101_WKOBJCODE01, POS_DOWN )
-  ENDSWITCH
-  _MSGWIN_CLOSE()
 
-  //ここで撮影アプリ呼び出し
-  _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
+  $LWK_PKWD_REC_LOOP = TRUE
 
-  //仮：ここで監督のセリフがある
-  //_PKWD_GET_DIRECTOR_TYPE( SCWK_ANSWER )
-  $SCWK_ANSWER = 0
-  SWITCH $SCWK_ANSWER
-  CASE 0 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_01, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 1 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_02, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_03, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 3 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_04, C15R0101_WKOBJCODE01, POS_DOWN )
-  CASE 4 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_pw_director_05, C15R0101_WKOBJCODE01, POS_DOWN )
-  ENDSWITCH
-  _MSGWIN_CLOSE()
+  WHILE $LWK_PKWD_REC_LOOP == TRUE
+
+    //監督のセリフ：撮影開始
+    $SCWK_ANSWER = msg_pw_director_01
+    _CALL sub_director_talk
+    _MSGWIN_CLOSE()
+
+    //ここで撮影アプリ呼び出し
+    _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
+
+    //仮：本当は戻り値で制御
+    $SCWK_ANSWER = TRUE
+    IF $SCWK_ANSWER == FALSE THEN
+      //監督のセリフ：もう一度撮影するか？
+      $SCWK_ANSWER = msg_pw_studio_23
+      _CALL sub_director_talk
+      _YES_NO_WIN( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_YES THEN
+        //「はい」の場合はもう一度。なにもしていない
+      ELSE
+        //シーケンス：終了へ
+        $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+        //このループを抜ける
+        $LWK_PKWD_REC_LOOP = FALSE
+      ENDIF
+    ELSE
+      //監督のセリフ：撮影完了
+      $SCWK_ANSWER = msg_pw_director_06
+      _CALL sub_director_talk
+      _MSGWIN_CLOSE()
+      //シーケンス：撮影後処理（セーブ）へ
+      $LWK_PKWD_SEQ = PKWD_REC_SEQ_AFTER
+      //このループを抜ける
+      $LWK_PKWD_REC_LOOP = FALSE
+    ENDIF
+  ENDWHILE
 
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_exit_studio )
   _OBJ_ANIME_WAIT()
@@ -191,6 +216,12 @@ _ANIME_LABEL anm_player_enter_mat
 _ANIME_LABEL anm_player_exit_studio
   _ANIME_DATA AC_WALK_D_8F, 6
   _ANIME_DATA ACMD_END, 0
+
+sub_director_talk:
+  _PKWD_GET_DIRECTOR_TYPE( LWK_PKWD_SCENARIO, LWK_PKWD_DIRECTOR )
+  $SCWK_ANSWER += $LWK_PKWD_DIRECTOR
+  _BALLOONWIN_OBJMSG_POS( SCWK_ANSWER, C15R0101_WKOBJCODE01, POS_DOWN )
+_RET
 
 /**************************************************************/
 //  撮影後
@@ -226,7 +257,7 @@ _ANIME_LABEL  anm_producer_turn_to_player
 
 _ANIME_LABEL  anm_player_talk_to_producer
   _ANIME_DATA AC_WALK_D_8F, 1
-  _ANIME_DATA AC_WALK_L_8F, 1
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
   _ANIME_DATA ACMD_END, 0
 
 /**************************************************************/
@@ -310,18 +341,40 @@ ev_pkwd_rec_select_poke:
 _RET
 
 /**************************************************************/
+// ポケウッド：ポケモンリスト呼び出し
+/**************************************************************/
+ev_pkwd_rec_pokelist:
+  //「OK!OK!じゃあ作品に出演するポケモンを決めてくれ！」
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_09, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
+  _PKWD_SELECT_POKEMON( SCWK_ANSWER )
+  IF $SCWK_ANSWER ==FALSE THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+    _RET
+  ENDIF
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
+
+_RET
+
+/**************************************************************/
 /**************************************************************/
 ev_pkwd_rec_go_studio:
   //「OK!じゃあ撮影を始めようか！」
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 14, 12, FALSE, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_studio )
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  SWITCH $LWK_HEROX
+  CASE 12 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_studio1 )
+  CASE 13 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_studio2 )
+  CASE 14 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_studio3 )
+  ENDSWITCH
   _OBJ_ANIME_WAIT()
 
-  //仮：ここで監督・共演者のOBJを設定
+  //ここで監督・共演者のOBJを設定
   _PKWD_SET_STUDIO_MMDL( LWK_PKWD_SCENARIO, OBJCHRWORK0, OBJCHRWORK1 )
   _FLAG_RESET( FV_PKWD_STAFF01 )  //出演者・監督　表示
   _FLAG_SET( FV_PKWD_STAFF02 )    //スタッフ非表示
@@ -329,7 +382,18 @@ ev_pkwd_rec_go_studio:
 
 _RET
 
-_ANIME_LABEL  anm_player_go_studio
+_ANIME_LABEL  anm_player_go_studio1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_studio2
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_studio3
   _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
 
@@ -428,22 +492,6 @@ ev_pkwd_rec_save:
 
   $SCWK_ANSWER = $LWK_PKWD_SUBSEQ_RESULT
 }
-_RET
-
-/**************************************************************/
-// ポケウッド：ポケモンリスト呼び出し
-/**************************************************************/
-ev_pkwd_rec_pokelist:
-  //「OK!OK!じゃあ作品に出演するポケモンを決めてくれ！」
-  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_09, SCWK_TARGET_OBJID, POS_DOWN )
-  _MSGWIN_CLOSE()
-  _PKWD_SELECT_POKEMON( SCWK_ANSWER )
-  IF $SCWK_ANSWER ==FALSE THEN
-    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
-    _RET
-  ENDIF
-  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
-
 _RET
 
 //--------------------------------------------------------------
@@ -664,6 +712,7 @@ _ANIME_LABEL  anm_player_go_out_theater
 ev_pkwd_show_after:
   _PKWD_GET_MOVIE_VALUE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _PLAYER_NAME( 0 )
   SWITCH $SCWK_ANSWER
   CASE SCR_PKWD_RESULT_GOOD_END THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_theater_09, SCWK_TARGET_OBJID, POS_DOWN )
@@ -674,33 +723,71 @@ ev_pkwd_show_after:
   ENDSWITCH
 
   //上映済みかチェック（このコマンドで上映済みフラグをONにしているので注意）
-  _PKWD_IS_SHOWED_MOVIE( SCWK_ANSWER, LWK_PKWD_SHOW_REC_POS )
+  _PKWD_IS_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER  )
   IF $SCWK_ANSWER == FALSE THEN
-    _MSGWIN_CLOSE()
-    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_JUDGE_NPC
+    //オーナー登場POSイベント設定
+    $LOCALWORK0 = 1
+    $LOCALWORK1 = $LWK_PKWD_SHOW_REC_POS
   ELSE
-    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
+    //オーナー登場POSイベント解除（念のため）
+    $LOCALWORK0 = 0
   ENDIF
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
 _RET
 
+//==============================================================================
+//
+//  業界人風の男（オーナー）出現イベント
+//
+//==============================================================================
+EVENT_START ev_pos_pokewood_owner_appear
+  _CALL ev_pkwd_show_judge_npc
+
+  //オーナー登場POSイベント解除
+  $LOCALWORK0 = 0
+EVENT_END
+
+
 /**************************************************************/
+//
+//
 //
 /**************************************************************/
 ev_pkwd_show_judge_npc:
 //仮
-  _OBJ_ADD_EX( 14, 18, DIR_UP, MMDL_ID_EVENTOBJ_00, DANPEI, MV_DMY )
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_appear )
+{
+  //業界人風の男出現
+  _OBJ_ADD_EX( 15, 31, DIR_UP, MMDL_ID_EVENTOBJ_00, PWOWNER, MV_DMY )
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_bikkuri )
   _OBJ_ANIME_WAIT()
+
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_right )
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_close )
-  _OBJ_ANIME_WAIT()
+  //プレイヤーの位置によりアニメ分岐
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  SWITCH $LWK_HEROX
+  CASE 14 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear1 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_right )
+    _OBJ_ANIME_WAIT()
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear2 )
+    _OBJ_ANIME_WAIT()
+  CASE 16 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear3 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_left )
+    _OBJ_ANIME_WAIT()
+  ENDSWITCH
 
-  _PKWD_GET_MOVIE_VALUE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
   _PLAYER_NAME( 0 )
+  _PKWD_GET_MOVIE_VALUE( LOCALWORK1, SCWK_ANSWER )
   SWITCH $SCWK_ANSWER
   CASE SCR_PKWD_RESULT_GOOD_END THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_04, MMDL_ID_EVENTOBJ_00, POS_DOWN )
@@ -710,35 +797,58 @@ ev_pkwd_show_judge_npc:
     _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_03, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   ENDSWITCH
 
-  _PKWD_IS_RENTAL_POKE_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  //出演ポケモンはレンタルか？
+  _PKWD_IS_RENTAL_POKE_MOVIE( LOCALWORK1, SCWK_ANSWER )
   IF $SCWK_ANSWER == FALSE THEN
     _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   ENDIF
   _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_commentator_disappear )
+  SWITCH $LWK_HEROX
+  CASE 14, 16 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_disappear1 )
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_disappear2 )
+  ENDSWITCH
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-
+}
 _RET
 
-_ANIME_LABEL  anm_commentator_appear
-  _ANIME_DATA AC_WALK_U_8F, 7
+_ANIME_LABEL  anm_owner_bikkuri
   _ANIME_DATA AC_MARK_GYOE, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_appear1
+  _ANIME_DATA AC_WALK_U_8F, 5
   _ANIME_DATA AC_STAY_WALK_L_8F, 1
   _ANIME_DATA ACMD_END, 0
 
-_ANIME_LABEL  anm_commentator_close
-  _ANIME_DATA AC_WALK_L_8F, 4
+_ANIME_LABEL  anm_owner_appear2
+  _ANIME_DATA AC_WALK_U_8F, 4
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_appear3
+  _ANIME_DATA AC_WALK_U_8F, 5
+  _ANIME_DATA AC_STAY_WALK_R_8F, 1
   _ANIME_DATA ACMD_END, 0
 
 _ANIME_LABEL  anm_player_turn_right
   _ANIME_DATA AC_STAY_WALK_R_8F, 1
   _ANIME_DATA ACMD_END, 0
 
-_ANIME_LABEL  anm_commentator_disappear
-  _ANIME_DATA AC_WALK_D_8F, 9
+_ANIME_LABEL  anm_player_turn_left
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_disappear1
+  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_owner_disappear2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F, 9
   _ANIME_DATA ACMD_END, 0
 
 //==============================================================================
@@ -747,6 +857,8 @@ _ANIME_LABEL  anm_commentator_disappear
 //
 //==============================================================================
 EVENT_START   ev_pokewood_monitor
+  _TALK_START_SE_PLAY()
+  _PKWD_RECORD_MONITOR( SCWK_ANSWER )
 EVENT_END
 
 

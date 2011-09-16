@@ -16,5 +16,9 @@
 #ifndef ZONE_C15R0301_EVB_H
 #define ZONE_C15R0301_EVB_H
 
+#define BG_C15R0301_MONITOR_01            0
+#define BG_C15R0301_MONITOR_02            1
+#define BG_C15R0301_MONITOR_03            2
+#define BG_C15R0301_MONITOR_04            3
 
 #endif //ZONE_C15R0301_EVB_H

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/12 15:17:17
+#save date:2011/09/16 16:56:53
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0201.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c15r0201.wms
 #ID name
 C15R0201_POKEWOOD_REC
 #OBJ CODE Number
-DANPEI
+SUNGLASSES
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 56
+-40 0 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
