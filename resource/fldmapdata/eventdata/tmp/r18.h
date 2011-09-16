@@ -20,6 +20,11 @@
 #define TR_BATTLEG_15                      8
 #define TR_VETERANW_10                     9
 #define R18_ITEM_01                       10
+#define FLD_ITEM_313                      11
+#define FLD_ITEM_314                      12
+#define FLD_ITEM_315                      13
+#define FLD_ITEM_316                      14
+#define FLD_ITEM_317                      15
 
 #endif //ZONE_R18_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r18.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
