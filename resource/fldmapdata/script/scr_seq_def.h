@@ -13988,20 +13988,18 @@
  * @param[in]   idx     施設インデックス
  * @param[out]  msgid   表示メッセージ
  *
- * @note ２に施設経験値　３に施設レベル　４に街経験値　５に街レベルが入る
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_SPOT( idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup) \
-      _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
+#define _RESORT_SET_SPOT( idx, ret_result, ret_grade_msg, ret_eff_msg, ret_exp ) \
+      _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_exp
 
-  .macro _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
+  .macro _ASM_RESORT_SET_SPOT idx, ret_result, ret_grade_msg, ret_eff_msg, ret_exp
   .short EV_SEQ_RESORT_SET_SPOT
   .short \idx
   .short \ret_result
   .short \ret_grade_msg
   .short \ret_eff_msg
-  .short \ret_lvup
-  .short \ret_city_lvup
+  .short \ret_exp
   .endm
 
 //--------------------------------------------------------------
@@ -14277,6 +14275,37 @@
   .macro _ASM_RESORT_RESET_MMDL param
   .short EV_SEQ_RESORT_RESET_MMDL
   .short \param
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  店経験値加算
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_EXP_SHOP( idx, add_exp, ret_result, ret_lv ) \
+      _ASM_RESORT_ADD_EXP_SHOP idx, add_exp, ret_result, ret_lv
+
+  .macro _ASM_RESORT_ADD_EXP_SHOP idx, add_exp, ret_result, ret_lv
+  .short EV_SEQ_RESORT_ADD_EXP_SHOP
+  .short \idx
+  .short \add_exp
+  .short \ret_result
+  .short \ret_lv
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  街経験値加算
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_EXP_CITY( add_exp, ret_result, ret_lv ) \
+      _ASM_RESORT_ADD_EXP_CITY add_exp, ret_result, ret_lv
+
+  .macro _ASM_RESORT_ADD_EXP_CITY add_exp, ret_result, ret_lv
+  .short EV_SEQ_RESORT_ADD_EXP_CITY
+  .short \add_exp
+  .short \ret_result
+  .short \ret_lv
   .endm
 
 //======================================================================

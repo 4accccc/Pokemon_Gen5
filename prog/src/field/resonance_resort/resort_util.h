@@ -32,9 +32,11 @@
 extern u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, WORDSET *p_wordset, HEAPID heapID );
 
 extern BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u32 *p_index );
-extern BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, GAMEDATA *p_gamedata, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup );
 
+extern BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *p_add_exp );
 
+extern u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_exp, u16 *p_lv );
+extern u32 RESORT_UTIL_AddExpShop( RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u16 add_exp, u16 *p_lv );
 
 extern BOOL RESORT_UTIL_IsFeverCondition( RESORT_SYSTEM *p_sys );
 extern BOOL RESORT_UTIL_IsFever( RESORT_SYSTEM *p_sys );

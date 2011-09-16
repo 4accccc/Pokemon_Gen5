@@ -74,7 +74,7 @@ typedef struct {
 }RESORT_SHOP_ITEM;
 
 // 一度に並べることができる商品数
-#define RESORT_SHOP_ITEM_MAX   ( 16 )
+#define RESORT_SHOP_ITEM_MAX   ( 17 )
 
 // BMP登録用情報構造体
 typedef struct {
