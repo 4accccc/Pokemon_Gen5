@@ -270,6 +270,11 @@ init_flags:
   _FLAG_SET( FV_C02_SPPOKE1_01 )  //ユクシー
   _FLAG_SET( FV_R07R0105_SPPOKE2_01 )  //エムリット
   _FLAG_SET( FV_D26_SPPOKE3_01 )  //アグノム
+  
+  //N05R0201：謁見の間
+  _FLAG_SET( FV_N01R0502_BOSS_01 )
+  _FLAG_SET( FV_N01R0501_BOSS_01 )
+  _FLAG_SET( FV_N01R0502_NPOKE_01 )
 
   //C07:セッカシティ　ダークトリニティ
   _FLAG_SET( FV_C07_NINJA_01 )

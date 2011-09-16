@@ -13,18 +13,58 @@
   .include  "d06r0101.h"
   .include  "c12.h"
   .include  "d01r0101.h"
+  
+  .include  "n01r0401.h"
+  .include  "n01r0402.h"
+  .include  "n01r0501.h"
+  .include  "n01r0502.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------------
 _EVENT_DATA   ev_pair_trainer_set_call
 _EVENT_DATA   ev_pair_trainer_free_call
+_EVENT_DATA   ev_n01r0401_boss
 _EVENT_DATA_END //終了
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/**************************************************************/
+/*		話しかけ：N城のN
+/**************************************************************/
+EVENT_START		ev_n01r0401_boss
+  _TALK_START_SE_PLAY()
+  
+  //【仮】メッセージラベルが仮
+  _BALLOONWIN_OBJMSG( msg_pair_d06_01, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+   //主人公・チェレン名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  /*
+  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
+  $SCWK_TEMP0 = msg_d02r0101_swleader1_05
+  $SCWK_TEMP0 += $WK_OTHER_D02R0101_PAIR
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  IF $WK_OTHER_D02R0101_PAIR != 4 THEN
+    $WK_OTHER_D02R0101_PAIR += 1
+  ENDIF
+ */
+  
+EVENT_END
 
 //====================================================================
 /*

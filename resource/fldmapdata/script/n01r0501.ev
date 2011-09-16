@@ -11,6 +11,10 @@
   .include  "scr_seq_def.h"
   .include  "msg_n01r0501.h"
   .include  "n01r0501.h"
+  .include  "n01r0501_def.h"
+  .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +23,176 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_n01r0501
+_EVENT_DATA    ev_init_n01r0501
+_EVENT_DATA    ev_pos_n01r0501_boss_01
+_EVENT_DATA    ev_n01r0501_boss_02
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_n01r0501
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_n01r0501
+
+  //N表示状態なら位置を変更
+  IF FLAG_OFF( FV_N01R0501_BOSS_01 ) THEN
+    _OBJ_POS_CHANGE( N01R0501_BOSS_01, 31, 0, 18, DIR_LEFT )
+  ENDIF
+  
+INIT_EVENT_END
+
+/**************************************************************/
+/*		POS：謁見の間前						  */
+/**************************************************************/
+EVENT_START		ev_pos_n01r0501_boss_01
+    //連れ歩いている
+  IF FLAG_ON(FE_N01R0401_PAIR_01) THEN
+    _CALL ev_n01r0501_pairend_01
+  
+  //連れ歩いていない
+  ELSE
+    _CALL ev_n01r0501_boss_stopper_01
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*		CALL：謁見の間イベントまでストッパー						  */
+/**************************************************************/
+ev_n01r0501_boss_stopper_01:
+  //Ｎ：ここが
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0501_boss_02, N01R0501_BOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公１歩左へ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+  _OBJ_ANIME_WAIT()
+_RET
+
+/**************************************************************/
+/*		CALL：連れ歩き終了						  */
+/**************************************************************/
+ev_n01r0501_pairend_01:
+  
+  //==================================//
+  //通常用N配置
+  _FLAG_RESET( FV_N01R0501_BOSS_01 )
+  //連れ歩き終了フラグ
+  _FLAG_RESET(FE_N01R0401_PAIR_01)
+  //N01R0401_N01R0402_SCENE_CHANGE無効
+  $WK_SCENE_N01R0402_BOSS = 4
+  //==================================//
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_N01R0501_BOSS_02, MV_DMY )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  $LCW_POSX += 1
+  
+  //動作モデル・連れ歩き削除・通常用生成
+  _OBJ_ADD( N01R0501_BOSS_01 )
+  //通常用を現在のNと同じ位置に配置
+  _OBJ_POS_CHANGE(N01R0501_BOSS_01,LCW_POSX,0,LCW_POSZ,DIR_LEFT)
+  _OBJ_DEL( PAIR_TRAINER_01 )
+  
+  //アニメ：主人公１歩左へ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+  _OBJ_ANIME_WAIT()
+  
+  //Ｎ：ここが
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0501_boss_01, N01R0501_BOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+_RET
+
+/**************************************************************/
+/*		空ラベル：連れ歩き後Ｎ						  */
+/**************************************************************/
+EVENT_START	ev_n01r0501_boss_02
+//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

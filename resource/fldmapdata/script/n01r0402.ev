@@ -10,7 +10,10 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0402.h"
-  //.include  "n01r0402.h"
+  .include  "n01r0402.h"
+  .include  "n01r0402_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,7 +31,135 @@ _EVENT_DATA		ev_bg_n01r0402_goods_06
 _EVENT_DATA		ev_bg_n01r0402_goods_07
 _EVENT_DATA		ev_bg_n01r0402_goods_08
 _EVENT_DATA		ev_bg_n01r0402_goods_09
+_EVENT_DATA		ev_n01r0402_boss_01
+_EVENT_DATA		ev_scene_n01r0402_boss_01
 _EVENT_DATA_END
+
+/************************************************************/
+/*					SCENE_CHANGE：Ｎと部屋						*/
+/************************************************************/
+EVENT_START	ev_scene_n01r0402_boss_01
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_N01R0402_BOSS_01, MV_DMY )
+  
+  //アニメ：主人公中央に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER,9,18, FORCE_TYPE_NOT, 8, DIR_LR )
+  //N動作モデル生成
+  _OBJ_ADD_EX( 9, 20, DIR_UP, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+  //N動作モデル削除
+  _OBJ_DEL( PAIR_TRAINER_01 )
+  
+  _OBJ_ANIME_WAIT()
+
+  //カメラ操作　部屋中央に移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,622592,0,1003520,40 )
+  
+  //アニメ：連れ立って部屋の中央へ
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00,8,18, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  
+  
+  //Ｎ：……ここは
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：Ｎ部屋の中央へ
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00,9,16, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //Ｎ：ボクはおさないころに
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：Ｎと主人公向き合う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //Ｎ：あるひ
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：Ｎ左右を見た後主人公を見る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_lr_look)
+  _OBJ_ANIME_WAIT()
+  
+  //Ｎ：カレが
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _TIME_WAIT(8)
+  
+  //アニメ：Ｎ演技
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_act1)
+  _OBJ_ANIME_WAIT()
+  
+  //Ｎ：……外に
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00,8,20, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 8*5 )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  _TIME_WAIT( 8 )
+  
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  _SE_WAIT()
+  
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //==================================//
+  //N01R0401_SCENE_CHANGE有効
+  $WK_SCENE_N01R0402_BOSS = 2
+  //子ども部屋イベント完了フラグセット
+  _FLAG_SET( FE_N01R0401_HEYA_END_01 )
+  //N01R0401_N表示
+  _FLAG_RESET(FV_N01R0401_BOSS_01)
+  //==================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_lr_look
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//N : 専用アニメ                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_act1
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*					空データ：連れ歩き後スクリプト						*/
+/************************************************************/
+EVENT_START	ev_n01r0402_boss_01
+  //
+EVENT_END
+
 
 /************************************************************/
 /*					バスケットボール						*/
@@ -119,3 +250,74 @@ _TALK_START_SE_PLAY()
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
