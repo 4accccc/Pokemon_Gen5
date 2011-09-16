@@ -74,7 +74,7 @@ $winprov_hash  = {"毎ターン倒す"=>0, "ターン内に相手を全滅"=>1,"特定の技を使用し
 
 $category_hash = { "アクション"=>0, "SF"=>1, "ヒューマン"=>2, "ホラー＆サスペンス"=>3 }
 
-$director_hash = { "OLDMAN1"=>0, "SUNGLASSES"=>1, "MIDDLEMAN2"=>3 ,"GENTLEMAN,ADULTW"=>4 }
+$director_hash = { "OLDMAN1"=>0, "SUNGLASSES"=>1, "MIDDLEMAN2"=>2 ,"GENTLEMAN"=>3, "ADULTW"=>4 }
 
 $bias_hash     = { "傾向：感動"=>0, "傾向：恐怖"=>1, "傾向：楽しい"=>2, "傾向：痛快"=>3, "傾向：シリアス"=>4 }
 
