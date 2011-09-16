@@ -790,6 +790,17 @@
 #define FV_T04_SWRIVAL_01                  844 /* 0x034c サザナミタウン：ライバル */
 #define FV_C03R0502_POKE38_01              845 /* 0x034d ヒウンシティ：ズルッグ */
 #define FV_D35R0101_POKE_01                846 /* 0x034e 自然保護区：黒オノノクス */
+#define FV_T04R101_STOPPER_01              847 /* 0x034f サザナミタウンゲート：ストッパー */
+#define FV_D29R0101_WORKMAN2_01            848 /* 0x0350 ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_WORKMAN2_02            849 /* 0x0351 ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_WORKMAN2_03            850 /* 0x0352 ヤーコンロード：トロッコ用 */
+#define FV_D29R0201_WORKMAN2_01            851 /* 0x0353 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_01            852 /* 0x0354 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_01A           853 /* 0x0355 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_02            854 /* 0x0356 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_02A           855 /* 0x0357 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_03            856 /* 0x0358 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_04            857 /* 0x0359 ヤーコンロード：トロッコ用 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
