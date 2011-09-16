@@ -18,6 +18,7 @@
 #include "../event_name_input.h"
 #include "src/field/ev_time.h"
 #include "savedata/medalbox.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -624,7 +625,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
  *	return TRUE ◎～△  FALSE×
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
+BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, WORDSET *p_wordset, GAMEDATA *p_gamedata, u16 *ret_grade_msg, u16 *ret_eff_msg, u16 *ret_lvup, u16* ret_city_lvup )
 {
   enum
   {
@@ -820,8 +821,27 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
               && prev_prize != next_prize
             )
           {
-            RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
-            is_prize = TRUE;
+            BOOL is_ok  = TRUE;
+            if( next_prize == RESORT_CITYPRIZE_TYPE_DENDOU )
+            {
+              EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
+              if( !EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) )
+              {
+                RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU, TRUE );
+                is_ok = FALSE;
+              }
+            }
+
+
+            if(is_ok)
+            {
+              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+              is_prize = TRUE;
+            }
+            else
+            {
+              is_prize = FALSE;
+            }
           }
           else
           {
@@ -1530,7 +1550,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
  *	@return ご褒美ナンバー
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys )
+u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
 {
   static const struct
   {
@@ -1556,17 +1576,28 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys )
       RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON,
     },
     {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
+      RESORT_CITYPRIZE_TYPE_DENDOU,
+    },
+    {
       RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME,
       RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME,
     },
   };
 
+  EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
 
   int i;
-  
+
   for( i = 0; i <= NELEMS(sc_param_to_prize); i++ )
   {
+    if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
+      && (EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) == FALSE) )
+    {
+      continue;
+    }
+
     if( RESORT_CITY_DATA_GetData(p_city,sc_param_to_prize[i].param,NULL) )
     {
       return sc_param_to_prize[i].prize;

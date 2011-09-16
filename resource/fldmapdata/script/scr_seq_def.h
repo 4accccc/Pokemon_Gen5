@@ -14259,6 +14259,19 @@
   .short \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  人物MMDL再配置
+ */
+//--------------------------------------------------------------
+#define _RESORT_RESET_MMDL( param ) \
+      _ASM_RESORT_RESET_MMDL param
+
+  .macro _ASM_RESORT_RESET_MMDL param
+  .short EV_SEQ_RESORT_RESET_MMDL
+  .short \param
+  .endm
+
 //======================================================================
 //
 //    無限ダンジョン関連

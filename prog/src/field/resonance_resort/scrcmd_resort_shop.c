@@ -57,6 +57,7 @@
 #include "scrcmd_resort.h"
 #include "system/nsbtx_to_clwk.h"
 #include "arc/fieldmap/fldmmdl_mdlparam.naix"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 // BMPWIN定義テーブル
 
@@ -73,7 +74,7 @@ typedef struct {
 }RESORT_SHOP_ITEM;
 
 // 一度に並べることができる商品数
-#define RESORT_SHOP_ITEM_MAX   ( 10 )
+#define RESORT_SHOP_ITEM_MAX   ( 16 )
 
 // BMP登録用情報構造体
 typedef struct {
@@ -215,6 +216,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   u16 msg_start;
   u16 msg_select;
   u16 msg_decide;
+  BOOL  is_dendou;
 
   //入れ替えにのみ使用
   u8 insert_idx;
@@ -381,6 +383,17 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_people_sys = Resort_ScrcmdShop_GetPeopleSys( fieldmap );
   sbw->gsys = gsys;
   sbw->wk.p_people  = RESORT_UTIL_GetFrontPeople( work, sbw->wk.p_people_sys );
+  {
+    if( RESORT_CITY_DATA_GetData( sbw->wk.p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL ) )
+    {
+      sbw->wk.is_dendou = TRUE;
+    }
+    else
+    {
+      sbw->wk.is_dendou = FALSE;
+    }
+  }
+
   //sbw->Camera_StartMove   = CameraNormal_StartMove;
   //sbw->Camera_EndMove     = CameraNormal_EndMove;
   sbw->Camera_StartMove   = CameraShop_StartMove;
@@ -1599,6 +1612,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
 static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 {
   int i, itemnum;
+  int cnt;
 
   GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                              NARC_message_itemname_dat, wk->heapId );
@@ -1616,19 +1630,27 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   GF_ASSERT_MSG( itemnum<RESORT_SHOP_ITEM_MAX, "ショップに一度に並べられる最大数を超えています\n" )
 
 
+  cnt = 0;
   for(i=0;i<itemnum;i++)
   {
     const RESORT_BINARY_SERVICE_DATA *cp_data = RESORT_BINARY_SHOP_DATA_GetList( wk->p_shop, wk->cp_shop_data, i );
+
     u16 price = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PRICE );
+    BOOL dendou = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_DENDOU );
+
+    if( dendou && !wk->is_dendou )
+    {
+      continue;
+    }
 
     // 商品ラインナップテーブルにIDと値段を登録
-    wk->lineup[i].id    = i;
-    wk->lineup[i].serviceID = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
+    wk->lineup[cnt].id    = i;
+    wk->lineup[cnt].serviceID = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
  
     // Gパワー係数を掛けてから値段を代入する
-    wk->lineup[i].price =  ResortShop_CalcPlace(wk,price);//GPOWER_Calc_Sale(price);
-    wk->lineup[i].param1 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
-    wk->lineup[i].param2 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_2 );
+    wk->lineup[cnt].price =  ResortShop_CalcPlace(wk,price);//GPOWER_Calc_Sale(price);
+    wk->lineup[cnt].param1 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
+    wk->lineup[cnt].param2 = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PARAM_2 );
 
     //名前フラグがONならばデータから作成
     //OFFならば道具から作成
@@ -1636,28 +1658,30 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
     {
       u16 name = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_NAME );
       u16 info = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_INFO );
-      wk->lineup[i].p_name = GFL_MSG_CreateString( resortMsgData, name );
-      wk->lineup[i].p_decidename  = GFL_MSG_CreateString( resortMsgData, name );
-      wk->lineup[i].p_info = GFL_MSG_CreateString( resortMsgData, info );
+      wk->lineup[cnt].p_name = GFL_MSG_CreateString( resortMsgData, name );
+      wk->lineup[cnt].p_decidename  = GFL_MSG_CreateString( resortMsgData, name );
+      wk->lineup[cnt].p_info = GFL_MSG_CreateString( resortMsgData, info );
     }
     else
     {
-      wk->lineup[i].p_name = GFL_MSG_CreateString( itemMsgData, wk->lineup[i].param1 );
-      wk->lineup[i].p_decidename  = GFL_MSG_CreateString( itemMsgData, wk->lineup[i].param1 );
-      wk->lineup[i].p_info = GFL_MSG_CreateString( itemInfoMsgData, wk->lineup[i].param1 );
+      wk->lineup[cnt].p_name = GFL_MSG_CreateString( itemMsgData, wk->lineup[cnt].param1 );
+      wk->lineup[cnt].p_decidename  = GFL_MSG_CreateString( itemMsgData, wk->lineup[cnt].param1 );
+      wk->lineup[cnt].p_info = GFL_MSG_CreateString( itemInfoMsgData, wk->lineup[cnt].param1 );
     }
     
     //リストに加える
-    BmpMenuWork_ListAddString( &wk->list[i], wk->lineup[i].p_name,
-                                      i,                // 商品テーブルのインデックス
+    BmpMenuWork_ListAddString( &wk->list[cnt], wk->lineup[cnt].p_name,
+                                      cnt,                // 商品テーブルのインデックス
                                       wk->heapId );
 
+    cnt++;
+
   }
-  wk->lineup_num = i;
+  wk->lineup_num = cnt;
   
   
   // 「やめる」登録
-  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+  BmpMenuWork_ListAddArchiveString( &wk->list[cnt], wk->shopMsgData, 
                                     mes_shop_02_06, 
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );

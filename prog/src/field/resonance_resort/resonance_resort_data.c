@@ -257,7 +257,6 @@ void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INST
   }
 }
 
-SDK_COMPILER_ASSERT( RESORT_INSTITUTION_DATA_BIT_MAX < 32 );
 //----------------------------------------------------------------------------
 /**
  *	@brief  イベント用ビットを取得
@@ -268,8 +267,9 @@ SDK_COMPILER_ASSERT( RESORT_INSTITUTION_DATA_BIT_MAX < 32 );
  *	@return TRUEならばON  FASEならばOFF
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_INSTITUTION_DATA_IsBit( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_BIT bit )
+BOOL RESORT_INSTITUTION_DATA_IsBit( const RESORT_INSTITUTION_DATA *cp_wk, u32 bit )
 {
+  GF_ASSERT( bit < 32 );
   return (cp_wk->bit & (1<<bit)) != 0;
 }
 //----------------------------------------------------------------------------
@@ -282,8 +282,9 @@ BOOL RESORT_INSTITUTION_DATA_IsBit( const RESORT_INSTITUTION_DATA *cp_wk, RESORT
  *
  */
 //-----------------------------------------------------------------------------
-void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_BIT bit, BOOL enable )
+void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, u32 bit, BOOL enable )
 {
+  GF_ASSERT( bit < 32 );
   if( enable )
   {
     p_wk->bit |= (1<<bit);
@@ -4184,10 +4185,7 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
 
-      for( j = RESORT_INSTITUTION_DATA_BIT_SHOP_START; j < RESORT_INSTITUTION_DATA_BIT_SHOP_END; j++ )
-      {
-        RESORT_INSTITUTION_DATA_SetBit( p_institution, j, FALSE );
-      }
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, 0 );
     }
   }
 }
@@ -4228,6 +4226,7 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
     default:
       GF_ASSERT(0);
     case 1:
+    case 5:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4285,20 +4284,6 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
         GF_ASSERT(0);
       case VERSION_W2:
         return RESORT_SHOP_ID_FLORIST_00_W2;
-      }
-    case 5:
-      switch( ver )
-      {
-      case VERSION_BLACK:
-        return RESORT_SHOP_ID_NURSERY_00_B;
-      case VERSION_WHITE:
-        return RESORT_SHOP_ID_NURSERY_00_W;
-      case VERSION_B2:
-        return RESORT_SHOP_ID_NURSERY_00_B2;
-      default:
-        GF_ASSERT(0);
-      case VERSION_W2:
-        return RESORT_SHOP_ID_NURSERY_00_W2;
       }
     case 0:
     case 6:
@@ -4460,7 +4445,9 @@ struct _RESORT_CITY_DATA
   u32     ev_prize_cityname :1;
   u32     celeb_day_flag    :1;
   u32     celeb_trade_flag  :1;
-  u32     dummy         :18;    //4 224
+  u32     prize_dendou  :1;
+  u32     ev_prize_dendou :1;
+  u32     dummy         :16;    //4 224
 
   u16     trainerID_max;
   u16     trainerID_cnt;        //4 228
@@ -4578,6 +4565,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->prize_neon;
   case RESORT_CITY_DATA_PARAM_PRIZE_SCOUT:
     return cp_wk->prize_scout;
+  case RESORT_CITY_DATA_PARAM_PRIZE_DENDOU:
+    return cp_wk->prize_dendou;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
     return cp_wk->ev_prize_sec03;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04:
@@ -4588,6 +4577,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->ev_prize_neon;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
     return cp_wk->ev_prize_scout;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU:
+    return cp_wk->ev_prize_dendou;
   case RESORT_CITY_DATA_CELEB_DAY_FLAG:
     return cp_wk->celeb_day_flag;
   case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
@@ -4646,6 +4637,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_PARAM_PRIZE_SCOUT:
     p_wk->prize_scout = data;
     break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_DENDOU:
+    p_wk->prize_dendou  = data;
+    break;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
     p_wk->ev_prize_sec03 = data;
     break;
@@ -4660,6 +4654,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
     break;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT:
     p_wk->ev_prize_scout = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU:
+    p_wk->ev_prize_dendou = data;
     break;
   case RESORT_CITY_DATA_CELEB_DAY_FLAG:
     p_wk->celeb_day_flag = data;

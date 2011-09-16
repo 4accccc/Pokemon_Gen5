@@ -119,6 +119,8 @@ extern void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk );
 
 extern void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible );
 
+extern void RESORT_PEOPLE_SYS_ResetMmdl( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_people );
+
 //êlï®ÇäÆëSÇ…è¡Ç∑
 extern void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people );
 

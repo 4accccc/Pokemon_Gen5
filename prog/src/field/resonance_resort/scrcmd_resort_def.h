@@ -186,7 +186,6 @@
 #define RESORT_SECRETARY_NEON_SEL_MSGID       (106) //ネオン選択
 #define RESORT_SECRETARY_RANK_SEL_MSGID       (107) //ランキング画面選択
 
-#define RESORT_SECRETARY_SEL_BYE_MSGID        (111) //またね
 #define RESORT_SECRETARY_SEL_SELECT           (112) //なにがしたいですか？
 #define RESORT_SECRETARY_SEL_ONE              (113) //１つだけ
 #define RESORT_SECRETARY_SEL_MANY             (114) //複数
@@ -351,6 +350,10 @@
 //_RESORT_ADD_PEOPLE
 #define RESORT_ADD_PEOPLE_SECRETARY_03        (0)
 #define RESORT_ADD_PEOPLE_SECRETARY_04        (1)
+
+//_RESORT_RESET_MMDL
+#define RESORT_RESET_MMDL_FRONT               (0)
+#define RESORT_RESET_MMDL_SECRETARY_ALL       (1)
 
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない

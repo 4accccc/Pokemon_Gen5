@@ -78,7 +78,8 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INI
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
 
-static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk );
+//その他
+static void Resort_People_CreateMmdl( RESORT_PEOPLE *p_wk,  const RESORT_PEOPLE_INIT_PARAM *cp_param );
 
 //-------------------------------------
 ///	抽象動作
@@ -163,25 +164,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       
     if( p_wk->p_mmdl == NULL )
     {
-      MMDL_HEADER header = sc_default_header;
-
-      //ヘッダ共通設定
-      {
-        u8 objcode = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_OBJCODE, NULL );
-        header.obj_code = objcode;
-        header.event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
-        header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
-      }
-
-      //ヘッダ個別設定
-      p_wk->cp_function->SetupMmdHeader( p_wk, cp_param, &header );
-
-      //MMDL作成
-      p_wk->p_mmdl  = MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
-
-      //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
-      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
-      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, cp_param->placeID );
+      Resort_People_CreateMmdl( p_wk,  cp_param );
     }
   }
   return p_wk;
@@ -197,17 +180,6 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
 static void RESORT_PEOPLE_Exit( RESORT_PEOPLE *p_wk )
 {
   GFL_HEAP_FreeMemory( p_wk );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物ワークメイン処理
- *
- *	@param	RESORT_PEOPLE *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void RESORT_PEOPLE_Main( RESORT_PEOPLE *p_wk,FIELD_PLAYER *p_player )
-{
 }
 
 //----------------------------------------------------------------------------
@@ -274,6 +246,22 @@ void RESORT_PEOPLE_SetTalkFlag( RESORT_PEOPLE *p_wk, BOOL is_talk )
 BOOL RESORT_PEOPLE_GetTalkFlag( const RESORT_PEOPLE *cp_wk )
 {
   return cp_wk->is_talk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLを削除→生成
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_PEOPLE_ResetMmdl( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param )
+{
+  if( p_wk->p_mmdl )
+  {
+    MMDL_Delete( p_wk->p_mmdl );
+    p_wk->p_mmdl = NULL;
+  }
+  Resort_People_CreateMmdl( p_wk,  cp_param );
 }
 //----------------------------------------------------------------------------
 /**
@@ -496,6 +484,41 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_I
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDL作成
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ *	@param	RESORT_PEOPLE_INIT_PARAM *cp_param 引数
+ */
+//-----------------------------------------------------------------------------
+static void Resort_People_CreateMmdl( RESORT_PEOPLE *p_wk,  const RESORT_PEOPLE_INIT_PARAM *cp_param )
+{
+  MMDL_HEADER header = sc_default_header;
+
+  GF_ASSERT( p_wk->p_mmdl == NULL );
+
+  //ヘッダ共通設定
+  {
+    u8 objcode = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_OBJCODE, NULL );
+    header.obj_code = objcode;
+    header.event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
+    header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
+  }
+
+  //ヘッダ個別設定
+  p_wk->cp_function->SetupMmdHeader( p_wk, cp_param, &header );
+
+  //MMDL作成
+  p_wk->p_mmdl  = MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
+
+  //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
+  RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
+  RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, cp_param->placeID );
+}
+
 //=============================================================================
 /**
  *					人物管理ワーク
@@ -517,6 +540,9 @@ struct _RESORT_PEOPLE_SYS
 ///	PRIVATE
 //=====================================
 static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, u16 peopleID );
+static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk );
+
+static void Resort_People_Sys_SetInitParam( const RESORT_PEOPLE_SYS *cp_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_add_param, u32 peopleID, RESORT_PEOPLE_INIT_PARAM *p_param );
 
 //-------------------------------------
 ///	PUBLIC
@@ -586,15 +612,6 @@ void RESORT_PEOPLE_SYS_Exit( RESORT_PEOPLE_SYS *p_wk )
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player )
 {
-  int i;
-  for( i = 0; i < p_wk->param.max; i++ )
-  {
-    RESORT_PEOPLE *p_people = p_wk->p_people[i];
-    if( p_people )
-    {
-      RESORT_PEOPLE_Main( p_people, p_player );
-    }
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -693,14 +710,8 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
   if( p_wk->p_people[peopleID] == NULL )
   {
     RESORT_PEOPLE_INIT_PARAM init_param;
-    GFL_STD_MemClear( &init_param, sizeof(RESORT_PEOPLE_INIT_PARAM) );
-    init_param.p_data       = cp_param->p_data;
-    init_param.peopleID     = peopleID;
-    init_param.placeID      = cp_param->placeID;
-    init_param.cp_binary    = p_wk->p_binary;
-    init_param.p_mmdlsys    = p_wk->param.p_mmdlsys;
-    init_param.cp_shop      = p_wk->param.cp_shop;
-    init_param.cp_institution = p_wk->param.cp_institution;
+
+     Resort_People_Sys_SetInitParam( p_wk, cp_param, peopleID, &init_param );
 
     NAGI_Printf( "Add=%d\n",peopleID );
     p_wk->p_people[peopleID] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
@@ -827,6 +838,31 @@ void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible )
       RESORT_PEOPLE_SetVisible( p_people, is_visible );
     }
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLを破棄→作成
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_sys  システム
+ *	@param	*p_people 作成する人物
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SYS_ResetMmdl( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_people )
+{
+  RESORT_PEOPLE_INIT_PARAM  init_param;
+
+  RESORT_PEOPLE_SYS_ADD_PARAM add_param;
+  u32 peopleID  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
+  GFL_STD_MemClear( &add_param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
+  add_param.p_data  = RESORT_PEOPLE_GetAbstructData( p_people );
+  add_param.placeID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PLACE_ID, NULL );
+
+  Resort_People_Sys_SetInitParam( p_sys, &add_param, peopleID, &init_param );
+
+  RESORT_PEOPLE_ResetMmdl( p_people, &init_param );
 }
 
 //----------------------------------------------------------------------------
@@ -970,4 +1006,23 @@ static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk )
       }
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  RESORT_PEOPLE_INIT_PARAMを設定
+ *
+ *	@param	const RESORT_PEOPLE_SYS *cp_wk  ワーク
+ *	@param	*p_param  構造体
+ */
+//-----------------------------------------------------------------------------
+static void Resort_People_Sys_SetInitParam( const RESORT_PEOPLE_SYS *cp_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_add_param, u32 peopleID, RESORT_PEOPLE_INIT_PARAM *p_param )
+{
+  GFL_STD_MemClear( p_param, sizeof(RESORT_PEOPLE_INIT_PARAM) );
+  p_param->p_data       = cp_add_param->p_data;
+  p_param->peopleID     = peopleID;
+  p_param->placeID      = cp_add_param->placeID;
+  p_param->cp_binary    = cp_wk->p_binary;
+  p_param->p_mmdlsys    = cp_wk->param.p_mmdlsys;
+  p_param->cp_shop      = cp_wk->param.cp_shop;
+  p_param->cp_institution = cp_wk->param.cp_institution;
 }

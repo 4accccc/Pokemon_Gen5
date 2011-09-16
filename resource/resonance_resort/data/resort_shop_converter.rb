@@ -81,15 +81,16 @@ end
 SERVICE_ROW_START       = 1         #行開始位置
 SERVICE_COL_START       = 0         #列開始位置
 SERVICE_COL_TAG         = SERVICE_COL_START     #列:タグ
-SERVICE_COL_NAME_FLAG   = 1         #列：名前フラグ
-SERVICE_COL_NAME        = 2         #列：サービス名
-SERVICE_COL_INFO        = 3         #列：サービス説明
-SERVICE_COL_MONEY       = 4         #列：値段
-SERVICE_COL_KIND        = 5         #列：サービス種類
-SERVICE_COL_PARAM_1     = 6         #列：サービス種類ごとの効果１
-SERVICE_COL_PARAM_2     = 7         #列：サービス種類ごとの効果２
-SERVICE_COL_EFFECT_M      = 8         #列：演出メッセージ男
-SERVICE_COL_EFFECT_F      = 9         #列：演出メッセージ女
+SERVICE_COL_DENDOU      = 1         #列：殿堂入り
+SERVICE_COL_NAME_FLAG   = 2         #列：名前フラグ
+SERVICE_COL_NAME        = 3         #列：サービス名
+SERVICE_COL_INFO        = 4         #列：サービス説明
+SERVICE_COL_MONEY       = 5         #列：値段
+SERVICE_COL_KIND        = 6         #列：サービス種類
+SERVICE_COL_PARAM_1     = 7         #列：サービス種類ごとの効果１
+SERVICE_COL_PARAM_2     = 8         #列：サービス種類ごとの効果２
+SERVICE_COL_EFFECT_M      = 9         #列：演出メッセージ男
+SERVICE_COL_EFFECT_F      = 10         #列：演出メッセージ女
 def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h )
   
   #データの作成
@@ -103,6 +104,7 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h 
     
     #データ取得
     tag     = csv.get( row, SERVICE_COL_TAG )
+    dendou  = csv.get( row, SERVICE_COL_DENDOU )
     name_flg= csv.get( row, SERVICE_COL_NAME_FLAG )
     name    = csv.get( row, SERVICE_COL_NAME )
     info    = csv.get( row, SERVICE_COL_INFO )
@@ -117,6 +119,7 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h 
     h_service.store( tag, row-SERVICE_ROW_START )
 
     #データ書き込み    
+    data.write_u16( dendou )
     data.write_u16( name_flg )
     #MSGTAGから値への変換
     if name == nil 
@@ -226,14 +229,8 @@ SHOP_COL_NEXTEXP       = 4         #列：次の経験値
 SHOP_COL_NAME          = 5         #列：お店名
 SHOP_COL_3DMD_L        = 6         #列：外観左
 SHOP_COL_3DMD_R        = 7         #列：外観右
-SHOP_COL_LIST1         = 8         #列：リスト１
-SHOP_COL_LIST2         = 9         #列：リスト２
-SHOP_COL_LIST3         = 10         #列：リスト３
-SHOP_COL_LIST4         = 11         #列：リスト４
-SHOP_COL_LIST5         = 12         #列：リスト５
-SHOP_COL_LIST6         = 13         #列：リスト６
-SHOP_COL_LIST_START    = SHOP_COL_LIST1
-SHOP_COL_LIST_END      = SHOP_COL_LIST6
+SHOP_COL_LIST_START    = 8         #列：リスト先頭
+SHOP_COL_LIST_END      = SHOP_COL_LIST_START + 16
 def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
   #データの作成
@@ -294,7 +291,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     end
 
     data.write_u16( 0 ) #ダミー
-    for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END+1
+    for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END
       list   = csv.get( row, i )
       if list == nil
         data.write_u16(0xFF);

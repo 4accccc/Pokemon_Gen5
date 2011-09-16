@@ -53,3 +53,4 @@ extern VMCMD_RESULT EvCmdResortEndEffect( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortPrintRankWindow( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortAddPeople( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortResetMmdl( VMHANDLE *p_core, void *p_wk_adrs );

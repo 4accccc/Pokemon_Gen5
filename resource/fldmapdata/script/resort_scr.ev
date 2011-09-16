@@ -401,7 +401,7 @@ sub_recent_doing:
           $LWK_RECENT = $LWK_CNT
           $LWK_RECENT += RESORT_MSGID_RECENT_00
 
-          _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 1 )
+          _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 1, 1 )
           _RESORT_GET_MSGID( LWK_RECENT, LWK_MSGID )
       	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
           $LWK_CNT += 1
@@ -552,6 +552,9 @@ sub_tourist_spot:
 	        _MAP_FADE_END_CHECK()
 	        _FIELD_CLOSE()
 	        _FIELD_OPEN()
+
+          _RESORT_RESET_MMDL( RESORT_RESET_MMDL_FRONT )
+
 		      _CAMERA_START()		//カメラ操作開始
 		      _CAMERA_PURGE()		//カメラのバインドを解く
           _CALL sub_setspot_camera
@@ -1481,6 +1484,9 @@ EVENT_START    ev_resort_secretary_work
 	      _MAP_FADE_END_CHECK()
 	      _FIELD_CLOSE()
 	      _FIELD_OPEN()
+
+        _RESORT_RESET_MMDL( RESORT_RESET_MMDL_SECRETARY_ALL )
+
 	      _MAP_FADE_BLACK_IN_SLOW()
 	      _MAP_FADE_END_CHECK()
         $LWK_MENU_LOOP = FALSE
