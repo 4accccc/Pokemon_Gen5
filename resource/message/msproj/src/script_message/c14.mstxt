@@ -1286,10 +1286,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かおだしかんばんが　ある……</Text>
+			<Text>かおだしかんばん　だ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:15:59" />
+				Time="2011-09-16T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1297,10 +1297,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>顔出し看板が　ある……</Text>
+			<Text>顔出し看板　だ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:16:11" />
+				Time="2011-09-16T03:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1357,10 +1357,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>看板分類：
-・クリア後</Comment>
+・クリア後
+・posでイベント発生（1日1回）
+　GRIDX＝786.787、GRIDZ＝182なら
+　続けて
+　VETERANMとsign4_04～07の
+　がどれかが登場（確率それぞれ25％）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:16:30" />
+				Time="2011-09-16T05:05:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1372,6 +1377,266 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いきますよ！
+はい　チーズ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:02:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いきますよ！
+はい　チーズ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後に撮影風のＳＥ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:53:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:01:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これも　きねん　たい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:55:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:53:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これも　記念たい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+・ランダムその１
+・メッセージ表示後、VETERANMと共に退場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:05:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER8
+ジムリーダー・シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとりだと……　さみしいから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:17:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:55:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとりだと……　さみしいから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:17:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア後
+・ランダムその２
+・メッセージ表示後、VETERANMと共に退場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:05:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:01:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶん　マニアです
+かおだしかんばんの！▼
+ちなみに
+かおハメ　っていうひとも　います！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:17:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:55:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分　マニアです
+顔出し看板の！▼
+ちなみに
+顔ハメ　っていう人も　います！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・クリア後
+・ランダムその３
+・メッセージ表示後、VETERANMと共に退場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:05:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:06:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_sign4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちみる♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:59:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T04:55:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちみる♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・クリア後
+・ランダムその４
+・あわせて鳴き声再生
+　メッセージ表示後、VETERANMと共に退場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:05:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE39
+ポケモン・ゴチミル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:00:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

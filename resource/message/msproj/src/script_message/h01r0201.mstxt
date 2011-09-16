@@ -290,4 +290,97 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_h01r0201_ol_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんせい！▼
+わたしは　この　どうぐを
+この　トレーナーに　あげます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:25:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんせい！▼
+わたしは　この道具を
+この　トレーナーに　あげます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:26:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手処理
+　No217「せんせいのツメ」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＯＬ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:22:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0201_ol_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんせいのツメ　を
+ポケモンに　もたせておけば▼
+ときどきだけど　あいてより　はやく
+わざを　だせるように　なるの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:25:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんせいのツメ　を
+ポケモンに　持たせておけば▼
+ときどきだけど　相手より　早く
+技を　だせるように　なるの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:25:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:21:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ＯＬ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T05:22:15" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
