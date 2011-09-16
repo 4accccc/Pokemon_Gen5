@@ -1018,7 +1018,7 @@ SRCS_OVERLAY_SCRCMD_PALPARK  =  field/scrcmd_palpark.c \
 SRCS_OVERLAY_SCRCMD_SEATEMPLE  =  field/scrcmd_seatemple.c \
                                 field/scrcmd_seatemple_table.c
 
-# スクリプトコマンド並列化  WBT
+# スクリプトコマンド並列化  WBT（共通）
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
@@ -1026,9 +1026,19 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
                             field/wbt_system.c \
                             field/wbt_calc_result.c \
                             field/wbt_tool.c \
-                            field/wbt_makematch.c \
                             field/wbt_setup.c \
                             field/wbt_party.c
+
+# スクリプトコマンド並列化  WBT（ロビー内）
+#===> SRCS_OVERLAY_SCRCMD_WBT
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_WBT_LOBBY  =  field/scrcmd_wbt_lobby.c \
+                                  field/wbt_system_lobby.c
+
+# スクリプトコマンド並列化  WBT（会場内）
+#===> SRCS_OVERLAY_SCRCMD_WBT
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_WBT_HALL  =  field/scrcmd_wbt_hall.c
 
 # スクリプトコマンド並列化　レゾナンスリゾート
 #===> GROUP_OVERLAY_DEBUGMENU
@@ -1369,6 +1379,10 @@ SRCS_OVERLAY_FIELD_GIMMICK_T01 = field/field_gimmick_t01.c
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_WBT_GIMMICK = field/wbt_gimmick.c \
                             field/wbt_battle.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_WBT_LOBBY_GIMMICK = field/wbt_makematch.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
