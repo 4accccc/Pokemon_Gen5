@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_D07R0501_STONE_01 (1)
+#define SCRID_ZONE_D07R0501 (2)
 
 #endif //_D07R0501_DEF_H_

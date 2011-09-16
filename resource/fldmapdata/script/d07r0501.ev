@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d07r0501.h"
-  //.include  "d07r0501.h"
+  .include  "d07r0501.h"
+
+  //@author suginaka_katsunori //ヤーコンロードトロッコ用初期化処理
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +22,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_d07r0501_stone_01
+_EVENT_DATA		ev_zone_d07r0501
 _EVENT_DATA_END
 
 
@@ -32,3 +35,23 @@ EVENT_START		ev_bg_d07r0501_stone_01
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
 EVENT_END
+
+/************************************************************/
+/*		ZONE_CHANGE											*/
+/************************************************************/
+INIT_EVENT_START   ev_zone_d07r0501
+
+	//ヤーコンロード用トロッコ初期化処理
+	_FLAG_SET( FV_D29R0101_WORKMAN2_03 )
+	_FLAG_SET( FV_D29R0201_WORKMAN2_01 )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_01A )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_02A )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_04 )
+	
+	_FLAG_RESET(FV_D29R0101_WORKMAN2_01)
+	_FLAG_RESET(FV_D29R0101_WORKMAN2_02)
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_01 )
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_02 )
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_03 )
+  
+INIT_EVENT_END

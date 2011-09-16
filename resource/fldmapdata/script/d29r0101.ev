@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d29r0101.h"
-  //.include  "d29r0101.h"
+  .include  "d29r0101.h"
+
+//@author	suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d29r0101
+_EVENT_DATA		ev_d29r0101_fighterw_01
+_EVENT_DATA		ev_d29r0101_stop1_01
+_EVENT_DATA		ev_d29r0101_stop2_01
+_EVENT_DATA		ev_d29r0101_stop3_01
+_EVENT_DATA		ev_d29r0101_d29r0201_workman2_01
+_EVENT_DATA		ev_d29r0101_d29r0301_workman2_01
+_EVENT_DATA		ev_d29r0101_d29r0301_workman2_02
 _EVENT_DATA_END
 
 
@@ -30,9 +38,307 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  わざマシンくれる格闘家女子                          */
 /**************************************************************/
-ev_d29r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d29r0101_fighterw_01
+  //わざマシン入手：チャージビーム
+  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_d29r0101_fighterw_01, msg_d29r0101_fighterw_02, msg_d29r0101_fighterw_02 )
+EVENT_END
+
+/**************************************************************/
+/*		ネジ山ストッパー									  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_stop1_01
+
+DEFINE_LOCAL	LWK_CHKWAZA
+
+//ゲームクリア済みの場合
+IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_02 )
+	
+	_CHECK_POKE_WAZA_GROUP( LWK_CHKWAZA, WAZANO_IWAKUDAKI )
+	
+	//いわくだきもってない
+	IF $LWK_CHKWAZA == 6 THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//いわくだきもってる
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_03 )
+		_MSGWIN_CLOSE()
+	
+		//暗転・岩OBJ削除
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		_OBJ_DEL( D29R0101_SPROCK_01 )
+		_OBJ_DEL( D29R0101_SPROCK_02 )
+		_OBJ_DEL( D29R0101_SPROCK_03 )
+		_OBJ_DEL( D29R0101_SPROCK_04 )
+		_OBJ_DEL( D29R0101_SPROCK_05 )
+		_OBJ_DEL( D29R0101_SPROCK_06 )
+		_OBJ_DEL( D29R0101_SPROCK_07 )
+		
+		_TIME_WAIT( 60 )
+	
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+		_OBJ_ANIME( D29R0101_STOP1_01, anm_jump_l )
+		_TIME_WAIT( 5 )
+		_OBJ_ANIME( D29R0101_STOP2_01, anm_jump_l )
+		_TIME_WAIT( 5 )
+		_OBJ_ANIME( D29R0101_STOP3_01, anm_jump_l )
+		_OBJ_ANIME_WAIT()
+		
+		//ばんざ－い！
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_04 )
+		_MSGWIN_CLOSE()
+		
+		//退場
+		_OBJ_ANIME_AUTO( D29R0101_STOP1_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_UD )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME_AUTO( D29R0101_STOP2_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_LR )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME_AUTO( D29R0101_STOP3_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_LR )
+		_OBJ_ANIME_WAIT()
+
+		//作業員OBJ削除
+		_OBJ_DEL( D29R0101_STOP1_01 )
+		_OBJ_DEL( D29R0101_STOP2_01 )
+		_OBJ_DEL( D29R0101_STOP3_01 )
+		
+		//バニシュフラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0101_STOP)
+		
+		//========================================/
+		
+
+	ENDIF
+
+//ゲームクリア前の場合
+ELSE
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_01 )
+
+ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		☆ネジ山ストッパー用アニメラベル
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		ネジ山ストッパー	一言メッセージのみ				  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_stop2_01
+_TALK_START_TURN_NOT()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*		ネジ山ストッパー	一言メッセージのみ				  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_stop3_01
+_TALK_START_TURN_NOT()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*		トロッコ乗り場のおっさん１号						  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_d29r0201_workman2_01
+
+//ゲームクリア済みの場合
+IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0101_WORKMAN2_01)
+		_FLAG_RESET(FV_D29R0201_WORKMAN2_01)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0201, 27, 14, DIR_LEFT )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+//クリア前の場合
+ELSE
+
+	//おう！トレーナー！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
+
+ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		トロッコ乗り場のおっさん２号						  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_d29r0301_workman2_01
+
+//ゲームクリア済みの場合
+IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0101_WORKMAN2_02)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_04)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0301, 56, 84, DIR_DOWN )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+//クリア前の場合
+ELSE
+
+	//おう！トレーナー！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
+
+ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		トロッコ乗り場のおっさん３号						  */
+/**************************************************************/
+EVENT_START		ev_d29r0101_d29r0301_workman2_02
+
+//ゲームクリア済みの場合
+IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0101_WORKMAN2_03)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_03)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0301, 19, 35, DIR_DOWN )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+//クリア前の場合
+ELSE
+
+	//おう！トレーナー！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
+
+ENDIF
+
+EVENT_END
 

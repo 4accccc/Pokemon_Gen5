@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/14 11:40:32
+#save date:2011/09/16 21:12:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d29r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d29r0101.wms
 #hold event type:
 1
 #hold event number:
-6
+20
 #event number: 0
 #type
 1
@@ -196,6 +196,440 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 88 0 24
+#event number: 6
+#type
+1
+#ID name
+D29R0101_FIGHTERW_01
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D29R0101_FIGHTERW_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 -568
+#event number: 7
+#type
+1
+#ID name
+D29R0101_STOP3_01
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_D29R0101_STOP3_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 8
+#event number: 8
+#type
+1
+#ID name
+D29R0101_STOP2_01
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_D29R0101_STOP2_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 40
+#event number: 9
+#type
+1
+#ID name
+D29R0101_STOP1_01
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_D29R0101_STOP1_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 24
+#event number: 10
+#type
+1
+#ID name
+D29R0101_SPROCK_01
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 40
+#event number: 11
+#type
+1
+#ID name
+D29R0101_SPROCK_02
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 24
+#event number: 12
+#type
+1
+#ID name
+D29R0101_SPROCK_03
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 8
+#event number: 13
+#type
+1
+#ID name
+D29R0101_SPROCK_04
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 40
+#event number: 14
+#type
+1
+#ID name
+D29R0101_SPROCK_05
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 24
+#event number: 15
+#type
+1
+#ID name
+D29R0101_SPROCK_06
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 8
+#event number: 16
+#type
+1
+#ID name
+D29R0101_SPROCK_07
+#OBJ CODE Number
+SPROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_STOP
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 24
+#event number: 17
+#type
+1
+#ID name
+D29R0101_WORKMAN2_01
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_WORKMAN2_01
+#Event Script Name
+SCRID_D29R0101_D29R0201_WORKMAN2_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 0 -360
+#event number: 18
+#type
+1
+#ID name
+D29R0101_WORKMAN2_02
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_WORKMAN2_02
+#Event Script Name
+SCRID_D29R0101_D29R0301_WORKMAN2_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 24
+#event number: 19
+#type
+1
+#ID name
+D29R0101_WORKMAN2_03
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D29R0101_WORKMAN2_03
+#Event Script Name
+SCRID_D29R0101_D29R0301_WORKMAN2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

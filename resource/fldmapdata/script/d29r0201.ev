@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d29r0201.h"
-  //.include  "d29r0201.h"
+  .include  "d29r0201.h"
+
+//@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d29r0201
+_EVENT_DATA		ev_d29r0201_d29r0101_workman2_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,50 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			トロッコのおっさん								  */
 /**************************************************************/
-ev_d29r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_d29r0201_d29r0101_workman2_01
 
+_TALK_OBJ_START()
+
+//この　トロッコに　のるかい
+_BALLOONWIN_TALKOBJ_MSG( msg_d29r0201_workman2_01 )
+
+//はい・いいえ分岐
+_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0201_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0201_WORKMAN2_01)
+		_FLAG_RESET(FV_D29R0101_WORKMAN2_01)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0101, 27, 38, DIR_LEFT )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0201_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END

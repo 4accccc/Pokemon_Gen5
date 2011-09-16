@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d29r0301.h"
-  //.include  "d29r0301.h"
+  .include  "d29r0301.h"
+
+//@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,9 +21,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d29r0301
+_EVENT_DATA		ev_d29r0301_d29r0101_workman2_01
+_EVENT_DATA		ev_d29r0301_d29r0101_workman2_02
+_EVENT_DATA		ev_d29r0301_workman2_01
+_EVENT_DATA		ev_d29r0301_workman2_01a
+_EVENT_DATA		ev_d29r0301_workman2_02
+_EVENT_DATA		ev_d29r0301_workman2_02a
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -30,9 +36,334 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			トロッコおじさん								  */
 /**************************************************************/
-ev_d29r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_d29r0301_d29r0101_workman2_01
+
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_04)
+		_FLAG_RESET(FV_D29R0101_WORKMAN2_02)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0101, 24, 14, DIR_LEFT )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			トロッコおじさん								  */
+/**************************************************************/
+EVENT_START		ev_d29r0301_d29r0101_workman2_02
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_03)
+		_FLAG_RESET(FV_D29R0101_WORKMAN2_03)
+		
+		//========================================/
+		
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_D29R0101, 16, 7, DIR_DOWN )
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*			トロッコおじさん	同ゾーン内					  */
+/**************************************************************/
+EVENT_START		ev_d29r0301_workman2_01
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_01)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_01A)
+		
+		//========================================/
+		
+		_OBJ_DEL( D29R0301_WORKMAN2_01 )
+		_OBJ_ADD( D29R0301_WORKMAN2_01A )
+		
+		//マップチェンジ
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 26, 0, 73, DIR_LEFT )
+		
+		_TIME_WAIT( 60 )
+
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			トロッコおじさん	同ゾーン内					  */
+/**************************************************************/
+EVENT_START		ev_d29r0301_workman2_01a
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_01A)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_01)
+		
+		//========================================/
+		
+		_OBJ_DEL( D29R0301_WORKMAN2_01A )
+		_OBJ_ADD( D29R0301_WORKMAN2_01 )
+		
+		//マップチェンジ
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 58, 0, 90, DIR_LEFT )
+		
+		_TIME_WAIT( 60 )
+
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			トロッコおじさん	同ゾーン内					  */
+/**************************************************************/
+EVENT_START		ev_d29r0301_workman2_02
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_02)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_02A)
+		
+		//========================================/
+		
+		_OBJ_DEL( D29R0301_WORKMAN2_02 )
+		_OBJ_ADD( D29R0301_WORKMAN2_02A )
+		
+		//マップチェンジ
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 26, 0, 48, DIR_LEFT )
+		
+		_TIME_WAIT( 60 )
+
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*			トロッコおじさん	同ゾーン内					  */
+/**************************************************************/
+EVENT_START		ev_d29r0301_workman2_02a
+
+	_TALK_OBJ_START()
+	
+	//この　トロッコに　のるかい
+	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_01 )
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		//ガタゴトSE再生
+		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
+		_SE_WAIT()
+		
+		//フラグセット
+		//========================================/
+		
+		_FLAG_SET(FV_D29R0301_WORKMAN2_02A)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_02)
+		
+		//========================================/
+		
+		_OBJ_DEL( D29R0301_WORKMAN2_02A )
+		_OBJ_ADD( D29R0301_WORKMAN2_02 )
+		
+		//マップチェンジ
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 47, 0, 88, DIR_LEFT )
+		
+		_TIME_WAIT( 60 )
+
+		//暗転復帰
+		_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+	
+	//いいえの場合
+	ELSE
+	
+		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0301_workman2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
 

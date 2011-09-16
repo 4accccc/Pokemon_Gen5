@@ -21,6 +21,12 @@
 #define D29R0301_ROCK_02                   5
 #define FLD_ITEM_320                       6
 #define FLD_ITEM_321                       7
+#define D29R0301_WORKMAN2_03               8
+#define D29R0301_WORKMAN2_01               9
+#define D29R0301_WORKMAN2_02              10
+#define D29R0301_WORKMAN2_02A             11
+#define D29R0301_WORKMAN2_01A             12
+#define D29R0301_WORKMAN2_04              13
 
 #endif //ZONE_D29R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

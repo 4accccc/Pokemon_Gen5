@@ -14,6 +14,7 @@
   .include  "c05r0501_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori //ヤーコンロードトロッコ用初期化処理
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -45,11 +46,22 @@ DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*		ZONE_CHANGE											*/
 /************************************************************/
 INIT_EVENT_START   ev_zone_c05
-  
-//
+
+	//ヤーコンロード用トロッコ初期化処理
+	_FLAG_SET( FV_D29R0101_WORKMAN2_03 )
+	_FLAG_SET( FV_D29R0201_WORKMAN2_01 )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_01A )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_02A )
+	_FLAG_SET( FV_D29R0301_WORKMAN2_04 )
+	
+	_FLAG_RESET(FV_D29R0101_WORKMAN2_01)
+	_FLAG_RESET(FV_D29R0101_WORKMAN2_02)
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_01 )
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_02 )
+	_FLAG_RESET( FV_D29R0301_WORKMAN2_03 )
   
 INIT_EVENT_END
 

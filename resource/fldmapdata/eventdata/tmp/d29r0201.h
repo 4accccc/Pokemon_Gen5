@@ -18,6 +18,7 @@
 #define D29R0201_ROCK_02                   4
 #define FLD_ITEM_87                        5
 #define FLD_ITEM_319                       6
+#define D29R0201_WORKMAN2_01               7
 
 #endif //ZONE_D29R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
