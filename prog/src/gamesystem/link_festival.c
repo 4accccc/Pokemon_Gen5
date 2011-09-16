@@ -499,7 +499,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
     //時間依存型の場合、失敗でもハイスコアを更新する
-    FMISSION_SAVE_UpdateMissionStatusHighScoreNum( f_save, wk->m_beacon->m_id, pl->score );
+    pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreNum( f_save, wk->m_beacon->m_id, pl->score );
   }
   if( !pl->clear_f ){
     return; //ミッション失敗
@@ -511,7 +511,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
-    FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->life );
+    pl->new_record_time_f = FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->life );
   }
 
   //ご褒美

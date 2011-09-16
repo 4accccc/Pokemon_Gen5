@@ -88,6 +88,10 @@ typedef struct _LINKFEST_MISSION_RESULT{
   u8    clear_f;  //TRUEならクリアした
   u8    hilink_version;   //<ハイリンクレベルのアップしたバージョン FMISSION_VERSION
   u8    hilink_level_up;  //ハイリンクのレベルアップ値(0ならレベルアップ無し)
+  u8    new_record_score_f:1; //スコアのニューレコード
+  u8    new_record_time_f:1; //残り時間のニューレコード
+  u8    :6;
+
   u32   score;    //スコア
   u16   item;     //ご褒美アイテム
   u16   item_num; //ご褒美アイテムの数

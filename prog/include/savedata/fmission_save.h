@@ -139,15 +139,7 @@ extern u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_M
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
-
-//---------------------------------------------------------------------------
-/**
- * @brief ミッションステータス ハイスコア(数値)をアップデートする	
- * @param	work		ワークへのポインタ
- */
-//---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
 
 //---------------------------------------------------------------------------
 /**
@@ -165,7 +157,7 @@ extern void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST
  * @param rest_time_frame 残り時間(フレーム単位)
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame );
+extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame );
 
 //---------------------------------------------------------------------------
 /**

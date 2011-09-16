@@ -186,15 +186,17 @@ u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
+BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
 {
   if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
     GF_ASSERT(0);
-    return;
+    return FALSE;
   }
   if( sv->high_score[id] < new_score ){
     sv->high_score[id] = new_score;
+    return TRUE;
   }
+  return FALSE;
 }
 
 //---------------------------------------------------------------------------
@@ -223,12 +225,12 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
  * @param rest_time_frame 残り時間(フレーム単位)
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame )
+BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame )
 {
   u32 sec;
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
-    return;
+    return FALSE;
   }
   if( rest_time_frame > FMISSION_LIFE_MAX ){
     rest_time_frame = FMISSION_LIFE_MAX;
@@ -238,7 +240,9 @@ void FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MIS
 
   if( sec > sv->high_score[id] ){
     sv->high_score[id] = sec;
+    return TRUE;
   }
+  return FALSE;
 }
 
 //---------------------------------------------------------------------------
