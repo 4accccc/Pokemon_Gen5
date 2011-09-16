@@ -14,6 +14,7 @@
 
 #define R09R0101_BOY2_01                   0
 #define R09R0101_WOMAN2_01                 1
+#define R09R0101_MAN3_01                   2
 
 #endif //ZONE_R09R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
