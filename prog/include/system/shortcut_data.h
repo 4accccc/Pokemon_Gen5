@@ -56,7 +56,7 @@ typedef enum
 	SHORTCUT_ID_ZUKAN_HABITAT_ZONE,				//ずかん＞せいそくちじょうほう
 
 	SHORTCUT_ID_MAX,
-	SHORTCUT_ID_NULL	= SHORTCUT_ID_MAX,	//データなし
+	SHORTCUT_ID_NULL	= 0xFF,	//データなし
 } SHORTCUT_ID;
 //=============================================================================
 /**
