@@ -104,6 +104,8 @@ extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBT_MIXWIN * www );
 extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 
+extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
+
 //============================================================================================
 //============================================================================================
 #ifdef  PM_DEBUG
@@ -134,35 +136,23 @@ extern void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern BOOL WBTTRAINER_HasAce( const WBTTRAINER * wbt_tr );
 
 //------------------------------------------------------------------
+//  in wbt_system_lobby.c
 //------------------------------------------------------------------
+extern POKEPARTY * WBTSYS_GetUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
-
-extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
 
 extern BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
-
-//------------------------------------------------------------------
-//  ポケモン選択関連
-//------------------------------------------------------------------
 extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );
 extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
-
 extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_data );
 
 extern void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//  in wbt_calc_result.c
-//------------------------------------------------------------------
-extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
-extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
-extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
-
 //------------------------------------------------------------------
 //  in wbt_makematch.c
 //------------------------------------------------------------------
@@ -183,6 +173,14 @@ extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup );
 extern void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info );
 extern void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no );
 extern void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no );
+
+//------------------------------------------------------------------
+//  in wbt_calc_result.c
+//------------------------------------------------------------------
+extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
+extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
+extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
+
 //------------------------------------------------------------------
 //  in wbt_battle.c
 //------------------------------------------------------------------

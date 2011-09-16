@@ -94,6 +94,7 @@ FS_EXTERN_OVERLAY(field_gimmick_hide_ship_bow);
 FS_EXTERN_OVERLAY(field_gym_old_elec);
 FS_EXTERN_OVERLAY(pkwd_field_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_h06);
+FS_EXTERN_OVERLAY(wbt_lobby_gimmick);
 
 
 #include "field_gimmick_table.cdat"
@@ -135,7 +136,10 @@ void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork)
     GFL_OVERLAY_Load( FieldGimmickTable[id].ov_id );
   }
 	//ギミックセットアップ
-	FieldGimmickTable[id].setup_func(fieldWork);
+  if (FieldGimmickTable[id].setup_func != NULL)
+  {
+    FieldGimmickTable[id].setup_func(fieldWork);
+  }
 }
 
 //---------------------------------------------------------------------------

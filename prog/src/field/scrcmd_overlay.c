@@ -50,6 +50,8 @@ FS_EXTERN_OVERLAY( scrcmd_fourkings );
 FS_EXTERN_OVERLAY( scrcmd_palpark );
 FS_EXTERN_OVERLAY( scrcmd_seatemple );
 FS_EXTERN_OVERLAY( scrcmd_wbt );
+FS_EXTERN_OVERLAY( scrcmd_wbt_lobby );
+FS_EXTERN_OVERLAY( scrcmd_wbt_hall );
 FS_EXTERN_OVERLAY( scrcmd_resort );
 FS_EXTERN_OVERLAY( scrcmd_resort_common );
 FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
@@ -134,9 +136,16 @@ static const ZONEID UseZoneIDTbl_seatemple[]  =
   ZONE_ID_D20R0501,
 };
 
-static const ZONEID UseZoneIDTbl_wbt[] = 
+//-------------------------------------
+///	WBT
+//=====================================
+static const ZONEID UseZoneIDTbl_wbt_lobby[] = 
 {
   ZONE_ID_D05R0101,
+};
+
+static const ZONEID UseZoneIDTbl_wbt_hall[] = 
+{
   ZONE_ID_D05R0201,
 };
 
@@ -273,12 +282,21 @@ static const struct
     FS_OVERLAY_ID( scrcmd_seatemple ),
     GFL_OVERLAY_BLANK_ID,
   },
+  //WBT（ロビー）
   {
     ScriptCmdTbl_wbt,
-    UseZoneIDTbl_wbt,
-    NELEMS(UseZoneIDTbl_wbt),
+    UseZoneIDTbl_wbt_lobby,
+    NELEMS(UseZoneIDTbl_wbt_lobby),
     FS_OVERLAY_ID( scrcmd_wbt ),
-    GFL_OVERLAY_BLANK_ID,
+    FS_OVERLAY_ID( scrcmd_wbt_lobby ),
+  },
+  //WBT（会場内）
+  {
+    ScriptCmdTbl_wbt,
+    UseZoneIDTbl_wbt_hall,
+    NELEMS(UseZoneIDTbl_wbt_hall),
+    FS_OVERLAY_ID( scrcmd_wbt ),
+    FS_OVERLAY_ID( scrcmd_wbt_hall ),
   },
   //RESONANCE_RESORT
   {

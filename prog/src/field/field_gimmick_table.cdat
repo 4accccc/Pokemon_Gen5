@@ -318,5 +318,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     H06_GIMMICK_End,    // マリンチューブ
     H06_GIMMICK_Move,   // マリンチューブ
   },
+  { //WBTロビー（ギミックはダミー）
+    FS_OVERLAY_ID(wbt_lobby_gimmick),
+    NULL,
+    NULL,
+    NULL,
+  },
 };
 
