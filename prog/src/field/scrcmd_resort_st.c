@@ -52,6 +52,8 @@ VMCMD_RESULT EvCmdResortChangeOverlayCommonToShop( VMHANDLE *p_core, void *p_wk_
 {
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( scrcmd_resort_common ) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( scrcmd_resort_shop ) );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -67,6 +69,8 @@ VMCMD_RESULT EvCmdResortChangeOverlayShopToCommon( VMHANDLE *p_core, void *p_wk_
 {
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( scrcmd_resort_shop ) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( scrcmd_resort_common ) );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 

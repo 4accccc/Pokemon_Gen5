@@ -42,6 +42,7 @@
 */
 //=============================================================================
 
+extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 //=============================================================================
 /**
  *					構造体宣言
@@ -139,7 +140,12 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     break;
   case RESORT_MSGID_APPEAL:
     {
-      u16 want_job = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 src_want_job = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+      u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_VER, NULL );
+
+      u16 want_job = RESORT_DATA_GetWantJobModify( src_want_job, trainerID, ver, p_city_data, p_shop );
+
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, want_job );
 
       u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
@@ -665,7 +671,7 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
   BOOL is_good = FALSE;
 
   {
-    u32 favorite_job  = RESORT_RECV_DATA_GetData(p_own, RESORT_DATA_PARAM_WANT_JOB, NULL);
+    u32 favorite_job  = RESORT_OWNER_DATA_GetWantJob(p_own, GAMEDATA_GetMyStatus(p_gamedata));
     const RESORT_BINARY_SHOP_DATA *cp_favorite_data = RESORT_BINARY_SHOP_GetData( p_shop, favorite_job );
     favorite_type = RESORT_BINARY_SHOP_DATA_GetData( cp_favorite_data, RESORT_BINARY_SHOP_PARAM_TYPE );
  
@@ -763,6 +769,13 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
         cp_new_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
 
         WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+        //フィーバーチェック
+        if( RESORT_UTIL_IsFeverCondition(p_sys) )
+        {
+          RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_FEVER_FLAG, TRUE );
+        }
+
 
         if( RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) != RESORT_BINARY_SHOP_DATA_GetData( cp_new_shop_data, RESORT_BINARY_SHOP_PARAM_NAME ) )
         {
@@ -886,7 +899,7 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  フィーバーになっているかどうか
+ *	@brief  フィーバー発生条件になっているかどうか
  *
  *	@param	RESORT_SYSTEM *p_sys  システム
  *
@@ -894,6 +907,21 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
  */
 //-----------------------------------------------------------------------------
 BOOL RESORT_UTIL_IsFever( RESORT_SYSTEM *p_sys )
+{
+  RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
+  return RESORT_CITY_DATA_GetData(p_city_data,RESORT_CITY_DATA_FEVER_FLAG,NULL);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィーバー発生条件になっているかどうか
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *
+ *	@return TRUEフィーバー  FALSE違う
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_IsFeverCondition( RESORT_SYSTEM *p_sys )
 {
   RESORT_ABSTRUCT_MANAGER *p_man  = RESORT_SYSTEM_GetAbstructManager(p_sys);
   RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
@@ -1005,7 +1033,10 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
   case RESORT_WORD_WANT_SHOP:
     GF_ASSERT( p_data );
     {
-      u16 shopno = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 wantjob = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+      u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_VER, NULL );
+      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, p_city_data, p_shop );
       STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, shopno, heapID );
       u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
@@ -1076,7 +1107,10 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
   case RESORT_WORD_WANT_SHOP_GENRE:
     GF_ASSERT( p_data );
     {
-      u32 shopno = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 wantjob = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+      u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_VER, NULL );
+      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, p_city_data, p_shop );
       const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
       u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
@@ -1115,6 +1149,12 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       WORDSET_RegisterWord( p_wordset, buff_idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
 
       GFL_STR_DeleteBuffer(p_str);
+    }
+    break;
+  case RESORT_WORD_FEVER_DAY:
+    {
+      u32 cnt = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_FEVER_CNT, NULL );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, RESORT_FEVER_DAY-cnt, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_SHOP_RESTEXP:

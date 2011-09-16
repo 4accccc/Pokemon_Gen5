@@ -107,6 +107,7 @@
 #define RESORT_WORD_WANT_SHOP         (14) //「フラワー○○」とか（なりたいお店）
 #define RESORT_WORD_WANT_SHOP_GENRE   (15) //「花屋」とか（なりたいお店）
 #define RESORT_WORD_OWNER_SHOP_GENRE  (16) //「花屋」とか（プレイヤーの得意なお店）
+#define RESORT_WORD_FEVER_DAY         (17)
 
 #define RESORT_WORD_PARAM_FRONT       (0xFE)  //目の前の人
 #define RESORT_WORD_PARAM_NONE        (0xFF)

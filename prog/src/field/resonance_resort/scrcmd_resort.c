@@ -201,6 +201,17 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
 
 
       BOOL is_job_change = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, NULL );
+      BOOL is_dendou = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL );
+
+      //ï€àÁèäÇÕìaì∞ì¸ÇËå„
+      if( want_type == RESORT_RESIDENT_TYPE_NURSERY )
+      {
+        if( !is_dendou )
+        {
+          is_job_change = TRUE;
+        }
+      }
+
       *p_ret_wk = (want_type != shop_type) && (is_job_change == FALSE);
     }
     break;
@@ -1891,7 +1902,7 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT4_GOSSIP_00+param, NULL );
     break;
   case RESORT_MY_PARAM_WANT_JOB:
-    *p_ret_wk = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_WANT_JOB, NULL );
+    *p_ret_wk = RESORT_OWNER_DATA_GetWantJob(p_owner, GAMEDATA_GetMyStatus(p_gamedata));
     break;
   case RESORT_MY_PARAM_IS_FEVER:
     *p_ret_wk = RESORT_UTIL_IsFever( p_sys );

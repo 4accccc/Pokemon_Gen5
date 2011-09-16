@@ -112,6 +112,7 @@ void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date )
 }
 
 static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
+extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 
 //-------------------------------------
 ///	リゾートデータグローバル参照
@@ -1170,7 +1171,7 @@ SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
  *    RESORT_RECV_DATAのPRIVATE
  */
 //=============================================================================
-static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk );
+static void Resort_Recv_Data_InitInstitution( RESORT_RECV_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop );
 static void Resort_Recv_Data_SetBeaconExtendData( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 
 //=============================================================================
@@ -1346,8 +1347,6 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk )
 
   //乱数
   RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
-
-  Resort_Recv_Data_SetWantJob( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -3453,13 +3452,21 @@ void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT
  *	@param	RESORT_RECV_DATA *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk )
+static void Resort_Recv_Data_InitInstitution( RESORT_RECV_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop )
 {
-  int shopID  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
-  RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
+  int want_job  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  int id  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+  int ver  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_VER, NULL );
 
-  RESORT_INSTITUTION_DATA_InitInstance( p_institution );
-  RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+  u16 shopID  = RESORT_DATA_GetWantJobModify( want_job, id, ver, sp_city_data, cp_shop );
+
+
+  {
+    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
+
+    RESORT_INSTITUTION_DATA_InitInstance( p_institution );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3504,15 +3511,17 @@ RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_D
 //-----------------------------------------------------------------------------
 void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
 {
-  Resort_Recv_Data_SetWantJob( p_wk );
+  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+
+  Resort_Recv_Data_InitInstitution( p_wk, p_shop );
   {
-    RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_wk );
 
     p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
-    RESORT_BINARY_SHOP_Exit( p_shop );
   }
+
+  RESORT_BINARY_SHOP_Exit( p_shop );
 }
 
 //=============================================================================
@@ -4217,11 +4226,29 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
 {
   u16 want_job = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
   u16 ver = MyStatus_GetRomCode( cp_mystatus );
+  u16 id = MyStatus_GetID( cp_mystatus );
 
 
+  return  RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  なりたいお店IDを修正
+ *
+ *	@param	u16 want_job  なりたいお店ID（want_jobがRESORT_SHOP_ID_NULLのときのみチェック）
+ *	@param	id    トレーナーID
+ *	@param	ver   バージョン
+ *
+ *	@return 修正後のなりたいお店IDを情報
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
+{
   if( want_job == RESORT_SHOP_ID_NULL )
   {
-    switch( MyStatus_GetID_Low(cp_mystatus) % 10 )
+    switch( id % 10 )
     {
     default:
       GF_ASSERT(0);
@@ -4452,6 +4479,9 @@ struct _RESORT_CITY_DATA
   u16     trainerID_max;
   u16     trainerID_cnt;        //4 228
   u32     rnd_seed;             //4 232
+
+  u16     fever_cnt;
+  u16     is_fever;
 };
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
@@ -4583,6 +4613,10 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->celeb_day_flag;
   case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
     return cp_wk->celeb_trade_flag;
+  case RESORT_CITY_DATA_FEVER_CNT:
+    return cp_wk->fever_cnt;
+  case RESORT_CITY_DATA_FEVER_FLAG:
+    return cp_wk->is_fever;
   default:
     GF_ASSERT(0);
     return 0;
@@ -4664,6 +4698,12 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
     p_wk->celeb_trade_flag = data;
     break;
+  case RESORT_CITY_DATA_FEVER_CNT:
+    p_wk->fever_cnt = data;
+    break;
+  case RESORT_CITY_DATA_FEVER_FLAG:
+    p_wk->is_fever  = data;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -4692,6 +4732,17 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 
   //セレブ抽選フラグ
   p_wk->celeb_day_flag = FALSE;
+
+  //もしフェーバーフラグがたっていたら、
+  if( p_wk->is_fever )
+  {
+    p_wk->fever_cnt++;
+    if( p_wk->fever_cnt >= RESORT_FEVER_DAY )
+    {
+      p_wk->is_fever = FALSE;
+      p_wk->fever_cnt = 0;
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -4787,6 +4838,33 @@ static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
     }
     return rnd;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  なりたいお店IDを修正
+ *
+ *	@param	u16 want_job  なりたいお店IDを
+ *	@param	id  トレーナーID
+ *	@param	ver バージョン
+ *	@param	RESORT_CITY_DATA *cp_data   街情報
+ *	@param	RESORT_BINARY_SHOP *cp_shop   お店情報
+ *
+ *	@return 修正後のお店ID
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop )
+{
+  BOOL is_dendou = RESORT_CITY_DATA_GetData( cp_data,RESORT_CITY_DATA_PARAM_PRIZE_DENDOU,NULL );
+  const RESORT_BINARY_SHOP_DATA* cp_shop_data = RESORT_BINARY_SHOP_GetData(cp_shop, want_job );
+  u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+
+  if( (want_job == RESORT_SHOP_ID_NULL) || (!is_dendou && shop_type == RESORT_RESIDENT_TYPE_NURSERY ) )
+  {
+    return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+  }
+    
+  return want_job;
 }
 
 //=============================================================================

@@ -39,6 +39,8 @@ typedef enum
 //=============================================================================
 extern void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl );
 
+extern u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver );
+
 //=============================================================================
 /**
  *  施設データ
@@ -623,9 +625,11 @@ extern void RESORT_RECORD_AddID( u32 record_id );
 #define RESORT_INSTITUTION_DATA_NUM (8)
 
 //街データ総サイズ
-#define RESORT_CITY_DATA_SIZE       (232)
+#define RESORT_CITY_DATA_SIZE       (236)
 
 #define RESORT_TRAINER_ID_STORE_SIZE (32)
+
+#define RESORT_FEVER_DAY  (3)
 
 //-------------------------------------
 ///	引数
@@ -654,6 +658,8 @@ typedef enum
   RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
   RESORT_CITY_DATA_CELEB_DAY_FLAG,
   RESORT_CITY_DATA_CELEB_TRADE_FLAG,
+  RESORT_CITY_DATA_FEVER_CNT,
+  RESORT_CITY_DATA_FEVER_FLAG,
 
   RESORT_CITY_DATA_PARAM_MAX
 }RESORT_CITY_DATA_PARAM;
