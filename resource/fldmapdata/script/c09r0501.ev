@@ -56,6 +56,7 @@ EVENT_START ev_pos_c09r0501_lighting_01
 
     //照明が点灯
     _CHAMPION_LIGHTING()
+    _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_01 )    // 部屋の照明がつく音
 
     _TIME_WAIT( 16 )
 
@@ -199,7 +200,27 @@ EVENT_START ev_c09r0501_swchampion_01
   //殿堂入り部屋出現
   _CHAMPION_HALL_ROOM()
 
-  _TIME_WAIT( 370 )  //殿堂入り部屋出現演出待ち
+  //========================================
+  //== アニメメモ ==========================
+  // 
+  // 総アニメ数 370F
+  // ドラゴンの石造が沈む 130F ～ 216F
+  //  壁に穴があいて、はしご用のロープが出てくる  235F ～ 307F
+  //  はしご用のステップが出てくる 312F ～ 350F
+
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_02 )    // 星座板の４つの石が回る音
+
+  _TIME_WAIT( 130 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_03 )    // ドラゴンの石像が沈む音
+
+  _TIME_WAIT( 105 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_04 )    // 壁に穴があいて、はしご用のロープが出てくる音
+
+  _TIME_WAIT( 77 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_05 )    // はしご用のステップが出てくる音
+
+  _TIME_WAIT( 58 )  //殿堂入り部屋出現演出待ち
+  //========================================
 
   _TIME_WAIT( 16 )  //間
 
