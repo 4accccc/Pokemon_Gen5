@@ -12709,6 +12709,13 @@
 //--------------------------------------------------------------
 /**
  * @brief もっとも獲得比率の高いメダルカテゴリを取得
+ * 
+ *  SCR_MEDALCATEGORY_ADVENTURE   (0)   // メダルカテゴリ（ぼうけん）
+ *  SCR_MEDALCATEGORY_BATTLE      (1)   // メダルカテゴリ（せんとう）
+ *  SCR_MEDALCATEGORY_AMUSEMENT   (2)   // メダルカテゴリ（おたのしみ）
+ *  SCR_MEDALCATEGORY_CHALLENGE   (3)   // メダルカテゴリ（ちょうせん）
+ *  SCR_MEDALCATEGORY_SPECIAL     (4)   // メダルカテゴリ（とくべつ）
+ *
  * @param[out]  ret_wk  メダルカテゴリID
  */
 //--------------------------------------------------------------
