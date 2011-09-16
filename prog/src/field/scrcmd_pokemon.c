@@ -72,6 +72,7 @@ typedef struct ADD_POKE_PRM_tag
   PtlSexSpec SexSel;
   PtlRareSpec RareSel;
   int Ball;
+  BOOL  SetTokusei3Flag;
 }ADD_POKE_PRM;
 
 static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * work);
@@ -896,9 +897,16 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
     prm.Level = level;
     prm.ItemNo = itemno;
     prm.Tokusei = tokusei;
-    if ( prm.Tokusei >= PTL_TOKUSEI_SPEC_MAX)
+    prm.SetTokusei3Flag = ( prm.Tokusei == SCR_TOKUSEI_SPEC_3 );
+    
+    if ( prm.Tokusei >= PTL_TOKUSEI_SPEC_MAX )
     {
-      GF_ASSERT_MSG(0,"%d:tokusei error",prm.Tokusei);
+#ifdef PM_DEBUG
+      if( prm.SetTokusei3Flag == FALSE ){
+        GF_ASSERT_MSG(0,"%d:tokusei error",prm.Tokusei);
+      }
+#endif
+      //SPEC_3が指定された場合、ここで一度BOTHに補正されるがSetTokusei3フラグで最終的に第3特性に上書きされる
       prm.Tokusei = PTL_TOKUSEI_SPEC_BOTH;
     }
     prm.SexSel = sex;
@@ -1661,9 +1669,6 @@ VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk )
  * @param	gdata   ゲームデータポインタ
  * @param prm     追加ポケモンパラメータ
  * @retval POKEMON_PARAM
- *
- * @todo  ForUpper フォルム変更はPP_ChangeFormNoを使用したほうがいいのですが、時期を考えて対処を見送ります
- * @tod   変更はアッパーでお願いします　20100628 Saito
  */
 //--------------------------------------------------------------
 static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
@@ -1680,8 +1685,13 @@ static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
   }
   // 追加するポケモンを作成
   pp = PP_CreateEx( prm->MonsNo, prm->Level, id, PTL_SETUP_ID_AUTO, rnd, prm->HeapID );
-  PP_Put( pp, ID_PARA_form_no, prm->FormNo );    // フォーム  <<@todo  PP_ChangeFormNoを使用したほうが良いです。
+  PP_ChangeFormNo( pp, prm->FormNo );
   PP_Put( pp, ID_PARA_item, prm->ItemNo );       // 所持アイテム
+
+  if( prm->SetTokusei3Flag ){
+    PP_SetTokusei3( pp, prm->MonsNo, prm->FormNo );
+  }
+
   {
     //捕獲ボールセット
     int item_type = ITEM_GetParam( prm->Ball, ITEM_PRM_ITEM_TYPE, prm->HeapID );

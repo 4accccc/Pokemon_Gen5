@@ -570,6 +570,7 @@
 #define SCR_TOKUSEI_SPEC_1    (0)     //特性1をセット
 #define SCR_TOKUSEI_SPEC_2    (1)     //特性2をセット
 #define SCR_TOKUSEI_SPEC_BOTH (2)     //どちらでも可
+#define SCR_TOKUSEI_SPEC_3    (3)     //特性3をセット(PTL_TOKUSEI_SPEC_MAXと同じ値なので注意)
 
 //--------------------------------------------------------------
 //    ポケモン作成 レア指定
