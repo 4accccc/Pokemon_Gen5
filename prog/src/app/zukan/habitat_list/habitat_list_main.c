@@ -453,7 +453,7 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
 	case FRAMELIST_RET_SCROLL:			// スクロール通常
 	case FRAMELIST_RET_RAIL:				// レールスクロール
 	case FRAMELIST_RET_SLIDE:				// スライドスクロール
-	case FRAMELIST_RET_MOVE:				// カーソル移動
+ 	case FRAMELIST_RET_MOVE:				// カーソル移動
     {
     }
     break;
@@ -554,7 +554,6 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   {
   case HABITATLIST_UI_MINIMAP:
     {
-      // @todo 戻り値にゾーングループを設定する
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
@@ -570,8 +569,6 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   case HABITATLIST_UI_ICON_R_06:
   case HABITATLIST_UI_ICON_R_07:
     {
-      // @todo 移動先タイプを戻り値に設定する
-      // @todo 戻り値にゾーングループを設定する
       ZUKANHABITAT_LIST_LISTDATA *p_data;
       u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( &p_wk->gra_sys );
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_R_01;
@@ -596,8 +593,6 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   case HABITATLIST_UI_ICON_C_06:
   case HABITATLIST_UI_ICON_C_07:
    {
-      // @todo 移動先タイプを戻り値に設定する
-      // @todo 戻り値にゾーングループを設定する
       ZUKANHABITAT_LIST_LISTDATA *p_data;
       u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( &p_wk->gra_sys );
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_C_01;
@@ -622,8 +617,6 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
   case HABITATLIST_UI_ICON_L_06:
   case HABITATLIST_UI_ICON_L_07:
    {
-      // @todo 移動先タイプを戻り値に設定する
-      // @todo 戻り値にゾーングループを設定する
       ZUKANHABITAT_LIST_LISTDATA *p_data;
       u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( &p_wk->gra_sys );
       s32 cursor_pos = key_status - HABITATLIST_UI_ICON_L_01;
@@ -697,9 +690,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
         HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
             MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
-        HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
-            MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
-        CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
+        CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
             MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE, SEQ_CHANGE_PARAM_NONE );
         ONOUE_Printf("モード切替1タッチ\n");
       }
@@ -719,19 +710,14 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       }
       HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
           MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
-      HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
-          MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM );
-      CallCellAnm( p_wk ,SELECT_BUTTON_CLWKID,OBJ_ANM_SEQ_SELECT_BUTTON_ANM,
+      CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
           MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("モード切替2タッチ\n");
     }
     break;
 
   case HABITATLIST_UI_MODE_BUTTON_03:
-    // 機能なし
-//    CallCellAnm( p_wk ,MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
-//        MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
-//    ONOUE_Printf("モード切替3タッチ\n");
+    // 使用しません
     break;
 
   // タッチ入力なし
@@ -845,6 +831,7 @@ static void MAINSEQ_ItemBlink( HABITAT_LIST_WK *p_wk )
       p_clwk= HABITAT_LIST_GRA_GetComClWk( &p_wk->gra_sys ,LIST_CURSOR_CLWKID );
       GFL_CLACT_WK_SetAnmSeq( p_clwk ,GFL_CLACT_WK_GetAnmSeq( p_clwk ) + 1);
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk , TRUE);
+      HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,MINIMAP_CLWKID,OBJ_ANM_SEQ_MINIMAP_ANM);
     }
     // through break
 	case 2:

@@ -22,6 +22,7 @@
 
 #include "poke_tool/monsnum_def.h"  // for MONSNO_数字
 
+#include "gamesystem/pm_season.h"
 
 //============================================================================================
 //	定数定義
@@ -745,6 +746,9 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
     ONOUE_Printf("生息地リスト：セーブからリスト生成\n");
     ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,FALSE );
   }
+   
+  // デフォルト季節を設定する
+  HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
 
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
                                       &ZUKANHABITAT_ZONE_ProcData, p_zone_info );

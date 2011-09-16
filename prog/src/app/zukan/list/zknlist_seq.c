@@ -432,7 +432,6 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
         ZUKANSAVE_SetZukanMode( wk->dat->savedata, ZUKAN_MODE_LOCAL );
         wk->dat->retMode = ZKNLIST_RET_MODE_CHANGE;
         SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_1, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
 
       case ZKNLISTUI_ID_MODE_BUTTON2:
@@ -462,7 +461,6 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
           SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
           ZUKANSAVE_SetZukanMode( wk->dat->savedata , ZUKAN_MODE_HABITAT);
         }
-        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_2, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
 
       case ZKNLISTUI_ID_MODE_BUTTON3:
@@ -478,7 +476,6 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
         // ¶‘§’nƒŠƒXƒg‚Ö
         wk->dat->retMode = ZKNLIST_RET_HABITAT_LIST;
         SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
-        SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
         ZUKANSAVE_SetZukanMode( wk->dat->savedata , ZUKAN_MODE_HABITAT );
         return SetButtonAnm( wk, ZKNLISTOBJ_IDX_MODE_BUTTON_3, ZKNLISTOBJ_ANM_MODE_BUTTON_ANM, MAINSEQ_END_SET );
 

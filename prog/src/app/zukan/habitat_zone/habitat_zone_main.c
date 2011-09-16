@@ -2034,7 +2034,7 @@ static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO
       msg_seisoku_result_14,  // 混合
       msg_seisoku_result_14,  // なし
     };
-    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    //GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
     
     // 地形ごとにメッセージを選択
     msg_id = msg_id_table[info_type];
@@ -2086,7 +2086,7 @@ static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INF
       msg_seisoku_result_07,  // 混合
       msg_seisoku_result_07,  // なし
     };
-    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    //GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
     
     // 地形ごとにメッセージを選択
     msg_id = msg_id_table[info_type];

@@ -106,6 +106,7 @@ enum
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ
+  OBJ_ANM_SEQ_MINIMAP_ANM = 40, // ミニマップ(アニメーション)
   OBJ_ANM_SEQ_NEW_ICON    = 12, // 新着アイコン
   OBJ_ANM_SEQ_EX_ICON     = 11, // びっくりマーク
   OBJ_ANM_SEQ_GET_ICON    = 7,  // 捕獲アイコン
@@ -243,6 +244,7 @@ typedef struct {
   ZUKANHABITAT_LIST_LISTDATA *p_list_data;
   GRA_ICON_DATA icon_data_main[ LIST_ICON_MAX ];
   GRA_ICON_DATA icon_data_sub[ LIST_ICON_MAX ];
+  BOOL list_update;
 
 }HABITAT_LIST_GRA_WK;
 
@@ -284,4 +286,5 @@ extern BOOL HABITAT_LIST_GRA_CheckAnmActive( HABITAT_LIST_GRA_WK *p_wk ,s32 clwk
 extern u16 HABITAT_LIST_GRA_GetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
 extern u16 HABITAT_LIST_GRA_CheckFade( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_AddScrollFrame( HABITAT_LIST_GRA_WK *p_wk ,s32 ypos,BOOL is_main  );
+extern void HABITAT_LIST_GRA_StartMiniMapIconAnm( HABITAT_LIST_GRA_WK *p_wk );
 

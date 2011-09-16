@@ -236,6 +236,10 @@ void HABITAT_LIST_GRA_Init( HABITAT_LIST_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
   GRA_SetBlendAlpha();            // 半透明処理
   GRA_SetWindow();                // ウィンドウ設定
+  
+  // リストの更新フラグを立てた状態ではじめ、
+  // ミニマップアイコンの初期化時のアニメーションを固定
+  p_wk->list_update = TRUE;
 
 }
 
@@ -403,6 +407,11 @@ u32 HABITAT_LIST_GRA_ListMain( HABITAT_LIST_GRA_WK *p_wk )
   {
     SetCursorEnable( p_wk, TRUE );
     SetLRButtonAnm( p_wk , FALSE);
+    p_wk->list_update = FALSE;
+  }
+  else
+  {
+    p_wk->list_update = TRUE;
   }
   return ret;
 }
@@ -879,6 +888,7 @@ static void GRA_LoadObjGraphic( HABITAT_LIST_GRA_WK *p_wk )
       OBJ_ANM_SEQ_MINIMAP, HEAPID_ZUKAN_HABITAT_LIST );
   GFL_CLACT_WK_SetDrawEnable( 
               p_wk->p_clwk_common_obj[MINIMAP_CLWKID], TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk_common_obj[MINIMAP_CLWKID] , TRUE );
 
   // モード切替ボタン1 --------------------------------------------------
   p_wk->p_clwk_common_obj[MODE_BUTTON_01_CLWKID] = UI_EASY_CLWK_CreateCLWK( 
@@ -1703,6 +1713,7 @@ static void ListCallBack_Move( void * work, u32 item_index, BOOL flg )
 {
   HABITAT_LIST_GRA_WK *p_wk = work;
   RefreshCursorPos( p_wk );
+  HABITAT_LIST_GRA_StartMiniMapIconAnm( p_wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2203,6 +2214,29 @@ void HABITAT_LIST_GRA_AddScrollFrame( HABITAT_LIST_GRA_WK *p_wk ,s32 yval,BOOL i
     // BGスクロール
 	  GFL_BG_SetScrollReq( BGS_FRAME_FONT, GFL_BG_SCROLL_Y_DEC, yval );
 	  GFL_BG_SetScrollReq( BGS_FRAME_BAR, GFL_BG_SCROLL_Y_DEC, yval );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミニマップアイコンアニメーション
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_StartMiniMapIconAnm( HABITAT_LIST_GRA_WK *p_wk )
+{
+  GFL_CLWK *p_clwk = p_wk->p_clwk_common_obj[MINIMAP_CLWKID];
+  if( p_wk->list_update == FALSE )
+  {
+    GFL_CLACT_WK_SetAnmFrame( p_clwk ,0 );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk, OBJ_ANM_SEQ_MINIMAP_ANM );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( p_clwk, OBJ_ANM_SEQ_MINIMAP );
   }
 }
 
