@@ -433,6 +433,8 @@
 #define FE_T04_SWRIVAL_WIN_01              417 /* 0x01a1 サザナミタウン：アイテム入手フラグ */
 #define FE_D08R0901_LEGEND_GET_01          418 /* 0x01a2 古代の城：ウルガモス捕獲フラグ */
 #define FE_D08R0901_LEGEND_MEET_01         419 /* 0x01a3 古代の城：ウルガモス遭遇フラグ */
+#define FE_D35R0101_POKE_GET_01            420 /* 0x01a4 自然保護区：黒オノノクス捕獲フラグ */
+#define FE_D35R0101_AREA_01                421 /* 0x01a5 自然保護区：到達フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -787,6 +789,7 @@
 #define FV_R18_ITEM_01                     843 /* 0x034b 18版道路：どうぐ（モンスターボール） */
 #define FV_T04_SWRIVAL_01                  844 /* 0x034c サザナミタウン：ライバル */
 #define FV_C03R0502_POKE38_01              845 /* 0x034d ヒウンシティ：ズルッグ */
+#define FV_D35R0101_POKE_01                846 /* 0x034e 自然保護区：黒オノノクス */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
