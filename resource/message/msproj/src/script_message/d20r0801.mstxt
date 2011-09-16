@@ -298,4 +298,189 @@ WMKRMO</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d20r0801_bg1_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>③は　たった　ひとりで
+１０００にんの　てきを　はねのけた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>③は　たった　１人で
+１０００人の　敵を　跳ね除けた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0801_bg2_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>④は　いちにちで
+１００００にんを　なかまに　した</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>④は　１日で
+１００００人を　仲間に　した</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0801_bg3_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>⑤は　いちにちで
+１０００００ひきの　いきものを　よんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>⑤は　１日で
+１０００００匹の　生き物を　呼んだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0801_bg4_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　わたしたちの
+きぼうで　あり　みらいで　ある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王は　私たちの
+希望であり　未来である</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:52:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0801_bg5_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここに　いだいなる　おう
+⑥を　たたえる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここに　偉大なる王
+⑥を　たたえる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:51:13" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

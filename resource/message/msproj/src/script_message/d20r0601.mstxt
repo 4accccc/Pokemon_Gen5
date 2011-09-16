@@ -540,4 +540,294 @@ NKXGTQFQQI</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg1_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いきる　ということ
+それは　すべてに　かんしゃ　すること</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生きると　いうこと
+それは　全てに　感謝　すること</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg2_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たべる　ということ　それは
+あらゆる　いのちを　いただくこと</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>食べる　ということ　それは
+あらゆる　命を　いただくこと</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg3_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいぎと　あく　だけではない
+あいだが　あるのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>正義と　悪だけではない
+間が　あるのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg4_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やばんで　あっては　ならない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>野蛮で　あっては　ならない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg5_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そまつに　しては　ならない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>粗末に　しては　ならない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg6_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべては　びょうどうに　とうとい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全ては　平等に　尊い</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg7_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たたかいは　なにも　うまない
+むげんの　かなしみを　うむだけだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦いは　何も　生まない
+無限の　悲しみを　生むだけだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0601_bg8_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうに　りかいを　しめすのならば
+ここで　ひかりを　はなて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王に　理解を　示すのならば
+ここで　光を　放て</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:48:56" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

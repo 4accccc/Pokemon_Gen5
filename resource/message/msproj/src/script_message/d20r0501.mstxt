@@ -1214,4 +1214,716 @@ HOJL</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg1_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうき　あるものよ
+おうの　ことばに　みみを　かたむけよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>勇気　あるものよ
+王の　言葉に　耳を　かたむけよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg2_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そすうを　りかい　するものは
+せかいの　しんりを　りかいする</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>素数を　理解する者は
+世界の　真理を　理解する</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg3_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　ゆうきを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　ゆうきを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg4_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　きぼうを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　きぼうを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg5_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　やさしさを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　やさしさを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg6_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　ゆめを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　ゆめを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg7_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　ぼうけんしんを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　ぼうけんしんを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg8_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　すべてを　うけいれた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　すべてを　うけいれた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg9_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　２ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　２ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg10_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　３ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　３ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg11_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　５ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　５ばんめの　かどを　まがり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg12_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　７ばんめの　かどを　まがった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　７ばんめの　かどを　まがった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg13_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうの　こころを　もて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうの　こころを　もて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg14_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　おうを　たたえる　ばしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　おうを　たたえる　ばしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg15_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは
+たみを　てらす　ひかりを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは
+たみを　てらす　ひかりを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg16_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは
+たみを　うごかす　ちからを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは
+たみを　うごかす　ちからを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg17_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　じあいの　こころで　つつんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　じあいの　こころで　つつんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg18_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　にくしみに　ながされなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうは　にくしみに　ながされなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg19_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうの　あゆみに　まよいは　ない
+まよいごに　おうの　しかくなし</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王の　歩みに　迷いは　無い
+迷い子に　王の　資格無し</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0501_bg19_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうの　あゆみに　まよいは　ない
+ゆうきある　おうよ　さきに　すすめ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王の　歩みに　迷いは　無い
+勇気ある　王よ　先に　進め▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:47:39" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

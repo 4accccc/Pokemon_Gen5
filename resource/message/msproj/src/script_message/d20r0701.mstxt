@@ -384,4 +384,189 @@ JQRUWVWFD</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d20r0701_bg1_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　いきとし　いけるものと
+かいわする　ちからを　もつ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王は　生きとし　生けるものと
+会話する　力を　持つ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0701_bg2_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　みらいを　よみ
+たみを　おおつなみから　まもった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王は　未来を　読み
+民を　大津波から　守った</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0701_bg3_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうは　すべての　きぼうで　あり
+すべての　りそうで　ある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王は　全ての　希望で　あり
+全ての　理想で　ある</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0701_bg4_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいする　こころと
+あいする　ちからを　もつのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>愛する　心と
+愛する　力を　持つのだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20r0701_bg5_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうに　りかいを　しめすのならば
+おうと　おなじ　ちからを　しめせ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>王に　理解を　示すのならば
+王と　同じ　力を　示せ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・考古学者イベント後
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-16T07:49:31" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
