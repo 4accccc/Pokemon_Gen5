@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-08-14T16:15:52" source="m_dun2707_00_00_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-09-15T17:31:24" source="m_dun2707_00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-08-14T16:15:52" source="m_dun2707_00_00_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-09-15T17:31:24" source="m_dun2707_00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2495,8 +2495,8 @@
 		vertex_size="60" polygon_size="18"
 		triangle_size="0" quad_size="18"
 		volume_min="-1.250000 0.781250 -0.718750"
-		volume_max="1.500000 0.875000 2.781250"
-		volume_r="3.278809"
+		volume_max="1.500000 0.875000 3.031250"
+		volume_r="3.493408"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -2548,7 +2548,7 @@
 				<primitive index="3" type="quad_strip" vertex_size="6">
 					<tex st="-24.000000 144.000000"/>
 					<clr rgb="0 0 0"/>
-					<pos_s xyz="1.500000 0.781250 2.781250"/>
+					<pos_s xyz="1.500000 0.781250 3.031250"/>
 					<pos_xy xy="1.500000 0.875000"/>
 					<tex st="-24.000000 120.000000"/>
 					<clr rgb="31 31 31"/>
@@ -2563,16 +2563,16 @@
 					<clr rgb="19 19 19"/>
 					<pos_xy xy="1.125000 0.875000"/>
 					<tex st="-8.000000 -8.000000"/>
-					<pos_xz xz="1.125000 2.531250"/>
+					<pos_xz xz="1.125000 2.781250"/>
 					<tex st="8.000000 120.000000"/>
-					<pos_xz xz="-0.875000 2.781250"/>
+					<pos_xz xz="-0.875000 3.031250"/>
 					<tex st="-8.000000 120.000000"/>
-					<pos_xz xz="-0.875000 2.531250"/>
+					<pos_xz xz="-0.875000 2.781250"/>
 					<tex st="8.000000 144.000000"/>
 					<clr rgb="0 0 0"/>
-					<pos_xz xz="-1.250000 2.781250"/>
+					<pos_xz xz="-1.250000 3.031250"/>
 					<tex st="-8.000000 144.000000"/>
-					<pos_xz xz="-1.250000 2.531250"/>
+					<pos_xz xz="-1.250000 2.781250"/>
 				</primitive>
 				<primitive index="5" type="quad_strip" vertex_size="6">
 					<tex st="-24.000000 144.000000"/>
@@ -2615,7 +2615,7 @@
 					<pos_xy xy="-0.875000 0.875000"/>
 					<tex st="-24.000000 -64.000000"/>
 					<clr rgb="0 0 0"/>
-					<pos_xz xz="-1.250000 2.781250"/>
+					<pos_xz xz="-1.250000 3.031250"/>
 					<pos_xy xy="-1.250000 0.781250"/>
 					<tex st="-24.000000 -40.000000"/>
 					<clr rgb="31 31 31"/>
@@ -2623,17 +2623,17 @@
 					<pos_xy xy="-0.875000 0.875000"/>
 					<tex st="-8.000000 -64.000000"/>
 					<clr rgb="0 0 0"/>
-					<pos_xz xz="1.500000 2.531250"/>
+					<pos_xz xz="1.500000 2.781250"/>
 					<tex st="-8.000000 -40.000000"/>
 					<clr rgb="19 19 19"/>
 					<pos_xy xy="1.125000 0.875000"/>
 					<tex st="8.000000 -40.000000"/>
-					<pos_xz xz="1.125000 2.781250"/>
+					<pos_xz xz="1.125000 3.031250"/>
 					<tex st="8.000000 -64.000000"/>
 					<clr rgb="0 0 0"/>
 					<pos_xy xy="1.500000 0.875000"/>
 					<tex st="-24.000000 144.000000"/>
-					<pos_xz xz="-1.250000 2.531250"/>
+					<pos_xz xz="-1.250000 2.781250"/>
 					<pos_xy xy="-1.250000 0.781250"/>
 					<tex st="-24.000000 -40.000000"/>
 					<clr rgb="12 12 12"/>
@@ -2746,7 +2746,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface448" kind="mesh"
+	<node index="0" name="polySurface453" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
