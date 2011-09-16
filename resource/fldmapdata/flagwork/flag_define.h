@@ -431,6 +431,8 @@
 #define FE_N01R0401_HEYA_END_01            415 /* 0x019f N城：子ども部屋イベント終了フラグ */
 #define FE_C03R1302_ITEMGET_01             416 /* 0x01a0 ヒウンシティ：アイテム入手フラグ */
 #define FE_T04_SWRIVAL_WIN_01              417 /* 0x01a1 サザナミタウン：アイテム入手フラグ */
+#define FE_D08R0901_LEGEND_GET_01          418 /* 0x01a2 古代の城：ウルガモス捕獲フラグ */
+#define FE_D08R0901_LEGEND_MEET_01         419 /* 0x01a3 古代の城：ウルガモス遭遇フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
