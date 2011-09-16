@@ -9329,6 +9329,86 @@
 		<language name="JPN" width="256">SW-CHAMPIRIS-05</language>
 		<language name="JPN_KANJI" width="256">SW-CHAMPIRIS-05</language>
 	</row>
+	<row id="msg_seq_se_sw_pkwood_01">
+		<language name="JPN" width="256">SW-PKWOOD-01</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-01</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_02">
+		<language name="JPN" width="256">SW-PKWOOD-02</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-02</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_03">
+		<language name="JPN" width="256">SW-PKWOOD-03</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-03</language>
+	</row>
+	<row id="msg_seq_se_sw_starpoke">
+		<language name="JPN" width="256">SW-STARPOKE</language>
+		<language name="JPN_KANJI" width="256">SW-STARPOKE</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_01">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-01</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-01</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_02">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-02</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-02</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_03">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-03</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-03</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_04">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-04</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-04</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_05">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-05</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-05</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_06">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-06</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-06</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_07">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-07</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-07</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_08">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-08</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-08</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_09">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-09</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-09</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_10">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-10</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-10</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_11">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-11</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-11</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_12">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-12</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-12</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_13">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-13</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-13</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_14">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-14</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-14</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_15">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-15</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-15</language>
+	</row>
+	<row id="msg_seq_se_sw_pkwood_aud_16">
+		<language name="JPN" width="256">SW-PKWOOD-AUD-16</language>
+		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-16</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
