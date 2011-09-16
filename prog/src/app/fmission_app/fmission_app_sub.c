@@ -1046,7 +1046,7 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 	
 	// 初期化
 	for(i=0;i<4;i++){
-		buf[i] = 0;
+		buf[i] = -1;	// 初期化
 	}
 	pos.x = x;
 	pos.y = y;
@@ -1063,6 +1063,7 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 //	OS_Printf("%d,%d,%d,%d\n",buf[0],buf[1],buf[2],buf[3]);
 	// 左あわせ(しばらく残し)
 	if(rflg == 0){
+#if 0
 		// ここまででbuf[]に逆順で値が入っているはず
 		for(i=0;i<4;i++){
 			// 値のみ表示
@@ -1081,6 +1082,7 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 			pos.x = x + 8*i;
 			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
 		}
+#endif
 	}
 	// 右あわせ
 	else{
@@ -1089,8 +1091,9 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 			// 値のみ表示
 			bflg = TRUE;
 			if(smode == 0){
-				if((buf[i] == 0)&&(i != 0)){
+				if(buf[i] == -1){
 					bflg = FALSE;
+					buf[i] = 0;	// 念のため
 				}
 			}
 			// 表示
@@ -1473,6 +1476,10 @@ s32 FmaCmn_chk_itemget( FMISSION_APP_WORK *wk, const s32 itemid )
 	u16		nownum;
 	u32		maxnum;
 	
+	// 念のため
+	if(itemid == 0){
+		return( 0 );
+	}
 	// 所持最大数
 	maxnum = MYITEM_GetItemMax( itemid );
 	// 現在の所持数

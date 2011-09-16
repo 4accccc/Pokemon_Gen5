@@ -681,7 +681,10 @@ static void fma_scroll_bg( FMISSION_APP_WORK* wk )
 //-----------------------------------------------------------------------------
 static void fma_init_info( FMISSION_APP_WORK* wk )
 {
-	// 必要であれば
+	// 1人の場合
+	if( wk->MissionStatus.entry_num <= 1 ){
+		wk->Flag |= FLG_FMA_ONLY;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1102,8 +1105,8 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 	if(wk->MissionResult.clear_f == TRUE){
 		wk->Flag |= FLG_FMA_SUCCESS;
 		// アイテム取得可能か
-		buf[0] = FmaCmn_chk_itemget( wk, wk->MissionResult.item );
 		if(wk->MissionResult.item_num > 0){
+			buf[0] = FmaCmn_chk_itemget( wk, wk->MissionResult.item );
 			if(buf[0] > 0){
 				wk->Flag |= FLG_FMA_GET;
 			}
@@ -1114,7 +1117,9 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 		wk->Flag |= FLG_FMA_BONUS;
 	}
 	// ダブルスコアの判定
-	if(wk->MissionResult.score >= (wk->ArcData[id].param.level[lv].goal*2)){
+	// =>単純にsp_itemで判定すること
+	if(wk->MissionResult.sp_item > 0){
+//	if(wk->MissionResult.score >= (wk->ArcData[id].param.level[lv].goal*2)){
 		wk->Flag |= FLG_FMA_DOUBLE;
 		// アイテム取得可能か
 		if(wk->MissionResult.sp_item_num > 0){
@@ -1127,7 +1132,11 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 	// クリアタイム(スコア達成型の場合のみ表示)の判定
 	if(wk->Param->fmwk->beacon.end_type == FMISSION_ENDTYPE_SCORE){
 		wk->Flag |= FLG_FMA_CLEAR_TIME;
-		//
+		// クリアタイムのNEW
+		if(wk->MissionResult.new_record_time_f == TRUE){
+			wk->Flag |= FLG_FMA_NEW_CT;
+		}
+#if 0
 		FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &cbuf[0], &cbuf[1] );
 		timer[0] = (s32)((s32)(cbuf[0]*60)+cbuf[1]);		// いままでの記録
 		timer[1] = LINK_FESTIVAL_GetMissionLife( wk->Param->fest_sys );	// 今回の記録
@@ -1137,12 +1146,21 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 				wk->Flag |= FLG_FMA_NEW_CT;
 			}
 		}
+		OS_Printf("time(save)     :%d,%d\n",cbuf[0] ,cbuf[1]);
+		OS_Printf("time(save,now) :%d,%d\n",timer[0],timer[1]);
+#endif
 	}
 	// トータルスコアの判定
+	if(wk->MissionResult.new_record_score_f == TRUE){
+		wk->Flag |= FLG_FMA_NEW_TS;
+	}
+#if 0
 	buf[0] = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
 	if(buf[0] < wk->MissionResult.score){
 		wk->Flag |= FLG_FMA_NEW_TS;
 	}
+	OS_Printf("total score :%d\n",buf[0]);
+#endif
 	// ハイリンクレベルアップの判定
 	if(wk->MissionResult.hilink_level_up > 0){
 		wk->Flag |= FLG_FMA_HILINK;
@@ -1242,8 +1260,18 @@ static void fma_key_result( FMISSION_APP_WORK* wk )
 			if(bflg == FALSE){
 				// 入力待ち
 				if(wk->Flag & FLG_FMA_MSG_END){
-					wk->Step = STEP_LV1;
-					wk->Flag |= FLG_FMA_ME_MES;
+					// MEを鳴らしている場合
+					if( wk->Flag & FLG_FMA_ME_WAIT ){
+						bflg = fma_is_snd_me_end( wk );
+						if(bflg == FALSE){
+							wk->Flag &= ~FLG_FMA_ME_WAIT;
+							wk->Flag |= FLG_FMA_ME_MES;
+							wk->Step = STEP_LV1;
+						}
+					}else{
+						wk->Flag |= FLG_FMA_ME_MES;
+						wk->Step = STEP_LV1;
+					}
 				}else{
 					// MEを鳴らしている場合
 					if( wk->Flag & FLG_FMA_ME_WAIT ){
@@ -1561,6 +1589,8 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]] );
 		WORDSET_ExpandStr( wk->Wordset, str, str_tmp );
 		GFL_STR_DeleteBuffer(str_tmp);
+		//
+		OS_Printf("%d,%d\n",id,buf[1]);
 	}
 	else if(mode == FMA_MES_GAIN){		// 報酬
 		// 報酬アイテム取得
