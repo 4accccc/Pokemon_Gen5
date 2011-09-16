@@ -92,9 +92,6 @@ EVENT_START  ev_pos_r04w_oldman1_02
   _BALLOONWIN_OBJMSG_POS( msg_r04w_stop_01, R04W_OLDMAN1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //「かいりき」入手処理
-  _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN04, 1 )
-
   //じいさん：おせないけどな
   _BALLOONWIN_OBJMSG_POS( msg_r04w_stop_02, R04W_OLDMAN1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -289,8 +286,8 @@ ev_vs_r04w_swboss:
   _BALLOONWIN_OBJMSG_POS( msg_r04w_swboss_10, R04W_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //【仮】トレーナーラベルが仮
-  _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  //トレーナー戦
+  _TRAINER_BTL_SET( TRID_SWBOSS_1_01, 0 )
   //結果チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -304,8 +301,8 @@ ev_vs_r04w_swboss:
   _BALLOONWIN_OBJMSG_POS( msg_r04w_swboss_11, R04W_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //【仮】どうぐ入手処理（入手内容が仮）
-  _ITEM_EVENT_KEYWAIT( ITEM_ORENNOMI, 5 )
+  //どうぐ入手処理：いのちのたま
+	_ITEM_EVENT_KEYWAIT(ITEM_INOTINOTAMA, 1)
 
   //アクロマ：くやしい！
   _PLAYER_NAME( 0 )
