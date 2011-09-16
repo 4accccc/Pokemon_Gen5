@@ -974,6 +974,8 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
 
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_all_people);
+
   RESORT_ABSTRUCT_DATA *p_data;
   void *p_data_adrs;
 
@@ -1082,6 +1084,54 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, phrase );
 
       GFL_STR_SetStringCode( p_str, phrase );
+    
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer(p_str);
+    }
+    break;
+  case RESORT_WORD_FREE_THANKS:
+    GF_ASSERT( p_data );
+    {
+      STRCODE thanks[RESORT_THANKS_LEN+EOM_SIZE];
+      STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_THANKS_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+
+      u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
+      RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT7_THANKS, thanks );
+
+      GFL_STR_SetStringCode( p_str, thanks );
+    
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer(p_str);
+    }
+    break;
+  case RESORT_WORD_OWNER_PHRASE: 
+    {
+      MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(p_gamedata);
+      STRCODE phrase[RESORT_PHRASE_LEN+EOM_SIZE];
+      STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+
+      u32 sex = MyStatus_GetMySex(p_mystatus);
+      RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT6_PHRASE, phrase );
+
+      GFL_STR_SetStringCode( p_str, phrase );
+    
+      WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer(p_str);
+    }
+    break;
+  case RESORT_WORD_OWNER_THANKS: 
+    {
+      MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(p_gamedata);
+      STRCODE thanks[RESORT_THANKS_LEN+EOM_SIZE];
+      STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_THANKS_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+
+      u32 sex = MyStatus_GetMySex(p_mystatus);
+      RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT7_THANKS, thanks );
+
+      GFL_STR_SetStringCode( p_str, thanks );
     
       WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
 
