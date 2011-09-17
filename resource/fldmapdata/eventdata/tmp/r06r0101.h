@@ -11,13 +11,13 @@
 
 #define R06R0101_SWLEADER1_01              0
 #define R06R0101_ASSISTANTM_01             1
-#define R06R0101_ASSISTANTM_03             2
+#define R06R0101_POKE27_01                 2
 #define R06R0101_ASSISTANTM_02             3
 #define R06R0101_ASSISTANTW_01             4
-#define R06R0101_POKE26_01                 5
+#define R06R0101_POKE25_01                 5
 #define R06R0101_POKE28_01                 6
-#define R06R0101_POKE25_01                 7
-#define R06R0101_POKE27_01                 8
+#define R06R0101_POKE26_01                 7
+#define R06R0101_ASSISTANTM_04             8
 #define R06R0101_AMBRELLA_01               9
 
 #endif //ZONE_R06R0101_EVC_H
@@ -25,9 +25,12 @@
 #ifndef ZONE_R06R0101_EVB_H
 #define ZONE_R06R0101_EVB_H
 
-#define BG_R06R0101_CASE_01               0
-#define BG_R06R0101_CASE_02               1
-#define BG_R06R0101_CASE_03               2
-#define BG_R06R0101_CASE_04               3
+#define BG_R06R0101_CASE_03               0
+#define BG_R06R0101_CASE_04               1
+#define BG_R06R0101_CASE_05               2
+#define BG_R06R0101_CASE_07               3
+#define BG_R06R0101_CASE_01               4
+#define BG_R06R0101_CASE_02               5
+#define BG_R06R0101_CASE_06               6
 
 #endif //ZONE_R06R0101_EVB_H

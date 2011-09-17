@@ -25,8 +25,10 @@
 #define FLD_ITEM_92                        9
 #define FLD_ITEM_93                       10
 #define TR_MOUNT_25                       11
-#define D06R0101_SWBELL_01                12
-#define D06R0101_BOSS_01                  13
+#define D06R0101_BOSS_01                  12
+#define D06R0101_WORKMAN2_01              13
+#define D06R0101_SWBELL_01                14
+#define D06R0101_WORKMAN2_02              15
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

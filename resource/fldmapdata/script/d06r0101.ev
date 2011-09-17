@@ -21,29 +21,48 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_init_d06r0101
-_EVENT_DATA    ev_zone_d06r0101
-_EVENT_DATA    ev_pos_d06r0101_swbell_01
-_EVENT_DATA    ev_pos_d06r0101_boss_01
-_EVENT_DATA_END 
+_EVENT_DATA   ev_zone_d06r0101
+_EVENT_DATA   ev_init_d06r0101
+_EVENT_DATA   ev_pos_d06r0101_swbell_01
+_EVENT_DATA   ev_pos_d06r0101_boss_01
+_EVENT_DATA   ev_d06r0101_swbell_01
+_EVENT_DATA   ev_d06r0101_workman2_01
+_EVENT_DATA_END
 
 //主人公座標取得変数
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
-
-/**************************************************************/
-/*  FIELD_INIT_LABEL                                           */
-/**************************************************************/
-INIT_EVENT_START	ev_init_d06r0101
-
-INIT_EVENT_END
-
 /**************************************************************/
 /*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
 INIT_EVENT_START  ev_zone_d06r0101
+
+  //POSイベントを起動させている＆プラズマフリゲート（１回目）を終わらせている
+  IF $WK_SCENE_D06R0101_SWBELL_01 == 1 && $WK_SCENE_D27R0101_FIRST_01 == 4 THEN
+
+    //========================================//
+    //ベルを非表示
+    _FLAG_SET( FV_D06R0101_SWBELL_01 )
+    //========================================//
+
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  FIELD_INIT_LABEL                                           */
+/**************************************************************/
+INIT_EVENT_START  ev_init_d06r0101
+
+  //POSイベントを起動させていない場合はベルを再配置
+  IF $WK_SCENE_D06R0101_SWBELL_01 == 0 THEN
+
+    //ベル再配置（POSイベント用）
+    _OBJ_POS_CHANGE( D06R0101_SWBELL_01, 11, 0, 48, DIR_RIGHT )
+
+  ENDIF
 
 INIT_EVENT_END
 
@@ -106,15 +125,31 @@ EVENT_START   ev_pos_d06r0101_swbell_01
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME_AUTO( D06R0101_SWBELL_01, 15, 40, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
-  _OBJ_DEL( D06R0101_SWBELL_01 )
 
-  //========================================//
-  //ベルを非表示
-  _FLAG_SET( FV_D06R0101_SWBELL_01 )
   //========================================//
   //POSイベント進行
   $WK_SCENE_D06R0101_SWBELL_01 = 1
   //========================================//
+
+  //イベント進行によって分岐
+  //プラズマフリゲート（１回目）を終わらせている
+  IF $WK_SCENE_D27R0101_FIRST_01 == 4 THEN
+
+    //ベル削除
+    _OBJ_DEL( D06R0101_SWBELL_01 )
+
+    //========================================//
+    //ベルを非表示
+    _FLAG_SET( FV_D06R0101_SWBELL_01 )
+    //========================================//
+
+  //プラズマフリゲート（１回目）を終わらせていない
+  ELSE
+
+    //ベル再配置
+    _OBJ_POS_CHANGE( D06R0101_SWBELL_01, 37, 0, 37, DIR_RIGHT )
+
+  ENDIF
 
 EVENT_END
 
@@ -145,6 +180,20 @@ EVENT_START   ev_pos_d06r0101_boss_01
   $WK_SCENE_D06R0101_BOSS_01 = 1
   //========================================//
 
+EVENT_END
+
+/**************************************************************/
+/*  ベル：話しかけ（ストッパー）                              */
+/**************************************************************/
+EVENT_START  ev_d06r0101_swbell_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_swbell_06 )
+EVENT_END
+
+/**************************************************************/
+/*  働くおじさん：話しかけ（ストッパー）                      */
+/**************************************************************/
+EVENT_START  ev_d06r0101_workman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_workeman2_01 )
 EVENT_END
 
 
