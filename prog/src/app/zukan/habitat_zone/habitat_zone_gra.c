@@ -880,6 +880,7 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_root_obj, p_wk->p_clunit, 
       0, 0, 0, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetObjMode(p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK],GX_OAM_MODE_XLU);
 
     // ã§í ëfçﬁånì«Ç›çûÇ› ------------------------------------------------
     
