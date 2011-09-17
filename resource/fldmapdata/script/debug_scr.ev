@@ -38,6 +38,7 @@
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
+  .include "pokewood_scr_def.h"
 
   .include "init_scr_def.h"
   .include "pasokon_def.h"
@@ -104,7 +105,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
-    _GOTO_GAMECLEAR_DEMO( 0 )
+//====↓ ポケウッドチュートリアルの呼び出し方====
+  _FLAG_SET( SYS_FLAG_POKEWOOD_TUTORIAL )
+  _RESERVE_SCRIPT( SCRID_RESERVE_PKWD_ENTRANCE_TUTORIAL )
+  _MAP_CHANGE( ZONE_ID_C15R0201, 14, 21, DIR_UP )
+//====↑ ポケウッドチュートリアルの呼び出し方====
+
+   // _GOTO_GAMECLEAR_DEMO( 0 )
   //_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
   //_GET_CGEAR_STATUS( SCWK_ANSWER )
   //_DEBUG_PRINT_WK( SCWK_ANSWER )
