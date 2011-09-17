@@ -16038,6 +16038,132 @@ swplazmaw_10　白</language>
 ポケモンの　能力を　引き出してるよ</language>
 	</row>
 
+	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">まだ　だいじょうぶ
+だいじょうぶ　だからね！</language>
+		<language name="JPN_KANJI" width="216">まだ　大丈夫
+大丈夫だからね！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+		<language name="JPN_KANJI" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あいてしてくれて　ありがとう！
+うん！　とても　たのしかったよ！</language>
+		<language name="JPN_KANJI" width="216">相手してくれて　ありがとう！
+うん！　とても　楽しかったよ！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">まだ　だいじょうぶ
+だいじょうぶ　だからね！</language>
+		<language name="JPN_KANJI" width="216">まだ　大丈夫
+大丈夫だからね！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+		<language name="JPN_KANJI" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あいてしてくれて　ありがとう！
+うん！　とても　たのしかったよ！</language>
+		<language name="JPN_KANJI" width="216">相手してくれて　ありがとう！
+うん！　とても　楽しかったよ！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_04_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">まだ　だいじょうぶ
+だいじょうぶ　だからね！</language>
+		<language name="JPN_KANJI" width="216">まだ　大丈夫
+大丈夫だからね！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_04_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+		<language name="JPN_KANJI" width="216">あうう……　こういうときは
+こうすれば　いいんだっけ……？</language>
+	</row>
+
+	<row id="TRID_SUPPORT_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あいてしてくれて　ありがとう！
+うん！　とても　たのしかったよ！</language>
+		<language name="JPN_KANJI" width="216">相手してくれて　ありがとう！
+うん！　とても　楽しかったよ！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_03_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">これまでの　じんせいで　つちかった
+すべてを　きみに　ぶつける！</language>
+		<language name="JPN_KANJI" width="216">これまでの　人生で　培った
+すべてを　きみに　ぶつける！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_03_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">……ぼくも　ポケモンも
+あらんかぎりの　ちからを　ふるう！</language>
+		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
+あらん限りの　力を　奮う！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとう
+きみも　ほんとうに　すごいね</language>
+		<language name="JPN_KANJI" width="216">……ありがとう
+きみも　本当に　すごいね</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_04_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">これまでの　じんせいで　つちかった
+すべてを　きみに　ぶつける！</language>
+		<language name="JPN_KANJI" width="216">これまでの　人生で　培った
+すべてを　きみに　ぶつける！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_04_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">……ぼくも　ポケモンも
+あらんかぎりの　ちからを　ふるう！</language>
+		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
+あらん限りの　力を　奮う！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとう
+きみも　ほんとうに　すごいね</language>
+		<language name="JPN_KANJI" width="216">……ありがとう
+きみも　本当に　すごいね</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_05_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">これまでの　じんせいで　つちかった
+すべてを　きみに　ぶつける！</language>
+		<language name="JPN_KANJI" width="216">これまでの　人生で　培った
+すべてを　きみに　ぶつける！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_05_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">……ぼくも　ポケモンも
+あらんかぎりの　ちからを　ふるう！</language>
+		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
+あらん限りの　力を　奮う！</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_1_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ありがとう
+きみも　ほんとうに　すごいね</language>
+		<language name="JPN_KANJI" width="216">……ありがとう
+きみも　本当に　すごいね</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
