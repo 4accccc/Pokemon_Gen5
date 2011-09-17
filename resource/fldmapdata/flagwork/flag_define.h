@@ -810,6 +810,10 @@
 #define FV_D29R0101_STOP                   858 /* 0x035a ヤーコンロード：ストッパー */
 #define FV_D24_PAIR_START_BELL_01          859 /* 0x035b リバースマウンテン：連れ歩きベル */
 #define FV_D24_PAIR_END_BELL_01            860 /* 0x035c リバースマウンテン：連れ歩きベル */
+#define FV_C15_SUNGLASSES_01               861 /* 0x035d ポケウッド：チュートリアル用キャラクター */
+#define FV_D06R0101_WORKMAN2_01            862 /* 0x035e 電気石の洞穴：ストッパー */
+#define FV_PKWD_STAFF_TUTORIAL01           863 /* 0x035f ポケウッド：チュートリアル用 */
+#define FV_PKWD_STAFF_TUTORIAL02           864 /* 0x0360 ポケウッド：チュートリアル用 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2290,7 +2294,7 @@
 #define SYS_FLAG_SUGOI_TSURI_GET          2437 /* 0x0985 すごいつりざお入手フラグ */
 #define SYS_FLAG_FES_TUTORIAL_CLEAR       2438 /* 0x0986 ハイリンクフェス：ミッションを初めてクリアしたフラグ */
 #define SYS_FLAG_NAMINORI_GET             2439 /* 0x0987 なみのり入手フラグ */
-#define SYS_FLAG_POKEWOOD_TUTORIAL        2440 /* 0x0988 ポケウッド：チュートリアル中のフラグ */
+		/* not used  2440(0x0988) */
 		/* not used  2441(0x0989) */
 		/* not used  2442(0x098a) */
 		/* not used  2443(0x098b) */
