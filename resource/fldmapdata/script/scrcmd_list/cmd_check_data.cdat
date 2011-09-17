@@ -715,4 +715,6 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (712)
   { FALSE, FALSE, FALSE }, // NO_CMD (713)
   { FALSE, FALSE, FALSE }, // NO_CMD (714)
+  { TRUE, FALSE, FALSE }, // _SC_GET_ZONE_POKE_ALL_GET (715)
+  { FALSE, FALSE, FALSE }, // NO_CMD (716)
 };

@@ -1591,7 +1591,6 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
     {TRUE,TRUE,TRUE},   // 草地、水辺、釣り
   };
 
-  // @todo 釣竿と波乗り入手状態チェックを入れる
   for( i = 0; i < FLIST_BACK_NORMAL_MAX ; i++ )
   {
     if( (land_type[i][ HABITAT_GROUND_LAND ] == is_l ) &&
@@ -1603,7 +1602,8 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
     }
   }
 
-  ONOUE_Printf("%d %d %d\n",p_data->is_exist_landtype[ HABITAT_GROUND_LAND ],p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ],p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ]);
+  ONOUE_Printf("dt:%d %d %d\n",p_data->is_exist_landtype[ HABITAT_GROUND_LAND ],p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ],p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ]);
+  ONOUE_Printf("fg:%d %d %d\n",is_l,is_w,is_f);
   if( index < 0 )
   {
     GF_ASSERT_MSG(0,"未知の背景タイプが指定されています\n");

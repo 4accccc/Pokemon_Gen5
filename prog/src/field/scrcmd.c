@@ -116,6 +116,7 @@
 #include "scrcmd_h06_gmk.h"
 #include "scrcmd_resort_st.h"
 #include "scrcmd_pokewood_st.h"
+#include "scrcmd_habitat_info.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

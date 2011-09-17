@@ -22,7 +22,7 @@ $season_name = ["四季なし","春","夏","秋","冬"]
 # 地形名
 $ground_type_name = ["土","海","釣"]
 # 地形名詳細
-$info_ground_type_name = ["草地","砂地","沼","洞窟","混合","なし"]
+$info_ground_type_name = ["草地","砂地","沼","洞窟","橋","混合","なし"]
 
 # 出力形式用モンスターデータ
 class CMonsterData
@@ -189,6 +189,7 @@ $zone_group_fom_data = Hash.new
 encount_data.each_key{|zone_id|
   # エラーチェック
   unless $zohe_id_to_zone_group.key?(zone_id.upcase) then raise "不明なゾーンID" end
+
   zone_group = $zohe_id_to_zone_group[zone_id.upcase]
   # キーが存在しない場合は、データ格納先を作成する
   unless zone_group_data.key?(zone_group) then
@@ -221,6 +222,7 @@ form_hash.each_key{|zone_id|
     $zone_group_fom_data[zone_group].concat(form_hash[zone_id])
   end
 }
+
 
 =begin
 
@@ -275,6 +277,7 @@ zone_group_data.each_key{|zone_group|
 
   print "\n"
 }
+
 
 =end
 

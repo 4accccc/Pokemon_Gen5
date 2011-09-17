@@ -2565,6 +2565,84 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_seisoku_result_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]　はし
+すべての　ポケモンを　つかまえました</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:01:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:01:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]　橋
+全ての　ポケモンを　捕まえました</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:01:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:01:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>捕獲条件達成時
+橋</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:02:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_result_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]　はし
+すべての　ポケモンを　みました</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:03:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:03:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]　橋
+全ての　ポケモンを　みました</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:03:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:03:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>みる条件達成時
+橋</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-17T08:03:14" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_seisoku_err_01"
 		Style="Large">
 		<LanguageCell

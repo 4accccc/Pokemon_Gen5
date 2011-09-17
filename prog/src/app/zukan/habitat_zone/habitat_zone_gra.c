@@ -1691,7 +1691,6 @@ static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk )
 {
-  // @todo zukan_detail_map.cÇ∆ÇŸÇ⁄ìØÇ∂èàóùÇ»ÇÃÇ≈ÅAëŒèàÇçlÇ¶ÇÈ
   p_wk->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
   p_wk->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosÇ≈1Å`0Ç…ÇµÇƒÇ¢ÇÈÇÃÇ≈
 

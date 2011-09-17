@@ -24,8 +24,6 @@
 #include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 #include "../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
 
-#include "savedata/misc.h"
-
 //============================================================================================
 //	定数定義
 //============================================================================================
@@ -392,7 +390,7 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
   // リストの表示状態取得
   is_vanish[HABITAT_GROUND_LAND] =  TRUE; // 地上は常にOK
   is_vanish[HABITAT_GROUND_WATERSIDE] =  // 波乗りが使える
-    MISC_GetBadgeFlag( GAMEDATA_GetMiscWork(p_zone_info->p_gdata), BADGE_ID_05 );
+    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET);
   is_vanish[HABITAT_GROUND_FISHING] =  // 釣竿入手
     EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET);
 
@@ -565,9 +563,6 @@ void ZKNCOMM_MakeHabitatListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_LIST_DATA 
   // イベントワーク取得
   EVENTWORK *p_event_wk = GAMEDATA_GetEventWork( p_zone_list->p_gdata );
   
-  // ミスクセーブワーク
-  MISC* p_misc = GAMEDATA_GetMiscWork(p_zone_list->p_gdata);
-  
   // アーカイブハンドル
   ARCHANDLE	*p_handle	= 
     GFL_ARC_OpenDataHandle( ARCID_HABITAT_LIST_DATA , HEAPID_ZUKAN_SYS );
@@ -581,7 +576,7 @@ void ZKNCOMM_MakeHabitatListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_LIST_DATA 
   // リスト状態取得
   is_vanish[HABITAT_GROUND_LAND] = TRUE; // 常にTRUE
   is_vanish[HABITAT_GROUND_WATERSIDE] =  // 波乗りが使える
-    MISC_GetBadgeFlag( p_misc, BADGE_ID_05 );
+    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET);
   is_vanish[HABITAT_GROUND_FISHING] =  // 釣竿入手
     EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET);
 

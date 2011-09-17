@@ -3307,7 +3307,7 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  現在選択中のゾーンにポケモンが生息しているかを調べる
+ *	@brief  現在選択中のゾーンにポケモンが生息していてかつ、行けるかチェック
  *
  *	@param	work 
  *
@@ -3316,6 +3316,9 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 //-----------------------------------------------------------------------------
 static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work ,ZKNDTL_COMMON_WORK* cmn)
 {
+  u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[work->select_data_idx];
+  u8 place_bitflag = work->area_data->season_data[PMSEASON_SPRING].place_bitflag[zkn_area_idx];
+
   // 今の季節の生息地が判明しているとき
   if( work->habitat == HABITAT_KNOWN )
   {
@@ -3323,7 +3326,6 @@ static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work ,ZKNDTL_COMMON_WO
     {
       // 選択判定(1年中同じ時は春のデータしか見ない)
       u8 season_id;
-      u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[work->select_data_idx];
       if( work->appear_rule == APPEAR_RULE_YEAR )
       {
         season_id = work->season_id;
@@ -3337,8 +3339,36 @@ static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work ,ZKNDTL_COMMON_WO
         // 表示状態更新
         if( CheckArrivalZone( work ,cmn ) == TRUE ) 
         {
-          ONOUE_Printf("到着ゾーン\n");
-          return TRUE;
+          // セーブデータ取得
+          GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+          SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( gamedata );
+          HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+          EVENTWORK *p_event_wk = GAMEDATA_GetEventWork( gamedata );
+
+          if( place_bitflag & PLACE_BITFLAG_GROUND_ALL )
+          {
+            ONOUE_Printf("到着ゾーン->地上\n");
+            HABITATLIST_SAVE_SetDefaultGround( p_habitat_sv, HABITAT_GROUND_LAND ); 
+            return TRUE;
+          }
+          else if( (place_bitflag & PLACE_BITFLAG_WATER_ALL) && 
+              (EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET ) == TRUE) )
+          {
+            ONOUE_Printf("到着ゾーン->水上\n");
+            HABITATLIST_SAVE_SetDefaultGround(  p_habitat_sv, HABITAT_GROUND_WATERSIDE ); 
+            return TRUE;
+          }
+          else if( (place_bitflag & PLACE_BITFLAG_FISHING_ALL ) &&
+              (EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET ) == TRUE ) )
+          {
+            ONOUE_Printf("到着ゾーン->釣り\n");
+            HABITATLIST_SAVE_SetDefaultGround(  p_habitat_sv, HABITAT_GROUND_FISHING ); 
+            return TRUE;
+          }
+          else
+          {
+            ONOUE_Printf("到着しているが、まだ地形が開いていない");
+          }
         }
         else
         {

@@ -37,6 +37,8 @@ $season_list = ["春","夏","秋","冬"]
 $item_tbl_list = ["なし","洞窟","橋"]
 #エンカウント率パターンテーブル(FMの値リストと一致している必要アリ)
 $enc_prob_list = ["弱草Lv1","弱草Lv2","強草Lv1","強草Lv2","弱長草Lv1","強長草Lv1","洞窟Lv1","洞窟Lv2","砂漠Lv1","水上Lv1","水上Lv2","沼地Lv1"]
+# 地形名
+$type_name_table = ["草地","砂地","沼","洞窟","橋","混合","なし"]
 
 # 地面タイプ置換え用配列（地面の時のみ置換え、水上はなしに置き換えておく）
 $groud_type_id = [GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUDN_TYPE_CAVE,GROUDN_TYPE_CAVE,GROUND_TYPE_SAND,GROUDN_TYPE_NONE,GROUDN_TYPE_NONE,GROUDN_TYPE_SWAMP]
@@ -481,24 +483,33 @@ class CEncountData
 
       # ホワイトの地形タイプ
       ret_type = gourd_type_merge(white.get_ground_type,white.get_ground_type_ex)
-      zone_hash[zone_name].white_ground_type = ret_type
+      # 季節上で複数の地形を持つ場合なしで上書きはしない
+      unless GROUDN_TYPE_NONE == ret_type then
+        zone_hash[zone_name].white_ground_type = ret_type
+      end
 
       # 地形タイプ保存(ブラック)
       if black_enable == true then
         ret_type = gourd_type_merge(black.get_ground_type,black.get_ground_type_ex)
-        zone_hash[zone_name].black_ground_type = ret_type
+        # 季節上で複数の地形を持つ場合なしで上書きはしない
+        unless GROUDN_TYPE_NONE == ret_type then
+          zone_hash[zone_name].black_ground_type = ret_type
+        end
       else
-        zone_hash[zone_name].black_ground_type =
-                                  zone_hash[zone_name].white_ground_type
+        # 季節上で複数の地形を持つ場合なしで上書きはしない
+        unless GROUDN_TYPE_NONE == ret_type then
+          zone_hash[zone_name].black_ground_type =
+            zone_hash[zone_name].white_ground_type
+        end
       end
 
-      # 出力
-      type_name_table = ["草地","砂地","沼","洞窟","橋","混合","なし"]
-      
-#      puts "---------------------------"
-#      puts "【 %s 】"%zone_name
-#      puts "白地形：%s"%type_name_table[zone_hash[zone_name].white_ground_type]
-#      puts "黒地形：%s"%type_name_table[zone_hash[zone_name].black_ground_type]
+=begin
+      puts "---------------------------"
+      puts "【 %s 】"%zone_name
+      puts "季節：%s"%[$season_list[season]]
+      puts "白地形：%s"%$type_name_table[zone_hash[zone_name].white_ground_type]
+      puts "黒地形：%s"%$type_name_table[zone_hash[zone_name].black_ground_type]
+=end
 
       # データ取得
       white_data = zone_hash[zone_name].white_data
@@ -601,10 +612,7 @@ class CEncountData
       end
 
       # ホワイトデータを登録
-      puts zone_name
-      puts "--------"
       set_form_data( white_table , zone_hash[zone_name] ,season,true)
-      puts "--------"
 
       # ブラックデータ登録
       if black_enable == true then
@@ -648,7 +656,6 @@ class CEncountData
           data.season   = season
           data.is_white = is_white
           dest << data
-          puts "%d,%d,%d,%d"%[data.monsno,data.formno,season,type_id]
         end
       end
     }

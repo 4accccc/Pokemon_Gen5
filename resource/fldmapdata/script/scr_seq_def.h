@@ -15609,5 +15609,32 @@
   .endm
 
 //======================================================================
+// 生息地リスト
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 指定ゾーンのポケモンを全て捕まえたかを取得
+ *
+ * @param zone_group_id    ゾーンID
+ * @param ground_id        地形タイプ
+ * @param ret_wk           コンプリート時にTRUEが帰ってくる
+ *
+ *  @note 地形タイプ
+ *  SCR_HABITAT_TYPE_LAND       (0)   ///<陸地
+ *  SCR_HABITAT_TYPE_SEA        (1)   ///<海
+ *  SCR_HABITAT_TYPE_FISHING    (2)   ///<釣り
+ */
+//--------------------------------------------------------------
+#define _SC_GET_ZONE_POKE_ALL_GET( zone_group_id ,ground_id ,ret_wk ) \
+    _ASM_SC_GET_ZONE_POKE_ALL_GET zone_group_id ,ground_id ,ret_wk
+
+    .macro  _ASM_SC_GET_ZONE_POKE_ALL_GET zone_group_id ,ground_id ,ret_wk
+    .short  EV_SEQ_ZONE_POKE_ALL_GET
+    .short  \zone_group_id
+    .short  \ground_id
+    .short  \ret_wk
+    .endm
+
+//======================================================================
 //======================================================================
 

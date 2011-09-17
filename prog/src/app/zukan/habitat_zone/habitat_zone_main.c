@@ -1052,11 +1052,11 @@ static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
       // リストデータを解析し、必要なデータを作成する
       MakeZoneCommonData( p_wk );
 
-      // 地形アイコン更新
-      RefreshLandTypeIcon( p_wk );
-
       // ポケモンアイコンリストを作成する
       RefreshLandPokeIcon( p_wk );
+
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
 
       // マップウィンドウ（上画面の更新）
       RefreshMapWin( p_wk );
@@ -1239,11 +1239,11 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmIndex( p_clwk , 0);
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
 
-      // 地形アイコン更新
-      RefreshLandTypeIcon( p_wk );
-
       // ポケモンアイコンリストを作成する
       RefreshLandPokeIcon( p_wk );
+
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
 
       // 決定音
       PMSND_PlaySE( SE_SEASON_CHANGE );
@@ -1367,11 +1367,11 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
       // リストデータを解析し、必要なデータを作成する
       MakeZoneCommonData( p_wk );
 
-      // 地形アイコン更新
-      RefreshLandTypeIcon( p_wk );
-
       // ポケモンアイコンリストを作成する
       RefreshLandPokeIcon( p_wk );
+
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
 
       // マップウィンドウ（上画面の更新）
       RefreshMapWin( p_wk );
@@ -1526,11 +1526,11 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
         GF_ASSERT(0);
       }
 
-      // 地形アイコン更新
-      RefreshLandTypeIcon( p_wk );
-
       // ポケモンアイコンリストを作成する
       RefreshLandPokeIcon( p_wk );
+
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
  
       // コンプリートアイコンをセットする
       SetCompIcon( p_wk );
@@ -1582,9 +1582,6 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
           {
             SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
           }
-
-          // 地形を設定
-          HABITATLIST_SAVE_SetDefaultGround( p_wk->p_habitat_sv, p_wk->land_type );
 
           // 地形位置を記憶
           p_wk->default_land_type = p_wk->land_type;
@@ -1644,8 +1641,6 @@ static void SkipLandType( HABITAT_ZONE_WK *p_wk ,BOOL is_skip_r )
       }
     }
   }
-
-  HABITATLIST_SAVE_SetDefaultGround( p_wk->p_habitat_sv, p_wk->land_type );
 }
 
 //----------------------------------------------------------------------------
@@ -2001,7 +1996,15 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
  
   // 地形メッセージIDを取得
-  msg_id = GetLandTypeMsgID( p_wk->land_type,p_list_data->info_ground_type);
+  if( p_wk->list_size > 0 )
+  {
+    msg_id = GetLandTypeMsgID( p_wk->land_type,p_list_data->info_ground_type);
+  }
+  else
+  {
+    // 生息していない場合用メッセージ
+    msg_id = msg_seisoku_zone_09;
+  }
  
   // 季節判定
   if( p_list_data->season_enable == TRUE )
@@ -2104,11 +2107,11 @@ static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO
       msg_seisoku_result_09,  // 砂地
       msg_seisoku_result_10,  // 沼
       msg_seisoku_result_11,  // 洞窟
-      msg_seisoku_result_11,  // 橋
+      msg_seisoku_result_15,  // 橋
       msg_seisoku_result_14,  // 混合
       msg_seisoku_result_14,  // なし
     };
-    //GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
     
     // 地形ごとにメッセージを選択
     msg_id = msg_id_table[info_type];
@@ -2156,11 +2159,11 @@ static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INF
       msg_seisoku_result_02,  // 砂地
       msg_seisoku_result_03,  // 沼
       msg_seisoku_result_04,  // 洞窟
-      msg_seisoku_result_07,  // 橋
+      msg_seisoku_result_16,  // 橋
       msg_seisoku_result_07,  // 混合
       msg_seisoku_result_07,  // なし
     };
-    //GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
+    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
     
     // 地形ごとにメッセージを選択
     msg_id = msg_id_table[info_type];
@@ -2450,12 +2453,6 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void RefreshLandTypeIcon( HABITAT_ZONE_WK *p_wk )
 {
-  // 地形タイプのポケモンが存在しないときはスキップ
-  if( p_wk->land_appear[p_wk->land_type] == FALSE )
-  {
-    ONOUE_Printf("右スキップ\n");
-    SkipLandType( p_wk ,TRUE);
-  }
 
   // 草地ボタンの点灯
   if( p_wk->land_type == HABITAT_GROUND_LAND )
@@ -2540,6 +2537,13 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
 {
   s32 i;
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+
+  // 地形タイプのポケモンが存在しないときはスキップ
+  if( p_wk->land_appear[p_wk->land_type] == FALSE )
+  {
+    ONOUE_Printf("右スキップ\n");
+    SkipLandType( p_wk ,TRUE);
+  }
 
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
   {
@@ -2862,9 +2866,7 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk )
   p_wk->p_habitat_sv    = p_habitat_sv; 
   p_wk->zone_data_cnt   = p_wk->p_init_param->zone_cnt;
 
-  // default地形を設定
-  p_wk->default_land_type = HABITAT_GROUND_LAND;
-
+  
   // データ位置を初期化
   p_wk->zone_data_index = 0;
   // 初期位置を検索する
@@ -2878,6 +2880,8 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk )
     }
   }
 
+  // default地形を設定
+  p_wk->default_land_type = HABITATLIST_SAVE_GetDefaultGround( p_wk->p_habitat_sv );
   p_wk->season    = HABITATLIST_SAVE_GetDefaultSeason( p_wk->p_habitat_sv );
   p_wk->land_type = p_wk->default_land_type;
 }

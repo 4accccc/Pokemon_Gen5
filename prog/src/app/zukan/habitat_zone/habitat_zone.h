@@ -16,12 +16,13 @@
 #include "gamesystem/pm_season.h"
 #include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 
+#include "habitat_zone_arc_data_def.h"
+
 //===================================================================================
 //	定数
 //===================================================================================
 enum{
   HABITAT_ZONE_POKE_DATA_MAX  = 20,   // リストに収まるデータ数
-  HABITAT_ZONE_POKE_LIST_MAX  = 30 ,  // ポケモンデータ最大数
 };
 
 // 戻り値
@@ -49,23 +50,6 @@ typedef enum{
   HABITAT_GROUND_INFO_MULTI,
   HABITAT_GROUND_INFO_NONE,
 }HABITAT_GROUND_INFO_TYPE;
-
-// 生息地リストアーカイブデータ
-typedef struct {
-  u16   monsno; // モンスターナンバー
-  u8    is_appear[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 出現条件 
-  u8    form[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 優先フォルム
-  u8    padding[2];
-}ARC_HABITAT_MONS_DATA;
-
-// 生息地リストアーカイブデータ
-typedef struct {
-  u8    season_enable;
-  u8    land_enable[HABITAT_GROUND_MAX];
-  u16   ground_type;
-  u16   data_num;
-  ARC_HABITAT_MONS_DATA mons_data[HABITAT_ZONE_POKE_LIST_MAX];
-}ARC_HABITAT_ZONE_DATA;
 
 // ポケモンデータ
 typedef struct {

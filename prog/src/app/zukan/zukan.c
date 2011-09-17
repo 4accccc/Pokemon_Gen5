@@ -180,11 +180,12 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	ZKNCOMM_InitDefaultMons( wk->prm->savedata, wk->list, wk->listMax );
 	ZKNCOMM_ResetSortData( wk->prm->savedata, &wk->sort );
   
-  // ゾーン詳細画面のデフォルト季節を設定する
+  // ゾーン詳細画面のデフォルト季節と地形を設定する
   {
     SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
     HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
     HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
+    HABITATLIST_SAVE_SetDefaultGround( p_habitat_sv, HABITAT_GROUND_LAND );
   }
 
 
@@ -888,6 +889,7 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
         SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
         HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
         HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
+        HABITATLIST_SAVE_SetDefaultGround( p_habitat_sv, HABITAT_GROUND_LAND );
       }
       ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_HABITAT);
       ret = SEQ_HABITAT_ZONE_CALL;

@@ -1106,6 +1106,10 @@
   NO_CMD()
   NO_CMD()
 
+  //生息地リスト
+  DEF_CMD( EvCmdCheckZonePokeGetComplete,       EV_SEQ_ZONE_POKE_ALL_GET )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

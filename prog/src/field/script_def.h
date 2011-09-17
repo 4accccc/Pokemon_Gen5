@@ -871,3 +871,11 @@
 #define SCR_PERSON_SECRET_DATE_FIRST    (1)   ///<初回デート
 #define SCR_PERSON_SECRET_DATE_REGULAR  (2)   ///<定期デート
 #define SCR_PERSON_SECRET_DATE_GIVE     (3)   ///<落し物受け渡し
+
+//--------------------------------------------------------------
+//  生息地タイプ
+//--------------------------------------------------------------
+#define SCR_HABITAT_TYPE_LAND       (0)   ///<陸地
+#define SCR_HABITAT_TYPE_SEA        (1)   ///<海
+#define SCR_HABITAT_TYPE_FISHING    (2)   ///<釣り
+
