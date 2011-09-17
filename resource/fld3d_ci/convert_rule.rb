@@ -354,7 +354,7 @@ $cutin_id_array.each{|id|
         bin_data << [ tex_data.cut_w.to_i ].pack( "C" )           # 切り取る幅
         bin_data << [ tex_data.cut_h.to_i ].pack( "C" )           # 切り取る高さ
         bin_data << [ tex_data.ncg_w.to_i ].pack( "C" )           # NCGの幅
-        bin_data << [ 0 ].pack( "C" )      # パディング
+        bin_data << [ tex_data.cut_x.to_i ].pack( "C" )           # NCGの切り取り元X
       end
     end
   }

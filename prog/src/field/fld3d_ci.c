@@ -171,7 +171,7 @@ typedef struct {
   u8 w;                     // 切り抜いた幅
   u8 h;                     // 切り抜いた幅
   u8 ncg_cw;                // NCGの幅(キャラクタ単位)
-  u8 padding;
+  u8 x;                     // 切り取るX
 }EX_TEX_DATA;
 
 typedef struct TEXREPLACE_WORK_tag
@@ -333,6 +333,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const u8 cw ,
                           const u8 ch ,
                           const u8 ncg_cw ,
+                          const u8 cx,
                           const u8 model_id ,
                           const u8 palnum );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
@@ -2284,6 +2285,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const u8 cw ,
                           const u8 ch ,
                           const u8 ncg_cw ,
+                          const u8 cx,
                           const u8 model_id ,
                           const u8 palnum )
 {
@@ -2309,15 +2311,16 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
     NOZOMU_Printf("key = %d %d\n",texkey, palkey);
     NOZOMU_Printf("adr = %x %x\n",tex_adr, pal_adr);
     NOZOMU_Printf("resid = %d\n",GFL_G3D_UTIL_GetUnitResIdx( ptr->Util,0 ) );
-    ONOUE_Printf("============================================\n");
+    OS_Printf("============================================\n");
     ONOUE_Printf("txname = %s\n",inTexName);
     ONOUE_Printf("plname = %s\n",inPlttName);
     ONOUE_Printf("key = %d %d\n",texkey, palkey);
     ONOUE_Printf("adr = %x %x\n",tex_adr, pal_adr);
-    ONOUE_Printf("cw =  %u\n",cw);
-    ONOUE_Printf("ch =  %u\n",ch);
-    ONOUE_Printf("ncg_cw =  %u\n",ncg_cw);
-    ONOUE_Printf("============================================\n\n");
+    OS_Printf("cw =  %u\n",cw);
+    OS_Printf("ch =  %u\n",ch);
+    OS_Printf("ncg_cw =  %u\n",ncg_cw);
+    OS_Printf("cx =  %u\n",cx);
+    OS_Printf("============================================\n\n");
     
   }
 
@@ -2337,7 +2340,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 
       for (y=0; y<ch; y++){
         for(x=0; x<cw; x++){
-          GFL_STD_MemCopy32((void*)(&src[(y*ncg_cw+x)*0x20]), (void*)(&dst[(y*cw+x)*0x20]), 0x20);
+          GFL_STD_MemCopy32((void*)(&src[(y*ncg_cw+x+cx)*0x20]), (void*)(&dst[(y*cw+x)*0x20]), 0x20);
         }
       }
     }
@@ -2486,7 +2489,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
       }
         
       // 転送
-      ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt ,DEFAULT_CHARACTER_W ,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0, 0);
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt ,DEFAULT_CHARACTER_W ,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0 ,0, 0);
     }
     break;
   case 2:
@@ -2507,7 +2510,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
         chr = NARC_fld3d_ci_tex_enc_heroine_up_down_0_16_16_16_LZ_bin;
         plt = NARC_fld3d_ci_tex_enc_heroine_up_down_NCLR;
       }
-      ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt,DEFAULT_CHARACTER_W,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0, 1);
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt,DEFAULT_CHARACTER_W,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0 ,0, 1);
       (*seq)++;
     }
     break;
@@ -2573,6 +2576,7 @@ static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work )
       u8 cw = tex_wk->p_tex_data[trans_cnt].w;
       u8 ch = tex_wk->p_tex_data[trans_cnt].h;
       u8 ncg_cw = tex_wk->p_tex_data[trans_cnt].ncg_cw;
+      u8 cx = tex_wk->p_tex_data[trans_cnt].x;
       if( cw == 0 )
       {
         cw = DEFAULT_CHARACTER_W;
@@ -2588,6 +2592,7 @@ static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work )
           cw,
           ch,
           ncg_cw,
+          cx,
           tex_wk->p_tex_data[trans_cnt].model_id,
           tex_wk->p_tex_data[trans_cnt].pal_id);
       GFL_HEAP_FreeMemory( ptr->chr_buf );

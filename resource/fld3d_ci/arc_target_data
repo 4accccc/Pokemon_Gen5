@@ -189,4 +189,30 @@ ARC_TARGET_DATA = \
 	n_ci01a.nsbta \
 	n_ci01a.nsbva \
 	n_ci01b.nsbma \
-	n_ci01b.nsbva
+	n_ci01b.nsbva \
+	wbt_ci01a.nsbmd \
+	wbt_ci01b.nsbmd \
+	wbt_ci01a.nsbca \
+	wbt_ci01a.nsbva \
+	wbt_ci01a.nsbta \
+	wbt_ci01b.nsbma \
+	wbt_ci01b.nsbta \
+	wbt_ci01b.nsbva \
+	pkwd_ci01a.nsbmd \
+	pkwd_ci01b.nsbmd \
+	pkwd_ci01a.nsbca \
+	pkwd_ci01a.nsbva \
+	pkwd_ci01a.nsbta \
+	pkwd_ci01b.nsbma \
+	pkwd_ci01b.nsbta \
+	pkwd_ci01b.nsbva \
+	get1_627.nsbmd \
+	get1_630.nsbmd \
+	get1_631.nsbmd \
+	get1_632.nsbmd \
+	get1_633.nsbmd \
+	get1_634.nsbmd \
+	get1_635.nsbmd \
+	get2_628.nsbmd \
+	get2_629.nsbmd \
+	get1_medal.nsbmd

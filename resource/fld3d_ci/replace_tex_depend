@@ -200,6 +200,205 @@ cnv_tmp\enc_n_LZ.bin : cnv_tmp\enc_n.NCGR
 cnv_tmp\enc_n.NCLR : replace_tex/VSdemo_Face/enc_n.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
+cnv_tmp\medal_icon_0_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_0_0_4_4.NCGR
+
+cnv_tmp\medal_icon_0_0_4_4_LZ.bin : cnv_tmp\medal_icon_0_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_0_0_4_4.NCGR
+
+cnv_tmp\medal_icon.NCLR : replace_tex/medal/medal_icon.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\medal_icon_4_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/4_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_4_0_4_4.NCGR
+
+cnv_tmp\medal_icon_4_0_4_4_LZ.bin : cnv_tmp\medal_icon_4_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_4_0_4_4.NCGR
+
+cnv_tmp\medal_icon_8_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/8_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_8_0_4_4.NCGR
+
+cnv_tmp\medal_icon_8_0_4_4_LZ.bin : cnv_tmp\medal_icon_8_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_8_0_4_4.NCGR
+
+cnv_tmp\medal_icon_12_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/12_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_12_0_4_4.NCGR
+
+cnv_tmp\medal_icon_12_0_4_4_LZ.bin : cnv_tmp\medal_icon_12_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_12_0_4_4.NCGR
+
+cnv_tmp\medal_icon_16_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/16_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_16_0_4_4.NCGR
+
+cnv_tmp\medal_icon_16_0_4_4_LZ.bin : cnv_tmp\medal_icon_16_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_16_0_4_4.NCGR
+
+cnv_tmp\medal_icon_20_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/20_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_20_0_4_4.NCGR
+
+cnv_tmp\medal_icon_20_0_4_4_LZ.bin : cnv_tmp\medal_icon_20_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_20_0_4_4.NCGR
+
+cnv_tmp\medal_icon_24_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/24_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_24_0_4_4.NCGR
+
+cnv_tmp\medal_icon_24_0_4_4_LZ.bin : cnv_tmp\medal_icon_24_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_24_0_4_4.NCGR
+
+cnv_tmp\medal_icon_28_0_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/28_0_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_28_0_4_4.NCGR
+
+cnv_tmp\medal_icon_28_0_4_4_LZ.bin : cnv_tmp\medal_icon_28_0_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_28_0_4_4.NCGR
+
+cnv_tmp\medal_icon_0_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_0_4_4_4.NCGR
+
+cnv_tmp\medal_icon_0_4_4_4_LZ.bin : cnv_tmp\medal_icon_0_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_0_4_4_4.NCGR
+
+cnv_tmp\medal_icon_4_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/4_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_4_4_4_4.NCGR
+
+cnv_tmp\medal_icon_4_4_4_4_LZ.bin : cnv_tmp\medal_icon_4_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_4_4_4_4.NCGR
+
+cnv_tmp\medal_icon_8_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/8_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_8_4_4_4.NCGR
+
+cnv_tmp\medal_icon_8_4_4_4_LZ.bin : cnv_tmp\medal_icon_8_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_8_4_4_4.NCGR
+
+cnv_tmp\medal_icon_12_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/12_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_12_4_4_4.NCGR
+
+cnv_tmp\medal_icon_12_4_4_4_LZ.bin : cnv_tmp\medal_icon_12_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_12_4_4_4.NCGR
+
+cnv_tmp\medal_icon_16_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/16_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_16_4_4_4.NCGR
+
+cnv_tmp\medal_icon_16_4_4_4_LZ.bin : cnv_tmp\medal_icon_16_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_16_4_4_4.NCGR
+
+cnv_tmp\medal_icon_20_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/20_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_20_4_4_4.NCGR
+
+cnv_tmp\medal_icon_20_4_4_4_LZ.bin : cnv_tmp\medal_icon_20_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_20_4_4_4.NCGR
+
+cnv_tmp\medal_icon_24_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/24_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_24_4_4_4.NCGR
+
+cnv_tmp\medal_icon_24_4_4_4_LZ.bin : cnv_tmp\medal_icon_24_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_24_4_4_4.NCGR
+
+cnv_tmp\medal_icon_28_4_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/28_4_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_28_4_4_4.NCGR
+
+cnv_tmp\medal_icon_28_4_4_4_LZ.bin : cnv_tmp\medal_icon_28_4_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_28_4_4_4.NCGR
+
+cnv_tmp\medal_icon_0_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_0_8_4_4.NCGR
+
+cnv_tmp\medal_icon_0_8_4_4_LZ.bin : cnv_tmp\medal_icon_0_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_0_8_4_4.NCGR
+
+cnv_tmp\medal_icon_4_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/4_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_4_8_4_4.NCGR
+
+cnv_tmp\medal_icon_4_8_4_4_LZ.bin : cnv_tmp\medal_icon_4_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_4_8_4_4.NCGR
+
+cnv_tmp\medal_icon_8_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/8_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_8_8_4_4.NCGR
+
+cnv_tmp\medal_icon_8_8_4_4_LZ.bin : cnv_tmp\medal_icon_8_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_8_8_4_4.NCGR
+
+cnv_tmp\medal_icon_12_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/12_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_12_8_4_4.NCGR
+
+cnv_tmp\medal_icon_12_8_4_4_LZ.bin : cnv_tmp\medal_icon_12_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_12_8_4_4.NCGR
+
+cnv_tmp\medal_icon_16_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/16_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_16_8_4_4.NCGR
+
+cnv_tmp\medal_icon_16_8_4_4_LZ.bin : cnv_tmp\medal_icon_16_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_16_8_4_4.NCGR
+
+cnv_tmp\medal_icon_20_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/20_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_20_8_4_4.NCGR
+
+cnv_tmp\medal_icon_20_8_4_4_LZ.bin : cnv_tmp\medal_icon_20_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_20_8_4_4.NCGR
+
+cnv_tmp\medal_icon_24_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/24_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_24_8_4_4.NCGR
+
+cnv_tmp\medal_icon_24_8_4_4_LZ.bin : cnv_tmp\medal_icon_24_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_24_8_4_4.NCGR
+
+cnv_tmp\medal_icon_28_8_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/28_8_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_28_8_4_4.NCGR
+
+cnv_tmp\medal_icon_28_8_4_4_LZ.bin : cnv_tmp\medal_icon_28_8_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_28_8_4_4.NCGR
+
+cnv_tmp\medal_icon_0_12_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_12_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_0_12_4_4.NCGR
+
+cnv_tmp\medal_icon_0_12_4_4_LZ.bin : cnv_tmp\medal_icon_0_12_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_0_12_4_4.NCGR
+
+cnv_tmp\medal_icon_4_12_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/4_12_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_4_12_4_4.NCGR
+
+cnv_tmp\medal_icon_4_12_4_4_LZ.bin : cnv_tmp\medal_icon_4_12_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_4_12_4_4.NCGR
+
+cnv_tmp\medal_icon_8_12_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/8_12_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_8_12_4_4.NCGR
+
+cnv_tmp\medal_icon_8_12_4_4_LZ.bin : cnv_tmp\medal_icon_8_12_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_8_12_4_4.NCGR
+
+cnv_tmp\medal_icon_12_12_4_4.NCGR : replace_tex/medal/medal_icon.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/12_12_4_4
+	mv  cnv_tmp\medal_icon.NCGR cnv_tmp\medal_icon_12_12_4_4.NCGR
+
+cnv_tmp\medal_icon_12_12_4_4_LZ.bin : cnv_tmp\medal_icon_12_12_4_4.NCGR
+	ntrcomp -l 2 cnv_tmp\medal_icon_12_12_4_4.NCGR
+
 cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp
 

@@ -38,6 +38,35 @@ TARGET_LIST = \
 	cnv_tmp\enc_boss.NCLR \
 	cnv_tmp\enc_n_LZ.bin \
 	cnv_tmp\enc_n.NCLR \
+	cnv_tmp\medal_icon_0_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon.NCLR \
+	cnv_tmp\medal_icon_4_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_8_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_12_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_16_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_20_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_24_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_28_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_0_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_4_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_8_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_12_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_16_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_20_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_24_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_28_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_0_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_4_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_8_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_12_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_16_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_20_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_24_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_28_8_4_4_LZ.bin \
+	cnv_tmp\medal_icon_0_12_4_4_LZ.bin \
+	cnv_tmp\medal_icon_4_12_4_4_LZ.bin \
+	cnv_tmp\medal_icon_8_12_4_4_LZ.bin \
+	cnv_tmp\medal_icon_12_12_4_4_LZ.bin \
 	cnv_tmp\enc_hero_LZ.bin \
 	cnv_tmp\enc_hero.NCLR \
 	cnv_tmp\enc_hero_up_down_0_0_16_16_LZ.bin \
