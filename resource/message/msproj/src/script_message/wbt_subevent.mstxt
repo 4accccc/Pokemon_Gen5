@@ -65,13 +65,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『アタシは　いつだって
-ゆうしょうを　ねらっているの！▼
-だから　こんかいの　けっかに
-なっとく　してないのっ！！</Text>
+			<Text>ホミカ『ゆうしょう　おめでと！▼
+あっ　いまのは
+アンタの　ポケモンたちに　いったの▼
+もちろん　ポケモンを　そだてたのは
+アンタって　しってるけど▼
+ポケモンジムいがいでは　アタシより
+つよい　トレーナーを　ほめないの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:45:37" />
+				Time="2011-09-17T08:24:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -79,13 +82,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『アタシは　いつだって
-優勝を　ねらっているの！▼
-だから　今回の　結果に
-納得してないのっ！！</Text>
+			<Text>ホミカ『優勝　おめでと！▼
+あっ　いまのは
+アンタの　ポケモンたちに　いったの▼
+もちろん　ポケモンを　育てたのは
+アンタって　知ってるけど▼
+ポケモンジム以外では　アタシより
+強い　トレーナーを　ほめないの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:45:54" />
+				Time="2011-09-17T08:24:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -121,10 +127,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ『あー　そーだねー
-むしポケモンは　いいよね</Text>
+むしポケモンは　いいよね▼
+かっても　まけても
+あいかわらず　うつくしいよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:45:17" />
+				Time="2011-09-17T08:24:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -133,10 +141,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーティ『あー　そーだねー
-むしポケモンは　いいよね</Text>
+むしポケモンは　いいよね▼
+勝っても　負けても
+あいかわらず　美しいよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:45:20" />
+				Time="2011-09-17T08:25:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -175,11 +185,11 @@
 がんばりに　こたえるため　そして▼
 はなやかな　スポットを
 あびて　もらいたくて……！▼
-そういう　いみで　あなた
-とても　まぶしかったわよ！</Text>
+そういう　いみで　あなたの　ポケモン
+まぶしいほど　かがやいていた！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:48:15" />
+				Time="2011-09-17T08:29:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -191,11 +201,11 @@
 がんばりに　応えるため　そして▼
 華やかな　スポットを
 浴びて　もらいたくて……！▼
-そういう意味で　あなた
-とても　まぶしかったわよ！</Text>
+そういう意味で　あなたの　ポケモン
+まぶしいほど　輝いていた！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:48:23" />
+				Time="2011-09-17T08:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -348,11 +358,11 @@
 しょうりを　ほっする！▼
 それこそが　いきる　エネルギー！
 きのうの　じぶんを　こえる　ちから！▼
-きみを　たたえつつ
-つぎこそは　かつ！</Text>
+きみの　しょうりを　たたえつつ
+つぎこそは　かならず　かつ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:51:43" />
+				Time="2011-09-17T08:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -364,11 +374,11 @@
 勝利を　欲する！▼
 それこそが　生きる　エネルギー！
 昨日の　自分を　越える　力！▼
-君を　称えつつ
-次こそは　勝つ！</Text>
+君の　勝利を　称えつつ
+次こそは　必ず　勝つ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:52:03" />
+				Time="2011-09-17T08:30:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -463,10 +473,10 @@
 みんなの　いいところを　だせるよう
 かんがえているけど　まだまだね▼
 あっ　わすれてた！
-ゆうしょう　おめでとう！！</Text>
+ゆうしょう　おめでとうね！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:54:03" />
+				Time="2011-09-17T08:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -479,10 +489,10 @@
 みんなの　いいところを　だせるよう
 考えているけど　まだまだね▼
 あっ　忘れてた！
-優勝　おめでとう！！</Text>
+優勝　おめでとうね！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:54:19" />
+				Time="2011-09-17T08:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -532,14 +542,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド『ゆうしょう　か！
+			<Text>ポッド『優勝　か！
 すごいな！▼
-おれも　ゆうしょう　して
-せかいいちの　ほのおつかい▽
+おれも　優勝して
+世界一の　炎使い▽
 ポッド！　って　なりたいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:56:41" />
+				Time="2011-09-17T08:32:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -578,11 +588,11 @@
 くみあわせに　たすけられた▽
 ぶぶんも　あるでしょう▼
 まだまだ　きたえつづけてください▼
-つよくなった　あなたに
-かつことを　もくてきと　しますよ</Text>
+つよくなった　あなたを　めざし
+トレーナーとして　きたえなおしますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:56:26" />
+				Time="2011-09-17T08:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -591,14 +601,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コーン『トーナメントの
-くみあわせに　たすけられた▽
-ぶぶんも　あるでしょう▼
-まだまだ　きたえつづけてください▼
-つよくなった　あなたに
-かつことを　もくてきと　しますよ</Text>
+組み合わせに　助けられた▽
+部分も　あるでしょう▼
+まだまだ　鍛え続けてください▼
+つよくなった　あなたを　めざし
+トレーナーとして　鍛え直しますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:56:41" />
+				Time="2011-09-17T08:37:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -636,12 +646,12 @@
 			<Text>デント『とりあえず　ですけど
 くさポケモンたちの　デリシャスな▽
 みりょくを　ひきだせて　よかったです▼
-……まけたんですけどね▼
+……まけたましたけどね▼
 それよりも
-コングラッチュレーション　でしたよ！</Text>
+コングラッチュレーション　ですよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:57:13" />
+				Time="2011-09-17T08:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -651,13 +661,13 @@
 			Language="JPN_KANJI">
 			<Text>デント『とりあえず　ですけど
 くさポケモンたちの　デリシャスな▽
-みりょくを　ひきだせて　よかったです▼
-……まけたんですけどね▼
+魅力を　ひきだせて　よかったです▼
+……負けましたけどね▼
 それよりも
-コングラッチュレーション　でしたよ！</Text>
+コングラッチュレーション　ですよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:57:16" />
+				Time="2011-09-17T08:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -707,14 +717,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アロエ『しぜんに　たたかえてたね！▼
-それが　いちばん　だよ
-どんなときでも　どんなばあいでも▼
-その　けっかが
-こんかいの　ゆうしょう　なんだろ？</Text>
+			<Text>アロエ『自然に　戦えてたね！▼
+それが　一番だよ
+どんな時でも　どんな場合でも▼
+その結果が
+今回の　優勝なんだろ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:59:33" />
+				Time="2011-09-17T08:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -809,10 +819,10 @@
 うんの　ようそも　あるし
 オレは　まだ　まんぞくしてないぜ！▼
 あっ　おまえの　ゆうしょうを
-うん　とは　おもってないけどな！</Text>
+ラッキーとは　おもってないけどな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:00:16" />
+				Time="2011-09-17T08:40:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -824,11 +834,11 @@
 終わり　だからな▼
 運の　要素も　あるし
 オレは　まだ　満足してないぜ！▼
-あっ　おまえの　ゆうしょうを
-うん　とは　おもってないけどな！</Text>
+あっ　おまえの　優勝を
+ラッキーとは　思ってないけどな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:00:22" />
+				Time="2011-09-17T08:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -983,13 +993,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミクリ『はいぼくの　りゆう……
+			<Text>ミクリ『敗北の　理由……
 それは……！▼
 みずの　イリュージョン！！
-それが　たりていなかったのです</Text>
+それが　足りていなかったのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:20:20" />
+				Time="2011-09-17T08:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1104,18 +1114,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『あっぱれ！
-みごとな　たたかい　だった▼
-わたしの　さいしょの　パートナー
+			<Text>アデク『天晴れ！
+見事な　戦い　だった▼
+わたしの　最初の　パートナー
 メラルバ……　いや▽
-ウルガモスの　たましいは▼
+ウルガモスの　魂は▼
 いまの　パートナーたちにも
-しっかりと　うけつがれている！▼
-そこに　きみの　つよさも
-くわえて　いきたいものだ！</Text>
+しっかりと　受け継がれている！▼
+そこに　きみの　強さも
+加えて　いきたいものだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:37:33" />
+				Time="2011-09-17T08:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1150,10 +1160,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タケシ『</Text>
+			<Text>タケシ『すばらしい……！
+じつに　いい　たたかい　だった▼
+おれは　すなおに
+ゆうしょうしゃを　ほめたたえる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:07" />
+				Time="2011-09-17T09:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1200,10 +1213,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カスミ『</Text>
+			<Text>カスミ『あたしの　じまん……▼
+みずタイプの　ポケモンたちが
+かなわない　なんてね▼
+ほんとう　せかいって　ひろいんだ
+おしえてくれて　ありがとね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:11" />
+				Time="2011-09-17T08:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1250,10 +1267,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マチス『</Text>
+			<Text>マチス『ユーは　ベリー　ストロング！▼
+ミーも　まけずに　スパルタで
+ポケモン　ナンバーワンに　しまーす！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:15" />
+				Time="2011-09-17T08:56:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1300,10 +1319,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリカ『</Text>
+			<Text>エリカ『あら？　けっこうな
+おてまえ　でしたわね▼
+また　おあいて　してくださると
+わたくしも　えがおに　なれますわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:19" />
+				Time="2011-09-17T08:56:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1350,10 +1372,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナツメ『</Text>
+			<Text>ナツメ『……あなたの　ゆうしょう
+じつは　よち　できていたのよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:22" />
+				Time="2011-09-17T09:26:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1400,10 +1423,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カツラ『</Text>
+			<Text>カツラ『うおおーいっ！▼
+こんかいの　ゆうしょうは
+なっとくの　つよさ　だな！▼
+わしも　つぎは　さらに　あつく
+もえて　ファイヤー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:27" />
+				Time="2011-09-17T08:51:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1450,10 +1477,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サカキ『……これで　とうぜん</Text>
+			<Text>サカキ『……いっておく▼
+どれだけ　つよくても
+いつかは　まけるのだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:44:35" />
+				Time="2011-09-17T08:46:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1461,11 +1490,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サカキ
-かりメッセージ</Text>
+			<Text>サカキ『……いっておく▼
+どれだけ　強くても
+一敗地に　まみれることも　ある</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:07:36" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T08:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1550,10 +1580,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ツクシ『</Text>
+			<Text>ツクシ『……むしポケモンの　ことなら
+だれにも　まけないよ！▼
+こういっていたのが　はずかしいです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:23:42" />
+				Time="2011-09-17T09:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7838,15 +7870,16 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ツツジ
-かりメッセージ▼
+			<Text>ツツジさーん！▼
+トレーナーズスクールの　せんせい　で
+カナズミシティの　ジムリーダーでもある！▼
 ちなみに　オレが　じょせいに
 ちゃんとか　さんとか　つけるのは▽
-あくまで　イメージだ▼
-だって　ねんれいまで　しらないもの</Text>
+あくまで　イメージだぞ▼
+だって　ねんれいまで　しらないもの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:59:39" />
+				Time="2011-09-17T10:37:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7854,11 +7887,16 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ツツジ
-かりメッセージ</Text>
+			<Text>ツツジさーん！▼
+トレーナーズスクールの　せんせい　で
+カナズミシティの　ジムリーダーでもある！▼
+ちなみに　オレが　じょせいに
+ちゃんとか　さんとか　つけるのは▽
+あくまで　イメージだぞ▼
+だって　ねんれいまで　しらないもの▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7893,11 +7931,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウキ
-かりメッセージ</Text>
+			<Text>トウキ　か
+ムロシティの　ジムリーダーだ▼
+ジムリーダー　だっけ？
+サーファー　だっけ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7905,11 +7945,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウキ
-かりメッセージ</Text>
+			<Text>トウキ　か
+ムロシティの　ジムリーダーだ▼
+ジムリーダー　だっけ？
+サーファー　だっけ？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7944,11 +7986,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テッセン
-かりメッセージ</Text>
+			<Text>テッセン　ね▼
+キンセツシティの　ジムリーダーだな▼
+いつも　えがおで　いるのが
+けんこうの　ひけつ　らしいぜ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:27:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7956,11 +8000,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テッセン
-かりメッセージ</Text>
+			<Text>テッセン　ね▼
+キンセツシティの　ジムリーダーだな▼
+いつも　えがおで　いるのが
+けんこうの　ひけつ　らしいぜ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7995,11 +8041,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アスナさん！
-かりメッセージ</Text>
+			<Text>アスナさんッ！▼
+フエンシティの　わかき　ジムリーダーで
+おんせんずき　らしいな！▼
+あと　かのじょの　おじいちゃんは
+してんのう　だったらしいぜ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:59:05" />
+				Time="2011-09-17T10:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8007,11 +8056,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アスナ
-かりメッセージ</Text>
+			<Text>アスナさんッ！▼
+フエンシティの　わかき　ジムリーダーで
+おんせんずき　らしいな！▼
+あと　かのじょの　おじいちゃんは
+してんのう　だったらしいぜ！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8046,11 +8098,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>センリ
-かりメッセージ</Text>
+			<Text>センリ　ね▼
+トウカシティの　ジムリーダーで
+ホウエンちほうで　ゆうめいな▽
+オダマキはかせの　ともだちさ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8058,11 +8112,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>センリ
-かりメッセージ</Text>
+			<Text>センリ　ね▼
+トウカシティの　ジムリーダーで
+ホウエンちほうで　ゆうめいな▽
+オダマキはかせの　ともだちさ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8097,11 +8153,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナギちゃーん！
-かりメッセージ</Text>
+			<Text>ナギちゃーん！！▼
+ヒワマキシティの　ジムリーダーで
+まさに　せかいに　はばたく　そんざい▼
+この　トーナメントに
+ぴったりな　トレーナーだよな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:58:59" />
+				Time="2011-09-17T10:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8109,11 +8168,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナギ
-かりメッセージ</Text>
+			<Text>ナギちゃーん！！▼
+ヒワマキシティの　ジムリーダーで
+まさに　せかいに　はばたく　そんざい▼
+この　トーナメントに
+ぴったりな　トレーナーだよな！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8148,11 +8210,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウね！
-ランちゃんと　ふたごの　ジムリーダー</Text>
+			<Text>フウは　トクサネシティの
+ジムリーダー　だな▼
+ふたごの　ランちゃんと　いっしょに
+ダブルバトル　してくるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:58:37" />
+				Time="2011-09-17T10:10:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8160,11 +8224,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウ
-かりメッセージ</Text>
+			<Text>フウは　トクサネシティの
+ジムリーダー　だな▼
+ふたごの　ランちゃんと　いっしょに
+ダブルバトル　してくるよ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8199,11 +8265,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランちゃんね！
-フウと　ふたごの　ジムリーダー</Text>
+			<Text>ランちゃんね！▼
+トクサネシティの　ジムリーダーを
+ふたごである　フウと　やってるよ！▼
+ふたご　だけあって
+ダブルバトルが　とくい　なんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:58:26" />
+				Time="2011-09-17T10:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8211,11 +8280,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ラン
-かりメッセージ</Text>
+			<Text>ランちゃんね！▼
+トクサネシティの　ジムリーダーを
+ふたごである　フウと　やってるよ！▼
+ふたご　だけあって
+ダブルバトルが　とくい　なんだ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8250,11 +8322,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アダン
-かりメッセージ</Text>
+			<Text>アダン！▼
+ミクリの　ししょうでも　ある
+ルネシティの　ジムリーダーだ▼
+ま　ダンディ　なんだろうな▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8262,11 +8336,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アダン
-かりメッセージ</Text>
+			<Text>アダン！▼
+ミクリの　ししょうでも　ある
+ルネシティの　ジムリーダーだ▼
+ま　ダンディ　なんだろうな▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T10:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8301,11 +8377,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒョウタ　ね
-かりメッセージ</Text>
+			<Text>ヒョウタ　ね▼
+クロガネシティの
+わかき　ジムリーダーだよ▼
+まちの　たんこうで　はたらく
+にんげんを　たばねてるってさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:57:46" />
+				Time="2011-09-17T09:49:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8313,11 +8392,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒョウタ
-かりメッセージ</Text>
+			<Text>ヒョウタ　ね▼
+クロガネシティの
+わかき　ジムリーダーだよ▼
+まちの　たんこうで　はたらく
+にんげんを　たばねてるってさ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8353,10 +8435,14 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ナタネちゃん！
-ああみえて　ゆうれいが～</Text>
+ゆうれいが　こわいんだって！▼
+ハクタイシティの
+れっきとした　ジムリーダーなのに！▼
+とはいえ　にんげん　だれにでも
+にがては　あるもんだよな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:56:18" />
+				Time="2011-09-17T09:47:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8364,11 +8450,15 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナタネ
-かりメッセージ</Text>
+			<Text>ナタネちゃん！
+ゆうれいが　こわいんだって！▼
+ハクタイシティの
+れっきとした　ジムリーダーなのに！▼
+とはいえ　にんげん　だれにでも
+にがては　あるもんだよな！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8403,11 +8493,16 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メリッサさん！
-あのひと～</Text>
+			<Text>メリッサさん！▼
+あの　ひとは　はでな　みためで
+ごかい　されやすいが▽
+こころやさしい　ジムリーダーさ！▼
+ヨスガシティ　ちかくの
+ロストタワーで　ねむる▽
+たましいを　なぐさめたりさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:56:07" />
+				Time="2011-09-17T09:46:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8415,11 +8510,16 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メリッサ
-かりメッセージ</Text>
+			<Text>メリッサさん！▼
+あの　ひとは　はでな　みためで
+ごかい　されやすいが▽
+こころやさしい　ジムリーダーさ！▼
+ヨスガシティ　ちかくの
+ロストタワーで　ねむる▽
+たましいを　なぐさめたりさ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8455,10 +8555,13 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>スモモちゃん！
-はだしの　てんさいかくとうか！</Text>
+はだしの　てんさいかくとうか！▼
+トバリシティの　ジムリーダーでな
+つよいとは　どういうことか▽
+しんけんに　とりくんでいるんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:55:59" />
+				Time="2011-09-17T09:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8466,11 +8569,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スモモ
-かりメッセージ</Text>
+			<Text>スモモちゃん！
+はだしの　てんさいかくとうか！▼
+トバリシティの　ジムリーダーでな
+つよいとは　どういうことか▽
+しんけんに　とりくんでいるんだよ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8505,11 +8611,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マキシ！
-プロレスラー</Text>
+			<Text>マキシ！▼
+プロレスラーと　ジムリーダーの
+２そくの　わらじを　はく　おとこ▼
+ファイトマネーは　ノモセシティの
+ために　つかう　みあげた　やつさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:57:29" />
+				Time="2011-09-17T09:39:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8517,11 +8626,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マキシ
-かりメッセージ</Text>
+			<Text>マキシ！▼
+プロレスラーと　ジムリーダーの
+２そくの　わらじを　はく　おとこ▼
+ファイトマネーは　ノモセシティの
+ために　つかう　みあげた　やつさ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8557,10 +8669,13 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>トウガン！
-ちなみに　ヒョウタの　ちちおや</Text>
+ミオシティの　ジムリーダーだね▼
+いつも　スコップを　もってるな
+ちなみに　クロガネシティ
+ジムリーダー　ヒョウタの　ちちおや▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:57:21" />
+				Time="2011-09-17T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8568,11 +8683,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウガン
-かりメッセージ</Text>
+			<Text>トウガン！
+ミオシティの　ジムリーダーだね▼
+いつも　スコップを　もってるな
+ちなみに　クロガネシティ
+ジムリーダー　ヒョウタの　ちちおや▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8607,11 +8725,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スズナちゃん！
-きあいの～</Text>
+			<Text>スズナちゃん！▼
+きあいの　はいった
+キッサキシティの　ジムリーダー！▼
+それに　まちにある
+しんでんの　ばんにん　でもあるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:57:41" />
+				Time="2011-09-17T09:38:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8619,11 +8740,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スズナ
-かりメッセージ</Text>
+			<Text>スズナちゃん！▼
+きあいの　はいった
+キッサキシティの　ジムリーダー！▼
+それに　まちにある
+しんでんの　ばんにん　でもあるぜ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8658,11 +8782,13 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デンジ
-かりメッセージ</Text>
+			<Text>デンジ　ね……▼
+ナギサシティの　ジムリーダーで
+ポケモンジムを　かいぞう　しては▽
+まちを　ていでん　させてしまうぜ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8670,11 +8796,13 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デンジ
-かりメッセージ</Text>
+			<Text>デンジ　ね……▼
+ナギサシティの　ジムリーダーで
+ポケモンジムを　かいぞう　しては▽
+まちを　ていでん　させてしまうぜ▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8709,11 +8837,11 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＢＷ主人公♂
-かりメッセージ</Text>
+			<Text>トウヤ……？
+つよいらしいけど　よく　しらないね▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:38:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8721,11 +8849,11 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＢＷ主人公♂
-かりメッセージ</Text>
+			<Text>トウヤ……？
+強いらしいけど　よく　知らないね</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8760,11 +8888,11 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＢＷ主人公♀
-かりメッセージ</Text>
+			<Text>トウコちゃん……？
+つよいらしいけど　よく　しらないね▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:38:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8772,11 +8900,11 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＢＷ主人公♀
-かりメッセージ</Text>
+			<Text>トウコちゃん……？
+強いらしいけど　よく　知らないね</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:45:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:34:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8811,12 +8939,14 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼
-まだジムリーダーとたたかっていない
-じょうたいで　はなしかけたとき</Text>
+			<Text>おれさ　つよい　トレーナーのこと
+すっごく　くわしいのよ！▼
+だからさ　おまえが
+ジムリーダーとかと　たたかったら▽
+どんな　やつか　おしえてやるよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T03:52:56" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:57:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8824,12 +8954,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼
-まだジムリーダーとたたかっていない
-じょうたいで　はなしかけたとき</Text>
+			<Text>おれさ　つよい　トレーナーのこと
+すっごく　くわしいのよ！▼
+だからさ　おまえが
+ジムリーダーとかと　たたかったら▽
+どんな　やつか　おしえてやるよ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T03:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T09:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8854,7 +8986,7 @@ msg_wbt_subev_sinou_～</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
