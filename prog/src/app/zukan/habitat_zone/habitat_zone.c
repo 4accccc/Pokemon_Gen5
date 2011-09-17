@@ -107,6 +107,7 @@ static GFL_PROC_RESULT ZukanHabitatZone_Init( GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT ZukanHabitatZone_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   HABITAT_ZONE_WK *p_wk = mywk;
+  
 
   // ƒƒCƒ“ŠÖ”‚ğŒÄ‚Ño‚·
   if( HABITAT_ZONE_Main( p_wk ) )

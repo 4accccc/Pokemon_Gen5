@@ -1002,38 +1002,54 @@ static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MAINSEQ_AppInit( HABITAT_ZONE_WK *p_wk )
 {
-  // フォントウィンドウのクリア
-  HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_INFO_WIN , 0 ,&p_wk->gra_sys );
-  
-  // 通信アイコンを表示
-  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_HABITAT_ZONE );
- 
-  // アプリケーションに必要なデータを取得する
-  CreateAppData( p_wk );
+  switch(p_wk->sub_seq)
+  {
+  case 0:
+    {
+      // フォントウィンドウのクリア
+      HABITAT_ZONE_GRA_BmpFil( PRINT_UTIL_INFO_WIN , 0 ,&p_wk->gra_sys );
 
-  // リストデータを解析し、必要なデータを作成する
-  MakeZoneCommonData( p_wk );
+      // 通信アイコンを表示
+      GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_HABITAT_ZONE );
 
-  // 地形アイコン更新
-  RefreshLandTypeIcon( p_wk );
+      // アプリケーションに必要なデータを取得する
+      CreateAppData( p_wk );
 
-  // ポケモンアイコンリストを作成する
-  RefreshLandPokeIcon( p_wk );
+      // リストデータを解析し、必要なデータを作成する
+      MakeZoneCommonData( p_wk );
 
-  // マップウィンドウ（上画面の更新）
-  RefreshMapWin( p_wk );
- 
-  // コンプリートアイコンをセットする
-  SetCompIcon( p_wk );
+      // 地形アイコン更新
+      RefreshLandTypeIcon( p_wk );
 
-  // ショートカットアイコンを設定
-  SetShortCutButtonCutAnmSeq( p_wk );
+      // ポケモンアイコンリストを作成する
+      RefreshLandPokeIcon( p_wk );
 
-  // フェードシーケンスに移行
-  SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
+      // マップウィンドウ（上画面の更新）
+      RefreshMapWin( p_wk );
 
-  // メインシーケンスの状態を継続に設定
-  p_wk->main_status = HABITAT_ZONE_MAIN_CONTINUE;
+      // コンプリートアイコンをセットする
+      SetCompIcon( p_wk );
+
+      // ショートカットアイコンを設定
+      SetShortCutButtonCutAnmSeq( p_wk );
+
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // ポケモンアイコン転送待ち
+      if( HABITAT_ZONE_GRA_CheckPokeIconTranceEnd(&p_wk->gra_sys) )
+      {
+        // フェードシーケンスに移行
+        SetNextSeq( p_wk ,MAIN_SEQ_FADEIN ,SEQ_CHANGE_PARAM_NONE );
+
+        // メインシーケンスの状態を継続に設定
+        p_wk->main_status = HABITAT_ZONE_MAIN_CONTINUE;
+      }
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1205,36 +1221,39 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
     break;
   case 1:
     {
-      // アニメーション終了待ち、音待ち
-      if( !PMSND_CheckPlaySE() )
+      if( HABITAT_ZONE_GRA_CheckPokeIconTranceEnd(&p_wk->gra_sys) )
       {
-        if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
+        // アニメーション終了待ち、音待ち
+        if( !PMSND_CheckPlaySE() )
         {
-          GFL_CLWK *p_clwk_no_anm;
-          // アニメーションシーケンスを決定、アニメーションしていないほうと同じフレーム数に同期する
-          if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+          if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
           {
-            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-            GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L );
-            GFL_CLACT_WK_ResetAnm( p_clwk );
-            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+            GFL_CLWK *p_clwk_no_anm;
+            // アニメーションシーケンスを決定、アニメーションしていないほうと同じフレーム数に同期する
+            if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+            {
+              p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+              GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L );
+              GFL_CLACT_WK_ResetAnm( p_clwk );
+              GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+            }
+            else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
+            {
+              p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+              GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R );
+              GFL_CLACT_WK_ResetAnm( p_clwk );
+              GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+            }
+
+            // アニメーションを開始
+            GFL_CLACT_WK_StartAnm( p_no_anm_clwk );
+
+            // デフォルトの季節を設定
+            HABITATLIST_SAVE_SetDefaultSeason( p_wk->p_habitat_sv, p_wk->season );
+
+            // キー入力状態に切替
+            SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
           }
-          else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
-          {
-            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-            GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R );
-            GFL_CLACT_WK_ResetAnm( p_clwk );
-            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
-          }
-
-          // アニメーションを開始
-          GFL_CLACT_WK_StartAnm( p_no_anm_clwk );
-
-          // デフォルトの季節を設定
-          HABITATLIST_SAVE_SetDefaultSeason( p_wk->p_habitat_sv, p_wk->season );
-
-          // キー入力状態に切替
-          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
         }
       }
     }
@@ -1344,21 +1363,24 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
     break;
   case 2:
     {
-      // 文字描画終了を待ってキー入力状態に以降
-      if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      if( HABITAT_ZONE_GRA_CheckPokeIconTranceEnd(&p_wk->gra_sys) )
       {
-        HABITATLIST_STATUS event;
-        event = CheckCompleteEvent( p_wk );
-        if( event != HABITAT_ZONE_STATUS_NONE )
+        // 文字描画終了を待ってキー入力状態に以降
+        if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
         {
-          // イベントIDを設定する
-          SetCompleteEvetnID( p_wk ,event );
-          SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
-        }
-        else
-        {
-          // キー入力状態に切替(はんこアイコン表示)
-          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          HABITATLIST_STATUS event;
+          event = CheckCompleteEvent( p_wk );
+          if( event != HABITAT_ZONE_STATUS_NONE )
+          {
+            // イベントIDを設定する
+            SetCompleteEvetnID( p_wk ,event );
+            SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+          }
+          else
+          {
+            // キー入力状態に切替(はんこアイコン表示)
+            SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          }
         }
       }
     }
@@ -1518,28 +1540,31 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
     break;
   case 2:
     {
-      // 文字描画終了を待ってキー入力状態に以降
-      if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
+      if( HABITAT_ZONE_GRA_CheckPokeIconTranceEnd(&p_wk->gra_sys) )
       {
-        HABITATLIST_STATUS event;
-        event = CheckCompleteEvent( p_wk );
-        if( event != HABITAT_ZONE_STATUS_NONE )
+        // 文字描画終了を待ってキー入力状態に以降
+        if( HABITAT_ZONE_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
         {
-          // イベントIDを設定する
-          SetCompleteEvetnID( p_wk ,event );
-          SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+          HABITATLIST_STATUS event;
+          event = CheckCompleteEvent( p_wk );
+          if( event != HABITAT_ZONE_STATUS_NONE )
+          {
+            // イベントIDを設定する
+            SetCompleteEvetnID( p_wk ,event );
+            SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+          }
+          else
+          {
+            SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          }
+
+          // 地形を設定
+          HABITATLIST_SAVE_SetDefaultGround( p_wk->p_habitat_sv, p_wk->land_type );
         }
         else
         {
-          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          ONOUE_Printf("描画待ち\n");
         }
-        
-        // 地形を設定
-        HABITATLIST_SAVE_SetDefaultGround( p_wk->p_habitat_sv, p_wk->land_type );
-      }
-      else
-      {
-        ONOUE_Printf("描画待ち\n");
       }
     }
     break;
@@ -2495,8 +2520,8 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
 
   for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i ++ )
   {
-    // 全てのポケモンアイコンを削除する
-    HABITAT_ZONE_GRA_DeletePokeIcon( &p_wk->gra_sys ,i );
+    // 全てのポケモンアイコンを非表示にする
+    HABITAT_ZONE_GRA_SetSetDrawEnableIcon( &p_wk->gra_sys ,i ,FALSE );
 
     // 全てのカーソルを見えない状態にする
     HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,

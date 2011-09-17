@@ -251,6 +251,14 @@ typedef enum{
 //
 //=============================================================================
 
+// ポケモンアイコン転送データ
+typedef struct {
+  BOOL is_trance;
+  u16 monsno;
+  u32 form_no;
+  u32 sex;
+}POKEICON_TRANCE_DATA;
+
 // ゾーン詳細画面ワーク:グラフィック
 typedef struct {
   // ゲームデータ
@@ -266,7 +274,9 @@ typedef struct {
   // ポケアイコン ------------------------------------
   UI_EASY_CLWK_RES  clres_poke_icon[HABITAT_ZONE_POKE_LIST_MAX];
   GFL_CLWK          *p_clwk_poke_icon[HABITAT_ZONE_POKE_LIST_MAX];
-  
+  ARCHANDLE         *p_pokeicon_ah;
+  POKEICON_TRANCE_DATA icon_trance_data[HABITAT_ZONE_POKE_LIST_MAX];
+ 
   // 共通OBJリソース
   UI_EASY_CLWK_RES  clres_common_obj;
   GFL_CLWK          *p_clwk_common_obj[COMMON_OBJ_WK_MAX];
@@ -304,6 +314,7 @@ typedef struct {
   APP_KEYCURSOR_WORK        *p_cursor;
   BOOL                      is_cursor_draw;
 
+
 }HABITAT_ZONE_GRA_WK;
 
 //=============================================================================
@@ -324,7 +335,7 @@ extern GFL_CLWK* HABITAT_ZONE_GRA_GetComClWk(
 extern void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
                       GRA_LANDICON_TYPE icon_type, GRA_LANDICON_STATUS status );
 extern void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u32 form_no, u32 sex,u8 index );
-extern void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index );
+extern void HABITAT_ZONE_GRA_SetSetDrawEnableIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index,BOOL is_draw );
 extern void HABITAT_ZONE_GRA_SetCursorStatus( HABITAT_ZONE_GRA_WK *p_wk ,
                                     u8 index ,GRA_POKEICON_CURSOR_STATUS status );
 extern void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,
@@ -342,4 +353,5 @@ extern void HABITAT_ZONE_GRA_CallFade( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 e
 extern u16 HABITAT_ZONE_GRA_CheckFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL is_main  );
 extern void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type  );
+extern BOOL HABITAT_ZONE_GRA_CheckPokeIconTranceEnd( HABITAT_ZONE_GRA_WK *p_wk );
 

@@ -115,6 +115,7 @@ static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk );
 static GFL_BMPWIN* GetBmpWin( HABITAT_ZONE_GRA_WK *p_wk ,PRINT_UTIL_WIN win_id);
 static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_ReLoadBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type );
+static void GRA_TrancePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -154,6 +155,9 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   // タウンマップデータ
   p_wk->p_townmap_data = TOWNMAP_DATA_Alloc( HEAPID_ZUKAN_HABITAT_ZONE );
 
+  // アーカイブハンドル取得
+	p_wk->p_pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_ZUKAN_HABITAT_ZONE );
+
   // 初期化
   GRA_InitVram();           // VRAM
   GRA_InitBg();             // BG
@@ -183,6 +187,9 @@ void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk )
 
   // タウンマップデータ
   TOWNMAP_DATA_Free( p_wk->p_townmap_data );
+
+  // ポケモンアイコングラフィックのアーカイブハンドル
+  GFL_ARC_CloseDataHandle( p_wk->p_pokeicon_ah );
 
   // BMPWINの開放
   GRA_ExitBmpWin( p_wk );
@@ -227,7 +234,41 @@ void HABITAT_ZONE_GRA_Exit( HABITAT_ZONE_GRA_WK *p_wk )
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk )
 {
+  s32 index;
 	GFL_CLACT_SYS_VBlankFunc();
+
+  // 転送待ちポケモンアイコンを転送
+  for( index = 0; index < HABITAT_ZONE_POKE_LIST_MAX; index++ )
+  {
+    if(p_wk->icon_trance_data[index].is_trance == TRUE )
+    {
+      GRA_TrancePokeIcon( p_wk ,index);
+      p_wk->icon_trance_data[index].is_trance = FALSE;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコン転送終了チェック
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL HABITAT_ZONE_GRA_CheckPokeIconTranceEnd( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  s32 index;
+  // ポケモンアイコンが全て転送済みかチェック
+  for( index = 0; index < HABITAT_ZONE_POKE_LIST_MAX; index++ )
+  {
+    if(p_wk->icon_trance_data[index].is_trance == TRUE )
+    {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -708,6 +749,7 @@ static void GRA_LoadBgGraphic(void)
 static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
 {
   s32 i;
+
   // アプリ常駐OBJリソース読み込み
   {
     UI_EASY_CLWK_RES_PARAM prm;
@@ -873,6 +915,15 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
 
   }
 
+  // ポケモンアイコンロード
+  for( i = 0; i < HABITAT_ZONE_POKE_LIST_MAX; i++ )
+  {
+    // リソース読み込み
+    GFL_CLACTPOS pos;
+    GFL_CLWK *p_clwk = GRA_LoadPokeIcon( p_wk , 0,0,0,i );
+    GRA_GetPokeIconPos( i ,&pos );
+    GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1403,11 +1454,53 @@ void HABITAT_ZONE_GRA_SetLnadTypeIcon( HABITAT_ZONE_GRA_WK *p_wk ,
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_SetPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u16 monsno ,u32 form_no, u32 sex,u8 index )
 {
-  // リソース読み込み
-  GFL_CLACTPOS pos;
-  GFL_CLWK *p_clwk = GRA_LoadPokeIcon( p_wk , monsno,form_no,sex,index );
-  GRA_GetPokeIconPos( index ,&pos );
-  GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_MAIN );
+  p_wk->icon_trance_data[index].is_trance = TRUE;
+  p_wk->icon_trance_data[index].monsno = monsno;
+  p_wk->icon_trance_data[index].form_no = form_no;
+  p_wk->icon_trance_data[index].sex = sex;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンアイコンを転送する
+ *
+ *	@param	*p_wk 
+ *	@param	index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void GRA_TrancePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index )
+{
+	NNSG2dCharacterData * chr;
+	void * buf;
+
+  u32 monsno  = p_wk->icon_trance_data[index].monsno;
+  u8  form_no = p_wk->icon_trance_data[index].form_no;
+  u8  sex     = p_wk->icon_trance_data[index].sex;
+
+  // キャラクターデータの読み込み
+	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
+					p_wk->p_pokeicon_ah, 
+          POKEICON_GetCgxArcIndexByMonsNumber(monsno,form_no,sex,FALSE),
+          FALSE, &chr, HEAPID_ZUKAN_HABITAT_ZONE );
+
+  // キャラクタの置換え
+  GFL_CLGRP_CGR_ReplaceEx(
+      GFL_CLACT_WK_GetCgrIndex(p_wk->p_clwk_poke_icon[index]),
+      chr->pRawData, POKEICON_SIZE_CGX, 0, CLSYS_DRAW_MAIN );
+  GFL_CLGRP_CGR_Replace( 
+      GFL_CLACT_WK_GetCgrIndex(p_wk->p_clwk_poke_icon[index]),chr );
+
+  GFL_CLACT_WK_SetPlttOffs(
+      p_wk->p_clwk_poke_icon[index], POKEICON_GetPalNum(monsno,form_no,sex,FALSE),
+      CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+  // 開放処理
+  GFL_HEAP_FreeMemory( buf );
+
+  // 表示する
+  HABITAT_ZONE_GRA_SetSetDrawEnableIcon( p_wk ,index ,TRUE);
 }
 
 //----------------------------------------------------------------------------
@@ -1433,7 +1526,7 @@ void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ポケモンアイコンを削除する
+ *	@brief  ポケモンアイコンの表示状態を設定する
  *
  *	@param	*p_wk 
  *	@param	index 
@@ -1441,15 +1534,9 @@ void HABITAT_ZONE_GRA_SetPokeAnmFlag( HABITAT_ZONE_GRA_WK *p_wk ,u8 index ,
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_DeletePokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index )
+void HABITAT_ZONE_GRA_SetSetDrawEnableIcon( HABITAT_ZONE_GRA_WK *p_wk ,u8 index,BOOL is_draw )
 {
-  // 存在する場合のみ削除
-  if( p_wk->p_clwk_poke_icon[index] != NULL )
-  {
-    UI_EASY_CLWK_UnLoadResource( &p_wk->clres_poke_icon[index] );
-    GFL_CLACT_WK_Remove( p_wk->p_clwk_poke_icon[index] );
-    p_wk->p_clwk_poke_icon[index] = NULL;
-  }
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_poke_icon[index],is_draw );
 }
 
 //----------------------------------------------------------------------------
