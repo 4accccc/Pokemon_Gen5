@@ -179,6 +179,14 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 	wk->listMode = ZKNLIST_CALL_NORMAL;
 	ZKNCOMM_InitDefaultMons( wk->prm->savedata, wk->list, wk->listMax );
 	ZKNCOMM_ResetSortData( wk->prm->savedata, &wk->sort );
+  
+  // ゾーン詳細画面のデフォルト季節を設定する
+  {
+    SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
+    HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+    HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
+  }
+
 
 	if( wk->prm->callMode == ZUKAN_MODE_TOP ){
 		wk->mainSeq = SEQ_TOP_CALL;
@@ -746,10 +754,7 @@ static int MainSeq_CallHabitatZone( ZUKAN_MAIN_WORK * wk )
     ONOUE_Printf("生息地リスト：セーブからリスト生成\n");
     ZKNCOMM_MakeHabitatZoneListData( p_habitat_sv,p_zone_info ,FALSE );
   }
-   
-  // デフォルト季節を設定する
-  HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
-
+  
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_habitat_zone),
                                       &ZUKANHABITAT_ZONE_ProcData, p_zone_info );
   return NextProcCall( wk, SEQ_HABITAT_ZONE_END );
@@ -877,8 +882,16 @@ static int MainSeq_EndHabitatZoneList( ZUKAN_MAIN_WORK * wk )
     wk->prm->retMode = ZUKAN_RET_NORMAL;
     break;
   case HABITAT_LIST_RET_CALL_ZONE_INFO:
-    ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_HABITAT);
-    ret = SEQ_HABITAT_ZONE_CALL;
+    {
+      // デフォルト季節を今の季節に変更
+      {
+        SAVE_CONTROL_WORK *p_svcont = GAMEDATA_GetSaveControlWork( wk->prm->gamedata );
+        HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
+        HABITATLIST_SAVE_SetDefaultSeason( p_habitat_sv,PMSEASON_GetRealTimeSeasonID() );
+      }
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_HABITAT);
+      ret = SEQ_HABITAT_ZONE_CALL;
+    }
     break;
   case HABITAT_LIST_RET_ZENKOKU:
     {

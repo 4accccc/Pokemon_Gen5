@@ -128,5 +128,8 @@ struct _HABITAT_ZONE_WK{
   // スクロール
   s32 main_scroll_cnt;
   s32 sub_scroll_cnt;
+
+  // 地形位置
+  HABITAT_GROUND_TYPE default_land_type;    // 表示中のの場所タイプ
 };
 

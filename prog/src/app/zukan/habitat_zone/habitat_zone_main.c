@@ -1256,31 +1256,31 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
     {
       if( HABITAT_ZONE_GRA_CheckPokeIconTranceEnd(&p_wk->gra_sys) )
       {
-        GFL_CLWK *p_clwk_no_anm;
-        // アニメーションシーケンスを決定、アニメーションしていないほうと同じフレーム数に同期する
-        if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+        if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
         {
-          p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-          GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L );
-          GFL_CLACT_WK_ResetAnm( p_clwk );
-          GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+          GFL_CLWK *p_clwk_no_anm;
+          // アニメーションシーケンスを決定、アニメーションしていないほうと同じフレーム数に同期する
+          if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
+          {
+            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
+            GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_L );
+            GFL_CLACT_WK_ResetAnm( p_clwk );
+            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+          }
+          else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
+          {
+            p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
+            GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R );
+            GFL_CLACT_WK_ResetAnm( p_clwk );
+            GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
+          }
+
+          // アニメーションを開始
+          GFL_CLACT_WK_StartAnm( p_no_anm_clwk );
+
+          // キー入力状態に切替
+          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
         }
-        else if( p_wk->seq_param == SEQ_CHANGE_PARAM_R )
-        {
-          p_clwk_no_anm = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-          GFL_CLACT_WK_SetAnmSeq( p_clwk , OBJ_ANM_SEQ_R );
-          GFL_CLACT_WK_ResetAnm( p_clwk );
-          GFL_CLACT_WK_ResetAnm( p_clwk_no_anm );
-        }
-
-        // アニメーションを開始
-        GFL_CLACT_WK_StartAnm( p_no_anm_clwk );
-
-        // デフォルトの季節を設定
-        HABITATLIST_SAVE_SetDefaultSeason( p_wk->p_habitat_sv, p_wk->season );
-
-        // キー入力状態に切替
-        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
       }
     }
     break;
@@ -1324,8 +1324,11 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
   // メッセージ書き換え
   case 0:
     {
-      // 季節を春に戻す
-      p_wk->season = PMSEASON_SPRING;
+      // 季節を戻す
+      p_wk->season    = HABITATLIST_SAVE_GetDefaultSeason( p_wk->p_habitat_sv );
+
+      // 地形を戻す
+      p_wk->land_type = p_wk->default_land_type;
 
       // アニメーションシーケンスを決定、季節の切替
       if( p_wk->seq_param == SEQ_CHANGE_PARAM_UP )
@@ -1350,17 +1353,16 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
       GFL_CLACT_WK_SetAnmSeq( p_clwk , anm_seq );
       GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
       GFL_CLACT_WK_StartAnm( p_clwk );
-
+      
       // シーケンスを進める
       p_wk->sub_seq++;
     }
     // through break;
   case 1:
     {
-      // アニメーション終了待ち
-      // アニメーション停止
-      GFL_CLACT_WK_SetAnmSeq( p_clwk , default_anm_seq );
-      GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
+//      // アニメーション停止
+//      GFL_CLACT_WK_SetAnmSeq( p_clwk , default_anm_seq );
+//      GFL_CLACT_WK_SetAutoAnmFlag( p_clwk ,TRUE );
 
       // リストデータを解析し、必要なデータを作成する
       MakeZoneCommonData( p_wk );
@@ -1583,6 +1585,9 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk )
 
           // 地形を設定
           HABITATLIST_SAVE_SetDefaultGround( p_wk->p_habitat_sv, p_wk->land_type );
+
+          // 地形位置を記憶
+          p_wk->default_land_type = p_wk->land_type;
         }
         else
         {
@@ -2856,7 +2861,9 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk )
   p_wk->p_zkn_sv        = p_zkn_sv;
   p_wk->p_habitat_sv    = p_habitat_sv; 
   p_wk->zone_data_cnt   = p_wk->p_init_param->zone_cnt;
-  
+
+  // default地形を設定
+  p_wk->default_land_type = HABITAT_GROUND_LAND;
 
   // データ位置を初期化
   p_wk->zone_data_index = 0;
@@ -2872,7 +2879,7 @@ static void CreateAppData( HABITAT_ZONE_WK *p_wk )
   }
 
   p_wk->season    = HABITATLIST_SAVE_GetDefaultSeason( p_wk->p_habitat_sv );
-  p_wk->land_type = HABITATLIST_SAVE_GetDefaultGround( p_wk->p_habitat_sv );
+  p_wk->land_type = p_wk->default_land_type;
 }
 
 //----------------------------------------------------------------------------
