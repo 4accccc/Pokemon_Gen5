@@ -1854,13 +1854,13 @@ msg_wbt_announce_09へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントに　さんかする
-トレーナーの　わかれめは▽
+トレーナーの　わけるもの……　それは▽
 ゆうしょうを　しっているか　いないか▼
 その　ゆうしょうを　しっている
 [Name:TrainerName Idx="0" ]　にゅうじょうッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:45:02" />
+				Time="2011-09-17T04:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1868,14 +1868,14 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメントに　さんかする
-トレーナーの　わかれめは▽
-ゆうしょうを　しっているか　いないか▼
-その　ゆうしょうを　しっている
-[Name:TrainerName Idx="0" ]　にゅうじょうッ！！▼</Text>
+			<Text>トーナメントに　参加する
+トレーナーの　分けるもの……　それは▽
+優勝を　知っているか　いないか▼
+その　優勝を　知っている
+[Name:TrainerName Idx="0" ]　入場ッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:45:05" />
+				Time="2011-09-17T04:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1917,13 +1917,12 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうしょうを　かさね
-さいきん　ホドモエあたりで▽
-ウワサの　ポケモントレーナー！▽
-[Name:TrainerName Idx="0" ]が　きたーッ！！▼</Text>
+			<Text>ちからの　かぎり　たたかえッ！▼
+そして　のぞむ　しょうりを
+てにいれろ！　[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:46:03" />
+				Time="2011-09-17T05:03:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1931,13 +1930,12 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうしょうを　かさね
-さいきん　ホドモエあたりで▽
-ウワサの　ポケモントレーナー！▽
-[Name:TrainerName Idx="0" ]が　きたーッ！！▼</Text>
+			<Text>力の　かぎり　戦えッ！▼
+そして　望む　勝利を
+手に入れろ！　[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:46:06" />
+				Time="2011-09-17T05:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1979,11 +1977,13 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　優勝回数５
-[Name:TrainerName Idx="0" ]の　にゅうじょうだー！！▼</Text>
+			<Text>ゆうしょうを　くりかえし
+さいきん　ホドモエあたりで▽
+ウワサの　ポケモントレーナー！▽
+[Name:TrainerName Idx="0" ]が　きたーッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1991,11 +1991,13 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　優勝回数５
-[Name:TrainerName Idx="0" ]の　入場だー！！▼</Text>
+			<Text>優勝を　繰り返し
+最近　ホドモエあたりで▽
+ウワサの　ポケモントレーナー！▽
+[Name:TrainerName Idx="0" ]が　来たーッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2257,13 +2259,14 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうしょうかいすうを　かぞえるには
+			<Text>この　ポケモントレーナーの
+ゆうしょうかいすうを　かぞえるには▽
 りょうてが　ひつようッ！▼
 どこかしら　ふうかくが　でてきたか！？
 カモンッ！　[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:35:14" />
+				Time="2011-09-17T04:51:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2271,13 +2274,14 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>優勝回数を　数えるには
+			<Text>この　ポケモントレーナーの
+優勝回数を　数えるには▽
 両手が　必要ッ！▼
 どこかしら　風格が　でてきたか！？
 カモンッ！　[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:35:00" />
+				Time="2011-09-17T04:51:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2540,13 +2544,13 @@ msg_wbt_announce_09へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>この　トレーナーが
-トーナメントに　さんかしたとき▽
-かんきゃくの　きたいが　たかまる！▼
+トーナメントに　さんか　するだけで▽
+かんきゃくたちが　さわぎだすッ！▼
 そのなも　[Name:TrainerName Idx="0" ]！
 いま　どうどう　とうじょうーッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:55:18" />
+				Time="2011-09-17T04:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2555,13 +2559,13 @@ msg_wbt_announce_09へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　トレーナーが
-トーナメントに　さんかしたとき▽
-かんきゃくの　きたいが　たかまる！▼
-そのなも　[Name:TrainerName Idx="0" ]！
-いま　どうどう　とうじょうーッ！！▼</Text>
+トーナメントに　参加するだけで▽
+観客たちが　騒ぎだすッ！▼
+その名も　[Name:TrainerName Idx="0" ]！
+いま　堂々　登場ーッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:55:20" />
+				Time="2011-09-17T04:50:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3101,11 +3105,14 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　優勝回数５０
-[Name:TrainerName Idx="0" ]の　にゅうじょうだー！！▼</Text>
+			<Text>かずおおくの　しょうりを　あじわい
+あまたの　はいぼくを　みてきた……▼
+そんな　トレーナーの　こころに
+きょらいする　おもいは　なにか？▽
+[Name:TrainerName ]の　にゅうじょう　だ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:47:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3113,11 +3120,14 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　優勝回数５０
-[Name:TrainerName Idx="0" ]の　入場だー！！▼</Text>
+			<Text>数多くの　勝利を　味わい
+数多の　敗北を　みてきた……▼
+そんな　トレーナーの　心に
+去来する　思いは　なにか？▽
+[Name:TrainerName ]の　入場だ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:48:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3379,11 +3389,15 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　優勝回数１００
-[Name:TrainerName Idx="0" ]の　にゅうじょうだー！▼</Text>
+			<Text>つみかさねた　ゆうしょうかいすう
+１００かい　いじょう！▼
+だが　すうじでは　あらわせない……
+ほんとうの　つよさを　もとめッ▼
+[Name:TrainerName ]
+いま　ここに　まいおりたーッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:37:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3391,11 +3405,15 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　優勝回数１００
-[Name:TrainerName Idx="0" ]の　入場だー！▼</Text>
+			<Text>積み重ねた　優勝回数
+１００回　以上！▼
+だが　数字では　表せない……
+本当の　強さを　求めッ▼
+[Name:TrainerName ]
+いま　ここに　舞い降りたーッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3716,13 +3734,13 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まさか　まさかの
+			<Text>まっ　まさか　まさかの
 ダブルノックダウン！▼
-こっ　これより
-はんていを　おこないますッ▼</Text>
+おまちください！　これより
+はんていを　おこないますッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:52:20" />
+				Time="2011-09-17T04:18:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3730,13 +3748,13 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まさか　まさかの
+			<Text>まっ　まさか　まさかの
 ダブルノックダウン！▼
-こっ　これより
-判定を　行いますッ▼</Text>
+お待ちください！　これより
+判定を　行いますッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:52:32" />
+				Time="2011-09-17T04:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3779,12 +3797,12 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダブルノックダウン
+			<Text>ダブルノックダウン！▼
 はんていの　けっか……▼
 かったのは　[Name:TrainerName ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:53:09" />
+				Time="2011-09-17T04:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3792,12 +3810,12 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブルノックダウン
+			<Text>ダブルノックダウン！▼
 判定の　結果……▼
 勝ったのは　[Name:TrainerName ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:53:25" />
+				Time="2011-09-17T04:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3840,11 +3858,12 @@ msg_wbt_announce_09へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-なんと　[Digit:1digit ]ひき　のこしての　しょうり！▼</Text>
+			<Text>これが　じつりょく　なのか？
+のこった　ポケモンは　[Digit:1digit ]ひきッ！▽
+みごとな　しょうり　ですっ！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T04:39:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:13:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3852,11 +3871,12 @@ msg_wbt_announce_09へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-なんと　[Digit:1digit ]匹　残しての　勝利！▼</Text>
+			<Text>これが　実力なのか？
+残った　ポケモンは　[Digit:1digit ]匹ッ！▽
+見事な　勝利ですっ！！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T04:39:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:13:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3895,11 +3915,13 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-なんと　かんぜんしょうり！▼</Text>
+			<Text>げきせんが　よそうされる
+チャンピオンズ　トーナメントでッ！▼
+まさか　まさかの
+かんぜんしょうり！！　グレイトォ！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T04:39:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3907,11 +3929,13 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ
-なんと　完全勝利！▼</Text>
+			<Text>激戦が　予想される
+チャンピオンズ　トーナメントでッ！▼
+まさか　まさかの
+完全勝利！！　グレイトォ！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-24T04:39:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3950,12 +3974,13 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きのうの　てきは　きょうの　とも！
-ミックスルールの　トーナメントだー！▽
-さっそく　ミックス　かいしだー！▼</Text>
+			<Text>じぶんの　パートナーである
+ポケモンは　どんな　つよさ？▼
+ミックストーナメント！
+さっそく　レッツ　ミックス！！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-26T12:39:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:27:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3963,12 +3988,13 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きのうの　てきは　きょうの　とも！
-ミックスルールの　トーナメントだー！▽
-さっそく　ミックス　かいしだー！▼</Text>
+			<Text>自分の　パートナーである
+ポケモンは　どんな　強さ？▼
+ミックストーナメント！
+さっそく　レッツ　ミックス！！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-26T12:39:03" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4003,11 +4029,11 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]が　えらんだ　ポケモンは
-[Name:PokemonName Idx="1" ]です▼</Text>
+			<Text>[Name:TrainerName ]が　えらんだ
+ポケモンは　[Name:PokemonName Idx="1" ]です▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-26T12:40:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4015,11 +4041,11 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]が　えらんだ　ポケモンは
-[Name:PokemonName Idx="1" ]です▼</Text>
+			<Text>[Name:TrainerName ]が　選択した
+ポケモンは　[Name:PokemonName Idx="1" ]です▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-26T12:40:33" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T04:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4054,11 +4080,11 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　てもちから
-ポケモンを　１ぴき　えらんでください</Text>
+			<Text>あいての　てもちポケモンから
+１ぴき　えらんでください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:27:40" />
+				Time="2011-09-17T04:29:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4066,11 +4092,11 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あいての　てもちから
-ポケモンを　１ぴき　えらんでください</Text>
+			<Text>相手の　手持ちポケモンから
+１匹　選んでください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T12:27:43" />
+				Time="2011-09-17T04:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
