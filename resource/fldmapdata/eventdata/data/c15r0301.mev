@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/16 20:37:28
+#save date:2011/09/17 12:50:34
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0301.wms
 #SECTION START:OBJ_EVENT
@@ -117,7 +117,7 @@ EVENTDATA_POSTYPE_GRID
 #Pos Event Label
 POS_C15R0301_OWNER_APPEAR
 #Pos Script Name
-SCRID_POS_POKEWOOD_OWNER_APPEAR
+SCRID_POS_PKWD_THEATER_OWNER_APPEAR
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name

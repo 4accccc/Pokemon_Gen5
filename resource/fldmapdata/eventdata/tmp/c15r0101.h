@@ -11,6 +11,7 @@
 
 #define C15R0101_WKOBJCODE00               0
 #define C15R0101_WKOBJCODE01               1
+#define C15R0101_HACHIKU_TUTORIAL          2
 
 #endif //ZONE_C15R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c15r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

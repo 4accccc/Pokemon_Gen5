@@ -11,7 +11,9 @@
 #ifndef ZONE_C15R0201_EVC_H
 #define ZONE_C15R0201_EVC_H
 
-#define C15R0201_POKEWOOD_REC              0
+#define C15R0201_SUNGLASSES_01             0
+#define C15R0201_SUNGLASSES_02             1
+#define C15R0201_PWOWNER_01                2
 
 #endif //ZONE_C15R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

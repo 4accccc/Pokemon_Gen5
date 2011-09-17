@@ -494,15 +494,22 @@ VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk )
   u16   rec_id = SCRCMD_GetVMWorkValue( core, work );
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
 
-  if ( getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SUCCESS, NULL ) == TRUE )
+  switch ( getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SUCCESS, NULL ) )
   {
-    *ret_wk = SCR_PKWD_RESULT_GOOD_END;
-  }
-  else
-  {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case BTL_POKEWOOD_RESULT_BAD:
     *ret_wk = SCR_PKWD_RESULT_BAD_END;
+    break;
+  case BTL_POKEWOOD_RESULT_SUCCESS:
+    *ret_wk = SCR_PKWD_RESULT_GOOD_END;
+    break;
+  case BTL_POKEWOOD_RESULT_STRANGE:
+    *ret_wk = SCR_PKWD_RESULT_STRANGE_END;
+    break;
   }
-  OS_Printf("EvCmdPokewoodGetMovieValue( rec_id = %d, result = %d\n", rec_id, *ret_wk );
+  OS_Printf("EvCmdPokewoodGetMovieValue( %d ) --> %d\n", rec_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
