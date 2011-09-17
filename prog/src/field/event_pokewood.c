@@ -1296,7 +1296,7 @@ static GMEVENT_RESULT eventPkwdBriefing( GMEVENT *p_event, int *p_seq, void *p_w
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  PKWD_BOOK呼び出し
+ *  @brief  PkwdBriefing呼び出し
  *
  *
  *  @return 終了コード
@@ -1326,7 +1326,7 @@ GMEVENT * PKWD_BRIEFING_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  PkwdSelectScreen呼び出し用イベント
+ *  @brief  PkwdBriefing呼び出し用イベント
  *
  *  @param  GMEVENT *event  GMEVENT
  *  @param  *seq            シーケンス
@@ -1357,6 +1357,77 @@ static GMEVENT_RESULT eventPkwdBriefing( GMEVENT *p_event, int *p_seq, void *p_w
 
   case SEQ_EXIT:
     OS_Printf( "Pkwd Briefing End\n");
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+static GMEVENT_RESULT eventPkwdEndroll( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdEndroll呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_ENDROLL_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_BRIEFING_PARAM *param = (PKWD_BRIEFING_PARAM *)parent_work;
+  PKWD_BRIEFING_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イベント作成
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdEndroll, sizeof(PKWD_BRIEFING_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_BRIEFING_EVENT_WORK) );
+
+  p_param->gsys       = gsys;
+  p_param->fieldmap   = fieldmap;
+  p_param->param      = *param;
+
+  OS_Printf( "PKWD ENDROLL Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdEndroll呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdEndroll( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_BRIEFING_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_briefing ), &PkwdEndrollProcData, &p_wk->param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    OS_Printf( "Pkwd Endroll End\n");
     return GMEVENT_RES_FINISH;
   }
 

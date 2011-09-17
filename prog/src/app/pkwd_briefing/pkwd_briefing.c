@@ -5,6 +5,7 @@
  * @author  mori
  * @date  2011.08.01 (title.cから作成）
  *
+ * @todo 敵役者の役名と本人名がまだ男女ごとに用意されていない
  */
 //==============================================================================
 #include <gflib.h>
@@ -36,7 +37,12 @@
 #include "battle/battgra_wb.naix"   // 背景モデリングデータ
 #include "pkwd_announce_gra.naix"   // カメラデータ
 
-#include "msg/msg_pw_briefing001.h"    // あらすじメッセージデータ（001～040までアリ）
+#include "msg/msg_pw_briefing001.h" // あらすじメッセージデータ（001～040までアリ）
+#include "msg/msg_pw_endroll.h"     // エンドロールメッセージデータ
+#include "msg/msg_pokewood_senario01_m.h" // ポケウッドシナリオデータ
+#include "msg/msg_pokewood_name.h"
+
+#include "../../battle/pokewood/pokewood_senario.h"
 
 //==============================================================================
 //  定数定義
@@ -56,6 +62,47 @@
 //情報ステータスバーパレット
 #define INFOWIN_PAL_NO  ( 0x0f ) 
 
+#define BRIEFING_BMPWIN_MAX ( 2 )
+
+enum{
+  ENDROL_TITLE_PLAYER1=0,      // 「役名１」
+  ENDROL_TITLE_PLAYER1_PARTY,  // 「役名１のパーティ名」
+  ENDROL_TITLE_PLAYER2,        // 「役名２」
+  ENDROL_TITLE_PLAYER2_PARTY,  // 「役名２のパーティ名」
+  ENDROL_TITLE_EXTRA1,         // 「エキストラ名」
+  ENDROL_TITLE_EXTRA2,         // 「エキストラ名」
+  ENDROL_TITLE_EXTRA3,         // 「エキストラ名」
+  ENDROL_TITLE_EXTRA4,         // 「エキストラ名」
+  ENDROL_TITLE_EXTRA5,         // 「エキストラ名」
+  ENDROL_TITLE_VFX,            // 「VFX」
+  ENDROL_TITLE_SCENARIO,       // 「シナリオライター」
+  ENDROL_TITLE_DIRECTOR,       // 「かんとく」
+  ENDROL_PLAYER1_ACT,          // 役名１の役者
+  ENDROL_PLAYER1_PARTY1,        // 役名１のパーティ
+  ENDROL_PLAYER1_PARTY2,        // 役名１のパーティ
+  ENDROL_PLAYER1_PARTY3,        // 役名１のパーティ
+  ENDROL_PLAYER1_PARTY4,        // 役名１のパーティ
+  ENDROL_PLAYER1_PARTY5,        // 役名１のパーティ
+  ENDROL_PLAYER1_PARTY6,        // 役名１のパーティ
+  ENDROL_PLAYER2_ACT,           // 役名２の役者
+  ENDROL_PLAYER2_PARTY1,        // 役名２のパーティ
+  ENDROL_PLAYER2_PARTY2,        // 役名２のパーティ
+  ENDROL_PLAYER2_PARTY3,        // 役名２のパーティ
+  ENDROL_PLAYER2_PARTY4,        // 役名２のパーティ
+  ENDROL_PLAYER2_PARTY5,        // 役名２のパーティ
+  ENDROL_PLAYER2_PARTY6,        // 役名２のパーティ
+  ENDROL_EXTRA_ACT1,            // エキストラの役者
+  ENDROL_EXTRA_ACT2,            // エキストラの役者
+  ENDROL_EXTRA_ACT3,            // エキストラの役者
+  ENDROL_EXTRA_ACT4,            // エキストラの役者
+  ENDROL_EXTRA_ACT5,            // エキストラの役者
+  ENDROL_VFX,                  // VFXスタッフ
+  ENDROL_SCENARIO1,            // シナリオライターの名前
+  ENDROL_SCENARIO2,            // 自分の名前
+  ENDROL_DIRECTOR      ,       // 監督名
+  ENDROL_SPACE,
+  ENDROL_END,                  //
+};
 
 ///タイトルロゴBGのBGプライオリティ
 enum{
@@ -103,6 +150,49 @@ enum{
   BTLV_INPUT_AUDIENCE_MAX = 22,
 };
 
+// エンドロール用文字列ID
+enum{
+  ENDROLL_STR_ENEMY_PARTY=0,
+  ENDROLL_STR_MY_PARTY,
+  ENDROLL_STR_MY_ROLE_M,
+  ENDROLL_STR_MY_ROLE_F,
+  ENDROLL_STR_EXTRA1,
+  ENDROLL_STR_EXTRA_ACTOR1,
+  ENDROLL_STR_EXTRA2,
+  ENDROLL_STR_EXTRA_ACTOR2,
+  ENDROLL_STR_EXTRA3,
+  ENDROLL_STR_EXTRA_ACTOR3,
+  ENDROLL_STR_EXTRA4,
+  ENDROLL_STR_EXTRA_ACTOR4,
+  ENDROLL_STR_EXTRA5,
+  ENDROLL_STR_EXTRA_ACTOR5,
+  ENDROLL_STR_WRITER_NAME,
+  ENDROLL_STR_WRITER,
+  ENDROLL_STR_VFX,
+  ENDROLL_STR_VFX_TEAM,
+  ENDROLL_STR_DIRECTOR,
+  ENDROLL_STR_DIRECTOR_NAME,
+
+  ENDROLL_STR_MYROLE,
+  ENDROLL_STR_MYNAME,
+  ENDROLL_STR_ENEMYROLE,
+  ENDROLL_STR_ENEMYNAME,
+
+  ENDROLL_STR_P1_MONSNAME1,
+  ENDROLL_STR_P1_MONSNAME2,
+  ENDROLL_STR_P1_MONSNAME3,
+  ENDROLL_STR_P1_MONSNAME4,
+  ENDROLL_STR_P1_MONSNAME5,
+  ENDROLL_STR_P1_MONSNAME6,
+  ENDROLL_STR_P2_MONSNAME1,
+  ENDROLL_STR_P2_MONSNAME2,
+  ENDROLL_STR_P2_MONSNAME3,
+  ENDROLL_STR_P2_MONSNAME4,
+  ENDROLL_STR_P2_MONSNAME5,
+  ENDROLL_STR_P2_MONSNAME6,
+
+  ENDROLL_STR_MAX,
+};
 
 #ifdef PM_DEBUG
 #endif
@@ -116,21 +206,31 @@ typedef struct{
 }SYS_CONTROL;
 
 typedef struct{
-  GFL_BMPWIN*     bmpwin[2];
+  GFL_BMPWIN*     bmpwin[ENDROL_END];
   GFL_BMP_DATA*   bmp;
-  PRINT_UTIL      printUtil[2];
+  PRINT_UTIL      printUtil[ENDROL_END];
   BOOL            message_req;    ///<TRUE:メッセージリクエストがあった
   GFL_FONT*       fontHandle;
   PRINT_QUE*      printQue;
   GFL_MSGDATA*    mm;
   STRBUF*         expandbuf[2];
   STRBUF*         endkeyword;    //「なし」を読み込む
+  STRBUF*         teststr;
+  STRBUF*         endrol_str[ENDROLL_STR_MAX];
   int             scrol_work;
 
   int             blend_flag;
   int             blend_work;
   int             now_page;
   int             wait;
+
+  int             scroll;
+  int             bmpwin_num;
+  int             screen_flag;
+  int             line_count;
+
+  POKEPARTY       *myparty;
+  POKEPARTY       *enemyparty;
 }G2D_CONTROL;
 
 typedef struct{
@@ -182,6 +282,7 @@ typedef struct {
 
   int           blend_seq;
   int           sex;
+  int           mode;
 }PKWD_BRIEFING_WORK;
 
 //==============================================================================
@@ -190,6 +291,8 @@ typedef struct {
 GFL_PROC_RESULT PkwdBriefingProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 GFL_PROC_RESULT PkwdBriefingProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+
+GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 //==============================================================================
 //  外部関数宣言
@@ -204,6 +307,12 @@ GFL_PROC_RESULT PkwdBriefingProcEnd( GFL_PROC * proc, int * seq, void * pwk, voi
 const GFL_PROC_DATA PkwdBriefingProcData = {
   PkwdBriefingProcInit,
   PkwdBriefingProcMain,
+  PkwdBriefingProcEnd,
+};
+
+const GFL_PROC_DATA PkwdEndrollProcData = {
+  PkwdBriefingProcInit,
+  PkwdEndrollProcMain,
   PkwdBriefingProcEnd,
 };
 
@@ -237,12 +346,28 @@ static void VintrFunc(GFL_TCB *tcb, void *work);
 static void BriefingFunc( PKWD_BRIEFING_WORK *tw );
 
 static void initLcdWindow( void );
+static void initLcdWindow2( int left_rigth );
+
 static void _briefing_print( G2D_CONTROL *CG2d, int page, int sex );
 static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw );
 
 static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID );
 static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam );
 
+static void EndrollFunc( PKWD_BRIEFING_WORK *tw );
+static void _endroll_print( G2D_CONTROL* CG2d, int page, int sex );
+
+static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID );
+static void releaseBriefingBmpwin( G2D_CONTROL* CG2d );
+static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align );
+static void releaseEndrollBmpwin( G2D_CONTROL* CG2d );
+
+static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  int scenario_no, HEAPID heapID );
+static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
+static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID);
+static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
+
+static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
 
 FS_EXTERN_OVERLAY( battle_view );
 
@@ -370,7 +495,7 @@ static void _debug_blend(void)
 
 //=============================================================================================
 /**
- * @brief タイトル画面メイン
+ * @brief あらすじ画面メイン
  *
  * @param   proc    
  * @param   seq   
@@ -402,6 +527,9 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
     btlv_init_audience_disp( tw, tw->heapID );
+    initBriefingMsgdata( &tw->CG2d, tw->param->scenario_no, tw->heapID );
+    initBriefingBmpwin( &tw->CG2d, tw->heapID );
+    
     // 1ページ目の文字列を描画
     _briefing_print( &tw->CG2d, 0, tw->sex );
     //情報ステータスバー初期化
@@ -413,9 +541,6 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
     tw->totalWait = 0;
     tw->seq = SEQ_FADEIN;
-//    PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
-    //SND_STRM_Play( STRM_TITLE );
-
     tw->bef_vcnt  = OS_GetVBlankCount();
     break;
 
@@ -434,7 +559,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     BriefingFunc( tw );
 
 #ifdef PM_DEBUG
-//    _debug_blend();
+    //_debug_blend();
 #endif
 
     PRINTSYS_QUE_Main( tw->CG2d.printQue );
@@ -453,13 +578,11 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 2);
     tw->seq = SEQ_FADEOUT;
     MainFunc(tw);
-//    PMSND_FadeOutBGM( 16 );
     break;
 
   case SEQ_FADEOUT:
     if( GFL_FADE_CheckFade() == FALSE && 
-        PMSND_CheckFadeOnBGM() == FALSE ){
-//      PMSND_StopBGM();
+      PMSND_CheckFadeOnBGM() == FALSE ){
       tw->seq = SEQ_END;
     }
     MainFunc(tw);
@@ -467,19 +590,197 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
 
   case SEQ_END:
     // 解放
+    releaseBriefingBmpwin(&tw->CG2d);
+    releaseBriefingMsgdata( &tw->CG2d );
     INFOWIN_Exit();
     BTLV_INPUT_DeleteAudienceObj( &tw->AOam );
     releaseOAMcontrol(&tw->COam);
     releaseG3Dcontrol(&tw->CG3d);
     releaseG2Dcontrol(&tw->CG2d);
     releaseSystem(&tw->CSys);
-
     return GFL_PROC_RES_FINISH;
 
   case SEQ_SKIP:
     return GFL_PROC_RES_FINISH;
   }
 
+  
+  return GFL_PROC_RES_CONTINUE;
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケモンパーティ参照用の初期化（無い場合はデバッグ用に埋め込む）
+ *
+ * @param   tw		
+ */
+//----------------------------------------------------------------------------------
+static void initWork( PKWD_BRIEFING_WORK* tw )
+{
+  if(tw->param->bsp!=NULL){
+    tw->CG2d.myparty    = tw->param->bsp->party[BTL_CLIENT_PLAYER];
+    tw->CG2d.enemyparty = tw->param->bsp->party[BTL_CLIENT_ENEMY1];
+  }
+#ifdef PM_DEBUG
+  else{
+    int i;
+    tw->CG2d.myparty    = PokeParty_AllocPartyWork(tw->heapID);
+    PokeParty_Init( tw->CG2d.myparty, 6 );
+    tw->CG2d.enemyparty = PokeParty_AllocPartyWork(tw->heapID);
+    PokeParty_Init( tw->CG2d.enemyparty, 6 );
+    
+    for(i=0;i<6;i++){
+      POKEMON_PARAM *pp1 = PP_Create( 1+i, 10, 0, tw->heapID );
+      POKEMON_PARAM *pp2 = PP_Create( 400+i, 10, 0, tw->heapID );
+      PokeParty_Add( tw->CG2d.myparty,    pp1);
+      PokeParty_Add( tw->CG2d.enemyparty, pp2);
+      GFL_HEAP_FreeMemory( pp1 );
+      GFL_HEAP_FreeMemory( pp2 );
+    }
+  }
+#endif
+}
+
+static void releaseWork( PKWD_BRIEFING_WORK* tw )
+{
+#ifdef PM_DEBUG  
+  int i;
+  if(tw->param->bsp==NULL){
+    for(i=0;i<6;i++){
+      PokeParty_Delete( tw->CG2d.myparty, 0 );
+      PokeParty_Delete( tw->CG2d.enemyparty, 0 );
+    }
+    GFL_HEAP_FreeMemory(tw->CG2d.myparty   );
+    GFL_HEAP_FreeMemory(tw->CG2d.enemyparty);
+  }
+#endif
+}
+
+//=============================================================================================
+/**
+ * @brief エンドロール画面メイン
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk  タイトル画面ワーク
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
+GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  PKWD_BRIEFING_WORK* tw = mywk;
+  u8 test_buff;
+
+  switch(tw->seq){
+  case SEQ_INIT:
+    // 初期化
+    initIO();
+    initVRAM();
+    initLcdWindow();
+
+    tw->seq = SEQ_SETUP;
+
+#ifdef PM_DEBUG
+    // エンディング画面のレイアウトを変更する
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+      tw->mode = 1;
+    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+      tw->mode = 2;
+    }
+#endif
+    break;
+
+  case SEQ_SETUP:
+    // セットアップ
+    initWork( tw );
+    setupSystem(&tw->CSys, tw->heapID);
+    setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
+    setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
+    setupOAMcontrol(&tw->COam, tw->heapID);
+    transBGGraphic( &tw->CG2d, tw->heapID, tw->mode );
+    btlv_init_audience_disp( tw, tw->heapID );
+    initEndrollMsgdata( tw->param, &tw->CG2d, tw->param->scenario_no, tw->heapID );
+    initEndrollBmpwin( &tw->CG2d, tw->heapID, tw->mode );
+
+    // 1ページ目の文字列を描画
+//    _endroll_print( &tw->CG2d, 0, tw->sex );
+    //情報ステータスバー初期化
+    INFOWIN_Init( FRAME_INFOWIN, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
+    GFL_NET_ReloadIconTopOrBottom( FALSE, tw->heapID );
+
+    // FADEIN設定
+    GFL_FADE_SetMasterBrightReq
+      (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
+    tw->totalWait = 0;
+    tw->seq = SEQ_FADEIN;
+    tw->bef_vcnt  = OS_GetVBlankCount();
+    break;
+
+  case SEQ_FADEIN:
+    if(GFL_FADE_CheckFade() == FALSE){ tw->seq = SEQ_MAIN; }
+    MainFunc(tw);
+    break;
+
+  case SEQ_MAIN:
+    MainFunc(tw);
+    // キーチェック
+    _key_check(tw);
+    // あらすじ表示管理
+    EndrollFunc( tw );
+
+#ifdef PM_DEBUG
+    //_debug_blend();
+#endif
+
+    PRINTSYS_QUE_Main( tw->CG2d.printQue );
+    {
+      int i;
+      for(i=0;i<tw->CG2d.bmpwin_num;i++){
+        PRINT_UTIL_Trans( &tw->CG2d.printUtil[i], tw->CG2d.printQue );
+      }
+    }
+    break;
+  case SEQ_VOICE_PLAY:
+    if(PMVOICE_CheckPlay(tw->voiceIndex)==FALSE){
+      tw->seq  = SEQ_NEXT;
+    }
+    MainFunc(tw);
+    break;
+  case SEQ_NEXT:
+    // FADEOUT設定
+    GFL_FADE_SetMasterBrightReq
+      (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 2);
+    tw->seq = SEQ_FADEOUT;
+    MainFunc(tw);
+    break;
+
+  case SEQ_FADEOUT:
+    if( GFL_FADE_CheckFade() == FALSE && 
+      PMSND_CheckFadeOnBGM() == FALSE ){
+      tw->seq = SEQ_END;
+    }
+    MainFunc(tw);
+    break;
+
+  case SEQ_END:
+    // 解放
+    releaseEndrollBmpwin( &tw->CG2d );
+    releaseEndrollMsgdata( &tw->CG2d );
+    releaseWork(tw);
+    INFOWIN_Exit();
+    BTLV_INPUT_DeleteAudienceObj( &tw->AOam );
+    releaseOAMcontrol(&tw->COam);
+    releaseG3Dcontrol(&tw->CG3d);
+    releaseG2Dcontrol(&tw->CG2d);
+    releaseSystem(&tw->CSys);
+    return GFL_PROC_RES_FINISH;
+
+  case SEQ_SKIP:
+    return GFL_PROC_RES_FINISH;
+  }
   
   return GFL_PROC_RES_CONTINUE;
 
@@ -690,7 +991,7 @@ static void releaseSystem(SYS_CONTROL* CSys)
 #define BRIEF_BMPWIN_H    ( 16 )
 
 // BMPWINクリアカラーコード
-#define BRIEF_CLEAR_COLOR ( 0xee )
+#define BRIEF_CLEAR_COLOR ( 0x00 )
 
 //==============================================================================
 //  G2DControl
@@ -702,21 +1003,21 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
   //BGフレーム設定
   {
     static const GFL_BG_BGCNT_HEADER main_brief1_frame = {  //メイン画面BGフレーム1
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x04000,
+      0, 0, 0x1000, 0,
+      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x08000,
       GX_BG_EXTPLTT_01, BGPRI_BRIEF1, 0, 0, FALSE
     };
     static const GFL_BG_BGCNT_HEADER main_brief2_frame = {  //メイン画面BGフレーム2
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, 0x04000,
+      0, 0, 0x1000, 0,
+      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x18000, 0x08000,
       GX_BG_EXTPLTT_01, BGPRI_BRIEF2, 0, 0, FALSE
     };
-    static const GFL_BG_BGCNT_HEADER main_bkgr_frame = {  //メイン画面BGフレーム3
+    static const GFL_BG_BGCNT_HEADER main_bkgr_frame = {    //メイン画面BGフレーム3
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x04000,
+      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x08000, 0x08000,
       GX_BG_EXTPLTT_01, BGPRI_BKGR, 0, 0, FALSE
     };
     
@@ -736,7 +1037,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
     GFL_BG_SetBGControl( FRAME_BRIEF1,  &main_brief1_frame, GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_BRIEF2,  &main_brief2_frame, GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_BKGR,    &main_bkgr_frame,   GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_SEATS,     &sub_msg_frame,     GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_SEATS,   &sub_msg_frame,     GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( FRAME_INFOWIN, &sub_logo_frame,    GFL_BG_MODE_TEXT );
   }
   //メイン画面背景設定
@@ -754,67 +1055,569 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
     GFL_ARC_UTIL_TransVramPalette(
       ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_brief_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
       
-
     GFL_BG_LoadScreenReq( FRAME_BKGR );
     GFL_BG_SetVisible( FRAME_BKGR, VISIBLE_OFF );
     GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
     GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
   }
   {
-    int i;
-//    GFL_BG_FillCharacter( FRAME_SEATS, 0x00, 1, 0 );
-//    GFL_BG_FillScreen( FRAME_SEATS, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-
-    //BMPWIN作成
-    CG2d->bmpwin[0] = GFL_BMPWIN_Create( FRAME_BRIEF1, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
-                                                       BRIEF_BMPWIN_W, BRIEF_BMPWIN_H, 
-                                                       U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-    CG2d->bmpwin[1] = GFL_BMPWIN_Create( FRAME_BRIEF2, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
-                                                       BRIEF_BMPWIN_W, BRIEF_BMPWIN_H, 
-                                                       U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-    
-    for(i=0;i<2;i++){
-      PRINT_UTIL_Setup( &CG2d->printUtil[i], CG2d->bmpwin[i] );
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[i] ), BRIEF_CLEAR_COLOR );
-      GFL_BMPWIN_MakeScreen( CG2d->bmpwin[i] );
-      GFL_BMPWIN_TransVramCharacter( CG2d->bmpwin[i] );
-    }
-    GFL_BG_LoadScreenReq( FRAME_BRIEF1 );
-    GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
-
-    //フォントパレット転送(緑字)
-    // メッセージフォント用パレット転送
-//    GFL_ARC_UTIL_TransVramPalette( ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_brief_nclr, 
-//                                   PALTYPE_MAIN_BG, 0, 0x20, heapID );
-
     //フォント&プリントキューシステム作成
     CG2d->fontHandle = GFL_FONT_Create
       ( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
     CG2d->printQue = PRINTSYS_QUE_Create( heapID );
-
-    //メッセージ取得
-    CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                               NARC_message_pw_briefing001_dat+scenario_no, heapID );
-    CG2d->expandbuf[0] = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
-    CG2d->expandbuf[1] = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
-    CG2d->endkeyword   = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
-    GFL_MSG_GetString(CG2d->mm, pw_briefing_end_keyword, CG2d->endkeyword);
-
     CG2d->message_req = TRUE;
   }
 }
 
 
+static u32 pokewood_scr_tbl[]={
+  NARC_pkwd_announce_gra_pkwd_credit_pokewood_NSCR,
+  NARC_pkwd_announce_gra_pkwd_credit_pokewood_l_NSCR,
+  NARC_pkwd_announce_gra_pkwd_credit_pokewood_r_NSCR,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロール用背景転送
+ *
+ * @param   CG2d		
+ */
+//----------------------------------------------------------------------------------
+static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align )
+{
+  GFL_BG_SetClearCharacter( FRAME_BRIEF1, 32, 0, heapID );
+  GFL_BG_SetClearCharacter( FRAME_BRIEF2, 32, 0, heapID );
+  GFL_BG_ClearScreen( FRAME_BRIEF1 );
+  GFL_BG_ClearScreen( FRAME_BRIEF2 );
+  
+  GFL_ARC_UTIL_TransVramPalette(
+    ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_credit_end_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
+  GFL_ARC_UTIL_TransVramBgCharacter(
+    ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_credit_end_NCGR,     FRAME_BKGR, 0, 0, FALSE, heapID);
+  GFL_ARC_UTIL_TransVramScreen(
+    ARCID_PKWD_ANNOUNCE, pokewood_scr_tbl[align], FRAME_BKGR, 0, 0, FALSE, heapID);
+  GFL_BG_LoadScreenReq( FRAME_BKGR );
+  GFL_BG_SetVisible( FRAME_BKGR, VISIBLE_ON );
+
+}
+
+
+static void _trans_G2DGraphic_End( G2D_CONTROL *CG2d, HEAPID heapID )
+{
+  GFL_ARC_UTIL_TransVramScreen(
+    ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_credit_end_NSCR, FRAME_BKGR, 0, 0, FALSE, heapID);
+}
+
+
 static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
+{
+  PRINTSYS_QUE_Delete(CG2d->printQue);
+  GFL_FONT_Delete(CG2d->fontHandle);
+}
+
+
+//==============================================================================
+//  あらすじ画面用メッセージデータ初期化
+//==============================================================================
+static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
+{
+  //メッセージ取得
+  CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                             NARC_message_pw_briefing001_dat+scenario_no, heapID );
+  CG2d->expandbuf[0] = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
+  CG2d->expandbuf[1] = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
+  CG2d->endkeyword   = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
+  GFL_MSG_GetString(CG2d->mm, pw_briefing_end_keyword, CG2d->endkeyword);
+
+}
+
+static void releaseBriefingMsgdata(G2D_CONTROL* CG2d)
 {
   GFL_STR_DeleteBuffer(CG2d->endkeyword);
   GFL_STR_DeleteBuffer(CG2d->expandbuf[1]);
   GFL_STR_DeleteBuffer(CG2d->expandbuf[0]);
   GFL_MSG_Delete(CG2d->mm);
-  PRINTSYS_QUE_Delete(CG2d->printQue);
-  GFL_FONT_Delete(CG2d->fontHandle);
+}
+
+#define ENDROLL_STR_1BLOCK_NUM  (15)
+
+//==============================================================================
+//  エンドロール画面用BMPWIN確保
+//==============================================================================
+static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  int scenario_no, HEAPID heapID )
+{
+  int i;
+  int mysex = MyStatus_GetMySex(param->mystatus);
+  //メッセージ取得
+  CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                             NARC_message_pw_endroll_dat, heapID );
+  CG2d->endkeyword = GFL_MSG_CreateString( CG2d->mm, pw_endroll_no_keyword );
+  CG2d->teststr    = GFL_MSG_CreateString( CG2d->mm, pw_endroll_testr );
+
+  // シナリオに対応した文字列を一括で取得
+  for(i=0;i<ENDROLL_STR_WRITER;i++){
+    CG2d->endrol_str[i] = GFL_MSG_CreateString( CG2d->mm, 
+                               pw_er_enemy_party_01+ENDROLL_STR_1BLOCK_NUM*scenario_no+i );
+  }
+
+  // シナリオに依存しない決めうちの文字列を取得
+  CG2d->endrol_str[ENDROLL_STR_WRITER]   = GFL_MSG_CreateString( CG2d->mm, pw_er_writer );
+  CG2d->endrol_str[ENDROLL_STR_VFX]      = GFL_MSG_CreateString( CG2d->mm, pw_er_vfx );
+  CG2d->endrol_str[ENDROLL_STR_VFX_TEAM] = GFL_MSG_CreateString( CG2d->mm, pw_er_vfx_team_name );
+  CG2d->endrol_str[ENDROLL_STR_DIRECTOR] = GFL_MSG_CreateString( CG2d->mm, pw_er_director );
+
+
+  // 性別に依存する文字列を取得
+  CG2d->endrol_str[ENDROLL_STR_MYROLE] = GFL_MSG_CreateString( CG2d->mm, 
+                                            pw_er_my_role_m_01+ENDROLL_STR_1BLOCK_NUM*scenario_no+mysex );
+  CG2d->endrol_str[ENDROLL_STR_MYNAME] = MyStatus_CreateNameString( param->mystatus, heapID );
+
+  // 敵の役名・役者名をシナリオ毎に取得
+  {
+    GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                             NARC_message_pokewood_name_dat, GFL_HEAP_LOWID(heapID) );
+    CG2d->endrol_str[ENDROLL_STR_ENEMYROLE] = GFL_MSG_CreateString( msgdata, pw_show_trainername_01+scenario_no );
+    CG2d->endrol_str[ENDROLL_STR_ENEMYNAME] = GFL_MSG_CreateString( msgdata, pw_rec_trainername_01+scenario_no );
+    GFL_MSG_Delete(msgdata);
+  
+  }
+  // 監督名を取得
+  {
+    POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, scenario_no, GFL_HEAP_LOWID(heapID));
+    CG2d->endrol_str[ENDROLL_STR_DIRECTOR_NAME] = GFL_MSG_CreateString( CG2d->mm, pw_er_director_name1+senario->director );
+    GFL_HEAP_FreeMemory( senario );
+  }
+
+  // ポケモン名を取得する
+  for(i=0;i<PokeParty_GetPokeCount(CG2d->myparty);i++){
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer( CG2d->myparty, i);
+    CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+i] = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, heapID );
+    PP_Get( pp, ID_PARA_nickname, CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+i] );
+  }
+
+  // 敵パーティのポケモン名を取得
+  for(i=0;i<PokeParty_GetPokeCount(CG2d->enemyparty);i++){
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer( CG2d->enemyparty, i);
+    CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+i] = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, heapID );
+    PP_Get( pp, ID_PARA_nickname, CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+i] );
+  }
+}
+
+static void releaseEndrollMsgdata( G2D_CONTROL* CG2d )
+{
+  int i;
+  for(i=0;i<ENDROLL_STR_MAX;i++){
+    if(CG2d->endrol_str[i]!=NULL){
+      GFL_STR_DeleteBuffer(CG2d->endrol_str[i]);
+    }
+  }
+  GFL_STR_DeleteBuffer(CG2d->teststr);
+  GFL_STR_DeleteBuffer(CG2d->endkeyword);
+  GFL_MSG_Delete(CG2d->mm);
+  
+}
+
+//==============================================================================
+//  あらすじ画面用BMPWIN確保
+//==============================================================================
+static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID )
+{
+  int i;
+
+  //BMPWIN作成
+  CG2d->bmpwin[0] = GFL_BMPWIN_Create( FRAME_BRIEF1, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
+                                                     BRIEF_BMPWIN_W, BRIEF_BMPWIN_H, 
+                                                     U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+  CG2d->bmpwin[1] = GFL_BMPWIN_Create( FRAME_BRIEF2, BRIEF_BMPWIN_X, BRIEF_BMPWIN_Y, 
+                                                     BRIEF_BMPWIN_W, BRIEF_BMPWIN_H, 
+                                                     U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+  
+  for(i=0;i<BRIEFING_BMPWIN_MAX;i++){
+    PRINT_UTIL_Setup( &CG2d->printUtil[i], CG2d->bmpwin[i] );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[i] ), BRIEF_CLEAR_COLOR );
+    GFL_BMPWIN_MakeScreen( CG2d->bmpwin[i] );
+    GFL_BMPWIN_TransVramCharacter( CG2d->bmpwin[i] );
+  }
+
+  GFL_BG_LoadScreenReq( FRAME_BRIEF1 );
+  GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
+
+}
+
+
+static void releaseBriefingBmpwin( G2D_CONTROL* CG2d )
+{
   GFL_BMPWIN_Delete(CG2d->bmpwin[1]);
   GFL_BMPWIN_Delete(CG2d->bmpwin[0]);
+}
+
+
+#define ALIGN_LEFT                ( 0 )
+#define ALIGN_RIGHT               ( 1 )
+#define ALIGN_CENTER              ( 2 )
+
+typedef struct {
+  u8 type;
+  u8 x, plus_y;
+  u8 align;
+} ENDROLL_LINE;
+
+// エンドロール配置1
+static const ENDROLL_LINE endroll_tbl1[]={
+  { ENDROL_TITLE_PLAYER1       ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_PLAYER1_ACT         , 17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER1_PARTY ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_PLAYER1_PARTY1      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY2      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY3      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY4      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY5      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY6      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  0,   2,   },
+  { ENDROL_TITLE_EXTRA1        ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_EXTRA_ACT1          , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA2        ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_EXTRA_ACT2          , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA3        ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_EXTRA_ACT3          , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA4        ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_EXTRA_ACT4          , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA5        ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_EXTRA_ACT5          , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2       ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_PLAYER2_ACT         , 17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2_PARTY ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_PLAYER2_PARTY1      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY2      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY3      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY4      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY5      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY6      , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  1,   2,   },
+  { ENDROL_TITLE_VFX           ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_VFX                 , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_SCENARIO      ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_SCENARIO1           , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_SCENARIO2           , 17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_DIRECTOR      ,  1,   0,   ALIGN_RIGHT },
+  { ENDROL_DIRECTOR            , 17,   2,   ALIGN_LEFT  },
+  { ENDROL_END                 ,},
+};
+static const ENDROLL_LINE endroll_tbl2[]={
+  { ENDROL_TITLE_PLAYER1       ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER1_ACT         ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER1_PARTY ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER1_PARTY1      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY2      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY3      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY4      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY5      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY6      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  0,   2,   },
+  { ENDROL_TITLE_EXTRA1        ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT1          ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA2        ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT2          ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA3        ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT3          ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA4        ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT4          ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA5        ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT5          ,  2,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2       ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER2_ACT         ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2_PARTY ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER2_PARTY1      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY2      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY3      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY4      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY5      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY6      ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  1,   2,   },
+  { ENDROL_TITLE_VFX           ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_VFX                 ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_SCENARIO      ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_SCENARIO1           ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_SCENARIO2           ,  2,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_DIRECTOR      ,  1,   2,   ALIGN_LEFT },
+  { ENDROL_DIRECTOR            ,  2,   2,   ALIGN_LEFT  },
+  { ENDROL_END                 ,},
+};
+
+
+static const ENDROLL_LINE endroll_tbl3[]={
+  { ENDROL_TITLE_PLAYER1       ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER1_ACT         ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER1_PARTY ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER1_PARTY1      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY2      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY3      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY4      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY5      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER1_PARTY6      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  0,   2,   },
+  { ENDROL_TITLE_EXTRA1        ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT1          ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA2        ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT2          ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA3        ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT3          ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA4        ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT4          ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_EXTRA5        ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_EXTRA_ACT5          ,  17,   4,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2       ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER2_ACT         ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_PLAYER2_PARTY ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_PLAYER2_PARTY1      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY2      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY3      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY4      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY5      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_PLAYER2_PARTY6      ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_SPACE               ,  16,   2,   },
+  { ENDROL_TITLE_VFX           ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_VFX                 ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_SCENARIO      ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_SCENARIO1           ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_SCENARIO2           ,  17,   3,   ALIGN_LEFT  },
+  { ENDROL_TITLE_DIRECTOR      ,  16,   2,   ALIGN_LEFT },
+  { ENDROL_DIRECTOR            ,  17,   2,   ALIGN_LEFT  },
+  { ENDROL_END                 ,},
+};
+
+#if 0
+// エンドロール配置2
+static const ENDROLL_LINE endroll_tbl2[]={
+  { ENDROL_TITLE_ENEMY      ,  1, 22, 1, ALIGN_LEFT  },
+  { ENDROL_ENEMY_ACT        ,  2, 22, 1, ALIGN_RIGHT },
+  { ENDROL_TITLE_ENEMY_PARTY,  1, 25, 1, ALIGN_LEFT  },
+  { ENDROL_ENEMY_PARTY      ,  2, 25, 6, ALIGN_RIGHT },
+  { ENDROL_TITLE_MINE       ,  1, 39, 1, ALIGN_LEFT  },
+  { ENDROL_MYNAME           ,  2, 39, 1, ALIGN_RIGHT },
+  { ENDROL_TITLE_MYPARTY    ,  1, 43, 6, ALIGN_LEFT  },
+  { ENDROL_MYPARTY          ,  2, 43, 1, ALIGN_RIGHT },
+  { ENDROL_END ,},
+};
+
+// エンドロール配置3
+static const ENDROLL_LINE endroll_tbl3[]={
+  { ENDROL_TITLE_ENEMY      ,  9, 22, 1, ALIGN_CENTER },
+  { ENDROL_ENEMY_ACT        ,  9, 22, 1, ALIGN_CENTER },
+  { ENDROL_TITLE_ENEMY_PARTY,  9, 25, 1, ALIGN_CENTER },
+  { ENDROL_ENEMY_PARTY      ,  9, 25, 6, ALIGN_CENTER },
+  { ENDROL_TITLE_MINE       ,  9, 39, 1, ALIGN_CENTER },
+  { ENDROL_MYNAME           ,  9, 39, 1, ALIGN_CENTER },
+  { ENDROL_TITLE_MYPARTY    ,  9, 43, 6, ALIGN_CENTER },
+  { ENDROL_MYPARTY          ,  9, 43, 1, ALIGN_CENTER },
+  { ENDROL_END ,},
+};
+
+// エンドロール配置4
+static const ENDROLL_LINE endroll_tbl4[]={
+  { ENDROL_TITLE_ENEMY      ,  8, 22, 1, ALIGN_LEFT },
+  { ENDROL_ENEMY_ACT        ,  9, 22, 1, ALIGN_LEFT },
+  { ENDROL_TITLE_ENEMY_PARTY,  8, 25, 1, ALIGN_LEFT },
+  { ENDROL_ENEMY_PARTY      ,  9, 25, 6, ALIGN_LEFT },
+  { ENDROL_TITLE_MINE       ,  8, 39, 1, ALIGN_LEFT },
+  { ENDROL_MYNAME           ,  9, 39, 1, ALIGN_LEFT },
+  { ENDROL_TITLE_MYPARTY    ,  8, 43, 6, ALIGN_LEFT },
+  { ENDROL_MYPARTY          ,  9, 43, 1, ALIGN_LEFT },
+  { ENDROL_END ,},
+};
+#endif
+
+
+enum{
+  ENDROL_F_PLAYER1 =30,
+  ENDROL_F_PLAYER1_ACT,
+  ENDROL_F_PLAYER2,
+  ENDROL_F_PLAYER2_ACT,
+  ENDROL_F_PLAYER1_PARTY1,
+  ENDROL_F_PLAYER1_PARTY2,
+  ENDROL_F_PLAYER1_PARTY3,
+  ENDROL_F_PLAYER1_PARTY4,
+  ENDROL_F_PLAYER1_PARTY5,
+  ENDROL_F_PLAYER1_PARTY6,
+  ENDROL_F_PLAYER2_PARTY1,
+  ENDROL_F_PLAYER2_PARTY2,
+  ENDROL_F_PLAYER2_PARTY3,
+  ENDROL_F_PLAYER2_PARTY4,
+  ENDROL_F_PLAYER2_PARTY5,
+  ENDROL_F_PLAYER2_PARTY6,
+};
+
+
+static const u32 endroll_strtbl[]={
+  ENDROL_F_PLAYER1,         /// ENDROL_TITLE_PLAYER1         // 「役名１」
+  ENDROLL_STR_MY_PARTY,     /// ENDROL_TITLE_PLAYER1_PARTY  // 「役名１のパーティ名」
+  ENDROL_F_PLAYER2,         /// ENDROL_TITLE_PLAYER2        // 「役名２」
+  ENDROLL_STR_ENEMY_PARTY,  /// ENDROL_TITLE_PLAYER2_PARTY  // 「役名２のパーティ名」
+  ENDROLL_STR_EXTRA1,       /// ENDROL_TITLE_EXTRA1         // 「エキストラ名」
+  ENDROLL_STR_EXTRA2,       /// ENDROL_TITLE_EXTRA2         // 「エキストラ名」
+  ENDROLL_STR_EXTRA3,       /// ENDROL_TITLE_EXTRA3         // 「エキストラ名」
+  ENDROLL_STR_EXTRA4,       /// ENDROL_TITLE_EXTRA4         // 「エキストラ名」
+  ENDROLL_STR_EXTRA5,       /// ENDROL_TITLE_EXTRA5         // 「エキストラ名」
+  ENDROLL_STR_VFX,          /// ENDROL_TITLE_VFX            // 「VFX」
+  ENDROLL_STR_WRITER,       /// ENDROL_TITLE_SCENARIO       // 「シナリオライター」
+  ENDROLL_STR_DIRECTOR,     /// ENDROL_TITLE_DIRECTOR       // 「かんとく」
+  ENDROL_F_PLAYER1_ACT,     /// ENDROL_PLAYER1_ACT          // 役名１の役者
+  ENDROL_F_PLAYER1_PARTY1,  /// ENDROL_PLAYER1_PARTY1        // 役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY2,  /// ENDROL_PLAYER1_PARTY2        // 役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY3,  /// ENDROL_PLAYER1_PARTY3        // 役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY4,  /// ENDROL_PLAYER1_PARTY4        // 役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY5,  /// ENDROL_PLAYER1_PARTY5        // 役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY6,  /// ENDROL_PLAYER1_PARTY6        // 役名１のパーティ
+  ENDROL_F_PLAYER2_ACT,     /// ENDROL_PLAYER2_ACT           // 役名２の役者
+  ENDROL_F_PLAYER2_PARTY1,  /// ENDROL_PLAYER2_PARTY1        // 役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY2,  /// ENDROL_PLAYER2_PARTY2        // 役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY3,  /// ENDROL_PLAYER2_PARTY3        // 役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY4,  /// ENDROL_PLAYER2_PARTY4        // 役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY5,  /// ENDROL_PLAYER2_PARTY5        // 役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY6,  /// ENDROL_PLAYER2_PARTY6        // 役名２のパーティ
+  ENDROLL_STR_EXTRA_ACTOR1, /// ENDROL_EXTRA_ACT1            // エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR2, /// ENDROL_EXTRA_ACT2            // エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR3, /// ENDROL_EXTRA_ACT3            // エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR4, /// ENDROL_EXTRA_ACT4            // エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR5, /// ENDROL_EXTRA_ACT5            // エキストラの役者
+  ENDROLL_STR_VFX_TEAM,     /// ENDROL_VFX                  // VFXスタッフ
+  ENDROLL_STR_WRITER_NAME,  /// ENDROL_SCENARIO1            // シナリオライターの名前
+  ENDROL_F_PLAYER1_ACT,     /// ENDROL_SCENARIO2            // 自分の名前
+  ENDROLL_STR_DIRECTOR_NAME,/// ENDROL_DIRECTOR             // 監督名
+};
+
+
+static void _str_print( G2D_CONTROL *CG2d, int index, const STRBUF *strbuf, int align )
+{
+  int x = 0;
+  if(align==ALIGN_RIGHT){
+    int len = PRINTSYS_GetStrWidth( strbuf, CG2d->fontHandle, 0 );
+    x = 15*8 - len;
+  }
+  PRINT_UTIL_PrintColor( &CG2d->printUtil[index], CG2d->printQue, x, 
+                         0, strbuf, CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2, 0) );
+
+}
+
+static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align, HEAPID heapID )
+{
+  const STRBUF *strbuf = NULL;
+  switch( endroll_strtbl[type] ){
+  case ENDROL_F_PLAYER1:
+    strbuf = CG2d->endrol_str[ENDROLL_STR_MYROLE];
+    _str_print( CG2d, index, strbuf, align);
+    break;
+  case ENDROL_F_PLAYER1_ACT:
+    strbuf = CG2d->endrol_str[ENDROLL_STR_MYNAME];
+    _str_print( CG2d, index, strbuf, align);
+    break;
+  case ENDROL_F_PLAYER2:
+    strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYROLE];
+    _str_print( CG2d, index, strbuf, align);
+    break;
+  case ENDROL_F_PLAYER2_ACT:
+    strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYNAME];
+    _str_print( CG2d, index, strbuf, align);
+    break;
+  case ENDROL_F_PLAYER1_PARTY1:
+  case ENDROL_F_PLAYER1_PARTY2:
+  case ENDROL_F_PLAYER1_PARTY3:
+  case ENDROL_F_PLAYER1_PARTY4:
+  case ENDROL_F_PLAYER1_PARTY5:
+  case ENDROL_F_PLAYER1_PARTY6:
+    {
+      int n = endroll_strtbl[type]-ENDROL_F_PLAYER1_PARTY1;
+      if(CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n]!=NULL){
+        strbuf = CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n];
+        _str_print( CG2d, index, strbuf, align);
+      }
+    }
+    break;
+  case ENDROL_F_PLAYER2_PARTY1:
+  case ENDROL_F_PLAYER2_PARTY2:
+  case ENDROL_F_PLAYER2_PARTY3:
+  case ENDROL_F_PLAYER2_PARTY4:
+  case ENDROL_F_PLAYER2_PARTY5:
+  case ENDROL_F_PLAYER2_PARTY6:
+    {
+      int n = endroll_strtbl[type]-ENDROL_F_PLAYER2_PARTY1;
+      if(CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME2+n]!=NULL){
+        strbuf = CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+n];
+        _str_print( CG2d, index, strbuf, align);
+      }
+    }
+    break;
+  default:
+    strbuf = CG2d->endrol_str[endroll_strtbl[type]];
+    _str_print( CG2d, index, strbuf, align);
+  }
+
+}
+#define ENDROLL_BMPWIN_W  ( 15 )
+#define ENDROLL_BMPWIN_H  (  2 )
+
+//==============================================================================
+//  エンディング画面用BMPWIN確保
+//==============================================================================
+static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align )
+{
+  int i,count=0,line_count=5;
+  const ENDROLL_LINE *tbl = endroll_tbl1;
+
+  if(align==1){
+    tbl = endroll_tbl2;
+    initLcdWindow2( 0 );
+  }else if(align==2){
+    tbl = endroll_tbl3;
+    initLcdWindow2( 1 );
+  }
+
+  //BMPWIN作成
+  for(i=0;tbl[i].type!=ENDROL_END;i++){
+    if(tbl[i].type<ENDROL_SPACE){
+      OS_Printf("bmpwin%d\n", count);
+      // BMP確保
+      if(line_count<=62){
+        CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF1, tbl[i].x, line_count, 
+                                                 ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
+                                                 U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+      }else{
+        CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF2, tbl[i].x, line_count-62, 
+                                                 ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
+                                                 U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+      }
+      
+      // BMP初期化
+      PRINT_UTIL_Setup( &CG2d->printUtil[count], CG2d->bmpwin[count] );
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[count] ), BRIEF_CLEAR_COLOR );
+
+      // 文字列描画
+      _Endroll_StrPrint( CG2d, count, tbl[i].type, tbl[i].align, heapID );
+
+      count++;
+      line_count += tbl[i].plus_y;
+    }else if( tbl[i].type==ENDROL_SPACE ){
+      // 空白扱いのデータは行送りの数値のみ反映させる
+      line_count += tbl[i].plus_y;
+    }
+  }
+  
+  CG2d->bmpwin_num = count;
+  CG2d->line_count = line_count;
+  OS_Printf("BMPWIN num = %d LINECOUNT = %d\n", count, line_count);
+
+  GFL_BG_LoadScreenReq( FRAME_BRIEF1 );
+  GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
+
+}
+
+
+static void releaseEndrollBmpwin( G2D_CONTROL* CG2d )
+{
+  int i;
+  for(i=0;i<CG2d->bmpwin_num;i++){
+    GFL_BMPWIN_Delete(CG2d->bmpwin[i]);
+  }
 }
 
 //==============================================================================
@@ -1042,6 +1845,9 @@ enum{
   BLEND_SEQ_WAIT,
   BLEND_SEQ_FADEOUT,
   BLEND_SEQ_END,
+
+  BLEND_SEQ_END_PUT,
+  BLEND_SEQ_END_WAIT,
 };
 
 
@@ -1156,6 +1962,8 @@ static void BriefingFunc( PKWD_BRIEFING_WORK *tw )
 }
 
 
+
+
   // ポケウッド用
 enum{
   POKEWOOD_WIN0_TOP_Y       =   16,
@@ -1171,14 +1979,27 @@ enum{
 static void initLcdWindow( void )
 {
     // 上画面の上下をマスクする
-    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+    G2_SetWnd1InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
                            GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
                            GX_WND_PLANEMASK_OBJ, TRUE );
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE , FALSE );
-    GX_SetVisibleWnd( GX_WNDMASK_W0 );
-    G2_SetWnd0Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
+    GX_SetVisibleWnd( GX_WNDMASK_W1 );
+    G2_SetWnd1Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
 }
 
+static void initLcdWindow2( int left_right )
+{
+    // 上画面の上下をマスクする2
+    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+                           GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_OBJ, TRUE );
+    GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+
+    if(left_right==0){
+      G2_SetWnd0Position( 136, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
+    }else{
+      G2_SetWnd0Position(   0, POKEWOOD_WIN0_TOP_Y, 120, POKEWOOD_WIN0_BOTTOM_Y);
+    }
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1424,8 +2245,6 @@ static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID )
                                           FRAME_SEATS, 0, 0, FALSE, heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( pbw->AOam.aHandle, NARC_battgra_wb_pkwd_movie_c_NCLR,
                                           PALTYPE_SUB_BG, 0, 7*0x20, heapID );
-  // 念のため
-//  SetupSetScroll( pbw->AOam, BG_NO_FRAME, 0, 0, BG_VISIBLE_OFF, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_OFF );
 }
 
 //----------------------------------------------------------------------------------
@@ -1505,3 +2324,232 @@ static void debug_btlv_audience( AUDIENCE_CONTROL *AOam )
   }
 }
 
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+//  エンドロール関係
+//=============================================================================================
+
+
+static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
+static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll );
+
+#define ENDROLL_SCROLL_ENDLINE  ((tw->CG2d.line_count*8+128))
+#define ENDROLL_START ( -192 )
+#define ENDROLL_TURN1 (    0 )
+#define ENDROLL_TURN2 (  256 )
+#define ENDROLL_TURN3 (  512 )
+#define ENDROLL_TURN4 (  768 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	あらすじ表示半透明処理
+ *
+ * @param   tw		
+ */
+//----------------------------------------------------------------------------------
+static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
+{
+  switch(tw->blend_seq){
+  // 開始
+  case BLEND_SEQ_START:
+    if((tw->CG2d.now_page&1)==0){
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16 );
+    }else{
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 16 );
+    }
+    tw->CG2d.scroll = ENDROLL_START;
+    _endroll_screen_onoff( &tw->CG2d );
+    G2_SetBG1Offset( 0, tw->CG2d.scroll );
+    G2_SetBG2Offset( 0, tw->CG2d.scroll+16 );
+    tw->blend_seq = BLEND_SEQ_BLACK_BACK_WAIT;
+    break;
+  // 
+  case BLEND_SEQ_BLACK_BACK_WAIT:
+    tw->blend_seq = BLEND_SEQ_BLACK_BACK_IN;
+    break;
+  // ブレンド処理ＯＮ
+  case BLEND_SEQ_BLACK_BACK_IN:
+    tw->CG2d.blend_work++;
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16-tw->CG2d.blend_work );
+    if(tw->CG2d.blend_work==8){
+      tw->blend_seq = BLEND_SEQ_FADEIN_START_WAIT;
+      tw->CG2d.blend_work=0;
+      tw->CG2d.wait = 0;
+    }
+    break;
+  // 文字列表示まで少々待ち
+  case BLEND_SEQ_FADEIN_START_WAIT:
+    if(tw->CG2d.wait++>30){
+      tw->blend_seq = BLEND_SEQ_FADEIN_START;
+    }
+    break;
+  // 文字列フェード開始
+  case BLEND_SEQ_FADEIN_START:
+    if((tw->CG2d.now_page&1)==0){
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 8 );
+    }else{
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 8 );
+    }
+    tw->blend_seq = BLEND_SEQ_FADEIN;
+    break;
+  // 文字列フェード
+  case BLEND_SEQ_FADEIN:
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2,  tw->CG2d.blend_work, 8 );
+    tw->CG2d.blend_work++;
+    if(tw->CG2d.blend_work==16){
+      tw->blend_seq = BLEND_SEQ_WAIT;
+    }
+    break;
+  // スクロール処理
+  case BLEND_SEQ_WAIT:
+//    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A || ++tw->CG2d.wait>BRIEFING_MSG_WAIT){
+//      tw->blend_seq = BLEND_SEQ_FADEOUT;
+//      tw->CG2d.wait=0;
+//    }
+
+    _endroll_screen_onoff( &tw->CG2d );
+    tw->CG2d.scroll++;
+    G2_SetBG1Offset( 0, tw->CG2d.scroll );
+    G2_SetBG2Offset( 0, (tw->CG2d.scroll)+16 );
+    _BG3Offset_func( &tw->CG2d, tw->CG2d.scroll );
+    GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON  );
+    GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
+
+    if(tw->CG2d.scroll>=ENDROLL_SCROLL_ENDLINE){
+      tw->blend_seq = BLEND_SEQ_END_PUT;
+      tw->CG2d.wait=0;
+    }
+    break;
+  // 「END」表示
+  case BLEND_SEQ_END_PUT:
+    _trans_G2DGraphic_End( &tw->CG2d, tw->heapID );
+    GX_SetVisibleWnd( GX_WNDMASK_W1 );
+    G2_SetBG3Offset( 0, 0 );
+    tw->blend_seq = BLEND_SEQ_END_WAIT;
+    break;
+  case BLEND_SEQ_END_WAIT:
+    if(++tw->CG2d.wait > 90){
+      tw->blend_seq = BLEND_SEQ_END;
+    }
+    break;
+  // 次の文字列を準備するか終了するか判定
+  case BLEND_SEQ_END:
+    tw->seq  = SEQ_VOICE_PLAY;                // 終了
+    break;
+  }
+}
+
+
+
+static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
+{
+  int mode=0;
+  switch(CG2d->scroll){
+  case ENDROLL_START:
+    mode=2;
+    break;
+  case ENDROLL_TURN1:
+    mode=3;
+    break;
+  case ENDROLL_TURN2:
+    mode=4;
+    break;
+  case ENDROLL_TURN3:
+    mode=5;
+    break;
+  case ENDROLL_TURN4:
+    mode=6;
+    break;
+  }
+
+  if(mode!=0){
+    int i;
+    for(i=0;i<CG2d->bmpwin_num;i++){  // スクリーン再生成
+      GFL_BMPWIN_MakeScreen( CG2d->bmpwin[i] );
+    }
+    switch(mode){
+    case 1:
+      GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      break;
+    case 2:
+      GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0, 32, 32, 32, 0 );    // 上半分残し
+      GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      break;
+    case 3:
+      // GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0, 0, 32, 32, 0 );  // 両方残し
+      GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      break;
+    case 4:
+      GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0,  0, 32, 32, 0 );    // 下半分残し
+      GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0, 32, 32, 32, 0 );    // 上半分残し
+      break;
+    case 5:
+      GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      // GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0, 32, 32, 32, 0 ); // 両方残し
+      break;
+    case 6:
+      GFL_BG_FillScreen( FRAME_BRIEF1, 0, 0,  0, 32, 64, 0 );    // 全部消去
+      GFL_BG_FillScreen( FRAME_BRIEF2, 0, 0,  0, 32, 32, 0 );    // 下半分残し
+      break;
+    }
+    GFL_BG_LoadScreenReq( FRAME_BRIEF1 );
+    GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
+  }
+}
+static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll )
+{
+  int pokewood_pos = (CG2d->line_count*8-128);
+  OS_Printf( "now=%d,", scroll);
+  if(scroll > pokewood_pos){
+    OS_Printf("limit=%d,  bg3pos=%d", pokewood_pos,  CG2d->scroll- pokewood_pos );
+    G2_SetBG3Offset( 0, CG2d->scroll- pokewood_pos  );
+  }
+  OS_Printf("\n");
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンディングロール用の文字列を描画
+ *
+ * @param   CG2d		
+ * @param   page		表示するページ
+ */
+//----------------------------------------------------------------------------------
+static void _endroll_print( G2D_CONTROL* CG2d, int page, int sex )
+{
+//    GFL_MSG_GetString(CG2d->mm, pw_briefing_001+page, CG2d->expandbuf[index]);
+  int i;
+
+  //メッセージ表示
+  for(i=0;i<CG2d->bmpwin_num;i++){
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[i] ), BRIEF_CLEAR_COLOR );
+    PRINT_UTIL_PrintColor( &CG2d->printUtil[i], CG2d->printQue, 0, 
+                        0, CG2d->teststr, CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2,0) );
+  }
+}

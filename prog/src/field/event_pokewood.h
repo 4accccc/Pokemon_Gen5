@@ -53,5 +53,5 @@ extern GMEVENT * PKWD_BOOK_EVENT_Show(  GAMESYS_WORK * gsys, void * parent_work 
 extern GMEVENT * PKWD_SELECT_SCREEN_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work );
 extern GMEVENT * PKWD_BRIEFING_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work );
 extern GMEVENT * PKWD_RECORD_MONITOR_EVENT_Call(  GAMESYS_WORK * gsys, void * parent_work );
-
 extern GMEVENT * PKWD_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work );
+extern GMEVENT * PKWD_ENDROLL_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work );
