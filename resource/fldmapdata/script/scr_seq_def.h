@@ -15214,8 +15214,25 @@
 //--------------------------------------------------------------
 #define _PKWD_CHECK_NEW_STAR_RANK( ret_wk )  \
     _ASM_PKWD_CHECK_NEW_STAR_RANK ret_wk
+
     .macro  _ASM_PKWD_CHECK_NEW_STAR_RANK ret_wk
     .short  EV_SEQ_PKWD_CHECK_NEW_STAR_RANK
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：スターランクが上がったかどうかのチェック
+ * @param[out]  ret_wk    スターランク（script_def.hのSCR_PKWD_STARRANK_を参照)
+ *
+ * ポケウッドコマンドの中でこのコマンドのみ常駐に置かれている
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_STAR_RANK( ret_wk ) \
+    _ASM_PKWD_GET_STAR_RANK ret_wk
+
+    .macro  _ASM_PKWD_GET_STAR_RANK ret_wk
+    .short  EV_SEQ_PKWD_GET_STAR_RANK
     .short  \ret_wk
     .endm
 

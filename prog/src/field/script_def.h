@@ -815,6 +815,11 @@
 #define   SCR_PKWD_ADDMSG_PROFITS             (3) ///<台本追加MSG:興行収益
 #define   SCR_PKWD_ADDMSG_ALL_GOOD_END        (4) ///<台本追加MSG:すべての台本のGOODEND
 
+#define   SCR_PKWD_STAR_RANK_0                  (0) ///<スターランク0（最低）
+#define   SCR_PKWD_STAR_RANK_1                  (1) ///<スターランク1
+#define   SCR_PKWD_STAR_RANK_2                  (2) ///<スターランク2
+#define   SCR_PKWD_STAR_RANK_3                  (3) ///<スターランク3
+#define   SCR_PKWD_STAR_RANK_4                  (4) ///<スターランク4（最高）
 
 //--------------------------------------------------------------
 //  scrcmd_infinity_dungeon.c

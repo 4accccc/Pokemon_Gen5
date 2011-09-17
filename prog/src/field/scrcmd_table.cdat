@@ -1100,6 +1100,12 @@
   // すれ違い調査隊で自慢メッセージを入力
   DEF_CMD( EvCmdCrossCommBoastMessageInputCall, EV_SEQ_CALL_CROSS_COMM_BOAST_MSG_INPUT )
 
+  //ポケウッド常駐：スターランクの取得
+  DEF_CMD( EvCmdPokewoodGetStarRank,            EV_SEQ_PKWD_GET_STAR_RANK )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

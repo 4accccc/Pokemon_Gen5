@@ -711,4 +711,8 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (708)
   { FALSE, FALSE, FALSE }, // NO_CMD (709)
   { TRUE, FALSE, FALSE }, // _CALL_CROSS_COMM_BOAST_MSG_INPUT (710)
+  { TRUE, TRUE, TRUE }, // _PKWD_GET_STAR_RANK (711)
+  { FALSE, FALSE, FALSE }, // NO_CMD (712)
+  { FALSE, FALSE, FALSE }, // NO_CMD (713)
+  { FALSE, FALSE, FALSE }, // NO_CMD (714)
 };

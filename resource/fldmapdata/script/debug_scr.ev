@@ -105,6 +105,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
+  _PKWD_GET_STAR_RANK( SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
 //====↓ ポケウッドチュートリアルの呼び出し方====
   _FLAG_SET( SYS_FLAG_POKEWOOD_TUTORIAL )
   _RESERVE_SCRIPT( SCRID_RESERVE_PKWD_ENTRANCE_TUTORIAL )
