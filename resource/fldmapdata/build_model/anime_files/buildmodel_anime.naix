@@ -291,10 +291,11 @@ enum {
 	NARC_buildmodel_anime_warp01_nsbta = 277,
 	NARC_buildmodel_anime_warp02_nsbta = 278,
 	NARC_buildmodel_anime_warp04_nsbta = 279,
-	NARC_buildmodel_anime_wbt_fountain_nsbta = 280,
-	NARC_buildmodel_anime_wbtgate_01_nsbta = 281,
-	NARC_buildmodel_anime_wf_lake01_nsbta = 282,
-	NARC_buildmodel_anime_wf_tree_anim01_nsbta = 283
+	NARC_buildmodel_anime_wbt_fountain_nsbca = 280,
+	NARC_buildmodel_anime_wbt_fountain_nsbta = 281,
+	NARC_buildmodel_anime_wbtgate_01_nsbta = 282,
+	NARC_buildmodel_anime_wf_lake01_nsbta = 283,
+	NARC_buildmodel_anime_wf_tree_anim01_nsbta = 284
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */
