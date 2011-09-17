@@ -2294,7 +2294,7 @@
 #define SYS_FLAG_SUGOI_TSURI_GET          2437 /* 0x0985 すごいつりざお入手フラグ */
 #define SYS_FLAG_FES_TUTORIAL_CLEAR       2438 /* 0x0986 ハイリンクフェス：ミッションを初めてクリアしたフラグ */
 #define SYS_FLAG_NAMINORI_GET             2439 /* 0x0987 なみのり入手フラグ */
-		/* not used  2440(0x0988) */
+#define SYS_FLAG_POKEWOOD_TUTORIAL        2440 /* 0x0988 ポケウッド：チュートリアル中のフラグ */
 		/* not used  2441(0x0989) */
 		/* not used  2442(0x098a) */
 		/* not used  2443(0x098b) */
