@@ -78,6 +78,8 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CI_CreateN,     NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //N
   {ENCEFF_CI_CreateNeoPlasma,NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xcf20}, //ネオプラズマ団
   {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xd530},     //ゲーツィス
+  {ENCEFF_CI_CreateWBT,   NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xcf20}, //WBT
+  {ENCEFF_CI_CreatePokeWood,NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xcf20}, //ポケウッド
 
   {ENCEFF_MDL_Create5, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE, 0x132e8},    //エフェクト
   {ENCEFF_CI_CreatePackage, NULL, FS_OVERLAY_ID(enceff_ci), TRUE, 0x80e0},    //パッケージポケ

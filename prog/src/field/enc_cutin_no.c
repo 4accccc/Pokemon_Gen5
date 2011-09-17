@@ -33,6 +33,8 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {FLDCIID_SWBOSS,SPTR_SWBOSS,0x7fff,0x0000},  //ボス(アクロマ)
   {FLDCIID_NEO_PLASMA, 0,     0x7fff,0x0000},  //ネオプラズマ団
   {FLDCIID_SAGE,  SPTR_SAGE,  0x7fff,0x0000},  //セージ
+  {FLDCIID_WBT,        0,     0x7fff,0x0000},  //WBT
+  {FLDCIID_POKEWOOD,   0,     0x7fff,0x0000},  //ポケウッド
   //
   {FLDCIID_SHIN_MU,  0, 0x7fff,0x0000}, //パッケージ
   {FLDCIID_IDOU, 0, 0x7fff,0x0000}, //移動ポケ

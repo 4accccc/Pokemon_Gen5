@@ -77,4 +77,6 @@
 #define FLDCIID_ZUKAN_W (64)
 #define FLDCIID_GET2_08M (65)
 #define FLDCIID_N (66)
-#define FLDCIID_MAX (67)
+#define FLDCIID_WBT (67)
+#define FLDCIID_POKEWOOD (68)
+#define FLDCIID_MAX (69)

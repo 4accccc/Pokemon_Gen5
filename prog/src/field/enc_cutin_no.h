@@ -28,6 +28,8 @@ typedef enum{
   ENC_CUTIN_SWBOSS, // プラズマ団のアクロマ
   ENC_CUTIN_NEO_PLASMA, // ネオプラズマ団
   ENC_CUTIN_SAGE,   // ゲーチス
+  ENC_CUTIN_WBT,    // WBT
+  ENC_CUTIN_POKEWOOD,// ポケウッド
   //
   ENC_CUTIN_PACKAGE,
   ENC_CUTIN_MOVEPOKE,
