@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_r06r0101.h"
   .include  "r06r0101.h"
 
-  //@author fujimura_souichirou（なみのり入手、シジキカイベント移植）
+  //@author fujimura_souichirou（なみのり入手、シジキカ入手イベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,7 +28,7 @@ _EVENT_DATA   ev_r06r0101_swleader1_01
 _EVENT_DATA   ev_init_r06r0101
 _EVENT_DATA   ev_r06r0101_assistantm_01
 _EVENT_DATA   ev_r06r0101_assistantm_02
-_EVENT_DATA   ev_r06r0101_assistantm_03
+_EVENT_DATA   ev_r06r0101_assistantm_04
 _EVENT_DATA   ev_r06r0101_assistantw_01
 _EVENT_DATA   ev_r06r0101_poke25_01
 _EVENT_DATA   ev_r06r0101_poke26_01
@@ -38,13 +38,6 @@ _EVENT_DATA   ev_r06r0101_ambrella_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
-//シキジカ                                                          //
-//  LOCALWORK0～2 まで使用しました。同マップ内の使用を禁止します。  //
-//                                                                  //
-//  LOCALWORK0  マップに入ってからの初回会話かどうか判定            //
-//  LOCALWORK1  シキジカを研究員に見せた状態を保存してメッセージ分岐//
-//  LOCALWORK2  見せたシキジカの季節を保存して会話を分岐            //
-//                                                                  //
 //温度計                                                            //
 //  LOCALWORK3  まで使用しました。同マップ内の使用を禁止します。    //
 //                                                                  //
@@ -183,215 +176,135 @@ EVENT_START  ev_r06r0101_assistantm_02
 EVENT_END
 
 /**************************************************************/
-/*  助手♂03：話しかけ（シキジカイベント）                    */
+/*  助手♂04：話しかけ（シキジカを貰う）                      */
 /**************************************************************/
-EVENT_START  ev_r06r0101_assistantm_03
-
-  //シキジカイベント用変数
-  DEFINE_LOCAL LWK_MONSNUM
-  DEFINE_LOCAL LWK_POKE_SELECT_CHK
-  DEFINE_LOCAL LWK_POKE_SELECT
-  DEFINE_LOCAL LWK_POKE_FORMNO
-  DEFINE_LOCAL LWK_TALK_NUM
-  DEFINE_LOCAL LWK_EGG_CHK
+EVENT_START  ev_r06r0101_assistantm_04
 
   _TALK_OBJ_START()
 
-  //ポケモン名（シキジカ）取得
-  _MONS_NAME( 0, MONSNO_511 )
+  //シキジカを貰っていない
+  IF FLAG_OFF( FE_R06R0101_POKE_GET_01 ) THEN
 
-  //イベントクリアのご褒美を貰った？
-  IF FLAG_OFF( FE_R06R0101_ITEMGET_01 ) THEN
-    //イベントをクリアした？
-    IF FLAG_OFF( FV_R06R0101_POKE_SPRING_01 ) && FLAG_OFF( FV_R06R0101_POKE_SUMMER_01 ) && FLAG_OFF( FV_R06R0101_POKE_AUTUMN_01 ) && FLAG_OFF( FV_R06R0101_POKE_WINTER_01 ) && $LOCALWORK1 == 0 THEN
-      //助手♂03：お！　あなたは！　おかげさまで
-      _BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_09)
+    //助手♂04：ちょっと　めずらしい　シキジカを▽
+    _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_01, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
+
+    //シキジカを貰う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN    //はい
+
+      //シキジカを貰う処理へ
+      _CALL ev_c06r0101_poke_get
+
+    ELSE    //いいえ
+
+      //助手♂04：めずらしい　シキジカ　なのですが
+      _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_06, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
-      //アイテム「リーフの石」入手
-      _ITEM_EVENT_NOWAIT( ITEM_RIIHUNOISI, 1 )
-
-      //========================================//
-      //アイテム入手フラグをON
-      _FLAG_SET( FE_R06R0101_ITEMGET_01 )
-      //========================================//
-
-    ELSE
-      //依頼に「はい」と答え、イベントを引き受けている？
-      IF FLAG_OFF( FE_R06R0101_EVENT_ON_01 ) THEN
-        IF $LOCALWORK2 == 0 THEN
-          //2回目以降の話しかけはこの処理を飛ばす
-          IF $LOCALWORK0  == 0 THEN
-
-            //助手♂03：われわれは　きせつによる　しぜんの　さまざまな
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_01 )
-            _AB_KEYWAIT_MARK()
-
-            //助手♂03：……と▼　ここまでは　よいのですけれども
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_01a )
-
-          ENDIF
-
-          //シキジカを選択したかの判定へ
-          _CALL ev_shikijika_event
-
-          //========================================//
-          //イベントスタートフラグON
-          _FLAG_SET( FE_R06R0101_EVENT_ON_01 )
-          //一度話しかけたことを保存
-          $LOCALWORK0 = 1
-          //========================================//
-
-        ELSIF $LOCALWORK2 == 1 THEN
-          //助手♂03：《シキジカ》の　はるの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
-        ELSIF $LOCALWORK2 == 2 THEN
-          //助手♂03：《シキジカ》の　なつの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
-        ELSIF $LOCALWORK2 == 3 THEN
-          //助手♂03：《シキジカ》の　あきの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
-        ELSIF $LOCALWORK2 == 4 THEN
-          //助手♂03：《シキジカ》の　ふゆの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
-        ENDIF
-        _LAST_KEYWAIT()
-        _MSGWIN_CLOSE()
-
-      ELSE
-        //シキジカを選択したかの判定へ
-        IF $LOCALWORK2 == 0 THEN
-          _CALL ev_shikijika_event
-
-        ELSIF $LOCALWORK2 == 1 THEN
-          //助手♂03：《シキジカ》の　はるの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
-        ELSIF $LOCALWORK2 == 2 THEN
-          //助手♂03：《シキジカ》の　なつの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
-        ELSIF $LOCALWORK2 == 3 THEN
-          //助手♂03：《シキジカ》の　あきの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
-        ELSIF $LOCALWORK2 == 4 THEN
-          //助手♂03：《シキジカ》の　ふゆの　すがた！▼
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
-        ENDIF
-        _LAST_KEYWAIT()
-        _MSGWIN_CLOSE()
-
-      ENDIF
     ENDIF
+
+  //シキジカ入手後
   ELSE
 
-    //助手♂03：４つの　きせつの　《シキジカ》の
-    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_10 )
+    //助手♂04：てんのめぐみ……▼
+    _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_07, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+
   ENDIF
 
 EVENT_END
 
+//シキジカを貰う処理
+ev_c06r0101_poke_get:
+{
+  DEFINE_LOCAL LWK_POKE_COUNT //手持ち
+  DEFINE_LOCAL SCWK_SEASON  //季節
+  DEFINE_LOCAL LWK_INPUT
 
-ev_shikijika_event:
+  //手持ちのポケモンの数を取得
+  _GET_PARTY_POKE_COUNT( LWK_POKE_COUNT, POKECOUNT_MODE_TOTAL )
 
-  //助手♂03：いかがでしょうか？▼
-  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_02 )
-  _YES_NO_WIN( SCWK_ANSWER )
+  //手持ちがいっぱいなら
+  IF $LWK_POKE_COUNT == 6 THEN
 
-  IF $SCWK_ANSWER == SCR_YES THEN
-  _MSGWIN_CLOSE()
+    //助手♂04：たくさんの　ポケモンを
+    _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_05, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
-    //手持ちポケモンを選択する
-    _SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK, LWK_POKE_SELECT, 0 )
+  //手持ちに空きがある
+  ELSE
 
-    //選んだポケモンのナンバーを取得する
-    _GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
-    //タマゴを選んでいないかチェック
-    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_POKE_SELECT )
+    //助手♂04：かわいがって　あげてください！▼
+    _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_02, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
+    _MSGWIN_CLOSE()
 
-    IF $LWK_POKE_SELECT_CHK == TRUE THEN
-      IF $LWK_EGG_CHK == FALSE THEN
-        IF $LWK_MONSNUM== MONSNO_511 THEN
+    //シキジカのフォルム選出（今の季節で入手できるフォルムに）
+    //季節取得
+    _GET_SEASON_ID( SCWK_SEASON )
 
-          //選んだポケモンのフォルムナンバーを取得
-          _GET_PARTY_POKE_FORMNO( LWK_POKE_FORMNO, LWK_POKE_SELECT )
+    //春
+    IF $SCWK_SEASON == PMSEASON_SPRING THEN
+      //シキジカ（春）特性：てんのめぐみ  【仮】レベルは仮
+      _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_511, 0, 25, SCR_TOKUSEI_SPEC_3, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_FALSE, 0, ITEM_MONSUTAABOORU )
 
-          //春のフォルムのシキジカを見せた
-          IF $LWK_POKE_FORMNO == FORMNO_511_SPRING && FLAG_ON( FV_R06R0101_POKE_SPRING_01 ) THEN
-            //助手♂03：《シキジカ》の　はるの　すがた！▼
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
+    //夏
+    ELSIF $SCWK_SEASON == PMSEASON_SUMMER THEN
+      //シキジカ（夏）特性：てんのめぐみ  【仮】レベルは仮
+      _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_511, 1, 25, SCR_TOKUSEI_SPEC_3, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_FALSE, 0, ITEM_MONSUTAABOORU )
 
-            //========================================//
-            _FLAG_RESET( FV_R06R0101_POKE_SPRING_01 )
-            $LOCALWORK2 = 1
-            //========================================//
+    //秋
+    ELSIF $SCWK_SEASON == PMSEASON_AUTUMN THEN
+      //シキジカ（秋）特性：てんのめぐみ  【仮】レベルは仮
+      _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_511, 2, 25, SCR_TOKUSEI_SPEC_3, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_FALSE, 0, ITEM_MONSUTAABOORU )
 
-          //夏のフォルムのシキジカを見せた
-          ELSIF $LWK_POKE_FORMNO == FORMNO_511_SUMMER && FLAG_ON( FV_R06R0101_POKE_SUMMER_01 ) THEN
-            //助手♂03：《シキジカ》の　なつの　すがた！▼
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
+    //冬
+    ELSIF $SCWK_SEASON == PMSEASON_WINTER THEN
+      //シキジカ（冬）特性：てんのめぐみ  【仮】レベルは仮
+      _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_511, 3, 25, SCR_TOKUSEI_SPEC_3, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_FALSE, 0, ITEM_MONSUTAABOORU )
 
-            //========================================//
-            _FLAG_RESET( FV_R06R0101_POKE_SUMMER_01 )
-            $LOCALWORK2 = 2
-            //========================================//
-
-          //秋のフォルムのシキジカを見せた
-          ELSIF $LWK_POKE_FORMNO == FORMNO_511_AUTUMN && FLAG_ON( FV_R06R0101_POKE_AUTUMN_01 ) THEN
-            //助手♂03：《シキジカ》の　あきの　すがた！▼
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
-
-            //========================================//
-            _FLAG_RESET( FV_R06R0101_POKE_AUTUMN_01 )
-            $LOCALWORK2 = 3
-            //========================================//
-
-          //冬のフォルムのシキジカを見せた
-          ELSIF $LWK_POKE_FORMNO == FORMNO_511_WINTER && FLAG_ON( FV_R06R0101_POKE_WINTER_01 ) THEN
-            //助手♂03：《シキジカ》の　ふゆの　すがた！▼
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
-
-            //========================================//
-            _FLAG_RESET( FV_R06R0101_POKE_WINTER_01 )
-            $LOCALWORK2 = 4
-            //========================================//
-
-          //すでに見せた季節のシキジカを見せた
-          ELSE
-            //助手♂03：すでに　つかまえてますよ
-            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_07 )
-          ENDIF
-
-          //========================================//
-          $LOCALWORK1 = 1
-          //========================================//
-
-        ELSE
-          _MONS_NAME( 0, MONSNO_511 )
-          //助手♂03：もうしあげにくいのですが……
-          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_11 )
-
-        ENDIF
-
-      ELSE
-        _MONS_NAME( 0, MONSNO_511 )
-        //助手♂03：もうしあげにくいのですが……
-        _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_11 )
-
-      ENDIF
-
-    ELSE
-      //助手♂03：そうですか……▼
-      _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_08 )
     ENDIF
 
-  ELSE
-    //助手♂03：そうですか……▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_08 )
+    //プレイヤー名を代入
+    _PLAYER_NAME( 0 )
+
+    //システム：シキジカを手に入れた！
+    _ME_PLAY( SEQ_ME_POKEGET )
+    _SYSWIN_MSG( msg_r06r0101_assistantm4_03, POS_DEFAULT )
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
+
+    //システム：ニックネームを　つけますか？
+    _SYSWIN_MSG( msg_r06r0101_assistantm4_04, POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+      _MSGWIN_CLOSE()
+
+      //ニックネーム入力処理（一番後ろのポケモンを取得する）
+      _PARTY_POKE_NAME_INPUT( LWK_INPUT, LWK_POKE_COUNT, TRUE )
+
+    ELSE  //いいえ
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+    //助手♂04：てんのめぐみ……▼
+    _BALLOONWIN_OBJMSG_POS( msg_r06r0101_assistantm4_07, R06R0101_ASSISTANTM_04, POS_DEFAULT ) 
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //シキジカ入手
+    _FLAG_SET( FE_R06R0101_POKE_GET_01 )
+    //========================================//
+
   ENDIF
-
+}
 _RET
-
 
 /**************************************************************/
 /*  助手♀01：話しかけ                                        */

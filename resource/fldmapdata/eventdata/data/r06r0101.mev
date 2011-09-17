@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/22 19:11:59
+#save date:2011/09/16 20:54:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -76,19 +76,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R06R0101_ASSISTANTM_03
+R06R0101_POKE27_01
 #OBJ CODE Number
-ASSISTANTM
+POKE27
 #MOVE CODE Number
-MV_UP
+MV_RTLU         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R06R0101_ASSISTANTM_03
+SCRID_R06R0101_POKE27_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 200
+-184 0 120
 #event number: 3
 #type
 1
@@ -169,19 +169,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R06R0101_POKE26_01
+R06R0101_POKE25_01
 #OBJ CODE Number
-POKE26
+POKE25
 #MOVE CODE Number
-MV_RND
+MV_RTRD         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_R06R0101_POKE_SUMMER_01
+0
 #Event Script Name
-SCRID_R06R0101_POKE26_01
+SCRID_R06R0101_POKE25_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -191,7 +191,7 @@ DIR_LEFT
 #Move Limit X Number
 1
 #Move Limit Z Number
-1
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -208,71 +208,9 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_R06R0101_POKE_WINTER_01
+0
 #Event Script Name
 SCRID_R06R0101_POKE28_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 0 200
-#event number: 7
-#type
-1
-#ID name
-R06R0101_POKE25_01
-#OBJ CODE Number
-POKE25
-#MOVE CODE Number
-MV_RTRD         
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_R06R0101_POKE_SPRING_01
-#Event Script Name
-SCRID_R06R0101_POKE25_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 0 136
-#event number: 8
-#type
-1
-#ID name
-R06R0101_POKE27_01
-#OBJ CODE Number
-POKE27
-#MOVE CODE Number
-MV_RTLU         
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_R06R0101_POKE_AUTUMN_01
-#Event Script Name
-SCRID_R06R0101_POKE27_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -282,13 +220,75 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 232
+#event number: 7
+#type
+1
+#ID name
+R06R0101_POKE26_01
+#OBJ CODE Number
+POKE26
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_POKE26_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
 #Move Limit Z Number
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 120
+-104 0 136
+#event number: 8
+#type
+1
+#ID name
+R06R0101_ASSISTANTM_04
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_ASSISTANTM_04
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 232
 #event number: 9
 #type
 1
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 216
+-232 0 232
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -329,34 +329,8 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+7
 #event number: 0
-#Bg Event Label
-BG_R06R0101_CASE_01
-#Bg Event Type
-BG_TALK_TYPE_BOARD
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_R06R0101_CASE_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 0 216
-#event number: 1
-#Bg Event Label
-BG_R06R0101_CASE_02
-#Bg Event Type
-BG_TALK_TYPE_BOARD
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_R06R0101_CASE_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 0 216
-#event number: 2
 #Bg Event Label
 BG_R06R0101_CASE_03
 #Bg Event Type
@@ -368,10 +342,36 @@ SCRID_BG_R06R0101_CASE_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 216
-#event number: 3
+-200 0 248
+#event number: 1
 #Bg Event Label
 BG_R06R0101_CASE_04
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_R06R0101_CASE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 248
+#event number: 2
+#Bg Event Label
+BG_R06R0101_CASE_05
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_R06R0101_CASE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 248
+#event number: 3
+#Bg Event Label
+BG_R06R0101_CASE_07
 #Bg Event Type
 BG_TALK_TYPE_BOARD
 #Bg Event Reaction Direction ID
@@ -382,6 +382,45 @@ SCRID_BG_R06R0101_CASE_02
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 184
+#event number: 4
+#Bg Event Label
+BG_R06R0101_CASE_01
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_R06R0101_CASE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 248
+#event number: 5
+#Bg Event Label
+BG_R06R0101_CASE_02
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_R06R0101_CASE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 248
+#event number: 6
+#Bg Event Label
+BG_R06R0101_CASE_06
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_R06R0101_CASE_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 248
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
