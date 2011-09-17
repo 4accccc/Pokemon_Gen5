@@ -193,7 +193,15 @@ enum {
 	NARC_fld3d_ci_gymbadge8f_nsbva = 179,
 	NARC_fld3d_ci_get1_zukan_m_nsbmd = 180,
 	NARC_fld3d_ci_get1_zukan_w_nsbmd = 181,
-	NARC_fld3d_ci_get1_663m_nsbmd = 182
+	NARC_fld3d_ci_get1_663m_nsbmd = 182,
+	NARC_fld3d_ci_trainer_n_spa = 183,
+	NARC_fld3d_ci_n_ci01a_nsbmd = 184,
+	NARC_fld3d_ci_n_ci01b_nsbmd = 185,
+	NARC_fld3d_ci_n_ci01a_nsbca = 186,
+	NARC_fld3d_ci_n_ci01a_nsbta = 187,
+	NARC_fld3d_ci_n_ci01a_nsbva = 188,
+	NARC_fld3d_ci_n_ci01b_nsbma = 189,
+	NARC_fld3d_ci_n_ci01b_nsbva = 190
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

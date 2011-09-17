@@ -40,4 +40,5 @@ clean:
 	$(MAKE) -f $(MKFILE_RES) clean
 	$(MAKE) -f $(MKFILE_TEX_DEPEND) clean
 	$(MAKE) -f $(MKFILE_TEX) clean
+	rm -f *.nsb*
 

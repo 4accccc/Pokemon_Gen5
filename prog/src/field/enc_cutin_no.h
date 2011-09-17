@@ -9,8 +9,7 @@
 #pragma once
 
 typedef enum{
-  ENC_CUTIN_RIVAL,
-  ENC_CUTIN_SUPPORT,
+  ENC_CUTIN_RIVAL,  // ライバル
   ENC_CUTIN_GYM1,
   ENC_CUTIN_GYM2,
   ENC_CUTIN_GYM3,
@@ -24,9 +23,12 @@ typedef enum{
   ENC_CUTIN_BIGFOUR3,
   ENC_CUTIN_BIGFOUR4,
   ENC_CUTIN_CHAMP,
-  ENC_CUTIN_BOSS,
-  ENC_CUTIN_SAGE,
-  ENC_CUTIN_PLASMA,
+  // SWAN
+  ENC_CUTIN_N,      // ポケモントレーナーN
+  ENC_CUTIN_SWBOSS, // プラズマ団のアクロマ
+  ENC_CUTIN_NEO_PLASMA, // ネオプラズマ団
+  ENC_CUTIN_SAGE,   // ゲーチス
+  //
   ENC_CUTIN_PACKAGE,
   ENC_CUTIN_MOVEPOKE,
   ENC_CUTIN_THREE,

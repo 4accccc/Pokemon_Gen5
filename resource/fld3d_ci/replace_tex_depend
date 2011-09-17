@@ -191,6 +191,15 @@ cnv_tmp\enc_boss_LZ.bin : cnv_tmp\enc_boss.NCGR
 cnv_tmp\enc_boss.NCLR : replace_tex/VSdemo_Face/enc_boss.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
+cnv_tmp\enc_n.NCGR : replace_tex/VSdemo_Face/enc_n.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_n_LZ.bin : cnv_tmp\enc_n.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_n.NCGR
+
+cnv_tmp\enc_n.NCLR : replace_tex/VSdemo_Face/enc_n.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
 cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp
 

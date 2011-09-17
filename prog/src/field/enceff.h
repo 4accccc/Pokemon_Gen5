@@ -29,8 +29,6 @@ extern void *ENCEFF_AllocUserWork(ENCEFF_CNT_PTR ptr, const int size, const HEAP
 extern void ENCEFF_FreeUserWork(ENCEFF_CNT_PTR ptr);
 extern void *ENCEFF_GetUserWorkPtr(ENCEFF_CNT_PTR ptr);
 
-extern GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-extern GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateGym01(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
@@ -43,10 +41,14 @@ extern GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fiel
 extern GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+
+extern GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+extern GMEVENT *ENCEFF_CI_CreateSwBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+extern GMEVENT *ENCEFF_CI_CreateN(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+extern GMEVENT *ENCEFF_CI_CreateNeoPlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-extern GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-extern GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+
 extern GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateMovePoke(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);

@@ -181,4 +181,12 @@ ARC_TARGET_DATA = \
 	gymbadge8f.nsbva \
 	get1_zukan_m.nsbmd \
 	get1_zukan_w.nsbmd \
-	get1_663m.nsbmd
+	get1_663m.nsbmd \
+	trainer_n.spa \
+	n_ci01a.nsbmd \
+	n_ci01b.nsbmd \
+	n_ci01a.nsbca \
+	n_ci01a.nsbta \
+	n_ci01a.nsbva \
+	n_ci01b.nsbma \
+	n_ci01b.nsbva

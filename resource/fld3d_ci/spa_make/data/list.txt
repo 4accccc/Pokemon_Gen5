@@ -16,6 +16,9 @@ fly_out.spa
 plasma.spa
 	plasma.spr
 
+trainer_n.spa
+	trainer_n.spr
+
 rival.spa
 	rival.spr
 
@@ -25,3 +28,4 @@ plasma_blue.spa
 merodia.spa
 	merodia_star.spr
 	merodia_onpu.spr
+

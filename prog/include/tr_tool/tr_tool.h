@@ -66,17 +66,18 @@
  * トレーナータイプグループ
  * 拡張する場合、岩澤に確認をお願いします
  */
-#define TRTYPE_GRP_RIVAL          (0) //ライバル
-#define TRTYPE_GRP_SUPPORT        (1) //サポート
-#define TRTYPE_GRP_LEADER         (2) //ジムリーダー
-#define TRTYPE_GRP_BIGFOUR        (3) //四天王
-#define TRTYPE_GRP_CHAMPION       (4) //チャンピオン
-#define TRTYPE_GRP_TRAINER_BOSS   (5) //ポケモントレーナーのN
-#define TRTYPE_GRP_PLASMA_BOSS    (6) //プラズマ団のN
-#define TRTYPE_GRP_LAST_BOSS      (7) //プラズマ団のN(ラストバトル)
-#define TRTYPE_GRP_SAGE           (8) //ゲーチス
-#define TRTYPE_GRP_PLASMA         (9) //プラズマ団
-#define TRTYPE_GRP_DPCHAMP        (10) //DPチャンピオン(シロナ)
+#define TRTYPE_GRP_LEADER         (0) //ジムリーダー
+#define TRTYPE_GRP_BIGFOUR        (1) //四天王
+#define TRTYPE_GRP_DPCHAMP        (2) //DPチャンピオン(シロナ)
+// SWAN
+#define TRTYPE_GRP_RIVAL          (3) // ライバル
+#define TRTYPE_GRP_TRAINER_SWBOSS (4) // ポケモントレーナーのアクロマ
+#define TRTYPE_GRP_PLASMA_SWBOSS  (5) // プラズマ団のアクロマ
+#define TRTYPE_GRP_N              (6) // N
+#define TRTYPE_GRP_PLASMA         (7) // プラズマ団(ネオ)
+#define TRTYPE_GRP_CHAMPION       (8) // チャンピオン
+#define TRTYPE_GRP_SAGE           (9)// ゲーチス
+#define TRTYPE_GRP_INFINITY       (10)// 無限ダンジョンボス
 #define TRTYPE_GRP_BCHAMP         (11) //サブウェイマスター
 #define TRTYPE_GRP_MAX            (12)
 #define TRTYPE_GRP_NONE           (TRTYPE_GRP_MAX)
@@ -85,31 +86,33 @@
  * トレーナータイプをグループ化する変換テーブルの参照インデックス定義
  * 拡張する場合、岩澤に確認をお願いします
  */
-#define TRTYPE_GRP_IDX_RIVAL			(0)
-#define TRTYPE_GRP_IDX_SUPPORT		(1)
-#define TRTYPE_GRP_IDX_SWLEADER1	(2)
-#define TRTYPE_GRP_IDX_SWLEADER2	(3)
-#define TRTYPE_GRP_IDX_SWLEADER3	(4)
-#define TRTYPE_GRP_IDX_SWLEADER4	(5)
-#define TRTYPE_GRP_IDX_SWLEADER5	(6)
-#define TRTYPE_GRP_IDX_SWLEADER6	(7)
-#define TRTYPE_GRP_IDX_SWLEADER7	(8)
-#define TRTYPE_GRP_IDX_SWLEADER8	(9)
-#define TRTYPE_GRP_IDX_BIGFOUR1		(10)
-#define TRTYPE_GRP_IDX_BIGFOUR2		(11)
-#define TRTYPE_GRP_IDX_BIGFOUR3		(12)
-#define TRTYPE_GRP_IDX_BIGFOUR4		(13)
-#define TRTYPE_GRP_IDX_CHAMPION		(14)
-#define TRTYPE_GRP_IDX_TRAINER_BOSS (15)
-#define TRTYPE_GRP_IDX_PLASMA_BOSS  (16)
-#define TRTYPE_GRP_IDX_LAST_BOSS 	  (17)
-#define TRTYPE_GRP_IDX_SAGE			  (18)
-#define TRTYPE_GRP_IDX_HAKAIM1		(19)
-#define TRTYPE_GRP_IDX_HAKAIW1		(20)
-#define TRTYPE_GRP_IDX_DPCHAMP		(21)
-#define TRTYPE_GRP_IDX_BCHAMP			(22)
-#define TRTYPE_GRP_IDX_BCHAMP2		(23)
-#define TRTYPE_GRP_IDX_MAX        (24)
+#define TRTYPE_GRP_IDX_SWLEADER1	(0) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER2	(1) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER3	(2) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER4	(3) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER5	(4) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER6	(5) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER7	(6) // ジムリーダー
+#define TRTYPE_GRP_IDX_SWLEADER8	(7) // ジムリーダー
+#define TRTYPE_GRP_IDX_BIGFOUR1		(8) // 四天王
+#define TRTYPE_GRP_IDX_BIGFOUR2		(9) // 四天王
+#define TRTYPE_GRP_IDX_BIGFOUR3		(10)// 四天王
+#define TRTYPE_GRP_IDX_BIGFOUR4		(11)// 四天王
+#define TRTYPE_GRP_IDX_DPCHAMP		(12)// DPチャンピオン(シロナ)
+//swan
+#define TRTYPE_GRP_IDX_SWRIVAL	  (15)// ライバル
+#define TRTYPE_GRP_IDX_TRAINER_SWBOSS (16)  // ポケモントレーナーのアクロマ
+#define TRTYPE_GRP_IDX_PLASMA_SWBOSS  (17)  // プラズマ団アクロマ
+#define TRTYPE_GRP_IDX_BOSS 	    (18)// ポケモントレーナーのN
+#define TRTYPE_GRP_IDX_SWPLAZMAM 	(19)// ネオプラズマ団
+#define TRTYPE_GRP_IDX_SWPLAZMAW 	(20)// ネオプラズマ団
+#define TRTYPE_GRP_IDX_SWSAGE3 	  (21)// 七賢人(ヴィオ)
+#define TRTYPE_GRP_IDX_NINJA			(22)// ダークトリニティ
+#define TRTYPE_GRP_IDX_SWCHAMPION	(23)// チャンピオン(アイリス)
+#define TRTYPE_GRP_IDX_SWSAGE1	  (24)// ゲーチス
+#define TRTYPE_GRP_IDX_MUGENBOSS	(25)// 無限ダンジョンボス
+
+#define TRTYPE_GRP_IDX_MAX        (26)
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_

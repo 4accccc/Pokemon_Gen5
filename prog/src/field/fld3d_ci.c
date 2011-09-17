@@ -36,6 +36,7 @@
 
 #include "system/main.h" //for HEAPID_FIELDMAP
 
+#include "savedata/etc_save.h" // for ETC_SAVE_WORK
 
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
@@ -337,7 +338,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work );
 
-static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 );
+static void SetFont2Tex(MYSTATUS *mystatus, ETC_SAVE_WORK *etcsave, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 );
 
 //static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
 static void ChangeCapDatCol(void);
@@ -2419,6 +2420,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
   FIELDMAP_WORK * fieldmap;
   ENC_WORK *enc_wk;
   MYSTATUS *mystatus;
+  ETC_SAVE_WORK *etcsave;
   //親イベントからワークポインタを取得
   {
     GMEVENT * parent = GMEVENT_GetParentEvent(event);
@@ -2427,13 +2429,18 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
 
   gsys = GMEVENT_GetGameSysWork(event);
   mystatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+  {
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+    etcsave = SaveData_GetEtc( save );
+  }
   ptr = evt_work->CiPtr;
   fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   enc_wk = (ENC_WORK*)ptr->Work;
   switch(*seq){
   case 0:
     //相手側の文字データ転送
-    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx , enc_wk->color[0] , enc_wk->color[1] );
+    SetFont2Tex(mystatus, etcsave, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
   case 1:
@@ -2504,7 +2511,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
     //自分側の文字データ転送
-    SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER , enc_wk->color[0] , enc_wk->color[1] );
+    SetFont2Tex(mystatus, etcsave, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
   case 4:
@@ -2662,7 +2669,7 @@ void SetResName(NNSG3dResName *outName,const char *inName)
 	}
 }
 
-static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 )
+static void SetFont2Tex(MYSTATUS *mystatus, ETC_SAVE_WORK *etcsave, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 )
 {
   F2T_WORK f2t_work;
   GFL_MSGDATA* msg; // メッセージデータ
@@ -2680,6 +2687,18 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
     strbuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, GFL_HEAP_LOWID(heapID) );
     strbuf_msg = GFL_MSG_CreateString( msg, inMsgIdx );
     WORDSET_RegisterPlayerName( p_word, 0, mystatus );
+    WORDSET_ExpandStr( p_word, strbuf, strbuf_msg );
+    GFL_STR_DeleteBuffer(strbuf_msg);
+    WORDSET_Delete( p_word );
+  }else if( inMsgIdx == SPTR_RIVAL )
+  {
+    // ライバル名
+    // WORDSET展開
+    STRBUF* strbuf_msg;
+    WORDSET *p_word = WORDSET_Create( GFL_HEAP_LOWID(heapID) );
+    strbuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+    strbuf_msg = GFL_MSG_CreateString( msg, inMsgIdx );
+    WORDSET_RegisterRivalName( p_word, 0, EtcSave_GetRivalName( etcsave ) );
     WORDSET_ExpandStr( p_word, strbuf, strbuf_msg );
     GFL_STR_DeleteBuffer(strbuf_msg);
     WORDSET_Delete( p_word );

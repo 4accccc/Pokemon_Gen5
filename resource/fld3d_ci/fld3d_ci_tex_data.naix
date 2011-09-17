@@ -38,9 +38,9 @@ enum {
 	NARC_fld3d_ci_tex_data_fldciid_siten_03_tex_data_bin = 24,
 	NARC_fld3d_ci_tex_data_fldciid_siten_04_tex_data_bin = 25,
 	NARC_fld3d_ci_tex_data_fldciid_champ_tex_data_bin = 26,
-	NARC_fld3d_ci_tex_data_fldciid_plasma01_tex_data_bin = 27,
-	NARC_fld3d_ci_tex_data_fldciid_plasma02_sage_tex_data_bin = 28,
-	NARC_fld3d_ci_tex_data_fldciid_plasma02_boss_tex_data_bin = 29,
+	NARC_fld3d_ci_tex_data_fldciid_neo_plasma_tex_data_bin = 27,
+	NARC_fld3d_ci_tex_data_fldciid_swboss_tex_data_bin = 28,
+	NARC_fld3d_ci_tex_data_fldciid_sage_tex_data_bin = 29,
 	NARC_fld3d_ci_tex_data_fldciid_champ_out_tex_data_bin = 30,
 	NARC_fld3d_ci_tex_data_fldciid_fly_out2_tex_data_bin = 31,
 	NARC_fld3d_ci_tex_data_fldciid_fly_in2_tex_data_bin = 32,
@@ -76,7 +76,8 @@ enum {
 	NARC_fld3d_ci_tex_data_fldciid_gym08f_tex_data_bin = 62,
 	NARC_fld3d_ci_tex_data_fldciid_zukan_m_tex_data_bin = 63,
 	NARC_fld3d_ci_tex_data_fldciid_zukan_w_tex_data_bin = 64,
-	NARC_fld3d_ci_tex_data_fldciid_get2_08m_tex_data_bin = 65
+	NARC_fld3d_ci_tex_data_fldciid_get2_08m_tex_data_bin = 65,
+	NARC_fld3d_ci_tex_data_fldciid_n_tex_data_bin = 66
 };
 
 /* NARC_FLD3D_CI_TEX_DATA_NAIX_ */

@@ -60,7 +60,6 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE, 0},    //バトルサブウェイ
 
   {ENCEFF_CI_CreateRival, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //ライバル
-  {ENCEFF_CI_CreateSupport, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //サポーター
   {ENCEFF_CI_CreateGym01, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C1ジムリーダー
   {ENCEFF_CI_CreateGym02, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C2ジムリーダー
   {ENCEFF_CI_CreateGym03, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C3ジムリーダー
@@ -73,10 +72,12 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CI_CreateBigFour2, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王2
   {ENCEFF_CI_CreateBigFour3, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王3
   {ENCEFF_CI_CreateBigFour4, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王4
-  {ENCEFF_CI_CreateChamp, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //チャンプ
-  {ENCEFF_CI_CreateBoss, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xd530},    //N
-  {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xd530},    //ゲーツィス
-  {ENCEFF_CI_CreatePlasma, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xcf20},    //プラズマ団
+  {ENCEFF_CI_CreateChamp, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},   //チャンプ
+
+  {ENCEFF_CI_CreateSwBoss,NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //アクロマ
+  {ENCEFF_CI_CreateN,     NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //N
+  {ENCEFF_CI_CreateNeoPlasma,NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xcf20}, //ネオプラズマ団
+  {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xd530},     //ゲーツィス
 
   {ENCEFF_MDL_Create5, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE, 0x132e8},    //エフェクト
   {ENCEFF_CI_CreatePackage, NULL, FS_OVERLAY_ID(enceff_ci), TRUE, 0x80e0},    //パッケージポケ

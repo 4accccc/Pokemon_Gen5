@@ -283,23 +283,23 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
       u8 grp = TT_TrainerTypeGrpGet( dst->tr_data[client]->tr_type);
 
       switch( grp ){
-      case TRTYPE_GRP_LEADER:
-      case TRTYPE_GRP_BIGFOUR:
+      case TRTYPE_GRP_LEADER:     // ジムリーダー
+      case TRTYPE_GRP_BIGFOUR:    // 四天王
         dst->musicWin = SEQ_BGM_WIN3;
         break;
 
       case TRTYPE_GRP_SAGE:       // ゲーチス
-      case TRTYPE_GRP_LAST_BOSS:  // プラズマ団のＮ（ラスト）
+      case TRTYPE_GRP_N:          // ポケモントレーナーのN
+      case TRTYPE_GRP_PLASMA_SWBOSS: // プラズマ団のアクロマ
         dst->musicWin = SEQ_BGM_WIN4;
         break;
 
-      case TRTYPE_GRP_CHAMPION:
-      case TRTYPE_GRP_BCHAMP:
+      case TRTYPE_GRP_CHAMPION:   // チャンピオン
+      case TRTYPE_GRP_BCHAMP:     // バトルサブウェイ
         dst->musicWin = SEQ_BGM_WIN5;
         break;
 
-      case TRTYPE_GRP_PLASMA:           // プラズマ団
-      case TRTYPE_GRP_PLASMA_BOSS:      // プラズマ団のＮ
+      case TRTYPE_GRP_PLASMA:     // プラズマ団
         dst->musicWin = SEQ_BGM_WIN6;
         break;
 
