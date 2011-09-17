@@ -22,8 +22,18 @@ enum{
   PWSV_TYPE_SENARIO_PLAYED,     ///< シナリオ撮影済みフラグ
   PWSV_TYPE_SENARIO_SUCCESS,    ///< シナリオ成功終了済みフラグ
   PWSV_TYPE_SENARIO_ANNOUNCED,  ///< シナリオオープン告知済みフラグ
+  PWSV_TYPE_SENARIO_STRANGE,    ///< ストレンジEND取得済みフラグ
 };
 
+// プレイヤーのポケウッドスターランク定義
+enum{
+  POKEWOOD_STAR_RANK_0=0,
+  POKEWOOD_STAR_RANK_1,
+  POKEWOOD_STAR_RANK_2,
+  POKEWOOD_STAR_RANK_3,
+  POKEWOOD_STAR_RANK_4,
+  POKEWOOD_STAR_RANK_MAX,   // 使いません(0-4までしかない)
+};
 
 /// ポケウッド興行成績データ構造体定義
 typedef struct {

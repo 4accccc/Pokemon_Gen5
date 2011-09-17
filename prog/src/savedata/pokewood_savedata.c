@@ -13,8 +13,7 @@
 //SDK_COMPILER_ASSERT( FMISSION_ID_MAX <= FMISSION_STATUS_MAX );
 
 // フラグ管理に必要な配列用の個数
-#define POKEWOOD_ARRAY_NUM (( POKEWOOD_SENARIO_MAX/32 )+1)
-
+#define POKEWOOD_ARRAY_NUM  (( POKEWOOD_SENARIO_MAX/32 )+1)
 #define POKEWOOD_RECSAVEDATA_MAX  ( 8 ) //正確にはpokewood_rec.hを参照
 
 //----------------------------------------------------
@@ -32,8 +31,9 @@ struct _POKEWOOD_SAVEDATA{
   s16 star_point;                             ///< プレイヤーのスターポイント 2
   s16 star_rank_announce;                     ///< スターポイントが上がった事を告知したか
   u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
+  u32 strange_flag[POKEWOOD_ARRAY_NUM];       ///< ストレンジエンド取得済みフラグ
   
-  u8 array[148];                              ///<
+  u8 array[140];                              ///<
 };
 
 //---------------------------------------------------------------------------
@@ -120,6 +120,8 @@ static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, int type )
     return sv->success_flag;
   case PWSV_TYPE_SENARIO_ANNOUNCED:
     return sv->announce_flag;
+  case PWSV_TYPE_SENARIO_STRANGE:
+    return sv->strange_flag;
   }
   GF_ASSERT(0);
   return NULL;
