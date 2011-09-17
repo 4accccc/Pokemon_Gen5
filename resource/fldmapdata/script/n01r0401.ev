@@ -59,7 +59,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_n01r0401_boss_01
     //連れ歩いている
-  IF FLAG_ON(FE_N01R0401_PAIR_01) THEN
+  IF FLAG_ON(SYS_FLAG_PAIR) THEN
     _CALL ev_n01r0401_pairend_01
   
   //連れ歩いていない
@@ -115,8 +115,6 @@ ev_n01r0401_pairstart_01:
     //連れ歩き開始
     _PAIR_TRAINER_SET( N01R0401_BOSS_01 , PAIR_ID_N01_BOSS, PAIR_TYPE_FREE_ZONE, 0, SCRID_N01R0401_BOSS )
     //==================================//
-    //連れ歩き開始フラグ
-    _FLAG_SET(FE_N01R0401_PAIR_01)
     //N01R0501_POS起動
     $WK_SCENE_N01R0501_BOSS = 1
     //N01R0502_POS起動
@@ -194,8 +192,6 @@ ev_n01r0401_pairend_01:
     _OBJ_DEL( PAIR_TRAINER_01 )
 
     //==================================//
-    //連れ歩き終了フラグ
-    _FLAG_RESET(FE_N01R0401_PAIR_01)
     //N01R0502_POS無効
     $WK_SCENE_N01R0502_BOSS = 0
     //==================================//
