@@ -685,6 +685,11 @@ EVENT_START   ev_pos_c08_ninja_01
   $WK_SCENE_C08_NINJA = 2
   //C08：ダークトリニティ非表示
   _FLAG_SET( FV_C08_NINJA_01 )
+  //T04R0101：ストッパー無効
+  _FLAG_SET( FV_T04R101_STOPPER_01 )
+  $WK_SCENE_T04R101_STOPPER_01 = 1
+  //C14 SCENE_CHANGE有効
+  $WK_SCENE_C14_SWRIVAL_01 = 1
   //========================================//
     
   //ハイリンク通信ブロック処理終了

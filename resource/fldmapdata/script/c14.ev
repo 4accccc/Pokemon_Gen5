@@ -12,7 +12,8 @@
   .include  "msg_c14.h"
   .include  "c14.h"
 
-  //@author fujimura_souichirou
+  //@author fujimura_souichirou（ジムクリア時イベント・カップル）
+  //@author Mizuguchi_Mai（ジムクリア前イベント・看板）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,9 +29,13 @@ _EVENT_DATA    ev_c14_swrival_01
 _EVENT_DATA    ev_c14_girl4_01
 _EVENT_DATA    ev_c14_boy4_01
 _EVENT_DATA    ev_c14_boy4_02
+_EVENT_DATA    ev_pos_c14_swleader8_01
 _EVENT_DATA_END
 
-
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /**************************************************************/
 /*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
@@ -41,6 +46,10 @@ _EVENT_DATA_END
 /*  FIELD_INIT_LABEL                                        */
 /************************************************************/
 INIT_EVENT_START  ev_init_c14
+
+  IF $WK_SCENE_C14_SWRIVAL_01 == 1 THEN
+    _OBJ_POS_CHANGE( C14_SWRIVAL_01, 787, -4, 179, DIR_RIGHT )
+  ENDIF
 
   //カップル男と会話済みでありゲームクリア後である場合、ユニットを再配置
   IF FLAG_ON( FE_C14_BOY4_TALK_01 ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
@@ -77,18 +86,12 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START   ev_scene_c14_swrival_01
 
-  //アニメ：主人公移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 788, 179, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-
   //アニメ：ライバル「！」
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_swrival_guide01 )
+  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
 
   //アニメ：ライバル移動
-  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 787, 179, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_turn_r )
+  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 788, 179, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
   //ライバル名代入
@@ -103,7 +106,6 @@ EVENT_START   ev_scene_c14_swrival_01
 
   //ライバル：その　プラズマだん　だけど
   _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバル定位置へ
@@ -113,11 +115,76 @@ EVENT_START   ev_scene_c14_swrival_01
   _OBJ_ANIME_WAIT()
 
   //========================================//
-  //イベント進行
+  //C14到着SCENE_CHANGE無効
   $WK_SCENE_C14_SWRIVAL_01 = 2
   //========================================//
 
 EVENT_END
+
+/************************************************************/
+/*  POS：シズイ登場イベント                  */
+/************************************************************/
+EVENT_START   ev_pos_c14_swleader8_01
+  
+  //シズイ動作モデル生成
+  _OBJ_ADD_EX( 798, 149, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWLEADER8, MV_DMY )
+  
+  //【仮】アニメ：シズイ登場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 797, 157, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：シズイ・主人公向き合う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_turn_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+  
+  //シズイ：ばっしゃーん！って
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  
+  //おう！おはん
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：シズイ退場・主人公見送り
+  IF $LCW_POSX == 795 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_x795 )
+    _TIME_WAIT( 8*2 )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_x794 )
+    _TIME_WAIT( 8*5 )
+  ENDIF
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+  
+  //シズイ動作モデル削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //========================================//
+  //C14GYM0101 STOPPER無効
+  $WK_SCENE_C14GYM0101_STOPPER = 1
+  //========================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	シズイ退場：x794
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader8_bye_x794
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	シズイ退場：x795
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader8_bye_x795
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*  SCENE_CHANGE02：ジムバッチ後ジムリーダーイベント        */
@@ -329,14 +396,6 @@ _ANIME_LABEL  anm_common_turn_d
 //共通処理：ギョエ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_gyoe
-  _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//ライバル：「！」振り向く
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_swrival_guide01
-  _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 

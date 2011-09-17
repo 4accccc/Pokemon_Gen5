@@ -13,6 +13,7 @@
   .include  "c14gym0101.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（ストッパー）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +25,7 @@
 _EVENT_DATA   ev_c14gym0101_swleader8_01
 _EVENT_DATA   ev_c14gym0101_guide_01
 _EVENT_DATA   ev_bg_c14gym0101_statue_01
+_EVENT_DATA   ev_pos_c14gym0101_stopper_01
 _EVENT_DATA_END
 
 
@@ -201,59 +203,92 @@ sub_leader_return:
 _RET
 
 /************************************************************/
+/*  POS：STOPPER                        */
+/************************************************************/
+EVENT_START   ev_pos_c14gym0101_stopper_01
+  
+  //アニメ：ダンペイ・主人公見る
+  _OBJ_ANIME( C14GYM0101_GUIDE_01, anm_danpei_look_player )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ダンペイ：ジムリーダーなら
+  _BALLOONWIN_OBJMSG_POS( msg_c14gym0101_glasses_01 , C14GYM0101_GUIDE_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+  
+  //アニメ：主人公戻る・ダンペイ下を見る
+  _OBJ_ANIME( C14GYM0101_GUIDE_01, anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ダンペイ：主人公見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_danpei_look_player
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
 /*  ダンペイ：話しかけ（ジムガイド）                        */
 /************************************************************/
 EVENT_START   ev_c14gym0101_guide_01
+  
+  //ストッパー有効
+  IF $WK_SCENE_C14GYM0101_STOPPER == 0 THEN
+    
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_01 )
+    
+  //ストッパー無効
+  ELSE
 
-  //【仮】後にストッパー処理の追加？
+    //バッジフラグ取得
+    _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
+    
+    //バッジフラグで分岐
+    IF $SCWK_TEMP0 == 0 THEN
+      //バッジ入手前の処理
 
-  _TALK_OBJ_START()
+      //アイテム入手フラグで分岐
+      IF FLAG_OFF( FE_C08GYM_ITEM ) THEN
+      
+        _TALK_OBJ_START()
 
-  //バッジフラグ取得
-  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
+        //アイテム未入手なら、おいしいみず入手イベント
+        //ダンペイ：リゾートきぶんな　ジムですけれど
+        _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_02 )
+        _BALLOONWIN_CLOSE()
 
-  //バッジフラグで分岐
-  IF $SCWK_TEMP0 == 0 THEN
-    //バッジ入手前の処理
+        //アイテム「おいしいみず」入手
+        _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
 
-    //アイテム入手フラグで分岐
-    IF FLAG_OFF( FE_C08GYM_ITEM ) THEN
+        //ダンペイ：この　ポケモンジムは
+        _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
 
-      //アイテム未入手なら、おいしいみず入手イベント
-      //ダンペイ：リゾートきぶんな　ジムですけれど
-      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_02 )
-      _BALLOONWIN_CLOSE()
+        //=====================================
+        //アイテム入手フラグをセット
+        _FLAG_SET( FE_C08GYM_ITEM )
+        //=====================================
 
-      //アイテム「おいしいみず」入手
-      _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+      ELSE
+        //入手済みならメッセージのみ
+        //ダンペイ：この　ポケモンジムは
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
 
-      //ダンペイ：この　ポケモンジムは
-      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-
-      //=====================================
-      //アイテム入手フラグをセット
-      _FLAG_SET( FE_C08GYM_ITEM )
-      //=====================================
+      ENDIF
 
     ELSE
-      //入手済みならメッセージのみ
-      //ダンペイ：この　ポケモンジムは
-      _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_03 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-
+      //バッジ入手後の処理
+      //ダンペイ：シズイさん　およいじゃってますね
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_04 )
+      
     ENDIF
-
-  ELSE
-    //バッジ入手後の処理
-
-    //ダンペイ：シズイさん　およいじゃってますね
-    _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_glasses_04 )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
   ENDIF
 
 EVENT_END
@@ -302,4 +337,74 @@ _ANIME_LABEL  anm_vanish
   _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
 

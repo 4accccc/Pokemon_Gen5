@@ -12,5 +12,6 @@
 #define SCRID_C14_GIRL4_01 (5)
 #define SCRID_C14_BOY4_01 (6)
 #define SCRID_C14_BOY4_02 (7)
+#define SCRID_POS_C14_SWLEADER8_01 (8)
 
 #endif //_C14_DEF_H_
