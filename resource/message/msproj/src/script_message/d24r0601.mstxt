@@ -6,10 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>あっ！　ここを　ぬけると
+サザナミタウンだね！▼
+あたしは　もうちょっと
+しらべたいんだけど　どうする？▽
+いちど　ここで　わかれちゃう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あっ！　ここを　ぬけると
+サザナミタウンだね！▼
+あたしは　もうちょっと
+調査したいんだけど　どうする？▽
+一度　ここで　別れちゃう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,11 +38,14 @@
 			Language="JPN">
 			<Comment>♀
 ・Black2ver
-・pos
-・はい/いいえの選択肢表示</Comment>
+・連れ歩き終了の確認
+・swbell_05かswbell_06表示済み
+・はい/いいえの選択肢表示
+　はい　→swbell_15orswbell_16
+　いいえ→swbell_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:44:57" />
+				Time="2011-09-17T05:15:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64,10 +75,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>うん　そうだね！▼
+ヒードランに　かんすることを
+もうちょっと　しらべておきたいし▼
+いっしょに　いてくれて　ありがとう！
+きをつけて　たびを　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -75,10 +90,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>うん　そうだね！▼
+ヒードランに　関することを
+もうちょっと　調査しておきたいし▼
+一緒に　いてくれて　ありがとう！
+気をつけて　旅を　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -88,10 +107,11 @@
 			Language="JPN">
 			<Comment>♀
 ・Black2ver
-・はい選択</Comment>
+・はい選択時
+・swbell_05かswbell_06表示済み</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:13" />
+				Time="2011-09-17T05:14:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -114,10 +134,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>うん　そうだね！▼
+ヒードランの　いそうな　ばしょ
+もうちょっと　しらべておきたいし▼
+いっしょに　いてくれて　ありがとう！
+きをつけて　たびを　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,10 +149,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>うん　そうだね！▼
+ヒードランに　関することを
+もうちょっと　調査しておきたいし▼
+一緒に　いてくれて　ありがとう！
+気をつけて　旅を　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,10 +166,11 @@
 			Language="JPN">
 			<Comment>♀
 ・Black2ver
-・いいえ選択</Comment>
+・はい選択時
+・swbell_05かswbell_06未表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:18" />
+				Time="2011-09-17T05:14:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -164,10 +193,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>うん！　じゃあ　もうちょっと
+しらべて　まわろうよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -175,10 +205,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>うん！　じゃあ　もうちょっと
+調査して　まわろうよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:39" />
+				Time="2011-09-17T05:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -188,11 +219,11 @@
 			Language="JPN">
 			<Comment>♀
 ・Black2ver
-・t03到達でココから削除
-　ソレまでこのメッセージクリア消し</Comment>
+・いいえ選択時
+・posから一歩戻す</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:47:34" />
+				Time="2011-09-17T05:14:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -201,6 +232,67 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-01T07:44:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0601_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リバースマウンテンだけど　やはり
+かざんのおきいしが　あるのかなあ？▼
+あのね　とおく　シンオウちほうの
+かざんには　かざんのおきいしが　あり▼
+それが　ヒードランに
+かんけい　しているんだって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リバースマウンテンだけど　やはり
+かざんのおきいしが　あるのかなあ？▼
+あのね　遠く　シンオウ地方の
+火山には　かざんのおきいしが　あり▼
+それが　ヒードランに
+関係しているんだって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・カゴメ到達まで
+・別れた辺りをウロウロと</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T05:14:55" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

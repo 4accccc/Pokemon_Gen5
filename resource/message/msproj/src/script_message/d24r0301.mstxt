@@ -892,4 +892,57 @@
 				Time="2011-08-19T09:47:28" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d24r0301_swbell_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リーバスマウンテンで
+まだ　しらべたい　ところが▽
+あるから　いっしょに　ね！▼
+もちろん　ポケモンの　かいふくは
+あたしが　するからね！▼
+ということで　しゅっぱつ　しんこう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:45:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:43:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リーバスマウンテンで
+まだ　調べたい　ところが▽
+あるから　一緒に　ね！▼
+もちろん　ポケモンの　回復は
+あたしが　するからね！▼
+ということで　出発進行！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:45:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:45:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・ヒードラン部屋に行かず、ヤマジ側で分かれた場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:42:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-17T03:42:21" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
