@@ -26,5 +26,7 @@
 #define SCRID_C04_TBOSS_01 (19)
 #define SCRID_C04_RAILMAN_01 (20)
 #define SCRID_C04_POKE33_01 (21)
+#define SCRID_POS_C04_RALLY_01 (22)
+#define SCRID_C04_CLOWN_01 (23)
 
 #endif //_C04_DEF_H_

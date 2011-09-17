@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/17 14:46:58
+#save date:2011/09/17 19:47:06
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -425,7 +425,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D06R0101_WORKMAN2_01
 #Event Script Name
 SCRID_D06R0101_WORKMAN2_01
 #Direction Type Number
@@ -487,7 +487,7 @@ MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D06R0101_WORKMAN2_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
