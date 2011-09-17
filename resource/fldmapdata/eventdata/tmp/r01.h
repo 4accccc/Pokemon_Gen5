@@ -17,6 +17,9 @@
 #define TR_ELITEW_30                       5
 #define FLD_ITEM_308                       6
 #define FLD_ITEM_307                       7
+#define R01_MAN1_01                        8
+#define R01_FISHING_01                     9
+#define R01_GIRL1_01                      10
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -471,6 +471,12 @@ INIT_EVENT_START  ev_init_gameclear_script
     _FLAG_RESET( FV_D07R0601_POKE4_01 )
   ENDIF
 
+  //黒オノノクス未捕獲時の復活処理
+  IF FLAG_ON( FV_D35R0101_POKE_01 ) && FLAG_OFF( FE_D35R0101_POKE_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D35R0101_POKE_01 )
+  ENDIF
+
 
 }
 INIT_EVENT_END

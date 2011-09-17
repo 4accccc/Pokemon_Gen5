@@ -8,6 +8,8 @@
 #ifndef ZONE_D35R0101_EVC_H
 #define ZONE_D35R0101_EVC_H
 
+#define D35R0101_SWLEADER6_01              0
+#define D35R0101_POKE_01                   1
 
 #endif //ZONE_D35R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d35r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

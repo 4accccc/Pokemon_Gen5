@@ -17,6 +17,7 @@
 #define C06R0201_SWBELL_01                 3
 #define C06R0201_SWLEADER6_01              4
 #define C06R0201_PILOT_01                  5
+#define C06R0201_INFORMATIONW_01           6
 
 #endif //ZONE_C06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

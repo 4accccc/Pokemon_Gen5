@@ -16,18 +16,27 @@
 #define ZONE_C01_EVC_H
 
 #define C01_FISING_01                      0
-#define C01_BADMAN_01                      1
+#define C01_BREEDERW_01                    1
 #define FLD_ITEM_288                       2
 #define FLD_ITEM_289                       3
-#define C01_BREEDERM_01                    4
-#define C01_POKE44_01                      5
-#define C01_POKE44_02                      6
-#define C01_POKE44_03                      7
-#define C01_POKE44_04                      8
-#define C01_POKE44_05                      9
-#define C01_POKE44_06                     10
-#define C01_POKE44_07                     11
-#define C01_POKE44_08                     12
+#define C01_POKE44_01                      4
+#define C01_POKE44_02                      5
+#define C01_POKE44_03                      6
+#define C01_POKE44_04                      7
+#define C01_POKE44_05                      8
+#define C01_POKE44_06                      9
+#define C01_POKE44_07                     10
+#define C01_POKE44_08                     11
+#define C01_OLDMAN1_01                    12
+#define C01_BADMAN_02                     13
+#define C01_BABYGIRL1_01                  14
+#define C01_OLDMAN1_02                    15
+#define C01_BADMAN_01                     16
+#define C01_WOMAN2_01                     17
+#define C01_WOMAN3_01                     18
+#define C01_WOMAN2_02                     19
+#define C01_BREEDERM_01                   20
+#define C01_BOY2_01                       21
 
 #endif //ZONE_C01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

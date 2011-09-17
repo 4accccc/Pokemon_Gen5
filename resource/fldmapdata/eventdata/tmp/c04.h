@@ -30,6 +30,7 @@
 #define C04_TBOSS_01                       7
 #define C04_POKE33_01                      8
 #define C04_RAILMAN_01                     9
+#define C04_CLOWN_01                      10
 
 #endif //ZONE_C04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

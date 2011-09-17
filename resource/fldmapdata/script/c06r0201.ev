@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_c06r0201.h"
   .include  "c06r0201.h"
 
-  //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント）
+  //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント、カーゴサービス）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,7 +26,13 @@ _EVENT_DATA   ev_c06r0201_veteranw_01
 _EVENT_DATA   ev_c06r0201_swleader6_01
 _EVENT_DATA   ev_c06r0201_hakase2_01
 _EVENT_DATA   ev_c06r0201_pilot_01
+_EVENT_DATA   ev_c06r0201_informationw_01
 _EVENT_DATA_END
+
+//アイテムチェック用変数
+DEFINE_LOCAL  LWK_ITEM_CHK
+//行き先選択用変数
+DEFINE_LOCAL  LWK_NUM_SELECT
 
 
 /**************************************************************/
@@ -298,6 +304,183 @@ EVENT_START   ev_c06r0201_pilot_01
   ENDIF
 }
 EVENT_END
+
+/************************************************************/
+/*  受付嬢：話しかけ（カーゴサービス）                      */
+/************************************************************/
+EVENT_START   ev_c06r0201_informationw_01
+
+  _TALK_OBJ_START()
+
+  //飛行機に乗れない状態（t07到達前）
+  IF $WK_SCENE_T07 == 0 THEN
+
+      //受付嬢：ジムリーダー　しだい　なんです
+      _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_01, C06R0201_INFORMATIONW_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+  //飛行機に乗れる状態（t07到達後）
+  ELSE
+
+    //バッグのアイテムチェック（きょかしょうはあるか）
+    _ITEM_CHK( ITEM_KYOKASYOU, 1, LWK_ITEM_CHK )
+
+    //「きょかしょう」を持っない
+    IF $LWK_ITEM_CHK == FALSE THEN
+
+      //受付嬢：ヤマジタウンに　いかれますか？
+      _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_02, C06R0201_INFORMATIONW_01, POS_DOWN )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //受付嬢：ひこうきに　のって　おまちください▼
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_03, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //ヤマジタウンへ
+        _CALL ev_map_change_t07
+
+      ELSE    //いいえ
+
+        //受付嬢：いつでも　ごりよう　ください！
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_04, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //「きょかしょう」を持っている（保護区に行ったことが無い）
+    ELSIF $LWK_ITEM_CHK == TRUE && FLAG_OFF( FE_D35R0101_AREA_01 ) THEN
+
+      //受付嬢：フキヨセ　カーゴ　サービス　です▼
+      _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_05, C06R0201_INFORMATIONW_01, POS_DOWN )
+      _MSGWIN_CLOSE()
+
+      //アニメ：受付嬢「！」
+      _OBJ_ANIME( C06R0201_INFORMATIONW_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
+
+      //受付嬢：あ……！　それは　きょかしょう！
+      _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_06, C06R0201_INFORMATIONW_01, POS_DOWN )
+
+      //保護区に行く？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //==================================//
+        //保護区へ行ったフラグON
+        _FLAG_SET( FE_D35R0101_AREA_01 )
+        //==================================//
+
+        //受付嬢：ひこうきに　のって　おまちください▼
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_03, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //保護区へ
+        _CALL ev_map_change_d35r0101
+
+      ELSE    //いいえ
+
+        //受付嬢：いつでも　ごりよう　ください！
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_04, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //「きょかしょう」を持っていて、なおかつ保護区にも行ったことがある
+    ELSE
+
+      //受付嬢：こんかいは　どちらに　いかれますか？
+      _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_07, C06R0201_INFORMATIONW_01, POS_DOWN )
+
+      //カーゴ行き先選択画面作成
+      _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_NUM_SELECT )
+
+      _BMPMENU_MAKE_LIST( msg_c06r0201_select_01, 0 ) //ヤマジタウン
+      _BMPMENU_MAKE_LIST( msg_c06r0201_select_02, 1 ) //しぜんほごく
+      _BMPMENU_MAKE_LIST( msg_c06r0201_select_03, 2 ) //やめる
+
+      _BMPMENU_START()
+
+      //「ヤマジタウン」を選択
+      IF $LWK_NUM_SELECT == 0 THEN
+
+        //受付嬢：ひこうきに　のって　おまちください▼
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_03, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //ヤマジタウンへ
+        _CALL ev_map_change_t07
+
+      //「ヤマジタウン」を選択
+      ELSIF $LWK_NUM_SELECT == 1 THEN
+
+        //受付嬢：ひこうきに　のって　おまちください▼
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_03, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //保護区へ
+        _CALL ev_map_change_d35r0101
+
+      //やめる（キャンセル）
+      ELSE
+
+        //受付嬢：いつでも　ごりよう　ください！
+        _BALLOONWIN_OBJMSG_POS( msg_c06r0201_infomationw_04, C06R0201_INFORMATIONW_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//フキヨセカーゴ・ヤマジタウンへ
+ev_map_change_t07:
+
+  //暗転【仮】発着デモへ（詳細未定）
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  //t07ヤマジタウンまでジャンプ【仮】
+  _MAP_CHANGE( ZONE_ID_T07R0101, 6, 4, DIR_DOWN )
+
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  _TIME_WAIT( 15 )
+
+_RET
+
+//フキヨセカーゴ・保護区へへ
+ev_map_change_d35r0101:
+
+  //暗転【仮】発着デモへ（詳細未定）
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  //d34保護区までジャンプ【仮】
+  _MAP_CHANGE( ZONE_ID_D35R0101, 19, 35, DIR_DOWN )
+
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  _TIME_WAIT( 15 )
+
+_RET
+
+
+
 
 
 //--------------------------------------------------------------------

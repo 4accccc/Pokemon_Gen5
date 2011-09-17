@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d35r0101.h"
-  //.include  "d35r0101.h"
+  .include  "d35r0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +21,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d35r0101
+_EVENT_DATA   ev_d35r0101_poke_01
+_EVENT_DATA   ev_d35r0101_swleader6_01
 _EVENT_DATA_END
 
 
@@ -30,9 +33,98 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  黒オノノクス：話しかけ（戦闘／倒した場合は殿堂入り後復帰）*/
 /**************************************************************/
-ev_d35r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d35r0101_poke_01
+
+  _TALK_START_SE_PLAY()
+
+  //黒オノノクス：グァオォーウッ！！
+  _VOICE_PLAY( MONSNO_509, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_d35r0101_poke_01, POS_DOWN )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  // Lv.60 オノノクス（色違い）
+  _WILD_BTL_SET_EX2( MONSNO_509, 60, 0, SCR_WILD_BTL_FLAG_RARE )
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //黒オノノクス非表示
+    _FLAG_SET( FV_D35R0101_POKE_01 )
+    //==================================//
+    _OBJ_DEL( D35R0101_POKE_01 )   //黒オノノクスを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //黒オノノクスを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+
+    //==================================//
+    //黒オノノクスを捕獲した
+    _FLAG_SET( FE_D35R0101_POKE_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+
+    //システム：くろいオノノクスは　ほごくの　おくへ
+    _SYSWIN_MSG( msg_d35r0101_poke_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDSWITCH
+
+EVENT_END
+
+/************************************************************/
+/*  フウロ：話しかけ（カーゴサービス／フキヨセへ）          */
+/************************************************************/
+EVENT_START   ev_d35r0101_swleader6_01
+
+  _TALK_OBJ_START()
+
+  //フウロ：アタシの　ひこうきで　ひとっとび！
+  _BALLOONWIN_OBJMSG_POS( msg_d35r0101_swleader6_01, D35R0101_SWLEADER6_01, POS_DOWN )
+
+  //フキヨセに戻る？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //フウロ：レッツ　フライトだよ！
+    _BALLOONWIN_OBJMSG_POS( msg_d35r0101_swleader6_02, D35R0101_SWLEADER6_01, POS_DOWN )
+    _MSGWIN_CLOSE()
+
+    //暗転【仮】発着デモへ（詳細未定）
+    _BLACK_OUT_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    //c06フキヨセシティまでジャンプ【仮】
+    _MAP_CHANGE( ZONE_ID_C06R0201, 14, 19, DIR_DOWN )
+
+    //暗転復帰
+    _BLACK_IN_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    _TIME_WAIT( 15 )
+
+  ELSE    //いいえ
+
+    //フウロ：じゅんびが　できたら　はなしかけてね
+    _BALLOONWIN_OBJMSG_POS( msg_d35r0101_swleader6_03, D35R0101_SWLEADER6_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
 

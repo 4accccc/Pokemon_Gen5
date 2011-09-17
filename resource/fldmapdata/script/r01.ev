@@ -8,6 +8,7 @@
   .include  "../../../prog/include/msg/script/msg_r01.h"
   .include  "r01.h"
 
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -16,30 +17,57 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
-_EVENT_DATA ev_bg_r01_board_01
-_EVENT_DATA ev_bg_r01_board_02
-_EVENT_DATA ev_bg_r01_board_03
+_EVENT_DATA   ev_bg_r01_board_01
+_EVENT_DATA   ev_bg_r01_board_02
+_EVENT_DATA   ev_bg_r01_board_03
+_EVENT_DATA   ev_r01_girl1_01
+_EVENT_DATA   ev_r01_man1_01
+_EVENT_DATA   ev_r01_fishing_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*看板01                                                      */
+/*  看板01                                                    */
 /**************************************************************/
 EVENT_START  ev_bg_r01_board_01
-	_EASY_BGWIN_MSG(msg_r01_sign1_01 , TYPE_ROAD)
+  _EASY_BGWIN_MSG( msg_r01_sign1_01, TYPE_ROAD )
 EVENT_END
 
 /**************************************************************/
-/*看板02                                                      */
+/*  看板02                                                    */
 /**************************************************************/
 EVENT_START  ev_bg_r01_board_02
-	_EASY_BGWIN_MSG(msg_r01_sign2_01 , TYPE_ROAD)
+  _EASY_BGWIN_MSG( msg_r01_sign2_01, TYPE_ROAD )
 EVENT_END
 
 /**************************************************************/
-/*看板03                                                      */
+/*  看板03                                                    */
 /**************************************************************/
 EVENT_START  ev_bg_r01_board_03
-	_EASY_BGWIN_MSG(msg_r01_sign3_01 , TYPE_INFO)
+  _EASY_BGWIN_MSG( msg_r01_sign3_01, TYPE_INFO )
   _FLAG_SET( MDL_FLAG_BOARD_R01_03 )
 EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ（アイテム入手）                          */
+/**************************************************************/
+EVENT_START   ev_r01_girl1_01
+  //アイテム「キズぐすり」入手
+  _EASY_TALK_ITEM_EVENT( ITEM_KIZUGUSURI, 1, FE_C03R0501_ITEMGET_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
+EVENT_END
+
+/**************************************************************/
+/* 男性：話しかけ                                             */
+/**************************************************************/
+EVENT_START   ev_r01_man1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_man1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 釣り人：話しかけ                                           */
+/**************************************************************/
+EVENT_START   ev_r01_fishing_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_fishing_01 )
+EVENT_END
+
+

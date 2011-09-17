@@ -10,7 +10,7 @@
   .include  "../../message/dst/script/msg_c01.h"
   .include  "c01.h"
 
-  //@author fujimura_souichirou（マッギョ祭）
+  //@author fujimura_souichirou（マッギョ祭／一言メッセージ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,11 +28,31 @@ _EVENT_DATA   ev_c01_fising_01
 _EVENT_DATA   ev_c01_badman_01
 _EVENT_DATA   ev_c01_breederm_01
 _EVENT_DATA   ev_c01_poke44_01
+_EVENT_DATA   ev_c01_oldman1_01
+_EVENT_DATA   ev_c01_badman_02
+_EVENT_DATA   ev_c01_boy2_01
+_EVENT_DATA   ev_c01_oldman1_02
+_EVENT_DATA   ev_c01_breederw_01
+_EVENT_DATA   ev_c01_woman2_01
+_EVENT_DATA   ev_c01_babygirl1_01
+_EVENT_DATA   ev_c01_woman2_02
+_EVENT_DATA   ev_c01_woman3_01
 _EVENT_DATA_END
 
 //季節と時間変数
 DEFINE_LOCAL SCWK_SEASON
 DEFINE_LOCAL LWK_TIMEZONE
+
+//メダルカテゴリ取得用変数
+DEFINE_LOCAL LWK_CATEGORY
+
+//------------------------------注意--------------------------------//
+//                                                                  //
+//  クイズイベントに LOCALWORK0 を使用しています。                  //
+//  同マップ内の使用を禁止します。                                  //
+//                                                                  //
+//------------------------------------------------------------------//
+
 
 /************************************************************/
 /*  ZONE_CHANGE_SCRIPT                                      */
@@ -83,7 +103,6 @@ INIT_EVENT_START  ev_zone_c01
 
 INIT_EVENT_END
 
-
 /**************************************************************/
 /*  C01 SIGN1用イベントスクリプト                             */
 /**************************************************************/
@@ -116,7 +135,7 @@ EVENT_END
 /*  C01 FISING  アイテム入手イベントスクリプト                */
 /**************************************************************/
 EVENT_START   ev_c01_fising_01
-  //【仮】入手アイテムが仮
+  //アイテム「おおきなしんじゅ」入手
   _EASY_TALK_ITEM_EVENT( ITEM_OOKINASINZYU, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02 )
 EVENT_END
 
@@ -124,8 +143,8 @@ EVENT_END
 /*  C01 BADMAN  アイテム入手イベント                          */
 /**************************************************************/
 EVENT_START   ev_c01_badman_01
-  //【仮】入手アイテムが仮
-  _EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 1, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
+  //アイテム「ダークボール×５」入手
+  _EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 5, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
 EVENT_END
 
 /**************************************************************/
@@ -168,6 +187,147 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c01_poke44_01
   _EASY_TALK_POKEVOICE( MONSNO_589, msg_c01_poke44_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c01_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_01 )
+EVENT_END
+
+/**************************************************************/
+/*  スキンヘッズ02：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c01_badman_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c01_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_boy2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん02：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c01_oldman1_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_cleaningm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ブリーダー♀：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c01_breederw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_breederw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女性01：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c01_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_woman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ（ランダムメッセージ）                    */
+/**************************************************************/
+EVENT_START   ev_c01_babygirl1_01
+
+  _TALK_OBJ_START()
+
+  //乱数で0～3幅でセリフの順番を決める
+  _GET_RND( LOCALWORK0, 3 )
+
+  IF $LOCALWORK0 == 0 THEN
+
+    //女の子：くさタイプの　ポケモンは
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSIF $LOCALWORK0 == 1 THEN
+
+    //女の子：みずタイプの　ポケモンは
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSIF $LOCALWORK0 == 2 THEN
+
+    //女の子：ほのおタイプの　ポケモンは
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_babygirl1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  女性02：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c01_woman2_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_woman2a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  保育士：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c01_woman3_01
+
+  _TALK_OBJ_START()
+
+  //保育士：あなたの　メダルボックス……▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_01 )
+
+  //もっとも獲得比率の高いメダルカテゴリを取得
+  _GET_MOST_GET_MEDALCATEGORY( LWK_CATEGORY )
+
+  //『とくべつ』メダルの比率が高い場合
+  IF $LWK_CATEGORY == 4 THEN
+
+    //保育士：きんいろの『とくべつ』メダルが
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //『ちょうせん』メダルの比率が高い場合
+  ELSIF $LWK_CATEGORY == 3 THEN
+
+    //保育士：むらさきの『ちょうせん』メダルが
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //『せんとう』メダルの比率が高い場合
+  ELSIF $LWK_CATEGORY == 1 THEN
+
+    //保育士：あおい『せんとう』のメダルが
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //『おたのしみ』メダルの比率が高い場合
+  ELSIF $LWK_CATEGORY == 2 THEN
+
+    //保育士：ピンクの『おたのしみ』メダルが
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //『ぼうけん』メダルの比率が高い場合
+  ELSIF $LWK_CATEGORY == 0 THEN
+
+    //保育士：オレンジの『ぼうけん』メダルが
+    _BALLOONWIN_TALKOBJ_MSG( msg_c01_woman3_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
 EVENT_END
 
 
