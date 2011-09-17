@@ -124,14 +124,17 @@ enum{
 	// 何本目か(bg)
   PLTID_MAIN_POKE     = 5,    // pok
 	PLTID_MAIN_FONT			= 10,		// font
+
+  PLTID_MAIN_OBJ_LIST = 9,    // obj
+
 	//
 	PLTID_SUB_BG_BASE		= 6,		// 通常bg
 	PLTID_SUB_BG_CMN		= 8,		// cmn
 	PLTID_SUB_FONT			= 10,		// font
 	//
 	PLTID_SUB_OBJ_CMN		= 4,		// cmn
-	PLTID_SUB_OBJ_FONT		= 12,		// font
-	PLTID_SUB_OBJ_LIST		= 13,		// list
+	PLTID_SUB_OBJ_FONT		= 8,		// font
+	PLTID_SUB_OBJ_LIST		= 9,		// list
 	//
 	// 何番目か
 	MES_CLEAR_COLOR			= 0,		// クリアカラー
@@ -139,11 +142,12 @@ enum{
 
 // 最大値
 enum{
-	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 34*2,		// empty
+	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 35*2,		// empty
 	//
 	PKWD_RECORD_MONITOR_CMN_OBJ_MAXNUM	= 3,	// obj(cmn)
 	PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM	= POKEWOOD_MYPOKE_NUM,	// obj(poke)
 	PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM	= 10,	// obj(list)
+	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM	  = 8,	// obj(up)
 	//
 	PKWD_RECORD_MONITOR_BGNUM_MAXNUM		= 8,	// bg
 	//
@@ -190,6 +194,7 @@ enum{
 	CLWKMODE_CMN	= 0,				// cmn
 	CLWKMODE_POKE,						// ポケモン
 	CLWKMODE_LIST,						// リスト
+  CLWKMODE_UP,              // 上画面のOBJ
 };
 
 // CLWK(CMN)
@@ -228,13 +233,29 @@ enum{
 	CLWK_LIST_NEW_08,					// NEW_08
 };
 
+// CLWK(UP)
+enum{
+  CLWK_UP_CROWN,            // 王冠
+  CLWK_UP_KIRA,             // キラ
+  CLWK_UP_STAR_00,          // スター
+  CLWK_UP_STAR_01,          // スター
+  CLWK_UP_STAR_02,          // スター
+  CLWK_UP_STAR_03,          // スター
+  CLWK_UP_STAR_04,          // スター
+  CLWK_UP_STAR_05,          // スター
+};
+
 // CLWK(List)のアニメシーケンス
 enum{
   CLWK_LIST_ANM_SEQ_SLIDER = 0,
   CLWK_LIST_ANM_SEQ_NEW,
   CLWK_LIST_ANM_SEQ_PANEL,
   CLWK_LIST_ANM_SEQ_UP,
+  CLWK_LIST_ANM_SEQ_CROWN,
+  CLWK_LIST_ANM_SEQ_KIRA,
+  CLWK_LIST_ANM_SEQ_STAR,
 };
+
 
 //-------------
 // フラグ
@@ -321,7 +342,8 @@ typedef struct
 	GFL_CLWK	*clwk_poke[PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM];	// CLWK
 	// list
 	GFL_CLWK	*clwk_list[PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM];	// CLWK
-	//
+	// up
+  GFL_CLWK  *clwk_up[PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM];  // CLWK
 } PKWD_RECORD_MONITOR_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -366,6 +388,8 @@ typedef struct
 	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
 	//
 	PKWD_RECORD_MONITOR_FLAG_BUFFER	FlagBuffer[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< フラグのバッファ
+	//
+	u8	          profits[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< 収益の高いフラグ
 	//
 	
 } PKWD_RECORD_MONITOR_MAIN_WORK;
@@ -510,7 +534,7 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_poke_tbl[] = {
 //----------------
 // narc, resid, paloffset, palnum
 static const s16 pwb_obj_list_info_tbl[] = {
-	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 2, // NCL
+	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 3, // NCL
 	NARC_b_scenario_gra_pkwd_list_obj_NCGR, RESID_LIST_CHR, 0, 0,	// NCG
 	NARC_b_scenario_gra_pkwd_list_obj_NCER, RESID_LIST_CEL, 0, 0,	// NCE
 	NARC_b_scenario_gra_pkwd_list_obj_NANR, -1, 0, 0,				// NAR?
@@ -540,6 +564,32 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_list_tbl[] = {
 	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	32,	RESID_LIST_CHR,},		// NEWマーク
 	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	33,	RESID_LIST_CHR,},		// NEWマーク
 	
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//---------------
+// OBJ(up)
+//---------------
+static const s16 pwb_obj_up_itbl[] = {
+	RESID_LIST_PLT,		// plt res
+	RESID_LIST_CHR,		// chr res
+	RESID_LIST_CEL,		// cel res
+  //
+	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM,		// max
+	CLWKMODE_UP,
+};
+
+// OBJのテーブルデータ
+const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
+	{ CLWK_LIST_ANM_SEQ_CROWN, 0x30, 1, 0, 0, 1, 34, RESID_LIST_CHR,}, // 王冠
+	{ CLWK_LIST_ANM_SEQ_KIRA,  0x30, 0, 0, 0, 1, 34, RESID_LIST_CHR,}, // キラキラ
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 4, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 5, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 6, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 7, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 8, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 9, RESID_LIST_CHR,}, // スター
+
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
@@ -1078,6 +1128,7 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 		wk->FlagBuffer[i].openid   = 0xff;
 		wk->FlagBuffer[i].color    = 0;
 		wk->FlagBuffer[i].stateflag= 0;
+    wk->profits[i] = 0;
 	}
 	//
 	// canvas
@@ -1604,6 +1655,10 @@ static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 draw
 	else if(buf[4] == CLWKMODE_LIST){		// list
 		clwk = &wk->wk_obj.clwk_list[0];
 	}
+  else if(buf[4] == CLWKMODE_UP )    // up
+  {
+		clwk = &wk->wk_obj.clwk_up[0];
+  }
 	
 	for(i=0;i<buf[3];i++){
 		// 終了判定
@@ -1616,6 +1671,7 @@ static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 draw
 		pos[1] = pwb_get_empty(wk, tmp*2+1);
 		cldata.pos_x 	= pos[0];
 		cldata.pos_y 	= pos[1];
+    ICHI_Printf("x %d y %d\n", pos[0], pos[1]);
 		cldata.anmseq 	= adr->anmseq;
 		cldata.softpri	= adr->softpri;
 		cldata.bgpri	= adr->bgpri;
@@ -1679,7 +1735,7 @@ static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	// リソース読み込み(poke)
 	pwb_init_obj_res_poke( wk );
 	// リソース読み込み(list)
-	pwb_init_obj_res( wk, CLSYS_DRAW_SUB, &pwb_obj_list_info_tbl[0]);
+	pwb_init_obj_res( wk, CLSYS_DRAW_MAX, &pwb_obj_list_info_tbl[0]);
 	//
 	// CLWK登録(cmn)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_cmn_tbl[0], &pwb_obj_cmn_itbl[0] );
@@ -1687,6 +1743,8 @@ static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwb_obj_poke_tbl[0], &pwb_obj_poke_itbl[0] );
 	// CLWK登録(list)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_list_tbl[0], &pwb_obj_list_itbl[0] );
+	// CLWK登録(up)
+	pwb_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwb_obj_up_tbl[0], &pwb_obj_up_itbl[0] );
 	//
 	// 通信アイコンセット(上画面)
 	GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
@@ -1718,6 +1776,11 @@ static void pwb_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	for(i=0;i<PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM;i++){
 		GFL_CLACT_WK_Remove( wk->wk_obj.clwk_list[i] );
 	}
+  // up
+	for(i=0;i<PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM;i++){
+		GFL_CLACT_WK_Remove( wk->wk_obj.clwk_up[i] );
+	}
+
 	//
 	//リソース破棄(cmn)
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_CMN_OBJ_PLT] );
@@ -1780,6 +1843,15 @@ static void pwb_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, 
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk_list[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk_list[wnum], TRUE );
 	}
+  // UP
+	else if(wmode == CLWKMODE_UP){
+		if(wnum >= PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk_up[wnum], seq );
+		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk_up[wnum], TRUE );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1822,6 +1894,15 @@ static void pwb_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wm
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk_list[wnum], bflg );
+	}
+	// up
+	else if(wmode == CLWKMODE_UP){
+		// 表示/非表示
+		if(wnum >= PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk_up[wnum], bflg );
 	}
 }
 
@@ -1870,6 +1951,17 @@ static BOOL pwb_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode
 		}
 		// 判定
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk_list[wnum] ) == FALSE ){
+			bflg = FALSE;
+		}
+	}
+	// up
+	else if(wmode == CLWKMODE_UP){
+		if(wnum >= PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM){
+			OS_Printf("obj max error:%d\n",wnum);
+			return( FALSE );
+    }
+		// 判定
+		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk_up[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
@@ -2560,13 +2652,40 @@ static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
     {
       pwb_chg_poke_obj( wk, i, monsno, sex, form );
       pwb_set_obj_visible( wk, CLWKMODE_POKE, i, TRUE );
+
+      // スターポケ判定
+      if( p_pkwd_record->pokeicon_star_bit & (1<<i) )
+      {
+        pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, TRUE );
+      }
+      else
+      {
+        pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
+      }
     }
     else
     {
       pwb_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
     }
   }
-	//
+
+
+	// 王冠判定
+  {
+    ICHI_Printf("scenario_id %d profits %d \n", id, wk->profits[id]);
+    if( wk->profits[ id ] == 1 )
+    {
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, TRUE );
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, TRUE );
+    }
+    else
+    {
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, FALSE );
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, FALSE );
+    }
+  }
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2591,6 +2710,10 @@ static void pwb_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
 	// list
 	for(i=0;i<PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM;i++){
 		pwb_set_obj_visible( wk, CLWKMODE_LIST, i, FALSE );
+	}
+	// up
+	for(i=0;i<PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM;i++){
+		pwb_set_obj_visible( wk, CLWKMODE_UP, i, FALSE );
 	}
 }
 
@@ -2706,6 +2829,9 @@ static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 	s32		i;
 	s32		j;
+  u16   max_profits = 0;  // 最高収益
+  u16   scenario[PKWD_RECORD_MONITOR_SCENARIO_MAX];  // 最高収益
+  u8    profits_idx;
 	BOOL	bflg;
 	//
 	// openチェック
@@ -2713,17 +2839,35 @@ static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
 		bflg = POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
 		if(bflg == TRUE){
+      const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, i );
+
 			wk->FlagBuffer[j].openid = i;
 			//
 			// new or upチェック
       {
-        const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, i );
         if( p_pkwd_record->new_flag == 1 ){
           wk->FlagBuffer[j].stateflag = 1;
         }
         else if( p_pkwd_record->update_flag == 1 )
         {
           wk->FlagBuffer[j].stateflag = 2;
+        }
+      }
+
+      // 王冠チェック
+      {
+        if( p_pkwd_record->profits >=  max_profits )
+        {
+          if( p_pkwd_record->profits >  max_profits )
+          {
+            profits_idx = 0;
+          }
+
+          max_profits = p_pkwd_record->profits;
+
+          // 保存
+          scenario[ profits_idx ] = i;
+          profits_idx++;
         }
       }
 			// colorチェック
@@ -2735,7 +2879,11 @@ static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	}
 	// シナリオ最大数が求まるはず
 	wk->ScenarioMax = j;
-	//
+	// 最高収益のシナリオにフラグをたてる
+	for(i=0;i<profits_idx;i++){
+    wk->profits[ scenario[ i ] ] = 1;
+    ICHI_Printf(" 収益 %d \n", scenario[i]);
+  }
 	// 結果
 	for(i=0;i<wk->ScenarioMax;i++){
 		OS_Printf("flag :%d,%d,%d\n",wk->FlagBuffer[i].openid, wk->FlagBuffer[i].color, wk->FlagBuffer[i].stateflag );
