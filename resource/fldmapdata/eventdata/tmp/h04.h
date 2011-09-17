@@ -49,5 +49,20 @@
 #define BG_H04_SIGN_01                    1
 #define H04_HIDE_ITEM_01                  2
 #define BG_H04_SIGN_02                    3
+#define BG_H04_DUMMY_FES_01               4
+#define BG_H04_DUMMY_FES_02               5
+#define BG_H04_DUMMY_FES_03               6
+#define BG_H04_DUMMY_FES_04               7
+#define BG_H04_DUMMY_FES_05               8
+#define BG_H04_DUMMY_FES_06               9
+#define BG_H04_DUMMY_FES_07              10
+#define BG_H04_DUMMY_FES_08              11
+#define BG_H04_DUMMY_FES_09              12
+#define BG_H04_DUMMY_FES_10              13
+#define BG_H04_DUMMY_FES_11              14
+#define BG_H04_DUMMY_FES_12              15
+#define BG_H04_DUMMY_FES_13              16
+#define BG_H04_DUMMY_FES_14              17
+#define BG_H04_DUMMY_FES_15              18
 
 #endif //ZONE_H04_EVB_H

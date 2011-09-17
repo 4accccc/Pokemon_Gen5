@@ -48,5 +48,20 @@
 #define BGID_R06_ANIMAL_TRAIL_01_2        7
 #define BGID_R06_ANIMAL_TRAIL_02_1        8
 #define BGID_R06_ANIMAL_TRAIL_02_2        9
+#define BG_R06_DUMMY_FES_01              10
+#define BG_R06_DUMMY_FES_02              11
+#define BG_R06_DUMMY_FES_03              12
+#define BG_R06_DUMMY_FES_04              13
+#define BG_R06_DUMMY_FES_05              14
+#define BG_R06_DUMMY_FES_06              15
+#define BG_R06_DUMMY_FES_07              16
+#define BG_R06_DUMMY_FES_08              17
+#define BG_R06_DUMMY_FES_09              18
+#define BG_R06_DUMMY_FES_10              19
+#define BG_R06_DUMMY_FES_11              20
+#define BG_R06_DUMMY_FES_12              21
+#define BG_R06_DUMMY_FES_13              22
+#define BG_R06_DUMMY_FES_14              23
+#define BG_R06_DUMMY_FES_15              24
 
 #endif //ZONE_R06_EVB_H

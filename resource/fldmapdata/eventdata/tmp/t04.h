@@ -30,5 +30,14 @@
 
 #define BGID_T04_SIGN1_01                 0
 #define BGID_T04_SIGN1_02                 1
+#define BG_T04_DUMMY_FES_01               2
+#define BG_T04_DUMMY_FES_02               3
+#define BG_T04_DUMMY_FES_03               4
+#define BG_T04_DUMMY_FES_04               5
+#define BG_T04_DUMMY_FES_05               6
+#define BG_T04_DUMMY_FES_06               7
+#define BG_T04_DUMMY_FES_07               8
+#define BG_T04_DUMMY_FES_08               9
+#define BG_T04_DUMMY_FES_09              10
 
 #endif //ZONE_T04_EVB_H

@@ -31,5 +31,16 @@
 #define R12_HIDE_ITEM_02                  4
 #define R12_HIDE_ITEM_03                  5
 #define R12_HIDE_ITEM_04                  6
+#define BG_R12_DUMMY_FES_01               7
+#define BG_R12_DUMMY_FES_02               8
+#define BG_R12_DUMMY_FES_03               9
+#define BG_R12_DUMMY_FES_04              10
+#define BG_R12_DUMMY_FES_05              11
+#define BG_R12_DUMMY_FES_06              12
+#define BG_R12_DUMMY_FES_07              13
+#define BG_R12_DUMMY_FES_08              14
+#define BG_R12_DUMMY_FES_09              15
+#define BG_R12_DUMMY_FES_10              16
+#define BG_R12_DUMMY_FES_11              17
 
 #endif //ZONE_R12_EVB_H
