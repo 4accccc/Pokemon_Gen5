@@ -15,6 +15,12 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL    SCRID_ZONE_D24R0901
+_FIELD_INIT_LABEL   SCRID_INIT_D24R0901
+_SCENE_CHANGE_LABEL   sp_d24r0901_tbl
 _SP_EVENT_DATA_END
 
-
+//テーブル定義
+sp_d24r0901_tbl:
+  _SCENE_CHANGE_DATA    WK_SCENE_D24_PAIR_START, 1, SCRID_SCENE_D24R0901_PAIR_START
+  _SCENE_CHANGE_END

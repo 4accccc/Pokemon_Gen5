@@ -55,7 +55,7 @@ INIT_EVENT_END
 EVENT_START		ev_pos_d11r0101_swrival_01
    
   //連れ歩いている
-  IF FLAG_ON(FE_D11R0101_PAIR_01) THEN
+  IF FLAG_ON(SYS_FLAG_PAIR) THEN
     _CALL ev_d11r0101_pairend_01
   
   //連れ歩いていない
@@ -105,11 +105,6 @@ ev_d11r0101_pairstart_01:
      _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_ONE_ZONE, TRID_SWRIVAL_15, SCRID_D11R0101_SWRIVAL_02 )
    ENDIF
    
-    //==================================//
-    //連れ歩き開始フラグ
-    _FLAG_SET(FE_D11R0101_PAIR_01)
-    //==================================//
-    
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
     
@@ -155,11 +150,6 @@ ev_d11r0101_pairend_01:
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
     
-    //==================================//
-    //連れ歩き終了フラグ
-    _FLAG_RESET(FE_D11R0101_PAIR_01)
-    //==================================//
-  
   //いいえ
   ELSE
     _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_03, PAIR_TRAINER_01, POS_DEFAULT )
@@ -209,11 +199,6 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   
   //連れ歩き解除
   _PAIR_TRAINER_FREE( SCRID_D11R0101_SWRIVAL_02, MV_DMY )
-  
-  //==================================//
-  //連れ歩き終了フラグ
-  _FLAG_RESET(FE_D11R0101_PAIR_01)
-  //==================================//
 
   _PLAYER_NAME( 0 )
   

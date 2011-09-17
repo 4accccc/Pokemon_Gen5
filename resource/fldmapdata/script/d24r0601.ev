@@ -10,7 +10,11 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d24r0601.h"
-  //.include  "d24r0601.h"
+  .include  "d24r0601.h"
+  .include  "d24r0601_def.h"
+  .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +23,193 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d24r0601
+_EVENT_DATA    ev_pos_d24r0601_swbell_01
+_EVENT_DATA    ev_d24r0601_swbell_02
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*  POS：連れ歩き終了                                       */
+/**************************************************************/
+EVENT_START   ev_pos_d24r0601_swbell_01
+  
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+    
+  //アニメ：主人公振り向き
+  _CALL ev_player_return_anm
+  
+  //ベル：連れ歩き終了しますか？
+  _BALLOONWIN_OBJMSG_POS( msg_d26r0601_swbell_01, PAIR_TRAINER_01, POS_DEFAULT )
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    
+    //ベル：ヒードラン部屋を見た
+    IF $WK_SCENE_D24_BELL_COMMENT == 3 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_d26r0601_swbell_02, PAIR_TRAINER_01, POS_DEFAULT )
+      
+    //ヒードラン部屋を見ていない
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_d26r0601_swbell_03, PAIR_TRAINER_01, POS_DEFAULT )
+      
+    ENDIF
+    _MSGWIN_CLOSE()
+    
+    //アニメ：ベル定位置に移動
+    _OBJ_ANIME_AUTO( PAIR_TRAINER_01, 25,15, FORCE_TYPE_NPC, 8, DIR_LR )
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    IF $LWK_DIR != DIR_UP THEN
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+
+    //連れ歩き解除
+    _PAIR_TRAINER_FREE( SCRID_D24R0601_SWBELL_02, MV_DMY )
+    
+    //==================================//
+    //連れ歩き終了
+    $WK_SCENE_D24_PAIR_START = 3
+    //ヒードランイベント終了
+    $WK_SCENE_D24_BELL_COMMENT = 3
+    //スタート地点のベルを非表示に
+    _FLAG_SET( FV_D24_PAIR_START_BELL_01 )
+    //ゴール地点のベルを表示
+    _FLAG_RESET( FV_D24_PAIR_END_BELL_01 )
+    //==================================//
+    
+    //ベル動作モデル表示
+    _OBJ_ADD( D24R0601_SWBELL_01 )
+    _OBJ_DEL( PAIR_TRAINER_01 )
+   
+  //いいえ
+  ELSE
+    
+    //ベル：もうちょっと
+    _BALLOONWIN_OBJMSG_POS( msg_d26r0601_swbell_04, PAIR_TRAINER_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：主人公１歩戻る
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+    
+  ENDIF
+  }
+  
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*		話しかけ：ベル						  */
 /**************************************************************/
-//ev_zone_d24r0601:
-//  _END
+EVENT_START		ev_d24r0601_swbell_02
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d26r0601_swbell_05 )
+EVENT_END
+
 
 /**************************************************************/
-/*                                                            */
+/*		CALL：振り向きアニメ						  */
 /**************************************************************/
-ev_d24r0601:
-  //とりあえず最初のラベルだけ生成している
-  _END
+ev_player_return_anm:
+  
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_l )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_u )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_d )
+  ENDSWITCH
+  
+  _OBJ_ANIME_WAIT()
+  
+_RET
 
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

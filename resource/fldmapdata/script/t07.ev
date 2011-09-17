@@ -113,7 +113,9 @@ EVENT_START   ev_scene_t07_hakase2_01
   //ベル非表示
   _FLAG_SET( FV_T07_SWBELL_01 )
   //POSイベント進行
-  $WK_SCENE_T07 = 0
+  $WK_SCENE_T07 = 2
+  //連れ歩きイベント起動
+  $WK_SCENE_D24_PAIR_START = 1
   //========================================//
 
 }

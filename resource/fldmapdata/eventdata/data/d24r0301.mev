@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/07 18:50:33
+#save date:2011/09/17 13:00:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0301.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r0301.wms
 #hold event type:
 1
 #hold event number:
-13
+14
 #event number: 0
 #type
 1
@@ -413,6 +413,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 32 -424
+#event number: 13
+#type
+1
+#ID name
+D24R0301_SWBELL_01
+#OBJ CODE Number
+SWBELL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D24_PAIR_START_BELL_01
+#Event Script Name
+SCRID_D24R0301_SWBELL_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -432,7 +463,58 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+3
+#event number: 0
+#Pos Event Label
+POS_D24R0301_SWBELL_01
+#Pos Script Name
+SCRID_POS_D24R0301_SWBELL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D24_PAIR_START
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 104
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_D24R0301_ROOM_01
+#Pos Script Name
+SCRID_POS_D24R0301_ROOM_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D24_BELL_COMMENT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 32 -648
+#size
+1 4
+#event number: 2
+#Pos Event Label
+POS_D24R0301_ROOM_02
+#Pos Script Name
+SCRID_POS_D24R0301_ROOM_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D24_BELL_COMMENT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 32 -632
+#size
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

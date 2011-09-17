@@ -440,6 +440,7 @@
 #define FE_N01R0401_N_FIRSTTALK            424 /* 0x01a8 N城：初回会話フラグ */
 #define FE_R01_ITEMGET_01                  425 /* 0x01a9 1番道路：アイテム入手フラグ */
 #define FE_R06R0101_POKE_GET_01            426 /* 0x01aa 季節研究所：シキジカ入手フラグ */
+#define FE_D24_SWBELL_FIRSTTALK            427 /* 0x01ab リバースマウンテン：初回会話フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 

@@ -10,7 +10,10 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d24r0501.h"
-  //.include  "d24r0501.h"
+  .include  "d24r0501.h"
+  .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/19 15:46:26
+#save date:2011/09/17 14:30:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0601.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r0601.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+D24R0601_SWBELL_01
+#OBJ CODE Number
+SWBELL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D24_PAIR_END_BELL_01
+#Event Script Name
+SCRID_D24R0601_SWBELL_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 -16 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +60,24 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r0601.wms
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_D24R0601_SWBELL_01
+#Pos Script Name
+SCRID_POS_D24R0601_SWBELL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D24_PAIR_START
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 -32 -152
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

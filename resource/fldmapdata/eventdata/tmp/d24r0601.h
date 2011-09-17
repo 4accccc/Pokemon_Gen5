@@ -10,6 +10,7 @@
 #ifndef ZONE_D24R0601_EVC_H
 #define ZONE_D24R0601_EVC_H
 
+#define D24R0601_SWBELL_01                 0
 
 #endif //ZONE_D24R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

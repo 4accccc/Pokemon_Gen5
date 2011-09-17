@@ -26,6 +26,7 @@
 #define FLD_ITEM_120                      10
 #define FLD_ITEM_122                      11
 #define FLD_ITEM_123                      12
+#define D24R0301_SWBELL_01                13
 
 #endif //ZONE_D24R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

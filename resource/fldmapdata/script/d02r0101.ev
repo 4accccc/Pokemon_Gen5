@@ -38,7 +38,7 @@ DEFINE_LOCAL  LCW_POSZ
 /**************************************************************/
 EVENT_START		ev_pos_d02r0101_swleader1_01
     //連れ歩いている
-  IF FLAG_ON(FE_D02R0101_PAIR_01) THEN
+  IF FLAG_ON(SYS_FLAG_PAIR) THEN
     _CALL ev_d02r0101_pairend_01
   
   //連れ歩いていない
@@ -57,11 +57,6 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   
   //連れ歩き解除
   _PAIR_TRAINER_FREE( SCRID_D02R0101_SWLEADER1_03, MV_DMY )
-  
-  //==================================//
-  //連れ歩き終了フラグ
-  _FLAG_RESET(FE_D02R0101_PAIR_01)
-  //==================================//
   
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 43,30, FORCE_TYPE_NOT, 8, DIR_UD )
   _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_swleader1_meet_sage5 )
@@ -134,8 +129,6 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
   //==================================//
-  //連れ歩き終了フラグ
-  _FLAG_RESET(FE_D02R0101_PAIR_01)
   //D02R0101 POS無効
   $WK_SCENE_D02R0101_SWLEADER1 = 1
   _FLAG_SET( FV_D02R0101_SWLEADER1_01 )
@@ -238,8 +231,6 @@ ev_d02r0101_pairstart_01:
     //【仮】連れ歩き開始（連れ歩きIDが仮）
     _PAIR_TRAINER_SET( D02R0101_SWLEADER1_01, PAIR_ID_D02R0101_SWLEADER1, PAIR_TYPE_ONE_ZONE, TRID_SWLEADER1_1_02, PAIR_ID_D02R0101_SWLEADER1 )
     //==================================//
-    //連れ歩き開始フラグ
-    _FLAG_SET(FE_D02R0101_PAIR_01)
     //初回会話完了フラグ
     _FLAG_SET(FE_D02R0101_SWLEADER1_FIRST)
     //==================================//
@@ -297,11 +288,6 @@ ev_d02r0101_pairend_01:
     _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
-    
-    //==================================//
-    //連れ歩き終了フラグ
-    _FLAG_RESET(FE_D02R0101_PAIR_01)
-    //==================================//
   
   //いいえ
   ELSE
