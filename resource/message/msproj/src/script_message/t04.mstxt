@@ -1219,22 +1219,21 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_01"
+		Label="msg_t04_sage7_end_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『ここは　あたたかいな▼
-なぜ　わたしが
-ここにいるのか　おしえよう▼
-ゲーチスさまが
+とつぜんだが
+ここに　ゲーチスさまが▽
 のこされた　しょもつが　ある▼
 これが　あれば　かいていいせきの
-もじが　よめる　という　しろもの▼
-わたしなりの　つみほろぼしだ
+こだいもじが　よめるという　しろもの▼
+わたしなりの　つみほろぼし……
 この　しょもつを　よむがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:10:47" />
+				Time="2011-09-17T06:55:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1243,17 +1242,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『ここは　あたたかいな▼
-なぜ　わたしが
-ここにいるのか　おしえよう▼
-ゲーチスさまが
-のこされた　しょもつが　ある▼
-これが　あれば　かいていいせきの
-もじが　よめる　という　しろもの▼
-わたしなりの　つみほろぼしだ
-この　しょもつを　よむがいい！▼</Text>
+突然だが
+ここに　ゲーチスさまが▽
+残された　書物が　ある▼
+これが　あれば　海底遺跡の
+古代文字が　読めるという　代物▼
+わたしなりの　罪滅ぼし……
+この書物を　読むがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:08:53" />
+				Time="2011-09-17T06:55:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1262,10 +1260,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・ライバル戦闘後に出現</Comment>
+・ライバル戦闘後に出現
+　隣接してメッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:18:57" />
+				Time="2011-09-17T06:54:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1284,7 +1283,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_02"
+		Label="msg_t04_sage7_end_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1335,7 +1334,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_03"
+		Label="msg_t04_sage7_end_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1344,11 +1343,11 @@
 サザナミわんに　でて
 ダイビングを　つかうと　よい▼
 そして　かいていいせきの　なかで
-みつけた　ぶんしょうを▽
+みつけた　あんごうを▽
 じぶんで　かきとめるのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:22:03" />
+				Time="2011-09-17T06:40:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1361,11 +1360,11 @@
 サザナミ湾に　でて
 ダイビングを　使うと　よい▼
 そして　海底遺跡の　なかで
-みつけた　文章を▽
+みつけた　暗号を▽
 自分で　書き留めるのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:22:24" />
+				Time="2011-09-17T06:40:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1396,16 +1395,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_04"
+		Label="msg_t04_sage7_end_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲーチスさまの　しょもつに　よると
 こだいの　にんげんは　ぶんしょうを▽
-はんたいから　よんだ　という</Text>
+はんたいから　よんだ　という▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:21:05" />
+				Time="2011-09-17T05:46:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1415,10 +1414,10 @@
 			Language="JPN_KANJI">
 			<Text>ゲーチスさまの　書物に　よると
 古代の　人間は　文章を▽
-反対から　読んでいた　という</Text>
+反対から　読んでいた　という▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:20:52" />
+				Time="2011-09-17T05:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1427,10 +1426,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・第２階層到達前</Comment>
+・第２階層到達前
+・次のフラグが
+　たっている　→sage7_end_09
+　たっていない→sage7_end_10</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:20:20" />
+				Time="2011-09-17T06:35:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1449,7 +1451,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_05"
+		Label="msg_t04_sage7_end_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1460,10 +1462,10 @@
 ３かいに　あがったなら
 もじを　さらに　１つずらすと▼
 このばあい　ずらすとは
-つぎの　もじに　おきかえることだろう</Text>
+つぎの　もじに　おきかえることだろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:24:55" />
+				Time="2011-09-17T05:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1478,10 +1480,10 @@
 ３階に　あがったなら
 文字を　さらに　１つずらすと▼
 この場合　ずらすとは
-次の　文字に　置き換えることだろう</Text>
+次の　文字に　置き換えることだろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:25:10" />
+				Time="2011-09-17T05:46:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1490,10 +1492,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・第２階層到達</Comment>
+・第２階層到達
+・次のフラグが
+　たっている　→sage7_end_09
+　たっていない→sage7_end_10</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:38:36" />
+				Time="2011-09-17T06:35:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1512,7 +1517,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_06"
+		Label="msg_t04_sage7_end_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1543,10 +1548,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・第３階層到達</Comment>
+・第３階層到達
+・次のフラグが
+　たっている　→sage7_end_09
+　たっていない→sage7_end_10</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:38:36" />
+				Time="2011-09-17T06:35:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1565,7 +1573,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_07"
+		Label="msg_t04_sage7_end_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1600,10 +1608,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・第４階層到達</Comment>
+・第４階層到達
+・次のフラグが
+　たっている　→sage7_end_09
+　たっていない→sage7_end_10</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:38:36" />
+				Time="2011-09-17T06:32:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1622,7 +1633,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_08"
+		Label="msg_t04_sage7_end_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1663,10 +1674,11 @@
 			<Comment>♂：クリア後
 ・第４階層到達＋こだいのおうかん入手
 ・アイテム入手処理
-　No000</Comment>
+　No089「おおきなしんじゅ」
+・続けてsage7_end_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:38:36" />
+				Time="2011-09-17T06:54:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1685,20 +1697,20 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_09"
+		Label="msg_t04_sage7_end_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにい！？
-さらに　すすんだというのか！▼
-では　どんな　ぶんしょうが
-のこされていたのだ？▼
+			<Text>なんと！？
+さらに　すすんだ　というのか！▼
+では　どんな　あんごうが
+のこされて　いたのだ？▼
 ……　……　……
 ……　……　……▼
 ふむふむ　なるほどな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T13:02:45" />
+				Time="2011-09-17T06:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1706,10 +1718,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>なんと！？
+さらに　進んだ　というのか！▼
+では　どんな　暗号が
+残されて　いたのだ？▼
+……　……　……
+……　……　……▼
+ふむふむ　なるほどな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T11:25:46" />
+				Time="2011-09-17T06:40:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1718,11 +1736,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・
-</Comment>
+・フラグに応じたメッセージを表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:55:37" />
+				Time="2011-09-17T06:34:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1741,14 +1758,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_10"
+		Label="msg_t04_sage7_end_10"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっと　たんさく　してくれ！</Text>
+			<Text>もっと　たんさく　するのだ！▼
+かいていいせきの　あんごうは
+じぶんで　かきのこすと　いいぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:38:07" />
+				Time="2011-09-17T06:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1756,10 +1775,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>もっと　探索するのだ！▼
+海底遺跡の　暗号は
+自分で　書き残すと　いいぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:36:44" />
+				Time="2011-09-17T06:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1790,21 +1811,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_sage7_11"
+		Label="msg_t04_sage7_end_11"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かいていいせきに　ついて
-しりたいことは　あつまった▼
-さて　こくさいけいさつに
-あいに　いくと　しよう▼
-われらの　すべてを
-はなさねば　ならんからな▼
-では　さらばだ！　てきながら
-あっぱれな　ポケモントレーナーめ▼</Text>
+しりたい　ことは　あつまった▼
+では　さらばだ！▼
+てきながら　あっぱれな
+ポケモントレーナー　め！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T13:04:27" />
+				Time="2011-09-17T06:20:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1812,10 +1830,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>海底遺跡に　ついて
+知りたい　ことは　集まった▼
+では　さらばだ！▼
+敵ながら　天晴れな
+ポケモントレーナー　め！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T13:01:10" />
+				Time="2011-09-17T06:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1824,10 +1846,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・退場する</Comment>
+・退場する
+　画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T13:01:17" />
+				Time="2011-09-17T06:34:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
