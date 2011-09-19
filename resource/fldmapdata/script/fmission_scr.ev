@@ -6,6 +6,8 @@
   .text
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_fmission_scr.h"
+  .include  "../../../prog/src/field/fes_gimmick_npc_dat.h"
+  .include  "fmission_scr_local.h"
 
 //--------------------------------------------------------------------
 //               スクリプト本体
@@ -14,13 +16,18 @@ _EVENT_DATA   ev_fmission_item_get
 _EVENT_DATA   ev_fmission_npc_lost_children
 _EVENT_DATA   ev_fmission_npc_present_item
 _EVENT_DATA   ev_fmission_npc_item_tarade
-_EVENT_DATA   ev_fmission_npc_item_buy
-_EVENT_DATA   ev_fmission_npc_item_rps
+_EVENT_DATA   ev_fmission_npc_shopping
+_EVENT_DATA   ev_fmission_npc_rps
 _EVENT_DATA   ev_fmission_npc_memory_quiz
-_EVENT_DATA   ev_fmission_npc_battle
+_EVENT_DATA   ev_fmission_npc_tr_battle
 _EVENT_DATA   ev_fmission_npc_get_a_present
 _EVENT_DATA   ev_fmission_npc_zukan_quiz
 _EVENT_DATA_END //終了
+
+
+DEFINE_LOCAL  reg_return
+DEFINE_LOCAL  reg_arg1
+DEFINE_LOCAL  reg_arg2
 
 //--------------------------------------------------------------------
 //  共通スクリプト  
@@ -47,47 +54,46 @@ EVENT_START   ev_fmission_npc_lost_children
   _CALL sub_npc_lost_children_main
 EVENT_END
 
-
 //====================================================================
 //アイテムプレゼント
 //====================================================================
 EVENT_START   ev_fmission_npc_present_item
-  _CALL sub_npc_lost_children_main
+  _CALL sub_npc_present_item_main
 EVENT_END
 
 //====================================================================
 //アイテム交換
 //====================================================================
 EVENT_START   ev_fmission_npc_item_tarade
-  _CALL sub_npc_lost_children_main
+  _CALL sub_npc_trade_item_main
 EVENT_END
 
 //====================================================================
 //アイテム購入
 //====================================================================
-EVENT_START   ev_fmission_npc_item_buy
-  _CALL sub_npc_lost_children_main
+EVENT_START   ev_fmission_npc_shopping
+  _CALL sub_npc_shopping_main
 EVENT_END
 
 //====================================================================
 //じゃんけん
 //====================================================================
-EVENT_START   ev_fmission_npc_item_rps
-  _CALL sub_npc_lost_children_main
+EVENT_START   ev_fmission_npc_rps
+  _CALL sub_npc_rps_main
 EVENT_END
 
 //====================================================================
 //記憶クイズ
 //====================================================================
 EVENT_START   ev_fmission_npc_memory_quiz
-  _CALL sub_npc_lost_children_main
+  _CALL sub_npc_memory_quiz_main
 EVENT_END
 
 //====================================================================
 //バトル
 //====================================================================
-EVENT_START   ev_fmission_npc_battle
-  _CALL sub_npc_lost_children_main
+EVENT_START   ev_fmission_npc_tr_battle
+  _CALL sub_npc_tr_battle_main
 EVENT_END
 
 //====================================================================
@@ -129,7 +135,7 @@ sub_npc_lost_children_main:
 {
   _TALK_OBJ_START()
   
-  /*------------迷子レスキューミッション---------------*/
+  //------------迷子レスキューミッション---------------//
   
   //うわーん
   _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_lostboy_01 )
@@ -154,4 +160,582 @@ sub_npc_lost_children_main:
 }
 _RET
 
+//--------------------------------------------------------
+//道具渡しメイン
+//--------------------------------------------------------
+sub_npc_present_item_main:
+{
+  DEFINE_LOCAL  i_item
+  DEFINE_LOCAL  i_ret
+
+  _TALK_OBJ_START()
+  
+  //------------道具渡しミッション---------------//
+  _FMISSION_NPC_PARAM_GET_PRESENT_ITEM( i_item )
+
+  //○○がほしいよ
+  _ITEM_NAME( 0, i_item )
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_01 )
+  
+  _YES_NO_WIN( i_ret )
+
+  IF $i_ret == SCR_NO THEN
+    //ケチ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  _SUB_ITEM( i_item, 1, i_ret )
+
+  IF $i_ret == FALSE THEN
+    //アイテム足りない
+    _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //ありがとう！
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_04 )
+  _MSGWIN_CLOSE()
+  
+  //○○を渡してあげた
+  _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_PRESENT_ITEM, i_item )
+  _SYSWIN_MSG( msg_fm_npc_itemboy_05, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //大切にするね
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_06 )
+  _MSGWIN_CLOSE()
+
+  //暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
+
+//--------------------------------------------------------
+//道具交換メイン
+//--------------------------------------------------------
+sub_npc_trade_item_main:
+{
+  _TALK_OBJ_START()
+  
+  //------------道具交換ミッション---------------//
+
+  //道具交換しようじゃないか
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_01, msg_fm_npc_trade02_01 )
+
+  //交換メイン
+  _CALL sub_npc_trade_item_exe
+
+  IF $reg_return == FALSE THEN
+    _RET  //交換失敗
+  ENDIF
+
+  //交換成功 暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
+
+sub_npc_trade_item_exe:
+{
+  DEFINE_LOCAL  i_roop
+  DEFINE_LOCAL  i_item_mine
+  DEFINE_LOCAL  i_item_npc
+  DEFINE_LOCAL  i_rank_mine
+  DEFINE_LOCAL  i_rank_npc
+  DEFINE_LOCAL  i_ret
+
+  //初期ランク抽選
+  _GET_RND( i_rank_mine, FES_NITEM_TRADE_RANK_MAX )
+  _GET_RND( i_rank_npc, FES_NITEM_TRADE_RANK_MAX )
+
+  $i_roop = 0
+  WHILE $i_roop < 3
+    _FMISSION_NPC_TRADE_ITEM_GET( i_rank_mine, i_rank_npc, i_item_mine, i_item_npc )
+
+    //○○と××を交換しないか？
+    _ITEM_NAME( 0, i_item_mine )
+    _ITEM_NAME( 1, i_item_npc )
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_02, msg_fm_npc_trade02_02 )
+
+    //メニュー生成
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
+		
+  	_BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys04, MENU_RET_WAIT )	//ちょっと
+	  _BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys03, MENU_RET_NO ) 	//いいえ
+    _BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys02, MENU_RET_YES )	//はい
+		
+	  //メニュー表示
+	  _BMPMENU_START()
+ 
+    IF $i_ret == EV_WIN_B_CANCEL || $i_ret == MENU_RET_NO THEN
+      //残念
+      _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_03, msg_fm_npc_trade02_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      $reg_return = FALSE
+      _RET
+    
+    ELSIF $i_ret == MENU_RET_YES THEN
+      //交換しよう
+
+      //所持数チェック
+      _ITEM_CHK( i_item_mine, 1, i_ret )
+      IF $i_ret == FALSE THEN
+        //○○持ってないね
+        _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_06, msg_fm_npc_trade02_06 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+        $reg_return = FALSE
+        _RET
+      ENDIF
+
+      //追加できるかチェック
+      _ADD_ITEM( i_item_npc, 1, i_ret )
+      IF $i_ret == FALSE THEN
+        //それ以上もてないね
+        _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_07, msg_fm_npc_trade02_07 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+        $reg_return = FALSE
+        _RET
+      ENDIF
+
+      //よし交換だ
+      _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_08, msg_fm_npc_trade02_08 )
+      _MSGWIN_CLOSE()
+
+      //○○と××を交換した
+      _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_ITEM_TRADE )
+      _SYSWIN_MSG( msg_fm_npc_trade_sys01, POS_DEFAULT )
+	    _ME_PLAY(	SEQ_ME_ITEM )
+      _ME_WAIT()
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //ありがとう ばいばい
+      _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_09, msg_fm_npc_trade02_09 )
+      _MSGWIN_CLOSE()
+      $reg_return = TRUE
+      _RET
+    ENDIF
+   
+    //ちょっと(粘り交渉 ループ継続)
+
+    //粘り抽選
+    $reg_arg1 = $i_roop //トライ数を引き渡し
+    _CALL sub_npc_trade_item_retry_check
+
+    IF $reg_return == FALSE THEN
+      //諦めるよ
+      _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_05, msg_fm_npc_trade02_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      _RET
+    ENDIF
+
+    //これならどう？
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_trade01_04, msg_fm_npc_trade02_04 )
+
+    //ランクを上げる
+    $i_rank_npc += 1
+    IF $i_rank_npc >= FES_NITEM_TRADE_RANK_MAX THEN
+      $i_rank_npc = 0 //maxまであがったら0に戻す
+    ENDIF
+ 
+    $i_roop += 1  //ループ回数インクリメント
+  ENDWHILE
+}
+_RET
+
+//粘るかどうか抽選 TRUEなら粘る、FALSEなら諦める
+sub_npc_trade_item_retry_check:
+{
+  DEFINE_LOCAL  i_try
+  DEFINE_LOCAL  i_rnd
+
+  $i_try = $reg_arg1  //トライ回数
+  $reg_return = FALSE
+
+  _GET_RND( i_rnd, 100 )  //100%
+
+  IF $i_try == 0 THEN
+    IF $i_rnd >= 60 THEN  //1回目は60%当たり
+      _RET  //はずれ
+    ENDIF
+  ELSIF $i_try == 1 THEN
+    IF $i_rnd >= 30 THEN  //1回目は30%当たり
+      _RET  //はずれ
+    ENDIF
+  ELSE
+    _RET  //2回以上粘らない
+  ENDIF
+
+  $reg_return = TRUE
+}
+_RET
+
+//--------------------------------------------------------
+//道具購入メイン
+//--------------------------------------------------------
+sub_npc_shopping_main:
+{
+  DEFINE_LOCAL  i_item
+  DEFINE_LOCAL  i_price
+  DEFINE_LOCAL  i_ret
+
+  _TALK_OBJ_START()
+  
+  //------------道具購入ミッション---------------//
+  _FMISSION_NPC_SHOPPING_ITEM_GET( i_item, i_price )
+
+  //○○を××円で購入しないか？
+  _ITEM_NAME( 0, i_item )
+  _NUMBER( 1, i_price, 5 )
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_01, msg_fm_npc_shop02_01 )
+  
+  _YES_NO_WIN( i_ret )
+
+  IF $i_ret == SCR_NO THEN
+    //残念
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_02, msg_fm_npc_shop02_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //所持金チェック
+  _CHECK_GOLD( i_ret, i_price )
+
+  IF $i_ret == FALSE THEN
+    //お金が足りない
+    _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_RUN_OUT_OF_MONEY )
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_03, msg_fm_npc_shop02_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //入手可不可チェック
+  _ADD_ITEM( i_item, 1, i_ret )
+  IF $i_ret == FALSE THEN
+    //それ以上もてないね
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_04, msg_fm_npc_shop02_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //まいどあり
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_05, msg_fm_npc_shop02_05 )
+  _MSGWIN_CLOSE()
+
+  //○○を××円で買いました
+  _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_ITEM_BUY, i_item )
+  _SYSWIN_MSG( msg_fm_npc_shop01_sys01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //今後もよろしく！
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_04 )
+  _MSGWIN_CLOSE()
+  
+  //暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
+
+//--------------------------------------------------------
+//じゃんけんメイン
+//--------------------------------------------------------
+sub_npc_rps_main:
+{
+  _TALK_OBJ_START()
+
+  //------------じゃんけんミッション---------------//
+  _CALL sub_npc_rps_exe
+
+  IF $reg_return == FALSE THEN
+    //負けた
+    _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_RPS_LOSE )
+    _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_janken_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //勝った
+  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_RPS_WIN )
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_janken_06 )
+  _MSGWIN_CLOSE()
+
+  //暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
+
+//じゃんけん実行
+sub_npc_rps_exe:
+{
+  DEFINE_LOCAL  i_roop
+  DEFINE_LOCAL  i_2nd_f
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_my
+  DEFINE_LOCAL  i_npc
+  DEFINE_LOCAL  i_rose
+
+  //じゃんけんしよ！　じゃんけん…
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_janken_01 )
+
+  $i_roop = TRUE 
+  WHILE $i_roop == TRUE
+    //相手の手を抽選
+    _GET_RND( i_npc, 3 )  //3択
+    
+    //メニュー生成
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_my )
+		
+  	_BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys01, RPS_ROCK )	    //グー
+    _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys03, RPS_SCISSORS )	//チョキ
+	  _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys02, RPS_PAPER ) 	  //パー
+		
+	  //メニュー表示
+	  _BMPMENU_START()
+    _MSGWIN_CLOSE()
+   
+    //ぽん！
+//    _SE_PLAY( SEQ_SE_SYS_58 ) //ギザウィンSE再生
+
+    IF $i_2nd_f == FALSE THEN
+      _GIZAWIN_OBJMSG_POS( msg_fm_npc_janken_02, SCWK_TARGET_OBJID, POS_DEFAULT )
+    ELSE
+      _GIZAWIN_OBJMSG_POS( msg_fm_npc_janken_04, SCWK_TARGET_OBJID, POS_DEFAULT )
+    ENDIF
+//    _SE_WAIT()
+//    _TIME_WAIT( 30 )
+
+    //互いの手を表示
+    $reg_arg1 = $i_my 
+    $reg_arg2 = $i_npc
+    _CALL sub_npc_rps_subwin_draw
+    _GIZAPLAINWIN_CLOSE()
+
+    //自分の手に対しての相手の負け手を生成
+    SWITCH  $i_my
+    CASE RPS_ROCK THEN
+      $i_rose = RPS_SCISSORS
+    CASE RPS_PAPER THEN
+      $i_rose = RPS_ROCK
+    CASE RPS_SCISSORS THEN
+      $i_rose = RPS_PAPER
+    ENDSWITCH
+
+    IF $i_my == $i_npc THEN
+      //あいこで～
+      _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_janken_03 )
+    
+      //掛け声が変わるので2回目以降フラグたてておく
+      $i_2nd_f = TRUE
+
+    ELSIF $i_npc == $i_rose THEN
+      //勝ち
+      $reg_return = TRUE
+      _RET
+    ELSE
+      //負け
+      $reg_return = FALSE
+      _RET
+    ENDIF
+
+  ENDWHILE
+}
+_RET
+
+sub_npc_rps_subwin_draw:
+{
+  DEFINE_LOCAL  i_dir
+  DEFINE_LOCAL  i_msg_my
+  DEFINE_LOCAL  i_msg_npc
+  DEFINE_LOCAL  i_pos_my_x
+  DEFINE_LOCAL  i_pos_my_y
+  DEFINE_LOCAL  i_pos_npc_x
+  DEFINE_LOCAL  i_pos_npc_y
+  
+  $i_msg_my  = $reg_arg1 
+  $i_msg_my  += msg_fm_npc_janken_sys01
+  $i_msg_npc = $reg_arg2 
+  $i_msg_npc += msg_fm_npc_janken_sys01
+
+  _PLAYER_DIR_GET( i_dir )
+
+  SWITCH  $i_dir
+  CASE DIR_UP THEN
+    $i_pos_my_x  = 18 
+    $i_pos_my_y  = 20
+    $i_pos_npc_x = 2
+    $i_pos_npc_y = 2
+  CASE DIR_DOWN THEN
+    $i_pos_my_x  = 2 
+    $i_pos_my_y  = 2
+    $i_pos_npc_x = 20
+    $i_pos_npc_y = 18
+  CASE DIR_LEFT THEN
+    $i_pos_my_x  = 18 
+    $i_pos_my_y  = 14 
+    $i_pos_npc_x = 2
+    $i_pos_npc_y = 14
+  CASE DIR_RIGHT THEN
+    $i_pos_my_x  = 2 
+    $i_pos_my_y  = 14 
+    $i_pos_npc_x = 18 
+    $i_pos_npc_y = 14
+  ENDSWITCH
+  
+  
+  _SUBWIN_MSG( i_msg_my, i_pos_my_x, i_pos_my_y, SUBWIN_ID_MINE )
+  _SUBWIN_MSG( i_msg_npc, i_pos_npc_x, i_pos_npc_y, SUBWIN_ID_NPC )
+  _AB_KEYWAIT_MARK()
+//  _TIME_WAIT( 30 )
+  _SUBWIN_CLOSE( SUBWIN_ID_MINE )
+  _SUBWIN_CLOSE( SUBWIN_ID_NPC )
+}
+_RET
+
+//--------------------------------------------------------
+//記憶クイズメイン
+//--------------------------------------------------------
+sub_npc_memory_quiz_main:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_ct
+  DEFINE_LOCAL  i_num
+  DEFINE_LOCAL  i_question_idx
+  DEFINE_LOCAL  i_answer_idx
+  DEFINE_LOCAL  i_question_no
+  DEFINE_LOCAL  i_poke
+
+  _TALK_OBJ_START()
+
+  //------------記憶クイズミッション---------------//
+  
+  //さて問題です
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_01 )
+
+  //出題パラメータ取得
+  _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET( i_num, i_question_idx, i_answer_idx )
+
+  //出題
+  $i_ct = 0
+  WHILE $i_ct < $i_num
+    _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE( i_ct, i_poke )
+
+    //○○！
+    _MONS_NAME( 0, i_poke )
+    _VOICE_PLAY( i_poke, 0 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_sys01 )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+
+    $i_ct += 1
+  ENDWHILE
+ 
+  //○番目に登場したポケモンの名前は？
+  $i_question_no = $i_question_idx
+  $i_question_no += 1  //表示は1～
+  _NUMBER( 6, i_question_no, 2 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_02 )
+  
+  //メニュー生成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
+		
+  $i_ct = 0
+  WHILE $i_ct < 5 
+    _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE( i_ct, i_poke )
+
+    //○○！
+    _MONS_NAME( 1, i_poke )
+  	_BMPMENU_MAKE_LIST( msg_fm_npc_mquiz01_sys02, i_ct )
+
+    $i_ct += 1
+	ENDWHILE
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //正誤判定
+  IF $i_ret != $i_answer_idx THEN
+    //はずれ
+    _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //正解です
+  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_MEMORY_QUIZ_CLEAR )
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_04 )
+
+  //ではまたどこかで
+  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_mquiz01_05 )
+  _MSGWIN_CLOSE()
+
+  //暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
+
+//--------------------------------------------------------
+//トレーナーバトルメイン
+//--------------------------------------------------------
+sub_npc_tr_battle_main:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_tr_id
+
+  _TALK_OBJ_START()
+
+  //------------トレーナーバトルミッション---------------//
+  _FMISSION_NPC_PARAM_GET_TRID( i_tr_id )
+
+  //バトルしよう
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_01, msg_fm_npc_btl02_01 )
+  
+  _YES_NO_WIN( i_ret )
+  IF $i_ret == SCR_NO THEN
+    //残念
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_02, msg_fm_npc_btl02_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //勝負！
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_03, msg_fm_npc_btl02_03 )
+
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( i_tr_id, 0 )
+  
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    _RET
+  ENDIF
+  _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  
+  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_TR_BATTLE_WIN )
+
+  //君は強い！ 
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_04, msg_fm_npc_btl02_04 )
+  //また戦ってくれ
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_05, msg_fm_npc_btl02_05 )
+  _MSGWIN_CLOSE()
+
+  //暗転復帰でNPC消す
+  _CALL	sub_fmission_npc_vanish
+}
+_RET
 

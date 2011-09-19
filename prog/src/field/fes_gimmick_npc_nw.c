@@ -51,17 +51,10 @@
 #include "field/fes_gimmick_npc.h"
 #include "field/fes_gimmick_local.h"
 
-#define FES_ITEM_PARAM_NUM (4) //1セット4アイテム
-#define LOT_ITEM_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
+#include "field/fes_gimmick_npc_dat.h"
 
-typedef struct _FES_ITEM_PARAM{
-  u16 item;
-  u16 prob;      ///<抽選確率
-}FES_ITEM_PARAM;
-
-typedef struct _FES_ITEM_SET{
-  FES_ITEM_PARAM prm[FES_ITEM_PARAM_NUM];
-}FES_ITEM_SET;
+#define LOT_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
+#define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
 
 //抽選数の下限と上限
 static const u8 DATA_LotTargetNum[][2] = {
@@ -70,27 +63,6 @@ static const u8 DATA_LotTargetNum[][2] = {
   { FES_GIMMICK_NPC_POINT_HIGH_MIN, FES_GIMMICK_NPC_POINT_HIGH_MAX }, 
 };
 #define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
-
-//抽選アイテムセットテーブル
-static const FES_ITEM_SET DATA_ItemSetTbl[FMISSION_ITEM_SET_MAX] = {
-  { { {ITEM_AKAIKAKERA, 25}, {ITEM_AOIKAKERA, 25}, {ITEM_MIDORINOKAKERA, 25}, {ITEM_KIIROIKAKERA, 25} } },
-  { { {ITEM_GENKINOKAKERA, 35}, {ITEM_HOSINOKAKERA, 30}, {ITEM_KAWARAZUNOISI, 30}, {ITEM_KINNOTAMA, 5 } } },
-  { { {ITEM_MUSIYOKESUPUREE, 30}, {ITEM_ANANUKENOHIMO, 30}, {ITEM_MONSUTAABOORU, 30}, {ITEM_PUREMIABOORU, 10 } } },
-  { { {ITEM_ANANUKENOHIMO, 40}, {ITEM_KIZUGUSURI, 40}, {ITEM_SIRUBAASUPUREE, 15}, {ITEM_HUTANOKASEKI, 5} } },
-  { { {ITEM_ANANUKENOHIMO, 40}, {ITEM_KIZUGUSURI, 40}, {ITEM_SIRUBAASUPUREE, 15}, {ITEM_HANENOKASEKI, 5} } },
-  { { {ITEM_MOMONNOMI, 25}, {ITEM_KURABONOMI, 25}, {ITEM_KAGONOMI, 25}, {ITEM_ORENNOMI, 25} } },
-  { { {ITEM_KIINOMI, 30}, { ITEM_NANASINOMI, 30 }, {ITEM_TIIGONOMI, 30}, {ITEM_OBONNOMI, 10} } },
-  { { {ITEM_HONOONOISI, 30}, { ITEM_MIZUNOISI, 30 }, {ITEM_RIIHUNOISI, 30}, {ITEM_YAMINOISI, 10} } },
-  { { {ITEM_HONOONOISI, 30}, { ITEM_MIZUNOISI, 30 }, {ITEM_RIIHUNOISI, 30}, {ITEM_HIKARINOISI, 10} } },
-  { { {ITEM_TIKARANOKONA, 30}, { ITEM_TIKARANONEKKO, 30 }, {ITEM_BANNOUGONA, 30}, {ITEM_HUKKATUSOU, 10} } },
-  { { {ITEM_SUKUSUKUKOYASI, 25}, { ITEM_ZIMEZIMEKOYASI, 25 }, {ITEM_NAGANAGAKOYASI, 25}, {ITEM_NEBANEBAKOYASI, 25} } },
-  { { {ITEM_AKAIITO, 30}, { ITEM_AKAIITO, 30 }, {ITEM_AKAIITO, 30}, {ITEM_HAATONOUROKO, 10} } },
-  { { {ITEM_HIMERINOMI, 45}, {ITEM_OBONNOMI, 45}, {ITEM_RAMUNOMI, 9}, {ITEM_NAZONOMI, 1} } },
-  { { {ITEM_TIISANAKINOKO, 60}, { ITEM_SINZYU, 30 }, {ITEM_ODANGOSINZYU, 9}, {ITEM_KODAINOOUKAN, 1} } },
-};
-
-
-#define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
 
 //FES_NPCオブジェコードテーブル
 static const u16 DATA_ObjCodeTbl[][2] = {
@@ -105,9 +77,17 @@ static const u16 DATA_ObjCodeTbl[][2] = {
   { ASSISTANTW, ASSISTANTM },//ポケモン図鑑クイズ
 };
 
+#include "field/fes_gimmick_npc.cdat"
+
 static void sub_AddMMdl( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u16 zone_id );
 static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u16 zone_id, GFL_STD_RandContext* rnd_c );
-static u16 sub_LotItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, GFL_STD_RandContext* rnd_c );
+static void sub_LotParam( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log );
+static void sub_LotParamPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
+static void sub_LotParamTradeItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
+static void sub_LotParamShoppingItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
+static void sub_LotParamTrBattle( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log );
+static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
+
 static void sub_FlagTableUpdate( FES_GIMMICK_NPC_WORK* wk, u16 zone_id );
 
 //----------------------------------------------------------------------
@@ -126,7 +106,7 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   wk->point_max = 0;
   MI_CpuClear8( wk->data, sizeof(BG_TALK_DATA)*FES_GIMMICK_NPC_DATA_MAX );
   MI_CpuClear8( wk->idx, sizeof(u8)*FES_GIMMICK_NPC_POINT_MAX );
-  MI_CpuClear8( wk->item, sizeof(u16)*FES_GIMMICK_NPC_POINT_MAX );
+  MI_CpuClear8( wk->param, sizeof(u16)*FES_GIMMICK_NPC_POINT_MAX*FES_GIMMICK_NPC_POINT_PARAM_MAX );
   MI_CpuClear8( wk->mmdl_tbl, sizeof(MMDL*)*FES_GIMMICK_NPC_POINT_MAX );
 
   //乱数コンテキスト初期化
@@ -145,12 +125,22 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  NPCミッションギミック ミッションパラメータからオブジェタイプを求める
+ */
+//----------------------------------------------------------------------
+u8 FES_GIMMICK_NPC_SUB_GetObjType( const FEST_MISSION* fmwk )
+{
+  return ( fmwk->beacon.ex_param > 0 );
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  NPCミッションギミック ミッションパラメータからOBJコードを決める
  */
 //----------------------------------------------------------------------
 u16 FES_GIMMICK_NPC_SUB_GetObjCode( FES_GIMMICK_NPC_WORK* wk, const FEST_MISSION* fmwk )
 {
-  u8 idx = ( fmwk->beacon.ex_param > 0 );
+  u8 idx = FES_GIMMICK_NPC_SUB_GetObjType( fmwk );
   return DATA_ObjCodeTbl[ fmwk->beacon.base_param][idx]; 
 }
 
@@ -213,7 +203,9 @@ static void sub_AddMMdl( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_MISS
       head.move_code = MV_RAIL_DIR_RND_ALL;
     }
     head.id = MMDL_ID_FMISSION_OBJ_01+i;
-    head.param0 = 0;
+    head.param0 = wk->param[i][0];
+    head.param1 = wk->param[i][1];
+    head.param2 = wk->param[i][2];
 
     wk->mmdl_tbl[i] = MMDLSYS_AddMMdl( mmdlsys, &head, zone_id );
     MMDL_OnMoveBit( wk->mmdl_tbl[i], MMDL_MOVEBIT_NOT_SAVE );  //セーブ対象にしない
@@ -281,12 +273,13 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_
 
   //ポイントを抽選
   {
-    u32 log[ FES_GIMMICK_NPC_POINT_MAX ];
-
+    u32 idx_log[ FES_GIMMICK_NPC_POINT_MAX ];
+    u32 param_log[ FES_GIMMICK_NPC_POINT_MAX ];
+    
     for(i = 0;i < wk->point_max;i++){
-      wk->idx[i] = FES_GIMMICK_SUB_RndGet( rnd_c, wk->data_max, log, i );
-//      wk->item[i] = sub_LotItem( wk, fmwk, rnd_c);
-      log[i] = wk->idx[i];  //抽選ナンバーの結果を取っておく
+      wk->idx[i] = FES_GIMMICK_SUB_RndGet( rnd_c, wk->data_max, idx_log, i );
+      sub_LotParam( wk, fmwk, i, rnd_c, param_log );
+      idx_log[i] = wk->idx[i];  //抽選ナンバーの結果を取っておく
     }
   }
   return TRUE;
@@ -294,33 +287,143 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_
 
 //----------------------------------------------------------------------
 /*
- *  @brief  NPCミッションギミック　ポイントアイテム抽選
+ *  @brief  NPCミッションギミック　ポイントパラメータ抽選
  */
 //----------------------------------------------------------------------
-static u16 sub_LotItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, GFL_STD_RandContext* rnd_c )
+static void sub_LotParam( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log )
 {
-  int i,level = 0;
-  u32 rnd;
-  const FES_ITEM_SET* ps;
-
-  if( fmwk->beacon.base_param >= FMISSION_ITEM_SET_MAX ){
-    ps = &DATA_ItemSetTbl[FMISSION_ITEM_SET_KAKERA1];
-    GF_ASSERT(0);
-  }else{
-    ps = &DATA_ItemSetTbl[ fmwk->beacon.base_param ];
+  switch( fmwk->beacon.base_param ){
+  case FMISSION_NPC_TYPE_PRESENT_ITEM:
+    sub_LotParamPresentItem( wk, fmwk, idx, rnd_c );
+    break;
+  case FMISSION_NPC_TYPE_ITEM_TRADE:
+    sub_LotParamTradeItem( wk, fmwk, idx, rnd_c );
+    break;
+  case FMISSION_NPC_TYPE_SHOPPING:
+    sub_LotParamShoppingItem( wk, fmwk, idx, rnd_c );
+    break;
+  case FMISSION_NPC_TYPE_TR_BATTLE:
+    sub_LotParamTrBattle( wk, fmwk, idx, rnd_c, log );
+    break;
+  case FMISSION_NPC_TYPE_GET_A_PRESENT:
+    sub_LotParamGetAPresentItem( wk, fmwk, idx, rnd_c );
+    break;
   }
-  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_ITEM_PROB_MAG, NULL, 0 );
+}
 
-  for( i = 0;i < FES_ITEM_PARAM_NUM;i++){
-    level += ps->prm[i].prob*LOT_ITEM_PROB_MAG;
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 道具プレゼント
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c )
+{
+  u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NITEM_PRESENT_DATA_MAX, NULL, 0 );
 
-    if( rnd < level ){
-      return ps->prm[i].item;
+  wk->param[idx][NITEM_PRESENT_PARAM_ITEM] = DATA_NpcItemPresent[rnd];
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 道具交換 
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamTradeItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c )
+{
+  u32 rnd, range;
+  u8 tbl_no = fmwk->beacon.ex_param;
+
+  if( tbl_no >= FES_NITEM_TRADE_DATA_MAX ){
+    GF_ASSERT(0);
+    tbl_no = 0;
+  }
+  wk->param[idx][NITEM_TRADE_PARAM_TBLNO] = tbl_no;
+ 
+  range = (FES_NITEM_TRADE_CATEGORY_MAX-1);
+  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, range, NULL, 0 )+1;
+
+  { //まずカテゴリA-C内で抽選
+    int i,swap;
+
+    swap = FES_GIMMICK_SUB_RndGet( rnd_c, 2, NULL, 0 );
+    for( i = 0;i < 2;i++){
+      wk->param[idx][(i+swap)%2] = (rnd+i)%range;
     }
   }
-  GF_ASSERT(0);
-  //万一抜けてきちゃったら0番目を返す
-  return ps->prm[0].item;
+  //5%の確率でレアテーブルに片方を差し替え
+  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
+  if( rnd >= (LOT_PROB_MAG*5) ){
+    return;
+  }
+  wk->param[idx][FES_GIMMICK_SUB_RndGet( rnd_c, 2, NULL, 0 )] = range;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 道具販売 
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamShoppingItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c )
+{
+  u8 no = 0;
+  u8 tbl_no = fmwk->beacon.ex_param;
+
+  {
+    int i,key = 0;
+    u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
+
+    for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
+      key += DATA_NpcItemShoppingProb[i];
+
+      if( rnd < key ){
+        no = i;
+        break;
+      } 
+    }
+  }
+  wk->param[idx][NITEM_SHOPPING_PARAM_ITEM] = DATA_NpcItemShopping[tbl_no].list[no].item;
+  wk->param[idx][NITEM_SHOPPING_PARAM_PRICE] = DATA_NpcItemShopping[tbl_no].list[no].price;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 トレーナーID 
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamTrBattle( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log )
+{
+  u32 rnd;
+  u8 tbl_no = fmwk->beacon.ex_param;
+  
+  if( tbl_no >= FES_NPC_TRAINER_DATA_MAX ){
+    GF_ASSERT(0);
+    tbl_no = 0;
+  }
+  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NPC_TRAINER_SET_NUM*LOT_PROB_MAG, log, idx )/LOT_PROB_MAG;
+  wk->param[idx][NPC_TRAINER_PARAM_TRID] = DATA_NpcTrainer[tbl_no][rnd];
+  log[idx] = rnd;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 プレゼントをもらう
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c )
+{
+  int no = 0;
+  int i,key = 0;
+  u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
+
+  for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
+    key += DATA_NpcItemGetAPresent[i].prob;
+
+    if( rnd < key ){
+      no = i;
+      break;
+    } 
+  }
+  wk->param[idx][NITEM_GPRESENT_PARAM_ITEM] = DATA_NpcItemGetAPresent[no].item;
 }
 
 //----------------------------------------------------------------------

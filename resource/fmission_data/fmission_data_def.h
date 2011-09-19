@@ -132,20 +132,21 @@ typedef enum{
   FMISSION_ITEM_SET_MAX,  ///<
 }FMISSION_ITEM_SET;
 
-#endif //__ASM_NO_DEF_
-
 //=========================================
 ///ミッションイベントID
 //=========================================
-#define  FMISSION_EVID_TOWER_OF_HEAVEN  ( 0 )   ///<タワーオブヘブンの鐘を鳴らせ
-#define  FMISSION_EVID_ENCEFF_FEATHER  ( 1 )   ///<ホドモエに舞い落ちる羽
-#define  FMISSION_EVID_ENCEFF_JUWEL  ( 2 )   ///<ジュエルを採掘せよ
-#define  FMISSION_EVID_EGG_HATCH  ( 3 )   ///<タマゴ孵化
-#define  FMISSION_EVID_FISHING  ( 4 )   ///<釣り大会
-#define  FMISSION_EVID_ANIMAL_TRAIL  ( 5 )   ///<獣道調査
-#define  FMISSION_MAX  ( 6 )   ///<
-#define  FMISSION_END  ( FMISSION_EVID_MAX-1 )   ///<
+typedef enum{
+  FMISSION_EVID_TOWER_OF_HEAVEN,  ///<タワーオブヘブンの鐘を鳴らせ
+  FMISSION_EVID_ENCEFF_FEATHER,  ///<ホドモエに舞い落ちる羽
+  FMISSION_EVID_ENCEFF_JUWEL,  ///<ジュエルを採掘せよ
+  FMISSION_EVID_EGG_HATCH,  ///<タマゴ孵化
+  FMISSION_EVID_FISHING,  ///<釣り大会
+  FMISSION_EVID_ANIMAL_TRAIL,  ///<獣道調査
+  FMISSION_EVID_MAX,  ///<
+  FMISSION_EVID_END = FMISSION_EVID_MAX-1,  ///<
+}FMISSION_EVENT_ID;
 
+#endif //__ASM_NO_DEF_
 
 //=========================================
 ///NPCタイプID
@@ -160,7 +161,7 @@ typedef enum{
 #define  FMISSION_NPC_TYPE_GET_A_PRESENT  ( 7 )   ///<アイテムをもらう
 #define  FMISSION_NPC_TYPE_POKE_QUIZ  ( 8 )   ///<ポケモン図鑑クイズ
 #define  FMISSION_NPC_TYPE_MAX  ( 9 )   ///<
-#define  FMISSION_NPC_END  ( FMISSION_NPC_TYPE_MAX-1 )   ///<
+#define  FMISSION_NPC_TYPE_END  ( FMISSION_NPC_TYPE_MAX-1 )   ///<
 
 
 

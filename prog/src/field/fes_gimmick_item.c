@@ -66,10 +66,8 @@ static FES_GIMMICK_ITEM_FLAG* sub_FlagTableGet( FES_GIMMICK_ITEM_WORK* wk, u16 z
  *  @brief  フェス　アイテムミッションギミック　フィールド復帰時処理
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk )
+void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk )
 {
-  FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)sys_wk->wk_buf;
-
   //キラオブジェクト表示をリセット
   FLDEFF_FES_KIRA_ObjDelAll( sys_wk->eff_task );
 
@@ -83,16 +81,17 @@ void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk )
  *  @brief  フェス　アイテムミッションギミック　ミッション終了時処理
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk )
+BOOL FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk )
 {
-  GFL_STD_RandContext rnd_c;
-  FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)sys_wk->wk_buf;
+  int ret = ( wk->data_max > 0 );
 
   //キラオブジェクト表示をリセット
   FLDEFF_FES_KIRA_ObjDelAll( sys_wk->eff_task );
 
   //ワーククリア
   MI_CpuClear32( wk, sizeof(FES_GIMMICK_ITEM_WORK) );
+
+  return ret;
 }
 
 //----------------------------------------------------------------------
@@ -167,7 +166,7 @@ BOOL FES_GIMMICK_ITEM_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32
   FES_GIMMICK_ITEM_FLAG* f_tbl;
   
   if( wk->point_max == 0 ){
-    return;
+    return FALSE;
   }
   f_tbl = sub_FlagTableGet( wk, wk->zone_id );
 

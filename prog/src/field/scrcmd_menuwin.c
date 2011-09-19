@@ -31,6 +31,7 @@
 #include "font/font.naix"
 
 #include "sound/pm_sndsys.h"
+#include "fes_gimmick.h"
 
 #include "tr_tool/ex_trainer_def.h" // for TRID_OFFSET_INFINITY_DUNGEON
 #include "../../../resource/fldmapdata/script/infinity_dungeon_scr_def.h" // for SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER
@@ -1448,6 +1449,29 @@ VMCMD_RESULT EvCmdBalloonWin_Write( VMHANDLE * core, void * wk,
   
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画コア OBJID指定有り
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT BalloonWinWriteCore( VMHANDLE *core, SCRCMD_WORK* work, u16 arc_id, u16 msg_id, u16 obj_id, u16 pos_type, TALKMSGWIN_TYPE type )
+{
+  STRBUF * msgbuf;
+  
+  OS_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
+  
+  msgbuf = SetExpandWord( work, arc_id, msg_id );
+  if( balloonWin_SetWrite(work,msgbuf,obj_id,pos_type,type) == TRUE ){
+    VMCMD_SetWait( core, BallonWinMsgWait );
+    return VMCMD_RESULT_SUSPEND;
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * 吹き出しウィンドウ 描画 OBJID指定有り
@@ -1463,8 +1487,9 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
   u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
   TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
+#if 0
   STRBUF * msgbuf;
-  
+ 
   OS_Printf( "吹き出しウィンドウ OBJID =%d\n", obj_id );
   
   msgbuf = SetExpandWord( work, MSGARC_DEFAULT, msg_id );
@@ -1475,6 +1500,9 @@ VMCMD_RESULT EvCmdBalloonWinWrite( VMHANDLE *core, void *wk )
   }
   
   return VMCMD_RESULT_CONTINUE;
+#else
+  return BalloonWinWriteCore( core, work, arc_id, msg_id, obj_id, pos_type, type );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1501,16 +1529,60 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 
   {
     u8 obj_id = MMDL_GetOBJID( mmdl );
-    
+
+    return BalloonWinWriteCore( core, work, arc_id, msg_id, obj_id, pos_type, type );
+
+#if 0
     STRBUF * msgbuf = SetExpandWord( work, arc_id, msg_id );
   //setupMsgData( work, arc_id, msg_id );
     if( balloonWin_SetWrite(work,msgbuf,obj_id,pos_type,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;
     }
+#endif
   }
-  
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 2択メッセージ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT BalloonWinWriteChoice( VMHANDLE *core, SCRCMD_WORK *work, u8 msg_idx )
+{
+  u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_id_2 = SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
+  TALKMSGWIN_TYPE type = SCRCMD_GetVMWorkValue( core, work );
+  STRBUF * msgbuf;
+
+  if( msg_idx ){
+    msg_id = msg_id_2;
+  }
+  return BalloonWinWriteCore( core, work, MSGARC_DEFAULT, msg_id, obj_id, pos_type, type );
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ 描画 フェスNPC用2択メッセージ表示
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBalloonWinWriteFesNpc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  u8 msg_idx = FES_GIMMICK_ObjTypeGetForNpcMission(FIELDMAP_GetFesGimmickSys( fieldmap ));
+
+  return BalloonWinWriteChoice( core, wk, msg_idx );
 }
 
 //--------------------------------------------------------------
@@ -1522,6 +1594,14 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
 {
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+  u32 sex = MyStatus_GetMySex( &player->mystatus );
+    
+  return BalloonWinWriteChoice( core, wk, (sex!=PM_MALE) );
+
+#if 0
   SCRCMD_WORK *work = wk;
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
@@ -1549,6 +1629,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
   }
   
   return VMCMD_RESULT_CONTINUE;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1560,6 +1641,8 @@ VMCMD_RESULT EvCmdBalloonWinWriteMF( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
 {
+  return BalloonWinWriteChoice( core, wk, (GET_VERSION()==VERSION_B2) );
+#if 0
   SCRCMD_WORK *work = wk;
   u16 arc_id = SCRCMD_GetVMWorkValue( core, work );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
@@ -1581,6 +1664,7 @@ VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk )
   }
   
   return VMCMD_RESULT_CONTINUE;
+#endif
 }
 
 //--------------------------------------------------------------

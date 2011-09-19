@@ -49,7 +49,38 @@
 
 #include "scrcmd_fmission.h"
 #include "fes_gimmick.h"
+#include "fes_gimmick_local.h"
 #include "fes_gimmick_def.h"
+
+//==================================================================
+/**
+ * フェスミッション　各種施設受け付け用強制終了コマンド
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT
+ *
+ * フェス中でないときに呼び出されたら、なにもせずに副作用無しで終了
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionEndForce( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+
+  if( LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
+    if( FES_GIMMICK_Delete( fes_gmk ) ){
+      GF_ASSERT(0); //無理やりギミック削除はホントはやっちゃダメなので、チェック用アサート仕掛けておく
+    }
+    LINK_FESTIVAL_MissionEnd( fest_sys );
+  }
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //==================================================================
 /**
@@ -77,7 +108,7 @@ VMCMD_RESULT EvCmdFMissionLogAction( VMHANDLE *core, void *wk )
 
 //==================================================================
 /**
- * フェスミッション NPCミッション 人物mmdl削除とクリアフラグOn処理 
+ * フェスNPCミッション 人物mmdl削除とクリアフラグOn処理 
  *
  * @param   core		
  * @param   wk		
@@ -99,6 +130,165 @@ VMCMD_RESULT EvCmdFMissionNpcEventClear( VMHANDLE *core, void *wk )
 
   //取得済みフラグセットと動作モデルの削除
   FES_GIMMICK_FlagSet( FIELDMAP_GetFesGimmickSys( fieldmap ), zone_id, obj_idx );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション 話しかけターゲットのNPCのMMDLが持つパラメータを取得
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcParamGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  u16 param_no = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  MMDL *mmdl = SCRIPT_GetTargetObj( scw );
+ 
+  *ret_wk = MMDL_GetParam( mmdl, param_no );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション アイテム交換ミッションのアイテムを取得 
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcTradeItemGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  u16 my_rank = SCRCMD_GetVMWorkValue( core, wk );
+  u16 npc_rank = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_mine = SCRCMD_GetVMWork( core, wk );
+  u16* ret_npc = SCRCMD_GetVMWork( core, wk );
+
+  FES_GIMMICK_NPC_TradeItemGet( fes_gmk, SCRIPT_GetTargetObj( scw ), my_rank, npc_rank, ret_mine, ret_npc );
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション アイテム交換ミッション 
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcShoppingItemGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  
+  u16* ret_item = SCRCMD_GetVMWork( core, wk );
+  u16* ret_price = SCRCMD_GetVMWork( core, wk );
+
+  FES_GIMMICK_NPC_ShoppingItemGet( fes_gmk, SCRIPT_GetTargetObj(scw), ret_item, ret_price );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション 記憶クイズミッション  クイズパラメータ生成
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  
+  u16* ret_q_num = SCRCMD_GetVMWork( core, wk );
+  u16* ret_q_idx = SCRCMD_GetVMWork( core, wk );
+  u16* ret_a_idx = SCRCMD_GetVMWork( core, wk );
+  
+  FES_GIMMICK_NPC_MemoryQuizParamGet( fes_gmk, ret_q_num, ret_q_idx, ret_a_idx );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション 記憶クイズミッション  出題パラメータ取得
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGetQuestionPoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  
+  u16  q_idx = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_q_poke = SCRCMD_GetVMWork( core, wk );
+
+  *ret_q_poke = FES_GIMMICK_NPC_MemoryQuizParamGetQuestionPoke( fes_gmk, q_idx );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスNPCミッション 記憶クイズミッション  回答パラメータ取得
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGetAnswerPoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  scw  = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
+  
+  u16  a_idx = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_a_poke = SCRCMD_GetVMWork( core, wk );
+
+  *ret_a_poke = FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( fes_gmk, a_idx );
 
   return VMCMD_RESULT_SUSPEND;
 }

@@ -87,7 +87,7 @@ extern void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk );
  *  @brief  フェスミッションギミック 削除　
  */
 //----------------------------------------------------------------------
-extern void FES_GIMMICK_Delete( FES_GIMMICK* wk );
+extern BOOL FES_GIMMICK_Delete( FES_GIMMICK* wk );
 
 //----------------------------------------------------------------------
 /*
@@ -125,4 +125,14 @@ extern BOOL FES_GIMMICK_CheckHitGridPos( FES_GIMMICK* wk, u16 gx, u16 gz, fx32 h
  */
 //----------------------------------------------------------------------
 extern void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx );
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　OBJタイプ取得(NPCミッション専用)
+ *
+ *  NPCミッション以外で呼び出すと、必ず0が返ります
+ */
+//----------------------------------------------------------------------
+extern u8 FES_GIMMICK_ObjTypeGetForNpcMission( FES_GIMMICK* wk );
+
 

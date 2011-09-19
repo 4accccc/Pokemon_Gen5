@@ -13,14 +13,22 @@
 #include "field/fes_gimmick_item.h"
 #include "field/fes_gimmick_npc.h"
 
+//ミッション中保持しつづけるワーク
 typedef union _FES_GIMMICK_WORK{
   FES_GIMMICK_ITEM_WORK item_wk;  ///<アイテムミッション用ワーク
   FES_GIMMICK_NPC_WORK npc_work;  ///<NPCミッションワーク
 }FES_GIMMICK_WORK;
 
+#if 0
 typedef union _FES_GIMMICK_FLAG_WORK{
   FES_GIMMICK_ITEM_FLAG_WORK  item_flag_wk; //アイテムミッション用ワーク
 }FES_GIMMICK_FLAG_WORK;
+#endif
+
+//ギミックで一時的に使用するワーク
+typedef union _FES_GIMMICK_TMP_WORK{
+  FES_GIMMICK_NPC_MEMORY_QUIZ_WORK npc_tmp_wk; ///NPCミッション用テンポラリ
+}FES_GIMMICK_TMP_WORK;
 
 struct _FES_GIMMICK{
   GAMESYS_WORK* gsys;
@@ -42,6 +50,7 @@ struct _FES_GIMMICK{
   FLDEFF_TASK* eff_task;  ///<フィールドエフェクトタスクのポインタを保持
 
   void* wk_buf; //ミッション別ローカルワークへのポインタ保持
+  FES_GIMMICK_TMP_WORK  tmp_wk; //テンポラリワーク領域
 };
 
 extern void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandContext* rnd_c );

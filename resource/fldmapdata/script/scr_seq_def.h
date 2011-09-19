@@ -1110,6 +1110,29 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _BALLOONWIN_TALKOBJ_MSG_FES_NPC
+ *  @brief  吹き出しウィンドウ描画　NPCオブジェのタイプでメッセージが切り替わる
+ *  @param msg_id_1 表示するメッセージID 1
+ *  @param msg_id_2 表示するメッセージID 2
+ *  @param obj_id 吹き出しを出す対象OBJ ID
+ *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
+ */
+//--------------------------------------------------------------
+#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_id_1, msg_id_2 ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC msg_id_1, msg_id_2
+
+  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC msg_id_1, msg_id_2
+  .short  EV_SEQ_BALLOONWIN_OBJMSG_FES_NPC
+  .short 0x0400
+  .short \msg_id_1
+  .short \msg_id_2
+  .short SCWK_TARGET_OBJID
+  .short POS_DEFAULT
+  .short BALLOONWIN_TYPE_NORMAL
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  @def  _BALLOONWIN_OBJMSG_POS
  *  @brief  吹き出しウィンドウ描画　位置指定あり
  *  @param msg_id 表示するメッセージID
@@ -1174,6 +1197,7 @@
   .short \pos
   .short BALLOONWIN_TYPE_NORMAL
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -9169,7 +9193,6 @@
   .short  \ret_wk
   .endm
 
-
 //======================================================================
 //
 //
@@ -9500,6 +9523,18 @@
   .short  \sec    
   .endm
 
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド 各種受付用ミッション強制終了コマンド　
+ */
+//--------------------------------------------------------------
+#define _FMISSION_END_FORCE() _ASM_FMISSION_END_FORCE
+
+  .macro  _ASM_FMISSION_END_FORCE
+  .short  EV_SEQ_FMISSION_END_FORCE
+  .endm
+
 //--------------------------------------------------------------
 /**
  * フェスミッション系コマンド ログアクションリクエスト　
@@ -9527,6 +9562,99 @@
 
   .macro  _ASM_FMISSION_NPC_EVENT_CLEAR
   .short  EV_SEQ_FMISSION_NPC_EVENT_CLEAR
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド フェスNPCパラメータ取得　
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_PARAM_GET_PRESENT_ITEM( ret_wk ) \
+    _ASM_FMISSION_NPC_PARAM_GET NITEM_PRESENT_PARAM_ITEM, ret_wk 
+
+#define _FMISSION_NPC_PARAM_GET_GPRESENT_ITEM( ret_wk ) \
+    _ASM_FMISSION_NPC_PARAM_GET NITEM_GPRESENT_PARAM_ITEM, ret_wk 
+
+#define _FMISSION_NPC_PARAM_GET_TRID( ret_wk ) \
+    _ASM_FMISSION_NPC_PARAM_GET NPC_TRAINER_PARAM_TRID, ret_wk 
+
+  .macro  _ASM_FMISSION_NPC_PARAM_GET  prm_idx, ret_wk
+  .short  EV_SEQ_FMISSION_NPC_PARAM_GET
+  .short  \prm_idx    
+  .short  \ret_wk    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド NPCアイテム交換パラメータ取得 
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_TRADE_ITEM_GET( my_rank, npc_rank, ret_my_item, ret_npc_item ) \
+    _ASM_FMISSION_NPC_TRADE_ITEM_GET my_rank, npc_rank, ret_my_item, ret_npc_item
+
+  .macro  _ASM_FMISSION_NPC_TRADE_ITEM_GET  my_rank, npc_rank, ret_my_item, ret_npc_item 
+  .short  EV_SEQ_FMISSION_NPC_TRADE_ITEM_GET
+  .short  \my_rank
+  .short  \npc_rank
+  .short  \ret_my_item    
+  .short  \ret_npc_item    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド NPCアイテム購入パラメータ取得 
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_SHOPPING_ITEM_GET( ret_item, ret_price ) \
+    _ASM_FMISSION_NPC_SHOPPING_ITEM_GET ret_item, ret_price
+
+  .macro  _ASM_FMISSION_NPC_SHOPPING_ITEM_GET  ret_item, ret_price
+  .short  EV_SEQ_FMISSION_NPC_SHOPPING_ITEM_GET
+  .short  \ret_item    
+  .short  \ret_price    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド 記憶クイズベースパラメータ取得 
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET( ret_q_num, ret_q_idx, ret_a_idx ) \
+    _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET ret_q_num, ret_q_idx, ret_a_idx
+
+  .macro  _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET  ret_q_num, ret_q_idx, ret_a_idx
+  .short  EV_SEQ_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET
+  .short  \ret_q_num   
+  .short  \ret_q_idx   
+  .short  \ret_a_idx   
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド 記憶クイズ 出題パラメータ取得
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE( q_idx, ret_poke ) \
+    _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE q_idx, ret_poke
+
+  .macro  _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE  q_idx, ret_poke 
+  .short  EV_SEQ_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE
+  .short  \q_idx   
+  .short  \ret_poke
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド 記憶クイズ 回答パラメータ取得
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE( a_idx, ret_poke ) \
+    _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE a_idx, ret_poke
+
+  .macro  _ASM_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE  a_idx, ret_poke 
+  .short  EV_SEQ_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE
+  .short  \a_idx   
+  .short  \ret_poke
   .endm
 
 //--------------------------------------------------------------

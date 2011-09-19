@@ -46,6 +46,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_lostboy_01">
@@ -87,6 +94,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-08-12T10:35:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_lostboy_02">
@@ -128,6 +142,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-08-12T10:35:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_lostboy_03">
@@ -173,6 +194,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-08-12T10:35:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_lostboy_04">
@@ -212,6 +240,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-08-12T10:35:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_01">
@@ -259,6 +294,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_02">
@@ -298,6 +340,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_03">
@@ -337,6 +386,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_04">
@@ -378,6 +434,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_05">
@@ -421,6 +484,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_itemboy_06">
@@ -460,6 +530,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:55:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade_sys01">
@@ -507,6 +584,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:05:10" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade_sys02">
@@ -546,6 +630,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade_sys03">
@@ -585,6 +676,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade_sys04">
@@ -626,6 +724,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:14" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_01">
@@ -667,6 +772,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T05:46:04" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_02">
@@ -718,6 +830,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T05:54:20" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_03">
@@ -757,6 +876,13 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_04">
@@ -804,6 +930,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_05">
@@ -845,6 +978,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_06">
@@ -884,6 +1024,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_07">
@@ -925,6 +1072,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_08">
@@ -964,6 +1118,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:39" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade01_09">
@@ -1005,6 +1166,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:14:40" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_01">
@@ -1046,6 +1214,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:13:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_02">
@@ -1097,6 +1272,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:13:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_03">
@@ -1138,6 +1320,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_04">
@@ -1185,6 +1374,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_05">
@@ -1230,6 +1426,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_06">
@@ -1273,6 +1476,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_07">
@@ -1314,6 +1524,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_08">
@@ -1355,6 +1572,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:51" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_trade02_09">
@@ -1396,6 +1620,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:21:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_sys01">
@@ -1443,6 +1674,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:08:45" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_01">
@@ -1498,6 +1736,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T04:03:04" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_02">
@@ -1539,6 +1784,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_03">
@@ -1580,6 +1832,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_04">
@@ -1621,6 +1880,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_05">
@@ -1660,6 +1926,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:45:32" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop01_06">
@@ -1701,6 +1974,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:09:10" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_01">
@@ -1750,6 +2030,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:51:29" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_02">
@@ -1793,6 +2080,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:49:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_03">
@@ -1832,6 +2126,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:49:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_04">
@@ -1871,6 +2172,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:49:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_05">
@@ -1912,6 +2220,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T03:49:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_shop02_06">
@@ -1951,6 +2266,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T06:09:02" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_janken_sys01">
@@ -2379,7 +2701,7 @@ msg_fm_npc_trade01_02へ</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys01">
+		Label="msg_fm_npc_mquiz01_sys01">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName ]！</Text>
@@ -2426,9 +2748,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys02">
+		Label="msg_fm_npc_mquiz01_sys02">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName Idx="1" ]</Text>
@@ -2471,9 +2800,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys03">
+		Label="msg_fm_npc_mquiz01_sys03">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName Idx="2" ]</Text>
@@ -2516,9 +2852,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys04">
+		Label="msg_fm_npc_mquiz01_sys04">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName Idx="3" ]</Text>
@@ -2561,9 +2904,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys05">
+		Label="msg_fm_npc_mquiz01_sys05">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName Idx="4" ]</Text>
@@ -2606,9 +2956,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_sys06">
+		Label="msg_fm_npc_mquiz01_sys06">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName Idx="5" ]</Text>
@@ -2651,9 +3008,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:55:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_01">
+		Label="msg_fm_npc_mquiz01_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>さて　もんだいです！▼</Text>
@@ -2690,9 +3054,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:37:00" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_02">
+		Label="msg_fm_npc_mquiz01_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>さてさて！
@@ -2737,9 +3108,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:36:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_03">
+		Label="msg_fm_npc_mquiz01_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>ざんねん！　ちがいます！</Text>
@@ -2776,9 +3154,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:36:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_04">
+		Label="msg_fm_npc_mquiz01_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいかい　です！
@@ -2817,9 +3202,16 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:36:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_npc_quiz01_05">
+		Label="msg_fm_npc_mquiz01_05">
 		<LanguageCell
 			Language="JPN">
 			<Text>ではまた　どこかで……
@@ -2858,6 +3250,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:36:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl01_01">
@@ -2903,6 +3302,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:44:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl01_02">
@@ -2942,6 +3348,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:44:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl01_03">
@@ -2987,6 +3400,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:44:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl01_04">
@@ -3028,6 +3448,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:44:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl01_05">
@@ -3069,6 +3496,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:44:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl02_01">
@@ -3114,6 +3548,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl02_02">
@@ -3153,6 +3594,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl02_03">
@@ -3198,6 +3646,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl02_04">
@@ -3241,6 +3696,13 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fm_npc_btl02_05">
@@ -3282,5 +3744,12 @@ msg_fm_npc_trade01_02へ</Comment>
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

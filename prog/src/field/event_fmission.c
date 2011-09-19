@@ -168,15 +168,6 @@ GMEVENT* EVENT_FMissionEnd( GAMESYS_WORK * gsys, void* work )
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
-
-  //現ミッションパラメータを取得
-  {
-    FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
-    wk->mission = *fmwk;
-
-    //ミッションの結果取得とレコードセーブ
-    LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->result, 0 );
-  }
   return event;
 }
 
@@ -447,12 +438,6 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
 
   switch( *seq ){
   case 0:
-    if( wk->result.clear_f && beacon->life > 0 ){ //クリアでミッション終了した場合
-      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
-    }else{  //タイムアップの場合
-      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
-    }
-    PMSND_PlaySE( EVFMISSION_SE_END_EFF );
     (*seq)++;
     break;
   case 1:

@@ -21,6 +21,7 @@
 #include "gamesystem/fest_mission_nw.h"
 #include "gamesystem/fest_mission_local.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
 
 #include "field/fieldmap.h"
@@ -49,6 +50,7 @@
 #include "field/fes_gimmick.h"
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_npc.h"
+#include "field/fes_gimmick_npc_dat.h"
 #include "field/fes_gimmick_local.h"
 
 static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u8 id );
@@ -108,10 +110,10 @@ void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16
  *  @brief  フェス　NPCミッションギミック　ミッション終了時処理
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
+BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 {
-  int i;
-
+  int i, ret = ( wk->data_max > 0 );
+  
   if( wk->point_max > 0 ){
     for(i = 0;i < FES_GIMMICK_MAX;i++){
       if( wk->mmdl_tbl[i] != NULL ){
@@ -122,154 +124,176 @@ void FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 
   //ワーククリア
   MI_CpuClear32( wk, sizeof(FES_GIMMICK_NPC_WORK) );
+
+  return ret;
 }
 
 //----------------------------------------------------------------------
 /*
- *  @brief  フェス　NPCミッションギミック ポイント話しかけ判定&イベント生成
- *
- *  @retval NULL  イベント無し
- *  @retval GMEVENT* POSを踏んだのでイベント発生
+ *  @brief  フェス　NPCミッションギミック 交換アイテム取得
  */
 //----------------------------------------------------------------------
-GMEVENT* FES_GIMMICK_NPC_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32* cp_pos )
+void FES_GIMMICK_NPC_TradeItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16 my_rank, u16 npc_rank, u16* my_item, u16* npc_item )
 {
-  int i;
-  FES_GIMMICK_NPC_WORK* wk = (FES_GIMMICK_NPC_WORK*)sys_wk->wk_buf;
-
-#if 0
-  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
-
-  for( i = 0;i < wk->point_max; i++){
-    POS_EVENT_DATA* pd = &wk->data[ wk->idx[i] ];
-    
-    if( !FLDEFF_FES_KIRA_ObjIsVisible( sys_wk->eff_task, i ) ||
-        (pd->pos_type != EVENTDATA_POSTYPE_GRID )){
-      continue;
-    }
-    if( PosEventData_GPOS_IsHit( pd, cp_pos ) ){
-      return sub_MakeEvent( sys_wk, wk, i );
-    }
+  const NITEM_TRADE_DATA* tbl;
+  if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_ITEM_TRADE ){
+    GF_ASSERT(0);
+    *my_item = ITEM_KIZUGUSURI;
+    *npc_item = ITEM_KIZUGUSURI;
+    return;
   }
-#endif
-  return NULL;
+
+  tbl = &DATA_NpcItemTrade[sys_wk->fmwk->beacon.ex_param];
+  *my_item  = tbl->item[MMDL_GetParam( mmdl, NITEM_TRADE_PARAM_MY_CATEGORY )][my_rank];
+  *npc_item = tbl->item[MMDL_GetParam( mmdl, NITEM_TRADE_PARAM_NPC_CATEGORY )][npc_rank];
 }
+
 //----------------------------------------------------------------------
 /*
- *  @brief  フェス　NPCミッションギミック ポイント当たり判定&イベント生成
- *
- *  @retval NULL  イベント無し
- *  @retval GMEVENT* POSを踏んだのでイベント発生
+ *  @brief  フェス　NPCミッションギミック 販売アイテムと値段を取得
  */
 //----------------------------------------------------------------------
-GMEVENT* FES_GIMMICK_NPC_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LOCATION* cp_location )
-{
-  int i;
-  FES_GIMMICK_NPC_WORK* wk = (FES_GIMMICK_NPC_WORK*)sys_wk->wk_buf;
-#if 0
-  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
+#define PRICE_RANGE_NUM (50-8)  //0.1刻みで0.8～5.0
 
-  for( i = 0;i < wk->point_max; i++){
-    POS_EVENT_DATA* pd = &wk->data[ wk->idx[i] ];
-    
-    if( !FLDEFF_FES_KIRA_ObjIsVisible( sys_wk->eff_task, i ) ||
-        (pd->pos_type != EVENTDATA_POSTYPE_RAIL )){
-      continue;
-    }
-    if( PosEventData_RPOS_IsHit( pd, cp_location ) ){
-      return sub_MakeEvent( sys_wk, wk, i );
-    }
+void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item, u16* price )
+{
+  u32 value;
+  u8 type = FES_GIMMICK_NPC_SUB_GetObjType( sys_wk->fmwk );
+  
+  if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_SHOPPING ){
+    GF_ASSERT(0);
+    *item = ITEM_KIZUGUSURI;
+    *price = 0;
+    return;
   }
-#endif
-  return NULL;
+
+  *item  = MMDL_GetParam( mmdl, NITEM_SHOPPING_PARAM_ITEM);
+  value  = MMDL_GetParam( mmdl, NITEM_SHOPPING_PARAM_PRICE);
+
+  if(type){ //価格に振れ幅が出る(0.8～5.0)
+    int range = ( GFUser_GetPublicRand( PRICE_RANGE_NUM )+8 ); //まず10倍で計算
+    fx32 f_value = FX_Div( FX32_CONST( value*range ), FX32_CONST(10));  //1/10
+    value = FX_Whole( f_value );  //小数点切捨て
+  }
+  *price = value;
 }
 
 //----------------------------------------------------------------------
 /*
- *  @brief  フェス　キラキラエフェクトとの座標当たり判定
- *
- *  @retval NULL  イベント無し
- *  @retval GMEVENT* POSを踏んだのでイベント発生
+ *  @brief  フェス　NPCミッションギミック 記憶クイズパラメータを生成
  */
 //----------------------------------------------------------------------
-BOOL FES_GIMMICK_NPC_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32 height )
-{
-#if 0
-  int i;
-  VecFx32 vec;
-  FES_GIMMICK_NPC_WORK* wk = (FES_GIMMICK_NPC_WORK*)sys_wk->wk_buf;
-  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
-  FES_GIMMICK_NPC_FLAG* f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, wk->zone_id );
+#define MEMORY_QUIZ_POKE_START  (MONSNO_TUTAAZYA)
+#define MEMORY_QUIZ_POKE_END    (MONSNO_URUGAMOSU)
+#define MEMORY_QUIZ_POKE_RANGE  (MEMORY_QUIZ_POKE_END-MEMORY_QUIZ_POKE_START+1)
+static u16 mquiz_LotPoke( u16 range, u16* log, int log_num );
 
-  for( i = 0;i < wk->point_max; i++)
+void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk, u16* q_num, u16* q_idx, u16* a_idx )
+{
+  int i,answer_max;
+  u16 rnd_log[NPC_MEMORY_QUIZ_QUESTION_MAX];
+  u8  rnd_idx[NPC_MEMORY_QUIZ_QUESTION_MAX];
+
+  FES_GIMMICK_NPC_MEMORY_QUIZ_WORK* twk = &(sys_wk->tmp_wk.npc_tmp_wk);
+
+  MI_CpuClear8( twk, sizeof(FES_GIMMICK_NPC_MEMORY_QUIZ_WORK) );
+
+  //出題数を決める
   {
-    POS_EVENT_DATA* pd = &wk->data[ wk->idx[i] ];
-
-    if( f_tbl->flag[i] ){
-      continue; //すでに取得済み
+    int score = LINK_FESTIVAL_GetNowScore( sys_wk->fest_sys );  //現在のトータルスコア
+    if( score <= NPC_MEMORY_QUIZ_QUESTION_MAX ){
+      twk->q_num = score;
+      if( twk->q_num < NPC_MEMORY_QUIZ_QUESTION_MIN ){
+        twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MIN;
+      }
+    }else{
+      twk->q_num = (score/10);
+      if( twk->q_num > NPC_MEMORY_QUIZ_QUESTION_MAX ){
+        twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MAX;
+      }
     }
-    if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
-      EVENTDATA_GetPosEventCenterPos( pd, &vec);
-    }
-    else{
-      RAIL_LOCATION loc;
-      EVENTDATA_GetPosEventCenterRailLocation( pd, &loc );
-      FIELD_RAIL_MAN_GetLocationPosition( sys_wk->railman, &loc, &vec );
-    }
-
-    if( SIZE_GRID_FX32(vec.x) != gx ||
-        SIZE_GRID_FX32(vec.z) != gz ||
-        (vec.y-H_DIFF_COLLISION_FOR_GROUND) > height ||
-        (vec.y+H_DIFF_COLLISION_FOR_GROUND) < height ){
-      continue;
-    }
-    return TRUE;
   }
-#endif
+
+  //出題ポケモンを抽選
+  if( twk->q_num < NPC_MEMORY_QUIZ_ANSWER_MAX ){
+    answer_max = NPC_MEMORY_QUIZ_ANSWER_MAX;
+  }else{
+    answer_max = twk->q_num;
+  }
+  for( i = 0;i < answer_max; i++ ){
+    rnd_idx[i] = i;   //連番初期化しておく
+    rnd_log[i] = mquiz_LotPoke( MEMORY_QUIZ_POKE_RANGE, rnd_log, i );
+    twk->q_poke[i] = rnd_log[i] + MEMORY_QUIZ_POKE_START;
+  }
+  //出題idxを抽選
+  twk->question_idx = GFUser_GetPublicRand( twk->q_num );
+
+  //配列シャッフル
+  for( i = 0;i < answer_max; i++ ){
+    u8 tmp = rnd_idx[i];
+    u8 rnd =  GFUser_GetPublicRand(answer_max);
+    rnd_idx[i] = rnd_idx[ rnd ];
+    rnd_idx[rnd] = tmp;
+  }
+  //前5つを回答候補にする
+  twk->answer_idx = 0xFF;
+  for( i = 0;i < NPC_MEMORY_QUIZ_ANSWER_MAX;i++){
+    twk->a_poke[i] = twk->q_poke[rnd_idx[i]];
+    if( rnd_idx[i] == twk->question_idx ){
+      twk->answer_idx = i;
+    }
+  }
+  //出題idxが回答候補に入っていなかったら、ランダムで上書き
+  if( twk->answer_idx == 0xFF ){
+    twk->answer_idx = GFUser_GetPublicRand( NPC_MEMORY_QUIZ_ANSWER_MAX );
+    twk->a_poke[ twk->answer_idx ] = twk->q_poke[ twk->question_idx ];
+  }
+
+  *q_num = twk->q_num;
+  *q_idx = twk->question_idx;
+  *a_idx = twk->answer_idx;
+}
+
+//出題ポケモン
+u16 FES_GIMMICK_NPC_MemoryQuizParamGetQuestionPoke( FES_GIMMICK* sys_wk, u8 idx )
+{
+  FES_GIMMICK_NPC_MEMORY_QUIZ_WORK* twk = &(sys_wk->tmp_wk.npc_tmp_wk);
+
+  return twk->q_poke[idx];
+}
+//回答ポケモン
+u16 FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( FES_GIMMICK* sys_wk, u8 idx )
+{
+  FES_GIMMICK_NPC_MEMORY_QUIZ_WORK* twk = &(sys_wk->tmp_wk.npc_tmp_wk);
+
+  return twk->a_poke[idx];
+}
+
+//----------------------------------------------------------------------
+/*
+ *  記憶クイズ 出題ポケモン抽選
+ */
+//----------------------------------------------------------------------
+
+//同じものが抽選されないようにチェック
+static BOOL mquiz_LotPokeConflictCheck( u16 poke, u16* log, int log_num )
+{
+  int i;
+
+  for( i = 0;i < log_num; i++ ){
+    if( poke == log[i] ) return TRUE;
+  }
   return FALSE;
 }
-
-//----------------------------------------------------------------------
-/*
- *  @brief  フェス　NPCミッションギミック　ゾーン遷移時処理
- */
-//----------------------------------------------------------------------
-//----------------------------------------------------------------------
-/*
- *  @brief  NPCミッションギミック イベント生成　
- */
-//----------------------------------------------------------------------
-static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u8 id )
+//ポケモンNo抽選
+static u16 mquiz_LotPoke( u16 range, u16* log, int log_num )
 {
-  GMEVENT* event = NULL;
-#if 0
-  SCRIPT_WORK* sc;
-  FES_GIMMICK_NPC_FLAG* f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, wk->zone_id );
-  u16 item = FLDEFF_FES_KIRA_ObjItemGet( sys_wk->eff_task, id );
+  u16 poke;
+  do{
+    poke = GFUser_GetPublicRand( range );
+  }while( mquiz_LotPokeConflictCheck( poke, log, log_num ));
 
-  FLDEFF_FES_KIRA_ObjDel( sys_wk->eff_task, id );
-  f_tbl->flag[id] = TRUE; //取得済みフラグ立てる
-
-  //イベント生成
-  if( item == 0 ){
-    //万一アイテム未設定なら、エフェクトだけ消してイベント起こさず帰る
-    GF_ASSERT(0);
-    return NULL;
-  } 
-  event = SCRIPT_SetEventScript( sys_wk->gsys, SCRID_FMISSION_ITEM_GET, NULL, HEAPID_FIELDMAP );
-  sc = SCRIPT_GetScriptWorkFromEvent( event );
-  SCRIPT_SetScriptWorkParam( sc, item, 0, 0, 0 );
- 
-  /*
-   * GFBTS1967関連対処
-   * 8番道路の一本橋から落ちてすぐ、エフェクトエンカウントが起動した場合
-   * 自機の特殊落下中ステータスがクリアされないため、明示的にクリアする
-   */
-  if( FIELD_PLAYER_CheckOzeFallOut( sys_wk->field_player ) ){
-    FIELD_PLAYER_FinishOzeFallOut( sys_wk->field_player );
-  }
-#endif
-  return event;
+  return poke;
 }
 
 //----------------------------------------------------------------------

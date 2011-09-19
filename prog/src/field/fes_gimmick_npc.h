@@ -9,9 +9,6 @@
 
 #pragma once
 
-#include "field/eventdata_local.h"
-#include "field/eventdata_type.h"
-
 #define FES_GIMMICK_NPC_DATA_MAX (10) ///<1ゾーンでmax20箇所候補にできる
 
 #define FES_GIMMICK_NPC_POINT_LOW_MIN (0)     ///<ポイント抽選数下限 少なめ(街)
@@ -25,17 +22,53 @@
 
 #define FES_GIMMICK_NPC_FLAG_WORK_NUM  (3)   ///<過去3ゾーン分確保
 
-//フェスミッションアイテムギミックフラグ
+#define FES_GIMMICK_NPC_POINT_PARAM_MAX (3) //ポイントごとに保存するパラメータ数
+
+///MMDL ParamNo
+#define NITEM_PRESENT_PARAM_ITEM  (0)
+
+#define NITEM_TRADE_PARAM_MY_CATEGORY (0)
+#define NITEM_TRADE_PARAM_NPC_CATEGORY  (1)
+#define NITEM_TRADE_PARAM_TBLNO (2)
+
+#define NITEM_SHOPPING_PARAM_ITEM (0)
+#define NITEM_SHOPPING_PARAM_PRICE  (2)
+
+#define NITEM_GPRESENT_PARAM_ITEM (0)
+
+#define NPC_TRAINER_PARAM_TRID  (0)
+
+//記憶クイズ出題レンジ
+#define NPC_MEMORY_QUIZ_QUESTION_MIN  (3)   //最小3題
+#define NPC_MEMORY_QUIZ_QUESTION_MAX  (10)  //最大10題
+#define NPC_MEMORY_QUIZ_ANSWER_MAX    (5)   //答え候補数
+
+#ifndef __ASM_NO_DEF_
+
+#include "field/eventdata_local.h"
+#include "field/eventdata_type.h"
+
+//フェスミッションNPCギミックフラグ
 typedef struct _FES_GIMMICK_NPC_FLAG{
   u16 zone_id;
   u8  flag[FES_GIMMICK_NPC_POINT_MAX];
 }FES_GIMMICK_NPC_FLAG;
 
-//フェスミッションアイテムギミックフラグ領域
+//フェスミッションNPCギミックフラグ領域
 typedef struct _FES_GIMMICK_NPC_FLAG_WORK{
   int tbl_num;
   FES_GIMMICK_NPC_FLAG tbl[FES_GIMMICK_NPC_FLAG_WORK_NUM];
 }FES_GIMMICK_NPC_FLAG_WORK;
+
+//フェスミッションNPCギミック 記憶クイズ用ワーク領域
+typedef struct _FES_GIMMICK_NPC_MEMORY_QUIZ_WORK{
+  u8  q_num;  //出題数
+  u8  question_idx; //出題No
+  u8  answer_idx; //正解index
+
+  u16 q_poke[NPC_MEMORY_QUIZ_QUESTION_MAX];  //出題ポケモンリスト
+  u16 a_poke[NPC_MEMORY_QUIZ_ANSWER_MAX];    //回答ポケモンリスト
+}FES_GIMMICK_NPC_MEMORY_QUIZ_WORK;
 
 //フェスアイテムミッションギミックワーク
 typedef struct _FES_GIMMICK_NPC_WORK{
@@ -45,7 +78,7 @@ typedef struct _FES_GIMMICK_NPC_WORK{
   u8  point_max; ///<抽選ポイント数
   BG_TALK_DATA  data[FES_GIMMICK_NPC_DATA_MAX];  ///<ポジション候補データテーブル
   u8  idx[FES_GIMMICK_NPC_POINT_MAX];  ///<抽選されたデータの参照indexテーブル
-  u16 item[FES_GIMMICK_NPC_POINT_MAX]; ///<抽選されたアイテムテーブル
+  u16 param[FES_GIMMICK_NPC_POINT_MAX][FES_GIMMICK_NPC_POINT_PARAM_MAX]; ///<抽選されたパラメータテーブル
   MMDL* mmdl_tbl[FES_GIMMICK_NPC_POINT_MAX];
 
   //取得済みログデータバッファへのポインタ
@@ -55,6 +88,7 @@ typedef struct _FES_GIMMICK_NPC_WORK{
 
 //NOTWIFI
 extern void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gsys, LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, u16 zone_id );
+extern u8 FES_GIMMICK_NPC_SUB_GetObjType( const FEST_MISSION* fmwk );
 extern u16 FES_GIMMICK_NPC_SUB_GetObjCode( FES_GIMMICK_NPC_WORK* wk, const FEST_MISSION* fmwk );
 extern FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_WORK* wk, u16 zone_id );
 
@@ -62,9 +96,13 @@ extern FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_W
 extern void FES_GIMMICK_NPC_MMdlSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16 zone_id, u16 idx );
-extern void FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
+extern BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 
-extern GMEVENT* FES_GIMMICK_NPC_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32* cp_pos );
-extern GMEVENT* FES_GIMMICK_NPC_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LOCATION* cp_location );
-extern BOOL FES_GIMMICK_NPC_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32 height );
+extern void FES_GIMMICK_NPC_TradeItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16 my_rank, u16 npc_rank, u16* my_item, u16* npc_item );
+extern void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item, u16* price );
+extern void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk,u16* q_num, u16* q_idx, u16* a_idx );
+extern u16 FES_GIMMICK_NPC_MemoryQuizParamGetQuestionPoke( FES_GIMMICK* sys_wk, u8 idx );
+extern u16 FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( FES_GIMMICK* sys_wk, u8 idx );
+
+#endif //__ASM_NO_DEF_
 

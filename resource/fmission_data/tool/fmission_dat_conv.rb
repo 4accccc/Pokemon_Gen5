@@ -260,6 +260,10 @@ class CDefList
         end
       end
       
+      if prev == 0 then
+        file.puts("#endif //__ASM_NO_DEF_\n\n")
+      end
+      
       file.puts("\n\n#endif //__H_FMISSION_DATA_DEF_H__\n\n");
     }
   end

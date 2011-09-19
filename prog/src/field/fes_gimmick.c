@@ -48,68 +48,15 @@
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_local.h"
 
+FS_EXTERN_OVERLAY( field_fes_gimmick_item );
+FS_EXTERN_OVERLAY( field_fes_gimmick_npc );
 
 //======================================================================
 //======================================================================
-#define FES_GIMMICK_ITEM_MAX (5)
-
-#define ZONE_ERROR  (0xFFFF)
-
-typedef struct _FMISSION_ITEM_POS{
-  u16 x,y,z;
-}FMISSION_ITEM_POS;
-
-typedef struct _FES_GIMMICK_DATA{
-  u16  num;
-  u16  zone_id;
-  FMISSION_ITEM_POS pos[FES_GIMMICK_ITEM_MAX];
-}FES_GIMMICK_DATA;
-
-//@todo いずれ外部ファイル化する
-static const u16 DATA_FMissionGimmickZone[FES_GIMMICK_DATA_MAX] = {
-  ZONE_ID_C01,
-  ZONE_ID_R03,
-  ZONE_ID_C02,
-};
-
-//@todo いずれ外部ファイル化する
-static const FES_GIMMICK_DATA  DATA_FMissionGimmickData[FES_GIMMICK_DATA_MAX] = {
-  { 5, ZONE_ID_C01,
-    {
-      { 746, 0, 600 },
-      { 769, 0, 603 },
-      { 795, 0, 600 },
-      { 774, 0, 603 },
-      { 771, 0, 587 },
-    },
-  },
-  { 5, ZONE_ID_R03,
-    {
-      { 759, 0, 563 },
-      { 711, 0, 557 },
-      { 698, 0, 558 },
-      { 681, 0, 582 },
-      { 691, 0, 600 },
-    },
-  },
-  { 5, ZONE_ID_C02,
-    {
-      { 653, 0, 581 },
-      { 633, 0, 583 },
-      { 608, 0, 598 },
-      { 617, 0, 583 },
-      { 648, 0, 582 },
-    },
-  },
-};
-
+static void sub_OverlayLoadUnload( const FEST_MISSION* fmwk, BOOL load_f );
 static void mission_init_mushroom_enc( FES_GIMMICK* wk );
 
 static u16 sub_GetZoneIdx( u16 zone_id );
-
-static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, GAMESYS_WORK* gsys, u16 zone_id );
-static const FES_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapID );
-static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FES_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys );
 
 //======================================================================
 //======================================================================
@@ -142,6 +89,7 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
       wk->railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
     }
   }
+  sub_OverlayLoadUnload( wk->fmwk, TRUE );
   return wk;
 }
 
@@ -152,8 +100,36 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
 //----------------------------------------------------------------------
 void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk )
 {
+  sub_OverlayLoadUnload( wk->fmwk, FALSE );
+
   MI_CpuClear8( wk, sizeof(FES_GIMMICK));
   GFL_HEAP_FreeMemory( wk );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションタイプごとにオーバーレイロード&アンロード
+ */
+//---------------------------------------------------------
+static void sub_OverlayLoadUnload( const FEST_MISSION* fmwk, BOOL load_f )
+{
+  FSOverlayID ol_field;
+
+  switch( fmwk->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    ol_field = FS_OVERLAY_ID( field_fes_gimmick_item );
+    break;
+  case FMISSION_TYPE_NPC:
+    ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
+    break;
+  default:
+    return;
+  }
+  if( load_f ){
+    GFL_OVERLAY_Load( ol_field );
+  }else{
+    GFL_OVERLAY_Unload( ol_field );
+  }
 }
 
 //----------------------------------------------------------------------
@@ -246,10 +222,13 @@ void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return;
   }
-  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
-    FES_GIMMICK_ITEM_FieldRecoverSetup( wk );
-  }else if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
+  switch( wk->fmwk->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    FES_GIMMICK_ITEM_FieldRecoverSetup( wk, wk->wk_buf );
+    break;
+  case FMISSION_TYPE_NPC:
     FES_GIMMICK_NPC_FieldRecoverSetup( wk, wk->wk_buf );
+    break;
   }
 }
 
@@ -258,13 +237,17 @@ void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
  *  @brief  フェスミッションギミック 削除　
  */
 //----------------------------------------------------------------------
-void FES_GIMMICK_Delete( FES_GIMMICK* wk )
+BOOL FES_GIMMICK_Delete( FES_GIMMICK* wk )
 {
   void* gmk_wk = LINK_FESTIVAL_GetMissionGimmickWork( wk->fest_sys );
 
-  if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
-    FES_GIMMICK_NPC_Delete( wk, (FES_GIMMICK_NPC_WORK*)gmk_wk );
+  switch( wk->fmwk->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    return FES_GIMMICK_ITEM_Delete( wk, (FES_GIMMICK_ITEM_WORK*)gmk_wk );
+  case FMISSION_TYPE_NPC:
+    return FES_GIMMICK_NPC_Delete( wk, (FES_GIMMICK_NPC_WORK*)gmk_wk );
   }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------
@@ -341,99 +324,21 @@ void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx )
   }
 }
 
-//======================================================================
-//======================================================================
-#if 0
 //----------------------------------------------------------------------
 /*
- *  @brief  ゾーンキー取得
- */
-//----------------------------------------------------------------------
-static u16 sub_GetZoneIdx( u16 zone_id )
-{
-  int i;
-
-  for( i = 0;i < FES_GIMMICK_DATA_MAX;i++){
-    if( DATA_FMissionGimmickZone[i] == zone_id ){
-      return i;
-    }
-  }
-  return ZONE_ERROR;
-}
-
-
-//----------------------------------------------------------------------
-/*
- *  @brief  アイテムボール配置
- */
-//----------------------------------------------------------------------
-static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, GAMESYS_WORK* gsys, u16 zone_id )
-{
-  GFL_STD_RandContext rnd_c;
-  GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
-  const FES_GIMMICK_DATA* dat = itemball_AllocZoneData( zone_id, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
-
-  if( dat == NULL){
-    return;
-  }
-  IWASAWA_Printf("FMissionGimmick key=%d\n", fmwk->beacon.key );
-
-  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, zone_id, &rnd_c );
-  itemball_MMdlSet( fest_sys, &rnd_c, dat, zone_id, GAMEDATA_GetMMdlSys( gdata ));
-}
-
-//----------------------------------------------------------------------
-/*
- *  @brief  アイテムボール配置データ取得
+ *  @brief  フェスミッションギミック　OBJタイプ取得(NPCミッション専用)
  *
- *  @retval NULL 該当データがない
+ *  NPCミッション以外で呼び出すと、必ず0が返ります
  */
 //----------------------------------------------------------------------
-static const FES_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapID )
+u8 FES_GIMMICK_ObjTypeGetForNpcMission( FES_GIMMICK* wk )
 {
-  u16 zone_idx = sub_GetZoneIdx( zone_id );
-
-  if( zone_idx != ZONE_ERROR ){
-    return &DATA_FMissionGimmickData[zone_idx];
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return 0;
   }
-  return NULL;
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
+    return FES_GIMMICK_NPC_SUB_GetObjType( wk->fmwk );
+  }
+  return 0;
 }
-
-//----------------------------------------------------------------------
-/*
- *  @brief  アイテムボール配置
- *
- *  @retval NULL 該当データがない
- */
-//----------------------------------------------------------------------
-static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FES_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys )
-{
-  int i, max, rnd;
-  u32 tbl[FES_GIMMICK_ITEM_MAX]; 
-  MMDL* mmdl;
-  u16 zone_idx = sub_GetZoneIdx( zone_id );
- 
-  if( dat->num < FES_GIMMICK_MAX ){
-    max = dat->num;
-  }else{
-    max = FES_GIMMICK_MAX;
-  }
-  for( i = 0;i < max;i++){
-    tbl[i] = FES_GIMMICK_SUB_RndGet( rnd_c, dat->num, tbl, i );
-    rnd = GFL_STD_Rand0( rnd_c, 4);
-
-#if 0
-    if(LINK_FESTIVAL_MissionFlagCheck( fest_sys, zone_idx, i )){
-      continue;
-    }
-#endif
-    mmdl = MMDLSYS_AddMMdlParam( mmdlsys, dat->pos[tbl[i]].x, dat->pos[tbl[i]].z,
-            DIR_DOWN, MMDL_ID_FMISSION_OBJ_01+i, FESITEM, MV_DMY, zone_id );
-    MMDL_SetEventID( mmdl, SCRID_FMISSION_ITEM_GET );
-    MMDL_SetParam( mmdl, rnd, MMDL_PARAM_0 );
-    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );  //セーブ対象にしない
-  }
-}
-
-#endif
 

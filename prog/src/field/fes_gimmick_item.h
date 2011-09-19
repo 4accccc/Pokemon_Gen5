@@ -56,8 +56,8 @@ typedef struct _FES_GIMMICK_ITEM_WORK{
 extern void FES_GIMMICK_ITEM_ZoneChangeSetup( FES_GIMMICK_ITEM_WORK* wk, GAMESYS_WORK* gsys, LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, u16 zone_id );
 
 //FIELDMAP
-extern void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk );
-extern void FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk );
+extern void FES_GIMMICK_ITEM_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk );
+extern BOOL FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk );
 
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32* cp_pos );
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LOCATION* cp_location );

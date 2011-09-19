@@ -27,8 +27,6 @@
 
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_item );
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_npc );
-FS_EXTERN_OVERLAY( field_fes_gimmick_item );
-FS_EXTERN_OVERLAY( field_fes_gimmick_npc );
 
 //==============================================================================
 //  \‘¢‘Ì’è‹`
@@ -870,25 +868,21 @@ void LINKFEST_LOG_TOP_SCORE_Delete( LINKFEST_LOG_TOP_SCORE* tsp )
 //---------------------------------------------------------
 static void lnkfes_OverlayLoadUnload( const FEST_MISSION* m_src, BOOL load_f )
 {
-  FSOverlayID ol_nw,ol_field;
+  FSOverlayID ol_nw;
 
   switch( m_src->arc.m_type ){
   case FMISSION_TYPE_ITEM:
     ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_item );
-    ol_field = FS_OVERLAY_ID( field_fes_gimmick_item );
     break;
   case FMISSION_TYPE_NPC:
     ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_npc );
-    ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
     break;
   default:
     return;
   }
   if( load_f ){
     GFL_OVERLAY_Load( ol_nw );
-    GFL_OVERLAY_Load( ol_field );
   }else{
-    GFL_OVERLAY_Unload( ol_field );
     GFL_OVERLAY_Unload( ol_nw );
   }
 }

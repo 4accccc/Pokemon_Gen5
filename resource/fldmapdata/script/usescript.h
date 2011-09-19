@@ -161,6 +161,7 @@
 
 //フェスミッションログアクションID
 #include "../../../prog/include/gamesystem/fmission_log_id.h"
+#include "../../../prog/src/field/fes_gimmick_npc.h"
 
 //======================================================================
 //  共通メッセージ関連

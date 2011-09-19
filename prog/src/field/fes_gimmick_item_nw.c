@@ -51,7 +51,8 @@
 #include "field/fes_gimmick_item.h"
 #include "field/fes_gimmick_local.h"
 
-#define FES_ITEM_PARAM_NUM (4) //1セット4アイテム
+#include "field/fes_gimmick_item_dat.h"
+
 #define LOT_ITEM_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
 
 typedef struct _FES_ITEM_PARAM{
@@ -60,7 +61,7 @@ typedef struct _FES_ITEM_PARAM{
 }FES_ITEM_PARAM;
 
 typedef struct _FES_ITEM_SET{
-  FES_ITEM_PARAM prm[FES_ITEM_PARAM_NUM];
+  FES_ITEM_PARAM prm[FES_KIRA_ITEM_PARAM_NUM];
 }FES_ITEM_SET;
 
 //抽選数の下限と上限
@@ -72,22 +73,7 @@ static const u8 DATA_LotTargetNum[][2] = {
 #define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
 
 //抽選アイテムセットテーブル
-static const FES_ITEM_SET DATA_ItemSetTbl[FMISSION_ITEM_SET_MAX] = {
-  { { {ITEM_AKAIKAKERA, 25}, {ITEM_AOIKAKERA, 25}, {ITEM_MIDORINOKAKERA, 25}, {ITEM_KIIROIKAKERA, 25} } },
-  { { {ITEM_GENKINOKAKERA, 30}, {ITEM_HOSINOKAKERA, 30}, {ITEM_KAWARAZUNOISI, 30}, {ITEM_KINNOTAMA, 10 } } },
-  { { {ITEM_MUSIYOKESUPUREE, 30}, {ITEM_ANANUKENOHIMO, 30}, {ITEM_MONSUTAABOORU, 30}, {ITEM_PUREMIABOORU, 10 } } },
-  { { {ITEM_ANANUKENOHIMO, 40}, {ITEM_KIZUGUSURI, 40}, {ITEM_SIRUBAASUPUREE, 15}, {ITEM_HUTANOKASEKI, 5} } },
-  { { {ITEM_ANANUKENOHIMO, 40}, {ITEM_KIZUGUSURI, 40}, {ITEM_SIRUBAASUPUREE, 15}, {ITEM_HANENOKASEKI, 5} } },
-  { { {ITEM_MOMONNOMI, 25}, {ITEM_KURABONOMI, 25}, {ITEM_KAGONOMI, 25}, {ITEM_ORENNOMI, 25} } },
-  { { {ITEM_KIINOMI, 30}, { ITEM_NANASINOMI, 30 }, {ITEM_TIIGONOMI, 30}, {ITEM_OBONNOMI, 10} } },
-  { { {ITEM_HONOONOISI, 30}, { ITEM_MIZUNOISI, 30 }, {ITEM_RIIHUNOISI, 30}, {ITEM_YAMINOISI, 10} } },
-  { { {ITEM_HONOONOISI, 30}, { ITEM_MIZUNOISI, 30 }, {ITEM_RIIHUNOISI, 30}, {ITEM_HIKARINOISI, 10} } },
-  { { {ITEM_TIKARANOKONA, 30}, { ITEM_TIKARANONEKKO, 30 }, {ITEM_BANNOUGONA, 30}, {ITEM_HUKKATUSOU, 10} } },
-  { { {ITEM_SUKUSUKUKOYASI, 25}, { ITEM_ZIMEZIMEKOYASI, 25 }, {ITEM_NAGANAGAKOYASI, 25}, {ITEM_NEBANEBAKOYASI, 25} } },
-  { { {ITEM_AKAIITO, 30}, { ITEM_AKAIITO, 30 }, {ITEM_AKAIITO, 30}, {ITEM_HAATONOUROKO, 10} } },
-  { { {ITEM_HIMERINOMI, 45}, {ITEM_OBONNOMI, 45}, {ITEM_RAMUNOMI, 9}, {ITEM_NAZONOMI, 1} } },
-  { { {ITEM_TIISANAKINOKO, 60}, { ITEM_SINZYU, 30 }, {ITEM_ODANGOSINZYU, 9}, {ITEM_KODAINOOUKAN, 1} } },
-};
+#include "fes_gimmick_item.cdat"
 
 static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_ITEM_WORK* wk, FEST_MISSION* fmwk, u16 zone_id, GFL_STD_RandContext* rnd_c );
 static u16 sub_LotItem( FES_GIMMICK_ITEM_WORK* wk, FEST_MISSION* fmwk, GFL_STD_RandContext* rnd_c );
@@ -209,7 +195,7 @@ static u16 sub_LotItem( FES_GIMMICK_ITEM_WORK* wk, FEST_MISSION* fmwk, GFL_STD_R
   }
   rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_ITEM_PROB_MAG, NULL, 0 );
 
-  for( i = 0;i < FES_ITEM_PARAM_NUM;i++){
+  for( i = 0;i < FES_KIRA_ITEM_PARAM_NUM;i++){
     level += ps->prm[i].prob*LOT_ITEM_PROB_MAG;
 
     if( rnd < level ){
