@@ -165,34 +165,6 @@ VMCMD_RESULT EvCmdInfinityDungeonFloorMove( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ダンジョンのステータス取得
- *
- *	@param	*core
- *	@param	*wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdInfinityDungeonGetStatus( VMHANDLE *p_core, void *p_wk_adrs )
-{
-  INFINITYDUNGEON_SAVE  *p_save;
-  SCRCMD_WORK *p_wk = p_wk_adrs;
-  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
-  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
-  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
-  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
-   
-  // WFBCの状態を調べる
-  FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_gamedata );
-
-  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  *p_ret_wk = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  ダンジョンのステータス設定
  *
  *	@param	*p_core

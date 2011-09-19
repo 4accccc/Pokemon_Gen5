@@ -5154,7 +5154,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_debug_onoue_01">
+		Label="msg_debug_onoue_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>最も獲得率の高いメダルカテゴリ</Text>
@@ -5179,7 +5180,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_debug_onoue_02">
+		Label="msg_debug_onoue_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>メダル獲得済み確認(ID:1)</Text>
@@ -5204,7 +5206,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_debug_onoue_03">
+		Label="msg_debug_onoue_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>歩数カウント監視開始</Text>
@@ -5229,7 +5232,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_debug_onoue_04">
+		Label="msg_debug_onoue_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>歩数カウント監視終了</Text>
@@ -5254,7 +5258,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_debug_onoue_05">
+		Label="msg_debug_onoue_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>歩数カウント取得</Text>
@@ -5276,6 +5281,58 @@
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
 				Time="2011-07-24T06:23:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>全捕獲チェック 草地、海、釣り</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:10:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全捕獲チェック 草地、海、釣り</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:11" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>無限ダンジョンステータス</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>無限ダンジョンステータス</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-09-19T06:11:34" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

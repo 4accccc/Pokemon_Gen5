@@ -1106,8 +1106,12 @@
   NO_CMD()
   NO_CMD()
 
-  //生息地リスト
+  //生息地リスト常駐
   DEF_CMD( EvCmdCheckZonePokeGetComplete,       EV_SEQ_ZONE_POKE_ALL_GET )
+  NO_CMD()
+  
+  //無限ダンジョン常駐
+  DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
   NO_CMD()
 
   END_CMD

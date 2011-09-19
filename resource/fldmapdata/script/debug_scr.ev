@@ -1361,7 +1361,8 @@ EVENT_START ev_debug_onoue
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_03,   2 ) // メダル獲得済み確認
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_04,   3 ) // メダル獲得済み確認
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_05,   4 ) // メダル獲得済み確認
-	_BMPMENU_MAKE_LIST( msg_debug_onoue_05,   5 ) // 全捕獲
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_06,   5 ) // 全捕獲チェック
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_07,   6 ) // 全捕獲
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1399,6 +1400,12 @@ EVENT_START ev_debug_onoue
     _SC_GET_ZONE_POKE_ALL_GET(ZONE_ID_C12,SCR_HABITAT_TYPE_SEA,RET_WK)
     _DEBUG_PRINT_WK(RET_WK)
     _SC_GET_ZONE_POKE_ALL_GET(ZONE_ID_C12,SCR_HABITAT_TYPE_FISHING,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+  }
+  CASE 6 THEN
+  {
+	  DEFINE_LOCAL RET_WK
+    _INFINITY_DUNGEON_GET_DUNGEON_STATUS(RET_WK)
     _DEBUG_PRINT_WK(RET_WK)
   }
   ENDSWITCH

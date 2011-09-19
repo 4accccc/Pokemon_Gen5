@@ -17,7 +17,7 @@
   //–³ŒÀƒ_ƒ“ƒWƒ‡ƒ“
   DEF_CMD( EvCmdInfinityDungeonStart, EV_SEQ_INFINITY_DUNGEON_START )
   DEF_CMD( EvCmdInfinityDungeonWarp, EV_SEQ_INFINITY_DUNGEON_WARP )
-  DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
+  NO_CMD()
   DEF_CMD( EvCmdInfinityDungeonResetSeed, EV_SEQ_INFINITY_DUNGEON_INIT_SEED )
   DEF_CMD( EvCmdInfinityDungeonGetFloorNo, EV_SEQ_INFINITY_DUNGEON_GET_FLOOR_NO )
   DEF_CMD( EvCmdInfinityDungeonFloorMove, EV_SEQ_INFINITY_DUNGEON_MOVE_FLOOR )

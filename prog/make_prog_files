@@ -918,7 +918,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_ochiba.c \
         field/event_move_hilink.c \
         field/wbt_system_st.c \
-        field/scrcmd_habitat_info.c
+        field/scrcmd_habitat_info.c \
+        field/scrcmd_infinity_dungeon_field.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP

@@ -117,6 +117,7 @@
 #include "scrcmd_resort_st.h"
 #include "scrcmd_pokewood_st.h"
 #include "scrcmd_habitat_info.h"
+#include "scrcmd_infinity_dungeon_field.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
