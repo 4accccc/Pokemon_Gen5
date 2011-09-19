@@ -211,3 +211,4 @@
 "nsbmdfiles/ja_public22.nsbmd"
 "nsbmdfiles/ja_public23.nsbmd"
 "nsbmdfiles/ja_public24.nsbmd"
+"nsbmdfiles/p_gun02.nsbmd"

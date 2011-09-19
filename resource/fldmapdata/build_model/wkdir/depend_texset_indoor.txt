@@ -3653,7 +3653,8 @@ DEP_TEXSET_IMD_INDOOR077 = \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/p_gun01.imd
+	$(SRCDIR)/p_gun01.imd \
+	$(SRCDIR)/p_gun02.imd
 
 texset/indoor077.imd: $(DEP_TEXSET_IMD_INDOOR077) texset/tmp/indoor077.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor077.list

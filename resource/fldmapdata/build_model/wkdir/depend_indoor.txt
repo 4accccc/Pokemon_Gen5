@@ -212,4 +212,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/ja_public22.nsbmd \
 	$(RESDIR)/ja_public23.nsbmd \
 	$(RESDIR)/ja_public24.nsbmd \
+	$(RESDIR)/p_gun02.nsbmd \
 
