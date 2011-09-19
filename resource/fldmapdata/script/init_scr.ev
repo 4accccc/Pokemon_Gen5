@@ -75,6 +75,9 @@ init_flags:
 	//c12r0101のベルとママを非表示
 	_FLAG_SET(FV_C12R0101_SWMAMA)
 	_FLAG_SET(FV_C12R0101_SWBELL)
+	
+	//c12r0202：レパルダス非表示
+  _FLAG_SET( FV_C12R0202_POKE32_01 )
 
   //C03P09 ヒウンアイスイベントの行列非表示
   _FLAG_SET( FV_C03P09_PEOPLE_01 )
@@ -515,7 +518,9 @@ ev_first_gameclear:
   _FLAG_RESET( FV_C12_SWRIVAL )
   _FLAG_RESET( FV_C12_SWRIVAL_SISTER )
   $WK_SCENE_SPPOKE_EVENT_01 = 1
-
+  //c12r0202：レパルダス表示
+  _FLAG_RESET( FV_C12R0202_POKE32_01 )
+  
   //D33:心の空洞にアララギ娘を表示
   _FLAG_RESET( FV_D33R0101_HAKASE2_01 )
 
@@ -524,6 +529,9 @@ ev_first_gameclear:
 
   //C03R0502:盗まれていたズルッグが帰ってくる
   _FLAG_RESET( FV_C03R0502_POKE38_01 )
+  
+  //C12R0101：全国ずかんイベント起動
+  $WK_SCENE_C12R0101 = 2
 
 _RET
 

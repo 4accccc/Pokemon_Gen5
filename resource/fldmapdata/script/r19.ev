@@ -178,7 +178,10 @@ EVENT_START   ev_pos_r19_pokeget_01
 	_FLAG_SET( FV_C12_SWRIVAL_SISTER )
 	_FLAG_SET( FV_C12_SWMAMA )
 	
-	//【仮】C12ライバル宅の妹を表示
+	//C12R0101ママを表示
+	_FLAG_RESET( FV_C12R0101_SWMAMA )
+	//C12R0202ライバル宅の妹を表示
+	_FLAG_RESET( FV_C12R0202_RIVALSISTER_01 )
 
   //==================================//
   

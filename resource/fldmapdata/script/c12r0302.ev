@@ -11,7 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_c12r0302.h"
   .include  "c12r0302.h"
-
+  .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
   //@author fujimura_souichirou
 
 //--------------------------------------------------------------

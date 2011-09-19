@@ -304,8 +304,8 @@ ev_leader1_btl:
     
    //C12のベル表示
    _FLAG_RESET( FV_C12_SWBELL )
-   //C12R0101のベル表示
-   _FLAG_RESET( FV_C12R0101_SWBELL )
+   //C12R0101のベル非表示
+   _FLAG_SET( FV_C12R0101_SWBELL )
     
    //========================================//
    

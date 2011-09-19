@@ -27,5 +27,7 @@
 #define BG_C12R0101_BED_02                2
 #define BG_C12R0101_WII_01                3
 #define BG_C12R0101_BED_03                4
+#define BG_C12R0101_SOUVENIR_01           5
+#define BG_C12R0101_SOUVENIR_02           6
 
 #endif //ZONE_C12R0101_EVB_H

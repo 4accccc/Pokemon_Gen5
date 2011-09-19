@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/11 14:40:02
+#save date:2011/09/19 13:20:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #ID name
 C12_SWRIVAL_01
 #OBJ CODE Number
-BOSS
+SWRIVAL
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -581,7 +581,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-13
+9
 #event number: 0
 #Pos Event Label
 POS_C12_RIVAL_PAIR_01
@@ -719,74 +719,6 @@ EVENTDATA_POSTYPE_GRID
 #size
 1 1
 #event number: 8
-#Pos Event Label
-POS_C12_NG_04
-#Pos Script Name
-SCRID_POS_C12_NG_04
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C12_WHITE_MEET
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 16 -680
-#size
-1 1
-#event number: 9
-#Pos Event Label
-POS_C12_NG_05
-#Pos Script Name
-SCRID_POS_C12_NG_05
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C12_WHITE_MEET
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--152 16 -680
-#size
-1 1
-#event number: 10
-#Pos Event Label
-POS_C12_NG_06
-#Pos Script Name
-SCRID_POS_C12_NG_06
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C12_WHITE_MEET
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 16 -504
-#size
-1 1
-#event number: 11
-#Pos Event Label
-POS_C12_NG_07
-#Pos Script Name
-SCRID_POS_C12_NG_07
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C12_WHITE_MEET
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-184 16 -72
-#size
-1 1
-#event number: 12
 #Pos Event Label
 POS_C12_NG_03
 #Pos Script Name

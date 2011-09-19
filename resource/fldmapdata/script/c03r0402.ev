@@ -164,7 +164,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c03r0402_man1_01
 
-  //【仮】クリア前のメッセージラベルが仮
 
   //クリア前の場合
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	
@@ -181,13 +180,13 @@ EVENT_START   ev_c03r0402_man1_01
       _TALK_OBJ_START()
 
       //男性：おっ　つよくなったね！
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_01 )
       _YES_NO_WIN( SCWK_ANSWER )
 
       IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
         //男性：じゃあ　はじめるよー！
-        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_06 )
         _MSGWIN_CLOSE()
 
         _TRAINER_BTL_SET( TRID_VETERANM_1_09, 0 )
@@ -207,7 +206,7 @@ EVENT_START   ev_c03r0402_man1_01
       ELSE    //いいえ
 
         //男性：いいえ　かー
-        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_05 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_07 )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
@@ -273,7 +272,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c03r0402_middleman2_01
 
-  //【仮】クリア後のメッセージラベルが仮
   
   //クリア前の場合
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	

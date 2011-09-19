@@ -11,7 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_c12r0202.h"
   .include  "c12r0202.h"
-
+  .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
   //@author fujimura_souichirou
 
 //--------------------------------------------------------------
@@ -23,6 +25,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c12r0202
 _EVENT_DATA    ev_c12r0202_rivalsister_01
+_EVENT_DATA    ev_c12r0202_poke32_01
+_EVENT_DATA    ev_bg_c12r0202_map_01
 _EVENT_DATA_END
 
 //先頭のポケモン名取得
@@ -62,50 +66,73 @@ EVENT_START   ev_c12r0202_rivalsister_01
   _PLAYER_NAME( 0 )
   //先頭ポケモンの名前を取得
   _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
+  
+  //殿堂入り回数を取得
+  _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
 
-  _TALK_OBJ_START()
+
 
   //ポケモン入手後から、ヒオウギジムクリアまで
   IF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 
-    //ライバル妹：あ、主人公さん！
-    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    //ライバル妹：あ、主人公さん！   
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
 
   //タウンマップをライバルに渡すまで
   ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 
     //ライバル妹：
-    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
 
-    _DEBUG_PRINT_WK( 0 )  //【仮】デバッグ用：ワーク値の出力
-
-  //タウンマップをライバルに渡してからクリアまで
-  //ELSIF $WK_SCENE_D22R0101 >= 1 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
-  //ジムクリアからクリアまで
+    _DEBUG_PRINT_WK( 0 ) 
+    
   ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
     //ライバル妹：
-    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
     _DEBUG_PRINT_WK( 1 )  //【仮】デバッグ用：ワーク値の出力
 
   //クリア後
-  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 < 10 THEN
 
     //ライバル妹：
-    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
 
     _DEBUG_PRINT_WK( 2 )  //【仮】デバッグ用：ワーク値の出力
-
+  
+  //殿堂入り10回後
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
+    
+    _DEBUG_PRINT_WK( 3 )  //【仮】デバッグ用：ワーク値の出力
   ENDIF
 
 EVENT_END
 
+/**************************************************************/
+/*  レパルダス：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c12r0202_poke32_01
+  
+  //殿堂入り回数を取得
+  _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
+  
+  //殿堂入り10回超え
+  IF $LOCALWORK15 > 10 THEN
+    _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_02 )
+  //条件未達成
+  ELSE
+    _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_01 )
+  ENDIF
+  
+EVENT_END
 
+/**************************************************************/
+/*  BG：地図                                        */
+/**************************************************************/
+EVENT_START   ev_bg_c12r0202_map_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c12r0202_map_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END

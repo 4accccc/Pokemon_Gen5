@@ -47,10 +47,6 @@ _EVENT_DATA    ev_pos_c12_rival_pair_return_01
 _EVENT_DATA    ev_pos_c12_ng_01
 _EVENT_DATA    ev_pos_c12_ng_02
 _EVENT_DATA    ev_pos_c12_ng_03
-_EVENT_DATA    ev_pos_c12_ng_04
-_EVENT_DATA    ev_pos_c12_ng_05
-_EVENT_DATA    ev_pos_c12_ng_06
-_EVENT_DATA    ev_pos_c12_ng_07
 _EVENT_DATA    ev_pos_c12_rival_pair_01_guide
 _EVENT_DATA    ev_scene_c12_gymclear_01
 _EVENT_DATA    ev_c12_swleader1_01
@@ -86,7 +82,7 @@ INIT_EVENT_START ev_init_c12
   
   //【仮】ライバルの位置を移動
   ELSIF $WK_SCENE_C12_WHITE_MEET == 1 THEN
-    _OBJ_POS_CHANGE( C12_SWRIVAL_01, 37, 8, 717, DIR_UP )
+    //_OBJ_POS_CHANGE( C12_SWRIVAL_01, 37, 8, 717, DIR_UP )
    //ポケセン案内後ならベルの位置を移動
    ELSIF $WK_SCENE_C12_WHITE_MEET == 5 THEN
     _OBJ_POS_CHANGE( C12_SWBELL_01, 47, 1, 740, DIR_DOWN )
@@ -866,6 +862,10 @@ EVENT_START		ev_scene_c12_townmap_01
 	
 	//C12のベルを非表示
 	_FLAG_SET( FV_C12_SWBELL )
+	//C12R0101ママを非表示
+	_FLAG_SET( FV_C12R0101_SWMAMA )
+	//C12R0202妹を非表示
+	_FLAG_SET( FV_C12R0202_RIVALSISTER_01 )
 
 	//==================================//
 EVENT_END
@@ -1077,8 +1077,8 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
-  //【仮】連れ歩き開始
-  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_C12_SWRIVAL, PAIR_TYPE_ONE_ZONE, TRID_RIVAL_07, SCRID_C12_RIVAL_PAIR_01 )
+  //連れ歩き開始
+  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_C12_SWRIVAL, PAIR_TYPE_FREE_ZONE, 0, SCRID_C12_SWRIVAL )
   
   //========================================//
   //POSイベント無効
@@ -1086,6 +1086,8 @@ EVENT_START ev_pos_c12_rival_pair_01
   
   //ライバル妹を非表示
   _FLAG_SET(FV_C12_SWRIVAL_SISTER)
+  //ライバルを非表示
+  _FLAG_SET(FV_C12_SWRIVAL)
   //========================================//
 
 }
@@ -1102,18 +1104,31 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
+  //========================================//
+  //ライバルを表示
+  _FLAG_RESET(FV_C12_SWRIVAL)
+  //========================================//
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( C12_SWRIVAL_01 )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _OBJ_POS_CHANGE( C12_SWRIVAL_01, LCW_POSX, 9, 715, DIR_UP )
+  
   //連れ歩き解除
   _PAIR_TRAINER_FREE( SCRID_C12_SWRIVAL_01, MV_DMY )
   
+  //連れ歩き動作モデル削除
+  _OBJ_DEL( PAIR_TRAINER_01 )
+  
   //アニメ：定位置に行く
-  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NOT, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
-
-  
   //========================================//
   //POSイベント無効
   $WK_SCENE_C12_WHITE_MEET = 2
@@ -1206,85 +1221,6 @@ EVENT_START ev_pos_c12_ng_03
 
 EVENT_END
 
-/**************************************************************/
-/*  C12：POS：主人公の家NG                         */
-/**************************************************************/
-EVENT_START ev_pos_c12_ng_04
-  
-  //振り向き処理
-  _CALL ev_c12_rival_ng_return01
-  
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-  
-  //ライバル：ちがうよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng04,PAIR_TRAINER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //戻り処理
-  _CALL ev_c12_rival_ng_return02
-
-EVENT_END
-
-/**************************************************************/
-/*  C12：POS：ライバルの家NG                         */
-/**************************************************************/
-EVENT_START ev_pos_c12_ng_05
-  
-  //振り向き処理
-  _CALL ev_c12_rival_ng_return01
-  
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-  
-  //ライバル：ちがうよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng05,PAIR_TRAINER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //戻り処理
-  _CALL ev_c12_rival_ng_return02
-
-EVENT_END
-
-/**************************************************************/
-/*  C12：POS：民家r0301NG                         */
-/**************************************************************/
-EVENT_START ev_pos_c12_ng_06
-  
-  //振り向き処理
-  _CALL ev_c12_rival_ng_return01
-  
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-  
-  //ライバル：ちがうよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng06,PAIR_TRAINER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //戻り処理
-  _CALL ev_c12_rival_ng_return02
-
-EVENT_END
-
-/**************************************************************/
-/*  C12：POS：民家r0401NG                         */
-/**************************************************************/
-EVENT_START ev_pos_c12_ng_07
-  
-  //振り向き処理
-  _CALL ev_c12_rival_ng_return01
-  
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-  
-  //ライバル：ちがうよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng07,PAIR_TRAINER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //戻り処理
-  _CALL ev_c12_rival_ng_return02
-
-EVENT_END
 
 //★C12連れ歩きストッパー振り向き処理
 ev_c12_rival_ng_return01:

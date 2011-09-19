@@ -10,11 +10,13 @@
 #define ZONE_C12R0202_EVC_H
 
 #define C12R0202_RIVALSISTER_01            0
+#define C12R0202_POKE32_01                 1
 
 #endif //ZONE_C12R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C12R0202_EVB_H
 #define ZONE_C12R0202_EVB_H
 
+#define BG_C12R0202_MAP_01                0
 
 #endif //ZONE_C12R0202_EVB_H

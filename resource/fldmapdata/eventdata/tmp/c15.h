@@ -11,7 +11,26 @@
 #ifndef ZONE_C15_EVC_H
 #define ZONE_C15_EVC_H
 
-#define C15_SWRIVAL_01                     0
+#define C15_SUNGLASSES_01                  0
+#define C15_OLDMAN1_01                     1
+#define C15_MIDDLEMAN1_01                  2
+#define C15_POKE30_01                      3
+#define C15_MAN1_01                        4
+#define C15_PWMOJI_01                      5
+#define C15_PWMOJI_02                      6
+#define C15_PWMOJI_03                      7
+#define C15_MAN1_02                        8
+#define C15_ADULTW_01                      9
+#define C15_OLDMAN1_02                    10
+#define C15_CLOWN_01                      11
+#define C15_MIDDLEWOMAN1_01               12
+#define C15_BABYBOY1_01                   13
+#define C15_BADRIDER_01                   14
+#define C15_BABYGIRL1_01                  15
+#define C15_BABYGIRL1_02                  16
+#define C15_MIDDLEMAN1_02                 17
+#define C15_SUNGLASSES_02                 18
+#define C15_MIDDLEWOMAN1_02               19
 
 #endif //ZONE_C15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
