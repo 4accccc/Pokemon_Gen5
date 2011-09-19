@@ -145,7 +145,7 @@
 #define WK_SCENE_D20R0601                16533 /* 0x4095 海底遺跡：１F・壁移動用 */
 #define WK_SCENE_D20R0701                16534 /* 0x4096 海底遺跡：１F・壁移動用 */
 #define WK_SCENE_C05_BTLRIDER            16535 /* 0x4097 ホドモエ：トリプル／ローテバトルイベント用ワーク */
-#define WK_SCENE_T04R0401                16536 /* 0x4098 サザナミタウン：シロナイベント用ワーク */
+#define WK_SCENE_T04R0301                16536 /* 0x4098 サザナミタウン：シロナイベント用ワーク */
 #define WK_SCENE_R07                     16537 /* 0x4099 7番道路：ライブキャスターイベント用ワーク */
 #define WK_SCENE_D06_PAIR                16538 /* 0x409a 電気穴の洞窟　連れ歩きイベント制御 */
 #define WK_SCENE_C04GYM0101_SHOW         16539 /* 0x409b スワンでんきジム：ジム進行状況管理ワーク */
@@ -284,6 +284,7 @@
 #define WK_SCENE_D24_PAIR_START          16672 /* 0x4120 リバースマウンテン：ベル連れ歩きイベント制御ワーク */
 #define WK_SCENE_D24_BELL_COMMENT        16673 /* 0x4121 リバースマウンテン・ヒードラン部屋：POS制御ワーク */
 #define WK_SCENE_C14_PHOTO_01            16674 /* 0x4122 セイガイハシティ：顔だし看板POS制御ワーク */
+#define WK_SCENE_D26_POKE23_01           16675 /* 0x4123 チャンピオンロード：クリア後ゾロアークPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -298,13 +299,13 @@
 #define WK_OTHER_EMPEROR_MONSNUM         16739 /* 0x4163 シリンダーブリッジ暴走族イベント：暴走族のヘッドを倒した時の 戦闘可能な先頭ポケモンのモンスターナンバーを格納 */
 #define WK_OTHER_BSEVENT_ITEM            16740 /* 0x4164 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテムを格納 */
 #define WK_OTHER_BSEVENT_NUM             16741 /* 0x4165 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテム数を格納 */
-#define WK_OTHER_T04R0401_SHIRONA        16742 /* 0x4166 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_BIGFOUR4       16743 /* 0x4167 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
-#define WK_OTHER_T04R0401_BIGFOUR1       16744 /* 0x4168 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
-#define WK_OTHER_T04R0401_LEADER8W       16745 /* 0x4169 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER6        16746 /* 0x416a サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER4        16747 /* 0x416b サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-#define WK_OTHER_T04R0401_LEADER2        16748 /* 0x416c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0301_SHIRONA        16742 /* 0x4166 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0301_BIGFOUR4       16743 /* 0x4167 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+#define WK_OTHER_T04R0301_BIGFOUR1       16744 /* 0x4168 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+		/* not used 16745(0x4169) */
+#define WK_OTHER_T04R0301_SWLEADER6      16746 /* 0x416a サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0301_SWLEADER4      16747 /* 0x416b サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0301_SWLEADER2      16748 /* 0x416c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
 #define WK_OTHER_SPORTS_RND_TR0          16749 /* 0x416d ビッグスタジアムのランダム配置トレーナー１人目 */
 #define WK_OTHER_SPORTS_RND_TR1          16750 /* 0x416e ビッグスタジアムのランダム配置トレーナー２人目 */
 #define WK_OTHER_SPORTS_RND_TR2          16751 /* 0x416f ビッグスタジアムのランダム配置トレーナー３人目 */

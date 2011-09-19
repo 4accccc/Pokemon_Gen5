@@ -9,6 +9,13 @@
 #ifndef ZONE_T04R0301_EVC_H
 #define ZONE_T04R0301_EVC_H
 
+#define T04R0301_BIGFOUR1_01               0
+#define T04R0301_SHIRONA_01                1
+#define T04R0301_BIGFOUR4_01               2
+#define T04R0301_SWLEADER2_01              3
+#define T04R0301_SWLEADER6_01              4
+#define T04R0301_SWLEADER4_01              5
+#define T04R0301_LADY_01                   6
 
 #endif //ZONE_T04R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

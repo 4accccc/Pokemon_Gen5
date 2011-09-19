@@ -441,6 +441,7 @@
 #define FE_R01_ITEMGET_01                  425 /* 0x01a9 1番道路：アイテム入手フラグ */
 #define FE_R06R0101_POKE_GET_01            426 /* 0x01aa 季節研究所：シキジカ入手フラグ */
 #define FE_D24_SWBELL_FIRSTTALK            427 /* 0x01ab リバースマウンテン：初回会話フラグ */
+#define FE_T06R0101_CHAMPION_WIN_01        428 /* 0x01ac サンギタウン：クリア後アデク戦を終えたフラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -532,13 +533,13 @@
 #define FV_T05_RAILFAN                     580 /* 0x0244 カナワタウン：電車前の人々（鉄道ファン） */
 #define FV_T05_WEEKEND                     581 /* 0x0245 カナワタウン：電車前の人々 */
 #define FV_D07R0101_WORKMAN2_02            582 /* 0x0246 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
-#define FV_T04R0401_SHIRONA_01             583 /* 0x0247 サザナミタウン別荘：シロナ */
-#define FV_T04R0401_BIGFOUR4_01            584 /* 0x0248 サザナミタウン別荘：カトレア */
-#define FV_T04R0401_BIGFOUR1_01            585 /* 0x0249 サザナミタウン別荘：シキミ */
-#define FV_T04R0401_LEADER8W_01            586 /* 0x024a サザナミタウン別荘：アイリス */
-#define FV_T04R0401_LEADER6_01             587 /* 0x024b サザナミタウン別荘：フウロ */
-#define FV_T04R0401_LEADER4_01             588 /* 0x024c サザナミタウン別荘：カミツレ */
-#define FV_T04R0401_LEADER2_01             589 /* 0x024d サザナミタウン別荘：アロエ */
+#define FV_T04R0301_SHIRONA_01             583 /* 0x0247 サザナミタウン別荘：シロナ */
+#define FV_T04R0301_BIGFOUR4_01            584 /* 0x0248 サザナミタウン別荘：カトレア */
+#define FV_T04R0301_BIGFOUR1_01            585 /* 0x0249 サザナミタウン別荘：シキミ */
+#define FV_T04R0301_LEDY_01                586 /* 0x024a サザナミタウン別荘：使用人 */
+#define FV_T04R0301_SWLEADER6_01           587 /* 0x024b サザナミタウン別荘：フウロ */
+#define FV_T04R0301_SWLEADER4_01           588 /* 0x024c サザナミタウン別荘：カミツレ */
+#define FV_T04R0301_SWLEADER2_01           589 /* 0x024d サザナミタウン別荘：ホミカ */
 #define FV_D07_STONE_01                    590 /* 0x024e ネジ山：季節対応・冬季岩ストッパー */
 #define FV_C03R1101_ITEM_01                591 /* 0x024f ヒウンビル：ゲーチスイベント後のアイテムボール */
 		/* not used   592(0x0250) */
@@ -814,6 +815,9 @@
 #define FV_D06R0101_WORKMAN2_01            862 /* 0x035e 電気石の洞穴：ストッパー */
 #define FV_PKWD_STAFF_TUTORIAL01           863 /* 0x035f ポケウッド：チュートリアル用 */
 #define FV_PKWD_STAFF_TUTORIAL02           864 /* 0x0360 ポケウッド：チュートリアル用 */
+#define FV_C12R0202_POKE32_01              865 /* 0x0361 ヒオウギシティ・ライバル宅：レパルダス */
+#define FV_D26_POKE23_01                   866 /* 0x0362 チャンピオンロード：ゾロアーク */
+#define FV_R16R0201_BACKPACKERM_01         867 /* 0x0363 迷いの森：バックパッカー（ゾロアーク） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
