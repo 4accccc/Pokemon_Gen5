@@ -1143,6 +1143,7 @@ static void GRA_ExitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk )
 {
   // 終了
   BLINKPALANM_Exit( p_wk->p_blinkanm_wk );
+  BLINKPALANM_Exit( p_wk->p_blinkanm_wk_land_icon );
 }
 
 //----------------------------------------------------------------------------
@@ -1248,7 +1249,18 @@ static void GRA_InitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk )
                     NARC_zukan_gra_list_list_bgd_NCLR, 
                     BLINK_PALID_POKE_CURSOR_START*16, 
                     BLINK_PALID_POKE_CURSOR_END*16 );
-    
+ 	
+  // 点滅させるパレットの指定
+  p_wk->p_blinkanm_wk_land_icon = BLINKPALANM_Create( 
+      BLINK_PALID_LAND_ICON_CHANGE*16  ,
+      BLINK_PAL_SIZE_LAND_ICON , BLINKPALANM_MODE_MAIN_OBJ, HEAPID_ZUKAN_HABITAT_ZONE );
+
+  // パレットアニメデータの作成
+  BLINKPALANM_SetPalBufferArcHDL( p_wk->p_blinkanm_wk_land_icon, ah,
+                    NARC_zukan_gra_list_list_objd_NCLR, 
+                    BLINK_PALID_LAND_ICON_START*16, 
+                    BLINK_PALID_LAND_ICON_END*16 );
+       
   // アーカイブクローズ
   GFL_ARC_CloseDataHandle( ah );
 	
@@ -1376,6 +1388,7 @@ static void GRA_BlinkAnmMain( HABITAT_ZONE_GRA_WK *p_wk )
 {
   // カーソル点滅アニメーション
   BLINKPALANM_Main( p_wk->p_blinkanm_wk );
+  BLINKPALANM_Main( p_wk->p_blinkanm_wk_land_icon );
 }
 
 //----------------------------------------------------------------------------

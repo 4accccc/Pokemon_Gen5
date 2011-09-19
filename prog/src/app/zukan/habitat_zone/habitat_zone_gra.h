@@ -171,9 +171,14 @@ enum{
   TRAY_PAL_WATERSIDE_START = 0,  // 水辺のパレット開始位置
   TRAY_PAL_FISHING_START   = 3,  // 釣りのパレット開始位置
 
-  EVENT_ICON_POS_OFS_X = 2,
-  EVENT_ICON_POS_OFS_Y = -3,
+  EVENT_ICON_POS_OFS_X = 2,       // イベントアイコンのオフセットX
+  EVENT_ICON_POS_OFS_Y = -3,      // イベントアイコンのオフセットY
   
+  BLINK_PALID_LAND_ICON_CHANGE  = 0x1,  // 点滅(書き換え対象)
+  BLINK_PALID_LAND_ICON_START   = 0x1,  // 点滅用パレット番号(基準)
+  BLINK_PALID_LAND_ICON_END     = 0x2,  // 滅用パレット番号(終了)
+  BLINK_PAL_SIZE_LAND_ICON      = 0x5,    // 点滅させるパレットの数
+
   // メインOBJパレット
   COMMON_PAL_START   = 0,
   COMMON_PAL_NUM     = 0x8, 
@@ -273,7 +278,9 @@ typedef struct {
 
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
-  BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
+  // パレット点滅　    -------------------------------
+  BLINKPALANM_WORK  *p_blinkanm_wk; // カーソル
+  BLINKPALANM_WORK  *p_blinkanm_wk_land_icon; // 地形アイコン
 	
   // セルアクターユニット
   GFL_CLUNIT			*p_clunit;
