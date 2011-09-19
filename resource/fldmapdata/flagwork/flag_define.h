@@ -442,6 +442,7 @@
 #define FE_R06R0101_POKE_GET_01            426 /* 0x01aa 季節研究所：シキジカ入手フラグ */
 #define FE_D24_SWBELL_FIRSTTALK            427 /* 0x01ab リバースマウンテン：初回会話フラグ */
 #define FE_T06R0101_CHAMPION_WIN_01        428 /* 0x01ac サンギタウン：クリア後アデク戦を終えたフラグ */
+#define FE_D27R0401_SWBOSS_WIN_01          429 /* 0x01ad プラズマフリゲート；クリア後アクロマ戦を終えたフラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -818,6 +819,8 @@
 #define FV_C12R0202_POKE32_01              865 /* 0x0361 ヒオウギシティ・ライバル宅：レパルダス */
 #define FV_D26_POKE23_01                   866 /* 0x0362 チャンピオンロード：ゾロアーク */
 #define FV_R16R0201_BACKPACKERM_01         867 /* 0x0363 迷いの森：バックパッカー（ゾロアーク） */
+#define FV_D10R0501_SWSAGE1_02             868 /* 0x0364 ジャイアントホール：杖なしゲーチス */
+#define FV_D10R0501_WAND_01                869 /* 0x0365 ジャイアントホール：杖 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
