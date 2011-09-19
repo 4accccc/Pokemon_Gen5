@@ -14360,8 +14360,21 @@
 /**
  * @def _INFINITY_DUNGEON_GET_DUNGEON_STATUS
  * @brief 無限ダンジョンの状態を取得
- * @param ret_wk    状態を受け取るワーク
+ * @param ret_wk    状態を受け取るワーク(下記が状態一覧)
  *
+ * INFINITY_DUNGEON_AREA_ID_1  (0) エリア1に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_2  (1) エリア2に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_3  (2) エリア3に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_4  (3) エリア4に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_5  (4) エリア5に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_6  (5) エリア6に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_7  (6) エリア7に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_8  (7) エリア8に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_9  (8) エリア9に挑戦可能な状態
+ * INFINITY_DUNGEON_AREA_ID_10 (9) エリア10に挑戦可能な状態
+ *
+ * INFINITY_DUNGEON_AREA_ID_10より大きい値の時
+ * 無限ダンジョンを最上階までクリアしている
  */
 //--------------------------------------------------------------
 #define _INFINITY_DUNGEON_GET_DUNGEON_STATUS( ret_wk ) \
