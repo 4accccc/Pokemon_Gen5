@@ -695,4 +695,543 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『それにしてもさ▼
+ポケモンを　もらえるなんて
+オマエ　すごい　ラッキーだよな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『それにしてもさ▼
+ポケモンを　もらえるなんて
+オマエ　すごい　ラッキーだよな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・その場で振り向き会話その１</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『で　どうするんだよ？
+ポケモンと　いっしょに　たびするのか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『で　どうするんだよ？
+ポケモンと　一緒に　旅するのか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・その場で振り向き会話その２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……いいから
+ベルって　ひと　さがそう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……いいから
+ベルって　人　探そう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・その場で振り向き会話その３
+　繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしはね　じぶんに
+なにが　できるか　わからなくて▽
+それを　さがすため　たびに　でたの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしはね　自分に
+なにが　できるか　わからなくて▽
+それを　探すため　旅に　でたの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・振り向き会話その１</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたし……
+トレーナーとしては　よわいんだけど▼
+それでも　たびを　つづけられたのは
+ポケモンが　がんばってくれたからなの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたし……
+トレーナーとしては　弱いんだけど▼
+それでも　旅を　続けられたのは
+ポケモンが　がんばってくれたからなの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・振り向き会話その２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だれもが　かちつづけられる　とか
+そんなのは　むずかしいよ……▼
+でもね　ポケモンを　すき！　なのは
+いつでも　いつまでも　できるよねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だれもが　勝ち続けられる　とか
+そんなのは　難しいよ……▼
+でもね　ポケモンを　好き！　なのは
+いつでも　いつまでも　できるよねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・振り向き会話その３</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すきな　ポケモンたちの　ことを
+もっともっと　しりたい……！▼
+それが　アララギはかせの　もとで
+おてつだいを　はじめた　りゆうかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>好きな　ポケモンたちの　ことを
+もっともっと　知りたい……！▼
+それが　アララギ博士の　もとで
+お手伝いを　始めた　理由かな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・振り向き会話その４</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はかせの　おてつだいが
+ほんとうに　やりたいことなのか……▼
+じつは　まだ　わからないけど
+やっていて　すごく　たのしいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>博士の　お手伝いが
+本当に　やりたいことなのか……▼
+じつは　まだ　わからないけど
+やっていて　すごく　楽しいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・振り向き会話その５
+・以降、このメッセージを繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えええ！　あなぬけのヒモを
+つかわれたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えええ！　あなぬけのヒモを
+使われたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・禁則処理：道具「あなぬけのヒモ」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_swbell_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えええ！　あなをほるの　わざを
+つかわれたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えええ！　あなをほるの　技を
+使われたら　はぐれちゃうよお？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・禁則処理：わざ「あなをほる」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:43:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
