@@ -75,12 +75,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ホミカ『あのね！
-あんた　せんちょう　でしょ？▼
+せんちょう　でしょ？▼
 ふね　うごかしてくれないと
 こまる　ひと　いるでしょーが！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,12 +89,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホミカ『あのね！
-あんた　船長でしょ？▼
+船長でしょ？▼
 船　動かしてくれないと
 こまる　人　いるでしょーが！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:33:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,18 +199,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『あー　もう！！▼
+			<Text>ホミカ『あー　もうー！！▼
 バカ！　バカ！　バカ！　バカ！
 バカ！　バカ！　バカ！　バカーー！▼
-かけもちが　わるいんじゃ　なくて
-めいわく　かけるな！　ってコト！▼
-せんちょうの　つごうで
-ふね　のれないとか　ないでしょーが▼
+ダメなのは　かけもち　じゃなくて
+めいわく　かけてることだって！▼
+せんちょうの　ワガママで
+ふね　のれないとか　ゆるさん！！▼
 あー　もう！
 ジムに　いこッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T08:50:22" />
+				Time="2011-09-19T04:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -218,18 +218,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『あー　もう！！▼
+			<Text>ホミカ『あー　もうー！！▼
 バカ！　バカ！　バカ！　バカ！
 バカ！　バカ！　バカ！　バカーー！▼
-掛け持ちが　悪いんじゃ　なくて
-迷惑かけるな！　ってコト！▼
-船長の　都合で
-船　乗れないとか　ないでしょーが▼
+ダメなのは　掛け持ち　じゃなくて
+迷惑かけてる　ことだって！▼
+船長の　ワガママで
+船　乗れないとか　許さん！！▼
 あー　もう！
 ジムに　行こッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T08:50:31" />
+				Time="2011-09-19T04:32:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -517,11 +517,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『あんたらの　その　かっこう
+			<Text>ホミカ『あんたら……
 もしかして　プラズマだん？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:34:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -529,11 +529,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『あんたらの　その格好
+			<Text>ホミカ『あんたら……
 もしかして　プラズマ団？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -953,10 +953,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ホミカ『[Name:TrainerName Idx="0" ]！
-あんたも　おてつだい！</Text>
+ホラ　あんたもッ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -965,10 +965,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホミカ『[Name:TrainerName Idx="0" ]！
-あんたも　お手伝い！</Text>
+ホラ　あんたもッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:37:01" />
+				Time="2011-09-19T04:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1373,13 +1373,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『アタシの　オヤジに　いえば
-ヒウンまで　つれていってくれるけどネ▼
-あいつらが　なにかしてないか
-アタシ　まちを　みてまわるから▼</Text>
+			<Text>ホミカ『あたしの　オヤジなら
+ヒウンまで　つれていってくれるけど▼
+あたしは　まちを　みてまわるから▼
+あいつら　なにか　してたら
+すっごく　ふゆかい　だし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:39:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1387,13 +1388,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『アタシの　オヤジに　いえば
-ヒウンまで　連れていってくれるけどネ▼
-あいつらが　なにかしてないか
-アタシ　街を　みてまわるから▼</Text>
+			<Text>ホミカ『あたしの　オヤジなら
+ヒウンまで　連れていってくれるけど▼
+あたしは　街を　みてまわるから▼
+あいつら　なにか　してたら
+すっごく　不愉快だし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1437,12 +1439,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……まけていたら　たいせつな
-ポケモンを　とられるところ　だったわ▼
-あんたたち　アリガトね
+ポケモンを　とられてた▼
+あんたたち　アリガト
 これは　ほんの　きもち！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1451,12 +1453,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……負けていたら　大切な
-ポケモンを　とられるところ　だったわ▼
+ポケモンを　とられてた▼
 あんたたち　アリガトね
 これは　ほんの　気持ち！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-19T04:36:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1504,7 +1506,7 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『それ……
 ひでんマシン　だな▽
-なかみは　いあいぎり　か！▼
+なかみは　いあいぎり！▼
 いあいぎりを　おぼえた　ポケモンは
 たたかって　いないときでも▽
 みちの　ほそい　きを　きれる！▼
@@ -1512,7 +1514,7 @@
 プラズマだんを　おいかけるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:37:24" />
+				Time="2011-09-19T04:36:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1522,7 +1524,7 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『それ……
 ひでんマシン　だな▽
-中は　いあいぎり　か！▼
+中は　いあいぎり！▼
 いあいぎりを　覚えた　ポケモンは
 戦って　いないときでも▽
 道路の　細い木を　切れる！▼
@@ -1530,7 +1532,7 @@
 プラズマ団を　追いかけるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:37:29" />
+				Time="2011-09-19T04:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
