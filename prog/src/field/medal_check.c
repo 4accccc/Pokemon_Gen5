@@ -18,7 +18,7 @@
 #include "system/medaldata.h" // fro MEDALDATA
 #include "arc_def.h"          // for ARCID_MEDALDATA
 #include "savedata\medalbox.h"
-#include "../../../resource/medal/data/mdlrec_id.h" // for MDLRECID_START etc
+#include "app/mdlrec_id.h" // for MDLRECID_START etc
 #include "field/medal_check.h"
 #include "script_def.h" // SCR_MEDALCATEGORY_Å`
 
