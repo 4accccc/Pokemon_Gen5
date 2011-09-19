@@ -115,6 +115,9 @@ u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habi
       break;
     }
   }
+  
+  ONOUE_Printf("gt:%d\n",ground_type);
+  ONOUE_Printf("si:%d\n",season_id);
 
   // ŒŸõ‚µ‚½Œ‹‰Ê”­Œ©‚Å‚«‚È‚©‚Á‚½ê‡
   if( arc_idx < 0 )

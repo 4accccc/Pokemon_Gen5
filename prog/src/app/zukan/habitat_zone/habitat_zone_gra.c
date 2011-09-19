@@ -246,6 +246,42 @@ void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk )
       p_wk->icon_trance_data[index].is_trance = FALSE;
     }
   }
+
+  // パレットの転送
+  if( p_wk->is_trance_pal_col== TRUE)
+  {
+    // パレット転送
+    switch( p_wk->set_trance_traypal_type )
+    {
+    case HABITAT_GROUND_LAND:
+      GFL_ARC_UTIL_TransVramPaletteEx(
+          ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_NCLR, PALTYPE_MAIN_BG,
+          TRAY_PAL_LAND_START*0x20, TRAY_PAL_START*0x20,
+          TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+      break;
+    case HABITAT_GROUND_WATERSIDE:
+      GFL_ARC_UTIL_TransVramPaletteEx(
+          ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
+          TRAY_PAL_WATERSIDE_START*0x20, TRAY_PAL_START*0x20,
+          TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+      break;
+    case HABITAT_GROUND_FISHING:
+      GFL_ARC_UTIL_TransVramPaletteEx(
+          ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
+          TRAY_PAL_FISHING_START*0x20, TRAY_PAL_START*0x20,
+          TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
+      break;
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+
+    // 点滅アニメ読み込み
+    GRA_ReLoadBlinkAnm( p_wk ,p_wk->set_trance_traypal_type );
+  
+    // 転送終了
+    p_wk->is_trance_pal_col = FALSE;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -836,6 +872,17 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG],FALSE );
     GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk_common_obj[OBJ_WK_STAMP_BIG], CLSYS_AFFINETYPE_DOUBLE );
     
+
+    // イベントアイコン
+    for( i = OBJ_WK_EVENT_ICON_01; i <= OBJ_WK_EVENT_ICON_03 ; i++ )
+    {
+      u8 pos_x = ((i-OBJ_WK_EVENT_ICON_01)*(OBJ_POS_BUTTON_WATERSIDE_X-OBJ_POS_BUTTON_LAND_X));
+      p_wk->p_clwk_common_obj[i] = UI_EASY_CLWK_CreateCLWK( 
+          &p_wk->clres_common_obj, p_wk->p_clunit, 
+          OBJ_POS_BUTTON_LAND_X + pos_x + EVENT_ICON_POS_OFS_X,
+          OBJ_POS_BUTTON_LAND_Y + EVENT_ICON_POS_OFS_Y,
+          OBJ_ANM_SEQ_EVENT_ICON, HEAPID_ZUKAN_HABITAT_ZONE );
+    }
 
     // 陸地ボタン
     p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_LAND] = UI_EASY_CLWK_CreateCLWK( 
@@ -1900,36 +1947,10 @@ void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL i
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type   )
+void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type )
 {
-  // パレット転送
-  switch( type )
-  {
-  case HABITAT_GROUND_LAND:
-    GFL_ARC_UTIL_TransVramPaletteEx(
-        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_NCLR, PALTYPE_MAIN_BG,
-        TRAY_PAL_LAND_START*0x20, TRAY_PAL_START*0x20,
-        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
-    break;
-  case HABITAT_GROUND_WATERSIDE:
-    GFL_ARC_UTIL_TransVramPaletteEx(
-        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
-        TRAY_PAL_WATERSIDE_START*0x20, TRAY_PAL_START*0x20,
-        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
-    break;
-  case HABITAT_GROUND_FISHING:
-    GFL_ARC_UTIL_TransVramPaletteEx(
-        ARCID_ZUKAN_GRA, NARC_zukan_gra_list_list_bgd_other_NCLR, PALTYPE_MAIN_BG,
-        TRAY_PAL_FISHING_START*0x20, TRAY_PAL_START*0x20,
-        TRAY_PAL_NUM*0x20 ,HEAPID_ZUKAN_HABITAT_ZONE );
-    break;
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-
-  // 点滅アニメ読み込み
-  GRA_ReLoadBlinkAnm( p_wk ,type );
+  p_wk->is_trance_pal_col = TRUE;
+  p_wk->set_trance_traypal_type = type;
 }
 
 //----------------------------------------------------------------------------
@@ -1977,5 +1998,19 @@ static void GRA_ReLoadBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE t
     GF_ASSERT(0);
     break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレイのパレット転送中か確認
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL HABITAT_ZONE_GRA_CheckTrayPalTrance( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  return p_wk->is_trance_pal_col;
 }
 

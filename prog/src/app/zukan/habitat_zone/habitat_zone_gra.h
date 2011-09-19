@@ -100,7 +100,8 @@ enum
   OBJ_ANM_SEQ_BUTTON_EXPLANATION  = 28,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_ANM  = 29,
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_OFF  = 41,
-  OBJ_ANM_SEQ_MENU_BAR  = 31,
+  OBJ_ANM_SEQ_MENU_BAR    = 31,
+  OBJ_ANM_SEQ_EVENT_ICON  = 11,
 };
 
 // OBJWKID
@@ -112,10 +113,13 @@ enum
   OBJ_WK_MAP_BLINK,
 
   // ↓ここからスクロール
+  OBJ_WK_BUTTON_EXPLANATION,
+  OBJ_WK_EVENT_ICON_01,
+  OBJ_WK_EVENT_ICON_02,
+  OBJ_WK_EVENT_ICON_03,
   OBJ_WK_BUTTON_LAND,
   OBJ_WK_BUTTON_WATERSIDE,
   OBJ_WK_BUTTON_FISHING,
-  OBJ_WK_BUTTON_EXPLANATION,
   OBJ_WK_UP_ARROW,
   OBJ_WK_DOWN_ARROW,
   OBJ_WK_CHECK_BOX,
@@ -130,7 +134,7 @@ enum
   // ポケモンごとのスタンプアイコン開始位置
   OBJ_WK_STAMP_SMALL_START = OBJ_WK_STAMP_SMALL_01,
 
-  M_SCROLL_OBJ_START = OBJ_WK_BUTTON_LAND,
+  M_SCROLL_OBJ_START = OBJ_WK_BUTTON_EXPLANATION,
   M_SCROLL_OBJ_END = OBJ_WK_MENU_BAR,
 };
 
@@ -166,6 +170,9 @@ enum{
   TRAY_PAL_LAND_START = 9,      // 草地のパレット開始位置
   TRAY_PAL_WATERSIDE_START = 0,  // 水辺のパレット開始位置
   TRAY_PAL_FISHING_START   = 3,  // 釣りのパレット開始位置
+
+  EVENT_ICON_POS_OFS_X = 2,
+  EVENT_ICON_POS_OFS_Y = -3,
   
   // メインOBJパレット
   COMMON_PAL_START   = 0,
@@ -314,6 +321,10 @@ typedef struct {
   APP_KEYCURSOR_WORK        *p_cursor;
   BOOL                      is_cursor_draw;
 
+  // トレイパレット転送 ------------
+  BOOL is_trance_pal_col;
+  HABITAT_GROUND_TYPE set_trance_traypal_type;
+
 
 }HABITAT_ZONE_GRA_WK;
 
@@ -354,4 +365,5 @@ extern u16 HABITAT_ZONE_GRA_CheckFade( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval,BOOL is_main  );
 extern void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type  );
 extern BOOL HABITAT_ZONE_GRA_CheckPokeIconTranceEnd( HABITAT_ZONE_GRA_WK *p_wk );
+extern BOOL HABITAT_ZONE_GRA_CheckTrayPalTrance( HABITAT_ZONE_GRA_WK *p_wk );
 
