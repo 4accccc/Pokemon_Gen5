@@ -13,6 +13,8 @@
   .include  "d08r0901.h"
   .include  "d08_def.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,205 +22,337 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_d08r0901_poke_01
-_EVENT_DATA		ev_zone_d08R0901
+_EVENT_DATA   ev_zone_d08r0901
+_EVENT_DATA   ev_pos_d08r0901_stone_01
+_EVENT_DATA   ev_d08r0901_poke_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+
+
 /**************************************************************/
-/*            FIELD_INIT_LABEL                              　 */
+/*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
-INIT_EVENT_START	ev_zone_d08R0901
-	
-	//バージョンを取得してOBJを変化させる
-	_GET_ROM_VERSION( SCWK_ANSWER )
-	IF FLAG_OFF(FV_D08R0901_PACKAGE_POKE) THEN
-	
-		IF $SCWK_ANSWER == VERSION_BLACK THEN
-			$OBJCHRWORK0 = SHIN_B
-		ELSE
-			$OBJCHRWORK0 = MU_B
-		ENDIF
-	ELSE
-	ENDIF
-	
+INIT_EVENT_START  ev_zone_d08r0901
+
+  //バージョンを取得してOBJを変化させる
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  IF FLAG_OFF( FV_D08R0901_PACKAGE_POKE ) THEN
+
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      $OBJCHRWORK0 = MU_B //ゼクロム
+    ELSE
+      $OBJCHRWORK0 = SHIN_B //レシラム
+    ENDIF
+
+  ENDIF
+
 INIT_EVENT_END
 
 /**************************************************************/
-/* パッケージポケモン 話しかけ                                                          
+/*  POS：ゼクロム（レシラム）復活                             */
+/**************************************************************/
+EVENT_START   ev_pos_d08r0901_stone_01
+
+  //バージョンを取得してメッセージを変化
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //B2:ゼクロム復活
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    //システム：ダークストーンが　うごめいている！？▼
+    _SYSWIN_MSG( msg_d08r0901_dstone_01, POS_DOWN )
+
+    //「ダークストーン」を取り出す？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      _MSGWIN_CLOSE()
+
+      _TIME_WAIT ( 8 )  //間
+
+      //==================================//
+      //ゼクロム表示
+      _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
+      //POSイベント進行
+      $WK_SCENE_D08R0901_LEGEND = 2
+      //==================================//
+
+      $OBJCHRWORK0 = MU_B //OBJをゼクロムに
+
+      //システム：まわりの　オーラを　とりこんだ
+      _SYSWIN_MSG( msg_d08r0901_dstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //ゼクロム登場【仮】ゼクロム復活デモ待ち
+      _OBJ_ADD( D08R0901_POKE_01 )
+      _OBJ_FALL_IN( D08R0901_POKE_01, 16, 11, DIR_DOWN )
+
+      _TIME_WAIT ( 60 )  //落下待ち
+
+    ELSE    //いいえ
+
+      _MSGWIN_CLOSE()
+
+      //アニメ：主人公一歩後ろに下がる
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT ( 8 )
+
+      //プレイヤーネームを格納
+      _PLAYER_NAME( 0 )
+      //システム：ふしぎな　ちからで　おしもどされた……！
+      _SYSWIN_MSG( msg_d08r0901_dstone_03, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //W2:レシラム復活
+  ELSE
+
+    //システム：ライトストーンが　うごめいている！？▼
+    _SYSWIN_MSG( msg_d08r0901_lstone_01, POS_DOWN )
+
+    //「ライトストーン」を取り出す？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      _MSGWIN_CLOSE()
+
+      _TIME_WAIT ( 8 )  //間
+
+      //==================================//
+      //レシラム表示
+      _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
+      //POSイベント進行
+      $WK_SCENE_D08R0901_LEGEND = 2
+      //==================================//
+
+      $OBJCHRWORK0 = SHIN_B //OBJをレシラムに
+
+      //システム：まわりの　オーラを　とりこんだ
+      _SYSWIN_MSG( msg_d08r0901_lstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //レシラム登場【仮】レシラム復活デモ待ち
+      _OBJ_ADD( D08R0901_POKE_01 )
+      _OBJ_FALL_IN( D08R0901_POKE_01, 16, 11, DIR_DOWN )
+
+      _TIME_WAIT ( 60 )  //落下待ち
+
+    ELSE    //いいえ
+
+      _MSGWIN_CLOSE()
+
+      //アニメ：主人公一歩後ろに下がる
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+      _OBJ_ANIME_WAIT()
+
+      _TIME_WAIT ( 8 )
+
+      //プレイヤーネームを格納
+      _PLAYER_NAME( 0 )
+      //システム：ふしぎな　ちからで　おしもどされた……！
+      _SYSWIN_MSG( msg_d08r0901_lstone_03, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ゼクロム（レシラム）：話しかけ（戦闘／倒した場合は殿堂入り後復帰）*/
 /**************************************************************/
 EVENT_START    ev_d08r0901_poke_01
 
 _TALK_START_SE_PLAY()
-{	
-  DEFINE_LOCAL	LWK_DIR
-	//自機：一歩前に戻る
-	_PLAYER_DIR_GET( LWK_DIR )
-	SWITCH $LWK_DIR
-	CASE DIR_UP THEN
-	CASE DIR_DOWN THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
-	CASE DIR_RIGHT THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_r )
-	CASE DIR_LEFT THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_l )
-	ENDSWITCH
-	_OBJ_ANIME_WAIT()
-}	
 {
-	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
-	_OBJ_ANIME_WAIT()
+  DEFINE_LOCAL  LWK_DIR
+  //自機：一歩前に戻る
+  _PLAYER_DIR_GET( LWK_DIR )
+  SWITCH $LWK_DIR
+  CASE DIR_UP THEN
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_r )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+}
+{
+  _OBJ_ANIME( D08R0901_POKE_01, anm_legend_hoeru )
+  _OBJ_ANIME_WAIT()
 
-    DEFINE_LOCAL  LWK_BATTLE_FLAG
-	DEFINE_LOCAL  LWK_ROM
-	
-    //シン・ム専用、伝説系MSG、レア無し
-    $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_IMMORTAL
-    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
-    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
-  
-	 _GET_ROM_VERSION( LWK_ROM )
-	IF $LWK_ROM == VERSION_WHITE THEN
-		_VOICE_PLAY( MONSNO_651, 0 )
-	ELSE
-		_VOICE_PLAY( MONSNO_650, 0 )
-	ENDIF
+  DEFINE_LOCAL  LWK_BATTLE_FLAG
 
-    _GET_ROM_VERSION( LWK_ROM )
-		IF $LWK_ROM == VERSION_BLACK THEN
-			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke7_01,POS_DEFAULT )
-			_VOICE_WAIT()
-			_AB_KEYWAIT_MARK()
-			_GIZAPLAINWIN_CLOSE()
+  //シン・ム専用、伝説系MSG、レア無し
+  $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_IMMORTAL
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
 
+  _GET_ROM_VERSION( LCWK_VERSION )
+  IF $LCWK_VERSION == VERSION_B2 THEN
 
-			_WILD_BTL_SET_EX( MONSNO_650, 50, LWK_BATTLE_FLAG )
-		ELSE
-			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke8_01,POS_DEFAULT )
-			_VOICE_WAIT()
-			_AB_KEYWAIT_MARK()
-			_GIZAPLAINWIN_CLOSE()
+    _VOICE_PLAY( MONSNO_651, 0 )
+    //ゼクロム：ババリバリッシュ！！
+    _GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke8_01, POS_DEFAULT )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _GIZAPLAINWIN_CLOSE()
 
-			_WILD_BTL_SET_EX( MONSNO_651, 50, LWK_BATTLE_FLAG )
-		ENDIF
+    // Lv.80 ゼクロム
+    _WILD_BTL_SET_EX( MONSNO_651, 80, LWK_BATTLE_FLAG )
 
-    _WILD_LOSE_CHECK( SCWK_ANSWER )
-    
-    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    
-          //========================================/
-          
-          //シンのOBJ削除
-          _OBJ_DEL( D08R0901_POKE_01 )
-          
-          //フラグセット
-          _FLAG_SET( FV_D08R0901_PACKAGE_POKE )
-          
-          //========================================/
-          
-    	//勝った場合
-      	_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-    
+  ELSE
+
+    _VOICE_PLAY( MONSNO_650, 0 )
+    //レシラム：ンバーニンガガッ！！
+    _GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke7_01, POS_DEFAULT )
+    _VOICE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _GIZAPLAINWIN_CLOSE()
+
+    // Lv.80 レシラム
+    _WILD_BTL_SET_EX( MONSNO_650, 80, LWK_BATTLE_FLAG )
+
+  ENDIF
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN    //勝った場合
+
+    //レシラム（ゼクロム）OBJ削除
+    _OBJ_DEL( D08R0901_POKE_01 )
+
+    //========================================/
+    //ゼクロム（レシラム）非表示
+    _FLAG_SET( FV_D08R0901_PACKAGE_POKE )
+    //========================================/
+
+    _WILD_WIN()   //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _WILD_LOSE()  //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+}
+
+  //ゼクロム（レシラム）を捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN    //捕まえた場合
+
+    //========================================/
+    //ゼクロム（レシラム）捕獲フラグをセット
+    _FLAG_SET( FE_PACKAGE_POKE_GET )
+    //========================================/
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN    //勝利した場合、あるいは逃げた場合
+
+    _GET_ROM_VERSION( LCWK_VERSION )
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      //システム：ゼクロムは　どこかに
+      _SYSWIN_MSG( msg_d08r0901_poke8_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
     ELSE
-        //負けた場合
-        _WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-      
+      //システム：レシラムは　どこかに
+      _SYSWIN_MSG( msg_d08r0901_poke7_02, POS_DOWN )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
     ENDIF
-}
-{
-	_WILD_RETRY_CHECK( SCWK_ANSWER )
 
-	SWITCH $SCWK_ANSWER
-	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
-		//勝利した場合、あるいは逃げた場合
-		DEFINE_LOCAL	LWK_ROM
-		_GET_ROM_VERSION( LWK_ROM )
-		IF $LWK_ROM == VERSION_WHITE THEN
-			_SYSWIN_MSG( msg_d08r0901_poke8_02 , POS_DOWN )
-			_LAST_KEYWAIT()
-			_SYSWIN_CLOSE()
-		ELSE
-			_SYSWIN_MSG( msg_d08r0901_poke7_02 , POS_DOWN )
-			_LAST_KEYWAIT()
-			_SYSWIN_CLOSE()
-		ENDIF
-        
-	CASE SCR_WILD_BTL_RET_CAPTURE THEN
-	//捕まえた場合
-		//捕獲フラグをセット
-		_FLAG_SET( FE_PACKAGE_POKE_GET )
+  ENDSWITCH
 
-	ENDSWITCH
-}
 EVENT_END
 
-//--------------------------------------------------------------------
-//		シンとム専用のアニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_legend_hoeru
-	_ANIME_DATA	AC_SHIN_MU_HOERU,1
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//		話しかけた場合の回り込み処理
+//シンとム専用のアニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_last6_r
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_last6_l
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_last6_d
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_legend_hoeru
+  _ANIME_DATA AC_SHIN_MU_HOERU,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：びっくりする                  
+//話しかけた場合の回り込み処理
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_gyoe
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_last6_r
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_last6_l
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_last6_d
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：上を向く                   
+//☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_up
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：下を向く_むきのみ                   
+//共通スクリプト：びっくりする
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_turn_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_gyoe
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：下を向く                   
+//共通スクリプト：上を向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_down
-	_ANIME_DATA	AC_STAY_WALK_D_16F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_up
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：右を向く                  
+//共通スクリプト：下を向く_むきのみ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_right
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_turn_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：左を向く                  
+//共通スクリプト：下を向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_left
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_down
+  _ANIME_DATA AC_STAY_WALK_D_16F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_right
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_left
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

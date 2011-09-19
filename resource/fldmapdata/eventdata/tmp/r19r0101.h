@@ -18,5 +18,6 @@
 #ifndef ZONE_R19R0101_EVB_H
 #define ZONE_R19R0101_EVB_H
 
+#define BG_R19R0101_BOARD_01              0
 
 #endif //ZONE_R19R0101_EVB_H

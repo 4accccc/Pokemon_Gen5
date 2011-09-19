@@ -483,6 +483,12 @@ INIT_EVENT_START  ev_init_gameclear_script
     _FLAG_RESET( FV_D35R0101_POKE_01 )
   ENDIF
 
+  //ゼクロム（レシラム）未捕獲時の復活処理
+  IF FLAG_ON( FV_D08R0901_PACKAGE_POKE ) && FLAG_OFF( FE_PACKAGE_POKE_GET ) && $WK_SCENE_D08R0901_LEGEND == 2 THEN
+    //復活したゼクロム（レシラム）と戦って、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
+  ENDIF
+
 
 }
 INIT_EVENT_END
