@@ -119,6 +119,10 @@
 				<ContentItem
 					Name="tvt_event_06.mstxt" />
 				<ContentItem
+					Name="tvt_event_07.mstxt" />
+				<ContentItem
+					Name="tvt_event_08.mstxt" />
+				<ContentItem
 					Name="tvt_event_system.mstxt" />
 				<ContentItem
 					Name="tvt_map.mstxt" />
