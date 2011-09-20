@@ -4245,6 +4245,51 @@
 		<language name="JPN_KANJI" width="216">フェス６</language>
 	</row>
 
+	<row id="swplazmam_36">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="nurse_05">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="basket_13">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="tennis_13">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="tennis_14">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="basket_14">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="mount_32">
+		<language name="JPN" width="216">マモル</language>
+		<language name="JPN_KANJI" width="216">マモル</language>
+	</row>
+
+	<row id="business1_13">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="ol_10">
+		<language name="JPN" width="216">サトコ</language>
+		<language name="JPN_KANJI" width="216">サトコ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

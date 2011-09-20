@@ -770,7 +770,16 @@
 #define	TRID_ELITEW_47   ( 757 ) 
 #define	TRID_ELITEW_48   ( 758 ) 
 #define	TRID_ELITEW_49   ( 759 ) 
-#define TRID_MAX  ( 760 )
+#define	TRID_SWPLAZMAM_36   ( 760 ) 
+#define	TRID_NURSE_05   ( 761 ) 
+#define	TRID_BASKET_13   ( 762 ) 
+#define	TRID_TENNIS_13   ( 763 ) 
+#define	TRID_TENNIS_14   ( 764 ) 
+#define	TRID_BASKET_14   ( 765 ) 
+#define	TRID_MOUNT_32   ( 766 ) 
+#define	TRID_BUSINESS1_13   ( 767 ) 
+#define	TRID_OL_10   ( 768 ) 
+#define TRID_MAX  ( 769 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
