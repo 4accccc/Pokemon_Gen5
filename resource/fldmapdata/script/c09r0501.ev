@@ -177,6 +177,9 @@ EVENT_START ev_c09r0501_swchampion_01
 
       _CAMERA_WAIT_MOVE()  //カメラ移動待ち
 */
+      //主人公画面中央へ
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 13, 40, DIR_RIGHT )
+
       _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
     ELSE
       _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
