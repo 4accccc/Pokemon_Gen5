@@ -184,7 +184,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		SEQ_BGM_VS_SHITENNO,	///<TRTYPE_GRP_BIGFOUR 四天王
 		SEQ_BGM_VS_SHIRONA,	  ///<TRTYPE_GRP_DPCHAMP シロナ(DPチャンピオン)
     // swan
-    SEQ_BGM_VS_RIVAL,//SEQ_BGM_VS_HUE,       ///<TRTYPE_GRP_RIVAL ライバル
+    SEQ_BGM_VS_HUE,       ///<TRTYPE_GRP_RIVAL ライバル
     SEQ_BGM_VS_TRAINER,   ///<TRTYPE_GRP_TRAINER_SWBOSS ポケモントレーナーのアクロマ
     SEQ_BGM_VS_ACHROMA,   ///<TRTYPE_GRP_PLASMA_SWBOSS プラズマ団のアクロマ
     SEQ_BGM_VS_N_2,       ///<TRTYPE_GRP_N ポケモントレーナーのN
