@@ -399,7 +399,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>４つの　きせつの　シキジカが
-どうじに　みれる　けんきゅうじょ！▼
+どうじに　みられる　けんきゅうじょ！▼
 シキジカについてなら
 ちょっとした　エキスパート　です▼
 どうですか？　われわれが　みつけた
@@ -407,7 +407,7 @@
 あなたも　そだててみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:10:33" />
+				Time="2011-09-20T12:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -415,16 +415,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４つの　きせつの　シキジカが
-どうじに　みれる　けんきゅうじょ！▼
+			<Text>４つの　季節の　シキジカが
+同時に　みられる　研究所！▼
 シキジカについてなら
 ちょっとした　エキスパート　です▼
 どうですか？　われわれが　みつけた
-ちょっと　めずらしい　シキジカを▽
-あなたも　そだててみませんか？</Text>
+ちょっと　珍しい　シキジカを▽
+あなたも　育ててみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:22:44" />
+				Time="2011-09-20T12:15:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -631,10 +631,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>たくさんの　ポケモンを
-つれて　おられるの　ですね！</Text>
+連れて　おられるの　ですね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:22:46" />
+				Time="2011-09-20T12:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -682,10 +682,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうですか……　ちょっと
-めずらしい　シキジカ　なのですが</Text>
+珍しい　シキジカ　なのですが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:22:46" />
+				Time="2011-09-20T12:15:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -734,11 +734,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>てんのめぐみ……▼
-なんでも　わざのこうかが
-２ばいに　なるそうですよ</Text>
+なんでも　技の効果が
+２倍に　なるそうですよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:22:46" />
+				Time="2011-09-20T12:15:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -773,27 +773,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>われわれは　きせつに　よる
-しぜんの　さまざな　へんかを▽
-けんきゅう　しています▼
-このあたりに　[Name:PokemonName Idx="0" ]
-という　ポケモンが　いますよね？▼
-[Name:PokemonName Idx="0" ]は　きせつに　よって
-そのすがたを　へんかさせる　という▽
-たいへんに　きょうみぶかい▽
-とくちょうを　もっているのですよ▼
-われわれとしては　このポケモンを
-けんきゅうし　きせつや　きこうと▽
-ポケモンの　かかわりに▽
-せまりたいと　かんがえています▼
-そのため　きおん　しつど　などなどを
-じゆうじざいに　コントロールし▽
-きせつをも　ちょうえつする▽
-きせきの　くうちょうシステムを▽
-かいはつ　どうにゅう　したんです！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -801,27 +784,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>我々は　季節に　よる
-自然の　様々な　変化を▽
-研究しています▼
-このあたりに　[Name:PokemonName Idx="0" ]
-という　ポケモンが　いますよね？▼
-[Name:PokemonName Idx="0" ]は　季節に　よって
-その姿を　変化させる　という▽
-大変に　興味深い▽
-特徴を　もっているのですよ▼
-我々としては　このポケモンを
-研究し　季節や　気候と▽
-ポケモンの　関わりに▽
-迫りたいと　考えています▼
-そのため　気温　湿度などなどを
-自由自在に　コントロールし▽
-季節をも　超越する▽
-奇跡の　空調システムを▽
-開発　導入したんです！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -829,14 +795,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・はじめて話しかけたときのみ
-・続けてassistantm3_01a
-・0＝シキジカ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:35:08" />
+				Time="2011-09-20T12:16:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -866,25 +828,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……と▼
-ここまでは　よいのですけれども
-われわれ　いそがしくて　ですね▼
-[Name:PokemonName Idx="0" ]を　つかまえに　いく
-タイミングが　なかなか　ないのです▼
-そこで　おねがい　なのですが
-まず　[Name:PokemonName Idx="0" ]を▽
-つかまえて　ほしいのです▼
-そして　[Name:PokemonName Idx="0" ]の　すがたが
-かわったことに　きがついたら▽
-この　けんきゅうしょ　まで▽
-つれてきて　いただけませんか？▼
-きみの　[Name:PokemonName Idx="0" ]の
-へんかを　かくにんしたら▽
-われわれも　そのきせつの▽
-[Name:PokemonName Idx="0" ]を　さがしにいきます▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,25 +839,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……と▼
-ここまでは　よいのですけれども
-我々　忙しくて　ですね▼
-[Name:PokemonName Idx="0" ]を　捕まえに　いく
-タイミングが　なかなか　ないのです▼
-そこで　お願い　なのですが
-まず　[Name:PokemonName Idx="0" ]を▽
-捕まえて　ほしいのです▽
-そして　[Name:PokemonName Idx="0" ]の　姿が▽
-変わったことに　気がついたら▽
-この　研究所　まで▽
-連れてきて　いただけませんか？▼
-君の　[Name:PokemonName Idx="0" ]の　姿の
-変化を　確認したら▽
-我々も　その季節の▽
-[Name:PokemonName Idx="0" ]を　探しにいきます▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -918,15 +850,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・はじめて話しかけたときのみ
-・次回はassistantm3_02から開始
-　→assistantm3_02
-・0＝シキジカ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:35:16" />
+				Time="2011-09-20T12:16:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -956,13 +883,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかがでしょうか？▼
-よければ　あなたの　つれている
-[Name:PokemonName Idx="0" ]の　すがたを▽
-はいけんさせて　いただけませんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -970,13 +894,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかがでしょうか？▼
-よければ　あなたの　連れている
-[Name:PokemonName Idx="0" ]の　姿を▽
-拝見させて　いただけませんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -984,25 +905,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・はい→季節が春（春フォルムの場合）
-　assistantm3_03
-・はい→季節が夏（夏フォルムの場合）
-　assistantm3_04
-・はい→季節が春（秋フォルムの場合）
-　assistantm3_05
-・はい→季節が春（冬フォルムの場合）
-　assistantm3_06
-・すでにフォルムを見せている場合→
-　assistantm3_06
-・いいえ→
-　assistantm3_07
-・シキジカ以外を見せた場合→
-　assistantm3_11</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:35:43" />
+				Time="2011-09-20T12:16:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1032,18 +938,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]の　はるの　すがた！▼
-この　からだの　ツヤと　いろ……
-まるで　はるの　おはなばたけ！▽
-では　ありませんか！▼
-からだから　ひろがる　かおりも
-とっても　フローラル……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-つかまえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1051,18 +949,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]の　春の　姿！▼
-この　体の　ツヤと　色……
-まるで　春の　お花畑！▽
-では　ありませんか！▼
-体から　広がる　香りも
-とっても　フローラル……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-捕まえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1070,12 +960,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1105,18 +993,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]の　なつの　すがた！▼
-この　からだの　ツヤと　いろ……
-まるで　まなつの　やぶの　なか！▽
-では　ありませんか！▼
-からだから　ひろがる　かおりも
-なんとも　あおくさい……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-つかまえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1124,18 +1004,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]の　夏の　姿！▼
-この　体の　ツヤと　色……
-まるで　生い茂る　やぶの　中！▽
-では　ありませんか！▼
-体から　広がる　香りも
-なんとも　青臭い……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-捕まえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1143,12 +1015,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1178,18 +1048,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]の　あきの　すがた！▼
-この　からだの　ツヤと　いろ……
-まるで　おちば　まう　なみきみち！▽
-では　ありませんか！▼
-からだから　ひろがる　かおりも
-かれた　きぎの　よう……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-つかまえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1197,18 +1059,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]の　秋の　姿！▼
-この　体の　ツヤと　色……
-まるで　落ち葉　舞う　並木道！▽
-では　ありませんか！▼
-体から　広がる　香りも
-枯れた　木々の　よう……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-捕まえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1216,12 +1070,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1251,18 +1103,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0" ]の　ふゆの　すがた！▼
-この　からだの　ツヤと　いろは……
-まるで　しんせつ　つもる　ゲレンデ！▽
-では　ありませんか！▼
-からだから　ひろがる　かおりは
-つちを　ほりかえしたあとの　よう……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-つかまえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1270,18 +1114,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0" ]の　冬の　姿！▼
-この　体の　ツヤと　色は……
-まるで　新雪　積もる　ゲレンデ！▽
-では　ありませんか！▼
-体から　広がる　香りは
-土を　掘り返したあとの　よう……▼
-いやいや　ありがとうございました
-さっそく　ボクも　[Name:PokemonName Idx="0" ]を▽
-捕まえに　いってきますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1289,12 +1125,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1324,13 +1158,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとうございます！▼
-ですが　そのきせつの　すがたの
-[Name:PokemonName Idx="0" ]は▽
-すでに　つかまえてますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1338,13 +1169,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとうございます！▼
-ですが　その季節の　姿の
-[Name:PokemonName Idx="0" ]は▽
-すでに　捕まえていますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1352,12 +1180,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1387,13 +1213,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうですか……▼
-われわれの　けんきゅうに
-きょうりょくして　いただけると▽
-たいへん　たすかるのですが……　</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1401,13 +1224,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうですか……▼
-我々の　研究に
-協力して　いただけると▽
-大変　助かるのですが……　</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1415,11 +1235,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1449,19 +1268,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ！　あなたは！▼
-おかげさまで　すべての　すがたの
-[Name:PokemonName Idx="0" ]を▽
-つかまえることが　できました▼
-これで　ポケモンと　きせつや
-きこうの　かんけいを　じっくり▽
-けんきゅう　することができます▼
-ありがとう　ございました▼
-たいしたものでは　ありませんが
-うけとってください▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1469,19 +1279,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ！　あなたは！▼
-お陰さまで　すべての　姿の
-[Name:PokemonName Idx="0" ]を▽
-捕まえることが　できました▼
-これで　ポケモンと　季節や
-気候の　関係を　じっくり▽
-研究することが　できます▼
-ありがとう　ございました▼
-大したものでは　ありませんが
-受け取ってください▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1489,15 +1290,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・すべてのフォルムを見せてから話しかけ
-・アイテム入手処理
-　No085「リーフの石」
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:50" />
+				Time="2011-09-20T12:16:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1527,14 +1323,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４つの　きせつの　[Name:PokemonName Idx="0" ]の
-すがたが　どうじに　みられるのは▽
-せかいで　ここだけ　ですからね▼
-いまじゃ　ちょっとした　ウチの
-マスコットに　なってますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1542,14 +1334,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４つの　季節の　[Name:PokemonName Idx="0" ]の
-姿が　同時に　見られるのは▽
-世界で　ここだけ　ですからね▼
-今じゃ　ちょっとした　ウチの
-マスコットに　なってますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1557,13 +1345,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・アイテム入手後はここから開始
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:42" />
+				Time="2011-09-20T12:16:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1593,12 +1378,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もうしあげにくいのですが……
-その ポケモンは▽
-[Name:PokemonName Idx="0" ]とは　ちがいますよ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1606,12 +1389,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>申し上げにくいのですが……
-その　ポケモンは▽
-[Name:PokemonName Idx="0" ]とは　違いますよ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1619,13 +1400,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・四季イベント
-・シキジカ以外を見せた場合
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:34:44" />
+				Time="2011-09-20T12:16:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2750,10 +2528,10 @@
 			<Text>つづいて　ちゅういほうです！▼
 かみなり　と　ぼうふう　が
 かならず　めいちゅう　しますので▽
-おきをつけ　ください！</Text>
+おきを　つけください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:15:33" />
+				Time="2011-09-20T12:18:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2763,11 +2541,11 @@
 			Language="JPN_KANJI">
 			<Text>続いて　注意報です！▼
 かみなり　と　ぼうふう　が
-かならず　命中しますので▽
-お気をつけ　ください！</Text>
+必ず　命中しますので▽
+お気を　つけください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T07:25:56" />
+				Time="2011-09-20T12:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3184,10 +2962,10 @@
 はなつことが　できます！▼
 また　かみなり　と　ぼうふう　は
 めいちゅう　しづらく　なりますので▽
-おきをつけ　ください！</Text>
+おきを　つけください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:16:24" />
+				Time="2011-09-20T12:18:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3201,10 +2979,10 @@
 放つことが　できます！▼
 また　かみなり　と　ぼうふう　は
 命中しづらく　なりますので▽
-お気をつけ　ください！</Text>
+お気を　つけください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T07:26:28" />
+				Time="2011-09-20T12:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3598,10 +3376,10 @@
 			<Text>つづいて　ちゅういほうです！▼
 ふぶき　が　かならず
 めいちゅう　しますので▽
-おきをつけ　ください！</Text>
+おきを　つけください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:18:23" />
+				Time="2011-09-20T12:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3610,12 +3388,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>続いて　注意報です！▼
-ふぶき　が　かならず
-命中　しますので▽
-お気をつけ　ください！</Text>
+ふぶき　が　必ず
+命中しますので▽
+お気を　つけください！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:36:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:17:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4202,12 +3980,12 @@
 			Language="JPN_KANJI">
 			<Text>わたくしの　ポケモン　天気予報
 いかがでしたか？▼
-ほかの　予報が　聞きたいときは
+他の　予報が　聞きたいときは
 別の　技や　特性を　持った▽
 ポケモンを　連れてきて　くださいね！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:53:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:17:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4467,8 +4245,8 @@
 空から　こおりの　結晶が
 輝きながら　降りそそぐ▽
 幻想的な　現象です！▼
-何度も　今くらいの　時期に
-どこかの　町で▼
+なんでも　今くらいの　時期に
+どこかの　街で▼
 みられる　という　話を
 きいたことが　あります▼
 ああ……　わたくしも
@@ -4477,7 +4255,7 @@
 みてみたい　ですわ！　うふふ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T07:27:56" />
+				Time="2011-09-20T12:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

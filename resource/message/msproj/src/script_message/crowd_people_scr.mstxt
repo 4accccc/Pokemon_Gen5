@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あるく　スピードは　はやいけど
-ゆっくり　のんびり　いきるんだ</Text>
+			<Text>はやい　ウォーキングは
+にんじゃの　しゅぎょう　なのデス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>歩く　スピードは　速いけど
-ゆっくり　のんびり　生きるんだ</Text>
+			<Text>はやい　ウォーキングは
+にんじゃの　しゅぎょう　なのデス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +31,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:30" />
+				Time="2011-09-20T12:06:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -92,11 +92,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！
+			<Text>こんにちは！　こんにちは！
 あいさつは　だいじ　だよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -104,11 +104,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！
+			<Text>こんにちは！　こんにちは！
 あいさつは　大事だよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -117,10 +117,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-20T12:05:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -303,6 +303,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CROWD_MSG08"
@@ -705,10 +712,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんど　しゅっちょうで
-カントーちほうに　いくんだよ</Text>
+ホウエンちほうに　いくんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -717,10 +724,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今度　出張で
-カントー地方に　行くんだよ</Text>
+ホウエン地方に　行くんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -729,10 +736,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:42" />
+				Time="2011-09-20T12:08:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -790,10 +797,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんな　ウォーキングの　プロ！</Text>
+			<Text>あるく　スピードなら
+おれが　ナンバーワン！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -801,10 +809,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんな　ウォーキングの　プロ！</Text>
+			<Text>歩く　スピードなら
+おれが　ナンバーワン！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -959,10 +968,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いつも　ここを　あるいているからね
-ひとを　よけるのは　うまいのよ</Text>
+めを　つぶっても　だいじょうぶ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -971,10 +980,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いつも　ここを　歩いているからね
-人を　よけるのは　うまいのよ</Text>
+目を　つぶっても　大丈夫！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:11:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -983,10 +992,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:45" />
+				Time="2011-09-20T12:11:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

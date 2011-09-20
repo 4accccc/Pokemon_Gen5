@@ -191,13 +191,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『いまさら
+			<Text>プラズマ団『いまさら
 マジメぶっても　遅いんだよ！▼
 前みたいに　楽しく
 人の　ポケモン　奪おうぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:21:32" />
+				Time="2011-09-20T11:29:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -242,10 +242,10 @@
 			Language="JPN">
 			<Text>？？？『ダメだよ▼
 ひとの　ものを　とったら　ドロボウ
-って　こと　わかったからさ▼</Text>
+だと　みにしみて　わかったからさ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:04:23" />
+				Time="2011-09-20T11:40:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,10 +255,10 @@
 			Language="JPN_KANJI">
 			<Text>？？？『ダメだよ▼
 ひとの　ものを　とったら　ドロボウ
-って　こと　わかったからさ▼</Text>
+だと　身にしみて　わかったからさ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:04:29" />
+				Time="2011-09-20T11:40:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -367,13 +367,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『チッ！
+			<Text>プラズマ団『チッ！
 ここで　騒ぎを　起こすな▼
 そう　いわれている
 おまえらの　相手は　今度だ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:22:28" />
+				Time="2011-09-20T11:29:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1275,11 +1275,11 @@
 どうなっているか　しんぱい　だけど▼
 いま　ともに　たびしている
 ポケモンたちも　だいじ　なんだよな▼
-こいつらと　いっしょなら　いつか　きっと
-うばわれた　ポケモンとも　あえるよな▼</Text>
+こいつらと　いっしょなら
+いつか　かならず……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:25:02" />
+				Time="2011-09-20T11:31:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1295,11 +1295,11 @@
 どうなっているか　心配だけど▼
 いま　ともに　旅している
 ポケモンたちも　大事なんだよな▼
-こいつらと　一緒なら　いつか　きっと
-奪われた　ポケモンとも　会えるよな▼</Text>
+こいつらと　一緒なら
+いつか　必ず……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:24:55" />
+				Time="2011-09-20T11:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1359,12 +1359,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヤーコン『なんだ　おまえら
-しりあい　だったのか？▼
+知り合い　だったのか？▼
 ふたりとも　なかなか　だったからな
 いいところへ　連れて　いってやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:25:01" />
+				Time="2011-09-20T11:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2331,11 +2331,11 @@
 			Language="JPN_KANJI">
 			<Text>離れた　土地を　つなぐ　橋▼
 別々の　人を　つなぐ
-ポケモン勝負に　ポケモンこうかん▼
+ポケモン勝負に　ポケモン交換▼
 ということは　ポケモンは　橋か！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T09:20:08" />
+				Time="2011-09-20T11:35:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
