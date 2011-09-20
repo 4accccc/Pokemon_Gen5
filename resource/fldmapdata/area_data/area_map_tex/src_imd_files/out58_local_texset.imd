@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-09T15:14:00"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-20T13:32:21"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -2113,14 +2113,14 @@
 		path="C:/home/swan_data3d/field/out01/chip/tex/sea_jimen.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 1000 0000 0000 0101 0110
-			0000 1010 1010 0011 0000 0101 1110 0001
-			1000 1010 1111 0000 0000 1101 0111 0000
-			1000 1110 1011 0000 0100 1110 0101 0000
-			1000 1111 1010 0000 0100 0111 0101 0000
-			1000 1011 0010 0000 1000 0001 0000 0000
-			1100 0000 0000 0000 0100 0000 0000 0000
-			0010 0000 0000 0000 0001 0000 0000 0000
+			2111 2222 4223 1235 2221 3222 5423 1025
+			3222 2233 5532 1025 3322 2233 5553 1005
+			3332 3233 5553 1003 3332 3223 5535 2002
+			3332 5333 2553 2000 3332 3533 2255 2000
+			2223 5353 0225 2002 3332 5535 0022 2200
+			5342 2553 0002 3200 5544 2255 0000 5420
+			5555 0023 0000 4542 0023 0000 2000 5454
+			0002 0000 4220 3445 2211 2222 5422 2354
 		</bitmap>
 	</tex_image>
 	<tex_image index="36" name="sea_simi.1"
@@ -2148,52 +2148,52 @@
 		path="C:/home/swan_data3d/field/out01/chip/tex/sea_zanami.tga"
 	>
 		<bitmap size="512">
-			0e0e 0e0e 0e0e 2e2e 2e2e 0e0e 0e0e 0e0e
-			0e0e 2e0e 2e2e 4e4e 4e4e 2e2e 0e2e 0e0e
-			2e2e 4e2e 4e4e aeae aeae 4e4e 2e4e 2e2e
-			4e4e ae4e aeae cece cece aeae 4eae 4e4e
-			aeae ceae cece eeee eeee cece aece aeae
-			ceae eece eeee eded eded eeee ceee aece
-			eece edee eded ecec ecec eded eeed ceee
-			eded eced ecec ecec ecec ecec edec eded
-			ecec ecec ebec eaea eaea eceb ecec ecec
-			ebec eaea eaea eaea eaea eaea eaea eceb
-			eaea eaea e9ea e8e9 e9e8 eae9 eaea eaea
-			eaea e8e9 e7e8 e6e6 e6e6 e8e7 e9e8 eaea
-			e8e8 e7e7 e6e6 e6e6 e6e6 e6e6 e7e6 e8e8
-			e7e7 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
-			e6e6 e6e6 e6e6 e7e7 e7e7 e6e6 e6e6 e6e6
-			e6e6 e7e6 e7e7 e7e7 e7e7 e7e7 e6e7 e6e6
+			1313 1313 1313 3333 3333 1313 1313 1313
+			1313 3313 3333 5353 5353 3333 1333 1313
+			3333 5333 5353 b3b3 b3b3 5353 3353 3333
+			5353 b353 d3b3 d3d3 b3d3 b2b3 53b2 5353
+			5353 d2b2 d2d2 d3d2 d2d3 d2d2 b2d2 5353
+			b2b2 d2d2 d1d1 f2f1 f2f2 d1d1 d1d1 b2d2
+			d1d1 d1d1 efef efef efef f1f0 cfd1 d1d1
+			f0f1 eff1 eded eded efed efef efef f1f0
+			efef edef eded eced eded eded efed efef
+			eded eded ecec ecec ecec eceb eced efed
+			eded eded eded eced ecec eaea eaea ecec
+			eeee eeee edee eded eced eaeb ecea eded
+			eded eded eded eded eded eced edec eeee
+			eded ecec ecec ecec eded eded eeed edee
+			ecec ecec ecec ecec ecec eded eded eded
+			ecec ebec ebeb eceb ecec ecec ecec ecec
+			ecec ebeb eceb ecec ecec ecec ecec ecec
+			eceb ecec ecec ecec ecec ebeb ebeb ebeb
+			ecec ecec ecec ebeb ecec ebec ebeb ebeb
+			ecec ecec ebeb ebeb eceb ecec ecec ecec
+			ecec ebec ebeb ebeb ebeb ecec ecec ecec
+			ebec ebeb ebeb ebeb ebeb ebeb ecec ecec
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb eaeb eaea eaea ebea ebeb ebeb
+			ebeb eaea eaea e7e7 e7e7 eaea eaea ebeb
+			eaea e7ea e7e7 e7e7 e7e7 e7e7 eae7 eaea
 			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e6e7 e6e6 e6e6 e7e6 e7e7 e7e7
-			e7e7 e6e6 e6e6 e5e5 e5e5 e6e6 e6e6 e7e7
-			e6e6 e5e6 e5e5 e5e5 e5e5 e5e5 e6e5 e6e6
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2
-			e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1
+			e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e6e9 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e6e9 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e9e9 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6
+			e8e8 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
+			e8e8 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
+			e5e5 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2 e2e2
+			c2c5 c2c2 c2c2 c2c2 c2c2 c2c2 c2c2 c2c2
+			c1c3 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
 			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
-			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
-			c0c0 c0c0 c0c0 c0c0 c0c0 c0c0 c0c0 c0c0
-			c0c0 a0c0 a0a0 a0a0 a0a0 a0a0 c0c0 c0c0
-			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
-			a0a0 a0a0 40a0 4040 4040 a040 a0a0 a0a0
-			a0a0 4040 4040 4040 4040 4040 4040 a0a0
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 2040 0020 0000 0000 2000 4020 4040
+			c1c1 a1c1 a1a1 a1a1 a1a1 a1a1 c1c1 c1c1
+			a1a1 a1a1 a1a1 a1a1 a1a1 a1a1 a1a1 a1a1
+			a1a1 a1a1 41a1 4141 4141 a141 a1a1 a1a1
+			a1a1 4141 4141 4141 4141 4141 4141 a1a1
+			4141 4141 4141 4141 4141 4141 4141 4141
+			4141 2141 0121 0101 0101 2101 4121 4141
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2344,14 +2344,15 @@
 		6ad0 5e8f 62b0 7fff
 	</tex_palette>
 	<tex_palette index="35" name="sea_jimen_pl" color_size="8">
-		6bbf 77df 7fff 7fff 7fff 7fff 7fff 7fff
+		639f 63bf 67bf 6bbf 6bdf 6fdf 7fff 7fff
 	</tex_palette>
 	<tex_palette index="36" name="sea_simi.1_pl" color_size="8">
 		4b1c 4afb 575d 639e 5f7d 679f 6bbf 533c
 	</tex_palette>
-	<tex_palette index="37" name="sea_zanami_pl" color_size="16">
-		59a0 59c2 59e3 5a06 5a29 5e4b 5e6d 5e8f
-		5eb1 62f4 6b59 6f9a 73bc 77de 7bff 7fff
+	<tex_palette index="37" name="sea_zanami_pl" color_size="24">
+		6221 6621 6642 6a44 6a64 6a65 6a67 6a68
+		6a86 6a88 6a8a 6aac 6ace 6b12 6b56 6f79
+		6f9a 73bc 77de 7bff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
