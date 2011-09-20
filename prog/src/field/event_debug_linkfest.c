@@ -710,7 +710,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           FMISSION_START_PARAM param;
 
           MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-          FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_ITEM_KAKERA01, 0, &param.mission, wk->tmpHeapID );
+          FMISSION_DATA_GetMissionParamDirect( 2/*FMISSION_ID_ITEM_KAKERA01*/, 0, &param.mission, wk->tmpHeapID );
           LINK_FESTIVAL_MissionStart( wk->fest_sys, &param.mission, FALSE );
 
           param.succeed_f = FALSE;
@@ -1568,7 +1568,7 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
     value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
   MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-  FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_EFFECT_ENC_TABUNNE01, 0, &param.mission, wk->tmpHeapID );
+  FMISSION_DATA_GetMissionParamDirect( 0 /*FMISSION_ID_EFFECT_ENC_TABUNNE01*/, 0, &param.mission, wk->tmpHeapID );
   param.mission.beacon.m_id = evwk->action;
   param.mission.beacon.item = fake[FAKE_ITEM];
   param.mission.beacon.pay = fake[FAKE_PAY];
