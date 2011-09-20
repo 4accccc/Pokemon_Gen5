@@ -64,11 +64,19 @@ _EVENT_DATA_END
 INIT_EVENT_START   ev_zone_pkwd_entrance
   _FLAG_SET( FV_PKWD_STAFF01 )    //出演者・監督非表示
   _FLAG_RESET( FV_PKWD_STAFF02 )  //スタッフ表示
+  //チュートリアルモード時の制御
   IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
-    //仮：チュートリアル中のOBJ表示制御をここに記述
+    _FLAG_RESET( FV_PKWD_STAFF_TUTORIAL01 )
+    _FLAG_RESET( FV_PKWD_STAFF_TUTORIAL02 )
+  ELSE
+    _FLAG_SET( FV_PKWD_STAFF_TUTORIAL01 )
+    _FLAG_SET( FV_PKWD_STAFF_TUTORIAL02 )
   ENDIF
 INIT_EVENT_END
 
+/**************************************************************/
+//  field_init_label
+/**************************************************************/
 INIT_EVENT_START  ev_init_pkwd_entrance
   IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
     $LOCALWORK0 = 1
@@ -401,6 +409,7 @@ ev_pkwd_rec_go_studio:
   _PKWD_SET_STUDIO_MMDL( LWK_PKWD_SCENARIO, OBJCHRWORK0, OBJCHRWORK1 )
   _FLAG_RESET( FV_PKWD_STAFF01 )  //出演者・監督　表示
   _FLAG_SET( FV_PKWD_STAFF02 )    //スタッフ非表示
+  _FLAG_SET( FV_PKWD_STAFF_TUTORIAL01 ) //チュートリアル時のハチク非表示
   _MAP_CHANGE( ZONE_ID_C15R0101, 15, 16, DIR_UP )
 
 _RET
