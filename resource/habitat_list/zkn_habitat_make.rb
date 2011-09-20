@@ -75,15 +75,17 @@ def set_mons_array_data( group_data ,mons_array ,mons_data )
 end
 
 # バイナリデータを出力する
-def put_bin_file( f_name ,group_data ,mons_array ,group_type ,zone_group,is_white)
+def put_bin_file( f_name ,group_data ,mons_array ,group_type ,zone_group,season_enable,is_white)
   bin = open(f_name,"w")
   
   # 季節の有効状態
-  if group_data.season_enable == true then
-    bin << [ 1 ].pack( "C" )
-  else
-    bin << [ 0 ].pack( "C" )
-  end
+  GTYPE_MAX.times{|g_type|
+    if season_enable[g_type] == true then
+      bin << [ 1 ].pack( "C" )
+    else
+      bin << [ 0 ].pack( "C" )
+    end
+  }
 
   # 地形の有効状態を設定
   landtype_enable = [0,0,0] 
@@ -204,7 +206,9 @@ encount_data.each_key{|zone_id|
 
 # 四季あり、四季なしデータが共存している場合をまとめる
 zone_group_data.each_key{|zone_group|
+  puts zone_group
   zone_group_data[zone_group].merge_season
+  zone_group_data[zone_group].season_enable_check
 }
 
 
@@ -224,7 +228,7 @@ form_hash.each_key{|zone_id|
 }
 
 
-=begin
+begin
 
 # マージしたデータを格納する
 zone_group_data.each_key{|zone_group|
@@ -232,15 +236,15 @@ zone_group_data.each_key{|zone_group|
 
   puts "=============================================================="
   puts "【 %s(ホワイト) 】"%[zone_group]
-  puts " 四季 :%s"%[data.season_enable]
   puts " 黒有 :%s"%[data.black_enable]
   puts " 白地形 :%s"%[$info_ground_type_name[data.white_ground_type]]
   puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
   GTYPE_MAX.times{|g_type|
+    puts " 四季 :%s"%[data.ground_season_w[g_type]]
+    puts "【 %s 】"%[$ground_type_name[g_type]]
     unless data.white_data[g_type] == nil then
-      puts "【 %s 】"%[$ground_type_name[g_type]]
       data.white_data[g_type].each_key{|season|
         print "%s(%2d種類):"%[$season_name[season],data.white_data[g_type][season].size]
         if data.white_data[g_type][season].size > 20 then
@@ -260,8 +264,9 @@ zone_group_data.each_key{|zone_group|
   # ブラック
   puts "【 %s(ブラック) 】"%[zone_group]
   GTYPE_MAX.times{|g_type|
+    puts " 四季 :%s"%[data.ground_season_b[g_type]]
+    puts "【 %s 】"%[$ground_type_name[g_type]]
     unless data.black_data[g_type] == nil then
-      puts "【 %s 】"%[$ground_type_name[g_type]]
       data.black_data[g_type].each_key{|season|
         print "%s(%2d種類):"%[$season_name[season],data.black_data[g_type][season].size]
         data.black_data[g_type][season].each{|mons_data|
@@ -279,7 +284,7 @@ zone_group_data.each_key{|zone_group|
 }
 
 
-=end
+end
 
 # バイナリデータの出力
 zone_group_data.each_key{|zone_group|
@@ -291,11 +296,11 @@ zone_group_data.each_key{|zone_group|
 
   # ブラック用データ作成
   set_mons_array_data( group_data,b_mons_array ,b_mons_data )
-  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type ,zone_group,false)
+  put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type ,zone_group ,group_data.ground_season_b ,false)
 
   # ホワイト用データ作成
   set_mons_array_data( group_data,w_mons_array ,w_mons_data)
-  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type ,zone_group ,true)
+  put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type ,zone_group ,group_data.ground_season_w ,true)
 }
 
 # データインデックステーブルを作成

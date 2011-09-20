@@ -71,12 +71,12 @@ $(TARGETDIR)/$(habitat_data_b).narc: $(habitat_data_b).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 
-$(habitat_data_b).narc: $(sources_data) $(encout_marshal) zkn_habitat_make.rb
+$(habitat_data_b).narc: $(sources_data) $(encout_marshal) zkn_habitat_make.rb  ../encount/enc_hash_data.rb
 	ruby zkn_habitat_make.rb $(encout_marshal) $(habitat_data_index) $(habitat_data_list_w) $(habitat_data_list_b) $(encout_form_marshal)
 	nnsarc -r -l -n -i $(habitat_data_b) -S $(habitat_data_list_b)
 	$(NAIXCUT) $(habitat_data_b).naix
 
-$(habitat_data_w).narc: $(sources_data) $(encout_marshal) zkn_habitat_make.rb
+$(habitat_data_w).narc: $(sources_data) $(encout_marshal) zkn_habitat_make.rb  ../encount/enc_hash_data.rb
 	nnsarc -r -l -n -i $(habitat_data_w) -S $(habitat_data_list_w)
 	$(NAIXCUT) $(habitat_data_w).naix
 

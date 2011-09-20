@@ -851,6 +851,17 @@ static int MainSeq_CallHabitatZoneList( ZUKAN_MAIN_WORK * wk )
   FreeHabitatListData( wk );
   ZKNCOMM_MakeHabitatListData( p_habitat_sv,p_zone_list );
 
+#ifdef PM_DEBUG
+  if( p_zone_list->list_size == 0 )
+  {
+    GF_ASSERT(0);
+    GFL_HEAP_FreeMemory( wk->work );
+    ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL);
+    wk->prm->retMode = ZUKAN_RET_MENU_CLOSE;
+    return NextProcCall( wk, SEQ_PROC_FINISH );
+  }
+#endif
+
   GFL_PROC_LOCAL_CallProc( wk->localProc,
       FS_OVERLAY_ID(zukan_habitat_list), &ZUKANHABITAT_LIST_ProcData, p_zone_list );
   return NextProcCall( wk, SEQ_HABITAT_ZONE_LIST_END );

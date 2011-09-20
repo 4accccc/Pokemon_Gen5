@@ -631,7 +631,7 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     break;
   case TPID_BUTTON_SEASON_L:
     {
-      if( p_list_data->season_enable == TRUE )
+      if( p_list_data->season_enable[p_wk->land_type] == TRUE )
       {
         ONOUE_Printf("季節切替L\n");
         SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
@@ -640,7 +640,7 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     break;
   case TPID_BUTTON_SEASON_R:
     {
-      if( p_list_data->season_enable == TRUE )
+      if( p_list_data->season_enable[p_wk->land_type] == TRUE )
       {
         ONOUE_Printf("季節切替R\n");
         SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
@@ -714,7 +714,7 @@ static void CheckTopKeyInput( HABITAT_ZONE_WK *p_wk )
   // 四季切替
   if( key_rep & PAD_BUTTON_L )
   {
-    if( p_list_data->season_enable == TRUE )
+    if( p_list_data->season_enable[p_wk->land_type] == TRUE )
     {
       ONOUE_Printf("季節切替L\n");
       SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_L );
@@ -722,7 +722,7 @@ static void CheckTopKeyInput( HABITAT_ZONE_WK *p_wk )
   }
   else if( key_rep & PAD_BUTTON_R )
   {
-    if( p_list_data->season_enable == TRUE )
+    if( p_list_data->season_enable[p_wk->land_type] == TRUE )
     {
       ONOUE_Printf("季節切替R\n");
       SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_SEASON ,SEQ_CHANGE_PARAM_R );
@@ -1206,7 +1206,7 @@ static void MAINSEQ_ChangeSeason( HABITAT_ZONE_WK *p_wk )
   GFL_CLWK *p_no_anm_clwk;
   
   HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-  GF_ASSERT( p_list_data->season_enable == TRUE );
+  GF_ASSERT( p_list_data->season_enable[p_wk->land_type] == TRUE );
 
   // 移動方向にあわせて、CLWKを取得しておく
   if( p_wk->seq_param == SEQ_CHANGE_PARAM_L )
@@ -1957,6 +1957,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       }
 
       GFL_CLACT_WK_SetBgPri( p_clwk ,0 );
+      p_wk->stump_se_frame = 0;
       p_wk->sub_seq++;
     }
     break;
@@ -1964,10 +1965,15 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
     // はんこアニメーション終了待ち
     {
       GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
+      // はんこSE
+      if( p_wk->stump_se_frame == STUMP_SE_FRAME )
+      {
+        PMSND_PlaySE( SEQ_SE_SW_ZUKANSTUMP_01 );
+      }
+      p_wk->stump_se_frame++;
       // アニメーション終了待ち
       if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
       {
-        PMSND_PlaySE( SEQ_SE_SW_ZUKANSTUMP_01 );
         HABITAT_ZONE_GRA_EnableStrCursor( &p_wk->gra_sys );
         GFL_CLACT_WK_SetBgPri( p_clwk ,1 );
         p_wk->sub_seq++;
@@ -2039,7 +2045,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   }
  
   // 季節判定
-  if( p_list_data->season_enable == TRUE )
+  if( p_list_data->season_enable[p_wk->land_type] == TRUE )
   {
     msg_id += p_wk->season + 1; // 季節は1スタート
   }
@@ -2669,9 +2675,9 @@ static void RefreshLandPokeIcon( HABITAT_ZONE_WK *p_wk )
   {
     GFL_CLWK *p_clwk;
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable[p_wk->land_type]);
     p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+    GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable[p_wk->land_type]);
   }
 }
 
@@ -2906,9 +2912,9 @@ static void SetZoneSelectButton( HABITAT_ZONE_WK *p_wk )
 
   // 季節用左右ボタン
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_L );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable[p_wk->land_type]);
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_SEASON_R );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable);
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,p_list_data->season_enable[p_wk->land_type]);
 
   // 説明を見る
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_EXPLANATION );

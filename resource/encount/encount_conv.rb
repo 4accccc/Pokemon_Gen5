@@ -41,9 +41,9 @@ $enc_prob_list = ["弱草Lv1","弱草Lv2","強草Lv1","強草Lv2","弱長草Lv1","強長草Lv1
 $type_name_table = ["草地","砂地","沼","洞窟","橋","混合","なし"]
 
 # 地面タイプ置換え用配列（地面の時のみ置換え、水上はなしに置き換えておく）
-$groud_type_id = [GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUDN_TYPE_CAVE,GROUDN_TYPE_CAVE,GROUND_TYPE_SAND,GROUDN_TYPE_NONE,GROUDN_TYPE_NONE,GROUDN_TYPE_SWAMP]
+$groud_type_id = [GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_GRASS,GROUND_TYPE_CAVE,GROUND_TYPE_CAVE,GROUND_TYPE_SAND,GROUND_TYPE_NONE,GROUND_TYPE_NONE,GROUND_TYPE_SWAMP]
 # 特殊地形タイプ用
-$groud_type_id_ex = [GROUDN_TYPE_NONE,GROUDN_TYPE_CAVE,GROUDN_TYPE_BRIDGE]
+$groud_type_id_ex = [GROUND_TYPE_NONE,GROUND_TYPE_CAVE,GROUND_TYPE_BRIDGE]
 
 $ground_type_id = [GTYPE_GROUND,GTYPE_GROUND,
       GTYPE_GROUND,GTYPE_WATER,GTYPE_WATER,GTYPE_FISHING,GTYPE_FISHING]
@@ -471,10 +471,8 @@ class CEncountData
       unless zone_hash.key?(zone_name) then
         zone_hash[zone_name] = CEncHashData.new
 
-        if season == SEASON_NONE then
-          zone_hash[zone_name].season_enable = false
-        else
-          zone_hash[zone_name].season_enable = true
+        unless season == SEASON_NONE then
+          zone_hash[zone_name].set_season_enable()
         end
         
         # 黒バージョンの有効状態
@@ -484,7 +482,7 @@ class CEncountData
       # ホワイトの地形タイプ
       ret_type = gourd_type_merge(white.get_ground_type,white.get_ground_type_ex)
       # 季節上で複数の地形を持つ場合なしで上書きはしない
-      unless GROUDN_TYPE_NONE == ret_type then
+      unless GROUND_TYPE_NONE == ret_type then
         zone_hash[zone_name].white_ground_type = ret_type
       end
 
@@ -492,12 +490,12 @@ class CEncountData
       if black_enable == true then
         ret_type = gourd_type_merge(black.get_ground_type,black.get_ground_type_ex)
         # 季節上で複数の地形を持つ場合なしで上書きはしない
-        unless GROUDN_TYPE_NONE == ret_type then
+        unless GROUND_TYPE_NONE == ret_type then
           zone_hash[zone_name].black_ground_type = ret_type
         end
       else
         # 季節上で複数の地形を持つ場合なしで上書きはしない
-        unless GROUDN_TYPE_NONE == ret_type then
+        unless GROUND_TYPE_NONE == ret_type then
           zone_hash[zone_name].black_ground_type =
             zone_hash[zone_name].white_ground_type
         end
@@ -534,7 +532,7 @@ class CEncountData
 
   # 地形タイプと特殊地形タイプをマージして返す
   def gourd_type_merge( groudn_type ,ex_groudn_type )
-    ret_id = GROUDN_TYPE_NONE
+    ret_id = GROUND_TYPE_NONE
     # 通常地形存在チェック
     if groudn_type.size > 0 then
       idx = $enc_prob_list.index(groudn_type)
@@ -544,19 +542,19 @@ class CEncountData
     if ex_groudn_type.size > 0 then
       idx = $item_tbl_list.index(ex_groudn_type)
       # 特殊地形タイプが設定されているときのみ
-      if $groud_type_id_ex[idx] != GROUDN_TYPE_NONE then
-        if ret_id == GROUDN_TYPE_NONE then
+      if $groud_type_id_ex[idx] != GROUND_TYPE_NONE then
+        if ret_id == GROUND_TYPE_NONE then
           # 通常地形がない時は上書き
           ret_id = $groud_type_id_ex[idx]
         else
           # 通常地形と異なる場合はマルチ
           unless ret_id == $groud_type_id_ex[idx] then
-            ret_id = GROUDN_TYPE_MULTI
+            ret_id = GROUND_TYPE_MULTI
           end
 
           # エラーチェック
-          if ((ret_id == GROUDN_TYPE_NONE)  &&
-              ($groud_type_id_ex[idx]!=GROUDN_TYPE_BRIDGE)) then
+          if ((ret_id == GROUND_TYPE_NONE)  &&
+              ($groud_type_id_ex[idx]!=GROUND_TYPE_BRIDGE)) then
             raise "特殊タイプだけのゾーンエラー"
           end
         end

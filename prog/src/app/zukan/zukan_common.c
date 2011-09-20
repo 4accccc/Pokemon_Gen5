@@ -133,7 +133,7 @@ u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habi
   {
     BOOL flg = CheckHabitatZone( 
         p_zkn_sv,&arc_data.mons_data[i],
-        ground_type,season_id,arc_data.season_enable );
+        ground_type,season_id,arc_data.season_enable[ground_type] );
     if( flg == TRUE )
     {
       max++;
@@ -151,7 +151,7 @@ u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habi
   {
     BOOL flg = CheckHabitatZone( 
         p_zkn_sv,&arc_data.mons_data[i],
-        ground_type,season_id,arc_data.season_enable );
+        ground_type,season_id,arc_data.season_enable[ground_type] );
     if( flg == TRUE )
     {
       buf[data_cnt] = arc_data.mons_data[i].monsno;
@@ -382,7 +382,7 @@ GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm
 void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_DATA * p_zone_info,BOOL is_set_single_zone )
 {
   ZUKAN_SAVEDATA *p_save;
-  s32 i;
+  s32 i,ground_type;
   EVENTWORK *p_event_wk = GAMEDATA_GetEventWork( p_zone_info->p_gdata );
   BOOL is_vanish[HABITAT_GROUND_MAX]; //リストの表示状態
 
@@ -494,8 +494,13 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
 
           // ゾーンごとのデータ
           p_zone_data->zone_group = sc_habitat->zone_group_id;
-          p_zone_data->season_enable = arc_data.season_enable;
           p_zone_data->info_ground_type = arc_data.ground_type;
+          
+          for( ground_type = HABITAT_GROUND_LAND; ground_type < HABITAT_GROUND_MAX;ground_type++ )
+          {
+            p_zone_data->season_enable[ground_type] =
+                          arc_data.season_enable[ground_type];
+          }
 
           //        ONOUE_Printf("ゾーンID:%u\n",p_zone_data->zone_group);
           //        ONOUE_Printf("季節フラグ:%u\n",p_zone_data->season_enable);
@@ -652,16 +657,6 @@ void ZKNCOMM_MakeHabitatListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_LIST_DATA 
           p_ld->is_vanish[HABITAT_GROUND_FISHING] 
             = is_vanish[HABITAT_GROUND_FISHING];
 
-#ifdef PM_DEBUG
-          {
-            s32 hoge = 0;
-            for( hoge = 0; hoge < HABITAT_GROUND_MAX ; hoge++ )
-            {
-              hoge += p_ld->is_exist_landtype[hoge] & p_ld->is_vanish[hoge];
-            }
-            GF_ASSERT(hoge);
-          }
-#endif
           // コンプリート状態
           {
             // 地形コンプリート状態を設定する

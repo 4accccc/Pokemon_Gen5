@@ -9,16 +9,28 @@
 # */
 #//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
+$KCODE = "SJIS" #文字コードをSJISに設定。monsno_hash.rbの読み込みに必要
+require File.dirname(__FILE__) + '/../personal/monsno_hash.rb'
 
 class CEncHashData
-  attr_accessor :white_data ,:black_data ,:black_enable ,:season_enable ,:black_ground_type ,:white_ground_type 
+  attr_accessor :white_data ,:black_data ,:black_enable ,:season_enable ,:black_ground_type ,:white_ground_type ,:ground_season_w ,:ground_season_b
 
   # 初期化
   def initialize
     @white_data = {GTYPE_GROUND=>{},GTYPE_WATER=>{},GTYPE_FISHING=>{}}
     @black_data = {GTYPE_GROUND=>{},GTYPE_WATER=>{},GTYPE_FISHING=>{}}
-    @white_ground_type = GROUDN_TYPE_NONE
-    @black_ground_type = GROUDN_TYPE_NONE
+    @white_ground_type = GROUND_TYPE_NONE
+    @black_ground_type = GROUND_TYPE_NONE
+    @ground_season_w = [false,false,false]
+    @ground_season_b = [false,false,false]
+    @season_enable = false
+  end
+
+  # 季節を有効にする
+  def set_season_enable
+    @season_enable = true
+    @ground_season_w = [true,true,true]
+    @ground_season_b = [true,true,true]
   end
 
   # クラスを結合する
@@ -26,7 +38,7 @@ class CEncHashData
 
     # 季節あり優先
     if other.season_enable == true then
-      @season_enable = true
+      set_season_enable()
     end
 
     # 地形タイプのマージ
@@ -44,12 +56,12 @@ class CEncHashData
   # 地形タイプのマージ
   def ground_type_merge(gtype,other_gtype)
     # 地形タイプを統合する
-    if  gtype == GROUDN_TYPE_NONE then
+    if  gtype == GROUND_TYPE_NONE then
       gtype = other_gtype
-    elsif other_gtype != GROUDN_TYPE_NONE then
+    elsif other_gtype != GROUND_TYPE_NONE then
       # 混合タイプチェック
       unless gtype == other_gtype then
-        gtype = GROUDN_TYPE_MULTI
+        gtype = GROUND_TYPE_MULTI
       end
     end
 
@@ -86,6 +98,7 @@ class CEncHashData
             @black_data[g_type][season].uniq!
           }
         end
+
         # ホワイトデータのマージン
         if @white_data[g_type].key?(SEASON_NONE) then
           no_season_data = @white_data[g_type][SEASON_NONE]
@@ -99,10 +112,52 @@ class CEncHashData
             @white_data[g_type][season].uniq!
           }
         end
+
+       
+      }
+    end
+  end
+  
+  # 季節の有効フラグをチェック
+  def season_enable_check
+    if @season_enable == true then
+      GTYPE_MAX.times{|g_type|
+        @ground_season_b[g_type] = check_season( g_type ,@black_data )
+        @ground_season_w[g_type] = check_season( g_type ,@white_data )
       }
     end
   end
 
+  # 季節チェック
+  def check_season( g_type ,data )
+    flg = false
+    # 四季が全て存在するかチェック
+    if data[g_type].size == 4 then
+      for key_season in SEASON_SPRING..SEASON_AUTUMN
+        for season in (key_season+1)..SEASON_WINTER
+          if data[g_type][season].size == data[g_type][key_season].size then
+            data[g_type][season].each{|key|
+              if data[g_type][key_season].index(key) == nil then
+                # 見つからない = 季節有り
+                return true
+              end
+            }
+          else
+            # サイズが違う = 季節有り
+            return true
+          end
+        end
+      end
+    else
+      # 季節は存在するが、特定の季節のみエンカウントがなくなる場合
+      unless data[g_type].size == 0 then
+            return true
+      end
+    end
+
+    # 四季なし
+    return false
+  end
 end
 
 class CFormData

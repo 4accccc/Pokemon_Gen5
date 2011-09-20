@@ -43,6 +43,7 @@ enum
   NOHABITATDATA_MSG_POS_Y = 120,
   NOHABITATDATA_MSG_W = 200,
   NOHABITATDATA_MSG_H = 16,
+  STUMP_SE_FRAME = 19,
 };
 
 
@@ -131,5 +132,9 @@ struct _HABITAT_ZONE_WK{
 
   // 地形位置
   HABITAT_GROUND_TYPE default_land_type;    // 表示中のの場所タイプ
+  
+  // はんこ演出
+  u32 stump_se_frame;
+
 };
 

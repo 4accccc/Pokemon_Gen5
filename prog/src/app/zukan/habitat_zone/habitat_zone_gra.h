@@ -332,7 +332,6 @@ typedef struct {
   BOOL is_trance_pal_col;
   HABITAT_GROUND_TYPE set_trance_traypal_type;
 
-
 }HABITAT_ZONE_GRA_WK;
 
 //=============================================================================
