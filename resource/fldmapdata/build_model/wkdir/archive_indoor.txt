@@ -212,3 +212,4 @@
 "nsbmdfiles/ja_public23.nsbmd"
 "nsbmdfiles/ja_public24.nsbmd"
 "nsbmdfiles/p_gun02.nsbmd"
+"nsbmdfiles/door_pwood01.nsbmd"
