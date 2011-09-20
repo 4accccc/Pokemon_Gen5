@@ -479,11 +479,10 @@
 　owner_demo_03bかowner_demo_04に分岐
 ・コンディションを引っ張ってくるタグは未完成（発注済）
 ・続けてowner_demo_05
-
-※SWANで人称を一人用に変更</Comment>
+※swanで人称を一人用に変更</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:01:09" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T10:39:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -555,11 +554,10 @@
 ・続けてmsg_c04r0201_white_03
 ・これ以降、オーナーにはなしかけると
 　msg_c04r0201_owner_01を表示
-
-※SWANで人称を一人用に変更・キー待ち記号削除</Comment>
+※swanで人称を一人用に変更・キー待ち記号削除</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:01:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T10:39:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2003,11 +2001,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・わざマシン49「エコーボイス」をくれる
-・入手前</Comment>
+・アイテム入手処理
+・わざマシン49「エコーボイス」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:33:16" />
+				Time="2011-09-20T10:41:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2067,11 +2065,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・わざマシン49「エコーボイス」をくれる
-・説明</Comment>
+・入手後自動で表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:33:22" />
+				Time="2011-09-20T10:41:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2129,11 +2126,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・わざマシン49「エコーボイス」をくれる
 ・入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T03:33:28" />
+				Time="2011-09-20T10:41:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2624,14 +2620,13 @@
 			Language="JPN">
 			<Comment>♂
 ●データコンバート時
-・メッセージ表示後 はい／いいえ選択肢
-・はい
-　owner_demo_swan_02b
-・いいえ
-　owner_demo_swan_02c</Comment>
+・メッセージ表示後
+　はい/いいえの選択肢表示
+　はい　→owner_demo_swan_02b
+　いいえ→owner_demo_swan_02c</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:57:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T10:42:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2886,46 +2881,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_white_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-29T09:22:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-29T09:22:32" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-29T09:22:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-29T09:22:39" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-29T09:22:30" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c04r0201_owner_swan_01"
 		Style="Large">
 		<LanguageCell
@@ -2973,7 +2928,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3022,7 +2977,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3065,7 +3020,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3116,7 +3071,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3165,7 +3120,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3216,7 +3171,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3269,7 +3224,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

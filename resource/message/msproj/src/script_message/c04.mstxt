@@ -889,13 +889,13 @@
 オレの　いもうとさ
 プレゼントされた　チョロネコを▽
 プラズマだんに　うばわれたんだよ……▼
-オレも　トレーナーとして
-みじゅくでさ　なにも　できなくて……▼
+オレも　ただの　ガキだし
+なにも　できなくて……▼
 だから……　だから
 もっと　つよくならなきゃな……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T07:51:28" />
+				Time="2011-09-20T10:14:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -907,13 +907,13 @@
 オレの　妹さ
 プレゼントされた　チョロネコを▽
 プラズマ団に　奪われたんだよ……▼
-オレも　トレーナーとして
-未熟でさ　なにも　できなくて……▼
+オレも　ただの　ガキだし
+なにも　できなくて……▼
 だから……　だから
 もっと　強くならなきゃな……！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T07:52:04" />
+				Time="2011-09-20T10:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1058,12 +1058,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエは
-ポケモンずかんを　あつめてろよ！▽
-それが　たびの　りゆう　なんだろ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエの
+たびの　りゆうは▽
+ポケモンずかん　なんだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:25:27" />
+				Time="2011-09-20T10:15:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1071,12 +1071,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエは
-ポケモン図鑑を　集めてろよ！▽
-それが　旅の　理由なんだろ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエの
+旅の　理由▽
+ポケモン図鑑　なんだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:25:18" />
+				Time="2011-09-20T10:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
