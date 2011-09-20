@@ -443,6 +443,7 @@
 #define FE_D24_SWBELL_FIRSTTALK            427 /* 0x01ab リバースマウンテン：初回会話フラグ */
 #define FE_T06R0101_CHAMPION_WIN_01        428 /* 0x01ac サンギタウン：クリア後アデク戦を終えたフラグ */
 #define FE_D27R0401_SWBOSS_WIN_01          429 /* 0x01ad プラズマフリゲート；クリア後アクロマ戦を終えたフラグ */
+#define FE_C05R0501_SWRIVAL_TALK           430 /* 0x01ae ホドモエシティ：クリア後ライバルと初回会話フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -821,6 +822,11 @@
 #define FV_R16R0201_BACKPACKERM_01         867 /* 0x0363 迷いの森：バックパッカー（ゾロアーク） */
 #define FV_D10R0501_SWSAGE1_02             868 /* 0x0364 ジャイアントホール：杖なしゲーチス */
 #define FV_D10R0501_WAND_01                869 /* 0x0365 ジャイアントホール：杖 */
+#define FV_BC10_TRAINER_01                 870 /* 0x0366 ブラックシティ：住人01 */
+#define FV_BC10_TRAINER_02                 871 /* 0x0367 ブラックシティ：住人02 */
+#define FV_WC10_TRAINER_01                 872 /* 0x0368 ホワイトフォレスト：住人01 */
+#define FV_WC10_TRAINER_02                 873 /* 0x0369 ホワイトフォレスト：住人02 */
+#define FV_C05R0501_SWRIVAL_01             874 /* 0x036a ホドモエシティ：ポケモンハウスのライバル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2561,6 +2567,7 @@
 #define TMFLG_C01GYM0101_LEADER1_BT       2776 /* 0x0ad8 サンヨウレストラン：１日１回三つ子ダブルバトルイベント */
 #define TMFLG_C01GYM0101_SHOW             2777 /* 0x0ad9 サンヨウレストラン：サルショーイベント */
 #define TMFLG_C14_PHOTO                   2778 /* 0x0ada セイガイハシティ：顔出し看板 */
+#define TMFLG_C05R0501_SWRIVAL_BTL        2779 /* 0x0adb ホドモエシティ：クリア後ライバル再戦フラグ */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
