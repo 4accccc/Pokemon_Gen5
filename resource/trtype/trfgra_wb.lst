@@ -187,6 +187,9 @@ trwb_mugenboss,PTL_SEX_MALE
 trwb_pkwd_ladybug,PTL_SEX_MALE
 tbwb_hero,PTL_SEX_MALE
 tbwb_heroine,PTL_SEX_FEMALE
+tbwb_leader1a,PTL_SEX_MALE
+tbwb_leader1c,PTL_SEX_MALE
+tbwb_leader1b,PTL_SEX_MALE
 tbwb_rival,PTL_SEX_MALE
 tbwb_support,PTL_SEX_FEMALE
 tbwb_araragi,PTL_SEX_MALE
