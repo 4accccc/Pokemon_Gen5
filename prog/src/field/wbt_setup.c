@@ -324,6 +324,7 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
   wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT優勝回数
   wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //自分情報
 
+#if 0  // 旧仕様のためコメントアウト
 	//  レベルの反映
   if ( WBTTOOL_CheckCupEnable( gamedata, WBTCUP_POKETYPE ) == FALSE )
   { //タイプトーナメントに参戦できない→LV1
@@ -337,19 +338,13 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
   { //タイプトーナメント、チャンピオントーナメントともにOK→LV3
     wr_param->status = WIN_RECORD_STATUS_LV3;
   }
-
+#endif
+  
   //すべての優勝回数カウンタ用のオープン条件をセット
   for ( i = 0; i < WBTWIN_COUNT_MAX; i ++ )
   {
-    if ( i == WBTWIN_COUNT_WCS )
-    {
-      wr_param->open_flag[ i ] = FALSE;
-    }
-    else
-    {
       WBTCUP wbtcup = WBTTOOL_WBTWinCountToCup( i );
       wr_param->open_flag[ i ] = WBTTOOL_CheckCupEnable( gamedata, wbtcup );
-    }
   }
 
   wr_param->result_work = res_work;

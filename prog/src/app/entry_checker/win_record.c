@@ -191,7 +191,7 @@ enum{
 	TMT_SINOU,								// シンオウ
 	TMT_WORLD,								// ワールド
 	TMT_CHAMPION,							// チャンピオン
-	TMT_WCS,								// WCS2011
+//	TMT_WCS,								// WCS2011
 	TMT_RENTAL,								// レンタル
 	//
 	TMT_RENTAL_MASTER,						// レンタルマスター
@@ -566,7 +566,7 @@ static const s16 wr_tmt_gmm_tbl[] = {
 	msg_wbt_wincount_005,			// シンオウ
 	msg_wbt_wincount_006,			// ワールド
 	msg_wbt_wincount_007,			// チャンピオン
-	msg_wbt_wincount_008,			// WCS
+//	msg_wbt_wincount_008,			// WCS
 	msg_wbt_wincount_009,			// レンタル
 	//
 	msg_wbt_wincount_010,			// レンタルマスター
@@ -605,7 +605,7 @@ static const s16 wbtwin_tbl[] = {
 	WBTWIN_COUNT_SINOU,				// シンオウ
 	WBTWIN_COUNT_WORLD,				// ワールド
 	WBTWIN_COUNT_CHAMPION,			// チャンピオンズ
-	WBTWIN_COUNT_WCS,				// WCS
+//	WBTWIN_COUNT_WCS,				// WCS
 	WBTWIN_COUNT_RENTAL,			// レンタル
 	//
 	WBTWIN_COUNT_RENTALMASTER,		// レンタルマスター
@@ -2016,7 +2016,8 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 #endif
 	for(i=0;i<TMT_MAX;i++){
 		// 表示の判定
-		bflg = wr_chk_dispflag( wk, i );
+//		bflg = wr_chk_dispflag( wk, i );
+		bflg = wr_chk_dispflag( wk, wbtwin_tbl[i] );
 		if(bflg == TRUE){
 			// 表示
 			wk->DispBuffer[j] = i;
@@ -2043,10 +2044,13 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 	OS_Printf("total win count :%d\n",wk->TotalWinCount);
 #endif
 	
-#if 0
+#if 1
 	OS_Printf("boy :%d\n",wk->TrainerId);
 	for(i=0;i<TMT_MAX;i++){
-		OS_Printf("%d, %d: %d\n",i,wbtwin_tbl[i],wk->CountBuffer[i]);
+		OS_Printf("%d, %d:%d\n",i,wbtwin_tbl[i], wk->CountBuffer[i]);
+	}
+	for(i=0;i<wk->DispMaxNum;i++){
+		OS_Printf("%d,%d\n", i, wk->DispBuffer[i] );
 	}
 #endif
 }
@@ -2330,9 +2334,12 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	switch(mode){
 		//
 		// 初期(念のため)
-		case TMT_HODOMOE:		// ホドモエ
-		case TMT_RENTAL:		// レンタル
-		case TMT_SHAFFLE:		// シャッフル
+//		case TMT_HODOMOE:		// ホドモエ
+//		case TMT_RENTAL:		// レンタル
+//		case TMT_SHAFFLE:		// シャッフル
+		case WBTWIN_COUNT_HODOMOE:		// ホドモエ
+		case WBTWIN_COUNT_RENTAL:		// レンタル
+		case WBTWIN_COUNT_SHUFFLE:		// シャッフル
 			bflg = TRUE;
 			break;
 		//

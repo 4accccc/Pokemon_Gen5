@@ -19,7 +19,7 @@
  */
 //------------------------------------------------------------------
 enum {
-  LOCAL_WBTWIN_COUNT_MAX = 30,
+  LOCAL_WBTWIN_COUNT_MAX = 29,  // 30->29
 
   LOCAL_WBTSAVE_FLAG_MAX = 64,
 
@@ -36,6 +36,7 @@ struct _WBTSAVE{
 
   ///優勝回数カウント（WBTWIN_COUNT定義で指定）
   u16 WinCount[ LOCAL_WBTWIN_COUNT_MAX ];
+  u16 pad;    // セーブデータを継続可能にするため(サイズを30にするためpadding)
 
   ///各種フラグ用領域（WBTSAVE_FLAG定義を参照）
   u8 flag[ LOCAL_WBTSAVE_FLAG_MAX / 8 ];
