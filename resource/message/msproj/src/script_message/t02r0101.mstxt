@@ -967,7 +967,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t02r0101_girl1_17">
+		Label="msg_t02r0101_girl1_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いくわよ！　あたしが
