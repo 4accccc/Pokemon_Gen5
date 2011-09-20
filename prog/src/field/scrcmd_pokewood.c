@@ -304,33 +304,19 @@ VMCMD_RESULT EvCmdPokewoodShow( VMHANDLE *core, void *wk )
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   int rec_id =  SCRCMD_GetVMWorkValue( core, work );
+  u16          *ret_wk  = SCRCMD_GetVMWork( core, wk );
+  PKWDSYS      *pkwdsys = getPOKEWOODSys( wk );
   GMEVENT *next_event;
+
   next_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)&rec_id );
   SCRIPT_CallEvent( scw, next_event );
+  PKWDSYS_SetScriptAnswerWork( pkwdsys, ret_wk );
 
   OS_Printf("EvCmdPokewoodShow( rec_id = %d\n", rec_id );
   return VMCMD_RESULT_SUSPEND;
 }
 
-// ----------------------------------------
-// ----------------------------------------
-static GMEVENT * createDummyEvent( void * wk )
-{
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
-
-	GMEVENT *new_event;
-	PKWD_BOOK_PARAM 	*pkwd_param = PKWD_BOOK_PARAM_Create( heapID, gsys, NULL );
-
-	new_event = GMEVENT_CreateOverlayEventCall( gsys,
-      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BOOK_EVENT_Show, (void *)pkwd_param );
-
-  return new_event;
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  スクリプトコマンド：ポケウッド台本画面呼び出し

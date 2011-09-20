@@ -651,11 +651,11 @@ enum{
   PW_SHOW_SEQ_BRIEFING_APP,
   PW_SHOW_SEQ_BRIEFING_APP_END,
   PW_SHOW_SEQ_CALL_BATTLE,
-  PW_SHOW_SEQ_FREE_BSP,
   PW_SHOW_SEQ_FIELD_BGM_PLAY,
   PW_SHOW_SEQ_FIELD_OPEN,
   PW_SHOW_SEQ_FIELD_BGM_WAIT,
   PW_SHOW_SEQ_FADEIN,
+  PW_SHOW_SEQ_FREE_BSP,
   PW_SHOW_SEQ_END,
 };
 //-----------------------------------------------------------------------------
@@ -685,7 +685,8 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
   //エンカウントエフェクト
   case PW_SHOW_SEQ_ENCOUNT_EFFECT:
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys,fieldmap,FIELD_FADE_WAIT) );
+    //ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
     (*seq)++;
     break;
 
@@ -737,13 +738,6 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     (*seq)++;
     break;
 
-  // 呼び出しパラメーター解放
-  case PW_SHOW_SEQ_FREE_BSP:
-    GFL_STR_DeleteBuffer( prew->TrainerTypeName );  // バトルで使用したトレーナータイプ名バッファを作成
-    deletePokewoodBSP( pbew->bp );
-    (*seq) ++;
-    break;
-
   // フィールドBGMを復帰
   case PW_SHOW_SEQ_FIELD_BGM_PLAY:
     GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
@@ -769,6 +763,22 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     (*seq) ++;
     break;
 
+  // 呼び出しパラメーター解放
+  case PW_SHOW_SEQ_FREE_BSP:
+    // バトルで使用したトレーナータイプ名バッファを削除
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
+    { //途中でキャンセルしてないかをスクリプトに返す
+      PKWDSYS * pkwdsys = *(GAMEDATA_GetPKWDSysPointer( gamedata ) );
+      u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
+      if ( ret_wk != NULL )
+      {
+        *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
+      }
+    }
+    deletePokewoodBSP( pbew->bp );
+    (*seq) ++;
+    break;
+
   case PW_SHOW_SEQ_END:
     return GMEVENT_RES_FINISH;
   }
@@ -786,11 +796,11 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
     PW_REC_SEQ_FIELDMAP_EXIT,
     PW_REC_SEQ_CALL_BATTLE,
     PW_REC_SEQ_SAVE,
-    PW_REC_SEQ_FREE_BSP,
     PW_REC_SEQ_FIELD_BGM_PLAY,
     PW_REC_SEQ_FIELD_OPEN,
     PW_REC_SEQ_FIELD_BGM_WAIT,
     PW_REC_SEQ_FADEIN,
+    PW_REC_SEQ_FREE_BSP,
     PW_REC_SEQ_END,
   };
 
@@ -815,7 +825,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
 
   //エンカウントエフェクト
   case PW_REC_SEQ_ENCOUNT_EFFECT:
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, ENCEFFID_POKEWOOD);
     (*seq)++;
     break;
 
@@ -841,14 +851,6 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
     (*seq)++;
     break;
 
-  // バトル呼び出しパラメータを解放
-  case PW_REC_SEQ_FREE_BSP:
-    GFL_STR_DeleteBuffer( prew->TrainerTypeName );  // バトルで使用したトレーナータイプ名バッファを作成
-    deletePokewoodBSP( pbew->bp );
-    //侵入システムにフィールド中であることを伝える
-    (*seq) ++;
-    break;
-
   case PW_REC_SEQ_FIELD_BGM_PLAY:
     // フィールドBGMを復帰
     GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
@@ -870,6 +872,23 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
   case PW_REC_SEQ_FADEIN:
     GMEVENT_CallEvent( event, 
         EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq) ++;
+    break;
+
+  // バトル呼び出しパラメータを解放
+  case PW_REC_SEQ_FREE_BSP:
+    // バトルで使用したトレーナータイプ名バッファを削除
+    GFL_STR_DeleteBuffer( prew->TrainerTypeName );
+    { //途中でキャンセルしてないかをスクリプトに返す
+      PKWDSYS * pkwdsys = *(GAMEDATA_GetPKWDSysPointer( gamedata ) );
+      u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
+      if ( ret_wk != NULL )
+      {
+        *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
+      }
+    }
+    deletePokewoodBSP( pbew->bp );
+    //侵入システムにフィールド中であることを伝える
     (*seq) ++;
     break;
 

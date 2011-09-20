@@ -151,6 +151,7 @@ EVENT_START ev_pokewood_rec
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
+        _CALL ev_pkwd_rec_exit_studio
       ELSE
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
       ENDIF
@@ -213,17 +214,17 @@ ev_pkwd_rec_studio:
     //ここで撮影アプリ呼び出し
     _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
 
-    //仮：本当は戻り値で制御
-    $SCWK_ANSWER = TRUE
+    _DEBUG_PRINT_WK( SCWK_ANSWER )
     IF $SCWK_ANSWER == FALSE THEN
       //監督のセリフ：もう一度撮影するか？
       $SCWK_ANSWER = msg_pw_studio_23
       _CALL sub_director_talk
       _YES_NO_WIN( SCWK_ANSWER )
-      IF $SCWK_ANSWER == SCR_YES THEN
-        //→「はい」：もう一度（なにも変更していない）
+      IF $SCWK_ANSWER != SCR_YES THEN
+        //→「いいえ」：もう一度（なにも変更していない）
       ELSE
-        //→「いいえ」：シーケンス終了へ
+        //→「はい」：シーケンス終了へ
+        _MSGWIN_CLOSE()
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
         //このループを抜ける
         $LWK_PKWD_REC_LOOP = FALSE
@@ -266,14 +267,7 @@ _RET
 //  撮影後 撮影エントランス
 /**************************************************************/
 ev_pkwd_after_rec:
-  _FLAG_SET( FV_PKWD_STAFF01 )    //出演者・監督非表示
-  _FLAG_RESET( FV_PKWD_STAFF02 )  //スタッフ表示
-
   $SCWK_TARGET_OBJID = C15R0201_SUNGLASSES_01
-
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_producer_turn_to_player )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_to_producer )
-  _OBJ_ANIME_WAIT()
 
   //公開するかどうかの処理フロー
   _CALL ev_pkwd_rec_save
@@ -287,15 +281,6 @@ ev_pkwd_after_rec:
   ENDIF
 
 _RET
-
-_ANIME_LABEL  anm_producer_turn_to_player
-  _ANIME_DATA AC_STAY_WALK_R_8F, 1
-  _ANIME_DATA ACMD_END, 0
-
-_ANIME_LABEL  anm_player_talk_to_producer
-  _ANIME_DATA AC_WALK_D_8F, 1
-  _ANIME_DATA AC_STAY_WALK_L_8F, 1
-  _ANIME_DATA ACMD_END, 0
 
 /**************************************************************/
 /**************************************************************/
@@ -394,6 +379,7 @@ ev_pkwd_rec_pokelist:
 _RET
 
 /**************************************************************/
+//  スタジオへの入室処理
 /**************************************************************/
 ev_pkwd_rec_go_studio:
   //「OK!じゃあ撮影を始めようか！」
@@ -433,6 +419,28 @@ _ANIME_LABEL  anm_player_go_studio2
 _ANIME_LABEL  anm_player_go_studio3
   _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+//  スタジオからの退出処理
+/**************************************************************/
+ev_pkwd_rec_exit_studio:
+  _FLAG_SET( FV_PKWD_STAFF01 )    //出演者・監督非表示
+  _FLAG_RESET( FV_PKWD_STAFF02 )  //スタッフ表示
+
+  _OBJ_ANIME( C15R0201_SUNGLASSES_01, anm_producer_turn_to_player )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_to_producer )
+  _OBJ_ANIME_WAIT()
+_RET
+
+_ANIME_LABEL  anm_producer_turn_to_player
+  _ANIME_DATA AC_STAY_WALK_R_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_player_talk_to_producer
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
 
 /**************************************************************/
 // ポケウッド：映画を公開するか
@@ -988,7 +996,7 @@ ev_pkwd_show_watch_movie:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
   _OBJ_ANIME_WAIT()
 
-  _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS )
+  _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
 
   //スクリーンから出てくる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )

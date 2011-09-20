@@ -15223,12 +15223,13 @@
  * @param[in]   rec_pos
  */
 //--------------------------------------------------------------
-#define _PKWD_SHOW( rec_pos ) \
-    _ASM_PKWD_SHOW rec_pos
+#define _PKWD_SHOW( rec_pos, ret_wk ) \
+    _ASM_PKWD_SHOW rec_pos, ret_wk
 
-    .macro  _ASM_PKWD_SHOW rec_pos
+    .macro  _ASM_PKWD_SHOW rec_pos, ret_wk
     .short  EV_SEQ_PKWD_SHOW
     .short  \rec_pos
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
