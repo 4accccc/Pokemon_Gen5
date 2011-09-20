@@ -601,8 +601,8 @@ GMEVENT * EVENT_WBTBattle(
   bew->is_no_lose = TRUE; //敗戦処理無し
   bew->not_free_bsp = TRUE; //開放しない。呼び出し元で開放する
   
-  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
-  bew->EncEffNo = ENCEFFID_SUBWAY;
+  //エンカウントエフェクトセット
+  bew->EncEffNo = ENCEFFID_WBT;
    
   //エフェクトエンカウント　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
