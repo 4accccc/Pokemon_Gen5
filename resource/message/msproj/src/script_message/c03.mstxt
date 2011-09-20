@@ -75,14 +75,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっと　しごとが　おわったとき▼
-なげた　モンスターボールが
-ころころと　３かい　ゆれたとき▼
+			<Text>ベッドで　ねむりに　つくとき▼
+ぼくの　ポケモンの　こうげきが
+きゅうしょに　あたったとき▼
 ぼくの　じんせいは　いろんな
 よろこびに　あふれておるのです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:25:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,14 +90,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　仕事が　終わったとき▼
-投げた　モンスターボールが
-ころころと　３回　揺れたとき▼
+			<Text>ベッドで　眠りに　つくとき▼
+ぼくの　ポケモンの　攻撃が
+きゅうしょに　あたったとき▼
 ぼくの　人生は　いろんな
 喜びに　あふれておるのです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -106,10 +106,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:25:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -140,10 +140,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしは　たたかう　ビジネスマン！
-……だけど　ポケモンは　よわいのだ</Text>
+あきらめなければ　いつか　かつ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -152,10 +152,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>私は　闘う　ビジネスマン！
-……だけど　ポケモンは　弱いのだ</Text>
+あきらめなければ　いつか　勝つ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,10 +164,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:27:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -197,16 +197,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いそがしい　いそがしいッ！▼
-あさごはんを　たべたら
-ひるごはんの　ことを　かんがえる▼
-ひるごはんを　たべおえたら
-ばんごはんに　ついて　なやむ▼
-まいにち　それの　くりかえし……
-なんて　いそがしいんだろう！</Text>
+			<Text>こんなに　ひとが　おおいと
+みんな　おなじ　かおに　みえちゃう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -214,16 +209,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>忙しい　忙しいッ！▼
-ブレックファーストを　食べたら
-ランチの　メニューを　考える▼
-ランチを　食べ終えたら
-ディナーに　ついて　悩む▼
-毎日　それの　繰り返し……
-なんて　忙しいんだろう！</Text>
+			<Text>こんなに　人が　多いと
+みんな　同じ　顔に　みえちゃう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -232,10 +222,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:33:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -265,13 +255,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ！　トレーナー！
-きみの　ポケモン　げんきかい？▼
-げんきが　いちばんだよ
-げんきなら　なんでも　できるからね！</Text>
+			<Text>げんきが　いちばん　だけど
+むりやり　げんきを　だすぐらいなら▽
+やすんだって　いいんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:34:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -279,13 +268,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！　トレーナー！
-きみの　ポケモン　元気かい？▼
-元気が　一番だよ
-元気なら　なんでも　できるからね！</Text>
+			<Text>元気が　一番だけど
+むりやり　元気を　だすぐらいなら▽
+休むんだって　いいんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,10 +282,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:35:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -327,13 +315,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ブツブツ▼
-ポケモンの　わざを　かえるか
-それとも　ポケモンを　かえるか▼
-……ブツブツ</Text>
+			<Text>ポケモンの　わざを　かえるか
+もたせる　どうぐを　かえるか……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -341,13 +327,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ブツブツ▼
-ポケモンの　技を　変えるか
-それとも　ポケモンを　変えるか▼
-……ブツブツ</Text>
+			<Text>ポケモンの　技を　変えるか
+持たせる　道具を　変えるか……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,10 +340,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:37:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -449,11 +433,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はとばで　ふねを　ながめるのが
-アタシなりの　ひるやすみよ</Text>
+			<Text>こんなに　はってん　するまえの
+ヒウンって　どんなふう　だったのかな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -461,11 +445,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>波止場で　船を　ながめるのが
-アタシの　昼休みスタイルよ</Text>
+			<Text>こんなに　発展する　前の
+ヒウンって　どんな風　だったのかな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -474,10 +458,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:41:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -566,11 +550,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルカンパニーでは
-うでじまんの　トレーナーを▽
-かんげい　していまーす！</Text>
+モニターを　ぼしゅう　してます▼
+うでじまんの　トレーナーさんは
+あそびに　きてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,11 +564,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バトルカンパニーでは
-腕自慢の　トレーナーを▽
-歓迎していまーす！</Text>
+モニターを　募集してます▼
+腕自慢の　トレーナーさんは
+遊びに　来てくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -592,10 +578,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:42:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -626,11 +612,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ブームは　いつか　すぎて……▼
-でも　いいものなら
+それでも　いい　ものなら
 ていばん　として　あいされるわね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T11:38:40" />
+				Time="2011-09-20T07:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -639,11 +625,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ブームは　いつか　すぎて……▼
-でも　いいものなら
+それでも　いい　ものなら
 定番として　愛されるわね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T11:38:54" />
+				Time="2011-09-20T07:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

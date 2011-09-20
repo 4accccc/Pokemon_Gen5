@@ -875,6 +875,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:57:42" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T07:49:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>？？？</Text>
