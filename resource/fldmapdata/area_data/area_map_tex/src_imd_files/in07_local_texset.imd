@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-09-01T12:24:03" source="in07_local_texset.mb"/>
+	<create user="fujiwara" host="W00251" date="2011-09-20T20:27:27" source="in07_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-09-01T12:24:03" source="in07_local_texset.mb"/>
+<original_create user="fujiwara" host="W00251" date="2011-09-20T20:27:27" source="in07_local_texset.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,10 +18,10 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="58 58"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="58 58"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -1348,41 +1348,41 @@
 	<tex_image index="44" name="m_whouse04"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="m_whouse04_pl"
 		path="C:/home/swan_data3d/field/in07/chip/tex/m_whouse04.tga"
 	>
 		<bitmap size="128">
-			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 3355 3333 5555 3555 4433 4444
-			5555 4355 4444 4444 5555 4435 4444 4444
-			5555 4443 4444 1111 3555 4444 1114 1111
-			4355 1444 1111 1111 4355 1144 1111 5511
-			4355 1144 1511 5511 4355 1114 1551 5511
-			4355 1114 1555 5511 4355 1114 1555 5511
-			4355 1114 1555 5511 4355 1114 1000 0011
-			4355 1114 1000 0011 4355 1114 1111 1111
-			4355 1114 1111 1111 4355 1114 1111 1111
-			4355 1114 1555 5511 4355 1114 1555 5511
-			4355 1114 1555 5511 4355 1114 1555 5511
-			4355 1114 1000 0011 4355 1114 1000 0011
-			4355 1114 1111 1111 4355 1114 1111 1111
-			4355 1114 1111 1111 2355 2222 2222 2222
-			3555 2222 2222 2222 5555 3333 3333 3333
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 4400 4444 0000 4000 5544 5555
+			0000 5400 5555 5555 0000 5540 5555 5555
+			0000 5554 5555 2222 4000 5555 2225 2222
+			5400 2555 2222 2222 5400 2255 2222 0022
+			5400 2255 2022 0022 5400 2225 2002 0022
+			5400 2225 2000 0022 5400 2225 2000 0022
+			5400 2225 2000 0022 5400 2225 2111 1122
+			5400 2225 2111 1122 5400 2225 2222 2222
+			5400 2225 2222 2222 5400 2225 2222 2222
+			5400 2225 2000 0022 5400 2225 2000 0022
+			5400 2225 2000 0022 5400 2225 2000 0022
+			5400 2225 2111 1122 5400 2225 2111 1122
+			5400 2225 2222 2222 5400 2225 2222 2222
+			5400 2225 2222 2222 3400 3333 3333 3333
+			4000 3333 3333 3333 0000 4444 4444 4444
 		</bitmap>
 	</tex_image>
 	<tex_image index="45" name="m_whouse05"
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="m_whouse05_pl"
 		path="C:/home/swan_data3d/field/in07/chip/tex/m_whouse05.tga"
 	>
 		<bitmap size="32">
-			4444 4444 4444 3334 4444 1113 3444 1111
-			1344 1111 1344 4411 1344 4411 1344 4411
-			1344 0011 1344 0011 1344 1111 1344 1111
-			3344 1111 2344 2222 2444 2222 4444 4444
+			0000 0000 0000 4440 0000 2224 4000 2222
+			2400 2222 2400 0022 2400 0022 2400 0022
+			2400 1122 2400 1122 2400 2222 2400 2222
+			4400 2222 3400 3333 3000 3333 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="46" name="m_whouse06"
@@ -1882,10 +1882,10 @@
 		571a 5b3b 5f5c 52f9
 	</tex_palette>
 	<tex_palette index="44" name="m_whouse04_pl" color_size="8">
-		2d49 18c5 25d8 212f 1085 7fff 7fff 7fff
+		7fff 2d49 18c5 25d8 212f 1085 7fff 7fff
 	</tex_palette>
 	<tex_palette index="45" name="m_whouse05_pl" color_size="8">
-		2d49 18c5 25d8 212f 7fff 7fff 7fff 7fff
+		7fff 2d49 18c5 25d8 212f 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="46" name="m_whouse06_pl" color_size="4">
 		254a 2d8c 35ce 7fff
