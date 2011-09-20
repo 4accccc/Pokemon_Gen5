@@ -111,7 +111,9 @@ MANUAL_COMMON_WORK*  MANUAL_COMMON_Init(
   // ファイルハンドル
   {
     work->handle_system  = GFL_ARC_OpenDataHandle( ARCID_MANUAL, work->heap_id );
-    work->handle_explain = GFL_ARC_OpenDataHandle( ARCID_MANUAL_IMAGE, work->heap_id );
+    // @todo
+    // ROM容量削減のため、一時的にコメントアウト
+    //work->handle_explain = GFL_ARC_OpenDataHandle( ARCID_MANUAL_IMAGE, work->heap_id );
   }
 
   // パレット
