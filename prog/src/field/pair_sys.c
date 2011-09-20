@@ -266,11 +266,12 @@ u16 PAIRSYS_GetPairID( GAMEDATA* gdata )
 u16 PAIRSYS_GetPairTrainerID( GAMEDATA* gdata )
 {
   u16 pair_id = PAIRSYS_GetPairID( gdata );
+  PAIR_SYSTEM_WORK* wk = GAMEDATA_GetPairSystemWork( gdata );
 
   if( pair_id == PAIR_ID_NONE){
     return TRID_NULL;
   }
-  return TRID_RIVAL_07;
+  return wk->tr_id;
 }
 
 //---------------------------------------------------
