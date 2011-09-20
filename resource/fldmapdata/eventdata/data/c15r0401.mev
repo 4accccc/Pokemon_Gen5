@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 13:03:58
+#save date:2011/09/20 18:31:20
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0401.wms
 #SECTION START:OBJ_EVENT
@@ -50,7 +50,7 @@ DOOR_ID_C15R0201_C15R0401_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
