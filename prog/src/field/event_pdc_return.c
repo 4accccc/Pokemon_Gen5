@@ -20,6 +20,7 @@
 #include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
 #include "gamesystem/game_data.h"
 #include "savedata/record.h"
+#include "field/resonance_resort_data.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -192,6 +193,7 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           RECORD *record = GAMEDATA_GetRecordPtr(param->gameData);
           RECORD_Inc(record,RECID_CAPTURE_POKE);
           RECORD_Inc(record,RECID_DAYCNT_CAPTURE);
+          RESORT_RECORD_AddID( RESORT_RECORD_ID_GETPOKE );
         }
 
         // 親名セットしてるけど、本来はエンカウント前にフィールド側で設定すべき？

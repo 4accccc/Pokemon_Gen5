@@ -272,18 +272,29 @@
 #define RESORT_NPC_DATA_MOUTHCOMM_A_03        (7)
 #define RESORT_NPC_DATA_MOUTHCOMM_A_04        (8)
 #define RESORT_NPC_DATA_MOUTHCOMM_A_05        (9)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_00        (10)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_01        (11)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_02        (12)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_03        (13)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_04        (14)
-#define RESORT_NPC_DATA_MOUTHCOMM_I_05        (15)
-
-#define RESORT_NPC_DATA_MOUTHCOMM_MSG_00      (16)  //èâä˙à•éAï∂
-#define RESORT_NPC_DATA_MOUTHCOMM_MSG_01      (17)  //í èÌà•éAï∂
-#define RESORT_NPC_DATA_MOUTHCOMM_MSG_02      (18)  //âÒìöämîFï∂
-#define RESORT_NPC_DATA_MOUTHCOMM_MSG_03      (19)  //åJÇËï‘Çµï∂
-#define RESORT_NPC_DATA_MOUTHCOMM_MSG_04      (20)  //â\Ç™Ç»Ç¢Ç∆Ç´ï∂
+#define RESORT_NPC_DATA_MOUTHCOMM_A_06        (10)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_07        (11)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_08        (12)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_09        (13)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_10        (14)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_11        (15)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_00        (16)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_01        (17)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_02        (18)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_03        (19)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_04        (20)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_05        (21)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_06        (22)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_07        (23)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_08        (24)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_09        (25)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_10        (26)
+#define RESORT_NPC_DATA_MOUTHCOMM_I_11        (27)
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_00      (28)  //èâä˙à•éAï∂
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_01      (29)  //í èÌà•éAï∂
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_02      (30)  //âÒìöämîFï∂
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_03      (31)  //åJÇËï‘Çµï∂
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_04      (32)  //â\Ç™Ç»Ç¢Ç∆Ç´ï∂
 
 //_RESORT_GET_SERVICE_DATAóp
 #define RESORT_SERVICE_DATA_EFFECT            (0)
@@ -398,4 +409,5 @@
 #define  RESORT_RECORD_ID_GAMESYNC    (28)//ÉQÅ[ÉÄÉVÉìÉNÇÇµÇΩ
 #define  RESORT_RECORD_ID_MYSTERYGIFT (29)//Ç”ÇµÇ¨Ç»Ç®Ç≠ÇËÇ‡ÇÃÇñ·Ç¡ÇΩ
 #define  RESORT_RECORD_ID_IR          (30)//IRÇÇµÇΩ
-#define  RESORT_RECORD_ID_MAX         (31)//ç≈ëÂêî
+#define  RESORT_RECORD_ID_GETPOKE     (31)//É|ÉPÉÇÉìÇïﬂÇ‹Ç¶ÇΩ
+#define  RESORT_RECORD_ID_MAX         (32)//ç≈ëÂêî

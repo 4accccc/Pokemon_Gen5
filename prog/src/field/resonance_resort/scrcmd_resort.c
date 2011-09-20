@@ -1282,6 +1282,8 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param   = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   
+  NAGI_Printf( "param[%d]\n", param );
+
   switch( param )
   {
   case RESORT_NPC_DATA_OBJID:
@@ -1302,6 +1304,12 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_NPC_DATA_MOUTHCOMM_A_03:
   case RESORT_NPC_DATA_MOUTHCOMM_A_04:
   case RESORT_NPC_DATA_MOUTHCOMM_A_05:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_06:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_07:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_08:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_09:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_10:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_11:
     param = param - RESORT_NPC_DATA_MOUTHCOMM_A_00;
     *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 + param );
     break;
@@ -1311,6 +1319,12 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_NPC_DATA_MOUTHCOMM_I_03:
   case RESORT_NPC_DATA_MOUTHCOMM_I_04:
   case RESORT_NPC_DATA_MOUTHCOMM_I_05:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_06:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_07:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_08:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_09:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_10:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_11:
     {
       u16 msgid;
       param = param - RESORT_NPC_DATA_MOUTHCOMM_I_00;

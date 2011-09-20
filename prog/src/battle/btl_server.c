@@ -30,6 +30,7 @@
 #include "btl_server_flow.h"
 #include "btl_server_local.h"
 #include "handler\hand_tokusei.h"
+#include "field/resonance_resort_data.h"
 
 #include "btl_server.h"
 
@@ -1827,6 +1828,7 @@ void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* b
 
   BTL_MAIN_RECORDDATA_Inc( server->mainModule, RECID_CAPTURE_POKE );
   BTL_MAIN_RECORDDATA_Inc( server->mainModule, RECID_DAYCNT_CAPTURE );
+  RESORT_RECORD_AddID( RESORT_RECORD_ID_GETPOKE );
 }
 
 void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )

@@ -88,7 +88,6 @@ KUTIKOMI_COL_ANSWER_NUM    = 7     #列:回答数
 KUTIKOMI_COL_ANSWER_START  = 8     #列：回答開始
 
 KUTIKOMI_COL_ANSWER_MAX    = 12     #列：回答最大数
-KUTIKOMI_COL_MSG_MAX    = 6     #列：文章最大数
 def convertKutikomi( csv, data, msg_h, tagHash )
   
   #データの作成
@@ -101,14 +100,14 @@ def convertKutikomi( csv, data, msg_h, tagHash )
     ques  = csv.get( row, KUTIKOMI_COL_QUESTION )
     num   = csv.get( row, KUTIKOMI_COL_ANSWER_NUM )
 
-    if num.to_i() > KUTIKOMI_COL_MSG_MAX 
-      p "回答数の最大は#{KUTIKOMI_COL_MSG_MAX }です"
+    if num.to_i() > KUTIKOMI_COL_ANSWER_MAX 
+      p "回答数の最大は#{KUTIKOMI_COL_ANSWER_MAX }です"
       exit(1)
     end
 
     tagHash.store( tag, row-KUTIKOMI_ROW_START )
 
-    for index in KUTIKOMI_COL_MSG_00...KUTIKOMI_COL_MSG_00 + KUTIKOMI_COL_MSG_MAX-1
+    for index in KUTIKOMI_COL_MSG_00...KUTIKOMI_COL_MSG_04+1
       msg = csv.get( row, index )
       begin
         data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
@@ -125,7 +124,7 @@ def convertKutikomi( csv, data, msg_h, tagHash )
 
     data.write_u16( num )
 
-    for index in KUTIKOMI_COL_ANSWER_START...KUTIKOMI_COL_ANSWER_START + KUTIKOMI_COL_ANSWER_MAX-1
+    for index in KUTIKOMI_COL_ANSWER_START...KUTIKOMI_COL_ANSWER_START + KUTIKOMI_COL_ANSWER_MAX
       answer   = csv.get( row, index )
 
       if answer == nil
@@ -138,6 +137,8 @@ def convertKutikomi( csv, data, msg_h, tagHash )
         end
       end
     end
+
+    data.write_u16( 0 ) #ダミー
   end
 end
 #-------------------------------------

@@ -42,6 +42,7 @@
 #include "multiboot/mb_local_def.h"
 #include "test/ariizumi/ari_debug.h"
 #include "debug/debug_str_conv.h"
+#include "field/resonance_resort_data.h"
 //======================================================================
 //  define
 //======================================================================
@@ -2114,6 +2115,7 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
     RECORD *record = GAMEDATA_GetRecordPtr(work->initWork->gameData);
     RECORD_Add(record,RECID_CAPTURE_POKE,pokeNum);
     RECORD_Add(record,RECID_DAYCNT_CAPTURE,pokeNum);
+    RESORT_RECORD_AddID( RESORT_RECORD_ID_GETPOKE );
   }
   MB_TPrintf( "Num[%d]\n",pokeNum );
   for( i=0;i<pokeNum;i++ )
