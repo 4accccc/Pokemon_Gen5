@@ -198,11 +198,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４ばんどうろも　すっかり　かわった！
-かわると　なんだか　ワクワクするの！</Text>
+			<Text>４ばんどうろの　いせきは　すごいな！
+どんなものでも　はっけんは　いいの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:35:15" />
+				Time="2011-09-20T09:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -210,11 +210,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４番道路も　すっかり　変わった！
-変化って　なんだか　ワクワクするの！</Text>
+			<Text>４番道路の　遺跡は　すごいな！
+どんなものでも　発見は　いいの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:36:18" />
+				Time="2011-09-20T09:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -223,11 +223,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver
-※仮メッセージ</Comment>
+・White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:36:43" />
+				Time="2011-09-20T09:20:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -256,11 +255,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４ばんどうろの　いせきは　すごいな！
-どんなものでも　はっけんは　いいの！</Text>
+			<Text>４ばんどうろも　すっかり　かわった！
+かわると　なんだか　ワクワクする！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:35:56" />
+				Time="2011-09-20T09:21:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -268,11 +267,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４番道路の　遺跡は　すごいな！
-どんなものでも　発見は　いいの！</Text>
+			<Text>４番道路も　すっかり　変わった！
+変化って　なんだか　ワクワクする！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:36:35" />
+				Time="2011-09-20T09:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,11 +280,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACKver
-※仮メッセージ</Comment>
+・Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:36:44" />
+				Time="2011-09-20T09:20:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

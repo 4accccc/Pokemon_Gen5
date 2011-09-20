@@ -123,10 +123,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょうしょうしき　はじめるよ▼</Text>
+			<Text>表彰式　はじめるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:25:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,10 +160,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆうしゅうな　せいせきを
-おさめ…▼</Text>
+おさめ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -171,11 +171,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうしゅうな　せいせきを
-おさめ…▼</Text>
+			<Text>優秀な　成績を
+修め……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -208,11 +208,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…その　きねんとして
+			<Text>……その　きねんとして
 これを　さしあげます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -220,11 +220,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>…その　きねんとして
+			<Text>……その記念として
 これを　さしあげます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -271,11 +271,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メダルラリーは　まだまだ
-おわりでは　ありません▼
+終わりでは　ありません▼
 これからも　がんばって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -498,11 +498,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん！
 いらっしゃいませ！▼
-ひょうしょうしきを
-はじめましょう！▼</Text>
+ひょうしょうしきを　はじめましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -512,11 +511,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん！
 いらっしゃいませ！▼
-ひょうしょうしきを
-はじめましょう！▼</Text>
+表彰式を　はじめましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -550,11 +548,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん
-あなたは　すべての　メダルを▼
+あなたは　すべての　メダルを▽
 パーフェクトに　コレクトし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -563,11 +561,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん
-あなたは　すべての　メダルを▼
+あなたは　すべての　メダルを▽
 パーフェクトに　コレクトし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:26:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -600,11 +598,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そのきねん　として
+			<Text>その　きねん　として
 これを　さしあげます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -612,11 +610,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そのきねん　として
+			<Text>その記念として
 これを　さしあげます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -709,10 +707,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいこう</Text>
+			<Text>最高</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1085,10 +1083,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しつもんある？</Text>
+			<Text>質問ある？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,10 +1318,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イチオシとうろく</Text>
+			<Text>イチオシ登録</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1602,10 +1600,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イチオシとうろくとは▼</Text>
+			<Text>イチオシ登録とは▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:27:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -415,13 +415,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっと！　いま　つくっているのは
-ゲームの　エンディング　なんだ▼
-ここで　みないで
-じぶんの　めで　たしかめてよ</Text>
+			<Text>プログラムはね
+とにかく　かんがえ　はたらき▽
+さいごに　いのるんだ！▼
+うごけ！　うごけっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T08:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -429,13 +429,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっと！　現在　製作しているのは
-ゲームの　エンディング　なんだ▼
-ここで　みないで
-自分の　目で　確かめてよ</Text>
+			<Text>プログラムはね
+とにかく　かんがえ　はたらき▽
+さいごに　いのるんだ！▼
+うごけ！　うごけっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T08:53:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,10 +444,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T08:53:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -469,13 +469,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　グラフィッカーなの
-１ドットに　たましいを　こめてます！▼
-ええーい！　ここに　１ドットを
-えぐりこむようにして　うつべし！</Text>
+			<Text>みたことも　ないものを　かくには
+いろんなものを　かんさつ　よね！▼
+みるだけじゃなく　ぶんせきして
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -498,10 +498,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T08:53:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -556,11 +556,11 @@
 			<Comment>♂
 ・クリア前
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→03_06
+　いいえ→03_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:33:35" />
+				Time="2011-09-20T08:46:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1160,10 +1160,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>サウンドデザイナー　ですけど
-みんな　どの　きょくが　いいんだろ？</Text>
+みんな　どの　きょくが　すきなの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:27:43" />
+				Time="2011-09-20T09:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1172,10 +1172,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サウンドデザイナー　ですけど
-みんな　どの　きょくが　いいんだろ？</Text>
+みんな　どの曲が　好きなの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:27:45" />
+				Time="2011-09-20T09:01:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1184,11 +1184,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanで新規作成
-※仮メッセージ</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:27:50" />
+				Time="2011-09-20T09:01:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1383,5 +1382,139 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0402_woman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いらっしゃいませ
+ゲームフリーク　です！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:04:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:04:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いらっしゃいませ
+ゲームフリーク　です！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:04:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:04:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝7、GRIDZ＝7
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:03:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0402_man1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いまですね　ぼくはですね▼
+あたらしいですね　ゲームのですね▼
+きかくをですね　かんがえているのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:10:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:09:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今ですね　ぼくはですね▼
+新しいですね　ゲームのですね▼
+企画をですね　考えているのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:11:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:10:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝2、GRIDZ＝12
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:06:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:06:59" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0402_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここ　ひんやり　してますよ
+サーバーは　ひやさないとね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここ　ひんやり　してますよ
+サーバーは　冷やさないとね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝2、GRIDZ＝4、上向き
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:05:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T09:04:52" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
