@@ -1833,11 +1833,11 @@ BREEDERW</Text>
 			Language="JPN">
 			<Text>こういう　しょうぶを　みてると
 ホドモエに　できた　という▼
-ワールドバトルトーナメントに
+ポケモンワールドトーナメントに
 いってみたく　なっちゃうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1847,11 +1847,11 @@ BREEDERW</Text>
 			Language="JPN_KANJI">
 			<Text>こういう　勝負を　みてると
 ホドモエに　できた　という▼
-ワールドバトルトーナメントに
+ポケモンワールドトーナメントに
 行ってみたく　なっちゃうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:05:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2347,11 +2347,10 @@ BACKPACKERM</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T08:09:18" />
+				Time="2011-09-20T11:04:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2841,11 +2840,11 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいところで　であったよね
-これを　あげようと　おもって！</Text>
+			<Text>いいところで　出会ったよね
+これを　あげようと　思って！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:48:07" />
+				Time="2011-09-20T11:00:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2899,14 +2898,14 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そらをとぶ　でーす！▼
-たたかっていないときに
-その　わざを　つかうと　いきたい▽
-ポケモンセンターなどに　いけるよ▼
+戦っていないときに
+その技を　使うと　行きたい▽
+ポケモンセンターなどに　行けるよ▼
 でね　[Name:TrainerName ]くん
-かくしあな　ってしってる？</Text>
+隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:47:54" />
+				Time="2011-09-20T11:00:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2961,14 +2960,14 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そらをとぶ　でーす！▼
-たたかっていないときに
-その　わざを　つかうと　いきたい▽
-ポケモンセンターなどに　いけるよ▼
+戦っていないときに
+その技を　使うと　行きたい▽
+ポケモンセンターなどに　行けるよ▼
 でね　[Name:TrainerName ]さん
-かくしあな　ってしってる？</Text>
+隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:47:54" />
+				Time="2011-09-20T11:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3076,15 +3075,15 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そっかあ……
-じゃあ　せつめい　するね▼
-きと　きの　あいだに
-ポケモンが　かくれそうな　あなが▽
+じゃあ　説明するね▼
+木と　木の　あいだに
+ポケモンが　隠れそうな　穴が▽
 ときどき　みつかるんだよ▼
 それを　そのまんま
-かくしあな　って　よんでるの</Text>
+隠し穴　って　呼んでるの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:01:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3135,14 +3134,14 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　この　あたりで　なにか
-ものおとが　きこえたから▽
-かくしあな　ありそうなんだよねえ▼
+			<Text>あのね　この辺りで　なにか
+物音が　きこえたから▽
+隠し穴　ありそうなんだよねえ▼
 というわけで
-いっしょに　さがそうよ！</Text>
+いっしょに　探そうよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3193,10 +3192,10 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！</Text>
+いっしょに　探してよお！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3246,11 +3245,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！▽
+いっしょに　探してよお！▽
 そらをとぶは　いまは　だめだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3298,11 +3297,11 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　あたりから
-ものおとが　きこえるんだけどなあ</Text>
+			<Text>この辺りから
+物音が　きこえるんだけどなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3350,10 +3349,10 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いま　みつけたのって……！
-かくしあな　でしょ！！</Text>
+隠し穴　でしょ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3404,13 +3403,13 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいね！　だいはっけん！
-だいはっけん　だよお！▼
-ほかにも　かくしあなが　あるか
-あたしも　しらべてみるねえ！</Text>
+			<Text>すごいね！　大発見！
+大発見　だよ！▼
+他にも　隠し穴が　あるか
+あたしも　調べてみるねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-09-20T11:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

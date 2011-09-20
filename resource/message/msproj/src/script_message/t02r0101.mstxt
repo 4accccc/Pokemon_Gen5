@@ -234,10 +234,10 @@
 			<Text>ね！　よかったらなんだけど▼
 あなたの　ツンベアーと
 あたしの　エイパムを▽
-ポケモンこうかん　しよーよ！</Text>
+ポケモン交換　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:06:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -287,10 +287,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うれしい！　では　さっそく
-ポケモンこうかん　スタート!▼</Text>
+ポケモン交換　スタート!▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:06:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -392,12 +392,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうよね……　あなたにとって
-だいじな　パートナー　なのね▼　
+大事な　パートナー　なのね▼　
 もし　よければ
-ポケモンこうかん　してね</Text>
+ポケモン交換　してね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:06:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -445,12 +445,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
+			<Text>あなたに　交換して　もらった
+ツンベアー！　強くなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -498,10 +498,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ね！　よかったらなんだけど
-ポケモンしょうぶ　おねがいできる？</Text>
+ポケモン勝負　お願いできる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -512,11 +512,11 @@
 			<Comment>♀
 ・ポケモン交換後＋マップチェンジ後
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→girl1_07
+　いいえ→girl1_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:41:18" />
+				Time="2011-09-20T11:12:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -538,12 +538,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
-きっと　たまげちゃうわよ！！▼</Text>
+			<Text>いくわよ！　あたしが
+ツンベアーを　どう　そだてたか▽
+じっせんで　おしえてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:41:18" />
+				Time="2011-09-20T11:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -551,12 +551,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
-きっと　たまげちゃうわよ！！▼</Text>
+			<Text>いくわよ！　あたしが
+ツンベアーを　どう　育てたか▽
+実戦で　教えてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:14:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -566,10 +566,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモン交換後＋マップチェンジ後
-・はい選択</Comment>
+・はい選択
+　メッセージ後、トレーナー戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:41:18" />
+				Time="2011-09-20T11:14:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -604,10 +605,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうよね……　いつもいつも
-しょうぶ　したいわけじゃ　ないよね</Text>
+勝負したいわけじゃ　ないよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -663,10 +664,10 @@
 ね！　よかったらなんだけど▼
 ユキノオーを　くれない？
 あたしの　ジュペッタ　あげるから！▽
-ポケモンこうかん　しよーよ！</Text>
+ポケモン交換　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:54" />
+				Time="2011-09-20T11:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -717,10 +718,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うれしい！　では　さっそく
-ポケモンこうかん　スタート!▼</Text>
+ポケモン交換　スタート!▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:45:07" />
+				Time="2011-09-20T11:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -768,11 +769,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　エイパム
-ものひろいを　おぼえているのよ！</Text>
+			<Text>あたしの　ジュペッタ
+おみとおしを　おぼえているのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:45:07" />
+				Time="2011-09-20T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -822,12 +823,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうよね……　あなたにとって
-だいじな　パートナー　なのね▼　
+大事な　パートナー　なのね▼　
 もし　よければ
-ポケモンこうかん　してね</Text>
+ポケモン交換　してね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:45:07" />
+				Time="2011-09-20T11:10:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -865,11 +866,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
+ユキノオー！　つよくなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
+				Time="2011-09-20T11:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -877,12 +878,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
+			<Text>あなたに　交換して　もらった
+ユキノオー！　強くなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
+				Time="2011-09-20T11:10:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -913,6 +914,112 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t02r0101_girl1_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ね！　よかったらなんだけど
+ポケモンしょうぶ　おねがいできる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ね！　よかったらなんだけど
+ポケモン勝負　お願いできる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい/いいえの選択肢表示
+　はい　→girl1_07
+　いいえ→girl1_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_girl1_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>いくわよ！　あたしが
+ユキノオーを　どう　そだてたか▽
+じっせんで　おしえてあげるから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:15:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:14:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いくわよ！　あたしが
+ユキノオーを　どう　育てたか▽
+実戦で　教えてあげるから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:15:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:14:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケモン交換後＋マップチェンジ後
+・はい選択
+　メッセージ後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:14:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T11:12:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t02r0101_girl1_14"
 		Style="Large">
 		<LanguageCell
@@ -930,10 +1037,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうよね……　いつもいつも
-しょうぶ　したいわけじゃ　ないよね</Text>
+勝負したいわけじゃ　ないよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
+				Time="2011-09-20T11:11:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -964,7 +1071,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t02r0101_girl1_15">
+		Label="msg_t02r0101_girl1_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ね！　あたし　あなたと
@@ -982,12 +1090,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ね！　あたし　あなたと
-ポケモンこうかん　できて▼
-さらに　ポケモンしょうぶも　して
+ポケモン交換　できて▼
+さらに　ポケモン勝負も　して
 すっごく　うれしいんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:47:07" />
+				Time="2011-09-20T11:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -124,11 +124,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいところで　であったよね
-これを　あげようと　おもって！</Text>
+			<Text>いいところで　出会ったよね
+これを　あげようと　思って！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,14 +182,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そらをとぶ　でーす！▼
-たたかっていないときに
-その　わざを　つかうと　いきたい▽
-ポケモンセンターなどに　いけるよ▼
+戦っていないときに
+その技を　使うと　行きたい▽
+ポケモンセンターなどに　行けるよ▼
 でね　[Name:TrainerName ]くん
-かくしあな　ってしってる？</Text>
+隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -244,14 +244,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そらをとぶ　でーす！▼
-たたかっていないときに
-その　わざを　つかうと　いきたい▽
-ポケモンセンターなどに　いけるよ▼
+戦っていないときに
+その技を　使うと　行きたい▽
+ポケモンセンターなどに　行けるよ▼
 でね　[Name:TrainerName ]さん
-かくしあな　ってしってる？</Text>
+隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -359,15 +359,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そっかあ……
-じゃあ　せつめい　するね▼
-きと　きの　あいだに
-ポケモンが　かくれそうな　あなが▽
+じゃあ　説明するね▼
+木と　木の　あいだに
+ポケモンが　隠れそうな　穴が▽
 ときどき　みつかるんだよ▼
 それを　そのまんま
-かくしあな　って　よんでるの</Text>
+隠し穴　って　呼んでるの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:01:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -418,14 +418,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　この　あたりで　なにか
-ものおとが　きこえたから▽
-かくしあな　ありそうなんだよねえ▼
+			<Text>あのね　この辺りで　なにか
+物音が　きこえたから▽
+隠し穴　ありそうなんだよねえ▼
 というわけで
-いっしょに　さがそうよ！</Text>
+いっしょに　探そうよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:02:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -476,10 +476,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！</Text>
+いっしょに　探してよお！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -529,11 +529,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！▽
+いっしょに　探してよお！▽
 そらをとぶは　いまは　だめだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -581,11 +581,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　あたりから
-ものおとが　きこえるんだけどなあ</Text>
+			<Text>この辺りから
+物音が　きこえるんだけどなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,10 +633,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いま　みつけたのって……！
-かくしあな　でしょ！！</Text>
+隠し穴　でしょ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -669,7 +669,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r16_swbell_13">
+		Label="msg_r16_swbell_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>すごいね！　だいはっけん！
@@ -686,13 +687,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいね！　だいはっけん！
-だいはっけん　だよお！▼
-ほかにも　かくしあなが　あるか
-あたしも　しらべてみるねえ！</Text>
+			<Text>すごいね！　大発見！
+大発見　だよ！▼
+他にも　隠し穴が　あるか
+あたしも　調べてみるねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:50:28" />
+				Time="2011-09-20T11:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
