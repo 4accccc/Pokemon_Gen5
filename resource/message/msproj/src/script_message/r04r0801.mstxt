@@ -131,14 +131,14 @@
 			Language="JPN_KANJI">
 			<Text>きみの　マネネと
 ぼくの　ウソハチを▽
-こうかん　してほしいな！</Text>
+交換　してほしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-07T06:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:23" />
+				Time="2011-09-20T09:56:57" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -185,17 +185,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンこうかん！
-ポケモンこうかん！▼
-せきがいせんで
-ポケモンが　いったりきたり！▼</Text>
+			<Text>ポケモン交換！
+ポケモン交換！▼
+赤外線で
+ポケモンが　行ったり来たり！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:23" />
+				Time="2011-09-20T09:57:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:23" />
+				Time="2011-09-20T09:56:57" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -344,10 +344,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そっか……▼
-じゃ　また　こんどね</Text>
+じゃ　また　今度ね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:23" />
+				Time="2011-09-20T09:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
