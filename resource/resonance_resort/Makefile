@@ -7,7 +7,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
 
-SUBDIRS	=	data
+SUBDIRS	=	data graphic
 
 include $(RESOURCE_MACRO)
 
