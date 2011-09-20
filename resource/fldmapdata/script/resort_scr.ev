@@ -267,7 +267,7 @@ sub_tourist_invitation:
 	_FIELD_OPEN()
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
-  _CALL sub_jobchange_camera
+  _CALL sub_shopbuild_camera
 	_MAP_FADE_BLACK_IN_SLOW()
 	_MAP_FADE_END_CHECK()
 
@@ -384,7 +384,7 @@ sub_recent_doing:
 	
 	  _BMPMENU_MAKE_LIST( resort_sys_select_37, SEQ_RECENT_RECORD )	  //できごとをきく
 		_BMPMENU_MAKE_LIST( resort_sys_select_38, SEQ_RECENT_MEDAL )	  //メダルをきく
-		_BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_RECENT_BYE )	    //またね
+		_BMPMENU_MAKE_LIST( resort_sys_select_49, SEQ_RECENT_BYE )	    //もどる
 		_BMPMENU_START()
 	
 	  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
@@ -576,7 +576,7 @@ sub_tourist_spot:
 
 		      _CAMERA_START()		//カメラ操作開始
 		      _CAMERA_PURGE()		//カメラのバインドを解く
-          _CALL sub_setspot_camera
+          _CALL sub_shopbuild_camera
 	        _MAP_FADE_WHITE_IN_SLOW()
 	        _MAP_FADE_END_CHECK()
 
@@ -599,13 +599,13 @@ sub_tourist_spot:
 	    _OBJ_ANIME( LWK_OBJID, anm_off_visible )
       _OBJ_ANIME_WAIT()
 
-	    _CAMERA_MOVE( 6565,0,888832,1015808,0,4030464,1 )
+	    _CAMERA_MOVE( 1957,0,888832,1015808,208896,2392064,1 )
  	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
       _BLACK_IN()
       _DISP_FADE_END_CHECK()
 
       //街に経験値が入る
-      _RESORT_ADD_EXP_CITY( LWK_EXP, LWK_RET, LWK_LV )
+      _RESORT_ADD_EXP_CITY( LWK_EXP, LWK_RET2, LWK_LV )
 
       //街の経験値アップ
       _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
@@ -939,7 +939,7 @@ sub_resident_merge:
 	  _FIELD_OPEN()
 	  _CAMERA_START()		//カメラ操作開始
 	  _CAMERA_PURGE()		//カメラのバインドを解く
-    _CALL sub_jobchange_camera
+    _CALL sub_shopbuild_camera
 	  _MAP_FADE_BLACK_IN_SLOW()
 	  _MAP_FADE_END_CHECK()
 
@@ -973,9 +973,9 @@ _RET
 
 
 //==============================================================
-//サブルーチン：転職用カメラセット
+//サブルーチン：お店が建った時用カメラ
 //==============================================================
-sub_jobchange_camera:
+sub_shopbuild_camera:
 {
   SWITCH $LWK_INDEX
   CASE 0 THEN
@@ -1506,19 +1506,19 @@ EVENT_START    ev_resort_secretary_work
 
     CASE SEQ_SECRETARY_WORK_CITYNAME THEN   //街名
        _BALLOONWIN_CLOSE()
-       _RESORT_INPUT_CITYNAME()
+       _RESORT_INPUT_CITYNAME( TRUE )
 
     CASE SEQ_SECRETARY_WORK_AUTHERNAME THEN //自分呼び名
        _BALLOONWIN_CLOSE()
-       _RESORT_INPUT_AUTHERNAME()
+       _RESORT_INPUT_AUTHERNAME( TRUE )
 
     CASE SEQ_SECRETARY_WORK_AUTHERPHRASE THEN //自分口癖
        _BALLOONWIN_CLOSE()
-       _RESORT_INPUT_AUTHERPHRASE()
+       _RESORT_INPUT_AUTHERPHRASE( TRUE )
 
     CASE SEQ_SECRETARY_WORK_AUTHERTHANKS THEN //自分感謝
        _BALLOONWIN_CLOSE()
-       _RESORT_INPUT_AUTHERTHANKS()
+       _RESORT_INPUT_AUTHERTHANKS( TRUE )
 
     CASE SEQ_SECRETARY_WORK_SECSORT THEN  //秘書交換
       _BALLOONWIN_CLOSE()

@@ -693,27 +693,27 @@ static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 
 static BOOL debugMenuCallProc_CallCityNameInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_CITY_NAME, p_wk->gmSys, NULL ) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_CITY_NAME, p_wk->gmSys, NULL, TRUE ) );
 
   return TRUE;
 }
 static BOOL debugMenuCallProc_CallOwnerNameInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_NAME, p_wk->gmSys, NULL ) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_NAME, p_wk->gmSys, NULL, TRUE ) );
 
   return TRUE;
 }
 
 static BOOL debugMenuCallProc_CallOwnerPhraseInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, p_wk->gmSys, NULL ) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, p_wk->gmSys, NULL, TRUE ) );
 
   return TRUE;
 }
 
 static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, p_wk->gmSys, NULL ) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, p_wk->gmSys, NULL, TRUE ) );
 
   return TRUE;
 }

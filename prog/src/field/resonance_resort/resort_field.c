@@ -26,6 +26,7 @@
 //archive
 #include "arc/arc_def.h"
 #include "arc/fieldmap/wbt_gmk.naix"
+#include "arc/resonance_resort_graphic.naix"
 
 //SE
 #include "sound/pm_sndsys.h"
@@ -3228,12 +3229,12 @@ enum
 static const GFL_G3D_UTIL_RES sc_res_table[] = 
 {
   // 優勝 エフェクト
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_a_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
-  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_wbt_e_win_b_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_a_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_a_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_a_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_b_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_b_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_RESONANCE_RESORT_GRAPHIC, NARC_resonance_resort_graphic_ja_ps_b_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
 };
 static const GFL_G3D_UTIL_ANM sc_win_a_anm_table[] =
 {
@@ -3420,9 +3421,9 @@ static void Resort_Field_Effect_StartConfetti( RESORT_FIELD_EFFECT *p_wk )
                             RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
 
     p_start_st->trans.x = FX32_CONST(127);
-    p_start_st->trans.z = FX32_CONST(997);
+    p_start_st->trans.z = FX32_CONST(500);
     p_loop_st->trans.x = FX32_CONST(127);
-    p_loop_st->trans.z = FX32_CONST(997);
+    p_loop_st->trans.z = FX32_CONST(500);
   }
 
   // 表示

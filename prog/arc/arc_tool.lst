@@ -373,4 +373,4 @@
   $VERSION_W2 ARCID_HABITAT_LIST_DATA  "habitat_data_w.narc"   #ホワイト版生息地リストデータ
   $VERSION_B2 ARCID_HABITAT_LIST_DATA  "habitat_data_b.narc"   #ブラック版生息地リストデータ
   ARCID_MARINE_TUBE_GRA "marine_tube_gra.narc"  # マリンチューブ掲示板グラフィック
-
+  ARCID_RESONANCE_RESORT_GRAPHIC "resonance_resort_graphic.narc" #レゾナンスリゾートグラフィック

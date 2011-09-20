@@ -3511,7 +3511,7 @@ RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_D
 //-----------------------------------------------------------------------------
 void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
 {
-  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_SYSTEM) );
 
   Resort_Recv_Data_InitInstitution( p_wk, p_shop );
   {

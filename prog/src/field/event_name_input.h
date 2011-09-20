@@ -32,7 +32,7 @@ typedef enum
   RESORT_NAMEIN_TYPE_AUTHER_PHASE,
   RESORT_NAMEIN_TYPE_AUTHER_THANKS,
 } RESORT_NAMEIN_TYPE;
-extern GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSystem, u16* ret_wk );
+extern GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSystem, u16* ret_wk, BOOL is_default );
 
 // ライバル名入力画面呼び出しイベント
 extern GMEVENT* EVENT_NameInput_Rival( GAMESYS_WORK* gameSystem, u16* ret_wk );

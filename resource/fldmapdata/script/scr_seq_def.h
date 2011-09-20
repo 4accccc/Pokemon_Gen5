@@ -14140,12 +14140,13 @@
  * @brief リゾート用　街名を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
-#define _RESORT_INPUT_CITYNAME() \
-      _ASM_RESORT_INPUT_CITYNAME
+#define _RESORT_INPUT_CITYNAME( default_str ) \
+      _ASM_RESORT_INPUT_CITYNAME default_str
 
-  .macro _ASM_RESORT_INPUT_CITYNAME
+  .macro _ASM_RESORT_INPUT_CITYNAME default_str
   .short EV_SEQ_RESORT_INPUT_NAME
   .short 0
+  .short \default_str
   .endm
 
 //--------------------------------------------------------------
@@ -14153,12 +14154,13 @@
  * @brief リゾート用　自分の呼び名を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
-#define _RESORT_INPUT_AUTHERNAME() \
-      _ASM_RESORT_INPUT_AUTHERNAME
+#define _RESORT_INPUT_AUTHERNAME( default_str ) \
+      _ASM_RESORT_INPUT_AUTHERNAME default_str
 
-  .macro _ASM_RESORT_INPUT_AUTHERNAME
+  .macro _ASM_RESORT_INPUT_AUTHERNAME default_str
   .short EV_SEQ_RESORT_INPUT_NAME
   .short 1
+  .short \default_str
   .endm
 
 //--------------------------------------------------------------
@@ -14166,12 +14168,13 @@
  * @brief リゾート用　口癖を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
-#define _RESORT_INPUT_AUTHERPHRASE() \
-      _ASM_RESORT_INPUT_AUTHERPHRASE
+#define _RESORT_INPUT_AUTHERPHRASE( default_str ) \
+      _ASM_RESORT_INPUT_AUTHERPHRASE default_str
 
-  .macro _ASM_RESORT_INPUT_AUTHERPHRASE
+  .macro _ASM_RESORT_INPUT_AUTHERPHRASE default_str
   .short EV_SEQ_RESORT_INPUT_NAME
   .short 2
+  .short \default_str
   .endm
 
 //--------------------------------------------------------------
@@ -14179,12 +14182,13 @@
  * @brief リゾート用　感謝を入力するPROCを呼ぶ
  */
 //--------------------------------------------------------------
-#define _RESORT_INPUT_AUTHERTHANKS() \
-      _ASM_RESORT_INPUT_AUTHERTHANKS
+#define _RESORT_INPUT_AUTHERTHANKS( default_str ) \
+      _ASM_RESORT_INPUT_AUTHERTHANKS default_str
 
-  .macro _ASM_RESORT_INPUT_AUTHERTHANKS
+  .macro _ASM_RESORT_INPUT_AUTHERTHANKS default_str
   .short EV_SEQ_RESORT_INPUT_NAME
   .short 3
+  .short \default_str
   .endm
   
 //--------------------------------------------------------------

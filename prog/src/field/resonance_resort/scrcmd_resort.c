@@ -1233,9 +1233,10 @@ VMCMD_RESULT EvCmdResortCallInputName( VMHANDLE *p_core, void *p_wk_adrs )
   SCRCMD_WORK*      work = p_wk_adrs;
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
-  u16 type      =   VMGetU16( p_core );
+  u16 type        =   VMGetU16( p_core );
+  u16 is_default  =   VMGetU16( p_core );
 
-  GMEVENT* event = EVENT_NameInput_Resort( type, gsys, NULL );
+  GMEVENT* event = EVENT_NameInput_Resort( type, gsys, NULL, is_default );
 
   SCRIPT_CallEvent( sc, event );
 
