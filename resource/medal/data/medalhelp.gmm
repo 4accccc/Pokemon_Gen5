@@ -1837,19 +1837,19 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_057">
-		<language name="JPN" width="216">くだらない　えいがを
-たくさん　とって　めざせ
-Ｂきゅうえいが　かんとく！</language>
-		<language name="JPN_KANJI" width="216">くだらない映画を
-たくさん　撮って　目指せ
-Ｂ級映画監督！</language>
+		<language name="JPN" width="216">だいほんの　ななめうえを　いく
+ヘンテコな　えいがを　とって
+カルトムービー　デビュー！</language>
+		<language name="JPN_KANJI" width="216">台本の　ななめ上を　いく
+ヘンテコな　映画を　撮って
+カルトムービー　デビュー！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_058">
 		<language name="JPN" width="216">ヘンテコな　えいがを
 たくさん　とって　めざせ
 カルトえいが　かんとく！</language>
-		<language name="JPN_KANJI" width="216">ヘンテコな映画を
+		<language name="JPN_KANJI" width="216">ヘンテコな　映画を
 たくさん　撮って　目指せ
 カルト映画監督！</language>
 	</row>

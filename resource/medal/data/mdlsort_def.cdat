@@ -17,14 +17,13 @@ u32 MedalSortList[] = {
     MDLID_MUGEN_WIN_LV1,	//２０にんぎり
     MDLID_MUGEN_WIN_LV2,	//５０にんぎり
     MDLID_WIN_BP_LV1,	//ＢＰみりおねあ
-    MDLID_PKWD_BADEND,	//Ｂきゅうでぃれくたー
     MDLID_DAYMAX_EXP_LV1,	//ＥＸＰみりおねあ
-    MDLID_FIELD_DUMMY_07,	//あきめだる
     MDLID_FIELD_DUMMY_02,	//あきめだる
-    MDLID_FIELD_DUMMY_04,	//あきめだる
     MDLID_FIELD_DUMMY_03,	//あきめだる
-    MDLID_FIELD_DUMMY_06,	//あきめだる
+    MDLID_FIELD_DUMMY_04,	//あきめだる
     MDLID_FIELD_DUMMY_05,	//あきめだる
+    MDLID_FIELD_DUMMY_06,	//あきめだる
+    MDLID_FIELD_DUMMY_07,	//あきめだる
     MDLID_COMPLETE_AKU,	//あくこれくたー
     MDLID_CHAMPION_AKU,	//あくちゃんぷ
     MDLID_FIELD_COMPLETE,	//あどべんちゃーきんぐ
@@ -67,7 +66,7 @@ u32 MedalSortList[] = {
     MDLID_WAZA_MUKOU,	//からぶりめいじん
     MDLID_WBT_RENTAL_MASTER,	//かりものえんぺらー
     MDLID_WBT_RENTAL,	//かりものきんぐ
-    MDLID_PKWD_STRANGEEND,	//かるとでぃれくたー
+    MDLID_PKWD_STRANGE_ALL,	//かるとでぃれくたー
     MDLID_WBT_KANTO,	//かんとーさいきょう
     MDLID_BILLBOARD_COUNT_LV1,	//かんばんめいじん
     MDLID_GOMIBAKO_LV1,	//がさいれのたつじん
@@ -190,6 +189,7 @@ u32 MedalSortList[] = {
     MDLID_BOX_LV3,	//はこいり３６０
     MDLID_CYCLE_MAX,	//はしるでんせつ
     MDLID_COMM_TRADE_LV1,	//はじめてとれーど
+    MDLID_PKWD_STRANGE_FIRST,	//はじめてのかると
     MDLID_FIRST_MEDAL,	//はじめのいっぽ
     MDLID_KAIRIKI,	//はっするまっする
     MDLID_EFFECT_ENCOUNT_LV1,	//はんたーちゃんす

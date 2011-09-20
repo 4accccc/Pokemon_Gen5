@@ -215,8 +215,8 @@
 #define MDLID_PKWD_SERIES_ALL	(201)	// マスターディレクター
 #define MDLID_PKWD_BOXOFFICE	(202)	// がっぽりムービー
 #define MDLID_PKWD_GOODEND	(203)	// めいさくディレクター
-#define MDLID_PKWD_BADEND	(204)	// Ｂきゅうディレクター
-#define MDLID_PKWD_STRANGEEND	(205)	// カルトディレクター
+#define MDLID_PKWD_STRANGE_FIRST	(204)	// はじめてのカルト
+#define MDLID_PKWD_STRANGE_ALL	(205)	// カルトディレクター
 #define MDLID_FES_HOLD_LV1	(206)	// かいさいビギナー
 #define MDLID_FES_HOLD_LV2	(207)	// かいさいエリート
 #define MDLID_FES_HOLD_LV3	(208)	// かいさいめいじん
