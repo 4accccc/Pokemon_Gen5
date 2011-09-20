@@ -153,6 +153,9 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
   //スクリプトからキャラ設定
   {
     int i;
+    MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(gamedata);
+    u32 sex = MyStatus_GetMySex(p_mystatus);
+
     LOCAL_TVT_CALLDATA *p_data  = LOCAL_TVT_CALLDATA_Init( gamedata, heapID );
 
     LOCAL_TVT_CHARA_PARAM chara_param[LOCAL_TVT_MEMBER_MAX];
@@ -160,7 +163,31 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
     for( i = 0; i < work->member; i++ )
     {
       ZONEID  zoneID  = work->scriptHead->back[i];
-      chara_param[i].charaType  = work->scriptHead->chara[i];
+      switch( work->scriptHead->chara[i] )
+      {
+      case LTCT_SECRET_M:
+        if( sex == PM_FEMALE )
+        {
+          chara_param[i].charaType  = LTCT_SECRET_M;
+        }
+        else
+        {
+          chara_param[i].charaType  = LTCT_SECRET_F;
+        }
+        break;
+      case LTCT_SECRET_M_MASK:
+        if( sex == PM_FEMALE )
+        {
+          chara_param[i].charaType  = LTCT_SECRET_M_MASK;
+        }
+        else
+        {
+          chara_param[i].charaType  = LTCT_SECRET_F_MASK;
+        }
+        break;
+      default:
+        chara_param[i].charaType  = work->scriptHead->chara[i];
+      }
       chara_param[i].bgType     = LOCAL_TVT_CALLDATA_GetBackByZoneID( p_data, zoneID );
       chara_param[i].weatherType= LOCAL_TVT_CALLDATA_GetWeatherByZoneID( p_data, zoneID );
     }

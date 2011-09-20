@@ -20,7 +20,7 @@
 #include "local_tvt_graphic.h"
 #include "local_tvt_message.h"
 #include "local_tvt_debug.h"
-
+#include "field/zonedata.h"
 #include "app/local_tvt_sys.h"
 
 //======================================================================
@@ -99,6 +99,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work = GFL_PROC_AllocWork( proc, sizeof(LOCAL_TVT_WORK), HEAPID_LOCAL_TVT );
   if( pwk == NULL )
   {
+    ZONEDATA_Open( GFL_HEAPID_APP );
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
     initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
     
@@ -201,6 +202,8 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   {
     GAMEDATA_Delete( work->initWork->gameData );
     GFL_HEAP_FreeMemory( work->initWork );
+
+    ZONEDATA_Close();
   }
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_LOCAL_TVT );

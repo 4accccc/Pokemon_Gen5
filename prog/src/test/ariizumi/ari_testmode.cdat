@@ -5,6 +5,7 @@
 #include "musical/musical_shot_sys.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
+#include "field/zonedata.h"
 FS_EXTERN_OVERLAY(musical);
 
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
