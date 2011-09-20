@@ -62,11 +62,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おひさしぶり！
-かざんでは　ありがとね！▼</Text>
+			<Text>ベル『えへへ
+いつのまにか　おいこしてたみたい▼
+リバースマウンテンでは　ありがとね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:45:28" />
+				Time="2011-09-20T13:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -74,11 +75,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『おひさしぶり！
-火山では　ありがとね！▼</Text>
+			<Text>ベル『えへへ
+いつのまにか　追い越してたみたい▼
+リバースマウンテンでは　ありがとね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:45:32" />
+				Time="2011-09-20T13:16:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -87,11 +89,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてhakase2_02
-※仮メッセージ</Comment>
+・続けてhakase2_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T03:54:54" />
+				Time="2011-09-20T13:15:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -565,11 +566,11 @@
 			Language="JPN">
 			<Comment>♀
 ・続けて
-　BLACK2→hakase2_07b
-　WHITE2→hakase2_07w</Comment>
+　Black2→hakase2_07b
+　White2→hakase2_07w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:50:17" />
+				Time="2011-09-20T13:17:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1611,10 +1612,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギはかせえ！
-まって　くださいよお！！▼</Text>
+まってくださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:20:33" />
+				Time="2011-09-20T13:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1623,10 +1624,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ博士え！
-待って　くださいよお！！▼</Text>
+待ってくださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:20:29" />
+				Time="2011-09-20T13:24:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
