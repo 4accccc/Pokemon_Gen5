@@ -474,13 +474,30 @@ class PKWD_INFO
   
 end
 
+def fix_datas( datas )
+  data Array.new
+  
+end
+
 #-------------------------------------------------------
 #-------------------------------------------------------
 #-----------------
 # ŠJn
 #-----------------
+
+#CSVæ‚è‚İ
 datas = CSV.readlines( ARGV[0] )
+
+#ˆê•”•¶š‰»‚¯‚É‘Î‰‚·‚é
+datas.each{|line|
+  line.each{|cell|
+    if cell then
+      cell.sub!("&#xff0d;","|")
+    end
+  }
+}
 #p datas
+
 
 #----------------
 # ã‘¤î•ñ‚Ìˆ—
