@@ -831,6 +831,9 @@
 #define FV_WC10_TRAINER_01                 872 /* 0x0368 ホワイトフォレスト：住人01 */
 #define FV_WC10_TRAINER_02                 873 /* 0x0369 ホワイトフォレスト：住人02 */
 #define FV_C05R0501_SWRIVAL_01             874 /* 0x036a ホドモエシティ：ポケモンハウスのライバル */
+#define FV_D27R0101_STOPPER_01             875 /* 0x036b プラズマフリゲート：ストッパー */
+#define FV_D27_BEFORE_PWPLAZMA_01          876 /* 0x036c プラズマフリゲート：船員（クリア前） */
+#define FV_D27_AFTER_PWPLAZMA_01           877 /* 0x036d プラズマフリゲート：船員（クリア後） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
