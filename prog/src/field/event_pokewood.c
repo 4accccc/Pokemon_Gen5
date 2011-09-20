@@ -58,6 +58,7 @@
 #include "msg/msg_pokewood_name.h"
 #include "../battle/pokewood/pokewood_senario.h"
 #include "pkwd_scenario_open.h"
+#include "pokewood_setup.h"
 
 #include "pokewood_party.naix"
 
@@ -167,6 +168,7 @@ typedef struct {
   u16 EncEffNo;
   PKWD_COUNT_PARAM    pkwd_count_param;
   PKWD_BRIEFING_PARAM pkwd_briefing_param;
+  PKWD_BRIEFING_PARAM pkwd_endroll_param;
   STRBUF              *TrainerTypeName;
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
@@ -623,6 +625,31 @@ static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_
   param->scenario_no  = bsp->pokewoodSenario;
   param->audienceNum  = bsp->audience_num;
   param->mystatus     = mystatus;
+  param->bsp          = bsp;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロールアプリパラメータ作成
+ *
+ * @param   param		
+ * @param   bsp		
+ * @param   mystatus		
+ * @param   gamedata		
+ */
+//----------------------------------------------------------------------------------
+static void _init_pkwd_endroll_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_PARAM *bsp, MYSTATUS *mystatus, GAMEDATA *gamedata )
+{
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+	
+	// 初期化
+  param->sv          = sv;
+  param->gameData    = gamedata;
+  param->mystatus    = mystatus;
+  param->audienceNum = bsp->audience_num;
+  param->audienceBit = bsp->audience_bit;
+  param->bsp         = bsp;
+  
 }
 
 //----------------------------------------------------------------------------------
@@ -651,6 +678,7 @@ enum{
   PW_SHOW_SEQ_BRIEFING_APP,
   PW_SHOW_SEQ_BRIEFING_APP_END,
   PW_SHOW_SEQ_CALL_BATTLE,
+  PW_SHOW_SEQ_CALL_ENDROLL,
   PW_SHOW_SEQ_FIELD_BGM_PLAY,
   PW_SHOW_SEQ_FIELD_OPEN,
   PW_SHOW_SEQ_FIELD_BGM_WAIT,
@@ -658,6 +686,9 @@ enum{
   PW_SHOW_SEQ_FREE_BSP,
   PW_SHOW_SEQ_END,
 };
+
+
+FS_EXTERN_OVERLAY( scrcmd_pokewood );
 //-----------------------------------------------------------------------------
 // ポケウッド上映イベント
 //-----------------------------------------------------------------------------
@@ -726,6 +757,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     break;
   // あらすじアプリ終了待ち
   case PW_SHOW_SEQ_BRIEFING_APP_END:
+    pbew->bp->audience_bit = prew->pkwd_briefing_param.audienceBit; // あらすじで設置した観客配置を引き継ぐ
     _delete_pkwd_briefing_param( &prew->pkwd_briefing_param );
     (*seq)++;
     break;
@@ -737,7 +769,12 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
     (*seq)++;
     break;
-
+  // エンドロール呼び出し
+  case PW_SHOW_SEQ_CALL_ENDROLL:
+    _init_pkwd_endroll_param( &prew->pkwd_endroll_param, pbew->bp, mystatus, gamedata );
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdEndrollProcData, &prew->pkwd_endroll_param );
+    (*seq)++;
+    break;
   // フィールドBGMを復帰
   case PW_SHOW_SEQ_FIELD_BGM_PLAY:
     GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );

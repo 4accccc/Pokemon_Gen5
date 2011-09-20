@@ -781,7 +781,7 @@ typedef struct
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
                                                BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood,
-                                               int audienceNum, HEAPID heapID );
+                                               int audienceNum, u32 audienceBit, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
@@ -910,7 +910,7 @@ static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, 
-                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, 0, heapID );
+                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, 0, 0, heapID );
 }
 
 //============================================================================================
@@ -934,10 +934,10 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, 
                                    PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, 
-                                   BtlMultiMode multiMode, int pokewood, int audienceNum, HEAPID heapID )
+                                   BtlMultiMode multiMode, int pokewood, int audienceNum, u32 audienceBit, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, 
-                              multiMode, pokewood, audienceNum, heapID );
+                              multiMode, pokewood, audienceNum, audienceBit, heapID );
 }
 
 //============================================================================================
@@ -962,7 +962,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
                                                BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, 
-                                               int audienceNum, HEAPID heapID )
+                                               int audienceNum, u32 audienceBit, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -984,6 +984,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->main_loop_tcb_flag = main_loop_tcb_flag;
   biw->pokewood    = pokewood;
   biw->audienceNum = audienceNum;
+  biw->audienceBit = audienceBit;
 
   //パレットフェード初期化
   biw->pfd = pfd;
@@ -3124,17 +3125,16 @@ static void _set_audienceBit( u32 *work, int index )
 static void set_audience_appear( BTLV_INPUT_WORK *biw )
 {
   int count=0,no,i;
-  
-  while(count!=biw->audienceNum){
-    no = GFUser_GetPublicRand( BTLV_INPUT_AUDIENCE_MAX );
-    if(_get_audienceBit(biw->audienceBit, no)==0){
-      BTLV_INPUT_SetAudienceCondition( biw, TRUE, no, 0 );
-      _set_audienceBit( &biw->audienceBit, no );
-      count++;
-      OS_Printf("audience %d=on\n", _get_audienceBit(biw->audienceBit, no));
+
+  // 観客席bitが立ってなかったら仮として左上から詰めて置いてしまう
+  if(biw->audienceBit==0){
+    int i;
+    for(i=0;i<biw->audienceNum;i++){
+      _set_audienceBit( &biw->audienceBit,i );
     }
   }
 
+  // 観客席を表示ONにする
   for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
     if(_get_audienceBit(biw->audienceBit, i)==0){
       BTLV_INPUT_SetAudienceCondition( biw, FALSE, i, 0 );

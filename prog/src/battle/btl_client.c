@@ -108,6 +108,7 @@ enum {
   POKEWOOD_AUDIENCE_SLEEP,    ///< Q‚é
   POKEWOOD_AUDIENCE_SURPRISE, ///< ‹Á‚«
   POKEWOOD_AUDIENCE_CLAP,     ///< ”Žè
+  POKEWOOD_AUDIENCE_LEAVE,    ///< “{‚Á‚Ä—£È
 };
 
 /*--------------------------------------------------------------------------*/
@@ -686,6 +687,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
     if(pokewood==BTL_POKEWOOD_SHOW){
       BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
       wk->pokewoodSeqWork.Audience.account = bsp->audience_num;
+      wk->pokewoodSeqWork.Audience.on_off  = bsp->audience_bit;
       GF_ASSERT_MSG( bsp->audience_num, "ã‰f‚È‚Ì‚ÉŠÏ‹q‚ª0\n" );
     }
 
@@ -10193,6 +10195,12 @@ int BTL_CLINET_GetAudienceNum( const BTL_CLIENT *client )
   return client->pokewoodSeqWork.Audience.account;
 }
 
+u32 BTL_CLINET_GetAudienceBit( const BTL_CLIENT *client )
+{
+  OS_TFPrintf(1,"*********************************** audience=%d\n",client->pokewoodSeqWork.Audience.account);
+  return client->pokewoodSeqWork.Audience.on_off;
+}
+
 //=============================================================================================
 /**
  * Œ»ÝAs“®‘I‘ðˆ—’†‚Ìƒ|ƒPƒ‚ƒ“ˆÊ’uID‚ðŽæ“¾
@@ -10717,7 +10725,7 @@ static void _leave_audience( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int au
   while(left!=leave_num){
     i = GFUser_GetPublicRand( count );
     if(flag_tbl[i]>=0){
-      BTLV_CORE_SetAudienceCondition( viewCore, FALSE, flag_tbl[i], 0 );  //•\Ž¦OFF
+      BTLV_CORE_SetAudienceCondition( viewCore, TRUE, flag_tbl[i], POKEWOOD_AUDIENCE_LEAVE );  //—£È
       psw->Audience.on_off ^= 1<<flag_tbl[i];
       left++;
       OS_Printf("delete=%d, left=%d\n", flag_tbl[i], left);

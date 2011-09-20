@@ -213,6 +213,7 @@ typedef struct{
   GFL_FONT*       fontHandle;
   PRINT_QUE*      printQue;
   GFL_MSGDATA*    mm;
+  WORDSET*        wordset;
   STRBUF*         expandbuf[2];
   STRBUF*         endkeyword;    //「なし」を読み込む
   STRBUF*         teststr;
@@ -351,11 +352,10 @@ static void initLcdWindow2( int left_rigth );
 static void _briefing_print( G2D_CONTROL *CG2d, int page, int sex );
 static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw );
 
-static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID );
+static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, BOOL flag, HEAPID heapID );
 static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam );
 
 static void EndrollFunc( PKWD_BRIEFING_WORK *tw );
-static void _endroll_print( G2D_CONTROL* CG2d, int page, int sex );
 
 static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID );
 static void releaseBriefingBmpwin( G2D_CONTROL* CG2d );
@@ -526,7 +526,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
-    btlv_init_audience_disp( tw, tw->heapID );
+    btlv_init_audience_disp( tw, TRUE, tw->heapID );
     initBriefingMsgdata( &tw->CG2d, tw->param->scenario_no, tw->heapID );
     initBriefingBmpwin( &tw->CG2d, tw->heapID );
     
@@ -630,7 +630,7 @@ static void initWork( PKWD_BRIEFING_WORK* tw )
     tw->CG2d.enemyparty = PokeParty_AllocPartyWork(tw->heapID);
     PokeParty_Init( tw->CG2d.enemyparty, 6 );
     
-    for(i=0;i<6;i++){
+    for(i=0;i<4;i++){
       POKEMON_PARAM *pp1 = PP_Create( 1+i, 10, 0, tw->heapID );
       POKEMON_PARAM *pp2 = PP_Create( 400+i, 10, 0, tw->heapID );
       PokeParty_Add( tw->CG2d.myparty,    pp1);
@@ -647,7 +647,7 @@ static void releaseWork( PKWD_BRIEFING_WORK* tw )
 #ifdef PM_DEBUG  
   int i;
   if(tw->param->bsp==NULL){
-    for(i=0;i<6;i++){
+    for(i=0;i<4;i++){
       PokeParty_Delete( tw->CG2d.myparty, 0 );
       PokeParty_Delete( tw->CG2d.enemyparty, 0 );
     }
@@ -680,6 +680,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     initIO();
     initVRAM();
     initLcdWindow();
+//    initLcdWindow2(0);
 
     tw->seq = SEQ_SETUP;
 
@@ -701,12 +702,11 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
     transBGGraphic( &tw->CG2d, tw->heapID, tw->mode );
-    btlv_init_audience_disp( tw, tw->heapID );
+    btlv_init_audience_disp( tw, FALSE, tw->heapID );
     initEndrollMsgdata( tw->param, &tw->CG2d, tw->param->scenario_no, tw->heapID );
     initEndrollBmpwin( &tw->CG2d, tw->heapID, tw->mode );
 
     // 1ページ目の文字列を描画
-//    _endroll_print( &tw->CG2d, 0, tw->sex );
     //情報ステータスバー初期化
     INFOWIN_Init( FRAME_INFOWIN, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
     GFL_NET_ReloadIconTopOrBottom( FALSE, tw->heapID );
@@ -991,7 +991,8 @@ static void releaseSystem(SYS_CONTROL* CSys)
 #define BRIEF_BMPWIN_H    ( 16 )
 
 // BMPWINクリアカラーコード
-#define BRIEF_CLEAR_COLOR ( 0x00 )
+#define BRIEF_CLEAR_COLOR   ( 0xee )
+#define ENDROLL_CLEAR_COLOR ( 0x00 )
 
 //==============================================================================
 //  G2DControl
@@ -1139,7 +1140,8 @@ static void releaseBriefingMsgdata(G2D_CONTROL* CG2d)
   GFL_MSG_Delete(CG2d->mm);
 }
 
-#define ENDROLL_STR_1BLOCK_NUM  (15)
+#define ENDROLL_STR_1BLOCK_NUM  ( 15 )  // 一つのシナリオのエンドロール用の文字列の数
+#define MY_ROLE_NAME_MAX        ( 21 )  // 自分の役名の最大長
 
 //==============================================================================
 //  エンドロール画面用BMPWIN確保
@@ -1151,6 +1153,7 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
   //メッセージ取得
   CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                              NARC_message_pw_endroll_dat, heapID );
+  CG2d->wordset    = WORDSET_Create( heapID );
   CG2d->endkeyword = GFL_MSG_CreateString( CG2d->mm, pw_endroll_no_keyword );
   CG2d->teststr    = GFL_MSG_CreateString( CG2d->mm, pw_endroll_testr );
 
@@ -1194,12 +1197,25 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
     CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+i] = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, heapID );
     PP_Get( pp, ID_PARA_nickname, CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+i] );
   }
-
+  
+  // 先頭ポケモンの名前をwordsetに登録
+  {
+    const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( CG2d->myparty, 0);
+    WORDSET_RegisterPokeMonsName( CG2d->wordset, 0, pp );
+  }
   // 敵パーティのポケモン名を取得
   for(i=0;i<PokeParty_GetPokeCount(CG2d->enemyparty);i++){
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer( CG2d->enemyparty, i);
     CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+i] = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, heapID );
     PP_Get( pp, ID_PARA_nickname, CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+i] );
+  }
+
+  // 自分の役名にポケモン名を適用してwordsetExpandして書き戻す
+  {
+    STRBUF *tempbuf = GFL_STR_CreateBuffer( MY_ROLE_NAME_MAX, heapID );
+    WORDSET_ExpandStr( CG2d->wordset, tempbuf, CG2d->endrol_str[ENDROLL_STR_MYROLE] );
+    GFL_STR_DeleteBuffer( CG2d->endrol_str[ENDROLL_STR_MYROLE] );
+    CG2d->endrol_str[ENDROLL_STR_MYROLE] = tempbuf;    //元の文字列は削除して展開済み文字列を上書き
   }
 }
 
@@ -1213,6 +1229,7 @@ static void releaseEndrollMsgdata( G2D_CONTROL* CG2d )
   }
   GFL_STR_DeleteBuffer(CG2d->teststr);
   GFL_STR_DeleteBuffer(CG2d->endkeyword);
+  WORDSET_Delete( CG2d->wordset );
   GFL_MSG_Delete(CG2d->mm);
   
 }
@@ -1499,25 +1516,22 @@ static void _str_print( G2D_CONTROL *CG2d, int index, const STRBUF *strbuf, int 
 
 }
 
-static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align, HEAPID heapID )
+static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
 {
-  const STRBUF *strbuf = NULL;
+  STRBUF *strbuf = NULL;
+  int n=0;
   switch( endroll_strtbl[type] ){
   case ENDROL_F_PLAYER1:
     strbuf = CG2d->endrol_str[ENDROLL_STR_MYROLE];
-    _str_print( CG2d, index, strbuf, align);
     break;
   case ENDROL_F_PLAYER1_ACT:
     strbuf = CG2d->endrol_str[ENDROLL_STR_MYNAME];
-    _str_print( CG2d, index, strbuf, align);
     break;
   case ENDROL_F_PLAYER2:
     strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYROLE];
-    _str_print( CG2d, index, strbuf, align);
     break;
   case ENDROL_F_PLAYER2_ACT:
     strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYNAME];
-    _str_print( CG2d, index, strbuf, align);
     break;
   case ENDROL_F_PLAYER1_PARTY1:
   case ENDROL_F_PLAYER1_PARTY2:
@@ -1525,13 +1539,8 @@ static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align
   case ENDROL_F_PLAYER1_PARTY4:
   case ENDROL_F_PLAYER1_PARTY5:
   case ENDROL_F_PLAYER1_PARTY6:
-    {
-      int n = endroll_strtbl[type]-ENDROL_F_PLAYER1_PARTY1;
-      if(CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n]!=NULL){
-        strbuf = CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n];
-        _str_print( CG2d, index, strbuf, align);
-      }
-    }
+    n = endroll_strtbl[type]-ENDROL_F_PLAYER1_PARTY1;
+    strbuf = CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n];
     break;
   case ENDROL_F_PLAYER2_PARTY1:
   case ENDROL_F_PLAYER2_PARTY2:
@@ -1539,17 +1548,26 @@ static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align
   case ENDROL_F_PLAYER2_PARTY4:
   case ENDROL_F_PLAYER2_PARTY5:
   case ENDROL_F_PLAYER2_PARTY6:
-    {
-      int n = endroll_strtbl[type]-ENDROL_F_PLAYER2_PARTY1;
-      if(CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME2+n]!=NULL){
-        strbuf = CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+n];
-        _str_print( CG2d, index, strbuf, align);
-      }
-    }
+    n = endroll_strtbl[type]-ENDROL_F_PLAYER2_PARTY1;
+    strbuf = CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+n];
     break;
   default:
     strbuf = CG2d->endrol_str[endroll_strtbl[type]];
-    _str_print( CG2d, index, strbuf, align);
+    // 文字列が「なし」だったら使用しない
+    if(GFL_STR_CompareBuffer(strbuf, CG2d->endkeyword)==TRUE){
+      strbuf = NULL;
+    }
+  }
+  
+  return strbuf;
+}
+
+static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align, HEAPID heapID )
+{
+  const STRBUF *strbuf = _get_Endroll_strbuf_pointer( CG2d, type );
+
+  if(strbuf!=NULL){
+    _str_print( CG2d, index, strbuf, align );
   }
 
 }
@@ -1575,27 +1593,29 @@ static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align )
   //BMPWIN作成
   for(i=0;tbl[i].type!=ENDROL_END;i++){
     if(tbl[i].type<ENDROL_SPACE){
-      OS_Printf("bmpwin%d\n", count);
-      // BMP確保
-      if(line_count<=62){
-        CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF1, tbl[i].x, line_count, 
-                                                 ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
-                                                 U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-      }else{
-        CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF2, tbl[i].x, line_count-62, 
-                                                 ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
-                                                 U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+      if(_get_Endroll_strbuf_pointer( CG2d, tbl[i].type)!=NULL){
+        OS_Printf("bmpwin%d\n", count);
+        // BMP確保
+        if(line_count<=62){
+          CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF1, tbl[i].x, line_count, 
+                                                   ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
+                                                   U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+        }else{
+          CG2d->bmpwin[count] = GFL_BMPWIN_Create( FRAME_BRIEF2, tbl[i].x, line_count-62, 
+                                                   ENDROLL_BMPWIN_W, ENDROLL_BMPWIN_H, 
+                                                   U_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
+        }
+        
+        // BMP初期化
+        PRINT_UTIL_Setup( &CG2d->printUtil[count], CG2d->bmpwin[count] );
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[count] ), ENDROLL_CLEAR_COLOR );
+  
+        // 文字列描画
+        _Endroll_StrPrint( CG2d, count, tbl[i].type, tbl[i].align, heapID );
+  
+        count++;
+        line_count += tbl[i].plus_y;
       }
-      
-      // BMP初期化
-      PRINT_UTIL_Setup( &CG2d->printUtil[count], CG2d->bmpwin[count] );
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[count] ), BRIEF_CLEAR_COLOR );
-
-      // 文字列描画
-      _Endroll_StrPrint( CG2d, count, tbl[i].type, tbl[i].align, heapID );
-
-      count++;
-      line_count += tbl[i].plus_y;
     }else if( tbl[i].type==ENDROL_SPACE ){
       // 空白扱いのデータは行送りの数値のみ反映させる
       line_count += tbl[i].plus_y;
@@ -1985,6 +2005,7 @@ static void initLcdWindow( void )
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE , FALSE );
     GX_SetVisibleWnd( GX_WNDMASK_W1 );
     G2_SetWnd1Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
+    G2_SetWnd0Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
 }
 
 static void initLcdWindow2( int left_right )
@@ -1993,6 +2014,7 @@ static void initLcdWindow2( int left_right )
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
                            GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_OBJ, TRUE );
     GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+
 
     if(left_right==0){
       G2_SetWnd0Position( 136, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
@@ -2183,6 +2205,27 @@ static void _set_audienceBit( u32 *work, int index )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief	観客配置bitの通りに観客を配置する
+ *
+ * @param   AOam		
+ * @param   audienceBit		
+ */
+//----------------------------------------------------------------------------------
+static void setAudienceObj( AUDIENCE_CONTROL *AOam, u32 audienceBit )
+{
+  int i;
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if(_get_audienceBit(audienceBit, i)==0){
+      SetAudienceOnOff( AOam, i, FALSE );
+      SetAudienceCondition( AOam, i, 0 );
+      OS_Printf("audience %d=off\n", i);
+    }
+  }
+
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief	観客人数を設定する
  *
  * @param   wk		
@@ -2204,13 +2247,8 @@ static u32 set_audience_appear( AUDIENCE_CONTROL *AOam, int audienceNum )
     }
   }
 
-  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
-    if(_get_audienceBit(audienceBit, i)==0){
-      SetAudienceOnOff( AOam, i, FALSE );
-      SetAudienceCondition( AOam, i, 0 );
-      OS_Printf("audience %d=off\n", i);
-    }
-  }
+  setAudienceObj( AOam, audienceBit );
+
   return audienceBit;
 }
 
@@ -2219,14 +2257,19 @@ static u32 set_audience_appear( AUDIENCE_CONTROL *AOam, int audienceNum )
  * @brief   観客の処理(初期化まとめ)
  */
 //--------------------------------------------------------------
-static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, HEAPID heapID )
+static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, BOOL flag, HEAPID heapID )
 {
   // OBJリソース転送・登録
   BTLV_INPUT_CreateAudienceObj( &pbw->AOam, heapID );
   
   // 観客表示・非表示設定
-  pbw->param->audienceBit = set_audience_appear( &pbw->AOam, pbw->param->audienceNum );
-  
+  if(flag==TRUE){
+    // 観客配置作成と観客表示
+    pbw->param->audienceBit = set_audience_appear( &pbw->AOam, pbw->param->audienceNum );
+  }else{
+    // 観客表示のみ
+    setAudienceObj( &pbw->AOam, pbw->param->audienceBit );
+  }
   // BG0非表示：操作パネル => 今回は表示(仮対応)
   // BG1表示：上書きして使用
   // BG2非表示：メッセージ、情報パネル
@@ -2532,24 +2575,4 @@ static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll )
     G2_SetBG3Offset( 0, CG2d->scroll- pokewood_pos  );
   }
   OS_Printf("\n");
-}
-//----------------------------------------------------------------------------------
-/**
- * @brief	エンディングロール用の文字列を描画
- *
- * @param   CG2d		
- * @param   page		表示するページ
- */
-//----------------------------------------------------------------------------------
-static void _endroll_print( G2D_CONTROL* CG2d, int page, int sex )
-{
-//    GFL_MSG_GetString(CG2d->mm, pw_briefing_001+page, CG2d->expandbuf[index]);
-  int i;
-
-  //メッセージ表示
-  for(i=0;i<CG2d->bmpwin_num;i++){
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[i] ), BRIEF_CLEAR_COLOR );
-    PRINT_UTIL_PrintColor( &CG2d->printUtil[i], CG2d->printQue, 0, 
-                        0, CG2d->teststr, CG2d->fontHandle, PRINTSYS_MACRO_LSB(1,2,0) );
-  }
 }

@@ -16119,10 +16119,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>無意味データを定義する際に使うキーワード</Comment>
+			<Comment>テスト用文字列（デバッグ用。本編では未使用）</Comment>
 			<CommentModifiedBy
 				User="mori:W00269"
-				Time="2011-09-15T13:19:35" />
+				Time="2011-09-18T12:17:44" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
