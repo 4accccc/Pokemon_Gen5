@@ -13,7 +13,7 @@
 
 #define WHISTLE_MARGINE (45)
 
-extern PL_BOAT_WORK_PTR PL_BOAT_Init(void);
+extern PL_BOAT_WORK_PTR PL_BOAT_Init( const BOOL game_clear_flag );
 extern void PL_BOAT_End(PL_BOAT_WORK_PTR *work);
 extern void PL_BOAT_Main(PL_BOAT_WORK_PTR work);
 extern GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work);

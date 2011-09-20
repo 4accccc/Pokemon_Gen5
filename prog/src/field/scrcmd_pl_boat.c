@@ -45,10 +45,16 @@ VMCMD_RESULT EvCmdPlBoat_Start( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gamedata );
 
   PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
 
-  if ( *ptr == NULL ) *ptr = PL_BOAT_Init();
+  // SYS_FLAG_GAME_CLEAR
+  u16 flag = SCRCMD_GetVMWorkValue( core, work );
+  BOOL game_clear_flag = EVENTWORK_CheckEventFlag( evwork, flag );
+  ICHI_Printf("ゲームクリアフラグ %d\n", game_clear_flag);
+
+  if ( *ptr == NULL ) *ptr = PL_BOAT_Init( game_clear_flag );
   else GF_ASSERT_MSG(0,"PL_BOAT_ALLOC_ERROR");
    
   return VMCMD_RESULT_CONTINUE;

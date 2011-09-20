@@ -42,7 +42,7 @@ static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work);
  * @retval		PL_BOAT_WORK_PTR
  */
 //--------------------------------------------------------------
-PL_BOAT_WORK_PTR PL_BOAT_Init(void)
+PL_BOAT_WORK_PTR PL_BOAT_Init( const BOOL game_clear_flag )
 {
   PL_BOAT_WORK_PTR work;
 
@@ -57,7 +57,7 @@ PL_BOAT_WORK_PTR PL_BOAT_Init(void)
   work->TrNumDouble = 0;
   work->GameEnd = FALSE;
   GFL_OVERLAY_Load( FS_OVERLAY_ID(pl_boat_setup) );
-  PL_BOAT_SETUP_EntryTrainer(work);
+  PL_BOAT_SETUP_EntryTrainer( work, game_clear_flag );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(pl_boat_setup) );
 
   return work;

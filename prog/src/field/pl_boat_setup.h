@@ -10,4 +10,4 @@
 
 #include "pleasure_boat_ptr.h"
 
-extern void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work);
+extern void PL_BOAT_SETUP_EntryTrainer( PL_BOAT_WORK *work, const BOOL game_clear_flag );

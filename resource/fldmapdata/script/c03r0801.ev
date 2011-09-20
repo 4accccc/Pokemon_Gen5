@@ -748,7 +748,8 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 	DEFINE_LOCAL	LWK_TOTAL1
 
   //遊覧船スタート
-  _PL_BOAT_START()
+  // ゲームクリア前と後でトレーナーが変更
+  _PL_BOAT_START( SYS_FLAG_GAME_CLEAR )
 	
 	//遊覧船内のトレーナー総数
 	_PL_BOAT_GET_TR_NUM(PL_TR_SEARCH_TYPE_TOTAL,LWK_TOTAL1)

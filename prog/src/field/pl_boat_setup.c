@@ -125,10 +125,11 @@ static void CreateTrTbl(const int inTblLen, const int inNum, u8 *workTbl, u8 *ou
 /**
  * @brief	トレーナー抽選
  * @param	 work      PL_BOAT_WORK_PTR
+ * @param  game_clear_flag  ゲームクリアフラグ(トレーナーが変更する)
  * @retval none
 */
 //--------------------------------------------------------------
-void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
+void PL_BOAT_SETUP_EntryTrainer( PL_BOAT_WORK *work, const BOOL game_clear_flag )
 {
   int tr_num;
   RTCDate date;
@@ -222,11 +223,26 @@ void PL_BOAT_SETUP_EntryTrainer(PL_BOAT_WORK *work)
       u8 room_idx = entry_work.RoomEntry[count++];
       u8 entry_id = entry_work.Trainer[i];
       work->RoomParam[room_idx].EntryID = entry_id;
-      work->RoomParam[room_idx].TrID = TrData[entry_id].TrID;
-      work->RoomParam[room_idx].ObjCode = TrData[entry_id].ObjCode;
       work->RoomParam[room_idx].NpcType = NPC_TYPE_TRAINER;
-      work->RoomParam[room_idx].NpcMsg[0] = TrData[entry_id].Msg[0];
-      work->RoomParam[room_idx].NpcMsg[1] = TrData[entry_id].Msg[1];
+      if( game_clear_flag == TRUE )
+      {
+        // クリア後
+        work->RoomParam[room_idx].TrID = AfterGameClear_TrData[entry_id].TrID;
+        work->RoomParam[room_idx].ObjCode = AfterGameClear_TrData[entry_id].ObjCode;
+        work->RoomParam[room_idx].NpcMsg[0] = AfterGameClear_TrData[entry_id].Msg[0];
+        work->RoomParam[room_idx].NpcMsg[1] = AfterGameClear_TrData[entry_id].Msg[1];
+        ICHI_Printf("クリア後トレーナーデータ\n");
+      }
+      else
+      {
+        // クリア前
+        work->RoomParam[room_idx].TrID = BeforeGameClear_TrData[entry_id].TrID;
+        work->RoomParam[room_idx].ObjCode = BeforeGameClear_TrData[entry_id].ObjCode;
+        work->RoomParam[room_idx].NpcMsg[0] = BeforeGameClear_TrData[entry_id].Msg[0];
+        work->RoomParam[room_idx].NpcMsg[1] = BeforeGameClear_TrData[entry_id].Msg[1];
+        ICHI_Printf("クリア前トレーナーデータ\n");
+
+      }
       OS_Printf("trainer_entry %d\n",entry_id);
     }
     //部屋に非トレーナー（長話）を格納

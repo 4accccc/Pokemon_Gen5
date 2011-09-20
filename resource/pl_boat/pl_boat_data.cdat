@@ -7,7 +7,20 @@
  */
 //======================================================================
 
-static const TR_DATA TrData[TRAINER_MAX] = {
+static const TR_DATA BeforeGameClear_TrData[TRAINER_MAX] = {
+	{BUSINESSMAN, TRID_BUSINESS1_12, {msg_c03r0801_businessman_04, msg_c03r0801_businessman_05}},
+	{TRAINERM, TRID_ELITEM_42, {msg_c03r0801_trainerm_03, msg_c03r0801_trainerm_04}},
+	{TRAINERW, TRID_ELITEW_41, {msg_c03r0801_trainerw_03, msg_c03r0801_trainerw_04}},
+	{BOY2, TRID_TANPAN_30, {msg_c03r0801_boy2_03, msg_c03r0801_boy2_04}},
+	{GIRL2, TRID_MINI_23, {msg_c03r0801_girl2_04, msg_c03r0801_girl2_05}},
+	{BOY4, TRID_PRINCE_11, {msg_c03r0801_boy4_03, msg_c03r0801_boy4_04}},
+	{GIRL4, TRID_PRINCESS_11, {msg_c03r0801_girl4_03, msg_c03r0801_girl4_04}},
+	{GENTLEMAN, TRID_GENTLE_08, {msg_c03r0801_gentleman_04, msg_c03r0801_gentleman_05}},
+	{LADY, TRID_MADAM_07, {msg_c03r0801_lady_04, msg_c03r0801_lady_05}},
+	{MAID, TRID_MAID_04, {msg_c03r0801_maid_01, msg_c03r0801_maid_02}},
+};
+
+static const TR_DATA AfterGameClear_TrData[TRAINER_MAX] = {
 	{BUSINESSMAN, TRID_BUSINESS1_05, {msg_c03r0801_businessman_04, msg_c03r0801_businessman_05}},
 	{TRAINERM, TRID_ELITEM_05, {msg_c03r0801_trainerm_03, msg_c03r0801_trainerm_04}},
 	{TRAINERW, TRID_ELITEW_05, {msg_c03r0801_trainerw_03, msg_c03r0801_trainerw_04}},

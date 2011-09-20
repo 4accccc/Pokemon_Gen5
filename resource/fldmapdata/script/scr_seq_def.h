@@ -10107,14 +10107,19 @@
 //--------------------------------------------------------------
 /**
  * 遊覧船モード開始
+ * 
+ * @param flag[in]  ゲームクリアフラグ( SYS_FLAG_GAME_CLEAR )
+ *
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
-#define _PL_BOAT_START() _ASM_PL_BOAT_START
+#define _PL_BOAT_START( flag ) \
+    _ASM_PL_BOAT_START flag
 
-  .macro  _ASM_PL_BOAT_START
-  .short  EV_SEQ_PL_BOAT_START
-  .endm
+    .macro  _ASM_PL_BOAT_START flag
+    .short  EV_SEQ_PL_BOAT_START
+    .short  \flag
+    .endm
 
 //--------------------------------------------------------------
 /**

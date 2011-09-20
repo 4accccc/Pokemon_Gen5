@@ -18,11 +18,11 @@ dat_file.printf("\n")
 #1行飛ばし
 csv_file.gets
 
-#トレーナー
-dat_file.printf("static const TR_DATA TrData[TRAINER_MAX] = {\n")
+#トレーナー(ゲームクリア前)
+dat_file.printf("static const TR_DATA BeforeGameClear_TrData[TRAINER_MAX] = {\n")
 while line = csv_file.gets
   #TR_END検出
-  if line =~/^#TR_END/ then
+  if line =~/^#BEFORE_GAME_CLEAR_TR_END/ then
 		break
 	end
   
@@ -33,6 +33,23 @@ while line = csv_file.gets
 end
 dat_file.printf("};\n")
 dat_file.printf("\n")
+
+#トレーナー(ゲームクリア後)
+dat_file.printf("static const TR_DATA AfterGameClear_TrData[TRAINER_MAX] = {\n")
+while line = csv_file.gets
+  #TR_END検出
+  if line =~/^#AFTER_GAME_CLEAR_TR_END/ then
+		break
+	end
+  
+  column = line.split ","
+
+  dat_file.printf("\t{%s, %s, {%s, %s}},\n",column[0].upcase, column[1].upcase, column[2] ,column[3].chomp("\r").chomp("\n"))
+
+end
+dat_file.printf("};\n")
+dat_file.printf("\n")
+
 
 #長話
 dat_file.printf("static const NONE_TR_DATA LongTalkerData[LONG_TALKER_MAX] = {\n")
