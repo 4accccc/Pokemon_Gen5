@@ -170,7 +170,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @name = get_unicode( 4, TRAINER_START_COL, TRAINER_START_ROW+@char_id );
+    @name = get_unicode( @conv, 4, TRAINER_START_COL, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = chk_str_limit( @name, 1, 14, $trainer_str[0] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -190,7 +196,13 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @title = get_unicode( 4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id );
+    @title = get_unicode( @conv, 4, TRAINER_START_COL+1, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = chk_str_limit( @title, 1, 22, $trainer_str[2] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -210,7 +222,17 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @msg_before = get_unicode( 4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id );
+    @msg_before = get_unicode( @conv, 4, TRAINER_START_COL+12+@local_language, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @msg_before, 2, $str_limit[2+flg], $trainer_str[1] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -231,7 +253,17 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @msg_after_win = get_unicode( 4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id );
+    @msg_after_win = get_unicode( @conv, 4, TRAINER_START_COL+24+@local_language, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @msg_after_win, 2, $str_limit[2+flg], $trainer_str[3] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -252,7 +284,17 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @msg_after_lose = get_unicode( 4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id );
+    @msg_after_lose = get_unicode( @conv, 4, TRAINER_START_COL+34+@local_language, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @msg_after_lose, 2, $str_limit[2+flg], $trainer_str[4] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -273,7 +315,17 @@ class WBT_CHARACTER_SINGLE
     end
     
     # 変換
-    @msg_announce = get_unicode( 4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id );
+    @msg_announce = get_unicode( @conv, 4, TRAINER_START_COL+43+@local_language, TRAINER_START_ROW+@char_id );
+    
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @msg_announce, 2, $str_limit[2+flg], $trainer_str[5] );
+    if(flg == -1)
+      trainer_exit();
+    end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
@@ -612,7 +664,7 @@ class WBT_CHARACTER_SINGLE
     end
     #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[12],@local_language_id)
+      p sprintf("%s :%d", $trainer_str[12],@local_language)
     end
   end
   

@@ -279,13 +279,18 @@ class WBT_DATA
     end
     #
     # 変換
-    @tournament_name = get_unicode( 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW )
+    @tournament_name = get_unicode( @conv, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW )
     #
-#    size = @tournament_name.size;
-#    p sprintf("size :%d",size)
-#    size.times{|i|
-#      p sprintf( "%x",@tournament_name[i] )
-#    }
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @tournament_name, 1, $str_limit[flg], $title_str[12] );
+    if(flg == -1)
+      data_exit();
+    end
+    #
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
 #      p sprintf("%s :%s", $title_str[12],@tournament_name)
@@ -304,8 +309,18 @@ class WBT_DATA
     end
     
     # 変換
-    @regulation_explain = get_unicode(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
-    
+    @regulation_explain = get_unicode(@conv, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
+    #
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @regulation_explain, 3, $str_limit[2+flg], $title_str[13] );
+    if(flg == -1)
+      data_exit();
+    end
+    #
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
 #      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW))
@@ -324,12 +339,22 @@ class WBT_DATA
     end
     
     # 変換
-    @contents_explain = get_unicode(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
+    @contents_explain = get_unicode(@conv, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
+    #
+    # 入力チェック
+    flg = 0
+    if((@local_language == 0)||(@local_language == 6))
+      flg = 1
+    end
+    flg = chk_str_limit( @contents_explain, 2, $str_limit[2+flg], $title_str[14] );
+    if(flg == -1)
+      data_exit();
+    end
     
     # セット(コードの変換注意)
-    if(@local_debug == 1)
-      p sprintf("%s :%s", $title_str[14],@conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW))
-    end
+#    if(@local_debug == 1)
+#      p sprintf("%s :%s", $title_str[14],@conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW))
+#    end
   end
   
   #----------------------------------

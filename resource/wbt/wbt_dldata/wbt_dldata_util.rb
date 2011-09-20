@@ -109,6 +109,7 @@ $ball_hash = {
 # エラー文字列(全まとめ)
 $error_str = [ "の指定が正しくありません",
                "が空白です",
+               "文字入力が正しくありません",
 ]
 
 # 国のテーブル参照用ハッシュ
@@ -126,6 +127,9 @@ $codes = {
   NKF::UTF16    => "UTF16",
 };
 
+# 文字数制限(1行用、複数行用(改行分加算))
+$str_limit = [36, 18, 36+1, 18+1]
+
 #---------------------------------------------------------
 #---------------------------------------------------------
 #-------------
@@ -136,39 +140,6 @@ def hash2no( hash, str )
     return -1
   end
   return hash[str]
-end
-
-#-------------------------
-# 文字列のパック(要確認)
-#-------------------------
-def str2pack_org( buffer, num )
-  array = Array.new
-  #
-  j=0
-  len = num*2
-  len.times{|i|
-    if(buffer[i] == nil)
-      array << 0xffff;
-    else
-      # 改行処理
-      # (0x0a, 0x00) => (0xfe, 0xff)に変換
-      if(buffer[i] == 0x0a)
-        # 念のため
-        if(i < len-2)
-           j = i+1
-           if(buffer[j] == 0)
-             buffer[i]   = 0xfe
-             buffer[i+1] = 0xff
-           end
-        end
-      end
-      array << buffer[i];
-#      p sprintf("utf : %x",buffer[i])
-    end
-  }
-  # サイズ注意
-  return array.pack("C*")
-#  return array.pack("S*")
 end
 
 #-------------------------
@@ -216,7 +187,8 @@ def str2pack( buffer, num )
     # (0x0a, 0x00) => (0xfe, 0xff)に変換
     if(buffer[i] == 0x0a)
       # 念のため
-      if(i < len-2)
+#      if(i < len-2)
+      if(i < len-1)
          if(buffer[i+1] == 0x00)
            array << 0xfe
            array << 0xff
@@ -231,7 +203,8 @@ def str2pack( buffer, num )
     # (0xbc, 0x25) => (0x00,0xf0,0x01,0xbe,0x00,0x00)に変換
     if(buffer[i] == 0xbc)
       # 念のため
-      if(i < len-2)
+#      if(i < len-2)
+      if(i < len-1)
          if(buffer[i+1] == 0x25)
            # 足りない場合は出力しない
            if(j <= len-8)
@@ -256,7 +229,8 @@ def str2pack( buffer, num )
     # (0xbd, 0x25) => (0x00,0xf0,0x00,0xbe,0x00,0x00)に変換
     if(buffer[i] == 0xbd)
       # 念のため
-      if(i < len-2)
+#      if(i < len-2)
+      if(i < len-1)
          if(buffer[i+1] == 0x25)
            # 足りない場合は出力しない
            if(j <= len-8)
@@ -351,16 +325,25 @@ def print_error_str( str, mstr )
   p sprintf("[%s] %s : %s", str, $error_str[0], mstr )
 end
 
-#-------------------------
+#------------------------------
 # 指定の箇所からの個数を求める
-#-------------------------
+# (設定ファイルで使用)
+#------------------------------
 def get_array_num( str, src, maxnum )
   # 個数を調べる
   i=0
   j=0;
   maxnum.times{|i|
 #    p sprintf("[%d] %s", i, str[src+i])
+    # 項目がなかった
     if(str[src+i] == nil)
+      break;
+    end
+    #
+    # skipだった
+    num = hash2no( $skip_hash, str[src+i] );
+    if(num >= 0)
+#      p sprintf("skip :%s",str[src+i])
       break;
     end
     j+=1
@@ -372,9 +355,9 @@ end
 #-------------------------
 # unicodeをセット
 #-------------------------
-def get_unicode( index, col, row )
+def get_unicode( conv, index, col, row )
   # UTF8で取得
-  str = @conv.get_cell2(index, col, row)
+  str = conv.get_cell2(index, col, row)
   #----------------
   # UTF8 -> UTF16へ
   #----------------
@@ -399,6 +382,112 @@ def get_unicode( index, col, row )
   end
   #
   return( strArr )
+end
+
+#-------------------------
+# 文字の情報をセット
+# (行数、それぞれの文字数)
+#-------------------------
+def chk_strinfo( buffer )
+  array = [0,0,0,0,0]
+  #
+  # サイズを取得
+  buffersize = buffer.size
+  #
+  j    = 0
+  cnt  = 0
+  skip = 0
+  buffersize.times{|i|
+    #------------
+    # skipの処理
+    #------------
+    if(skip > 0)
+      skip = skip-1
+      next;
+    end
+    #
+    # 改行処理
+    # (0x0a, 0x00)
+    if(buffer[i] == 0x0a)
+      # 念のため
+      if(i < buffersize-1)
+         if(buffer[i+1] == 0x00)
+           skip = 1
+           array[1+cnt] = (j+2)/2
+           cnt = cnt+1
+           j = 0
+#           p sprintf("skip 0\n")
+           next
+        end
+      end
+    end
+    #
+    # 改ページ処理
+    # (0xbc, 0x25)
+    if(buffer[i] == 0xbc)
+      if(buffer[i+1] == 0x25)
+        skip = 1
+        j = j+6
+#        p sprintf("skip 1\n")
+        next
+     end
+    end
+    #
+    # 改ページ処理(行送り)
+    # (0xbd, 0x25)
+    if(buffer[i] == 0xbd)
+      if(buffer[i+1] == 0x25)
+        skip = 1
+        j = j+6
+#        p sprintf("skip 2\n")
+        next
+      end
+    end
+    # カウント
+    j = j+1
+  }
+  #
+  if(j != 0)
+    array[1+cnt] = j/2
+  end
+  #
+  # 行数
+  array[0] = cnt+1
+  #
+  return( array )
+end
+
+#-------------------------
+# 文字の個数制限
+# (バッファ、行数、文字数)
+#-------------------------
+def chk_str_limit( buffer, lnum, num, str )
+  # チェックの有無
+  if( $debug_chkstr == 0 )
+    return( 0 );
+  end
+  #
+  flg = 0
+  array = chk_strinfo( buffer )
+  #
+#  p sprintf("%d :%d,%d,%d,%d :\n",array[0],array[1],array[2],array[3],array[4])
+  #
+  # 行数の制限
+  if(array[0] > lnum)
+    p sprintf("%s : %s : (行数:%d > %d)\n",str, $error_str[2], array[0], lnum)
+    flg = -1
+  else
+    # 文字数の制限
+    3.times{|i|
+      if( array[1+i] > num )
+        p sprintf("%s : %s : (文字数: %d > %d)\n",str, $error_str[2], array[1+i], num)
+        flg = -1;
+        break;
+      end
+    }
+  end
+  #
+  return( flg )
 end
 
 #-------------------------------------------------------

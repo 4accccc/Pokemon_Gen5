@@ -13,6 +13,10 @@ $current_lang_id = 0
 # debug(0:別,1:同じ)
 $debug_filename = 1;
 
+# 文字列チェック(0:off、1:on)
+# うるさいかもしれないので切り替えにしておく
+$debug_chkstr = 0
+
 require "my_tab_out_direct_sheet.rb"
 
 require "wbt_dldata_data.rb"	  # トーナメントリスト(WBTDL_DATA)のシート用
