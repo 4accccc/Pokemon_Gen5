@@ -13,6 +13,23 @@
 #ifndef ZONE_WC10_EVC_H
 #define ZONE_WC10_EVC_H
 
+#define WC10_02_01                         0
+#define WC10_POKE16_01                     1
+#define WC10_05_01                         2
+#define WC10_13_01                         3
+#define WC10_18_01                         4
+#define WC10_20_01                         5
+#define WC10_30_01                         6
+#define WC10_POKE17_01                     7
+#define WC10_POKE49_01                     8
+#define WC10_POKE18_01                     9
+#define WC10_07_01                        10
+#define WC10_POKE45_01                    11
+#define WC10_POKE36_01                    12
+#define WC10_SHOPM1_01                    13
+#define WC10_SHOPM1_02                    14
+#define WC10_SHOPM1_03                    15
+#define WC10_SHOPM1_04                    16
 
 #endif //ZONE_WC10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/wc10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -13,6 +13,8 @@
   .include  "bc10r0401.h"
   .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
+  //@author fujimura_souichirou（一言メッセージ追加）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,62 +22,149 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_bc10r0401
-_EVENT_DATA    ev_bc10r0401_shopm1_01
-_EVENT_DATA    ev_bc10r0401_shopm1_02
-_EVENT_DATA    ev_bc10r0401_shopm1_03
-_EVENT_DATA    ev_bc10r0401_shopm1_04
-_EVENT_DATA    ev_bc10r0401_shopm1_05
-
+_EVENT_DATA   ev_zone_bc10r0401
+_EVENT_DATA   ev_bc10r0401_shopm1_01
+_EVENT_DATA   ev_bc10r0401_shopm1_02
+_EVENT_DATA   ev_bc10r0401_shopm1_03
+_EVENT_DATA   ev_bc10r0401_shopm1_04
+_EVENT_DATA   ev_bc10r0401_gentleman_01
+_EVENT_DATA   ev_bc10r0401_boy4_01
+_EVENT_DATA   ev_bc10r0401_middleman2_01
+_EVENT_DATA   ev_bc10r0401_man3_01
+_EVENT_DATA   ev_bc10r0401_middlewoman1_01
+_EVENT_DATA   ev_bc10r0401_middleman1_01
+_EVENT_DATA   ev_bc10r0401_badman_01
+_EVENT_DATA   ev_bc10r0401_woman3_01
+_EVENT_DATA   ev_bc10r0401_oldman1_01
 _EVENT_DATA_END
+
+//無限ダンジョンの状態を取得する用変数
+DEFINE_LOCAL  LWK_DUNGEON_STATUS
 
 
 /**************************************************************/
 /*            フィールド初期化スクリプト                      */
 /**************************************************************/
 INIT_EVENT_START ev_zone_bc10r0401
-	
-	
+
 INIT_EVENT_END
 
-
-
 /**************************************************************/
-/* 人口A：ショップA                                           */
+/* ショップ01                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_01
-	_TALK_OBJ_START()
-//	_BLACK_CITY_SHOP0_CALL( )
+  _TALK_OBJ_START()
+  _BLACK_CITY_SHOP0_CALL( )
 EVENT_END
 
 /**************************************************************/
-/* 人口B：ショップB                                           */
+/* ショップ02                                                  */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_02
-	_TALK_OBJ_START()
-//	_BLACK_CITY_SHOP1_CALL( )
+  _TALK_OBJ_START()
+  _BLACK_CITY_SHOP1_CALL( )
 EVENT_END
 
 /**************************************************************/
-/* 人口C：ショップC                                           */
+/* ショップ03                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_03
-	_TALK_OBJ_START()
-//	_BLACK_CITY_SHOP2_CALL( )
+  _TALK_OBJ_START()
+  _BLACK_CITY_SHOP2_CALL( )
 EVENT_END
 
 /**************************************************************/
-/* 人口D：ショップD                                          */
+/* ショップ04                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_04
-	_TALK_OBJ_START()
-//	_BLACK_CITY_SHOP3_CALL( )
+  _TALK_OBJ_START()
+  _BLACK_CITY_SHOP3_CALL( )
 EVENT_END
 
 /**************************************************************/
-/* 人口E：ショップE                                           */
+/*  ＢＣのボス（ジェントルマン）：話しかけ                    */
 /**************************************************************/
-EVENT_START   ev_bc10r0401_shopm1_05
-	_TALK_OBJ_START()
-//	_BLACK_CITY_SHOP4_CALL( )
+EVENT_START   ev_bc10r0401_gentleman_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //ＢＣボス：ようこそ……
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_gentleman_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //ＢＣボス：おまえの
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_gentleman_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //ＢＣボス：くろのまてんろうの　バンジロウに
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_gentleman_03 )
+
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_boy4_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_boy4_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじさん01：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middlewoman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_man3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_man3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middlewoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middlewoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじさん02：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_middleman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_middleman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  スキンヘッズ：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_woman3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_woman3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_bc10r0401_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_oldman1_01 )
+EVENT_END
+
+

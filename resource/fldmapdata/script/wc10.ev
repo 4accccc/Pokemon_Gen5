@@ -10,8 +10,10 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_wc10.h"
-  //.include  "wc10.h"
+  .include  "wc10.h"
   .include "../../../prog/src/field/scrcmd_wfbc_define.h"
+
+  //@author fujimura_souichirou（一言メッセージ追加）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,124 +22,507 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_wc10
-_EVENT_DATA    ev_bg_wc10_board_01
-_EVENT_DATA    ev_pos_wc10_d31r0101_door
+_EVENT_DATA   ev_zone_wc10
+_EVENT_DATA   ev_init_wc10
+_EVENT_DATA   ev_pos_wc10_d31r0101_door
+_EVENT_DATA   ev_bg_wc10_board_01
+_EVENT_DATA   ev_wc10_shopm1_01
+_EVENT_DATA   ev_wc10_shopm1_02
+_EVENT_DATA   ev_wc10_shopm1_03
+_EVENT_DATA   ev_wc10_shopm1_04
+_EVENT_DATA   ev_wc10_02_01
+_EVENT_DATA   ev_wc10_05_01
+_EVENT_DATA   ev_wc10_07_01   //エリア05クリア後に出現する
+_EVENT_DATA   ev_wc10_13_01
+_EVENT_DATA   ev_wc10_18_01
+_EVENT_DATA   ev_wc10_20_01
+_EVENT_DATA   ev_wc10_27_01
+_EVENT_DATA   ev_wc10_30_01   //エリア10クリア後に出現する
+_EVENT_DATA   ev_wc10_poke16_01
+_EVENT_DATA   ev_wc10_poke17_01
+_EVENT_DATA   ev_wc10_poke18_01
+_EVENT_DATA   ev_wc10_poke36_01
+_EVENT_DATA   ev_wc10_poke45_01
+_EVENT_DATA   ev_wc10_poke49_01
 _EVENT_DATA_END
 
+//無限ダンジョンの状態を取得する用変数
+DEFINE_LOCAL  LWK_DUNGEON_STATUS
+
 //------------------------！注意！------------------------------//
-//																//
-//		LOCALWORK12をD32への接続に使用			//
-//		ゾーン内での使用を禁止します							//
-//																//
+//                                                              //
+//    LOCALWORK12をD32への接続に使用                            //
+//    ゾーン内での使用を禁止します                              //
+//                                                              //
 //--------------------------------------------------------------//
 
+
 /**************************************************************/
-/*            フィールド初期化スクリプト                      */
+/*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
-INIT_EVENT_START ev_zone_wc10
-	
-	
+INIT_EVENT_START  ev_zone_wc10
+
+
+INIT_EVENT_END
+
+/************************************************************/
+/*  FIELD_INIT_LABEL                                        */
+/************************************************************/
+INIT_EVENT_START  ev_init_wc10
+
+  //無限ダンジョンの進行具合でOBJ配置が変化
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  IF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //トレーナー（wc10_07_01）が配置されていない場合はトレーナー配置
+    IF FLAG_ON( FV_WC10_TRAINER_01 ) THEN
+
+      //==================================//
+      //トレーナー表示
+      _FLAG_RESET( FV_WC10_TRAINER_01 )
+      //==================================//
+
+      //トレーナー配置
+      _OBJ_ADD( WC10_07_01 )  //タクマ
+
+     ENDIF
+
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //トレーナー（wc10_07_01）が配置されていない場合はトレーナー配置
+    IF FLAG_ON( FV_WC10_TRAINER_01 ) THEN
+
+      //==================================//
+      //トレーナー表示
+      _FLAG_RESET( FV_WC10_TRAINER_01 )
+      //==================================//
+
+      //トレーナー配置
+      _OBJ_ADD( WC10_07_01 )  //タクマ
+
+     ENDIF
+
+    //トレーナー（WC10_30_01）が配置されていない場合はトレーナー配置
+    IF FLAG_ON( FV_WC10_TRAINER_02 ) THEN
+
+      //==================================//
+      //トレーナー表示
+      _FLAG_RESET( FV_WC10_TRAINER_02 )
+      //==================================//
+
+      //トレーナー配置
+      _OBJ_ADD( WC10_30_01 )  //グレース
+
+     ENDIF
+
+  ENDIF
+
 INIT_EVENT_END
 
 /**************************************************************/
-/*POS：無限ダンジョンに移動                                                 */
+/*  POS：無限ダンジョンに移動                                 */
 /**************************************************************/
 EVENT_START  ev_pos_wc10_d31r0101_door
 
   //カメラ操作　無限ダンジョンにフォーカス
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  
+  _CAMERA_START()   //カメラ操作開始
+  _CAMERA_PURGE()   //カメラのバインドを解く
+
   //カメラ操作,最後の引数はカメラ操作にかけるフレーム数
-  _CAMERA_MOVE( 358,0,1085440,1867776,544799,1409024,1)
-  
+  _CAMERA_MOVE( 358,0,1085440,1867776,544799,1409024,1 )
+
   //アニメ：主人公入り口へ移動
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
-  
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  
+
+  _CAMERA_WAIT_MOVE() //カメラ移動待ち
+
   //マップチェンジ
   _MAP_CHANGE( ZONE_ID_D31R0101, 7, 14, DIR_UP )
-  
+
 EVENT_END
 
 /**************************************************************/
-/*看板01                                                 */
+/*  看板01                                                    */
 /**************************************************************/
 EVENT_START  ev_bg_wc10_board_01
-	_EASY_BGWIN_MSG(wc10_sign_01 , TYPE_TOWN)
+  _EASY_BGWIN_MSG( wc10_sign_01, TYPE_TOWN) 
 EVENT_END
 
+/**************************************************************/
+/* ショップ01                                                 */
+/**************************************************************/
+EVENT_START   ev_wc10_shopm1_01
+  _TALK_OBJ_START()
+  _WHITE_FOREST_SHOP0_CALL()
+EVENT_END
+
+/**************************************************************/
+/* ショップ02                                                  */
+/**************************************************************/
+EVENT_START   ev_wc10_shopm1_02
+  _TALK_OBJ_START()
+  _WHITE_FOREST_SHOP1_CALL()
+EVENT_END
+
+/**************************************************************/
+/* ショップ03                                                 */
+/**************************************************************/
+EVENT_START   ev_wc10_shopm1_03
+  _TALK_OBJ_START()
+  _WHITE_FOREST_SHOP2_CALL()
+EVENT_END
+
+/**************************************************************/
+/* ショップ04                                                 */
+/**************************************************************/
+EVENT_START   ev_wc10_shopm1_04
+  _TALK_OBJ_START()
+  _WHITE_FOREST_SHOP3_CALL()
+EVENT_END
+
+/**************************************************************/
+/*  ヒロコ（じゅくがえり♀）：話しかけ                        */
+/**************************************************************/
+EVENT_START   ev_wc10_02_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //ヒロコ：ポワ～ン……▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_02_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //ヒロコ：わわっ！　みました！？
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_02_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //ヒロコ：ポケモンが　あそんでいるのを
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_02_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  マサオ（たんパンこぞう）：話しかけ                        */
+/**************************************************************/
+EVENT_START   ev_wc10_05_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //マサオ：おれの　にいちゃんは
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_05_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //マサオ：すーっごい　ひさしぶりに！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_05_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //マサオ：にいちゃんが　さいきん
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_05_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  タクマ（カラテおう）：話しかけ                            */
+/**************************************************************/
+EVENT_START   ev_wc10_07_01   //エリア05クリア後に出現する
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //タクマ：さいきん　しろのたいじゅで
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_07_01 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //タクマ：きみが　《主人公》　か！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_07_02 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  カルロス（バックパッカー♂）：話しかけ                    */
+/**************************************************************/
+EVENT_START   ev_wc10_13_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //カルロス：ホワイトフォレストじゃ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_13_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //カルロス：まいにち　ここで
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_13_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //カルロス：たびの　じゅんびをしようと
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_13_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ガクト（やまおとこ）：話しかけ                            */
+/**************************************************************/
+EVENT_START   ev_wc10_18_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //ガクト：しんせいなる　しろのたいじゅの
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_18_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ガクト：おお！　《主人公》！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_18_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ガクト：もりの　みんなを
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_18_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ミホ（ほいくし）：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_wc10_20_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //ミホ：わーん　たいくつー！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_20_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //ミホ：こっちに　ひっこしてきたら
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_20_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //ミホ：のはらに　ねっころがるとか
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_20_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ローザ（ベテラン♀）：話しかけ                            */
+/**************************************************************/
+EVENT_START   ev_wc10_27_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //ローザ：まずい……　まずいわ……
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_27_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //ローザ：わたしも　しろのたいじゅに
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_27_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ローザ：しょしんに　かえって
+    _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_27_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  グレース（マダム）：話しかけ                              */
+/**************************************************************/
+EVENT_START   ev_wc10_30_01   //エリア10クリア後に出現する
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //グレース：あなたが　《主人公》　ね！▼
+  _EASY_BALLOONWIN_TALKOBJ_MSG( wc10_30_01 )
+
+EVENT_END
+
+/**************************************************************/
+/*  ムシャーナ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_wc10_poke16_01
+  _EASY_TALK_POKEVOICE( MONSNO_516, wc10_poke16_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ミネズミ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_wc10_poke17_01
+  _EASY_TALK_POKEVOICE( MONSNO_537, wc10_poke17_01 )
+EVENT_END
+
+/**************************************************************/
+/*  チュリネ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_wc10_poke18_01
+  _EASY_TALK_POKEVOICE( MONSNO_517, wc10_poke18_01 )
+EVENT_END
+
+/**************************************************************/
+/*  タブンネ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_wc10_poke36_01
+  _EASY_TALK_POKEVOICE( MONSNO_599, wc10_poke36_01 )
+EVENT_END
+
+/**************************************************************/
+/*  コジョフー：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_wc10_poke45_01
+  _EASY_TALK_POKEVOICE( MONSNO_630, wc10_poke45_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ダンゴロ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_wc10_poke49_01
+  _EASY_TALK_POKEVOICE( MONSNO_600, wc10_poke49_01 )
+EVENT_END
+
+
 //--------------------------------------------------------------------
-//	☆共通処理：1歩歩く
+//☆共通処理：1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆共通処理：方向転換
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆共通処理：ギョエ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ハテナ
+//☆共通処理：その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_hatena
-	_ANIME_DATA	AC_MARK_HATENA,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_hatena
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
+
+

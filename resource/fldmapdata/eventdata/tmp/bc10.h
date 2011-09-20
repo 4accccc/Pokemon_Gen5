@@ -14,6 +14,14 @@
 #ifndef ZONE_BC10_EVC_H
 #define ZONE_BC10_EVC_H
 
+#define BC10_03_01                         0
+#define BC10_08_01                         1
+#define BC10_25_01                         2
+#define BC10_11_01                         3
+#define BC10_19_01                         4
+#define BC10_24_01                         5
+#define BC10_23_01                         6
+#define BC10_29_01                         7
 
 #endif //ZONE_BC10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/bc10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

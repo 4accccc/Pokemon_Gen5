@@ -13,6 +13,8 @@
   .include  "wc10r0101.h"
   .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
+  //@author fujimura_souichirou（一言メッセージ追加）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,7 +22,65 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_wc10r0101_oldman1_01
+_EVENT_DATA   ev_wc10r0101_boy2_01
+_EVENT_DATA   ev_wc10r0101_boy3_01
+_EVENT_DATA   ev_wc10r0101_middlewoman2_01
 _EVENT_DATA_END
 
+//無限ダンジョンの状態を取得する用変数
+DEFINE_LOCAL  LWK_DUNGEON_STATUS
+
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_oldman1_01
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  //初期状態
+  IF $LWK_DUNGEON_STATUS <= 4 THEN
+
+    //おじいさん：ホワイトフォレストへ　ようこそ！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_oldman1_01 )
+
+  //エリア05クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 5 && $LWK_DUNGEON_STATUS <= 9 THEN
+
+    //おじいさん：こえを　きいているようだね▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_oldman1_02 )
+
+  //エリア10クリア後
+  ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+    //おじいさん：こころの　こえを　きいたようだね▽
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_oldman1_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  男の子01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_boy2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_boy3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_boy3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_wc10r0101_middlewoman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10r0101_middlewoman2_01 )
+EVENT_END
 
 

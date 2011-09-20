@@ -9,6 +9,10 @@
 #ifndef ZONE_WC10R0101_EVC_H
 #define ZONE_WC10R0101_EVC_H
 
+#define WC10R0101_OLDMAN1_01               0
+#define WC10R0101_BOY2_01                  1
+#define WC10R0101_BOY3_01                  2
+#define WC10R0101_MIDDLEWOMAN2_01          3
 
 #endif //ZONE_WC10R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/wc10r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -9,11 +9,19 @@
 #ifndef ZONE_BC10R0401_EVC_H
 #define ZONE_BC10R0401_EVC_H
 
-#define BC10R0401_SHOPM1_01                0
+#define BC10R0401_SHOPM1_02                0
 #define BC10R0401_SHOPM1_04                1
-#define BC10R0401_SHOPM1_03                2
-#define BC10R0401_SHOPM1_02                3
-#define BC10R0401_SHOPM1_05                4
+#define BC10R0401_SHOPM1_01                2
+#define BC10R0401_SHOPM1_03                3
+#define BC10R0401_GENTLEMAN_01             4
+#define BC10R0401_BOY4_01                  5
+#define BC10R0401_MIDDLEMAN2_01            6
+#define BC10R0401_MAN3_01                  7
+#define BC10R0401_MIDDLEWOMAN1_01          8
+#define BC10R0401_MIDDLEMAN1_01            9
+#define BC10R0401_BADMAN_01               10
+#define BC10R0401_WOMAN3_01               11
+#define BC10R0401_OLDMAN1_01              12
 
 #endif //ZONE_BC10R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/bc10r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

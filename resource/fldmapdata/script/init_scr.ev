@@ -306,6 +306,14 @@ init_flags:
   //D26:チャンピオンロードのゾロアーク
   _FLAG_SET( FV_D26_POKE23_01 )
 
+  //BC10:ブラックシティのトレーナー
+  _FLAG_SET( FV_BC10_TRAINER_01 )
+  _FLAG_SET( FV_BC10_TRAINER_02 )
+
+  //WC10:ホワイトフォレストのトレーナー
+  _FLAG_SET( FV_WC10_TRAINER_01 )
+  _FLAG_SET( FV_WC10_TRAINER_02 )
+
 }
 _RET
 

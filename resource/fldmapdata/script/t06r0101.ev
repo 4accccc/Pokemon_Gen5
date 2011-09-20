@@ -11,8 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_t06r0101.h"
   .include  "t06r0101.h"
-  
+
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（クリア後イベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,6 +29,14 @@ _EVENT_DATA    ev_t06r0101_champion_01
 _EVENT_DATA    ev_t06r0101_girl3_01
 _EVENT_DATA    ev_t06r0101_boy3_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+//無限ダンジョンの状態を取得する用変数
+DEFINE_LOCAL  LWK_DUNGEON_STATUS
 
 
 /************************************************************/
@@ -242,20 +251,266 @@ _ANIME_LABEL	anm_girl3_back
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/* アデクはなしかけ                                         */
+/*  アデク：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_t06r0101_champion_01
-  
+
+  //無限ダンジョンの進行具合で台詞が分岐
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
   //クリア後ならセリフを分岐
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_13 )
-  //ヒオウギジムクリア後ならセリフを変更
-  ELSIF $WK_SCENE_C12GYM_OPEN >= 2 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_12 )
+
+    //アデク戦前
+    IF FLAG_OFF( FE_T06R0101_CHAMPION_WIN_01 ) THEN
+
+      //イベントへ
+      _CALL ev_mugenboss_01
+
+    //アデク戦後（バンジロウ対戦前）
+    ELSIF FLAG_ON( FE_T06R0101_CHAMPION_WIN_01 ) && $LWK_DUNGEON_STATUS <= 9 THEN
+
+      _TALK_OBJ_START()
+      //アデク：わが　まご　ながら
+      _BALLOONWIN_OBJMSG_WB( msg_t06r0101_champion_end_10w, msg_t06r0101_champion_end_10b, T06R0101_CHAMPION_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //バンジロウ対戦後
+    ELSIF $LWK_DUNGEON_STATUS >= 10 THEN
+
+      _TALK_OBJ_START()
+      //アデク：おまえさんが
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_11, T06R0101_CHAMPION_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //クリア前
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_11 )
+
+    _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+
+    //ヒオウギジムバッジを入手していない
+    IF $SCWK_TEMP0 == 0 THEN
+      //アデク：それが　たびの　よさ　だな
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_11 )
+
+    //ジムバッジ入手後
+    ELSE
+      //アデク：ちからを　ひきだせたけっかだな
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_12 )
+
+    ENDIF
+
   ENDIF
+
 EVENT_END
+
+//アデク戦＆無限ダンジョンボス
+ev_mugenboss_01:
+
+  _TALK_OBJ_START()
+
+  //WBT登場前
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN    //【仮】クリアフラグで分岐中
+    //アデク：イッシュちほうで　さいきょうの
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_01, T06R0101_CHAMPION_01, POS_DEFAULT )
+
+  //WBT登場後
+  ELSE
+    //アデク：かれらにも　トレーナーの　すごみを
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_02, T06R0101_CHAMPION_01, POS_DEFAULT )
+
+  ENDIF
+
+  //アデクと戦う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //アデク：こころが　おどる！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_03, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し【仮】トレーナーIDは仮
+    _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+
+    //結果チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()
+    ELSE
+      _TRAINER_LOSE()
+    ENDIF
+
+    //アデク：さすがだな
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_05, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    _TIME_WAIT( 16 )
+
+    //階段SE再生
+    _SE_PLAY( SEQ_SE_KAIDAN )
+
+    //SE待ち
+    _SE_WAIT()
+
+     //フィールド上にバンジロウ配置
+    _OBJ_ADD_EX( 6, 12, DIR_UP, MMDL_ID_EVENTOBJ_00, MUGENBOSS, MV_DMY )
+
+    //プレイヤーの向きを取得
+    _PLAYER_DIR_GET( LWK_DIR ) 
+    //主人公が上を向いていなかった場合、アデク振り向き
+    IF $LWK_DIR != DIR_UP THEN
+      //アニメ：アデク振り向き
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_d )
+    ENDIF
+
+    //アニメ：バンジロウ登場
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 6, FORCE_TYPE_NPC, 4, DIR_UD )
+    _OBJ_ANIME_WAIT()
+
+    //バンジロウ：じーちゃん！▼（バージョンでセリフが異なる）
+    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_01w, msg_t06r0101_mugenboss_end_01b, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+    //主人公移動
+    IF $LCW_POSX == 6 && $LCW_POSZ == 2 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 5, 3, FORCE_TYPE_NPC, 8, DIR_LR )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+
+    //アデク：バンジロウでは　ないか！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_06, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //バンジロウ：おーい！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+    //バンジロウ、主人公に接近
+    IF $LCW_POSX == 6 && $LCW_POSZ == 4 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 5, FORCE_TYPE_NPC, 8, DIR_UD )
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 3 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 7, 5, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+    ELSIF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 5, 5, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+
+    //アニメ：バンジロウ「？」
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_hatena )
+    _OBJ_ANIME_WAIT()
+
+    //バンジロウ：で　だれ　こいつ？▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //プレイヤーネームを格納
+    _PLAYER_NAME( 0 )
+
+    //性別が格納されるローカル変数を定義
+    DEFINE_LOCAL SCWK_SEX
+    _GET_MY_SEX( SCWK_SEX )
+
+    //男性だった場合
+    IF $SCWK_SEX == PM_MALE THEN
+
+      //アデク：かれの　なまえは
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_07, T06R0101_CHAMPION_01, POS_DEFAULT )
+      _MSGWIN_CLOSE()
+
+    //女性だった場合
+    ELSE
+
+      //アデク：かのじょの　なまえは
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_08, T06R0101_CHAMPION_01, POS_DEFAULT )
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+    //バンジロウ：やっぱりか！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //アデク：どうだ？　バンジロウ
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_09, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //バンジロウ：ダメだ！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+
+    //バンジロウ：じぶんの　ポケモンたちと！▼（バージョンでセリフが異なる）
+    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_06w, msg_t06r0101_mugenboss_end_06b, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+
+    //プレイヤーネームを格納
+    _PLAYER_NAME( 0 )
+    //バンジロウ：じゃな！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+    //アニメ：バンジロウ退場
+    IF $LCW_POSX == 6 && $LCW_POSZ == 4 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 12, FORCE_TYPE_NPC, 4, DIR_UD )
+    ELSE
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 6, FORCE_TYPE_NPC, 4, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 12, FORCE_TYPE_NPC, 4, DIR_UD )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    _SE_PLAY( SEQ_SE_KAIDAN )    //階段SE再生
+    _SE_WAIT()    //SE待ち
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+    //主人公とアデク向き合う
+    IF $LCW_POSX == 6 && $LCW_POSZ == 4 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 3 THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_r )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    ELSIF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+
+    //アデク：わが　まご　ながら
+    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_champion_end_10w, msg_t06r0101_champion_end_10b, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //アデク（クリア後）に勝利した
+    _FLAG_SET( FE_T06R0101_CHAMPION_WIN_01 )
+    //========================================//
+
+  ELSE
+
+    //アデク：ふむう……
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_04, T06R0101_CHAMPION_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
 
 /**************************************************************/
 /* BOY3はなしかけ                                         */
