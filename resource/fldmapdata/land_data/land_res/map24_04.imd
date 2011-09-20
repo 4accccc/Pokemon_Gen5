@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-09T16:14:29" source="map24_04.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-20T15:17:37" source="map24_04.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-09-09T16:14:29" source="map24_04.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-09-20T15:17:37" source="map24_04.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2008,13 +2008,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="sea_mizu1_1"
+	<material index="20" name="sea_mizu"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2032,13 +2032,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="sea_mizu1_2"
+	<material index="21" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -9567,8 +9567,8 @@
 		<display index="17" material="17" polygon="16" priority="0"/>
 		<display index="18" material="18" polygon="0" priority="0"/>
 		<display index="19" material="19" polygon="11" priority="0"/>
-		<display index="20" material="20" polygon="2" priority="0"/>
-		<display index="21" material="21" polygon="1" priority="0"/>
+		<display index="20" material="20" polygon="1" priority="0"/>
+		<display index="21" material="21" polygon="2" priority="0"/>
 	</node>
 </node_array>
 
