@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/19 18:38:47
+#save date:2011/09/20 21:17:41
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r16r0201.wms
 #SECTION START:OBJ_EVENT
@@ -80,25 +80,25 @@ TR_RANGERM_15
 #OBJ CODE Number
 RANGERM
 #MOVE CODE Number
-MV_LEFT
+MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TRAINER_KYORO
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_RANGERM_15
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
-4
+2
 #Parameter 1 Number
-0
+5
 #Parameter 2 Number
 0
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+8
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -326,7 +326,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+1
 #event number: 0
 #Door Event Label
 DOOR_ID_R16R0201_R16_EXIT01
@@ -344,22 +344,5 @@ EVENTDATA_POSTYPE_GRID
 -56 0 -584
 #size
 2 1
-#event number: 1
-#Door Event Label
-DOOR_ID_R16R0201_R16R0301_EXIT01
-#Next Zone ID Name
-ZONE_ID_R16R0301
-#Next Door ID Name
-DOOR_ID_R16R0301_R16R0201_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 0 -24
-#size
-1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
