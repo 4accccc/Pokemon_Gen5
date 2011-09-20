@@ -556,10 +556,10 @@
 	</row>
 
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
-		<language name="JPN" width="216">うろたえて
-こんな　モノ　あげたりするわ！▼</language>
-		<language name="JPN_KANJI" width="216">うろたえて
-こんな　モノ　あげたりするわ！▼</language>
+		<language name="JPN" width="216">うろたえたりして
+こんな　モノ　あげちゃうわ！▼</language>
+		<language name="JPN_KANJI" width="216">うろたえたりして
+こんな　モノ　あげちゃうわ！▼</language>
 	</row>
 
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
@@ -8693,7 +8693,7 @@
 	<row id="TRID_KARATE_14_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">デコボコみちで　おのれを　みがく！
 こんじょうを　きたえるのだ！▼</language>
-		<language name="JPN_KANJI" width="216">デコボコみちで　己を　みがく！
+		<language name="JPN_KANJI" width="216">デコボコ道で　己を　磨く！
 根性を　鍛えるのだ！▼</language>
 	</row>
 
@@ -9798,9 +9798,9 @@
 
 	<row id="TRID_MOUNT_2_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">あ……　そっかあ
-かなり　かんがえているよね</language>
+いまの　かんがえてるよねえ</language>
 		<language name="JPN_KANJI" width="216">あ……　そっかあ
-かなり　考えているよね</language>
+今の　考えてるよねえ</language>
 	</row>
 
 	<row id="TRID_SWBOSS_1_01_TRMSG_FIGHT_LOSE">
