@@ -421,11 +421,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・No00「？？？」未所有時
+・No635「アクロママシーン」未所有時
 ・ストッパー状態</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:36:50" />
+				Time="2011-09-20T12:56:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -448,10 +448,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>道具使用の確認</Text>
+			<Text>おおきな　いわに　たいして
+アクロママシーンを　つかいますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:28:45" />
+				Time="2011-09-20T12:55:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -459,10 +460,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぱれっしゅ！</Text>
+			<Text>大きな　岩に　対して
+アクロママシーンを　使いますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:26:06" />
+				Time="2011-09-20T12:56:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -471,13 +473,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・No00「？？？」所有時
+・No635「アクロママシーン」所有時
 ・はい/いいえの選択肢表示
 　はい　→poke50_03
 　いいえ→終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:36:52" />
+				Time="2011-09-20T12:56:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -551,11 +553,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？？？は
+			<Text>アクロママシーンは
 こわれてしまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:40:00" />
+				Time="2011-09-20T12:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -563,11 +565,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？？？は
-こわれてしまった……</Text>
+			<Text>アクロママシーンは
+壊れてしまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:40:03" />
+				Time="2011-09-20T12:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -581,5 +583,12 @@
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:39:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-20T12:57:38" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

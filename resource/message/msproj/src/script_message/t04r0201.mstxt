@@ -93,12 +93,12 @@
 ・夏だけ出現
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
-　はい→ポケモン選択画面
+　はい　→ポケモン選択画面
 　いいえ→diet_04
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:45:46" />
+				Time="2011-09-20T12:49:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
