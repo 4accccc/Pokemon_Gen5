@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d26r1101.h"
-  //.include  "d26r1101.h"
+  .include  "d26r1101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,81 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d26r1101
+_EVENT_DATA   ev_zone_d26r1101
+_EVENT_DATA   ev_pos_d26r1101_poke23_01
 _EVENT_DATA_END
 
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
-//ev_zone_d26r1101:
-//  _END
+INIT_EVENT_START  ev_zone_d26r1101
+
+  //クリア後ならばゾロアークを表示（１回のみ）
+  IF $WK_SCENE_D26_POKE23_01 == 2 THEN
+
+    //==================================//
+    //ゾロアーク表示
+    _FLAG_RESET( FV_D26_POKE23_01 )
+    //==================================//
+
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  POS：ゾロアーク・Ｎの城誘導02                             */
 /**************************************************************/
-ev_d26r1101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_d26r1101_poke23_01
+
+  //ゾロアーク：くあぁああああぁん！！
+  _VOICE_PLAY( MONSNO_530, 0 ) 
+  //_PLAINWIN_MSG_UP( msg_d26r1101_poke23_01 )
+  _BALLOONWIN_OBJMSG_POS( msg_d26r1101_poke23_01, D26R1101_POKE23_01, POS_DEFAULT )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  //_PLAINWIN_CLOSE()
+  _MSGWIN_CLOSE()
+
+  //アニメ：ゾロアーク、Ｎ城方面へ移動
+  _OBJ_ANIME_AUTO( D26R1101_POKE23_01, 4, 7, FORCE_TYPE_NPC, 6, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( D26R1101_POKE23_01, 28, 7, FORCE_TYPE_NPC, 6, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( D26R1101_POKE23_01 )  //動作モデル削除
+
+  //========================================//
+  //POS進行
+  $WK_SCENE_D26_POKE23_01 = 3
+  //ゾロアーク非表示
+  _FLAG_SET( FV_D26_POKE23_01 )
+  //========================================//
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
 

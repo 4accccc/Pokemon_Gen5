@@ -13,6 +13,7 @@
   .include  "d27r0601.h"
 
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（ＢＧメッセージ設置）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -32,6 +33,9 @@ _EVENT_DATA    ev_d27r0601_ninja_03
 _EVENT_DATA    ev_d27r0601_swrival_01
 _EVENT_DATA    ev_d27r0601_poke32_01
 _EVENT_DATA    ev_pos_d27r0601_stopper_01
+_EVENT_DATA    ev_bg_d27r0601_monitor_01
+_EVENT_DATA    ev_bg_d27r0601_monitor_02
+_EVENT_DATA    ev_bg_d27r0601_monitor_03
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -496,6 +500,59 @@ EVENT_START	ev_pos_d27r0601_warp_01
   ENDIF
   
 EVENT_END
+
+/**************************************************************/
+/*  ＢＧ：モニター01                                          */
+/**************************************************************/
+EVENT_START   ev_bg_d27r0601_monitor_01
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：イッシュちほうの
+  _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  ＢＧ：モニター02                                          */
+/**************************************************************/
+EVENT_START   ev_bg_d27r0601_monitor_02
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：ふねに　かんする　データが
+  _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_02 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  ＢＧ：モニター03                                          */
+/**************************************************************/
+EVENT_START   ev_bg_d27r0601_monitor_03
+
+  _TALK_START_SE_PLAY()
+
+  //クリア前
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ＢＧ：だんいんの　こえが　きこえる……！？
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_03 )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+  ELSE
+
+    //ＢＧ：スノーノイズ　じょうたい　だ……
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_04 )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
 
 //--------------------------------------------------------------
 //	ダークトリニティ：登場

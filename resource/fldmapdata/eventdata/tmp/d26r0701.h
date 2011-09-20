@@ -24,6 +24,7 @@
 #define FLD_ITEM_205                       6
 #define FLD_ITEM_213                       7
 #define FLD_ITEM_215                       8
+#define D26R0701_POKE23_01                 9
 
 #endif //ZONE_D26R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

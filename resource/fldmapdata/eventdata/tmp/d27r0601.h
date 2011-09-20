@@ -20,5 +20,15 @@
 #ifndef ZONE_D27R0601_EVB_H
 #define ZONE_D27R0601_EVB_H
 
+#define BG_D27R0601_MONITOR1_01           0
+#define BG_D27R0601_MONITOR1_02           1
+#define BG_D27R0601_MONITOR1_03           2
+#define BG_D27R0601_MONITOR2_02           3
+#define BG_D27R0601_MONITOR3_01           4
+#define BG_D27R0601_MONITOR3_02           5
+#define BG_D27R0601_MONITOR3_03           6
+#define BG_D27R0601_MONITOR3_04           7
+#define BG_D27R0601_MONITOR3_05           8
+#define BG_D27R0601_MONITOR3_06           9
 
 #endif //ZONE_D27R0601_EVB_H

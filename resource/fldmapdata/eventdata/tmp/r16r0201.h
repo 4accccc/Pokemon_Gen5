@@ -17,6 +17,7 @@
 #define FLD_ITEM_65                        4
 #define FLD_ITEM_66                        5
 #define FLD_ITEM_67                        6
+#define R16R0201_BACKPACKERM_01            7
 
 #endif //ZONE_R16R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

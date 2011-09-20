@@ -303,6 +303,9 @@ init_flags:
   _FLAG_SET( FV_D29R0301_WORKMAN2_02A )
   _FLAG_SET( FV_D29R0301_WORKMAN2_04 )
 
+  //D26:チャンピオンロードのゾロアーク
+  _FLAG_SET( FV_D26_POKE23_01 )
+
 }
 _RET
 
@@ -538,6 +541,9 @@ ev_first_gameclear:
   
   //C12R0101：全国ずかんイベント起動
   $WK_SCENE_C12R0101 = 2
+
+  //D26:チャンピオンロードにゾロアーク出現
+  $WK_SCENE_D26_POKE23_01 = 1
 
 _RET
 

@@ -10,6 +10,7 @@
 #ifndef ZONE_D26R1101_EVC_H
 #define ZONE_D26R1101_EVC_H
 
+#define D26R1101_POKE23_01                 0
 
 #endif //ZONE_D26R1101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r1101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

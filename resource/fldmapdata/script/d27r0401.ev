@@ -13,6 +13,7 @@
   .include  "d27r0401.h"
 
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（クリア後のアクロマ戦）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -161,8 +162,71 @@ INIT_EVENT_END
 /* アクロマ：話しかけ                                         */
 /**************************************************************/
 EVENT_START   ev_d27r0401_swboss_01
-  //【仮】条件で会話分岐
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_03_09 )
+
+  //クリア前
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //アクロマ：ですが　あなたは　わたくしに
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_03_09 )
+
+  //クリア後
+  ELSE
+
+    _TALK_OBJ_START()
+
+    //アクロマ（クリア後）に勝利していない場合
+    IF FLAG_OFF( FE_D27R0401_SWBOSS_WIN_01 ) THEN
+
+      //アクロマ：……ここまで　くるとは
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_01 )
+
+      //アクロマ：さてと……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_02 )
+      _MSGWIN_CLOSE()
+
+      //アクロマ戦  【仮】トレーナーIDは仮
+      _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+
+      //結果チェック
+      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _TRAINER_WIN()
+      ELSE
+        _TRAINER_LOSE()
+      ENDIF
+
+      //アクロマ：……ミスの　ゆるされない
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_03 )
+
+      //アクロマ：これを　もっていきなさい！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_04 )
+      _MSGWIN_CLOSE()
+
+      //アイテム「マスターボール」入手
+      _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
+
+      //アクロマ：よければ　また
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //アクロマ（クリア後）に勝利した
+      _FLAG_SET( FE_D27R0401_SWBOSS_WIN_01 )
+      //========================================//
+
+    //アクロマ（クリア後）に勝利している
+    ELSE
+
+      //アクロマ：よければ　また
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
 EVENT_END
 
 /************************************************************/

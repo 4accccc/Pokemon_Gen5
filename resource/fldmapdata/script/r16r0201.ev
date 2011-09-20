@@ -13,6 +13,8 @@
   .include  "msg_r16r0301.h"
   .include  "r16r0201.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,4 +22,116 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_r16r0201_backpackerm_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/**************************************************************/
+/*  バックパッカー♂（ゾロアーク）：話しかけ（アイテム入手）  */
+/**************************************************************/
+EVENT_START   ev_r16r0201_backpackerm_01
+
+  _TALK_OBJ_START()
+
+  //バックパッカー♂：やあ　ポケモントレーナー▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_01 )
+
+  //ゾロアークを知っている？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //バックパッカー♂：すごいね！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_02 )
+
+  ELSE    //いいえ
+
+    //バックパッカー♂：おやおや……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_03 )
+
+  ENDIF
+
+  //バックパッカー♂：フン！　しんじて　うらぎられるのも
+  _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_04 )
+  _MSGWIN_CLOSE()
+
+  //わざマシン９５「バークアウト」入手
+  _ITEM_EVENT_NOWAIT( ITEM_WAZAMASIN95, 1 )
+
+  //バックパッカー♂：２ねんほどまえ
+  _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_05 )
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //バックパッカー♂：移動
+  IF $LCW_POSX == 8 THEN
+    _OBJ_ANIME_AUTO( R16R0201_BACKPACKERM_01, 9, 15, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 16 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME_AUTO( R16R0201_BACKPACKERM_01, 8, 14, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //一度OBJを消してゾロアークにすりかえる
+  _OBJ_DEL( R16R0201_BACKPACKERM_01 )
+  _TIME_WAIT( 2 )
+
+  //ゾロアーク配置
+  IF $LCW_POSX == 8 THEN
+    _OBJ_ADD_EX( 9, 15, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE23, MV_DMY )
+  ELSE
+    _OBJ_ADD_EX( 8, 14, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE23, MV_DMY )
+  ENDIF
+
+  _TIME_WAIT( 4 )
+
+  //ゾロアーク退場
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke_walk_d )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+  //========================================/
+  //バックパッカー♂（ゾロアーク）非表示
+  _FLAG_SET( FV_R16R0201_BACKPACKERM_01 )
+  //========================================/
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゾロアーク：退場用
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke_walk_d
+  _ANIME_DATA AC_WALK_D_4F,4
+  _ANIME_DATA ACMD_END,0
+
+

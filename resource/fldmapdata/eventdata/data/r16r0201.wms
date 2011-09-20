@@ -1,16 +1,34 @@
 #WorldMap SaveData 
-#save date:2010/02/12 16:11:52
+#save date:2011/09/19 14:21:28
 #Width
-1
+5
 #Height
-2
+4
 #block x offset
 0
 #block z offset
 0
 #3dp file names
-C:\home\swan_data3d\field\out51\m_dun2101_00_00.3dp
-C:\home\swan_data3d\field\out51\m_dun2101_00_01.3dp
+C:\home\swan_data3d\field\out51\m_dun2102_00_00.3dp
+C:\home\swan_data3d\field\out51\m_dun2102_00_01.3dp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #block size
 32 32
 #End of WorldMap SaveData
