@@ -109,8 +109,9 @@
 //行きたいお店グループ
 #define RESORT_APPEAL_LV_MIDDLE (1) //中
 #define RESORT_APPEAL_LV_LOW (0) //弱
+#define RESORT_APPEAL_LV_GROUP_NONE (3) //グループ無し
 #define RESORT_APPEAL_LV_HIGH (2) //強
-#define RESORT_APPEAL_LV_MAX (3) //最大
+#define RESORT_APPEAL_LV_MAX (4) //最大
 //プリセットタイプ
 #define RESORT_PRESET_TYPE_SECRETARY_03 (6) //秘書３
 #define RESORT_PRESET_TYPE_SECRETARY_04 (7) //秘書４

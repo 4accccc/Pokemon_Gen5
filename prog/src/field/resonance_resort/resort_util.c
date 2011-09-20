@@ -31,6 +31,7 @@
 #include "savedata/resonance_resort_sv.h"
 #include "resort_shop.h"
 #include "resort_util.h"
+#include "resort_const.h"
 
 //outer
 #include "resort_util.h"
@@ -72,7 +73,7 @@ static u32 SexGetMsgID( u32 sex, u32 male, u32 female )
  *	@return メッセージID
  */
 //-----------------------------------------------------------------------------
-u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, WORDSET *p_wordset, HEAPID heapID )
+u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, GAMEDATA *p_gamedata, WORDSET *p_wordset, HEAPID heapID )
 { 
   RESORT_ABSTRUCT_MANAGER *p_man  = RESORT_SYSTEM_GetAbstructManager(p_sys);
   RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
@@ -124,7 +125,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
           || people_type == RESORT_PEOPLE_TYPE_PROXY );
       if( spot == 0 )
       {
-        spot = RESORT_UTIL_DrawLotsWantSpot( p_abstruct, p_sys );
+        spot = RESORT_UTIL_DrawLotsWantSpot( p_abstruct, p_sys, p_gamedata );
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
       GF_ASSERT( spot > 0 );
@@ -638,9 +639,9 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
 
   static const fx32 sc_grade[]  =
   {
-    FX32_CONST(0.5),
-    FX32_CONST(1.0),
-    FX32_CONST(2.0),
+    RESORT_CONST_SPOT_EXP_GOOD,
+    RESORT_CONST_SPOT_EXP_GREAT,
+    RESORT_CONST_SPOT_EXP_EXCELLENT,
   };
 
   RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
@@ -1417,13 +1418,39 @@ static u32 Resort_Util_DrawLotsWantSpotByGroup( const RESORT_ABSTRUCT_DATA *cp_w
  *	@return 行きたい場所ID
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys )
+u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
 {
+  u32 want_spot;
+
   //グループ抽選
   u32 group = Resort_Util_DrawLotsSpotGroup( cp_wk, p_sys );
 
+  //もし一定確率でお気に入り場所にいく
+  {
+    static const int sc_favorite_percent[] =
+    {
+      RESORT_CONST_WANTSPOT_FAVORITE_LOW,
+      RESORT_CONST_WANTSPOT_FAVORITE_MIDDLE,
+      RESORT_CONST_WANTSPOT_FAVORITE_HIGH,
+    };
+
+    int rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_FAVORITE, 100 );
+    if( rnd < sc_favorite_percent[group] )
+    {
+      RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
+      RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+      RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
+      MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
+      
+      u32 shopno = RESORT_OWNER_DATA_GetWantJob( p_owner, p_mystatus );
+      const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
+      u32 shoptype = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
+      return RESORT_SPOT_ID_SPOT_01_LOT + shoptype;
+    }
+  }
+
   //いきたい場所抽選
-  u32 want_spot = Resort_Util_DrawLotsWantSpotByGroup( cp_wk, p_sys, group );
+  want_spot = Resort_Util_DrawLotsWantSpotByGroup( cp_wk, p_sys, group );
 
   //もしグループ強の場合、◎がなかったらグループ弱から抽選する
   {

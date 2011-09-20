@@ -58,6 +58,7 @@
 #include "system/nsbtx_to_clwk.h"
 #include "arc/fieldmap/fldmmdl_mdlparam.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "resort_const.h"
 
 // BMPWIN定義テーブル
 
@@ -3376,14 +3377,8 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 //-----------------------------------------------------------------------------
 static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
 {
-  enum
-  {
-    RESORT_PRICE_COEFFEICENT = FX32_CONST(0.002f),
-    RESORT_FEVER_NONE_COEFFEICENT   = 1,
-    RESORT_FEVER_EXIST_COEFFEICENT  = 2,
-  };
   BOOL is_fever = RESORT_UTIL_IsFever( p_wk->p_resort_sys );
-  u32 fever_num = is_fever ? RESORT_FEVER_EXIST_COEFFEICENT: RESORT_FEVER_NONE_COEFFEICENT;
+  u32 fever_num = is_fever ? RESORT_CONST_FEVER_EXIST_COEFFEICENT: RESORT_CONST_FEVER_NONE_COEFFEICENT;
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
   GF_ASSERT( city_lv != 0 );
 
@@ -3392,7 +3387,7 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
     city_lv--;
   }
 
-  return price - FX_Whole(price * city_lv * fever_num * RESORT_PRICE_COEFFEICENT );
+  return price - FX_Whole(price * city_lv * fever_num * RESORT_CONST_PRICE_COEFFEICENT );
 }
 
 

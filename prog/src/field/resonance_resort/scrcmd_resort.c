@@ -601,26 +601,18 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
-  RESORT_BINARY_SPOT *p_spot = RESORT_SYSTEM_GetBinarySpot( p_sys );
-  RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
-  RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE* p_people = NULL;
-  u32 sex = PM_MALE;
-  u16 people_type = 0;
   RESORT_ABSTRUCT_DATA *p_abstruct = NULL;
-  RESORT_ABSTRUCT_MANAGER *p_man = RESORT_SYSTEM_GetAbstructManager(p_sys);
-  RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData( p_sys );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
 
 
   p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
   if( p_people )
   {
-    sex = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL );
-    people_type = RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE );
     p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
   }
 
-  *p_ret_wk = RESORT_UTIL_GetMsgID( param, p_sys, p_abstruct, p_wordset, heapID );
+  *p_ret_wk = RESORT_UTIL_GetMsgID( param, p_sys, p_abstruct, p_gamedata, p_wordset, heapID );
 
   return VMCMD_RESULT_CONTINUE;
 }

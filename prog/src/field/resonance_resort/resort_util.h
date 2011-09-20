@@ -29,7 +29,7 @@
  *					äOïîåˆäJä÷êî
 */
 //=============================================================================
-extern u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, WORDSET *p_wordset, HEAPID heapID );
+extern u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, GAMEDATA *p_gamedata, WORDSET *p_wordset, HEAPID heapID );
 
 extern BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u32 *p_index );
 
@@ -43,7 +43,7 @@ extern BOOL RESORT_UTIL_IsFever( RESORT_SYSTEM *p_sys );
 
 extern void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYSTEM *p_sys, RESORT_PEOPLE *p_people, WORDSET *p_wordset, GAMEDATA *p_gamedata, HEAPID heapID );
 
-extern u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys );
+extern u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata );
 
 extern FLDMSGWIN * RESORT_UTIL_RANKWND_Create( FLDMSGBG *p_msgbg, HEAPID heapID );
 
