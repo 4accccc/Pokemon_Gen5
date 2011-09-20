@@ -2710,6 +2710,12 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif //DEBUG_ONLY_FOR_hudson
+
+    // ポケウッド撮影でも逃げられる
+    if(BTL_MAIN_GetPokewoodMode(wk)==BTL_POKEWOOD_REC){
+      return BTL_ESCAPE_MODE_CONFIRM;
+    }
+
     return BTL_ESCAPE_MODE_NG;
 
   case BTL_COMPETITOR_SUBWAY:
