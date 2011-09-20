@@ -556,6 +556,9 @@ _RET
 //  エントリー→会場へ入場する
 /**************************************************************/
 ev_enter_hall:
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
+
   //地方トーナメント解除チェック：カントーだけでチェック
   _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_KANTO, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN

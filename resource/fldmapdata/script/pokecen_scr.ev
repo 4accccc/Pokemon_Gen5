@@ -411,6 +411,8 @@ EVENT_START ev_union
   IF $room_in == TRUE THEN
     //リゾートレコード
     _RESORT_SET_RECORD( RESORT_RECORD_ID_UNION )
+    //フェスミッション強制終了
+    _FMISSION_END_FORCE()
 
     //「おたのしみ ください」
     _BALLOONWIN_OBJMSG_POS( msg_pc_union_04, SCWK_TARGET_OBJID, POS_DL )

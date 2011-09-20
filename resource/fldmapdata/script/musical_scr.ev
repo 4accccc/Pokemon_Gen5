@@ -82,6 +82,8 @@ EVENT_START ev_musical_recept_single
 
         //リゾートレコード
         _RESORT_SET_RECORD( RESORT_RECORD_ID_MUSICAL )
+        //フェスミッション強制終了
+        _FMISSION_END_FORCE()
 
         //入場アニメ
         _CALL recept_move_obj_solo
@@ -411,6 +413,8 @@ ev_musical_recept_comm_core:
 
     //リゾートレコード
     _RESORT_SET_RECORD( RESORT_RECORD_ID_MUSICAL )
+    //フェスミッション強制終了
+    _FMISSION_END_FORCE()
 
     //入場アニメ
     _CALL recept_move_obj_comm

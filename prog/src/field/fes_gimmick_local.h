@@ -36,6 +36,9 @@ struct _FES_GIMMICK{
   LINK_FESTIVAL* fest_sys;  ///<最上位ワークへのポインタを保持
   const FEST_MISSION* fmwk; ///<現在のミッション情報ワーク
 
+  BOOL        ov_load_f;  ///<フィールドでギミック用オーバーレイをロードしたか？
+  FSOverlayID fld_ov_id;  ///<フィールドでロードしたギミック用オーバーレイID
+
   FIELDMAP_WORK* fieldWork;
   MMDLSYS* mmdl_sys;
   FIELD_PLAYER* field_player; 

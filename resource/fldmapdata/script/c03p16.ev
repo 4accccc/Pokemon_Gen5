@@ -274,6 +274,8 @@ ev_cabin:
   _SE_WAIT()
 
   _SET_CGEAR_OFF()
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
 
   //まもなく　しゅっこうに　なります
   _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05, C03P16_CABINGUIDE_01, POS_DOWN )

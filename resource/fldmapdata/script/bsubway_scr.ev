@@ -598,6 +598,8 @@ sub_receipt_challenge_single_double:
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
 
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -763,6 +765,8 @@ sub_receipt_challenge_multi_ai:
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
 
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1199,6 +1203,8 @@ sub_receipt_challenge_multi_comm:
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1416,6 +1422,8 @@ sub_receipt_challenge_wifi:
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1497,6 +1505,8 @@ ev_bsw_game_continue:
     
     //リゾートレコード
     _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
+    //フェスミッション強制終了
+    _FMISSION_END_FORCE()
 
     //デモ　出発
     _CALL sub_receipt_demo_start_train

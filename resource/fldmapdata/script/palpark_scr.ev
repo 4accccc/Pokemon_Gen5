@@ -152,6 +152,8 @@ play_palpark:
     //エラー
     _RET
   ENDIF
+  //フェスミッション強制終了処理
+  _FMISSION_END_FORCE()
 
   //「そこにたって」
   _BALLOONWIN_OBJMSG( msg_palpark_08, R15R0301_PARK )

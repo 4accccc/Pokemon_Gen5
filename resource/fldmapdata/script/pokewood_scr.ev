@@ -390,6 +390,9 @@ _RET
 //  スタジオへの入室処理
 /**************************************************************/
 ev_pkwd_rec_go_studio:
+  //フェスミッション強制終了処理
+  _FMISSION_END_FORCE()
+
   //「OK!じゃあ撮影を始めようか！」
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
   _MSGWIN_CLOSE()
@@ -997,6 +1000,9 @@ _RET
 //
 /**************************************************************/
 ev_pkwd_show_watch_movie:
+  //フェスミッション強制終了処理
+  _FMISSION_END_FORCE()
+  
   //「それでは　まもなく上映です」
   _BALLOONWIN_OBJMSG_POS( msg_pw_theater_05, SCWK_TARGET_OBJID, POS_DOWN )
   _MSGWIN_CLOSE()

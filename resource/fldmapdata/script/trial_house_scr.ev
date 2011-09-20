@@ -273,6 +273,9 @@ charange:
 
   _RESORT_SET_RECORD( RESORT_RECORD_ID_TRIALHOUSE )
 
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
+
   //「でははじめるよ」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DOWN )
   _BALLOONWIN_CLOSE()   //アニメにつづくのでクローズ

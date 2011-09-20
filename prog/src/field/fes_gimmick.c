@@ -53,7 +53,7 @@ FS_EXTERN_OVERLAY( field_fes_gimmick_npc );
 
 //======================================================================
 //======================================================================
-static void sub_OverlayLoadUnload( const FEST_MISSION* fmwk, BOOL load_f );
+static void sub_OverlayLoadUnload( FES_GIMMICK* wk, BOOL load_f );
 static void mission_init_mushroom_enc( FES_GIMMICK* wk );
 
 static u16 sub_GetZoneIdx( u16 zone_id );
@@ -89,7 +89,7 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
       wk->railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
     }
   }
-  sub_OverlayLoadUnload( wk->fmwk, TRUE );
+  sub_OverlayLoadUnload( wk, TRUE );
   return wk;
 }
 
@@ -100,7 +100,7 @@ FES_GIMMICK* FES_GIMMICK_SYS_Create( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
 //----------------------------------------------------------------------
 void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk )
 {
-  sub_OverlayLoadUnload( wk->fmwk, FALSE );
+  sub_OverlayLoadUnload( wk, FALSE );
 
   MI_CpuClear8( wk, sizeof(FES_GIMMICK));
   GFL_HEAP_FreeMemory( wk );
@@ -111,24 +111,36 @@ void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk )
  * @brief ミッションタイプごとにオーバーレイロード&アンロード
  */
 //---------------------------------------------------------
-static void sub_OverlayLoadUnload( const FEST_MISSION* fmwk, BOOL load_f )
+static void sub_OverlayLoadUnload( FES_GIMMICK* wk, BOOL load_f )
 {
   FSOverlayID ol_field;
 
-  switch( fmwk->arc.m_type ){
-  case FMISSION_TYPE_ITEM:
-    ol_field = FS_OVERLAY_ID( field_fes_gimmick_item );
-    break;
-  case FMISSION_TYPE_NPC:
-    ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
-    break;
-  default:
-    return;
-  }
+  /*
+   * フィールド終了時にフェスが終了しているケースがあるので
+   * アンロードはロード時に覚えておいたパラメータで行う
+   */
   if( load_f ){
+    if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys ) == FALSE ){
+      return;
+    }
+    switch( wk->fmwk->arc.m_type ){
+    case FMISSION_TYPE_ITEM:
+      ol_field = FS_OVERLAY_ID( field_fes_gimmick_item );
+      break;
+    case FMISSION_TYPE_NPC:
+      ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
+      break;
+    default:
+      return;
+    }
+    wk->ov_load_f = TRUE; 
+    wk->fld_ov_id = ol_field;
     GFL_OVERLAY_Load( ol_field );
   }else{
-    GFL_OVERLAY_Unload( ol_field );
+    if( wk->ov_load_f ){
+      GFL_OVERLAY_Unload( wk->fld_ov_id );
+      wk->ov_load_f = FALSE;
+    }
   }
 }
 
@@ -142,6 +154,9 @@ void FES_GIMMICK_SYS_MMdlSetup( FES_GIMMICK* wk, MMDLSYS* mmdl_sys )
   //MMDLSYS
   wk->mmdl_sys = mmdl_sys;
   
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return;
+  }
   if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
     FES_GIMMICK_NPC_MMdlSetup( wk, wk->wk_buf );
   }
@@ -240,6 +255,10 @@ void FES_GIMMICK_FieldRecoverSetup( FES_GIMMICK* wk )
 BOOL FES_GIMMICK_Delete( FES_GIMMICK* wk )
 {
   void* gmk_wk = LINK_FESTIVAL_GetMissionGimmickWork( wk->fest_sys );
+  
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return FALSE;
+  }
 
   switch( wk->fmwk->arc.m_type ){
   case FMISSION_TYPE_ITEM:

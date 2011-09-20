@@ -122,7 +122,6 @@ static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIEL
 static void sub_ReleaseFMissionWork( FMISSION_EVWORK* wk );
 static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 line );
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk );
-static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk );
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk );
 
 //----------------------------------------------------------------------
@@ -360,13 +359,6 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
-#if 0 
-    wk->winStream = FLDSYSWIN_STREAM_Add( wk->fmb, wk->msgData, SYSMSG_WIN_SX );
-    GFL_MSG_GetString( wk->msgData, msg_fmission_start, wk->s_buf );
-    FLDSYSWIN_STREAM_AllPrintStrBuf( wk->winStream, 0, 0, wk->s_buf );
-    wk->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(),
-      FLDSYSWIN_STREAM_GetBmpWin( wk->winStream ), 15, TIMEICON_DEFAULT_WAIT, GFL_HEAP_LOWID(wk->heapID) );
-#endif
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
     (*seq)++;
     break;
@@ -381,28 +373,16 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     FLDSYSWIN_Delete( wk->win );
     FES_GIMMICK_MissionInitSetup( FIELDMAP_GetFesGimmickSys( wk->fieldmap ) ); //最初の1回だけの初期化
     FES_GIMMICK_ZoneChangeSetup( wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
-#if 0
-    TIMEICON_Exit( wk->timeIcon );
-    FLDSYSWIN_STREAM_Delete( wk->winStream );
-#endif    
     if( !wk->succeed_f ){
-//      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
-//      GMEVENT_CallEvent( event, call_ev );
       (*seq) = 6;
       break;
     }
-//    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, DISP_FADE_SPEED );
     
     PMSND_PlaySE( EVFMISSION_SE_FADE_EFF );
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
     (*seq)++;
     break;
   case 3:
-#if 0
-    if( GFL_FADE_CheckFade() ){
-      break;
-    }
-#endif
     //エフェクトエンカウントを一度リセット
     EFFECT_ENC_EffectDelete( FIELDMAP_GetEncount( wk->fieldmap ) );
 
@@ -453,103 +433,6 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
-
-#if 0
-  switch (*seq) {
-  case 0:
-    if( wk->result.clear_f && beacon->life > 0 ){ //クリアでミッション終了した場合
-      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
-    }else{  //タイムアップの場合
-      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
-    }
-    PMSND_PlaySE( EVFMISSION_SE_END_EFF );
-    (*seq)++;
-    break;
-  case 1:
-    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
-    FLDSYSWIN_ClearWindow( wk->win );
-    sub_FMissionEndParamDraw( wk );
-
-    if( wk->result.clear_f ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_CLEAR ));
-    }else{
-      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_FAILED ));
-    }
-    (*seq)++;
-    break;
-  case 2:
-    if( PMSND_CheckPlayBGM() == FALSE ){
-      LINKFEST_MISSION_STATUS st;
-      LINK_FESTIVAL_GetMissionStatus( wk->fest_sys, &st );
-
-      LINK_FESTIVAL_MissionEnd( wk->fest_sys );
-      PMSND_PlaySE( EVFMISSION_SE_FADE_EFF );
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
-      (*seq)++;
-    }
-    break;
-  case 3:
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
-    (*seq)++;
-    break;
-  case 4:
-    FLDSYSWIN_ClearWindow( wk->win );
-    FLDSYSWIN_Delete( wk->win );
-    FES_GIMMICK_Delete( wk->fest_sys, wk->gsys );
-    GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
-    (*seq)++;
-    break;
-  case 5:
-    GMEVENT_CallEvent( event, EVENT_FieldOpen( wk->gsys ) );
-    (*seq)++;
-    break;
-  case 6:
-//  FES_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
-    FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
-    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
-//    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, DISP_FADE_SPEED );
-    (*seq)++;
-    break;
-  case 7:
-#if 0
-    {
-      GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_NORMAL );
-      GMEVENT_CallEvent( event, call_ev );
-    }
-    if( GFL_FADE_CheckFade() == TRUE ){
-      break;
-    }
-#endif
-    if( wk->result.clear_f ){ //クリアしていればアイテム入手イベントコール
-      (*seq)++;
-    }else{
-      (*seq) = 0xFF;  //終了
-    }
-    break;
-  case 8:
-    { //クリアしていればアイテム入手イベントコール
-      s16 num;
-      MYITEM_PTR item_sv = GAMEDATA_GetMyItem( wk->gdata );
-      u32 max = MYITEM_GetItemMax( beacon->item );
-      u16 now = MYITEM_GetItemNum( item_sv, beacon->item, GFL_HEAP_LOWID(wk->heapID) );
-      GMEVENT* sc_event = SCRIPT_SetEventScript( wk->gsys, SCRID_ITEM_EVENT_FMISSION_CLEAR, NULL, HEAPID_FIELDMAP );
-
-      SCRIPT_WORK* sc = SCRIPT_GetScriptWorkFromEvent( sc_event );
-
-      num = max-now;
-      if( num >= wk->result.item_num ){
-        num = wk->result.item_num;  
-      }
-      SCRIPT_SetScriptWorkParam( sc, beacon->item, num, 0, 0 );
-      GMEVENT_CallEvent( event, sc_event );
-    }
-    (*seq)++;
-    break;
-  default:
-    sub_ReleaseFMissionWork( wk );
-    return GMEVENT_RES_FINISH;
-  }
-#endif
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -619,18 +502,6 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
   case 4:
     FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
-#if 0
-    {
-      FIELD_SUBSCREEN_MODE screen_mode = FIELD_SUBSCREEN_GetMode( FIELDMAP_GetFieldSubscreenWork( evwk->fieldmap ) );
-
-      LINK_FESTIVAL_MissionEnd( evwk->fest_sys );
-
-      if( screen_mode == FIELD_SUBSCREEN_FMISSION_VIEW ){
-        GMEVENT* call_ev = EVENT_ChangeSubScreen( evwk->gsys, evwk->fieldmap, FIELD_SUBSCREEN_NORMAL );
-        GMEVENT_CallEvent( event, call_ev );
-      }
-    }
-#endif
     (*seq)++;
     break;
   default:
@@ -694,33 +565,6 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
 }
 
-//-----------------------------------------------------------------
-/*
- *  @brief  フェスタミッション終了時　パラメータ描画
- */
-//-----------------------------------------------------------------
-static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
-{
-  //パラメータ
-  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 5 );
-  
-  //パラメータまとめてWordset
-  sub_FMissionParamWordExpand( wk );
-  
-  //タイトル
-  GFL_MSG_GetString( wk->msgData, msg_fmission_end_title, wk->s_buf );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
-  
-  GFL_MSG_GetString( wk->msgData, msg_fmission_failed+wk->result.clear_f, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
-  GFL_MSG_GetString( wk->msgData, msg_fmission_score, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 3 );
-  
-  //報酬
-  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 8 );
-}
 
 //-----------------------------------------------------------------
 /*

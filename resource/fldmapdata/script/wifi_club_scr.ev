@@ -243,6 +243,8 @@ sub_club_counter_connect:
 
   //レコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_WIFICLUB )
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
 
   //接続　それではご案内します
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, POS_DL )
