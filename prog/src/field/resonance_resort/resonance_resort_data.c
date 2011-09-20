@@ -80,8 +80,8 @@ static BOOL s_debug_permission = FALSE;
 
 
 //TODO 拡張の数減らしたので一時的に不正ビーコンが漂っている
-//#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
-#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
+#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
+//#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
 
 //----------------------------------------------------------------------------
 /**

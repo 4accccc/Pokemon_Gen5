@@ -3469,7 +3469,7 @@ static void SetCameraMoveResort( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK *fieldma
         {
           { 17, 32, 0, 65, DIR_RIGHT},
           { 0, 17, 0, 80, DIR_DOWN  },
-          { 17, 32, 65, 80, DIR_UP  },
+          { 17, 32, 65, 80, DIR_DOWN  },
         };
 
         FIELD_PLAYER *fld_player  = FIELDMAP_GetFieldPlayer( fieldmap );
