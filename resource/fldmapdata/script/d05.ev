@@ -468,6 +468,8 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   $WK_SCENE_R06_SWLEADER1 = 1
   //R06コバルオンイベントPOS有効
   $WK_SCENE_R06_LEGEND_MEET = 1
+  //d06r0101ストッパー非表示
+  _FLAG_SET( FV_D06R0101_WORKMAN2_01 )
   //========================================//
 EVENT_END
 

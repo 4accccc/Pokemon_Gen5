@@ -203,7 +203,7 @@ EVENT_START   ev_t04r0301_shirona_02
 	_GET_SEASON_ID( SCWK_SEASON )
 	
 	//初回イベント未クリア
-	IF $WK_SCENE_T04R0301 == 1 THEN
+	IF $WK_SCENE_T04R0301 == 2 THEN
 	
 		//シロナ：あら じゅんびは
 		_BALLOONWIN_OBJMSG_POS( msg_t04r0301_shirona_first_07, T04R0301_SHIRONA_01, POS_DEFAULT )
@@ -225,7 +225,7 @@ EVENT_START   ev_t04r0301_shirona_02
 		ENDIF
 		
 	//初回イベントクリア後退室前
-	ELSIF $WK_SCENE_T04R0301 == 2 && $LOCALWORK15 == 1 THEN
+	ELSIF $WK_SCENE_T04R0301 == 3 && $LOCALWORK15 == 1 THEN
 		
 		//こちらにはね
 		_BALLOONWIN_OBJMSG_POS( msg_t04r0301_shirona_first_09, T04R0301_SHIRONA_01, POS_DEFAULT )
@@ -438,5 +438,5 @@ EVENT_END
 /* 使用人                       */
 /**************************************************************/
 EVENT_START   ev_t04r0301_lady_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0301_lady_01 )
 EVENT_END

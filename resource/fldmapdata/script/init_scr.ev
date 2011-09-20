@@ -255,6 +255,8 @@ init_flags:
   _FLAG_SET( FV_D10R0401_BOSS_01 )
   _FLAG_SET( FV_D10R0401_POKE_02 )
   _FLAG_SET( FV_D10R0401_POKE_03 )
+  _FLAG_SET( FV_D10R0501_SWSAGE1_02 )
+  _FLAG_SET( FV_D10R0501_WAND_01 )
 
   //D24:リバースマウンテン
   _FLAG_SET( FV_D24_POKE485 )  //ヒードラン
@@ -302,6 +304,9 @@ init_flags:
   _FLAG_SET( FV_D29R0301_WORKMAN2_01A )
   _FLAG_SET( FV_D29R0301_WORKMAN2_02A )
   _FLAG_SET( FV_D29R0301_WORKMAN2_04 )
+  
+  //T04：シロナ
+  _FLAG_SET( FV_T04R0301_SHIRONA_01 )
 
   //D26:チャンピオンロードのゾロアーク
   _FLAG_SET( FV_D26_POKE23_01 )
@@ -508,7 +513,7 @@ INIT_EVENT_END
 //初回ゲームクリア時の処理
 ev_first_gameclear:
   //↓ここにクリア後イベントを起動するためのフラグ/ワーク操作を記述
-
+  
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
@@ -549,6 +554,11 @@ ev_first_gameclear:
   
   //C12R0101：全国ずかんイベント起動
   $WK_SCENE_C12R0101 = 2
+  
+  //T04R0301別荘イベント起動
+  $WK_SCENE_T04R0301 = 1
+  //T04R0301使用人非表示
+  _FLAG_SET( FV_T04R0301_LEDY_01 )
 
   //D26:チャンピオンロードにゾロアーク出現
   $WK_SCENE_D26_POKE23_01 = 1

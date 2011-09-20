@@ -79,154 +79,168 @@ INIT_EVENT_START	ev_zone_t04
 	//シロナの別荘イベント設定
 	//【仮】出現条件をクリア後に変更
 	
-	//シロナとの初回戦闘が終わっていない
-	IF $WK_SCENE_T04R0301 == 0 || $WK_SCENE_T04R0301 == 1  && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		
-		//初期状態で全員非表示
-		_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
-		_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
-		_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
-		_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
-		_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
-		
-		//シロナを表示
-		_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
-		
-	//シロナとの初回戦闘終了済み
-	ELSIF $WK_SCENE_T04R0301 == 2 THEN
-	
-		//春で今日の設定をまだ行っていない
-		IF $SCWK_SEASON == PMSEASON_SPRING && FLAG_OFF( TMFLG_T04R0401_TALKSET ) THEN
-			
-			//初期状態で全員非表示
-			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
-			
-			//***シロナを表示
-			_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
-			//***シロナの本日のセリフを設定
-			_GET_RND( LWK_RANDWORD,2 )
-			$WK_OTHER_T04R0301_SHIRONA = $LWK_RANDWORD
-			
-			//***カトレアを75%の確率で表示する
-			_GET_RND( LWK_RANDNUM,4 )
-			IF $LWK_RANDNUM <= 2 THEN
-				_FLAG_RESET( FV_T04R0301_BIGFOUR4_01 )
-				
-				//カトレアの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,5 )
-				$WK_OTHER_T04R0301_BIGFOUR4 = $LWK_RANDWORD
-				
-			//3ははずれで非表示
-			ELSE
-				_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
-			ENDIF
-			
-			//***シキミを50%の確率で表示する
-			_GET_RND( LWK_RANDNUM,2 )
-			IF $LWK_RANDNUM == 1 THEN
-				_FLAG_RESET( FV_T04R0301_BIGFOUR1_01 )
-				
-				//シキミの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,5 )
-				$WK_OTHER_T04R0301_BIGFOUR1 = $LWK_RANDWORD
-				
-			//0ははずれで非表示
-			ELSE
-				_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
-			ENDIF
-			
-			//==================================//
-					
-			//本日の設定は終了
-			_FLAG_SET ( TMFLG_T04R0401_TALKSET )
-			
-			//==================================//
-		
-		//夏で今日の設定をまだ行っていない
-		ELSIF  $SCWK_SEASON == PMSEASON_SUMMER && FLAG_OFF( TMFLG_T04R0401_TALKSET ) THEN
-			
-			//初期状態で全員非表示
-			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
-			
-			//***シロナの本日のセリフを設定
-			_GET_RND( LWK_RANDWORD,5 )
-			$WK_OTHER_T04R0301_SHIRONA = $LWK_RANDWORD
-			_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
-			
-			//***フウロを75%の確率で表示する
-			_GET_RND( LWK_RANDNUM,4 )
-			_DEBUG_PRINT_WK( LWK_RANDNUM )
-			IF $LWK_RANDNUM <= 2 THEN
-				_FLAG_RESET( FV_T04R0301_SWLEADER6_01 )
-				
-				//フウロの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,5 )
-				$WK_OTHER_T04R0301_SWLEADER6 = $LWK_RANDWORD
-				
-			//3ははずれで非表示
-			ELSE
-				_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
-			ENDIF
-			
-			//***カミツレを50%の確率で表示する
-			_GET_RND( LWK_RANDNUM,2 )
-			_DEBUG_PRINT_WK( LWK_RANDNUM )
-			IF $LWK_RANDNUM == 1 THEN
-				_FLAG_RESET( FV_T04R0301_SWLEADER4_01 )
-				
-				//カミツレの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,5 )
-				$WK_OTHER_T04R0301_SWLEADER4 = $LWK_RANDWORD
-				
-			//0ははずれで非表示
-			ELSE
-				_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
-			ENDIF
-			
-			//***アロエを25%の確率で表示する
-			_GET_RND( LWK_RANDNUM,4 )
-			_DEBUG_PRINT_WK( LWK_RANDNUM )
-			IF $LWK_RANDNUM == 3 THEN
-				_FLAG_RESET( FV_T04R0301_SWLEADER2_01 )
-				
-				//アロエの本日のセリフを設定
-				_GET_RND( LWK_RANDWORD,5 )
-				$WK_OTHER_T04R0301_SWLEADER2 = $LWK_RANDWORD
-				
-			//0ははずれで非表示
-			ELSE
-				_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
-			ENDIF
-			
-			//==================================//
-					
-			//本日の設定は終了
-			_FLAG_SET ( TMFLG_T04R0401_TALKSET )
-			
-			//==================================//
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  	
+  	//シロナとの初回戦闘が終わっていない
+  	IF $WK_SCENE_T04R0301 == 1  || $WK_SCENE_T04R0301 == 2  THEN
+  		
+  		//初期状態で全員非表示
+  		_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+  		_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+  		_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+  		_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+  		_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+  		
+  		//シロナを表示
+  		_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
+  		
+  	//シロナとの初回戦闘終了済み
+  	ELSIF $WK_SCENE_T04R0301 == 2 THEN
+  	
+  		//春で今日の設定をまだ行っていない
+  		IF $SCWK_SEASON == PMSEASON_SPRING && FLAG_OFF( TMFLG_T04R0401_TALKSET ) THEN
+  			
+  			//初期状態で全員非表示
+  			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+  			
+  			//***シロナを表示
+  			_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
+  			//***シロナの本日のセリフを設定
+  			_GET_RND( LWK_RANDWORD,2 )
+  			$WK_OTHER_T04R0301_SHIRONA = $LWK_RANDWORD
+  			
+  			//***カトレアを75%の確率で表示する
+  			_GET_RND( LWK_RANDNUM,4 )
+  			IF $LWK_RANDNUM <= 2 THEN
+  				_FLAG_RESET( FV_T04R0301_BIGFOUR4_01 )
+  				
+  				//カトレアの本日のセリフを設定
+  				_GET_RND( LWK_RANDWORD,5 )
+  				$WK_OTHER_T04R0301_BIGFOUR4 = $LWK_RANDWORD
+  				
+  			//3ははずれで非表示
+  			ELSE
+  				_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+  			ENDIF
+  			
+  			//***シキミを50%の確率で表示する
+  			_GET_RND( LWK_RANDNUM,2 )
+  			IF $LWK_RANDNUM == 1 THEN
+  				_FLAG_RESET( FV_T04R0301_BIGFOUR1_01 )
+  				
+  				//シキミの本日のセリフを設定
+  				_GET_RND( LWK_RANDWORD,5 )
+  				$WK_OTHER_T04R0301_BIGFOUR1 = $LWK_RANDWORD
+  				
+  			//0ははずれで非表示
+  			ELSE
+  				_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+  			ENDIF
+  			
+  			//==================================//
+  					
+  			//本日の設定は終了
+  			_FLAG_SET ( TMFLG_T04R0401_TALKSET )
+  			
+  			//==================================//
+  		
+  		//夏で今日の設定をまだ行っていない
+  		ELSIF  $SCWK_SEASON == PMSEASON_SUMMER && FLAG_OFF( TMFLG_T04R0401_TALKSET ) THEN
+  			
+  			//初期状態で全員非表示
+  			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+  			
+  			//***シロナの本日のセリフを設定
+  			_GET_RND( LWK_RANDWORD,5 )
+  			$WK_OTHER_T04R0301_SHIRONA = $LWK_RANDWORD
+  			_FLAG_RESET( FV_T04R0301_SHIRONA_01 )
+  			
+  			//***フウロを75%の確率で表示する
+  			_GET_RND( LWK_RANDNUM,4 )
+  			_DEBUG_PRINT_WK( LWK_RANDNUM )
+  			IF $LWK_RANDNUM <= 2 THEN
+  				_FLAG_RESET( FV_T04R0301_SWLEADER6_01 )
+  				
+  				//フウロの本日のセリフを設定
+  				_GET_RND( LWK_RANDWORD,5 )
+  				$WK_OTHER_T04R0301_SWLEADER6 = $LWK_RANDWORD
+  				
+  			//3ははずれで非表示
+  			ELSE
+  				_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+  			ENDIF
+  			
+  			//***カミツレを50%の確率で表示する
+  			_GET_RND( LWK_RANDNUM,2 )
+  			_DEBUG_PRINT_WK( LWK_RANDNUM )
+  			IF $LWK_RANDNUM == 1 THEN
+  				_FLAG_RESET( FV_T04R0301_SWLEADER4_01 )
+  				
+  				//カミツレの本日のセリフを設定
+  				_GET_RND( LWK_RANDWORD,5 )
+  				$WK_OTHER_T04R0301_SWLEADER4 = $LWK_RANDWORD
+  				
+  			//0ははずれで非表示
+  			ELSE
+  				_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+  			ENDIF
+  			
+  			//***アロエを25%の確率で表示する
+  			_GET_RND( LWK_RANDNUM,4 )
+  			_DEBUG_PRINT_WK( LWK_RANDNUM )
+  			IF $LWK_RANDNUM == 3 THEN
+  				_FLAG_RESET( FV_T04R0301_SWLEADER2_01 )
+  				
+  				//アロエの本日のセリフを設定
+  				_GET_RND( LWK_RANDWORD,5 )
+  				$WK_OTHER_T04R0301_SWLEADER2 = $LWK_RANDWORD
+  				
+  			//0ははずれで非表示
+  			ELSE
+  				_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+  			ENDIF
+  			
+  			//==================================//
+  					
+  			//本日の設定は終了
+  			_FLAG_SET ( TMFLG_T04R0401_TALKSET )
+  			
+  			//==================================//
 
-		//秋・冬（全員非表示）
-		ELSIF  $SCWK_SEASON == PMSEASON_AUTUMN || $SCWK_SEASON == PMSEASON_WINTER THEN
-			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
-			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
-			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+  		//秋・冬（全員非表示）
+  		ELSIF  $SCWK_SEASON == PMSEASON_AUTUMN || $SCWK_SEASON == PMSEASON_WINTER THEN
+  			_FLAG_SET( FV_T04R0301_SHIRONA_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+  			_FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+  			_FLAG_SET( FV_T04R0301_SWLEADER2_01 )
 
-		ENDIF
-	
-	ENDIF
+  		ENDIF
+  	
+  	ENDIF
+  
+  //クリア前
+  ELSE
+    
+    _FLAG_SET( FV_T04R0301_SHIRONA_01 )
+    _FLAG_SET( FV_T04R0301_BIGFOUR4_01 )
+    _FLAG_SET( FV_T04R0301_BIGFOUR1_01 )
+    _FLAG_SET( FV_T04R0301_SWLEADER6_01 )
+    _FLAG_SET( FV_T04R0301_SWLEADER4_01 )
+    _FLAG_SET( FV_T04R0301_SWLEADER2_01 )
+    
+  ENDIF
 
   //クリア後、ライバルを再配置（なおかつイベントクリア前なら）
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( FE_T04_SWRIVAL_WIN_01 ) THEN
@@ -470,13 +484,13 @@ EVENT_START   ev_t04_swrival_01
       //ライバル戦呼び出し　最初の３匹によって分岐【仮】トレーナーIDは仮
       IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
         //初期３匹で草タイプを選択
-        _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+        _TRAINER_BTL_SET( TRID_SWRIVAL_19, 0 )
       ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
         //初期３匹で炎タイプを選択
-        _TRAINER_BTL_SET( TRID_SWRIVAL_02, 0 )
+        _TRAINER_BTL_SET( TRID_SWRIVAL_20, 0 )
       ELSE
         //初期３匹で水タイプを選択
-        _TRAINER_BTL_SET( TRID_SWRIVAL_03, 0 )
+        _TRAINER_BTL_SET( TRID_SWRIVAL_21, 0 )
       ENDIF
 
       //結果チェック
