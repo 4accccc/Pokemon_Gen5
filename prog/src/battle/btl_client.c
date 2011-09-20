@@ -2503,7 +2503,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     {
       const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       POKEWOOD_CUTIN_AttachViewCore( p_cutin, wk->viewCore );
-      POKEWOOD_CUTIN_Start( p_cutin, senario, wk->pokewoodSeqWork.event_no, MyStatus_GetMySex(cp_mystatus) );
+
+      POKEWOOD_CUTIN_Start( p_cutin, senario, wk->pokewoodSeqWork.event_no, _get_pokewood_choice( wk, &wk->pokewoodSeqWork ), MyStatus_GetMySex(cp_mystatus) );
 
       // 選択肢内容の反映と背景VFX起動チェック
       wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork ); 

@@ -31,7 +31,7 @@ extern POKEWOOD_CUTIN * POKEWOOD_CUTIN_Init( HEAPID heapID );
 extern void POKEWOOD_CUTIN_Exit( POKEWOOD_CUTIN *p_wk );
 extern void POKEWOOD_CUTIN_Main( POKEWOOD_CUTIN *p_wk );
 extern BOOL POKEWOOD_CUTIN_IsEnd( const POKEWOOD_CUTIN *cp_wk );
-extern void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event, u32 sex );
+extern void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event, u16 choice, u32 sex );
 extern void POKEWOOD_CUTIN_AttachViewCore( POKEWOOD_CUTIN *p_wk, BTLV_CORE* p_core );
 
 //Init‚µ‚Ä‚È‚­‚Ä‚àŽg‚¦‚Ü‚·

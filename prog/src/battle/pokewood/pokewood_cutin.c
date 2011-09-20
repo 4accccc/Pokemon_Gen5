@@ -130,7 +130,8 @@ struct _POKEWOOD_CUTIN
   u16 chr;
   u16 cel;
   u16 is_res_load;
-  u32 player_sex;
+  u16 player_sex;
+  u16 choice;
 
   void *p_cell_buff;
   NNSG2dCellDataBank *p_cell;
@@ -460,7 +461,7 @@ BOOL POKEWOOD_CUTIN_IsEnd( const POKEWOOD_CUTIN *cp_wk )
  *	@param  sex                 ƒvƒŒƒCƒ„[‚Ì«•Ê
  */
 //-----------------------------------------------------------------------------
-void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event, u32 sex )
+void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event, u16 choice, u32 sex )
 {
   p_wk->seq = 1;
   p_wk->is_end = FALSE;
@@ -468,6 +469,7 @@ void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_sen
   p_wk->event       = event;
   p_wk->script_seq  = 0;
   p_wk->player_sex  = sex;
+  p_wk->choice      = choice;
 }
 //----------------------------------------------------------------------------
 /**
@@ -924,11 +926,11 @@ static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCR
       {
         if( cp_param->param[1] == PW_CUTIN_DEF_MES_TYPE_PLAYER )
         {
-          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].my_message;
+          message = cp_ev->reaction[ p_wk->choice ].my_message;
         }
         else
         {
-          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].enemy_message;
+          message = cp_ev->reaction[ p_wk->choice ].enemy_message;
         }
       }
       else
