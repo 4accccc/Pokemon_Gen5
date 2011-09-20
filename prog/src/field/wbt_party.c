@@ -85,6 +85,9 @@ static u16 GetRand( GFL_STD_RandContext *rand_context )
 //
 //============================================================================================
 //--------------------------------------------------------------
+/**
+ * @brief NG情報オブジェクト生成
+ */
 //--------------------------------------------------------------
 WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup )
 {
@@ -103,6 +106,9 @@ WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief NG情報オブジェクト削除
+ */
 //--------------------------------------------------------------
 void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info )
 {
@@ -111,6 +117,11 @@ void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info )
   GFL_HEAP_FreeMemory( ng_info );
 }
 //--------------------------------------------------------------
+/**
+ * @brief NG登録：アイテム
+ * @param[in/out] ng_info
+ * @param[in]     item_no
+ */
 //--------------------------------------------------------------
 void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no )
 {
@@ -127,6 +138,11 @@ void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no )
   GF_ASSERT(0);
 }
 //--------------------------------------------------------------
+/**
+ * @brief NG登録：ポケモンNo.
+ * @param[in/out] ng_info
+ * @param[in]     mons_no
+ */
 //--------------------------------------------------------------
 void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no )
 {
@@ -144,6 +160,14 @@ void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief NG情報との照合チェック
+ * @param[in]   ng_info
+ * @param[in]   mons_no
+ * @param[in]   item_no
+ * @retval  TRUE  問題ない
+ * @retval  FALSE 問題あり（NGのものと一致した）
+ */
 //--------------------------------------------------------------
 static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 item_no )
 {

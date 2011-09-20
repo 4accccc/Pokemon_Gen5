@@ -99,12 +99,13 @@ struct _WBT_MATCH_CONDITION{
 //--------------------------------------------------------------
 /// ポケモン抽選処理でのNGポケモン情報
 //--------------------------------------------------------------
-struct _WBT_NGPMINFO{
-  BOOL disableMonsCheck;
-  u16 ng_mons_max;
-  u16 ng_item_max;
-  u16 * ng_mons_no;
-  u16 * ng_item_no;
+struct _WBT_NGPMINFO
+{
+  BOOL disableMonsCheck;  ///<ポケモンNoのチェック無効
+  u16 ng_mons_max;        ///<NGポケモンNo.の最大数
+  u16 ng_item_max;        ///<NGアイテムNo.の最大数
+  u16 * ng_mons_no;       ///<NGポケモンNo.の配列
+  u16 * ng_item_no;       ///<NGアイテムNo.の配列
 };
 
 //------------------------------------------------------------------

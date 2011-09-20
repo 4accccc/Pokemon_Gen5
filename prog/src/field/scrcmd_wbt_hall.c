@@ -196,6 +196,54 @@ VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：対戦相手の手持ちデータ生成
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupEnemyParty( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  //SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  //GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+
+  switch ( WBTSYS_GetWBTCup(wbtsys) )
+  {
+  case WBTCUP_RENTAL:
+  case WBTCUP_RENTALMASTER:
+    WBTSYS_SetupEnemyRentalParty( wbtsys );
+    break;
+  default:
+    WBTSYS_SetupEnemyParty( wbtsys, gsys, wbt_tr );
+  }
+  TAMADA_Printf("EvCmdWBTSetupEnemyParty\n");
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：勝利時の残り手持ちポケモン数を取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
+  u16   stage  = WBTSYS_GetStage( wbtsys );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u8 count = WBTSYS_GetSurvivalCount( wbtsys, stage );
+  if ( WBTSYS_GetPartyMax(wbtsys) == count )
+  { //勝利時に残り0匹はない。無傷の場合は0を返すこととする
+    count = 0;
+  }
+  *ret_wk = count;
+
+  TAMADA_Printf("EvCmdWBTGetSurvivalCount == %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //============================================================================================
 //
 //    ミックスバトル関連

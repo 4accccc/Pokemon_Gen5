@@ -462,6 +462,7 @@ void WBT_MIXWIN_Delete( WBT_MIXWIN * wmw )
 //--------------------------------------------------------------
 static BOOL checkDLPokemon( const WBTDL_POKEMON * dl_poke )
 {
+  GF_ASSERT( dl_poke );
   if ( dl_poke->monsno == 0 || dl_poke->level == 0 ) return FALSE;
   return TRUE;
 }
@@ -554,6 +555,37 @@ static void setDLPokeParty( POKEPARTY * party,
 {
   int i;
   POKEMON_PARAM * entry_pp;
+  const WBTDL_POKEMON * dl_array[ TEMOTI_POKEMAX ];
+
+  GFL_STD_MemClear32( dl_array, sizeof(dl_array) );
+  {
+    int total;
+    total = 0;
+    for ( i = 0; i < TEMOTI_POKEMAX; i ++ )
+    {
+      const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );
+      if ( checkDLPokemon( dl_poke ) )
+      {
+        dl_array[ total ] = dl_poke;
+        total ++;
+      }
+    }
+    GF_ASSERT( total >= num );
+
+    //shuffle;
+    i = total;
+    while ( i )
+    {
+      int rand_pos = GFUser_GetPublicRand( i );
+      i --;
+      {
+        const WBTDL_POKEMON * temp;
+        temp = dl_array[ rand_pos ];
+        dl_array[rand_pos] = dl_array[ i ];
+        dl_array[i] = temp;
+      }
+    }
+  }
 
   PokeParty_Init( party, TEMOTI_POKEMAX );
 
@@ -561,7 +593,8 @@ static void setDLPokeParty( POKEPARTY * party,
 
   for ( i = 0; i < num; i ++ )
   {
-    const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );
+    const WBTDL_POKEMON * dl_poke = dl_array[ i ];
+    //const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );
     if ( checkDLPokemon( dl_poke ) )
     {
       setDLPokemon( entry_pp, dl_poke, tempHeapID );
