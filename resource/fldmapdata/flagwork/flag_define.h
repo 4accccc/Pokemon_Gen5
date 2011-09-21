@@ -2315,7 +2315,7 @@
 #define SYS_FLAG_FES_TUTORIAL_CLEAR       2438 /* 0x0986 ハイリンクフェス：ミッションを初めてクリアしたフラグ */
 #define SYS_FLAG_NAMINORI_GET             2439 /* 0x0987 なみのり入手フラグ */
 #define SYS_FLAG_POKEWOOD_TUTORIAL        2440 /* 0x0988 ポケウッド：チュートリアル中のフラグ */
-		/* not used  2441(0x0989) */
+#define SYS_FLAG_WBT_TUTORIAL             2441 /* 0x0989 WBT:チュートリアル中のフラグ */
 		/* not used  2442(0x098a) */
 		/* not used  2443(0x098b) */
 		/* not used  2444(0x098c) */
