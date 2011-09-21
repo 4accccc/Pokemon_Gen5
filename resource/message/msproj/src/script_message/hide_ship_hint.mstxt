@@ -1436,11 +1436,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チョロチョロ　チョロネコちゃん
-あんたの　ポケモン　ちょうだいな▼</Text>
+			<Text>プラズマだん『あんたが　のぞむモノ
+あたい　もってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:43:25" />
+				Time="2011-09-21T04:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1448,11 +1450,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チョロチョロ　チョロネコちゃん
-あんたの　ポケモン　ちょうだいな▼</Text>
+			<Text>プラズマだん『あんたが　望むモノ
+あたい　持ってるわ！▼
+でも　ほしけりゃ……
+わかるでしょ？　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:43:28" />
+				Time="2011-09-21T04:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1461,10 +1465,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント7_0</Comment>
+・アジト船：2回目
+・メッセージ表示後、戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T10:03:24" />
+				Time="2011-09-21T04:59:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1487,12 +1492,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　チョロネコが　すきなの▼
-だけど　なかなか　もらえないのよ
-どこかで　たすけてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:30" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1500,12 +1506,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　チョロネコが　好きなの▼
-だけど　なかなか　もらえないのよ
-どこかで　助けてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:39" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1514,10 +1521,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント7_1</Comment>
+・アジト船：2回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:42:39" />
+				Time="2011-09-21T04:59:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1540,12 +1550,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　チョロネコが　すきなの▼
-だけど　なかなか　もらえないのよ
-どこかで　たすけてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1553,12 +1564,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　チョロネコが　好きなの▼
-だけど　なかなか　もらえないのよ
-どこかで　助けてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1567,10 +1579,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント7_2</Comment>
+・アジト船：2回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:32" />
+				Time="2011-09-21T04:59:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1593,12 +1608,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　チョロネコが　すきなの▼
-だけど　なかなか　もらえないのよ
-どこかで　たすけてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1606,12 +1622,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　チョロネコが　好きなの▼
-だけど　なかなか　もらえないのよ
-どこかで　助けてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1620,10 +1637,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント7_3</Comment>
+・アジト船：2回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:35" />
+				Time="2011-09-21T04:59:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1646,12 +1666,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　チョロネコが　すきなの▼
-だけど　なかなか　もらえないのよ
-どこかで　たすけてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1659,12 +1680,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　チョロネコが　好きなの▼
-だけど　なかなか　もらえないのよ
-どこかで　助けてあげないと！</Text>
+			<Text>ひゅー！
+あんた　やるじゃん！▼
+じゃあ　あたいは
+これを　あげるじゃん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:59:42" />
+				Time="2011-09-21T04:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1673,10 +1695,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント7_4</Comment>
+・アジト船：2回目
+・戦闘後、自動で表示
+・アイテム入手処理
+　No633「プラズマカード」入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:38" />
+				Time="2011-09-21T04:59:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1685,6 +1710,60 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint7_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　プラズマカードが　ないと
+パスワードは　にゅうりょく　できない▼
+あとは　じぶんで　なんとかなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　プラズマカードが　ないと
+パスワードは　入力できない▼
+あとは　自分で　なんとかなさい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：2回目
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T05:00:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
