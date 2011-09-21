@@ -11,20 +11,19 @@
 #ifndef ZONE_R07_EVC_H
 #define ZONE_R07_EVC_H
 
-#define R07_FIGHTREW_01                    0
-#define TR_MINI_17                         1
-#define TR_TANPAN_21                       2
-#define TR_KINDERGARTENM_07                3
-#define TR_KINDERGARTENW_07                4
-#define TR_FUTAGO_07                       5
-#define TR_FUTAGO_07_2                     6
-#define TR_JUGGLING_14                     7
-#define TR_JUGGLING_15                     8
-#define TR_CHILDCARE_06                    9
-#define FLD_ITEM_101                      10
-#define FLD_ITEM_102                      11
-#define FLD_ITEM_103                      12
-#define FLD_ITEM_104                      13
+#define TR_MINI_17                         0
+#define TR_TANPAN_21                       1
+#define TR_KINDERGARTENM_07                2
+#define TR_KINDERGARTENW_07                3
+#define TR_FUTAGO_07                       4
+#define TR_FUTAGO_07_2                     5
+#define TR_JUGGLING_14                     6
+#define TR_JUGGLING_15                     7
+#define TR_CHILDCARE_06                    8
+#define FLD_ITEM_101                       9
+#define FLD_ITEM_102                      10
+#define FLD_ITEM_103                      11
+#define FLD_ITEM_104                      12
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

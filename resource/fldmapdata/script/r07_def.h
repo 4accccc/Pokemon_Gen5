@@ -8,7 +8,7 @@
 #define SCRID_BG_R07_BOARD_01 (1)
 #define SCRID_BG_R07_BOARD_02 (2)
 #define SCRID_BG_R07_BOARD_03 (3)
-#define SCRID_R07_FIGHTREW_01 (4)
-#define SCRID_ZONE_R07 (5)
+#define SCRID_ZONE_R07 (4)
+#define SCRID_POS_R07_LIVECASTER (5)
 
 #endif //_R07_DEF_H_

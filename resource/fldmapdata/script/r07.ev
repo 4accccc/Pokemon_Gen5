@@ -14,6 +14,7 @@
   .include  "r07r0301_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori（ライブキャスターイベントとわざマシン削除）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,8 +26,8 @@
 _EVENT_DATA ev_bg_r07_board_01
 _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
-_EVENT_DATA ev_r07_fightrew_01
 _EVENT_DATA ev_zone_r07
+_EVENT_DATA	ev_pos_r07_livecaster
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -36,15 +37,6 @@ INIT_EVENT_START ev_zone_r07
   //フェスミッション用 タワーオブヘブンの鐘を鳴らしたフラグをリセット
   _FLAG_RESET ( FE_FMISSION_EV_TOH_CLEAR )
 INIT_EVENT_END
-
-/**************************************************************/
-/*  わざマシンくれる格闘家女子                          */
-/**************************************************************/
-
-EVENT_START   ev_r07_fightrew_01
-  //わざマシン入手：チャージビーム
-  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_r07_fighterw_01, msg_r07_fighterw_02, msg_r07_fighterw_02 )
-EVENT_END
 
 /**************************************************************/
 /*看板01（７番道路用）                                         */
@@ -66,4 +58,29 @@ EVENT_END
 EVENT_START  ev_bg_r07_board_03
 	_EASY_BGWIN_MSG(msg_r07_sign3_01 , TYPE_INFO)
   _FLAG_SET( MDL_FLAG_BOARD_R07_03 )
+EVENT_END
+
+/**************************************************************/
+/*		R07		ライブキャスターイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_r07_livecaster
+	
+	//TVT着信音を再生
+	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_r07_tvt_01, POS_DOWN )
+	_ME_WAIT()
+
+	_PLAYER_NAME(0)
+	_SYSWIN_MSG( msg_r07_tvt_02, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//【仮】ライブキャスター起動
+	
+	//========================================/
+	
+	//ライブキャスターイベント終了
+	$WK_SCENE_R07 = 1
+	
+	//========================================/
+	
 EVENT_END
