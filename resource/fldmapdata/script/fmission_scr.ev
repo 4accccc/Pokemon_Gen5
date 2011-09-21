@@ -439,7 +439,7 @@ sub_npc_shopping_main:
   _MSGWIN_CLOSE()
 
   //ç°å„Ç‡ÇÊÇÎÇµÇ≠ÅI
-  _BALLOONWIN_TALKOBJ_MSG( msg_fm_npc_itemboy_04 )
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_06, msg_fm_npc_shop02_06 )
   _MSGWIN_CLOSE()
   
   //à√ì]ïúãAÇ≈NPCè¡Ç∑

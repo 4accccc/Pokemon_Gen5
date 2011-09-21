@@ -1987,11 +1987,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>フフフ……
-[Name:Item ]を　[Digit:6digits Idx="1" ]えんで
+[Name:Item ]を　[Digit:6digits Idx="1" ]で▽
 こうにゅう　しないかね？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T03:49:52" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:21:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2000,11 +2000,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フフフ……
-[Name:Item ]を　[Digit:6digits Idx="1" ]えんで
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで▽
 こうにゅう　しないかね？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T03:49:52" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
