@@ -36,6 +36,7 @@
 #include "resort_map.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "resort_debug_inline.h"
+#include "resort_debug.h"
 
 #define PROC_HEAP_SIZE  (0x40000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -291,6 +292,10 @@ typedef enum {
   EDITBOX_ID_EXT8_RECORD_DAY_02,
   EDITBOX_ID_EXT8_RECORD_DAY_03,
 
+  //デバッグフラグ
+  EDITBOX_ID_FLAG_00,
+  EDITBOX_ID_FLAG_01,
+
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
 
@@ -485,6 +490,9 @@ static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INP
 static void ShopPos_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL ShopPos_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 static BOOL ShopPos_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
+
+static void DebugFlag_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL DebugFlag_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 //-------------------------------------
 ///	データ
 //=====================================
@@ -499,7 +507,7 @@ static const STR_PARAM StrParamsFirst[] =
   //何を操作するか
   {STR_TYPE_SWITCH, RESORT_DATA_16,  STR_POS_X, STR_LINE2_POS_Y,
     8*8,STR_LINE2_POS_Y,12*8,TOUCH_H,
-    PEOPLE_00,5,EDITBOX_ID_FIRST_PEOPLE },
+    PEOPLE_00,6,EDITBOX_ID_FIRST_PEOPLE },
 
   //追加ボタン
   {STR_TYPE_BUTTON, CAPTION_NONE,  STR_POS_X, STR_LINE4_POS_Y,
@@ -1358,6 +1366,23 @@ static const STR_PARAM StrParamsShopPos[] =
     JAVER_00,4,EDITBOX_ID_SHOP_TYPE_00 },
 };
 
+//デバッグフラグ
+static const STR_PARAM StrParamsDebugFlag[] =
+{
+  //デバッグフラグ
+  {STR_TYPE_CAPTION, PEOPLE_05,  STR_POS_X, STR_LINE0_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //強制◎
+  {STR_TYPE_SWITCH, RESORT_DATA_109, STR_POS_X, STR_LINE2_POS_Y,
+    60,STR_LINE2_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_00 },
+  //EXP99999
+  {STR_TYPE_SWITCH, RESORT_DATA_110, STR_POS_X, STR_LINE4_POS_Y,
+    60,STR_LINE4_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_01 },
+};
+
 
 static const STR_PARAM_DISPLAY sc_first_display_tbl[]  =
 {
@@ -1406,6 +1431,13 @@ static const STR_PARAM_DISPLAY sc_shoppos_display_tbl[]  =
   //お店配置
   {
     StrParamsShopPos, NELEMS(StrParamsShopPos)
+  },
+};
+static const STR_PARAM_DISPLAY sc_debugflag_display_tbl[]  =
+{
+  //お店配置
+  {
+    StrParamsDebugFlag, NELEMS(StrParamsDebugFlag)
   },
 };
 static const STR_PARAM_PAGE sc_first_page =
@@ -1460,6 +1492,14 @@ static const STR_PARAM_PAGE sc_shoppos_page =
   ShopPos_StoreData,
   ShopPos_ReStoreData,
   ShopPos_PushCallback,
+};
+static const STR_PARAM_PAGE sc_debug_flag_page =
+{
+  sc_debugflag_display_tbl,
+  NELEMS(sc_debugflag_display_tbl),
+  DebugFlag_StoreData,
+  DebugFlag_ReStoreData,
+  NULL,
 };
 
 static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -2799,6 +2839,9 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
   case 4: //自分
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
     break;
+  case 5: //デバッグ入力
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_debug_flag_page );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -2825,6 +2868,9 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
     break;
   case 4: //自分
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
+    break;
+  case 5: //デバッグ入力
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_debug_flag_page );
     break;
   default:
     GF_ASSERT(0);
@@ -3498,6 +3544,34 @@ static BOOL ShopPos_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p
       UpdateBoxInner( p_wk, EDITBOX_ID_SHOP_ID_00 + index * SHOPPOS_OFS, id );
     }
     break;
+  }
+
+  return TRUE;
+}
+
+static const struct
+{
+  EDITBOX_ID  id;
+  RESORT_DEBUG_FLAG flag;
+}sc_debugflag_to_exitbox[]=
+{
+  { EDITBOX_ID_FLAG_00, RESORT_DEBUG_FLAG_FORCE_EXCELLENT },
+  { EDITBOX_ID_FLAG_01, RESORT_DEBUG_FLAG_EXP_9999 },
+};
+static void DebugFlag_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{ 
+  int i;
+  for( i = 0; i < NELEMS(sc_debugflag_to_exitbox); i++ )
+  {
+    p_wk->BoxValue[ sc_debugflag_to_exitbox[i].id ] = RESORT_DEBUG_FLAG_Get( sc_debugflag_to_exitbox[i].flag );
+  }
+}
+static BOOL DebugFlag_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  int i;
+  for( i = 0; i < NELEMS(sc_debugflag_to_exitbox); i++ )
+  {
+    RESORT_DEBUG_FLAG_Set( sc_debugflag_to_exitbox[i].flag, cp_wk->BoxValue[ sc_debugflag_to_exitbox[i].id ] );
   }
 
   return TRUE;

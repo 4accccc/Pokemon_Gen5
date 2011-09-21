@@ -60,6 +60,8 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
   //ÉrÅ[ÉRÉì
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_BEACON );
 
+  //óêêî
+  RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_RND_SEED, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
 
   //Ç»ÇËÇΩÇ¢Ç®ìX
   {

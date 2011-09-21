@@ -32,6 +32,7 @@
 #include "resort_shop.h"
 #include "resort_util.h"
 #include "resort_const.h"
+#include "resort_debug.h"
 
 //outer
 #include "resort_util.h"
@@ -677,13 +678,34 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
     *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_EFF_MSG_F + index*RESORT_BINARY_SPOT_ANSWER_NUM );
   }
 
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_EXCELLENT) )
+  {
+    is_good = TRUE;
+  }
+#endif 
+
   //åoå±ílÇê›íË
   if( is_good )
   {
     *p_add_exp = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_BAESEXP );
     grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + index*RESORT_BINARY_SPOT_ANSWER_NUM );
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_EXCELLENT) )
+  {
+    grade = RESORT_GRADE_TYPE_EXCELLENT;
+  }
+#endif 
+
+
     GF_ASSERT( grade < NELEMS(sc_grade) );
     (*p_add_exp) = FX_Whole(  (*p_add_exp) * sc_grade[ grade ] );
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_EXP_9999) )
+  {
+    (*p_add_exp)  = 9999;
+  }
+#endif 
   }
 
   //ï]âøï∂

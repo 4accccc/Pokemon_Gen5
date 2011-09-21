@@ -1848,7 +1848,7 @@ static void RESORT_CROWD_LINE_Main( RESORT_CROWD_LINE *p_wk )
 {
   enum
   {
-    RESORT_CROWD_LINE_WALK_NUM  = 2,  //１ラインに歩く人の数
+    RESORT_CROWD_LINE_WALK_NUM  = 1,  //１ラインに歩く人の数
   };
 
   u32 move_cnt  = 0;
