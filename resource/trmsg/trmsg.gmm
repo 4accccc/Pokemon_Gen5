@@ -14622,59 +14622,59 @@ swplazmaw_10　白</language>
 	</row>
 
 	<row id="TRID_NINJA_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">てきを　みとめたくはないが
+いい　ポケモントレーナー　だな</language>
+		<language name="JPN_KANJI" width="216">敵を　認めたくはないが
+いい　ポケモントレーナー　だな</language>
 	</row>
 
 	<row id="TRID_SWSAGE3_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">カゴメよりも　つよくなったか？
+この　わずかな　あいだで……</language>
+		<language name="JPN_KANJI" width="216">カゴメよりも　強くなったか？
+この　わずかな　あいだで……</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_32_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">まけても　プラズマだんの
+せいぎを　つらぬく！　それだけだ！</language>
+		<language name="JPN_KANJI" width="216">負けても　プラズマだんの
+正義を　貫く！　それだけだ！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_33_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">たたかうことに　こだわった
+オレたちを　うわまわる　とは……！？</language>
+		<language name="JPN_KANJI" width="216">戦うことに　こだわった
+オレたちを　上回る　とは……！？</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">くやしい！　バカ！
+もう！　プラーズマー！！</language>
+		<language name="JPN_KANJI" width="216">くやしい！　バカ！
+もう！　プラーズマー！！</language>
 	</row>
 
 	<row id="TRID_SWCHAMPION_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">ポケモンの　いたみ……
 あたしも　おなじように　かんじる！</language>
-		<language name="JPN_KANJI" width="216">ポケモンの　いたみ……
-あたしも　おなじように　かんじる！</language>
+		<language name="JPN_KANJI" width="216">ポケモンの　痛み……
+あたしも　同じように　感じる！</language>
 	</row>
 
 	<row id="TRID_SWCHAMPION_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">マダよ！　マダマダッ！！
 マダ　あたしたち　たたかえる！！</language>
 		<language name="JPN_KANJI" width="216">マダよ！　マダマダッ！！
-マダ　あたしたち　たたかえる！！</language>
+マダ　あたしたち　戦える！！</language>
 	</row>
 
 	<row id="TRID_SWCHAMPION_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
 		<language name="JPN" width="216">できることが　へったぶん
 まよいなく　たたかえるんだから！</language>
-		<language name="JPN_KANJI" width="216">できることが　へったぶん
-まよいなく　たたかえるんだから！</language>
+		<language name="JPN_KANJI" width="216">できることが　減ったぶん
+迷いなく　戦えるんだから！</language>
 	</row>
 
 	<row id="TRID_SWCHAMPION_01_TRMSG_FIGHT_LOSE">
@@ -14682,8 +14682,8 @@ swplazmaw_10　白</language>
 ちからを　だしきったのに……▽
 まけちゃったんだ　あたしたち！</language>
 		<language name="JPN_KANJI" width="216">ふわあああ……
-ちからを　だしきったのに……▽
-まけちゃったんだ　あたしたち！</language>
+全力を　だしきったのに……▽
+負けちゃったんだ　あたしたち！</language>
 	</row>
 
 	<row id="TRID_MOUNT_14_TRMSG_FIGHT_LOSE">
@@ -16156,6 +16156,20 @@ swplazmaw_10　白</language>
 きみも　ほんとうに　すごいね</language>
 		<language name="JPN_KANJI" width="216">……ありがとう
 きみも　本当に　すごいね</language>
+	</row>
+
+	<row id="TRID_SWSAGE3_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">こやつらから　うける
+プレッシャー……　なにごとだ！？</language>
+		<language name="JPN_KANJI" width="216">こやつらから　受ける
+プレッシャー……　何事だ！？</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_35_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ヴィオさまの　となりで
+なんたる　しったい　だ……！</language>
+		<language name="JPN_KANJI" width="216">ヴィオさまの　隣で
+なんたる　失態だ……！</language>
 	</row>
 
 	<flowchart-group-list>
