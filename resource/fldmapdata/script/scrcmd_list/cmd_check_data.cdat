@@ -719,4 +719,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (716)
   { TRUE, TRUE, FALSE }, // _INFINITY_DUNGEON_GET_DUNGEON_STATUS (717)
   { FALSE, FALSE, FALSE }, // NO_CMD (718)
+  { TRUE, TRUE, TRUE }, // NO_DATA_719 (719)
 };

@@ -12579,6 +12579,22 @@
   .short \state
   .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @brief 人物状態取得  隠し
+ */
+//--------------------------------------------------------------
+#define _PERSON_STATE_GET_SECRET( ret_wk ) \
+    _ASM_PERSON_STATE_GET_SECRET ret_wk
+
+  .macro _ASM_PERSON_STATE_GET_SECRET ret_wk
+  .short EV_SEQ_PERSON_GET_STATE
+  .short \LOCAL_TVT_PERSON_SECRET
+  .short \ret_wk
+  .endm
+
+
 //--------------------------------------------------------------
 /**
  * @brief ライブキャスター電話OK設定  アララギ博士

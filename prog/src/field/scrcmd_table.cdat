@@ -1084,7 +1084,7 @@
   // アイテム関連
   DEF_CMD( EvCmdUseSprayContinue, EV_SEQ_USE_SPRAY_CONTINUE )
 
-  // 人物状態
+  // 人物状態２
   DEF_CMD( EvCmdPersonState_SetTrade, EV_SEQ_PERSON_SET_TRADE_FLAG )
 
   // マリンチューブ
@@ -1113,6 +1113,9 @@
   //無限ダンジョン常駐
   DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
   NO_CMD()
+
+  //　人物状態３
+  DEF_CMD( EvCmdPersonState_GetState, EV_SEQ_PERSON_GET_STATE )
 
   END_CMD
   //スクリプトコマンドテーブル終了
