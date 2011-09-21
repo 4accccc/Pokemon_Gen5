@@ -56,5 +56,6 @@
 #define BG_C13_DUMMY_FES_13              15
 #define BG_C13_DUMMY_FES_14              16
 #define BG_C13_DUMMY_FES_15              17
+#define HIDE_ITEM_040                    18
 
 #endif //ZONE_C13_EVB_H

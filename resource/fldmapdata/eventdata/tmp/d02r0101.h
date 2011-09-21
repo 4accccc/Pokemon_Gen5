@@ -53,5 +53,10 @@
 #define D02R0101_HIDE_ITEM_02             9
 #define D02R0101_HIDE_ITEM_03            10
 #define BGID_D02R0101_ANIMAL_TRAIL_01_1  11
+#define HIDE_ITEM_046                    12
+#define HIDE_ITEM_047                    13
+#define HIDE_ITEM_048                    14
+#define HIDE_ITEM_049                    15
+#define HIDE_ITEM_050                    16
 
 #endif //ZONE_D02R0101_EVB_H
