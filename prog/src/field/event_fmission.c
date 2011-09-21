@@ -28,6 +28,7 @@
 #include "field/field_msgbg.h"
 #include "field/field_fade.h"
 #include "field/fes_gimmick.h"
+#include "field/fld3d_ci.h"      //FIELD_ENCOUNT_CheckEncount
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 #include "effect_encount.h"
 
@@ -418,6 +419,11 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
 
   switch( *seq ){
   case 0:
+    {
+      FLD3D_CI_PTR ci_ptr = FIELDMAP_GetFld3dCiPtr( wk->fieldmap );
+      GMEVENT* call_event = FLD3D_CI_CreateCutInEvt( wk->gsys, ci_ptr, FLDCIID_FES_FINISH );
+      GMEVENT_CallEvent( event, call_event );
+    }
     (*seq)++;
     break;
   case 1:
