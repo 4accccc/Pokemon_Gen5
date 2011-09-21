@@ -548,7 +548,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わっ　わたし　ちがい　ますから！▼
-……えっ？　●●●●●さん　ですか？▼
+……えっ？
+[Name:TrainerName ]さん　ですか？▼
 すっ　すみません！▼
 わたし　かんちがい　してしまって…▼
 えっと……
@@ -564,7 +565,7 @@
 ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:51:37" />
+				Time="2011-09-21T09:07:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -573,7 +574,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わっ　わたし　ちがい　ますから！▼
-……えっ？　●●●●●さん　ですか？▼
+……えっ？
+[Name:TrainerName ]さん　ですか？▼
 すっ　すみません！▼
 わたし　かんちがい　してしまって…▼
 えっと……
@@ -589,7 +591,7 @@
 ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:27" />
+				Time="2011-09-21T09:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -598,10 +600,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてswidolm_02_02</Comment>
+・続けてswidolm_02_02
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:54:28" />
+				Time="2011-09-21T09:07:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -676,10 +679,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう　●●●●●くん▼
+			<Text>ありがとう
+[Name:TrainerName ]くん▼
 なかなか　じかんが　とれなくて
 おそくなっちゃって　ごめんなさい▼
-でも　●●●●●くん　との
+でも　[Name:TrainerName ]くん　との
 おしゃべりは　たのしかった　から▽
 おそくなって　ラッキー　だったかな？▼
 あはは……▼
@@ -693,7 +697,7 @@
 はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:16" />
+				Time="2011-09-21T09:08:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -701,10 +705,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう　●●●●●くん▼
+			<Text>ありがとう
+[Name:TrainerName ]くん▼
 なかなか　じかんが　とれなくて
 おそくなっちゃって　ごめんなさい▼
-でも　●●●●●くん　との
+でも　[Name:TrainerName ]くん　との
 おしゃべりは　たのしかった　から▽
 おそくなって　ラッキー　だったかな？▼
 あはは……▼
@@ -718,7 +723,7 @@
 はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:29" />
+				Time="2011-09-21T09:08:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -727,11 +732,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、退場
-　画面外に消えると主人公操作可能に</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:50:28" />
+				Time="2011-09-21T09:09:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -808,16 +812,16 @@
 			<Text>それと　もうひとつ
 おねがいが　あるの…▼
 わたし　ライブキャスターを
-●●●●●くんに　かけすぎちゃって▽
+[Name:TrainerName ]くんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 しごとばの　せんぱいに▽
 しかられちゃったの……▼
-だから　●●●●●くん　から
+だから　[Name:TrainerName ]くん　から
 れんらくを　くれないかな？▽
 ……　……　……
 ……　……　……▼
 えっ　いいの？　よかった……▼
-●●●●●くんて　やさしいね▼
+[Name:TrainerName ]くんて　やさしいね▼
 ふふっ▼
 ふだん　だと　わたしは
 しごとばに　いることが　おおいから▽
@@ -828,10 +832,10 @@
 うれしい……　かな▼
 あはは……▼
 じゃあ　きょうは　これで　かえるね
-さようなら　●●●●●くん▼</Text>
+さようなら　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:16" />
+				Time="2011-09-21T09:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -842,16 +846,16 @@
 			<Text>それと　もうひとつ
 おねがいが　あるの…▼
 わたし　ライブキャスターを
-●●●●●くんに　かけすぎちゃって▽
+[Name:TrainerName ]くんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 しごとばの　せんぱいに▽
 しかられちゃったの……▼
-だから　●●●●●くん　から
+だから　[Name:TrainerName ]くん　から
 れんらくを　くれないかな？▽
 ……　……　……
 ……　……　……▼
 えっ　いいの？　よかった……▼
-●●●●●くんて　やさしいね▼
+[Name:TrainerName ]くんて　やさしいね▼
 ふふっ▼
 ふだん　だと　わたしは
 しごとばに　いることが　おおいから▽
@@ -862,10 +866,10 @@
 うれしい……　かな▼
 あはは……▼
 じゃあ　きょうは　これで　かえるね
-さようなら　●●●●●くん▼</Text>
+さようなら　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:29" />
+				Time="2011-09-21T09:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -875,10 +879,11 @@
 			Language="JPN">
 			<Comment>♀
 ・メッセージ表示後、退場
-　画面外に消えると主人公操作可能に</Comment>
+　画面外に消えると主人公操作可能に
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:53:37" />
+				Time="2011-09-21T09:09:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -902,7 +907,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わっ　わたし　ちがい　ますから！▼
-……えっ？　●●●●●さん　ですか？▼
+……えっ？
+[Name:TrainerName ]さん　ですか？▼
 すっ　すみません！▼
 わたし　かんちがい　してしまって…▼
 えっと……
@@ -918,7 +924,7 @@
 ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:08:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -927,7 +933,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わっ　わたし　ちがい　ますから！▼
-……えっ？　●●●●●さん　ですか？▼
+……えっ？
+[Name:TrainerName ]さん　ですか？▼
 すっ　すみません！▼
 わたし　かんちがい　してしまって…▼
 えっと……
@@ -943,7 +950,7 @@
 ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:09:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -952,10 +959,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswidolm_02_02</Comment>
+・続けてswidolm_02_02
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:54:32" />
+				Time="2011-09-21T09:09:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1030,10 +1038,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう　●●●●●くん▼
+			<Text>ありがとう
+[Name:TrainerName ]くん▼
 なかなか　じかんが　とれなくて
 おそくなっちゃって　ごめんなさい▼
-でも　●●●●●くん　との
+でも　[Name:TrainerName ]くん　との
 おしゃべりは　たのしかった　から▽
 おそくなって　ラッキー　だったかな？▼
 あはは……▼
@@ -1047,7 +1056,7 @@
 はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:08:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1055,10 +1064,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう　●●●●●くん▼
+			<Text>ありがとう
+[Name:TrainerName ]くん▼
 なかなか　じかんが　とれなくて
 おそくなっちゃって　ごめんなさい▼
-でも　●●●●●くん　との
+でも　[Name:TrainerName ]くん　との
 おしゃべりは　たのしかった　から▽
 おそくなって　ラッキー　だったかな？▼
 あはは……▼
@@ -1072,7 +1082,7 @@
 はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1081,11 +1091,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、退場
-　画面外に消えると主人公操作可能に</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:11" />
+				Time="2011-09-21T09:09:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1162,16 +1171,16 @@
 			<Text>それと　もうひとつ
 おねがいが　あるの…▼
 わたし　ライブキャスターを
-●●●●●くんに　かけすぎちゃって▽
+[Name:TrainerName ]くんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 しごとばの　せんぱいに▽
 しかられちゃったの……▼
-だから　●●●●●くん　から
+だから　[Name:TrainerName ]くん　から
 れんらくを　くれないかな？▽
 ……　……　……
 ……　……　……▼
 えっ　いいの？　よかった……▼
-●●●●●くんて　やさしいね▼
+[Name:TrainerName ]くんて　やさしいね▼
 ふふっ▼
 ふだん　だと　わたしは
 しごとばに　いることが　おおいから▽
@@ -1182,10 +1191,10 @@
 うれしい……　かな▼
 あはは……▼
 じゃあ　きょうは　これで　かえるね
-さようなら　●●●●●くん▼</Text>
+さようなら　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1196,16 +1205,16 @@
 			<Text>それと　もうひとつ
 おねがいが　あるの…▼
 わたし　ライブキャスターを
-●●●●●くんに　かけすぎちゃって▽
+[Name:TrainerName ]くんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 しごとばの　せんぱいに▽
 しかられちゃったの……▼
-だから　●●●●●くん　から
+だから　[Name:TrainerName ]くん　から
 れんらくを　くれないかな？▽
 ……　……　……
 ……　……　……▼
 えっ　いいの？　よかった……▼
-●●●●●くんて　やさしいね▼
+[Name:TrainerName ]くんて　やさしいね▼
 ふふっ▼
 ふだん　だと　わたしは
 しごとばに　いることが　おおいから▽
@@ -1216,10 +1225,10 @@
 うれしい……　かな▼
 あはは……▼
 じゃあ　きょうは　これで　かえるね
-さようなら　●●●●●くん▼</Text>
+さようなら　[Name:TrainerName ]くん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				Time="2011-09-21T09:09:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1229,10 +1238,11 @@
 			Language="JPN">
 			<Comment>♂
 ・メッセージ表示後、退場
-　画面外に消えると主人公操作可能に</Comment>
+　画面外に消えると主人公操作可能に
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:44" />
+				Time="2011-09-21T09:09:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
