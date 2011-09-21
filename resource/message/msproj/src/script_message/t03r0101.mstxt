@@ -35,10 +35,10 @@
 			<Comment>♂
 ・朝になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
-※swanでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T05:23:39" />
+				Time="2011-09-20T13:33:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -154,10 +154,10 @@
 			<Comment>♀
 ・朝になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T05:30:39" />
+				Time="2011-09-20T13:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

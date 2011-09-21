@@ -32,10 +32,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>イベント
-・条件を満たしていないとき</Comment>
+・条件を満たしていないとき
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-09-21T02:37:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,10 +98,11 @@
 ・条件を満たしているとき
 　手持ちにレジアイス、レジロック、レジスチルがいる
 ・続けて
-・0＝トレーナー名</Comment>
+・0＝トレーナー名
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-09-21T02:37:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -147,10 +149,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・続けて戦闘に</Comment>
+・続けて戦闘に
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-09-21T02:37:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -199,10 +202,11 @@
 			Language="JPN">
 			<Comment>イベント
 ・捕獲以外で戦闘終了した場合
-・殿堂入りで復帰</Comment>
+・殿堂入りで復帰
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-09-21T02:37:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,10 +264,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・0＝トレーナー名</Comment>
+・0＝トレーナー名
+※未対応</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-09-21T02:37:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
