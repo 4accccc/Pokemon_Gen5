@@ -2576,10 +2576,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>やったわ！
-あなたの　まけね</Text>
+あなたの　まけね▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T11:10:41" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:06:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2588,10 +2588,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったわ！
-あなたの　まけね</Text>
+あなたの　まけね▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:06:44" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:06:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2621,10 +2621,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>うわーん　まけたー……
-あなたの　かちよ！</Text>
+あなたの　かちよ！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T11:10:23" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2633,10 +2633,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うわーん　まけたー……
-あなたの　かちよ！</Text>
+あなたの　かちよ！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:06:44" />
+				User="iwasawa:W00270"
+				Time="2011-09-21T06:06:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
