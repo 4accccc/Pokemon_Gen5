@@ -115,10 +115,12 @@ pc_box:
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL box_end_mode
   DEFINE_LOCAL game_clear
-  DEFINE_LOCAL champ_win
+
+  //@todo キュレムを捕まえたら壁紙が開放される処理に変わる
+  //DEFINE_LOCAL champ_win
 
   _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, game_clear )
-  _FLAG_CHECK( SYS_FLAG_CHAMPION_WIN, champ_win )
+  //_FLAG_CHECK( SYS_FLAG_CHAMPION_WIN, champ_win )
 
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
@@ -137,6 +139,7 @@ pc_box:
     ENDIF
   ENDIF
 
+/*
   // 殿堂入りしている
   IF $champ_win == TRUE THEN
     _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_02, SCWK_ANSWER ) // メッセージ表示済みか？
@@ -148,6 +151,7 @@ pc_box:
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_02 )
     ENDIF
   ENDIF
+*/
 
   $exit = FALSE
   WHILE $exit == FALSE
@@ -278,65 +282,20 @@ pc_record:
   _SYSWIN_MSG( msg_pc_kiroku_window_04 , POS_DOWN ) 
   _SYSWIN_CLOSE()
 
-  $loop = TRUE
-  WHILE $loop == TRUE
-
-    _SYSWIN_MSG( msg_exp_window , POS_DOWN ) // 説明文表示用のウィンドウを表示
-    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, select_pos )
-
-    // はじめてのクリア
-    IF $f_game_clear == TRUE THEN
-      _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_01, msg_pc_kiroku_01, msg_pc_kiroku_window_01 )  
-    ENDIF
-    // 殿堂入り
-    IF $dendou_check != SCR_DENDOU_DATA_NULL THEN
-      _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_02, msg_pc_kiroku_02, msg_pc_kiroku_window_02 )  
-    ENDIF
-    // 接続を切る
-    _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_03, msg_pc_kiroku_03, msg_pc_kiroku_window_03 )  
-    _SYSWIN_MSG( msg_exp_window , POS_DOWN ) // 説明文表示用のウィンドウを表示
-    _BMPMENU_START_BREAKABLE()
-    _SYSWIN_CLOSE()
-
-    SWITCH $select_pos
-    CASE msg_pc_kiroku_window_01 THEN // はじめてのクリア
-      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_FIRST, SCWK_ANSWER ) // 「はじめてのクリア」画面呼び出し
-      // ×ボタン終了ならログアウト
-      IF $SCWK_ANSWER == 1 THEN
-        $log_out = TRUE
-        $pc_off_mode = SCR_PASOKON_OFF_QUICK
-        $loop = FALSE
-      ENDIF
-
-    CASE msg_pc_kiroku_window_02 THEN // 殿堂入り
-      // データが正常な場合
-      IF $dendou_check == SCR_DENDOU_DATA_OK THEN
-        _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, SCWK_ANSWER ) // 殿堂入り画面呼び出し
-        // ×ボタン終了ならログアウト
-        IF $SCWK_ANSWER == 1 THEN
-          $log_out = TRUE
-          $pc_off_mode = SCR_PASOKON_OFF_QUICK
-          $loop = FALSE
-        ENDIF
-      // データが正常でない場合
-      ELSE
-        _SYSWIN_MSG( msg_pc_on_04, POS_DOWN ) //「データが壊れています｣
-        _SYSWIN_CLOSE()                       //
-      ENDIF
-
-    CASE msg_pc_kiroku_window_03 THEN // 接続を切る
-      $loop = FALSE
-
-    CASE EV_WIN_B_CANCEL THEN
-      $loop = FALSE
-
-    CASE EV_WIN_X_BREAK THEN 
-      $loop = FALSE
-      $log_out = TRUE // ログアウト
+  // データが正常な場合
+  IF $dendou_check == SCR_DENDOU_DATA_OK THEN
+    _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, SCWK_ANSWER ) // 殿堂入り画面呼び出し
+    // ×ボタン終了ならログアウト
+    IF $SCWK_ANSWER == 1 THEN
+      $log_out = TRUE
       $pc_off_mode = SCR_PASOKON_OFF_QUICK
-    ENDSWITCH 
+    ENDIF
+  // データが正常でない場合
+  ELSE
+    _SYSWIN_MSG( msg_pc_on_04, POS_DOWN ) //「データが壊れています｣
+    _SYSWIN_CLOSE()                       //
+  ENDIF
 
-  ENDWHILE
 }
 _RET
 

@@ -130,7 +130,6 @@ static void setup_bg_sys( HEAPID heapID );
 static void release_bg_sys( void );
 static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y );
 
-static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work ); // 初回クリア時の殿堂入りデータを登録する
 static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work ); // 初回クリア時のレコードを登録する
 static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work ); // 殿堂入り時のレコードを登録する
 static void SaveFirstDendouiriTime( GAMECLEAR_MSG_WORK* work ); // 初「殿堂入り」の日時を記録する
@@ -298,10 +297,11 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
   case GAMECLEAR_SEQ_SAVETYPE_BRANCH: 
     if( wk->otherSaveExist == FALSE ) {
 
-      //「初回クリア」をセーブ
+      //「初回クリア」= 「殿堂入り」をセーブ
       if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
-        UpdateFirstClearDendouData( wk ); // 初回クリアデータ
         UpdateFirstClearRecord( wk ); // レコードデータ
+        // 殿堂入りセーブ
+        DendouSave_init( wk );
       }
       //「殿堂入り」をセーブ
       else {
@@ -630,25 +630,6 @@ static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
   BmpWinFrame_Write( wk->bmpwin, WINDOW_TRANS_OFF, GAMECLEAR_WINFRAME_CHAR, GAMECLEAR_WINFRAME_PAL );
 
   return;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 初回クリア時の殿堂入りデータを登録する
- *
- * @param work
- */
-//-----------------------------------------------------------------------------
-static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work )
-{
-  RTCDate date;
-  POKEPARTY* party; 
-  DENDOU_RECORD* record; 
-
-  RTC_GetDate( &date );
-  party  = GAMEDATA_GetMyPokemon( work->gamedata ); 
-  record = GAMEDATA_GetDendouRecord( work->gamedata ); 
-  DendouRecord_Add( record, party, &date, HEAPID_PROC );
 }
 
 //-----------------------------------------------------------------------------

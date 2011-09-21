@@ -874,8 +874,8 @@ VMCMD_RESULT EvCmdChkDendouData( VMHANDLE * core, void * wk )
   // 引数を取得
   ret_wk = SCRCMD_GetVMWork( core, wk ); // 第一引数: 戻り値の格納先
 
-  // チャンピオンに勝っている
-  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_CHAMPION_WIN ) ) { 
+  // チャンピオンに勝っている = ゲームクリアしている
+  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) ) { 
 
     // 外部データをロード
     save = GAMEDATA_GetSaveControlWork( gameData );

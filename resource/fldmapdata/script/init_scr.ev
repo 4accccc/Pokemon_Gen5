@@ -386,11 +386,6 @@ INIT_EVENT_START  ev_init_gameclear_script
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     //初回なら
     _CALL ev_first_gameclear
-  ELSE
-    //初めて殿堂入りした時の処理を呼び出す
-    IF FLAG_OFF( SYS_FLAG_CHAMPION_WIN ) THEN
-      _CALL	ev_dendouiri
-    ENDIF
   ENDIF
   
   //手持ちポケモンを回復させる
@@ -579,8 +574,6 @@ _RET
 
 //初回殿堂入り時の処理
 ev_dendouiri:
-  //殿堂入りフラグをセット
-  _FLAG_SET( SYS_FLAG_CHAMPION_WIN )
 
   //研究所にサポートを表示
   //_FLAG_RESET( FV_T01R0401_SUPPORT_AFTER )
@@ -588,7 +581,7 @@ ev_dendouiri:
   //_FLAG_SET( FV_T01R0201_SUPPORT )
 
   //壁紙を追加（２段階目）
-  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
+  //_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
 
 _RET
 
