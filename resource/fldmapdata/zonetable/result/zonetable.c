@@ -21113,7 +21113,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D27R0101,
 		MAPNAME_D27,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
-		WEATHER_NO_MIST,
+		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
 		MC_TYPE_DUNGEON,  // map_chg_type
