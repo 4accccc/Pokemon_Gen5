@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-20T13:32:21"/>
+	<create user="ibe_mana" host="W00191" date="2011-09-21T12:48:03"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1954,14 +1954,14 @@
 		path="C:/home/swan_data3d/field/out58/chip/tex/out58_zan2b.tga"
 	>
 		<bitmap size="64">
-			4444 4444 4444 4444 4444 4444 4444 4444
-			4444 3334 4333 4444 3344 2233 3322 4433
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 3331 1333 1111 3311 2233 3322 1133
 			2333 2222 2222 3332 2222 2222 2222 2222
-			2222 8888 8888 2222 8888 8888 8888 8888
-			8888 8888 8888 8888 8888 aaaa aaaa 888a
-			aaaa 7777 7777 aaa7 7777 9999 9999 7779
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 0099 9900 9999 0999 0000 0000 9990
+			2222 5555 5555 2222 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 7777 7777 5557
+			7777 4444 4444 7774 4444 6666 6666 4446
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 0066 6600 6666 0666 0000 0000 6660
 		</bitmap>
 	</tex_image>
 	<tex_image index="30" name="out58_zan3b"
@@ -1972,10 +1972,10 @@
 		path="C:/home/swan_data3d/field/out58/chip/tex/out58_zan3b.tga"
 	>
 		<bitmap size="64">
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 2223 3222 3333 2233 1122 2211 3322
-			1222 1111 1111 2221 1111 1111 1111 1111
-			1111 6666 6666 1111 6666 6666 6666 6666
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 3331 1333 1111 3311 2233 3322 1133
+			2333 2222 2222 3332 2222 2222 2222 2222
+			2222 6666 6666 2222 6666 6666 6666 6666
 			6666 6666 6666 6666 6666 7777 7777 6667
 			7777 4444 4444 7774 4444 5555 5555 4445
 			5555 5555 5555 5555 5555 5555 5555 5555
@@ -2322,15 +2322,14 @@
 	<tex_palette index="28" name="out58_yuka04_pl" color_size="8">
 		29af 31f2 6318 6739 6b5a 6f7b 7fff 7fff
 	</tex_palette>
-	<tex_palette index="29" name="out58_zan2b_pl" color_size="16">
-		7fff 6ec8 66a8 66cb 62ce 6f09 6f09 5ea2
-		62c4 5a82 5ea2 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="29" name="out58_zan2b_pl" color_size="8">
+		7fff 66ad 66a8 66cb 5ea2 62c4 5a82 5ea2
 	</tex_palette>
 	<tex_palette index="30" name="out58_zan3b_pl" color_size="8">
-		7fff 6688 66ab 66ce 6282 5e62 66a5 62a3
+		7fff 66ad 6688 66ab 6282 5e62 66a5 62a3
 	</tex_palette>
 	<tex_palette index="31" name="out58_zan4b_pl" color_size="8">
-		7fff 6a68 6aab 66ae 6661 6a84 6241 6682
+		7fff 6a68 6aab 66ad 6661 6a84 6241 6682
 	</tex_palette>
 	<tex_palette index="32" name="out58_zan5_pl" color_size="8">
 		7fff 62ed 6710 6b31 56a0 5ee6 630a 7fff
