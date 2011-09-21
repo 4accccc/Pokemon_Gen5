@@ -2180,6 +2180,11 @@ static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_
     // ã‰f’†‚Ìê‡‚ÍŠÏ‹q‚É“®‚«‚ð—^‚¦‚é
     if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW ){
       _set_audience_ending_reaction( wk->viewCore, &wk->pokewoodSeqWork );
+      {
+        BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
+        bsp->audience_bit = wk->pokewoodSeqWork.Audience.on_off;
+      }
+      
     }
   }
 
