@@ -26,4 +26,5 @@ $effect_id_hash = {
   "FLDEFFID_ZUKAN_M" => 22,
   "FLDEFFID_ZUKAN_W" => 23,
   "FLDEFFID_GET2_08M" => 24,
+  "FLDEFFID_FES_FINISH" => 25,
 }
