@@ -20,6 +20,7 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
 {
   u32 trainerID;
   u32 sex;
+  u32 ver;
 
   //自分のデータをいれた後、トレーナーIDと名前を変える
   RESORT_RECV_DATA_SetMyData( p_wk, p_gamedata );
@@ -38,6 +39,16 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, GFL_STD_MtRand(GFL_STD_RAND_MAX) );
   trainerID = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );
 
+  //バージョン  一応B2orW2
+  {
+    ver = VERSION_B2;
+    if( GFL_STD_MtRand(2) )
+    {
+      ver = VERSION_W2;
+    }
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_VER, ver );
+  }
+
   //性別
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, GFL_STD_MtRand(2) );
   sex = RESORT_RECV_DATA_GetData( p_wk, RESORT_DATA_PARAM_SEX, NULL );
@@ -48,6 +59,12 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
   
   //ビーコン
   RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_BEACON );
+
+
+  //なりたいお店
+  {
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, RESORT_DATA_GetDefaultWantJob( 0, trainerID, ver ) );
+  }
 
   //名前セット
   {
