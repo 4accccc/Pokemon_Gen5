@@ -65,6 +65,13 @@ u32 WBTSAVE_GetWorkSize(void)
 void WBTSAVE_Init( WBTSAVE * wbtsave )
 {
   GFL_STD_MemClear( wbtsave, sizeof(WBTSAVE) );
+  {
+    int i;
+    for ( i = 0; i < WBT_BATTLE_NUM; i ++ )
+    {
+      wbtsave->trainer_id[i] = WBTROM_TRID_INVALID;
+    }
+  }
 }
 
 //------------------------------------------------------------------

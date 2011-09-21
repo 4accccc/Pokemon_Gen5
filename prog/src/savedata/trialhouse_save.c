@@ -11,6 +11,8 @@
 #include "savedata/trialhouse_save_local.h"
 #include "savedata/trialhouse_save.h"
 
+#include "savedata/wbt_save.h"
+
 //---------------------------------------------------------------------------
 /**
  * @brief	仕掛け用ワークのサイズ取得
@@ -31,6 +33,7 @@ int THSV_GetWorkSize(void)
 void THSV_Init(THSV_WORK * work)
 {
 	MI_CpuClear8(work, sizeof(THSV_WORK));
+  WBTSAVE_Init( &work->wbtsave );
 }
 
 //---------------------------------------------------------------------------

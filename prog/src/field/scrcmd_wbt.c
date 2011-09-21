@@ -37,6 +37,8 @@
 
 #include "app/wbt_list.h"
 
+#include "field/eventwork.h"  //EVENTWORK_
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_WBT_TUTORIAL
 
 //============================================================================================
 //============================================================================================
@@ -180,12 +182,15 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
   GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
   WBTSYS ** wbtsys_work;
+  BOOL isTutorlal;
 
+  isTutorlal = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_WBT_TUTORIAL );
   TAMADA_Printf("EvCmdWBTSystemStart\n");
   wbtsys_work = GAMEDATA_GetWBTSysPointer( gamedata );
   GF_ASSERT( *wbtsys_work == NULL );
-  *wbtsys_work = WBTSYS_Create( HEAPID_PROC );
+  *wbtsys_work = WBTSYS_Create( HEAPID_PROC, isTutorlal );
 
   return VMCMD_RESULT_CONTINUE;
 }

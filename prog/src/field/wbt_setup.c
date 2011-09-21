@@ -158,7 +158,7 @@ void WBTLIST_PARAM_Setup_Debug(
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   WBTSYS * wbtsys;
 
-  wbtsys = WBTSYS_Create( HEAPID_FIELDMAP );
+  wbtsys = WBTSYS_Create( HEAPID_FIELDMAP, FALSE );
   WBTSYS_SetupTrainer( wbtsys, gamedata, trid_table );
   WBTSYS_SetWBTCup( wbtsys, wbtcup );
   WBTSYS_SetRule( wbtsys, wbtrule );

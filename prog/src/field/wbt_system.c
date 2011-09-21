@@ -54,12 +54,13 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-WBTSYS * WBTSYS_Create( HEAPID heapID )
+WBTSYS * WBTSYS_Create( HEAPID heapID, BOOL isTutorial )
 {
   int i;
   WBTSYS * wbtsys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTSYS) );
 
   wbtsys->heapID = heapID;
+  wbtsys->isTutorial = isTutorial;
   wbtsys->wbtcup = WBTCUP_NULL;
   wbtsys->rule = WBTRULE_NULL;
   wbtsys->stage = WBTSTAGE_RECEPTION;

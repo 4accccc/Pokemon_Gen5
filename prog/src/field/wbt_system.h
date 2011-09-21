@@ -29,8 +29,6 @@ typedef struct _WBTTRAINER WBTTRAINER;
 typedef struct _WBTROM_TRDATA WBTROM_TRDATA;
 typedef u8 WBTROM_TRID;
 
-enum { WBTROM_TRID_INVALID = 0xff };
-
 enum { WBT_AUDIENCE_TYPE_MAX = 4 };
 
 //------------------------------------------------------------------
@@ -63,7 +61,7 @@ typedef enum {
 
 //============================================================================================
 //============================================================================================
-extern WBTSYS * WBTSYS_Create( HEAPID heapID );
+extern WBTSYS * WBTSYS_Create( HEAPID heapID, BOOL isTutorial );
 extern void WBTSYS_Delete( WBTSYS * wbtsys );
 
 //------------------------------------------------------------------

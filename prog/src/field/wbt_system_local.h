@@ -128,6 +128,9 @@ struct _WBTROM_TRDATA{
 struct _WBT_SYSTEM {
   HEAPID heapID;
 
+  ///チュートリアルモードかどうか
+  BOOL isTutorial;
+
   ///ROM上のトレーナーデータ
   const WBTROM_TRDATA * rom_trdata;
 

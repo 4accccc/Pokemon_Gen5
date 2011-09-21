@@ -980,8 +980,8 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
       u8 pos = getBattleRecordIndex( wbtsys->stage );
       WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
     }
-    if ( result == BTL_RESULT_LOSE )
-    { //敗北した場合は無効なトレーナーIDをセットしておく
+    if ( result == BTL_RESULT_LOSE || wbtsys->isTutorial == TRUE )
+    { //敗北した場合orチュートリアル中は無効なトレーナーIDをセットしておく
       u8 pos;
       for ( pos = 0; pos < WBT_BATTLE_NUM; pos ++ )
       {
