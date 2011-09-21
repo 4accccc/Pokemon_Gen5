@@ -8,13 +8,14 @@
 			Language="JPN">
 			<Text>ウフフ
 おまちしてました▼
-アタシ　じまんの　フキヨセジム
-たいほうで　とぶのは　たのしかった？▼
+アナタは　かぜにも　まけない
+タフな　トレーナー　なのね！▽
+なんだか　きたい　しちゃいます▼
 じゃあね　つぎは　アタシと
 もっと　たのしいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:18:57" />
+				Time="2011-09-21T10:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,13 +25,14 @@
 			Language="JPN_KANJI">
 			<Text>ウフフ
 お待ちしてました▼
-アタシ　自慢の　フキヨセジム
-大砲での　特訓は　楽しかった？▼
+アナタは　風にも　負けない
+タフな　トレーナー　なのね！▽
+なんだか　期待しちゃいます▼
 じゃあね　今度は　アタシと
 もっと　楽しいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:19:20" />
+				Time="2011-09-21T10:13:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +41,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・戦闘前メッセージ</Comment>
+・戦闘前メッセージ
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T10:14:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -67,14 +70,14 @@
 			Language="JPN">
 			<Text>アナタって　すごい
 ポケモントレーナー　なのね！▼
-ひさしぶりに　ほんきで
-ポケモンしょうぶ　できて▽
+２ねんぶりかな？　ほんきで
+ポケモンしょうぶ　できたから▽
 アタシも　ポケモンも　しあわせ▼
 これは　リーグこうにんの　ジムバッジ
-アナタに　にあうと　うれしいな▼</Text>
+だけど　つうかてん　ですよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T10:34:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,14 +87,14 @@
 			Language="JPN_KANJI">
 			<Text>アナタって　すごい
 ポケモントレーナー　なのね！▼
-ひさしぶりに　本気で
-ポケモン勝負　できて▽
+２年ぶりかな？　本気で
+ポケモン勝負　できたから▽
 アタシも　ポケモンも　しあわせ▼
 これは　リーグ公認の　ジムバッジ
-アナタに　似合うと　うれしいな▼</Text>
+だけど　通過点　ですよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T10:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100,10 +103,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・戦闘後メッセージ</Comment>
+・戦闘後メッセージ
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T10:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -181,12 +185,12 @@
 それだけ　ジムバッジがあれば
 レベル７０までの　ポケモンは▽
 アナタの　いうことを　きいてくれるわ▼
-あと　すごーく　しあわせ　だった
-ポケモンしょうぶの　おれいに　この▽
+あと　いまの　ポケモンしょうぶを
+わすれないためにも　この▽
 わざマシンを　うけとってほしいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:19:08" />
+				Time="2011-09-21T10:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -198,12 +202,12 @@
 それだけ　ジムバッジがあれば
 レベル７０までの　ポケモンは▽
 アナタの　いうことを　きいてくれるわ▼
-あと　すごーく　しあわせ　だった
-ポケモン勝負の　お礼に　この▽
+あと　今の　ポケモン勝負を
+忘れないためにも　この▽
 わざマシンを　受け取ってほしいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:19:29" />
+				Time="2011-09-21T10:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,10 +217,11 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No389「わざマシン６２」（アクロバット）</Comment>
+　No389「わざマシン６２」（アクロバット）
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:20:03" />
+				Time="2011-09-21T10:41:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -239,10 +244,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>アララギはかせ
+どう　なさってるかな？▼
+では　アタシは　フキヨセカーゴで
+じゅんびを　してますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:20:10" />
+				Time="2011-09-21T11:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -250,10 +258,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>アララギ博士
+どう　なさってるかな？▼
+では　アタシは　フキヨセカーゴで
+準備を　してますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T11:20:16" />
+				Time="2011-09-21T11:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,10 +273,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手処理後</Comment>
+・アイテム入手処理後
+・？マーク表示後にメッセージ表示
+※swanで処理、メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:02:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -288,15 +301,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つぎの　ジムがある　セッカシティは
-７ばんどうろの　さき▽
-ネジやまを　こえたところよ▼
-ひこうきなら　ひとっとびだけど
-あるいていくのは　たいへんだよね▽
-ちゃんと　じゅんびを　してね！</Text>
+			<Text>そらをとぶで　ポケモンに　
+つれていってもらうのも▼
+じぶんで　ひこうきを
+そうじゅう　するのも▽
+どちらも　たのしい　です！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -304,15 +316,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>次の　ジムがある　セッカシティは
-７番道路の　先▽
-ネジ山を　越えたところよ▼
-飛行機なら　ひとっとびだけど
-歩いていくのは　大変だよね▽
-ちゃんと　準備を　してね！</Text>
+			<Text>そらをとぶで　ポケモンに　
+連れていってもらうのも▼
+自分で　飛行機を
+操縦するのも▽
+どちらも　楽しい　です！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:21:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,10 +332,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリアまで繰り返し</Comment>
+・t07到達後からクリアまで
+※swanで処理、メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:02:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -353,13 +365,12 @@
 ポケモンしょうぶを　おもいだして▼
 アタシも　ポケモンを
 きたえなおしたり　してるんだよ▼
-アタシの　かもつきに
-ひとは　のせないんだけど▼
-アナタとなら　どこかに
-しゅぎょうに　いっても　いいかも</Text>
+アタシの　かもつきで
+アナタと　どこか　しゅぎょうに▽
+いっちゃうのも　いいかも</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:23:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -373,13 +384,12 @@
 ポケモン勝負を　思い出して▼
 アタシも　ポケモンを
 鍛えなおしたり　してるんだよ▼
-アタシの　貨物機に
-人は　乗せないんだけど▼
-アナタとなら　どこかに
-修行に　行っても　いいかも</Text>
+アタシの　貨物機で
+アナタと　二人　どこか　修行に▽
+いっちゃうのも　いいかも</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -388,10 +398,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリアから</Comment>
+・クリアから
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T11:02:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
