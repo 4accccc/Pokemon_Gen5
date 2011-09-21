@@ -611,6 +611,43 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_pc_on_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとうございます！[Ctrl2:PageClear ]
+キュレムを　つかまえた　きねんとして
+かべがみが　ついか　されました！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-21T11:58:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-21T11:58:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとうございます！[Ctrl2:PageClear ]
+キュレムを捕まえた　記念として
+壁紙が　追加　されました！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-21T11:58:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-21T11:58:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■壁紙追加メッセージ３
+一度読んだら、次から表示されません。</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-21T11:58:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_pc_box_01"
 		Style="Large">
 		<LanguageCell
