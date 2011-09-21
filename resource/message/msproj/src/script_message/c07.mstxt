@@ -757,12 +757,12 @@
 いや　ただしくは
 もう　なにも　できない……　か▼
 それは　いい
-おわった　はなしだ▼
+おわった　はなし▼
 ただ　オマエは　おもしろい
 オレたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-06T08:56:14" />
+				Time="2011-09-21T03:18:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -777,12 +777,12 @@
 いや　ただしくは
 もう　なにも　できない……　か▼
 それは　いい
-おわった　はなしだ▼
+終わった　話▼
 ただ　オマエは　おもしろい
-オレたちと　たたかえ！▼</Text>
+オレたちと　戦え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -833,10 +833,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレたちと　たたかえ！▼</Text>
+			<Text>オレたちと　戦え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-06T08:58:10" />
+				Time="2011-09-21T03:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -889,11 +889,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエに　かつ！　それを
-ゲーチスさまに　ほうこくする！▼</Text>
+			<Text>オマエに　勝つ！　それを
+ゲーチスさまに　報告する！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -947,14 +947,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つづいて　オレが……▼
-とおもったが　トリプルバトルが
+			<Text>続いて　オレが……▼
+と思ったが　トリプルバトルが
 できるだけの　ポケモンが　いないな▼
-また　きせつが　かわったとき
-あいて　してやる▼</Text>
+また　季節が　変われば
+相手してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1005,10 +1005,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……どうする
-つづけて　たたかうか？</Text>
+続けて　戦うか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:19:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1053,12 +1053,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たたかうこと！▼
-それだけが　いま
-オレが　いきている　あかし▼</Text>
+			<Text>戦うこと！▼
+それだけが　今
+オレが　生きている　証▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1106,11 +1106,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか……▼
-また　きせつが　かわったとき
-あいて　してやる▼</Text>
+また　季節が　変われば
+相手してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:20:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1157,14 +1157,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つづいて　オレが……▼
-とおもったが　ローテーションで
-たたかえるほど　ポケモンが　いないな▼
-また　きせつが　かわったとき
-あいて　してやる▼</Text>
+			<Text>続いて　オレが……▼
+と思ったが　ローテーションで
+戦えるほど　ポケモンが　いないな▼
+また　季節が　変われば
+相手してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1215,10 +1215,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……どうする
-つづけて　たたかうか？</Text>
+続けて　戦うか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:21:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1326,11 +1326,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか……▼
-また　きせつが　かわったとき
-あいて　してやる▼</Text>
+また　季節が　変われば
+相手してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2011-09-21T03:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
