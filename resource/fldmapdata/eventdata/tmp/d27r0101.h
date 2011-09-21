@@ -36,6 +36,9 @@
 #define D27R0101_NINJA_01                 17
 #define D27R0101_NINJA_02                 18
 #define D27R0101_NINJA_03                 19
+#define D27R0101_SWPLAZMAM_END_01         20
+#define D27R0101_SWPLAZMAM_END_02         21
+#define D27R0101_STOPPER_01               22
 
 #endif //ZONE_D27R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

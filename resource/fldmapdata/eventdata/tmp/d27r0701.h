@@ -23,6 +23,7 @@
 #define ZONE_D27R0701_EVC_H
 
 #define D27R0701_SWPLAZMAM_01              0
+#define D27R0701_SWPLAZMAM_02              1
 
 #endif //ZONE_D27R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

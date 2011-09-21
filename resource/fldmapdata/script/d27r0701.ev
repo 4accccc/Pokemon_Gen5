@@ -26,6 +26,7 @@ _EVENT_DATA    ev_zone_d27r0701
 _EVENT_DATA    ev_init_d27r0701
 _EVENT_DATA    ev_recover_d27r0701
 _EVENT_DATA    ev_scene_d27r0701_plazmam_01
+_EVENT_DATA    ev_d27r0701_swplazmam_02
 _EVENT_DATA_END
 
 //バージョン取得
@@ -68,10 +69,15 @@ INIT_EVENT_START	ev_init_d27r0701
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
-  //乗船2回目でホワイトならばヒント人の位置を変更
+  //乗船2回目でブラックならばヒント人の位置を変更
   IF $WK_SCENE_D27R0701_PLAZMAM_01 == 1 && $LCWK_VERSION == VERSION_B2 THEN
     _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_01,16,0,25,DIR_UP)
   ENDIF
+  
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_02,13,0,16,DIR_RIGHT)
+  ENDIF
+  
 INIT_EVENT_END
 /************************************************************/
 /*					FIELD_RECOVER_LABEL  						*/
@@ -109,21 +115,9 @@ EVENT_START	ev_scene_d27r0701_plazmam_01
   //ネオプラズマ：おれは
   _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_02 , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
   
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_03b , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
-    
-  //W2
-  ELSE
-    
-    //【仮】正解のIDでメッセージラベルを差し替え
-    //$LCWK_MSGID = msg_d27r0701_swplazmam1_02_03w
-    //$LCWK_MSGID += $LCWK_PASSID
-    //_BALLOONWIN_OBJMSG_POS( LCWK_PASSID , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
-    
-    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_03w , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
-  ENDIF
-  
+  //ネオプラズマ：このふね…
+  _BALLOONWIN_OBJMSG_WB( msg_d27r0701_swplazmam1_02_03b , msg_d27r0701_swplazmam1_02_03w , D27R0701_SWPLAZMAM_01 , POS_DEFAULT)
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
@@ -137,26 +131,24 @@ EVENT_END
 /*					話しかけ：元プラズマ団員  						*/
 /************************************************************/
 EVENT_START	ev_d27r0701_swplazmam_01
-  // ROMバージョン取得
-  _GET_ROM_VERSION( LCWK_VERSION )
-  //正解ID取得
-  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
-  
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam1_02_03b )
-    
-  //W2
+  _TALK_OBJ_START() 
+  _BALLOONWIN_OBJMSG_WB( msg_d27r0701_swplazmam1_02_03b , msg_d27r0701_swplazmam1_02_03w , D27R0701_SWPLAZMAM_01 , POS_DEFAULT)
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員  						*/
+/************************************************************/
+EVENT_START	ev_d27r0701_swplazmam_02  
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam_end_01 )
   ELSE
-    
-    //【仮】正解のIDでメッセージラベルを差し替え
-    //$LCWK_MSGID = msg_d27r0701_swplazmam1_02_03w
-    //$LCWK_MSGID += $LCWK_PASSID
-    //_EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
-    
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam1_02_03w )
+    _TALK_OBJ_START() 
+    _BALLOONWIN_OBJMSG_WB( msg_d27r0701_swplazmam2_01b , msg_d27r0701_swplazmam2_01b , D27R0701_SWPLAZMAM_02 , POS_DEFAULT)
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
-  
 EVENT_END
 
 //--------------------------------------------------------------------

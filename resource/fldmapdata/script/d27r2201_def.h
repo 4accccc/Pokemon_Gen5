@@ -5,6 +5,8 @@
 #define _D27R2201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D27R2201 (1)
+#define SCRID_D27R2201_BAKER_01 (1)
+#define SCRID_D27R2201_SWPLAZMAM_01 (2)
+#define SCRID_D27R2201_SWPLAZMAW_01 (3)
 
 #endif //_D27R2201_DEF_H_

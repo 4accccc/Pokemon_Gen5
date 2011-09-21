@@ -12,6 +12,7 @@
 #define ZONE_D27R1501_EVC_H
 
 #define FLD_ITEM_191                       0
+#define D27R1501_SWPLAZMAM_01              1
 
 #endif //ZONE_D27R1501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r1501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -50,6 +50,9 @@ _EVENT_DATA    ev_d27r0101_swplazmam1_02_01
 _EVENT_DATA    ev_d27r0101_swplazmam1_02_02
 _EVENT_DATA    ev_scene_d27r0101_firstbtl_01
 _EVENT_DATA    ev_scene_d27r0101_secondbtl_01
+_EVENT_DATA    ev_d27r0101_stopper_01
+_EVENT_DATA    ev_d27r0101_swplazmam_end_01
+_EVENT_DATA    ev_d27r0101_swplazmam_end_02
 _EVENT_DATA_END
 
 //バージョン取得
@@ -62,7 +65,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0101
-  
+  /*【仮】D10起動状態での接続を要確認
   //D10プラズマフリゲート起動中
   IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R0101_EXIT01, 16, 0, 17 )
@@ -70,6 +73,7 @@ INIT_EVENT_START	ev_zone_d27r0101
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R1101_EXIT01, 16, 0, 17 )
   ENDIF
+  */
   
   //D05からの搭乗時
   IF $WK_SCENE_D05 == 3 THEN
@@ -1134,6 +1138,33 @@ EVENT_START	ev_pos_d27r0101_second_b_01
   
 EVENT_END
 
+/************************************************************/
+/*					話しかけ：ストッパープラズマ団員  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_stopper_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_UP( msg_d27r0101_swplazmam_stop_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：クリア後プラズマ団員01  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_end_01
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam_end_01 )
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：クリア後プラズマ団員01  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_end_02
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw_end_01 )
+
+EVENT_END
 
 
 ev_battle_check:	

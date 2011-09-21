@@ -41,6 +41,9 @@ _EVENT_DATA    ev_d27r1301_swplazmam_01
 _EVENT_DATA    ev_pos_d27r1301_swsage7_01
 _EVENT_DATA    ev_bg_d27r1301_panel_01
 _EVENT_DATA    ev_bg_d27r1301_panel_02
+_EVENT_DATA    ev_d27r1301_swplazmam_02
+_EVENT_DATA    ev_d27r1301_swplazmam_03
+_EVENT_DATA    ev_d27r1301_swplazmaw_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -280,6 +283,33 @@ EVENT_START	ev_bg_d27r1301_panel_02
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
   ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1301_swplazmam_02
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1301_swplazmam1_end_01 )
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1301_swplazmam_03
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1301_swplazmam2_end_01 )
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1301_swplazmaw_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1301_swplazmaw_end_01 )
   
 EVENT_END
 

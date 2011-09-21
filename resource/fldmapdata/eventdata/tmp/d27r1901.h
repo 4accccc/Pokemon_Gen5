@@ -10,6 +10,7 @@
 #define ZONE_D27R1901_EVC_H
 
 #define D27R1901_HINT_06                   0
+#define D27R1901_SWPLAZMAM_01              1
 
 #endif //ZONE_D27R1901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r1901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

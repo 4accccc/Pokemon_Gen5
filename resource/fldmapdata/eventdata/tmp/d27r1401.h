@@ -14,6 +14,8 @@
 
 #define SWPLAZMAW_01                       0
 #define SWPLAZMAW_02                       1
+#define D27R1401_SWPLAZMAW_01              2
+#define D27R1401_POKE29_01                 3
 
 #endif //ZONE_D27R1401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

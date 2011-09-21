@@ -19,20 +19,41 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r2201
+_EVENT_DATA    ev_d27r2201_baker_01
+_EVENT_DATA    ev_d27r2201_swplazmam_01
+_EVENT_DATA    ev_d27r2201_swplazmaw_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  プラズマ団員：話しかけ                                      */
 /**************************************************************/
-//ev_zone_d27r2201:
-//  _END
+EVENT_START   ev_d27r2201_baker_01
+  
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_baker_01 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_baker_end_01 )
+  ENDIF
+  
+EVENT_END
+
 
 /**************************************************************/
-/*                                                            */
+/*  プラズマ団員：話しかけ                                      */
 /**************************************************************/
-ev_d27r2201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d27r2201_swplazmam_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_swplazmam_end_01 )
+  
+EVENT_END
 
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r2201_swplazmaw_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_swplazmaw_end_01 )
+  
+EVENT_END

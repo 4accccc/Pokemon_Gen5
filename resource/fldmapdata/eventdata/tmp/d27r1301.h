@@ -39,6 +39,9 @@
 #define FLD_ITEM_188W                     14
 #define FLD_ITEM_190W                     15
 #define FLD_ITEM_193                      16
+#define D27R1301_SWPLAZMAM_02             17
+#define D27R1301_SWPLAZMAM_03             18
+#define D27R1301_SWPLAZMAW_01             19
 
 #endif //ZONE_D27R1301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

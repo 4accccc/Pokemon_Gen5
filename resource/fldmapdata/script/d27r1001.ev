@@ -38,6 +38,9 @@ _EVENT_DATA    ev_d27r1001_swplazmam_01
 _EVENT_DATA    ev_pos_d27r1001_swsage7_01
 _EVENT_DATA    ev_bg_d27r1001_panel_01
 _EVENT_DATA    ev_bg_d27r1001_panel_02
+_EVENT_DATA    ev_d27r1001_swplazmam_02
+_EVENT_DATA    ev_d27r1001_swplazmam_03
+_EVENT_DATA    ev_d27r1001_swplazmaw_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -258,6 +261,34 @@ EVENT_START	ev_bg_d27r1001_panel_02
   ENDIF
   
 EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1001_swplazmam_02
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1001_swplazmam1_end_01 )
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1001_swplazmam_03
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1001_swplazmam2_end_01 )
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r1001_swplazmaw_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1001_swplazmaw_end_01 )
+  
+EVENT_END
+
 
 /************************************************************/
 /*					特殊接続（船首楼）				*/
