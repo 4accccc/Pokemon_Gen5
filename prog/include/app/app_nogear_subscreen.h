@@ -22,7 +22,7 @@
 
 // アーカイブ
 #include "arc_def.h"
-#include "c_gear.naix"
+#include "c_gear_sw.naix"
 
 // サウンド
 
@@ -105,21 +105,6 @@ enum
   APP_NOGEAR_SS_DATA_NSC,
   APP_NOGEAR_SS_DATA_MAX,
 };
-
-static ARCDATID APP_NOGEAR_SS_arcdatid[APP_NOGEAR_SS_TYPE_MAX][APP_NOGEAR_SS_DATA_MAX] =
-{
-  {
-    NARC_c_gear_c_gear_m_NCLR,
-    NARC_c_gear_c_gear_m1_NCGR,
-    NARC_c_gear_c_gear01_n_NSCR,
-  },
-  {
-    NARC_c_gear_c_gear_f_NCLR,
-    NARC_c_gear_c_gear_f1_NCGR,
-    NARC_c_gear_c_gear01_n_NSCR,
-  },
-};
-
 
 //=============================================================================
 /**
@@ -221,11 +206,11 @@ static inline void APP_NOGEAR_SUBSCREEN_Trans(
   APP_NOGEAR_SS_TYPE       type     = ( sex == PM_FEMALE ) ? ( APP_NOGEAR_SS_TYPE_FEMALE ) : ( APP_NOGEAR_SS_TYPE_MALE );
 
   // Cギア入手前のサブスクリーンの生成
-  handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, heap_id );
+  handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, heap_id );
 
   GFL_ARCHDL_UTIL_TransVramPalette(
       handle,
-      APP_NOGEAR_SS_arcdatid[type][APP_NOGEAR_SS_DATA_NCL],
+      NARC_c_gear_sw_no_gear_m_nclr+type,
       PALTYPE_SUB_BG,
       APP_NOGEAR_SS_BG_PAL_POS_S_NOGEAR * 0x20,
       APP_NOGEAR_SS_BG_PAL_NUM_S_NOGEAR * 0x20,
@@ -233,7 +218,7 @@ static inline void APP_NOGEAR_SUBSCREEN_Trans(
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
       handle,
-      APP_NOGEAR_SS_arcdatid[type][APP_NOGEAR_SS_DATA_NCG],
+      NARC_c_gear_sw_no_gear_ncgr,
       APP_NOGEAR_SS_BG_FRAME_S_NOGEAR,
 			0,
       0,  // 全転送
@@ -242,7 +227,7 @@ static inline void APP_NOGEAR_SUBSCREEN_Trans(
 
   GFL_ARCHDL_UTIL_TransVramScreen(
       handle,
-      APP_NOGEAR_SS_arcdatid[type][APP_NOGEAR_SS_DATA_NSC],
+      NARC_c_gear_sw_no_gear_nscr,
       APP_NOGEAR_SS_BG_FRAME_S_NOGEAR,
       0,
       0,  // 全転送
