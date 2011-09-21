@@ -2,22 +2,44 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_transceiver_r02_01"
+		Label="msg_transceiver_c04p01_swidolw1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-ママです
-そっちは　どう？▼
-ポケモンと　なかよくなって
-たびの　たのしさを▽
-かみしめている　ころかしら？▼
-ちょっと　ようが　あって
-れんらく　したんだけど　いちど▽
-ライブキャスターを　きるわね▼</Text>
+			<Text>あの……　もしもし▼
+……　……　……
+……　……　……▼
+あっ　はい　そうです▼
+わたし　その　ライブキャスターの▽
+もちぬし　です……▼
+いまは　ふるい　ライブキャスターから
+れんらく　して　いるので▽
+おんせいのみで　ごめんなさい▼
+ひろって　いただいて
+ありがとう　ございました▼
+じつは……　すぐにでも
+うけとりに　いきたいんですけど……▼
+わたし　しごとを　していまして
+いま　うけとりに　いく　ことが▽
+できない　じょうたい　なんです▼
+よろしければ　しばらくの　あいだ
+その　ライブキャスターを▽
+あずかって　もらえないでしょうか？▼
+……　……　……
+……　……　……▼
+えっ　いいんですか？
+ありがとう　ございます▼
+わたしは　○○……▼
+いえ……　◎◎◎◎◎って　いいます▼
+あなたは？▼
+はい　●●●●●さん　ですね▼
+しごとが　おちついたら
+うけとりに　いきますので▽
+しばらくの　あいだ▽
+よろしく　おねがいします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,18 +47,40 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-ママです
-そっちは　どう？▼
-ポケモンと　仲良くなって
-旅の　楽しさを▽
-かみしめている　ころかしら？▼
-ちょっと　用が　あって
-連絡したんだけど　一度▽
-ライブキャスターを　きるわね▼</Text>
+			<Text>あの……　もしもし▼
+……　……　……
+……　……　……▼
+あっ　はい　そうです▼
+わたし　その　ライブキャスターの▽
+もちぬし　です……▼
+いまは　ふるい　ライブキャスターから
+れんらく　して　いるので▽
+おんせいのみで　ごめんなさい▼
+ひろって　いただいて
+ありがとう　ございました▼
+じつは……　すぐにでも
+うけとりに　いきたいんですけど……▼
+わたし　しごとを　していまして
+いま　うけとりに　いく　ことが▽
+できない　じょうたい　なんです▼
+よろしければ　しばらくの　あいだ
+その　ライブキャスターを▽
+あずかって　もらえないでしょうか？▼
+……　……　……
+……　……　……▼
+えっ　いいんですか？
+ありがとう　ございます▼
+わたしは　○○……▼
+いえ……　◎◎◎◎◎って　いいます▼
+あなたは？▼
+はい　●●●●●さん　ですね▼
+しごとが　おちついたら
+うけとりに　いきますので▽
+しばらくの　あいだ▽
+よろしく　おねがいします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44,20 +88,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■　r02：２番道路イベント用メッセージ
-・ママの口ぱくアニメーション再生
-・続けて
-・0＝主人公名前</Comment>
+			<Comment>■　c04p01
+・アイドル♀の落し物拾ったとき
+・アイドルは音声のみ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:28:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>アイドル♀
+音声のみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:29:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -65,6 +109,61 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c04p01_swidolw1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あと……▼
+うけわたしが　おわる　まで
+こちらの　じょうきょうが▽
+わからないと　しんぱい　でしょうから▼
+ていき　てきに
+●●●●●さんの　ライブキャスターへ▽
+れんらく　させて　いただきますね▼
+それでは　しつれいします▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:27:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:27:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あと……▼
+うけわたしが　おわる　まで
+こちらの　じょうきょうが▽
+わからないと　しんぱい　でしょうから▼
+ていき　てきに
+●●●●●さんの　ライブキャスターへ▽
+れんらく　させて　いただきますね▼
+それでは　しつれいします▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:27:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:27:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・フィールドに復帰する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:27:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アイドル♀
+音声のみ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T07:29:29" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
