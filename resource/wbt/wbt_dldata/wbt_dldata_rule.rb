@@ -118,10 +118,11 @@ class WBT_RULE
   def chk_join_info()
     #
     3.times{|i|
-      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW), 
-                                        REG_UP_START_COL+i, $reg_str[i])
+      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW),
+                                        $reg_str[i] )
       if(ret == -1)
-         rule_exit();
+        print_error_info( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW );
+        rule_exit();
       end
       # セット
       @join_info[i] = @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW).to_i;
@@ -139,7 +140,8 @@ class WBT_RULE
       #
       flg = chk_num_range( @join_info[i], min, max )
       if(flg == -1)
-        print_error_num( $reg_str[i], @join_info[i] );
+        print_error_num( $reg_str[i], @join_info[i], min, max );
+        print_error_info( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW );
         rule_exit();
       end
       #
@@ -154,15 +156,17 @@ class WBT_RULE
   #----------------
   def chk_level_range()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW), 
-                                      REG_UP_START_COL+3, $reg_str[3])
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW),
+                                      $reg_str[3] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
     num = hash2no( $level_range_hash, @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW) );
     if(num == -1)
       print_error_str( $reg_str[3], @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW) );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
       rule_exit();
     else
       @level_range = num;
@@ -178,9 +182,10 @@ class WBT_RULE
   #----------------
   def chk_level_total()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+4, REG_UP_START_ROW), 
-                                      REG_UP_START_COL+4, $reg_str[4])
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+4, REG_UP_START_ROW),
+                                      $reg_str[4] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
@@ -189,7 +194,8 @@ class WBT_RULE
     # 範囲チェック
     flg = chk_num_range( @level_total, 0, 600 )
     if(flg == -1)
-      print_error_num( $reg_str[4], @level_total );
+      print_error_num( $reg_str[4], @level_total, 0, 600 );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW );
       rule_exit();
     end
     #
@@ -205,9 +211,10 @@ class WBT_RULE
     #
     2.times{|i|
       # ブランクチェック
-      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+5+i, REG_UP_START_ROW), 
-                                        REG_UP_START_COL+5+i, $reg_str[5+i]);
+      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+5+i, REG_UP_START_ROW),
+                                        $reg_str[5+i] )
       if(ret == -1)
+        print_error_info( $current_xls_name, 1, REG_UP_START_COL+5+i, REG_UP_START_ROW );
         rule_exit();
       end
       #
@@ -234,8 +241,9 @@ class WBT_RULE
     WBTDL_POKE_MAX.times{|i|
       # ブランクチェック
       ret = chkblank( @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW),
-                                        RULE_UP_START_COL+i, $reg_str[7]);
+                                        $reg_str[7] )
       if(ret == -1)
+        print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW );
         rule_exit();
       end
       #
@@ -250,9 +258,10 @@ class WBT_RULE
         str = @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW-1);
         id = hash2no( $monsno_hash, str );
         if(id == -1)
-           # 該当するポケモンがない=>エラー
-           print_error_str( $reg_str[7], str );
-           rule_exit();
+          # 該当するポケモンがない=>エラー
+          print_error_str( $reg_str[7], str );
+          print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW-1 );
+          rule_exit();
         else
           off_bit  = id%8;
           off_char = id/8;
@@ -277,8 +286,9 @@ class WBT_RULE
     WBTDL_ITEM_MAX.times{|i|
       # ブランクチェック
       ret = chkblank( @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4),
-                                        RULE_UP_START_COL+i, $reg_str[8]);
+                                        $reg_str[8] );
       if(ret == -1)
+        print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4 );
         rule_exit();
       end
       #
@@ -293,9 +303,10 @@ class WBT_RULE
         str = @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4-1);
         id = hash2no( $item_hash, str );
         if(id == -1)
-           # 該当するアイテムがない=>エラー
-           print_error_str( $reg_str[8], str );
-           rule_exit();
+          # 該当するアイテムがない=>エラー
+          print_error_str( $reg_str[8], str );
+          print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4-1 );
+          rule_exit();
         else
           off_bit  = id%8;
           off_char = id/8;
@@ -311,31 +322,6 @@ class WBT_RULE
     }
   end
   
-  #----------------------------
-  # ニックネーム表示(準備だけ)
-  #----------------------------
-  def chk_nickname()
-    #
-    # ブランクチェック
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+15, REG_UP_START_ROW), 
-                                      REG_UP_START_COL+15, $reg_str[9]);
-    if(ret == -1)
-      rule_exit();
-    end
-    #
-    # セット
-    num = hash2no( $onoff_hash, @conv.get_cell(1, REG_UP_START_COL+15, REG_UP_START_ROW) );
-#    if(num >= 2)
-#      @both_info[i] = 1;
-#    else
-#      @both_info[i] = 0;
-#    end
-    #
-    if(@local_debug == 1)
-      p sprintf("%d :%s",num, $reg_str[9])
-    end
-  end
-  
   #----------------
   # 禁止技
   #----------------
@@ -343,8 +329,9 @@ class WBT_RULE
     #
     # ブランクチェック
     ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+22, REG_UP_START_ROW),
-                                      REG_UP_START_COL+22, $reg_str[11]);
+                                      $reg_str[11] );
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+22, REG_UP_START_ROW );
       rule_exit();
     end
     #
@@ -353,6 +340,7 @@ class WBT_RULE
     if(id == -1)
       # 該当する禁止技がない=>エラー
       print_error_str( $reg_str[11], str );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+22, REG_UP_START_ROW );
       rule_exit();
     else
       @veto_waza_no = id;
@@ -368,15 +356,17 @@ class WBT_RULE
   #----------------
   def chk_battle_rule()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW), 
-                                      REG_UP_START_COL+19, $reg_str[10])
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW),
+                                      $reg_str[10] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+19, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
     num = hash2no( $battle_rule_hash, @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW) );
     if(num == -1)
       print_error_str( $reg_str[10], @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW) );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+19, REG_UP_START_ROW );
       rule_exit();
     else
       @btl_rule = num;
@@ -392,15 +382,17 @@ class WBT_RULE
   #----------------
   def chk_type()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW), 
-                                      REG_UP_START_COL+23, $reg_str[12])
+    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW),
+                                      $reg_str[12] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+23, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
     num = hash2no( $type_hash, @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW) );
     if(num == -1)
       print_error_str( $reg_str[12], @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW) );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+23, REG_UP_START_ROW );
       rule_exit();
     else
       @need_poketype = num;
@@ -418,8 +410,9 @@ class WBT_RULE
     #
     # ブランクチェック
     ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+24, REG_UP_START_ROW),
-                                      REG_UP_START_COL+25, $reg_str[13]);
+                                      $reg_str[13] );
     if(ret == -1)
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+24, REG_UP_START_ROW );
       rule_exit();
     end
     #
@@ -427,7 +420,8 @@ class WBT_RULE
     # 範囲のチェック(0、1)
     flg = chk_num_range( num, 0, 1 );
     if(flg == -1)
-      print_error_num( $reg_str[13], num );
+      print_error_num( $reg_str[13], num, 0, 1 );
+      print_error_info( $current_xls_name, 1, REG_UP_START_COL+24, REG_UP_START_ROW );
       rule_exit();
     end
     #

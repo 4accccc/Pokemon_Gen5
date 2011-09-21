@@ -130,11 +130,26 @@ $codes = {
 # 文字数制限(1行用、複数行用(改行分加算))
 $str_limit = [36, 18, 36+1, 18+1]
 
+# シート名
+$sheet_str = [ "トーナメントリスト",
+               "レギュレーション",
+               "レギュレーション管理",
+               "トレーナー管理",
+               "トレーナーデータ",
+               "トレーナータイプ指定",
+               "手持ちデータ",
+]
+
 #---------------------------------------------------------
 #---------------------------------------------------------
-#-------------
+#--------------------------------
 # ハッシュ
-#-------------
+#
+# hash:     ハッシュ
+# str:      調べる文字列
+#
+# ret:      (-1:なし、その他:ハッシュ値)
+#--------------------------------
 def hash2no( hash, str )
   if hash[str]==nil then
     return -1
@@ -142,9 +157,14 @@ def hash2no( hash, str )
   return hash[str]
 end
 
-#-------------------------
-# 文字列のパック(新)
-#-------------------------
+#-------------------------------
+# 文字列のパック
+# 
+# buffer:  バッファ(char型の配列)
+# num:     最大数
+# 
+# ret:     packしたデータ
+#-------------------------------
 def str2pack( buffer, num )
   array = Array.new	# 格納用
   #
@@ -187,7 +207,6 @@ def str2pack( buffer, num )
     # (0x0a, 0x00) => (0xfe, 0xff)に変換
     if(buffer[i] == 0x0a)
       # 念のため
-#      if(i < len-2)
       if(i < len-1)
          if(buffer[i+1] == 0x00)
            array << 0xfe
@@ -203,7 +222,6 @@ def str2pack( buffer, num )
     # (0xbc, 0x25) => (0x00,0xf0,0x01,0xbe,0x00,0x00)に変換
     if(buffer[i] == 0xbc)
       # 念のため
-#      if(i < len-2)
       if(i < len-1)
          if(buffer[i+1] == 0x25)
            # 足りない場合は出力しない
@@ -229,7 +247,6 @@ def str2pack( buffer, num )
     # (0xbd, 0x25) => (0x00,0xf0,0x00,0xbe,0x00,0x00)に変換
     if(buffer[i] == 0xbd)
       # 念のため
-#      if(i < len-2)
       if(i < len-1)
          if(buffer[i+1] == 0x25)
            # 足りない場合は出力しない
@@ -262,18 +279,18 @@ def str2pack( buffer, num )
   #
   # サイズ注意
   return array.pack("C*")
-#  return array.pack("S*")
 end
 
 #-------------------------
 # ブランクチェック
 #
-# check文字列、エクセルのcol、エラー表示文字列
-# (0:ある、-1:なし)
+# str:   check文字列
+# mstr:  エラー表示文字列
+#
+# ret:   (0:ある、-1:なし)
 #-------------------------
-def chkblank( str, num, mstr )
+def chkblank( str, mstr )
   if(str == nil)
-#    p sprintf("[%s](%d) %s", mstr,num,$error_str[1])
     p sprintf("[%s] %s", mstr,$error_str[1])
     return(-1);
   end
@@ -283,8 +300,9 @@ end
 #-------------------------
 # ブランクチェック(判定のみ)
 #
-# check文字列
-# (0:ある、-1:なし)
+# str:   check文字列
+#
+# ret:   (0:ある、-1:なし)
 #-------------------------
 def chkblank_no_print( str )
   if(str == nil)
@@ -296,8 +314,11 @@ end
 #-------------------------
 # 数字の範囲チェック
 #
-# input、min(含む)、max(含む)
-# (0:ある、-1:なし)
+# input:    入力値
+# minnum:   min(含む)
+# maxnum:   max(含む)
+#
+# ret:      (0:ある、-1:なし)
 #-------------------------
 def chk_num_range( input, minnum, maxnum )
   flg = 0
@@ -313,21 +334,47 @@ end
 
 #-------------------------
 # エラー表示まとめ(数字)
+#
+# str:     文字列
+# num:     入力値
+# min:     min(含む)
+# max:     max(含む)
 #-------------------------
-def print_error_num( str, num )
-  p sprintf("[%s] %s : %d", str, $error_str[0], num )
+def print_error_num( str, num, min, max )
+  p sprintf("[%s] %s : %d (%d - %d)", str, $error_str[0], num, min, max )
 end
 
 #-------------------------
 # エラー表示まとめ(文字列)
+#
+# str:     文字列
+# mstr:    
 #-------------------------
 def print_error_str( str, mstr )
   p sprintf("[%s] %s : %s", str, $error_str[0], mstr )
 end
 
+#-------------------------
+# エラー表示(詳細情報)
+#
+# filename: ファイル名
+# sheetnum: シート番号
+# col:      col
+# row:      row
+#-------------------------
+def print_error_info( filename, sheetnum, col, row )
+  p sprintf("[%s] : [%s] : [ %d, %d ]", filename, $sheet_str[sheetnum], col, row )
+end
+
 #------------------------------
 # 指定の箇所からの個数を求める
 # (設定ファイルで使用)
+#
+# str:      文字列
+# src:      番号(index)
+# maxnum:   最大数
+#
+# ret:      個数
 #------------------------------
 def get_array_num( str, src, maxnum )
   # 個数を調べる
@@ -352,9 +399,16 @@ def get_array_num( str, src, maxnum )
   return(j)
 end
 
-#-------------------------
+#-------------------------------
 # unicodeをセット
-#-------------------------
+#
+# conv:     excelアクセス用
+# index:    シート番号
+# col:      col
+# row:      row
+#
+# ret:      UTF16の文字バッファ
+#-------------------------------
 def get_unicode( conv, index, col, row )
   # UTF8で取得
   str = conv.get_cell2(index, col, row)
@@ -386,6 +440,10 @@ end
 
 #-------------------------
 # 文字の情報をセット
+#
+# buffer:   文字のバッファ
+#
+# ret:      情報のバッファ
 # (行数、それぞれの文字数)
 #-------------------------
 def chk_strinfo( buffer )
@@ -457,10 +515,16 @@ def chk_strinfo( buffer )
   return( array )
 end
 
-#-------------------------
+#------------------------------------
 # 文字の個数制限
-# (バッファ、行数、文字数)
-#-------------------------
+#
+# buffer:   バッファ
+# lnum:     行数
+# num:      文字数
+# str:      文字列
+#
+# ret:      (0:正しい、-1:正しくない)
+#------------------------------------
 def chk_str_limit( buffer, lnum, num, str )
   # チェックの有無
   if( $debug_chkstr == 0 )
@@ -474,13 +538,13 @@ def chk_str_limit( buffer, lnum, num, str )
   #
   # 行数の制限
   if(array[0] > lnum)
-    p sprintf("%s : %s : (行数:%d > %d)\n",str, $error_str[2], array[0], lnum)
+    p sprintf("%s : %s : (行数:%d > %d)",str, $error_str[2], array[0], lnum)
     flg = -1
   else
     # 文字数の制限
     3.times{|i|
       if( array[1+i] > num )
-        p sprintf("%s : %s : (文字数: %d > %d)\n",str, $error_str[2], array[1+i], num)
+        p sprintf("%s : %s : (文字数: %d > %d)",str, $error_str[2], array[1+i], num)
         flg = -1;
         break;
       end

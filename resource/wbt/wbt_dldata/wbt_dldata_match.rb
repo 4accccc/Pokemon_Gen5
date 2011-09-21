@@ -67,15 +67,17 @@ class WBT_MATCH_SINGLE
   #----------------
   def chk_match()
     #
-    ret = chkblank( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id ), 
-                                      MATCH_START_COL, $match_str[0])
+    ret = chkblank( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id ),
+                                      $match_str[0] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
       match_exit();
     end
     # セット
     num = hash2no( $match_hash, @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
     if(num == -1)
       print_error_str( $match_str[0], @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
+      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
       match_exit();
     else
       @type = num;
@@ -92,8 +94,9 @@ class WBT_MATCH_SINGLE
   def chk_prio()
     #
     ret = chkblank( @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id ),
-                                      MATCH_START_COL+1, $match_str[1] )
+                                      $match_str[1] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
       match_exit();
     end
     # セット
@@ -101,7 +104,8 @@ class WBT_MATCH_SINGLE
     # 範囲のチェック(0 - 5)
     flg = chk_num_range( @pri, 0, 5 );
     if(flg == -1)
-      print_error_num( $match_str[1], @pri );
+      print_error_num( $match_str[1], @pri, 0, 5 );
+      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
       match_exit();
     end
     #
@@ -116,8 +120,9 @@ class WBT_MATCH_SINGLE
   def chk_id()
     #
     ret = chkblank( @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id ),
-                                      MATCH_START_COL+2, $match_str[2] )
+                                      $match_str[2] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
       match_exit();
     end
     #
@@ -130,7 +135,8 @@ class WBT_MATCH_SINGLE
     # 範囲のチェック(0 - 999)
     flg = chk_num_range( @id, 0, 999 );
     if(flg == -1)
-      print_error_num( $match_str[2], @id );
+      print_error_num( $match_str[2], @id, 0, 999 );
+      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
       match_exit();
     end
     #

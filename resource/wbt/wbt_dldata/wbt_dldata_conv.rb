@@ -13,9 +13,12 @@ $current_lang_id = 0
 # debug(0:別,1:同じ)
 $debug_filename = 1;
 
+# カレントファイル名
+$current_xls_name = ""
+
 # 文字列チェック(0:off、1:on)
 # うるさいかもしれないので切り替えにしておく
-$debug_chkstr = 0
+$debug_chkstr = 1
 
 require "my_tab_out_direct_sheet.rb"
 
@@ -96,6 +99,7 @@ LANG_MAX_NUM.times{|m|
       num = get_array_num( @data, 12*m, 12 )
       size = num
       size.times{|i|
+        $current_xls_name = @data[12*m+i]
         filename = getAbsolutePath( @data[12*m+i] );
         conv.open_file( filename );
         
@@ -113,7 +117,7 @@ LANG_MAX_NUM.times{|m|
         #
         conv.close_file();
         #
-        p sprintf("list(%d): %s",i,@data[12*m+i])
+        p sprintf("list(%02d): %s",i,@data[12*m+i])
       }
       p sprintf("end :%s",outfilename)
     }

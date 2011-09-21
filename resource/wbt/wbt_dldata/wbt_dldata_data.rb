@@ -162,8 +162,9 @@ class WBT_DATA
   def chk_tournament_id()
     #
     ret = chkblank( @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW ),
-                                     DATA_UP_START_COL+DATA_TOURNAMENT, $title_str[0] )
+                                     $title_str[0] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
       data_exit();
     end
     # セット
@@ -172,7 +173,8 @@ class WBT_DATA
     # 範囲のチェック(1 - 65535)
     flg = chk_num_range( @tournament_id, 1, 65535 );
     if(flg == -1)
-      print_error_num( $title_str[0], @tournament_id );
+      print_error_num( $title_str[0], @tournament_id, 1, 65535 );
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
       data_exit();
     end
     
@@ -187,9 +189,10 @@ class WBT_DATA
   def chk_day()
     #
     3.times{|i|
-      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW), 
-                                        DATA_UP_START_COL+DATA_YEAR+i, $title_str[1+i])
+      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW),
+                                        $title_str[1+i] )
       if(ret == -1)
+        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW );
         data_exit();
       end
       # セット
@@ -209,7 +212,8 @@ class WBT_DATA
       #
       flg = chk_num_range( @day[i], min, max )
       if(flg == -1)
-        print_error_num( $title_str[1+i], @day[i] );
+        print_error_num( $title_str[1+i], @day[i], min, max );
+        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW );
         data_exit();
       end
       
@@ -225,14 +229,16 @@ class WBT_DATA
   def chk_version()
     #
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW),
-                                      DATA_UP_START_COL+4, $title_str[4] )
+                                      $title_str[4] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
       data_exit();
     end
     # セット
     num = hash2no( $version_hash, @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
     if(num == -1)
       print_error_str( $title_str[4], @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
       data_exit();
     else
       @version = num;
@@ -248,9 +254,10 @@ class WBT_DATA
   def chk_lang()
     #
     DATA_LANG_NUM.times{|i|
-      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW), 
-                      1+DATA_UP_START_COL+DATA_LANG_JPN+i, $title_str[DATA_LANG_JPN+i])
+      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW),
+                                        $title_str[DATA_LANG_JPN+i] )
       if(ret == -1)
+        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
         data_exit();
       end
       # セット
@@ -273,8 +280,9 @@ class WBT_DATA
   def chk_tournament_name()
     #
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW),
-                                      DATA_UP_START_COL+14+@local_language, $title_str[12])
+                                      $title_str[12] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     #
@@ -288,6 +296,7 @@ class WBT_DATA
     end
     flg = chk_str_limit( @tournament_name, 1, $str_limit[flg], $title_str[12] );
     if(flg == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     #
@@ -303,8 +312,9 @@ class WBT_DATA
   def chk_regulation_explain()
     #
     ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW),
-                                      DATA_UP_START_COL+23+@local_language, $title_str[13])
+                                      $title_str[13] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     
@@ -318,6 +328,7 @@ class WBT_DATA
     end
     flg = chk_str_limit( @regulation_explain, 3, $str_limit[2+flg], $title_str[13] );
     if(flg == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     #
@@ -332,9 +343,10 @@ class WBT_DATA
   #----------------------------------
   def chk_contents_explain()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW), 
-                                      DATA_UP_START_COL+32+@local_language, $title_str[14])
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW),
+                                      $title_str[14] )
     if(ret == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     
@@ -348,6 +360,7 @@ class WBT_DATA
     end
     flg = chk_str_limit( @contents_explain, 2, $str_limit[2+flg], $title_str[14] );
     if(flg == -1)
+      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW );
       data_exit();
     end
     
