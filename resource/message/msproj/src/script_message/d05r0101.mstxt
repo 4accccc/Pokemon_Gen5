@@ -1204,4 +1204,58 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼
+世界からトレーナーが
+集まってきていることを話す</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:53:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼
+世界からトレーナーが
+集まってきていることを話す</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:55:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:53:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX=11、GRIDZ=12</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:54:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW
+エリートトレーナー♀
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-21T11:53:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
