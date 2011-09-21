@@ -82,7 +82,10 @@ static BOOL LOCAL_TVT_SECRET_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOC
 static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 static BOOL LOCAL_TVT_SECRET_TrueFace( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
+static BOOL LOCAL_TVT_SECRET_ForceTalk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs );
 
+static BOOL Local_Tvt_Secret_GreetingInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq );
+static BOOL Local_Tvt_Secret_TalkInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq );
 static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq );
 
 //隠しキャラのデータ取得
@@ -121,7 +124,10 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
     if( LTVT_SECREAT_TALK_RING_OFF == talk )
     {
       p_person->greetingFunction  = LOCAL_TVT_SECRET_TrueFace;
-
+    }
+    else if( LTVT_SECREAT_TALK_FORCE_TALK == talk )
+    {
+      p_person->greetingFunction  = LOCAL_TVT_SECRET_ForceTalk;
     }
     else
     {
@@ -248,57 +254,9 @@ static void LOCAL_TVT_SECRET_Exit( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
 //-----------------------------------------------------------------------------
 static BOOL LOCAL_TVT_SECRET_Greeting( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs )
 {
-  enum
-  {
-    SEQ_INIT,
-    SEQ_MAIN,
-    SEQ_END,
-  };
   LOCAL_TVT_SECRET *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
-  switch( p_wk->seq )
-  {
-  case SEQ_INIT:
-    {
-      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
-      u32 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
-
-#if 0 //かならず最初の１０回は相手からかけて、その後は自分しかかけないので
-      //エクセルで管理することにした
-      //かけてくる場合番号を足す
-      if( p_wk->mode == LOCAL_TVT_SECRET_MODE_SEND )
-      {
-        msgID += SECRET_MSGID_RECIVE_ADD;
-      }
-#endif
-      //女性の場合は会話番号を足す
-      if( sex == PTL_SEX_FEMALE )
-      {
-        msgID += SECRET_MSGID_FEMALE_ADD;
-      }
-      LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
-    }
-    p_wk->seq++;
-    break;
-
-  case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_secret, cp_param->p_chara_sys ) )
-    {
-      p_wk->seq++;
-    }
-    break;
-
-  case SEQ_END:
-    p_wk->seq = 0;
-    return TRUE;
-
-  default:
-    GF_ASSERT(0);
-  }
-
-  return FALSE;
+  return Local_Tvt_Secret_GreetingInner( p_person, cp_param, p_wk, &p_wk->seq );
 }
 
 //----------------------------------------------------------------------------
@@ -316,47 +274,16 @@ static BOOL LOCAL_TVT_SECRET_Talk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_T
 {
   enum
   {
-    SEQ_INIT,
-    SEQ_MAIN,
+    SEQ_TALK,
     SEQ_FAREWELL,
     SEQ_END,
   };
   LOCAL_TVT_SECRET *p_wk       = p_wk_adrs;
-  LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
 
   switch( p_wk->seq )
   {
-  case SEQ_INIT:
-    {
-      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
-      u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
-      u32 msgID;
-
-      //デート終了してたら初期化
-      LOCAL_TVT_CALLDATA_ResetSecretDate( cp_param->p_data );
-
-      if( p_wk->is_talk == FALSE )
-      {
-        //何回も変わらないように最初の１回だけ受け取る
-        p_wk->talk_msgID = Local_Tvt_Secret_GetTalkMsgID( p_wk->cp_quest, cp_param->p_data, cp_param->p_message );
-      }
-      msgID = p_wk->talk_msgID;
-
-      //女性の場合は会話番号を足す
-      if( sex == PTL_SEX_FEMALE )
-      {
-        msgID += SECRET_MSGID_FEMALE_ADD;
-      }
-      LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
-
-      //話しかけた
-      p_wk->is_talk = TRUE;
-    }
-    p_wk->seq++;
-    break;
-
-  case SEQ_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_secret, cp_param->p_chara_sys ) )
+  case SEQ_TALK:
+    if( Local_Tvt_Secret_TalkInner( p_person, cp_param, p_wk, &p_wk->sub_seq ) )
     {
       p_wk->seq++;
     }
@@ -397,6 +324,140 @@ static BOOL LOCAL_TVT_SECRET_Farewell( LOCAL_TVT_PERSON_SYS *p_person, const LOC
   return Local_Tvt_Secret_FarewellInner( p_person, cp_param, p_wk, &p_wk->seq );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  挨拶
+ *
+ *	@param	LOCAL_TVT_PERSON_SYS *p_person  人物システム
+ *	@param const LOCAL_TVT_PERSON_SYS_PARAM *cp_param 引数
+ *	@param	*p_wk_adrs  ワーク
+ *
+ *	@return TRUEで終了  FALSEで継続
+ */ 
+//-----------------------------------------------------------------------------
+static BOOL Local_Tvt_Secret_GreetingInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_END,
+  };
+  LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+
+  switch( *p_seq )
+  {
+  case SEQ_INIT:
+    {
+      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
+      u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
+      u32 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
+
+#if 0 //かならず最初の１０回は相手からかけて、その後は自分しかかけないので
+      //エクセルで管理することにした
+      //かけてくる場合番号を足す
+      if( p_wk->mode == LOCAL_TVT_SECRET_MODE_SEND )
+      {
+        msgID += SECRET_MSGID_RECIVE_ADD;
+      }
+#endif
+      //女性の場合は会話番号を足す
+      if( sex == PTL_SEX_FEMALE )
+      {
+        msgID += SECRET_MSGID_FEMALE_ADD;
+      }
+      LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_secret, cp_param->p_chara_sys ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    (*p_seq)  = 0;
+    return TRUE;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話す
+ *
+ *	@param	LOCAL_TVT_PERSON_SYS *p_person  人物システム
+ *	@param const LOCAL_TVT_PERSON_SYS_PARAM *cp_param 引数
+ *	@param	*p_wk_adrs  ワーク
+ *
+ *	@return TRUEで終了  FALSEで継続
+ */ 
+//-----------------------------------------------------------------------------
+static BOOL Local_Tvt_Secret_TalkInner( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, LOCAL_TVT_SECRET *p_wk, s32 *p_seq )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_FAREWELL,
+    SEQ_END,
+  };
+  LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
+
+  switch( *p_seq )
+  {
+  case SEQ_INIT:
+    {
+      const GFL_MSGDATA *cp_msg = LOCAL_TVT_MESSAGE_GetCallMsgData( cp_param->p_message );
+      u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
+      u32 msgID;
+
+      //デート終了してたら初期化
+      LOCAL_TVT_CALLDATA_ResetSecretDate( cp_param->p_data );
+
+      if( p_wk->is_talk == FALSE )
+      {
+        //何回も変わらないように最初の１回だけ受け取る
+        p_wk->talk_msgID = Local_Tvt_Secret_GetTalkMsgID( p_wk->cp_quest, cp_param->p_data, cp_param->p_message );
+      }
+      msgID = p_wk->talk_msgID;
+
+      //女性の場合は会話番号を足す
+      if( sex == PTL_SEX_FEMALE )
+      {
+        msgID += SECRET_MSGID_FEMALE_ADD;
+      }
+      LOCAL_TVT_CHARA_StartTalk( p_secret, cp_msg, msgID );
+
+      //話しかけた
+      p_wk->is_talk = TRUE;
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_secret, cp_param->p_chara_sys ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    (*p_seq)  = 0;
+    return TRUE;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  さよなら  
@@ -549,6 +610,61 @@ static BOOL LOCAL_TVT_SECRET_TrueFace( LOCAL_TVT_PERSON_SYS *p_person, const LOC
 
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制的に挨拶→話す→さよならになる
+ *
+ *	@param	LOCAL_TVT_PERSON_SYS *p_person  人物システム
+ *	@param const LOCAL_TVT_PERSON_SYS_PARAM *cp_param 引数
+ *	@param	*p_wk_adrs  ワーク
+ *
+ *	@return TRUEで終了  FALSEで継続
+ */ 
+//-----------------------------------------------------------------------------
+static BOOL LOCAL_TVT_SECRET_ForceTalk( LOCAL_TVT_PERSON_SYS *p_person, const LOCAL_TVT_PERSON_SYS_PARAM *cp_param, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_GREET,
+    SEQ_TALK,
+    SEQ_FAREWELL,
+    SEQ_END,
+  };
+  LOCAL_TVT_SECRET *p_wk       = p_wk_adrs;
+
+  switch( p_wk->seq )
+  {
+  case SEQ_GREET:
+    if( Local_Tvt_Secret_GreetingInner( p_person, cp_param, p_wk, &p_wk->sub_seq ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_TALK:
+    if( Local_Tvt_Secret_TalkInner( p_person, cp_param, p_wk, &p_wk->sub_seq ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+    
+  case SEQ_FAREWELL:
+    if( Local_Tvt_Secret_FarewellInner( p_person, cp_param, p_wk, &p_wk->sub_seq ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_END:
+    p_wk->seq = 0;
+    return TRUE;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -614,6 +730,7 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
   default:
     GF_ASSERT(0);
   case LTVT_SECREAT_TALK_RING_OFF:
+  case LTVT_SECREAT_TALK_FORCE_TALK:
   case LTVT_SECREAT_TALK_NONE:
     return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
 

@@ -10365,6 +10365,23 @@
   .macro  _ASM_TVT_DEMO demo_no
   .short  EV_SEQ_CALL_TVT_DEMO
   .short  \demo_no
+  .short  SCR_LTVT_CALLTVT_MODE_NORMAL
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CALL_TVT_DEMO_REVERSE
+ * @brief デモ呼び出し  ！注！こちらはライブキャスターの色が反対です
+ * @param demo_no   デモID指定ナンバー
+ */
+//--------------------------------------------------------------
+#define _CALL_TVT_DEMO_REVERSE( demo_no )  \
+    _ASM_CALL_TVT_DEMO_REVERSE demo_no
+
+  .macro  _ASM_CALL_TVT_DEMO_REVERSE demo_no
+  .short  EV_SEQ_CALL_TVT_DEMO
+  .short  \demo_no
+  .short  SCR_LTVT_CALLTVT_MODE_REVERSE
   .endm
 
 //--------------------------------------------------------------

@@ -51,6 +51,7 @@ typedef enum
   LTVT_SECREAT_TALK_QANSWER,
   LTVT_SECREAT_TALK_RING_OFF,       //すぐ切る
   LTVT_SECREAT_TALK_DAILY_RND,      //日常会話ランダム
+  LTVT_SECREAT_TALK_FORCE_TALK,       //すぐに話すへ行く
 } LTVT_SECREAT_TALK;
 
 //-------------------------------------

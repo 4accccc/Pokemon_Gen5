@@ -401,9 +401,10 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 color = SCRCMD_GetVMWorkValue( core, wk );
   LOCAL_TVT_INIT_WORK * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(LOCAL_TVT_INIT_WORK) );
   param->mode     = LOCAL_TVT_MODE_SCRIPT;
-  param->color    = LOCAL_TVT_COLOR_NORMAL;
+  param->color    = color;
   param->scriptId = demo_id;
   param->gameData = SCRCMD_WORK_GetGameData( work );
 

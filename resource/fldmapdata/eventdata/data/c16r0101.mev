@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/11 19:13:03
+#save date:2011/09/21 16:17:42
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c16r0101.wms
 #SECTION START:OBJ_EVENT
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C16R0101_OWNER
 #OBJ CODE Number
-GENTLEMAN
+BUSINESSMAN
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
