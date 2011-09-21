@@ -21,11 +21,8 @@
 //----------------------------------------------------------
 typedef struct _CGEAR_SAVEDATA CGEAR_SAVEDATA;
 
-#define C_GEAR_RING_COLOR_MAX (6)
-#define C_GEAR_RING_NUM (5) //リングIDは内側から0→4
-
-#define C_GEAR_PANEL_WIDTH   (9)
-#define C_GEAR_PANEL_HEIGHT  (4)
+#define CGEAR_RING_COLOR_MAX (6)
+#define CGEAR_RING_NUM (5) //リングIDは内側から0→4
 
 ///パネルID
 typedef enum{
@@ -35,6 +32,7 @@ typedef enum{
   CGEAR_PANEL_MAX,
 }CGEAR_PANEL_ID;
 
+#if 0
 /// ぱねるタイプ
 //0x80 ビットがTRUEなら文字の出るところ。
 //0x40ビットがTRUEならIRの１つまえ
@@ -49,7 +47,7 @@ typedef enum {
   CGEAR_PANELTYPE_MAX,
   CGEAR_PANELTYPE_BOOT=CGEAR_PANELTYPE_MAX,
 } CGEAR_PANELTYPE_ENUM;
-
+#endif
 
 //----------------------------------------------------------
 //	セーブデータシステムが依存する関数
@@ -74,11 +72,13 @@ extern u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id );
 extern void CGEAR_SV_SetCGearPanelPos( CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id, u8 pos );
 extern u8 CGEAR_SV_GetCGearPanelPos(const CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id );
 
+#if 0
 extern CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int y);
 extern BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y);
 extern BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type );
 extern void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type, BOOL icon, BOOL last);
 extern u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV );
+#endif
 
 extern void CGEAR_SV_SetPowerFlag( CGEAR_SAVEDATA* pSV, BOOL flag );
 extern BOOL CGEAR_SV_GetPowerFlag( const CGEAR_SAVEDATA* cpSV );

@@ -21,10 +21,6 @@
 #define CGEAR_SW_DECAL_SIZEY (15)
 #define CGEAR_SW_DECAL_SIZE_MAX (CGEAR_SW_DECAL_SIZEX*CGEAR_SW_DECAL_SIZEY*32)
 
-//#ifdef DEBUG_ONLY_FOR_iwasawa 
-#define CGEAR_SWAN_ON
-//#endif
-
 FS_EXTERN_OVERLAY(cgear_sw);
 
 typedef struct _C_GEAR_WORK  C_GEAR_WORK;

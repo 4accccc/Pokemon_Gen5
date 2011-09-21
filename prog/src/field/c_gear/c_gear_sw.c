@@ -95,9 +95,9 @@ typedef enum {
 } _CGEAR_SLEEP_STATE;
 
 typedef enum{
-  _CGEAR_NET_BIT_IR = (1 << CGEAR_PANELTYPE_IR),
-  _CGEAR_NET_BIT_WIRELESS = (1 << CGEAR_PANELTYPE_WIRELESS),
-  _CGEAR_NET_BIT_WIFI = (1 << CGEAR_PANELTYPE_WIFI),
+  _CGEAR_NET_BIT_IR = (1 << CGEAR_PANEL_IR),
+  _CGEAR_NET_BIT_WIRELESS = (1 << CGEAR_PANEL_WIRELESS),
+  _CGEAR_NET_BIT_WIFI = (1 << CGEAR_PANEL_WIFI),
 } _CGEAR_NET_BIT;
 
 //ビーコンからの通知フラグID各種
@@ -148,8 +148,8 @@ enum{
 #define CROSS_COLOR_ICON_MAX  (10)  //アイコン数
 
 //リング色変え処理用
-#define RING_NUM                ( C_GEAR_RING_NUM )
-#define RING_COLOR_MAX          ( C_GEAR_RING_COLOR_MAX+1 )    //リングカラー数+BOOT時カラー
+#define RING_NUM                ( CGEAR_RING_NUM )
+#define RING_COLOR_MAX          ( CGEAR_RING_COLOR_MAX+1 )    //リングカラー数+BOOT時カラー
 
 #define RING_COLOR_SET_NUM   (3)
 enum{
@@ -912,9 +912,11 @@ struct _C_GEAR_WORK {
   u16 palChangeType[ CGEAR_PANEL_MAX ];
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 
-  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];  //リングカラー
+  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];  //リングカラーパレットを保存しておくバッファ
 
+#if 0
   u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+#endif
   u8 select_panel;
   u8 select_count;
 
@@ -979,9 +981,6 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork);  // 初期入手の演出
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork);  // スリープ復帰の演出
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork);  // 復帰・初期　共通の演出
 static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork );
-
-
-static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type );
 
 // CGEARワーク初期化処理
 // CGEARワーク破棄処理
@@ -1291,9 +1290,6 @@ static BOOL _modeSelectAnimWait(C_GEAR_WORK* pWork)
 
 static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
 {
-  int x,y;
-  CGEAR_PANELTYPE_ENUM type;
-
   pWork->select_count = 0;
 }
 
@@ -2611,7 +2607,7 @@ static void _InputCheck( C_GEAR_WORK* pWork )
       u8 ring_id = ret-TOUCH_LABEL_RING0;
 
       PMSND_PlaySE( SEQ_SE_MSCL_07 );
-      pWork->ring_col[ring_id] = (++pWork->ring_col[ring_id]) % C_GEAR_RING_COLOR_MAX;
+      pWork->ring_col[ring_id] = (++pWork->ring_col[ring_id]) % CGEAR_RING_COLOR_MAX;
 
       CGEAR_SV_SetCGearRingColor( pWork->pCGSV, ring_id, pWork->ring_col[ring_id] );
 
@@ -3518,7 +3514,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 
   {
     int i;
-    for( i = 0;i < C_GEAR_RING_NUM; i++ ){
+    for( i = 0;i < RING_NUM; i++ ){
       pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i);
     }
   } 

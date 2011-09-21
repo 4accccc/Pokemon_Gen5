@@ -64,10 +64,6 @@
 #include "event_comm_error.h"
 #include "./c_gear/c_gear_sw.h"          //CGEAR_SW_IsDoEventWireless
 
-#ifndef CGEAR_SWAN_ON
-#include "./c_gear/c_gear.h"             //CGEAR_IsDoEventWireless
-#endif  //ifndef CGEAR_SWAN_ON
-
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_Å`
 #include "../../../resource/fldmapdata/script/hiden_def.h"
 #include "../../../resource/fldmapdata/script/tv_scr_def.h"  //for SCRID_TV
@@ -1493,7 +1489,6 @@ static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
     FSND_StopTVTRingTone( fsnd );
    
-#ifdef CGEAR_SWAN_ON
   }else if ( CGEAR_SW_IsDoEventWireless( cgear ) == FALSE ){
     
     // CÉMÉAÇ©ÇÁwirelessà»äOÇ÷ÇÃëJà⁄
@@ -1502,16 +1497,6 @@ static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
     CGEAR_SW_SetStopTVTRingTone( cgear );
     
   }
-#else
-  }else if ( CGEAR_IsDoEventWireless( cgear ) == FALSE ){
-    
-    // CÉMÉAÇ©ÇÁwirelessà»äOÇ÷ÇÃëJà⁄
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
-    FSND_StopTVTRingTone( fsnd );
-    CGEAR_SetStopTVTRingTone( cgear );
-    
-  }
-#endif
 }
 
 
