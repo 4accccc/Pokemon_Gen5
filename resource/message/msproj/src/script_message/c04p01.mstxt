@@ -547,10 +547,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>わっ　わたし　ちがい　ますから！▼
+……えっ？　●●●●●さん　ですか？▼
+すっ　すみません！▼
+わたし　かんちがい　してしまって…▼
+えっと……
+はじめまして……　ですね▼
+わたし　◎◎◎◎◎です▼
+イメージと　ちがって　いたので
+おどろいちゃ……　て　しまいました▼
+あはは……▼
+……　……　……
+……　……　……▼
+そっ　そうですね
+ふつうに　しゃべり　ますね▼
+ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:50:01" />
+				Time="2011-09-21T08:51:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -558,10 +572,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼</Text>
+			<Text>わっ　わたし　ちがい　ますから！▼
+……えっ？　●●●●●さん　ですか？▼
+すっ　すみません！▼
+わたし　かんちがい　してしまって…▼
+えっと……
+はじめまして……　ですね▼
+わたし　◎◎◎◎◎です▼
+イメージと　ちがって　いたので
+おどろいちゃ……　て　しまいました▼
+あはは……▼
+……　……　……
+……　……　……▼
+そっ　そうですね
+ふつうに　しゃべり　ますね▼
+ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:02" />
+				Time="2011-09-21T08:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -596,11 +624,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　てわたした！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　？？？？？に
+おとしものを　てわたした！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:49:25" />
+				Time="2011-09-21T08:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -608,11 +636,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　手渡した！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]はは　？？？？？に
+おとしものを　手渡した！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:49:32" />
+				Time="2011-09-21T08:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -648,11 +676,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばいばい！
-仮メッセージ▼</Text>
+			<Text>ありがとう　●●●●●くん▼
+なかなか　じかんが　とれなくて
+おそくなっちゃって　ごめんなさい▼
+でも　●●●●●くん　との
+おしゃべりは　たのしかった　から▽
+おそくなって　ラッキー　だったかな？▼
+あはは……▼
+あの……　よかったら
+これからも　はなし　あいてに▽
+なって　くれないかな？▼
+……　……　……
+……　……　……▼
+よかった……
+ことわられたら　どうしようかと▽
+はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:50:56" />
+				Time="2011-09-21T08:53:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -660,11 +701,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ばいばい！
-仮メッセージ▼</Text>
+			<Text>ありがとう　●●●●●くん▼
+なかなか　じかんが　とれなくて
+おそくなっちゃって　ごめんなさい▼
+でも　●●●●●くん　との
+おしゃべりは　たのしかった　から▽
+おそくなって　ラッキー　だったかな？▼
+あはは……▼
+あの……　よかったら
+これからも　はなし　あいてに▽
+なって　くれないかな？▼
+……　……　……
+……　……　……▼
+よかった……
+ことわられたら　どうしようかと▽
+はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:01" />
+				Time="2011-09-21T08:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -696,14 +750,175 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04p01_swidolw_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？が
+ライブキャスターに　とうろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:52:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？が
+ライブキャスターに　登録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ライブキャスターの
+　宛先にアイドル♀追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:55:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolw_02_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それと　もうひとつ
+おねがいが　あるの…▼
+わたし　ライブキャスターを
+●●●●●くんに　かけすぎちゃって▽
+マ……　じゃなくて▽
+しごとばの　せんぱいに▽
+しかられちゃったの……▼
+だから　●●●●●くん　から
+れんらくを　くれないかな？▽
+……　……　……
+……　……　……▼
+えっ　いいの？　よかった……▼
+●●●●●くんて　やさしいね▼
+ふふっ▼
+ふだん　だと　わたしは
+しごとばに　いることが　おおいから▽
+でんぱが　つながり　にくいかも▽
+しれないんだけど……▼
+こまめに　ライブキャスターを
+チェックして　れんらくを　くれると▽
+うれしい……　かな▼
+あはは……▼
+じゃあ　きょうは　これで　かえるね
+さようなら　●●●●●くん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:52:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それと　もうひとつ
+おねがいが　あるの…▼
+わたし　ライブキャスターを
+●●●●●くんに　かけすぎちゃって▽
+マ……　じゃなくて▽
+しごとばの　せんぱいに▽
+しかられちゃったの……▼
+だから　●●●●●くん　から
+れんらくを　くれないかな？▽
+……　……　……
+……　……　……▼
+えっ　いいの？　よかった……▼
+●●●●●くんて　やさしいね▼
+ふふっ▼
+ふだん　だと　わたしは
+しごとばに　いることが　おおいから▽
+でんぱが　つながり　にくいかも▽
+しれないんだけど……▼
+こまめに　ライブキャスターを
+チェックして　れんらくを　くれると▽
+うれしい……　かな▼
+あはは……▼
+じゃあ　きょうは　これで　かえるね
+さようなら　●●●●●くん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLW
+スワンアイドル女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:53:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04p01_swidolm_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>わっ　わたし　ちがい　ますから！▼
+……えっ？　●●●●●さん　ですか？▼
+すっ　すみません！▼
+わたし　かんちがい　してしまって…▼
+えっと……
+はじめまして……　ですね▼
+わたし　◎◎◎◎◎です▼
+イメージと　ちがって　いたので
+おどろいちゃ……　て　しまいました▼
+あはは……▼
+……　……　……
+……　……　……▼
+そっ　そうですね
+ふつうに　しゃべり　ますね▼
+ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -711,10 +926,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かりメッセージ▼</Text>
+			<Text>わっ　わたし　ちがい　ますから！▼
+……えっ？　●●●●●さん　ですか？▼
+すっ　すみません！▼
+わたし　かんちがい　してしまって…▼
+えっと……
+はじめまして……　ですね▼
+わたし　◎◎◎◎◎です▼
+イメージと　ちがって　いたので
+おどろいちゃ……　て　しまいました▼
+あはは……▼
+……　……　……
+……　……　……▼
+そっ　そうですね
+ふつうに　しゃべり　ますね▼
+ふふっ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -749,11 +978,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　てわたした！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　？？？？？に
+おとしものを　てわたした！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -761,11 +990,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　手渡した！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]はは　？？？？？に
+おとしものを　手渡した！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,11 +1030,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばいばい！
-仮メッセージ▼</Text>
+			<Text>ありがとう　●●●●●くん▼
+なかなか　じかんが　とれなくて
+おそくなっちゃって　ごめんなさい▼
+でも　●●●●●くん　との
+おしゃべりは　たのしかった　から▽
+おそくなって　ラッキー　だったかな？▼
+あはは……▼
+あの……　よかったら
+これからも　はなし　あいてに▽
+なって　くれないかな？▼
+……　……　……
+……　……　……▼
+よかった……
+ことわられたら　どうしようかと▽
+はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -813,11 +1055,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ばいばい！
-仮メッセージ▼</Text>
+			<Text>ありがとう　●●●●●くん▼
+なかなか　じかんが　とれなくて
+おそくなっちゃって　ごめんなさい▼
+でも　●●●●●くん　との
+おしゃべりは　たのしかった　から▽
+おそくなって　ラッキー　だったかな？▼
+あはは……▼
+あの……　よかったら
+これからも　はなし　あいてに▽
+なって　くれないかな？▼
+……　……　……
+……　……　……▼
+よかった……
+ことわられたら　どうしようかと▽
+はらはら　しちゃった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T11:51:06" />
+				Time="2011-09-21T08:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -839,6 +1094,153 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-10T11:50:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？が
+ライブキャスターに　とうろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？が
+ライブキャスターに　登録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ライブキャスターの
+　宛先にアイドル♂追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:55:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_swidolm_02_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それと　もうひとつ
+おねがいが　あるの…▼
+わたし　ライブキャスターを
+●●●●●くんに　かけすぎちゃって▽
+マ……　じゃなくて▽
+しごとばの　せんぱいに▽
+しかられちゃったの……▼
+だから　●●●●●くん　から
+れんらくを　くれないかな？▽
+……　……　……
+……　……　……▼
+えっ　いいの？　よかった……▼
+●●●●●くんて　やさしいね▼
+ふふっ▼
+ふだん　だと　わたしは
+しごとばに　いることが　おおいから▽
+でんぱが　つながり　にくいかも▽
+しれないんだけど……▼
+こまめに　ライブキャスターを
+チェックして　れんらくを　くれると▽
+うれしい……　かな▼
+あはは……▼
+じゃあ　きょうは　これで　かえるね
+さようなら　●●●●●くん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それと　もうひとつ
+おねがいが　あるの…▼
+わたし　ライブキャスターを
+●●●●●くんに　かけすぎちゃって▽
+マ……　じゃなくて▽
+しごとばの　せんぱいに▽
+しかられちゃったの……▼
+だから　●●●●●くん　から
+れんらくを　くれないかな？▽
+……　……　……
+……　……　……▼
+えっ　いいの？　よかった……▼
+●●●●●くんて　やさしいね▼
+ふふっ▼
+ふだん　だと　わたしは
+しごとばに　いることが　おおいから▽
+でんぱが　つながり　にくいかも▽
+しれないんだけど……▼
+こまめに　ライブキャスターを
+チェックして　れんらくを　くれると▽
+うれしい……　かな▼
+あはは……▼
+じゃあ　きょうは　これで　かえるね
+さようなら　●●●●●くん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWIDOLM
+スワンアイドル男</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-21T08:54:40" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
