@@ -225,12 +225,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたの　まえに　あらわれたのは
-ぐうぜんか　ひつぜんか……！▼
+きょうみぶかい　できごと……！▼
 それはさておき　あなたは！
 プラズマだんと　たたかうのですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T06:51:37" />
+				Time="2011-09-21T03:51:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -239,12 +239,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたの　前に　現われたのは
-偶然か　必然か……！▼
+興味深い　できごと……！▼
 それはさておき　あなたは！
 プラズマ団と　戦うのですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T06:51:46" />
+				Time="2011-09-21T03:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -356,13 +356,14 @@
 あなたと　あなたの　ポケモンは
 すきな　みちを　ゆけば　いいのです！▼
 あなたが　すべきことは
-ポケモンの　ちからを　はっきさせるべく▽
+ポケモンの　ちからを▼
+さいだいげんに　はっきさせるべく
 ポケモンの　ことを　おもうこと！▼
 よろしい！
 これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T06:57:06" />
+				Time="2011-09-21T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -375,13 +376,14 @@
 あなたと　あなたの　ポケモンは
 好きな　道を　行けば　いいのです！▼
 あなたが　すべきことは
-ポケモンの　力を　発揮させるべく▽
+ポケモンの　力を▼
+最大限に　発揮させるべく
 ポケモンの　ことを　想うこと！▼
 よろしい！
 これは　わたくしから　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T06:57:08" />
+				Time="2011-09-21T03:52:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -392,11 +394,11 @@
 			<Comment>♂
 ・いいえ選択時
 ・アイテム入手処理
-　No000「？？？」
+　No635「アクロママシーン」
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T06:57:21" />
+				Time="2011-09-21T03:53:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
