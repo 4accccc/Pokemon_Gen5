@@ -65,26 +65,38 @@ INIT_EVENT_START ev_init_c16
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
     _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   CASE 2 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
     _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   CASE 3 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
     _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   CASE 4 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
     _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   CASE 5 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_POS_CHANGE( C16_SECRETARY_01, 15, 0, 70, DIR_DOWN )
     _OBJ_POS_CHANGE( C16_SECRETARY_02, 14, 0, 70, DIR_DOWN )
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   CASE 6 THEN
     _OBJ_DEL(C16_OWNER_01)
     _OBJ_DEL(C16_SECRETARY_01)
     _OBJ_DEL(C16_SECRETARY_02)
+    _OBJ_DEL(C16_SECRETARY_03)
+    _OBJ_DEL(C16_SECRETARY_04)
   ENDSWITCH
 
 INIT_EVENT_END
@@ -129,8 +141,8 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_OBJ_ANIME( C16_OWNER_01, anm_mark_gyoe )
 
   //秘書下をむく
-	_OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_down )
-	_OBJ_ANIME( C16_SECRETARY_02, anm_first_dir_down )
+	_OBJ_ANIME( C16_SECRETARY_03, anm_first_dir_down )
+	_OBJ_ANIME( C16_SECRETARY_04, anm_first_dir_down )
 	_OBJ_ANIME_WAIT()
 
   //ちょっときみきみ
@@ -138,7 +150,7 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_MSGWIN_CLOSE()
 
   //プレイヤーこさせる
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 71, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 72, FORCE_TYPE_NOT, 8, DIR_LR )
 	_OBJ_ANIME_WAIT()
 
 	_BALLOONWIN_OBJMSG( msg_c16_owner_02, C16_OWNER_01 )
@@ -176,20 +188,29 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_BALLOONWIN_OBJMSG( msg_c16_owner_05, C16_OWNER_01 )
 	_MSGWIN_CLOSE()
 
-	//オーナー：！マーク
+	//秘書３：！マーク
 	_TIME_WAIT( 16 )
-	_OBJ_ANIME( C16_OWNER_01, anm_mark_gyoe )
+	_OBJ_ANIME( C16_SECRETARY_03, anm_mark_gyoe )
 	_OBJ_ANIME_WAIT()
 
-  //じかんが
+  //左向く
+	_OBJ_ANIME( C16_SECRETARY_03, anm_first_dir_left )
+  _OBJ_ANIME_WAIT()
+
+  //だんな様時間が
+	_BALLOONWIN_OBJMSG( msg_c16_secretary3_01, C16_SECRETARY_03 )
+	_MSGWIN_CLOSE()
+
+  //右向く
+	_OBJ_ANIME( C16_OWNER_01, anm_first_dir_right )
+  _OBJ_ANIME_WAIT()
+
+  //おっとそうだった
 	_BALLOONWIN_OBJMSG( msg_c16_owner_06, C16_OWNER_01 )
 	_MSGWIN_CLOSE()
 
-	//オーナー：右向く
-  //秘書１：左向く
-	_TIME_WAIT( 16 )
-	_OBJ_ANIME( C16_OWNER_01, anm_first_dir_right )
-	_OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_left )
+	//オーナー：上向く
+	_OBJ_ANIME( C16_OWNER_01, anm_first_dir_up )
 	_OBJ_ANIME_WAIT()
 
   //オーナー：頼んだよ
@@ -200,13 +221,24 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_BALLOONWIN_OBJMSG( msg_c16_secretary_01, C16_SECRETARY_01 )
 	_MSGWIN_CLOSE()
 
-  //秘書１退く
-  _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_makeaway_01 )
 
-  //オーナー去る
+  //オーナーたち去る
 	_OBJ_ANIME( C16_OWNER_01, anm_first_owner_goaway_01 )
+  _OBJ_ANIME( C16_SECRETARY_03, anm_first_sec03_goaway )
+  _OBJ_ANIME( C16_SECRETARY_04, anm_first_sec04_goaway )
 	_OBJ_ANIME_WAIT()
   _OBJ_DEL( C16_OWNER_01 )
+  _OBJ_DEL( C16_SECRETARY_03 )
+  _OBJ_DEL( C16_SECRETARY_04 )
+
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+
+  //秘書前に
+  _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_come )
+  _OBJ_ANIME( C16_SECRETARY_02, anm_first_sec02_come )
+	_OBJ_ANIME_WAIT()
 
   //始めまして
 	_BALLOONWIN_OBJMSG( msg_c16_secretary_02, C16_SECRETARY_01 )
@@ -258,14 +290,31 @@ _ANIME_LABEL	anm_first_dir_left
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//秘書１：退く
+//上向き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_first_sec01_makeaway_01
+_ANIME_LABEL	anm_first_dir_up
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書３：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec03_goaway
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-  _ANIME_DATA AC_WAIT_8F, 10
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書４：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec04_goaway
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_WAIT_8F, 1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -274,6 +323,21 @@ _ANIME_LABEL	anm_first_sec01_makeaway_01
 _ANIME_LABEL	anm_first_owner_goaway_01
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書１：くる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec01_come
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//秘書２：くる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_sec02_come
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 

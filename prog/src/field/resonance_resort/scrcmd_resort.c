@@ -39,7 +39,7 @@
 #define PEOPLE_TYPE_ASSERT2( p_people, type1, type2 ) GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type1 || RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type2 )
 
 static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field );
-static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_field );
+static u16 Resort_Scrcmd_GetMmdlID( SCRCMD_WORK *p_wk );
 static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 
@@ -1287,10 +1287,10 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
   switch( param )
   {
   case RESORT_NPC_DATA_OBJID:
-    *p_ret_wk = Resort_Scrcmd_GetMmdlID( p_field );
+    *p_ret_wk = Resort_Scrcmd_GetMmdlID( p_wk );
     break;
   case RESORT_NPC_DATA_INDEX:
-    *p_ret_wk = RESORT_NPC_MMDLID_TO_INDEX( Resort_Scrcmd_GetMmdlID( p_field ) );
+    *p_ret_wk = RESORT_NPC_MMDLID_TO_INDEX( Resort_Scrcmd_GetMmdlID( p_wk ) );
     break;
   case RESORT_NPC_DATA_MOUTHCOMM_Q:
     *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_QUESTION );
@@ -2380,21 +2380,12 @@ static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field )
  *	@return MMDLID
  */
 //-----------------------------------------------------------------------------
-static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_field )
+static u16 Resort_Scrcmd_GetMmdlID( SCRCMD_WORK *p_wk )
 {
-  s16 gx, gy, gz;
-  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_field );
-  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_field );
-  RESORT_PEOPLE *p_people;
-  MMDL* p_frontmmdl;
+  SCRIPT_WORK *p_sc = SCRCMD_WORK_GetScriptWork( p_wk );
+  MMDL *p_mmdl = SCRIPT_GetTargetObj( p_sc );
 
-  // 目の前のグリッド取得
-  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
-
-  // 目の前にいる人物を検索
-  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
-
-  return MMDL_GetOBJID( p_frontmmdl );
+  return MMDL_GetOBJID( p_mmdl );
 }
 
 //----------------------------------------------------------------------------

@@ -37,6 +37,7 @@ _EVENT_DATA    ev_resort_board
 _EVENT_DATA    ev_resort_tutorial_01
 _EVENT_DATA    ev_resort_tutorial_02
 _EVENT_DATA    ev_resort_celeb
+_EVENT_DATA    ev_reserve_resort_debug
 _EVENT_DATA_END
 
 //DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
@@ -283,17 +284,7 @@ sub_tourist_invitation:
   _SYSWIN_CLOSE()
 
   //フェードアウト
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-
-	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (1) 
-	_CAMERA_WAIT_MOVE()
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _CALL sub_camera_ret
 
   //選択肢終了
   $LWK_MENU_LOOP = FALSE
@@ -404,7 +395,7 @@ sub_recent_doing:
           $LWK_RECENT = $LWK_CNT
           $LWK_RECENT += RESORT_MSGID_RECENT_00
 
-          _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 1, 1 )
+          _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 1 )
           _RESORT_GET_MSGID( LWK_RECENT, LWK_MSGID )
       	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
           $LWK_CNT += 1
@@ -416,6 +407,7 @@ sub_recent_doing:
         ENDWHILE
 
       ELSE
+        _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 1 )
         _RESORT_GET_MSGID( RESORT_MSGID_RECORD_NONE, LWK_MSGID )
       	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
       ENDIF
@@ -597,8 +589,7 @@ sub_tourist_spot:
 	    _OBJ_ANIME( LWK_OBJID, anm_off_visible )
       _OBJ_ANIME_WAIT()
 
-	    _CAMERA_MOVE( 1957,0,888832,1015808,208896,2392064,1 )
- 	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+      _CALL sub_city_camera
       _BLACK_IN()
       _DISP_FADE_END_CHECK()
 
@@ -714,6 +705,36 @@ sub_setspot_camera:
 		  _CAMERA_MOVE( 2085,9600,626688,745472,323584,1085440,1 )
 	  ENDSWITCH
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+}
+_RET
+
+//==============================================================
+//サブルーチン：街用カメラセット
+//==============================================================
+sub_city_camera:
+{
+  _CAMERA_MOVE( 1957,0,888832,1015808,208896,2392064,1 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+}
+_RET
+
+//==============================================================
+//サブルーチン：カメラ戻る
+//==============================================================
+sub_camera_ret:
+{
+  //フェードアウト
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (1) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
 }
 _RET
 
@@ -946,16 +967,7 @@ sub_resident_merge:
     _SYSWIN_CLOSE()
 
     //フェードアウト
-	  _BLACK_OUT()
-	  _DISP_FADE_END_CHECK()
-	  //自機にカメラを戻す
-	  _CAMERA_DEF_MOVE (1) 
-	  _CAMERA_WAIT_MOVE()
-	  _CAMERA_BIND()		//カメラバインド
-	  _CAMERA_END()		//カメラ操作終了
-
-    _BLACK_IN()
-    _DISP_FADE_END_CHECK()
+    _CALL sub_camera_ret
 
     $LWK_MENU_LOOP = FALSE
   ELSE
@@ -1425,17 +1437,7 @@ sub_resident_service_effect:
   _SYSWIN_CLOSE()
 
   //フェード
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-
-  //自機にカメラを戻す
-	_CAMERA_DEF_MOVE (1) 
-	_CAMERA_WAIT_MOVE()
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-
-  _BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _CALL sub_camera_ret
 }
 _RET
 
@@ -1884,17 +1886,18 @@ EVENT_START    ev_resort_secretary_pc
   
   _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
 
-  //挨拶文
-  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 1 )
-  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 2 )
-  _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_WORD_PARAM_FRONT, 0, 3 )
-  _RESORT_GET_MSGID( RESORT_SECRETARY_GREET_MSGID, LWK_MSGID )
-	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
   $LWK_MENU_LOOP = TRUE
   WHILE $LWK_MENU_LOOP == TRUE
+
+    //挨拶文
+    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 1 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 2 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_WORD_PARAM_FRONT, 0, 3 )
+    _RESORT_GET_MSGID( RESORT_SECRETARY_GREET_MSGID, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
     //メニュー表示
     _CALL sub_secretary_pc_main_menu
 
@@ -2842,5 +2845,103 @@ sub_celeb_trade:
 	  _BALLOONWIN_CLOSE()
     _RET
   ENDIF
+}
+_RET
+
+
+/**************************************************************/
+/*            デバッグスクリプト                              */
+/**************************************************************/
+EVENT_START ev_reserve_resort_debug
+{
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_MENU_RET )
+	_BMPMENU_MAKE_LIST( resort_debug_03,   3 ) //チュートリアル終了
+	_BMPMENU_MAKE_LIST( resort_debug_00,   0 ) //建てたカメラ
+	_BMPMENU_MAKE_LIST( resort_debug_01,   1 ) //案内カメラ
+	_BMPMENU_MAKE_LIST( resort_debug_02,   2 ) //街カメラ
+	_BMPMENU_START()
+
+  SWITCH $LWK_MENU_RET
+  CASE 0 THEN
+    _CALL sub_debug_num_menu
+    
+    IF $LWK_MENU_RET != EV_WIN_B_CANCEL THEN
+      $LWK_INDEX = $LWK_MENU_RET
+
+	    _BLACK_OUT()
+	    _DISP_FADE_END_CHECK()
+		  _CAMERA_START()		//カメラ操作開始
+		  _CAMERA_PURGE()		//カメラのバインドを解く
+      _CALL sub_shopbuild_camera
+      _BLACK_IN()
+      _DISP_FADE_END_CHECK()
+
+      _AB_KEYWAIT()
+
+      _CALL sub_camera_ret
+    ENDIF
+
+  CASE 1 THEN
+    _CALL sub_debug_num_menu
+
+    IF $LWK_MENU_RET != EV_WIN_B_CANCEL THEN
+      $LWK_LIST_RET_IDX = $LWK_MENU_RET
+
+	    _BLACK_OUT()
+	    _DISP_FADE_END_CHECK()
+		  _CAMERA_START()		//カメラ操作開始
+		  _CAMERA_PURGE()		//カメラのバインドを解く
+      _CALL sub_setspot_camera
+      _BLACK_IN()
+      _DISP_FADE_END_CHECK()
+
+      _AB_KEYWAIT()
+
+      _CALL sub_camera_ret
+    ENDIF
+
+  CASE 2 THEN
+
+	  _BLACK_OUT()
+	  _DISP_FADE_END_CHECK()
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+    _CALL sub_city_camera
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+    _AB_KEYWAIT()
+
+    _CALL sub_camera_ret
+  CASE 3 THEN
+    $WK_SCENE_C16_TUTORIAL_SEQ  = 6
+    $WK_SCENE_C16_TUTORIAL_01   = 1
+    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
+  DEFAULT
+    $LWK_MENU_LOOP = FALSE
+  ENDSWITCH
+
+  ENDWHILE
+}
+EVENT_END
+
+//==============================================================
+//サブルーチン：数値メニュー
+//==============================================================
+sub_debug_num_menu:
+{
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_MENU_RET )
+	_BMPMENU_MAKE_LIST( resort_debug_04,   0 ) //1
+	_BMPMENU_MAKE_LIST( resort_debug_05,   1 ) //2
+	_BMPMENU_MAKE_LIST( resort_debug_06,   2 ) //3
+	_BMPMENU_MAKE_LIST( resort_debug_07,   3 ) //4
+	_BMPMENU_MAKE_LIST( resort_debug_08,   4 ) //5
+	_BMPMENU_MAKE_LIST( resort_debug_09,   5 ) //6
+	_BMPMENU_MAKE_LIST( resort_debug_10,   6 ) //7
+	_BMPMENU_MAKE_LIST( resort_debug_11,   7 ) //8
+	_BMPMENU_START()
 }
 _RET

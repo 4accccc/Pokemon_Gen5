@@ -15,6 +15,8 @@
 #define C16_OWNER_01                       0
 #define C16_SECRETARY_01                   1
 #define C16_SECRETARY_02                   2
+#define C16_SECRETARY_03                   3
+#define C16_SECRETARY_04                   4
 
 #endif //ZONE_C16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

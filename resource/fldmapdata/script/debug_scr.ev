@@ -46,6 +46,8 @@
   .include	"wbt_hall_def.h"
 
   .include  "tv_scr_def.h"
+  .include  "resort_scr_def.h"
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -1413,11 +1415,44 @@ EVENT_START ev_debug_onoue
 EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*              なぎはし                                      */
 /**************************************************************/
 EVENT_START   ev_debug_nagihashi
-  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+{
+  DEFINE_LOCAL LWK_RET
+
+  $SCWK_TEMP0 = 0
+
+	WHILE $SCWK_TEMP0 == 0
+
+    //メインメニュー
+    _CALL sub_nagi_main_menu
+
+	  SWITCH $SCWK_ANSWER
+	  CASE 0 THEN //JA
+      _GET_ZONE_ID( LWK_RET )
+      IF $LWK_RET == ZONE_ID_C16 THEN
+        _RESERVE_SCRIPT( SCRID_RESERVE_RESORT_DEBUG )
+        $SCWK_TEMP0 = 1
+      ENDIF
+    DEFAULT
+      $SCWK_TEMP0 = 1
+	  ENDSWITCH
+
+  ENDWHILE
+}
 EVENT_END
+
+//--------------------------------------------------------------
+//               なぎはしメインメニュー
+//--------------------------------------------------------------
+sub_nagi_main_menu:
+{
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_nagi_00,   0 ) //JA
+	_BMPMENU_START()
+}
+_RET
 
 /************************************************************/
 /*				一般向けデバッグメニュー					*/

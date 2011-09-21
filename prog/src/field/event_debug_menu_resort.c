@@ -40,6 +40,9 @@
 #include "resonance_resort/resort_shop.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "resonance_resort/resort_debug_inline.h"
+#include "script.h"
+
+#include "../../../resource/fldmapdata/script/resort_scr_def.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -63,23 +66,14 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_DesignerSetup2( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_DesignerSetup3( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup1, GFL_OVERLAY_BLANK_ID },
-  /*
-  { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup2, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup3, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup4, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_41, debugMenuCallProc_DesignerSetup5, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_42, debugMenuCallProc_DesignerSetup6, GFL_OVERLAY_BLANK_ID },*/
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_44, debugMenuCallProc_Script, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_02, debugMenuCallProc_SetProxy, GFL_OVERLAY_BLANK_ID },
@@ -493,8 +487,8 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
       Debug_Resort_SetRecv( p_recv, p_wk->gdata );
-
-      RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 12 );
+  
+      RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 1+GFL_STD_MtRand(RESORT_SHOP_ID_MAX-1) );
 
       RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
     }
@@ -573,115 +567,13 @@ static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return FALSE;
 }
-static BOOL debugMenuCallProc_DesignerSetup2( DEBUG_MENU_EVENT_WORK *p_wk )
+static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
-  debugMenuCallProc_AllResident( p_wk );
-
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
   {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    int i;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 13  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
-    }
+    SCRIPT_ChangeScript( p_wk->gmEvent, SCRID_RESERVE_RESORT_DEBUG, NULL, p_wk->heapID );
   }
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_DesignerSetup3( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
-  debugMenuCallProc_AllResident( p_wk );
-
-  {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    int i;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 14  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
-    }
-  }
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_DesignerSetup4( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
-  debugMenuCallProc_AllResident( p_wk );
-
-  {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    int i;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 36  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
-    }
-  }
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_DesignerSetup5( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
-  debugMenuCallProc_AllResident( p_wk );
-
-  {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    int i;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 37  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
-    }
-  }
-
-  return FALSE;
-}
-static BOOL debugMenuCallProc_DesignerSetup6( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  //‚Ü‚¸Zl‚ð‘S•”‚¢‚ê‚é
-  debugMenuCallProc_AllResident( p_wk );
-
-  {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
-    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    int i;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
-      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, 38  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
-    }
-  }
-
-  return FALSE;
+  return TRUE;
 }
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )

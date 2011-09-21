@@ -150,10 +150,10 @@ typedef enum
 //=====================================
 typedef u16 RESORT_DATE;
 
-#define RESORT_DATE_GET_YEAR( x )   ((x>>9)&7)
-#define RESORT_DATE_GET_MONTH( x )  ((x>>5)&4)
-#define RESORT_DATE_GET_DAY( x )    ((x)&5)
-#define RESORT_DATE_SET( y,m,d)     ((y&7)<<9|(m&4)<<5|(d&5))
+#define RESORT_DATE_GET_YEAR( x )   ((x>>9)&127)
+#define RESORT_DATE_GET_MONTH( x )  ((x>>5)&15)
+#define RESORT_DATE_GET_DAY( x )    ((x)&31)
+#define RESORT_DATE_SET( y,m,d)     ((y&127)<<9|(m&15)<<5|(d&31))
 
 extern RESORT_DATE RESORT_DATA_RtcToDate( const RTCDate *cp_date );
 extern void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date );
