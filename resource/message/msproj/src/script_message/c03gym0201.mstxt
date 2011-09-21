@@ -6,14 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まってたよー！▼
-ボクの　むしポケモンが　きみと
-たたかいたいって　さわいでさ▼
+			<Text>さっきは　おつかれー▼
+なんかさ　さっきから　ボクの
+むしポケモンが　さわいでるんだよね▽
+きみと　たたかいたい　って！▼
 ではでは
-さっそくだけど　しょうぶ　だね▼</Text>
+さっそく　しょうぶ　だね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T09:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>待ってたよー！▼
-ボクの　むしポケモンが　きみと
-戦いたいって　騒いでさ▼
+			<Text>さっきは　おつかれー▼
+なんかさ　さっきから　ボクの
+むしポケモンが　騒いでるんだよね▽
+きみと　戦いたい　って！▼
 ではでは
-早速だけど　勝負だね▼</Text>
+さっそく　勝負だね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T09:33:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38,10 +40,10 @@
 			Language="JPN">
 			<Comment>♂
 ・戦闘前メッセージ
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:57:40" />
+				Time="2011-09-21T09:34:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64,15 +66,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あうう
-まけちゃったよ……▼
-それにしても　きみ
+			<Text>あうう……　きみ
 すっごく　つよいんだねえ▼
-この　ビートルバッジ！
-きみに　にあうと　いいね！▼</Text>
+まけたのも
+なっとく　かなあ……▼
+そうだ！　この　ビートルバッジ！
+きみに　にあうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:05:03" />
+				Time="2011-09-21T09:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,15 +82,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あうう
-負けちゃったよ……▼
-それにしても　きみ
+			<Text>あうう……　きみ
 すっごく　強いんだねえ▼
-この　ビートルバッジ！
-きみに　似合うと　いいね！▼</Text>
+負けたのも
+納得　かなあ……▼
+そうだ！　この　ビートルバッジ！
+きみに　似合うよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:05:12" />
+				Time="2011-09-21T09:35:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,10 +100,10 @@
 			Language="JPN">
 			<Comment>♂
 ・戦闘後メッセージ
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:57:41" />
+				Time="2011-09-21T09:39:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -174,8 +176,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　ビートルバッジの
-かっこよさ　わかるでしょ！▼
+			<Text>むう！　そうぞういじょうに
+きみに　にあってるね▽
+その　ビートルバッジ！▼
 それに　バッジを　３コ　もっていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
@@ -183,7 +186,7 @@
 これも　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:05:28" />
+				Time="2011-09-21T09:38:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -191,8 +194,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　ビートルバッジの
-かっこよさ　わかるでしょ！▼
+			<Text>むう！　想像以上に
+きみに　似合ってるね▽
+その　ビートルバッジ！▼
 それに　バッジを　３個　持っていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
@@ -200,7 +204,7 @@
 これも　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:05:31" />
+				Time="2011-09-21T09:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -210,10 +214,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No403「むしのていこう」</Comment>
+　No403「むしのていこう」
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T09:39:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -268,10 +273,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理後
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:57:43" />
+				Time="2011-09-21T09:39:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -335,11 +340,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・leader_05表示後
-※swanでメッセージ変更予定</Comment>
+・leader_05表示後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:57:45" />
+				Time="2011-09-21T09:46:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -362,15 +366,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『やあ▼
-さいきんは　ポケモンを　そだて……
-そだてた　ポケモンを　モチーフに▽
-えを　かいて……の　くりかえし▼
-やりたいことが　あるのは
-なんて　ステキな　ことなんだろーなー</Text>
+			<Text>アーティ『やあ
+さいきん　どう？▼
+ボクはね　ポケモンを　モチーフに
+さくひんを　つくってるよ▽
+って　ずっと　そうなんだけどね▼
+ときどき　につまっちゃうけれど
+ポケモンを　みていたらさ▼
+かきたい　きもち　どんどん　あふれて
+とまらなく　なっちゃうねー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T09:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -378,15 +385,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ『やあ▼
-最近は　ポケモンを　育てて……
-育てた　ポケモンを　モチーフに▽
-絵を　描いて……の　繰り返し▼
-やりたいことが　あるのは
-なんて　ステキな　ことなんだろーなー</Text>
+			<Text>アーティ『やあ
+最近　どう？▼
+ボクはね　ポケモンを　モチーフに
+作品を　創ってるよ▽
+って　ずっと　そうなんだけどね▼
+ときどき　煮詰まっちゃうけれど
+ポケモンを　みていたらさ▼
+描きたい　気持ち　どんどん　あふれて
+とまらなく　なっちゃうねー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-21T09:45:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -396,10 +406,10 @@
 			Language="JPN">
 			<Comment>♂
 ・クリア後
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:57:47" />
+				Time="2011-09-21T09:42:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
