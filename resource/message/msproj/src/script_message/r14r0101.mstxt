@@ -130,10 +130,10 @@
 			Language="JPN">
 			<Comment>♀
 ・Black2ver
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:21:14" />
+				Time="2011-09-21T03:31:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -182,10 +182,10 @@
 			Language="JPN">
 			<Comment>♀
 ・White2ver
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:21:15" />
+				Time="2011-09-21T03:31:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -215,11 +215,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ギラギラした　ブラックシティでは
-ギラギラした　アレが　かえるぜ</Text>
+			<Text>ブラックシティの　ような
+とかいで　くらしていると▽
+いなかにも　あこがれるな▼
+ないものねだり　とは
+わかっているけどな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:22:39" />
+				Time="2011-09-21T03:33:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,11 +230,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ギラギラした　ブラックシティでは
-ギラギラした　アレが　買えるぜ</Text>
+			<Text>ブラックシティの　ような
+都会で　暮らしていると▽
+田舎にも　あこがれるな▼
+ないものねだり　とは
+わかっているけどな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:22:46" />
+				Time="2011-09-21T03:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -241,11 +247,10 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-※仮メッセージ
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:22:55" />
+				Time="2011-09-21T03:34:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -274,11 +279,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストは
-ポケモンと　くらす　ひとばかりさ</Text>
+			<Text>ホワイトフォレストの　ような
+いなかで　くらしていると▽
+とかいにも　あこがれるな▼
+ないものねだり　とは
+わかっているけどな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:23:15" />
+				Time="2011-09-21T03:34:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -286,11 +294,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストは
-ポケモンと　暮らす　人ばかりさ</Text>
+			<Text>ホワイトフォレストの　ような
+田舎で　暮らしていると▽
+都会にも　あこがれるな▼
+ないものねだり　とは
+わかっているけどな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:23:24" />
+				Time="2011-09-21T03:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -300,11 +311,10 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-※仮メッセージ
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:22:56" />
+				Time="2011-09-21T03:34:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
