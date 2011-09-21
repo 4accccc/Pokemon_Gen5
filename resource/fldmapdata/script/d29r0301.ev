@@ -66,13 +66,13 @@ EVENT_START		ev_d29r0301_d29r0101_workman2_01
 		//フラグセット
 		//========================================/
 		
-		_FLAG_SET(FV_D29R0301_WORKMAN2_04)
-		_FLAG_RESET(FV_D29R0101_WORKMAN2_02)
+		_FLAG_SET(FV_D29R0301_WORKMAN2_03)
+		_FLAG_RESET(FV_D29R0101_WORKMAN2_03)
 		
 		//========================================/
 		
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0101, 24, 14, DIR_LEFT )
+		_MAP_CHANGE( ZONE_ID_D29R0101, 16, 7, DIR_DOWN )
 	
 	//いいえの場合
 	ELSE
@@ -115,13 +115,13 @@ EVENT_START		ev_d29r0301_d29r0101_workman2_02
 		//フラグセット
 		//========================================/
 		
-		_FLAG_SET(FV_D29R0301_WORKMAN2_03)
-		_FLAG_RESET(FV_D29R0101_WORKMAN2_03)
+		_FLAG_SET(FV_D29R0301_WORKMAN2_04)
+		_FLAG_RESET(FV_D29R0101_WORKMAN2_02)
 		
 		//========================================/
 		
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0101, 16, 7, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_D29R0101, 24, 14, DIR_LEFT )
 	
 	//いいえの場合
 	ELSE

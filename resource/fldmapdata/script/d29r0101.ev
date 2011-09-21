@@ -255,13 +255,13 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		//フラグセット
 		//========================================/
 		
-		_FLAG_SET(FV_D29R0101_WORKMAN2_02)
-		_FLAG_RESET(FV_D29R0301_WORKMAN2_04)
+		_FLAG_SET(FV_D29R0101_WORKMAN2_03)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_03)
 		
 		//========================================/
 		
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0301, 56, 84, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_D29R0301, 19, 35, DIR_DOWN )
 	
 	//いいえの場合
 	ELSE
@@ -315,13 +315,13 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		//フラグセット
 		//========================================/
 		
-		_FLAG_SET(FV_D29R0101_WORKMAN2_03)
-		_FLAG_RESET(FV_D29R0301_WORKMAN2_03)
+		_FLAG_SET(FV_D29R0101_WORKMAN2_02)
+		_FLAG_RESET(FV_D29R0301_WORKMAN2_04)
 		
 		//========================================/
 		
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0301, 19, 35, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_D29R0301, 56, 84, DIR_DOWN )
 	
 	//いいえの場合
 	ELSE
