@@ -501,9 +501,7 @@ static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 static BOOL CheckChampionNews( const GATEWORK* work ); // チャンピオンニュースがあるかどうかを判定する
 static BOOL CheckChampionDataExist( const GATEWORK* work ); // チャンピオンデータが存在するかどうかを判定する
 static BOOL CheckFirstClearDataExist( const GATEWORK* work ); //「はじめてのクリア」データが存在するかどうかを判定する
-static BOOL CheckDendouDataExist( const GATEWORK* work ); //「殿堂入り」データが存在するかどうかを判定する
 static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, int* destMonsNum ); //「殿堂入り」データのモンスター番号を取得する
-static void GetChampMonsNo_byFirstClear( const GATEWORK* work, int* destMonsNo, int* destMonsNum ); //「はじめてクリア」データのモンスター番号を取得する
 // 臨時ニュース
 static void LoadSpNewsData( GATEWORK* work ); // 臨時ニュースデータを読み込む
 static void DeleteSpNewsData( GATEWORK* work ); // 臨時ニュースデータを破棄する
@@ -1075,8 +1073,7 @@ static void AddNewsEntryData( GATEWORK* work, NEWS_TYPE newsType, u32 spNewsFlag
 static BOOL CheckChampionNews( const GATEWORK* work )
 { 
   //「はじめてクリア」or「殿堂入り」データが存在する
-  if( (CheckFirstClearDataExist( work ) == TRUE) ||
-      (CheckDendouDataExist( work ) == TRUE) )
+  if( CheckFirstClearDataExist( work ) == TRUE)
   {
     // 表示の残り時間がある
     if( 0 < work->champNewsMinutes ) { 
@@ -1114,31 +1111,6 @@ static BOOL CheckFirstClearDataExist( const GATEWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 「殿堂入り」データが存在するかどうかを判定する
- *
- * @param work
- *
- * @return 「殿堂入り」のデータが存在する場合 TRUE
- *          そうでない場合 FALSE
- */
-//------------------------------------------------------------------------------------------ 
-static BOOL CheckDendouDataExist( const GATEWORK* work )
-{
-  EVENTWORK* evwork;
-
-  evwork  = GAMEDATA_GetEventWork( work->gameData );
-
-  // チャンピオンに勝利フラグが立っている
-  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_CHAMPION_WIN ) == TRUE ) {
-    return TRUE;
-  }
-  else {
-    return FALSE;
-  }
-}
-
-//------------------------------------------------------------------------------------------
-/**
  * @brief 「殿堂入り」データのモンスター番号を取得する
  *
  * @param work
@@ -1152,9 +1124,6 @@ static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, 
   LOAD_RESULT result;
   DENDOU_SAVEDATA* dendouData;
   int i;
-
-  // データが存在しない
-  GF_ASSERT( CheckDendouDataExist( work ) == TRUE );
 
   *destMonsNum = 0;
 
@@ -1199,40 +1168,6 @@ static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, 
 
   // セーブデータ解放
   SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief「はじめてクリア」データのモンスター番号を取得する
- *
- * @param work
- * @param destMonsNo  モンスター番号を格納する配列
- * @param destMonsNum 取得したモンスター番号の数の格納先
- */
-//------------------------------------------------------------------------------------------
-static void GetChampMonsNo_byFirstClear( const GATEWORK* work, int* destMonsNo, int* destMonsNum )
-{
-  SAVE_CONTROL_WORK* save;
-  LOAD_RESULT result;
-  DENDOU_RECORD* record;
-  int i;
-
-  // データが存在しない
-  GF_ASSERT( CheckFirstClearDataExist(work) == TRUE );
-
-  record = GAMEDATA_GetDendouRecord( work->gameData );
-  *destMonsNum = DendouRecord_GetPokemonCount( record );
-
-  for( i=0; i<*destMonsNum; i++ )
-  {
-    DENDOU_POKEMON_DATA pokeData;
-    pokeData.nickname = GFL_STR_CreateBuffer( 64, work->heapID );
-    pokeData.oyaname = GFL_STR_CreateBuffer( 64, work->heapID );
-    DendouRecord_GetPokemonData( record, i, &pokeData );
-    destMonsNo[i] = pokeData.monsno;
-    GFL_STR_DeleteBuffer( pokeData.nickname );
-    GFL_STR_DeleteBuffer( pokeData.oyaname );
-  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -1934,13 +1869,7 @@ static void AddNews_CHAMPION( GATEWORK* work )
   wordset = WORDSET_Create( heap_id );
 
   //「殿堂入り」データがあれば, 参照する
-  if( CheckDendouDataExist( work ) ) {
-    GetChampMonsNo_byDendouData( work, monsno, &monsnum );
-  }
-  //「殿堂入り」データがなければ,「はじめてクリア」データを参照する
-  else {
-    GetChampMonsNo_byFirstClear( work, monsno, &monsnum );
-  }
+  GetChampMonsNo_byDendouData( work, monsno, &monsnum );
 
   // 使用するメッセージを選択
   switch( monsnum ) {
