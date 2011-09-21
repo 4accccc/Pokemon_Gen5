@@ -27,10 +27,9 @@
 #ifndef ZONE_C02_EVB_H
 #define ZONE_C02_EVB_H
 
-#define C02_HIDE_ITEM_01                  0
+#define HIDE_ITEM_001                     0
 #define BG_C02_SIGN1_01                   1
 #define BG_C02_SIGN2_01                   2
 #define BG_C02_SIGN3_01                   3
-#define C02_HIDE_ITEM_02                  4
 
 #endif //ZONE_C02_EVB_H

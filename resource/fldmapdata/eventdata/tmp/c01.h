@@ -48,5 +48,6 @@
 #define BGID_C01_SIGN3_01                 2
 #define BGID_C01_GYMSIGN_01               3
 #define BGID_C01_GYMSIGN_02               4
+#define HIDE_ITEM_000                     5
 
 #endif //ZONE_C01_EVB_H

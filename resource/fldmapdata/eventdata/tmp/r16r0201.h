@@ -23,8 +23,9 @@
 #ifndef ZONE_R16R0201_EVB_H
 #define ZONE_R16R0201_EVB_H
 
-#define R16R0201_HIDE_ITEM_01             0
+#define HIDE_ITEM_184                     0
 #define BGID_R16R0201_ANIMAL_TRAIL_01_1   1
 #define BGID_R16R0201_ANIMAL_TRAIL_01_2   2
+#define HIDE_ITEM_185                     3
 
 #endif //ZONE_R16R0201_EVB_H

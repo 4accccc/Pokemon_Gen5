@@ -63,5 +63,7 @@
 #define BG_C05_DUMMY_FES_18              23
 #define BG_C05_DUMMY_FES_19              24
 #define BG_C05_DUMMY_FES_20              25
+#define HIDE_ITEM_004                    26
+#define HIDE_ITEM_005                    27
 
 #endif //ZONE_C05_EVB_H

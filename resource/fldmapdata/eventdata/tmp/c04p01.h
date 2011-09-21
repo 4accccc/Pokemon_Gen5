@@ -33,5 +33,6 @@
 #define BG_C04P01_DUMMY_FES_10           10
 #define BG_C04P01_DUMMY_FES_11           11
 #define BG_C04P01_DUMMY_FES_12           12
+#define HIDE_ITEM_003                    13
 
 #endif //ZONE_C04P01_EVB_H
