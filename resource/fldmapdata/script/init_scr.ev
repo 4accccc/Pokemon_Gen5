@@ -319,6 +319,10 @@ init_flags:
   _FLAG_SET( FV_WC10_TRAINER_01 )
   _FLAG_SET( FV_WC10_TRAINER_02 )
 
+  //C05R0501:ホドモエ・ポケモンハウスのライバル
+  _FLAG_SET( FV_C05R0501_SWRIVAL_01 )
+
+
 }
 _RET
 

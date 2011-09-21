@@ -13,6 +13,7 @@
   .include  "c05r0501.h"
   
   //@author Mizuguchi_Mai
+  //@author fujimura_souichirou（クリア後のライバル戦）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -34,6 +35,7 @@ _EVENT_DATA    ev_c05r0501_poke41_01
 _EVENT_DATA    ev_c05r0501_poke38_01
 _EVENT_DATA    ev_c05r0501_poke17_01
 _EVENT_DATA    ev_c05r0501_poke22_01
+_EVENT_DATA    ev_c05r0501_swrival_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -364,20 +366,134 @@ EVENT_END
 /* 			POKE17：話しかけ（ミネズミ			  */
 /**************************************************************/
 EVENT_START		ev_c05r0501_poke17_01
-  
   _EASY_TALK_POKEVOICE( MONSNO_537, msg_c05r0501_poke4_01 )
-  
 EVENT_END
-
 
 /**************************************************************/
 /* 			POKE22：話しかけ（ゾロア）			  */
 /**************************************************************/
 EVENT_START		ev_c05r0501_poke22_01
-  
   _EASY_TALK_POKEVOICE( MONSNO_529, msg_c05r0501_poke5_01 )
-  
 EVENT_END
+
+/**************************************************************/
+/*  ライバル：話しかけ（クリア後に出現／１日１回ライバル戦）  */
+/**************************************************************/
+EVENT_START   ev_c05r0501_swrival_01
+
+  _TALK_OBJ_START()
+
+  //プライヤー名代入
+  _PLAYER_NAME( 0 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //初回会話
+  IF FLAG_OFF( FE_C05R0501_SWRIVAL_TALK ) THEN
+
+    //========================================//
+    //初回会話フラグON
+    _FLAG_SET( FE_C05R0501_SWRIVAL_TALK )
+    //========================================//
+
+    //ライバル：なんだよ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_01 )
+
+    //ライバルと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ライバル戦闘へ
+      _CALL ev_c05r0501_swrival_btl
+
+    ELSE
+
+      //ライバル：それでも　いいけど
+      _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //会話２回目以降
+  ELSE
+
+    //ライバル戦前（１日１回）
+    IF FLAG_OFF( TMFLG_C05R0501_SWRIVAL_BTL ) THEN
+
+      //ライバル：なあ　《主人公》
+      _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_02 )
+
+      //ライバルと戦う？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //ライバル戦闘へ
+        _CALL ev_c05r0501_swrival_btl
+
+      ELSE
+
+        //ライバル：それでも　いいけど
+        _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //ライバル戦後
+    ELSE
+
+      //ライバル：そうなんだよな
+      _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+//ライバル戦
+ev_c05r0501_swrival_btl:
+
+  //ライバル：いくぜッ！！▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_03 )
+  _MSGWIN_CLOSE()
+
+  //ライバル戦呼び出し　最初の３匹によって分岐
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_22, 0 )
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_23, 0 )
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_24, 0 )
+  ENDIF
+
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+
+  //ライバル：そうなんだよな
+  _BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_swrival_end_05 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //戦闘終了（１日経過すると復活）
+  _FLAG_SET( TMFLG_C05R0501_SWRIVAL_BTL )
+  //========================================//
+
+_RET
 
 
 //--------------------------------------------------------------------
@@ -450,3 +566,5 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
+
+

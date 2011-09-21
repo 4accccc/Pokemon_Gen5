@@ -536,6 +536,8 @@ EVENT_START   ev_t04_swrival_01
       _FLAG_SET ( FE_T04_SWRIVAL_WIN_01 )
       //ライバルを非表示
       _FLAG_SET ( FV_T04_SWRIVAL_01 )
+      //ホドモエ・ポケモンハウスのライバルを表示
+      _FLAG_RESET ( FV_C05R0501_SWRIVAL_01 )
       //==================================//
 
     ELSE
@@ -617,6 +619,8 @@ EVENT_START   ev_t04_swrival_01
       _FLAG_SET ( FE_T04_SWRIVAL_WIN_01 )
       //ライバルを非表示
       _FLAG_SET ( FV_T04_SWRIVAL_01 )
+      //ホドモエ・ポケモンハウスのライバルを表示
+      _FLAG_RESET ( FV_C05R0501_SWRIVAL_01 )
       //==================================//
 
     ELSE
