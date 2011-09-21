@@ -47,10 +47,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーん　こまったな……
-わたしも　いそがしいし……▼</Text>
+ぼくも　いそがしいし……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:32:50" />
+				Time="2011-09-21T14:23:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -59,10 +59,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん　こまったな……
-わたしも　いそがしいし……▼</Text>
+ぼくも　いそがしいし……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:32:58" />
+				Time="2011-09-21T14:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -132,25 +132,25 @@
 とはいっても　ごらんのように
 いまは　なにもない　ただの　とおりだよ▼
 もうしおくれたね▼
-わたしは　このジョインアベニューの
+ぼくは　このジョインアベニューの
 オーナーなんだ▼
-わたしの　ゆめは
-ここを　せかいいち　にぎわいがある▽
-まちに　すること！▼
-……でも　ここを　かんりするものが
+ぼくの　ゆめはね
+たくさん　ひとで　にぎわう　まちを▽
+せかいじゅうに　つくること　なんだ▼
+……でも　ここを　かんりする　ひとが
 これなくなって　こまっているんだよね▼
+……　　……　　……　　……
+……　　……　　……　　……▼
+ビビっと　きた！▼
 きみは　みたところ　トレーナーで
 かくちを　めぐっているね▼
 いろんな　ひとと　であえる　たちばの
 じんぶつに　たのみたいんだ▼
-……　　……　　……　　……
-……　　……　　……　　……▼
-わし　ビビっと　きた！▼
-どうだね？
-きみ　やってみないかい？</Text>
+どう？
+きみ　やってみない？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:41:51" />
+				Time="2011-09-21T15:55:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -162,25 +162,25 @@
 とはいっても　ごらんのように
 いまは　なにもない　ただの　とおりだよ▼
 もうしおくれたね▼
-わたしは　このジョインアベニューの
+ぼくは　このジョインアベニューの
 オーナーなんだ▼
-わたしの　ゆめは
-ここを　せかいいち　にぎわいがある▽
-まちに　すること！▼
-……でも　ここを　かんりするものが
+ぼくの　ゆめはね
+たくさん　ひとで　にぎわう　まちを▽
+せかいじゅうに　つくること　なんだ▼
+……でも　ここを　かんりする　ひとが
 これなくなって　こまっているんだよね▼
+……　　……　　……　　……
+……　　……　　……　　……▼
+ビビっと　きた！▼
 きみは　みたところ　トレーナーで
 かくちを　めぐっているね▼
 いろんな　ひとと　であえる　たちばの
 じんぶつに　たのみたいんだ▼
-……　　……　　……　　……
-……　　……　　……　　……▼
-わし　ビビっと　きた！▼
-どうだね？
-きみ　やってみないかい？</Text>
+どう？
+きみ　やってみない？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:41:54" />
+				Time="2011-09-21T15:55:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -208,11 +208,11 @@
 			Language="JPN">
 			<Text>ありがとう！▼
 じゃあ　きみという　にんげんを
-おしえてくれ▽
+おしえてよ▼
 きみの　「くちぐせ」は？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:34:33" />
+				Time="2011-09-21T15:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -222,11 +222,11 @@
 			Language="JPN_KANJI">
 			<Text>ありがとう！▼
 じゃあ　きみという　にんげんを
-おしえてくれ▽
+おしえてよ▼
 きみの　「くちぐせ」は？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:31:40" />
+				Time="2011-09-21T15:13:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -340,12 +340,13 @@
 			Language="JPN">
 			<Text>[Name:ResortGreet ]
 [Name:ResortGreet Idx="1" ]　▼
-……うむ！！▼
-きみは　わたしが　みこんだ　とおりの
-にんげん　だな！▼</Text>
+……うん！！▼
+おもった　とおりだ！
+きもしか　いない！▽
+きみ　いがいに　ありえない！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:13:57" />
+				Time="2011-09-21T16:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -355,12 +356,13 @@
 			Language="JPN_KANJI">
 			<Text>[Name:ResortGreet ]
 [Name:ResortGreet Idx="1" ]　▼
-……うむ！！▼
-きみは　わたしが　みこんだ　とおりの
-にんげん　だな！▼</Text>
+……うん！！▼
+おもった　とおりだ！
+きもしか　いない！▽
+きみ　いがいに　ありえない！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:14:06" />
+				Time="2011-09-21T16:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -430,11 +432,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひしょ　たちよ
-あとのことは　まかせたぞ▼</Text>
+			<Text>ひしょ　たちよ▼
+そういう　ことだから
+あとのことは　よろしくね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:59:59" />
+				Time="2011-09-21T16:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -442,11 +445,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひしょ　たちよ
-あとのことは　まかせたぞ▼</Text>
+			<Text>ひしょ　たちよ▼
+そういう　ことだから
+あとのことは　よろしくね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:00:05" />
+				Time="2011-09-21T16:12:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -556,14 +560,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かしこまりました
-[Name:ResortMayor ]！▼
-それでは
-じゅんびが　ととのいましたら▽
+			<Text>[Name:ResortMayor ]！▼
+あなたは　この　まちの
+せきにんしゃです▼
+まだ　なにも　ない　このまちに
+たくさんの　ひとが　やってくる▽
+すてきな　アベニューに　してください▼
+やりかたに　ついては　これから
+かんたんに　せつめい　いたします▼
+じゅんびが　ととのいましたら
 わたくしに　はなしかけて　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:35:37" />
+				Time="2011-09-21T15:15:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -571,14 +580,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かしこまりました
-[Name:ResortMayor ]！▼
-それでは
-じゅんびが　ととのいましたら▽
+			<Text>[Name:ResortMayor ]！▼
+あなたは　この　まちの
+せきにんしゃです▼
+まだ　なにも　ない　このまちに
+たくさんの　ひとが　やってくる▽
+すてきな　アベニューに　してください▼
+やりかたに　ついては　これから
+かんたんに　せつめい　いたします▼
+じゅんびが　ととのいましたら
 わたくしに　はなしかけて　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T07:47:01" />
+				Time="2011-09-21T15:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -657,15 +671,16 @@
 つくるのが　よいでしょう▼
 そう！　おみせです！▼
 おみせを　つくるには
-まちに　きたひとを▽
-「しょうたい」すると　できます▼
+ゆめを　もって▽
+この　まちへ　やってきた　ひとを▽
+「しょうたい」すると　できあがます▼
 ……おや？
 だれか　いらしたみたいです▼
 さっそく　「しょうたい」
 してみましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:53:36" />
+				Time="2011-09-21T15:44:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -678,15 +693,16 @@
 つくるのが　よいでしょう▼
 そう！　おみせです！▼
 おみせを　つくるには
-まちに　きたひとを▽
-「しょうたい」すると　できます▼
+ゆめを　もって▽
+この　まちへ　やってきた　ひとを▽
+「しょうたい」すると　できあがます▼
 ……おや？
 だれか　いらしたみたいです▼
 さっそく　「しょうたい」
 してみましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:53:48" />
+				Time="2011-09-21T15:44:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -865,16 +881,23 @@
 ごあんないして▽
 まちの　にんきが　あがりました▼
 おみせや　まちの　にんきを　あげて
-どんどん　ゆうめいに　していきましょう▼
+ゆうめいに　していきましょう▼
+おきゃくさまを　よぶ　コツは　とにかく
+つうしんを　することです▼
+Ｃ－ＧＥＡＲを　ＯＮにして
+すれちがって　みたり▼
+ユニオンルームや
+グローバルターミナル　などの▽
+つうしん　しせつへ　いってみましょう▼
 それでは　わたくしどもは
 [Name:ResortMayor ]の　ひしょとして▽
 こちらの　へやで　おまちしています▼
-いろいろなことを　サポートしますので
+いろいろ　サポートしますので
 えんりょなく　もうしつけください▼
 それでは▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:17:57" />
+				Time="2011-09-21T15:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -887,16 +910,23 @@
 ごあんないして▽
 まちの　にんきが　あがりました▼
 おみせや　まちの　にんきを　あげて
-どんどん　ゆうめいに　していきましょう▼
+ゆうめいに　していきましょう▼
+おきゃくさまを　よぶ　コツは　とにかく
+つうしんを　することです▼
+Ｃ－ＧＥＡＲを　ＯＮにして
+すれちがって　みたり▼
+ユニオンルームや
+グローバルターミナル　などの▽
+つうしん　しせつへ　いってみましょう▼
 それでは　わたくしどもは
 [Name:ResortMayor ]の　ひしょとして▽
 こちらの　へやで　おまちしています▼
-いろいろなことを　サポートしますので
+いろいろ　サポートしますので
 えんりょなく　もうしつけください▼
 それでは▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:36:29" />
+				Time="2011-09-21T15:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -922,12 +952,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　チュートリアルを
-している　ところで　ございます▼</Text>
+			<Text>あなたは　いちにんまえの
+[Name:ResortMayor ]に　なるため▼
+チュートリアルを
+うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T10:25:35" />
+				Time="2011-09-21T15:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -935,12 +966,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　チュートリアルを
-している　ところで　ございます▼</Text>
+			<Text>あなたは　いちにんまえの
+[Name:ResortMayor ]に　なるため▼
+チュートリアルを
+うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T10:25:43" />
+				Time="2011-09-21T15:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -966,14 +998,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:17" />
+				Time="2011-09-21T15:36:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -981,14 +1012,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:20" />
+				Time="2011-09-21T15:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1014,14 +1044,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:17" />
+				Time="2011-09-21T15:36:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1029,14 +1058,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:22" />
+				Time="2011-09-21T15:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1062,14 +1090,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:17" />
+				Time="2011-09-21T15:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1077,14 +1104,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:23" />
+				Time="2011-09-21T15:36:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1110,14 +1136,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:17" />
+				Time="2011-09-21T15:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1125,14 +1150,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:24" />
+				Time="2011-09-21T15:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1158,14 +1182,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:17" />
+				Time="2011-09-21T15:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1173,14 +1196,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 チュートリアルを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:26" />
+				Time="2011-09-21T15:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1206,11 +1228,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だんなさま！
-そろそろ　おしごとの　おじかん　ですが…▼</Text>
+			<Text>オーナー！▼
+そろそろ　おしごとの
+おじかん　ですが……▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-21T05:51:58" />
+				User="shimoyamada:W00184"
+				Time="2011-09-21T13:46:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1218,11 +1241,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だんなさま！
-そろそろ　おしごとの　おじかん　ですが…▼</Text>
+			<Text>オーナー！▼
+そろそろ　おしごとの
+おじかん　ですが……▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-21T05:52:00" />
+				User="shimoyamada:W00184"
+				Time="2011-09-21T13:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

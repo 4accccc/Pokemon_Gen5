@@ -12367,10 +12367,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きっさ[Name:TrainerName Idx="0" ]</Text>
+			<Text>バー　[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:31:10" />
+				Time="2011-09-21T13:45:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12378,10 +12378,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>喫茶[Name:TrainerName Idx="0" ]</Text>
+			<Text>バー　[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:31:22" />
+				Time="2011-09-21T13:45:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12421,10 +12421,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]しょくどう</Text>
+			<Text>キッチン[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:31:31" />
+				Time="2011-09-21T13:46:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12432,10 +12432,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]食堂</Text>
+			<Text>キッチン[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:31:38" />
+				Time="2011-09-21T13:46:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
