@@ -161,8 +161,8 @@ enum
 	CURSOR_CLWK_MAX
 };
 //ˆÊ’u
-#define CURSOR_POS_DEFAULT_X		(128)
-#define CURSOR_POS_DEFAULT_Y		(96)
+#define CURSOR_POS_DEFAULT_X		(118)
+#define CURSOR_POS_DEFAULT_Y		(78)
 //‘¬“x
 #define CURSOR_ADD_SPEED				(3)
 //§ŒÀ
@@ -909,8 +909,8 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 		}
 		else
 		{	
-			pos.x	= 128;
-			pos.y	= 96;
+			pos.x	= CURSOR_POS_DEFAULT_X;
+			pos.y	= CURSOR_POS_DEFAULT_Y;
 		}
 		CURSOR_SetPos( &p_wk->cursor, &pos );
 	}
