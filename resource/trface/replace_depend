@@ -2178,3 +2178,12 @@ cnv_tmp/trwb_pilot_1.NCLR : ./../../../swan_doc/trgra/trwb_pilot.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 	cp cnv_tmp/trwb_pilot.NCLR cnv_tmp/trwb_pilot_1.NCLR 
 
+cnv_tmp/trwb_pkwd_ladybug.NCGR : ./../../../swan_doc/trgra/trwb_pkwd_ladybug.ncg 
+	@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp
+
+cnv_tmp/trwb_pkwd_ladybug_LZ.bin : cnv_tmp/trwb_pkwd_ladybug.NCGR 
+	ntrcomp -l 2 cnv_tmp/trwb_pkwd_ladybug.NCGR
+
+cnv_tmp/trwb_pkwd_ladybug.NCLR : ./../../../swan_doc/trgra/trwb_pkwd_ladybug.ncl 
+	@g2dcvtr $< -bg -o/cnv_tmp
+

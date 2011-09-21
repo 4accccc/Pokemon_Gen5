@@ -474,7 +474,9 @@ enum {
 	NARC_face_gra_trwb_scientistw_1_LZ_bin = 460,
 	NARC_face_gra_trwb_scientistw_1_NCLR = 461,
 	NARC_face_gra_trwb_pilot_1_LZ_bin = 462,
-	NARC_face_gra_trwb_pilot_1_NCLR = 463
+	NARC_face_gra_trwb_pilot_1_NCLR = 463,
+	NARC_face_gra_trwb_pkwd_ladybug_LZ_bin = 464,
+	NARC_face_gra_trwb_pkwd_ladybug_NCLR = 465
 };
 
 /* NARC_FACE_GRA_NAIX_ */

@@ -462,4 +462,6 @@
 "cnv_tmp/trwb_scientistw_1.NCLR"
 "cnv_tmp/trwb_pilot_1_LZ.bin"
 "cnv_tmp/trwb_pilot_1.NCLR"
+"cnv_tmp/trwb_pkwd_ladybug_LZ.bin"
+"cnv_tmp/trwb_pkwd_ladybug.NCLR"
 
