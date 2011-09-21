@@ -44,8 +44,8 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START  ev_init_d05r0101
 
-  //トーナメント後から入ってきた場合、ユニットを再配置
-  IF $WK_SCENE_D05 == 2 THEN
+  //仮：優勝した場合はWBTシステム側でLOCALWORK1を1とするようにした
+  IF $WK_SCENE_D05 == 1 && $LOCALWORK1 == 1 THEN
 
     //========================================//
     //チェレン、ライバル表示
@@ -164,21 +164,24 @@ EVENT_START   ev_reserve_d05r0101_tutorial
   //チェレン、ライバル非表示
   _FLAG_SET( FV_D05R0101_SWLEADER1_01 )
   _FLAG_SET( FV_D05R0101_SWRIVAL_01 )
+
+  //WBTチュートリアルモードを指定
+  _FLAG_SET( SYS_FLAG_WBT_TUTORIAL )
   //D05 プラズマ団イベントSCENE_CHANGE有効
-  $WK_SCENE_D05 = 2
+  //$WK_SCENE_D05 = 2
   //プラズマフリゲート・現在地対応
-  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
+  //$WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
   //========================================//
 
   //【仮】トーナメント後のイベントまでジャンプ
 
-  _TIME_WAIT( 30 )
+  //_TIME_WAIT( 30 )
 
   //予約スクリプト(トーナメント後イベント開始）
-  _RESERVE_SCRIPT( SCRID_RESERVE_D05R0101_TUTORIAL_02 )
+  //_RESERVE_SCRIPT( SCRID_RESERVE_D05R0101_TUTORIAL_02 )
 
   //D05R0101マップチェンジ
-  _MAP_CHANGE( ZONE_ID_D05R0101, 15, 9, DIR_DOWN )
+  //_MAP_CHANGE( ZONE_ID_D05R0101, 15, 9, DIR_DOWN )
 
 EVENT_END
 
@@ -257,7 +260,12 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   //アクロマもこのタイミングで非表示に
   _FLAG_SET( FV_D05R0101_SWBOSS_01 )
   //D05 プラズマ団イベントSCENE_CHANGE有効
-  //$WK_SCENE_D05 = 2
+  $WK_SCENE_D05 = 2
+  //プラズマフリゲート・現在地対応
+  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
+
+  //WBTチュートリアルモードを解除
+  _FLAG_RESET( SYS_FLAG_WBT_TUTORIAL )
   //========================================//
 
 EVENT_END

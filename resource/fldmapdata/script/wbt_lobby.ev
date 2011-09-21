@@ -17,6 +17,7 @@
   .include "wbt_scr_define.h"
 
   .include "wbt_hall_def.h" //リザーブスクリプトID参照
+  .include "d05r0101_def.h"  //WBTチュートリアルイベント用参照
 
   .include  "d05r0101.h"    //OBJID参照
 
@@ -37,9 +38,11 @@ _EVENT_DATA_END
 /*						FIELD_INIT_LABEL                            */
 /********************************************************************/
 INIT_EVENT_START  ev_init_wbt_lobby
+  $LOCALWORK1 = 0
   _WBT_SYSTEM_CHECK_ENABLE( SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     _CALL ev_init_wbt_lobby_reception
+    _CALL ev_init_wbt_lobby_tutorial
   ENDIF
   _CALL ev_init_wbt_lobby_obj
 INIT_EVENT_END
@@ -69,6 +72,12 @@ INIT_EVENT_END
 
 //WBT会場から退出するときに対戦者を表示するかどうかの処理
 ev_init_wbt_lobby_obj:
+
+  IF FLAG_ON( SYS_FLAG_WBT_TUTORIAL ) THEN
+    //チュートリアル時は対戦者を出さない
+    _RET
+  ENDIF
+
   _WBT_GET_LOBBY_TRAINER_MMDL( OBJCHRWORK0, OBJCHRWORK1, OBJCHRWORK2 )
   IF $OBJCHRWORK0 != 0 THEN
     _FLAG_RESET( FV_WBT_LOBBY_LEADER1 )
@@ -84,6 +93,25 @@ ev_init_wbt_lobby_obj:
   ENDIF
   _RET
   
+//WBTチュートリアルでシーケンスを進めるかどうか
+ev_init_wbt_lobby_tutorial:
+  IF FLAG_OFF( SYS_FLAG_WBT_TUTORIAL ) THEN
+    _RET
+  ENDIF
+
+  //ホドモエイベントカップか？
+  _WBT_GET_WBT_CUP( SCWK_ANSWER )
+  IF $SCWK_ANSWER != SCR_WBT_CUP_HODOMOE_EVENT THEN
+    _RET
+  ENDIF
+
+  //優勝した場合か？
+  _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_STAGE_WIN THEN
+    $LOCALWORK1 = 1
+  ENDIF
+_RET
+
 /********************************************************************/
 /*						FIELD_RECOVER_LABEL                         */
 /********************************************************************/
@@ -165,6 +193,7 @@ DEFINE_LOCAL  LWK_TEMP
 
   WHILE $LWK_WBT_LOBBY_SEQ != WBT_LOBBY_SEQ_END && $LWK_WBT_LOBBY_SEQ != WBT_LOBBY_SEQ_HALL
 
+    _DEBUG_PRINT_WK( LWK_WBT_LOBBY_SEQ )
     SWITCH $LWK_WBT_LOBBY_SEQ
     CASE WBT_LOBBY_SEQ_FIRST_MENU THEN
       //ようこそ　ワールドバトルトーナメントへ！
@@ -842,6 +871,10 @@ EVENT_START	ev_reserve_wbt_exit
 	//WBTシステム終了
 	_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   
+  IF $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_HODOMOE_EVENT THEN
+    //WBTチュートリアルイベント後半へ
+    _RESERVE_SCRIPT( SCRID_RESERVE_D05R0101_TUTORIAL_02 )
+  ENDIF
 EVENT_END
 
 //--------------------------------------------------------------------
