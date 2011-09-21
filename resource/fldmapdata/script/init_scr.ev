@@ -538,6 +538,8 @@ ev_first_gameclear:
   _FLAG_SET( FV_D27_BEFORE_PWPLAZMA_01 )
   _FLAG_RESET( FV_D27_AFTER_PWPLAZMA_01 )
   
+  //ボックス壁紙追加
+  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
 
   //14番道路ゲートのストッパーを非表示
   _FLAG_SET( FV_R14R0101_MAN3_01 )

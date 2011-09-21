@@ -115,12 +115,11 @@ pc_box:
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL box_end_mode
   DEFINE_LOCAL game_clear
-
-  //@todo キュレムを捕まえたら壁紙が開放される処理に変わる
-  //DEFINE_LOCAL champ_win
+  DEFINE_LOCAL kyuremu_get
 
   _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, game_clear )
-  //_FLAG_CHECK( SYS_FLAG_CHAMPION_WIN, champ_win )
+  //@todo キュレム捕獲フラグがないので仮でゲームクリアフラグ
+  _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, kyuremu_get )
 
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
@@ -128,30 +127,29 @@ pc_box:
   _SYSWIN_MSG( msg_pc_box_01 , POS_DOWN ) 
 
   // 初回クリア済み
+  // = 殿堂入りしている
   IF $game_clear == TRUE THEN
     _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_01, SCWK_ANSWER ) // メッセージ表示済みか？
     // メッセージをまだ表示していない
     IF $SCWK_ANSWER == FALSE THEN
 	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
-      _SYSWIN_MSG( msg_pc_on_05 , POS_DOWN ) 
+      _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_01 )
     ENDIF
   ENDIF
 
-/*
-  // 殿堂入りしている
-  IF $champ_win == TRUE THEN
+  // キュレム捕獲
+  IF $kyuremu_get == TRUE THEN
     _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_02, SCWK_ANSWER ) // メッセージ表示済みか？
     // メッセージをまだ表示していない
     IF $SCWK_ANSWER == FALSE THEN
 	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
-      _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
+      _SYSWIN_MSG( msg_pc_on_07 , POS_DOWN ) 
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_02 )
     ENDIF
   ENDIF
-*/
 
   $exit = FALSE
   WHILE $exit == FALSE
