@@ -1091,6 +1091,24 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _BALLOONWIN_TALKOBJ_MSG_POS
+ *  @brief  吹き出しウィンドウ描画位置指定　話し掛けOBJ専用
+ *  @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+#define _BALLOONWIN_TALKOBJ_MSG_POS( msg_id, pos ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_POS msg_id, pos
+  
+  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_POS msg_id, pos
+  .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
+  .short 0x0400
+  .short \msg_id
+  .short \pos
+  .short BALLOONWIN_TYPE_NORMAL
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _BALLOONWIN_TALKOBJ_MSG_ARC
  * @brief 吹き出しウィンドウ描画 話しかけOBJ専用、メッセージアーカイブ指定付き
  *  @param  arc_id  メッセージアーカイブ指定ID
@@ -1119,15 +1137,18 @@
  */
 //--------------------------------------------------------------
 #define _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_id_1, msg_id_2 ) \
-    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC msg_id_1, msg_id_2
+    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, POS_DEFAULT
 
-  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC msg_id_1, msg_id_2
+#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_id_1, msg_id_2, pos ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, pos
+
+  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, pos
   .short  EV_SEQ_BALLOONWIN_OBJMSG_FES_NPC
   .short 0x0400
   .short \msg_id_1
   .short \msg_id_2
   .short SCWK_TARGET_OBJID
-  .short POS_DEFAULT
+  .short \pos
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 

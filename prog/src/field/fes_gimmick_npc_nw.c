@@ -68,11 +68,11 @@ static const u8 DATA_LotTargetNum[][2] = {
 static const u16 DATA_ObjCodeTbl[][2] = {
   { BABYBOY1, BABYBOY1 },//迷子を捜せ
   { BOY2, BOY2 },//アイテムをプレゼントする
-  { BACKPACKERM, BACKPACKERW },//アイテム交換
+  { BACKPACKERM, GIRL4 },//アイテム交換
   { SHOPM1, SUNGLASSES },//アイテム購入
   { BABYGIRL2, BABYGIRL2 },//じゃんけん
-  { VETERANM, VETERANM },//記憶クイズ
-  { TRAINERM, TRAINERW },//バトル
+  { CLOWN, CLOWN },//記憶クイズ
+  { FIGHTERM, TRAINERW },//バトル
   { PCWOMAN1, PCWOMAN1 },//アイテムをもらう
   { ASSISTANTW, ASSISTANTM },//ポケモン図鑑クイズ
 };
