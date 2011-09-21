@@ -286,6 +286,7 @@
 #define WK_SCENE_C14_PHOTO_01            16674 /* 0x4122 セイガイハシティ：顔だし看板POS制御ワーク */
 #define WK_SCENE_D26_POKE23_01           16675 /* 0x4123 チャンピオンロード：クリア後ゾロアークPOS制御ワーク */
 #define WK_SCENE_D09R1401_SWRIVAL_01     16676 /* 0x4124 チャンピオンロード：ライバル戦POS制御ワーク */
+#define WK_SCENE_D27R10R13_STOPPER       16677 /* 0x4125 プラズマフリゲート：ストッパーPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
