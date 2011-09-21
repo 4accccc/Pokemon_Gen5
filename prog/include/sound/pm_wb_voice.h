@@ -19,7 +19,7 @@
 #define PMVOICE_START			(BANK_PV001)
 #define PMVOICE_END				(WAVE_ARC_PV492_SKY)
 #define PMVOICE_POKE001		(PMVOICE_START)
-
+#define PMVOICE_POKE652   (BANK_PMWB_660)
 //------------------------------------------------------------------
 /**
  * @brief	鳴き声ユーザーパラメータ構造体

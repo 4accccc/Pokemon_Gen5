@@ -76,13 +76,21 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
   };
   int i;
 
-  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
-    //指定範囲外
-//    *waveIdx = PMVOICE_POKE001;
-    *waveIdx = MONSNO_ZIBAKOIRU; // 仮で範囲外の泣き声をジバコイルにした 2011.04.28 by mori
+  //指定範囲外
+  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > (MONSNO_MAX-2)) ){
+    *waveIdx = PMVOICE_POKE001;
+//    *waveIdx = MONSNO_ZIBAKOIRU; // 仮で範囲外の泣き声をジバコイルにした 2011.04.28 by mori
     return;
   }
 
+  // ボスポケモンのVOICE設定
+  if(pokeNo >= MONSNO_ufo && pokeNo <= MONSNO_KARATEOU){
+    *waveIdx = PMVOICE_POKE652 + pokeNo-MONSNO_ufo;
+    OS_Printf("pokeNo=%d, ボスポケモンvoice = %d\n", pokeNo, *waveIdx);
+    return;
+  }
+
+  // フォルムチェンジに対応してWAVEバンクを切り替える
   for( i = 0;i < NELEMS(DATA_PMVoiceFormTbl);i++){
     const PMVOICE_FORM_PARAM* prm = &DATA_PMVoiceFormTbl[i];
 
@@ -116,10 +124,9 @@ BOOL PMV_CustomVoiceWave( u32     pokeNo,     // [in]ポケモンナンバー
   PMV_REF* pmvRef;
   POKEMON_VOICE_PARAM  pvp;
 
-  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
+  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > (MONSNO_MAX-2)) ){
     //指定範囲外
-    OS_Printf("ジバコイルの泣き声\n");
-    pokeNo = MONSNO_ZIBAKOIRU;
+    pokeNo = MONSNO_HUSIGIDANE;
   }
 
 
