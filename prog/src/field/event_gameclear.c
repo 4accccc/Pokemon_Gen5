@@ -119,10 +119,11 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
 
   switch( work->nowSeq ) {
   case GMCLEAR_SEQ_INIT:
-    if( work->clear_mode == GAMECLEAR_MODE_DENDOU ) {
-      GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
+    // swanではゲームクリア = 殿堂入りになりました。
+    //if( work->clear_mode == GAMECLEAR_MODE_DENDOU ) {
+      //GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
       ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
-    }
+    //}
     PMSND_FadeOutBGM( 30 );
     NowSeqFinish( work, seq );
     break;
