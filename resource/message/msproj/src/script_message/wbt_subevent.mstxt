@@ -646,12 +646,12 @@
 			<Text>デント『とりあえず　ですけど
 くさポケモンたちの　デリシャスな▽
 みりょくを　ひきだせて　よかったです▼
-……まけたましたけどね▼
+……まけましたけどね▼
 それよりも
 コングラッチュレーション　ですよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T08:40:06" />
+				Time="2011-09-21T11:34:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1453,13 +1453,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カツラ『うおおーいっ！▼
-今回の　優勝が
+今回の　優勝は
 納得の　強さ　だな！▼
 わしも　次は　さらに　熱く
 燃えて　ファイヤー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T06:59:18" />
+				Time="2011-09-21T11:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2235,13 +2235,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アスナ『あならの　つよさって
+			<Text>アスナ『あなたの　つよさって
 じぶんらしさを　だせてることかな▼
 あなたの　ゆうしょうで
 みんなが　もりあがっていたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:23:19" />
+				Time="2011-09-21T11:35:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2249,13 +2249,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アスナ『あならの　強さって
+			<Text>アスナ『あなたの　つよさって
 自分らしさを　だせてることかな▼
 あなたの　優勝で
 みんなが　盛り上がっていたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:23:15" />
+				Time="2011-09-21T11:35:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9054,13 +9054,13 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>トウガン！
-ミオシティの　ジムリーダーだね▼
-いつも　スコップを　もってるな
+ミオシティの　ジムリーダーだね▽
+いつも　スコップを　もってるな▼
 ちなみに　クロガネシティ
 ジムリーダー　ヒョウタの　ちちおや▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T09:39:08" />
+				Time="2011-09-21T11:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9069,13 +9069,13 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トウガン！
-ミオシティの　ジムリーダーだね▼
-いつも　スコップを　持ってるな
+ミオシティの　ジムリーダーだね▽
+いつも　スコップを　持ってるな▼
 ちなみに　クロガネシティ
 ジムリーダー　ヒョウタの　父親▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:56:36" />
+				Time="2011-09-21T11:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
