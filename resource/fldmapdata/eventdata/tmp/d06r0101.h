@@ -36,5 +36,8 @@
 #define ZONE_D06R0101_EVB_H
 
 #define D06R0101_HIDE_ITEM_02             0
+#define HIDE_ITEM_061                     1
+#define HIDE_ITEM_062                     2
+#define HIDE_ITEM_063                     3
 
 #endif //ZONE_D06R0101_EVB_H

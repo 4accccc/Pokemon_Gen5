@@ -39,7 +39,7 @@
 #ifndef ZONE_D07R0101_EVB_H
 #define ZONE_D07R0101_EVB_H
 
-#define D07R0101_HIDE_ITEM_02             0
+#define HIDE_ITEM_066                     0
 #define D07R0101_HIDE_ITEM_03             1
 #define D07R0101_HIDE_ITEM_01             2
 

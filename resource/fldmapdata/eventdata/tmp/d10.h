@@ -16,5 +16,7 @@
 #ifndef ZONE_D10_EVB_H
 #define ZONE_D10_EVB_H
 
+#define HIDE_ITEM_073                     0
+#define HIDE_ITEM_074                     1
 
 #endif //ZONE_D10_EVB_H

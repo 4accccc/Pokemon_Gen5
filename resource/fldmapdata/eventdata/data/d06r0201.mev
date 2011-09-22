@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/05 13:27:47
+#save date:2011/09/21 15:12:50
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -267,7 +267,20 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Bg Event Label
+HIDE_ITEM_064
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_064
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 16 -392
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
