@@ -2440,8 +2440,8 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
         GF_ASSERT(0);
       }
 
-      index++;
       GF_ASSERT( index < HABITAT_ZONE_POKE_DATA_MAX );
+      index++;
       ONOUE_Printf("%2d:ポケモンアイコン読み込み\n",i);
     }
     else
