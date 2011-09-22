@@ -584,7 +584,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
 
     if( efp->companion_f ){
-      BTL_SETUP_WildMulti( bsp, enc->gdata, partyEnemy, TRID_RIVAL_07, &sit, heapID );
+      BTL_SETUP_WildMulti( bsp, enc->gdata, partyEnemy, PAIRSYS_GetPairTrainerID(enc->gdata), &sit, heapID );
     }else{
       BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE+efp->enc_double_f, heapID );
     }
