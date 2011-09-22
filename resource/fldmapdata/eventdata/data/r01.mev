@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/16 17:38:24
+#save date:2011/09/22 16:00:02
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -435,7 +435,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-17
+18
 #event number: 0
 #Pos Event Label
 POS_R01_DUMMY_FES_01
@@ -725,6 +725,23 @@ EVENTDATA_POSTYPE_GRID
 56 24 -840
 #size
 1 1
+#event number: 17
+#Pos Event Label
+POSID_R01_SWBELL_01
+#Pos Script Name
+SCRID_POS_R01_SWBELL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R01_CONV
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -696
+#size
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

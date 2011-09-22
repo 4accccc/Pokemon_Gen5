@@ -32,6 +32,7 @@
 #define FLD_ITEM_68                       18
 #define FLD_ITEM_69                       19
 #define R05_CAMERAMAN_01                  20
+#define R05_SWLEADER1_01                  21
 
 #endif //ZONE_R05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

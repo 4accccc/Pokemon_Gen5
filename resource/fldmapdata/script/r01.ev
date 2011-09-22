@@ -9,6 +9,7 @@
   .include  "r01.h"
 
   //@author fujimura_souichirou
+  //@aithor suginaka_katsunori//データコンバートイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,8 +24,33 @@ _EVENT_DATA   ev_bg_r01_board_03
 _EVENT_DATA   ev_r01_girl1_01
 _EVENT_DATA   ev_r01_man1_01
 _EVENT_DATA   ev_r01_fishing_01
+_EVENT_DATA		ev_pos_r01_swbell_01
+_EVENT_DATA		ev_zone_r01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*			ゾーンチェンジラベル							  */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_r01
+	
+	DEFINE_LOCAL	LWK_CONV
+	
+	//データコンバートをしているかチェック
+	_DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LWK_CONV )
+	
+	//コンバートしている場合
+	IF $LWK_CONV == TRUE THEN
+	
+		//チェレンと戦闘前か？
+		IF $WK_SCENE_R01_CONV == 0 THEN
+		
+			$WK_SCENE_R01_CONV = 1
+		
+		ENDIF
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  看板01                                                    */
@@ -70,4 +96,284 @@ EVENT_START   ev_r01_fishing_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_fishing_01 )
 EVENT_END
 
+/**************************************************************/
+/*	データコンバートＰＯＳイベント							  */
+/**************************************************************/
+EVENT_START		ev_pos_r01_swbell_01
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+
+	//ベル出現
+	_OBJ_ADD_EX( 788,721,DIR_DOWN,MMDL_ID_EVENTOBJ_00,SWBELL,MV_DMY )
+
+	//おうい！/ねえねえ！
+	_BALLOONWIN_OBJMSG_MF( msg_r01_swbell_01, msg_r01_swbell_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ベル：主人公に隣接　主人公：！マーク
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_POS_GET( MMDL_ID_PLAYER,LWK_POSX,LWK_POSZ )
+	
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 788, 730, FORCE_TYPE_NPC, 8, DIR_UD )
+	
+	SWITCH $LWK_POSX
+	CASE 786 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_786 )
+	CASE 787 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_787 )
+	CASE 788 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	CASE 789 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_789 )
+	CASE 790 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_790 )
+	CASE 791 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_791 )
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_kyorokyoro )
+	_OBJ_ANIME_WAIT()
+	
+	//ここ　なつかしいなあ
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_03 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+
+	//あのひ……
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_04 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 789, 731, FORCE_TYPE_NPC, 8, DIR_LR )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//ねえ　旧主人公！
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_05 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	//せーの！
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_06 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 30 )
+	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_l )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+
+	//なんてね
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_07 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//変数を定義
+	DEFINE_LOCAL	LWK_TYPE
+	DEFINE_LOCAL	LWK_TRAINER
+	
+	//旧主人公の初期タイプを取得
+	_DATACONV_GET_WORK( DATACONV_WORK_FIRST_POKETYPE, LWK_TYPE )
+	
+	SWITCH $LWK_TYPE
+	CASE FIRST_POKETYPE_KUSA THEN
+		$LWK_TRAINER = TRID_SUPPORT_02
+	CASE FIRST_POKETYPE_HONOO THEN
+		$LWK_TRAINER = TRID_SUPPORT_03
+	CASE FIRST_POKETYPE_MIZU THEN
+		$LWK_TRAINER = TRID_SUPPORT_04
+	ENDSWITCH
+	
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( LWK_TRAINER, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+
+	//うふふ！
+	_BALLOONWIN_OBJMSG_POS( msg_r01_swbell_08 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 788, 721, FORCE_TYPE_NPC, 8, DIR_UD )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================/
+	
+	//イベント終了
+	$WK_SCENE_R01_CONV = 2
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d2
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_kyorokyoro
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆主人公：専用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_come_786
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_come_787
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_come_789
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_come_790
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_come_791
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 

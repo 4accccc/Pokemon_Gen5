@@ -11,5 +11,7 @@
 #define SCRID_R01_GIRL1_01 (4)
 #define SCRID_R01_MAN1_01 (5)
 #define SCRID_R01_FISHING_01 (6)
+#define SCRID_POS_R01_SWBELL_01 (7)
+#define SCRID_ZONE_R01 (8)
 
 #endif //_R01_DEF_H_

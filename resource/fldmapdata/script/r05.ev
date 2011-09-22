@@ -38,8 +38,34 @@ _EVENT_DATA		ev_r05_stop07_01
 _EVENT_DATA		ev_r05_stop08_01
 _EVENT_DATA		ev_r05_stop09_01
 _EVENT_DATA   ev_r05_cameraman_01
+_EVENT_DATA		ev_r05_swleader1_01
+_EVENT_DATA		ev_zone_r05
 _EVENT_DATA_END
 
+/**************************************************************/
+/*			ゾーンチェンジラベル							  */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_r05
+	
+	DEFINE_LOCAL	LWK_CONV
+	
+	//データコンバートをしているかチェック
+	_DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LWK_CONV )
+	
+	//コンバートしている場合
+	IF $LWK_CONV == TRUE THEN
+	
+		//チェレンと戦闘前か？
+		IF FLAG_OFF( FE_R05_SWLEADER1_BTL) THEN	
+			
+			//チェレン表示
+			_FLAG_RESET(FV_R05_SWLEADER1_01)
+		
+		ENDIF
+	
+	ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*							看板							*/
@@ -674,6 +700,25 @@ _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //	◆チャールズ：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_badrider_leave
@@ -774,4 +819,110 @@ EVENT_START   ev_r05_cameraman_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_01 )
 EVENT_END
 
+/**************************************************************/
+/*	R05	データコンバート用　チェレンバトルイベント			  */
+/**************************************************************/
+EVENT_START		ev_r05_swleader1_01
+_TALK_OBJ_START()
 
+	//初回会話の場合
+	IF FLAG_OFF( FE_R05_SWLEADER1_TALK) THEN
+		
+		//きいたよ　Nという
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_01 )
+	
+		//========================================/
+		
+		//初回会話フラグセット
+		_FLAG_SET(FE_R05_SWLEADER1_TALK)
+		
+		//========================================/
+	
+	//二度目の会話の場合
+	ELSE
+		//きみとのしょうぶで
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_02 )
+	
+	ENDIF
+
+	//はい・いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+		
+		//旧主人公名を代入
+		_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+		
+		//きみと　～～は　どこか　にているから
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_03 )
+		_MSGWIN_CLOSE()
+		
+		//変数を定義
+		DEFINE_LOCAL	LWK_TYPE
+		DEFINE_LOCAL	LWK_TRAINER
+		
+		//旧主人公の初期タイプを取得
+		_DATACONV_GET_WORK( DATACONV_WORK_FIRST_POKETYPE, LWK_TYPE )
+		
+		SWITCH $LWK_TYPE
+		CASE FIRST_POKETYPE_KUSA THEN
+			$LWK_TRAINER = TRID_SWLEADER1_1_03
+		CASE FIRST_POKETYPE_HONOO THEN
+			$LWK_TRAINER = TRID_SWLEADER1_1_04
+		CASE FIRST_POKETYPE_MIZU THEN
+			$LWK_TRAINER = TRID_SWLEADER1_1_05
+		ENDSWITCH
+		
+		//トレーナー戦呼び出し
+		_TRAINER_BTL_SET( LWK_TRAINER, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+	
+		//旧主人公名を代入
+		_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,1)
+	
+		_OBJ_ANIME( R05_SWLEADER1_01, anm_staystep_d )
+		_OBJ_ANIME_WAIT()
+	
+		//むかし　ここで
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_05 )
+	
+		//Nも　おなじ　ものを
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_06 )
+		_MSGWIN_CLOSE()
+		
+		//退場
+		_OBJ_ANIME_AUTO( R05_SWLEADER1_01, 348,439, FORCE_TYPE_NOT, 8, DIR_LR )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_DEL( R05_SWLEADER1_01 )
+		
+		//========================================/
+		
+		//バニシュフラグセット
+		_FLAG_SET(FV_R05_SWLEADER1_01)
+		
+		//戦闘済にする
+		_FLAG_SET(FE_R05_SWLEADER1_BTL)
+		
+		//========================================/
+	
+	//いいえの場合
+	ELSE
+		
+		//そう？
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_swleader1_04 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
