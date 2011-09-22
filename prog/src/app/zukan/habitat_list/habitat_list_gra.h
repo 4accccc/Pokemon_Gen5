@@ -105,6 +105,7 @@ enum
   OBJ_ANM_SEQ_SELECT_BUTTON_ANM   = 5,    // セレクトボタン(アニメ)
   OBJ_ANM_SEQ_MODE_BUTTON     = 13,   // モード切替ボタン
   OBJ_ANM_SEQ_MODE_BUTTON_ANM = 14,   // モード切替ボタン（アニメ）
+  OBJ_ANM_SEQ_MODE_BUTTON_SELECT_ANM = 42,   // モード切替ボタン（選択アニメ）
   OBJ_ANM_SEQ_MINIMAP     = 15, // ミニマップ
   OBJ_ANM_SEQ_MINIMAP_ANM = 40, // ミニマップ(アニメーション)
   OBJ_ANM_SEQ_NEW_ICON    = 12, // 新着アイコン

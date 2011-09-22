@@ -688,7 +688,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
         SetRetMod( p_wk ,HABITAT_LIST_RET_LOCAL );
         HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
             MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
-        CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+        CallCellAnm( p_wk ,MODE_BUTTON_01_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_SELECT_ANM,
             MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE, SEQ_CHANGE_PARAM_NONE );
         ONOUE_Printf("モード切替1タッチ\n");
       }
@@ -708,7 +708,7 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
       }
       HABITAT_LIST_GRA_SetAnmSeq( &p_wk->gra_sys,
           MODE_BUTTON_03_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON );
-      CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_ANM,
+      CallCellAnm( p_wk ,MODE_BUTTON_02_CLWKID,OBJ_ANM_SEQ_MODE_BUTTON_SELECT_ANM,
           MAIN_SEQ_FADEOUT ,SEQ_CHANGE_PARAM_NONE ,SEQ_CHANGE_PARAM_NONE);
       ONOUE_Printf("モード切替2タッチ\n");
     }
