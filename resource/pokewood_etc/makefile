@@ -67,16 +67,16 @@ endif
 #------------------------------------------------------------------------------
 # ごほうび：作成するデータ
 #------------------------------------------------------------------------------
-$(BONUS_CDAT): $(BONUS_CSV_DATA) $(BONUS_CONV)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる	
+$(BONUS_CDAT): $(BONUS_CSV_DATA) $(BONUS_CONV)
 	ruby $(BONUS_CONV) $(BONUS_CSV_DATA) $(BONUS_CDAT)
 endif	
 
 #------------------------------------------------------------------------------
 #	TRTYPE→MMDL変換：作成するデータ
 #------------------------------------------------------------------------------
-$(TR2MMDL_CDAT):	$(TR2MMDL_CSV_DATA) $(TR2MMDL_CONV)
 ifeq	($(CONVERTUSER),true)
+$(TR2MMDL_CDAT):	$(TR2MMDL_CSV_DATA) $(TR2MMDL_CONV)
 	ruby $(TR2MMDL_CONV) $(TR2MMDL_CSV_DATA) $(TR2MMDL_CDAT)
 endif
 
