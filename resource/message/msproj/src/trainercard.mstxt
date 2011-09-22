@@ -1057,10 +1057,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＷＢＴ　ゆうしょう　かいすう</Text>
+			<Text>ＰＷＴ　ゆうしょう　かいすう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:55:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:19:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1068,10 +1068,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＢＴ　優勝　回数</Text>
+			<Text>ＰＷＴ　優勝　回数</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:56:00" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1080,11 +1080,11 @@ GFBTS1607：不要なスペース削除</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>カード裏面項目。【スワンで追加】
-ワールドバトルトーナメントで優勝した回数。
+ポケモンワールドトーナメントで優勝した回数。
 単位はなし。</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:56:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:19:23" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

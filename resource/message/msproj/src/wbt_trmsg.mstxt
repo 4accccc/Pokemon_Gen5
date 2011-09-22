@@ -35786,12 +35786,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さすが　ワールドバトルトーナメント！
+			<Text>さすが　ポケモンワールドトーナメント！
 しゅつじょうしゃは　みんな▽
 ひとくせある　つわものばかりね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-05T03:13:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -35799,12 +35799,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さすが　ワールドバトルトーナメント！
+			<Text>さすが　ポケモンワールドトーナメント！
 出場者は　みんな▽
 ひとくせある　つわものばかりね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-05T03:30:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

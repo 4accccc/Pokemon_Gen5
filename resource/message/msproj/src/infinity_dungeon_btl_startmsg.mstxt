@@ -18317,14 +18317,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このエリアまでくると
-ワールドバトルトーナメントの▽
+			<Text>この　エリアまでくると
+ポケモンワールドトーナメントトの▽
 チャンピオンなんてのも　いるからね▼
 きみも　かなりの　やりてだろうが
 きをぬかずに　たたかいなさい！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-24T07:11:27" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18332,14 +18332,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このエリアまでくると
-ワールドバトルトーナメントの▽
+			<Text>この　エリアまでくると
+ポケモンワールドトーナメントの▽
 チャンピオンなんてのも　いるからね▼
 きみも　かなりの　やり手だろうが
 気を抜かずに　戦いなさい！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-24T07:11:42" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18752,13 +18752,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれは　ワールドバトルトーナメントで
-ゆうしょうしたことが　あるのだ！▼
+			<Text>ポケモンワールドトーナメントで
+ゆうしょうしたことが　ある　おれだ！▼
 こんなところに　いる　しろうとなど
 あかごの　てを　ひねるが　ごとしだ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-26T07:42:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:18:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18766,13 +18766,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれは　ワールドバトルトーナメントで
-優勝したことが　あるんだぞ！▼
+			<Text>ポケモンワールドトーナメントで
+優勝したことが　ある　おれだ！▼
 こんなところに　いる　素人など
 赤子の　手を　ひねるが　ごとしだ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-26T07:42:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T11:18:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
