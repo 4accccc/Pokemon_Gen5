@@ -22,6 +22,6 @@
 #define BG_D23_DUMMY_FES_03               2
 #define BG_D23_DUMMY_FES_04               3
 #define BG_D23_DUMMY_FES_05               4
-#define HIDE_ITEM_02                      5
+#define HIDE_ITEM_084                     5
 
 #endif //ZONE_D23_EVB_H

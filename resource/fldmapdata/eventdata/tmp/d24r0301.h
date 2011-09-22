@@ -33,5 +33,10 @@
 #ifndef ZONE_D24R0301_EVB_H
 #define ZONE_D24R0301_EVB_H
 
+#define HIDE_ITEM_088                     0
+#define HIDE_ITEM_089                     1
+#define HIDE_ITEM_090                     2
+#define HIDE_ITEM_091                     3
+#define HIDE_ITEM_092                     4
 
 #endif //ZONE_D24R0301_EVB_H

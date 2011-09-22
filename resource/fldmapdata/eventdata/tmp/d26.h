@@ -42,5 +42,8 @@
 #define BG_D26_DUMMY_FES_02               1
 #define BG_D26_DUMMY_FES_03               2
 #define BG_D26_DUMMY_FES_04               3
+#define HIDE_ITEM_099                     4
+#define HIDE_ITEM_100                     5
+#define HIDE_ITEM_101                     6
 
 #endif //ZONE_D26_EVB_H

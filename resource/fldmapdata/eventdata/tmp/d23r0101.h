@@ -44,5 +44,7 @@
 #define BG_D23R0101_DUMMY_FES_16         14
 #define BG_D23R0101_DUMMY_FES_17         15
 #define BG_D23R0101_DUMMY_FES_18         16
+#define HIDE_ITEM_085                    17
+#define HIDE_ITEM_086                    18
 
 #endif //ZONE_D23R0101_EVB_H

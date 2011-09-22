@@ -25,5 +25,7 @@
 #ifndef ZONE_D29R0201_EVB_H
 #define ZONE_D29R0201_EVB_H
 
+#define HIDE_ITEM_119                     0
+#define HIDE_ITEM_120                     1
 
 #endif //ZONE_D29R0201_EVB_H
