@@ -431,8 +431,8 @@
 #define FE_N01R0401_HEYA_END_01            415 /* 0x019f N城：子ども部屋イベント終了フラグ */
 #define FE_C03R1302_ITEMGET_01             416 /* 0x01a0 ヒウンシティ：アイテム入手フラグ */
 #define FE_T04_SWRIVAL_WIN_01              417 /* 0x01a1 サザナミタウン：アイテム入手フラグ */
-#define FE_D08R0901_LEGEND_GET_01          418 /* 0x01a2 古代の城：ウルガモス捕獲フラグ */
-#define FE_D08R0901_LEGEND_MEET_01         419 /* 0x01a3 古代の城：ウルガモス遭遇フラグ */
+#define FE_D08R0901_LEGEND_GET_01          418 /* 0x01a2 リュウラセンの塔：レシラム・ゼクロム捕獲フラグ */
+#define FE_D08R0901_LEGEND_MEET_01         419 /* 0x01a3 リュウラセンの塔：レシラム・ゼクロム遭遇フラグ */
 #define FE_D35R0101_POKE_GET_01            420 /* 0x01a4 自然保護区：黒オノノクス捕獲フラグ */
 #define FE_D35R0101_AREA_01                421 /* 0x01a5 自然保護区：到達フラグ */
 #define FE_D24_PAIR_01                     422 /* 0x01a6 リバースマウンテン：連れ歩きフラグ */
@@ -448,6 +448,12 @@
 #define FE_T02R0101_POKETRADE_02           432 /* 0x01b0 カラクサタウン：くりかえし交換・ユキノオーとジュペッタを交換した */
 #define FE_T02R0101_BTL_WIN_01             433 /* 0x01b1 カラクサタウン：くりかえし交換バトル・ツンベアー交換後のバトルに勝利した */
 #define FE_T02R0101_BTL_WIN_02             434 /* 0x01b2 カラクサタウン：くりかえし交換バトル・ユキノオー交換後のバトルに勝利した */
+#define FE_R05_SWLEADER1_TALK              435 /* 0x01b3 5番道路：チェレンとの初回会話を終えたフラグ */
+#define FE_C02R0701_BREEDERW_TALK          436 /* 0x01b4 シッポウシティ：タマゴイベント初回会話フラグ */
+#define FE_C02R0701_POKE_GET               437 /* 0x01b5 シッポウシティ：タマゴイベント獲得フラグ */
+#define FE_R05_SWLEADER1_BTL               438 /* 0x01b6 5番道路：チェレンと戦闘したフラグ */
+#define FE_D10R0501_LEGEND_GET_01          439 /* 0x01b7 古代の城：キュレム捕獲フラグ */
+#define FE_D10R0501_LEGEND_MEET_01         440 /* 0x01b8 古代の城：キュレム遭遇フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -834,6 +840,8 @@
 #define FV_D27R0101_STOPPER_01             875 /* 0x036b プラズマフリゲート：ストッパー */
 #define FV_D27_BEFORE_PWPLAZMA_01          876 /* 0x036c プラズマフリゲート：船員（クリア前） */
 #define FV_D27_AFTER_PWPLAZMA_01           877 /* 0x036d プラズマフリゲート：船員（クリア後） */
+#define FV_R05_SWLEADER1_01                878 /* 0x036e 5番道路：チェレン */
+#define FV_T04_SAGE7_01                    879 /* 0x036f サザナミタウン：ヴィオ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

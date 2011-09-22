@@ -287,6 +287,23 @@
 #define WK_SCENE_D26_POKE23_01           16675 /* 0x4123 チャンピオンロード：クリア後ゾロアークPOS制御ワーク */
 #define WK_SCENE_D09R1401_SWRIVAL_01     16676 /* 0x4124 チャンピオンロード：ライバル戦POS制御ワーク */
 #define WK_SCENE_D27R10R13_STOPPER       16677 /* 0x4125 プラズマフリゲート：ストッパーPOS制御ワーク */
+#define WK_SCENE_C04_LOCALTVT            16678 /* 0x4126 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_C05_LOCALTVT            16679 /* 0x4127 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_C06_LOCALTVT            16680 /* 0x4128 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_T03_LOCALTVT            16681 /* 0x4129 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_T04_LOCALTVT            16682 /* 0x412a ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_T07_LOCALTVT            16683 /* 0x412b ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R05_LOCALTVT            16684 /* 0x412c ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R06_LOCALTVT            16685 /* 0x412d ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R07_LOCALTVT            16686 /* 0x412e ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R09_LOCALTVT            16687 /* 0x412f ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R11_LOCALTVT            16688 /* 0x4130 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R12_LOCALTVT            16689 /* 0x4131 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R13_LOCALTVT            16690 /* 0x4132 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R14_LOCALTVT            16691 /* 0x4133 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_R16_LOCALTVT            16692 /* 0x4134 ローカルライブキャスター隠しキャラPOS制御ワーク */
+#define WK_SCENE_D05R0101                16693 /* 0x4135 WBT：チュートリアルイベント制御ワーク */
+#define WK_SCENE_R01_CONV                16694 /* 0x4136 1番道路：データコンバートベル戦POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -342,6 +359,7 @@
 #define WK_OTHER_C07_SEASON              16780 /* 0x418c セッカシティ：ダークトリニティイベントに使用 ゾーンチェンジラベルで現季節とワークの季節で差分があれば０に戻す */
 #define WK_OTHER_C01GYM0101_BTL          16781 /* 0x418d サンヨウレストラン：ジムリーダー戦闘後会話分岐用 */
 #define WK_OTHER_C01GYM0101_SARU         16782 /* 0x418e サンヨウレストラン：３猿決定用ワーク */
+#define WK_OTHER_D20_ARRIVE              16783 /* 0x418f 海底遺跡到達度・取得ワーク */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 
