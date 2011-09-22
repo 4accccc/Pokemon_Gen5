@@ -173,6 +173,12 @@ EVENT_START ev_pokewood_rec
         _CALL ev_pkwd_tutorial_go_theater
         //チュートリアルモードのフラグをOFFにする
         _FLAG_RESET( SYS_FLAG_POKEWOOD_TUTORIAL )
+        //メダルヒント開示：すべての映画を撮った
+        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_SERIES_ALL )
+        //メダルヒント開示：興行収入が一定以上
+        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_BOXOFFICE )
+        //メダルヒント開示：初めてストレンジエンドをとった
+        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_STRANGE_FIRST )
         //イベント全体終了へ
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
       ELSE
