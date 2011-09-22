@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-09-13T15:15:02" source="out55_local_tex_wi.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-09-16T16:11:44" source="out55_local_tex_wi.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-09-13T15:15:02" source="out55_local_tex_wi.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-09-16T16:11:44" source="out55_local_tex_wi.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1461,22 +1461,22 @@
 		path="C:/home/swan_data3d/field/out55/chip/out55_local_tex_wi/out55_ka.tga"
 	>
 		<bitmap size="128">
-			ffff ff1f ffff 1fff fff1 ff11 ffff 1fff
-			1111 1111 fff1 1111 2221 1111 1111 1111
-			3322 1122 1111 2222 6633 2223 2223 3332
-			cccc cccc cccc cccc 9999 9999 9999 9999
-			9999 9999 9999 9999 dddd dddd dddd dddd
-			dddd dddd dddd dddd cccc cccc cccc cccc
-			9999 c999 9999 c999 9999 c999 9999 c999
-			cccc cccc cccc cccc c999 9999 c999 9999
-			c999 9999 c999 9999 cccc cccc cccc cccc
-			7777 7777 7777 0077 8887 8888 8888 0078
-			ee87 eeee eeee 0078 ee87 eeee eeee 0078
-			8887 8888 8888 0078 7777 7777 7777 0077
-			0000 bbb0 000b 0000 0000 bbb0 000b 0000
-			0000 8870 0007 0000 0000 8870 0007 0000
-			0000 8870 0007 0000 0000 44ba 00ab 0000
-			a000 aa4a 0aa4 0000 0000 555a 00aa 0000
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2226 2222 2666 2222 6662 2226
+			1611 6661 6116 6611 1111 1111 1111 1111
+			7777 7777 7777 7777 5555 5555 5555 5555
+			5555 5555 5555 5555 8888 8888 8888 8888
+			8888 8888 8888 8888 7777 7777 7777 7777
+			5555 7555 5555 7555 5555 7555 5555 7555
+			7777 7777 7777 7777 7555 5555 7555 5555
+			7555 5555 7555 5555 7777 7777 7777 7777
+			3333 3333 3333 0033 4443 4444 4444 0034
+			aa43 aaaa aaaa 0034 aa43 aaaa aaaa 0034
+			4443 4444 4444 0034 3333 3333 3333 0033
+			0000 9990 0009 0000 0000 9990 0009 0000
+			0000 4430 0003 0000 0000 4430 0003 0000
+			0000 4430 0003 0000 0000 1196 0069 0000
+			6000 6616 0661 0000 0000 2226 0066 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="29" name="out55_kage"
@@ -1596,8 +1596,8 @@
 		2634 7bbd 6718 4295 2daf 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="28" name="out55_ka_pl" color_size="16">
-		75df 7bbd 6718 4295 192b 218f 2daf 4e95
-		5f19 2a38 1d4d 3e12 25d4 1d70 739d 7fff
+		75df 214b 29af 4e95 5f19 2a38 256d 25d4
+		1d70 3e12 739d 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="29" name="out55_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
