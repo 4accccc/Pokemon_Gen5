@@ -463,12 +463,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……うう！　でも
-Ｎさま　ポケモンに　やさしかったし▼
-オレも　わるい　にんげんから
-ポケモンを　まもりたいって……▼</Text>
+Ｎさま　ポケモンに　優しかったし▼
+オレも　悪い　人間から
+ポケモンを　守りたいって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-09-22T07:15:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -561,11 +561,11 @@
 			<Text>ああいう　ふうに　おもわれるのも
 じぶんらが　わるいからですよね……▼
 ポケモンのため　とはいえ
-けっきょは　じぶんらの▽
+けっきょくは　じぶんらの▽
 やりたいことを　やってただけだし……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-09-22T07:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -573,14 +573,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああいう　ふうに　おもわれるのも
-じぶんらが　わるいからですよね……▼
+			<Text>ああいう風に　思われるのも
+自分らが　悪いからですよね……▼
 ポケモンのため　とはいえ
-けっきょは　じぶんらの▽
+結局は　自分らの▽
 やりたいことを　やってただけだし……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-09-22T07:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

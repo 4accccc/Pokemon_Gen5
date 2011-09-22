@@ -1753,7 +1753,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 よういした　ブラックキュレムが！！▼
 なんと　いまいましい！▼
-また　キュレムを
+にげた　キュレムを　また
 かくほ　せねば　ならんではないか！▼
 やはり　めざわりな　トレーナーは
 ワタクシが　てを　くだしましょう！▼
@@ -1762,7 +1762,7 @@ N</Text>
 ワタクシを　とめることは　できない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1773,7 +1773,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 用意した　ブラックキュレムが！！▼
 なんと　忌々しい！▼
-また　キュレムを
+逃げた　キュレムを　また
 確保せねば　ならんではないか！▼
 やはり　目障りな　トレーナーは
 ワタクシが　手を　くだしましょう！▼
@@ -1782,7 +1782,7 @@ N</Text>
 ワタクシを　とめることは　できない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1826,7 +1826,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 よういした　ホワイトキュレムが！！▼
 なんと　いまいましい！▼
-また　キュレムを
+にげた　キュレムを　また
 かくほ　せねば　ならんではないか！▼
 やはり　めざわりな　トレーナーは
 ワタクシが　てを　くだしましょう！▼
@@ -1835,7 +1835,7 @@ N</Text>
 ワタクシを　とめることは　できない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1846,7 +1846,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 用意した　ホワイトキュレムが！！▼
 なんと　忌々しい！▼
-また　キュレムを
+逃げた　キュレムを　また
 確保せねば　ならんではないか！▼
 やはり　目障りな　トレーナーは
 ワタクシが　手を　くだしましょう！▼
@@ -1855,7 +1855,7 @@ N</Text>
 ワタクシを　とめることは　できない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2024,17 +2024,17 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]あえて　こう　よびます▼
 とうさん！
 わかってください▼
-ポケモンは　どうぐ　ではないのです▼
+ポケモンは
+どうぐ　ではないのです▼
 ポケモンと　ヒトをは　おたがいを
 たかみへと　いざなっていける▽
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
-だのに！
-とうさんは……[Ctrl2:CtrlSpeed ]</Text>
+だのに！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2045,17 +2045,17 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]あえて　こう　呼びます▼
 とうさん！
 わかってください▼
-ポケモンは　道具　ではないのです▼
+ポケモンは
+道具　ではないのです▼
 ポケモンと　ヒトをは　お互いを
 高みへと　誘っていける▽
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
-だのに！
-とうさんは……[Ctrl2:CtrlSpeed ]</Text>
+だのに！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:26:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2464,10 +2464,10 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
 キミに　ありがとう　って！▼
 そうなんだ
-ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2478,10 +2478,10 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
 キミに　ありがとう　って！▼
 そうなんだ
-ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2522,10 +2522,10 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
 キミに　ありがとう　って！▼
 そうなんだ
-ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2536,10 +2536,10 @@ N</Text>
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
 キミに　ありがとう　って！▼
 そうなんだ
-ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-09-22T07:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
