@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-09-12T15:10:14" source="m_dining01_00_00.mb"/>
+	<create user="fujiwara" host="W00251" date="2011-09-22T16:42:48" source="m_dining01_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-09-12T15:10:14" source="m_dining01_00_00.mb"/>
+<original_create user="fujiwara" host="W00251" date="2011-09-22T16:42:48" source="m_dining01_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -598,14 +598,14 @@
 		path="C:/home/swan_data3d/field/in07/chip/tex/mat.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			1100 1111 1111 0011 2110 2222 2222 0112
-			2210 1111 1111 0122 1210 0000 0000 0121
-			1210 0000 0000 0121 1210 0000 0000 0121
-			1210 0000 0000 0121 1210 0000 0000 0121
-			1210 0000 0000 0121 2210 1111 1111 0122
-			2110 2222 2222 0112 1100 1111 1111 0011
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 1111 1111 1111 1111
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
+			2221 2222 2222 1222 2221 2222 2222 1222
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="placematt1"
@@ -869,7 +869,7 @@
 		47bf 6bff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="15" name="mat_pl" color_size="8">
-		28f8 2d18 3539 7fff 7fff 7fff 7fff 7fff
+		1cf8 2539 2d7a 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="16" name="placematt1_pl" color_size="8">
 		3113 3936 45b8 7fff 7fff 7fff 7fff 7fff
@@ -2141,7 +2141,7 @@
 		vertex_size="26" polygon_size="7"
 		triangle_size="0" quad_size="7"
 		volume_min="-3.250000 0.015625 0.031250"
-		volume_max="-0.750000 0.218750 1.000000"
+		volume_max="-0.562500 0.218750 1.250000"
 		volume_r="3.264648"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -2211,15 +2211,15 @@
 					<pos_xy xy="-3.250000 0.218750"/>
 					<tex st="0.000000 16.000000"/>
 					<clr rgb="24 20 21"/>
-					<pos_s xyz="-0.750000 0.031250 1.000000"/>
+					<pos_s xyz="-0.562500 0.031250 1.250000"/>
 					<tex st="0.000000 0.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xz xz="-0.750000 0.750000"/>
+					<pos_xz xz="-0.562500 0.750000"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xy xy="-1.500000 0.031250"/>
+					<pos_xy xy="-1.687500 0.031250"/>
 					<tex st="16.000000 16.000000"/>
 					<clr rgb="24 20 21"/>
-					<pos_xz xz="-1.500000 1.000000"/>
+					<pos_xz xz="-1.687500 1.250000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
