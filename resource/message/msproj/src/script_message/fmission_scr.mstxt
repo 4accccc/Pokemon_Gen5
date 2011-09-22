@@ -569,20 +569,26 @@
 			<Comment>システムウインドウ
 
 交換用メッセージ
-道具入手ＭＥを再生</Comment>
+道具入手ＭＥを再生
+
+タグ0：道具名（わたす）
+タグ1：道具名（もらう）</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:04:58" />
+				Time="2011-09-13T14:51:17" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>システムウインドウ
 
 交換用メッセージ
-道具入手ＭＥを再生</Comment>
+道具入手ＭＥを再生
+
+タグ0：道具名（わたす）
+タグ1：道具名（もらう）</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:05:10" />
+				Time="2011-09-13T14:51:09" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1182,7 +1188,7 @@ msg_fm_npc_trade01_02へ</Comment>
 どうぐこうかんを　しましょうよ！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T05:50:58" />
+				Time="2011-09-21T14:09:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1332,11 +1338,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_trade02_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>よろしくてよ
+			<Text>……　よろしくてよ
 これなら　どうかしら？▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1344,11 +1350,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よろしくてよ
+			<Text>……　よろしくてよ
 これなら　どうかしら？▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1386,13 +1392,14 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_trade02_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいわ！
-いわなくて　いいわ！▼
+			<Text>……　ちょっと？？▼
+ちょっと　なんなのよ！
+しょうじきに　いいなさいよ！▼
 お　こ　と　わ　り　！
 そういう　ことなんでしょ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:06:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1400,13 +1407,14 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいわ！
-いわなくて　いいわ！▼
+			<Text>……　ちょっと？？▼
+ちょっと　なんなのよ！
+しょうじきに　いいなさいよ！▼
 お　こ　と　わ　り　！
 そういう　ことなんでしょ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1439,11 +1447,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>あなた……！！
-[Name:Item Idx="1" ]を　もっていませんわ！▽
-ひやかし　ってこと！？</Text>
+[Name:Item Idx="1" ]を　もっていませんわ！▼
+ひやかし　ってことかしら？
+しつれい　しちゃうわ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:11:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1452,11 +1461,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなた……！！
-[Name:Item Idx="1" ]を　もっていませんわ！▽
-ひやかし　ってこと！？</Text>
+[Name:Item Idx="1" ]を　もっていませんわ！▼
+ひやかし　ってことかしら？
+しつれい　しちゃうわ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1488,11 +1498,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_trade02_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item ]は
-それいじょう　もてませんね……</Text>
+			<Text>あなた……！！
+[Name:Item ]は▽
+それいじょう　もてないわよ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1500,11 +1511,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ]は
-それいじょう　もてませんね……</Text>
+			<Text>あなた……！！
+[Name:Item ]は▽
+それいじょう　もてないわよ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-09-21T14:12:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3658,12 +3670,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_btl02_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけて……　しまった！
-しんの　つよさへの　みちのりは▽
-なんとも　とおい……▼</Text>
+			<Text>まけて……　しまった……
+あたしも　まだまだ　なのね▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:49:28" />
+				Time="2011-09-21T14:01:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3671,12 +3682,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まけて……　しまった！
-しんの　つよさへの　みちのりは▽
-なんとも　とおい……▼</Text>
+			<Text>まけて……　しまった……
+あたしも　まだまだ　なのね▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:51:30" />
+				Time="2011-09-21T14:02:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3708,11 +3718,13 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_btl02_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ではまた　たたかおう！
+			<Text>でも！
+いつか！▽
+あなたにだって　かってみせる！！▽
 さよならです！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:51:19" />
+				Time="2011-09-21T14:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3720,11 +3732,13 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ではまた　たたかおう！
+			<Text>でも！
+いつか！▽
+あなたにだって　かってみせる！！▽
 さよならです！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:51:30" />
+				Time="2011-09-21T14:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
