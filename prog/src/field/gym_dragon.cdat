@@ -350,32 +350,32 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body02_nsbta,
+    NARC_gym_dragon_w_emy_dra_body02_nsbta,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body03_nsbta,
+    NARC_gym_dragon_w_emy_dra_body03_nsbta,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body04_nsbta,
+    NARC_gym_dragon_w_emy_dra_body04_nsbta,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body02_nsbma,
+    NARC_gym_dragon_w_emy_dra_body02_nsbma,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body03_nsbma,
+    NARC_gym_dragon_w_emy_dra_body03_nsbma,
     GFL_G3D_UTIL_RESARC
   },
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_b_emy_dra_body04_nsbma,
+    NARC_gym_dragon_w_emy_dra_body04_nsbma,
     GFL_G3D_UTIL_RESARC
   },
 };
