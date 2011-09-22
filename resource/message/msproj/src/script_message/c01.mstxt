@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンしょうぶも　たのしめる
+			<Text>ポケモン勝負も　楽しめる
 おいしい　レストランっす！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:33:30" />
+				Time="2011-09-22T03:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,13 +281,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　タイプと
-わざの　タイプが　同じだと▽
+技の　タイプが　同じだと▽
 威力が　アップ！▼
 ジュエルを　持たせておくと
-わざの　威力が　さらに　アップ！</Text>
+技の　威力が　さらに　アップ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:41:37" />
+				Time="2011-09-22T03:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -336,11 +336,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>夢の跡地には
-工場が　栄えいたころの▽
+工場が　栄えていたころの▽
 夢が　いっぱい　残っておる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:49:07" />
+				Time="2011-09-22T03:32:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -375,11 +375,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>スクールで　まなんだことを
-だれかに　おしえてあげて▽
+だれかに　おしえてあげることで▽
 ひろがっていく　ポケモンの　わ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:45:00" />
+				Time="2011-09-22T03:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -388,11 +388,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>スクールで　学んだことを
-だれかに　教えてあげて▽
+だれかに　教えてあげることで▽
 広がっていく　ポケモンの　輪！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:45:16" />
+				Time="2011-09-22T03:33:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

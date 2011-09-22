@@ -229,11 +229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『いまは　いけないけれどね
-・理由▼</Text>
+			<Text>アララギ『みちが　ふさがって
+いまは　いけないけれど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T09:33:59" />
+				Time="2011-09-21T11:48:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -241,11 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『今は　行けないけれどね
-・理由▼</Text>
+			<Text>アララギ『道が　ふさがって
+今は　行けないけれど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:41:22" />
+				Time="2011-09-21T11:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -454,10 +454,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ベル『ポケモンが　ひとを
-た　たべちゃうのお！？▼</Text>
+た　たべちゃうのですかあ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:16:05" />
+				Time="2011-09-21T11:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -466,10 +466,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベル『ポケモンが　人を
-た　食べちゃうのお！？▼</Text>
+た　食べちゃうのですかあ！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:42:49" />
+				Time="2011-09-21T11:48:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

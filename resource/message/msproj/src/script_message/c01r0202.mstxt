@@ -63,12 +63,12 @@
 			Language="JPN">
 			<Text>オレさ　また　がいこくに　いってさ
 ポケモンしょうぶ　してくるつもり▼
-だって　がいこくに　いくと
+だって　がいこく　だと
 じぶんの　あたりまえが　つうじなくて▽
 いろいろ　はっけんが　あるんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T05:02:24" />
+				Time="2011-09-22T03:45:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,12 +78,12 @@
 			Language="JPN_KANJI">
 			<Text>オレさ　また　外国に　行ってさ
 ポケモン勝負　してくるつもり▼
-だって　外国に　いくと
+だって　外国だと
 自分の　当たり前が　通じなくて▽
 いろいろ　発見が　あるんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T05:04:11" />
+				Time="2011-09-22T03:45:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -119,12 +119,11 @@
 			Language="JPN">
 			<Text>たびの　トレーナーさん▼
 あなたの　かぞくは
-ライブキャスターを▼
-かけてくる　ひと？
+ライブキャスターを　かけてくる？▽
 それとも　まっている　ひと？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T05:00:50" />
+				Time="2011-09-22T03:46:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -132,13 +131,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たびの　トレーナーさん▼
-あなたの　家族は　ライブキャスターを
-かけてくる　人？▽
+			<Text>旅の　トレーナーさん▼
+あなたの　家族は
+ライブキャスターを　かけてくる？▽
 それとも　待っている　人？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T05:01:09" />
+				Time="2011-09-22T03:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
