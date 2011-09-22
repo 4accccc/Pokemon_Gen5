@@ -135,7 +135,7 @@
 ぼくは　このジョインアベニューの
 オーナーなんだ▼
 ぼくの　ゆめはね
-たくさん　ひとで　にぎわう　まちを▽
+おおくの　ひとで　にぎわう　まちを▽
 せかいじゅうに　つくること　なんだ▼
 ……でも　ここを　かんりする　ひとが
 これなくなって　こまっているんだよね▼
@@ -150,7 +150,7 @@
 きみ　やってみない？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T15:55:14" />
+				Time="2011-09-22T05:37:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -165,7 +165,7 @@
 ぼくは　このジョインアベニューの
 オーナーなんだ▼
 ぼくの　ゆめはね
-たくさん　ひとで　にぎわう　まちを▽
+おおくの　ひとで　にぎわう　まちを▽
 せかいじゅうに　つくること　なんだ▼
 ……でも　ここを　かんりする　ひとが
 これなくなって　こまっているんだよね▼
@@ -180,7 +180,7 @@
 きみ　やってみない？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T15:55:34" />
+				Time="2011-09-22T05:37:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -342,11 +342,11 @@
 [Name:ResortGreet Idx="1" ]　▼
 ……うん！！▼
 おもった　とおりだ！
-きもしか　いない！▽
+きみしか　いない！▽
 きみ　いがいに　ありえない！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T16:12:44" />
+				Time="2011-09-22T03:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -358,11 +358,11 @@
 [Name:ResortGreet Idx="1" ]　▼
 ……うん！！▼
 おもった　とおりだ！
-きもしか　いない！▽
+きみしか　いない！▽
 きみ　いがいに　ありえない！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T16:12:49" />
+				Time="2011-09-22T03:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1229,11 +1229,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オーナー！▼
-そろそろ　おしごとの
+そろそろ　つぎの　おしごとの
 おじかん　ですが……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T13:46:56" />
+				Time="2011-09-22T05:40:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1242,11 +1242,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー！▼
-そろそろ　おしごとの
+そろそろ　つぎの　おしごとの
 おじかん　ですが……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T13:47:01" />
+				Time="2011-09-22T05:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

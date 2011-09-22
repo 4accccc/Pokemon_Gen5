@@ -10238,11 +10238,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>『[Name:ResortTown Idx="2" ]』　として
-[Name:ResortTown Idx="0" ]の　うわさが▽
-ちょっぴり　ひろまった！！▼</Text>
+[Name:ResortTown Idx="0" ]の▽
+うわさが　ちょっぴり　ひろまった！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:09:23" />
+				Time="2011-09-22T04:14:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10251,11 +10251,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『[Name:ResortTown Idx="2" ]』　として
-[Name:ResortTown Idx="0" ]の　うわさが▽
-ちょっぴり　ひろまった！！▼</Text>
+[Name:ResortTown Idx="0" ]の▽
+うわさが　ちょっぴり　ひろまった！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:09:30" />
+				Time="2011-09-22T04:15:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10480,12 +10480,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>……おや？▼
-オーナーが　よんでいるようだ
-じむきょくへ　いってみよう▼
-</Text>
+オーナーが　やってきた！▼
+[Name:ResortMayor ]の　へやへ
+いってみよう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T07:34:38" />
+				User="shimoyamada:W00184"
+				Time="2011-09-22T04:12:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10494,11 +10494,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……おや？▼
-オーナーが　よんでいるようだ
-じむきょくへ　いってみよう▼</Text>
+オーナーが　やってきた！▼
+[Name:ResortMayor ]の　へやへ
+いってみよう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T07:34:41" />
+				User="shimoyamada:W00184"
+				Time="2011-09-22T04:12:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10506,10 +10507,12 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ご褒美イベント発生テキスト</Comment>
+			<Comment>ご褒美イベント発生テキスト
+
+0：市長名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T07:47:40" />
+				Time="2011-09-22T04:12:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
