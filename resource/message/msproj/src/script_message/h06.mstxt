@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はぁ……はぁ……
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]はぁ……はぁ……
 のどが　かわいた……▼
 ワンダーブリッジ　で……
 であった　きみ……▼
 お……おいしいみず……
-くれません　か……？</Text>
+くれません　か……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:14:55" />
+				Time="2011-09-22T06:38:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はぁ……はぁ……
+			<Text>[Ctrl2:CtrlSpeed mode="2" ]はぁ……はぁ……
 のどが　かわいた……▼
 ワンダーブリッジ　で……
 であった　きみ……▼
 お……おいしいみず……
-くれません　か……？</Text>
+くれません　か……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:14:58" />
+				Time="2011-09-22T06:38:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
