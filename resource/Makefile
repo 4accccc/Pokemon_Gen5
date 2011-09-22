@@ -192,6 +192,7 @@ SUBDIRS	=	wmi \
 			animal_trail \
 			pokewood_party \
 			pokewood_cutin \
+			pokewood_etc \
 			gpower_app \
 			key_system \
 			marine_tube_gra

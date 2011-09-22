@@ -1,0 +1,68 @@
+//======================================================================
+/**
+ * @file	pokewood_bonus.cdat
+ * @brief	ポケウッドご褒美データファイル
+ * @note	このファイルはコンバーターから出力されます
+ *
+ */
+//======================================================================
+
+#define PKWD_FAN_MAX (22)	//ファンの数
+#define	NOT_GIVE	(0xff)
+// ファンの種類・道具を上げるタイプ
+static const u16 pkwd_bonus_fan[] = {
+	0,  // BACKPACKERM
+	NOT_GIVE,  // WOMAN2
+	NOT_GIVE,  // MAN3
+	1,  // MUSICIANW
+	2,  // POLICEMAN
+	NOT_GIVE,  // WOMAN2
+	2,  // BABYBOY2
+	2,  // NURSE
+	3,  // TRAINERM
+	NOT_GIVE,  // WOMAN2
+	NOT_GIVE,  // MAN3
+	3,  // OLDWOMAN1
+	NOT_GIVE,  // MAN3
+	3,  // TENNISW
+	NOT_GIVE,  // MAN3
+	NOT_GIVE,  // WOMAN2
+	3,  // BABYBOY1
+	NOT_GIVE,  // WOMAN2
+	NOT_GIVE,  // MAN3
+	NOT_GIVE,  // WOMAN2
+	4,  // HAKAIM
+	4,  // SWPLAZMAW
+};
+
+#define PKWD_RANK_MAX (4)	//S・A・B・Cの４種類
+#define PKWD_DIFFICULT_MAX (4)	//易・並・中・高の４種類
+// ご褒美のランク
+static const u16 pkwd_bonus_rank[4][3] = {
+	//BAD_END GOOD_END STRANGE_END 
+	{3, 2, 1 },	// 易
+	{3, 2, 1 },	// 並
+	{3, 2, 0 },	// 中
+	{2, 1, 0 },	// 高
+};
+
+// ご褒美アイテムリスト
+static const u16 pkwd_bonus_item[5][4] = {
+	//A B C D
+	{580, 92, 25, 30 },	// あげるタイプ 0
+	{33, 32, 43, 17 },	// あげるタイプ 1
+	{23, 29, 78, 138 },	// あげるタイプ 2
+	{42, 54, 591, 134 },	// あげるタイプ 3
+	{582, 89, 35, 34 },	// あげるタイプ 4
+};
+
+// ご褒美アイテムの個数リスト
+static const u16 pkwd_bonus_item_num[5][4] = {
+	//A B C D
+	{ 1, 1, 5, 1 },	// あげるタイプ 0
+	{ 5, 5, 1, 1 },	// あげるタイプ 1
+	{ 1, 1, 1, 1 },	// あげるタイプ 2
+	{ 5, 5, 1, 1 },	// あげるタイプ 3
+	{ 1, 1, 1, 1 },	// あげるタイプ 4
+};
+
