@@ -452,20 +452,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とつぜん　だけど　ぼくね……
-ここみたいに　ひくい　ばしょや▽
-ちいさい　ものが　すきなんだ▼
-ポケモンも　ちいさい　ポケモンに
-ひときわ　きょうみが　わくんだ▼
-そうだなあ……　ぐたいてきに　いうと
-たかさが　０．２ｍか　もっと　ひくい▽
-ポケモンが　とくに　すきだな▼
+			<Text>突然だけど　ぼくね……
+ここみたいに　低い　場所や▽
+小さい　ものが　好きなんだ▼
+ポケモンも　小さい　ポケモンに
+ひときわ　興味が　わくんだ▼
+そうだなあ……　具体的に　いうと
+高さが　０．２ｍか　もっと　低い▽
+ポケモンが　とくに　好きだな▼
 ところで　きみ……
-ちいさい　ポケモン　もってるかい？▽
-もっていたら　みせてほしいな</Text>
+小さい　ポケモン　持ってるかい？▽
+いたら　みせてほしいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:49:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -513,11 +513,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちいさい　ポケモン……
+			<Text>小さい　ポケモン……
 みせてくれるのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -571,16 +571,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おお！　すごい！
-[Name:PokemonName ]　ちいさいなあ！▼
+[Name:PokemonName ]　小さいなあ！▼
 もし　[Name:PokemonName ]に　なったら
-どんな　きぶん　だろう……？▼
-いつもの　せいかつが　ひとあじも
-ふたあじも　ちがっちゃうよね……▼
-そうぞう　したら　ゾクゾクするよ！
-やっぱり　ちいさいのは　おもしろい！</Text>
+どんな　気分だろう……？▼
+いつもの　生活が　ひと味も
+ふた味も　違っちゃうよね……▼
+想像したら　ゾクゾクするよ！
+やっぱり　小さいのは　おもしろい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:49:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -634,13 +634,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん……▼
-ちいさい　ポケモン
+小さい　ポケモン
 もってないんだね……▼
 ０．２ｍより
-ちいさい　ポケモン　みたいなあ……</Text>
+小さい　ポケモン　みたいなあ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -689,13 +689,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちいさい　ポケモンを
+			<Text>小さい　ポケモンを
 みせてくれて　ありがとう▼
-また　あしたも　みせてくれると
+また　明日も　みせてくれると
 とても　うれしいな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:50:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -752,19 +752,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あのね！　わたしね！
-ここみたいに　たかい　ところとか▽
-おっきいものが　だいすきなの！▼
+ここみたいに　高い　所とか▽
+おっきいものが　大好きなの！▼
 ポケモンも　おっきい　ポケモンが
-すき　なんだよ！▼
+好き　なんだよ！▼
 あのね
 おっきい　って　いうのはね▼
-たかさが　５ｍ　より　たかーい
+高さが　５ｍ　より　高ーい
 ポケモンの　ことを　いうんだよ！▼
 ねえねえ！　おっきい　ポケモン
-もってたら　みせて！</Text>
+持ってたら　みせて！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:51:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -872,16 +872,16 @@
 			Language="JPN_KANJI">
 			<Text>わー！　すっごーい！
 [Name:PokemonName ]　おっきーい！▼
-[Name:PokemonName ]の　うえに　のったら
-とっても　きもちよさそう！▼
-たかい　ところ　からだと
-とおくの　やま　とか▽
-おうちの　やねのうえ　とか▼
+[Name:PokemonName ]の　上に　乗ったら
+とっても　気持ちよさそう！▼
+高い　ところ　からだと
+遠くの　山とか▽
+おうちの　屋根の上　とか▼
 いつもは　みられない　ものが　みえて
-だから　おっきいもの　だいすき！</Text>
+だから　おっきいもの　大好き！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -936,12 +936,12 @@
 			Language="JPN_KANJI">
 			<Text>えーっ！？▼
 おっきい　ポケモン
-もってないのー？▼
+持ってないのー？▼
 ５ｍより
 おっきい　ポケモン　みたーい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:52:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -992,11 +992,11 @@
 			Language="JPN_KANJI">
 			<Text>おっきい　ポケモン
 みせてくれて　ありがとう！▼
-また　あしたも　みせてくれると
+また　明日も　みせてくれると
 もっともっと　うれしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:16:09" />
+				Time="2011-09-22T08:52:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
