@@ -585,10 +585,11 @@
 			<Comment>♂
 ・swboss_02表示後から
 　アジト船イベント終了まで繰り返し
-・アジト船イベント終了時に削除</Comment>
+・アジト船イベント終了時に削除
+　それまでPWTのストッパーに</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:15:11" />
+				Time="2011-09-22T10:24:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1277,10 +1278,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>トーナメント
+トリートメント　リーゼント</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:51:51" />
+				Time="2011-09-22T10:46:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1288,10 +1290,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>トーナメント
+トリートメント　リーゼント</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:01" />
+				Time="2011-09-22T10:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1326,10 +1329,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ひとまえで　しょうぶ　するなら
+まいあがらないように　しないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:47:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1337,10 +1341,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>人前で　勝負するなら
+舞い上がらないように　しないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:47:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1375,10 +1380,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あたしの　ポケモンを
+みんなに　アッピール！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:49:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1386,10 +1392,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あたしの　ポケモンを
+みんなに　アッピール！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:49:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1424,10 +1431,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>じぶんの　チャレンジが
+せかいに　つながっていく……▽
+なんて　ステキなの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1435,10 +1444,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>自分の　チャレンジが
+世界に　つながっていく……▽
+なんて　ステキなの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:52:04" />
+				Time="2011-09-22T10:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
