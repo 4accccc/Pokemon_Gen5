@@ -31,10 +31,12 @@
 #ifndef ZONE_R18_EVB_H
 #define ZONE_R18_EVB_H
 
-#define R18_HIDE_ITEM_01                  0
-#define R18_HIDE_ITEM_02                  1
-#define R18_HIDE_ITEM_03                  2
-#define R18_HIDE_ITEM_03_COPY             3
+#define HIDE_ITEM_187                     0
+#define HIDE_ITEM_188                     1
+#define HIDE_ITEM_186                     2
+#define HIDE_ITEM_189                     3
 #define BGID_R18_ANIMAL_TRAIL_01_1        4
+#define HIDE_ITEM_190                     5
+#define HIDE_ITEM_191                     6
 
 #endif //ZONE_R18_EVB_H

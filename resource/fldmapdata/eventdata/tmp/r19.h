@@ -37,5 +37,6 @@
 #define BG_R19_DUMMY_FES_13              15
 #define BG_R19_DUMMY_FES_14              16
 #define BG_R19_DUMMY_FES_15              17
+#define HIDE_ITEM_192                    18
 
 #endif //ZONE_R19_EVB_H

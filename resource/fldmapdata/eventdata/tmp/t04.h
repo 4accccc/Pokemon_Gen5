@@ -39,5 +39,9 @@
 #define BG_T04_DUMMY_FES_07               8
 #define BG_T04_DUMMY_FES_08               9
 #define BG_T04_DUMMY_FES_09              10
+#define HIDE_ITEM_201                    11
+#define HIDE_ITEM_202                    12
+#define HIDE_ITEM_203                    13
+#define HIDE_ITEM_204                    14
 
 #endif //ZONE_T04_EVB_H

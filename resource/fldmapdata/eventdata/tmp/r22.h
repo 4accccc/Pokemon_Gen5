@@ -48,5 +48,7 @@
 #define BG_R22_DUMMY_FES_16              17
 #define BG_R22_DUMMY_FES_17              18
 #define BG_R22_DUMMY_FES_18              19
+#define HIDE_ITEM_195                    20
+#define HIDE_ITEM_196                    21
 
 #endif //ZONE_R22_EVB_H

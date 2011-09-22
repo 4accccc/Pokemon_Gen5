@@ -23,5 +23,6 @@
 #define BG_T01_BOARD_02                   2
 #define BG_T01_BOARD_04                   3
 #define BG_T01_BOARD_03                   4
+#define HIDE_ITEM_199                     5
 
 #endif //ZONE_T01_EVB_H

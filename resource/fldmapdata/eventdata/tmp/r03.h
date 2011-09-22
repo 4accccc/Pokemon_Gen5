@@ -52,5 +52,6 @@
 #define BGID_R03_ANIMAL_TRAIL_02_1        5
 #define HIDE_ITEM_132                     6
 #define HIDE_ITEM_133                     7
+#define HIDE_ITEM_210                     8
 
 #endif //ZONE_R03_EVB_H

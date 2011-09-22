@@ -28,5 +28,6 @@
 #define ZONE_T02_EVB_H
 
 #define T02_SIGN1_01                      0
+#define HIDE_ITEM_200                     1
 
 #endif //ZONE_T02_EVB_H

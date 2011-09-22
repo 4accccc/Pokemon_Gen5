@@ -53,5 +53,7 @@
 #define BG_R20_DUMMY_FES_13              13
 #define BG_R20_DUMMY_FES_14              14
 #define BG_R20_DUMMY_FES_15              15
+#define HIDE_ITEM_193                    16
+#define HIDE_ITEM_194                    17
 
 #endif //ZONE_R20_EVB_H
