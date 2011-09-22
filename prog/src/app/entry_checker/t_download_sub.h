@@ -80,6 +80,7 @@ extern void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, co
 extern s32  TdCmn_chk_tp( T_DOWNLOAD_MAIN_WORK *wk, const s32 tpmode, const s32 mode );
 //
 extern void TdCmn_set_passive( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
+extern void TdCmn_set_passive_direct( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
 //
 extern void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //

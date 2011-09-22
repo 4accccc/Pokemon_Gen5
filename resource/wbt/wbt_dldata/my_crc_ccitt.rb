@@ -55,18 +55,45 @@ $CRC16Table = [
 
 # (0:ブロックごとのcrcを埋め込む、1:全体のcrcを最後に付け足す)
 $chk_mode = 0
-
+#
 # debug (0:off、1:on)
 $debug_mode = 0;
 #
+# ruby or exe(0:ruby、1:exe)
+$current_mode = 0
 
 #BLOCK_SIZE = 0x120c	# 4620byte
 #BLOCK_SIZE = 0x122c	# 4652byte
 BLOCK_SIZE = 0x11e4	# 4580byte
 
-#----------------------------------------------------------
-#----------------------------------------------------------
+# 使用方法メッセージ
+$usage_str = [
+  "\n使い方\nruby my_crc_ccitt.rb in.bin out.bin [-t]",    # ruby
+  "\n使い方\nmy_crc_ccitt.exe in.bin out.bin [-t]",        # exe
+]
 
+#----------------------------------------------------------
+#----------------------------------------------------------
+#------------
+# 引数チェック
+#------------
+if ARGV[0] == nil
+  puts "引数1に入力ファイル名を指定してください"
+  puts $usage_str[$current_mode]
+  exit(1)
+end
+if ARGV[1] == nil
+  puts "引数2に出力ファイル名を指定してください"
+  puts $usage_str[$current_mode]
+  exit(1)
+end
+#
+# 存在チェック
+unless FileTest.exists?(ARGV[0])
+  puts "入力ファイル #{ARGV[0]} が見つかりません"
+  exit(1)
+end
+#
 # 全体のcrc用
 if(ARGV[2] == '-t')
   $chk_mode = 1
@@ -146,6 +173,7 @@ begin
 end
 
 p sprintf("%s -> %s",ARGV[0], ARGV[1])
+p sprintf("end")
 
 end      # $chk_mode(0)
 
@@ -179,6 +207,9 @@ begin
   fpw.write([crcReg].pack("i"))
   fpw.close
 end
+
+p sprintf("%s -> %s",ARGV[0], ARGV[1])
+p sprintf("end 2")
 
 end       # chk_mode(1)
 

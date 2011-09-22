@@ -2772,6 +2772,35 @@ void TdCmn_set_passive( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  輝度の変更(要検討)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const BOOL			(TRUE:暗い、FALSE:戻し)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_set_passive_direct( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
+{
+	s32		rate;
+	s32		off;
+	
+	rate = TD_ACTIVE_RATE;
+	if(bflg == TRUE){
+		rate = TD_PASSIVE_RATE;
+	}
+	G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
+	
+	// パレット変更(caption)(直接転送)
+	off = 0;
+	if(bflg == TRUE){
+		off = 0x10;
+	}
+	GX_LoadBGPltt( &wk->FontPal[off], 0x20*7, 0x20 );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  文字送りカーソルの処理
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk

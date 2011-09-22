@@ -723,7 +723,8 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		i;
 	
 	// オフセット戻し
-	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+//	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	
 	// ここまでで表示数(DispMaxNum)を決めておくこと
 	wk->DispMaxNum = wk->SaveMaxNum;
@@ -1204,7 +1205,8 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 	
 	// frame_listを使っていない面では必要
 	// オフセット戻し
-	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+//	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	
 	// アイコン表示
 	for(i=0;i<3;i++){
@@ -1760,6 +1762,8 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
 	}else{
 		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, TRUE );
+		// スクロールバーの処理
+		TdCmn_main_scrollbar( wk );
 	}
 	// 左右矢印表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_LEFT,  TRUE );
@@ -2146,6 +2150,7 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 							TdCmn_chk_up_disp( wk, FALSE, FALSE, FALSE );
 							// カーソル表示(ちらつくので消しておく)
 							TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+							TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
 							// カーソル戻し
 							wk->SaveCurPos = 0;
 						}
@@ -2158,6 +2163,7 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 							wk->Step = STEP_LV4;
 							// カーソル表示(ちらつくので消しておく)
 							TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+							TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
 							wk->Flag |= FLG_MW_SELECT_SAVE;
 						}
 					}
@@ -2308,7 +2314,8 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		num;
 	
 	// オフセット戻し
-	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+//	GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	
 	// 表示数セット
 	wk->DispMaxNum = wk->SaveMaxNum;
@@ -2320,8 +2327,9 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// バー非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
+	//
 	// 左上タイトル表示
-	TdCmn_disp_title_info( wk, wk->Mode, 0 );
+//	TdCmn_disp_title_info( wk, wk->Mode, 0 );
 	// ×非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_CROSS,  FALSE );
 	// 左右矢印非表示
@@ -2358,8 +2366,9 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 		if(!(wk->Flag & FLG_MW_SELECT_SAVE)){
 			// データがいっぱい => 削除が必要
 			TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_DATA_FULL, 1 );
-			// 輝度変更
-			TdCmn_set_passive( wk, TRUE );
+			// 輝度変更(直接セット)
+//			TdCmn_set_passive( wk, TRUE );
+			TdCmn_set_passive_direct( wk, TRUE );
 			// アニメ停止
 			TdCmn_stop_anim_speed( wk, TRUE );
 			wk->Step = STEP_INIT+10;
@@ -2383,6 +2392,9 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 			TdSave_init_timeicon( wk );
 		}
 	}
+	// 左上タイトル表示
+	// 輝度変更(パレット変え)の影響があるため最後に表示
+	TdCmn_disp_title_info( wk, wk->Mode, 0 );
 	// フラグクリア
 	wk->Flag &= ~FLG_MW_SAVE2INFO;
 }
@@ -2875,6 +2887,10 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				TdCmn_exit_yesnowin( wk );
 				// はい=>本当に削除
 				if(tmp == 0){
+					// いったんクリア
+					for(i=0;i<6;i++){
+						TdCmn_clear_canvas( wk, T_DOWNLOAD_MSG_UP_TNAME+i );
+					}
 					// 削除画面
 					TdCmn_clear_frame( wk, 1 );
 					TdCmn_disp_title_info( wk, wk->Mode, 0 );

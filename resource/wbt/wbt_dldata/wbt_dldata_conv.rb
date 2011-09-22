@@ -20,6 +20,9 @@ $current_xls_name = ""
 # うるさいかもしれないので切り替えにしておく
 $debug_chkstr = 1
 
+# ruby or exe(0:ruby、1:exe)
+$current_mode = 0
+#
 require "my_tab_out_direct_sheet.rb"
 
 require "wbt_dldata_data.rb"	  # トーナメントリスト(WBTDL_DATA)のシート用
@@ -41,8 +44,29 @@ $output_str = [ "_J",	# 日本語
 # 言語最大数
 LANG_MAX_NUM = 7
 
+# 使用方法メッセージ
+$usage_str = [
+  "\n使い方\nruby wbt_dldata_conv.rb in.xls",    # ruby
+  "\n使い方\nwbt_dldata_conv.exe in.xls",        # exe
+]
+
 #-------------------------------------------------------
 #-------------------------------------------------------
+#------------
+# 引数チェック
+#------------
+if ARGV[0] == nil
+  puts "引数1に入力(xls)ファイル名を指定してください"
+  puts $usage_str[$current_mode]
+  exit(1)
+end
+#
+# 存在チェック
+unless FileTest.exists?(ARGV[0])
+  puts "入力(xls)ファイル #{ARGV[0]} が見つかりません"
+  exit(1)
+end
+
 #-------------------
 # エクセルファイルアクセス
 #-------------------
@@ -101,6 +125,11 @@ LANG_MAX_NUM.times{|m|
       size.times{|i|
         $current_xls_name = @data[12*m+i]
         filename = getAbsolutePath( @data[12*m+i] );
+        # ファイルの有無チェック
+        unless FileTest.exists?( filename )
+          p sprintf("ファイル %s が見つかりません",@data[12*m+i]);
+          exit(1)
+        end
         conv.open_file( filename );
         
         # 情報の参照
