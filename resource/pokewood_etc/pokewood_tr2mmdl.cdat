@@ -1,1 +1,18 @@
 //TEST
+//このファイルはコンバータで自動生成しています
+//pokewood_tr2mmdl.csv --> pokewood_tr2mmdl.cdat
+static const u16 TrType2MMdl[][2] = {
+	{ SCIENTISTWASSISTANTW,  },
+	{ RGLEADER5RGLEADER5,  },
+	{ SCIENTISTMASSISTANTM,  },
+	{ PKWD_MOB_MPWMOJI,  },
+	{ MAIDMAID,  },
+	{ LEADER7LEADER7,  },
+	{ CLEANINGCLEANINGM,  },
+	{ OLOL,  },
+	{ PKWD_MOB_FPWMOJI,  },
+	{ KINDERGARTENWBABYGIRL2,  },
+	{ KINDERGARTENMGENTLEMAN,  },
+	{ BUSINESS2BUSINESSMAN,  },
+	{ WORKER2WORKMAN2,  },
+};
