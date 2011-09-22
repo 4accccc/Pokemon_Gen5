@@ -2333,7 +2333,7 @@
 #define SYS_FLAG_NAMINORI_GET             2439 /* 0x0987 なみのり入手フラグ */
 #define SYS_FLAG_POKEWOOD_TUTORIAL        2440 /* 0x0988 ポケウッド：チュートリアル中のフラグ */
 #define SYS_FLAG_WBT_TUTORIAL             2441 /* 0x0989 WBT:チュートリアル中のフラグ */
-		/* not used  2442(0x098a) */
+#define SYS_FLAG_NPOKE_OPEN               2442 /* 0x098a ホドモエシティ：Nポケ開放フラグ */
 		/* not used  2443(0x098b) */
 		/* not used  2444(0x098c) */
 		/* not used  2445(0x098d) */
