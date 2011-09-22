@@ -843,6 +843,11 @@
 #define FV_D27_AFTER_PWPLAZMA_01           877 /* 0x036d プラズマフリゲート：船員（クリア後） */
 #define FV_R05_SWLEADER1_01                878 /* 0x036e 5番道路：チェレン */
 #define FV_T04_SAGE7_01                    879 /* 0x036f サザナミタウン：ヴィオ */
+#define FV_C15R0301_BONUS_0                880 /* 0x0370 ポケウッド：ファン（スターランク0） */
+#define FV_C15R0301_BONUS_1                881 /* 0x0371 ポケウッド：ファン（スターランク1） */
+#define FV_C15R0301_BONUS_2                882 /* 0x0372 ポケウッド：ファン（スターランク2） */
+#define FV_C15R0301_BONUS_3                883 /* 0x0373 ポケウッド：ファン（スターランク3） */
+#define FV_C15R0301_BONUS_4                884 /* 0x0374 ポケウッド：ファン（スターランク4） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
