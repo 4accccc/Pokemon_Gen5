@@ -151,6 +151,12 @@ enum
   MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA,    // 敵ドラゴン（左足）
   MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA,    // 敵ドラゴン（右足）
   MODEL_RESID_ENEMY_DRAGON_HEAD_ICA,      // 敵ドラゴン（頭）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L_ITA,    // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R_ITA,    // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD_ITA,      // 敵ドラゴン（頭）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L_IMA,    // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R_IMA,    // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD_IMA,      // 敵ドラゴン（頭）
   MODEL_RESID_MAX,
 };
 
@@ -233,6 +239,36 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
     NARC_gym_dragon_b_emy_dra_body04_nsbca,
     GFL_G3D_UTIL_RESARC
   },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body02_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body03_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body04_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body02_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body03_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body04_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
 };
 #else
 static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
@@ -312,6 +348,36 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
     NARC_gym_dragon_w_emy_dra_body04_nsbca,
     GFL_G3D_UTIL_RESARC
   },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body02_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body03_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body04_nsbta,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body02_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body03_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_b_emy_dra_body04_nsbma,
+    GFL_G3D_UTIL_RESARC
+  },
 };
 
 #endif
@@ -337,19 +403,25 @@ static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon1_anm[] =
 
 static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon2_anm[] = 
 {
-  { MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA, 0 }
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_L_ITA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_L_IMA, 0 },
 };
 #define ANIMEID_ENEMY_DRAGON2_MAX  (NELEMS(sc_g3d_enemy_dragon2_anm))
 
 static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon3_anm[] = 
 {
-  { MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA, 0 }
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_R_ITA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_R_IMA, 0 },
 };
 #define ANIMEID_ENEMY_DRAGON3_MAX  (NELEMS(sc_g3d_enemy_dragon3_anm))
 
 static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon4_anm[] = 
 {
-  { MODEL_RESID_ENEMY_DRAGON_HEAD_ICA, 0 }
+  { MODEL_RESID_ENEMY_DRAGON_HEAD_ICA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_HEAD_ITA, 0 },
+  { MODEL_RESID_ENEMY_DRAGON_HEAD_IMA, 0 },
 };
 #define ANIMEID_ENEMY_DRAGON4_MAX  (NELEMS(sc_g3d_enemy_dragon4_anm))
 

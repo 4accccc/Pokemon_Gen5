@@ -11,6 +11,12 @@ DATA_LIST = \
     emy_dra_body02.nsbca \
     emy_dra_body03.nsbca \
     emy_dra_body04.nsbca \
+    emy_dra_body02.nsbta \
+    emy_dra_body03.nsbta \
+    emy_dra_body04.nsbta \
+    emy_dra_body02.nsbma \
+    emy_dra_body03.nsbma \
+    emy_dra_body04.nsbma \
     hero_dra_move_w.nsbmd \
     hero_dra_move_b.nsbmd \
     hero_dra_move.nsbca \
