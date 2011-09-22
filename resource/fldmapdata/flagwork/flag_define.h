@@ -454,6 +454,7 @@
 #define FE_R05_SWLEADER1_BTL               438 /* 0x01b6 5番道路：チェレンと戦闘したフラグ */
 #define FE_D10R0501_LEGEND_GET_01          439 /* 0x01b7 古代の城：キュレム捕獲フラグ */
 #define FE_D10R0501_LEGEND_MEET_01         440 /* 0x01b8 古代の城：キュレム遭遇フラグ */
+#define FE_C03P12_ITEMGET_01               441 /* 0x01b9 ヒウンシティ：アイテム入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
