@@ -19,5 +19,6 @@
 #define SCRID_R05_STOP07_01 (12)
 #define SCRID_R05_STOP08_01 (13)
 #define SCRID_R05_STOP09_01 (14)
+#define SCRID_R05_CAMERAMAN_01 (15)
 
 #endif //_R05_DEF_H_

@@ -12,8 +12,9 @@
   .include  "../../message/dst/script/msg_r05.h"
   .include  "r05.h"
   .include  "musical_scr_def.h"
-  
+
   //@author	suginaka_katsunori
+  //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -36,7 +37,7 @@ _EVENT_DATA		ev_r05_stop06_01
 _EVENT_DATA		ev_r05_stop07_01
 _EVENT_DATA		ev_r05_stop08_01
 _EVENT_DATA		ev_r05_stop09_01
-
+_EVENT_DATA   ev_r05_cameraman_01
 _EVENT_DATA_END
 
 
@@ -765,4 +766,12 @@ EVENT_END
 EVENT_START		ev_r05_stop09_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_stop09_01 )
 EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_r05_cameraman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_01 )
+EVENT_END
+
 
