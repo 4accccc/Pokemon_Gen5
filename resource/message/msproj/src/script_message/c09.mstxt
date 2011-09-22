@@ -62,10 +62,10 @@
 ・はい/いいえ表示
 　はい　→veteranm1_03
 　いいえ→veteranm1_04
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:09:37" />
+				Time="2011-09-22T11:40:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -120,10 +120,10 @@
 ・はい/いいえ表示
 　はい　→veteranm1_03
 　いいえ→veteranm1_04
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:09:38" />
+				Time="2011-09-22T11:40:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -299,10 +299,10 @@
 			Language="JPN">
 			<Comment>♂
 ・話しかけ
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:09:44" />
+				Time="2011-09-22T11:40:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
