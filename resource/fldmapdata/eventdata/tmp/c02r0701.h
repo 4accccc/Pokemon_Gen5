@@ -13,6 +13,7 @@
 #define C02R0701_INFORMATIONW_01           0
 #define C02R0701_DANCER_01                 1
 #define C02R0701_GIRL2_01                  2
+#define C02R0701_BREEDERW_01               3
 
 #endif //ZONE_C02R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

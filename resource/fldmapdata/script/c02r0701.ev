@@ -13,6 +13,7 @@
   .include  "c02r0701.h"
 
   //@author fujimura_souichirou
+  //@author	suginaka_katsunori//ブリーダーのタマゴ入手イベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,6 +26,7 @@ _EVENT_DATA   ev_bg_c02r0701_board_01
 _EVENT_DATA   ev_c02r0701_informationw_01
 _EVENT_DATA   ev_c02r0701_girl2_01
 _EVENT_DATA   ev_c02r0701_dancer_01
+_EVENT_DATA		ev_c02r0701_breederw_01
 _EVENT_DATA_END
 
 
@@ -56,4 +58,91 @@ EVENT_START   ev_c02r0701_dancer_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_dancer_01 )
 EVENT_END
 
+/**************************************************************/
+/*	ブリーダー：タマゴ入手イベント							  */
+/**************************************************************/
+EVENT_START		ev_c02r0701_breederw_01
 
+	//タマゴ入手イベントがまだ終わっていないか？
+	IF FLAG_OFF( FE_C02R0701_POKE_GET) THEN	
+	
+	_TALK_OBJ_START()
+		
+		//初回会話か
+		IF FLAG_ON( FE_C02R0701_BREEDERW_TALK ) THEN
+			//２回目以降
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_02 )
+		ELSE
+			//初回
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_01 )
+			
+			//========================================//
+			//初回会話フラグをセット
+			_FLAG_SET( FE_C02R0701_BREEDERW_TALK )
+			//========================================//
+			
+		ENDIF
+		
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい
+			
+			//ピンプクを入手
+			_ADD_TAMAGO_TO_PARTY( SCWK_ANSWER, MONSNO_440, 0 )
+			
+			//追加できたかチェック
+			IF $SCWK_ANSWER == TRUE THEN
+				//手持ちに追加された
+				
+				//よろしく　おねがい　します
+				_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_05 )
+				_MSGWIN_CLOSE()
+				
+				//========================================//
+				//ポケモンのタマゴ入手フラグをセット
+				_FLAG_SET( FE_C02R0701_POKE_GET )
+				//========================================//
+				
+				//手に入れた！
+				_PLAYER_NAME( 0 )
+				_ME_PLAY( SEQ_ME_TAMAGO_GET )
+				_SYSWIN_MSG( msg_c02r0701_breederw_07, POS_DEFAULT )
+				_ME_WAIT()
+				_AB_KEYWAIT_MARK()
+				_MSGWIN_CLOSE()
+				
+				//ポケモンの　タマゴ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_06 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+
+			ELSE
+				//手持ちがイッパイで追加できなかった
+				
+				//ポケモンが　いっぱいで
+				_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_03 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				
+			ENDIF
+			
+
+		ELSE
+			//いいえ
+		
+			//あっ　はい　わかりました
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ENDIF
+
+	//既に入手済み
+	ELSE
+	
+		//ポケモンの　タマゴ
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0701_breederw_06 )	
+	
+	ENDIF
+
+EVENT_END
