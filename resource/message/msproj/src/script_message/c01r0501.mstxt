@@ -94,12 +94,12 @@
 でも　どうしても
 方法が　思いつかなくって……▼
 いくつか　アイデアは　あるけど
-きめられなくて……▼
+決められなくて……▼
 そこで　キミの　意見を
 きかせて　ほしいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:44:21" />
+				Time="2011-09-22T05:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -218,8 +218,8 @@
 道具を　渡すことで▼
 じめんタイプの　技が
 当たるように　したいんだ！▼
-どんな　道具を　渡そうか
-考えた　すえ▼
+どんな　道具を
+渡そうか　考えた末▼
 くろいてっきゅう　が　いいと
 思ってるんだけど▽
 自信が　ないんだ……▼
@@ -227,7 +227,7 @@
 いい　アイデア　かな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:45:34" />
+				Time="2011-09-22T05:06:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1681,18 +1681,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こうかくレンズと　フォーカスレンズ▼
-よく　にた　どうぐ　だけど
+にている　どうぐ　だけど
 なまえも　ちがうし　こうかも　ちがう▼
 こうかくレンズは
-めいちゅうりつが　１１０パーセントに▼
+めいちゅうりつが　１１０パーセント！▼
 フォーカスレンズは
 あとから　わざを　だすときに▽
-めいちゅうりつが　１２０パーセントに▼
+めいちゅうりつが　１２０パーセント！▼
 ということは　すばやくない
 ポケモンなら　フォーカスレンズ　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T06:07:55" />
+				Time="2011-09-22T05:11:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1701,18 +1701,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こうかくレンズと　フォーカスレンズ▼
-よく　にた　どうぐ　だけど
-なまえも　ちがうし　こうかも　ちがう▼
+似ている　道具　だけど
+名前も　違うし　効果も　ちがう▼
 こうかくレンズは
-めいちゅうりつが　１１０パーセントに▼
+命中率が　１１０パーセント！▼
 フォーカスレンズは
-あとから　わざを　だすときに▽
-めいちゅうりつが　１２０パーセントに▼
+後から　技を　だすときに▽
+命中率が　１２０パーセント！▼
 ということは　すばやくない
 ポケモンなら　フォーカスレンズ　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T06:07:58" />
+				Time="2011-09-22T05:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2294,11 +2294,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ピンポン！　ピンポーン！！▼
-だいせいかい　です！
+大正解　です！
 あなたに　これを　プレゼント！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T06:49:30" />
+				Time="2011-09-22T05:11:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

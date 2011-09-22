@@ -2124,7 +2124,8 @@ RANGERW</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c02gym0101_counter2_01">
+		Label="msg_c02gym0101_counter2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>no data</Text>
