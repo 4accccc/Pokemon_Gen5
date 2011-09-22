@@ -2,14 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d31r0201_assistantw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>そらの　はてまで　つきぬけて
+そびえたつ　くろのまてんろう……▽
+きょうみぶかい　たてもの　よね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>空の　果てまで　突き抜けて
+そびえたつ　黒の摩天楼……▽
+非常に　興味深い　建造物ね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,10 +32,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア1～5クリアまで</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -47,5 +59,257 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0201_assistantw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリア６は　ちじょうからは
+みえないくらい　たかい　ところに▽
+あるみたいね……▼
+ホント　どこまで　つづいてるのかしら
+けんきゅうしゃとして▽
+きょうみは　つきないわね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリア６は　地上からは
+みえないくらい　高い所に▽
+あるみたいね……▼
+ホント　どこまで　続いてるのかしら？
+研究者として　興味は　尽きないわね▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0201_assistantw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなた　いちばん　うえの
+エリアも　クリアしたんだってね……▼
+バンジロウくんしか　そんなこと
+できるトレーナー　いないとおもってた▼
+すごいわ……まさに　もう
+くもの　うえの　ひとって　かんじね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなた　一番　上の
+エリアも　クリアしたんだってね……▼
+バンジロウくんしか　そんなこと
+できるトレーナー　いないと思ってた▼
+すごいわ……まさに　もう
+雲の上の人って　感じね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>科学者女　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0201_espm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いままで　みたことも　ない
+つよい　ちからを　かんじる……▼
+ふるえが……とまらないよ……
+このビルには　いったい▽
+なにが　かくされているんだ？▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いままで　みたことも　ない
+強い力を　感じる……▼
+震えが……止まらないよ……
+このビルには　いったい▽
+なにが　隠されているんだ？▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア1～5クリアまで</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0201_espm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんなんだ　この　ちからは！
+どんどん　おおきくなって　いるんだ！▼
+ううっ……とりはだが　とまらない……
+くろのまてんろう……▽
+いったい　どんな　ひみつが……▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんなんだ　この　力は！
+どんどん　大きくなって　いるんだ！▼
+ううっ……鳥肌が　止まらない……
+黒の摩天楼……▽
+いったい　どんな　秘密が……▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア5クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0201_espm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみが　すべての
+エリアを　せいはしたと　きいて▽
+ぼくも　すべてを　りかいしたよ▼
+いままで　ぼくが　かんじていた
+ふるえあがるような　ちから……▼
+それは　きみが　もっていた
+せんざいのうりょく　だったんだ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみが　すべての
+エリアを　制覇したと　聞いて▽
+ぼくも　全てを　理解したよ▼
+いままで　ぼくが　感じていた
+震え上がるような　力……▼
+それは　きみが　持っていた
+潜在能力だったんだ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
+エリア10クリア後</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>サイキッカー男　黒の摩天楼</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-09-22T02:54:12" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
