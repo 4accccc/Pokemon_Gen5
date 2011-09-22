@@ -47,7 +47,7 @@
 
 #define BG_H04_SIGN_03                    0
 #define BG_H04_SIGN_01                    1
-#define H04_HIDE_ITEM_01                  2
+#define HIDE_ITEM_125                     2
 #define BG_H04_SIGN_02                    3
 #define BG_H04_DUMMY_FES_01               4
 #define BG_H04_DUMMY_FES_02               5
@@ -64,5 +64,7 @@
 #define BG_H04_DUMMY_FES_13              16
 #define BG_H04_DUMMY_FES_14              17
 #define BG_H04_DUMMY_FES_15              18
+#define HIDE_ITEM_126                    19
+#define HIDE_ITEM_127                    20
 
 #endif //ZONE_H04_EVB_H

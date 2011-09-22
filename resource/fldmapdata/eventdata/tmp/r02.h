@@ -39,5 +39,7 @@
 #define BG_R02_BOARD3_01                  2
 #define BGID_R02_ANIMAL_TRAIL_01_1        3
 #define BGID_R02_ANIMAL_TRAIL_01_2        4
+#define HIDE_ITEM_130                     5
+#define HIDE_ITEM_131                     6
 
 #endif //ZONE_R02_EVB_H

@@ -31,5 +31,7 @@
 #ifndef ZONE_D32R0101_EVB_H
 #define ZONE_D32R0101_EVB_H
 
+#define HIDE_ITEM_123                     0
+#define HIDE_ITEM_124                     1
 
 #endif //ZONE_D32R0101_EVB_H

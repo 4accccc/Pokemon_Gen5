@@ -51,5 +51,10 @@
 #define BG_R04W_SIGN1_01                  0
 #define BG_R04W_SIGN4_01                  1
 #define BG_R04W_SIGN4_02                  2
+#define HIDE_ITEM_142                     3
+#define HIDE_ITEM_143                     4
+#define HIDE_ITEM_144                     5
+#define HIDE_ITEM_145                     6
+#define HIDE_ITEM_146                     7
 
 #endif //ZONE_R04W_EVB_H
