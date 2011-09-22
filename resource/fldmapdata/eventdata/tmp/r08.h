@@ -30,5 +30,7 @@
 #define BG_R08_SIGN1_01                   0
 #define BG_R08_SIGN3_01                   1
 #define BG_R08_SIGN2_01                   2
+#define HIDE_ITEM_159                     3
+#define HIDE_ITEM_160                     4
 
 #endif //ZONE_R08_EVB_H

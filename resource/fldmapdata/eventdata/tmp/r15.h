@@ -31,5 +31,7 @@
 #define BG_R15_BOARD_02                   1
 #define BG_R15_BOARD_03                   2
 #define BG_R15_BOARD_04                   3
+#define HIDE_ITEM_181                     4
+#define HIDE_ITEM_182                     5
 
 #endif //ZONE_R15_EVB_H

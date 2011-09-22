@@ -30,5 +30,6 @@
 
 #define BG_R16_BOARD_01                   0
 #define BG_R16_BOARD_02                   1
+#define HIDE_ITEM_183                     2
 
 #endif //ZONE_R16_EVB_H

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 11:59:13
+#save date:2011/09/22 15:49:36
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION START:OBJ_EVENT
@@ -329,7 +329,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+7
 #event number: 0
 #Bg Event Label
 BGID_R14R0201_ANIMAL_TRAIL_01_1
@@ -369,6 +369,58 @@ SCRID_ANIMAL_TRAIL_14
 EVENTDATA_POSTYPE_GRID
 #position
 328 80 104
+#event number: 3
+#Bg Event Label
+HIDE_ITEM_177
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_177
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 64 -120
+#event number: 4
+#Bg Event Label
+HIDE_ITEM_178
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_178
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 16 -568
+#event number: 5
+#Bg Event Label
+HIDE_ITEM_179
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_179
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 32 -312
+#event number: 6
+#Bg Event Label
+HIDE_ITEM_180
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_180
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 64 -104
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

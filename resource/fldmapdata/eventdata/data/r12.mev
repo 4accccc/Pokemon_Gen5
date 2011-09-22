@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/17 20:07:01
+#save date:2011/09/22 15:29:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r12.wms
 #SECTION START:OBJ_EVENT
@@ -298,7 +298,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-18
+21
 #event number: 0
 #Bg Event Label
 BG_R12_SIGN_01
@@ -533,6 +533,45 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 568 0 104
+#event number: 18
+#Bg Event Label
+HIDE_ITEM_167
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_167
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 32 24
+#event number: 19
+#Bg Event Label
+HIDE_ITEM_168
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_168
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 16 56
+#event number: 20
+#Bg Event Label
+HIDE_ITEM_169
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_169
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 0 200
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

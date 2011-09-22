@@ -29,5 +29,9 @@
 #define BGID_R14R0201_ANIMAL_TRAIL_01_1   0
 #define BGID_R14R0201_ANIMAL_TRAIL_02_1   1
 #define BGID_R14R0201_ANIMAL_TRAIL_02_2   2
+#define HIDE_ITEM_177                     3
+#define HIDE_ITEM_178                     4
+#define HIDE_ITEM_179                     5
+#define HIDE_ITEM_180                     6
 
 #endif //ZONE_R14R0201_EVB_H
