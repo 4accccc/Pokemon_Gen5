@@ -4,7 +4,7 @@
 #**
 ##-----------------------------------------------------------------------------
 
-USERS	= matsuda kawada_koji
+USERS	= matsuda kawada_koji onoue_masayuki tsuruta_saya
 
 SUBDIRS		=
 

@@ -28,6 +28,12 @@
 //=============================================================================
 #define  POKEFOOT_EX_ARC_CHAR_GIRATHINA_FORM_01  NARC_pokefoot_ex_poke_foot_487_001_NCGR    // 487 ギラティナ フォルム01
 #define  POKEFOOT_EX_ARC_CHAR_SHEIMI_FORM_01     NARC_pokefoot_ex_poke_foot_492_001_NCGR    // 492 シェイミ   フォルム01
+#define  POKEFOOT_EX_ARC_CHAR_KYUREMU_FORM_01     NARC_pokefoot_ex_poke_foot_646_001_NCGR    // 646 キュレム   フォルム01
+#define  POKEFOOT_EX_ARC_CHAR_KYUREMU_FORM_02     NARC_pokefoot_ex_poke_foot_646_002_NCGR    // 646 キュレム   フォルム02
+#define  POKEFOOT_EX_ARC_CHAR_KERUDHIO_FORM_01     NARC_pokefoot_ex_poke_foot_647_001_NCGR    // 647 ケルディオ   フォルム01
+#define  POKEFOOT_EX_ARC_CHAR_TORUNEROSU_FORM_01     NARC_pokefoot_ex_poke_foot_641_001_NCGR    // 641 トルネロス   フォルム01
+#define  POKEFOOT_EX_ARC_CHAR_BORUTOROSU_FORM_01     NARC_pokefoot_ex_poke_foot_642_001_NCGR    // 642 ボルトロス   フォルム01
+#define  POKEFOOT_EX_ARC_CHAR_RANDOROSU_FORM_01     NARC_pokefoot_ex_poke_foot_645_001_NCGR    // 645 ランドロス   フォルム01
 
 
 //=============================================================================
@@ -82,6 +88,30 @@ int POKEFOOT_EX_CharDataIdxGet(int monsno, int formno)
   else if( monsno == MONSNO_SHEIMI && formno == FORMNO_SHEIMI_SKY )
   {
     return  POKEFOOT_EX_ARC_CHAR_SHEIMI_FORM_01;
+  }
+  else if( monsno == MONSNO_KYUREMU && formno == FORMNO_KYUREMU_WHITE )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_KYUREMU_FORM_01;
+  }
+  else if( monsno == MONSNO_KYUREMU && formno == FORMNO_KYUREMU_BLACK )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_KYUREMU_FORM_02;
+  }
+  else if( monsno == MONSNO_KERUDHIO && formno == FORMNO_KERUDHIO_SWORD )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_KERUDHIO_FORM_01;
+  }
+  else if( monsno == MONSNO_TORUNEROSU && formno == FORMNO_TORUNEROSU_AR )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_TORUNEROSU_FORM_01;
+  }
+  else if( monsno == MONSNO_BORUTOROSU && formno == FORMNO_BORUTOROSU_AR )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_BORUTOROSU_FORM_01;
+  }
+  else if( monsno == MONSNO_RANDOROSU && formno == FORMNO_RANDOROSU_AR )
+  {
+    return  POKEFOOT_EX_ARC_CHAR_RANDOROSU_FORM_01;
   }
   else
   {

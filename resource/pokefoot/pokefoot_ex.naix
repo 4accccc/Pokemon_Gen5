@@ -12,7 +12,13 @@
 
 enum {
 	NARC_pokefoot_ex_poke_foot_487_001_NCGR = 0,
-	NARC_pokefoot_ex_poke_foot_492_001_NCGR = 1
+	NARC_pokefoot_ex_poke_foot_492_001_NCGR = 1,
+	NARC_pokefoot_ex_poke_foot_646_001_NCGR = 2,
+	NARC_pokefoot_ex_poke_foot_646_002_NCGR = 3,
+	NARC_pokefoot_ex_poke_foot_647_001_NCGR = 4,
+	NARC_pokefoot_ex_poke_foot_641_001_NCGR = 5,
+	NARC_pokefoot_ex_poke_foot_642_001_NCGR = 6,
+	NARC_pokefoot_ex_poke_foot_645_001_NCGR = 7
 };
 
 /* NARC_POKEFOOT_EX_NAIX_ */
