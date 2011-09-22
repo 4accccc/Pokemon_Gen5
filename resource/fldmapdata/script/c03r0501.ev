@@ -53,10 +53,8 @@ EVENT_END
 /*  おじいさん：話しかけ（アイテム入手）                      */
 /**************************************************************/
 EVENT_START   ev_c03r0501_oldman_01
-  //アイテム「せんせいのツメ」入手
-  _EASY_TALK_ITEM_EVENT( ITEM_SENSEINOTUME, 1, FE_C03R0501_ITEMGET_01, msg_c03r0501_oldman_01, msg_c03r0501_oldman_02, msg_c03r0501_oldman_02 )
+  //アイテム「おまもりこばん」入手
+  _EASY_TALK_ITEM_EVENT( ITEM_OMAMORIKOBAN, 1, FE_C03R0501_ITEMGET_01, msg_c03r0501_oldman_01, msg_c03r0501_oldman_02, msg_c03r0501_oldman_02 )
 EVENT_END
-
-
 
 

@@ -27,7 +27,10 @@ _EVENT_DATA    ev_c03r0402_assistantm_01
 _EVENT_DATA    ev_c03r0402_woman1_01
 _EVENT_DATA    ev_c03r0402_man1_01
 _EVENT_DATA    ev_c03r0402_middleman2_01
-_EVENT_DATA    ev_c03r0402_trainerm_01
+_EVENT_DATA    ev_c03r0402_man2_01
+_EVENT_DATA    ev_c03r0402_woman2_01
+_EVENT_DATA    ev_c03r0402_man1_02
+_EVENT_DATA    ev_c03r0402_assistantm_02
 _EVENT_DATA_END
 
 
@@ -375,7 +378,7 @@ EVENT_START   ev_c03r0402_middleman2_01
 
 EVENT_END
 
-ev_battle_check:	
+ev_battle_check:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	
@@ -387,45 +390,31 @@ ev_battle_check:
 _RET
 
 /**************************************************************/
-/*  エリート♂：話しかけ                                      */
+/*  男性02：話しかけ                                          */
 /**************************************************************/
-EVENT_START   ev_c03r0402_trainerm_01
+EVENT_START   ev_c03r0402_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_man2_01 )
+EVENT_END
 
-  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-  //クリア後
-    _TALK_OBJ_START()
+/**************************************************************/
+/*  女性02：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0402_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_woman2_01 )
+EVENT_END
 
-    //ゾーンＢＧＭ変更チェック
-    IF FLAG_OFF( SYS_FLAG_BGM_C03R0402 ) THEN
-    //ゾーン曲かわる前
+/**************************************************************/
+/*  男性03：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0402_man1_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_man1_01 )
+EVENT_END
 
-      //エリート：ちゃんと　サウンド
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_02 )
-      _MSGWIN_CLOSE()
-
-      _START_EVENT_BGM( SEQ_BGM_E_SOUND_DESIGNER )  //【仮】ロケット団のものを
-
-      //========================================//
-      //ＢＧＭ変更フラグをセット
-      _FLAG_SET( SYS_FLAG_BGM_C03R0402 )
-      //BGMチェンジでの環境SEポーズ状態をCLEAR
-      _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
-      //========================================//
-
-    ELSE
-    //ゾーン曲がロケット団曲に変わっている
-      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_03 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ENDIF
-
-  ELSE
-  //クリア前
-    //ぼくサウンドデザイナー！
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_01 )
-  ENDIF
-
+/**************************************************************/
+/*  助手♂02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c03r0402_assistantm_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_assistantm_01 )
 EVENT_END
 
 

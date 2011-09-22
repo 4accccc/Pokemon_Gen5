@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 11:25:28
+#save date:2011/09/21 13:06:19
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r0402.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03r0402.wms
 #hold event type:
 1
 #hold event number:
-7
+10
 #event number: 0
 #type
 1
@@ -200,9 +200,40 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C03R0402_TRAINERM_01
+C03R0402_MAN2_01
 #OBJ CODE Number
-TRAINERM
+MAN2
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0402_MAN2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 72
+#event number: 7
+#type
+1
+#ID name
+C03R0402_WOMAN2_01
+#OBJ CODE Number
+WOMAN2
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
@@ -210,7 +241,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C03R0402_TRAINERM_01
+SCRID_C03R0402_WOMAN2_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -226,7 +257,69 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 56
+-136 0 136
+#event number: 8
+#type
+1
+#ID name
+C03R0402_MAN1_02
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0402_MAN1_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 56
+#event number: 9
+#type
+1
+#ID name
+C03R0402_ASSISTANTM_02
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0402_ASSISTANTM_02
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

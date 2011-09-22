@@ -14,7 +14,10 @@
 #define C03R0402_WOMAN1_01                 3
 #define C03R0402_MAN1_01                   4
 #define C03R0402_MIDDLEMAN2_01             5
-#define C03R0402_TRAINERM_01               6
+#define C03R0402_MAN2_01                   6
+#define C03R0402_WOMAN2_01                 7
+#define C03R0402_MAN1_02                   8
+#define C03R0402_ASSISTANTM_02             9
 
 #endif //ZONE_C03R0402_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0402.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

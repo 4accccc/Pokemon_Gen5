@@ -13,6 +13,7 @@
 #define H01R0201_INFORMATIONW_01           0
 #define H01R0201_WORKMAN_01                1
 #define H01R0201_WOMAN2_01                 2
+#define H01R0201_OL_01                     3
 
 #endif //ZONE_H01R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

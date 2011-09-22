@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/17 18:33:31
+#save date:2011/09/21 13:00:08
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03p13.wms
 #SECTION START:OBJ_EVENT
@@ -14,42 +14,11 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03p13.wms
 #type
 1
 #ID name
-C03P13_VETERANM_01
-#OBJ CODE Number
-VETERANM
-#MOVE CODE Number
-MV_RAIL_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C03P13_VETERANM_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-1
-#Move Limit Z Number
-1
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-0 2 0
-#event number: 1
-#type
-1
-#ID name
 C03P13_BOY2_01
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_RAIL_RND
+MV_RAIL_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -57,7 +26,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03P13_BOY2_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,8 +40,8 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 8 0
-#event number: 2
+0 3 -2
+#event number: 1
 #type
 1
 #ID name
@@ -103,6 +72,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_RAIL
 #position
 0 0 4
+#event number: 2
+#type
+1
+#ID name
+C03P13_VETERANM_01
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03P13_VETERANM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 2 -2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -24,6 +24,7 @@ _EVENT_DATA   ev_h01r0201_informationw_01
 _EVENT_DATA   ev_h01r0201_woman2_01
 _EVENT_DATA   ev_h01r0201_workman_01
 _EVENT_DATA   ev_pos_h01r0201_workman_01
+_EVENT_DATA   ev_h01r0201_ol_01
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -116,6 +117,14 @@ EVENT_START   ev_pos_h01r0201_workman_01
   _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_u )
   _OBJ_ANIME_WAIT()
 
+EVENT_END
+
+/**************************************************************/
+/*  ＯＬ：話しかけ（アイテム入手）                            */
+/**************************************************************/
+EVENT_START   ev_h01r0201_ol_01
+  //アイテム「せんせいのツメ」入手
+  _EASY_TALK_ITEM_EVENT( ITEM_SENSEINOTUME, 1, FE_H01R0201_ITEMGET_01, msg_h01r0201_ol_01, msg_h01r0201_ol_02, msg_h01r0201_ol_02 )
 EVENT_END
 
 
