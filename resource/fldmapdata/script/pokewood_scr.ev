@@ -999,6 +999,8 @@ _RET
 /**************************************************************/
 //
 /**************************************************************/
+DEFINE_LOCAL  LWK_BM_DOOR_ID
+
 ev_pkwd_show_watch_movie:
   //フェスミッション強制終了処理
   _FMISSION_END_FORCE()
@@ -1008,25 +1010,66 @@ ev_pkwd_show_watch_movie:
   _MSGWIN_CLOSE()
 
   //スクリーンに入る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_door )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  $LWK_HEROZ -= 1
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
   _OBJ_ANIME_WAIT()
 
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+
+  _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
+
   _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  $LWK_HEROZ -= 1
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
+
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
 
   //スクリーンから出てくる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
   _OBJ_ANIME_WAIT()
 
+  //_PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  //$LWK_HEROZ -= 1
+  //_BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_to_reception )
+  _OBJ_ANIME_WAIT()
+
+
   $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_AFTER
 _RET
 
-_ANIME_LABEL  anm_player_go_in_theater
+_ANIME_LABEL  anm_player_go_door
   _ANIME_DATA AC_WALK_R_8F, 6
-  _ANIME_DATA AC_WALK_U_8F, 3
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_in_theater
+  _ANIME_DATA AC_WALK_U_8F, 1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_go_out_theater
-  _ANIME_DATA AC_WALK_D_8F, 3
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_to_reception
+  _ANIME_DATA AC_WALK_D_8F, 2
   _ANIME_DATA AC_WALK_L_8F, 6
   _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0

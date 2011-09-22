@@ -716,7 +716,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
   //エンカウントエフェクト
   case PW_SHOW_SEQ_ENCOUNT_EFFECT:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys,fieldmap,FIELD_FADE_WAIT) );
+    //GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys,fieldmap,FIELD_FADE_WAIT) );
     //ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
     (*seq)++;
     break;
@@ -795,8 +795,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
   // フェードイン処理
   case PW_SHOW_SEQ_FADEIN:
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    //GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     (*seq) ++;
     break;
 
