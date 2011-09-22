@@ -12,7 +12,7 @@
   .include  "msg_c14.h"
   .include  "c14.h"
 
-  //@author fujimura_souichirou（ジムクリア時イベント・カップル）
+  //@author fujimura_souichirou（ジムクリア時イベント・カップル・顔出し看板）
   //@author Mizuguchi_Mai（ジムクリア前イベント・看板）
 
 //--------------------------------------------------------------
@@ -22,6 +22,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_c14
 _EVENT_DATA    ev_init_c14
 _EVENT_DATA    ev_scene_c14_swrival_01
 _EVENT_DATA    ev_scene_c14_swleader8_01
@@ -30,17 +31,36 @@ _EVENT_DATA    ev_c14_girl4_01
 _EVENT_DATA    ev_c14_boy4_01
 _EVENT_DATA    ev_c14_boy4_02
 _EVENT_DATA    ev_pos_c14_swleader8_01
+_EVENT_DATA    ev_pos_c14_kaodasi_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
-DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+//------------------------------注意--------------------------------//
+//                                                                  //
+//  顔出し看板イベントに LOCALWORK0～1を使用しています。            //
+//  同マップ内の使用を禁止します。                                  //
+//                                                                  //
+//------------------------------------------------------------------//
+
+
 /**************************************************************/
 /*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
-//ev_zone_c14:
-//  _END
+INIT_EVENT_START  ev_zone_c14
+
+  //顔出し看板イベント制御（１日１回）
+  IF FLAG_ON( TMFLG_C14_KAODASI_01 ) THEN
+
+    //顔出し看板POSをOFFに
+    $LOCALWORK0 = 1
+
+  ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*  FIELD_INIT_LABEL                                        */
@@ -79,7 +99,6 @@ INIT_EVENT_START  ev_init_c14
   ENDIF
 
 INIT_EVENT_END
-
 
 /************************************************************/
 /*  SCENE_CHANGE01：街到着ライバルイベント                  */
@@ -363,30 +382,166 @@ EVENT_START   ev_c14_boy4_02
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_boy4_02 )
 EVENT_END
 
+/************************************************************/
+/*  POS：顔出し看板イベント（１日１回）                     */
+/************************************************************/
+EVENT_START   ev_pos_c14_kaodasi_01
+
+  _TALK_START_SE_PLAY()
+
+  //プレイヤーの向きを取得
+  _PLAYER_DIR_GET( LWK_DIR ) 
+
+  //主人公が下を向いていない場合は下を向かせる
+  IF $LWK_DIR != DIR_DOWN THEN
+    //アニメ：主人公振り向き
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //クリア前の場合
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ＢＧ：かおだしかんばんだ……
+    _PLAINWIN_MSG_DOWN( msg_c14_sign4_01 )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+    //==================================//
+    //顔出し看板イベント終了（翌日復活）
+    _FLAG_SET( TMFLG_C14_KAODASI_01 )
+    //POS進行
+    $LOCALWORK0 = 1
+    //==================================//
+
+  //クリア後
+  ELSE
+
+    //==================================//
+    //カメラマン表示
+    _FLAG_RESET( FV_C14_KAODASI_01 )
+    //POS進行
+    $LOCALWORK0 = 1
+    //==================================//
+
+    //ＢＧ：かおだしかんばんが　ある……！▼
+    _PLAINWIN_MSG_DOWN( msg_c14_sign4_02 )
+    _PLAINWIN_CLOSE()
+
+    //カメラマン出現
+    _OBJ_ADD( C14_VETERANM_01 )
+
+    //乱数で0～4幅で一緒に出現するゲストキャラを決める
+    _GET_RND( LOCALWORK1, 4 )
+    IF $LOCALWORK1 == 0 THEN
+      //フィールド上にシズイ配置
+      _OBJ_ADD_EX( 777, 182, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWLEADER8, MV_DMY )
+    ELSIF $LOCALWORK1 == 1 THEN
+      //フィールド上に女性配置
+      _OBJ_ADD_EX( 777, 182, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, WOMAN2, MV_DMY )
+    ELSIF $LOCALWORK1 == 2 THEN
+      //フィールド上にビジネスマン配置
+      _OBJ_ADD_EX( 777, 182, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BUSINESSMAN, MV_DMY )
+    ELSIF $LOCALWORK1 == 3 THEN
+      //フィールド上にゴチミル配置
+      _OBJ_ADD_EX( 777, 182, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, POKE39, MV_DMY )
+    ENDIF
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+    //アニメ：カメラマン＋ゲスト登場
+    IF $LCW_POSX == 786 THEN
+      _OBJ_ANIME( C14_VETERANM_01, anm_veteranm_walk_01 )
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_eventobj_walk_01 )
+    ELSE
+      _OBJ_ANIME( C14_VETERANM_01, anm_veteranm_walk_02 )
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_eventobj_walk_02 )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+
+    //カメラマン：はい　チーズ！！▼
+    _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_03, C14_VETERANM_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //フラッシュ演出（SE
+    _SE_PLAY( SEQ_SE_GYM_E02 )
+    _WHITE_IN()
+    _DISP_FADE_END_CHECK()
+    _SE_WAIT()  //SE待ち
+
+    _TIME_WAIT( 8 )
+
+    //登場ゲストによって演出分岐
+    IF $LOCALWORK1 == 0 THEN
+      //シズイ：これも　きねん　たい！▼
+      _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    ELSIF $LOCALWORK1 == 1 THEN
+      //女性：ひとりだと……　さみしいから！▼
+      _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    ELSIF $LOCALWORK1 == 2 THEN
+      //ビジネスマン：じぶん　マニアです
+      _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    ELSIF $LOCALWORK1 == 3 THEN
+      //ゴチミル：ちみる♪
+      _VOICE_PLAY( MONSNO_607, 0 ) 
+      _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+      _VOICE_WAIT()
+    ENDIF
+    _MSGWIN_CLOSE()
+
+    //アニメ：カメラマン＋ゲスト退場
+    IF $LCW_POSX == 786 THEN
+      _OBJ_ANIME( C14_VETERANM_01, anm_veteranm_bye_01 )
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_eventobj_bye_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    ELSE
+      _OBJ_ANIME( C14_VETERANM_01, anm_veteranm_bye_02 )
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_eventobj_bye_02 )
+      _TIME_WAIT( 8 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+    _OBJ_DEL( C14_VETERANM_01 )
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+    _TIME_WAIT( 16 )   //砂浜の足跡が消えるまで待ち
+
+    //==================================//
+    //カメラマン非表示
+    _FLAG_SET( FV_C14_KAODASI_01 )
+    //顔出し看板イベント終了（翌日復活）
+    _FLAG_SET( TMFLG_C14_KAODASI_01 )
+    //==================================//
+
+  ENDIF
+
+EVENT_END
+
 
 //--------------------------------------------------------------------
-//共通：ターン右                 
+//共通：ターン右
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_turn_r
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通：ターン左                        
+//共通：ターン左
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_turn_l
   _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通：ターン上                        
+//共通：ターン上
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_turn_u
   _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通：ターン下                         
+//共通：ターン下
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
@@ -397,6 +552,79 @@ _ANIME_LABEL  anm_common_turn_d
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：登場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_veteranm_walk_01
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：登場02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_veteranm_walk_02
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_R_8F,3
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲスト：登場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_eventobj_walk_01
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_R_8F,3
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲスト：登場02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_eventobj_walk_02
+  _ANIME_DATA AC_WALK_R_8F,9
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：退場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_veteranm_bye_01
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_L_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：退場02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_veteranm_bye_02
+  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_L_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲスト：退場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_eventobj_bye_01
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_L_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ゲスト：退場02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_eventobj_bye_02
+  _ANIME_DATA AC_WALK_L_8F,9
   _ANIME_DATA ACMD_END,0
 
 

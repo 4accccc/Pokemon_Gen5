@@ -45,13 +45,13 @@ EVENT_START   ev_c05r0201_oldman1_01
 
   _TALK_OBJ_START()
 
-  //【仮】50匹以上（条件を変更）
-  IF $LWK_ZUKAN_RESURT >= 50 THEN
+  //70匹以上
+  IF $LWK_ZUKAN_RESURT >= 70 THEN
 
     //「かいがらのすず」を過去にあげた事があるか
     IF FLAG_OFF( FE_C05R0201_ITEMGET_01 ) THEN
 
-      //おじいさん：ほう！　５０ひき　いじょうか！
+      //おじいさん：ほう！　７０ひき　いじょうか！
       _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_02, C05R0201_OLDMAN1_01 )
       _BALLOONWIN_CLOSE()
 
@@ -79,7 +79,7 @@ EVENT_START   ev_c05r0201_oldman1_01
 
   ELSE
 
-    //おじいさん：５０ひき　いじょうなら
+    //おじいさん：７０ひき　いじょうなら
     _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_01, C05R0201_OLDMAN1_01 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()

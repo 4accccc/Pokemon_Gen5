@@ -190,7 +190,8 @@ init_flags:
 
   //c14
   _FLAG_SET( FV_C14_SWLEADER8_01 )  //セイガイハシティ：シズイ
-  _FLAG_SET( FV_C14_BOY4_02 )  //セイガイハシティ：カップル男（独り用）
+  _FLAG_SET( FV_C14_BOY4_02 )       //セイガイハシティ：カップル男（独り用）
+  _FLAG_SET( FV_C14_KAODASI_01 )    //セイガイハシティ：カメラマン
 
   //R22
   _FLAG_SET( FV_R22_SWBOSS_01 ) //22番道路：アクロマ
