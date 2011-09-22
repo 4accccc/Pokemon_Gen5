@@ -111,7 +111,10 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
         }
       }
       //タマゴではないポケモンを見つけられなかった
-      if (i == num) GF_ASSERT(0);
+      //@todo 仮でタブンネを登録
+      if (i == num){
+        WORDSET_RegisterPokeMonsNameNo( wordset, 3, 531 );
+      }
     }
 
     // 1番にLCCの隠しキャラと交換をした場合のみ、自分が交換に出したポケモンの種族名(タマゴを除く)
