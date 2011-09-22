@@ -850,6 +850,7 @@
 #define FV_C15R0301_BONUS_2                882 /* 0x0372 ポケウッド：ファン（スターランク2） */
 #define FV_C15R0301_BONUS_3                883 /* 0x0373 ポケウッド：ファン（スターランク3） */
 #define FV_C15R0301_BONUS_4                884 /* 0x0374 ポケウッド：ファン（スターランク4） */
+#define FV_C14_KAODASI_01                  885 /* 0x0375 セイガイハシティ：顔出し看板イベントのカメラマン */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2591,6 +2592,7 @@
 #define TMFLG_C01GYM0101_SHOW             2777 /* 0x0ad9 サンヨウレストラン：サルショーイベント */
 #define TMFLG_C14_PHOTO                   2778 /* 0x0ada セイガイハシティ：顔出し看板 */
 #define TMFLG_C05R0501_SWRIVAL_BTL        2779 /* 0x0adb ホドモエシティ：クリア後ライバル再戦フラグ */
+#define TMFLG_C14_KAODASI_01              2780 /* 0x0adc セイガイハシティ：顔出し看板イベント制御（１日１回） */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
