@@ -163,6 +163,9 @@
 #include "../../../prog/include/gamesystem/fmission_log_id.h"
 #include "../../../prog/src/field/fes_gimmick_npc.h"
 
+// 無限ダンジョン
+#include "../../../prog/src/field/infinity_dungeon_def.h"
+
 //======================================================================
 //  共通メッセージ関連
 //======================================================================
