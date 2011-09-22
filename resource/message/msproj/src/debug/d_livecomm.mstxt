@@ -1815,6 +1815,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlc_fake_tr_view">
+		<LanguageCell
+			Language="JPN">
+			<Text>tr_view=[Digit:2digits Idx="0" ]  mine=[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T06:10:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T06:10:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>tr_view=[Digit:2digits Idx="0" ]  mine=[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T06:10:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T06:10:38" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dlc_sex_male"
 		Style="Large">
 		<LanguageCell

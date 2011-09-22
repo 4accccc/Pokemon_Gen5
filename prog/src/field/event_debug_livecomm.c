@@ -118,6 +118,7 @@ typedef enum{
   FAKE_VERSION,
   FAKE_LANG,
   FAKE_COLOR,
+  FAKE_CHAR,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -495,6 +496,7 @@ static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_VERSION, 3, VERSION_WHITE, VERSION_B2,}, //FAKE_VERSION,
   { BPRM_WSET_LANG, 1, LANG_JAPAN, LANG_KOREA,}, //FAKE_LANG,
   { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_COLOR,
+  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_CHAR,
 };
 
 ////////////////////////////////////////////////
@@ -692,6 +694,7 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     fake[FAKE_VERSION] = GET_VERSION();  //PM_VERSION;
     fake[FAKE_LANG] = PM_LANG;
     fake[FAKE_COLOR] = owner_info.favoriteColor;
+    fake[FAKE_CHAR] = MyStatus_GetTrainerView( wk->my_status );
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -1054,6 +1057,8 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
   info->language = fake[FAKE_LANG];
   //color
   info->favorite_color_index = fake[FAKE_COLOR];
+  //tr_char
+  info->trainer_view = fake[FAKE_CHAR];
   //rank
   if( fake[FAKE_COLOR] < 6 ){
     info->research_team_rank = fake[FAKE_COLOR];
