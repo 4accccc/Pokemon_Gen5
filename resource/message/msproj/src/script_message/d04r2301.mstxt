@@ -29,10 +29,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・メッセージ表示＋鳴き声再生後に戦闘へ</Comment>
+・メッセージ表示＋鳴き声再生後に戦闘へ
+※swanでココに移動</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T05:09:56" />
+				Time="2011-09-22T06:50:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88,10 +89,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・ポケモンを倒した場合のメッセージ
-・殿堂入り後に復活</Comment>
+・殿堂入り後に復活
+※swanでココに移動</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T05:09:44" />
+				Time="2011-09-22T06:50:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
