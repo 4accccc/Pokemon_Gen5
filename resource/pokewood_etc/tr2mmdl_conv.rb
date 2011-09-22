@@ -36,6 +36,7 @@ raw_data.each{|column|
   if trtype == "–¢Œˆ’è" then next end
 
   trtypeid = headerArray.search( 'TRTYPE_' + trtype, trtype )
+  mmdlid = headerArray.search( mmdl, mmdl )
   if trtypeid == nil then 
     puts "trtype = #{trtype}"
     puts column
@@ -61,8 +62,8 @@ File.open(ARGV[1],"w"){|writefile|
   writefile.puts("//#{ARGV[0]} --> #{ARGV[1]}")
 
   writefile.puts("static const u16 TrType2MMdl[][2] = {")
-  conv_data.each{|trtype|
-    writefile.printf("\t{ %s, %s },\n", trtype, conv_data[trtype] )
+  conv_data.each{|trtype, mmdl|
+    writefile.printf("\t{ TRTYPE_%s, %s },\n", trtype, mmdl )
   }
   writefile.puts("};\n")
 }
