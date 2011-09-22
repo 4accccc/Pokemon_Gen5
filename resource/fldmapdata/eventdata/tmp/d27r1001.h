@@ -18,16 +18,15 @@
 #define D27R1001_HINT_04                   7
 #define D27_POKE10_02                      8
 #define D27R1001_STOPPER_01                9
-#define D27R1001_STOPPER_02               10
-#define D27R1001_SWSAGE7_01               11
-#define D27R1001_SWPLAZMAM_01             12
-#define FLD_ITEM_187                      13
-#define FLD_ITEM_188                      14
-#define FLD_ITEM_190                      15
-#define FLD_ITEM_192                      16
-#define D27R1001_SWPLAZMAM_02             17
-#define D27R1001_SWPLAZMAM_03             18
-#define D27R1001_SWPLAZMAW_01             19
+#define D27R1001_SWSAGE7_01               10
+#define D27R1001_SWPLAZMAM_01             11
+#define FLD_ITEM_187                      12
+#define FLD_ITEM_188                      13
+#define FLD_ITEM_190                      14
+#define FLD_ITEM_192                      15
+#define D27R1001_SWPLAZMAM_02             16
+#define D27R1001_SWPLAZMAM_03             17
+#define D27R1001_SWPLAZMAW_01             18
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

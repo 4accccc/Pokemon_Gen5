@@ -41,6 +41,9 @@ _EVENT_DATA    ev_bg_d27r1001_panel_02
 _EVENT_DATA    ev_d27r1001_swplazmam_02
 _EVENT_DATA    ev_d27r1001_swplazmam_03
 _EVENT_DATA    ev_d27r1001_swplazmaw_01
+_EVENT_DATA    ev_pos_d27r1001_stopper_01
+_EVENT_DATA    ev_pos_d27r1001_stopper_02
+_EVENT_DATA    ev_d27r1001_stopper_03
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -261,6 +264,114 @@ EVENT_START	ev_bg_d27r1001_panel_02
   ENDIF
   
 EVENT_END
+
+/************************************************************/
+/*					POS：ストッパープラズマ団（アクロマ戦前）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1001_stopper_01
+
+  //アニメ：ストッパー「！」
+  _OBJ_ANIME( D27R1001_STOPPER_01 , anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D27R1001_STOPPER_01 , anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ストッパー
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1001_swplazmam_stop_01 , D27R1001_STOPPER_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公１歩戻る
+  _OBJ_ANIME( D27R1001_STOPPER_01 , anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_r )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
+/************************************************************/
+/*					POS：ストッパープラズマ団（アクロマ戦後）				*/
+/************************************************************/
+EVENT_START	ev_pos_d27r1001_stopper_02
+
+  //アニメ：ストッパー「！」
+  _OBJ_ANIME( D27R1001_STOPPER_01 , anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D27R1001_STOPPER_01 , anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ストッパー
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1001_swplazmam_stop_02 , D27R1001_STOPPER_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //退場処理
+  _CALL ev_d27_stopper_bye
+  
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：ストッパープラズマ団				*/
+/************************************************************/
+EVENT_START	ev_d27r1001_stopper_03
+
+  IF $WK_SCENE_D27R10R13_STOPPER == 0 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1001_swplazmam_stop_01 )
+  ELSE
+    _TALK_START_SE_PLAY()
+    
+    //アニメ：ストッパー「！」
+    _OBJ_ANIME( D27R1001_STOPPER_01 , anm_common_gyoe )
+    _OBJ_ANIME_WAIT()
+    
+    //ストッパー：じつは
+    _BALLOONWIN_OBJMSG_POS( msg_d27r1001_swplazmam_stop_02 , D27R1001_STOPPER_01 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //退場処理
+    _CALL ev_d27_stopper_bye
+  
+  ENDIF
+  
+EVENT_END
+
+/************************************************************/
+/*					CALL：ストッパープラズマ団				*/
+/************************************************************/
+ev_d27_stopper_bye:
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：ストッパー退場
+  IF $LCW_POSX == 9 THEN
+    _OBJ_ANIME( D27R1001_STOPPER_01 , anm_stopper_bye_x9)
+  ELSE
+    _OBJ_ANIME_AUTO( D27R1001_STOPPER_01 , 13, 19, FORCE_TYPE_NOT, 4, DIR_LR)
+  ENDIF
+  _TIME_WAIT(8)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //ストッパー動作モデル削除
+  _OBJ_DEL( D27R1001_STOPPER_01 )
+  
+  //=====================================
+  //D27R1301ストッパー削除
+  _FLAG_SET( FV_D27R1001_STOPPER_01 )
+  //D27R1301 POS無効
+  $WK_SCENE_D27R10R13_STOPPER = 2
+  //=====================================
+  
+_RET
+
+//--------------------------------------------------------------------
+//	ストッパー：退場x9
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_bye_x9
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_R_4F,5
+	_ANIME_DATA	AC_WALK_D_4F,7
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  プラズマ団員：話しかけ                                      */

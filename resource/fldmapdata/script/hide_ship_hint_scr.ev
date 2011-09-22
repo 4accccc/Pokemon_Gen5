@@ -388,7 +388,7 @@ EVENT_START ev_d27_hint_06
 EVENT_END
 
 /**************************************************************/
-/*  ヒント7                         */
+/*  プラズマカード入手処理                         */
 /**************************************************************/
 EVENT_START ev_d27_hint_07
   _TALK_OBJ_START()
@@ -436,6 +436,15 @@ EVENT_START ev_d27_hint_07
      _CALL ev_battle_check
      
      _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _MSGWIN_CLOSE()
+     
+     //キーカード入手処理
+     _ITEM_EVENT_KEYWAIT( ITEM_PURAZUMAKAADO, 1 )
+     
+     //D27カードキー所持
+      _FLAG_SET(FE_D27_CARDKEY_01)
+     
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint7_05 )
      _LAST_KEYWAIT()
      _MSGWIN_CLOSE()
     
@@ -446,7 +455,7 @@ EVENT_START ev_d27_hint_07
     
   //戦闘後
   ELSE
-    _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+    _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint7_05 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   ENDIF
