@@ -211,7 +211,7 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d31r0101_mountman_01"
+		Label="msg_d31r0101_mountman_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -259,7 +259,7 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d31r0101_mountman_01"
+		Label="msg_d31r0101_mountman_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
