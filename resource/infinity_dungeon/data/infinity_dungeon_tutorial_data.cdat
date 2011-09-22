@@ -609,11 +609,11 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
 // 黒 エリア1 トレーナーデータ
 static const u16 sc_tutorial_tr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 {
-  41, // 0
-  39, // 1
-  641, // 2
-  626, // 3
-  47, // 4
+  40, // 0
+  38, // 1
+  640, // 2
+  625, // 3
+  46, // 4
   1, // 5
   1, // 6
   1, // 7
@@ -645,10 +645,10 @@ static const u16 sc_tutorial_tr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 
 static const u16 sc_tutorial_rectr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 {
-  641, // 0
-  652, // 1
-  641, // 2
-  652, // 3
+  640, // 0
+  651, // 1
+  640, // 2
+  651, // 3
   652, // 4
   652, // 5
   652, // 6
@@ -682,12 +682,12 @@ static const u16 sc_tutorial_rectr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 // 黒 エリア2 トレーナーデータ
 static const u16 sc_tutorial_tr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
 {
-  111, // 0
-  117, // 1
-  602, // 2
-  99, // 3
-  652, // 4
-  107, // 5
+  110, // 0
+  116, // 1
+  601, // 2
+  98, // 3
+  651, // 4
+  106, // 5
   1, // 6
   1, // 7
   1, // 8
@@ -718,11 +718,11 @@ static const u16 sc_tutorial_tr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
 
 static const u16 sc_tutorial_rectr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
 {
-  652, // 0
-  641, // 1
-  641, // 2
-  641, // 3
-  652, // 4
+  651, // 0
+  640, // 1
+  640, // 2
+  640, // 3
+  651, // 4
   641, // 5
   641, // 6
   641, // 7
@@ -755,11 +755,11 @@ static const u16 sc_tutorial_rectr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
 // 白 エリア1 トレーナーデータ
 static const u16 sc_tutorial_tr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 {
-  4, // 0
-  24, // 1
-  651, // 2
-  621, // 3
-  19, // 4
+  3, // 0
+  23, // 1
+  650, // 2
+  620, // 3
+  18, // 4
   1, // 5
   1, // 6
   1, // 7
@@ -791,11 +791,11 @@ static const u16 sc_tutorial_tr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 
 static const u16 sc_tutorial_rectr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 {
-  651, // 0
-  642, // 1
-  651, // 2
-  642, // 3
-  642, // 4
+  650, // 0
+  641, // 1
+  650, // 2
+  641, // 3
+  641, // 4
   642, // 5
   642, // 6
   642, // 7
@@ -828,12 +828,12 @@ static const u16 sc_tutorial_rectr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 // 白 エリア2 トレーナーデータ
 static const u16 sc_tutorial_tr_data_w2[INFINITY_DUNGEON_TRID_MAX] =
 {
-  67, // 0
-  61, // 1
-  612, // 2
-  79, // 3
-  642, // 4
-  71, // 5
+  66, // 0
+  60, // 1
+  611, // 2
+  78, // 3
+  641, // 4
+  70, // 5
   1, // 6
   1, // 7
   1, // 8
@@ -864,12 +864,12 @@ static const u16 sc_tutorial_tr_data_w2[INFINITY_DUNGEON_TRID_MAX] =
 
 static const u16 sc_tutorial_rectr_data_w2[INFINITY_DUNGEON_TRID_MAX] =
 {
-  642, // 0
-  651, // 1
-  651, // 2
-  651, // 3
-  642, // 4
-  651, // 5
+  641, // 0
+  650, // 1
+  650, // 2
+  650, // 3
+  641, // 4
+  650, // 5
   651, // 6
   651, // 7
   651, // 8
