@@ -452,3 +452,4 @@
 "nsbmdfiles/c15_gate_02.nsbmd"
 "nsbmdfiles/door_c14.nsbmd"
 "nsbmdfiles/c14_boat.nsbmd"
+"nsbmdfiles/door_t07_sh.nsbmd"
