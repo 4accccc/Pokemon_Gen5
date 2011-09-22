@@ -2067,6 +2067,11 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_034">
+		<language name="JPN" width="216">ジョインアベニュー　クリア</language>
+		<language name="JPN_KANJI" width="216">ジョインアベニュー　クリア</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_035">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
 ●●●かい　あそんだ　ささやかな
 あそびごころを　たたえる　メダル。</language>
@@ -2075,7 +2080,7 @@
 遊び心を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_035">
+	<row id="MDL_EXP_APPLICATION_036">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
 ●●●かい　あそんだ　それなりの
 あそびごころを　たたえる　メダル。</language>
@@ -2084,7 +2089,7 @@
 遊び心を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_036">
+	<row id="MDL_EXP_APPLICATION_037">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
 ●●●かい　あそんだ　そうとうな
 あそびごころを　たたえる　メダル。</language>
@@ -2093,7 +2098,7 @@
 遊び心を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_037">
+	<row id="MDL_EXP_APPLICATION_038">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
 ●●●かい　あそんだ　ごくじょうの
 あそびごころを　たたえる　メダル。</language>
@@ -2102,7 +2107,7 @@
 遊び心を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_038">
+	<row id="MDL_EXP_APPLICATION_039">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
 ふうせんを　●●●コ　わった
 ささやかな　はかいの　メダル。</language>
@@ -2111,7 +2116,7 @@
 ささやかな　破壊の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_039">
+	<row id="MDL_EXP_APPLICATION_040">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
 ふうせんを　●●●コ　わった
 はげしい　はかいの　メダル。</language>
@@ -2120,7 +2125,7 @@
 激しい　破壊の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_040">
+	<row id="MDL_EXP_APPLICATION_041">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
 ふうせんを　●●●コ　わった
 ごうかいな　はかいの　メダル。</language>
@@ -2129,22 +2134,13 @@
 豪快な　破壊の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_041">
+	<row id="MDL_EXP_APPLICATION_042">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
 ふうせんを　●●●コ　わった
 きゅうきょくの　はかいの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
 風船を　●●●個　割った
 究極の　破壊の　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_042">
-		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_043">
@@ -2247,6 +2243,15 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_054">
+		<language name="JPN" width="216">ポケウッドの　えいが
+●●●●●●●●●●●●●●●●●●
+すべてのシリーズを　とった　メダル。</language>
+		<language name="JPN_KANJI" width="216">ポケウッドの　映画
+●●●●●●●●●●●●●●●●●●
+すべてのシリーズを　撮った　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_055">
 		<language name="JPN" width="216">ポケウッドで　すべての　えいがを
 さつえいした　たさくな　かんとくの
 あかしとなる　メダル。</language>
@@ -2255,7 +2260,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_055">
+	<row id="MDL_EXP_APPLICATION_056">
 		<language name="JPN" width="216">ポケウッドで　●●●●●いじょうの
 こうぎょうしゅうにゅうを　きろくした
 うれっこかんとくの　ための　メダル。</language>
@@ -2264,7 +2269,7 @@
 売れっ子監督の　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_056">
+	<row id="MDL_EXP_APPLICATION_057">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
 グッドエンドの　ストーリーを　とった
 めいさくえいが　かんとくの　メダル。</language>
@@ -2273,7 +2278,7 @@
 名作映画監督の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_057">
+	<row id="MDL_EXP_APPLICATION_058">
 		<language name="JPN" width="216">ポケウッドで　はじめて　ストレンジな
 ストーリーの　えいがを　とった
 きさい　たんじょう　きねん　メダル。</language>
@@ -2282,7 +2287,7 @@
 鬼才の　誕生を　記念する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_058">
+	<row id="MDL_EXP_APPLICATION_059">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
 ストレンジな　ストーリーを　とった
 カルトえいが　かんとくの　メダル。</language>
@@ -2291,112 +2296,59 @@
 カルト映画監督の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_059">
-		<language name="JPN" width="216">フェスミッションを　はじめて
-かいさいした　ういういしい
-しきりやに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　初めて
-開催した　初々しい　仕切り屋に
-与えられる　メダル。</language>
-	</row>
-
 	<row id="MDL_EXP_APPLICATION_060">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-かいさいした　せいえいの
-しきりやに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-開催した　精鋭の　仕切り屋に
-与えられる　メダル。</language>
+		<language name="JPN" width="216">フェスさんか１０</language>
+		<language name="JPN_KANJI" width="216">フェスさんか１０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_061">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-かいさいした　じゅくれんの
-しきりやに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-開催した　熟練の　仕切り屋に
-与えられる　メダル。</language>
+		<language name="JPN" width="216">フェスさんか３０</language>
+		<language name="JPN_KANJI" width="216">フェスさんか３０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_062">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-かいさいした　しきらせれば
-だれにも　まけない　ひとの　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-開催した　仕切らせれば
-だれにも　負けない　人の　メダル。</language>
+		<language name="JPN" width="216">ハイスコア１００</language>
+		<language name="JPN_KANJI" width="216">ハイスコア１００</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_063">
-		<language name="JPN" width="216">フェスミッションを　はじめて
-たっせいした　ういういしい
-しごとにんに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　初めて
-達成した　初々しい　仕事人に
-与えられる　メダル。</language>
+		<language name="JPN" width="216">ハイスコア１０００</language>
+		<language name="JPN_KANJI" width="216">ハイスコア１０００</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_064">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-たっせいした　せいえいの
-しごとにんに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-達成した　精鋭の　仕事人に
-与えられる　メダル。</language>
+		<language name="JPN" width="216">かいさい１０</language>
+		<language name="JPN_KANJI" width="216">かいさい１０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_065">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-たっせいした　じゅくれんの
-しごとにんに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-達成した　熟練の　仕事人に
-与えられる　メダル。</language>
+		<language name="JPN" width="216">かいさい５０</language>
+		<language name="JPN_KANJI" width="216">かいさい５０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_066">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-たっせいした　しごとを　まかせれば
-かくじつに　こなす　ひとの　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-達成した　仕事を　任せれば
-確実に　遂行する　人の　メダル。</language>
+		<language name="JPN" width="216">さんか１</language>
+		<language name="JPN_KANJI" width="216">さんか１</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_067">
-		<language name="JPN" width="216">フェスミッションに　はじめて
-さんかした　ういういしい
-にぎやかしに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションに　初めて
-参加した　初々しい　にぎやかしに
-与えられる　メダル。</language>
+		<language name="JPN" width="216">さんか１０</language>
+		<language name="JPN_KANJI" width="216">さんか１０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_068">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-さんかした　せいえいの
-にぎやかしに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-参加した　精鋭の　にぎやかしに
-与えられる　メダル。</language>
+		<language name="JPN" width="216">クリア３０</language>
+		<language name="JPN_KANJI" width="216">クリア３０</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_069">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-さんかした　じゅくれんの
-にぎやかしに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-参加した　熟練の　にぎやかしに
-与えられる　メダル。</language>
+		<language name="JPN" width="216">クリア１００</language>
+		<language name="JPN_KANJI" width="216">クリア１００</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_070">
-		<language name="JPN" width="216">フェスミッションを　●●●●かい
-さんかした　にぎやかしの　さいのうが
-ズバぬけている　ひとの　メダル。</language>
-		<language name="JPN_KANJI" width="216">フェスミッションを　●●●●回
-参加した　にぎやかしの　才能が
-ズバ抜けている　人の　メダル。</language>
+		<language name="JPN" width="216">ミッションぜんクリア</language>
+		<language name="JPN_KANJI" width="216">ミッションぜんクリア</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_071">

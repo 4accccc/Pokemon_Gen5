@@ -1702,17 +1702,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_034">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_035">
 		<language name="JPN" width="216">ともだちと　あつまって
 ライブキャスターの
 ミニゲームで　あそぼう！</language>
 		<language name="JPN_KANJI" width="216">友達と　集まって
 ライブキャスターの
 ミニゲームで　遊ぼう！</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_035">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_036">
@@ -1726,17 +1726,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_038">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_039">
 		<language name="JPN" width="216">ライブキャスターの
 ミニゲームで　ふうせんを
 バンバン　わろう！</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの
 ミニゲームで　風船を
 バンバン　割ろう！</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_039">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_040">
@@ -1810,6 +1810,11 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_054">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_055">
 		<language name="JPN" width="216">ポケウッドで　とることの　できる
 すべての　えいがを
 とりつくせ！</language>
@@ -1818,7 +1823,7 @@
 撮り尽くせ！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_055">
+	<row id="MDL_HINT_APPLICATION_056">
 		<language name="JPN" width="216">えいがを　とるなら　やっぱり
 うれる　えいが！　
 こうぎょうしゅうにゅうを　かせげ！</language>
@@ -1827,7 +1832,7 @@
 興行収入を　稼げ！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_056">
+	<row id="MDL_HINT_APPLICATION_057">
 		<language name="JPN" width="216">おうどうの　えいがを
 たくさん　とって　めざせ
 めいさくえいが　かんとく！</language>
@@ -1836,7 +1841,7 @@
 名作映画監督！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_057">
+	<row id="MDL_HINT_APPLICATION_058">
 		<language name="JPN" width="216">だいほんの　ななめうえを　いく
 ヘンテコな　えいがを　とって
 カルトムービー　デビュー！</language>
@@ -1845,7 +1850,7 @@
 カルトムービー　デビュー！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_058">
+	<row id="MDL_HINT_APPLICATION_059">
 		<language name="JPN" width="216">ヘンテコな　えいがを
 たくさん　とって　めざせ
 カルトえいが　かんとく！</language>
@@ -1854,18 +1859,11 @@
 カルト映画監督！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_059">
-		<language name="JPN" width="216">ハイリンクへ　いき
-フェスミッションを
-かいさい　しよう！</language>
-		<language name="JPN_KANJI" width="216">ハイリンクへ　行き
-フェスミッションを
-開催しよう！</language>
-	</row>
-
 	<row id="MDL_HINT_APPLICATION_060">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">おおにんずうで　あつまって
+フェスミッションに　さんかしよう！</language>
+		<language name="JPN_KANJI" width="216">大人数で　集まって
+フェスミッションに　参加ｋしよう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_061">
@@ -1874,22 +1872,24 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_062">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">フェスミッションで
+ハイスコアを　めざそう！</language>
+		<language name="JPN_KANJI" width="216">フェスミッションで
+ハイスコアを　目指そう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_063">
-		<language name="JPN" width="216">きょうりょくして
-フェスミッションを
-クリア　しよう！</language>
-		<language name="JPN_KANJI" width="216">協力して
-フェスミッションを
-クリア　しよう！</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_064">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">ハイリンクへ　いき
+フェスミッションを
+かいさい　しよう！</language>
+		<language name="JPN_KANJI" width="216">ハイリンクへ　行き
+フェスミッションを
+開催しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_065">
@@ -1898,11 +1898,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_066">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_067">
 		<language name="JPN" width="216">かいさい　された
 フェスミッションに
 さんか　しよう！</language>
@@ -1911,9 +1906,18 @@
 参加　しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_068">
+	<row id="MDL_HINT_APPLICATION_067">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_068">
+		<language name="JPN" width="216">みんなで　きょうりょくして
+フェスミッションを
+クリア　しよう！</language>
+		<language name="JPN_KANJI" width="216">みんなで　協力して
+フェスミッションを
+クリア　しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_069">
