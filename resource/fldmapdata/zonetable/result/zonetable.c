@@ -15439,9 +15439,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_SWANHH01, // camera_area
 		19,   // padding > placeicon
     0,
-		5,
+		13,
 		0,
-		4,
+		5,
 	},
 	{//ZONE_ID_C12R0201 = 429
 		RSC_GRID_NOSCROLL,
