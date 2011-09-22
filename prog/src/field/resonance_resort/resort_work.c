@@ -27,7 +27,7 @@
 //=====================================
 struct _RESORT_WORK
 {
-  u32 data[RESORT_WORK_GET_PARAM_RNKDATA_MAX];
+  u32 data[RESORT_WORK_GET_PARAM_MAX];
 };
 //=============================================================================
 /**
@@ -95,6 +95,21 @@ void RESORT_WORK_ReLoadData( RESORT_WORK *p_wk, SAVE_CONTROL_WORK *p_sv )
 //-----------------------------------------------------------------------------
 u32 RESORT_WORK_GetData( const RESORT_WORK *cp_wk, RESORT_WORK_GET_PARAM param )
 {
-  GF_ASSERT( param < RESORT_WORK_GET_PARAM_RNKDATA_MAX );
+  GF_ASSERT( param < RESORT_WORK_GET_PARAM_MAX );
   return cp_wk->data[ param ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ設定
+ *
+ *	@param	RESORT_WORK *p_wk ワーク
+ *	@param	param 設定するデータ
+ *	@param	data データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_WORK_SetData( RESORT_WORK *p_wk, RESORT_WORK_GET_PARAM param, u32 data )
+{
+  GF_ASSERT( param < RESORT_WORK_GET_PARAM_MAX );
+  p_wk->data[ param ] = data;
 }

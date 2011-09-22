@@ -357,7 +357,7 @@ static BOOL debugMenuCallProc_ClearRecvBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
   //Œ}•oŠÙ‚Å‚ÍŽg‚¦‚È‚¢
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
   {
     return FALSE;
   }
@@ -372,7 +372,7 @@ static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
 
   //Œ}•oŠÙ‚Å‚ÍŽg‚¦‚È‚¢
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
   {
     return FALSE;
   }
@@ -502,8 +502,7 @@ static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
 
-  //Œ}•oŠÙ‚Å‚ÍŽg‚¦‚È‚¢
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
   {
     return FALSE;
   }

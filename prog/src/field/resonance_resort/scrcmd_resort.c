@@ -1209,6 +1209,29 @@ VMCMD_RESULT EvCmdResortAddExpCity( VMHANDLE *p_core, void *p_wk_adrs )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マージ開始  現在は住人だけ
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetMergeLock( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+  u16 on_off = SCRCMD_GetVMWorkValue( p_core, p_wk );
+
+  RESORT_PEOPLE_ALL_DATA_SetMergeLock( p_all_people, on_off );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1707,7 +1730,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
       {
         cnt += RESORT_RECV_DATA_GetData(p_resident,RESORT_DATA_PARAM_EXT1_SHOP_LOT+i,NULL);
       }
-      WORDSET_RegisterNumber(p_word,1,cnt,1, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
+      WORDSET_RegisterNumber(p_word,2,cnt,1, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
     }
     *p_ret_wk = resort_offreco_sys_13_02;
     break;
@@ -1731,14 +1754,15 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
           if( num > 0 )
           {
             cnt++;
-          }
 
-          if( idx+1 == cnt )
-          {
-            STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+idx );
-            WORDSET_RegisterWord( p_word, 1, p_str, PM_NEUTRAL, TRUE, PM_LANG );
-            WORDSET_RegisterNumber(p_word,2,num,1, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
-            GFL_STR_DeleteBuffer( p_str );
+            if( idx+1 == cnt )
+            {
+              STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+i );
+              WORDSET_RegisterWord( p_word, 1, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+              WORDSET_RegisterNumber(p_word,2,num,1, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
+              GFL_STR_DeleteBuffer( p_str );
+              break;
+            }
           }
         }
         GFL_MSG_Delete( p_msg );
@@ -1746,11 +1770,11 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
 
       if( idx+1 < cnt )
       {
-        *p_ret_wk = resort_offreco_sys_13_03;
+        *p_ret_wk = resort_offreco_sys_13_04;
       }
       else
       {
-        *p_ret_wk = resort_offreco_sys_13_04;
+        *p_ret_wk = resort_offreco_sys_13_03;
       }
     }
     break;

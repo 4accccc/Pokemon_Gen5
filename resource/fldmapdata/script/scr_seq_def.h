@@ -14499,6 +14499,20 @@
   .short \ret_lv
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  街経験値加算
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_MERGE_LOCK( on_off ) \
+      _ASM_RESORT_SET_MERGE_LOCK on_off
+
+  .macro _ASM_RESORT_SET_MERGE_LOCK on_off
+  .short EV_SEQ_RESORT_SET_MERGE_LOCK
+  .short \on_off
+  .endm
+
+
 //======================================================================
 //
 //    無限ダンジョン関連
@@ -15148,14 +15162,16 @@
  *         DATACONV_ID_MUSICAL…  ミュージカル
  *         DATACONV_ID_DENDOU …  でんどう
  *
+ * @param buffIdx セットするタグナンバー
  */
 //--------------------------------------------------------------
-#define _DATACONV_SET_NAME( id ) \
-      _ASM_DATACONV_SET_NAME id
+#define _DATACONV_SET_NAME( id, buffIdx ) \
+      _ASM_DATACONV_SET_NAME id, buffIdx
 
-  .macro  _ASM_DATACONV_SET_NAME id
+  .macro  _ASM_DATACONV_SET_NAME id, buffIdx
   .short  EV_SEQ_DATACONV_SET_NAME
   .short  \id
+  .short  \buffIdx
   .endm
 
 //--------------------------------------------------------------

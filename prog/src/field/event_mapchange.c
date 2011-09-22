@@ -100,6 +100,7 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "amprotect.h"
 #include "field_goout_effect.h"
 #include "savedata/resonance_resort_sv.h"
+#include "field/resort_work.h"
 #include "resonance_resort/resort_map.h"
 #include "resonance_resort/resort_binary.h"
 #include "resonance_resort/resort_mapcreate.h"
@@ -122,6 +123,7 @@ static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id );
+static void MAPCHG_SetUpResortMapChange( GAMEDATA * gamedata, u16 zone_id, u16 pre_zone_id );
 
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id );
@@ -978,8 +980,12 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     AM_IsMagiconA2(magicon2_failure_func);
 #endif
 
+
     //新しいマップモードなど機能指定を行う
     MAPCHG_setupMapTools( gameSystem, work->loc_req.zone_id );
+
+    //リゾート用設定
+    MAPCHG_SetUpResortMapChange( gameData, work->loc_req.zone_id, work->before_zone_id );
     
     //新しいマップID、初期位置をセット
     MAPCHG_updateGameData( gameSystem, &work->loc_req );
@@ -2996,7 +3002,10 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 { 
-  OS_TPrintf( "ZONEID=%d\n", zone_id );
+
+  RESORT_WORK *p_wk = GAMEDATA_GetReosrtWork(gamedata);
+
+  NAGI_Printf( "ZONEID=%d\n", zone_id );
 
   //迎賓館のみ存在する拡張バッファをつくって登録
   if( ZONEDATA_IsResonanceResort( zone_id ) )
@@ -3028,6 +3037,25 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
       RESORT_RECV_BUFF_Exit( *pp_buff );
       *pp_buff = NULL;
     }
+  }
+
+  RESORT_WORK_SetData( p_wk, RESORT_WORK_GET_PARAM_IS_MAPCHANGE, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾートマップチェンジのみの設定
+ *
+ *	@param	GAMEDATA * gamedata ゲームデータ
+ *	@param	zone_id         遷移先
+ *	@param	pre_zone_id     遷移前
+ */
+//-----------------------------------------------------------------------------
+static void MAPCHG_SetUpResortMapChange( GAMEDATA * gamedata, u16 zone_id, u16 pre_zone_id )
+{
+  RESORT_WORK *p_wk = GAMEDATA_GetReosrtWork(gamedata);
+  if( zone_id != pre_zone_id )
+  {
+    RESORT_WORK_SetData( p_wk, RESORT_WORK_GET_PARAM_IS_MAPCHANGE, TRUE );
   }
 }
 

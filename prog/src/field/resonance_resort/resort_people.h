@@ -27,12 +27,22 @@
 //=====================================
 typedef struct _RESORT_PEOPLE RESORT_PEOPLE;
 //-------------------------------------
-///	
+///	取得タイプ
 //=====================================
 typedef enum 
 {
-  RESORT_PEOPLE_DATA_PARAM_TYPE, //人物の種類 旅行者とか
+  RESORT_PEOPLE_DATA_PARAM_TYPE,    //人物の種類 旅行者とか
+  RESORT_PEOPLE_DATA_PARAM_CREATE,  //生成状態
 } RESORT_PEOPLE_DATA_PARAM;
+
+//-------------------------------------
+///	生成状態
+//=====================================
+typedef enum
+{
+  RESORT_PEOPLE_CREATE_NEW,     //新規作成
+  RESORT_PEOPLE_CREATE_ADDALL,  //AddAll
+} RESORT_PEOPLE_CREATE;
 
 //-------------------------------------
 ///	PUBLIC

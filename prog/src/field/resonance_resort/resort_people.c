@@ -38,6 +38,7 @@ typedef struct
   const RESORT_BINARY_SHOP   *cp_shop;
   const RESORT_BINARY_INSTITUTION *cp_institution;
   FIELD_PLAYER *p_player;       //プレイヤー
+  RESORT_PEOPLE_CREATE  create;
 }RESORT_PEOPLE_INIT_PARAM;
 
 //-------------------------------------
@@ -54,8 +55,9 @@ typedef struct
 struct _RESORT_PEOPLE
 {
   RESORT_PEOPLE_TYPE people_type;
-  u16   peopleID;
+  u32   peopleID;
   BOOL  is_talk;
+  RESORT_PEOPLE_CREATE  create;
   MMDLSYS * p_mmdlsys;
   MMDL    * p_mmdl;
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
@@ -145,6 +147,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   p_wk->peopleID    = cp_param->peopleID;
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
   p_wk->p_abstruct_data = cp_param->p_data;
+  p_wk->create      = cp_param->create;
 
   //人物生成時には必ず不正検査を行う  //TODO 重いのでやらない
   //RESORT_ABSTRUCT_DATA_ModifyProfWord( p_wk->p_abstruct_data, heapID );
@@ -369,6 +372,8 @@ u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_
   {
   case RESORT_PEOPLE_DATA_PARAM_TYPE:
     return cp_wk->people_type;
+  case RESORT_PEOPLE_DATA_PARAM_CREATE:
+    return cp_wk->create;
   default:
     GF_ASSERT(0);
     return 0;
@@ -539,7 +544,7 @@ struct _RESORT_PEOPLE_SYS
 //-------------------------------------
 ///	PRIVATE
 //=====================================
-static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, u16 peopleID );
+static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, RESORT_PEOPLE_CREATE create, u16 peopleID );
 static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk );
 
 static void Resort_People_Sys_SetInitParam( const RESORT_PEOPLE_SYS *cp_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_add_param, u32 peopleID, RESORT_PEOPLE_INIT_PARAM *p_param );
@@ -649,7 +654,7 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
       GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
       param.p_data      =  RESORT_DATA_MANAGER_GetAbstructDataByPlace( p_wk->param.p_data_manager, placeID, peopleID );
       param.placeID     = p_wk->param.placeID;
-      RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
+      RESORT_PEOPLE_SYS_Add( p_wk, &param, RESORT_PEOPLE_CREATE_ADDALL, peopleID );
     }
   }
 
@@ -686,7 +691,7 @@ void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESOR
         GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
         param.p_data      = p_data;
         param.placeID     = p_wk->param.placeID;
-        RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
+        RESORT_PEOPLE_SYS_Add( p_wk, &param, RESORT_PEOPLE_CREATE_NEW, peopleID );
       }
     }
   }
@@ -705,13 +710,14 @@ void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESOR
  *	@return 人物ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, u16 peopleID )
+static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param, RESORT_PEOPLE_CREATE create, u16 peopleID )
 {
   if( p_wk->p_people[peopleID] == NULL )
   {
     RESORT_PEOPLE_INIT_PARAM init_param;
 
-     Resort_People_Sys_SetInitParam( p_wk, cp_param, peopleID, &init_param );
+    Resort_People_Sys_SetInitParam( p_wk, cp_param, peopleID, &init_param );
+    init_param.create = create;
 
     NAGI_Printf( "Add=%d\n",peopleID );
     p_wk->p_people[peopleID] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
@@ -742,7 +748,7 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_
   {
     NAGI_Printf( "AddNew=%d\n", peopleID );
     {
-      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  peopleID );
+      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_Add( p_wk, cp_param, RESORT_PEOPLE_CREATE_NEW, peopleID );
       return p_people;
     }
   }
@@ -861,6 +867,7 @@ void RESORT_PEOPLE_SYS_ResetMmdl( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_peo
   add_param.placeID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
   Resort_People_Sys_SetInitParam( p_sys, &add_param, peopleID, &init_param );
+  init_param.create = RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_CREATE );
 
   RESORT_PEOPLE_ResetMmdl( p_people, &init_param );
 }

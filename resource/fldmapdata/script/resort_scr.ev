@@ -828,6 +828,7 @@ sub_resident_institution:
       $LWK_MENU_LOOP = FALSE
 
     CASE SEQ_RESIDENT_DOING THEN        //最近どう？
+	    _BALLOONWIN_CLOSE()
       _CALL sub_recent_doing
 
     CASE SEQ_RESIDENT_CHECKEXP THEN   //調子どう？
@@ -837,7 +838,6 @@ sub_resident_institution:
 
       _RESORT_GET_MSGID( RESORT_RESIDENT_LV_MSGID, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_JOBCHANGE THEN  //転職させる
       _CALL sub_resident_merge
@@ -887,9 +887,6 @@ sub_resident_main_menu:
 
 	//メニュー表示
 	_BMPMENU_START()
-
-  //どうしますか？を閉じる
-	_BALLOONWIN_CLOSE()
 
   IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
     $LWK_MENU_RET = SEQ_RESIDENT_BYE
@@ -2225,7 +2222,6 @@ EVENT_START ev_resort_npc_mouthcomm
   ENDIF
 
 	_BALLOONWIN_CLOSE()
-
 }
 EVENT_END
 //==============================================================
@@ -2307,9 +2303,6 @@ sub_npc_mouthcomm_question:
   _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_A_NUM, LWK_TMP )
 
   //質問文
-  _BALLOONWIN_CLOSE()
-
-
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
   _RESORT_SET_WORD( RESORT_WORD_OWNER_PHRASE, RESORT_WORD_PARAM_NONE, 0, 1 )
   _RESORT_SET_WORD( RESORT_WORD_OWNER_THANKS, RESORT_WORD_PARAM_NONE, 0, 2 )
@@ -2349,6 +2342,9 @@ EVENT_START ev_resort_npc_offreco
 {
   DEFINE_LOCAL LWK_CNT
   DEFINE_LOCAL LWK_TMP
+
+  //言う内容に整合性がとれなくなるのでマージ禁止
+  _RESORT_SET_MERGE_LOCK( TRUE )
 
   _TALK_OBJ_START()
 
@@ -2441,6 +2437,9 @@ EVENT_START ev_resort_npc_offreco
 
     ENDIF
   ENDIF
+
+
+  _RESORT_SET_MERGE_LOCK( FALSE )
 
   //街　大好き
   _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
@@ -2920,6 +2919,9 @@ EVENT_START ev_reserve_resort_debug
     $WK_SCENE_C16_TUTORIAL_SEQ  = 6
     $WK_SCENE_C16_TUTORIAL_01   = 1
     _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
+
+    _MAP_CHANGE( ZONE_ID_R04, 430, 490, DIR_UP )
+    $LWK_MENU_LOOP = FALSE
   DEFAULT
     $LWK_MENU_LOOP = FALSE
   ENDSWITCH

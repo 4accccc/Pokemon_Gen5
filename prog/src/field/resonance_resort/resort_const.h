@@ -54,6 +54,16 @@
  */
 #define RESORT_CONST_SPOT_EXP_GOOD FX32_CONST(0.5f)
 /*
+ *  お店にファンが行ったときの経験値レート
+ *
+ */
+#define RESORT_CONST_FUN_EXP_RATE   FX32_CONST(0.5f)
+/*
+ *  お店にセレブが行ったときの経験値レート
+ *
+ */
+#define RESORT_CONST_CELEB_EXP_RATE   FX32_CONST(2.0f)
+/*
  *  お店の品物・サービスの価格
  *  基礎数
  *

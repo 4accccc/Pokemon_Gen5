@@ -697,9 +697,24 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
   }
 #endif 
 
-
     GF_ASSERT( grade < NELEMS(sc_grade) );
     (*p_add_exp) = FX_Whole(  (*p_add_exp) * sc_grade[ grade ] );
+
+    //ファンかセレブならばさらに経験値修正
+    if( RESORT_ABSTRUCT_DATA_GetPeopleType(p_wk) == RESORT_PEOPLE_TYPE_PROXY )
+    {
+      switch( RESORT_ABSTRUCT_DATA_GetData(p_wk,RESORT_DATA_PARAM_TYPE,NULL) )
+      {
+      case RESORT_PROXY_TYPE_CELEB:
+        (*p_add_exp) = FX_Whole(  (*p_add_exp) * RESORT_CONST_CELEB_EXP_RATE );
+        break;
+      case RESORT_PROXY_TYPE_FUN:
+        (*p_add_exp) = FX_Whole(  (*p_add_exp) * RESORT_CONST_FUN_EXP_RATE );
+        break;
+      }
+    }
+    
+
 #ifdef PM_DEBUG
   if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_EXP_9999) )
   {

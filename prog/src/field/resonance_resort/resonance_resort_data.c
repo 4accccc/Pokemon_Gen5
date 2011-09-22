@@ -3915,6 +3915,7 @@ struct _RESORT_PEOPLE_ALL_DATA
   RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
   RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
   RESORT_RECV_DATA        owner;
+  BOOL                    merge_lock;
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PEOPLE_ALL_DATA) == RESORT_PEOPLE_ALL_DATA_SIZE );
@@ -4144,6 +4145,13 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void 
   };
 
   int i;
+
+  if( p_wk->merge_lock )
+  {
+    return FALSE;
+  }
+
+  //住人マージ
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
@@ -4157,6 +4165,7 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void 
     }
   }
 
+  //秘書マージ
   for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
     RESORT_SECRETARY_DATA *p_secret = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_wk, i );
@@ -4197,6 +4206,18 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, 0 );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マージロックフラグ設定
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *	@param	is_lock TRUEロック  FALSEマージする
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ALL_DATA_SetMergeLock( RESORT_PEOPLE_ALL_DATA *p_wk, BOOL is_lock )
+{
+  p_wk->merge_lock = is_lock;
 }
 
 //----------------------------------------------------------------------------

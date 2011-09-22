@@ -51380,10 +51380,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▽</Text>
+			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▽</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-09T10:52:50" />
+				Time="2011-09-21T12:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51391,10 +51391,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▽</Text>
+			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▽</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-09T10:52:53" />
+				Time="2011-09-21T12:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51427,10 +51427,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▼</Text>
+			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-10T09:43:38" />
+				Time="2011-09-21T12:28:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51438,10 +51438,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]が　[Digit:1digit Idx="1" ]けん▼</Text>
+			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-10T09:43:40" />
+				Time="2011-09-21T12:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

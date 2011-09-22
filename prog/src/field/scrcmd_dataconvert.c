@@ -139,15 +139,16 @@ VMCMD_RESULT EvCmdDataConv_WordSetOwnerName( VMHANDLE *p_core, void *p_wk_adrs )
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_sc );
   HEAPID heapID = SCRCMD_WORK_GetHeapID( p_scrcmd );
   u16 id    = SCRCMD_GetVMWorkValue( p_core, p_wk_adrs );
+  u16 buffIdx   = SCRCMD_GetVMWorkValue( p_core, p_wk_adrs );
 
   u8 sex = DATA_CONVERT_SAVE_GetSex( p_dataconv, id );
   const STRCODE *cp_name = (const STRCODE *)DATA_CONVERT_SAVE_GetName( p_dataconv, id );
   STRBUF *p_str = GFL_STR_CreateBuffer( 64, GFL_HEAP_LOWID(heapID) );
-  GFL_STR_SetStringCode(  p_str, cp_name );
+  GFL_STR_SetStringCodeOrderLength(  p_str, cp_name, PERSON_NAME_SIZE+EOM_SIZE );
 
   GF_ASSERT( DATA_CONVERT_SAVE_IsExist( p_dataconv, id ) );
 
-  WORDSET_RegisterWord( p_wordset, 0, p_str, sex, TRUE, PM_LANG );
+  WORDSET_RegisterWord( p_wordset, buffIdx, p_str, sex, TRUE, PM_LANG );
 
   GFL_STR_DeleteBuffer( p_str );
 
