@@ -455,6 +455,8 @@
 #define FE_D10R0501_LEGEND_GET_01          439 /* 0x01b7 古代の城：キュレム捕獲フラグ */
 #define FE_D10R0501_LEGEND_MEET_01         440 /* 0x01b8 古代の城：キュレム遭遇フラグ */
 #define FE_C03P12_ITEMGET_01               441 /* 0x01b9 ヒウンシティ：アイテム入手フラグ */
+#define FE_H01R0201_ITEMGET_01             442 /* 0x01ba スカイアローブリッジゲート：アイテム入手フラグ */
+#define FE_C03P14_ITEMGET_01               443 /* 0x01bb ヒウンシティ：アイテム入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
