@@ -9,11 +9,11 @@
 			<Text>はしのうえに　まれに
 とりポケモンの　かげが　みえるだろ？▽
 あの　したに　ハネが　おちてくるんだ！▼
-でさ　ハネを　ひろおうとしたとき
+でさ　ハネを　ひろおう　とすると
 まれに　ポケモンと　ぶつかるんだよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,11 +24,11 @@
 			<Text>橋の上に　まれに
 とりポケモンの　影が　みえるだろ？▽
 あの下に　ハネが　落ちてくるんだ！▼
-でさ　ハネを　拾おうとしたとき
+でさ　ハネを　拾おう　とすると
 まれに　ポケモンと　ぶつかるんだよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -131,15 +131,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエの　はねばし……
-またの　なまえを　リザードンブリッジ！▼
-あがった　はねばしが　リザードンって
+			<Text>ホドモエの　跳ね橋……
+またの　名前を　リザードンブリッジ！▼
+あがった　跳ね橋が　リザードンって
 ポケモンのように　みえるからだって▼
 ……でも　ぼく　リザードンを
 みたことないから　よくわからないや</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:58:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -188,10 +188,10 @@
 ……でも　ぼく　リザードンを
 みたことないから　よくわからないや▼
 ……えっ！？
-リザードンと　いっしょ　なの？▼</Text>
+リザードンを　つれているの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,17 +199,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエの　はねばし……
-またの　なまえを　リザードンブリッジ！▼
+			<Text>ホドモエの　跳ね橋……
+またの　名前を　リザードンブリッジ！▼
 あがった　はねばしが　リザードンって
 ポケモンのように　みえるからだって▼
 ……でも　ぼく　リザードンを
 みたことないから　よくわからないや▼
 ……えっ！？
-リザードンと　いっしょ　なの？▼</Text>
+リザードンを　連れているの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -267,12 +267,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わー！　すごーい！
-たしかに　にてるかも！▼
+たしかに　似てるかも！▼
 ありがとう！
 おれいに　これを　もらってよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -329,11 +329,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この跳ね橋を　デザインした　人は
+			<Text>この　跳ね橋を　デザインした人は
 リザードンと　一緒に　いたのかな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T05:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
