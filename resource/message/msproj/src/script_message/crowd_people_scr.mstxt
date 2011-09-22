@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はやい　ウォーキングは
-にんじゃの　しゅぎょう　なのデス</Text>
+ニンジャの　しゅぎょう　なのデス</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:06:00" />
+				Time="2011-09-22T02:43:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はやい　ウォーキングは
-にんじゃの　しゅぎょう　なのデス</Text>
+ニンジャの　しゅぎょう　なのデス</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:06:02" />
+				Time="2011-09-22T02:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -49,11 +49,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうこそ　はやく　かえって
-いもうとたちと　ポケモンしょうぶ！</Text>
+			<Text>いもうとたちと　ポケモンしょうぶ！
+たたかうほどに　あいが　ふかまる！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61,11 +61,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日こそ　早く　帰って
-妹たちと　ポケモン勝負！</Text>
+			<Text>妹たちと　ポケモン勝負！
+戦うほどに　愛が　深まる！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,10 +74,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T02:39:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -136,10 +136,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>タイム　イズ　マネー
-じかんは　とりもどせません</Text>
+じかんは　とりもどせない▼
+そして　わたしは
+こうかい　したくないんだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -148,10 +150,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タイム　イズ　マネー
-時間は　取り戻せません</Text>
+時間は　取り戻せない▼
+そして　わたしは
+後悔したくないんだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,10 +164,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T03:23:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -178,10 +182,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいかわらず　ひとが　おおい……</Text>
+			<Text>まいにち　ひとが　ふえる……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:21:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -189,10 +193,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あいかわらず　人が　多い……</Text>
+			<Text>毎日　人が　増える……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:21:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -201,10 +205,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T02:21:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -219,11 +223,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さぼるときも　ぜんりょく！
-いつだって　ほんき　だよ！</Text>
+			<Text>しごとも　フルパワー！
+さぼるのも　フルパワー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:36:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -231,11 +235,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さぼるときも　全力！
-いつだって　本気だよ！</Text>
+			<Text>仕事も　フルパワー！
+さぼるのも　フルパワー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -244,10 +248,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T02:36:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -265,10 +269,10 @@
 			<Text>この　まちは
 ねむらない　まち……▼
 わたしは　ねむる……
-おはだの　ために</Text>
+ゆめ　みる　ために</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:22:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -279,10 +283,10 @@
 			<Text>この　街は
 眠らない　街……▼
 わたしは　眠る……
-お肌の　ために</Text>
+夢みる　ために</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -291,10 +295,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T03:22:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -316,11 +320,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あるくことで　エネルギーが　たまる
+			<Text>あるけば　エネルギーが　たまる
 シューズが　あれば　いいのに！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -328,11 +332,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>歩くことで　エネルギーが　たまる
+			<Text>歩けば　エネルギーが　たまる
 シューズが　あれば　いいのに！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:44:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -341,10 +345,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:32" />
+				Time="2011-09-22T02:44:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -359,11 +363,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくいさま
-まっているだろうなあ……</Text>
+			<Text>はやく　キミに　あいたい……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -371,11 +374,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得意様
-待っているだろうなあ……</Text>
+			<Text>はやく　キミに　会いたい……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -384,10 +386,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -402,11 +404,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　あるく……
-きょうも　あしたも　あさっても</Text>
+			<Text>ポケモンの　タマゴ！
+ポケモンの　タマゴ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -414,11 +416,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>私は　歩く……
-今日も　明日も　明後日も</Text>
+			<Text>ポケモンの　タマゴ！
+ポケモンの　タマゴ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -427,10 +429,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:26:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -445,11 +447,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がんばれ！　おれ！！
-がんばれ！　きみ！！</Text>
+			<Text>シャカリキに　やるのも
+ダラダラ　するのも　じゆう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:21:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -457,11 +459,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>がんばれ！　おれ！！
-がんばれ！　きみ！！</Text>
+			<Text>シャカリキに　やるのも
+ダラダラ　するのも　自由</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -470,10 +472,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:23:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -488,11 +490,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんどの　やすみは
-ベースボールかんせん　だな</Text>
+			<Text>ベースボールを　みるか
+それとも　バスケットボール？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,11 +502,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今度の　休日は
-ベースボール観戦だな</Text>
+			<Text>ベースボールを　観るか
+それとも　バスケットボール？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -513,10 +515,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:19:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -531,13 +533,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　しごと　という
-しょうぶを　しているのだ！▼
-こいつは　なかなか　てごわくて
-だからこそ　たのしいんだぜ！</Text>
+			<Text>しごとは　たのしまないと
+じんせいが　つまらなくなるよ！▼
+だって　いちにちの　うち
+しごとの　じかんは　ながいもん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:18:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -545,13 +547,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　仕事という
-勝負を　しているのだ！▼
-こいつは　なかなか　手ごわくて
-だからこそ　楽しいんだぜ！</Text>
+			<Text>仕事は　楽しまないと
+人生が　いろあせるよ！▼
+だって　一日の　うち
+大半は　仕事してるんだからさ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -560,10 +562,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:18:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -578,11 +580,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うーむ……　ユーの　ポケモン
-ドレスアップを　すると　いいかもね</Text>
+			<Text>ポケウッドに　あそびに　いきたいな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -590,11 +591,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーむ……　ユーの　ポケモン
-ドレスアップを　すると　いいかもね</Text>
+			<Text>ポケウッドに　遊びに　行きたいな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -603,10 +603,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:33" />
+				Time="2011-09-22T03:11:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -649,11 +649,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+			<Comment>c03群集用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:34" />
+				Time="2011-09-22T03:09:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -669,10 +668,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひさびさに　ポケモンと
-たびを　したいなあ……</Text>
+たびを　したけど　よかったよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -681,10 +680,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>久々に　ポケモンと
-旅を　したいなあ……</Text>
+旅を　したけど　よかったよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:09:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -693,10 +692,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:42" />
+				Time="2011-09-22T03:11:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -754,11 +753,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろんな　くにの　ひとびとが
-この　ヒウンに　あつまってるんだ</Text>
+			<Text>せかいじゅうの　ひとが
+ヒウンに　あつまっている▼
+まるで　ちいさな　せかいちず　だよ
+この　まちは！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -766,11 +767,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>各国の　人々が
-この　ヒウンに　集ってるんだ</Text>
+			<Text>世界　各国の　人が
+ヒウンに　集まっている▼
+まるで　小さな　世界地図だよ
+この　街は！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -779,10 +782,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:42" />
+				Time="2011-09-22T03:13:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -797,11 +800,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あるく　スピードなら
-おれが　ナンバーワン！</Text>
+			<Text>ヒウン　ライモン
+ライモン　ヒウン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:09:21" />
+				Time="2011-09-22T02:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -809,11 +812,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>歩く　スピードなら
-おれが　ナンバーワン！</Text>
+			<Text>ヒウン　ライモン
+ライモン　ヒウン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:09:36" />
+				Time="2011-09-22T02:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -822,10 +825,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:42" />
+				Time="2011-09-22T03:06:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -864,11 +867,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+			<Comment>c03群集用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:45" />
+				Time="2011-09-22T03:04:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -905,11 +907,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+			<Comment>c03群集用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:45" />
+				Time="2011-09-22T03:06:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -924,11 +925,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくは　じぶんの　めいしに　すきな
+			<Text>じぶんの　めいしに　すきな
 ポケモンの　イラストを　いれているよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -936,11 +937,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくは　自分の　名刺に　好きな
+			<Text>自分の　名刺に　好きな
 ポケモンの　イラストを　いれているよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T02:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -948,11 +949,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+			<Comment>c03群集用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:45" />
+				Time="2011-09-22T02:58:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1010,11 +1010,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ！　いま　あるいている
-ひとのかずを　カウントしてたのに！！</Text>
+			<Text>ふるい　ちかてつを　うみに　いれて
+さかなポケモンの　すみかに　するよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:06:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1022,11 +1022,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ！　今　歩いている
-人の数を　カウントしてたのに！！</Text>
+			<Text>古い　地下鉄を　海に　いれて
+さかなポケモンの　住処に　するよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1035,10 +1035,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>c03群集用
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:07:46" />
+				Time="2011-09-22T03:06:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
