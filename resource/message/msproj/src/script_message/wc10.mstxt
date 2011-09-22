@@ -1481,12 +1481,12 @@
 めちゃくちゃ　やるきなんだー！▼
 はたらいてる　ショップにも　ガンガン
 しんせいひん　ならべたりしてさー！▼
-しろのじゅどうを　クリアした
-[Name:TrainerName ]　ってひとに▽
+しろのじゅどうを　せいはした
+[Name:TrainerName ]　って　ひとに▽
 しげき　されたんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:04" />
+				Time="2011-09-22T08:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1498,12 +1498,12 @@
 めちゃくちゃ　やる気なんだー！▼
 働いてる　ショップにも　ガンガン
 新製品を　並べたりしてさー！▼
-白の樹洞を　クリアした
-[Name:TrainerName ]　って人に▽
+白の樹洞を　制覇した
+[Name:TrainerName ]　って　人に▽
 刺激されたんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:13" />
+				Time="2011-09-22T08:57:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1907,11 +1907,12 @@
 			<Text>タクマ『きみが　[Name:TrainerName ]　か！
 白の大樹を　制覇したんだろ？▼
 すごいよなぁ　おれなんて　ずっと
-最初のエリアで　苦戦してるんだよ……▽
+最初の　エリアで▽
+苦戦してるんだよ……▼
 今度　コツを　おしえてよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:38" />
+				Time="2011-09-22T08:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4377,14 +4378,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ガクト『おお！　[Name:TrainerName ]！▼
-話には　聞いてるよ
+話には　きいてるよ
 洞穴　だいぶ　深い所まで▽
 潜ったみたいだな！▼
 早くも　あきらめ気味の　わしに
 代わって　最下層まで　行ってくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:31" />
+				Time="2011-09-22T08:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4428,13 +4429,13 @@
 			Language="JPN">
 			<Text>ガクト『もりの　みんなを
 だいひょうして　[Name:TrainerName ]　の▼
-しろのたいじゅクリアを
+しろのたいじゅ　せいはを
 いわわせて　もらうよ！▼
 おめでとう！
 ほんとうに　よく　がんばったね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:39" />
+				Time="2011-09-22T08:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4444,13 +4445,13 @@
 			Language="JPN_KANJI">
 			<Text>ガクト『森の　みんなを
 代表して　[Name:TrainerName ]　の▼
-白の大樹クリアを
+白の大樹　制覇を
 祝わせて　もらうよ！▼
 おめでとう！
 本当に　良く　頑張ったね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:36" />
+				Time="2011-09-22T08:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4833,13 +4834,13 @@
 			Language="JPN">
 			<Text>ミホ『こっちに　ひっこしてきたら
 おはだが　つるつるになったの！▼
-とれたての　きのみを　まいにち
-たべているおかげかな？▼
+とれたての　きのみを
+まいにち　たべている　おかげかな？▼
 だいしぜんって　すごいね！
 だいしぜん　ばんざーい！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:46" />
+				Time="2011-09-22T08:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4850,12 +4851,12 @@
 			<Text>ミホ『こっちに　引っ越してきたら
 お肌が　つるつるになったの！▼
 取れたての　木の実を
-毎日　食べているおかげかな？▼
+毎日　食べている　おかげかな？▼
 大自然って　すごいね！
 大自然　ばんざーい！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:54" />
+				Time="2011-09-22T08:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6488,13 +6489,13 @@
 			<Text>ローザ『初心に　返って
 白の大樹で　修行していたらね▼
 駆け出しのころに　感じた
-純粋な　ポケモン勝負の　楽しさを▽
-思い出したわ！▼
+純粋な　ポケモン勝負の▽
+楽しさを　思い出したわ！▼
 [Name:TrainerName ]　は　あそこで　なにか
 大切なものを　みつけられた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:56:24" />
+				Time="2011-09-22T08:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7052,10 +7053,10 @@
 森に来た　なんて騒いでるから▽
 ついつい　みにきちゃった！▼
 こわもての人かと　思ったら
-見た目は　ずいぶん　かわいいのね！</Text>
+みためは　ずいぶん　可愛いのね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T07:00:26" />
+				Time="2011-09-22T08:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
