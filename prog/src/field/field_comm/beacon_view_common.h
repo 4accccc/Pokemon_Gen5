@@ -24,6 +24,7 @@ typedef enum{
   SCROLL_UP,
   SCROLL_DOWN,
   SCROLL_RIGHT,
+  SCROLL_NONE,
 }SCROLL_DIR;
 
 //タスクメニューID

@@ -984,8 +984,8 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
   pp->n_line = 0;
   pp->que = wk->printQue;
 
-  pp->px = ACT_PANEL_OX*(idx+1)+ACT_PANEL_PX;
-  pp->py = ACT_PANEL_OY*(idx+1)+ACT_PANEL_PY;
+  pp->px = ACT_PANEL_OX*idx+ACT_PANEL_PX;
+  pp->py = ACT_PANEL_OY*idx+ACT_PANEL_PY;
 
   //パネルアクター
   pp->cPanel = obj_ObjAdd( wk,

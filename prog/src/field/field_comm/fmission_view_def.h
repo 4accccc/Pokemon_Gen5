@@ -105,11 +105,12 @@ typedef enum{
 #define VIEW_LOG_MAX    (4)
 
 #define MISSION_LOG_MAX   (30)  //ログ管理数
-#define PANEL_MAX         (4)   //同時描画されるパネル数
-#define PANEL_VIEW_START  (1)
-#define PANEL_VIEW_END    (3)
+#define PANEL_MAX         (3)   //同時描画されるパネル数
+#define PANEL_VIEW_START  (0)   //描画される最上段
+#define PANEL_VIEW_END    (2)   //描画される最下段
 #define PANEL_VIEW_MAX    (3)   //画面内に描画されるパネル数
-#define PANEL_LINE_END    (4)
+#define PANEL_LINE_START  (0)
+#define PANEL_LINE_END    (2)
 
 #define PANEL_DATA_BLANK (0xFF)
 
@@ -297,7 +298,7 @@ enum{
 #define ACT_PANEL_OX  (0)
 #define ACT_PANEL_OY  (5*8)
 #define ACT_PANEL_PX  (8)
-#define ACT_PANEL_PY  (6*8-ACT_PANEL_OY)
+#define ACT_PANEL_PY  (6*8) //(6*8-ACT_PANEL_OY)
 
 #define ACT_UNION_OX  (2*8)
 #define ACT_UNION_OY  (2*8)

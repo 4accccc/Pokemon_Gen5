@@ -61,21 +61,23 @@ static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct )
 static void draw_MissionInfo( FMISSION_VIEW_PTR wk );
 static void draw_MissionNowScore( FMISSION_VIEW_PTR wk );
 static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct );
-static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct );
 static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f );
 
 static void obj_UpDownViewSet( FMISSION_VIEW_PTR wk );
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line );
-static PANEL_WORK* panel_GetPanelFromDataIndex( FMISSION_VIEW_PTR wk, u8 data_idx );
-static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl);
-static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, int* task_ct );
+static PANEL_WORK* panel_GetNextTargetPanel( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
+static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
+static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl );
+static void panel_DrawFinish( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
+static BOOL panel_DrawMain( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
+static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl );
 static BOOL panel_CheckPrint( PANEL_WORK* pp );
 
 static void list_UpDownReq( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
 static void list_UpDownReq1st( FMISSION_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq );
-static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, u8 dir );
+static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir );
 
 static void effReq_PanelScroll( FMISSION_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, int* task_ct );
 static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id );
@@ -111,9 +113,9 @@ void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
     FMISSION_LOG_ViewTbl_GetLog( wk->logView, wk->tmpLog, ofs );
     idx = FMISSION_LOG_ViewTbl_GetOfs2Idx( wk->logView, ofs );
   
-    pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
+    pp = panel_GetNextTargetPanel( wk, SCROLL_NONE );
     panel_Entry( pp, idx, PANEL_VIEW_START+i );  //パネル新規登録
-    panel_Draw( wk, pp, wk->tmpLog, NULL );   //パネル描画
+    panel_Draw( wk, pp, wk->tmpLog );   //パネル描画
     panel_VisibleSet( pp, TRUE );   //パネル描画
   }
 
@@ -129,10 +131,6 @@ void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
   //ミッション情報表示
   draw_MissionInfo( wk );
   draw_EntryNum( wk, &wk->en_print_task_ct );
-#if 0
-  draw_MissionNowScore( wk );
-  draw_RestTime( wk, &wk->eff_task_ct );
-#endif
 }
 
 /*
@@ -671,24 +669,6 @@ static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct )
 }
 
 /*
- *  @brief 残り時間表示 
- */
-static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct )
-{
-#if 0
-  int min = wk->ctrl.fm_sec/60;
-  int sec = wk->ctrl.fm_sec%60;
-
-  WORDSET_RegisterNumber( wk->wordset, 0, min, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wordset, 1, sec, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-
-  GFL_BMP_Fill( wk->win[WIN_FMTIME].bmp, TIME_NUM_PX, 0, TIME_NUM_SX, TIME_NUM_SY, FCOL_LOGNUM_BASE );
-  print_GetMsgToBuf( wk, msg_sys_fmission_time_num );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMTIME], wk->str_expand, TIME_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, task_ct, FALSE );
-#endif
-}
-
-/*
  *  @brief  メニューアクター Viewセット
  */
 static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f )
@@ -738,11 +718,11 @@ static void panel_Clear( PANEL_WORK* pp )
 {
   int i;
 
-  panel_VisibleSet( pp, FALSE );
+//  panel_VisibleSet( pp, FALSE );
 
   for(i = 0;i < PANEL_FOAM_MAX;i++){
     GFL_BMP_Clear( pp->msgOam[i].bmp, 0 );
-	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
+//	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
     GFL_STR_ClearBuffer( pp->str[i] );
   
     if( pp->tcb_print[i] != NULL ){
@@ -770,28 +750,41 @@ static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line )
 }
 
 /*
- *  @brief  指定データindexを持つパネルを探す
+ *  @brief  次の描画ターゲットになるパネルを探す
  */
-static PANEL_WORK* panel_GetPanelFromDataIndex( FMISSION_VIEW_PTR wk, u8 data_idx )
+static PANEL_WORK* panel_GetNextTargetPanel( FMISSION_VIEW_PTR wk, SCROLL_DIR dir )
 {
-  int i;
+  int i, next_line;
   PANEL_WORK* pp;
+  //まずはブランクパネルを探す
   for(i = 0;i < PANEL_MAX;i++){
-    if( wk->panel[i].data_idx == data_idx ){
+    if( wk->panel[i].data_idx == PANEL_DATA_BLANK ){
       return &wk->panel[i];
     }
   }
-  if(data_idx == PANEL_DATA_BLANK){
-    GF_ASSERT(0);
+  //見つからなければ、スクロール方向に応じて次のターゲットを決める
+  if( dir == SCROLL_NONE ){
+    GF_ASSERT(0); //スクロール無しの時にブランクが見つからなかったらおかしい
     return NULL;
   }
+  if( dir == SCROLL_UP ){ //次は一番上を消して、一つ下を表示したい
+    next_line = PANEL_VIEW_START;
+  }else{  //次は一番下を消して、一つ上を表示したい
+    next_line = PANEL_VIEW_END;
+  }
+  for(i = 0;i < PANEL_MAX;i++){
+    if( wk->panel[i].n_line == next_line ){
+      return &wk->panel[i];
+    }
+  }
+  GF_ASSERT(0);
   return NULL;
 }
 
 /*
  *  @brief  パネル　Unionアクター更新
  */
-static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl)
+static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
 {
   static const int file[2] = {
     NARC_fldmmdl_mdlres_swhero_nsbtx,
@@ -799,15 +792,13 @@ static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION
   };
 
   if( !pp->mine_f ){  //ほかのプレイヤー
-    u8 char_no, p_ofs;
-
-    char_no = FMISSION_LOG_GetTrView( pl );
+    u8 p_ofs;
 
     //キャラクタ転送
     GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
-                          wk->resCharUnion[ char_no ].p_char );
+                          wk->resCharUnion[ pp->char_no ].p_char );
     //パレット転送
-    p_ofs = 16*sc_wifi_unionobj_plt[char_no];
+    p_ofs = 16*sc_wifi_unionobj_plt[ pp->char_no ];
     PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
   }else{
     //自分
@@ -833,7 +824,7 @@ static PANEL_TYPE panel_GetType( FMISSION_VIEW_PTR wk, FMISSION_LOG_ACTION actio
   return PANEL_TYPE_SYS;
 }
 
-
+#if 0
 /*
  *  @brief  パネル描画
  */
@@ -844,6 +835,7 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
   pp->sex = FMISSION_LOG_GetSex( pl );
   pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
   pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
+  pp->char_no = FMISSION_LOG_GetTrView( pl );
 
   IWASAWA_Printf("PanelDraw %d\n", action);
   //プレイヤー名取得
@@ -855,7 +847,7 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
   WORDSET_ExpandStr( wk->wordset, pp->str[PANEL_FOAM_MSG], wk->str_tmp );
 
   //UnionOBJリソース更新
-  panel_UnionObjUpdate( wk, pp, pl);
+  panel_UnionObjUpdate( wk, pp );
 
   //パネルパターン変更
   BVCAct_AnmStart( pp->cPanel, ACTANM_PANEL_SYS+pp->type );
@@ -869,6 +861,91 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
     printReq_FOamPrint( wk, pp, PANEL_FOAM_NAME, col, task_ct );
     printReq_FOamPrint( wk, pp, PANEL_FOAM_MSG, col, task_ct );
   }
+}
+#endif
+
+/*
+ *  @brief  パネル描画エントリー
+ */
+static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl )
+{
+  FMISSION_LOG_ACTION action = FMISSION_LOG_GetAction( pl );
+
+  pp->sex = FMISSION_LOG_GetSex( pl );
+  pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
+  pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
+
+  IWASAWA_Printf("PanelDrawEntry %d\n", action);
+  //プレイヤー名取得
+  FMISSION_LOG_GetName( pl, pp->str[PANEL_FOAM_NAME] );
+  //メッセージバッファ初期化
+  FMISSION_LOG_ActionWordset( pl,  wk->wordset, wk->heap_sID);
+  //NULLでないactionは1～なので、マイナス1している
+  GFL_MSG_GetString( wk->mm_sys, msg_fmission_log_act01+(action-1), wk->str_tmp);
+  WORDSET_ExpandStr( wk->wordset, pp->str[PANEL_FOAM_MSG], wk->str_tmp );
+
+  {
+    int i;
+    PRINTSYS_LSB col = FCOL_FNTOAM_W;
+
+    if( pp->type == PANEL_TYPE_MSG ){
+      col = FCOL_FNTOAM_B; 
+    }
+    for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+      if( wk->init_f ){
+	      PRINTSYS_PrintColor( pp->msgOam[i].bmp, 0, 0, pp->str[i], wk->fontHandle, col );
+      }else{
+        PRINTSYS_PrintQueColor( wk->printQue, pp->msgOam[i].bmp, 0, 0, pp->str[i], wk->fontHandle, col );
+      } 
+    }
+  }
+}
+/*
+ *  @brief  パネル描画終了アップデート処理
+ */
+static void panel_DrawFinish( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  int i;
+
+  //UnionOBJリソース更新
+  panel_UnionObjUpdate( wk, pp );
+
+  //パネルパターン変更
+  BVCAct_AnmStart( pp->cPanel, ACTANM_PANEL_SYS+pp->type );
+
+  //FontOam領域転
+  for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
+  }
+  panel_VisibleSet( pp, TRUE );   //パネル描画開始
+}
+
+/*
+ *  @brief  パネル描画メイン
+ *
+ *  TRUEが返るまで呼び続ける
+ */
+static BOOL panel_DrawMain( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  int i;
+
+  //全FontOamの描画待ち
+  for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+    if( PRINTSYS_QUE_IsExistTarget( wk->printQue, pp->msgOam[i].bmp ) ){
+      return FALSE;
+    }
+  }
+  panel_DrawFinish( wk, pp );
+  return TRUE;
+}
+
+/*
+ *  @brief  パネル一発描画
+ */
+static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl )
+{
+  panel_DrawStart( wk, pp, pl );
+  panel_DrawFinish( wk, pp );
 }
 
 /*
@@ -912,10 +989,10 @@ static void list_UpDownReq( FMISSION_VIEW_PTR wk, SCROLL_DIR dir )
   
   BVCSound_PlaySE( FVIEW_SE_UPDOWN );
 
-  if( dir == SCROLL_UP ){
+  if( dir == SCROLL_UP ){ //次は一つ下を表示したい
     ofs = wk->ctrl.view_top+wk->ctrl.view_max;
     FMISSION_LOG_TBL_SetViewTopIdx( wk->logView, ++wk->ctrl.view_top );
-  }else{
+  }else{  //次は一つ上を表示したい
     ofs = wk->ctrl.view_top-1;
     FMISSION_LOG_TBL_SetViewTopIdx( wk->logView, --wk->ctrl.view_top );
   }
@@ -970,14 +1047,14 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* work);
 /*
  *  @brief  ビュー スクロール処理リクエスト
  */
-static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, u8 dir )
+static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir )
 {
   PANEL_WORK* pp;
   GFL_TCBL* tcb;
   TASKWK_LIST_SCROLL* twk;
 
   //空きパネル検索
-  pp = panel_GetPanelFromDataIndex( wk, PANEL_DATA_BLANK );
+  pp = panel_GetNextTargetPanel( wk, dir );
   if( pp == NULL){
     GF_ASSERT(0);
     return; //万一のためのチェック(正しい挙動ならNULLはない)
@@ -994,14 +1071,49 @@ static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, u8 d
   wk->eff_task_ct++;
 
   panel_Entry( pp, idx, 0 );  //パネル新規登録(ラインは後で初期化)
-  panel_Draw( wk, pp, pl, &twk->child_task );   //パネル描画
+  panel_DrawStart( wk, pp, pl );   //パネル描画開始リクエスト
 }
 
 static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_LIST_SCROLL* twk = (TASKWK_LIST_SCROLL*)tcb_wk;
   FMISSION_VIEW_PTR fvp = twk->fvp;
-  
+
+  switch( twk->seq ){
+  case 0:
+    //パネル描画待ち
+    if( panel_DrawMain( fvp, twk->pp ) == FALSE ){
+      return;
+    }
+    //パネルを移動
+    {
+      int i, line;
+
+      for(i = 0;i < PANEL_MAX; i++ ){
+        PANEL_WORK* pp = &fvp->panel[i];
+        if( pp->data_idx == PANEL_DATA_BLANK ){
+          continue;
+        }
+        //移動するラインを決定
+        if( pp == twk->pp ){
+          if( twk->dir == SCROLL_UP ){
+            pp->n_line = PANEL_VIEW_END;
+          }else{
+            pp->n_line = PANEL_VIEW_START;
+          } 
+        }else{
+          if( twk->dir == SCROLL_UP ){
+            pp->n_line--;
+          }else{
+            pp->n_line++;
+          } 
+        } 
+        panel_SetPos( pp, pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX, pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY );
+      }
+    }
+    break;
+  }
+#if 0
   if( twk->child_task > 0 ){
     return;
   }
@@ -1015,6 +1127,7 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
   default:
     break;
   }
+#endif
   if( twk->task_ct != NULL ){
     (*twk->task_ct)--;
   }

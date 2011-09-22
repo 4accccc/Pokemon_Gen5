@@ -44,7 +44,8 @@ typedef struct _PANEL_WORK{
   u8  id; //パネルID
   u8  data_idx; //データ配列参照実index
 
-  u8  n_line; //現在のライン
+  u8  n_line:2;  //現在のライン
+  u8  char_no:6; //ユニオンキャラクターNo
   u8  sex:1;  //性別
   u8  mine_f:1;  //プレイヤー自身のログならTRUE
   u8  type:6; //パネルタイプ(enum PANEL_TYPE)
@@ -60,7 +61,6 @@ typedef struct _PANEL_WORK{
   GFL_TCBL* tcb_print[PANEL_FOAM_MAX];
 
   const PRINT_QUE* que;
-  GFL_TCBL* tcb_print_name;
 }PANEL_WORK;
 
 /*
