@@ -64,6 +64,9 @@ static const u16 FormTable[][2] =
   //スワン新規フォルムテーブル
 	{ MONSNO_KYUREMU, FORM_MAX_KYUREMU },					// キュレム ※スワン新規
 	{ MONSNO_KERUDHIO, FORM_MAX_KERUDHIO },				// ケルディオ ※スワン新規
+	{ MONSNO_BORUTOROSU, FORM_MAX_BORUTOROSU },	  // ボルトロス ※スワン新規
+	{ MONSNO_TORUNEROSU, FORM_MAX_TORUNEROSU },		// トルネロス ※スワン新規
+	{ MONSNO_RANDOROSU, FORM_MAX_RANDOROSU },		  // ランドロス ※スワン新規
 
 	{ 0, 0 },
 };

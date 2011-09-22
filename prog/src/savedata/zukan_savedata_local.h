@@ -43,9 +43,12 @@ enum {
 	
   FORM_MAX_KYUREMU  = 3,					// キュレム ※スワン新規
   FORM_MAX_KERUDHIO = 2,					// ケルディオ ※スワン新規
-	/* スワン合計: 77 */
+  FORM_MAX_BORUTOROSU = 2,				// ボルトロス ※スワン新規
+  FORM_MAX_TORUNEROSU = 2,        // トルネロス ※スワン新規
+  FORM_MAX_RANDOROSU  = 2,        // ランドロス ※スワン新規
+	/* スワン合計: 83 */
 
-	FORM_ARRAY_LEN = 10,		///< フォルムフラグ配列の大きさ 10 * 8 = 80まで大丈夫
+	FORM_ARRAY_LEN = 11,		///< フォルムフラグ配列の大きさ 11 * 8 = 88まで大丈夫
 
 	// 色定義
 	COLOR_NORMAL = 0,		// 通常カラー	
