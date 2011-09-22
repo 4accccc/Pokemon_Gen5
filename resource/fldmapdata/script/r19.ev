@@ -126,7 +126,7 @@ EVENT_START   ev_pos_r19_pokeget_01
   _OBJ_ANIME_WAIT()
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
-  /*
+  /**/
   //捕獲デモ呼び出し
   _CAPTURE_DEMO_SET()
   
@@ -134,12 +134,13 @@ EVENT_START   ev_pos_r19_pokeget_01
   _CAMERA_PURGE()		//カメラのバインドを解く
   
   //カメラ操作　博士中心に
-  _CAMERA_MOVE( 9694,0,970800,51675136,0,47480832,1 )
+  //_CAMERA_MOVE( 9694,0,970800,51675136,0,47480832,1 )
+  _CAMERA_MOVE( 9688,0,970752,3899392,65551,45580288,1 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //暗転終了
   _WILD_WIN()
-  */
+  /**/
   
   //自機にカメラを戻す
   _CAMERA_DEF_MOVE (24)
