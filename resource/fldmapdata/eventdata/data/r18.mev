@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 16:32:08
+#save date:2011/09/22 18:57:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r18.wms
 #SECTION START:OBJ_EVENT
@@ -541,7 +541,7 @@ SCRID_HIDE_ITEM_188
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-680 -20 -408
+632 0 -440
 #event number: 2
 #Bg Event Label
 HIDE_ITEM_186
@@ -554,7 +554,7 @@ SCRID_HIDE_ITEM_186
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 152
+168 0 152
 #event number: 3
 #Bg Event Label
 HIDE_ITEM_189
@@ -567,7 +567,7 @@ SCRID_HIDE_ITEM_189
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-648 -20 8
+664 -16 40
 #event number: 4
 #Bg Event Label
 BGID_R18_ANIMAL_TRAIL_01_1
@@ -606,7 +606,7 @@ SCRID_HIDE_ITEM_191
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 -24 -152
+456 -16 -40
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
