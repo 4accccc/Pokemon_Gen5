@@ -28,6 +28,8 @@
 #include  "gamesystem/game_data.h"
 #include  "savedata/etc_save.h"
 
+#include  "field/infinity_dungeon_def.h"
+
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_nakatsui | defined DEBUG_ONLY_FOR_nagihashi_toru
 #define SEIKAKU_PRINT
@@ -334,8 +336,17 @@ void  TT_TrainerDataGet( TrainerID tr_id, TRAINER_DATA* td )
   }
   else
   {
-    ONOUE_Printf("トレーナーデータ差し替え\n");
-    GFL_ARC_LoadData( td, ARCID_TRDATA, 1 );
+    TrainerID id = tr_id - TRID_OFFSET_INFINITY_DUNGEON;
+    if((INF_TRID_START_MONEY<=id)&&(INF_TRID_START_MONEY+INF_TRID_CNT_MONEY > id))
+    {
+      ONOUE_Printf("トレーナーデータ差し替え(お金)\n");
+      GFL_ARC_LoadData( td, ARCID_TRDATA, TRID_GENTLE_09 );
+    }
+    else
+    {
+      ONOUE_Printf("トレーナーデータ差し替え(通常)\n");
+      GFL_ARC_LoadData( td, ARCID_TRDATA, TRID_CHILDCARE_10 );
+    }
   }
 }
 

@@ -19,20 +19,68 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d31r0101
+_EVENT_DATA    ev_fighterw_01
+_EVENT_DATA    ev_mountman_01
 _EVENT_DATA_END
 
+DEFINE_LOCAL LWK_DUNGEON_STATUS
+DEFINE_LOCAL LWK_MSG_ID
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*			D31R0101 	バトルガール				                        */
 /**************************************************************/
-//ev_zone_d31r0101:
-//  _END
+EVENT_START		ev_fighterw_01
+{
+  _TALK_OBJ_START()
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  IF $LWK_DUNGEON_STATUS <= INFINITY_DUNGEON_AREA_ID_5 THEN
+    // 1~5
+    $LWK_MSG_ID = msg_d31r0101_fighterw_01
+  ELSIF $LWK_DUNGEON_STATUS <= INFINITY_DUNGEON_AREA_ID_10 THEN
+    // 6~9
+    $LWK_MSG_ID = msg_d31r0101_fighterw_02
+  ELSE
+    // 10
+    $LWK_MSG_ID = msg_d31r0101_fighterw_03
+  ENDIF
+  
+  // メッセージ
+  _BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+	
+  // 終了
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+	
+}
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*			D31R0101 	やまおとこ                              */
 /**************************************************************/
-ev_d31r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_mountman_01
+{
+  _TALK_OBJ_START()
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
+  IF $LWK_DUNGEON_STATUS <= INFINITY_DUNGEON_AREA_ID_5 THEN
+    // 1~5
+    $LWK_MSG_ID = msg_d31r0101_mountman_01
+  ELSIF $LWK_DUNGEON_STATUS <= INFINITY_DUNGEON_AREA_ID_10 THEN
+    // 6~9
+    $LWK_MSG_ID = msg_d31r0101_mountman_02
+  ELSE
+    // 10
+    $LWK_MSG_ID = msg_d31r0101_mountman_03
+  ENDIF
+  
+  // メッセージ
+  _BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+	
+  // 終了
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+}
+EVENT_END
+
+ 

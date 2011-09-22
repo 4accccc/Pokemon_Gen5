@@ -59,6 +59,13 @@
 #define INF_DUNGEON_TR_DATA_MAX  (500)  // 抽選するトレーナーデータ数
 #define INF_DUNGEON_TR_ID_MAX  (INF_TRID_CNT_NORMAL+INF_TRID_CNT_MONEY+INF_TRID_CNT_RECOVERY)  // トレーナーIDの最大値
 
+// 回復トレーナー抽選値
+#define INF_TRID_RECOVERY_AREA_NUM  (5) // 1エリアに抽選するトレーナー数
+#define INF_TRID_RECOVERY_START_AREA1_5_W (650) // 1~5エリアの回復トレーナー開始ID
+#define INF_TRID_RECOVERY_START_AREA6_10_W (655)// 1~10エリアの回復トレーナー開始ID
+#define INF_TRID_RECOVERY_START_AREA1_5_B (640) // 1~5エリアの回復トレーナー開始ID
+#define INF_TRID_RECOVERY_START_AREA6_10_B (645)// 1~10エリアの回復トレーナー開始ID
+
 // ヒントレベル
 #define INFINITY_DUNGEON_HINT_LEVEL_1  (0)
 #define INFINITY_DUNGEON_HINT_LEVEL_2  (1)

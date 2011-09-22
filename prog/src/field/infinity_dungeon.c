@@ -535,8 +535,8 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
 static const GRID_DATA* GetBmodelPos( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  );
 static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data);
 static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,
-    int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
+static u32 GetRecoverTrainerID( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context );
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
 static BOOL SetTutorialMap( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 static void SetTutorialTrainerData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 
@@ -2465,8 +2465,8 @@ static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_no ,int rmv
  *	@brief  トレーナーデータ
  *
  *	@param	*p_dungeon_data フロアデータ
- *	@param	area_no          生成用シード
- *	@param	seed          生成用シード
+ *	@param	area_no         エリア番号
+ *	@param	seed            生成用シード
  *
  *	@retval
  */
@@ -2533,7 +2533,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
       if( (g_debug_inf_is_presentation == FALSE) )
       {
         // 通常配置
-        SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+        SetRecoverTrainer( p_dungeon_data ,n ,area_no,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
       }
       else
       {
@@ -2562,12 +2562,12 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
         }
         else
         {
-          SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+          SetRecoverTrainer( p_dungeon_data ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
         }
       }
 
 #else
-      SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+      SetRecoverTrainer( p_dungeon_data ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
 #endif
     }
   }
@@ -2587,8 +2587,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no 
-    ,int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index )
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index )
 {
   int id_pos = 0;
   u16 tr_id;
@@ -2599,12 +2598,77 @@ static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no
   member_index = GFL_STD_Rand( rand_context ,member_num[room_id_index]);
   id_pos = GetRoomTrainerIDPos( p_dungeon_data ,floor_no ,room_id_array[room_id_index] ,member_index);
 
-  tr_id = INF_TRID_START_RECOVERY + GFL_STD_Rand( rand_context ,INF_TRID_CNT_RECOVERY);
+  // エリア番号から、適切な回復トレーナーを抽選
+  tr_id = GetRecoverTrainerID( p_dungeon_data ,area_no ,rand_context);
+
   p_dungeon_data->tr_data[floor_no].tr_id[id_pos] = tr_id;
   p_dungeon_data->recover_data[(*recover_index)] = tr_id;
   (*recover_index)++;
   p_dungeon_data->recover_room_id[floor_no] = room_id_array[room_id_index];
   OS_Printf("回復トレーナー部屋NO：%u\n",room_id_array[room_id_index]);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアごとの回復トレーナーID取得
+ *
+ *	@param	*p_dungeon_data 
+ *	@param	*rand_context 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetRecoverTrainerID( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context )
+{
+  const u32 dungeon_color = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  u32 start_trid = INF_TRID_START_RECOVERY;
+  u32 trid_ofs   = GFL_STD_Rand( rand_context ,INF_TRID_RECOVERY_AREA_NUM);
+
+  // 現在のエリアによって分岐
+  switch( area_no )
+  {
+  case INFINITY_DUNGEON_AREA_ID_1:
+  case INFINITY_DUNGEON_AREA_ID_2:
+  case INFINITY_DUNGEON_AREA_ID_3:
+  case INFINITY_DUNGEON_AREA_ID_4:
+  case INFINITY_DUNGEON_AREA_ID_5:
+    {
+      if( dungeon_color == VERSION_B2 )
+      {
+        start_trid = INF_TRID_RECOVERY_START_AREA1_5_B;
+      }
+      else
+      {
+        start_trid = INF_TRID_RECOVERY_START_AREA1_5_W;
+      }
+    }
+    break;
+  case INFINITY_DUNGEON_AREA_ID_6:
+  case INFINITY_DUNGEON_AREA_ID_7:
+  case INFINITY_DUNGEON_AREA_ID_8:
+  case INFINITY_DUNGEON_AREA_ID_9:
+  case INFINITY_DUNGEON_AREA_ID_10:
+    {
+      if( dungeon_color == VERSION_B2 )
+      {
+        start_trid = INF_TRID_RECOVERY_START_AREA6_10_B;
+      }
+      else
+      {
+        start_trid = INF_TRID_RECOVERY_START_AREA6_10_W;
+      }
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+    start_trid = INF_TRID_RECOVERY_START_AREA1_5_B;
+    break;
+  }
+
+  // 回復トレーナーID
+  start_trid += trid_ofs;
+
+  return start_trid;
 }
 
 //----------------------------------------------------------------------------
