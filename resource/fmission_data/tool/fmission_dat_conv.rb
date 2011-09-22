@@ -136,7 +136,8 @@ class CDefine
 
   def get_num key
     for n in @list do
-      if n.key == key then
+      word = (@prefix+n.key)
+      if word == key then
         return n.num
       end
     end
@@ -219,10 +220,12 @@ class CDefList
     end
   end 
 
-  def search key, err_msg
+  def search key, prefix, err_msg
     for n in @list do
-      num = n.get_num( key )
+      word = prefix+key
+      num = n.get_num( word )
       if num != nil then
+        print("c_def_search #{key}, #{err_msg}, #{num}\n")
         return num
       end
     end
@@ -337,7 +340,7 @@ class CMission
   end
 
   def initialize work, c_def_list, c_evflag_list, c_msg_list
-    @type = c_def_list.search( work[COLUMN_TYPE], "ミッションタイプ")
+    @type = c_def_list.search( work[COLUMN_TYPE], "FMISSION_TYPE_", "ミッションタイプ")
     @type_str = work[COLUMN_TYPE]
     @id = work[COLUMN_ID]
     print("missionid = #{@type_str}->#{@type}, #{@id}, #{work[COLUMN_BASE_PARAM]}\n")
@@ -352,13 +355,13 @@ class CMission
       @base_param = $monsno_hash.fetch( param, 0 )
       print("type MUSHROOM_ENC\n")
     when "EVENT"
-      @base_param = c_def_list.search( param, "パラメータ->イベントID")
+      @base_param = c_def_list.search( param, "FMISSION_", "パラメータ->イベントID")
       print("type EVENT\n")
     when "ITEM"
-      @base_param = c_def_list.search( param, "パラメータ->アイテムセットタイプ")
+      @base_param = c_def_list.search( param, "FMISSION_", "パラメータ->アイテムセットタイプ")
       print("type ITEM\n")
     when "NPC"
-      @base_param = c_def_list.search( param, "パラメータ->NPCイベントタイプ")
+      @base_param = c_def_list.search( param, "FMISSION_NPC_", "パラメータ->NPCイベントタイプ")
       print("type NPC\n")
     when "TRBTL"
       @base_param = 0
@@ -370,10 +373,10 @@ class CMission
     
     @ex_param = work[COLUMN_EX_PARAM].to_i
 
-    @unit = c_def_list.search( work[COLUMN_UNIT], "単位系")
-    @end_type = c_def_list.search( work[COLUMN_END_TYPE], "終了条件" ) 
+    @unit = c_def_list.search( work[COLUMN_UNIT], "FMISSION_UNIT_", "単位系")
+    @end_type = c_def_list.search( work[COLUMN_END_TYPE], "FMISSION_ENDTYPE_", "終了条件" ) 
     @time_bonus = work[COLUMN_TBONUS].to_i
-    @pay_bonus = c_def_list.search( work[COLUMN_PAY_BONUS], "報酬ボーナスタイプ" )
+    @pay_bonus = c_def_list.search( work[COLUMN_PAY_BONUS], "FMISSION_PAY_", "報酬ボーナスタイプ" )
     
     ev_flag = work[COLUMN_OPEN_FLAG]
     if ev_flag == '0' then
@@ -395,8 +398,8 @@ class CMission
         print_err("参加条件イベントフラグが不正です", ev_flag )
       end
     end
-    @location = c_def_list.search( work[COLUMN_LOCATION], "範囲" )
-    @host = c_def_list.search( work[COLUMN_HOST], "開催制限" )
+    @location = c_def_list.search( work[COLUMN_LOCATION], "FMISSION_", "範囲" )
+    @host = c_def_list.search( work[COLUMN_HOST], "FMISSION_HOST_", "開催制限" )
 
     @level = Array.new
     for i in 0..4 do
