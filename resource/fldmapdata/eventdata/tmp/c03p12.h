@@ -13,6 +13,9 @@
 #define ZONE_C03P12_EVC_H
 
 #define C03P12_INFORMATIONW_01             0
+#define C03P12_SUNGLASSES_01               1
+#define C03P12_BADMAN_02                   2
+#define C03P12_BADMAN_01                   3
 
 #endif //ZONE_C03P12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
