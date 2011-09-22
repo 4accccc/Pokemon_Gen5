@@ -252,10 +252,11 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
     int i;
     POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
     for(i=0;i<40;i++){
-      OS_Printf("p senario%02d open=%d, played=%d, success=%d, announced=%d\n", i ,
+      OS_Printf("p senario%02d open=%d, played=%d, success=%d, strange=%d, announced=%d\n", i ,
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_OPEN, i ),     // シナリオオープンフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_PLAYED, i ),   // シナリオ撮影済みフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_SUCCESS, i ),  // シナリオ成功終了済みフラグ
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_STRANGE, i ),   // シナリオストレンジ終了済みフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_ANNOUNCED, i ) // シナリオオープン告知済みフラグ
                 );
     }
@@ -480,31 +481,7 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
       }
     }
     OS_Printf(" pokewood senario open num = %d\n ", POKEWOOD_SAVEDATA_GetSenarioOpenNum(ps));
-/*
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,4);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,5);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,6);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,7);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,8);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,9);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,11);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,12);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,13);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,14);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,15);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,16);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,11);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,17);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,18);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,19);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,20);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,31);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,32);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,33);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,34);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,35);
-    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,40);
-*/
+
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
       newcount = POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag(ps,50);
     }

@@ -17,13 +17,13 @@
 #define POKEWOOD_SHOWING_MAX          ( POKEWOOD_SAVEDATA_MAX ) ///< 同時に上映する最大数
 
 /// ポケウッド情報取得関数用定義
-enum{
+typedef enum{
   PWSV_TYPE_SENARIO_OPEN=0,     ///< シナリオオープンフラグ
   PWSV_TYPE_SENARIO_PLAYED,     ///< シナリオ撮影済みフラグ
   PWSV_TYPE_SENARIO_SUCCESS,    ///< シナリオ成功終了済みフラグ
   PWSV_TYPE_SENARIO_ANNOUNCED,  ///< シナリオオープン告知済みフラグ
   PWSV_TYPE_SENARIO_STRANGE,    ///< ストレンジEND取得済みフラグ
-};
+} PokewoodFlagType;
 
 // プレイヤーのポケウッドスターランク定義
 enum{
@@ -83,8 +83,8 @@ extern POKEWOOD_SAVEDATA* GAMEDATA_GetPokewoodSavedata( GAMEDATA *gamedata );
 //=============================================================================================
 //=============================================================================================
 
-extern BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, int type, int no );
-extern void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, int type, int no );
+extern BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, PokewoodFlagType type, int no );
+extern void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type, int no );
 
 //=============================================================================================
 /**
@@ -93,7 +93,8 @@ extern void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, int type, 
 //=============================================================================================
 extern BOOL POKEWOOD_SAVEDATA_GetPokewoodOpenFlag( const POKEWOOD_SAVEDATA *sv, int no );
 extern void POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( POKEWOOD_SAVEDATA *sv, int no );
-extern  int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv );
+extern  int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv );   //@todo 消します
+extern  int POKEWOOD_SAVEDATA_GetFlagTotal( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type );
 
 
 //=============================================================================================

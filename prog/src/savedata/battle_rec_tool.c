@@ -42,6 +42,11 @@
 #include "net_app/gds/gds_battle_mode.h"
 #include "pokewood_rec_local.h"
 #include "tr_tool/trtype_def.h"
+#include "poke_tool/pokewood_party.h"
+#include "pokewood_party.naix"
+#include "arc_def.h"
+#include "message.naix"
+#include "msg/msg_pokewood_name.h"
 
 #ifdef PM_DEBUG
 #define DEBUG_BATTLE_REC_TOOL_PRINT
@@ -816,192 +821,14 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
 {
   enum
   {
-    POKEWOOD_CONV_DATA_POKE_NUM = 3,
+    POKEWOOD_CONV_DATA_POKE_NUM = 6,
   };
-
-  enum
-  {
-    POKEWOOD_TRDATA_PLAYER_M,
-    POKEWOOD_TRDATA_ENEMY_M,
-    POKEWOOD_TRDATA_PLAYER_F,
-    POKEWOOD_TRDATA_ENEMY_F,
-    POKEWOOD_TRDATA_MAX,
-  };
-
-  //TODO　本来ROMから読み出す予定だが、ないので
-  //データべた書き
-  static const struct _POKEWOOD_REC_CONV_DATA
-  {
-    struct _POKEWOOD_REC_TR_DATA
-    {
-      u32 tr_type;
-      STRCODE trainer_name[PERSON_NAME_SIZE + EOM_SIZE];
-      u32 trainer_name_length;
-    } tr_data[POKEWOOD_TRDATA_MAX];
-
-    struct _POKEWOOD_REC_POKE_DATA
-    {
-      u16 src_monsno; //変更前
-      u16 dst_monsno; //変更先
-    } poke_data[POKEWOOD_CONV_DATA_POKE_NUM];
-  } sc_rec_to_show_data[] =
-  {
-    //シナリオ０
-    {
-      //トレーナーデータ
-      {
-        //味方
-        {
-          0,
-          L"",
-          0,
-        },
-        //敵
-        {
-          TRTYPE_SCIENTISTW,
-          L"サトミ",
-          3,
-        },
-        //味方
-        {
-          0,
-          L"",
-          0,
-        },
-        //敵
-        {
-          TRTYPE_SCIENTISTW,
-          L"サトミ",
-          3,
-        },
-      },
-      //敵のポケモンデータ
-      {
-        MONSNO_ufo,
-        MONSNO_ufo,
-      }
-    },
-    //シナリオ１
-    {
-      //トレーナーデータ
-      {
-        //味方
-        {
-          TRTYPE_PKWD_HERO,
-          L"",
-          0,
-        },
-        //敵
-        {
-          TRTYPE_PKWD_VILLAIN,
-          L"ハチクマン",
-          5,
-        },
-        //味方（女）
-        {
-          TRTYPE_PKWD_HEROINE,
-          L"",
-          0,
-        },
-        //敵（女）
-        {
-          TRTYPE_PKWD_VILLAIN,
-          L"ハチクマン",
-          5,
-        },
-      },
-      //敵のポケモンデータ
-      {
-        0,
-      },
-    },
-    //シナリオ2
-    {
-      //トレーナーデータ
-      {
-        //味方
-        {
-          0,
-          L"",
-          0,
-        },
-        //敵
-        {
-          TRTYPE_SCIENTISTW,
-          L"サトミ",
-          3,
-        },
-        //味方
-        {
-          0,
-          L"",
-          0,
-        },
-        //敵
-        {
-          TRTYPE_SCIENTISTW,
-          L"サトミ",
-          3,
-        },
-      },
-      //敵のポケモンデータ
-      {
-        0
-      }
-    },
-
-  };
-
-  const struct _POKEWOOD_REC_CONV_DATA *p_setup_data = &sc_rec_to_show_data[ bsp->pokewoodSenario ];
-
-#if 0
-  GF_ASSERT(bsp->pokewoodSenario < NELEMS(sc_rec_to_show_data) );
-
-  //敵トレーナーの設定
-  {
-    int i;
-    int ofs;
-
-    if( MyStatus_GetMySex( bsp->playerStatus[ BTL_CLIENT_PLAYER ] ) == PM_MALE )
-    {
-      ofs = POKEWOOD_TRDATA_PLAYER_M;
-    }
-    else
-    {
-      ofs = POKEWOOD_TRDATA_PLAYER_F;
-    }
-
-    for( i = BTL_CLIENT_PLAYER; i <= BTL_CLIENT_ENEMY1; i++ )
-    {
-      const struct _POKEWOOD_REC_TR_DATA *p_tr_data = &p_setup_data->tr_data[i+ofs];
-
-      if( p_tr_data->tr_type != 0 || p_tr_data->trainer_name_length != 0 )
-      {
-        if( bsp->tr_data[i] == NULL )
-        {
-
-          bsp->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
-        }
-      }
-
-
-      if( p_tr_data->tr_type != 0 )
-      {
-        bsp->tr_data[i]->tr_id   = 1;//1とすることでトレーナーとしてだましている
-        bsp->tr_data[i]->tr_type = p_tr_data->tr_type;
-        bsp->tr_data[i]->ai_bit  = 0;
-      }
-
-      if( p_tr_data->trainer_name_length != 0 )
-      {
-        STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
-        GFL_STD_MemCopy( p_tr_data->trainer_name, name, sizeof(STRCODE)*p_tr_data->trainer_name_length );
-        name[p_tr_data->trainer_name_length] = GFL_STR_GetEOMCode();
-        GFL_STR_SetStringCode( bsp->tr_data[i]->name, name );
-      }
-    }
-  }
-#endif
+  GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                         NARC_message_pokewood_name_dat, 
+                                         GFL_HEAP_LOWID(heapID) );
+  POKEWOOD_PARTIES_DATA *ppd = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, 
+                               NARC_pokewood_party_pkwd_party01_bin+bsp->pokewoodSenario, 
+                               GFL_HEAP_LOWID(heapID) );
 
   //敵ポケモンの設定
   //置換するものがあったら変える
@@ -1019,14 +846,22 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
       }
       for( j = 0; j < POKEWOOD_CONV_DATA_POKE_NUM; j++ )
       {
-        const struct _POKEWOOD_REC_POKE_DATA *p_poke_data = &p_setup_data->poke_data[j];
-
-        if( p_poke_data->src_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
+        POKEWOOD_POKE_DATA *poke = &ppd->data[j];
+        if( poke->rec_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
         {
-          PP_Put( p_pp, ID_PARA_monsno, p_poke_data->dst_monsno );
+          PP_Put( p_pp, ID_PARA_monsno, poke->show_monsno );
+          PP_Renew( p_pp );
+          if(poke->show_monsno>=MONSNO_ufo && poke->show_monsno<=MONSNO_KARATEOU){
+            STRBUF *strbuf = GFL_MSG_CreateString( msgdata, pw_boss_poke_name_652+(poke->show_monsno-MONSNO_ufo));
+            PP_Put( p_pp, ID_PARA_nickname, (u32)strbuf );
+            GFL_STR_DeleteBuffer(strbuf);
+          }
         }
       }
     }
   }
+  GFL_HEAP_FreeMemory( ppd );
+  GFL_MSG_Delete( msgdata );
+
 }
 

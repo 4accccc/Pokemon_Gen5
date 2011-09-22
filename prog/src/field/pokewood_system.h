@@ -56,6 +56,8 @@ extern void PKWDSYS_SetPlayNo( PKWDSYS *pkwdsys, int no );
 extern  u16 PKWDSYS_GetPlayNo( PKWDSYS *pkwdsys );
 
 extern void * PKWDSYS_GetBackupArea( PKWDSYS *pkwdsys );
+extern void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no, BtlPokewoodResult result );
+extern void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata );
 
 
 extern void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPARTY *entry_party );

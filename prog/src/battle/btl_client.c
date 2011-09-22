@@ -2180,6 +2180,7 @@ static void _check_ending( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_
     // 上映中の場合は観客に動きを与える
     if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW ){
       _set_audience_ending_reaction( wk->viewCore, &wk->pokewoodSeqWork );
+      // BATTLE_SETUP_PARAMに書き戻す
       {
         BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
         bsp->audience_bit = wk->pokewoodSeqWork.Audience.on_off;
@@ -2572,7 +2573,7 @@ enum{
 
 // 0:元 1:A_TRAINER_B_TRAINER 2:BOTH_POKE 3:A_NONE_B_NONE 4:A_NONE_B_TRAINER 5:A_TRAINER_B_NONE (に向かう)
 static const int stage_tbl[][6]={
-  { PW_STAGE_BOTH_POKE,           ENEMY_APPEAR, 0,            -1,                -1,              -1, },///< 両方ポケモン
+  { PW_STAGE_BOTH_POKE,           ENEMY_APPEAR, 0,            -1,                ENEMY_APPEAR,    HERO_APPEAR, },///< 両方ポケモン
   { PW_STAGE_A_POKEMON_B_TRAINER, HERO_APPEAR,  ENEMY_2_POKE, -1,                -1,              -1, },///< 敵がトレーナー自分はポケモン
   { PW_STAGE_A_TRAINER_B_TRAINER, 0,            ENEMY_2_POKE, ENEMY_DISSAPPEAR,  HERO_DISSAPPEAR, ENEMY_DISSAPPEAR},///< 両方トレーナー
   { PW_STAGE_A_TRAINER_B_POKEMON, ENEMY_APPEAR, HERO_2_POKE,  -1,                -1,              -1, },///< 敵がポケモン自分がトレーナー
@@ -2608,6 +2609,10 @@ static int _get_next_stage_seq( POKEWOOD_SEQ_WORK *work, int next_cond )
       case PW_STAGE_A_NONE_B_TRAINER:
         return stage_tbl[i][4];
       case PW_STAGE_A_TRAINER_B_NONE:
+        return stage_tbl[i][5];
+      case PW_STAGE_A_POKEMON_B_TRAINER:
+        return stage_tbl[i][4];
+      case PW_STAGE_A_TRAINER_B_POKEMON:
         return stage_tbl[i][5];
       }
     }

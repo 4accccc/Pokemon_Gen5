@@ -109,7 +109,7 @@ static void _get_shift_offset( int no, int *offset, int *shift )
  * @brief	各々のフラグに関してテーブルポインタを返す
  */
 //----------------------------------------------------------------------------------
-static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, int type )
+static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type )
 {
   switch(type){
   case PWSV_TYPE_SENARIO_OPEN:
@@ -138,7 +138,7 @@ static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, int type )
  * @retval  BOOL	TRUE or FALSE
  */
 //=============================================================================================
-BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, int type, int no )
+BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, PokewoodFlagType type, int no )
 {
   int offset, shift;
   u32 *tbl=_get_flagtable_pointer( (POKEWOOD_SAVEDATA *)sv, type );
@@ -156,7 +156,7 @@ BOOL POKEWOOD_SAVEDATA_GetPokewoodFlag( const POKEWOOD_SAVEDATA *sv, int type, i
  * @param   no		シナリオNO
  */
 //=============================================================================================
-void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, int type, int no )
+void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type, int no )
 {
   int offset, shift;
   u32 *tbl=_get_flagtable_pointer( sv, type );
@@ -454,6 +454,29 @@ void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_
 
 //=============================================================================================
 /**
+ * @brief	各種ポケウッド進行フラグの総数を返す
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   type	PokewoodFlagType
+ *
+ * @retval  int		合計数
+ */
+//=============================================================================================
+int POKEWOOD_SAVEDATA_GetFlagTotal( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type )
+{
+  
+  int i,count=0;
+  for(i=0;i<POKEWOOD_BOXOFFICE_DATA_MAX;i++){
+    if(POKEWOOD_SAVEDATA_GetPokewoodFlag( sv, type, i )){
+      count++;
+    }
+  }
+  return count;
+
+}
+
+//=============================================================================================
+/**
  * @brief	ポケウッドシナリオオープンの総数を返す
  *
  * @param   sv		POKEWOOD_SAVEDATA
@@ -463,11 +486,5 @@ void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_
 //=============================================================================================
 int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv )
 {
-  int i,count=0;
-  for(i=0;i<POKEWOOD_BOXOFFICE_DATA_MAX;i++){
-    if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(sv,i)){
-      count++;
-    }
-  }
-  return count;
+  return POKEWOOD_SAVEDATA_GetFlagTotal( sv, PWSV_TYPE_SENARIO_OPEN );
 }

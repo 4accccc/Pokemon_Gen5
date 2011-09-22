@@ -59,86 +59,12 @@
 #include "../battle/pokewood/pokewood_senario.h"
 #include "pkwd_scenario_open.h"
 #include "pokewood_setup.h"
+#include "poke_tool/pokewood_party.h"
 
 #include "pokewood_party.naix"
 
 #include "field_fade.h"
 
-//’è‹`‚µ‚½’l‚ª‚¸‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚é
-SDK_COMPILER_ASSERT( PKWD_REC_POS_00 == LOADDATA_POKEWOOD0 );
-SDK_COMPILER_ASSERT( PKWD_REC_POS_01 == LOADDATA_POKEWOOD1 );
-SDK_COMPILER_ASSERT( PKWD_REC_POS_02 == LOADDATA_POKEWOOD2 );
-SDK_COMPILER_ASSERT( PKWD_REC_POS_03 == LOADDATA_POKEWOOD3 );
-SDK_COMPILER_ASSERT( PKWD_REC_POS_TMP == LOADDATA_POKEWOOD4 );
-//SDK_COMPILER_ASSERT( PKWD_REC_POS_MAX == LOADDATA_POKEWOOD_MAX );
-
-//======================================================================
-//  define
-//======================================================================
-// pokewood
-enum{
-  PKWDS_REC_POKE = 0,   // B‰e—pƒ|ƒPƒ‚ƒ“
-  PKWDS_PLAY_POKE,      // ã‰f—pƒ|ƒPƒ‚ƒ“
-  PKWDS_LEVEL,          // ƒŒƒxƒ‹
-  PKWDS_FORM,           // ƒtƒHƒ‹ƒ€
-  PKWDS_SEX,            // «•Ê
-  PKWDS_MIND,           // «Ši
-  PKWDS_STATE,          // “Á«
-  PKWDS_GOODS,          // “¹‹ï
-  PKWDS_SKILL_1,        // ‹Z1
-  PKWDS_SKILL_2,        // ‹Z2
-  PKWDS_SKILL_3,        // ‹Z3
-  PKWDS_SKILL_4,        // ‹Z4
-  PKWDS_HP_FIX,         // HPŒÅ‘Ì’l
-  PKWDS_HP_EFF,         // HP“w—Í’l
-  PKWDS_ATK_FIX,        // UŒ‚ŒÅ‘Ì’l
-  PKWDS_ATK_EFF,        // UŒ‚“w—Í’l
-  PKWDS_DEF_FIX,        // –hŒäŒÅ‘Ì’l
-  PKWDS_DEF_EFF,        // –hŒä“w—Í’l
-  PKWDS_SPD_FIX,        // ‘‚³ŒÅ‘Ì’l
-  PKWDS_SPD_EFF,        // ‘‚³“w—Í’l
-  PKWDS_SPATK_FIX,      // “ÁUŒÅ‘Ì’l
-  PKWDS_SPATK_EFF,      // “ÁU“w—Í’l
-  PKWDS_SPDEF_FIX,      // “Á–hŒÅ‘Ì’l
-  PKWDS_SPDEF_EFF,      // “Á–h“w—Í’l
-  //
-  PKWDS_PARAM_MAX,
-};
-
-// ----------------------------------------
-// ƒ|ƒPƒEƒbƒh—pƒ|ƒPƒ‚ƒ“ƒf[ƒ^icast—pj
-// ----------------------------------------
-
-typedef struct{
-  s16 rec_monsno, show_monsno;  // B‰e—pƒ|ƒPƒ‚ƒ“/ã‰f—pƒ|ƒPƒ‚ƒ“
-  s16 level;                    // ƒŒƒxƒ‹
-  s16 form;                     // ƒtƒHƒ‹ƒ€
-  s16 sex;                      // «•Ê
-  s16 seikaku;                  // «Ši
-  s16 tokusei;                  // “Á«
-  s16 item;                     // “¹‹ï
-  s16 waza[4];                  // ‹Z‚S‚Â
-  s16 hp_rnd;                   // HPŒÅ‘Ì’l
-  s16 hp_eff;                   // HP“w—Í’l
-  s16 pow_rnd;                  // UŒ‚ŒÅ‘Ì’l
-  s16 pow_eff;                  // UŒ‚“w—Í’l
-  s16 def_rnd;                  // –hŒäŒÅ‘Ì’l
-  s16 def_eff;                  // –hŒä“w—Í’l
-  s16 spd_rnd;                  // ‘‚³ŒÅ‘Ì’l
-  s16 spd_eff;                  // ‘‚³“w—Í’l
-  s16 spepow_rnd;                // “ÁUŒÅ‘Ì’l
-  s16 spepow_eff;                // “ÁU“w—Í’l
-  s16 spedef_rnd;                // “Á–hŒÅ‘Ì’l
-  s16 spedef_eff;                // “Á–h“w—Í’l
-} POKEWOOD_POKE_DATA;
-
-// ------------------------------------------------------------
-// ƒRƒ“ƒo[ƒ^‚©‚ço—Í‚³‚ê‚éƒ|ƒPƒEƒbƒh—pƒf[ƒ^‘S‘Ì
-// ------------------------------------------------------------
-typedef struct{
-  s16                party_num[2];  // “Gƒ|ƒPƒ‚ƒ“”A©•ªƒ|ƒPƒ‚ƒ“”‚Ì‡
-  POKEWOOD_POKE_DATA data[12];      // Ši”[”‚É‚æ‚Á‚Ä•Ï‰»‚·‚é‚½‚ßA•K‚¸11‚Ü‚ÅQÆ‚Å‚«‚é‚Æ‚ÍŒÀ‚ç‚È‚¢
-} POKEWOOD_PARTIES_DATA;
 
 
 //======================================================================
@@ -191,6 +117,14 @@ static const int trainerData[][2]={
   { TRTYPE_LEADER7,    TRTYPE_PKWD_VILLAIN, },     // ƒnƒ`ƒNƒ}ƒ“
   { TRTYPE_SCIENTISTW, TRTYPE_SCIENTISTW,   },     // Œ¤‹†ˆõ
 };
+
+//’è‹`‚µ‚½’l‚ª‚¸‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚é
+SDK_COMPILER_ASSERT( PKWD_REC_POS_00 == LOADDATA_POKEWOOD0 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_01 == LOADDATA_POKEWOOD1 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_02 == LOADDATA_POKEWOOD2 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_03 == LOADDATA_POKEWOOD3 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_TMP == LOADDATA_POKEWOOD4 );
+//SDK_COMPILER_ASSERT( PKWD_REC_POS_MAX == LOADDATA_POKEWOOD_MAX );
 
 //============================================================================================
 //============================================================================================
@@ -542,19 +476,6 @@ static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, H
 {
   PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
 
-  // w’èƒVƒiƒŠƒI‚ÌƒvƒŒƒCÏ‚İƒtƒ‰ƒO‚ğ—§‚Ä‚é
-  {
-    POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
-    POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, bsp->pokewoodSenario);  // ƒVƒiƒŠƒIB‰eÏ‚İƒtƒ‰ƒO‚ğ—§‚Ä‚é
-
-    // B‰e¬Œ÷‚Å‚ ‚ê‚Î¬Œ÷ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-    if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_SUCCESS){
-      POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_SUCCESS, bsp->pokewoodSenario );
-    }
-    // ƒVƒiƒŠƒIƒI[ƒvƒ“ƒ`ƒFƒbƒN
-    PKWD_OpenCheckScenario( ps, bsp->pokewoodSenario, bsp->pokewoodResult, bsp->pokewoodProfit );
-  }
-
   BattleRec_LoadToolModule(); //gimmick‚ÌƒI[ƒo[ƒŒƒC‚ÆŠ±Â‚·‚é‚Ì‚Å’ˆÓ
   // BATTLE_SETUP_PARAM‚ğã‰f—p‚ÌƒgƒŒ[ƒi[ƒf[ƒ^‚É‘‚«Š·‚¦‚é
   dataMakeEncountTrainer( bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, bsp->tr_data[BTL_CLIENT_ENEMY1], 
@@ -702,6 +623,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   FIELD_SOUND * fsnd  = GAMEDATA_GetFieldSound( gamedata );
   MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
 
   switch( *seq ) {
   // í“¬—p‚a‚f‚lƒZƒbƒg
@@ -809,6 +731,12 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
       if ( ret_wk != NULL )
       {
         *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
+        if(*ret_wk){
+          PKWDSYS_CheckEnding( pkwdsys, gamedata, pbew->bp->pokewoodSenario, pbew->bp->pokewoodResult );
+          // ƒVƒiƒŠƒIƒI[ƒvƒ“ƒ`ƒFƒbƒN
+          PKWD_OpenCheckScenario( ps, pbew->bp->pokewoodSenario, 
+                                  pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
+        }
       }
     }
     deletePokewoodBSP( pbew->bp );

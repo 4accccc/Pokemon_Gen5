@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2011-09-15T21:38:39"/>
+	<create user="mori" host="W00269" date="2011-09-22T20:14:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -391,7 +391,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="147"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -417,14 +417,14 @@
 		</language>
 	</columns>
 
-	<dialog left="262" top="213" right="975" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="863" top="150" right="1576" bottom="783" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="0" style="0000" width="538"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="705"/>
-		<band id="3" index="3" style="0000" width="705"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -923,6 +923,238 @@
 		<comment>上映時の名前</comment>
 		<language name="JPN" width="256">テストさん</language>
 		<language name="JPN_KANJI" width="256">テストさん</language>
+	</row>
+
+	<row id="pw_boss_poke_name_652" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_ufoの
+上映時のニックネーム</comment>
+		<language name="JPN" width="256">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="256">ＵＦＯ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_653" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_HATIKUMANの
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">ハチクマン</language>
+		<language name="JPN_KANJI" width="256">ハチクマン</language>
+	</row>
+
+	<row id="pw_boss_poke_name_654" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_mvの
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">Ｍ．Ｖ</language>
+		<language name="JPN_KANJI" width="256">Ｍ．Ｖ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_655" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">Ｍ．Ｖ</language>
+		<language name="JPN_KANJI" width="256">Ｍ．Ｖ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_656" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">てんそうき</language>
+		<language name="JPN_KANJI" width="256">転送機</language>
+	</row>
+
+	<row id="pw_boss_poke_name_657" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">だいＯＬ</language>
+		<language name="JPN_KANJI" width="256">大ＯＬ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_658" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">ひとがた</language>
+		<language name="JPN_KANJI" width="256">ひとがた</language>
+	</row>
+
+	<row id="pw_boss_poke_name_659" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">かいぶつ</language>
+		<language name="JPN_KANJI" width="256">怪物</language>
+	</row>
+
+	<row id="pw_boss_poke_name_660" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">Ｆー００</language>
+		<language name="JPN_KANJI" width="256">Ｆー００</language>
+	</row>
+
+	<row id="pw_boss_poke_name_661" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">あくりょう</language>
+		<language name="JPN_KANJI" width="256">悪霊</language>
+	</row>
+
+	<row id="pw_boss_poke_name_662" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="256">しろいかべ</language>
+		<language name="JPN_KANJI" width="256">白い壁</language>
+	</row>
+
+	<row id="pw_boss_poke_name_663" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_KUROIKABEの
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">くろいかべ</language>
+		<language name="JPN_KANJI" width="256">黒い壁</language>
+	</row>
+
+	<row id="pw_boss_poke_name_664" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_665" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_666" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_667" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_668" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_669" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_670" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_671" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_672" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_673" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_674" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_675" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_676" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_677" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_678" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_679" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</comment>
+		<language name="JPN" width="256">セット</language>
+		<language name="JPN_KANJI" width="256">セット</language>
+	</row>
+
+	<row id="pw_boss_poke_name_680" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_ufo2の
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="256">ＵＦＯ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_681" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_DAIol2の
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">だいＯＬ</language>
+		<language name="JPN_KANJI" width="256">大ＯＬ</language>
+	</row>
+
+	<row id="pw_boss_poke_name_682" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ポケウッド用ボスポケモン
+MONSNO_ff002の
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">Ｆー００２</language>
+		<language name="JPN_KANJI" width="256">Ｆー００２</language>
+	</row>
+
+	<row id="pw_boss_poke_name_683" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>&quot;ポケウッド用ボスポケモン
+MONSNO_KARATEOUの
+上映時ニックネーム&quot;</comment>
+		<language name="JPN" width="256">からておう</language>
+		<language name="JPN_KANJI" width="256">空手王</language>
 	</row>
 
 	<flowchart-group-list>
