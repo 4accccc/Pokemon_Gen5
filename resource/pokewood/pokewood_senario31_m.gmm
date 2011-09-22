@@ -911,7 +911,19 @@
 完全な　混沌……▼
 世界は　無　に　帰した……</language>
 	</row>
-	<row id="pw_event6_hero_0">
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">かいぶつ『ナントイウ
+シブトサ……▼
+ワレニ　ヒッテキ　スル
+セイメイリョク　ヲ……？</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『ナントイウ
+セイメイリョク……▼
+ヨモヤ　コノ　ホシノ
+イキモノ　トハ　オモエヌ……▼
+ムシロ　ワレニ　チカイ
+コウジゲンノ　ソンザイ……？</language>
+	</row>
+	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">%MYNAME『こんとんだか
 しんえんだか　しらんが▽
 このほしは　オレのものだ！▼
@@ -933,13 +945,13 @@
 宇宙の　かなたで
 ひきこもってな！</language>
 	</row>
-	<row id="pw_event6_enemy_0">
+	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">かいぶつ『ウワー▼
 ヤラレター</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ウワー▼
 ヤラレター</language>
 	</row>
-	<row id="pw_event6_hero_1">
+	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">%MYNAME『かいぶつさえ
 ねじふせる　この　ちから……▼
 まさしく　さいきょうの
@@ -953,7 +965,7 @@
 世界を　支配し　いずれ▽
 宇宙の　覇権を　にぎる！</language>
 	</row>
-	<row id="pw_event6_hero_2">
+	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">しょうたいふめいの　かいぶつを
 あっとうてきな　ちからで▽
 げきたいした　%MYNAME▼
@@ -967,7 +979,7 @@
 人間では　ないのか……？▽
 そして　宇宙の　覇権　とは？</language>
 	</row>
-	<row id="pw_event6_hero_3">
+	<row id="pw_event6_hero_4">
 		<language name="JPN" width="256">あかいきりの　かいぶつの
 しょうたいも　わからぬまま▽
 あらたな　ナゾを　うんだものの▽
