@@ -658,1235 +658,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swrival_13"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オレと　ポケモンしょうぶ　しろよ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:43:38" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オレと　ポケモン勝負　しろよ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:54:26" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswplazmam1_02
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:50:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
-なにが　せかいを　しはいするだよ？▼
-おまえらは　ただの　ポケモンどろぼう
-しかも　うばった　ポケモンを
-どうぐとして　あつかってるだけだろ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:55:01" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
-なにが　世界を　支配するだよ？▼
-おまえらは　ただの　ポケモンどろぼう
-しかも　奪った　ポケモンを
-道具として　扱ってるだけだろ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:54:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswplazmam1_03
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:50:35" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_15"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:51:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:51:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・主人公と向き合って
-　メッセージ表示後、トレーナー戦闘に
-・0＝主人公名
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:50:31" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_16"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！
-ミネズミみたいな　にげあし　だな！▼
-おくに　なかまが　いるかもしれないな
-よし！　さがすぜ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:52:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！
-ミネズミみたいな　にげあし　だな！▼
-奥に　仲間が　いるかもしれないな
-よし！　探すぜ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:57:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswleader3_01
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:53:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:34:07" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_17"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……もしかして
-ジムリーダーの　アーティさん？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:28" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:55:26" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……もしかして
-ジムリーダーの　アーティさん？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T12:41:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswleader3_02
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:56:33" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:53:00" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_18"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
-でも　プラズマだん　だぜ
-わるいヤツらは　ほっておけないだろ？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T12:03:25" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:56:30" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
-でも　プラズマ団　だぜ
-悪いヤツらは　ほっておけないだろ？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:58:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswleader3_03
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:56:30" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:54:22" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_19"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-ジムリーダーは　アイツらと
-たたかったことが　あるんだもんな……▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:58:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:04" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-ジムリーダーは　アイツらと
-戦ったことが　あるんだもんな……▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:58:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswrival_20
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T12:06:46" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:54:22" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_20"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
-これ！
-えんりょせずに　つかえ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:59:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:04" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
-これ！
-遠慮せずに　使え▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:59:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・主人公と向き合ってメッセージ表示
-・アイテム入手処理
-　No423「ひでんマシン０４」（かいりき）
-・続けてswrival_21
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T12:07:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:54:22" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swrival_21"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ほかにも　なかまが　いるかもな▼
-よし！　かならず
-さがしだしてやる！▼
-オレ……　ポケモンどろぼう　は
-ぜったいに　ゆるさないッ！！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:58:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:04" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ほかにも　仲間が　いるかもな▼
-よし！　必ず
-探しだしてやる！▼
-オレ……　ポケモンどろぼう　は
-絶対に　許さないッ！！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-12T02:59:38" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、ライバル退場
-・続けてswleader3_04
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T12:07:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T11:54:22" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『あのね　ほんとうに
-プラズマだんが　いるかも　しれないし▼
-それに　やせいポケモンも　いるから
-いっしょに　いこうよ？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『あのね　本当に
-プラズマ団が　いるかも　しれないし▼
-それに　野生ポケモンも　いるから
-一緒に　いこうよ？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:04:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・連れ歩き確認
-・はい/いいえの選択肢表示
-　はい　→swchampion_03
-　いいえ→swchampion_02</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:23" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『うん　わかった！
-じゃあ　じゅんび　してきてね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『うん　わかった！
-じゃあ　準備してきてね▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:19:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・いいえ選択
-　押し戻される？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『うん　いきましょ！▼
-あっ　きみが　さがしたい　ばしょを
-すきに　さがして　いいからね▼
-ポケモンが　きずついたら
-あたしが　かいふく　してあげるから！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『うん　行きましょ！▼
-あっ　きみが　探したい　場所を
-好きに　探して　いいからね▼
-ポケモンが　きずついたら
-あたしが　回復して　あげるから！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:05:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・はい選択
-・連れ歩き開始</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『いちど　そとに　でる？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『いちど　外に　でる？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:05:28" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・連れ歩き終了確認（出入り口のpos）
-・はい/いいえの選択肢表示
-　はい　→swchampion_02
-　いいえ→swchampion_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『ほんとうに　プラズマだん？
-２ねんまえに　かいさん　したはずだよ▼
-あのときは　かなり
-たいへん　だったんだから！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:20:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『本当に　プラズマ団？
-２年前に　解散したはずだよ▼
-あのときは　かなり
-大変　だったんだから！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:20:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・振り向き会話その１</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『げすいどう　って
-ドラゴンタイプの　ポケモンは▽
-いるわけ　ないよね……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:18:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『下水道　って
-ドラゴンタイプの　ポケモンは▽
-いるわけ　ないよね……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:18:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・振り向き会話その２</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『ポケモンずかん？▼
-ああ　アララギはかせの
-おてつだいを　してるんだ！▼
-ページが　うまっていくのって
-トレーナーとしても　うれしいよね！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:18:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『ポケモン図鑑？▼
-ああ　アララギ博士の
-お手伝いを　してるんだ！▼
-ページが　埋まっていくのって
-トレーナーとしても　うれしいよね！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:17:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・振り向き会話その３</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『あたしはね　しゅぎょうで
-うまれこきょうを　はなれて▽
-イッシュちほうに　きたんだ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:28:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『あたしはね　修行のため
-生まれ故郷を　離れて▽
-イッシュ地方に　来たんだ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:28:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・振り向き会話その４</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『さ　さがしましょ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『さ　探しましょ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:05:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・振り向き会話その５
-・以降、このメッセージを繰り返し</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:27" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『あなぬけのヒモ？▼
-それを　つかわれたら　あたし
-ここで　おいてけぼりに　なるよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『あなぬけのヒモ？▼
-それを　使われたら　あたし
-ここで　おいてけぼりに　なるよ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:05:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・禁則処理：道具「あなぬけのヒモ」</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:27" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『あなをほる？▼
-その　わざを　つかわれたら　あたし
-ここで　おいてけぼりに　なるよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『あなをほる？▼
-その　わざを　使われたら　あたし
-ここで　おいてけぼりに　なるよ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:06:05" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・禁則処理：わざ「あなをほる」</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:27" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d11r0101_swchampion_12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイリス『ねえ！
-あなたたち　そこで　なにしてるの？▼
-ここには　もしかしたら
-ポケモンどろぼうが　いて　あぶないよ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:34:24" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイリス『ねえ！
-あなたたち　そこで　なにしてるの？▼
-ここには　もしかしたら
-ポケモンどろぼうが　いて　危ないよ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:34:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・posイベント
-　座標未定
-・続けてswplazmam1_01</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-09T09:29:02" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:27" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_d11r0101_swplazmam1_01"
 		Style="Large">
 		<LanguageCell
@@ -1936,16 +707,15 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_13"
+		Label="msg_d11r0101_swrival_13"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『プラズマだん　なの？▼
-なんだか　２ねんまえと
-かっこうが　ちがってるけれど……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいから
+オレと　ポケモンしょうぶ　しろよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:34:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1953,12 +723,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『プラズマ団　なの？▼
-なんだか　２年前と
-格好が　違ってるけれど……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいから
+オレと　ポケモン勝負　しろよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:06:22" />
+				Time="2011-09-22T07:34:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1966,19 +735,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswplazmam1_02</Comment>
+			<Comment>♂
+・続けてswplazmam1_02
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:24:52" />
+				Time="2011-09-22T07:34:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:28" />
+				Time="2011-09-22T07:34:26" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1989,7 +759,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2055,18 +825,18 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_14"
+		Label="msg_d11r0101_swrival_14"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『あきれた……！▼
-２ねんまえに　あんなことが　あったのに
-まだ　あきらめて　なかったんだ……▼
-じゃ　タチワキで　ポケモンを
-うばったのも　あなたたち　ね！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
+なにが　せかいを　しはいするだよ？▼
+おまえらは　ただの　ポケモンどろぼう
+しかも　うばった　ポケモンを
+どうぐとして　あつかってるだけだろ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2074,14 +844,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『あきれた……！▼
-２年前に　あんなことが　あったのに
-まだ　あきらめて　なかったんだ……▼
-じゃ　タチワキで　ポケモンを
-奪ったのも　あなたたち　ね！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
+なにが　世界を　支配するだよ？▼
+おまえらは　ただの　ポケモンどろぼう
+しかも　奪った　ポケモンを
+道具として　扱ってるだけだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:07:17" />
+				Time="2011-09-22T07:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2089,19 +859,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswplazmam1_03</Comment>
+			<Comment>♂
+・続けてswplazmam1_03
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:25:01" />
+				Time="2011-09-22T07:34:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:29" />
+				Time="2011-09-22T07:34:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2112,7 +883,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2174,15 +945,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_15"
+		Label="msg_d11r0101_swrival_15"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『きみ！
-２ｖｓ２で　たたかうよ！！▼</Text>
+			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2190,11 +960,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『きみ！
-２ｖｓ２で　戦うよ！！▼</Text>
+			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:07:43" />
+				Time="2011-09-22T07:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2202,20 +971,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・主人公と向き合って
-・メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+・0＝主人公名
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:34:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:29" />
+				Time="2011-09-22T07:34:08" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2226,7 +997,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2291,20 +1062,17 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_16"
+		Label="msg_d11r0101_swrival_16"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『まちなさいよ！！▼
-もー！　なんて　にげあし！
-まるで　ミネズミ　みたい▼
-あきれた！　ほんとうに　
-ポケモンどろぼうが　いたんだ▼
-じゃ　この　おくも
-しらべたほうが　いいかも▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+ミネズミみたいな　にげあし　だな！▼
+おくに　なかまが　いるかもしれないな
+よし！　さがすぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:23:44" />
+				Time="2011-09-22T07:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2312,16 +1080,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『待ちなさいよ！！▼
-もー！　なんて　にげあし！
-まるで　ミネズミ　みたい▼
-あきれた！　本当に　
-ポケモンどろぼうが　いたんだ▼
-じゃ　この奥も
-調べたほうが　いいかも▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+ミネズミみたいな　にげあし　だな！▼
+奥に　仲間が　いるかもしれないな
+よし！　探すぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:24:02" />
+				Time="2011-09-22T07:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2329,19 +1094,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswleader3_01</Comment>
+			<Comment>♂
+・続けてswleader3_01
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:25:24" />
+				Time="2011-09-22T07:33:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:32" />
+				Time="2011-09-22T07:33:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2352,7 +1118,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2418,14 +1184,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_17"
+		Label="msg_d11r0101_swrival_17"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『あっ！　アーティ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……もしかして
+ジムリーダーの　アーティさん？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2433,10 +1200,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『あっ！　アーティ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……もしかして
+ジムリーダーの　アーティさん？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2444,19 +1212,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswleader3_02</Comment>
+			<Comment>♂
+・続けてswleader3_02
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:26:00" />
+				Time="2011-09-22T07:33:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:32" />
+				Time="2011-09-22T07:33:49" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2467,7 +1236,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2544,16 +1313,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_18"
+		Label="msg_d11r0101_swrival_18"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『ふうん　そっか……▼
-それにしても　プラズマだんが
-ふっかつ　だなんて　どうしよう？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
+でも　プラズマだん　だぜ
+わるいヤツらは　ほっておけないだろ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2561,12 +1330,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『ふうん　そっか……▼
-それにしても　プラズマ団が
-復活だなんて　どうしよう？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
+でも　プラズマ団　だぜ
+悪いヤツらは　ほっておけないだろ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:11:18" />
+				Time="2011-09-22T07:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2574,19 +1343,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswleader3_03</Comment>
+			<Comment>♂
+・続けてswleader3_03
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:26:02" />
+				Time="2011-09-22T07:33:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:33" />
+				Time="2011-09-22T07:33:38" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2597,7 +1367,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2672,15 +1442,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_19"
+		Label="msg_d11r0101_swrival_19"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『……そうだね
-ここに　プラズマだんは　いないんだし▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
+ジムリーダーは　アイツらと
+たたかったことが　あるんだもんな……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2688,11 +1459,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『……そうだね
-ここに　プラズマ団は　いないんだし▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
+ジムリーダーは　アイツらと
+戦ったことが　あるんだもんな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:12:07" />
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2700,19 +1472,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてswchampion_20</Comment>
+			<Comment>♂
+・続けてswrival_20
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:25:46" />
+				Time="2011-09-22T07:33:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:35" />
+				Time="2011-09-22T07:33:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2723,24 +1496,23 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_20"
+		Label="msg_d11r0101_swrival_20"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-いっしょに　たんけん　できて
-とても　おもしろかったよ！▼
-これは　その　おれい！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
+これ！
+えんりょせずに　つかえ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2748,13 +1520,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-いっしょに　探検できて
-とても　おもしろかったよ！▼
-これは　その　お礼！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
+これ！
+遠慮せずに　使え▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:12:20" />
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2762,21 +1533,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
 ・アイテム入手処理
-　No188「ヤチェのみ」×３
-・0＝主人公名前</Comment>
+　No423「ひでんマシン０４」（かいりき）
+・続けてswrival_21
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:35" />
+				Time="2011-09-22T07:33:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2787,26 +1560,25 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d11r0101_swchampion_21"
+		Label="msg_d11r0101_swrival_21"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『アーティはね
-ヒウンの　ジムリーダー　なの！▼
-しかも　こんな　かんじなのに
-いがいと　つよいからね　ここで▽
-ポケモン　きたえたら　どう？▼
-[Name:TrainerName Idx="0" ]　じゃねー！▼</Text>
+			<Text>ほかにも　なかまが　いるかもな▼
+よし！　かならず
+さがしだしてやる！▼
+オレ……　ポケモンどろぼう　は
+ぜったいに　ゆるさないッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2814,15 +1586,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『アーティはね
-ヒウンの　ジムリーダー　なの！▼
-しかも　こんな　雰囲気なのに
-意外と　強いからね　ここで▽
-ポケモン　鍛えたら　どう？▼
-[Name:TrainerName Idx="0" ]　じゃねー！▼</Text>
+			<Text>ほかにも　仲間が　いるかもな▼
+よし！　必ず
+探しだしてやる！▼
+オレ……　ポケモンどろぼう　は
+絶対に　許さないッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:12:40" />
+				Time="2011-09-22T07:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2830,22 +1601,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・アイテム入手後
-・表示後、アーティ、アイリス退場
-　主人公操作可能に
-・0＝主人公名前</Comment>
+			<Comment>♂
+・メッセージ表示後、ライバル退場
+・続けてswleader3_04
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T01:44:07" />
+				Time="2011-09-22T07:33:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWCHAMPION
-チャンピオン・アイリス</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:45:35" />
+				Time="2011-09-22T07:33:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2856,7 +1626,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
