@@ -1,3 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_local_tvt_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターが　鳴っている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・コール音再生と同時に表示
+・コール音終了後にメッセージを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:52:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_local_tvt_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・メッセージ表示後、ライブキャスター画面へ
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:52:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-22T03:51:32" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>
