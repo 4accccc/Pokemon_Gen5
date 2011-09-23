@@ -932,10 +932,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BADMAN</Text>
+			<Text>BADMAN
+→FIGHTERMに変更</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T07:10:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
