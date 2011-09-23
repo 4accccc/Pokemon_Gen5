@@ -45,6 +45,8 @@
 #include "tr_tool/trtype_def.h"
 #include "pkwd_scenario_open.h"
 
+// ご褒美データ
+#include "../../../resource/pokewood_etc/pokewood_bonus.cdat"
 
 //SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
 SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
@@ -85,6 +87,8 @@ GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos );
 //============================================================================================
 
 //============================================================================================
+
+
 //--------------------------------------------------------------
 /**
  * @todo  テーブルを完成させる
@@ -137,6 +141,7 @@ static const POKEWOOD_SENARIO * allocScenarioData( HEAPID heapID, u32 scenario_n
 typedef enum {
   PKWD_SC_PARAM_DIRECTOR = 0,
   PKWD_SC_PARAM_TRTYPE,
+  PKWD_SC_PARAM_DIFFICULT,
 }PKWD_SC_PARAM_ID;
 
 //--------------------------------------------------------------
@@ -152,6 +157,9 @@ static u16 readScenarioData( u32 scenario_no, PKWD_SC_PARAM_ID param_id )
     break;
   case PKWD_SC_PARAM_TRTYPE:
     value = scWork->trtype[0]; //仮
+    break;
+  case PKWD_SC_PARAM_DIFFICULT:
+    value = scWork->difficult;
     break;
   default:
     GF_ASSERT(0);
@@ -785,6 +793,67 @@ VMCMD_RESULT EvCmdPokewoodRecordMonitor( VMHANDLE * core, void * wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//=============================================================================
+//  ご褒美アイテム
+//=============================================================================
+VMCMD_RESULT EvCmdPokewoodGetBonusItem( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*    work = wk;
+  u16 rec_id          = SCRCMD_GetVMWorkValue( core, work );
+  u16 fan_no         = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_item_no   = SCRCMD_GetVMWork( core, work );
+  u16 * ret_item_num  = SCRCMD_GetVMWork( core, work );
+
+  // エンディング種類
+  u16 rec_result = getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SUCCESS, NULL );
+  // 台本種類
+  u16 senario_no = getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SENARIO, NULL );
+  u16 difficult  = readScenarioData( senario_no, PKWD_SC_PARAM_DIFFICULT );
+
+  u16 bonus_rank;  // ご褒美のランク
+  u16 fan_type;    // どうぐを上げるタイプ
+
+  difficult = difficult / 2 - 1;  // 取得したものが 2,4,6,8のため
+
+  GF_ASSERT( rec_result < SCR_PKWD_RESULT_MAX );
+  GF_ASSERT( difficult < PKWD_DIFFICULT_MAX );
+  GF_ASSERT( fan_no < PKWD_FAN_MAX )
+
+  // コンバータ出力データを参照
+  bonus_rank = pkwd_bonus_rank[ difficult ][ rec_result ];
+  GF_ASSERT( bonus_rank < PKWD_RANK_MAX );
+
+  fan_type = pkwd_bonus_fan[ fan_no ];
+
+  ICHI_Printf("録画no %d ", rec_id );
+  ICHI_Printf("シナリオno %d ", senario_no );
+  ICHI_Printf("エンディングno %d ", rec_result );
+  ICHI_Printf("台本難易度 %d \n", difficult );
+  ICHI_Printf("ファンno %d ", fan_no );
+  ICHI_Printf("ご褒美ランク %d ", bonus_rank );
+  ICHI_Printf("道具を上げるタイプ %d \n", fan_type );
+
+  // もらえるアイテム取得
+  if( fan_type != NOT_GIVE )
+  {
+    // ご褒美アイテム番号
+    *ret_item_no = pkwd_bonus_item[ fan_type ][ bonus_rank ];
+    // ご褒美アイテムの個数
+    *ret_item_num = pkwd_bonus_item_num[ fan_type ][ bonus_rank ];
+  }
+  else
+  {
+    // もらえない
+    *ret_item_no = 0;
+    *ret_item_num = 0;
+  }
+
+
+  OS_Printf("EvCmdPokewoodGetBonusItem=%d %d\n", *ret_item_no, *ret_item_num);
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //============================================================================================
 //  PKWD　イベント　映画をコピー
 //============================================================================================

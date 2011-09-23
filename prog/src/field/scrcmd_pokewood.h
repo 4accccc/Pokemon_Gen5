@@ -49,6 +49,9 @@ extern VMCMD_RESULT EvCmdPokewoodGetDirectorType( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodCheckAllSuccess( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodRecordMonitor( VMHANDLE * core, void * wk );
 
+// ‚²–J”üƒAƒCƒeƒ€
+extern VMCMD_RESULT EvCmdPokewoodGetBonusItem( VMHANDLE * core, void * wk );
+
 extern int  PokewoodStarPoint2StarRank( int point);
 
 #ifdef _cplusplus

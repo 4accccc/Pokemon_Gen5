@@ -40,5 +40,8 @@
   DEF_CMD( EvCmdPokewoodCheckAllSuccess,        EV_SEQ_PKWD_CHECK_ALL_SUCCESS )
   DEF_CMD( EvCmdPokewoodRecordMonitor,          EV_SEQ_PKWD_RECORD_MONITOR )
   
+  // ご褒美アイテム
+  DEF_CMD( EvCmdPokewoodGetBonusItem,          EV_SEQ_PKWD_GET_BONUS_ITEM )
+
   END_CMD
   //スクリプトコマンドテーブル終了

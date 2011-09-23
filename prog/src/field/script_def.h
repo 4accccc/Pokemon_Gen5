@@ -805,9 +805,10 @@
 #define   SCR_PKWD_SELECT_MODE_NORMAL         (0) ///<ã‰f‘I‘ð‰æ–ÊF’Êí
 #define   SCR_PKWD_SELECT_MODE_DELETE         (1) ///<ã‰f‘I‘ð‰æ–ÊFíœ
 
-#define   SCR_PKWD_RESULT_GOOD_END            (0) ///<‰f‰æ•]‰¿F¬Œ÷
-#define   SCR_PKWD_RESULT_BAD_END             (1) ///<‰f‰æ•]‰¿FŽ¸”s
+#define   SCR_PKWD_RESULT_BAD_END             (0) ///<‰f‰æ•]‰¿FŽ¸”s
+#define   SCR_PKWD_RESULT_GOOD_END            (1) ///<‰f‰æ•]‰¿F¬Œ÷
 #define   SCR_PKWD_RESULT_STRANGE_END         (2) ///<‰f‰æ•]‰¿F“ÁŽêƒ‹[ƒg
+#define   SCR_PKWD_RESULT_MAX                 (3) 
 
 #define   SCR_PKWD_ADDMSG_GOOD_END            (0) ///<‘ä–{’Ç‰ÁMSG:‘O‚Ì‘ä–{‚ÌGOODEND
 #define   SCR_PKWD_ADDMSG_GAMECLEAR           (1) ///<‘ä–{’Ç‰ÁMSG:ƒQ[ƒ€ƒNƒŠƒAŒã

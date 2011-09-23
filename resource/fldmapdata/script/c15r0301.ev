@@ -19,20 +19,608 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c15r0301
+
+_EVENT_DATA       ev_zone_c15r0301
+
+// スターランク 0
+_EVENT_DATA       ev_c15r0301_backpackerm_01
+// スターランク 1
+_EVENT_DATA       ev_c15r0301_woman2_01
+_EVENT_DATA       ev_c15r0301_man3_01
+_EVENT_DATA       ev_c15r0301_musicianw_01
+// スターランク 2
+_EVENT_DATA       ev_c15r0301_policeman_01
+_EVENT_DATA       ev_c15r0301_woman2_02
+_EVENT_DATA       ev_c15r0301_babyboy2_01
+_EVENT_DATA       ev_c15r0301_nurse_01
+// スターランク 3
+_EVENT_DATA       ev_c15r0301_trainerm_01
+_EVENT_DATA       ev_c15r0301_woman2_03
+_EVENT_DATA       ev_c15r0301_man3_02
+_EVENT_DATA       ev_c15r0301_oldwoman1_01
+_EVENT_DATA       ev_c15r0301_man3_03
+_EVENT_DATA       ev_c15r0301_tennisw_01
+// スターランク 4
+_EVENT_DATA       ev_c15r0301_man3_04
+_EVENT_DATA       ev_c15r0301_woman2_04
+_EVENT_DATA       ev_c15r0301_babyboy1_01
+_EVENT_DATA       ev_c15r0301_woman2_05
+_EVENT_DATA       ev_c15r0301_man3_05
+_EVENT_DATA       ev_c15r0301_woman2_06
+_EVENT_DATA       ev_c15r0301_hakaim_01
+_EVENT_DATA       ev_c15r0301_swplazmaw_01
+
 _EVENT_DATA_END
 
+//------------------------！注意！------------------------------//
+//																                              //
+//  C15R0301:シアターでのローカルワーク使途
+//  pokewood_scr.evで設定しています
+//  LOCALWORK0  1のとき初上映でのオーナー出現イベント発生
+//  LOCALWORK1  上記イベントでの上映データ位置を記録
+//  LOCALWORK2  上映した作品Noを保存している
+//
+//	LOCALWORK5～15までをファンにアイテムを渡したかの制御に使用//
+//		ゾーン内での使用を禁止します							                //
+//
+//																                              //
+//--------------------------------------------------------------//
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c15r0301:
-//  _END
+// fan関数で使用する
+DEFINE_LOCAL  msg_greeting      // 挨拶メッセージ
+DEFINE_LOCAL  fan_no            // ファン番号
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c15r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+// normal_msg関数で使用する
+DEFINE_LOCAL  msg_bad_end       // バッドエンド用メッセージ
+DEFINE_LOCAL  msg_good_end      // グッドエンド用メッセージ
+DEFINE_LOCAL  msg_strange_end   // ストレンジエンド用メッセージ
+
+// bonus_item関数で使用する
+DEFINE_LOCAL  msg_bonus_item    // ご褒美授与メッセージ
+DEFINE_LOCAL  msg_bonus_item_fail  // どうぐいっぱいのメッセージ
+DEFINE_LOCAL  bonus_item_no     // ご褒美アイテム番号
+DEFINE_LOCAL  bonus_item_num    // ご褒美アイテムの個数
+DEFINE_LOCAL  bonus_localwork   // ご褒美アイテム処理関数の引数
+                                // LOCALWORKを入れる
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c15r0301
+  
+  //ファンを非表示
+  _FLAG_SET( FV_C15R0301_BONUS_0 )
+  _FLAG_SET( FV_C15R0301_BONUS_1 )
+  _FLAG_SET( FV_C15R0301_BONUS_2 )
+  _FLAG_SET( FV_C15R0301_BONUS_3 )
+  _FLAG_SET( FV_C15R0301_BONUS_4 )
+
+
+INIT_EVENT_END
+
+/************************************************************/
+/************************************************************/
+/*						ファン							*/
+/************************************************************/
+// スターランク 0
+EVENT_START       ev_c15r0301_backpackerm_01
+{
+  // 各データ
+  $fan_no               = 0             // ファン番号
+  $msg_greeting         = pwfun_01_01   // 挨拶
+  $msg_strange_end      = pwfun_01_02   // ストレンジED
+  $msg_good_end         = pwfun_01_03   // グッドED
+  $msg_bad_end          = pwfun_01_04   // バッドED
+  $msg_bonus_item       = pwfun_01_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_01_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK5   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK5 = $bonus_localwork
+}
+EVENT_END
+/************************************************************/
+// スターランク 1
+EVENT_START       ev_c15r0301_woman2_01
+{
+  // 各データ
+  $fan_no               = 1             // ファン番号
+  $msg_greeting         = pwfun_02_01   // 挨拶
+  $msg_strange_end      = pwfun_02_02   // ストレンジED
+  $msg_good_end         = pwfun_02_03   // グッドED
+  $msg_bad_end          = pwfun_02_04   // バッドED
+  $msg_bonus_item       = pwfun_02_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_02_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_man3_01
+{
+  // 各データ
+  $fan_no               = 2             // ファン番号
+  $msg_greeting         = pwfun_03_01   // 挨拶
+  $msg_strange_end      = pwfun_03_02   // ストレンジED
+  $msg_good_end         = pwfun_03_03   // グッドED
+  $msg_bad_end          = pwfun_03_04   // バッドED
+  $msg_bonus_item       = pwfun_03_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_03_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_musicianw_01
+{
+  // 各データ
+  $fan_no               = 3             // ファン番号
+  $msg_greeting         = pwfun_04_01   // 挨拶
+  $msg_strange_end      = pwfun_04_02   // ストレンジED
+  $msg_good_end         = pwfun_04_03   // グッドED
+  $msg_bad_end          = pwfun_04_04   // バッドED
+  $msg_bonus_item       = pwfun_04_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_04_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK6   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK6 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+/************************************************************/
+// スターランク 2
+EVENT_START       ev_c15r0301_policeman_01
+{
+  // 各データ
+  $fan_no               = 4             // ファン番号
+  $msg_greeting         = pwfun_05_01   // 挨拶
+  $msg_strange_end      = pwfun_05_02   // ストレンジED
+  $msg_good_end         = pwfun_05_03   // グッドED
+  $msg_bad_end          = pwfun_05_04   // バッドED
+  $msg_bonus_item       = pwfun_05_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_05_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK7   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK7 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_woman2_02
+{
+  // 各データ
+  $fan_no               = 5             // ファン番号
+  $msg_greeting         = pwfun_06_01   // 挨拶
+  $msg_strange_end      = pwfun_06_02   // ストレンジED
+  $msg_good_end         = pwfun_06_03   // グッドED
+  $msg_bad_end          = pwfun_06_04   // バッドED
+  $msg_bonus_item       = pwfun_06_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_06_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_babyboy2_01
+{
+  // 各データ
+  $fan_no               = 6             // ファン番号
+  $msg_greeting         = pwfun_07_01   // 挨拶
+  $msg_strange_end      = pwfun_07_02   // ストレンジED
+  $msg_good_end         = pwfun_07_03   // グッドED
+  $msg_bad_end          = pwfun_07_04   // バッドED
+  $msg_bonus_item       = pwfun_07_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_07_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK8   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK8 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_nurse_01
+{
+  // 各データ
+  $fan_no               = 7             // ファン番号
+  $msg_greeting         = pwfun_08_01   // 挨拶
+  $msg_strange_end      = pwfun_08_02   // ストレンジED
+  $msg_good_end         = pwfun_08_03   // グッドED
+  $msg_bad_end          = pwfun_08_04   // バッドED
+  $msg_bonus_item       = pwfun_08_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_08_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK9   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK9 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+/************************************************************/
+// スターランク 3
+EVENT_START       ev_c15r0301_trainerm_01
+{
+  // 各データ
+  $fan_no               = 8             // ファン番号
+  $msg_greeting         = pwfun_09_01   // 挨拶
+  $msg_strange_end      = pwfun_09_02   // ストレンジED
+  $msg_good_end         = pwfun_09_03   // グッドED
+  $msg_bad_end          = pwfun_09_04   // バッドED
+  $msg_bonus_item       = pwfun_09_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_09_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK10   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK10 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_woman2_03
+{
+  // 各データ
+  $fan_no               = 9             // ファン番号
+  $msg_greeting         = pwfun_10_01   // 挨拶
+  $msg_strange_end      = pwfun_10_02   // ストレンジED
+  $msg_good_end         = pwfun_10_03   // グッドED
+  $msg_bad_end          = pwfun_10_04   // バッドED
+  $msg_bonus_item       = pwfun_10_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_10_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_man3_02
+{
+  // 各データ
+  $fan_no               = 10            // ファン番号
+  $msg_greeting         = pwfun_11_01   // 挨拶
+  $msg_strange_end      = pwfun_11_02   // ストレンジED
+  $msg_good_end         = pwfun_11_03   // グッドED
+  $msg_bad_end          = pwfun_11_04   // バッドED
+  $msg_bonus_item       = pwfun_11_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_11_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_oldwoman1_01
+{
+  // 各データ
+  $fan_no               = 11             // ファン番号
+  $msg_greeting         = pwfun_12_01   // 挨拶
+  $msg_strange_end      = pwfun_12_02   // ストレンジED
+  $msg_good_end         = pwfun_12_03   // グッドED
+  $msg_bad_end          = pwfun_12_04   // バッドED
+  $msg_bonus_item       = pwfun_12_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_12_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK11   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK11 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_man3_03
+{
+  // 各データ
+  $fan_no               = 12            // ファン番号
+  $msg_greeting         = pwfun_13_01   // 挨拶
+  $msg_strange_end      = pwfun_13_02   // ストレンジED
+  $msg_good_end         = pwfun_13_03   // グッドED
+  $msg_bad_end          = pwfun_13_04   // バッドED
+  $msg_bonus_item       = pwfun_13_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_13_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_tennisw_01
+{
+  // 各データ
+  $fan_no               = 13             // ファン番号
+  $msg_greeting         = pwfun_14_01   // 挨拶
+  $msg_strange_end      = pwfun_14_02   // ストレンジED
+  $msg_good_end         = pwfun_14_03   // グッドED
+  $msg_bad_end          = pwfun_14_04   // バッドED
+  $msg_bonus_item       = pwfun_14_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_14_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK12   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK12 = $bonus_localwork
+}
+EVENT_END
+/************************************************************/
+// スターランク 4
+EVENT_START       ev_c15r0301_man3_04
+{
+  // 各データ
+  $fan_no               = 14            // ファン番号
+  $msg_greeting         = pwfun_15_01   // 挨拶
+  $msg_strange_end      = pwfun_15_02   // ストレンジED
+  $msg_good_end         = pwfun_15_03   // グッドED
+  $msg_bad_end          = pwfun_15_04   // バッドED
+  $msg_bonus_item       = pwfun_15_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_15_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_woman2_04
+{
+  // 各データ
+  $fan_no               = 15            // ファン番号
+  $msg_greeting         = pwfun_16_01   // 挨拶
+  $msg_strange_end      = pwfun_16_02   // ストレンジED
+  $msg_good_end         = pwfun_16_03   // グッドED
+  $msg_bad_end          = pwfun_16_04   // バッドED
+  $msg_bonus_item       = pwfun_16_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_16_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_babyboy1_01
+{
+  // 各データ
+  $fan_no               = 16             // ファン番号
+  $msg_greeting         = pwfun_17_01   // 挨拶
+  $msg_strange_end      = pwfun_17_02   // ストレンジED
+  $msg_good_end         = pwfun_17_03   // グッドED
+  $msg_bad_end          = pwfun_17_04   // バッドED
+  $msg_bonus_item       = pwfun_17_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_17_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK13   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK13 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_woman2_05
+{
+  // 各データ
+  $fan_no               = 17            // ファン番号
+  $msg_greeting         = pwfun_18_01   // 挨拶
+  $msg_strange_end      = pwfun_18_02   // ストレンジED
+  $msg_good_end         = pwfun_18_03   // グッドED
+  $msg_bad_end          = pwfun_18_04   // バッドED
+  $msg_bonus_item       = pwfun_18_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_18_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_man3_05
+{
+  // 各データ
+  $fan_no               = 18            // ファン番号
+  $msg_greeting         = pwfun_19_01   // 挨拶
+  $msg_strange_end      = pwfun_19_02   // ストレンジED
+  $msg_good_end         = pwfun_19_03   // グッドED
+  $msg_bad_end          = pwfun_19_04   // バッドED
+  $msg_bonus_item       = pwfun_19_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_19_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_woman2_06
+{
+  // 各データ
+  $fan_no               = 19            // ファン番号
+  $msg_greeting         = pwfun_20_01   // 挨拶
+  $msg_strange_end      = pwfun_20_02   // ストレンジED
+  $msg_good_end         = pwfun_20_03   // グッドED
+  $msg_bad_end          = pwfun_20_04   // バッドED
+  $msg_bonus_item       = pwfun_20_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_20_06   // 道具いっぱい
+  $bonus_localwork      = 1             // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_hakaim_01
+{
+  // 各データ
+  $fan_no               = 20             // ファン番号
+  $msg_greeting         = pwfun_21_01   // 挨拶
+  $msg_strange_end      = pwfun_21_02   // ストレンジED
+  $msg_good_end         = pwfun_21_03   // グッドED
+  $msg_bad_end          = pwfun_21_04   // バッドED
+  $msg_bonus_item       = pwfun_21_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_21_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK14   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK14 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+EVENT_START       ev_c15r0301_swplazmaw_01
+{
+  // 各データ
+  $fan_no               = 21             // ファン番号
+  $msg_greeting         = pwfun_22_01   // 挨拶
+  $msg_strange_end      = pwfun_22_02   // ストレンジED
+  $msg_good_end         = pwfun_22_03   // グッドED
+  $msg_bad_end          = pwfun_22_04   // バッドED
+  $msg_bonus_item       = pwfun_22_05   // 道具授与
+  $msg_bonus_item_fail  = pwfun_22_06   // 道具いっぱい
+  $bonus_localwork      = $LOCALWORK15   // 道具授与フラグ
+
+  // ファンの処理
+  _CALL fan
+
+  // フラグ再設定
+  $LOCALWORK15 = $bonus_localwork
+}
+EVENT_END
+/*-----------------------------------------------------------*/
+
+//=============================================================================
+/**
+ *    ファンの処理
+ *    
+ *    @param  [in]msg_greeting    挨拶メッセージ 
+ *    @param  [in]fan_no          ファン番号
+ */
+//=============================================================================
+fan:
+{
+  _TALK_OBJ_START()
+
+  _PLAYER_NAME( 0 )
+
+  // 挨拶メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_greeting, SCWK_TARGET_OBJID, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+
+  // ごほうびアイテムチェック
+  _PKWD_GET_BONUS_ITEM( LOCALWORK2, fan_no, bonus_item_no, bonus_item_num )
+
+  // 以下の条件でごほうびアイテムをもらえる
+  // 1.ごほうびをもらっていない
+  // 2.ごほうびアイテムが設定されている
+  // 3.初めて上映する
+  IF $bonus_localwork == 0 && $bonus_item_no != 0 && $LOCALWORK0 == 1 THEN
+    // ご褒美アイテム
+    _CALL bonus_item
+  ELSE
+    // 通常メッセージ
+    _CALL normal_msg
+  ENDIF
+
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+}
+_RET
+
+//=============================================================================
+/**
+ *    通常メッセージ
+ *    エンディングによってメッセージ分岐する
+ *    
+ *    @param  [in]msg_bad_end     バッドEDメッセージ
+ *    @param  [in]msg_good_end    グッドEDメッセージ
+ *    @param  [in]msg_strange_end ストレンジEDメッセージ
+ */
+//=============================================================================
+normal_msg:
+{
+  _PKWD_GET_MOVIE_VALUE( LOCALWORK2, SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_PKWD_RESULT_BAD_END THEN
+  // BAD END
+  _BALLOONWIN_OBJMSG_POS( msg_bad_end, SCWK_TARGET_OBJID, POS_DOWN )
+
+  CASE SCR_PKWD_RESULT_GOOD_END THEN
+  // GOOD END
+  _BALLOONWIN_OBJMSG_POS( msg_good_end, SCWK_TARGET_OBJID, POS_DOWN )
+
+  CASE SCR_PKWD_RESULT_STRANGE_END THEN
+  // STRANGE END
+  _BALLOONWIN_OBJMSG_POS( msg_strange_end, SCWK_TARGET_OBJID, POS_DOWN )
+
+  ENDSWITCH
+}
+_RET
+
+//=============================================================================
+/**
+ *    ご褒美アイテムをくれるファンの処理
+ *
+ *    @param  [in]bonus_item_no       もらうアイテム番号
+ *    @param  [in]bonus_item_num      もらうアイテムの個数
+ *    @param  [in]msg_bonus_item      アイテム授与メッセージ
+ *    @param  [in]msg_bonus_item_fail 道具がいっぱいの時メッセージ
+ *    @param  [out]bonus_localwork    道具をもらったフラグ
+ *
+ */
+//=============================================================================
+bonus_item:
+{
+  DEFINE_LOCAL  ret_add
+
+  _BALLOONWIN_OBJMSG_POS( msg_bonus_item, SCWK_TARGET_OBJID, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  // アイテムを取得できたのかチェック
+  _ADD_ITEM_CHK( bonus_item_no, bonus_item_num, ret_add)
+
+  // アイテム入手
+  // ↓のコマンドをよぶことで、バッグがいっぱいの時のメッセージをだす
+  _ITEM_EVENT_KEYWAIT( bonus_item_no, bonus_item_num )
+
+  IF $ret_add == FALSE THEN
+    //入手失敗システムメッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_bonus_item_fail, SCWK_TARGET_OBJID, POS_DOWN )
+  ELSE
+    $bonus_localwork = 1    // 道具授与フラグON
+    //入手成功システムメッセージ
+    _CALL normal_msg
+  ENDIF
+}
+_RET
 

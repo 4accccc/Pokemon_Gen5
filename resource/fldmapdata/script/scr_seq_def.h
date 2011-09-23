@@ -15579,7 +15579,25 @@
     .short  \ret_wk
     .endm
 
-
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：ファンにもらえるアイテム取得
+ *
+ * @param [in] rec_pos  録画データ指定（０～３）
+ * @param [in] fan_no   ファンのNO resource/pokewood_bonus.xlsのファンNO 
+ * @param [out] ret_item_no   アイテム番号  0ならもらえない
+ * @param [out] ret_item_num  アイテム個数
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_BONUS_ITEM( rec_pos, fan_no, ret_item_no, ret_item_num )  \
+    _ASM_PKWD_GET_BONUS_ITEM rec_pos, fan_no, ret_item_no, ret_item_num 
+    .macro  _ASM_PKWD_GET_BONUS_ITEM rec_pos, fan_no, ret_item_no, ret_item_num
+    .short  EV_SEQ_PKWD_GET_BONUS_ITEM
+    .short  \rec_pos
+    .short  \fan_no
+    .short  \ret_item_no
+    .short  \ret_item_num
+    .endm
 
 //======================================================================
 //======================================================================
