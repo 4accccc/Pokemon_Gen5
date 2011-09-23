@@ -115,12 +115,17 @@ typedef struct{
   s16 win_provision;  ///< 勝利条件パターン
   s16 poke_provision[2];   ///< 勝利条件にポケモン指定がある時に参照する（0:撮影 1:上映）
   s16 waza_provision; ///< 勝利条件に技指定がある時に参照する
+
   s16 trtype[4];      ///< 敵トレーナータイプ（0:男で撮影 1:男で上映 2:女で撮影 3:女で上映）
+
   s16 mytype[2];      ///< 自分トレーナータイプ（ 0:撮影 1:上映）
   s16 battle_field;   ///< 戦闘背景指定
   s16 battle_bgm;     ///< 上映時BGM
+
   s16 win_bgm;        ///< 勝利時BGM
-  s16 padding;
+  s16 lose_bgm;       ///< 失敗時BGM
+  s16 strange_bgm;    ///< ストレンジ時BGM
+  s16 enemy_rank;     ///< 敵トレーナースターランク
 
   s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
   

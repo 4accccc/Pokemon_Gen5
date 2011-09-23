@@ -193,6 +193,9 @@ class POKEWOOD_SENARIO
     @field      = hash2no( $field_hash, field )
     @bgm        = $bgm_hash["SEQ_BGM_VS_NORAPOKE"]
     @win_bgm    = $bgm_hash["SEQ_BGM_WIN1"]
+    @lose_bgm    = $bgm_hash["SEQ_BGM_PW_SCENARIO_01_F"]
+    @strange_bgm    = $bgm_hash["SEQ_BGM_PW_SCENARIO_07_F"]
+    @trainer_rank  = 0
 
     @enemy_poke = Array.new(ENEMY_POKE_NUM)
     ENEMY_POKE_NUM.times{|i|
@@ -206,7 +209,8 @@ class POKEWOOD_SENARIO
       @event[i] = EVENT_DATA.new( 0 )
     }
   end
-  attr_accessor :senario, :poke_limit, :item_ok, :select_msg, :situation_msg, :turn_msg, :event, :turn_max, :enemy_poke, :bgm, :win_bgm
+  attr_accessor :senario, :poke_limit, :item_ok, :select_msg, :situation_msg, :turn_msg, :event, 
+                :turn_max, :enemy_poke, :bgm, :win_bgm, :lose_bgm, :strange_bgm, :trainer_rank
 
   # 初期情報セット
   def top_info( trainer_id, success_flag )
@@ -216,9 +220,11 @@ class POKEWOOD_SENARIO
   end
   attr_accessor :trainer_id, :bg_change, :success_flag
 
-  def set_bgm( bgm, win )
-    @bgm     = $bgm_hash[bgm]
-    @win_bgm = $bgm_hash[win]
+  def set_bgm( bgm, win, lose, strange )
+    @bgm         = hash2no_error($bgm_hash, bgm, "ＢＧＭ" )
+    @win_bgm     = hash2no_error($bgm_hash, win, "ＢＧＭ" )
+    @lose_bgm    = hash2no_error($bgm_hash,lose, "ＢＧＭ")
+    @strange_bgm = hash2no_error($bgm_hash,strange, "ＢＧＭ")
   end
 
   # 勝利条件情報セット
@@ -287,7 +293,6 @@ class POKEWOOD_SENARIO
     @enemy_poke[index].sex    = hash2no($sex_hash, sex)
     @enemy_poke[index].level  = level.to_i
   end
-
 
   def set_select_msg( index, msg )
     @select_msg[index] = msg2id( msg )
@@ -385,7 +390,9 @@ class POKEWOOD_SENARIO
     array << @field
     array << @bgm
     array << @win_bgm
-    array << 0
+    array << @lose_bgm
+    array << @strange_bgm
+    array << @trainer_rank
     
     BG_CHANGE_DATA_NUM.times{|i|
       array << @bg_change[i]
@@ -420,6 +427,14 @@ end
 def hash2no( hash, str )
   if hash[str]==nil then
     return -1
+  end
+  return hash[str]
+end
+
+def hash2no_error( hash, str, type_str )
+  if hash[str]==nil then
+    printf("%sという%s定義は存在しません\n", str, type_str)
+    exit(1)
   end
   return hash[str]
 end
@@ -598,7 +613,7 @@ trainer_name_show = gmm.write_each( "pw_trname_show", datas[5][4], datas[5][4], 
 pokewood.top_info( datas[10][1], datas[6][1] )
 
 #BGM指定入力
-pokewood.set_bgm( datas[7][3], datas[8][3] )
+pokewood.set_bgm(  datas[8][3], datas[9][3], datas[10][3], datas[11][3] )
 
 #勝利条件情報入力
 pokewood.set_win_provision( datas[1][3], datas[2][3], datas[2][4], datas[3][3] )
@@ -607,9 +622,11 @@ pokewood.set_win_provision( datas[1][3], datas[2][3], datas[2][4], datas[3][3] )
 #敵トレーナー情報セット
 pokewood.set_trainer_info( datas[4][3], datas[4][4], datas[4][5], datas[4][6] )
 
+#敵トレーナースターランクセット
+pokewood.trainer_rank = datas[6][3].to_i
 
 #自分トレーナー情報セット
-pokewood.set_mytype_info( datas[6][3], datas[6][4] )
+pokewood.set_mytype_info( datas[7][3], datas[7][4] )
 
 
 # BG切り替え情報入力
