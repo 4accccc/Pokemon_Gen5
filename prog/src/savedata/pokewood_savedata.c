@@ -391,7 +391,7 @@ int POKEWOOD_SAVEDATA_CalcStarPoint2StarRank( int point )
     return 2;
   }else if(point>=POKEWOOD_STARRANK2_MAX && point<POKEWOOD_STARRANK3_MAX){
     return 3;
-  }else if(point>=POKEWOOD_STARRANK3_MAX && point<POKEWOOD_STARRANK4_MAX){
+  }else if(point>=POKEWOOD_STARRANK3_MAX && point<=POKEWOOD_STARRANK4_MAX){
     return 4;
   }
   
