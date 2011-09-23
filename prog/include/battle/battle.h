@@ -374,6 +374,8 @@ typedef struct {
   u8 PokewoodMode        : 2;  // 0:通常(ポケウッドじゃない）、1:撮影モード、2：上映モード
 
   u8 bag_nouse_flag       :1;  // アイテム使用禁止フラグ
+  u8 WBTFinalFlag         :1;  // swan追加：WBT決勝かどうか（戦闘背景制御用）
+  u8 pad1bit              :1;  // 1bitあまり領域
 
   u8 pokewoodSenario;         // ポケウッドのシナリオNo
   u8 pokewoodRentalFlag;      // ポケウッドにレンタルポケモンで参加しているか？(1:レンタル 0:自前）

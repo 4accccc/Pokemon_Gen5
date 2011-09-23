@@ -848,6 +848,10 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     bp->fieldSituation.bgType = BATTLE_BG_TYPE_WBT;
     bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
   }
+  if (WBTSYS_GetStage( wbtsys ) == WBTSTAGE_FINAL)
+  { //WBTŒˆŸ‚©‚Ç‚¤‚©‚ðŽ¦‚·ƒtƒ‰ƒO
+    bp->WBTFinalFlag = TRUE;
+  }
 #ifdef  PM_DEBUG
   OS_PutString("WBT:dump Enemy Party:\n");
   DEBUG_POKEPARTY_dump( bp->party[BTL_CLIENT_ENEMY1], wbtsys->heapID ); 
@@ -968,6 +972,7 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
     break;
   }
 
+  OS_Printf("WBT: is Final = %d\n", bsp->WBTFinalFlag );
   {
     const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
     WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
