@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_local_tvt_scr.h"
   //.include  "local_tvt_scr.h"
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,9 +21,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_local_tvt_scr
+_EVENT_DATA    ev_pos_local_tvt
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_STATE	//好感度取得用
+DEFINE_LOCAL	LWK_ZONE
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -30,9 +34,88 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*				ローカルライブキャスターPOSイベント			  */
 /**************************************************************/
-ev_local_tvt_scr:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_pos_local_tvt
 
+	//TVT着信音を再生
+	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_local_tvt_01, POS_DOWN )
+	_ME_WAIT()
+
+	_PLAYER_NAME(0)
+	_SYSWIN_MSG( msg_local_tvt_02, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//隠しキャラ用ライブキャスター起動
+	_CALL_TVT_SECRET( 0 )
+
+	//今いるゾーンを取得する
+	_GET_ZONE_ID( LWK_ZONE )
+	
+	//イベント起動したゾーンのＰＯＳを無効にする
+	SWITCH $LWK_ZONE
+	CASE ZONE_ID_C04 THEN
+		$WK_SCENE_C04_LOCALTVT = 2
+	CASE ZONE_ID_C05 THEN
+		$WK_SCENE_C05_LOCALTVT = 2
+	CASE ZONE_ID_C06 THEN
+		$WK_SCENE_C06_LOCALTVT = 2
+	CASE ZONE_ID_T03 THEN
+		$WK_SCENE_T03_LOCALTVT = 2
+	CASE ZONE_ID_T04 THEN
+		$WK_SCENE_T04_LOCALTVT = 2
+	CASE ZONE_ID_T07 THEN
+		$WK_SCENE_T07_LOCALTVT = 2
+	CASE ZONE_ID_R05 THEN
+		$WK_SCENE_R05_LOCALTVT = 2
+	CASE ZONE_ID_R06 THEN
+		$WK_SCENE_R06_LOCALTVT = 2
+	CASE ZONE_ID_R07 THEN
+		$WK_SCENE_R07_LOCALTVT = 2
+	CASE ZONE_ID_R09 THEN
+		$WK_SCENE_R09_LOCALTVT = 2
+	CASE ZONE_ID_R11 THEN
+		$WK_SCENE_R11_LOCALTVT = 2
+	CASE ZONE_ID_R12 THEN
+		$WK_SCENE_R12_LOCALTVT = 2
+	CASE ZONE_ID_R13 THEN
+		$WK_SCENE_R13_LOCALTVT = 2
+	CASE ZONE_ID_R14 THEN
+		$WK_SCENE_R14_LOCALTVT = 2
+	CASE ZONE_ID_R16 THEN
+		$WK_SCENE_R16_LOCALTVT = 2
+	DEFAULT
+		_DEBUG_PRINT_WK(LWK_ZONE)
+	ENDSWITCH
+
+	//好感度取得
+	_PERSON_STATE_GET_SECRET( LWK_STATE )
+	
+	//好感度が１０以上ならば
+	IF $LWK_STATE >= 10 THEN
+	
+		//========================================/
+
+		//全てのＰＯＳイベントを無効にする
+		$WK_SCENE_C04_LOCALTVT = 2
+		$WK_SCENE_C05_LOCALTVT = 2
+		$WK_SCENE_C06_LOCALTVT = 2
+		$WK_SCENE_T03_LOCALTVT = 2
+		$WK_SCENE_T04_LOCALTVT = 2
+		$WK_SCENE_T07_LOCALTVT = 2
+		$WK_SCENE_R05_LOCALTVT = 2
+		$WK_SCENE_R06_LOCALTVT = 2
+		$WK_SCENE_R07_LOCALTVT = 2
+		$WK_SCENE_R09_LOCALTVT = 2
+		$WK_SCENE_R11_LOCALTVT = 2
+		$WK_SCENE_R12_LOCALTVT = 2
+		$WK_SCENE_R13_LOCALTVT = 2
+		$WK_SCENE_R14_LOCALTVT = 2
+		$WK_SCENE_R16_LOCALTVT = 2
+		
+		//========================================/
+
+	ENDIF
+
+EVENT_END

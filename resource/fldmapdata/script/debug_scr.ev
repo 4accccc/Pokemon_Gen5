@@ -692,6 +692,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 9 )	//過去イベント・ホドモエ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_14, 10 )	//せいそくち・水上エンカウント用フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_15, 11 )	//せいそくち・釣りエンカウント用フラグセット
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_16, 12 )	//ローカルライブキャスターＰＯＳ起動
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -835,7 +836,25 @@ EVENT_START   ev_debug_suginaka
 		ELSIF $SCWK_ANSWER == 11 THEN
 
 			_FLAG_SET(SYS_FLAG_SUGOI_TSURI_GET)
+			
+		ELSIF $SCWK_ANSWER == 12 THEN
 
+			$WK_SCENE_C04_LOCALTVT = 1
+			$WK_SCENE_C05_LOCALTVT = 1
+			$WK_SCENE_C06_LOCALTVT = 1
+			$WK_SCENE_T03_LOCALTVT = 1
+			$WK_SCENE_T04_LOCALTVT = 1
+			$WK_SCENE_T07_LOCALTVT = 1
+			$WK_SCENE_R05_LOCALTVT = 1
+			$WK_SCENE_R06_LOCALTVT = 1
+			$WK_SCENE_R07_LOCALTVT = 1
+			$WK_SCENE_R09_LOCALTVT = 1
+			$WK_SCENE_R11_LOCALTVT = 1
+			$WK_SCENE_R12_LOCALTVT = 1
+			$WK_SCENE_R13_LOCALTVT = 1
+			$WK_SCENE_R14_LOCALTVT = 1
+			$WK_SCENE_R16_LOCALTVT = 1
+	
 		ELSE
 
 			$SCWK_TEMP0 = 428

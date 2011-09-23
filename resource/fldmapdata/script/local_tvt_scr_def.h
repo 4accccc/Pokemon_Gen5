@@ -5,6 +5,6 @@
 #define _LOCAL_TVT_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_LOCAL_TVT_SCR (1)
+#define SCRID_POS_LOCAL_TVT (10860)
 
 #endif //_LOCAL_TVT_SCR_DEF_H_

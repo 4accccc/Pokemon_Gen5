@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 15:51:56
+#save date:2011/09/23 12:23:52
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r16.wms
 #SECTION START:OBJ_EVENT
@@ -409,7 +409,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POSID_R16_LOCAL_TVT
+#Pos Script Name
+SCRID_POS_LOCAL_TVT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R16_LOCALTVT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -104
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
