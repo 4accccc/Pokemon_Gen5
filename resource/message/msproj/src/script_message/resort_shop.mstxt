@@ -28,10 +28,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、お金が足りないとき</Comment>
+			<Comment>買う画面で、お金が足りないとき♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -46,10 +46,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おかねが　たりないですよ！▼</Text>
+			<Text>おかねが　たりないですね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -57,10 +57,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お金が　たりないですよ！▼</Text>
+			<Text>お金が　たりないですね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,10 +68,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、お金が足りないとき</Comment>
+			<Comment>買う画面で、お金が足りないとき♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -87,10 +87,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Item Idx="0" ]を
-いくつ　おかいあげに　なりますか？</Text>
+いくつ　おかいあげ　ですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99,10 +99,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Item Idx="0" ]を
-いくつ　お買い上げに　なりますか？</Text>
+いくつ　お買い上げに　ですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -110,10 +110,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、買う道具の数を選ぶとき</Comment>
+			<Comment>買う画面で、買う道具の数を選ぶとき♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -152,10 +152,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、買う道具の数を選ぶとき</Comment>
+			<Comment>買う画面で、買う道具の数を選ぶとき♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:57:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -170,11 +170,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　は
 [Digit:2digits Idx="1" ]コで　[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -182,11 +182,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　は
 [Digit:2digits Idx="1" ]コで　[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -195,10 +195,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき</Comment>
+「はい、いいえ」の確認をするとき♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -238,10 +238,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき</Comment>
+「はい、いいえ」の確認をするとき♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -256,11 +256,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　は
 [Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:56:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -268,11 +268,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　は
 [Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,10 +281,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき</Comment>
+「はい、いいえ」の確認をするとき♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -324,10 +324,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき</Comment>
+「はい、いいえ」の確認をするとき♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -370,10 +370,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買い物をしたときのお礼のメッセージ</Comment>
+			<Comment>買い物をしたときのお礼のメッセージ♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:58:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -389,12 +389,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はい　どうぞ
-ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+ありがとう　ございますー[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T13:43:37" />
+				Time="2011-09-23T10:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -403,12 +403,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はい　どうぞ
-ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+ありがとう　ございますー[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T13:43:31" />
+				Time="2011-09-23T10:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -416,10 +416,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買い物をしたときのお礼のメッセージ</Comment>
+			<Comment>買い物をしたときのお礼のメッセージ♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:59:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -458,10 +458,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道具を買うときに、指定した数がバッグに入らないとき</Comment>
+			<Comment>道具を買うときに、指定した数がバッグに入らないとき♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:59:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -477,10 +477,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それ　いじょう
-もちきれないですよ！▼</Text>
+もちきれないですね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -489,10 +489,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それ以上
-持ちきれないですよ！▼</Text>
+持ちきれないですね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,10 +500,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道具を買うときに、指定した数がバッグに入らないとき</Comment>
+			<Comment>道具を買うときに、指定した数がバッグに入らないとき♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:59:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -639,10 +639,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まいど　ありがとう　ございます
-おだいは　あとで　いただきますね▼</Text>
+おだいは　あとで　いただきます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:29:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -651,15 +651,22 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まいど　ありがとう　ございます
-お代は　後で　いただきますね▼</Text>
+お代は　後で　いただきます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:01" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -695,6 +702,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -730,6 +744,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -744,10 +765,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うりきれです
-また　あした　おねがいします▼</Text>
+また　あした　おねがいしますね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -756,15 +777,22 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>売り切れです
-また　あした　おねがいします▼</Text>
+また　あした　おねがいしますね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -778,11 +806,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　です
 [Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -790,16 +818,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]　ですね
+			<Text>[Name:Item Idx="0" ]　です
 [Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:30" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -835,6 +870,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:30" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -870,6 +912,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:31:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -883,11 +932,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅうりょうです
+			<Text>しゅうりょうですね	
 また　あす　おねがいします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -895,16 +944,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>終了です
+			<Text>終了ですね
 また　明日　おねがいします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:30:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:31:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1526,11 +1582,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-かいふくなら　おまかせ！
+おみせの　みらいを　きいてみよう！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:45:19" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1539,11 +1595,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-かいふくなら　おまかせ！
+おみせの　みらいを　きいてみよう！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:45:21" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1570,11 +1626,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-ゲストルームなら　おまかせ！
+かいふくなら　おまかせ！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:45:28" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1583,11 +1639,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-ゲストルームなら　おまかせ！
+かいふくなら　おまかせ！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:45:30" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1683,10 +1739,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>第５役割説明</Comment>
+			<Comment>第５役割説明
+
+未使用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:34:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1747,11 +1805,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
-ポケモンの　レベルを　あげます
+ポケモンを　つよく　します
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:39:59" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:35:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1760,11 +1818,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
-ポケモンの　レベルを　あげます
+ポケモンを　つよく　します
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:02" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:35:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1772,10 +1830,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>育て屋役割説明</Comment>
+			<Comment>育て屋役割説明
+
+未使用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T10:35:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2086,6 +2146,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:27" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2121,6 +2188,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2156,6 +2230,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2191,6 +2272,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2226,6 +2314,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ
+案内する</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:13:54" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2261,6 +2357,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ
+案内する</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:13:58" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2296,6 +2400,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ
+招待するで建て替え</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:14:16" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2333,10 +2445,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>システムｍｓｇ
+招待するで建て替え</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T04:58:28" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:14:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2373,6 +2486,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2410,6 +2530,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2443,6 +2570,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムｍｓｇ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:00:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2488,6 +2622,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:02:34" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2502,15 +2643,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　[Name:Item Idx="0" ]を
-かんてい　します▼
+かんてい　しますね▼
 ……
 …………▼
 ………………
 ………………▼
-むむっ　これは！▼</Text>
+あらっ？　これは！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:56:48" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2519,20 +2660,27 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　[Name:Item Idx="0" ]を
-かんてい　します▼
+かんてい　しますね▼
 ……
 …………▼
 ………………
 ………………▼
-むむっ　これは！▼</Text>
+あらっ？　これは！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:56:51" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:02:39" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2574,6 +2722,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具♂</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:02:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2587,14 +2742,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="2" ]は
-[Name:Item ]でした！
+			<Text>[Name:Item Idx="2" ]　は
+[Name:Item ]　でしたね
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:58:19" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2602,19 +2757,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="2" ]は
-[Name:Item ]でした！
+			<Text>[Name:Item Idx="2" ]　は
+[Name:Item ]　でしたね
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:58:23" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具♀</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:02:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>

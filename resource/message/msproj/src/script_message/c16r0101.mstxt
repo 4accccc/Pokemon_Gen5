@@ -441,6 +441,75 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_drill_sel_ans_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　[Name:ResortMayor ]の
+じむしょ　です▼
+[Name:ResortTown Idx="1" ]の　ために
+ひしょや　わたしたちが▽
+おしごとを　サポート　します▼
+まちが　はってん　していくと
+いろいろな　ひとが　やってきます▼
+たのしい　はなしが　きけるので
+ときどき　のぞいて　みてください▼
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:03:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　[Name:ResortMayor ]の
+じむしょ　です▼
+[Name:ResortTown Idx="1" ]の　ために
+ひしょや　わたしたちが▽
+おしごとを　サポート　します▼
+まちが　はってん　していくと
+いろいろな　ひとが　やってきます▼
+たのしい　はなしが　きけるので
+ときどき　のぞいて　みてください▼
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:03:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加ｍｓｇ
+
+0：市長名
+1：リゾート街名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:05:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答６
+「おすすめを　おしえる」って？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_drill_sel_ans_07"
 		Style="Large">
 		<LanguageCell
@@ -493,7 +562,7 @@
 			<Text>ここって　なに？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:00:25" />
+				Time="2011-09-23T12:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -510,6 +579,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢1</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:39:44" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢１</Text>
@@ -550,6 +626,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:46" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢2</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢２</Text>
@@ -590,6 +673,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:52" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢3</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢３</Text>
@@ -630,6 +720,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:02" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢4</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢４</Text>
@@ -670,6 +767,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:08" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢5</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢５</Text>
@@ -710,6 +814,60 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:14" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢6</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢６</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　へやは　なに？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:04:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　へやは　なに？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:04:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:31:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢6</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢６</Text>
@@ -750,6 +908,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢終了</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:40:49" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -773,8 +938,8 @@
 			<Text>がんばってるね！
 [Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T08:27:14" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T11:41:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1055,6 +1220,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>第３秘書追加</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:37:39" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1101,6 +1273,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>第４秘書追加</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:37:45" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1122,12 +1301,21 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きょうは　きみに
-プレゼントが　あるんだ▼
-まちに　すきな　なまえを
-つけてみないか▼</Text>
+おれいが　したいんだ▼
+ここまで　はってん　させてくれて
+ほんとうに　ありがとう！▼
+きみこそ　しんの
+[Name:ResortMayor Idx="1" ]　だ▼
+もう　ここは　きみの　まちと　いって
+いいだろう！▼
+そこでだ！▼
+まちに　なまえを　つけてくれないか？▼
+きみが　ジョインアベニューに
+もっとも　ふさわしいと　おもう▽
+なまえを　つけちゃってくれ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:01:14" />
+				Time="2011-09-23T12:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1136,17 +1324,36 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きょうは　きみに
-プレゼントが　あるんだ▼
-まちに　すきな　なまえを
-つけてみないか▼</Text>
+おれいが　したいんだ▼
+ここまで　はってん　させてくれて
+ほんとうに　ありがとう！▼
+きみこそ　しんの
+[Name:ResortMayor Idx="1" ]　だ▼
+もう　ここは　きみの　まちと　いって
+いいだろう！▼
+そこでだ！▼
+まちに　なまえを　つけてくれないか？▼
+きみが　ジョインアベニューに
+もっとも　ふさわしいと　おもう▽
+なまえを　つけちゃってくれ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:01:19" />
+				Time="2011-09-23T12:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>街命名権獲得
+
+
+1：市長名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T12:24:17" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1172,12 +1379,12 @@
 アベニューの　ネオンを
 じゆうに　かえられる　ようにしたよ▼
 ネオンを　かえれば　まちの
-ふんいきも　きっと　かわるよ▼
+ふんいきも　がらっと　かわるよ▼
 ネオンで　まちに　きたひとを
 もっと　よろこばしちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-22T04:28:22" />
+				Time="2011-09-23T13:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1190,17 +1397,24 @@
 アベニューの　ネオンを
 じゆうに　かえられる　ようにしたよ▼
 ネオンを　かえれば　まちの
-ふんいきも　きっと　かわるよ▼
+ふんいきも　がらっと　かわるよ▼
 ネオンで　まちに　きたひとを
 もっと　よろこばしちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-22T04:28:29" />
+				Time="2011-09-23T13:37:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ネオン変更</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:37:21" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1251,6 +1465,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スカウト起動</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:37:27" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1508,13 +1729,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみには
-もう　なにも　いうことは　ないよ！▼
-だから　ひきつづき
+			<Text>じゃ　ひきつづき
 がんばっちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T14:31:31" />
+				Time="2011-09-23T13:38:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1522,13 +1741,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみには
-もう　なにも　いうことは　ないよ！▼
-だから　ひきつづき
+			<Text>じゃ　ひきつづき
 がんばっちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T14:31:36" />
+				Time="2011-09-23T13:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1554,11 +1771,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃ　ひきつづき
+			<Text>きみには
+もう　なにも　いうことは　ないよ！▼
+だから　ひきつづき
 がんばっちゃってよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T08:40:04" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1566,11 +1785,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃ　ひきつづき
+			<Text>きみには
+もう　なにも　いうことは　ないよ！▼
+だから　ひきつづき
 がんばっちゃってよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T08:40:06" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T13:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1633,6 +1854,16 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書・回復
+0：秘書名
+1：クチグセ
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:50:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1655,13 +1886,13 @@
 			Language="JPN">
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
-もっとべんりに　パソコンを
-つかうことが　できます▼
+パソコンを　てばやく　
+あつかうことが　できます▼
 わたしに　はなしかけて
 くださいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T08:35:03" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1671,18 +1902,27 @@
 			Language="JPN_KANJI">
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
-もっとべんりに　パソコンを
-つかうことが　できます▼
+パソコンを　てばやく　
+あつかうことが　できます▼
 わたしに　はなしかけて
 くださいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-11T08:35:06" />
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書・パソコン
+0：秘書名
+1：クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:50:17" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1729,6 +1969,15 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1バージョンアップ男
+0：秘書名
+1：クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:51:13" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1775,6 +2024,15 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1バージョンアップ女
+0：秘書名
+1：クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:51:17" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1821,6 +2079,15 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1バージョンアップ男
+0：秘書名
+1：クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:51:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
@@ -1867,6 +2134,15 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:31:21" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>秘書1バージョンアップ女
+0：秘書名
+1：クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-23T07:51:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢７</Text>
