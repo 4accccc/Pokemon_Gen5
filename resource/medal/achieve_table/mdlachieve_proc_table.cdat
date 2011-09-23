@@ -37,6 +37,7 @@ MDLACHIEVEPROC sc_achieve_proc[] = {
   NULL,
   MDLREC_CHECK_SuretigaiCount, // MDLRECID_SURECHIGAI_CNT
   NULL,
+  NULL,
   MDLREC_CHECK_AnimalTrailCheck, // MDLRECID_KEMONOMICHI
   NULL,
   NULL,

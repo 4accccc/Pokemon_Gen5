@@ -2297,58 +2297,102 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_060">
-		<language name="JPN" width="216">フェスさんか１０</language>
-		<language name="JPN_KANJI" width="216">フェスさんか１０</language>
+		<language name="JPN" width="216">１０にんいじょう　あつまった
+なかなかの　きぼの　ミッションに
+さんかした　きねんの　メダル。</language>
+		<language name="JPN_KANJI" width="216">１０人以上　集まった
+なかなかの　規模の　ミッションに
+参加した　記念の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_061">
-		<language name="JPN" width="216">フェスさんか３０</language>
-		<language name="JPN_KANJI" width="216">フェスさんか３０</language>
+		<language name="JPN" width="216">３０にんいじょう　あつまった
+そうとうな　きぼの　ミッションに
+さんかした　きねんの　メダル。</language>
+		<language name="JPN_KANJI" width="216">３０人以上　集まった
+相当な　規模の　ミッションに
+参加した　記念の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_062">
-		<language name="JPN" width="216">ハイスコア１００</language>
-		<language name="JPN_KANJI" width="216">ハイスコア１００</language>
+		<language name="JPN" width="216">１００いじょうの　スコアを　きろくし
+なかなか　もりあがった　ミッションに
+さんかした　あかしの　メダル。</language>
+		<language name="JPN_KANJI" width="216">１００以上の　スコアを　記録し
+なかなか　盛り上がった　ミッションに
+参加した　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_063">
-		<language name="JPN" width="216">ハイスコア１０００</language>
-		<language name="JPN_KANJI" width="216">ハイスコア１０００</language>
+		<language name="JPN" width="216">１０００いじょうの　スコアを　きろくし
+そうとう　もりあがった　ミッションに
+さんかした　あかしの　メダル。</language>
+		<language name="JPN_KANJI" width="216">１０００以上の　スコアを　記録し
+相当　盛り上がった　ミッションに
+参加した　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_064">
-		<language name="JPN" width="216">かいさい１０</language>
-		<language name="JPN_KANJI" width="216">かいさい１０</language>
+		<language name="JPN" width="216">フェスミッションを　１０かい
+かいさいした　それなりの
+じしゅせいを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションを　１０回
+開催した　それなりの
+自主性を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_065">
-		<language name="JPN" width="216">かいさい５０</language>
-		<language name="JPN_KANJI" width="216">かいさい５０</language>
+		<language name="JPN" width="216">フェスミッションを　５０かい
+かいさいした　たぐいまれな
+じしゅせいを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションを　５０回
+開催した　たぐいまれな
+自主性を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_066">
-		<language name="JPN" width="216">さんか１</language>
-		<language name="JPN_KANJI" width="216">さんか１</language>
+		<language name="JPN" width="216">フェスミッションに　はじめて
+さんかした　かけだしの
+せっきょくせいを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションに　初めて
+参加した　駆け出しの
+積極性を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_067">
-		<language name="JPN" width="216">さんか１０</language>
-		<language name="JPN_KANJI" width="216">さんか１０</language>
+		<language name="JPN" width="216">フェスミッションに　１０かい
+さんかした　かがやかしい
+せっきょくせいを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションに　１０回
+参加した　輝かしい
+積極性を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_068">
-		<language name="JPN" width="216">クリア３０</language>
-		<language name="JPN_KANJI" width="216">クリア３０</language>
+		<language name="JPN" width="216">フェスミッションを　３０かい
+クリアした　そこそこの
+じっこうりょくを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションを　３０回
+クリアした　そこそこの
+実行力を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_069">
-		<language name="JPN" width="216">クリア１００</language>
-		<language name="JPN_KANJI" width="216">クリア１００</language>
+		<language name="JPN" width="216">フェスミッションを　１００かい
+クリアした　おどろくべき
+じっこうりょくを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">フェスミッションを　１００回
+クリアした　驚くべき
+実行力を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_070">
-		<language name="JPN" width="216">ミッションぜんクリア</language>
-		<language name="JPN_KANJI" width="216">ミッションぜんクリア</language>
+		<language name="JPN" width="216">すべての　フェスミッションを
+クリアした　てんかむそうの
+じっこうりょくを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">すべての　フェスミッションを
+クリアした　天下無双の
+実行力を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_071">
