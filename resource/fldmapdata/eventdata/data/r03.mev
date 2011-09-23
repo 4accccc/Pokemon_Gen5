@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 18:59:15
+#save date:2011/09/23 18:34:30
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #hold event type:
 1
 #hold event number:
-26
+24
 #event number: 0
 #type
 1
@@ -138,37 +138,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_ELITEW_29
-#OBJ CODE Number
-TRAINERW
-#MOVE CODE Number
-MV_RTRDUL       
-#EVENT TYPE Number
-EV_TYPE_TRAINER_KYORO
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_ELITEW_29
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-2
-#Parameter 1 Number
-5
-#Parameter 2 Number
-0
-#Move Limit X Number
-5
-#Move Limit Z Number
-5
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 16 104
-#event number: 5
-#type
-1
-#ID name
 TR_KINDERGARTENM_08
 #OBJ CODE Number
 BABYBOY2
@@ -196,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 696 56 120
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -227,7 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 680 16 56
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 712 16 56
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,38 +258,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 792 16 40
-#event number: 9
-#type
-1
-#ID name
-TR_ELITEM_29
-#OBJ CODE Number
-TRAINERM
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_ELITEM_29
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-4
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-440 0 -8
-#event number: 10
+#event number: 8
 #type
 1
 #ID name
@@ -351,7 +289,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 616 0 -504
-#event number: 11
+#event number: 9
 #type
 1
 #ID name
@@ -382,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 152 16 24
-#event number: 12
+#event number: 10
 #type
 1
 #ID name
@@ -413,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 248 0 -264
-#event number: 13
+#event number: 11
 #type
 1
 #ID name
@@ -444,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 680 0 -472
-#event number: 14
+#event number: 12
 #type
 1
 #ID name
@@ -475,7 +413,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -56 16 -248
-#event number: 15
+#event number: 13
 #type
 1
 #ID name
@@ -506,7 +444,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 40 16 -184
-#event number: 16
+#event number: 14
 #type
 1
 #ID name
@@ -537,7 +475,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -88 16 -168
-#event number: 17
+#event number: 15
 #type
 1
 #ID name
@@ -568,7 +506,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 552 0 -312
-#event number: 18
+#event number: 16
 #type
 1
 #ID name
@@ -599,7 +537,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 24
-#event number: 19
+#event number: 17
 #type
 1
 #ID name
@@ -630,7 +568,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 872 16 56
-#event number: 20
+#event number: 18
 #type
 1
 #ID name
@@ -661,7 +599,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 840 0 -40
-#event number: 21
+#event number: 19
 #type
 1
 #ID name
@@ -692,7 +630,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 856 0 -40
-#event number: 22
+#event number: 20
 #type
 1
 #ID name
@@ -723,7 +661,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 1016 16 8
-#event number: 23
+#event number: 21
 #type
 1
 #ID name
@@ -754,7 +692,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 1064 16 72
-#event number: 24
+#event number: 22
 #type
 1
 #ID name
@@ -785,7 +723,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1064 16 136
-#event number: 25
+#event number: 23
 #type
 1
 #ID name

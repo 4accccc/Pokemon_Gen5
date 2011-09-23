@@ -1,5 +1,7 @@
 $KCODE = "SJIS"
 
+$CHECK_TYPE = 3     # 2:エリア別 3:MOVIE_MODEL別
+
 def MakeObjCodeVec( file, vec )
   entry = false
   while line = file.gets
@@ -35,7 +37,7 @@ while line = zone_csv.gets
   #マトリックスＩＤが「wb」の項を対称にする
   if column[4] == "wb" then
     #エリアを取得
-    area = column[2]
+    area = column[ $CHECK_TYPE ]
     #ゾーン取得
     zone = column[0]
     #取得エリアはプッシュ済みか？
