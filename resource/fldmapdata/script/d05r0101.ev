@@ -36,6 +36,8 @@ _EVENT_DATA   ev_init_d05r0101
 _EVENT_DATA   ev_d05r0101_swleader5_01
 _EVENT_DATA   ev_d05r0101_swboss_01
 _EVENT_DATA   ev_reserve_d05r0101_tutorial_02
+_EVENT_DATA   ev_d05r0101_swleader1_01
+_EVENT_DATA   ev_d05r0101_swrival_01
 _EVENT_DATA_END
 
 
@@ -44,8 +46,8 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START  ev_init_d05r0101
 
-  //仮：優勝した場合はWBTシステム側でLOCALWORK1を1とするようにした
-  IF $WK_SCENE_D05 == 1 && $LOCALWORK1 == 1 THEN
+  //優勝した場合はWBTシステム側でWK_SCENE_D05R0101を1とするようにした
+  IF $WK_SCENE_D05R0101 == 1 THEN
 
     //========================================//
     //チェレン、ライバル表示
@@ -263,7 +265,6 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   $WK_SCENE_D05 = 2
   //プラズマフリゲート・現在地対応
   $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
-
   //WBTチュートリアルモードを解除
   _FLAG_RESET( SYS_FLAG_WBT_TUTORIAL )
   //========================================//
@@ -278,10 +279,24 @@ EVENT_START   ev_d05r0101_swleader5_01
 EVENT_END
 
 /**************************************************************/
-/*  アクロマ：話しかけ（外に出るまで繰り返し）                */
+/*  アクロマ：話しかけ（優勝後、外に出るまで繰り返し）        */
 /**************************************************************/
 EVENT_START   ev_d05r0101_swboss_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swboss_01 )
+EVENT_END
+
+/**************************************************************/
+/*  チェレン：話しかけ（優勝後、外に出るまで繰り返し）        */
+/**************************************************************/
+EVENT_START   ev_d05r0101_swleader1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swleader1_03 )
+EVENT_END
+
+/**************************************************************/
+/*  ライバル：話しかけ（優勝後、外に出るまで繰り返し）        */
+/**************************************************************/
+EVENT_START   ev_d05r0101_swrival_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swrival_03 )
 EVENT_END
 
 /**************************************************************/

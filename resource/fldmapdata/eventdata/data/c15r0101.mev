@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/17 18:03:03
+#save date:2011/09/20 13:09:57
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0101.wms
 #SECTION START:OBJ_EVENT
@@ -84,7 +84,7 @@ MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_PKWD_STAFF02
+FV_PKWD_STAFF_TUTORIAL01
 #Event Script Name
 SCRID_PKWD_TUTORIAL_HACHIKU_01
 #Direction Type Number

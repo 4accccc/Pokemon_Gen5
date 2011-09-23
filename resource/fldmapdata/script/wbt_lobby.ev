@@ -38,7 +38,6 @@ _EVENT_DATA_END
 /*						FIELD_INIT_LABEL                            */
 /********************************************************************/
 INIT_EVENT_START  ev_init_wbt_lobby
-  $LOCALWORK1 = 0
   _WBT_SYSTEM_CHECK_ENABLE( SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     _CALL ev_init_wbt_lobby_reception
@@ -108,7 +107,7 @@ ev_init_wbt_lobby_tutorial:
   //優勝した場合か？
   _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_WBT_STAGE_WIN THEN
-    $LOCALWORK1 = 1
+    $WK_SCENE_D05R0101 = 1
   ENDIF
 _RET
 
@@ -128,12 +127,17 @@ EVENT_START	ev_wbt_reception_l
 
   _TALK_OBJ_START()
 
-  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
-  _WBT_SYSTEM_START()
-  _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION1 )
+  IF $WK_SCENE_D05R0101 == 1 THEN
+    //しばらくこの受付では参加できないことを知らせるメッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19, SCWK_TARGET_OBJID, POS_DL )
+  ELSE
+    //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
+    _WBT_SYSTEM_START()
+    _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION1 )
 
-  //ＷＢＴ受付メイン処理
-  _CALL ev_wbt_main
+    //ＷＢＴ受付メイン処理
+    _CALL ev_wbt_main
+  ENDIF
 
 EVENT_END
 
@@ -154,6 +158,8 @@ EVENT_START ev_wbt_reception_r
     _CALL ev_wbt_main
 
   ELSE
+    //クリアまでこの受付では参加できないことを知らせるメッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19, SCWK_TARGET_OBJID, POS_DL )
     //クリアまでこの受付では参加できないことを知らせるメッセージ
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()

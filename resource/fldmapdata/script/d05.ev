@@ -331,6 +331,8 @@ EVENT_START		ev_scene_d05_swplazma_01
   _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 199, -1, 493 )
   
   //========================================//
+  //D05R0101 WBTチュートリアル優勝時→WBT通常状態に
+  $WK_SCENE_D05R0101 = 2
   //D05プラズマ団イベント終了
   $WK_SCENE_D05 = 3
   //D05ライバル非表示
