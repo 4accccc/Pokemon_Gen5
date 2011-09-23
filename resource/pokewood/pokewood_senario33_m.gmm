@@ -346,418 +346,513 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
+		<language name="JPN" width="256">じょゆう</language>
+		<language name="JPN_KANJI" width="256">じょゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
-	</row>
-	<row id="pw_wazasel_hero_0">
-		<language name="JPN" width="256">まちを　はかいするのを　やめろ！
-いいかげんに　めを　さましてっ！</language>
-		<language name="JPN_KANJI" width="256">まちを　はかいするのを　やめろ！
-いいかげんに　めを　さましてっ！</language>
-	</row>
-	<row id="pw_wazasel_enemy_0">
-		<language name="JPN" width="256">わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</language>
-		<language name="JPN_KANJI" width="256">わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</language>
-	</row>
-	<row id="pw_wazasel_hero_1">
-		<language name="JPN" width="256">いますぐ　ＵＦＯを　とめるんだっ！</language>
-		<language name="JPN_KANJI" width="256">いますぐ　ＵＦＯを　とめるんだっ！</language>
-	</row>
-	<row id="pw_wazasel_enemy_1">
-		<language name="JPN" width="256">ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</language>
-		<language name="JPN_KANJI" width="256">ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</language>
-	</row>
-	<row id="pw_wazasel_hero_2">
-		<language name="JPN" width="256">うう……
-なんて　がんじょうな　ボディだ……</language>
-		<language name="JPN_KANJI" width="256">うう……
-なんて　がんじょうな　ボディだ……</language>
-	</row>
-	<row id="pw_wazasel_enemy_2">
-		<language name="JPN" width="256">フン……　うんが　いいわね……</language>
-		<language name="JPN_KANJI" width="256">フン……　うんが　いいわね……</language>
-	</row>
-	<row id="pw_wazasel_hero_3">
-		<language name="JPN" width="256">ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</language>
-		<language name="JPN_KANJI" width="256">ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</language>
-	</row>
-	<row id="pw_wazasel_enemy_3">
-		<language name="JPN" width="256">わたしの　いだいな　けんきゅうを
-みとめない　せかい　なんて……</language>
-		<language name="JPN_KANJI" width="256">わたしの　いだいな　けんきゅうを
-みとめない　せかい　なんて……</language>
-	</row>
-	<row id="pw_wazasel_hero_4">
-		<language name="JPN" width="256">クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</language>
-		<language name="JPN_KANJI" width="256">クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</language>
-	</row>
-	<row id="pw_wazasel_enemy_4">
-		<language name="JPN" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
-		<language name="JPN_KANJI" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
-	</row>
-	<row id="pw_wazasel_hero_5">
-		<language name="JPN" width="256">クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</language>
-		<language name="JPN_KANJI" width="256">クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</language>
-	</row>
-	<row id="pw_wazasel_enemy_5">
-		<language name="JPN" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
-		<language name="JPN_KANJI" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
-	</row>
-	<row id="pw_wazasel_hero_6">
-		<language name="JPN" width="256">れいせいに……　れいせいに……
-ここは　ようすを　みるんだ……</language>
-		<language name="JPN_KANJI" width="256">れいせいに……　れいせいに……
-ここは　ようすを　みるんだ……</language>
-	</row>
-	<row id="pw_wazasel_enemy_6">
-		<language name="JPN" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-		<language name="JPN_KANJI" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-	</row>
-	<row id="pw_wazasel_hero_7">
-		<language name="JPN" width="256">クッ……　あのＵＦ０を
-とめる　ほうほうは　ないのか……</language>
-		<language name="JPN_KANJI" width="256">クッ……　あのＵＦ０を
-とめる　ほうほうは　ないのか……</language>
-	</row>
-	<row id="pw_wazasel_enemy_7">
-		<language name="JPN" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-		<language name="JPN_KANJI" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-	</row>
-	<row id="pw_wazasel_hero_8">
-		<language name="JPN" width="256">グズグズしていらない……
-このままでは　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">グズグズしていらない……
-このままでは　ヒウンの　まちが……</language>
-	</row>
-	<row id="pw_wazasel_enemy_8">
-		<language name="JPN" width="256">わたしの　じゃまを　しないでっ！</language>
-		<language name="JPN_KANJI" width="256">わたしの　じゃまを　しないでっ！</language>
-	</row>
-	<row id="pw_situ_hero_0">
-		<language name="JPN" width="256">クッ……　このままでは……
-ヒウンシティが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　このままでは……
-ヒウンシティが……</language>
-	</row>
-	<row id="pw_situ_enemy_0">
-		<language name="JPN" width="256">わたしの　けんきゅうの
-じゃまするから　こうなるのよ！　</language>
-		<language name="JPN_KANJI" width="256">わたしの　けんきゅうの
-じゃまするから　こうなるのよ！　</language>
-	</row>
-	<row id="pw_situ_hero_1">
-		<language name="JPN" width="256">もう　いいだろう！　はかいをやめて
-いますぐ　ＵＦＯを　とめるんだっ！</language>
-		<language name="JPN_KANJI" width="256">もう　いいだろう！　はかいをやめて
-いますぐ　ＵＦＯを　とめるんだっ！</language>
-	</row>
-	<row id="pw_situ_enemy_1">
-		<language name="JPN" width="256">せいぎの　みかたの　きどりで
-わたしの　じゃまを　しないで！</language>
-		<language name="JPN_KANJI" width="256">せいぎの　みかたの　きどりで
-わたしの　じゃまを　しないで！</language>
-	</row>
-	<row id="pw_situ_hero_2">
-		<language name="JPN" width="256">さあ！　もう　あきらめるんだ！</language>
-		<language name="JPN_KANJI" width="256">さあ！　もう　あきらめるんだ！</language>
-	</row>
-	<row id="pw_situ_enemy_2">
-		<language name="JPN" width="256">そんな……　そんな……
-わたしのゆめが……　けんきゅうが……</language>
-		<language name="JPN_KANJI" width="256">そんな……　そんな……
-わたしのゆめが……　けんきゅうが……</language>
-	</row>
-	<row id="pw_situ_hero_3">
-		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
-	</row>
-	<row id="pw_situ_enemy_3">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_situ_hero_4">
-		<language name="JPN" width="256">まて！　にげるのかっ！</language>
-		<language name="JPN_KANJI" width="256">まて！　にげるのかっ！</language>
-	</row>
-	<row id="pw_situ_enemy_4">
-		<language name="JPN" width="256">もくてきは　はたしたわ……
-つぎは　どのまちに　しようかしら？</language>
-		<language name="JPN_KANJI" width="256">もくてきは　はたしたわ……
-つぎは　どのまちに　しようかしら？</language>
-	</row>
-	<row id="pw_situ_hero_5">
-		<language name="JPN" width="256">クッ……　もう……　ダメだ……</language>
-		<language name="JPN_KANJI" width="256">クッ……　もう……　ダメだ……</language>
-	</row>
-	<row id="pw_situ_enemy_5">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
-	</row>
-	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
-		<language name="JPN_KANJI" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
-	</row>
-	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
-		<language name="JPN_KANJI" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
-	</row>
-	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
-		<language name="JPN_KANJI" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
-	</row>
-	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
-		<language name="JPN_KANJI" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
+		<language name="JPN" width="256">アシスタント</language>
+		<language name="JPN_KANJI" width="256">アシスタント</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
-		<language name="JPN_KANJI" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
+		<language name="JPN" width="256">%MYNAME『さあ　Ｆ−００……
+ぼくと　いっしょに　あそぼうか</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『さあ　Ｆ−００……
+僕と　一緒に　遊ぼうか</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
-		<language name="JPN_KANJI" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
+		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
+%MYNAME！　ナニシテ　アソブ？</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『アソブ！　アソブ！
+%MYNAME！　ナニシテ　アソブ？</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">だれ？</language>
-		<language name="JPN_KANJI" width="256">だれ？</language>
+		<language name="JPN" width="256">%MYNAME『そうだな……
+Ｆ−００は　なにが　したい？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『そうだな……
+Ｆ−００は　何が　したい？</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
-		<language name="JPN_KANJI" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
+		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
+%MYNAMEト　ポケモント　アソブ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『アソブ！　アソブ！
+%MYNAMEト　ポケモント　アソブ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
-		<language name="JPN_KANJI" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
+		<language name="JPN" width="256">じょしゅ『%MYNAMEはかせ……▼
+Ｆ−００と　あそんで　ばかりで
+いいんですか？▼
+あたらしい　けんきゅうの　いらいも
+たくさん　きていますが……</language>
+		<language name="JPN_KANJI" width="256">助手『%MYNAME博士……▼
+Ｆ−００と　遊んで　ばかりで
+いいんですか？▼
+新しい　研究の　依頼も
+たくさん　来ていますが……</language>
 	</row>
-	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
+	<row id="pw_event0_hero_3">
+		<language name="JPN" width="256">%MYNAME『ほっておけ……▼
+だれにでも　できる
+けんきゅう　だろ？▼
+それより　オレは　Ｆ−００に
+いろいろなことを　おしえて▽
+コイツの　メモリーを　もっと▽
+じゅうじつして　やりたいんだ……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『ほっておけ……▼
+誰にでも　できる　研究だろ？▼
+それより　オレは　Ｆ−００に
+色々なことを　教えて▽
+コイツの　メモリーを　もっと▽
+充実して　やりたいんだ……</language>
 	</row>
-	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
-	</row>
-	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">わかりました</language>
-		<language name="JPN_KANJI" width="256">わかりました</language>
-	</row>
-	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
+	<row id="pw_event1_hero_0">
+		<language name="JPN" width="256">%MYNAME『ほら　Ｆ−００！▼
+ポケモンに　こうげきして！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『ほら　Ｆ−００！▼
+ポケモンに　こうげきして！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
-		<language name="JPN_KANJI" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
+		<language name="JPN" width="256">Ｆー００『コウゲキ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……</language>
+	</row>
+	<row id="pw_event1_hero_1">
+		<language name="JPN" width="256">%MYNAME『わかるだろ？▼
+ポケモン　みたいにさ
+わざを　つかうんだよ！▼
+Ｆ−００の　からだには
+あいてを　こうげきする▽
+システムが　ついてるんだよ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『分かるだろ？▼
+ポケモン　みたいにさ
+わざを　つかうんだよ！▼
+Ｆ−００の　身体には
+ポケモンの　わざを　使える▽
+システムが　ついてるんだよ！</language>
+	</row>
+	<row id="pw_event1_enemy_1">
+		<language name="JPN" width="256">Ｆー００『コウゲキ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……</language>
+	</row>
+	<row id="pw_event1_hero_2">
+		<language name="JPN" width="256">%MYNAME『どうした？　Ｆ−００？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『どうした？　Ｆ−００？</language>
+	</row>
+	<row id="pw_event1_enemy_2">
+		<language name="JPN" width="256">じょしゅ『もしかして……
+Ｆー００は　あいてを▽
+きずつけることが　いやなんじゃ……</language>
+		<language name="JPN_KANJI" width="256">助手『もしかして……
+Ｆー００は　相手を▽
+傷つけることが　嫌なんじゃ……</language>
+	</row>
+	<row id="pw_event1_hero_3">
+		<language name="JPN" width="256">%MYNAME『いいかい？　Ｆ−００
+ポケモンは　バトルすることが▽
+だいすきなんだ▼
+しんぱい　しなくても　いいんだよ</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『いいかい？　Ｆ−００
+ポケモンは　バトルすることが▽
+大好きなんだ▼
+心配しなくても　いいんだよ</language>
+	</row>
+	<row id="pw_event1_enemy_3">
+		<language name="JPN" width="256">Ｆー００『……　……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『……　……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">たしかに…</language>
-		<language name="JPN_KANJI" width="256">たしかに…</language>
+		<language name="JPN" width="256">%MYNAME『ほら！　たのしいよ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『ほら！　楽しいよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
-		<language name="JPN_KANJI" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
+		<language name="JPN" width="256">Ｆー００『タノシイ……　タノシイ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『タノシイ……　タノシイ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">いままでも　あったよ</language>
-		<language name="JPN_KANJI" width="256">いままでも　あったよ</language>
+		<language name="JPN" width="256">%MYNAME『はやく　しろっ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『早く　しろっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
-		<language name="JPN_KANJI" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
+		<language name="JPN" width="256">Ｆー００『ワカッタ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ワカッタ……</language>
+	</row>
+	<row id="pw_event1_react_hero_2">
+		<language name="JPN" width="256">%MYNAME『しかたないな……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『仕方ないな……</language>
+	</row>
+	<row id="pw_event1_react_enemy_2">
+		<language name="JPN" width="256">Ｆー００『コウゲキ……　キライ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……　キライ……</language>
+	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">%MYNAME『どうだ？
+ポケモンと　バトルするのは▽
+なかなか　たのしいだろ？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『どうだ？
+ポケモンと　バトルするのは▽
+なかなか　楽しいだろ？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
+		<language name="JPN" width="256">Ｆー００『ポケモン！　タノシイ！
+%MYNAME！　ダイスキ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ポケモン！　タノシイ！
+%MYNAME！　ダイスキ！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+		<language name="JPN" width="256">%MYNAME『ははは……
+ありがとう　%MYNAME……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『ははは……
+ありがとう　%MYNAME……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
-	</row>
-	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
+		<language name="JPN" width="256">Ｆー００『ボク　%MYNAME　スキ！
+%MYNAME　ボク　スキ？</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ボク　%MYNAME　スキ！
+%MYNAME　ボク　スキ？</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
+		<language name="JPN" width="256">%MYNAME『だいすきだよ</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『大好きだよ</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
+		<language name="JPN" width="256">Ｆー００『%MYNAME！　ダイスキ！
+ボク　タノシイ！　</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『%MYNAME！　ダイスキ！
+ボク　タノシイ！　</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
+		<language name="JPN" width="256">%MYNAME『わからないな……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『わからないな……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
+		<language name="JPN" width="256">Ｆー００『キライ……
+%MYNAME……　ボク　キライ……
+ボク……　%MYNAME　キライ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『キライ……
+%MYNAME……　ボク　キライ……
+ボク……　%MYNAME　キライ……</language>
+	</row>
+	<row id="pw_event2_react_hero_2">
+		<language name="JPN" width="256">%MYNAME『はずかしいな……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『はずかしいな……</language>
+	</row>
+	<row id="pw_event2_react_enemy_2">
+		<language name="JPN" width="256">Ｆー００『……？</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『……？</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
+		<language name="JPN" width="256">じょしゅ『%MYNAME　はかせ……▼
+そろそろ　Ｆー００の
+エネルギーが　なくなりますが……</language>
+		<language name="JPN_KANJI" width="256">助手『%MYNAME博士……▼
+そろそろ　Ｆー００の
+エネルギーが　なくなりますが……</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+		<language name="JPN" width="256">%MYNAME『しかたない……
+きょうは　ここまでに　するか▼
+もっと　Ｆー００と　あそべるように
+バッテリーを　おおきな　ものと▽
+とりかえなければな……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『仕方ない……
+今日は　ここまでに　するか▼
+もっと　Ｆー００と　遊べるように
+バッテリーを　大きな　ものと▽
+取り替えなければな……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
+		<language name="JPN" width="256">じょしゅ『はかせ……▼
+あなたは　なぜ　Ｆー００に
+そこまで　こだわるのですか？▼
+たしかに　あなたが　つくりあげた
+ロボット　ですから▽
+たいせつにしたい　おきもちも▽
+わかるのですが……</language>
+		<language name="JPN_KANJI" width="256">助手『博士……▼
+あなたは　なぜ　Ｆー００に
+そこまで　こだわるのですか？▼
+たしかに　あなたが　作り上げた
+ロボット　ですから▽
+大切にしたい　お気持も▽
+分かるのですが……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
-		<language name="JPN_KANJI" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
+		<language name="JPN" width="256">%MYNAME『しりたいか……？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『知りたいか……？</language>
+	</row>
+	<row id="pw_event3_enemy_2">
+		<language name="JPN" width="256">じょしゅ『ええ……　まあ……</language>
+		<language name="JPN_KANJI" width="256">助手『ええ……　まあ……</language>
+	</row>
+	<row id="pw_event3_hero_3">
+		<language name="JPN" width="256">%MYNAME『……　……▼
+オレは　ちいさい　ころから
+べんきょう　ばかり　してきた▼
+だから　ともだちと　よべる
+あいては　だれも　いない……▼
+いまじゃ　アンタたち　おとなに
+まざって　けんきゅう　ばかりの▽
+まいにち　だろ……▼
+Ｆー００だけ　なんだよ……
+オレが　いっしょに　あそべるのは</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『……　……▼
+オレは　小さい　ころから
+勉強　ばかり　してきた▼
+だから　友達と　呼べる
+相手は　誰も　いない……▼
+今じゃ　アンタたち　大人に
+混ざって　研究ばかりの▽
+毎日　だろ……▼
+Ｆー００だけ　なんだよ……
+オレが　一緒に　遊べるのは</language>
 	</row>
 	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
+		<language name="JPN" width="256">じょしゅ『……　……</language>
+		<language name="JPN_KANJI" width="256">助手『……　……</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">だめだ…</language>
-		<language name="JPN_KANJI" width="256">だめだ…</language>
+		<language name="JPN" width="256">%MYNAME『よし……
+ここまでに　しようか　Ｆー００……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『よし……
+ここまでに　しようか　Ｆー００……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
-		<language name="JPN_KANJI" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
+		<language name="JPN" width="256">Ｆー００『タノシイ！　タノシイ！
+%MYNAME！　タノシイ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『タノシイ！　タノシイ！
+%MYNAME！　タノシイ！</language>
+	</row>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">%MYNAME『そうか……
+ぼくも　たのしいよ　Ｆー００……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『そうか……
+僕も　楽しいよ　Ｆー００……</language>
+	</row>
+	<row id="pw_event4_enemy_1">
+		<language name="JPN" width="256">Ｆー００『%MYNAME！ダイスキ！▼
+%MYNAME　トモダチ！▼
+ボクト　モット　アソボ！▼</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『%MYNAME！ダイスキ！▼
+%MYNAME　トモダチ！▼
+ボクト　モット　アソボ！▼</language>
+	</row>
+	<row id="pw_event4_hero_2">
+		<language name="JPN" width="256">%MYNAME『Ｆー００　ごめんな▼
+そろそろ　おまえの　バッテリーが
+きれちゃうんだ……▼
+だから　ちょっと　やすまないとな？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『Ｆー００　ごめんな▼
+そろそろ　お前の　バッテリーが
+切れちゃうんだ……▼
+だから　ちょっと　休まないとな？</language>
+	</row>
+	<row id="pw_event4_enemy_2">
+		<language name="JPN" width="256">じょしゅ『ふふっ……</language>
+		<language name="JPN_KANJI" width="256">助手『ふふっ……</language>
+	</row>
+	<row id="pw_event4_hero_3">
+		<language name="JPN" width="256">%MYNAME『なにが　おかしい……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『何が　可笑しい……</language>
+	</row>
+	<row id="pw_event4_enemy_3">
+		<language name="JPN" width="256">じょしゅ『すっ　すいません……▼
+ふたりが　あそんでる　すがたが
+なんだか　とても　なかの　いい▽
+きょうだい　みたい　だから……</language>
+		<language name="JPN_KANJI" width="256">助手『すっ　すいません……▼
+二人が　遊んでいる　姿が
+何だか　とても　仲の　良い▽
+兄弟みたい　だから……</language>
+	</row>
+	<row id="pw_event4_hero_4">
+		<language name="JPN" width="256">%MYNAME『きょうだい　だと……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『兄弟だと……</language>
+	</row>
+	<row id="pw_event4_enemy_4">
+		<language name="JPN" width="256">じょしゅ『すっ　すいません！
+べつに　わるぎは　ないんです！</language>
+		<language name="JPN_KANJI" width="256">助手『すっ　すいません！
+別に　悪気は　ないんです！</language>
+	</row>
+	<row id="pw_event4_hero_5">
+		<language name="JPN" width="256">%MYNAME『きょうだい　か……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『兄弟か……</language>
+	</row>
+	<row id="pw_event4_hero_6">
+		<language name="JPN" width="256">……じょしゅが　いったように
+Ｆ−００と　わたしは▽
+なかのよい　きょうだいの　ような
+かんけいに　なっていった……▼
+だが……▼
+そんな　しあわせな　ひびも
+ながくは　つづかなった……</language>
+		<language name="JPN_KANJI" width="256">……助手が　言ったように
+Ｆ−００と　私は▽
+仲の良い　兄弟の　ような
+関係に　なっていった……▼
+だが……▼
+そんな　幸せな　日々も
+長く　続かなかった……</language>
+	</row>
+	<row id="pw_event5_hero_0">
+		<language name="JPN" width="256">%MYNAME『おい！　Ｆー００！！
+どうしたんだっ！？</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『おい！　Ｆー００！！
+どうしたんだっ！？</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">Ｆー００『ポケモン……　タノシイ……
+%MYNAME……　ダイスキ……▼
+………　………　………▼
+………　………　………</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ポケモン……　タノシイ……
+%MYNAME……　ダイスキ……▼
+………　………　………▼
+………　………　………</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">%MYNAME『おい！　Ｆー００！！
+しっかりしろっ！　Ｆー００！！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『おい！　Ｆー００！！
+しっかりしろっ！　Ｆー００！！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">じょしゅ『ダメです……▼
+Ｆ−００の　きのうが　かんぜんに
+とまって　しまいました……▼
+かいろが　ショート　しています……
+いままでに　Ｆー００が　おぼえた▼
+メモリーも　すべて　きえました……</language>
+		<language name="JPN_KANJI" width="256">助手『ダメです……▼
+Ｆ−００の　機能が　完全に
+停まって　しまいました……▼
+回路も　ショート　しています……
+今まで　Ｆー００が　学んだ▼
+メモリーも　すべて　消えました……</language>
+	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">%MYNAME『そんなっ！！▼
+メモリーの　バックアップは
+とっていないのかっ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『そんなっ！！▼
+メモリーの　バックアップは
+取っていないのかっ！</language>
+	</row>
+	<row id="pw_event5_enemy_2">
+		<language name="JPN" width="256">じょしゅ『ざんねんですが……</language>
+		<language name="JPN_KANJI" width="256">助手『残念ですが……</language>
+	</row>
+	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">%MYNAME『そんなっ！！▼
+やっと　できた　ロボット……▼
+……ともだち　なんだぞッ！！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『そんなっ！！▼
+やっと　できた　ロボット……▼
+……友達　なんだぞッ！！</language>
+	</row>
+	<row id="pw_event5_hero_4">
+		<language name="JPN" width="256">……それから　わたしは
+なにかに　とりつかれたように▽
+Ｆ−００を　しゅうり　した……▼
+Ｆ−００は　まえにも　まして
+こうせいのうの　ロボットとして▽
+うまれかわった……▼
+だが　うまれかわった　Ｆ−００に
+いぜんの　ような　こころは▽
+めばえることは　なかった……</language>
+		<language name="JPN_KANJI" width="256">……それから　私は
+何かに　取りつかれたように▽
+Ｆ−００を　修理した……▼
+Ｆ−００は　前にも　増して
+高性能の　ロボットとして▽
+生まれ変わった……▼
+だが　生まれ変わった　Ｆ−００に
+以前の　ような　心は▽
+芽生えることは　なかった……</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">たおせた…</language>
-		<language name="JPN_KANJI" width="256">たおせた…</language>
+		<language name="JPN" width="256">%MYNAME『グワッ！！▼
+なんて……　ちからだ……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『グワッ！！▼
+何て……　パワーだ……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
-		<language name="JPN_KANJI" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
+		<language name="JPN" width="256">Ｆー００『ボク　コウゲキ　スル！！
+%MYNAME　タノシイ！！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ボク　コウゲキ　スル！！
+%MYNAME　タノシイ！！</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">%MYNAME『うぐッ……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『うぐッ……</language>
+	</row>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">じょしゅ『キャーッ！！▼
+ちょっと　%MYNAMEはかせ！
+だいじょうぶ　ですかッ！？</language>
+		<language name="JPN_KANJI" width="256">助手『キャーッ！！▼
+ちょっと　%MYNAME博士！
+大丈夫ですかッ！？</language>
+	</row>
+	<row id="pw_event6_hero_2">
+		<language name="JPN" width="256">%MYNAME『グッ……▼
+Ｆー００……　つよいな……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『グッ……▼
+Ｆー００……　つよいな……</language>
+	</row>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">Ｆー００『ボク　コウゲキ　スル！！
+%MYNAME　タノシイ！！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ボク　コウゲキ　スル！！
+%MYNAME　タノシイ！！</language>
+	</row>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">%MYNAME『ハハハ……▼
+ほら……　Ｆー００……
+もっと……　あそぼう……▼
+きみは……　ぼくの……▼
+……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『ハハハ……▼
+ほら……　Ｆー００……
+もっと……　遊ぼう……▼
+きみは……　僕の……▼
+……　……　……　……</language>
+	</row>
+	<row id="pw_event6_enemy_3">
+		<language name="JPN" width="256">じょしゅ『はかせっ！！▼
+ちょっとっ！　だれか　きてっ！
+%MYNAMEはかせ　がっ！！▼
+Ｆー００に　やられたのっ！！▼
+このロボット　きけんすぎるわ！</language>
+		<language name="JPN_KANJI" width="256">助手『博士っ！！▼
+ちょっとッ！　誰か　来てっ！
+%MYNAME博士　がっ！！▼
+Ｆー００に　やられたのっ！！▼
+このロボット　危険すぎるわ！</language>
+	</row>
+	<row id="pw_event6_hero_4">
+		<language name="JPN" width="256">はしゃぎすぎた　Ｆ−００に
+こうげき　された　わたしは▽
+そのまま　きを　うしなった……▼
+……めざめると　じょしゅの
+てに　よって　Ｆ−００は▽
+はかい　されていた……▼
+わたしは　かつて　Ｆ−００だった
+スクラップを　だきしめて▽
+けんきゅうしょを　さった……▼
+そして　もうにどと
+ロボットの　けんきゅうに▽
+たずさわることは　なかった……</language>
+		<language name="JPN_KANJI" width="256">はしゃぎすぎた　Ｆ−００に
+こうげき　された　私は▽
+そのまま　気を　失った……▼
+……目覚めると　助手の
+手に　よって　Ｆ−００は▽
+破壊されていた……▼
+私は　かつて　Ｆ−００だった
+スクラップを　抱きしめて▽
+研究所を　去った……▼
+そして　もう二度と
+ロボットの　研究に ▽
+携わることは　なかった……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
