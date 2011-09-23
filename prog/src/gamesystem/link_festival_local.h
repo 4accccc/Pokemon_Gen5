@@ -32,7 +32,8 @@ struct _LINK_FESTIVAL{
   
   u16 ready_timer;    ///<ミッション開始前タイマー
   
-  u16 finfo_score;  //フィールドで表示しているスコア
+  u16 finfo_total_score;  //フィールドで表示しているトータルスコア
+  u16 finfo_my_score;     //フィールドで表示しているマイスコア
   u16 finfo_bonus;  //フィールドで表示しているタイムボーナス
 
   u16 tmap_root;    //現在のルートゾーンID

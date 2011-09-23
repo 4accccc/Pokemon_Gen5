@@ -44,10 +44,13 @@ typedef enum{
  ACT_MSN01,
  ACT_MSN02,
  ACT_MSN03,
+ ACT_MSN04,
  ACT_TS_P,  //トータルスコアプレート
  ACT_TSN01,
  ACT_TSN02,
  ACT_TSN03,
+ ACT_TSN04,
+ ACT_UNIT,
  ACT_SCORE_KIRA,
  ACT_SCORE_UP,
  ACT_TIME_P, //タイムプレート
@@ -61,7 +64,7 @@ typedef enum{
  ACT_MAX,
 }ACT_ID;
  
-#define ACT_SCOREN_PLACE_NUM (3)
+#define ACT_SCOREN_PLACE_NUM (4)
 #define ACT_TIMEN_PLACE_NUM (2)
 #define ACT_TIMEN_NUM (ACT_TIMEN_PLACE_NUM*2)
 
@@ -80,6 +83,11 @@ typedef enum{
  ACTANM_SCORE_UP,
  ACTANM_TIME_BONUS,
  ACTANM_KIRA,
+ ACTANM_UNIT_BLANK,
+ ACTANM_UNIT_HUMAN,
+ ACTANM_UNIT_POKEMON,
+ ACTANM_UNIT_ITEM,
+ ACTANM_UNIT_COUNT,
  ACTANM_MAX,
 }ACT_ANMID;
 
@@ -151,7 +159,8 @@ static void _sub_ActorDelete( FIELD_FMISSION_INFO* wk );
 static int get_num_keta(u32 num,u8 keta);
 static void panel_Hide( FIELD_FMISSION_INFO* wk );
 static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f );
-static void panel_ScoreUpdate( FIELD_FMISSION_INFO* wk, int score, u8 act_idx );
+static void panel_MyScoreUpdate( FIELD_FMISSION_INFO* wk );
+static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk );
 static void panel_ScrollInit( FIELD_FMISSION_INFO* wk );
 static void taskAdd_PanelScroll( FIELD_FMISSION_INFO* wk, u8 act_idx, u8 act_num, s16 ofs );
 static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk );
@@ -264,7 +273,8 @@ void FIELD_FMISSION_INFO_Draw( FIELD_FMISSION_INFO* wk )
     return;
   }
   panel_TimeUpdate( wk, FALSE );
-  panel_ScoreUpdate( wk,  LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ), ACT_TSN01 );
+  panel_MyScoreUpdate( wk );
+  panel_TotalScoreUpdate( wk );
 }
 
 
@@ -373,6 +383,8 @@ static void _sub_ActorCreate( FIELD_FMISSION_INFO* wk )
     wk->pAct[ACT_MSN01+i] = _sub_ObjAdd( wk, AP_MSN_X+(AP_MSN_OX*i), AP_MSN_Y, ACTANM_SNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
     wk->pAct[ACT_TSN01+i] = _sub_ObjAdd( wk, AP_TSN_X+(AP_TSN_OX*i), AP_TSN_Y, ACTANM_LNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
   }
+  //単位アクター追加
+  wk->pAct[ACT_UNIT] = _sub_ObjAdd( wk, AP_UNIT_X, AP_UNIT_Y, ACTANM_UNIT_BLANK, FLD_FMISSION_INFO_OAM_SPRI1);
 
   //タイムナンバー追加
   for( i = 0;i < ACT_TIMEN_PLACE_NUM;i++){
@@ -443,6 +455,18 @@ static void panel_Hide( FIELD_FMISSION_INFO* wk )
 
 //--------------------------------------------------------------
 /**
+ *	@brief	パネルの単位表示
+ */
+//--------------------------------------------------------------
+static void panel_UnitSet( FIELD_FMISSION_INFO* wk )
+{
+  panel_VisibleSet( wk, FALSE );
+  wk->visible_f = FALSE;
+  wk->score_up_ct = 0;  //0リセット
+}
+
+//--------------------------------------------------------------
+/**
  *	@brief	数字の桁取得
  */
 //--------------------------------------------------------------
@@ -494,12 +518,58 @@ static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
 
 //--------------------------------------------------------------
 /**
- *	@brief	スコアパネル描画更新
+ *	@brief	マイスコアパネル描画更新
  */
 //--------------------------------------------------------------
-static void panel_ScoreUpdate( FIELD_FMISSION_INFO* wk, int score, u8 act_idx )
+static void panel_MyScoreUpdate( FIELD_FMISSION_INFO* wk )
 {
-  panel_NumberDraw( wk, score, ACT_SCOREN_PLACE_NUM, act_idx, FALSE );
+  panel_NumberDraw( wk, /*LINK_FESITVAL_FInfoMyScoreGet( wk->fest_sys )*/9999, ACT_SCOREN_PLACE_NUM, ACT_MSN01, FALSE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ *	@brief	トータルスコアパネル描画更新
+ */
+//--------------------------------------------------------------
+//X座標だけ
+static void tscore_SetDrawPosX( FIELD_FMISSION_INFO* wk, u8 act_idx, u16 x )
+{
+  wk->actPos[act_idx].x = x;
+  GFL_CLACT_WK_SetPos( wk->pAct[act_idx], &wk->actPos[act_idx], ACT_RENDER_ID );
+}
+//単位とスコアの表示X座標を返す
+static void tscore_GetDrawPosX( FMISSION_UNIT_ID unit, u16 score, u16* pos_unit, u16* pos_score )
+{
+  *pos_unit = AP_UNIT_X;
+  *pos_score = AP_TSN_X;
+}
+
+static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk )
+{
+  FMISSION_UNIT_ID unit = wk->fmwk->arc.unit;
+  u16 score = LINK_FESTIVAL_FInfoTotalScoreGet( wk->fest_sys );
+
+  score = 9999;
+  panel_NumberDraw( wk, score, ACT_SCOREN_PLACE_NUM, ACT_TSN01, FALSE );
+  
+  //単位表示設定
+  GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UNIT], unit+ACTANM_UNIT_BLANK );
+  GFL_CLACT_WK_ResetAnm( wk->pAct[ACT_UNIT] );
+
+  //スコアと単位の表示位置調整
+  {
+    int i;
+    u16 pos_unit, pos_score;
+
+    tscore_GetDrawPosX( unit, score, &pos_unit, &pos_score );
+
+    tscore_SetDrawPosX( wk, ACT_UNIT, pos_unit );
+
+    for( i = 0;i < ACT_SCOREN_PLACE_NUM;i++ ){
+      tscore_SetDrawPosX( wk, ACT_TSN01+i, pos_score+(AP_TSN_OX*i) );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -518,8 +588,8 @@ static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
 
   //描画状態セット
   panel_TimeUpdate( wk, TRUE );
-  panel_ScoreUpdate( wk, wk->fmwk->beacon.goal, ACT_MSN01 );
-  panel_ScoreUpdate( wk, LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ), ACT_TSN01 );
+  panel_MyScoreUpdate( wk );
+  panel_TotalScoreUpdate( wk );
 
   wk->visible_f = TRUE;
 }
@@ -604,11 +674,11 @@ static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk )
 
   now_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
 
-  if( LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ) >= now_score ){
+  if( LINK_FESTIVAL_FInfoTotalScoreGet( wk->fest_sys ) >= now_score ){
     return; //更新の必要無し
   }
   wk->score_up_ct = SCORE_UP_VIEW_TIME;
-  LINK_FESTIVAL_FInfoScoreInc( wk->fest_sys );
+  LINK_FESTIVAL_FInfoScoreUpdate( wk->fest_sys, now_score );
   PMSND_PlaySE( FMINFO_SE_SCOREUP );
 
   if( wk->t_scoreup_f ){

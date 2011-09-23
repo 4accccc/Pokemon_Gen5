@@ -241,17 +241,25 @@ extern int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル フィールドで現在表示しているスコアを取得
+ *  @brief  リンクフェスティバル フィールドで現在表示しているトータルスコアを取得
  */
 //---------------------------------------------------------
-extern u16 LINK_FESTIVAL_FInfoScoreGet( LINK_FESTIVAL* wk );
+extern u16 LINK_FESTIVAL_FInfoTotalScoreGet( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル フィールドで現在表示しているスコアをインクリメント
+ *  @brief  リンクフェスティバル フィールドで現在表示しているマイスコアを取得
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_FInfoScoreInc( LINK_FESTIVAL* wk );
+extern u16 LINK_FESTIVAL_FInfoMyScoreGet( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル フィールドで現在表示しているスコアをアップデート
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_FInfoScoreUpdate( LINK_FESTIVAL* wk, u16 now_total_score );
+
 //---------------------------------------------------------
 /*
  *  @brief  リンクフェスティバル フィールドで表示するタイムボーナス値を取得

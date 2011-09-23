@@ -355,24 +355,32 @@ int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル フィールドで現在表示しているスコアを取得
+ *  @brief  リンクフェスティバル フィールドで現在表示しているトータルスコアを取得
  */
 //---------------------------------------------------------
-u16 LINK_FESTIVAL_FInfoScoreGet( LINK_FESTIVAL* wk )
+u16 LINK_FESTIVAL_FInfoTotalScoreGet( LINK_FESTIVAL* wk )
 {
-  return wk->finfo_score;
+  return wk->finfo_total_score;
+}
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル フィールドで現在表示しているマイスコアを取得
+ */
+//---------------------------------------------------------
+u16 LINK_FESTIVAL_FInfoMyScoreGet( LINK_FESTIVAL* wk )
+{
+  return wk->finfo_my_score;
 }
 
 //---------------------------------------------------------
 /*
- *  @brief  リンクフェスティバル フィールドで現在表示しているスコアをインクリメント
+ *  @brief  リンクフェスティバル フィールドで現在表示しているスコアをアップデート
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_FInfoScoreInc( LINK_FESTIVAL* wk )
+void LINK_FESTIVAL_FInfoScoreUpdate( LINK_FESTIVAL* wk, u16 now_total_score )
 {
-  if( wk->finfo_score < FMISSION_SAVE_HIGH_SCORE_MAX ){
-    wk->finfo_score += 1;
-  }
+  wk->finfo_total_score = now_total_score;
+  wk->finfo_my_score = wk->m_beacon->my_score;
 }
 
 //---------------------------------------------------------
@@ -935,7 +943,8 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->log_num = 0;
   wk->log_idx = 0;
   wk->beacon_timer = 0; 
-  wk->finfo_score = 0;
+  wk->finfo_total_score = 0;
+  wk->finfo_my_score = 0;
   wk->finfo_bonus = 0;
   wk->now_score = 0;
   wk->tmap_root = 0xFFFF; //無効値で初期化
