@@ -73,8 +73,13 @@
 #define	WARP_ID_R18 (68)
 #define	WARP_ID_D13 (69)
 #define	WARP_ID_D29R0101 (70)
+#define	WARP_ID_C00R0101 (71)
+#define	WARP_ID_C00R0201 (72)
+#define	WARP_ID_C15 (73)
+#define	WARP_ID_C16 (74)
+#define	WARP_ID_D05R0101 (75)
 
-#define	WARP_ID_MAX		(71)
+#define	WARP_ID_MAX		(76)
 
 #endif	//__WARPDATA_H__
 //

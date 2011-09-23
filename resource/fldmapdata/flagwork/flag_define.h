@@ -2358,13 +2358,13 @@
 		/* not used  2464(0x09a0) */
 		/* not used  2465(0x09a1) */
 		/* not used  2466(0x09a2) */
-		/* not used  2467(0x09a3) */
-		/* not used  2468(0x09a4) */
-		/* not used  2469(0x09a5) */
-		/* not used  2470(0x09a6) */
-		/* not used  2471(0x09a7) */
+#define SYS_FLAG_ARRIVE_C00R0101          2467 /* 0x09a3 到着フラグ：C00R0101 */
+#define SYS_FLAG_ARRIVE_C00R0201          2468 /* 0x09a4 到着フラグ：C00R0201 */
+#define SYS_FLAG_ARRIVE_C15               2469 /* 0x09a5 到着フラグ：C15 */
+#define SYS_FLAG_ARRIVE_C16               2470 /* 0x09a6 到着フラグ：C16 */
+#define SYS_FLAG_ARRIVE_D05R0101          2471 /* 0x09a7 到着フラグ：D05R0101 */
 #define SYS_FLAG_ARRIVE_T01               2472 /* 0x09a8 到着フラグ：T01 */
-#define SYS_FLAG_ARRIVE_T02               2473 /* 0x09a9 到着フラグ：T0２ */
+#define SYS_FLAG_ARRIVE_T02               2473 /* 0x09a9 到着フラグ：T02 */
 #define SYS_FLAG_ARRIVE_C01               2474 /* 0x09aa 到着フラグ：C01 */
 #define SYS_FLAG_ARRIVE_C02               2475 /* 0x09ab 到着フラグ：C02 */
 #define SYS_FLAG_ARRIVE_C03               2476 /* 0x09ac 到着フラグ：C03 */
