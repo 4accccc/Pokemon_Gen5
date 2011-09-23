@@ -186,11 +186,8 @@ sub_wheel_talk_swan:
   // JAの履歴差し込み 「観覧車に乗った」
   _RESORT_SET_RECORD( RESORT_RECORD_ID_WHEEL )
 
-  // 全員と乗った判定
-  IF FLAG_ON( FE_AMUSEMENT_TR01_TALK ) && FLAG_ON( FE_AMUSEMENT_TR02_TALK ) && FLAG_ON( FE_AMUSEMENT_TR03_TALK ) && FLAG_ON( FE_AMUSEMENT_TR04_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC01_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC02_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC03_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC04_TALK ) && FLAG_ON( FE_AMUSEMENT_LCC_TALK ) THEN
-    // 全員と観覧車のったメダル
-    _SET_MEDAL_ACHIVE( MDLID_KANRANSHA )
-  ENDIF
+  // メダル
+  _CALL medal_get
 
   //========================================/
 
@@ -435,6 +432,9 @@ sub_wheel_ride_main:
     //対戦済みフラグを立てる
     _TRAINER_FLAG_SET( lwk_tr_id )
   ENDIF
+
+  // メダル
+  _CALL medal_get
 }
 _RET
 
@@ -446,4 +446,43 @@ _ANIME_LABEL	anm_move_to_entrance
 	_ANIME_DATA	ACMD_END,0
 
 } //WHEEL_RIDE_END
+
+
+medal_get:
+{
+  DEFINE_LOCAL  ret_tr01
+  DEFINE_LOCAL  ret_tr02
+  DEFINE_LOCAL  ret_tr03
+  DEFINE_LOCAL  ret_tr04
+  DEFINE_LOCAL  ret_tr_id
+
+  _GET_MY_SEX( SCWK_ANSWER )
+  IF $SCWK_ANSWER == 0 THEN
+    _GET_WHEEL_TRAINER_TR_ID( 0, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr01 )
+    _GET_WHEEL_TRAINER_TR_ID( 2, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr02 )
+    _GET_WHEEL_TRAINER_TR_ID( 4, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr03 )
+    _GET_WHEEL_TRAINER_TR_ID( 6, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr04 )
+  ELSE
+    _GET_WHEEL_TRAINER_TR_ID( 1, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr01 )
+    _GET_WHEEL_TRAINER_TR_ID( 3, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr02 )
+    _GET_WHEEL_TRAINER_TR_ID( 5, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr03 )
+    _GET_WHEEL_TRAINER_TR_ID( 7, ret_tr_id )
+    _TRAINER_FLAG_CHECK( ret_tr_id, ret_tr04 )
+  ENDIF
+
+  // 全員と乗った判定
+  IF $ret_tr01 == TRUE && $ret_tr02 == TRUE && $ret_tr03 == TRUE && $ret_tr04 == TRUE && FLAG_ON( FE_AMUSEMENT_NPC01_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC02_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC03_TALK ) && FLAG_ON( FE_AMUSEMENT_NPC04_TALK ) && FLAG_ON( FE_AMUSEMENT_LCC_TALK ) THEN
+    // 全員と観覧車のったメダル
+    _SET_MEDAL_ACHIVE( MDLID_KANRANSHA )
+  ENDIF
+
+}
+_RET
 
