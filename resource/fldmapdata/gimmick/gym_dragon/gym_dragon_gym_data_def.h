@@ -9,9 +9,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#define  FOG_COLOR_A (31) // フォグカラーA
-#define  FOG_SLOPE (6) // フォグのかかり具合
-#define  FOG_OFFSET (32495) // フォグオフセット
+#define  FOG_COLOR_A (30) // フォグカラーA
+#define  FOG_SLOPE (8) // フォグのかかり具合
+#define  FOG_OFFSET (32687) // フォグオフセット
 #define  DRA_BARK_MOVE_STOP_SE_FRAME (200) // 咆える前の停止音再生タイミング
 #define  DRA_BARK_FRAME_HERO (180) // ドラゴンがほえるタイミング（アニメーション終了タイミングから値分さかのぼったタイミングでなく）
 #define  DRA_BARK_FRAME_ENEMY (120) // ドラゴンがほえるタイミング（アニメーション終了タイミングから値分さかのぼったタイミングでなく）
