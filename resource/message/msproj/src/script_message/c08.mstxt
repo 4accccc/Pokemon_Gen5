@@ -4478,10 +4478,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルの　やかた
-ザ・トリプルバトル！</Text>
+……だった　やかた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:53:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4490,10 +4490,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バトルの館
-ザ・トリプルバトル！</Text>
+……だった　館</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4502,10 +4502,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>バトル施設
-・WHITEver</Comment>
+・White2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:50:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4535,10 +4536,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルの　やかた
-ザ・ローテーションバトル！</Text>
+……だった　やかた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4547,10 +4548,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バトルの館
-ザ・ローテーションバトル！</Text>
+……だった　館</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4559,10 +4560,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>バトル施設
-・BLACKver</Comment>
+・Black2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-23T04:50:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4659,10 +4661,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:11:11" />
+				Time="2011-09-23T04:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4670,10 +4674,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:11:11" />
+				Time="2011-09-23T04:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4681,10 +4687,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>ポケモンジム
+・White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:11:11" />
+				Time="2011-09-23T04:55:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4702,7 +4709,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4713,10 +4720,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:10" />
+				Time="2011-09-23T04:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4724,10 +4733,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:10" />
+				Time="2011-09-23T04:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4735,10 +4746,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>ポケモンジム
+・Black2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:10" />
+				Time="2011-09-23T04:55:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4753,57 +4766,6 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c08_gymsign_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモンジム</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>看板</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:46:07" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
