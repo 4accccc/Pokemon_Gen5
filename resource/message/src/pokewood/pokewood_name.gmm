@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00269" date="2011-09-22T20:14:54"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2011-09-23T16:57:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -391,7 +391,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="147"/>
+		<comment position="1" width="99"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -417,14 +417,14 @@
 		</language>
 	</columns>
 
-	<dialog left="863" top="150" right="1576" bottom="783" maximized="no" rayout="Vertical2">
+	<dialog left="323" top="194" right="1035" bottom="823" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="537"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="704"/>
+		<band id="3" index="3" style="0000" width="704"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -477,80 +477,80 @@
 
 	<row id="pw_rec_trainername_06">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ハチク</language>
-		<language name="JPN_KANJI" width="256">ハチク</language>
+		<language name="JPN" width="256">アイ</language>
+		<language name="JPN_KANJI" width="256">アイ</language>
 	</row>
 
 	<row id="pw_rec_trainername_07">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ハチク</language>
+		<language name="JPN_KANJI" width="256">ハチク</language>
 	</row>
 
 	<row id="pw_rec_trainername_08">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブヒコ</language>
+		<language name="JPN_KANJI" width="256">モブヒコ</language>
 	</row>
 
 	<row id="pw_rec_trainername_09">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ビバリ</language>
+		<language name="JPN_KANJI" width="256">ビバリ</language>
 	</row>
 
 	<row id="pw_rec_trainername_10">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブヒコ</language>
+		<language name="JPN_KANJI" width="256">モブヒコ</language>
 	</row>
 
 	<row id="pw_rec_trainername_11">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ビバリ</language>
+		<language name="JPN_KANJI" width="256">ビバリ</language>
 	</row>
 
 	<row id="pw_rec_trainername_12">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">クミ</language>
+		<language name="JPN_KANJI" width="256">クミ</language>
 	</row>
 
 	<row id="pw_rec_trainername_13">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">マサヒコ</language>
+		<language name="JPN_KANJI" width="256">マサヒコ</language>
 	</row>
 
 	<row id="pw_rec_trainername_14">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">クミ</language>
+		<language name="JPN_KANJI" width="256">クミ</language>
 	</row>
 
 	<row id="pw_rec_trainername_15">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">マサチカ</language>
+		<language name="JPN_KANJI" width="256">マサチカ</language>
 	</row>
 
 	<row id="pw_rec_trainername_16">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ピーター</language>
+		<language name="JPN_KANJI" width="256">ピーター</language>
 	</row>
 
 	<row id="pw_rec_trainername_17">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブコ</language>
+		<language name="JPN_KANJI" width="256">モブコ</language>
 	</row>
 
 	<row id="pw_rec_trainername_18">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブコ</language>
+		<language name="JPN_KANJI" width="256">モブコ</language>
 	</row>
 
 	<row id="pw_rec_trainername_19">
@@ -573,116 +573,116 @@
 
 	<row id="pw_rec_trainername_22">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ナツメ</language>
+		<language name="JPN_KANJI" width="256">ナツメ</language>
 	</row>
 
 	<row id="pw_rec_trainername_23">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブヘイ</language>
+		<language name="JPN_KANJI" width="256">モブヘイ</language>
 	</row>
 
 	<row id="pw_rec_trainername_24">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ナツメ</language>
+		<language name="JPN_KANJI" width="256">ナツメ</language>
 	</row>
 
 	<row id="pw_rec_trainername_25">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ペネロペ</language>
+		<language name="JPN_KANJI" width="256">ペネロペ</language>
 	</row>
 
 	<row id="pw_rec_trainername_26">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ダニー</language>
+		<language name="JPN_KANJI" width="256">ダニー</language>
 	</row>
 
 	<row id="pw_rec_trainername_27">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ダニー</language>
+		<language name="JPN_KANJI" width="256">ダニー</language>
 	</row>
 
 	<row id="pw_rec_trainername_28">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ダニー</language>
+		<language name="JPN_KANJI" width="256">ダニー</language>
 	</row>
 
 	<row id="pw_rec_trainername_29">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブエ</language>
+		<language name="JPN_KANJI" width="256">モブエ</language>
 	</row>
 
 	<row id="pw_rec_trainername_30">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブエ</language>
+		<language name="JPN_KANJI" width="256">モブエ</language>
 	</row>
 
 	<row id="pw_rec_trainername_31">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モブエ</language>
+		<language name="JPN_KANJI" width="256">モブエ</language>
 	</row>
 
 	<row id="pw_rec_trainername_32">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ゲンズブル</language>
+		<language name="JPN_KANJI" width="256">ゲンズブル</language>
 	</row>
 
 	<row id="pw_rec_trainername_33">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">バーグマン</language>
+		<language name="JPN_KANJI" width="256">バーグマン</language>
 	</row>
 
 	<row id="pw_rec_trainername_34">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">ゲンズブル</language>
+		<language name="JPN_KANJI" width="256">ゲンズブル</language>
 	</row>
 
 	<row id="pw_rec_trainername_35">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">バーグマン</language>
+		<language name="JPN_KANJI" width="256">バーグマン</language>
 	</row>
 
 	<row id="pw_rec_trainername_36">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">ニコルソン</language>
+		<language name="JPN_KANJI" width="256">ニコルソン</language>
 	</row>
 
 	<row id="pw_rec_trainername_37">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">アビゲイル</language>
+		<language name="JPN_KANJI" width="256">アビゲイル</language>
 	</row>
 
 	<row id="pw_rec_trainername_38">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">モブジロウ</language>
+		<language name="JPN_KANJI" width="256">モブジロウ</language>
 	</row>
 
 	<row id="pw_rec_trainername_39">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">ウッド</language>
+		<language name="JPN_KANJI" width="256">ウッド</language>
 	</row>
 
 	<row id="pw_rec_trainername_40">
 		<comment>撮影時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">ハチク</language>
+		<language name="JPN_KANJI" width="256">ハチク</language>
 	</row>
 
 	<row id="pw_show_trainername_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -705,92 +705,92 @@
 
 	<row id="pw_show_trainername_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ハチコップ</language>
-		<language name="JPN_KANJI" width="256">ハチコップ</language>
+		<language name="JPN" width="256">メカポリス</language>
+		<language name="JPN_KANJI" width="256">メカポリス</language>
 	</row>
 
 	<row id="pw_show_trainername_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ハチコップ</language>
-		<language name="JPN_KANJI" width="256">ハチコップ</language>
+		<language name="JPN" width="256">メカポリス</language>
+		<language name="JPN_KANJI" width="256">メカポリス</language>
 	</row>
 
 	<row id="pw_show_trainername_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ハチコップ</language>
-		<language name="JPN_KANJI" width="256">ハチコップ</language>
+		<language name="JPN" width="256">セツコ</language>
+		<language name="JPN_KANJI" width="256">セツコ</language>
 	</row>
 
 	<row id="pw_show_trainername_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">メカポリス</language>
+		<language name="JPN_KANJI" width="256">メカポリス</language>
 	</row>
 
 	<row id="pw_show_trainername_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="256">ＵＦＯ</language>
 	</row>
 
 	<row id="pw_show_trainername_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">Ｅ</language>
+		<language name="JPN_KANJI" width="256">Ｅ</language>
 	</row>
 
 	<row id="pw_show_trainername_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="256">ＵＦＯ</language>
 	</row>
 
 	<row id="pw_show_trainername_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">エイリアン</language>
+		<language name="JPN_KANJI" width="256">エイリアン</language>
 	</row>
 
 	<row id="pw_show_trainername_12" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="pw_show_trainername_13" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ホフマン</language>
+		<language name="JPN_KANJI" width="256">ホフマン</language>
 	</row>
 
 	<row id="pw_show_trainername_14" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="pw_show_trainername_15" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">セリザワ</language>
+		<language name="JPN_KANJI" width="256">セリザワ</language>
 	</row>
 
 	<row id="pw_show_trainername_16" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ストレンジ</language>
+		<language name="JPN_KANJI" width="256">ストレンジ</language>
 	</row>
 
 	<row id="pw_show_trainername_17" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">レディアン</language>
+		<language name="JPN_KANJI" width="256">レディアン</language>
 	</row>
 
 	<row id="pw_show_trainername_18" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">レディアン</language>
+		<language name="JPN_KANJI" width="256">レディアン</language>
 	</row>
 
 	<row id="pw_show_trainername_19" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -813,116 +813,116 @@
 
 	<row id="pw_show_trainername_22" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="pw_show_trainername_23" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ぬいぐるみ</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ</language>
 	</row>
 
 	<row id="pw_show_trainername_24" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ジュジュベ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ</language>
 	</row>
 
 	<row id="pw_show_trainername_25" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">モニカ</language>
+		<language name="JPN_KANJI" width="256">モニカ</language>
 	</row>
 
 	<row id="pw_show_trainername_26" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="pw_show_trainername_27" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="pw_show_trainername_28" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">ロドリゲス</language>
+		<language name="JPN_KANJI" width="256">ロドリゲス</language>
 	</row>
 
 	<row id="pw_show_trainername_29" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">あかいきり</language>
+		<language name="JPN_KANJI" width="256">あかいきり</language>
 	</row>
 
 	<row id="pw_show_trainername_30" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">あかいきり</language>
+		<language name="JPN_KANJI" width="256">あかいきり</language>
 	</row>
 
 	<row id="pw_show_trainername_31" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">あかいきり</language>
+		<language name="JPN_KANJI" width="256">あかいきり</language>
 	</row>
 
 	<row id="pw_show_trainername_32" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">マニュエル</language>
+		<language name="JPN_KANJI" width="256">マニュエル</language>
 	</row>
 
 	<row id="pw_show_trainername_33" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">ななしさん</language>
-		<language name="JPN_KANJI" width="256">ななしさん</language>
+		<language name="JPN" width="256">シモン</language>
+		<language name="JPN_KANJI" width="256">シモン</language>
 	</row>
 
 	<row id="pw_show_trainername_34" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">マニュエル</language>
+		<language name="JPN_KANJI" width="256">マニュエル</language>
 	</row>
 
 	<row id="pw_show_trainername_35" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">シモン</language>
+		<language name="JPN_KANJI" width="256">シモン</language>
 	</row>
 
 	<row id="pw_show_trainername_36" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">カダス</language>
+		<language name="JPN_KANJI" width="256">カダス</language>
 	</row>
 
 	<row id="pw_show_trainername_37" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">セラエノ</language>
+		<language name="JPN_KANJI" width="256">セラエノ</language>
 	</row>
 
 	<row id="pw_show_trainername_38" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">アーカム</language>
+		<language name="JPN_KANJI" width="256">アーカム</language>
 	</row>
 
 	<row id="pw_show_trainername_39" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">カダス</language>
+		<language name="JPN_KANJI" width="256">カダス</language>
 	</row>
 
 	<row id="pw_show_trainername_40" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>上映時の名前</comment>
-		<language name="JPN" width="256">テストさん</language>
-		<language name="JPN_KANJI" width="256">テストさん</language>
+		<language name="JPN" width="256">ハチクマン</language>
+		<language name="JPN_KANJI" width="256">ハチクマン</language>
 	</row>
 
 	<row id="pw_boss_poke_name_652" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -945,23 +945,26 @@ MONSNO_HATIKUMANの
 		<comment>ポケウッド用ボスポケモン
 MONSNO_mvの
 上映時ニックネーム</comment>
-		<language name="JPN" width="256">Ｍ．Ｖ</language>
-		<language name="JPN_KANJI" width="256">Ｍ．Ｖ</language>
+		<language name="JPN" width="256">Ｍ・Ｖ</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_655" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｍ．Ｖ</language>
-		<language name="JPN_KANJI" width="256">Ｍ．Ｖ</language>
+		<language name="JPN" width="256">Ｍ・Ｖ２</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ２</language>
 	</row>
 
 	<row id="pw_boss_poke_name_656" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">てんそうき</language>
-		<language name="JPN_KANJI" width="256">転送機</language>
+		<language name="JPN_KANJI" width="256">てんそうき</language>
 	</row>
 
 	<row id="pw_boss_poke_name_657" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">だいＯＬ</language>
-		<language name="JPN_KANJI" width="256">大ＯＬ</language>
+		<comment>ポケウッド用ボスポケモン
+MONSNO_657の
+上映時ニックネーム</comment>
+		<language name="JPN" width="256">モニカ</language>
+		<language name="JPN_KANJI" width="256">モニカ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_658" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -971,22 +974,22 @@ MONSNO_mvの
 
 	<row id="pw_boss_poke_name_659" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">かいぶつ</language>
-		<language name="JPN_KANJI" width="256">怪物</language>
+		<language name="JPN_KANJI" width="256">かいぶつ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_660" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｆー００</language>
-		<language name="JPN_KANJI" width="256">Ｆー００</language>
+		<language name="JPN" width="256">Ｆ－００</language>
+		<language name="JPN_KANJI" width="256">Ｆ－００</language>
 	</row>
 
 	<row id="pw_boss_poke_name_661" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">あくりょう</language>
-		<language name="JPN_KANJI" width="256">悪霊</language>
+		<language name="JPN_KANJI" width="256">あくりょう</language>
 	</row>
 
 	<row id="pw_boss_poke_name_662" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256">しろいかべ</language>
-		<language name="JPN_KANJI" width="256">白い壁</language>
+		<language name="JPN_KANJI" width="256">しろいかべ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_663" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -994,7 +997,7 @@ MONSNO_mvの
 MONSNO_KUROIKABEの
 上映時ニックネーム</comment>
 		<language name="JPN" width="256">くろいかべ</language>
-		<language name="JPN_KANJI" width="256">黒い壁</language>
+		<language name="JPN_KANJI" width="256">くろいかべ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_664" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1137,16 +1140,16 @@ MONSNO_ufo2の
 		<comment>ポケウッド用ボスポケモン
 MONSNO_DAIol2の
 上映時ニックネーム</comment>
-		<language name="JPN" width="256">だいＯＬ</language>
-		<language name="JPN_KANJI" width="256">大ＯＬ</language>
+		<language name="JPN" width="256">モニカ</language>
+		<language name="JPN_KANJI" width="256">モニカ</language>
 	</row>
 
 	<row id="pw_boss_poke_name_682" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ポケウッド用ボスポケモン
 MONSNO_ff002の
 上映時ニックネーム</comment>
-		<language name="JPN" width="256">Ｆー００２</language>
-		<language name="JPN_KANJI" width="256">Ｆー００２</language>
+		<language name="JPN" width="256">Ｆ－００</language>
+		<language name="JPN_KANJI" width="256">Ｆ－００</language>
 	</row>
 
 	<row id="pw_boss_poke_name_683" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1154,7 +1157,7 @@ MONSNO_ff002の
 MONSNO_KARATEOUの
 上映時ニックネーム&quot;</comment>
 		<language name="JPN" width="256">からておう</language>
-		<language name="JPN_KANJI" width="256">空手王</language>
+		<language name="JPN_KANJI" width="256">からておう</language>
 	</row>
 
 	<flowchart-group-list>
