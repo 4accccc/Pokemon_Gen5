@@ -47,6 +47,8 @@
 
 // ご褒美データ
 #include "../../../resource/pokewood_etc/pokewood_bonus.cdat"
+// TRTYPE→動作モデル変換テーブル
+#include "../../../resource/pokewood_etc/pokewood_tr2mmdl.cdat"
 
 //SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
 SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
@@ -96,18 +98,15 @@ GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos );
 //--------------------------------------------------------------
 static const u16 ActorTRType2MMdlID( u16 trtype )
 {
-  static const u16 trtype2mmdl[][2] = {
-    {TRTYPE_LEADER7,  LEADER7 },
-  };
-
   int i;
-  for ( i = 0; i < NELEMS(trtype2mmdl); i ++ )
+  for ( i = 0; i < NELEMS(TrType2MMdl); i ++ )
   {
-    if ( trtype2mmdl[i][0] == trtype )
+    if ( TrType2MMdl[i][0] == trtype )
     {
-      return trtype2mmdl[i][1];
+      return TrType2MMdl[i][1];
     }
   }
+  //仮：テーブルから見つけられなかった場合はBOY2にする
   return BOY2;
 }
 
@@ -140,11 +139,15 @@ static const POKEWOOD_SENARIO * allocScenarioData( HEAPID heapID, u32 scenario_n
 //--------------------------------------------------------------
 typedef enum {
   PKWD_SC_PARAM_DIRECTOR = 0,
-  PKWD_SC_PARAM_TRTYPE,
+  PKWD_SC_PARAM_TRTYPE_FOR_M,
+  PKWD_SC_PARAM_TRTYPE_FOR_F,
   PKWD_SC_PARAM_DIFFICULT,
 }PKWD_SC_PARAM_ID;
 
 //--------------------------------------------------------------
+/**
+ * @todo  scWork->trtypeの引数が直値なのでズレに対してどうするか？
+ */
 //--------------------------------------------------------------
 static u16 readScenarioData( u32 scenario_no, PKWD_SC_PARAM_ID param_id )
 {
@@ -155,8 +158,11 @@ static u16 readScenarioData( u32 scenario_no, PKWD_SC_PARAM_ID param_id )
   case PKWD_SC_PARAM_DIRECTOR:
     value = scWork->director;
     break;
-  case PKWD_SC_PARAM_TRTYPE:
-    value = scWork->trtype[0]; //仮
+  case PKWD_SC_PARAM_TRTYPE_FOR_M:
+    value = scWork->trtype[0];
+    break;
+  case PKWD_SC_PARAM_TRTYPE_FOR_F:
+    value = scWork->trtype[2];
     break;
   case PKWD_SC_PARAM_DIFFICULT:
     value = scWork->difficult;
@@ -700,12 +706,19 @@ VMCMD_RESULT EvCmdPokewoodIsRentalPokeMovie( VMHANDLE * core, void * wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodSetStudioMMdl( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK * work = wk;
+  GAMEDATA   * gamedata = SCRCMD_WORK_GetGameData( work );
+  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+  u8 sex = MyStatus_GetMySex( mystat );
+
   u16 sc_no   = SCRCMD_GetVMWorkValue( core, wk );
   u16 * mmdl1 = SCRCMD_GetVMWork( core, wk );
   u16 * mmdl2 = SCRCMD_GetVMWork( core, wk );
+  PKWD_SC_PARAM_ID param_id;
 
   //シナリオから判別してセットする
-  *mmdl1 = ActorTRType2MMdlID( readScenarioData( sc_no, PKWD_SC_PARAM_TRTYPE ) );
+  param_id = ( sex == PM_MALE ? PKWD_SC_PARAM_TRTYPE_FOR_M : PKWD_SC_PARAM_TRTYPE_FOR_F );
+  *mmdl1 = ActorTRType2MMdlID( readScenarioData( sc_no, param_id ) );
   *mmdl2 = DirectorIDtoMMdlID( readScenarioData( sc_no, PKWD_SC_PARAM_DIRECTOR ) );
 
   TAMADA_Printf("EvCmdPokewoodSetStudioMMdl(%d)-->%d,%d\n", sc_no, *mmdl1, *mmdl2 );
