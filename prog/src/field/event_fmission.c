@@ -419,6 +419,10 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
 
   switch( *seq ){
   case 0:
+    evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end );
+    (*seq)++;
+    break;
+  case 1:
     {
       FLD3D_CI_PTR ci_ptr = FIELDMAP_GetFld3dCiPtr( wk->fieldmap );
       GMEVENT* call_event = FLD3D_CI_CreateCutInEvt( wk->gsys, ci_ptr, FLDCIID_FES_FINISH );
@@ -426,7 +430,7 @@ static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * 
     }
     (*seq)++;
     break;
-  case 1:
+  case 2:
     {
       FMISSION_APP_MODE mode = FMISSION_APP_MODE_RESULT;
       GMEVENT* call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,

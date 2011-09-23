@@ -44,15 +44,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_end_timeup"
+		Label="msg_fmission_end"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フェスミッションの　しゅうりょう
-じかんに　なりました[Ctrl2:PageClear ]</Text>
+			<Text>フェスミッション　しゅうりょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T11:03:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60,44 +59,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フェスミッションの　終了時間に
-なりました[Ctrl2:PageClear ]</Text>
+			<Text>フェスミッション　終了！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fmission_end_clear"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ミッションを　クリアしました[Ctrl2:PageClear ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ミッションを　クリアしました[Ctrl2:PageClear ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T11:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -117,10 +82,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッションの　ないようを
-かくにん　します[Ctrl2:PageClear ]</Text>
+かくにん　します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T11:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -129,10 +94,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フェスミッションの　内容を
-確認します[Ctrl2:PageClear ]</Text>
+確認します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T11:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
