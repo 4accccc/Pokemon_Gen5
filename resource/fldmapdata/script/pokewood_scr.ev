@@ -142,7 +142,7 @@ EVENT_START ev_pokewood_rec
 
     CASE PKWD_REC_SEQ_SELECT_SCENARIO THEN
       IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
-        $LWK_PKWD_SCENARIO = 1  //仮：「ハチクマン」を指定する
+        $LWK_PKWD_SCENARIO = 0  //「ハチクマン1」を指定する
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_SELECT_POKE
       ELSE
         _CALL ev_pkwd_rec_select_scenario
