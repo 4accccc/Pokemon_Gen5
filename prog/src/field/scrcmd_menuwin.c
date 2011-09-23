@@ -2298,7 +2298,7 @@ VMCMD_RESULT EvCmdBGWinSeaTempleMsg( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  u16 msg_id = VMGetU16( core );
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u16 type = VMGetU16( core );
   HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
    
