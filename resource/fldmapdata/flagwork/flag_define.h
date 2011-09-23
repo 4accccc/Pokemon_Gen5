@@ -2356,8 +2356,8 @@
 		/* not used  2462(0x099e) */
 		/* not used  2463(0x099f) */
 		/* not used  2464(0x09a0) */
-		/* not used  2465(0x09a1) */
-		/* not used  2466(0x09a2) */
+#define SYS_FLAG_ARRIVE_D31R0201          2465 /* 0x09a1 到着フラグ：D31R0201 */
+#define SYS_FLAG_ARRIVE_D31R0101          2466 /* 0x09a2 到着フラグ：D31R0101 */
 #define SYS_FLAG_ARRIVE_C00R0101          2467 /* 0x09a3 到着フラグ：C00R0101 */
 #define SYS_FLAG_ARRIVE_C00R0201          2468 /* 0x09a4 到着フラグ：C00R0201 */
 #define SYS_FLAG_ARRIVE_C15               2469 /* 0x09a5 到着フラグ：C15 */
