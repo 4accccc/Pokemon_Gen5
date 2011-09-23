@@ -523,7 +523,7 @@ static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
 //--------------------------------------------------------------
 static void panel_MyScoreUpdate( FIELD_FMISSION_INFO* wk )
 {
-  panel_NumberDraw( wk, /*LINK_FESITVAL_FInfoMyScoreGet( wk->fest_sys )*/9999, ACT_SCOREN_PLACE_NUM, ACT_MSN01, FALSE );
+  panel_NumberDraw( wk, LINK_FESTIVAL_FInfoMyScoreGet( wk->fest_sys ), ACT_SCOREN_PLACE_NUM, ACT_MSN01, FALSE );
 }
 
 
@@ -550,7 +550,6 @@ static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk )
   FMISSION_UNIT_ID unit = wk->fmwk->arc.unit;
   u16 score = LINK_FESTIVAL_FInfoTotalScoreGet( wk->fest_sys );
 
-  score = 9999;
   panel_NumberDraw( wk, score, ACT_SCOREN_PLACE_NUM, ACT_TSN01, FALSE );
   
   //íPà ï\é¶ê›íË
