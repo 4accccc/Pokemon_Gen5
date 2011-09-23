@@ -6,16 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]これは　とある　かがくしゃに
+[Ctrl1:xcenter ]おきた　できごとで　ある……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:48:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]これは　とある　科学者に
+[Ctrl1:xcenter ]起きた　出来事で　ある……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:48:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +50,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]かれは　こども　ながら
+[Ctrl1:xcenter ]てんさいてきな　ずのうを　もち
+[Ctrl1:xcenter ]おとなたちに　まじって　ロボットの
+[Ctrl1:xcenter ]かいはつを　おこなっていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:50:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +64,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]彼は　子供　ながら
+[Ctrl1:xcenter ]天才的な　頭脳を　持ち
+[Ctrl1:xcenter ]大人たちに　混じって　ロボットの
+[Ctrl1:xcenter ]開発を　行なっていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +82,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>[Ctrl1:xcenter ]……そうだ
+
+[Ctrl1:xcenter ]すべては　ロボットの　かんせいを
+[Ctrl1:xcenter ]まじかに　ひかえた　あるばんから
+[Ctrl1:xcenter ]はじまったのだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +97,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ]……そうだ
+
+[Ctrl1:xcenter ]すべては　ロボットの　完成を
+[Ctrl1:xcenter ]間近に　ひかえた　ある晩から
+[Ctrl1:xcenter ]はじまったのだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +298,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]これは　とある　かがくしゃに
+[Ctrl1:xcenter ]おきた　できごとで　ある……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +311,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]これは　とある　科学者に
+[Ctrl1:xcenter ]起きた　出来事で　ある……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +335,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]かのじょは　こども　ながら
+[Ctrl1:xcenter ]てんさいてきな　ずのうを　もち
+[Ctrl1:xcenter ]おとなたちに　まじって　ロボットの
+[Ctrl1:xcenter ]かいはつを　おこなっていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +349,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]彼女は　子供　ながら
+[Ctrl1:xcenter ]天才的な　頭脳を　持ち
+[Ctrl1:xcenter ]大人たちに　混じって　ロボットの
+[Ctrl1:xcenter ]開発を　行なっていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:51:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +367,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>[Ctrl1:xcenter ]……そう
+
+[Ctrl1:xcenter ]すべては　ロボットの　かんせいを
+[Ctrl1:xcenter ]まじかに　ひかえた　あるばんから
+[Ctrl1:xcenter ]はじまったの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +382,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ]……そう
+
+[Ctrl1:xcenter ]すべては　ロボットの　完成を
+[Ctrl1:xcenter ]間近に　ひかえた　ある晩から
+[Ctrl1:xcenter ]はじまったの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T11:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

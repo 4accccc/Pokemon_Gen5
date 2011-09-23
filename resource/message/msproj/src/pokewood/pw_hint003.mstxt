@@ -749,11 +749,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！
-</Text>
+			<Text>セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:43" />
+				Time="2011-09-22T04:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,11 +760,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　守れ！
-</Text>
+			<Text>セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:32" />
+				Time="2011-09-22T04:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -797,7 +795,7 @@
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:56" />
+				Time="2011-09-22T04:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -867,11 +865,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！
-</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:59" />
+				Time="2011-09-22T04:01:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -879,11 +876,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　守れ！
-</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:24:13" />
+				Time="2011-09-22T04:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -904,11 +900,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:24:03" />
+				Time="2011-09-22T04:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -916,11 +911,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　守れ！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:24:13" />
+				Time="2011-09-22T04:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -941,10 +935,10 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:24:08" />
+				Time="2011-09-22T03:59:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

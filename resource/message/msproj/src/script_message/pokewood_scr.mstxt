@@ -1092,10 +1092,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　だいじょうぶ　ですか？
-とりなおしますかね？</Text>
+あきらめて　とりなおしますか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:24:11" />
+				Time="2011-09-22T06:07:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1104,10 +1104,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あれ？　大丈夫ですか？
-撮り直しますかね？</Text>
+あきらめて　撮り直しますかね？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:23:50" />
+				Time="2011-09-22T06:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

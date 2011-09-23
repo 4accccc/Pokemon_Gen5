@@ -1391,8 +1391,6 @@
 				<ContentItem
 					Name="kaseki_scr.mstxt" />
 				<ContentItem
-					Name="local_tvt_scr.mstxt" />
-				<ContentItem
 					Name="medal_ev.mstxt" />
 				<ContentItem
 					Name="musical_scr.mstxt" />

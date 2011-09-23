@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+
+[Ctrl1:xcenter ]それは　イッシュちほうの
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+
+[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T05:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
+
+[Ctrl1:xcenter ]それは　イッシュ地方の
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……
+
+[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T05:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +58,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]まいにちの　パトロール……
+[Ctrl1:xcenter ]それも　イッシュぼうえいたいの
+[Ctrl1:xcenter ]たいせつな　にんむ　である……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +71,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]毎日の　パトロール……
+[Ctrl1:xcenter ]それも　イッシュ防衛隊の
+[Ctrl1:xcenter ]重要な　任務　である……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +88,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>[Ctrl1:xcenter ]わんがんを　パトロールちゅうに
+[Ctrl1:xcenter ]はとばから　ひびく　さけびごえ……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T10:36:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +103,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ]湾岸を　パトロール中に
+[Ctrl1:xcenter ]波止場から　ひびく　さけび声……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T10:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +304,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+
+[Ctrl1:xcenter ]それは　イッシュちほうの
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+
+[Ctrl1:xcenter ]これは　かれらの　たたかいの
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +321,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+
+[Ctrl1:xcenter ]それは　イッシュちほうの
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+
+[Ctrl1:xcenter ]これは　かれらの　たたかいの
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +349,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]まいにちの　パトロール……
+[Ctrl1:xcenter ]それも　イッシュぼうえいたいの
+[Ctrl1:xcenter ]たいせつな　にんむ　である……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:04:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +362,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]毎日の　パトロール……
+[Ctrl1:xcenter ]それも　イッシュ防衛隊の
+[Ctrl1:xcenter ]重要な　任務　である……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +379,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>[Ctrl1:xcenter ]わんがんを　パトロールちゅうに
+[Ctrl1:xcenter ]はとばから　ひびいた　さけびごえ……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:11:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +394,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ]湾岸を　パトロール中に
+[Ctrl1:xcenter ]波止場から　ひびいた　さけび声……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-19T04:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

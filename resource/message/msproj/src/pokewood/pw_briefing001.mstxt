@@ -6,14 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]くるまが　いきかう　オフィスがい
-[Ctrl1:xcenter ]なんでもない　まちが　いきなり
-[Ctrl1:xcenter ]あんうんに　のみこまれた！
-[Ctrl1:xcenter ]そらから　まいおりてきたのは
-[Ctrl1:xcenter ]なんと　UFOであった！</Text>
+			<Text>[Ctrl1:xcenter ]えがおの　たえない　ゆうえんち
+[Ctrl1:xcenter ]みんなの　りそうの　ゆうえんち
+
+[Ctrl1:xcenter ]だが　そんな　ばしょに　
+[Ctrl1:xcenter ]あやしい　かげが　ひとつ……
+[Ctrl1:xcenter ]そう　それは　じけんの　まくあけ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:32:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]くるまが　いきかう　オフィスがい
-[Ctrl1:xcenter ]なんでもない　まちが　いきなり
-[Ctrl1:xcenter ]あんうんに　のみこまれた！
-[Ctrl1:xcenter ]そらから　まいおりてきたのは
-[Ctrl1:xcenter ]なんと　UFOであった！</Text>
+			<Text>[Ctrl1:xcenter ]笑顔の　たえない　遊園地
+[Ctrl1:xcenter ]みんなの　理想の　遊園地
+
+[Ctrl1:xcenter ]だが　そんな　場所に　
+[Ctrl1:xcenter ]怪しい　影が　ひとつ……
+[Ctrl1:xcenter ]そう　それは　事件の　幕開け……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:32:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:14:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54,16 +56,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]なぜ
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
 
-[Ctrl1:xcenter ]どうして
+[Ctrl1:xcenter ]かげあるところに　ひかりあり！
 
-[Ctrl1:xcenter ]このまちが
-
-[Ctrl1:xcenter ]えらばれたのか</Text>
+[Ctrl1:xcenter ]あのヒーローが　あらわれた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-03T07:53:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -71,16 +71,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]なぜ
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
 
-[Ctrl1:xcenter ]どうして
+[Ctrl1:xcenter ]影あるところに　光あり！
 
-[Ctrl1:xcenter ]このまちが
-
-[Ctrl1:xcenter ]えらばれたのか</Text>
+[Ctrl1:xcenter ]あのヒーローが　現れた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-03T07:54:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -92,10 +90,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　なは！
+
+[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-04T08:25:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,10 +104,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　名は！
+
+[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-04T08:25:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -300,14 +304,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]くるまが　いきかう　オフィスがい
-[Ctrl1:xcenter ]なんでもない　まちが　いきなり
-[Ctrl1:xcenter ]あんうんに　のみこまれた！
-[Ctrl1:xcenter ]そらから　まいおりてきたのは
-[Ctrl1:xcenter ]なんと　UFOであった！</Text>
+			<Text>[Ctrl1:xcenter ]えがおの　たえない　ゆうえんち
+[Ctrl1:xcenter ]みんなの　りそうの　ゆうえんち
+
+[Ctrl1:xcenter ]だが　そんな　ばしょに　
+[Ctrl1:xcenter ]あやしい　かげが　ひとつ……
+[Ctrl1:xcenter ]そう　それは　じけんの　まくあけ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:58:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -315,14 +320,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]くるまが　いきかう　オフィスがい
-[Ctrl1:xcenter ]なんでもない　まちが　いきなり
-[Ctrl1:xcenter ]あんうんに　のみこまれた！
-[Ctrl1:xcenter ]そらから　まいおりてきたのは
-[Ctrl1:xcenter ]なんと　UFOであった！</Text>
+			<Text>[Ctrl1:xcenter ]笑顔の　たえない　遊園地
+[Ctrl1:xcenter ]みんなの　理想の　遊園地
+
+[Ctrl1:xcenter ]だが　そんな　場所に　
+[Ctrl1:xcenter ]怪しい　影が　ひとつ……
+[Ctrl1:xcenter ]そう　それは　事件の　幕開け……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:58:26" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -330,10 +336,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>あらすじ♀用</Comment>
+			<Comment>あらすじ♂</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:59:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:25" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -348,17 +354,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]なぜ
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
 
-[Ctrl1:xcenter ]どうして
+[Ctrl1:xcenter ]かげあるところに　ひかりあり！
 
-[Ctrl1:xcenter ]このまちが
-
-[Ctrl1:xcenter ]えらばれたのか
-</Text>
+[Ctrl1:xcenter ]あのヒロインが　あらわれた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-25T04:29:38" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -366,17 +369,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]なぜ
+			<Text>[Ctrl1:xcenter ]だが　しかし！！
 
-[Ctrl1:xcenter ]どうして
+[Ctrl1:xcenter ]影あるところに　光あり！
 
-[Ctrl1:xcenter ]このまちが
-
-[Ctrl1:xcenter ]えらばれたのか
-</Text>
+[Ctrl1:xcenter ]あのヒロインが　現れた！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-25T04:29:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -388,12 +388,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だが　このまちのきき
-このほしのきき　には　ちがいない！
-</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　なは！
+
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-04T05:39:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:16:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -401,12 +401,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だが　このまちのきき
-このほしのきき　には　ちがいない！
-</Text>
+			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　名は！
+
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-04T05:44:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-17T04:16:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

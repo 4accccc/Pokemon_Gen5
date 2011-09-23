@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+
+[Ctrl1:xcenter ]それは　イッシュちほうの
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+
+[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:25:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
+
+[Ctrl1:xcenter ]それは　イッシュ地方の
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……
+
+[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +58,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName ]の
+[Ctrl1:xcenter ]まえに　とつじょ　あらわれた
+[Ctrl1:xcenter ]なぞの　おんな　Ｅ……
+
+[Ctrl1:xcenter ]かのじょは　みずからを
+[Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +74,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
+[Ctrl1:xcenter ]前に　突如　現れた
+[Ctrl1:xcenter ]謎の　女　Ｅ……
+
+[Ctrl1:xcenter ]彼女は　自らを
+[Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:43:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +94,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
+[Ctrl1:xcenter ][Name:TrainerName ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +107,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　数日後……
+[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
+[Ctrl1:xcenter ][Name:TrainerName ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +306,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+
+[Ctrl1:xcenter ]それは　イッシュちほうの
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+
+[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +323,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
+
+[Ctrl1:xcenter ]それは　イッシュ地方の
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……
+
+[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +351,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName ]の
+[Ctrl1:xcenter ]まえに　とつじょ　あらわれた
+[Ctrl1:xcenter ]なぞの　おんな　Ｅ……
+
+[Ctrl1:xcenter ]かのじょは　みずからを
+[Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:43:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +367,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
+[Ctrl1:xcenter ]前に　突如　現れた
+[Ctrl1:xcenter ]謎の　女　Ｅ……
+
+[Ctrl1:xcenter ]彼女は　自らを
+[Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +387,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
+[Ctrl1:xcenter ][Name:TrainerName ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:43:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +400,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　数日後……
+[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
+[Ctrl1:xcenter ][Name:TrainerName ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T02:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
