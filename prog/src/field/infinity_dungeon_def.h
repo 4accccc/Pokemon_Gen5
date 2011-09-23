@@ -51,7 +51,7 @@
 
 // トレーナー
 #define INF_TRID_START_NORMAL  (0)
-#define INF_TRID_CNT_NORMAL    (600)
+#define INF_TRID_CNT_NORMAL    (620)
 #define INF_TRID_CNT_MONEY  (20)
 #define INF_TRID_START_MONEY  (620)
 #define INF_TRID_START_RECOVERY  (640)
