@@ -1151,8 +1151,8 @@
 	</row>
 
 	<row id="elitem_20">
-		<language name="JPN" width="216">フトシ</language>
-		<language name="JPN_KANJI" width="216">フトシ</language>
+		<language name="JPN" width="216">ミゲル</language>
+		<language name="JPN_KANJI" width="216">ミゲル</language>
 	</row>
 
 	<row id="scientistm_12">
@@ -1226,8 +1226,8 @@
 	</row>
 
 	<row id="princess_09">
-		<language name="JPN" width="216">アキノ</language>
-		<language name="JPN_KANJI" width="216">アキノ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="princess_10">
@@ -2061,8 +2061,8 @@
 	</row>
 
 	<row id="prince_09">
-		<language name="JPN" width="216">ミゲル</language>
-		<language name="JPN_KANJI" width="216">ミゲル</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="backpackerw_16">
@@ -4288,6 +4288,16 @@
 	<row id="ol_10">
 		<language name="JPN" width="216">サトコ</language>
 		<language name="JPN_KANJI" width="216">サトコ</language>
+	</row>
+
+	<row id="karate_33">
+		<language name="JPN" width="216">フトシ</language>
+		<language name="JPN_KANJI" width="216">フトシ</language>
+	</row>
+
+	<row id="battleg_25">
+		<language name="JPN" width="216">アキノ</language>
+		<language name="JPN_KANJI" width="216">アキノ</language>
 	</row>
 
 	<flowchart-group-list>
