@@ -626,29 +626,29 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T02:09:41" />
+				Time="2011-09-23T05:33:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T02:09:40" />
+				Time="2011-09-23T05:33:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T02:09:44" />
+				Time="2011-09-23T05:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T02:09:44" />
+				Time="2011-09-23T05:33:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T02:09:52" />
+				Time="2011-09-23T05:33:32" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

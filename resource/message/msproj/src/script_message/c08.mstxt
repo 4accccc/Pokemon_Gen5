@@ -400,10 +400,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ついたぞ
-さあ！　あがってくれ▼</Text>
+さあ！　あがりなさい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:26:04" />
+				Time="2011-09-23T05:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -412,10 +412,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>着いたぞ
-さあ！　あがってくれ▼</Text>
+さあ！　あがりなさい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:26:20" />
+				Time="2011-09-23T05:25:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -451,10 +451,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こおり……　だと？▼</Text>
+			<Text>なにごと　だ……？
+この　こおりの　せかいは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:10:14" />
+				Time="2011-09-23T05:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -462,10 +463,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>氷……　だと？▼</Text>
+			<Text>なにごと　だ……？
+この氷の　世界は……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:10:21" />
+				Time="2011-09-23T05:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -813,11 +815,12 @@
 ワタシという　そんざいの　しょうめい！▼
 さて　これらは　プラズマだんの
 ぎじゅつで　うみだした▽
-とくしゅな　こおり！▽
-かきごおりには　できませぬ▼</Text>
+とくしゅな　こおり！▼
+アイツを　とらえているかぎり
+とけたり　くだけたり　しません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:45:39" />
+				Time="2011-09-23T05:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -831,11 +834,12 @@
 それこそが　生命の　実感！
 ワタシという　存在の　証明！▼
 さて　これらは　プラズマ団の
-技術で　うみだした　特殊な　氷！▽
-かき氷には　できませぬ▼</Text>
+技術で　うみだした　特殊な　氷！▼
+アイツを　捕らえているかぎり
+溶けたり　砕けたり　しません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:42:18" />
+				Time="2011-09-23T05:39:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -927,11 +931,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シャガ『２ねんまえの　おまえたちの
-しょぎょうを　しっている　にんげんが
+しょぎょうを　しっている　にんげんが▽
 すなおに　わたすと　かんがえるのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:46:26" />
+				Time="2011-09-23T05:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -940,11 +944,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シャガ『２年前の　おまえたちの
-所業を　知っている　人間が
+所業を　知っている　人間が▽
 素直に　渡すと　考えるのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:46:20" />
+				Time="2011-09-23T05:41:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1042,11 +1046,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『この　こおりを　とかすには
-あいつらを　かたづけるしか　ない！▼</Text>
+			<Text>シャガ『なんにせよ
+あいつらを　かたづけよう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:47:26" />
+				Time="2011-09-23T05:45:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1054,11 +1058,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『氷漬けを　打破するには
-あいつらを　かたづけるしか　ない！▼</Text>
+			<Text>シャガ『なんにせよ
+あいつらを　かたづけよう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:47:03" />
+				Time="2011-09-23T05:45:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2959,17 +2963,20 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『ありがとうございます▼
-……いや　あいさつは　また　こんどで▼
-さきほどの　こおりが
-とんできた　ほうこうから　けいさんして▽
-プラズマだんの　いばしょが　わかります▼
-ボクと　[Name:TrainerName Idx="1" ]とで
+……いや
+あいさつは　また　こんどで▼
+さきほどの　こおりが　とんできた
+ほうこうから　けいさんして▼
+プラズマだんの　いばしょが
+だいたい　わかりました▼
+セイガイハシティの　ちかく　です！▼
+ぼくと　[Name:TrainerName Idx="1" ]が
 プラズマだんを　しらべます▼
 ですから　シャガさんは
 ソウリュウを　まもってください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:23:45" />
+				Time="2011-09-23T06:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2978,17 +2985,20 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『ありがとうございます▼
-……いや　あいさつは　また　今度で▼
-さきほどの　氷が
-飛来した　方向から　計算して▽
-プラズマ団の　所在が　わかります▼
-ボクと　[Name:TrainerName Idx="1" ]とで
+……いや
+あいさつは　また　今度で▼
+さきほどの　氷が　飛来した
+方向から　計算して▼
+プラズマ団の　潜伏場所が
+だいたい　わかりました▼
+セイガイハシティの　近く　です！▼
+ぼくと　[Name:TrainerName Idx="1" ]が
 プラズマ団を　調べます▼
 ですから　シャガさんは
 ソウリュウを　守ってください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:27:35" />
+				Time="2011-09-23T06:18:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3024,12 +3034,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『……そういってくれるか
-わかった！　そちらは　まかせる▽
+			<Text>シャガ『……そういってくれるか▼
+わかった！
+そちらは　まかせる▼
 だが　けっして　むりは　するなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:26:12" />
+				Time="2011-09-23T06:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3037,12 +3048,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『……そういってくれるか
-わかった！　そちらは　任せる▽
+			<Text>シャガ『……そういってくれるか▼
+わかった！
+そちらは　任せる▼
 だが　決して　無理は　するなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:26:03" />
+				Time="2011-09-23T06:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3080,13 +3092,13 @@
 			<Text>チェレン『[Name:TrainerName ]！▼
 きみの　はんだんに　まかせるけれど
 よければ　いっしょに　きてほしい！▼
-プラズマ団とも　わたりあえる
+プラズマだん　とも　わたりあえる
 ポケモントレーナー　だからね▼
 では　シャガさん
-行ってきます！▼</Text>
+いってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:29:25" />
+				Time="2011-09-23T06:11:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3141,7 +3153,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『プラズマだん　から
+			<Text>シャガ『セイガイハシティか……▼
+サザナミタウンから
+きたに　なにが　ある……？▼
+[Name:TrainerName ]！▼
+プラズマだん　から
 ポケモンたちを　まもってくれぬか！▼
 ポケモンと　ひととの　まじわりは
 どうあるべきか　どうすべきかは▽
@@ -3150,7 +3166,7 @@
 かってに　きめること　ではない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:33:43" />
+				Time="2011-09-23T06:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3158,7 +3174,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『プラズマ団から
+			<Text>シャガ『セイガイハシティか……▼
+サザナミタウンから
+北に　なにが　ある……？▼
+[Name:TrainerName ]！▼
+プラズマ団から
 ポケモンたちを　守ってくれぬか！▼
 ポケモンと　人との　交わりは
 どうあるべきか　どうすべきかは▽
@@ -3167,7 +3187,7 @@
 独善的に　決めること　ではない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:34:08" />
+				Time="2011-09-23T06:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3176,10 +3196,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・d10イベントまで繰り返し</Comment>
+・d10イベントまで繰り返し
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:39:56" />
+				Time="2011-09-23T06:16:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4661,12 +4682,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:00" />
+				Time="2011-09-23T05:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4674,12 +4693,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:00" />
+				Time="2011-09-23T05:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4720,12 +4737,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:00" />
+				Time="2011-09-23T05:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4733,12 +4748,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:00" />
+				Time="2011-09-23T05:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4746,12 +4759,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモンジム
-・Black2ver
-※swanでメッセージ修正</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:07" />
+				Time="2011-09-23T05:10:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4766,6 +4777,58 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_gymsign_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:10:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:10:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ[Ctrl2:LineFeed ]
+スパルタン　メイヤー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:10:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:10:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモンジム
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:11:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-23T05:10:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
