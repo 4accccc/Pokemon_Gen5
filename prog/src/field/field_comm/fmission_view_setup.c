@@ -793,6 +793,10 @@ static void _sub_BmpWinCreate(FMISSION_VIEW_PTR wk)
       BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
   bmpwin_Add( wk, &wk->win[WIN_TITLE],
       BMP_TITLE_FRM, BMP_TITLE_PAL, BMP_TITLE_PX, BMP_TITLE_PY,BMP_TITLE_SX, BMP_TITLE_SY );
+  bmpwin_Add( wk, &wk->win[WIN_GOAL],
+      BMP_GOAL_FRM, BMP_GOAL_PAL, BMP_GOAL_PX, BMP_GOAL_PY,BMP_GOAL_SX, BMP_GOAL_SY );
+  bmpwin_Add( wk, &wk->win[WIN_ENTRY],
+      BMP_ENTRY_FRM, BMP_ENTRY_PAL, BMP_ENTRY_PX, BMP_ENTRY_PY,BMP_ENTRY_SX, BMP_ENTRY_SY );
 }
 
 //--------------------------------------------------------------
@@ -995,6 +999,13 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
     pp->px, pp->py, ACTANM_PANEL_ACT+(idx%3), OBJ_BG_PRI, OBJ_SPRI_PANEL+idx);
 //  GFL_CLACT_WK_SetPlttOffs( pp->cPanel, idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   
+  //アイコンアクター
+  pp->cIcon = obj_ObjAdd( wk,
+    wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
+    wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
+    wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
+    pp->px+ACT_ICON_OX, pp->py+ACT_ICON_OY, ACTANM_ICON_HELLO, OBJ_BG_PRI, OBJ_SPRI_ICON+idx);
+  
   //Unionオブジェアクター
   pp->cUnion = obj_ObjAdd( wk,
     wk->objResUnion.res[OBJ_RES_CGR].tbl[idx],
@@ -1009,8 +1020,12 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
   
   act_PanelFOamAdd( wk, &pp->msgOam[PANEL_FOAM_MSG], BMP_PANEL_MSG_OAM_SX, BMP_PANEL_MSG_OAM_SY, pp->px+ACT_MSG_OX, pp->py+ACT_MSG_OY );
   pp->str[PANEL_FOAM_MSG] = GFL_STR_CreateBuffer( FMISSION_LOG_BUFLEN_MSG, wk->heap_sID );
+  
+  act_PanelFOamAdd( wk, &pp->msgOam[PANEL_FOAM_SCORE], BMP_PANEL_SCORE_OAM_SX, BMP_PANEL_SCORE_OAM_SY, pp->px+ACT_SCORE_OX, pp->py+ACT_SCORE_OY );
+  pp->str[PANEL_FOAM_SCORE] = GFL_STR_CreateBuffer( BUFLEN_PANEL_SCORE_MSG, wk->heap_sID );
 
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
 }
 
@@ -1029,6 +1044,8 @@ static void act_PanelObjDel( FMISSION_VIEW_PTR wk, u8 idx )
   }
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_Remove( pp->cUnion );
+  GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
+  GFL_CLACT_WK_Remove( pp->cIcon );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_Remove( pp->cPanel );
  

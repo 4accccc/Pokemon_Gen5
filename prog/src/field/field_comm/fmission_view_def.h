@@ -117,6 +117,7 @@ typedef enum{
 typedef enum{
  PANEL_FOAM_NAME,
  PANEL_FOAM_MSG,
+ PANEL_FOAM_SCORE,
  PANEL_FOAM_MAX,
 }PANEL_FOAM_ID;
 
@@ -129,6 +130,9 @@ typedef enum{
 ///ポップアップメッセージバッファ長
 #define BUFLEN_POPUP_MSG  (18*6*2+EOM_SIZE)
 #define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)
+
+//FOAMスコアメッセージバッファ長
+#define BUFLEN_PANEL_SCORE_MSG ((7*2)+EOM_SIZE)
 
 ///メニュー
 typedef enum{
@@ -193,6 +197,10 @@ typedef enum{
 #define BMP_PANEL_NAME_OAM_SX  (8)  //パネルOAM
 #define BMP_PANEL_NAME_OAM_SY  (2)
 
+//スコア 日本＆ハングル(12dot*7) 欧米(6dot*7)
+#define BMP_PANEL_SCORE_OAM_SX  (12)  //パネルOAM(11でいいけど、ライブラリが12取る)
+#define BMP_PANEL_SCORE_OAM_SY  (2)
+
 //ポップアップウィンドウ
 #define BMP_POPUP_PX (2)
 #define BMP_POPUP_PY (22)
@@ -203,23 +211,35 @@ typedef enum{
 //タイトルウィンドウ
 #define BMP_TITLE_PX  (5)
 #define BMP_TITLE_PY  (0)
-#define BMP_TITLE_SX  (25)
-#define BMP_TITLE_SY  (5)
+#define BMP_TITLE_SX  (23)
+#define BMP_TITLE_SY  (3)
 #define BMP_TITLE_FRM (FRM_MENU)
 #define BMP_TITLE_PAL (FONT_PAL_POPUP)
+//目標値ウィンドウ
+#define BMP_GOAL_PX  (2)
+#define BMP_GOAL_PY  (3)
+#define BMP_GOAL_SX  (15)
+#define BMP_GOAL_SY  (2)
+#define BMP_GOAL_FRM (FRM_MENU)
+#define BMP_GOAL_PAL (FONT_PAL_POPUP)
+//参加者人数ウィンドウ
+#define BMP_ENTRY_PX  (19)
+#define BMP_ENTRY_PY  (3)
+#define BMP_ENTRY_SX  (11)
+#define BMP_ENTRY_SY  (2)
+#define BMP_ENTRY_FRM (FRM_MENU)
+#define BMP_ENTRY_PAL (FONT_PAL_POPUP)
 
-#define BMP_TITLE_OX  (0)
 #define BMP_TITLE_OY  (4)
-#define BMP_ENTRY_STR_OX    (16)
-#define BMP_ENTRY_STR_OY    (3*8)
-#define BMP_ENTRY_NUM_DSX   (9*8)
-#define BMP_ENTRY_NUM_DSY   (16)
-#define BMP_ENTRY_NUM_OX    ((BMP_TITLE_SX*8)-BMP_ENTRY_NUM_DSX)
-#define BMP_ENTRY_NUM_OY    (BMP_ENTRY_STR_OY)
+#define BMP_TITLE_BSX (BMP_TITLE_SX*8)
+#define BMP_GOAL_STR_OX  (0)
+#define BMP_GOAL_STR_OY  (0)
 
 enum{
  WIN_POPUP,
  WIN_TITLE,
+ WIN_GOAL,
+ WIN_ENTRY,
  WIN_MAX,
 };
 
@@ -291,6 +311,9 @@ enum{
  ACTANM_DOWN_ON,
  ACTANM_DOWN_ANM,
  ACTANM_DOWN_OFF,
+ ACTANM_ICON_HELLO,
+ ACTANM_ICON_THANKS,
+ ACTANM_ICON_BOAST,
 };
 
 #define ACT_ANM_SET (3)
@@ -300,10 +323,14 @@ enum{
 #define ACT_PANEL_PX  (8)
 #define ACT_PANEL_PY  (6*8) //(6*8-ACT_PANEL_OY)
 
+#define ACT_ICON_OX   (2*8)
+#define ACT_ICON_OY   (0)
 #define ACT_UNION_OX  (2*8)
 #define ACT_UNION_OY  (2*8)
 #define ACT_NAME_OX   (6*8)
 #define ACT_NAME_OY   (4)
+#define ACT_SCORE_OX  (16*8)
+#define ACT_SCORE_OY  (ACT_NAME_OY)
 #define ACT_MSG_OX    (6*8)
 #define ACT_MSG_OY    (16+4)
 #define ACT_RANK_OX   (19*8)
@@ -323,7 +350,7 @@ enum{
 #define ACT_DOWN_PX (ACT_UP_PX+8*3)
 
 #define ACT_INFO_PX (2*8)
-#define ACT_INFO_PY (4)
+#define ACT_INFO_PY (ACT_MENU_PY)
 
 /////////////////////////////////////////////
 //タッチパネル

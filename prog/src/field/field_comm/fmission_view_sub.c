@@ -65,6 +65,7 @@ static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f );
 
 static void obj_UpDownViewSet( FMISSION_VIEW_PTR wk );
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
+static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line );
 static PANEL_WORK* panel_GetNextTargetPanel( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
@@ -73,20 +74,24 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
 static void panel_DrawFinish( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
 static BOOL panel_DrawMain( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
 static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl );
-static BOOL panel_CheckPrint( PANEL_WORK* pp );
+static void eff_IconEffectAddCheck( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
 
 static void list_UpDownReq( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
 static void list_UpDownReq1st( FMISSION_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq );
-static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir );
+static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir, BOOL new_f );
 
+#if 0
 static void effReq_PanelScroll( FMISSION_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, int* task_ct );
+#endif
 static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id );
 static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk );
 
 static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl );
 static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf );
 
+#if 0
 static void printReq_FOamPrint( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, PANEL_FOAM_ID id, PRINTSYS_LSB color,int* task_ct );
+#endif
 
 //////////////////////////////////////////////////////////////////
 
@@ -377,17 +382,9 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
   switch( wk->sub_seq ){
   case 0:
     FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
-    if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
-      wk->newLogOfs = wk->ctrl.view_top;
-      FMISSION_LOG_ViewTbl_GetLog( wk->logView, wk->newLog, wk->newLogOfs );
-      wk->newLogIdx = FMISSION_LOG_ViewTbl_GetOfs2Idx( wk->logView, wk->newLogOfs );
-    }
-    //スクロールリクエスト
-    list_ScrollReq( wk, wk->newLog, wk->newLogIdx, SCROLL_DOWN );
-    wk->ctrl.view_top = wk->newLogOfs;
-
     
     {
+      //新規ログパラメータでSEを鳴らす
       FMISSION_LOG_ACTION action = FMISSION_LOG_GetAction( wk->newLog );
  
       switch( action ){
@@ -406,6 +403,16 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
         break;
       }
     } 
+
+    if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
+      wk->newLogOfs = wk->ctrl.view_top;
+      FMISSION_LOG_ViewTbl_GetLog( wk->logView, wk->newLog, wk->newLogOfs );
+      wk->newLogIdx = FMISSION_LOG_ViewTbl_GetOfs2Idx( wk->logView, wk->newLogOfs );
+    }
+    //スクロールリクエスト
+    list_ScrollReq( wk, wk->newLog, wk->newLogIdx, SCROLL_DOWN, (wk->ctrl.view_top==0) );
+    wk->ctrl.view_top = wk->newLogOfs;
+    
     wk->sub_seq++;
     break;
   case 1:
@@ -608,13 +615,21 @@ static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct )
  */
 static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
 {
+  int width;
+  //タイトル描画(センタリング)
   FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_expand, wk->fmwk, wk->tmpHeapID );
-  BVCPrintReq_BmpwinPrint( &wk->win[WIN_TITLE], wk->str_expand,
-      BMP_TITLE_OX, BMP_TITLE_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
 
-  print_GetMsgToBuf( wk, msg_sys_entry_str );
-  BVCPrintReq_BmpwinPrintEx( &wk->win[WIN_TITLE], wk->str_expand,
-      BMP_ENTRY_STR_OX, BMP_ENTRY_STR_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f, FALSE );
+  width = PRINTSYS_GetStrWidth( wk->str_expand, wk->fontHandle, 0 );
+  width = (BMP_TITLE_BSX-width)/2;
+  BVCPrintReq_BmpwinPrint( &wk->win[WIN_TITLE], wk->str_expand,
+      width, BMP_TITLE_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
+
+  //目標値描画
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->fmwk->beacon.goal, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  print_GetMsgToBuf( wk, msg_sys_goal_num00+wk->fmwk->arc.unit );
+  BVCPrintReq_BmpwinPrint( &wk->win[WIN_GOAL], wk->str_expand,
+      BMP_GOAL_STR_OX, BMP_GOAL_STR_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
+
 #if 0
   FEST_MISSION_GetExpStr( wk->wordset, wk->mm_fmission, wk->str_expand, wk->fmwk, wk->heapID );
   BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
@@ -658,6 +673,14 @@ static void draw_MissionNowScore( FMISSION_VIEW_PTR wk )
  */
 static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct )
 {
+  GFL_BMP_Clear( wk->win[WIN_ENTRY].bmp, FCOL_TITLE_BASE );
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_entry, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  
+  print_GetMsgToBuf( wk, msg_sys_entry_num );
+  BVCPrintReq_BmpwinPrintEx( &wk->win[WIN_ENTRY], wk->str_expand,
+      0, 0, FCOL_TITLE_BASE, FCOL_TITLE, task_ct, wk->init_f, FALSE );
+
+#if 0
   GFL_BMP_Fill( wk->win[WIN_TITLE].bmp,
     BMP_ENTRY_NUM_OX, BMP_ENTRY_NUM_OY, BMP_ENTRY_NUM_DSX, BMP_ENTRY_NUM_DSY, FCOL_TITLE_BASE );
 
@@ -666,6 +689,7 @@ static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct )
   print_GetMsgToBuf( wk, msg_sys_entry_num );
   BVCPrintReq_BmpwinPrintEx( &wk->win[WIN_TITLE], wk->str_expand,
       0, BMP_ENTRY_NUM_OY, FCOL_TITLE_BASE, FCOL_TITLE, task_ct, wk->init_f, FALSE );
+#endif
 }
 
 /*
@@ -707,8 +731,19 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   for(i = 0;i < PANEL_FOAM_MAX;i++){
     BmpOam_ActorSetDrawEnable( pp->msgOam[i].oam, visible_f );
   }
+  if( !visible_f ){
+    panel_IconVisibleSet( pp, visible_f );
+  }
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
+}
+
+/*
+ *  @brief  パネル アイコン表示状態On/Off
+ */
+static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f )
+{
+  GFL_CLACT_WK_SetDrawEnable( pp->cIcon, visible_f );
 }
 
 /*
@@ -720,11 +755,17 @@ static void panel_Clear( PANEL_WORK* pp )
 
 //  panel_VisibleSet( pp, FALSE );
 
+  if( pp->tcb_icon != NULL ){
+    GFL_TCBL_Delete( pp->tcb_icon );
+    pp->tcb_icon = NULL;
+    pp->icon_no = 0;
+  }
   for(i = 0;i < PANEL_FOAM_MAX;i++){
     GFL_BMP_Clear( pp->msgOam[i].bmp, 0 );
 //	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
     GFL_STR_ClearBuffer( pp->str[i] );
-  
+ 
+#if 0
     if( pp->tcb_print[i] != NULL ){
       #ifdef PM_DEBUG
       if( PRINTSYS_QUE_IsExistTarget( pp->que, pp->msgOam[i].bmp ) ){
@@ -734,9 +775,13 @@ static void panel_Clear( PANEL_WORK* pp )
       GFL_TCBL_Delete( pp->tcb_print[i] );
       pp->tcb_print[i] = NULL;
     }
+#endif
   }
   pp->data_idx = PANEL_DATA_BLANK;
   pp->n_line = 0;
+  pp->tr_view = 0;
+  pp->icon_no = 0;
+  pp->type = 0;
 }
 
 /*
@@ -796,9 +841,9 @@ static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
 
     //キャラクタ転送
     GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
-                          wk->resCharUnion[ pp->char_no ].p_char );
+                          wk->resCharUnion[ pp->tr_view ].p_char );
     //パレット転送
-    p_ofs = 16*sc_wifi_unionobj_plt[ pp->char_no ];
+    p_ofs = 16*sc_wifi_unionobj_plt[ pp->tr_view ];
     PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
   }else{
     //自分
@@ -835,7 +880,7 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
   pp->sex = FMISSION_LOG_GetSex( pl );
   pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
   pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
-  pp->char_no = FMISSION_LOG_GetTrView( pl );
+  pp->tr_view = FMISSION_LOG_GetTrView( pl );
 
   IWASAWA_Printf("PanelDraw %d\n", action);
   //プレイヤー名取得
@@ -874,10 +919,16 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
   pp->sex = FMISSION_LOG_GetSex( pl );
   pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
   pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
+  pp->tr_view = FMISSION_LOG_GetTrView( pl );
 
   IWASAWA_Printf("PanelDrawEntry %d\n", action);
   //プレイヤー名取得
   FMISSION_LOG_GetName( pl, pp->str[PANEL_FOAM_NAME] );
+  //スコア文字列生成
+  WORDSET_RegisterNumber( wk->wordset, 0, FMISSION_LOG_GetScore( pl ), 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  GFL_MSG_GetString( wk->mm_sys, msg_sys_panel_score_num, wk->str_tmp);
+  WORDSET_ExpandStr( wk->wordset, pp->str[PANEL_FOAM_SCORE], wk->str_tmp );
+  
   //メッセージバッファ初期化
   FMISSION_LOG_ActionWordset( pl,  wk->wordset, wk->heap_sID);
   //NULLでないactionは1～なので、マイナス1している
@@ -885,17 +936,18 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
   WORDSET_ExpandStr( wk->wordset, pp->str[PANEL_FOAM_MSG], wk->str_tmp );
 
   {
-    int i;
+    int i,ofs = 0;
     PRINTSYS_LSB col = FCOL_FNTOAM_W;
 
     if( pp->type == PANEL_TYPE_MSG ){
       col = FCOL_FNTOAM_B; 
+      ofs = 6;
     }
     for( i = 0;i < PANEL_FOAM_MAX; i++ ){
       if( wk->init_f ){
-	      PRINTSYS_PrintColor( pp->msgOam[i].bmp, 0, 0, pp->str[i], wk->fontHandle, col );
+	      PRINTSYS_PrintColor( pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col );
       }else{
-        PRINTSYS_PrintQueColor( wk->printQue, pp->msgOam[i].bmp, 0, 0, pp->str[i], wk->fontHandle, col );
+        PRINTSYS_PrintQueColor( wk->printQue, pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col );
       } 
     }
   }
@@ -956,29 +1008,65 @@ static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
   pp->px = x;
   pp->py = y;
   BVCAct_SetPosition( pp->cPanel, x, y );
+  BVCAct_SetPosition( pp->cIcon, x+ACT_ICON_OX, y+ACT_ICON_OY );
   BVCAct_SetPosition( pp->cUnion, x+ACT_UNION_OX, y+ACT_UNION_OY );
   BmpOam_ActorSetPos( pp->msgOam[PANEL_FOAM_NAME].oam, x+ACT_NAME_OX, y+ACT_NAME_OY);
   BmpOam_ActorSetPos( pp->msgOam[PANEL_FOAM_MSG].oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
 }
 
+/////////////////////////////////////////////////////////////////////
 /*
- *  @brief  パネル　プリント中チェック　
- *
- *  @retval TRUE  プリント中
- *  @retval FALSE プリントが終了している
+ *  @brief  パネルアイコン表示 
  */
-static BOOL panel_CheckPrint( PANEL_WORK* pp )
-{
-  int i;
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_ICON_EFF{
+  u8  wait;
 
-  for( i = 0;i < PANEL_FOAM_MAX; i++ )
-  {
-    if( pp->tcb_print[i] != NULL ){
-      return TRUE;
-    }
+  PANEL_WORK* pp;
+  FMISSION_VIEW_PTR fvp;
+}TASKWK_ICON_EFF;
+
+static void tcb_IconEffect( GFL_TCBL *tcb , void* work);
+
+/*
+ *  @brief  パネルアイコン表示タスク登録
+ */
+static void eff_IconEffectAddCheck( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  GFL_TCBL* tcb;
+  TASKWK_ICON_EFF* twk;
+  
+  if( pp->icon_no == 0 ){
+    panel_IconVisibleSet( pp, FALSE );
+    return;
   }
-  return FALSE;
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_IconEffect, sizeof(TASKWK_ICON_EFF), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_ICON_EFF ));
+
+  twk->fvp = wk;
+  twk->pp = pp;
+  twk->wait = ICON_POP_TIME;
+  twk->pp->tcb_icon = tcb;
+  
+  BVCAct_AnmStart( pp->cIcon, ( pp->icon_no-1 )+ACTANM_ICON_HELLO );
+  panel_IconVisibleSet( pp, TRUE );
 }
+
+static void tcb_IconEffect( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_ICON_EFF* twk = (TASKWK_ICON_EFF*)tcb_wk;
+
+  if( twk->wait-- > 0 ){
+    return;
+  }
+  twk->pp->tcb_icon = NULL;
+  twk->pp->icon_no = 0;
+  panel_IconVisibleSet( twk->pp, FALSE );
+  GFL_TCBL_Delete(tcb);
+}
+
 
 /*
  *  @brief  リストアップダウンリクエスト
@@ -1000,7 +1088,7 @@ static void list_UpDownReq( FMISSION_VIEW_PTR wk, SCROLL_DIR dir )
   idx = FMISSION_LOG_ViewTbl_GetOfs2Idx( wk->logView, ofs );
   
   //スクロールリクエスト
-  list_ScrollReq( wk, wk->tmpLog, idx, dir );
+  list_ScrollReq( wk, wk->tmpLog, idx, dir, FALSE );
 }
 
 /*
@@ -1047,7 +1135,7 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* work);
 /*
  *  @brief  ビュー スクロール処理リクエスト
  */
-static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir )
+static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCROLL_DIR dir, BOOL new_f )
 {
   PANEL_WORK* pp;
   GFL_TCBL* tcb;
@@ -1072,6 +1160,10 @@ static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCRO
 
   panel_Entry( pp, idx, 0 );  //パネル新規登録(ラインは後で初期化)
   panel_DrawStart( wk, pp, pl );   //パネル描画開始リクエスト
+
+  if( new_f ){
+    pp->icon_no = 1;
+  }
 }
 
 static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
@@ -1109,6 +1201,9 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
           } 
         } 
         panel_SetPos( pp, pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX, pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY );
+        if( pp == twk->pp ){
+          eff_IconEffectAddCheck( fvp, twk->pp );
+        }
       }
     }
     break;
@@ -1134,7 +1229,7 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
-
+#if 0
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  パネルスクロール
@@ -1257,6 +1352,7 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+#endif
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  メッセージウィンドウ ポップアップ 
@@ -1651,7 +1747,7 @@ static void tcb_WinRetireYesNo( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
-
+#if 0
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  FontOamメッセージ表示キュー処理 
@@ -1730,3 +1826,4 @@ static void tcb_FOamPrint( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+#endif

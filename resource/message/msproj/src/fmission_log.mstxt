@@ -2,14 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_sys_entry_str"
+		Label="msg_sys_goal_num00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さんかにんずう</Text>
+			<Text>もくひょう[Digit:4digits ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加人数</Text>
+			<Text>目標[Digit:4digits ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,10 +28,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッションエントリー数　見出し</Comment>
+			<Comment>ミッション目標値合計 単位：ブランク
+0：1-9999　</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:45:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -40,16 +41,183 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_sys_goal_num01">
+		<LanguageCell
+			Language="JPN">
+			<Text>もくひょう[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:44:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目標[Digit:4digits ]にん</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:49:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション目標値合計 単位：人
+0：1-9999</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:01" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_sys_goal_num02">
+		<LanguageCell
+			Language="JPN">
+			<Text>もくひょう[Digit:4digits ]ひき</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目標[Digit:4digits ]ひき</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:49:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション目標値合計 単位：人
+0：1-9999</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:56" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_sys_goal_num03">
+		<LanguageCell
+			Language="JPN">
+			<Text>もくひょう[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目標[Digit:4digits ]こ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:49:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション目標値合計 単位：人
+0：1-9999</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_sys_goal_num04">
+		<LanguageCell
+			Language="JPN">
+			<Text>もくひょう[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目標[Digit:4digits ]かい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:49:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション目標値合計 単位：人
+0：1-9999</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:46:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_sys_entry_num"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0" ][Digit:3digits Idx="0" ]にん</Text>
+			<Text>[Ctrl1:xright value="0" ]さんか[Digit:3digits Idx="0" ]にん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -57,10 +225,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0" ][Digit:3digits Idx="0" ]人</Text>
+			<Text>[Ctrl1:xright value="0" ]参加[Digit:3digits Idx="0" ]人</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-09-23T06:42:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -918,7 +1086,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_freeword_ini"
+		Label="msg_sys_freeword_ini_"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -965,6 +1133,39 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_sys_panel_score_num">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:xright ]スコア[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T08:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T08:03:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xright ]スコア[Digit:4digits ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T08:50:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T08:03:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パネルのスコア表示(単位表示無し)
+0:スコア0-9999</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-23T08:04:29" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_fmission_log_act01"
@@ -2967,86 +3168,6 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fmission_log_pop01_01_"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text />
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text />
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fmission_log_pop01_02_"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text />
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text />
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
