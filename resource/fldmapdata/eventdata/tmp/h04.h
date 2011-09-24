@@ -11,6 +11,7 @@
 #define DOOR_ID_H04_H04R0501_EXIT01       6
 #define DOOR_ID_H04_H04R0201_EXIT01       7
 #define DOOR_ID_H04_H04R0701_EXIT01       8
+#define DOOR_ID_H04_H04R0801_EXIT01       9
 
 #endif //ZONE_H04_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
