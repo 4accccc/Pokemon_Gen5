@@ -4085,19 +4085,21 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
 
 
 #ifdef DEBUG_SET_ANIME_AND_POS
-  // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
-  AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
-  u8 i;
   {
-    area_data->year = 1;
-    area_data->season_data[PMSEASON_SPRING].unknown = 0;
-
-    for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+    // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
+    AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
+    u8 i;
     {
-      area_data->season_data[PMSEASON_SPRING].place_bitflag[i] = PLACE_BITFLAG_GROUND_ALL | PLACE_BITFLAG_WATER_ALL | PLACE_BITFLAG_FISHING_ALL;
+      area_data->year = 1;
+      area_data->season_data[PMSEASON_SPRING].unknown = 0;
+
+      for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+      {
+        area_data->season_data[PMSEASON_SPRING].place_bitflag[i] = PLACE_BITFLAG_GROUND_ALL | PLACE_BITFLAG_WATER_ALL | PLACE_BITFLAG_FISHING_ALL;
+      }
     }
+    return area_data;
   }
-  return area_data;
 #endif
 
 
