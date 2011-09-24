@@ -1219,11 +1219,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうき　あるものよ
-おうの　ことばに　みみを　かたむけよ</Text>
+			<Text>よけむたかをみみにはとこのうお
+よのもるあきうゆ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:47:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1231,11 +1231,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勇気　あるものよ
-王の　言葉に　耳を　かたむけよ</Text>
+			<Text>よけむたかをみみにはとこのうお
+よのもるあきうゆ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1256,11 +1256,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そすうを　りかい　するものは
-せかいの　しんりを　りかいする</Text>
+			<Text>るすいかりをりんしのいかせ
+はのもるすいかりをうすそ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:47:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1268,11 +1268,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>素数を　理解する者は
-世界の　真理を　理解する</Text>
+			<Text>るすいかりをりんしのいかせ
+はのもるすいかりをうすそ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1293,10 +1293,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　ゆうきを　もつ</Text>
+			<Text>つもをきうゆはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1304,10 +1304,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　勇気を　持つ</Text>
+			<Text>つもをきうゆはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:06:16" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1328,10 +1328,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　きぼうを　もつ</Text>
+			<Text>つもをうほきはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1339,10 +1339,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　希望を　持つ</Text>
+			<Text>つもをうほきはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:06:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1363,10 +1363,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　やさしさを　もつ</Text>
+			<Text>つもをさしさやはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1374,10 +1374,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　優しさを　持つ</Text>
+			<Text>つもをさしさやはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:06:31" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1398,10 +1398,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　ゆめを　もつ</Text>
+			<Text>つもをめゆはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1409,10 +1409,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　夢を　持つ</Text>
+			<Text>つもをめゆはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:06:38" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1433,10 +1433,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　ぼうけんしんを　もつ</Text>
+			<Text>つもをんしんけうほはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1444,10 +1444,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　冒険心を　持つ</Text>
+			<Text>つもをんしんけうほはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:06:50" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1468,10 +1468,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　すべてを　うけいれた</Text>
+			<Text>たれいけうをてへすはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1479,10 +1479,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　すべてを　受け入れた</Text>
+			<Text>たれいけうをてへすはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1503,10 +1503,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　２ばんめの　かどを　まがり</Text>
+			<Text>るかまをとかのめんはちいはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1514,10 +1514,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　２番目の　角を　曲がり</Text>
+			<Text>るかまをとかのめんはちいはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1538,10 +1538,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　３ばんめの　かどを　まがり</Text>
+			<Text>るかまをとかのめんはんさはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1549,10 +1549,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　３番目の　角を　曲がり</Text>
+			<Text>るかまをとかのめんはんさはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:43" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1573,10 +1573,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　５ばんめの　かどを　まがり</Text>
+			<Text>るかまをとかのめんはこはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1584,10 +1584,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　５番目の　角を　曲がり</Text>
+			<Text>るかまをとかのめんはこはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:40" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T10:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1608,10 +1608,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　７ばんめの　かどを　まがった</Text>
+			<Text>るかまをとかのめんはななはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1619,10 +1619,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　７番目の　角を　曲がった</Text>
+			<Text>るかまをとかのめんはななはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:34" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:30:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1643,10 +1643,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうの　こころを　もて</Text>
+			<Text>てもをろここのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:24:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1654,10 +1654,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王の　心を　持て</Text>
+			<Text>てもをろここのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:07:54" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:24:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1678,10 +1678,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは　おうを　たたえる　ばしょ</Text>
+			<Text>ろことるえたたをうおはここ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1689,10 +1689,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは　王を　称える　場所</Text>
+			<Text>ろことるえたたをうおはここ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:08:08" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1713,11 +1713,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは
-たみを　てらす　ひかりを　もつ</Text>
+			<Text>つもをりかひすらてをみた
+はうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1725,11 +1725,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は
-民を　照らす　光を　持つ</Text>
+			<Text>つもをりかひすらてをみた
+はうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:08:26" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1750,11 +1750,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは
-たみを　うごかす　ちからを　もつ</Text>
+			<Text>つもをらかちすかこうをみた
+はうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1762,11 +1762,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は
-民を　動かす　力を　持つ</Text>
+			<Text>つもをらかちすかこうをみた
+はうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:09:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1787,10 +1787,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　じあいの　こころで　つつんだ</Text>
+			<Text>だんつつでろここのいあしはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1798,10 +1798,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　慈愛の　心で　つつんだ</Text>
+			<Text>だんつつでろここのいあしはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:09:21" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:31:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1822,10 +1822,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうは　にくしみに　ながされなかった</Text>
+			<Text>たつかなれさかなにみしくにはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:23" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1833,10 +1833,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王は　憎しみに　流されなかった</Text>
+			<Text>たつかなれさかなにみしくにはうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T13:09:33" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1857,11 +1857,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうの　あゆみに　まよいは　ない
-まよいごに　おうの　しかくなし</Text>
+			<Text>しなくかしのうおにこいよま
+いなはいよまにみゆあのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:47:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:32:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1869,11 +1869,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王の　歩みに　迷いは　無い
-迷い子に　王の　資格無し</Text>
+			<Text>しなくかしのうおにこいよま
+いなはいよまにみゆあのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:32:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1894,11 +1894,11 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうの　あゆみに　まよいは　ない
-ゆうきある　おうよ　さきに　すすめ▼</Text>
+			<Text>めすすにきさようおるあきうゆ
+いなはいよまにみゆあのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:47:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1906,11 +1906,11 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王の　歩みに　迷いは　無い
-勇気ある　王よ　先に　進め▼</Text>
+			<Text>めすすにきさようおるあきうゆ
+いなはいよまにみゆあのうお</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:46:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:33:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -545,11 +545,11 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いきる　ということ
-それは　すべてに　かんしゃ　すること</Text>
+			<Text>なされせゆすあきぬとほせひろた
+なさえうなれくう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,11 +557,11 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>生きると　いうこと
-それは　全てに　感謝　すること</Text>
+			<Text>なされせゆすあきぬとほせひろた
+なさえうなれくう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -582,11 +582,11 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たべる　ということ　それは
-あらゆる　いのちを　いただくこと</Text>
+			<Text>なされせゆすあきぬとほせひろた
+ひろたなさえうなれほち</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -594,11 +594,11 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べる　ということ　それは
-あらゆる　命を　いただくこと</Text>
+			<Text>なされせゆすあきぬとほせひろた
+ひろたなさえうなれほち</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -619,11 +619,11 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎと　あく　だけではない
-あいだが　あるのだ</Text>
+			<Text>ちはれいきちうい
+うにひとこちけいなくうそ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -631,11 +631,11 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>正義と　悪だけではない
-間が　あるのだ</Text>
+			<Text>ちはれいきちうい
+うにひとこちけいなくうそ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -656,10 +656,10 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やばんで　あっては　ならない</Text>
+			<Text>うにりにひとていとあひゆ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -667,10 +667,10 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>野蛮で　あっては　ならない</Text>
+			<Text>うにりにひとていとあひゆ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -691,10 +691,10 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そまつに　しては　ならない</Text>
+			<Text>うにりにひとすぬてみた</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -702,10 +702,10 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>粗末に　しては　ならない</Text>
+			<Text>うにりにひとすぬてみた</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -726,10 +726,10 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべては　びょうどうに　とうとい</Text>
+			<Text>うなえなぬえなえらふひとほせ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -737,10 +737,10 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>全ては　平等に　尊い</Text>
+			<Text>うなえなぬえなえらふひとほせ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -761,11 +761,11 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかいは　なにも　うまない
-むげんの　かなしみを　うむだけだ</Text>
+			<Text>ちこちめえんむすにきはあこめ
+うにみえやぬにひうきちち</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -773,11 +773,11 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦いは　何も　生まない
-無限の　悲しみを　生むだけだ</Text>
+			<Text>ちこちめえんむすにきはあこめ
+うにみえやぬにひうきちち</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -798,11 +798,11 @@ NKXGTQFQQI</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうに　りかいを　しめすのならば
-ここで　ひかりを　はなて</Text>
+			<Text>とにひんるきふとささ
+ひりにはせもすんうきるぬえか</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -810,11 +810,11 @@ NKXGTQFQQI</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王に　理解を　示すのならば
-ここで　光を　放て</Text>
+			<Text>とにひんるきふとささ
+ひりにはせもすんうきるぬえか</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-16T07:49:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-24T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
