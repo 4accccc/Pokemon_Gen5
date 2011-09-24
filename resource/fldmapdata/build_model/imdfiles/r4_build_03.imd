@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-09-22T17:40:37" source="r4_build_03.mb"/>
+	<create user="fujiwara" host="W00251" date="2011-09-22T22:16:06" source="r4_build_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-09-22T17:40:37" source="r4_build_03.mb"/>
+<original_create user="fujiwara" host="W00251" date="2011-09-22T22:16:06" source="r4_build_03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
+	compress_node="merge" node_size="3 3"
 	compress_material="off" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
@@ -337,7 +337,7 @@
 </tex_palette_array>
 
 <material_array size="3">
-	<material index="0" name="h_mado"
+	<material index="0" name="h_mado_1"
 		light0="off" light1="on" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -350,7 +350,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="19 19 19"
+		ambient="25 25 25"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -361,7 +361,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="r4_b03_kabe01"
+	<material index="1" name="r4_b03_kabe01_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -385,7 +385,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="r4_b03_yane01"
+	<material index="2" name="r4_b03_yane01_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -411,8 +411,9 @@
 	/>
 </material_array>
 
-<matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
 </matrix_array>
 
 <polygon_array size="3">
@@ -994,12 +995,12 @@
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
+			<mtx_list size="1">1</mtx_list>
 			<primitive_array size="3">
 				<primitive index="0" type="quad_strip" vertex_size="8">
 					<mtx idx="0"/>
 					<tex st="-220.187500 -16.625000"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xyz xyz="-0.375000 5.101074 -3.875000"/>
 					<tex st="-220.187500 19.812500"/>
 					<pos_xy xy="-0.375000 0.437500"/>
@@ -1018,7 +1019,6 @@
 				</primitive>
 				<primitive index="1" type="quads" vertex_size="12">
 					<tex st="-221.937500 155.437500"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_xy xy="5.375000 0.437500"/>
 					<tex st="-63.812500 155.437500"/>
 					<pos_xz xz="5.375000 -3.875000"/>
@@ -1027,7 +1027,6 @@
 					<tex st="-221.937500 97.687500"/>
 					<pos_xz xz="5.375000 3.875000"/>
 					<tex st="-220.812500 -51.000000"/>
-					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_xz xz="-0.375000 -3.875000"/>
 					<tex st="-79.937500 -51.000000"/>
 					<pos_xy xy="5.375000 5.101074"/>
@@ -1036,7 +1035,6 @@
 					<tex st="-220.812500 -96.750000"/>
 					<pos_xy xy="-0.375000 0.437500"/>
 					<tex st="-207.687500 86.687500"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xz xz="-0.375000 3.875000"/>
 					<tex st="-81.250000 86.687500"/>
 					<pos_xy xy="5.375000 0.437500"/>
@@ -1047,7 +1045,6 @@
 				</primitive>
 				<primitive index="2" type="triangles" vertex_size="6">
 					<tex st="-144.062500 19.812500"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="0.437500 0.332031"/>
 					<tex st="-79.875000 19.812500"/>
 					<pos_xz xz="-0.375000 3.875000"/>
@@ -1065,11 +1062,25 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+<node_array size="3">
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
-		child="-1"
+		child="1"
 		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="building" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
@@ -1077,16 +1088,35 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="3"
-		vertex_size="260" polygon_size="71"
-		triangle_size="6" quad_size="65"
+		display_size="2"
+		vertex_size="234" polygon_size="63"
+		triangle_size="4" quad_size="59"
 		volume_min="-1.000000 0.375000 -4.000000"
 		volume_max="5.500000 5.937500 4.000000"
 		volume_r="8.744385"
 	>
+		<display index="0" material="1" polygon="0" priority="0"/>
+		<display index="1" material="2" polygon="1" priority="0"/>
+	</node>
+	<node index="2" name="window" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="26" polygon_size="8"
+		triangle_size="2" quad_size="6"
+		volume_min="-0.375000 0.437500 -3.875000"
+		volume_max="5.375000 5.101074 3.875000"
+		volume_r="8.362305"
+	>
 		<display index="0" material="0" polygon="2" priority="0"/>
-		<display index="1" material="1" polygon="0" priority="0"/>
-		<display index="2" material="2" polygon="1" priority="0"/>
 	</node>
 </node_array>
 
