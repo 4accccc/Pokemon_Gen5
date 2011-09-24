@@ -636,7 +636,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{0,2},	// 地面アニメーション
 
-			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+			GYM_DRAGON_MAPPER_BLOCK_MEMSIZE,	// 
       1,  // topフレームのブロック描画数
 		},
 		&FieldMapCtrl_HybridFunctions,

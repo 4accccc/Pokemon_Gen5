@@ -52,6 +52,11 @@ typedef struct {
 // swan H06 マリンチューブ専用
 #define	H06_MAPPER_MAPMDL_SIZE		(0x7000)	//モデルデータ用メモリ確保サイズ 
 #define H06_MAPPER_BLOCK_MEMSIZE	( H06_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
+// swan ドラゴンジム専用
+#define GYM_DRAGON_GAIN_SIZE  (0xB000) // モデルデータ用メモリ確保サイズ削減量
+#define	GYM_DRAGON_MAPPER_MAPMDL_SIZE		(FLD_MAPPER_MAPMDL_SIZE-GYM_DRAGON_GAIN_SIZE)	//モデルデータ用メモリ確保サイズ 
+#define GYM_DRAGON_MAPPER_BLOCK_MEMSIZE	( GYM_DRAGON_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
+
 
 //-------------------------------------
 ///	描画ブロック指定
