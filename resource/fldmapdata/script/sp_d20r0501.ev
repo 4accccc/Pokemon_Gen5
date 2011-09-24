@@ -15,6 +15,7 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL		SCRID_ZONE_D20R0501
 _FIELD_INIT_LABEL		SCRID_INIT_D20R0501
 _FIELD_RECOVER_LABEL	SCRID_RECOVER_D20R0501
 _SP_EVENT_DATA_END

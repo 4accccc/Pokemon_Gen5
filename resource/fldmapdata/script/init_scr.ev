@@ -327,6 +327,9 @@ init_flags:
  //R05：コンバートイベント・チェレン
   _FLAG_SET(FV_R05_SWLEADER1_01)
 
+ //T04：サザナミ七賢人
+  _FLAG_SET(FV_T04_SAGE7_01)
+
 }
 _RET
 

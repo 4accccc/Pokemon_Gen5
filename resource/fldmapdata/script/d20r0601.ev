@@ -36,14 +36,25 @@ _EVENT_DATA		ev_pos_d20r0601_down_01
 _EVENT_DATA		ev_reserve_d20r0601_event_02
 _EVENT_DATA		ev_init_d20r0601
 _EVENT_DATA		ev_recover_d20r0601
+_EVENT_DATA		ev_zone_d20r0601
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_MSG1
+DEFINE_LOCAL	LWK_MSG2
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_zone_d20r0601:
-//  _END
+INIT_EVENT_START	ev_zone_d20r0601
+
+	//‚QŠK‘w‰“ž’BŽž
+	IF $WK_OTHER_D20_ARRIVE == 2 THEN
+	
+		$WK_OTHER_D20_ARRIVE = 3
+	
+	ENDIF
+	
+INIT_EVENT_END
 
 /**************************************************************/
 /*				FIELD INIT LABEL							  */
@@ -74,59 +85,118 @@ INIT_EVENT_START	ev_recover_d20r0601
 INIT_EVENT_END
 
 /**************************************************************/
+/*		ˆÃ†‚a‚fƒCƒxƒ“ƒg@‹¤’Êˆ—							  */
+/**************************************************************/
+ev_seatemple:
+
+_TALK_START_SE_PLAY()
+_BGWIN_SEATEMPLE_MSG( LWK_MSG1, TYPE_INFO )
+
+IF $WK_OTHER_D20_ARRIVE >= 2 THEN 
+	
+	_BGWIN_CLOSE()
+	_BGWIN_MSG( LWK_MSG2, TYPE_INFO )
+
+ENDIF
+
+_BGWIN_CLOSE()
+
+_RET
+
+/**************************************************************/
 /*		d20r0601	BG1										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg1_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg1_01, TYPE_INFO )
+	
+	$LWK_MSG1 = msg_d20r0601_bg1_01
+	$LWK_MSG2 = msg_d20r0601_bg1_end_01
+
+	_CALL ev_seatemple
+
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG2										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg2_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg2_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg2_01
+	$LWK_MSG2 = msg_d20r0601_bg2_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG3										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg3_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg3_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg3_01
+	$LWK_MSG2 = msg_d20r0601_bg3_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG4										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg4_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg4_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg4_01
+	$LWK_MSG2 = msg_d20r0601_bg4_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG5										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg5_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg5_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg5_01
+	$LWK_MSG2 = msg_d20r0601_bg5_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG6										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg6_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg6_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg6_01
+	$LWK_MSG2 = msg_d20r0601_bg6_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG7										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg7_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg7_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg7_01
+	$LWK_MSG2 = msg_d20r0601_bg7_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG8										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0601_bg8_01
-	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0601_bg8_01, TYPE_INFO )
+
+	$LWK_MSG1 = msg_d20r0601_bg8_01
+	$LWK_MSG2 = msg_d20r0601_bg8_end_01
+
+	_CALL ev_seatemple
+	
 EVENT_END
 
 /**************************************************************/

@@ -14,6 +14,7 @@
   .include  "t04r0101_def.h"
 
   //@author fujimura_souichirou（ライバル戦のトレーナーデータ差し替え・クリア後イベント）
+  //@author suginaka_katsunori//海底遺跡イベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -32,6 +33,7 @@ _EVENT_DATA		ev_t04_maid_01
 _EVENT_DATA		ev_t04_ambrella_01
 _EVENT_DATA		ev_t04_babygirl1_01
 _EVENT_DATA   ev_t04_swrival_01
+_EVENT_DATA		ev_t04_sage7_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -256,7 +258,7 @@ INIT_EVENT_START	ev_zone_t04
 INIT_EVENT_END
 
 /**************************************************************/
-/*  POS：ライバル戦                                           */
+/*  POS：ライバル戦＋七賢人海底遺跡イベント                   */
 /**************************************************************/
 EVENT_START   ev_pos_t04_swrival_01
 
@@ -540,6 +542,8 @@ EVENT_START   ev_t04_swrival_01
       _FLAG_RESET ( FV_C05R0501_SWRIVAL_01 )
       //==================================//
 
+      _CALL ev_sage7
+
     ELSE
 
       //ライバル：……ッチ
@@ -622,7 +626,9 @@ EVENT_START   ev_t04_swrival_01
       //ホドモエ・ポケモンハウスのライバルを表示
       _FLAG_RESET ( FV_C05R0501_SWRIVAL_01 )
       //==================================//
-
+		
+      _CALL ev_sage7
+		
     ELSE
 
       //ライバル：……ッチ
@@ -635,6 +641,87 @@ EVENT_START   ev_t04_swrival_01
   ENDIF
 
 EVENT_END
+
+ev_sage7:
+
+		//2011.09.23	海底遺跡イベント追加
+		
+		//========================================/
+		_FLAG_RESET(FV_T04_SAGE7_01)
+		//========================================/
+		
+		_OBJ_ADD( T04_SAGE7_01 )
+		
+		//七賢人移動
+		_OBJ_POS_CHANGE( T04_SAGE7_01, 764, -5, 304, DIR_LEFT )
+
+		//自機座標取得
+		_PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+		//座標格納の変数を定義
+		DEFINE_LOCAL	LWK_OBJ_POSX
+		DEFINE_LOCAL	LWK_OBJ_POSZ
+
+		//七賢人：プレイヤーに隣接する
+		SWITCH $LCW_POSX
+		CASE 752 THEN
+			$LWK_OBJ_POSX = 753
+			$LWK_OBJ_POSZ = 301
+		CASE 753 THEN
+			
+			$LWK_OBJ_POSX = 753
+			
+			IF $LCW_POSZ == 302 THEN
+				$LWK_OBJ_POSZ = 303
+			ELSE
+				$LWK_OBJ_POSZ = 301
+			ENDIF
+			
+		CASE 754 THEN
+			$LWK_OBJ_POSX = 753
+			$LWK_OBJ_POSZ = 301
+		ENDSWITCH
+		
+		_OBJ_ANIME_AUTO( T04_SAGE7_01, LWK_OBJ_POSX, LWK_OBJ_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+		_OBJ_ANIME_WAIT()
+		
+		//座標に合わせてプレイヤー：七賢人のほうを向く
+		SWITCH $LCW_POSX
+		CASE 752 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+			_OBJ_ANIME( T04_SAGE7_01, anm_staystep_l )
+		CASE 753 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+			_OBJ_ANIME( T04_SAGE7_01, anm_staystep_u )
+		CASE 754 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+			_OBJ_ANIME( T04_SAGE7_01, anm_staystep_r )
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG_POS( msg_t04_sage7_end_01 , T04_SAGE7_01, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+		
+		_PLAYER_NAME(0)
+		
+		_SYSWIN_MSG( msg_t04_sage7_end_02, POS_DOWN )
+		_AB_KEYWAIT_MARK()
+		_SYSWIN_CLOSE()
+		
+		_BALLOONWIN_OBJMSG_POS( msg_t04_sage7_end_03 , T04_SAGE7_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+		$WK_OTHER_D20_ARRIVE = 1
+		//========================================/
+
+
+_RET
 
 
 //--------------------------------------------------------------------
@@ -708,4 +795,104 @@ _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
 
+/**************************************************************/
+/*		SAGE7：海底遺跡サブイベント							  */
+/**************************************************************/
+EVENT_START		ev_t04_sage7_01
+_TALK_OBJ_START()
 
+SWITCH $WK_OTHER_D20_ARRIVE
+CASE 0 THEN	//七賢人登場前
+	//異常処理・本来行かない
+	_DEBUG_PRINT_WK(WK_OTHER_D20_ARRIVE)
+CASE 1 THEN	//解読イベント後・海底遺跡にまだ入っていない。
+	//ねんのため　つたえておくが
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+CASE 2 THEN	//海底遺跡に入った。
+	//ゲーチスさまの　しょもつに
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_04 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+CASE 3 THEN	//2階層到達
+	//しょもつには　たしか　こう　しるされていた
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_05 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+CASE 4 THEN	//3階層到達
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_09 )
+	//たみの　あらそいを　おさめ
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_06 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	//========================================/
+	//会話済みにする
+	$WK_OTHER_D20_ARRIVE = 5
+	//========================================/
+CASE 5 THEN	//3階層到達で七賢人と会話済
+	//たみの　あらそいを　おさめ
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_06 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+CASE 6 THEN	//4階層到達
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_09 )
+	//おうは　みらいを　よみ
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	//========================================/
+	//会話済みにする
+	$WK_OTHER_D20_ARRIVE = 7
+	//========================================/
+CASE 7 THEN	//4階層到達で七賢人と会話済
+	//おうは　みらいを　よみ
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_07 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_10 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+CASE 8 THEN	//こだいのおうかん入手
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_09 )
+	//けんとうの　つかない
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_08 )
+	_MSGWIN_CLOSE()
+	
+	_ITEM_EVENT_KEYWAIT( ITEM_OOKINASINZYU, 1 )
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t04_sage7_end_11 )
+	_MSGWIN_CLOSE()
+	
+	//自機座標取得
+	_PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+	//アニメ：七賢人退場
+	IF $LCW_POSZ == 300  THEN
+		//主人公をよけて歩く
+		_OBJ_ANIME_AUTO( T04_SAGE7_01, 752, 296, FORCE_TYPE_NPC, 8, DIR_LR )
+	ELSE
+		_OBJ_ANIME_AUTO( T04_SAGE7_01, 753, 296, FORCE_TYPE_NPC, 8, DIR_UD )
+	ENDIF
+
+	_TIME_WAIT( 24 )
+
+	//アニメ：主人公見送り
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+	_OBJ_ANIME_WAIT()
+
+	_SE_PLAY( SEQ_SE_KAIDAN )   //階段SE再生
+	_OBJ_DEL( T04_SAGE7_01 )  //ライバル動作モデル削除
+	_SE_WAIT()  //SE待ち
+	
+	//========================================/
+	//七賢人のバニシュフラグセット
+	_FLAG_SET(FV_T04_SAGE7_01)
+	//========================================/
+
+ENDSWITCH
+
+EVENT_END

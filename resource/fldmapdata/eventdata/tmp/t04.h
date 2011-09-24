@@ -22,6 +22,7 @@
 #define T04_BABYGIRL1_01                   4
 #define FLD_ITEM_126                       5
 #define T04_SWRIVAL_01                     6
+#define T04_SAGE7_01                       7
 
 #endif //ZONE_T04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
