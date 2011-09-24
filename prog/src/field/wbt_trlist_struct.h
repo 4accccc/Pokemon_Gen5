@@ -42,12 +42,5 @@ typedef struct {
   u16 btl_bgm_id;         ///<戦闘BGM
   u16 win_bgm_id;         ///<勝利時BGM
   u16 ace_poke_id;        ///<切り札ポケモン
-  u16 msg_1st_start;      ///<一回戦用対戦前メッセージ
-  u16 msg_2nd_start;      ///<二回戦用対戦前メッセージ
-  u16 msg_final_start;    ///<決勝戦用対戦前メッセージ
-  u16 msg_fight_after;    ///<対戦後メッセージ
-  u16 msg_fight_win;      ///<対戦勝メッセージ
-  u16 msg_fight_lose;     ///<対戦負メッセージ
-  u16 msg_fight_announce; ///<前口上メッセージ
 } WBT_TRDATA; 
 

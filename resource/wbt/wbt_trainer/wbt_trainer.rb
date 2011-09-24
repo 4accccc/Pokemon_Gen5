@@ -141,13 +141,8 @@ class WBT_TRDATA
     @win_bgm = column[COL::WIN_BGM]
     @title = column[COL::TITLE]
     @ace_poke = column[COL::ACE_POKE]
-    @msg_1st_start = 0 #column[COL::MSG_1ST_START]
-    @msg_2nd_start = 0 #column[COL::MSG_2ND_START]
-    @msg_final_start = 0 #column[COL::MSG_FINAL_START]
-    @msg_fight_after = 0 #column[COL::MSG_FIGHT_AFTER]
-    @msg_fight_win = 0 #column[COL::MSG_FIGHT_WIN]
-    @msg_fight_lose = 0 #column[COL::MSG_FIGHT_LOSE]
-    @msg_fight_announce = 0 #column[COL::MSG_ANNOUNCE]
+    @msg_1st_start = column[COL::MSG_1ST_START]
+    @msg_2nd_start = column[COL::MSG_2ND_START]
 
     $headerArray.search( @btl_bgm, @btl_bgm )
     $headerArray.search( @win_bgm, @win_bgm )
@@ -211,17 +206,20 @@ class WBT_TRDATA
     str += sprintf("\t\t%-40s, // BTL_BGM\n", @btl_bgm )
     str += sprintf("\t\t%-40s, // WIN_BGM\n", @win_bgm )
     str += sprintf("\t\t%s, //切り札ポケモン\n", @ace_poke_no )
-    str += sprintf("\t\t%-40s, //一回戦用対戦前メッセージ\n", @msg_1st_start )
-    str += sprintf("\t\t%-40s, //二回戦用対戦前メッセージ\n", @msg_2nd_start )
-    str += sprintf("\t\t%-40s, //決勝戦用対戦前メッセージ\n", @msg_final_start )
-    str += sprintf("\t\t%-40s, //対戦後メッセージ\n", @msg_fight_after )
-    str += sprintf("\t\t%-40s, //対戦勝メッセージ\n", @msg_fight_win )
-    str += sprintf("\t\t%-40s, //対戦負メッセージ\n", @msg_fight_lose )
-    str += sprintf("\t\t%-40s, //前口上メッセージ\n", @msg_fight_announce )
+    #str += sprintf("\t\t%-40s, //一回戦用対戦前メッセージ\n", @msg_1st_start )
+    #str += sprintf("\t\t%-40s, //二回戦用対戦前メッセージ\n", @msg_2nd_start )
 
     str += sprintf("\t},\n")
 
     return str
+  end
+
+  def printout_msgid(idx)
+    if @msg_1st_start == nil && @msg_2nd_start == nil then
+      return nil
+    end
+    name1 = @msg_1st_start + ","
+    return sprintf("\t{ %-40s %20s },//%s\n", name1, @msg_2nd_start, @name )
   end
 end
 
@@ -282,14 +280,36 @@ def make_trtitle_gmm( trdata_list, template_gmm )
   trtitle_gmm.close_gmm
 end
 
+#msgidの列を表示する
+def put_msgid_source( trdata_list )
+  output = ""
+  output += sprintf("static const u16 WBTTrainerMsgID[][2] = {\n");
+
+  trdata_list.each_with_index{|trdata, idx|
+    result = trdata.printout_msgid(idx)
+    break if result == nil
+    output += result
+  }
+  output += "};\n"
+  return output
+end
+
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
-trdata_list = read_trdata_list( ARGV[0] ) 
-if ARGV.size == 1 then
+
+trdata_list = read_trdata_list( ARGV[1] ) 
+
+case ARGV[0]
+when "list" then
   puts put_trdata_source( trdata_list )
-elsif ARGV.size == 2 then
-  make_trname_gmm( trdata_list, ARGV[1] )
-  make_trtitle_gmm( trdata_list, ARGV[1] )
+when "gmm" then
+  make_trname_gmm( trdata_list, ARGV[2] )
+  make_trtitle_gmm( trdata_list, ARGV[2] )
+when "msgid" then
+  puts put_msgid_source( trdata_list )
+else
+  STDERR.puts"未対応のコンバート種別指定です：#{ARGV[1]}"
+  exit -1
 end
 
 

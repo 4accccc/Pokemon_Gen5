@@ -1,7 +1,10 @@
 #------------------------------------------------------------------------------
-#  通信アイコンnarcを作るmakefile  
-#  コピーしてtargetnameを書き換えれば汎用的に使えます
-#  2009.07.09
+#
+#	WBTトレーナーデータコンバート環境
+#
+#	@author		tamada GAMEFREAK inc.
+#	@date			2011.03.09
+#
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
@@ -12,7 +15,8 @@ USERS	= tamada suginaka_katsunori
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = wbt_trlist
+arctarget = wbt_trlist
+trdata_bin		= wbt_trainer.bin
 trname_gmm = wbt_trname.gmm
 trtitle_gmm = wbt_trtitle.gmm
 #------------------------------------------------------------------------------
@@ -31,6 +35,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
+CONV			= wbt_trainer.rb
 #------------------------------------------------------------------------------
 #データ
 #------------------------------------------------------------------------------
@@ -42,7 +47,9 @@ LIST_FILE 	= list.txt
 DATAFILE	= wbt_trainer_list.xls
 DATATXT = $(DATAFILE:.xls=.txt)
 
-CDAT	= wbt_trainer.dat
+BINCDAT	= $(trdata_bin:.bin=.cdat)
+
+MSGCDAT	= wbt_trmsg_id.cdat
 #------------------------------------------------------------------------------
 #ヘッダ参照先
 #------------------------------------------------------------------------------
@@ -63,13 +70,14 @@ WBT_DEPENDS	= $(PROJECT_PROGDIR)include/pm_version.h \
 .SUFFIXES: .c .bin
 
 
-LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
+LDIRT_CLEAN = $(TARGETDIR)/$(arctarget).narc $(TARGETDIR)/$(arctarget).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
-LDIRT_CLEAN += *.dat *.bin $(targetname).narc $(targetname).naix arc_result.txt
+LDIRT_CLEAN += *.dat *.bin $(arctarget).narc $(arctarget).naix arc_result.txt
 LDIRT_CLEAN += $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm)
 LDIRT_CLEAN += $(trname_gmm) $(trtitle_gmm)
+LDIRT_CLEAN += $(MSGCDAT)
 endif
 
 
@@ -87,11 +95,11 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #%.bin: %.c
 #wbt_trainer.bin: wbt_trainer.dat
-wbt_trainer.bin: $(DATATXT) $(WBT_DEPENDS) wbt_trainer.rb
-	@ruby wbt_trainer.rb $(DATATXT) > wbt_trainer.cdat
+$(trdata_bin): $(DATATXT) $(WBT_DEPENDS) $(CONV)
+	@ruby $(CONV) list $(DATATXT) > $(BINCDAT)
 	@echo "WBT trainer parameter convert"
 	@echo "//" > temp.c
-	@cat dummy_header.h wbt_trainer.cdat |unix2dos > temp.c
+	@cat dummy_header.h $(BINCDAT) |unix2dos > temp.c
 	@$(CC) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
 	@$(MWLD) -dis -o wbt_trainer.elf temp.o
 	@$(ELF2BIN) wbt_trainer.elf
@@ -107,23 +115,23 @@ wbt_trainer.bin: $(DATATXT) $(WBT_DEPENDS) wbt_trainer.rb
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm)
+do-build:	subdir $(TARGETDIR)/$(arctarget).narc $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm) $(MSGCDAT)
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
-	@echo copying $(targetname).narc
-	@$(COPY) $(targetname).narc $(TARGETDIR)/
-	@$(COPY) $(targetname).naix $(TARGETDIR)/
+$(TARGETDIR)/$(arctarget).narc:  $(arctarget).narc 
+	@echo copying $(arctarget).narc
+	@$(COPY) $(arctarget).narc $(TARGETDIR)/
+	@$(COPY) $(arctarget).naix $(TARGETDIR)/
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: wbt_trainer.bin
-	@nnsarc -i -cl -l -n $(targetname).narc *.bin > arc_result.txt
-	@$(NAIXCUT) $(targetname).naix
+$(arctarget).narc: $(trdata_bin)
+	@nnsarc -i -cl -l -n $(arctarget).narc *.bin > arc_result.txt
+	@$(NAIXCUT) $(arctarget).naix
 
 $(DATATXT):	$(DATAFILE)
 	$(XLS2TAB) -c $(DATAFILE) > $(DATATXT)
@@ -134,11 +142,14 @@ $(GMMDIR)/$(trname_gmm):	$(trname_gmm)
 $(GMMDIR)/$(trtitle_gmm):	$(trtitle_gmm)
 	$(COPY)	$(trtitle_gmm) $(GMMDIR)
 
-$(trname_gmm) $(trtitle_gmm) :	$(DATATXT)
-	ruby wbt_trainer.rb $(DATATXT) $(GMMDIR)/../template.gmm
+$(trname_gmm) $(trtitle_gmm) :	$(DATATXT) $(CONV)
+	ruby $(CONV) gmm $(DATATXT) $(GMMDIR)/../template.gmm
+
+$(MSGCDAT):	$(DATATXT) $(CONV)
+	ruby $(CONV) msgid $(DATATXT) > $(MSGCDAT)
 
 #wbt_trainer.dat: $(DATATXT)
-#	@ruby wbt_trainer.rb $(DATATXT) 
+#	@ruby $(CONV) $(DATATXT) 
 
 endif
 

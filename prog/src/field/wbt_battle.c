@@ -1103,6 +1103,16 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 
 //============================================================================================
 //============================================================================================
+#include "msg/msg_wbt_trmsg.h"
+#include "../../../resource/wbt/wbt_trainer/wbt_trmsg_id.cdat"
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u16 get_msgid_start( WBTCUP wbtcup, WBTROM_TRID tr_id )
+{
+  GF_ASSERT( tr_id < NELEMS(WBTTrainerMsgID) );
+  return WBTTrainerMsgID[tr_id][0];
+}
 //------------------------------------------------------------------
 /**
  * @brief
@@ -1126,7 +1136,10 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
   {
     GFL_MSGDATA * msgData;
     u16 msg_id;
-    msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
+    WBTROM_TRID tr_id;
+    tr_id = WBTTRAINER_GetID( opponent );
+    msg_id = tr_id * WBT_TRMSG_TYPE_NUM;
+    GF_ASSERT( msg_id == get_msgid_start( wbtsys->wbtcup, tr_id ) );
     msg_id += type;
     msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
         NARC_message_wbt_trmsg_dat, tempHeapID );
