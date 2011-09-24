@@ -1447,12 +1447,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>あなた……！！
-[Name:Item Idx="1" ]を　もっていませんわ！▼
+[Name:Item ]を　もっていませんわ！▼
 ひやかし　ってことかしら？
 しつれい　しちゃうわ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:11:25" />
+				Time="2011-09-24T08:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1461,12 +1461,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなた……！！
-[Name:Item Idx="1" ]を　もっていませんわ！▼
+[Name:Item ]を　もっていませんわ！▼
 ひやかし　ってことかしら？
 しつれい　しちゃうわ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:11:32" />
+				Time="2011-09-24T08:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1499,11 +1499,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>あなた……！！
-[Name:Item ]は▽
+[Name:Item Idx="1" ]は▽
 それいじょう　もてないわよ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:12:42" />
+				Time="2011-09-24T08:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1512,11 +1512,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなた……！！
-[Name:Item ]は▽
+[Name:Item Idx="1" ]は▽
 それいじょう　もてないわよ！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:12:47" />
+				Time="2011-09-24T08:14:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1645,10 +1645,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Item ]を
-[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+[Digit:6digits Idx="1" ]えんで　かいました</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:08:31" />
+				Time="2011-09-24T08:24:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1657,10 +1657,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Item ]を
-[Digit:6digits Idx="1" ]えんで　かいました▼</Text>
+[Digit:6digits Idx="1" ]えんで　かいました</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:08:32" />
+				Time="2011-09-24T08:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1999,11 +1999,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>フフフ……
-[Name:Item ]を　[Digit:6digits Idx="1" ]で▽
+[Name:Item ]を　[Digit:6digits Idx="1" ]えんで▽
 こうにゅう　しないかね？</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-21T06:21:24" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-24T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2588,10 +2588,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>やったわ！
-あなたの　まけね▼</Text>
+あなたの　まけね</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-21T06:06:17" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-23T11:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2600,10 +2600,10 @@ msg_fm_npc_trade01_02へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったわ！
-あなたの　まけね▼</Text>
+あなたの　まけね</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-21T06:06:23" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-23T11:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3718,13 +3718,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_btl02_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>でも！
-いつか！▽
+			<Text>でも！　いつか！
 あなたにだって　かってみせる！！▽
 さよならです！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:03:11" />
+				Time="2011-09-24T07:25:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3732,13 +3731,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でも！
-いつか！▽
+			<Text>でも！　いつか！
 あなたにだって　かってみせる！！▽
 さよならです！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:03:42" />
+				Time="2011-09-24T07:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

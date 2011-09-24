@@ -264,9 +264,9 @@ sub_npc_trade_item_exe:
     //メニュー生成
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
-  	_BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys04, MENU_RET_WAIT )	//ちょっと
-	  _BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys03, MENU_RET_NO ) 	//いいえ
     _BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys02, MENU_RET_YES )	//はい
+	  _BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys03, MENU_RET_NO ) 	//いいえ
+  	_BMPMENU_MAKE_LIST( msg_fm_npc_trade_sys04, MENU_RET_WAIT )	//ちょっと
 		
 	  //メニュー表示
 	  _BMPMENU_START()
@@ -310,8 +310,8 @@ sub_npc_trade_item_exe:
 
       //○○と××を交換した
       _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_ITEM_TRADE )
-      _SYSWIN_MSG( msg_fm_npc_trade_sys01, POS_DEFAULT )
 	    _ME_PLAY(	SEQ_ME_ITEM )
+      _SYSWIN_MSG( msg_fm_npc_trade_sys01, POS_DEFAULT )
       _ME_WAIT()
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
@@ -435,7 +435,10 @@ sub_npc_shopping_main:
 
   //○○を××円で買いました
   _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_ITEM_BUY, i_item )
+  _SE_PLAY( SEQ_SE_SYS_22 )  //【仮】このＳＥで良いんだっけ？？
   _SYSWIN_MSG( msg_fm_npc_shop01_sys01, POS_DEFAULT )
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //今後もよろしく！
@@ -495,11 +498,11 @@ sub_npc_rps_exe:
     _GET_RND( i_npc, 3 )  //3択
     
     //メニュー生成
-    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_my )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, i_my )
 		
   	_BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys01, RPS_ROCK )	    //グー
-    _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys03, RPS_SCISSORS )	//チョキ
-	  _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys02, RPS_PAPER ) 	  //パー
+	  _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys02, RPS_SCISSORS ) //チョキ
+    _BMPMENU_MAKE_LIST( msg_fm_npc_janken_sys03, RPS_PAPER )	  //パー
 		
 	  //メニュー表示
 	  _BMPMENU_START()
@@ -592,6 +595,7 @@ sub_npc_rps_subwin_draw:
   
   _SUBWIN_MSG( i_msg_my, i_pos_my_x, i_pos_my_y, SUBWIN_ID_MINE )
   _SUBWIN_MSG( i_msg_npc, i_pos_npc_x, i_pos_npc_y, SUBWIN_ID_NPC )
+  _TIME_WAIT( 16 )
   _AB_KEYWAIT_MARK()
   _SUBWIN_CLOSE( SUBWIN_ID_MINE )
   _SUBWIN_CLOSE( SUBWIN_ID_NPC )
@@ -643,7 +647,7 @@ sub_npc_memory_quiz_main:
   _BALLOONWIN_TALKOBJ_MSG_POS( msg_fm_npc_mquiz01_02, POS_DOWN )
   
   //メニュー生成
-  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, i_ret )
 		
   $i_ct = 0
   WHILE $i_ct < 5 

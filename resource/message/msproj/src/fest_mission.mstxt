@@ -114,31 +114,6 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_tutorial">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここじゃない</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-18T08:49:35" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-18T08:49:35" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここじゃない</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-20T06:12:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-20T06:12:31" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
 		Label="msg_fm_title_item_01">
 		<LanguageCell
 			Language="JPN">
@@ -691,7 +666,7 @@
 			<Text>かくとうかと　しゅぎょう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-11T04:37:32" />
+				Time="2011-09-24T06:18:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1390,10 +1365,10 @@
 		Label="msg_fm_title_evt_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジュエルを　さいくつせよ</Text>
+			<Text>おたから　はっくつ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T09:37:00" />
+				Time="2011-09-24T06:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1401,10 +1376,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジュエルを　さいくつせよ</Text>
+			<Text>おたから　はっくつ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-24T06:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1657,6 +1632,51 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-08-26T08:58:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_tutorial">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいげんじかんないに　かけらを
+[Digit:4digits Idx="1" ]こいじょう　あつめよう！
+まちや　みちの　キラキラひかる
+ばしょを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-24T06:26:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-18T08:49:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいげんじかんないに　かけらを
+[Digit:4digits Idx="1" ]こいじょう　あつめよう！
+まちや　みちの　キラキラひかる
+ばしょを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-24T06:26:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-20T06:12:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-24T06:26:09" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-09-24T06:26:09" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2653,13 +2673,13 @@
 		Label="msg_fm_explain_npc_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちや　みちにいる
-ピエロに　はなしかけて
-クイズに　せいかい　しろ！
-[Digit:4digits Idx="1" ]かいいじょうで　クリア！</Text>
+			<Text>まちや　みちにいる　ピエロに
+はなしかけて　クイズに　こたえよう！
+[Digit:4digits Idx="1" ]かいいじょう
+せいかい　すれば　クリアだ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:16:35" />
+				Time="2011-09-24T06:31:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2667,13 +2687,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちにいる
-ピエロに　はなしかけて
-クイズに　せいかい　しろ！
-[Digit:4digits Idx="1" ]かいいじょうで　クリア！</Text>
+			<Text>まちや　みちにいる　ピエロに
+はなしかけて　クイズに　こたえよう！
+[Digit:4digits Idx="1" ]かいいじょう
+せいかい　すれば　クリアだ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:16:40" />
+				Time="2011-09-24T06:32:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3284,12 +3304,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　ほらあなで
-みつかる　ジュエルを　あつめよう！
+みつかる　おたからを　あつめよう！
 ボコボコと　つちけむりの
 あがる　ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:37:35" />
+				Time="2011-09-24T06:33:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3298,12 +3318,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>かくちの　ほらあなで
-みつかる　ジュエルを　あつめよう！
+みつかる　おたからを　あつめよう！
 ボコボコと　つちけむりの
 あがる　ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-24T06:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
