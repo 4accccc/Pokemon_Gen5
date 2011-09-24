@@ -1791,8 +1791,7 @@ static void Zukan_Detail_Map_TownmapDataIdxToZknAreaIdxArrayMake( ZUKAN_DETAIL_M
         break;
       }
     }
-    // @todo 正常なデータを作成するまではassertをコメントアウト
-    // GF_ASSERT_MSG( exist, "ZUKAN_DETAIL_MAP : タウンマップにある拠点が図鑑データにありません。\n" );
+    GF_ASSERT_MSG( exist, "ZUKAN_DETAIL_MAP : タウンマップにある拠点が図鑑データにありません。\n" );
   }
 }
 

@@ -22,6 +22,9 @@ binmode STDERR, ":encoding(shiftjis)";
 # インクルード
 use Encode;
 
+# 無視するゾーングループID
+use constant $SKIP_ZONE_ID = "D35R0101";
+
 ##=============================================================================
 =pod
     グローバル変数
@@ -633,13 +636,17 @@ sub MakeMonsTblZone
       for( my $j=$$ref[0]; $j<$$ref[1]; $j++ )
       {
         my $mons_tbl_idx = $zoneseason_tbl[$i][$j];
+        
         if( defined($mons_tbl_idx) )
         {
           foreach my $s (@season_tbl)
           {
-            if( $zoneseason_tbl[$i][$zoneseason_col_season] & $$s[0] )
+            if( !($zoneseason_tbl[$i][$zoneseason_col_zonename] eq $SKIP_ZONE_ID) )
             {
-              $mons_tbl[ $mons_tbl_idx ][ $$s[1] + $mons_col_season_ofs_zone_start + $zoneseason_tbl[$i][$zoneseason_col_zoneid] ] |= $$ref[2];
+              if( $zoneseason_tbl[$i][$zoneseason_col_season] & $$s[0] )
+              {
+                $mons_tbl[ $mons_tbl_idx ][ $$s[1] + $mons_col_season_ofs_zone_start + $zoneseason_tbl[$i][$zoneseason_col_zoneid] ] |= $$ref[2];
+              }
             }
           }
         }

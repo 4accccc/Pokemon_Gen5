@@ -121,13 +121,13 @@ $(gmmname): $(sources_data)
 	$(NAIXCUT) $(targetname_data).naix
 	$(COPY) $(gmmname) $(GMMDIR)
 
-$(targetname_area_w).narc: $(sources_area_w) $(source_townmap_data)
+$(targetname_area_w).narc: $(sources_area_w) $(source_townmap_data) zkn_encount_make.pl
 	perl zkn_encount_make.pl $(input_encount) $(input_monsno) w
 	nnsarc -r -l -n -i $(targetname_area_w) -S $(input_area_list_w)
 	$(NAIXCUT) $(targetname_area_w).naix
 
 $(targetname_area_b).narc: $(sources_area_b) $(source_townmap_data)
-	perl zkn_encount_make.pl $(input_encount) $(input_monsno) b
+	perl zkn_encount_make.pl $(input_encount) $(input_monsno) b zkn_encount_make.pl
 	nnsarc -r -l -n -i $(targetname_area_b) -S $(input_area_list_b)
 	$(NAIXCUT) $(targetname_area_b).naix
 
