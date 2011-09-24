@@ -157,6 +157,8 @@ EVENT_START ev_pokewood_rec
     CASE PKWD_REC_SEQ_SHOOTING        THEN
       _REPORT_EVENT_CALL( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
+        //JA履歴への対応：ポケウッドで映画を撮った
+        _RESORT_SET_RECORD( RESORT_RECORD_ID_POKEWOOD )
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
         _CALL ev_pkwd_rec_exit_studio
