@@ -26,12 +26,16 @@
 #include "poke_tool/poketype_def.h" // for POKETYPE_MAX
 #include "medal_achieve_data.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"                          // MDL_FLAG_ANIMALTRAIL_～
+#include "../../../../resource/habitat_list/habitat_list_data.h" 
+// for HABITAT_LIST_DATA_MAX
 
 // セーブデータ
 #include "savedata/musical_save.h"
 #include "savedata/zukan_savedata.h"
 #include "savedata/sodateya_work.h"
 #include "savedata/bsubway_savedata.h"
+#include "savedata/outside_permanent.h"
+#include "savedata/habitat_list_save.h"
 
 //=============================================================================
 /**
@@ -74,6 +78,14 @@ typedef struct {
   u32   medal_get_count[ SCR_MEDALCATEGORY_MAX ];
   u32   box_total;
 }MEDALREC_DATA;
+
+//-------------------------------------
+///	到着フラグとヒントメダル関連付け用構造体
+//=====================================
+typedef struct {
+  MedalID medal_id; 
+  u16 sys_flag_id;
+}ARRIVE_MEDAL_TD;
 
 //=============================================================================
 /**
@@ -130,11 +142,36 @@ static BOOL MDLREC_CHECK_TradeCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
 static BOOL MDLREC_CHECK_AnimalTrailCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_BoardCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_HabitatGetLookCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 
 // 判定用関数テーブル読み込み
 typedef BOOL (*MDLACHIEVEPROC)( MEDALREC_DATA* ,GAMEDATA* ,u32 ,HEAPID );
 #include "../../../resource/medal/achieve_table/mdlachieve_proc_table.cdat"
 
+// 到着フラグとメダルレコードID関連付けテーブル（ヒント）
+static const ARRIVE_MEDAL_TD sc_arrive_hint_mdl_table[] =
+{
+  { MDLID_TRAIN_ALL             , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_FOSSILE_LV1           , SYS_FLAG_ARRIVE_C02 },
+  { MDLID_SUBWAY_SINGLE_LV1     , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_SUBWAY_DOUBLE_LV1     , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_SUBWAY_MULTI_LV1      , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_SUBWAY_CHALLENGE_LV1  , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_WIN_BP_LV1            , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_YUURANSEN_LV1         , SYS_FLAG_ARRIVE_C03 },
+  { MDLID_MUSICALPLAY_LV1       , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_MUSICALWIN_LV1        , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_MUSICALGOODS          , SYS_FLAG_ARRIVE_C04 },
+  { MDLID_MUGEN_AREA_B_LV1      , SYS_FLAG_ARRIVE_D31R0201   }, // 無限（黒）受付
+  { MDLID_MUGEN_AREA_W_LV1      , SYS_FLAG_ARRIVE_D31R0101   }, // 無限（白）受付
+  { MDLID_MUGEN_WIN_LV1         , SYS_FLAG_ARRIVE_D31R0201   }, // 受付両方でチェック
+  { MDLID_MUGEN_WIN_LV1         , SYS_FLAG_ARRIVE_D31R0101   },
+};
+#define ARRIVE_HINT_MDL_TBL_SIZE (NELEMS(sc_arrive_hint_mdl_table))
 
 //----------------------------------------------------------------------------
 /**
@@ -160,6 +197,7 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
   u8          title_open_cnt[HINT_LEVEL_MAX];
   u8          title_open_max[HINT_LEVEL_MAX];
   MEDALREC_DATA medalrec_data;
+  EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
 
 #if 1
 #ifdef PM_DEBUG
@@ -209,14 +247,9 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
       {
         // レコードデータとの比較
         u32 rec_data = RECORD_Get( p_rec , medal_data[medal_id].cmp_id );
-
-        // タイトル達成を行っていない場合はまず調べる
-        if( medal_state < MEDAL_STATE_TITLE_ACHIVE )
+        if( medal_data[medal_id].target_count <= rec_data )
         {
-          if( medal_data[medal_id].target_count <= rec_data )
-          {
-            MEDALBOX_SetTitleMedalAchive( p_medal_box , medal_id );
-          }
+          MEDALBOX_SetTitleMedalAchive( p_medal_box , medal_id );
         }
       }
       else
@@ -255,10 +288,7 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
         {
           if( medal_data[medal_id].hint_level<= i+1 )
           {
-            if( medal_state < MEDAL_STATE_HINT_ACHIVE )
-            {
-              MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
-            }
+            MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
           }
         }
       }
@@ -301,13 +331,23 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
           // 取得している最大未満は全て開放
           if( medal_data[medal_id].hint_level < hint_level_max )
           {
-            if( medal_state < MEDAL_STATE_HINT_ACHIVE )
-            {
-              MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
-            }
+            MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
           }
         }
+      }
+    }
+  }
 
+  // 到達フラグでヒントを起動するものをチェック
+  {
+    for( i = 0; i < ARRIVE_HINT_MDL_TBL_SIZE; i++ )
+    {
+      const ARRIVE_MEDAL_TD *p_arrive = &sc_arrive_hint_mdl_table[i];
+      BOOL is_set = EVENTWORK_CheckEventFlag( p_event_wk ,p_arrive->sys_flag_id );
+      if( is_set == TRUE )
+      {
+        // ヒントメダルを開放
+        MEDALBOX_SetHintMedalAchive( p_medal_box , p_arrive->medal_id );
       }
     }
   }
@@ -1223,6 +1263,190 @@ static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
   target_cnt = NELEMS(flag_tbl);
   ONOUE_Printf("列車説明チェック数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全ての橋到達チェック
+ *
+ *	@param	p_recdata
+ *	@param	p_gamedata
+ *	@param	target_cnt 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  const s32 flag_tbl[] =
+  {
+    SYS_FLAG_ARRIVE_H01,
+    SYS_FLAG_ARRIVE_H03,
+    SYS_FLAG_ARRIVE_H05,
+  };
+  EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  target_cnt = NELEMS(flag_tbl);
+  ONOUE_Printf("橋チェック数:%d/%u\n",check_cnt,target_cnt);
+  return cmp_target( check_cnt , target_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イッシュ一周
+ *
+ *	@param	p_recdata
+ *	@param	p_gamedata
+ *	@param	target_cnt 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  const s32 flag_tbl[] =
+  {
+    SYS_FLAG_ARRIVE_C12,
+    SYS_FLAG_ARRIVE_T06,
+    SYS_FLAG_ARRIVE_C13,
+    SYS_FLAG_ARRIVE_C03,
+    SYS_FLAG_ARRIVE_C04,
+    SYS_FLAG_ARRIVE_C05,
+    SYS_FLAG_ARRIVE_C06,
+    SYS_FLAG_ARRIVE_T07,
+    SYS_FLAG_ARRIVE_T04,
+    SYS_FLAG_ARRIVE_T03,
+    SYS_FLAG_ARRIVE_C08,
+    SYS_FLAG_ARRIVE_C14,
+    SYS_FLAG_ARRIVE_C09,
+    SYS_FLAG_ARRIVE_C07,
+    SYS_FLAG_ARRIVE_C02,
+    SYS_FLAG_ARRIVE_C01,
+    SYS_FLAG_ARRIVE_T02,
+    SYS_FLAG_ARRIVE_T01,
+  };
+  EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  target_cnt = NELEMS(flag_tbl) + 1;  // WF or BC
+
+  // WF or BC はどちらかチェック
+  if( EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D31R0201 ) || 
+      EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D31R0101 ))
+  {
+    check_cnt++;
+  }
+
+  ONOUE_Printf("全到達チェック数:%d/%u\n",check_cnt,target_cnt);
+  return cmp_target( check_cnt , target_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データコンバートフラグ数チェック
+ *
+ *	@param	p_recdata
+ *	@param	p_gamedata
+ *	@param	target_cnt 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 sum = 0;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_svc );
+  WB_SAVE_CONV_FLAG flg;
+
+  // データコンバートフラグ数チェック
+  for( flg = 0; flg < WB_SAVE_CONV_FLAG_MAX ; flg++ )
+  {
+    if( DATA_CONVERT_SAVE_GetFlag( p_dataconv, flg ) )
+    {
+      sum ++;
+    }
+  }
+  return cmp_target( sum , target_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地捕獲チェック
+ *
+ *	@param	p_recdata
+ *	@param	p_gamedata
+ *	@param	target_cnt 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+    s32 i;
+  u32 cnt;
+  u8 ground_id;
+  HABITATLIST_STATUS list_status;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svc );
+
+  // 生息地リストデータ数チェック
+  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i ++ )
+  {
+    for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id ++ )
+    {
+      list_status = HABITATLIST_SAVE_GetZoneStatus( p_habitat_sv,i,ground_id );
+
+      // 見ただけカウント
+      if( list_status == HABITAT_ZONE_STATUS_GET )
+      {
+        cnt++;
+      }
+    }
+  }
+  return cmp_target( cnt , target_cnt );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地見た、捕獲チェック
+ *
+ *	@param	p_recdata
+ *	@param	p_gamedata
+ *	@param	target_cnt 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL MDLREC_CHECK_HabitatGetLookCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{ 
+  s32 i;
+  u32 cnt;
+  u8 ground_id;
+  HABITATLIST_STATUS list_status;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svc );
+
+  // 生息地リストデータ数チェック
+  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i ++ )
+  {
+    for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id ++ )
+    {
+      list_status = HABITATLIST_SAVE_GetZoneStatus( p_habitat_sv,i,ground_id );
+
+      // 見た、捕獲をカウント
+      if( (list_status == HABITAT_ZONE_STATUS_LOOK) || 
+          (list_status == HABITAT_ZONE_STATUS_GET) )
+      {
+        cnt++;
+      }
+    }
+  }
+  return cmp_target( cnt , target_cnt );
 }
 
 //----------------------------------------------------------------------------

@@ -32,6 +32,8 @@
 #include "move_pokemon.h" 
 #include "proc_gameclear_save.h"
 
+#include "savedata/medalbox.h"
+
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //==============================================================================================
@@ -93,6 +95,7 @@ static void SetupSequence( GAMECLEAR_WORK* work ); // シーケンスの流れをセットア
 static u16 GetEndingDemoID( void ); // エンディングの3DデモIDを取得する
 static void NowSeqFinish( GAMECLEAR_WORK* work, int* seq ); // 現在のシーケンスを終了する
 static void ElboardStartChampNews( GAMECLEAR_WORK* work ); // 電光掲示板にチャンピオンニュースの表示を開始する
+static void CheckMedalAchieve( GAMECLEAR_WORK* work );  // クリア時のメダルチェック
 
 
 //============================================================================================
@@ -124,6 +127,10 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
       //GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
       ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
     //}
+ 
+    // メダル達成処理
+    CheckMedalAchieve( wk );
+
     PMSND_FadeOutBGM( 30 );
     NowSeqFinish( work, seq );
     break;
@@ -411,3 +418,92 @@ static void ElboardStartChampNews( GAMECLEAR_WORK* work )
   minutes = 60 * 24; // 表示する時間[min]
   MISC_SetChampNewsMinutes( misc, minutes );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クリア時メダル達成処理
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CheckMedalAchieve( GAMECLEAR_WORK* work )
+{
+  GAMEDATA *p_gdata = GAMESYSTEM_GetGameData( work->gsys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gdata );
+  MEDALBOX *p_medal_box = SaveData_GetMedalBox( p_sv );
+
+  // ヒントメダル達成
+  MEDALBOX_SetHintMedalAchive( p_medal_box , MDLID_TAMAGO_LV1 );        // タマゴビギナー
+  MEDALBOX_SetHintMedalAchive( p_medal_box , MDLID_SODATEYA_CNT_LV1 );  //そだてやマニア
+
+  // 手持ちチェック
+  {
+    s32 i;
+    POKEPARTY *p_my_party = GAMEDATA_GetMyPokemon( p_gdata );			// 手持ちモケモン
+    s32 party_cnt = PokeParty_GetPokeCount( p_my_party );
+    s32 mons_num = 0;
+    s32 type_cnt[POKETYPE_MAX];
+
+    // タイプと同じ並びの指定持ち物限定クリアメダルID
+    const MedalID type_medal_id_tbl[] =
+    {
+      MDLID_CHAMPION_NORMAL,
+      MDLID_CHAMPION_KAKUTOU,
+      MDLID_CHAMPION_HIKOU,
+      MDLID_CHAMPION_DOKU,
+      MDLID_CHAMPION_JIMEN,
+      MDLID_CHAMPION_IWA,
+      MDLID_CHAMPION_MUSHI,
+      MDLID_CHAMPION_GHOST,
+      MDLID_CHAMPION_HAGANE,
+      MDLID_CHAMPION_HONOO,
+      MDLID_CHAMPION_MIZU,
+      MDLID_CHAMPION_KUSA,
+      MDLID_CHAMPION_DENKI,
+      MDLID_CHAMPION_ESPER,
+      MDLID_CHAMPION_KOORI,
+      MDLID_CHAMPION_DRAGON,
+      MDLID_CHAMPION_AKU,
+    };
+
+    // クリア
+    GFL_STD_MemClear( type_cnt, sizeof(type_cnt) );
+
+    // パーティー数
+    for( i = 0; i < party_cnt; i++ )
+    {
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_my_party , i );
+      BOOL is_egg = PP_Get( p_pp , ID_PARA_tamago_flag , NULL );
+      if( is_egg != TRUE )
+      {
+        s32 type1, type2;
+        // タイプ１は必ずカウント
+        type1 = PP_Get( p_pp, ID_PARA_type1, NULL );
+        type_cnt[type1]++;
+
+        // タイプ１と違うときのみカウント
+        type2 = PP_Get( p_pp, ID_PARA_type2, NULL );
+        if( type1 != type2 )
+        {
+          type_cnt[type2]++;
+        }
+        // モンスター数カウント
+        mons_num++;
+      }
+    }
+
+    // タイプごとのポケモン数と比較し、手持ちと同じ数ならメダル獲得
+    for( i = 0; i < POKETYPE_MAX; i++ )
+    {
+      if( type_cnt[i] == mons_num ) 
+      {
+        // ヒントメダル達成
+        MEDALBOX_SetTitleMedalAchive( p_medal_box , type_medal_id_tbl[i] );
+        ONOUE_Printf("メダル取得：%d\n",i);
+      }
+    }
+  }
+}
+

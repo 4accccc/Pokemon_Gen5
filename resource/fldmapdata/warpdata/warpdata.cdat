@@ -540,5 +540,33 @@ static const WARPDATA WarpData[] = {
 		ZONE_ID_D31R0101    ,   0,   0,
 		ZONE_ID_D31R0101    ,   0,   0,
 	},
+	{
+		SYS_FLAG_ARRIVE_T06,
+		FALSE,TRUE ,
+		ZONE_ID_T06         ,   0,   0,
+		ZONE_ID_T06         ,   0,   0,
+		ZONE_ID_T06         ,   0,   0,
+	},
+	{
+		SYS_FLAG_ARRIVE_T07,
+		FALSE,TRUE ,
+		ZONE_ID_T07         ,   0,   0,
+		ZONE_ID_T07         ,   0,   0,
+		ZONE_ID_T07         ,   0,   0,
+	},
+	{
+		SYS_FLAG_ARRIVE_H01,
+		FALSE,TRUE ,
+		ZONE_ID_H01         ,   0,   0,
+		ZONE_ID_H01         ,   0,   0,
+		ZONE_ID_H01         ,   0,   0,
+	},
+	{
+		SYS_FLAG_ARRIVE_H03,
+		FALSE,TRUE ,
+		ZONE_ID_H03         ,   0,   0,
+		ZONE_ID_H03         ,   0,   0,
+		ZONE_ID_H03         ,   0,   0,
+	},
 };
 //==================================

@@ -199,12 +199,16 @@ void MEDALBOX_SetTitleMedalAchive( MEDALBOX * p_mdlbox, MedalID medal_id )
 //-----------------------------------------------------------------------------
 void MEDALBOX_SetHintMedalAchive( MEDALBOX *p_mdlbox, MedalID medal_id )
 {
+  // メダル情報取得
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
 
-  // 新品フラグを立てる
-  p_medal_st->is_new = TRUE;
- 
-  SetMedalState( p_medal_st , MEDAL_STATE_HINT_ACHIVE );
+  // ヒントより上位の状態の場合には設定しない
+  if ( p_medal_st->medal_state == MEDAL_STATE_NONE )
+  {
+    // 新品フラグを立てる
+    p_medal_st->is_new = TRUE;
+    SetMedalState( p_medal_st , MEDAL_STATE_HINT_ACHIVE );
+  }
 }
 
 //----------------------------------------------------------------------------

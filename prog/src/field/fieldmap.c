@@ -142,6 +142,8 @@
 
 #include "wbt_system.h"
 
+#include "savedata/medalbox.h"  // MDLID_MAX
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -966,8 +968,19 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
     
     // 天気晴れ
-    FIELD_WEATHER_Set(
-        fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
+    {
+      u32 weather_id = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
+      FIELD_WEATHER_Set(
+          fieldWork->weather_sys, weather_id, HEAPID_WEATHER );
+
+      // ダイアモンドダストメダル取得
+      if( weather_id == WEATHER_NO_DIAMONDDUST )
+      {
+        SAVE_CONTROL_WORK* p_sv=GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+        MEDALBOX *p_medal_box = SaveData_GetMedalBox( p_sv );
+        MEDALBOX_SetTitleMedalAchive( p_medal_box , MDLID_DIAMONDDUST );
+      }
+    }
 
     //外出エフェクト
     fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( fieldWork->gamedata, fieldWork->ExpObjCntPtr, FIELDMAP_GetZoneID( fieldWork ), GAMEDATA_GetSeasonID(fieldWork->gamedata), FIELDMAP_GetSeasonTimeZone( fieldWork ), fieldWork->heapID );

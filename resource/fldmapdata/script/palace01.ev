@@ -282,6 +282,13 @@ EVENT_START ev_scene_palace01_1stguide
 	_BALLOONWIN_OBJMSG( plc_oldman1_01_13, PALACE01_OLDMAN1_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+
+  // ヒントメダル開放
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_DELPOWER_USE_LV1 )   // デルパワー＋
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_JOIN_NUM_LV1 )   // １０にんフェス
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_HIGHSCORE_LV1 )  // てんとりハンドレッド
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_HOLD_LV1 )       // かいさいＬＶ１
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_CLEAR_LV1 )      // たっせいＬＶ１
 	
 	//========================================//
 	//初回誘導イベントを無効
