@@ -45,6 +45,7 @@ do-build:pokefoot_ex.narc
 
 pokefoot_ex.narc: $(POKEGRA:.nce=.NCER) $(POKECOL:.ncl=.NCLR) pokefoot_ex.scr
 	nnsarc -c -l -n -i pokefoot_ex.narc -S pokefoot_ex.scr
+	$(NAIXCUT) pokefoot_ex.naix
 	xcopy /d /y pokefoot_ex.narc .\\..\\
 	xcopy /d /y pokefoot_ex.naix .\\..\\
 
