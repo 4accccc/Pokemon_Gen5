@@ -346,8 +346,8 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">えんぎははいゆう</language>
-		<language name="JPN_KANJI" width="256">えんぎははいゆう</language>
+		<language name="JPN" width="256">はいゆう</language>
+		<language name="JPN_KANJI" width="256">はいゆう</language>
 	</row>
 	<row id="pw_trname_show">
 		<language name="JPN" width="256">はたらくおとこ</language>
@@ -532,6 +532,34 @@
 あいても　ほんき　みたいだな……</language>
 		<language name="JPN_KANJI" width="256">%MYNAME『……どうやら
 相手も　本気みたい　だな……</language>
+	</row>
+	<row id="pw_event2_enemy_2">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+	</row>
+	<row id="pw_event2_react_hero_0">
+		<language name="JPN" width="256">%MYNAME『いっきに　きめるか……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『一気に　きめるか……</language>
+	</row>
+	<row id="pw_event2_react_enemy_0">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴゴ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴゴ……</language>
+	</row>
+	<row id="pw_event2_react_hero_1">
+		<language name="JPN" width="256">%MYNAME『しんちょうに　いくか……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『しんちょうに　いくか……</language>
+	</row>
+	<row id="pw_event2_react_enemy_1">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴゴ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴゴ……</language>
+	</row>
+	<row id="pw_event2_react_hero_2">
+		<language name="JPN" width="256">%MYNAME『かてるかなあ……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『勝てるかなあ……</language>
+	</row>
+	<row id="pw_event2_react_enemy_2">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>

@@ -346,12 +346,12 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">こせいはじょゆう</language>
-		<language name="JPN_KANJI" width="256">こせいはじょゆう</language>
+		<language name="JPN" width="256">しんじんじょゆう</language>
+		<language name="JPN_KANJI" width="256">しんじんじょゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">なぞのひかり</language>
+		<language name="JPN_KANJI" width="256">なぞのひかり</language>
 	</row>
 	<row id="pw_turn_hero_0">
 		<language name="JPN" width="256">%MYNAME『……それにしても
@@ -435,13 +435,13 @@
 	</row>
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">つうしん『りょうかい！　%MYNAME！
-ただいまから　われわれは　そいつを
+ただいまから　われわれは　そいつを▽
 だいバンギラスと　こしょう　する！▼
 いいか！　%MYNAME！
 なんとしても　だいバンギラスの▽
 まちに　はいるのを　ふせいでくれ！</language>
 		<language name="JPN_KANJI" width="256">通信『了解！　%MYNAME！
-ただ今から　我々は　その個体を
+ただ今から　我々は　その個体を▽
 大バンギラスと　呼称する！▼
 いいか！　%MYNAME！
 何としても　大バンギラスが
@@ -454,10 +454,10 @@
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">にげおくれた　しみん『にげろっ！！
-あんな　おおきな　バンギラスに
+あんな　おおきな　バンギラスに▽
 おそわれたら　ひとたまりもないぞ！！</language>
 		<language name="JPN_KANJI" width="256">にげおくれた　しみん『逃げろっ！！
-あんな　大きな　バンギラスに
+あんな　大きな　バンギラスに▽
 おそわれたら　ひとたまりもないぞ！！</language>
 	</row>
 	<row id="pw_event1_hero_1">
@@ -610,17 +610,59 @@
 謎の　光……▽
 あれは　まぼろし　だったの……？</language>
 	</row>
-	<row id="pw_event3_hero_0">
+	<row id="pw_event3_enemy_0">
+		<language name="JPN" width="256">だいバンギラス『グロローッ！！</language>
+		<language name="JPN_KANJI" width="256">大バンギラス『グロローッ！！</language>
+	</row>
+	<row id="pw_event3_hero_1">
+		<language name="JPN" width="256">%MYNAME『くっ……
+なんて　パワーなの　コイツ……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『くっ……
+何て　パワーなの　コイツ……</language>
+	</row>
+	<row id="pw_event3_hero_2">
+		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
+おうとうせよ！　%MYNAME！▽
+じょうきょうを　ほうこく　しろ！</language>
+		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
+応答せよ！　%MYNAME！▽
+状況を　報告　しろ！</language>
+	</row>
+	<row id="pw_event3_hero_3">
+		<language name="JPN" width="256">%MYNAME『もうしわけ　ありません！
+さくせんは　しっぱい　です！！▼
+こちらの　てもちポケモンは
+ぜんめつ　しました！▼
+だいバンギラスは　このまま
+まちに　しんにゅう　してしまいます！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME『申し訳ありません！
+作戦は　失敗です！！▼
+こちらの　手持ちポケモンは
+全滅　しました！▼
+大バンギラスは　このまま
+街に　侵入　してしまいます！</language>
+	</row>
+	<row id="pw_event3_hero_4">
+		<language name="JPN" width="256">つうしん『なんてことだ……
+これで　イッシュは　おしまいだ……</language>
+		<language name="JPN_KANJI" width="256">通信『何てことだ……
+これで　イッシュは　おしまいだ……</language>
+	</row>
+	<row id="pw_event3_enemy_5">
+		<language name="JPN" width="256">？？？『……　……</language>
+		<language name="JPN_KANJI" width="256">？？？『……　……</language>
+	</row>
+	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">%MYNAME『キャハ！　やったー！
 だいバンギラスを　たおしたっ！</language>
 		<language name="JPN_KANJI" width="256">%MYNAME『キャハ！　やったー！
 大バンギラスを　倒したっ！</language>
 	</row>
-	<row id="pw_event3_enemy_0">
+	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">だいバンギラス『……　……</language>
 		<language name="JPN_KANJI" width="256">大バンギラス『……　……</language>
 	</row>
-	<row id="pw_event3_hero_1">
+	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">つうしん『よくやった！　%MYNAME！
 ただちに　ほんぶへ……▼
 いや……　まて　　%MYNAME……▼
@@ -636,7 +678,7 @@
 ヤツは　まだ　倒れていないっ！
 注意しろっ！　%MYNAME！</language>
 	</row>
-	<row id="pw_event3_hero_2">
+	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">%MYNAME『キャハ！　キャハハッ！
 これで　わたしも　ゆうめいじん！！▼
 もう　こんな　あぶない　しごとで
@@ -648,73 +690,31 @@
 苦労する　必要も　ないっ！▼
 一生　遊んで　生きて行けるわ！</language>
 	</row>
-	<row id="pw_event3_enemy_2">
+	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">だいバンギラス『グロロ……</language>
 		<language name="JPN_KANJI" width="256">大バンギラス『グロロ……</language>
 	</row>
-	<row id="pw_event3_hero_3">
+	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">つうしん『おい！　%MYNAME！
 きこえて　いるのかっ！！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　%MYNAME！
 聞こえて　いるのかっ！！</language>
 	</row>
-	<row id="pw_event3_enemy_4">
+	<row id="pw_event4_enemy_4">
 		<language name="JPN" width="256">だいバンギラス『グロローンッ！！</language>
 		<language name="JPN_KANJI" width="256">大バンギラス『グロローンッ！！</language>
 	</row>
-	<row id="pw_event3_hero_5">
+	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">%MYNAME『……フギャーッ！！</language>
 		<language name="JPN_KANJI" width="256">%MYNAME『……フギャーッ！！</language>
 	</row>
-	<row id="pw_event3_hero_6">
+	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">つうしん『おい！　どうした！！
 %MYNAME！　おうとう　せよ！▼
 %MYNAME！！　%MYNAME！！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　どうした！！
 %MYNAME！　応答　せよ！▼
 %MYNAME！！　%MYNAME！！</language>
-	</row>
-	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">だいバンギラス『グロローッ！！</language>
-		<language name="JPN_KANJI" width="256">大バンギラス『グロローッ！！</language>
-	</row>
-	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">%MYNAME『くっ……
-なんて　パワーなの　コイツ……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『くっ……
-何て　パワーなの　コイツ……</language>
-	</row>
-	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
-おうとうせよ！　%MYNAME！▽
-じょうきょうを　ほうこく　しろ！</language>
-		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
-応答せよ！　%MYNAME！▽
-状況を　報告　しろ！</language>
-	</row>
-	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">%MYNAME『もうしわけ　ありません！
-さくせんは　しっぱい　です！！▼
-こちらの　てもちポケモンは
-ぜんめつ　しました！▼
-だいバンギラスは　このまま
-まちに　しんにゅう　してしまいます！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『申し訳ありません！
-作戦は　失敗です！！▼
-こちらの　手持ちポケモンは
-全滅　しました！▼
-大バンギラスは　このまま
-街に　侵入　してしまいます！</language>
-	</row>
-	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">つうしん『なんてことだ……
-これで　イッシュは　おしまいだ……</language>
-		<language name="JPN_KANJI" width="256">通信『何てことだ……
-これで　イッシュは　おしまいだ……</language>
-	</row>
-	<row id="pw_event4_enemy_5">
-		<language name="JPN" width="256">？？？『……　……</language>
-		<language name="JPN_KANJI" width="256">？？？『……　……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

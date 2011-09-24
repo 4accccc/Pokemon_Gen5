@@ -385,6 +385,16 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『グムム……
 かっ　からだが……</language>
 	</row>
+	<row id="pw_turn_enemy_7">
+		<language name="JPN" width="256">ハチクマン『グッ……　からだが……
+うまく……　うごかぬ……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『グッ……　身体が……
+うまく……　動かぬ……</language>
+	</row>
+	<row id="pw_turn_enemy_9">
+		<language name="JPN" width="256">ハチクマン『これまで……　か……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『これまで……　か……</language>
+	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『なんだ……
 この　きょだいな　マシンは……▼
