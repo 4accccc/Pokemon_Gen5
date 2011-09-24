@@ -1107,11 +1107,23 @@ void WBTSYS_GetOpponentBGM( const WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 #include "../../../resource/wbt/wbt_trainer/wbt_trmsg_id.cdat"
 
 //------------------------------------------------------------------
+/**
+ * @brief ROMトレーナーに対応したメッセージOffsetを取得する
+ *
+ * @note
+ * レンタルトーナメントの場合はメッセージを変える必要があるため
+ */
 //------------------------------------------------------------------
 static u16 get_msgid_start( WBTCUP wbtcup, WBTROM_TRID tr_id )
 {
+  u8 idx = 0;
+  if ( wbtcup == WBTCUP_RENTAL || wbtcup == WBTCUP_RENTALMASTER )
+  {
+    idx = 1;
+  }
+  OS_Printf("tr_id = %2d msg_id = %3d\n", tr_id, WBTTrainerMsgID[tr_id][idx] );
   GF_ASSERT( tr_id < NELEMS(WBTTrainerMsgID) );
-  return WBTTrainerMsgID[tr_id][0];
+  return WBTTrainerMsgID[tr_id][idx];
 }
 //------------------------------------------------------------------
 /**
@@ -1138,8 +1150,8 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
     u16 msg_id;
     WBTROM_TRID tr_id;
     tr_id = WBTTRAINER_GetID( opponent );
-    msg_id = tr_id * WBT_TRMSG_TYPE_NUM;
-    GF_ASSERT( msg_id == get_msgid_start( wbtsys->wbtcup, tr_id ) );
+    //msg_id = tr_id * WBT_TRMSG_TYPE_NUM;
+    msg_id = get_msgid_start( wbtsys->wbtcup, tr_id );
     msg_id += type;
     msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
         NARC_message_wbt_trmsg_dat, tempHeapID );

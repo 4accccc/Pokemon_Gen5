@@ -38089,10 +38089,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:58:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38156,10 +38157,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:58:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38231,10 +38233,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38292,10 +38295,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38351,10 +38355,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38419,10 +38424,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38486,10 +38492,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：チェレン
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38545,10 +38552,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：チェレン
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38604,10 +38612,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38675,10 +38684,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38744,10 +38754,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38805,10 +38816,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38864,10 +38876,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38931,10 +38944,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -38996,10 +39010,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：ホミカ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39055,10 +39070,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：ホミカ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39088,13 +39104,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクの　むしポケモンが　きみと
+			<Text>ボクの　ＸＸポケモンが　きみと
 たたかいたいって　さわいでさ▼
 ではでは
 さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T13:06:29" />
+				User="tamada:W00253"
+				Time="2011-09-24T04:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39102,13 +39118,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクの　むしポケモンが　きみと
+			<Text>ボクの　ＸＸポケモンが　きみと
 戦いたいって　騒いでさ▼
 ではでは
 さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-14T06:51:36" />
+				User="tamada:W00253"
+				Time="2011-09-24T04:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39118,10 +39134,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:58:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39151,7 +39168,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしポケモンの　うつくしさを
+			<Text>ＸＸポケモンの　うつくしさを
 ひきだせる　たたかいを　すれば▼
 かっても　まけても
 こころおどる　こうけいに　なるよ！▼
@@ -39160,8 +39177,8 @@
 ではでは
 さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-15T13:03:13" />
+				User="tamada:W00253"
+				Time="2011-09-24T04:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39169,7 +39186,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むしポケモンの　美しさを
+			<Text>ＸＸポケモンの　美しさを
 ひきだせる　戦いを　すれば▼
 勝っても　負けても
 心踊る　光景に　なるよ！▼
@@ -39178,8 +39195,8 @@
 ではでは
 さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-15T13:03:22" />
+				User="tamada:W00253"
+				Time="2011-09-24T04:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39189,10 +39206,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:58:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39260,10 +39278,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39319,10 +39338,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39378,10 +39398,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T05:59:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39441,10 +39462,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39506,10 +39528,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：アーティ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39565,10 +39588,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：アーティ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39624,10 +39648,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39691,10 +39716,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39758,10 +39784,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39817,10 +39844,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39876,10 +39904,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39935,10 +39964,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -39998,10 +40028,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：カミツレ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40057,10 +40088,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：カミツレ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40120,10 +40152,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40183,10 +40216,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40250,10 +40284,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40309,10 +40344,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40368,10 +40404,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40433,10 +40470,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40496,10 +40534,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：ヤーコン
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40555,10 +40594,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：ヤーコン
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40614,10 +40654,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40681,10 +40722,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40752,10 +40794,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40811,10 +40854,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40870,10 +40914,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40935,10 +40980,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40998,10 +41044,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ジムリーダー：フウロ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41057,10 +41104,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：フウロ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41118,10 +41166,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41185,10 +41234,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41254,10 +41304,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:00:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41315,10 +41366,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41374,10 +41426,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41439,10 +41492,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41500,10 +41554,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シャガ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41559,10 +41614,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：シャガ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41618,10 +41674,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:40" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41683,10 +41740,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:41" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41750,10 +41808,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:43" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41809,10 +41868,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:45" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41868,10 +41928,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:46" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41929,10 +41990,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:48" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -41990,10 +42052,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ジムリーダー：シズイ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:49" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42049,10 +42112,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ジムリーダー：シズイ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-13T12:29:52" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42108,10 +42172,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42175,10 +42240,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42246,10 +42312,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42307,10 +42374,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42366,10 +42434,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42435,10 +42504,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42498,10 +42568,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：ベル
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42557,10 +42628,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：ベル
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42616,10 +42688,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42677,10 +42750,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42742,10 +42816,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42801,10 +42876,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42860,10 +42936,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42921,10 +42998,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -42984,10 +43062,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ポッド
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43043,10 +43122,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：ポッド
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43102,10 +43182,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43161,10 +43242,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43226,10 +43308,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43285,10 +43368,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43344,10 +43428,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43405,10 +43490,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43466,10 +43552,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：コーン
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43525,10 +43612,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：コーン
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43586,10 +43674,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43647,10 +43736,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43710,10 +43800,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43769,10 +43860,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43828,10 +43920,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43891,10 +43984,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43954,10 +44048,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：デント
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44013,10 +44108,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：デント
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44074,10 +44170,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44139,10 +44236,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44212,10 +44310,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44271,10 +44370,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44330,10 +44430,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44391,10 +44492,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44452,10 +44554,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモントレーナー：アロエ
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44511,10 +44614,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：アロエ
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44570,10 +44674,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44631,10 +44736,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44696,10 +44802,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44757,10 +44864,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44816,10 +44924,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44875,10 +44984,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44938,10 +45048,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモントレーナー：ハチク
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44997,10 +45108,11 @@
 			Language="JPN">
 			<Comment>♂：アナウンス
 ・ポケモントレーナー：ハチク
-・前口上メッセージ</Comment>
+・前口上メッセージ
+レンタル用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-09-24T06:02:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
