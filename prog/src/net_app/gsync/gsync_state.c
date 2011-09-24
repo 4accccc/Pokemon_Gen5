@@ -53,6 +53,8 @@
 #include "net/dwc_error.h"
 #include "net/dwc_rap.h"
 
+#include "savedata/medalbox.h"
+#include "app/mdlrec_id.h"  // for MDLRECID_GAMESYNC
 
 // 入力キー
 // メッセージ送りがどのボタンでも対応していたのを対処 add ichiraku
@@ -599,6 +601,10 @@ static void _pokemonArise(G_SYNC_WORK* pWork)
     pWork->pp = pp;
     DREAMWORLD_SV_SetSleepPokemonFlg(pDreamSave,FALSE);
     DREAMWORLD_SV_SetUploadCount(pDreamSave, pWork->uploadCount);
+    { //2011.09.24 swan追加
+      MEDALBOX * medalbox   = SaveData_GetMedalBox( pWork->pSaveData );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLRECID_GAMESYNC );
+    }
     
   }
 }
