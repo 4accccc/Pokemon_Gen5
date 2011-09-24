@@ -68,8 +68,10 @@ typedef enum{
 #define ACT_TIMEN_PLACE_NUM (2)
 #define ACT_TIMEN_NUM (ACT_TIMEN_PLACE_NUM*2)
 
-#define ACT_SCORE_START (ACT_MS_P)
-#define ACT_SCORE_NUM   (ACT_SCORE_UP+1)
+#define ACT_MY_SCORE_START (ACT_MS_P)
+#define ACT_MY_SCORE_NUM   (ACT_SCORE_UP-ACT_MY_SCORE_START+1)
+#define ACT_TOTAL_SCORE_START (ACT_TS_P)
+#define ACT_TOTAL_SCORE_NUM   (ACT_SCORE_UP-ACT_TOTAL_SCORE_START+1)
 #define ACT_TIME_START  (ACT_TIME_P)
 #define ACT_TIME_NUM    (ACT_TIME_BONUS-ACT_SCORE_UP)
 
@@ -113,7 +115,8 @@ struct _FIELD_FMISSION_INFO{
   const FEST_MISSION* fmwk; 
 
   //
-  u8              visible_f:1; //パネルが隠れているか？
+  u8              visible_f:1; //パネルが表示されているか？
+  u8              myscore_visible_f:1; //マイスコアパネルが表示されているか？
   u8              t_scoreup_f:1;  //スコアアップタスクが生きているか？
   u8              t_tbonus_f:1;   //タイムボーナスタスクが生きているか？
   u8              score_up_ct;
@@ -158,6 +161,7 @@ static void _sub_ActorDelete( FIELD_FMISSION_INFO* wk );
 
 static int get_num_keta(u32 num,u8 keta);
 static void panel_Hide( FIELD_FMISSION_INFO* wk );
+static BOOL panel_MyScoreViewCheck( FIELD_FMISSION_INFO* wk );
 static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f );
 static void panel_MyScoreUpdate( FIELD_FMISSION_INFO* wk );
 static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk );
@@ -273,7 +277,11 @@ void FIELD_FMISSION_INFO_Draw( FIELD_FMISSION_INFO* wk )
     return;
   }
   panel_TimeUpdate( wk, FALSE );
+  
+  //マイスコア表示非表示チェック
+  wk->myscore_visible_f = panel_MyScoreViewCheck( wk );
   panel_MyScoreUpdate( wk );
+
   panel_TotalScoreUpdate( wk );
 }
 
@@ -455,6 +463,16 @@ static void panel_Hide( FIELD_FMISSION_INFO* wk )
 
 //--------------------------------------------------------------
 /**
+ *	@brief	マイスコアパネルの表示チェック
+ */
+//--------------------------------------------------------------
+static BOOL panel_MyScoreViewCheck( FIELD_FMISSION_INFO* wk )
+{
+  return (LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys ) > 1 );
+}
+
+//--------------------------------------------------------------
+/**
  *	@brief	数字の桁取得
  */
 //--------------------------------------------------------------
@@ -479,6 +497,8 @@ static void panel_NumberDraw( FIELD_FMISSION_INFO* wk, int num, int keta, u8 act
     int value = get_num_keta( num, i );
     if( i > 0 && !full_f){
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[idx], (value!=0) );
+    }else{
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[idx], TRUE );
     }
     GFL_CLACT_WK_SetAnmIndex( wk->pAct[idx], value );
 //    GFL_CLACT_WK_SetAnmFrame( wk->pAct[idx], FX32_CONST(value));
@@ -511,7 +531,10 @@ static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
 //--------------------------------------------------------------
 static void panel_MyScoreUpdate( FIELD_FMISSION_INFO* wk )
 {
-  panel_NumberDraw( wk, LINK_FESTIVAL_FInfoMyScoreGet( wk->fest_sys ), ACT_SCOREN_PLACE_NUM, ACT_MSN01, FALSE );
+  if( wk->myscore_visible_f ){
+    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_MS_P], TRUE );
+    panel_NumberDraw( wk, LINK_FESTIVAL_FInfoMyScoreGet( wk->fest_sys ), ACT_SCOREN_PLACE_NUM, ACT_MSN01, FALSE );
+  }
 }
 
 
@@ -566,8 +589,15 @@ static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk )
 //--------------------------------------------------------------
 static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
 {
+  //マイスコア表示非表示チェック
+  wk->myscore_visible_f = panel_MyScoreViewCheck( wk );
+
   //初期位置セット
-  taskAdd_PanelScroll( wk, ACT_SCORE_START, ACT_SCORE_NUM, AP_MSP_SY+AP_TSP_SY);
+  if( wk->myscore_visible_f ){ 
+    taskAdd_PanelScroll( wk, ACT_MY_SCORE_START, ACT_MY_SCORE_NUM, AP_MSP_SY+AP_TSP_SY);
+  }else{
+    taskAdd_PanelScroll( wk, ACT_TOTAL_SCORE_START, ACT_TOTAL_SCORE_NUM, AP_MSP_SY+AP_TSP_SY);
+  }
   taskAdd_PanelScroll( wk, ACT_TIME_START, ACT_TIME_NUM, -AP_TIMEP_SY);
   
   taskAddCheck_ScoreUp( wk );
