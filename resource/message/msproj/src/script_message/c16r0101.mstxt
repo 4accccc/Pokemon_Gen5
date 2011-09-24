@@ -68,13 +68,13 @@
 			<Text>ここは　イッシュちほうで
 いちばん　あたらしい　まち▽
 『[Name:ResortTown Idx="1" ]』です▼
-たくさんの　ひとびとが　おとずれて
-よろこびと　つながりが　ある▽
+たくさんの　ひとが　おとずれて
+よろこびと　つながりある▽
 すてきな　まちに　なるように▽
 げんざい　かいはつ　しています▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T10:36:45" />
+				Time="2011-09-24T03:23:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -100,10 +100,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>0：－
-1：街名</Comment>
+1：街名
+
+選択肢１
+ここって何の回答</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T10:36:16" />
+				Time="2011-09-24T05:12:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -129,10 +132,10 @@
 			<Text>この　アベニューを　つくった
 オーナーに　スカウトされて▼
 あなたは　この　アベニューの
-かいはつの　せきにんしゃ　である▽
+せきにんしゃ　である▽
 『[Name:ResortMayor Idx="0" ]』に　なりました▼
 ここでの　もくてきは　ただ　ひとつ
-すてきな　まちを　つくること！▼
+すてきな　まちを　つくること▼
 あそびに　きた　ひとびとが
 まんぞく　できる　まちに　しましょう▼
 おしごとを　てだすけ　する
@@ -140,7 +143,7 @@
 なんなりと　もうしつけ　ください▼　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:10:20" />
+				Time="2011-09-24T03:23:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -151,10 +154,10 @@
 			<Text>この　アベニューを　つくった
 オーナーに　スカウトされて▼
 あなたは　この　アベニューの
-かいはつの　せきにんしゃ　である▽
+せきにんしゃ　である▽
 『[Name:ResortMayor Idx="0" ]』に　なりました▼
 ここでの　もくてきは　ただ　ひとつ
-すてきな　まちを　つくること！▼
+すてきな　まちを　つくること▼
 あそびに　きた　ひとびとが
 まんぞく　できる　まちに　しましょう▼
 おしごとを　てだすけ　する
@@ -162,7 +165,7 @@
 なんなりと　もうしつけ　ください▼　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T12:10:31" />
+				Time="2011-09-24T03:24:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -171,10 +174,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>0：市長名
-</Comment>
+
+選択肢２
+何をするのの回答</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T10:39:18" />
+				Time="2011-09-24T05:12:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -198,7 +203,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さまざまな　つうしんを　して
-まちに　ゲストを　よびましょう▼
+まちに　おきゃくさまを　よびましょう▼
 つうしんしした　あいては
 アベニューに　あらわれるので▽
 はなしかけて　みましょう▼
@@ -210,7 +215,7 @@
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:03:59" />
+				Time="2011-09-24T03:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -219,7 +224,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さまざまな　つうしんを　して
-まちに　ゲストを　よびましょう▼
+まちに　おきゃくさまを　よびましょう▼
 つうしんしした　あいては
 アベニューに　あらわれるので▽
 はなしかけて　みましょう▼
@@ -231,12 +236,22 @@
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:04:15" />
+				Time="2011-09-24T03:24:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+選択肢３
+すてきな街の回答
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T05:20:02" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答３
@@ -258,7 +273,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲストをよぶ　には
+			<Text>おやくさまをよぶ　には
 とにかく　つうしんする　こと　です▼
 Ｃ－ＧＥＡＲを　ＯＮにしておけば
 すれちがった　あいてが　やってきます▼
@@ -270,7 +285,7 @@
 ファンが　くることも　ありますよ▼　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T14:35:24" />
+				Time="2011-09-24T03:27:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -296,6 +311,15 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:16" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+選択肢４
+お客様を呼ぶには回答</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T05:20:28" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答４
@@ -318,7 +342,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>「しょうたいする」を　えらぶと
-ゲストが　まちの　じゅうにんと▽
+おきゃくさまが　まちの　じゅうにんと▽
 なって　おみせが　つくられます▼
 それぞれの　ひとが
 ゆめを　もっているので▼
@@ -326,7 +350,7 @@
 はなしを　よくきいて　えらびましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:31:14" />
+				Time="2011-09-24T03:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -335,7 +359,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>「しょうたいする」を　えらぶと
-ゲストが　まちの　じゅうにんと▽
+おきゃくさまが　まちの　じゅうにんと▽
 なって　おみせが　つくられます▼
 それぞれの　ひとが
 ゆめを　もっているので▼
@@ -343,12 +367,21 @@
 はなしを　よくきいて　えらびましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T11:31:23" />
+				Time="2011-09-24T03:28:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:22" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+選択肢５
+招待するっての回答</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T05:20:44" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答５
@@ -370,10 +403,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちに　きた　ひとへ
+			<Text>まちに　きた　おきゃくさまへ
 「あんないする」を▽
 やってみましょう▼
-ゲストが　まんぞくすると
+おきゃくさまが　まんぞくすると
 あんない　した　おみせと▽
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
@@ -385,12 +418,12 @@
 おみせに　おかれている▽
 しなものの　おねだんが▽
 ちょっぴり　おやすく　なります▼
-ゲストの　いきたい　ところへ
-うまく　あんないして▽
+おきゃくさまの　いきたい　ところへ
+じょうずに　あんないして▽
 にんきを　あつめましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T16:08:47" />
+				Time="2011-09-24T03:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -398,10 +431,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちに　きた　ひとへ
+			<Text>まちに　きた　おきゃくさまへ
 「あんないする」を▽
 やってみましょう▼
-ゲストが　まんぞくすると
+おきゃくさまが　まんぞくすると
 あんない　した　おみせと▽
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
@@ -413,17 +446,26 @@
 おみせに　おかれている▽
 しなものの　おねだんが▽
 ちょっぴり　おやすく　なります▼
-ゲストの　いきたい　ところへ
-うまく　あんないして▽
+おきゃくさまの　いきたい　ところへ
+じょうずに　あんないして▽
 にんきを　あつめましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T16:08:55" />
+				Time="2011-09-24T03:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-06T11:30:27" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+選択肢６
+案内するっての回答</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T05:20:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>回答６
@@ -457,7 +499,7 @@
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:03:20" />
+				Time="2011-09-24T05:08:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -486,12 +528,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>追加ｍｓｇ
+事務局の説明を入れる
 
 0：市長名
-1：リゾート街名</Comment>
+1：リゾート街名
+
+選択肢７
+この部屋って何の回答</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:05:33" />
+				Time="2011-09-24T05:21:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -700,10 +746,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲストをよぶ　には？</Text>
+			<Text>おきゃくさまをよぶ　には？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:31:02" />
+				User="shimoyamada:W00184"
+				Time="2011-09-24T03:32:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -711,10 +757,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲストをよぶ　には？</Text>
+			<Text>おきゃくさまをよぶ　には？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:31:02" />
+				User="shimoyamada:W00184"
+				Time="2011-09-24T03:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1440,10 +1486,18 @@
 きみも　すきなひとを
 ひしょに　したいだろう？▼
 まちゆくひとを
-ひしょに　してみないか▼</Text>
+ひしょに　してみないか▼
+やりかたは　かんたんだよ▼
+はなしかけて　
+「スカウトする」を　えらぶんだ▼
+この　まちの　みりょくが
+あいての　りそうより　たかければ▽
+きっと　せいこう　するよ▼
+だから　もっと　もっと
+まちを　はってん　させちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:02:20" />
+				Time="2011-09-24T05:02:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1456,10 +1510,18 @@
 きみも　すきなひとを
 ひしょに　したいだろう？▼
 まちゆくひとを
-ひしょに　してみないか▼</Text>
+ひしょに　してみないか▼
+やりかたは　かんたんだよ▼
+はなしかけて　
+「スカウトする」を　えらぶんだ▼
+この　まちの　みりょくが
+あいての　りそうより　たかければ▽
+きっと　せいこう　するよ▼
+だから　もっと　もっと
+まちを　はってん　させちゃってよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-18T11:02:33" />
+				Time="2011-09-24T05:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

@@ -1287,10 +1287,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　[Name:ResortTown ]
-[Name:ResortMayor Idx="1" ]の　じむしょ</Text>
+[Name:ResortMayor Idx="1" ]の　じむしょ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:39:51" />
+				Time="2011-09-24T07:25:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1299,10 +1299,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　[Name:ResortTown ]
-[Name:ResortMayor Idx="1" ]の　じむしょ</Text>
+[Name:ResortMayor Idx="1" ]の　じむしょ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:39:57" />
+				Time="2011-09-24T07:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1316,6 +1316,104 @@
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-23T08:40:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_kanban_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは
+[Name:ResortTown ]▼
+ひとと　こうりゅう　するほどに
+はってんする　おおどおり▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは
+[Name:ResortTown ]▼
+ひとと　こうりゅう　するほどに
+はってんする　おおどおり▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:28:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>入り口の大看板・奥
+0：街名
+
+タウンマップのまま</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:24:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_kanban_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは
+[Name:ResortTown ]▼
+ひとと　こうりゅう　するほどに
+はってんする　おおどおり▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:28:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは
+[Name:ResortTown ]▼
+ひとと　こうりゅう　するほどに
+はってんする　おおどおり▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:28:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>入り口の大看板・手前
+0：街名
+
+タウンマップのまま</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-24T07:27:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
