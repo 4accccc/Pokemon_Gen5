@@ -280,7 +280,6 @@ extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word, u8 namein_shortcut 
 extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
-extern void GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 extern void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param );
 extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );

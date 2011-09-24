@@ -90,6 +90,9 @@ static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
 static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type );
 static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys );
+static void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
+static void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
+static BOOL GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 
 #ifdef PM_DEBUG
 GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
@@ -1448,8 +1451,7 @@ void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal )
 //==================================================================
 void GAMEBEACON_Set_PokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_CAPTURE, monsno ) ){
-    GAMEBEACON_Set_FMissionWildPokemonGet( monsno, eff_enc_f, mushroom_enc_f );
+  if( GAMEBEACON_Set_FMissionWildPokemonGet( monsno, eff_enc_f, mushroom_enc_f ) ){
     return;
   }
 
@@ -1467,7 +1469,7 @@ void GAMEBEACON_Set_PokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f 
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_WildPokemonGet(u16 monsno)
+static void GAMEBEACON_Set_WildPokemonGet(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_GET) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
@@ -1497,7 +1499,7 @@ void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
+static void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_POKE_GET) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
@@ -1526,22 +1528,28 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
  * @param   monsno    ポケモン番号
  * @param   eff_enc_f エフェクトエンカウントならTRUE
  * @param   mushroom_enc_f  タマゲタケシンボルエンカウントならTRUE
- *
- * フェスミッションビーコン送信チェックはGAMEBEACON_Set_PokemonGet()で事前に行っているので、ここではやらなくていい
  */
 //==================================================================
-void GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
+static BOOL GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
   u8 action;
+  FMISSION_LOG_ACTION log_act;
 
   if( eff_enc_f ){
     action = GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE;
+    log_act = FMISSION_LOG_ACT_EFF_ENC_CAPTURE;
   }else if( mushroom_enc_f ){
     action = GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE;
+    log_act = FMISSION_LOG_ACT_MUSHROOM_CAPTURE;
   }else{
     action = GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE;
+    log_act = FMISSION_LOG_ACT_POKE_CAPTURE;
   }
-  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, action, monsno );
+  if( GAMEBEACON_SUB_FMissionCheckScore( log_act, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, action, monsno );
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //==================================================================
@@ -1556,16 +1564,19 @@ void GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mus
 void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
   u8 action;
+  FMISSION_LOG_ACTION  log_act;
 
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EFF_ENC_WIN, monsno ) ){
-
-    if( eff_enc_f ){
-      action = GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN;
-    }else if( mushroom_enc_f ){
-      action = GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN;
-    }else{
-      action = GAMEBEACON_ACTION_FMISSION_POKE_WIN;
-    }
+  if( eff_enc_f ){
+    action = GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN;
+    log_act = FMISSION_LOG_ACT_EFF_ENC_WIN;
+  }else if( mushroom_enc_f ){
+    action = GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN;
+    log_act = FMISSION_LOG_ACT_MUSHROOM_WIN;
+  }else{
+    action = GAMEBEACON_ACTION_FMISSION_POKE_WIN;
+    log_act = FMISSION_LOG_ACT_POKE_WIN;
+  }
+  if( GAMEBEACON_SUB_FMissionCheckScore( log_act, monsno ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, action, monsno );
   }
 }
