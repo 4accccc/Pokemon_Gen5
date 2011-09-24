@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/23 12:20:19
+#save date:2011/09/24 15:12:03
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r12.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ TR_KARATE_14
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_RTRD         
+MV_RND_DL
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -121,19 +121,19 @@ SCRID_TRID_KARATE_14
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-3
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-5
+0
 #Move Limit Z Number
-8
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 16 184
+232 32 104
 #event number: 4
 #type
 1
@@ -142,25 +142,25 @@ TR_BATTLEG_14
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_RTLD         
+MV_RND_UDR
 #EVENT TYPE Number
-EV_TYPE_TRAINER_KYORO
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_BATTLEG_14
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
-3
-#Parameter 1 Number
 4
+#Parameter 1 Number
+0
 #Parameter 2 Number
 0
 #Move Limit X Number
-8
+0
 #Move Limit Z Number
-8
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
