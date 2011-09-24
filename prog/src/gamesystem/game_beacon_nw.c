@@ -1182,17 +1182,18 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
  *
  * @param   gamedata		
  * @param   free_word   一言メッセージ
+ * @param   namein_shortcut メッセージ入力時に使用したショートカットID NAMEIN_SHORTCUT_RET include/app/name_input.h
  */
 //==================================================================
-void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
+void GAMEBEACON_Set_FreeWord( const STRBUF *free_word, u8 namein_shortcut )
 {
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_FREEWORD, 0 ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_FREEWORD, (u32)free_word );
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_FREEWORD, (u32)free_word, namein_shortcut );
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FREEWORD) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
-  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
+  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word, namein_shortcut );
 }
 
 //==================================================================
@@ -1201,11 +1202,13 @@ void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
  *
  * @param   gamedata		
  * @param   free_word   一言メッセージ
+ * @param   namein_shortcut メッセージ入力時に使用したショートカットID NAMEIN_SHORTCUT_RET include/app/name_input.h
  */
 //==================================================================
-void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word)
+void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word, u8 namein_shortcut )
 {
-  GFL_STR_GetStringCode(free_word, info->action.freeword_message, GAMEBEACON_FREEWORD_MESSAGE_LEN);
+  GFL_STR_GetStringCode(free_word, info->action.freeword.freeword_message, GAMEBEACON_FREEWORD_MESSAGE_LEN);
+  info->action.freeword.shortcut_id = namein_shortcut;
   info->action.action_no = GAMEBEACON_ACTION_FREEWORD;
   
   BEACONINFO_Set_Details_Walk(info);

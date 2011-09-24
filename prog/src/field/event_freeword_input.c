@@ -165,7 +165,7 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
     break;
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
     GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
-    GAMEBEACON_Set_FreeWord( param->strbuf );
+    GAMEBEACON_Set_FreeWord( param->strbuf, param->shortcut_ret );
 
     // ショートカットボタン戻り値
     switch( param->shortcut_ret ){
@@ -196,7 +196,7 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
     break;
   case NAMEIN_FREE_FES_WORD:  // フェス用フリーワード
     GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
-    GAMEBEACON_Set_FreeWord( param->strbuf );
+    GAMEBEACON_Set_FreeWord( param->strbuf, param->shortcut_ret );
 
     // ショートカットボタン戻り値
     switch( param->shortcut_ret ){

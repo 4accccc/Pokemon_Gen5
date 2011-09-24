@@ -1062,10 +1062,16 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
  *
  * @param   send		
  * @param   action
- * @param   param
+ * @param   param1
+ * @param   param2
  */
 //--------------------------------------------------------------
 void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param )
+{
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(send, action, param, 0 );
+}
+
+void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param1, u32 param2 )
 {
   GAMEBEACON_SEND_MANAGER tmp;
   LINK_FESTIVAL* fest_sys;
@@ -1083,20 +1089,20 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send
 
   switch( action ){
   case GAMEBEACON_ACTION_FMISSION_FREEWORD:
-    BEACONINFO_Set_FreeWord( info, (const STRBUF*)param);
+    BEACONINFO_Set_FreeWord( info, (const STRBUF*)param1, param2 );
     break;
   case GAMEBEACON_ACTION_FMISSION_POKE_DOWN:
-    BEACONINFO_Set_Dying( info, (const STRBUF*)param);
+    BEACONINFO_Set_Dying( info, (const STRBUF*)param1);
     break;
   case GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE:
-    BEACONINFO_Set_HPLittle( info, (const STRBUF*)param);
+    BEACONINFO_Set_HPLittle( info, (const STRBUF*)param1);
     break;
   case GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE:
-    BEACONINFO_Set_PPLittle( info, (const STRBUF*)param);
+    BEACONINFO_Set_PPLittle( info, (const STRBUF*)param1);
     break;
   default:
     info->action.fmission = LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon;
-    info->action.fmission.act_param = (u16)param;
+    info->action.fmission.act_param = (u16)param1;
     break;
   }
   info->action.action_no = action;  //ƒAƒNƒVƒ‡ƒ“noã‘‚«

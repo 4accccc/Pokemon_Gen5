@@ -105,18 +105,7 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
  */
 //--------------------------------------------------------------
 extern void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param );
-
-#if 0
-//--------------------------------------------------------------
-/**
- * フェスビーコン送信をセットした時の共通処理
- *
- * @param   send		
- * @param   info		
- */
-//--------------------------------------------------------------
-extern void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param );
-#endif
+extern void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param1, u32 param2 );
 
 //--------------------------------------------------------------
 /**
@@ -215,7 +204,7 @@ void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id);
 void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
-void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word);
+void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word, u8 namein_shortcut);
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);

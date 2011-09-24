@@ -393,8 +393,8 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
 
   if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_FREEWORD ){
     //EOMž‚Ý
-    GFL_STD_MemCopy16( info->action.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
-    p_log->param = 0;
+    GFL_STD_MemCopy16( info->action.freeword.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
+    p_log->param = info->action.freeword.shortcut_id;
   }else if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_DOWN ){
     //EOMž‚Ý
     GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));

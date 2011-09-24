@@ -276,7 +276,7 @@ extern void GAMEBEACON_Set_PokeShifter(void);
 extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
 extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
-extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
+extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word, u8 namein_shortcut );
 extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );

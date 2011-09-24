@@ -897,7 +897,7 @@ void GAMEBEACON_Get_FreeWordMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
     GFL_STR_ClearBuffer(dest);
     return;
   }
-  GFL_STR_SetStringCode( dest, info->action.freeword_message );
+  GFL_STR_SetStringCode( dest, info->action.freeword.freeword_message );
 }
 
 //==================================================================

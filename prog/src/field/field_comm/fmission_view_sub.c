@@ -918,7 +918,8 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
 
   pp->sex = FMISSION_LOG_GetSex( pl );
   pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
-  pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
+  pp->act_prm = FMISSION_LOG_GetActionParam( pl );
+  pp->type = panel_GetType( wk, action, pp->act_prm );
   pp->tr_view = FMISSION_LOG_GetTrView( pl );
 
   IWASAWA_Printf("PanelDrawEntry %d\n", action);
@@ -1012,6 +1013,7 @@ static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
   BVCAct_SetPosition( pp->cUnion, x+ACT_UNION_OX, y+ACT_UNION_OY );
   BmpOam_ActorSetPos( pp->msgOam[PANEL_FOAM_NAME].oam, x+ACT_NAME_OX, y+ACT_NAME_OY);
   BmpOam_ActorSetPos( pp->msgOam[PANEL_FOAM_MSG].oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
+  BmpOam_ActorSetPos( pp->msgOam[PANEL_FOAM_SCORE].oam, x+ACT_SCORE_OX, y+ACT_SCORE_OY);
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -1161,8 +1163,10 @@ static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, SCRO
   panel_Entry( pp, idx, 0 );  //パネル新規登録(ラインは後で初期化)
   panel_DrawStart( wk, pp, pl );   //パネル描画開始リクエスト
 
-  if( new_f ){
-    pp->icon_no = 1;
+  if( new_f && pp->type == PANEL_TYPE_MSG ){
+    pp->icon_no = pp->act_prm;  //アイコンNo
+  }else{
+    pp->icon_no = 0;
   }
 }
 
@@ -1206,6 +1210,9 @@ static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
         }
       }
     }
+    twk->seq++;
+    return;
+  case 1:
     break;
   }
 #if 0

@@ -95,7 +95,10 @@ typedef struct{
       STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
       u16 target_trainer_id;                ///<対象相手のトレーナーID(下位16ビット)
     }thanks;
-    STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
+    struct{
+      STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
+      u8  shortcut_id;  ///<メッセージ入力時に使用したショートカットのID NAMEIN_SHORTCUT_RET in include/app/name_input.h
+    }freeword;
     FEST_BEACON  fmission;
     u8 extend_buff[20];   ///<２０バイトのフリーエリア  リゾートで使用
   };
