@@ -9,7 +9,7 @@
 #ifndef __H_FMISSION_DATA_ID_H__
 #define __H_FMISSION_DATA_ID_H__
 
-#define  FMISSION_ID_ITEM_TABUNNE01  ( 0 )  ///<初めてのミッション
+#define  FMISSION_ID_ITEM_TUTORIAL_01  ( 0 )  ///<初めてのミッション
 #define  FMISSION_ID_ITEM_KAKERA_01  ( 1 )  ///<かけら１
 #define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<かけら２
 #define  FMISSION_ID_ITEM_KAKERA_03B  ( 3 )  ///<かけらＢ
@@ -50,11 +50,11 @@
 #define  FMISSION_ID_EVENT_TRAIL_01B  ( 38 )  ///<かくしあな大調査Ｂ
 #define  FMISSION_ID_EVENT_TRAIL_01W  ( 39 )  ///<かくしあな大調査Ｗ
 #define  FMISSION_ID_TRBTL_ALL_01  ( 40 )  ///<トレーナーを倒せ！
-#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<エモンガを探せ１
-#define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<カケラを求めて１
-#define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<鐘を　鳴らして
-#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 44 )  ///<揺れ草を探せ１
-#define  FMISSION_ID_ITEM_ITEM_KAKERA_02  ( 45 )  ///<カケラを求めて２
+#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<ダミー
+#define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<ダミー
+#define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<ダミー
+#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 44 )  ///<ダミー
+#define  FMISSION_ID_ITEM_ITEM_KAKERA_02  ( 45 )  ///<ダミー
 #define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_02  ( 46 )  ///<ダミー
 #define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_03  ( 47 )  ///<ダミー
 #define  FMISSION_ID_NPC_POKEQUIZ_01  ( 48 )  ///<図鑑クイズ１

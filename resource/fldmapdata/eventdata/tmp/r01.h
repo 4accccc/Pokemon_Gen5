@@ -31,5 +31,22 @@
 #define BGID_R01_BOARD_02                 2
 #define BGID_R01_BOARD_04                 3
 #define R01_HIDE_ITEM_01                  4
+#define BG_R01_DUMMY_FES_01               5
+#define BG_R01_DUMMY_FES_02               6
+#define BG_R01_DUMMY_FES_03               7
+#define BG_R01_DUMMY_FES_04               8
+#define BG_R01_DUMMY_FES_05               9
+#define BG_R01_DUMMY_FES_06              10
+#define BG_R01_DUMMY_FES_07              11
+#define BG_R01_DUMMY_FES_08              12
+#define BG_R01_DUMMY_FES_09              13
+#define BG_R01_DUMMY_FES_10              14
+#define BG_R01_DUMMY_FES_11              15
+#define BG_R01_DUMMY_FES_12              16
+#define BG_R01_DUMMY_FES_13              17
+#define BG_R01_DUMMY_FES_14              18
+#define BG_R01_DUMMY_FES_15              19
+#define BG_R01_DUMMY_FES_16              20
+#define BG_R01_DUMMY_FES_17              21
 
 #endif //ZONE_R01_EVB_H
