@@ -358,6 +358,7 @@ static void tcb_VInter( GFL_TCB* tcb, void * work)
   if( wk->pfd != NULL){
     PaletteFadeTrans( wk->pfd );
   }
+  FMissionView_PanelUpdate( wk );
 }
 
 //--------------------------------------------------------------

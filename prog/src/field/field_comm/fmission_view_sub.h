@@ -89,5 +89,9 @@ extern void FMissionView_UpDownAnmSet( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
 //---------------------------------------------------
 extern void FMissionView_UpDownViewSet( FMISSION_VIEW_PTR wk );
 
+/*
+ *  @brief  パネル更新リクエスト処理
+ */
+extern void FMissionView_PanelUpdate( FMISSION_VIEW_PTR wk );
 
 

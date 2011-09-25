@@ -44,8 +44,9 @@ typedef struct _PANEL_WORK{
   u8  id; //パネルID
   u8  data_idx; //データ配列参照実index
 
+  u8  trans_req_f:1;  //転送リクエスト
   u8  n_line:2;   //現在のライン
-  u8  tr_view:6;  //ユニオンキャラクターNo(0-15)
+  u8  tr_view:5;  //ユニオンキャラクターNo(0-15)
   u8  sex:1;  //性別
   u8  mine_f:1;  //プレイヤー自身のログならTRUE
   u8  type:2; //パネルタイプ(enum PANEL_TYPE)

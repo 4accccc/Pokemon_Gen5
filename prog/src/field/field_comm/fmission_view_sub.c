@@ -70,6 +70,7 @@ static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line );
 static PANEL_WORK* panel_GetNextTargetPanel( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
 static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
+static void panel_BmpTrans( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
 static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl );
 static void panel_DrawFinish( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
 static BOOL panel_DrawMain( FMISSION_VIEW_PTR wk, PANEL_WORK* pp );
@@ -356,6 +357,23 @@ BOOL FMissionView_MenuBarCheckAnm( FMISSION_VIEW_PTR wk, MENU_ID id )
 void FMissionView_UpDownViewSet( FMISSION_VIEW_PTR wk )
 {
   obj_UpDownViewSet( wk );
+}
+
+/*
+ *  @brief  パネル更新リクエスト処理
+ */
+void FMissionView_PanelUpdate( FMISSION_VIEW_PTR wk )
+{
+  int i;
+
+  for( i = 0;i < PANEL_MAX;i++){
+    PANEL_WORK* pp = &wk->panel[i];
+
+    if( pp->data_idx == PANEL_DATA_BLANK || !pp->trans_req_f ){
+      continue;
+    }
+    panel_BmpTrans( wk, pp );
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -910,6 +928,20 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
 #endif
 
 /*
+ *  @brief  パネル描画 BMPトランス処理
+ */
+static void panel_BmpTrans( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
+{
+  int i;
+
+  //FontOam領域転
+  for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
+  }
+  pp->trans_req_f = FALSE;
+}
+
+/*
  *  @brief  パネル描画エントリー
  */
 static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl )
@@ -958,19 +990,15 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
  */
 static void panel_DrawFinish( FMISSION_VIEW_PTR wk, PANEL_WORK* pp )
 {
-  int i;
-
   //UnionOBJリソース更新
   panel_UnionObjUpdate( wk, pp );
 
   //パネルパターン変更
   BVCAct_AnmStart( pp->cPanel, ACTANM_PANEL_SYS+pp->type );
 
-  //FontOam領域転
-  for( i = 0;i < PANEL_FOAM_MAX; i++ ){
-	  BmpOam_ActorBmpTrans( pp->msgOam[i].oam );
-  }
   panel_VisibleSet( pp, TRUE );   //パネル描画開始
+  
+  pp->trans_req_f = TRUE; //転送リクエスト
 }
 
 /*
@@ -999,6 +1027,7 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl )
 {
   panel_DrawStart( wk, pp, pl );
   panel_DrawFinish( wk, pp );
+  panel_BmpTrans( wk, pp );
 }
 
 /*
