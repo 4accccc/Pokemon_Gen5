@@ -878,6 +878,7 @@ static PANEL_TYPE panel_GetType( FMISSION_VIEW_PTR wk, FMISSION_LOG_ACTION actio
   switch( action ){
   case FMISSION_LOG_ACT_FREEWORD:
     return PANEL_TYPE_MSG;
+  case FMISSION_LOG_ACT_OPEN:
   case FMISSION_LOG_ACT_NEW_ENTRY:
     return PANEL_TYPE_ACT;
   }

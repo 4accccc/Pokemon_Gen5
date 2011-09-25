@@ -28,6 +28,7 @@
 #include "system/gfl_use.h"
 #include "field/zonedata.h"
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/mystatus.h"
 
 #include "game_beacon_local.h"
 #include "debug/debug_flg.h"
@@ -135,6 +136,39 @@ void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_
     FMISSION_LOG_TBL_SetLog( tbl, &log );
   }
 }
+
+//------------------------------------------------------------------
+/*
+ *  ミッション開催ログをスタックにセット
+ *
+ *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
+ *  @param  GAMEDATA*
+ *
+ *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
+ */
+//------------------------------------------------------------------
+void FMISSION_LOG_TBL_SetLogMissionOpen( FMISSION_LOG_TBL* tbl, GAMEDATA* gdata )
+{
+  FMISSION_LOG  log;
+  MYSTATUS* my =  GAMEDATA_GetMyStatus( gdata );
+ 
+  FMISSION_LOG_Clear(&log); 
+  
+  log.action = FMISSION_LOG_ACT_OPEN;
+  log.mine_f = TRUE;
+  log.tr_id =  MyStatus_GetID_Low( my );
+  log.sex = MyStatus_GetMySex( my );
+
+  log.tr_view = MyStatus_GetTrainerView( my );  //0-15で返ってくる
+  if( log.sex == PM_FEMALE ){
+    log.tr_view -= UNION_VIEW_INDEX_WOMAN_START;  //男女0-7に丸める
+  }
+  MyStatus_CopyNameStrCode( my, log.name, PERSON_NAME_SIZE+EOM_SIZE);
+
+  FMISSION_LOG_TBL_SetLog( tbl, &log );
+}
+
+
 
 //------------------------------------------------------------------
 /*

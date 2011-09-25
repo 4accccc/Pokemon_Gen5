@@ -18,6 +18,7 @@
 #include "gamesystem/g_power.h"
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission_data.h"
+#include "gamesystem/fmission_log_local.h"
 #include "poke_tool/poke_tool.h"
 #include "item/itemsym.h"
 
@@ -357,9 +358,12 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       if( wk->succeed_f ){  //他者ミッションに参加
         LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
         FMISSION_SAVE_IncMissionEntryNum( f_save );
-      }else{  //自分で開催
+      }else{  //自分で開催した場合。LINK_FESTIVAL_MissionStartはこのイベントに来る前に呼ばれている
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
-       
+      
+        //開催しましたログセット
+        FMISSION_LOG_TBL_SetLogMissionOpen( LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys ), wk->gdata );
+
         // 現在時刻を取得
         GFL_RTC_GetDate( &date );
 

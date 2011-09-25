@@ -545,7 +545,8 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   //エントリーデータストック
   FMISSION_ENTRY_TBL_Set( fest_sys, info );
   
-  if( !is_entry ){
+  if( !is_entry || info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_FMISSION ){
+    //自分がエントリーしていない時、アクションが配布フェスミッションだった場合はログに積まない
     return;
   }
   //ログストアパラメータ生成

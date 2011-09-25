@@ -11,7 +11,7 @@
 
 #include "fmission_log_id.h"
 
-typedef u8 FMISSION_LOG_ACTION;
+typedef u8 FMISSION_LOG_ACTION; //FMISSION_LOG_ACT_NULL etc
 
 #define FMISSION_LOG_MAX  (30)  ///<ƒƒOŠi”[”max
 #define FMISSION_LOG_END  (FMISSION_LOG_MAX-1)

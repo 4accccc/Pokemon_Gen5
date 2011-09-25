@@ -680,7 +680,7 @@ void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRB
       return;
     }
     tsp->score = wk->m_beacon->my_score;
-    tsp->tr_id = MyStatus_GetID( my )&0xFFFF;
+    tsp->tr_id = MyStatus_GetID_Low( my );
     MyStatus_CopyNameString( my, tsp->name );
   }else{
     if( tsp->score > score ){
@@ -828,7 +828,7 @@ static void topscore_Clear( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp )
   //ƒvƒŒƒCƒ„[–¼‚Å‰Šú‰»‚µ‚Ä‚¨‚­
   MyStatus_CopyNameString( my, tsp->name );
 
-  tsp->tr_id = MyStatus_GetID(my)&0xFFFF;
+  tsp->tr_id = MyStatus_GetID_Low(my);
   tsp->score = 0;
 }
 
