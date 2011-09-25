@@ -29,6 +29,7 @@
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/natsuki.h"
+#include "poke_tool/status_rcv.h"
 #include "waza_tool/wazano_def.h"
 
 //#include "event_encount_effect.h"
@@ -230,7 +231,9 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
 
   case 1:
     {
-      u32 btl_result = GAMEDATA_GetLastBattleResult(gamedata);
+      u32 btl_result = GAMEDATA_GetLastBattleResult(gamedata);  //ポケモンゲットなど結果詳細
+      BOOL is_lose = FIELD_BATTLE_IsLoseResult( btl_result, BTL_COMPETITOR_WILD); //全滅したか？
+
       //Ｎポケモン捕獲チェック
       if( btl_result == BTL_RESULT_CAPTURE && wbew->n_poke_id != ENC_N_POKE_NONE){
         ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork(gamedata) );
@@ -244,6 +247,11 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
           MMDL_SetStatusBitReflectOff( mmdl, FALSE );
         }
       }
+      if( !is_lose && PAIRSYS_CheckPairFlag( gamedata )){
+        //連れ歩き中は手持ち全回復
+        POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+        STATUS_RCV_PokeParty_RecoverAll( party );
+      }
       //このイベント自体がサブイベントの場合、何もせずに戻る
       if ( wbew->sub_event_f == TRUE )
       {
@@ -252,7 +260,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
       }
 
       //このイベントがトップのイベントの場合、戦闘後処理を行う
-      if (FIELD_BATTLE_IsLoseResult( btl_result, BTL_COMPETITOR_WILD) == TRUE)
+      if ( is_lose )
       {
         //負けた場合は敗北処理へ
         COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
@@ -866,6 +874,11 @@ static GMEVENT_RESULT fieldBattleEvent(
       }
     }
     else {
+      if( PAIRSYS_CheckPairFlag( gamedata )){
+        //連れ歩き中は手持ち全回復
+        POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+        STATUS_RCV_PokeParty_RecoverAll( party );
+      }
       GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     }
     (*seq) ++;
