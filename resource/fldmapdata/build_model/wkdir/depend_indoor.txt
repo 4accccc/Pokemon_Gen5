@@ -214,4 +214,8 @@ DEP_INDOOR	=	\
 	$(RESDIR)/ja_public24.nsbmd \
 	$(RESDIR)/p_gun02.nsbmd \
 	$(RESDIR)/door_pwood01.nsbmd \
+	$(RESDIR)/mado_in07cf1.nsbmd \
+	$(RESDIR)/mado_in07ft1.nsbmd \
+	$(RESDIR)/mado_in07wh1.nsbmd \
+	$(RESDIR)/mado_in07wh2.nsbmd \
 

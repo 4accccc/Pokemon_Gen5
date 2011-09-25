@@ -213,3 +213,7 @@
 "nsbmdfiles/ja_public24.nsbmd"
 "nsbmdfiles/p_gun02.nsbmd"
 "nsbmdfiles/door_pwood01.nsbmd"
+"nsbmdfiles/mado_in07cf1.nsbmd"
+"nsbmdfiles/mado_in07ft1.nsbmd"
+"nsbmdfiles/mado_in07wh1.nsbmd"
+"nsbmdfiles/mado_in07wh2.nsbmd"

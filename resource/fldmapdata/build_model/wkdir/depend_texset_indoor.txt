@@ -426,7 +426,11 @@ DEP_TEXSET_IMD_INDOOR007 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/mado_in07cf1.imd \
+	$(SRCDIR)/mado_in07ft1.imd \
+	$(SRCDIR)/mado_in07wh1.imd \
+	$(SRCDIR)/mado_in07wh2.imd
 
 texset/indoor007.imd: $(DEP_TEXSET_IMD_INDOOR007) texset/tmp/indoor007.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor007.list
