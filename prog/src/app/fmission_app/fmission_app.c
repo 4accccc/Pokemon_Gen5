@@ -19,6 +19,8 @@
 
 #include "gamesystem/fmission_log.h"
 #include "gamesystem/fmission_log_accessor_fapp.h"
+#include "gamesystem/link_festival.h"
+#include "gamesystem/link_festival_fapp.h"
 
 #include "fmission_app_local.h"
 #include "fmission_app_sub.h"

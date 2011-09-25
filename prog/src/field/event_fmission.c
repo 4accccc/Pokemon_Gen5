@@ -38,6 +38,8 @@
 #include "./event_subscreen.h"
 #include "savedata/fmission_save.h"
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/medalbox.h"
+#include "app/mdlid_def.h"  // for MDLID_
 
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
@@ -347,12 +349,27 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
   switch (*seq) {
   case 0:
     {
-      FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( GAMEDATA_GetSaveControlWork( wk->gdata ) );
+      SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
+      FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
+      MEDALBOX * medalbox = SaveData_GetMedalBox( save );
+      RTCDate date;
+
       if( wk->succeed_f ){  //他者ミッションに参加
         LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
         FMISSION_SAVE_IncMissionEntryNum( f_save );
       }else{  //自分で開催
-        FMISSION_SAVE_IncMissionOpenNum( f_save );
+        u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
+       
+        // 現在時刻を取得
+        GFL_RTC_GetDate( &date );
+
+        //開催回数でメダルセット
+        if( open_num >= 30 ){
+          MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_HOLD_LV1, date.year, date.month, date.day );
+          if( open_num >= 50 ){
+            MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_HOLD_LV2, date.year, date.month, date.day );
+          }
+        }
       }
       //ジョインアベニュー履歴セット
       RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINKFES );

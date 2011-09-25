@@ -67,7 +67,7 @@ extern u32 FMISSION_SAVE_GetMissionOpenNum( FMISSION_SAVE* sv );
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_IncMissionOpenNum( FMISSION_SAVE* sv );
+extern u32 FMISSION_SAVE_IncMissionOpenNum( FMISSION_SAVE* sv );
 
 //---------------------------------------------------------------------------
 /**

@@ -303,16 +303,19 @@ extern u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル　ミッション結果を取得＆レコードをセーブに反映
+ * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
- * @param fest_sys  LINK_FESTIVAL*
- * @param pl  LINKFEST_MISSION_RESULT構造体型へのポインタ
- * @param mission_time_sec  秒単位のミッション制限時間(FMISSION_ARC_PARAM->m_timeを渡してください)
+ * @param u32* スコアを取得するu32のワークポインタ
+ * @param u32* 取得するアイテム数を返すu32のワークポインタ
+ * @retval  TRUE    ミッション成功
+ * @retval  FALSE   ミッション失敗
  *
- *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
+ * エントリーしてない時に呼び出すと不定の値が返るので注意
+ * LINK_FESTIVAL_IsMissionEntry(), FEST_MISSION_IsEntry(&wk->mission)でチェックしてから呼ぶこと
+ *
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec );
+extern BOOL LINK_FESTIVAL_IsMissionClear( LINK_FESTIVAL* wk, u32* score );
 
 //---------------------------------------------------------
 /*

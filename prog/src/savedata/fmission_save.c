@@ -71,11 +71,12 @@ u32 FMISSION_SAVE_GetMissionOpenNum( FMISSION_SAVE* sv )
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_IncMissionOpenNum( FMISSION_SAVE* sv )
+u32 FMISSION_SAVE_IncMissionOpenNum( FMISSION_SAVE* sv )
 {
   if( sv->open_num < FMISSION_SAVE_OPEN_NUM_MAX ){
     ++sv->open_num;
   }
+  return sv->open_num;
 }
 
 //---------------------------------------------------------------------------
