@@ -514,7 +514,10 @@ EVENT_START ev_tr_c08gym0101_swleader7
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
-			
+		
+    // アニメーションヒープ開放
+    _GYM_DRAGON_RELEASE_ANM_HEAP()
+
 		//勝利後会話
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_02 )
 		_BALLOONWIN_CLOSE()
@@ -547,6 +550,9 @@ EVENT_START ev_tr_c08gym0101_swleader7
 			
 	  }
 		
+    // アニメーションヒープ作成
+    _GYM_DRAGON_MAKE_ANM_HEAP()
+	
 		//バッジをもらった
 		_PLAYER_NAME( 0 )
     _SYSWIN_MSG( msg_c08gym0101_swleader7_03 , POS_DEFAULT )

@@ -54,6 +54,8 @@ extern VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_PushButton( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_RefreshButton( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymDragon_TurnOnUpButton( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymDragon_ReleaseAnmHeap( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymDragon_MakeAnmHeap( VMHANDLE *core, void *wk );
 
 //“Å
 extern VMCMD_RESULT EvCmdGymPoison_AnmStop( VMHANDLE * core, void *wk );

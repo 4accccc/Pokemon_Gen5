@@ -1037,8 +1037,8 @@
   DEF_CMD( EvCmdGymDragon_RefreshButton, EV_SEQ_GYM_DRAGON_REFRESH_BUTTON )
   DEF_CMD( EvCmdGymDragon_TurnOnUpButton, EV_SEQ_GYM_DRAGON_TURNON_UP_BUTTON )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGymDragon_ReleaseAnmHeap, EV_SEQ_GYM_DRAGON_RELEASE_ANM_HEAP)
+  DEF_CMD( EvCmdGymDragon_MakeAnmHeap, EV_SEQ_GYM_DRAGON_MAKE_ANM_HEAP)
   NO_CMD()
   NO_CMD()
 

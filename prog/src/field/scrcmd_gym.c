@@ -602,6 +602,46 @@ VMCMD_RESULT EvCmdGymDragon_RefreshButton( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ドラゴンジムギミック　アニメーションヒープの開放
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_ReleaseAnmHeap( VMHANDLE *core, void *wk )
+{
+  u16 event_seq;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // アニメーションヒープ開放
+  GYM_DRAGON_ReleaseAnmHeap(gsys);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ドラゴンジムギミック　アニメーションヒープの作成
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_MakeAnmHeap( VMHANDLE *core, void *wk )
+{
+  u16 event_seq;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // アニメーションヒープ開放
+  GYM_DRAGON_MakeAnmHeap(gsys);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--毒--
 //--------------------------------------------------------------
 /**

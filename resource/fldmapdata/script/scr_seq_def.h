@@ -7338,6 +7338,28 @@
 
 //--------------------------------------------------------------
 /**
+ * ジムコマンド　ドラゴンジムアニメーション用ヒープ開放コマンド
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_RELEASE_ANM_HEAP() _ASM_GYM_DRAGON_RELEASE_ANM_HEAP
+
+  .macro  _ASM_GYM_DRAGON_RELEASE_ANM_HEAP
+  .short  EV_SEQ_GYM_DRAGON_RELEASE_ANM_HEAP
+  .endm  
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジムアニメーション用ヒープ開放コマンド
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_MAKE_ANM_HEAP() _ASM_GYM_DRAGON_MAKE_ANM_HEAP
+
+  .macro  _ASM_GYM_DRAGON_MAKE_ANM_HEAP
+  .short  EV_SEQ_GYM_DRAGON_MAKE_ANM_HEAP
+  .endm  
+
+//--------------------------------------------------------------
+/**
  * ジムコマンド　毒ジムスピーカーOFF
  * @param idx   ギミックインデックス0～2
  */

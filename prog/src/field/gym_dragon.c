@@ -53,7 +53,7 @@
 //=============================================================================
 #define GYM_DRAGON_UNIT_IDX (0)
 #define GYM_DRAGON_TMP_ASSIGN_ID  (1)
-#define GYM_DRAGON_ANM_HEAP_SIZE (0x24000) // 追従アニメーションデータ用ヒープ
+#define GYM_DRAGON_ANM_HEAP_SIZE (0x30000) // 追従アニメーションデータ用ヒープ
 
 
 //=============================================================================
@@ -1247,17 +1247,17 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
   
     // デフォルトカメラを切り替え
     FIELD_CAMERA_SetCameraType( p_cam, GYM_DRAGON_EFFECT_CAM_NO );  // デフォルトカメラの切り替え
+    ONOUE_Printf("カメラを演出用に変更\n");
     FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
 
-    ONOUE_Printf("カメラを演出用に変更\n");
   }
   if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_END) )
   {
     // 演出用カメラから通常カメラに戻す
     FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
     FIELD_CAMERA_SetCameraType( p_cam, p_wk->cam_type_tmp );        // カメラタイプを復帰
-    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
     ONOUE_Printf("カメラを元に戻す\n");
+    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
   }
 
   // SE再生
@@ -1703,6 +1703,41 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
     }
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション用ヒープ開放
+ *
+ *	@param	*p_gamesys
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void GYM_DRAGON_ReleaseAnmHeap( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK  *p_fld_wk = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  GYM_DRAGON_TMP *p_gmkwk = GMK_TMP_WK_GetWork( p_fld_wk, GYM_DRAGON_TMP_ASSIGN_ID);
+  // アニメーション用ヒープを削除
+  GFL_HEAP_DeleteHeap( p_gmkwk->heapAnmID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション用ヒープ作成
+ *
+ *	@param	*p_gamesys 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void GYM_DRAGON_MakeAnmHeap( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK  *p_fld_wk = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  GYM_DRAGON_TMP *p_gmkwk = GMK_TMP_WK_GetWork( p_fld_wk, GYM_DRAGON_TMP_ASSIGN_ID);
+  // アニメーション用ヒープ生成
+  GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, p_gmkwk->heapAnmID, GYM_DRAGON_ANM_HEAP_SIZE );
 }
 
 #ifdef PM_DEBUG

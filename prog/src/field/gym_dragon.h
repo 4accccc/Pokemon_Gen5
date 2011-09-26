@@ -29,4 +29,6 @@ extern void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork);
 extern  GMEVENT * GYM_DRAGON_CreateButtonTurnOnEvent( GAMESYS_WORK *p_gamesys, u16 layer );
 extern  GMEVENT * GYM_DRAGON_CreateButtonEvent( GAMESYS_WORK *p_gamesys, u16 event_seq );
 extern void GYM_DRAGON_RefreshButton( GAMESYS_WORK *p_gamesys );
+extern void GYM_DRAGON_ReleaseAnmHeap( GAMESYS_WORK *p_gamesys );
+extern void GYM_DRAGON_MakeAnmHeap( GAMESYS_WORK *p_gamesys );
 
