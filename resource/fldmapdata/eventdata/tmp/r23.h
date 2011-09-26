@@ -2,7 +2,6 @@
 #ifndef ZONE_R23_EVD_H
 #define ZONE_R23_EVD_H
 
-#define DOOR_ID_R23_D10R0101_EXIT01       0
 
 #endif //ZONE_R23_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r23.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

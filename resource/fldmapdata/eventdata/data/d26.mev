@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 12:01:30
+#save date:2011/09/26 13:12:48
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-904 80 40
+904 80 -472
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 80 88
+280 80 -424
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 80 200
+408 80 -312
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 80 -8
+40 80 -520
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 80 120
+136 80 -392
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-888 160 -168
+888 160 -680
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-728 80 56
+728 80 -456
 #event number: 7
 #type
 1
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 80 88
+536 80 -424
 #event number: 8
 #type
 1
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 80 56
+264 80 -456
 #event number: 9
 #type
 1
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 80 56
+-88 80 -456
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 80 -56
+440 80 -568
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 80 -72
+328 80 -584
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 80 -136
+264 80 -648
 #event number: 13
 #type
 1
@@ -443,7 +443,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 64 -216
+296 64 -728
 #event number: 14
 #type
 1
@@ -474,7 +474,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 80 -136
+440 80 -648
 #event number: 15
 #type
 1
@@ -505,7 +505,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 80 -248
+488 80 -760
 #event number: 16
 #type
 1
@@ -536,7 +536,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 96 -8
+392 96 -520
 #event number: 17
 #type
 1
@@ -567,7 +567,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 80 248
+408 80 -264
 #event number: 18
 #type
 1
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 80 -216
+-88 80 -728
 #event number: 19
 #type
 1
@@ -629,7 +629,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 96 -40
+376 96 -552
 #event number: 20
 #type
 1
@@ -660,7 +660,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 80 88
+-120 80 -424
 #event number: 21
 #type
 1
@@ -691,7 +691,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-936 160 -120
+936 160 -632
 #event number: 22
 #type
 1
@@ -722,7 +722,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-648 160 168
+648 160 -344
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -745,7 +745,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-920 80 168
+920 80 -344
 #event number: 1
 #Bg Event Label
 BG_D26_DUMMY_FES_02
@@ -758,7 +758,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1048 80 168
+1048 80 -344
 #event number: 2
 #Bg Event Label
 BG_D26_DUMMY_FES_03
@@ -771,7 +771,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-968 80 72
+968 80 -440
 #event number: 3
 #Bg Event Label
 BG_D26_DUMMY_FES_04
@@ -784,7 +784,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1080 80 -40
+1080 80 -552
 #event number: 4
 #Bg Event Label
 HIDE_ITEM_099
@@ -797,7 +797,7 @@ SCRID_HIDE_ITEM_099
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 80 -248
+328 80 -760
 #event number: 5
 #Bg Event Label
 HIDE_ITEM_100
@@ -810,7 +810,7 @@ SCRID_HIDE_ITEM_100
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-776 80 184
+776 80 -344
 #event number: 6
 #Bg Event Label
 HIDE_ITEM_101
@@ -823,7 +823,7 @@ SCRID_HIDE_ITEM_101
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1112 160 104
+1112 160 -408
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -848,7 +848,7 @@ WK_SCENE_D26_SPPOKE3_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 96 -8
+408 96 -520
 #size
 1 2
 #Map Event List Data End
@@ -860,7 +860,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_D26_D26R0101_EXIT01
@@ -875,8 +875,25 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-952 150 200
+952 150 -312
 #size
 3 1
+#event number: 1
+#Door Event Label
+DOOR_ID_D26_D10R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_D10R0101
+#Next Door ID Name
+DOOR_ID_D10R0101_D26_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1672 -32 -1448
+#size
+1 2
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
