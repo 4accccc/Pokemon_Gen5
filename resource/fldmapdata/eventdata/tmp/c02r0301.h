@@ -11,6 +11,8 @@
 #define ZONE_C02R0301_EVC_H
 
 #define C02R0301_GIRL1_01                  0
+#define C02R0301_POKE_01                   1
+#define C02R0301_BOY1_01                   2
 
 #endif //ZONE_C02R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

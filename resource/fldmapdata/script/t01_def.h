@@ -10,5 +10,8 @@
 #define SCRID_BG_T01_BOARD_03 (3)
 #define SCRID_BG_T01_BOARD_04 (4)
 #define SCRID_BG_T01_BOARD_05 (5)
+#define SCRID_T01_BIGMAN_01 (6)
+#define SCRID_T01_WOMAN2_01 (7)
+#define SCRID_T01_BABYGIRL1_01 (8)
 
 #endif //_T01_DEF_H_

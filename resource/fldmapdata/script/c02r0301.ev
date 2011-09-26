@@ -20,9 +20,32 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_zone_c02r0301
 _EVENT_DATA   ev_c02r0301_girl1_01
+_EVENT_DATA   ev_c02r0301_poke_01
+_EVENT_DATA   ev_c02r0301_boy1_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+
+
+/************************************************************/
+/*  ZONE_CHANGE_LABEL                                       */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c02r0301
+
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    $OBJCHRWORK0 = POKE24   //Ｂ版ならモンメン
+  ELSE
+    $OBJCHRWORK0 = POKE18   //Ｗ版ならチュリネ
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  女の子：話しかけ（なつき度チェック）                      */
@@ -74,6 +97,30 @@ EVENT_START   ev_c02r0301_girl1_01
 
 EVENT_END
 
+/**************************************************************/
+/*  モンメン（チュリネ）：話しかけ                            */
+/**************************************************************/
+EVENT_START   ev_c02r0301_poke_01
 
+  //ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //バージョンでポケモンが異なる
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    //Ｂ２版ならモンメン
+    _EASY_TALK_POKEVOICE( MONSNO_521, msg_c02r0301_poke24b_01 )
+  ELSE
+    //Ｗ２版ならチュリネ
+    _EASY_TALK_POKEVOICE( MONSNO_517, msg_c02r0301_poke18_01 )
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c02r0301_boy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_boy1_01 )
+EVENT_END
 
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/14 13:22:47
+#save date:2011/09/26 19:28:55
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+C02GYM0201_GLASSES_01
+#OBJ CODE Number
+DANPEI
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C02GYM0201_GLASSES_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -19,7 +50,267 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c02gym0201.wms
 #hold event type:
 1
 #hold event number:
-0
+20
+#event number: 0
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_01_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 -40
+#event number: 1
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_01_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 -40
+#event number: 2
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_02_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -40
+#event number: 3
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_03_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -40
+#event number: 4
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_03_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -40
+#event number: 5
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_02_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 8 -40
+#event number: 6
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_04_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -40
+#event number: 7
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_02_01_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_02_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 88
+#event number: 8
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_02_01_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_02_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 8 88
+#event number: 9
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_02_02_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_02_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 88
+#event number: 10
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_02_02_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_02_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 88
+#event number: 11
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_03_04_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_03_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 8 -40
+#event number: 12
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_01_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 216
+#event number: 13
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_01_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 216
+#event number: 14
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_02_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 8 216
+#event number: 15
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_02_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 216
+#event number: 16
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_03_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 216
+#event number: 17
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_03_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 216
+#event number: 18
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_04_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 216
+#event number: 19
+#Bg Event Label
+BG_C02GYM0201_CATEGORY_01_04_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C02GYM0201_CATEGORY_01_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 216
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

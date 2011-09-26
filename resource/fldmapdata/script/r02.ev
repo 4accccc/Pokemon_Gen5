@@ -27,6 +27,11 @@ _EVENT_DATA   ev_r02_boy2_02
 _EVENT_DATA   ev_r02_girl2_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL  LWK_DIR
+//メダルチェック変数
+DEFINE_LOCAL  LWK_MEDAL_CHC
+
 //------------------------------注意--------------------------------//
 //                                                                  //
 //  ハードロッカーイベントに LOCALWORK0～1 まで使用しています。     //
@@ -53,21 +58,43 @@ INIT_EVENT_END
 /*  R02 看板1のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board1_01
-  _EASY_BGWIN_MSG(msg_r02_sign1_01, TYPE_ROAD) //看板1:2番道路
+  _EASY_BGWIN_MSG( msg_r02_sign1_01, TYPE_ROAD ) //看板1:2番道路
 EVENT_END
 
 /**************************************************************/
 /*  R02 看板2のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board2_01
-  _EASY_BGWIN_MSG(msg_r02_sign2_01, TYPE_ROAD) //看板2:2番道路
+
+  //プレイヤーの向きを取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  //メダルチェック
+  _CHECK_MEDAL_GET( LWK_MEDAL_CHC, MDLID_BILLBOARD_BACK )
+
+  //看板を後ろから調べた（メダル未開放）
+  IF $LWK_DIR == DIR_DOWN && $LWK_MEDAL_CHC == FALSE THEN
+
+    _PLAINWIN_MSG_DOWN( msg_r02_sign4_01 ) //看板2:かんばんの　うらに
+
+    //========================================//
+    //メダル条件達成
+    _SET_MEDAL_ACHIVE( MDLID_BILLBOARD_BACK )
+    //========================================//
+
+  //看板を正面から調べた、もしくはメダル入手済み
+  ELSE
+
+    _EASY_BGWIN_MSG( msg_r02_sign2_01, TYPE_ROAD ) //看板2:2番道路
+
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*  R02 看板3のイベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_r02_board3_01
-  _EASY_BGWIN_MSG(msg_r02_sign3_01, TYPE_INFO) //看板3:お得な掲示板
+  _EASY_BGWIN_MSG( msg_r02_sign3_01, TYPE_INFO ) //看板3:お得な掲示板
   _FLAG_SET( MDL_FLAG_BOARD_R02_03 )
 EVENT_END
 

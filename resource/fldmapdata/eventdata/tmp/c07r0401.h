@@ -9,10 +9,13 @@
 #ifndef ZONE_C07R0401_EVC_H
 #define ZONE_C07R0401_EVC_H
 
-#define C07R0401_GENTLEMAN_01              0
-#define C07R0401_WOMAN2_01                 1
-#define C07R0401_POKE_01                   2
-#define C07R0401_POKE_02                   3
+#define C07R0401_WOMAN2_01                 0
+#define C07R0401_POKE_01                   1
+#define C07R0401_GENTLEMAN_01              2
+#define C07R0401_POKE_03                   3
+#define C07R0401_POKE_05                   4
+#define C07R0401_POKE_02                   5
+#define C07R0401_POKE_04                   6
 
 #endif //ZONE_C07R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -330,6 +330,14 @@ init_flags:
  //T04：サザナミ七賢人
   _FLAG_SET(FV_T04_SAGE7_01)
 
+  //T01R0102:カノコタウンのＢＷ主人公の部屋
+  _FLAG_SET( FV_T01R0102_AWARD_01 )  //表彰状（地方）
+  _FLAG_SET( FV_T01R0102_AWARD_02 )  //表彰状（全国）
+  _FLAG_SET( FV_T01R0102_TROPHY_01 ) //バトルサブウェイトロフィ（シングル）
+  _FLAG_SET( FV_T01R0102_TROPHY_02 ) //バトルサブウェイトロフィ（ダブル）
+  _FLAG_SET( FV_T01R0102_TROPHY_03 ) //バトルサブウェイトロフィ（マルチ）
+
+
 }
 _RET
 

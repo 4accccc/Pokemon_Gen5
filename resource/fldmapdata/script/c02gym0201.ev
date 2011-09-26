@@ -12,6 +12,8 @@
   .include  "msg_c02gym0201.h"
   .include  "c02gym0201.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,6 +21,275 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
-
+_EVENT_DATA   ev_c02gym0201_glasses_01
+_EVENT_DATA   ev_bg_c02gym0201_category_01_01
+_EVENT_DATA   ev_bg_c02gym0201_category_01_02
+_EVENT_DATA   ev_bg_c02gym0201_category_01_03
+_EVENT_DATA   ev_bg_c02gym0201_category_01_04
+_EVENT_DATA   ev_bg_c02gym0201_category_02_01
+_EVENT_DATA   ev_bg_c02gym0201_category_02_02
+_EVENT_DATA   ev_bg_c02gym0201_category_03_01
+_EVENT_DATA   ev_bg_c02gym0201_category_03_02
+_EVENT_DATA   ev_bg_c02gym0201_category_03_03
+_EVENT_DATA   ev_bg_c02gym0201_category_03_04
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ダンペイ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c02gym0201_glasses_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_glasses_01 )
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「社会」の本棚01                                  */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_01_01
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「しゃかい」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_01 )
+
+  //ＢＧ：「うつりかわる　イッシュ」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_03 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：この２ねんで　さまがわりした
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_03 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「社会」の本棚02                                  */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_01_02
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「しゃかい」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_01 )
+
+  //ＢＧ：「のりもの　だいすき！」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_04 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：ヒウンシティの　ゆうらんせんや
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_04 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「社会」の本棚03                                  */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_01_03
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「しゃかい」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_01 )
+
+  //ＢＧ：「５つの　はし」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_05 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：イッシュちほう　めいぶつの
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_05 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「社会」の本棚04                                  */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_01_04
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「しゃかい」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_01 )
+
+  //ＢＧ：「おいしいもの　たべたい！」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_06 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：イッシュちほうの　グルメじょうほうが
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_06 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン」の本棚01                              */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_02_01
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモン」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_02 )
+
+  //ＢＧ：「ホネと　カセキと　わたしたち」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：ポケモンの　ホネと　カセキについての
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_01 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン」の本棚02                              */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_02_02
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモン」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_02 )
+
+  //ＢＧ：「ポケモンと　おしごと」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：さまざまな　しごとの　げんばで
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_02 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン絵本」の本棚01                          */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_03_01
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモンえほん」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_03 )
+
+  //ＢＧ：「よわむしヨーテリーの　たんけん１」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_09 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：こころやさしくも　よわむしな
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_09 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン絵本」の本棚02                          */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_03_02
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモンえほん」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_03 )
+
+  //ＢＧ：「よわむしヨーテリーの　たんけん２」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_10 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：よわむしな　ヨーテリーと
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_10 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン絵本」の本棚03                          */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_03_03
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモンえほん」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_03 )
+
+  //ＢＧ：「よわむしヨーテリーの　たんけん３」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_11 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：よわむしな　ヨーテリーと
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_11 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*  ＢＧ：「ポケモン絵本」の本棚04                          */
+/************************************************************/
+EVENT_START   ev_bg_c02gym0201_category_03_04
+
+  _TALK_START_SE_PLAY()
+  //ＢＧ：「ポケモンえほん」の　ほんだな▼
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_category_03 )
+
+  //ＢＧ：「よわむしヨーテリーの　たんけん４」
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_headline_12 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //ＢＧ：ヨーテリーと　ゾロア　それに　デスマス
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_book_12 )
+
+  ELSE  //いいえ
+
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+

@@ -21,17 +21,64 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_zone_t01r0102
 _EVENT_DATA   ev_bg_t01r0102_game_01
 _EVENT_DATA   ev_bg_t01r0102_tv_01
 _EVENT_DATA   ev_bg_t01r0102_pc_01
 _EVENT_DATA   ev_bg_t01r0102_bed_01
 _EVENT_DATA   ev_t01r0102_prize1_01   //表彰状（地方）
 _EVENT_DATA   ev_t01r0102_prize2_01   //表彰状（全国）
-_EVENT_DATA   ev_t01r0102_trorhy1_01    //バトルサブウェイトロフィ（シングル）
-_EVENT_DATA   ev_t01r0102_trorhy2_01    //バトルサブウェイトロフィ（ダブル）
-_EVENT_DATA   ev_t01r0102_trorhy3_01    //バトルサブウェイトロフィ（マルチ）
+_EVENT_DATA   ev_t01r0102_trorhy1_01  //バトルサブウェイトロフィ（シングル）
+_EVENT_DATA   ev_t01r0102_trorhy2_01  //バトルサブウェイトロフィ（ダブル）
+_EVENT_DATA   ev_t01r0102_trorhy3_01  //バトルサブウェイトロフィ（マルチ）
 _EVENT_DATA_END
 
+//データコンバート用チェック変数
+DEFINE_LOCAL  LWK_BSUBWAY_AWARD_01  //イッシュ図鑑
+DEFINE_LOCAL  LWK_BSUBWAY_AWARD_02  //全国図鑑埋
+DEFINE_LOCAL  LWK_BSUBWAY_TROPHY_01 //サブウェイトロフィー１
+DEFINE_LOCAL  LWK_BSUBWAY_TROPHY_02 //サブウェイトロフィー２
+DEFINE_LOCAL  LWK_BSUBWAY_TROPHY_03 //サブウェイトロフィー３
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_t01r0102
+
+  //データコンバートチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BSUBWAY_AWARD_01, LWK_BSUBWAY_AWARD_01 )  //イッシュ図鑑埋めたか
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BSUBWAY_AWARD_02, LWK_BSUBWAY_AWARD_02 )  //全国図鑑埋めたか
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BSUBWAY_TROPHY_01, LWK_BSUBWAY_TROPHY_01 )  //サブウェイトロフィー１を貰ったか
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BSUBWAY_TROPHY_02, LWK_BSUBWAY_TROPHY_02 )  //サブウェイトロフィー２を貰ったか
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BSUBWAY_TROPHY_03, LWK_BSUBWAY_TROPHY_03 )  //サブウェイトロフィー３を貰ったか
+
+  //イッシュ図鑑を埋めている場合、表彰状（地方）表示
+  IF $LWK_BSUBWAY_AWARD_01 == TRUE THEN
+    _FLAG_RESET( FV_T01R0102_AWARD_01 )  //表彰状（地方）
+  ENDIF
+
+  //全国図鑑を埋めている場合、表彰状（全国）表示
+  IF $LWK_BSUBWAY_AWARD_02 == TRUE THEN
+    _FLAG_RESET( FV_T01R0102_AWARD_02 )  //表彰状（全国）
+  ENDIF
+
+  //サブウェイトロフィー１を貰っている場合、トロフィー１表示
+  IF $LWK_BSUBWAY_TROPHY_01 == TRUE THEN
+    _FLAG_RESET( FV_T01R0102_TROPHY_01 )  //バトルサブウェイトロフィ（シングル）
+  ENDIF
+
+  //サブウェイトロフィー２を貰っている場合、トロフィー２表示
+  IF $LWK_BSUBWAY_TROPHY_02 == TRUE THEN
+    _FLAG_RESET( FV_T01R0102_TROPHY_02 )  //バトルサブウェイトロフィ（ダブル）
+  ENDIF
+
+  //サブウェイトロフィー３を貰っている場合、トロフィー３表示
+  IF $LWK_BSUBWAY_TROPHY_03 == TRUE THEN
+    _FLAG_RESET( FV_T01R0102_TROPHY_03 )  //バトルサブウェイトロフィ（マルチ）
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト             */
@@ -39,17 +86,8 @@ _EVENT_DATA_END
 EVENT_START   ev_bg_t01r0102_game_01
 
   _TALK_START_SE_PLAY()
-
-  //部屋の状態でメッセージ分岐
-  _GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
-
-  IF $SCWK_ANSWER == TRUE THEN
-    //置き換えフラグON ＝ 部屋が荒れてる
-    _PLAINWIN_MSG_DOWN( msg_t01r0102_game_02 )
-  ELSE
-    //置き換えフラグOFF ＝ 普段の状態
-    _PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
-  ENDIF
+  //ＢＧ：ウィーが　ある！
+  _SYSWIN_MSG( msg_t01r0102_game_01, POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
@@ -61,7 +99,6 @@ EVENT_END
 EVENT_START   ev_bg_t01r0102_tv_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：だれかが　みがいているのか
   _PLAINWIN_MSG_DOWN( msg_t01r0102_tv_01 )
   _LAST_KEYWAIT()
@@ -75,7 +112,6 @@ EVENT_END
 EVENT_START   ev_bg_t01r0102_pc_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：パソコンだが　しばらく
   _SYSWIN_MSG( msg_t01r0102_pc_01, POS_DOWN )
   _LAST_KEYWAIT()
@@ -89,7 +125,6 @@ EVENT_END
 EVENT_START   ev_bg_t01r0102_bed_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：しわ　ひとつ　ない
   _SYSWIN_MSG( msg_t01r0102_bed_01, POS_DOWN )
   _LAST_KEYWAIT()
@@ -103,7 +138,6 @@ EVENT_END
 EVENT_START   ev_t01r0102_prize1_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：イッシュずかん　かんせいの
   _PLAINWIN_MSG_DOWN( msg_t01r0102_award1_01 )
   _MSGWIN_CLOSE()
@@ -118,7 +152,6 @@ EVENT_END
 EVENT_START   ev_t01r0102_prize2_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：ぜんこくずかん　かんせいの
   _PLAINWIN_MSG_DOWN( msg_t01r0102_award2_01 )
   _MSGWIN_CLOSE()
@@ -133,7 +166,6 @@ EVENT_END
 EVENT_START   ev_t01r0102_trorhy1_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：シングル　マスターに　しょうりした▽
   _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy1_01 )
   _LAST_KEYWAIT()
@@ -147,7 +179,6 @@ EVENT_END
 EVENT_START   ev_t01r0102_trorhy2_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：ダブル　マスターに　しょうりした▽
   _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy2_01 )
   _LAST_KEYWAIT()
@@ -161,7 +192,6 @@ EVENT_END
 EVENT_START   ev_t01r0102_trorhy3_01
 
   _TALK_START_SE_PLAY()
-
   //ＢＧ：マルチ　マスターに　しょうりした▽
   _PLAINWIN_MSG_DOWN( msg_t01r0102_trophy3_01 )
   _LAST_KEYWAIT()

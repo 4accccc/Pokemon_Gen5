@@ -12,6 +12,9 @@
 #ifndef ZONE_T01_EVC_H
 #define ZONE_T01_EVC_H
 
+#define T01_WOMAN2_01                      0
+#define T01_BABYGIRL1_01                   1
+#define T01_BIGMAN_01                      2
 
 #endif //ZONE_T01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
