@@ -72,6 +72,13 @@ static const POINT_S16 ColosseumWayOutPos_multi[] = {
 };
 
 
+//=============================================================================
+/**
+ *        静的関数宣言
+ */
+//=============================================================================
+// バージョンからOBJ_CODEを求める
+static u16 getObjCode_Version( const MYSTATUS* mystatus );
 
 
 //==================================================================
@@ -300,12 +307,7 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
     if(Colosseum_GetCommPlayerPos(clsys, net_id, &pospack) == TRUE){
       if(CommPlayer_CheckOcc(clsys->cps, net_id) == FALSE){
         u16 obj_code;
-        if(MyStatus_GetMySex(&clsys->basic_status[net_id].myst) == PM_MALE){
-          obj_code = HERO;
-        }
-        else{
-          obj_code = HEROINE;
-        }
+        obj_code = getObjCode_Version( &clsys->basic_status[net_id].myst );
         CommPlayer_Add(clsys->cps, net_id, obj_code, &pospack);
       }
       else{
@@ -315,5 +317,46 @@ void ColosseumTool_CommPlayerUpdate(COLOSSEUM_SYSTEM_PTR clsys)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バージョンからOBJ_CODEを求める
+ *
+ *	@param	const MYSTATUS* mystatus 
+ *
+ *	@return OBJ_CODE
+ */
+//-----------------------------------------------------------------------------
+static u16 getObjCode_Version( const MYSTATUS* mystatus )
+{
+  u8  version = MyStatus_GetRomCode( mystatus );
+  u32 sex     = MyStatus_GetMySex( mystatus );
+  u16 obj_code;
+  
+  // swan
+  if( version == VERSION_W2 || version == VERSION_B2 )
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = SWHERO;
+    }
+    else
+    {
+      obj_code = SWHEROINE;
+    }
+  }
+  else
+  // wb
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = HERO;
+    }
+    else
+    {
+      obj_code = HEROINE;
+    }
+  }
 
+  return obj_code;
+}
 
