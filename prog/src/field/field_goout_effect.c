@@ -249,8 +249,8 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
           p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i);
           FLD_EXP_OBJ_ChgAnmStopFlg(p_anm_cnt, 0);
         }
+        p_wk->seq++;
       }
-      p_wk->seq++;
       break;
     case SEQ_ANM_WAIT:
       {
@@ -302,6 +302,7 @@ void FIELD_GOOUT_EFFECT_Setup( FIELD_GOOUT_EFFECT *p_wk )
   if( p_wk->is_enable )
   {
     p_wk->is_setup  = TRUE;
+    p_wk->is_start  = FALSE;
     p_wk->seq       = 0;
   }
 }
@@ -318,6 +319,25 @@ void FIELD_GOOUT_EFFECT_Start( FIELD_GOOUT_EFFECT *p_wk )
   if( p_wk->is_enable )
   {
     p_wk->is_start  = TRUE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外出表現  キャンセル
+ *
+ *	@param	FIELD_GOOUT_EFFECT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_GOOUT_EFFECT_Cancel( FIELD_GOOUT_EFFECT *p_wk )
+{
+  if( p_wk->is_setup )
+  {
+    FLD_EXP_OBJ_SetVanish
+      (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, TRUE );
+
+    p_wk->is_setup  = FALSE;
+    p_wk->is_start  = FALSE;
+    p_wk->seq       = 0;
   }
 }
 

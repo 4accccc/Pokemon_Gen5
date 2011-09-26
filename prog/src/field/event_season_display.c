@@ -253,6 +253,13 @@ GMEVENT* EVENT_SeasonDisplay(
   work->callback_func  = NULL;
   work->callback_param = NULL;
 
+
+  //室外表現演出はしない
+  {
+    FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+    FIELD_GOOUT_EFFECT_Cancel( p_goout );
+  }
+
   // シーケンス初期化
   SetSeq( work, seq, SEQ_INIT );
 

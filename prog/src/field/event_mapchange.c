@@ -1045,11 +1045,13 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_FINISH:
+#if 0
     {
       FIELDMAP_WORK *p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
       FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( p_fld );
       FIELD_GOOUT_EFFECT_Start( p_goout );
     }
+#endif
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;

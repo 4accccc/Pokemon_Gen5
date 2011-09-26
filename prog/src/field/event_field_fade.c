@@ -1047,6 +1047,13 @@ static GMEVENT_RESULT BrightInEvent( GMEVENT* event, int* seq, void* wk )
     }
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
+
 		(*seq)++;
 		break;
 
@@ -1642,6 +1649,12 @@ static GMEVENT_RESULT QuickInEvent( GMEVENT* event, int* seq, void* wk )
   GFL_FADE_SetMasterBrightReq(
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
       16, 0, FIELD_FADE_QUICK_WAIT);
+
+  //室外表現演出はしない
+  {
+    FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+    FIELD_GOOUT_EFFECT_Cancel( p_goout );
+  }
 
   // フィールドBG復元
   ResetFieldBG( work->fieldmap );
