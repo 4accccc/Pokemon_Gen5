@@ -268,7 +268,7 @@ typedef enum
   //拡張データ7
   RESORT_DATA_PARAM_EXT7_THANKS,  //p_ret_adrsから取得
 
-  //文字列取得
+  //文字列取得(メッセージデータ使わない)
   RESORT_DATA_PARAM_PHRASE_CODE,  //p_ret_adrsから取得
   RESORT_DATA_PARAM_THANKS_CODE,  //p_ret_adrsから取得
 

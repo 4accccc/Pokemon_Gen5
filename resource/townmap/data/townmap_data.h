@@ -22,3 +22,4 @@
 //到着フラグや隠しマップフラグが以下の値ならばプログラムで個別制御を行わなければならない
 #define TOWNMAP_USER_FLAG_LIBERTY_GARDEN_TICKET	(61440)
 #define TOWNMAP_USER_FLAG_OVERSEAS_TRADE	(61441)
+#define TOWNMAP_USER_FLAG_LAST_PLASMA	(61442)
