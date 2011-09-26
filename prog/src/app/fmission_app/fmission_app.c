@@ -1121,7 +1121,6 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 	// ダブルスコアの判定
 	// =>単純にsp_itemで判定すること
 	if(wk->MissionResult.sp_item > 0){
-//	if(wk->MissionResult.score >= (wk->ArcData[id].param.level[lv].goal*2)){
 		wk->Flag |= FLG_FMA_DOUBLE;
 		// アイテム取得可能か
 		if(wk->MissionResult.sp_item_num > 0){
@@ -1138,31 +1137,11 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 		if(wk->MissionResult.new_record_time_f == TRUE){
 			wk->Flag |= FLG_FMA_NEW_CT;
 		}
-#if 0
-		FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &cbuf[0], &cbuf[1] );
-		timer[0] = (s32)((s32)(cbuf[0]*60)+cbuf[1]);		// いままでの記録
-		timer[1] = LINK_FESTIVAL_GetMissionLife( wk->Param->fest_sys );	// 今回の記録
-		// 今回の記録があり、いままでよりも大きい=>更新
-		if(timer[1] > 0){
-			if(timer[0] < timer[1]){
-				wk->Flag |= FLG_FMA_NEW_CT;
-			}
-		}
-		OS_Printf("time(save)     :%d,%d\n",cbuf[0] ,cbuf[1]);
-		OS_Printf("time(save,now) :%d,%d\n",timer[0],timer[1]);
-#endif
 	}
 	// トータルスコアの判定
 	if(wk->MissionResult.new_record_score_f == TRUE){
 		wk->Flag |= FLG_FMA_NEW_TS;
 	}
-#if 0
-	buf[0] = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
-	if(buf[0] < wk->MissionResult.score){
-		wk->Flag |= FLG_FMA_NEW_TS;
-	}
-	OS_Printf("total score :%d\n",buf[0]);
-#endif
 	// ハイリンクレベルアップの判定
 	if(wk->MissionResult.hilink_level_up > 0){
 		wk->Flag |= FLG_FMA_HILINK;
@@ -1764,7 +1743,9 @@ static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 		//
 		if(flg == 0){		// スコア
 			WORDSET_RegisterNumber(wk->Wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-			str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_03_tbl[0] );
+//			str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_03_tbl[0] );
+			buf[1] = wk->ArcData[id].common.unit;
+			str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
 		}else{			// 時間
 			if(buf[1] == 0){     // 分のみ
 				WORDSET_RegisterNumber(wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -1999,6 +1980,14 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 		}
 		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
 	}
+#if 0
+	//
+	OS_Printf("buffer : ");
+	for(i=0;i<3;i++){
+		OS_Printf("(%d,%d) ",wk->Latest->log[i].tr_id,wk->Latest->log[i].score);
+	}
+	OS_Printf("\n");
+#endif
 }
 
 //--------------------------------------------------------------
