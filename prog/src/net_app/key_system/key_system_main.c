@@ -142,7 +142,7 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   //セーブデータ受信用メモリを確保する
   if( p_param_adrs == NULL )
   {
-    heap_size = 0x100000;
+    heap_size = 0xb0000;
   }
   else
   {
@@ -182,7 +182,7 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   KEYSYS_MAP_Init( &p_wk->select, HEAPID_KEY_SYSTEM );
 
   //シーケンス
-  p_wk->p_seq = KEYSYS_SEQ_Init( 8, p_wk, NULL, HEAPID_KEY_SYSTEM );
+  p_wk->p_seq = KEYSYS_SEQ_Init( 12, p_wk, NULL, HEAPID_KEY_SYSTEM );
 
   {
     //初回シーケンス

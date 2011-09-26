@@ -28,6 +28,7 @@
 #include "arc/mb_parent.naix"
 #include "msg/msg_key_system.h"
 #include "message.naix"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //自分のモジュール
 #include "key_system_util.h"
@@ -68,6 +69,9 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SaveOuter( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SaveInner( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //画面構築シーケンス
 static void DataConv_Seq_CreateDisplayNetMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -78,6 +82,9 @@ static void DataConv_Seq_CreateDisplayWifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
 static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//その他
+static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -842,9 +849,9 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   enum
   {
     SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_WAIT,
-    SEQ_SAVE_COMPLETE,
+    SEQ_SAVE_MSG_WAIT,
+    SEQ_SAVE,
+    SEQ_SAVE_COMPLETE_MSG,
     SEQ_SAVE_COMPLETE_WAIT,
     SEQ_END,
   };
@@ -857,28 +864,26 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
     (*p_seq)++;
     break;
-  case SEQ_SAVE_START:
+  case SEQ_SAVE_MSG_WAIT:
     if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
       (*p_seq)++;
     }
     break;
-  case SEQ_SAVE_WAIT:
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+  case SEQ_SAVE:
+    if( DataConv_Seq_ConvComplete( p_wk ) )
     {
-      (*p_seq)++;
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveInAndOut );
     }
+    else
+    {
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveOuter );
+    }
+    (*p_seq)++;
     break;
-  case SEQ_SAVE_COMPLETE:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      p_wk->cnt = 0;
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
-      (*p_seq) = SEQ_SAVE_COMPLETE_WAIT;
-    }
+  case SEQ_SAVE_COMPLETE_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    (*p_seq) = SEQ_SAVE_COMPLETE_WAIT;
     break;
 
   case SEQ_SAVE_COMPLETE_WAIT:
@@ -896,6 +901,130 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     GF_ASSERT(0);
 
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  管理外セーブのみ実行
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SaveOuter( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+    SEQ_SAVE_COMPLETE,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SAVE_START:
+    OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+    p_wk->cnt = 0;
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_WAIT:
+    p_wk->cnt++;
+    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_COMPLETE:
+    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
+    {
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  }
+}//----------------------------------------------------------------------------
+/**
+ *	@brief  内部セーブのみ実行
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SaveInner( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+    SEQ_SAVE_COMPLETE,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SAVE_START:
+    GAMEDATA_SaveAsyncStart(p_wk->p_param->p_gamedata);
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_WAIT:
+    if( GAMEDATA_SaveAsyncMain(p_wk->p_param->p_gamedata) == SAVE_RESULT_OK )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_COMPLETE:
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  内部＋管理外セーブ実行
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SAVE_OUTER,
+    SEQ_SAVE_INNER,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SAVE_OUTER:
+    //管理外をセーブする
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveOuter );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_INNER:
+    //内部をセーブする
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveInner );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  } 
 }
 //----------------------------------------------------------------------------
 /**
@@ -1550,4 +1679,40 @@ static void DataConv_Display_DeleteWifi( void *p_wk_adrs )
   p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンバート後の処理
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ *
+ *	@retval TRUE  内部セーブを変更した
+ *	@retval FALSE していない
+ *
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk )
+{
+  BOOL change = FALSE;
+
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->p_param->p_gamedata );
+
+  //セーブがあるときだけ
+  if( SaveData_GetExistFlag(p_sv) )
+  {
+    EVENTWORK *p_ev = SaveData_GetEventWork(p_sv);
+
+    //Nポケ起動条件を見て、フラグを立てる
+    if( EVENTWORK_CheckEventFlag( p_ev, FE_C05R0501_POKE22_GET )
+      && DATA_CONVERT_SAVE_GetFlag(p_wk->p_data_sv, WB_SAVE_CONV_FLAG_GAME_CLEAR) )
+    {
+      EVENTWORK_SetEventFlag( p_ev, SYS_FLAG_NPOKE_OPEN );
+      change = TRUE;
+    }
+    return change;
+  }
+  
+  return FALSE;
 }

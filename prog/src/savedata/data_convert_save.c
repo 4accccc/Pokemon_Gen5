@@ -154,6 +154,7 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
     switch( i )
     {
     case WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE:
+    case WB_SAVE_CONV_WORK_FURNITURE_SHOP:
       /*  ‚È‚µ  */
       break;
     case WB_SAVE_CONV_WORK_N_BATTLE_RAIMON:
