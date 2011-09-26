@@ -583,6 +583,17 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 static GFL_PROC_RESULT PkwdCountProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	PKWD_COUNT_MAIN_WORK* wk = mywk;
+	BOOL	bflg;
+	
+	//--------
+	// Que‘Ò‚¿
+	//--------
+	bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+	if(bflg == FALSE){
+		OS_Printf("pkwd_count : que not end\n");
+		return( GFL_PROC_RES_CONTINUE );
+	}
+	OS_Printf("pkwd_count : que end\n");
 	
 	//----------------
 	// ˆ—‚ğ‹Lq

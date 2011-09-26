@@ -1324,6 +1324,17 @@ static GFL_PROC_RESULT PkwdBookProc_Init( GFL_PROC *proc, int *seq, void *pwk, v
 static GFL_PROC_RESULT PkwdBookProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	PKWD_BOOK_MAIN_WORK* wk = mywk;
+	BOOL	bflg;
+	
+	//--------
+	// Que‘Ò‚¿
+	//--------
+	bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+	if(bflg == FALSE){
+		OS_Printf("pkwd_book : que not end\n");
+		return( GFL_PROC_RES_CONTINUE );
+	}
+	OS_Printf("pkwd_book : que end\n");
 	
 	//----------------
 	// ƒpƒ‰ƒ[ƒ^“n‚µ
@@ -4718,7 +4729,7 @@ static void PrintStrBuf( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_
 	//
 	width     = PRINTSYS_GetStrWidth( strbuf, wk->font, 0 );
 	bmp_width = GFL_BMPWIN_GetSizeX( print_util->win ) * 8;
-	x         = (bmp_width - width)/2;
+	x         = 8+(bmp_width - width)/2;
 	//
 	PRINT_UTIL_PrintColor( print_util, que, x, y, strbuf, wk->font, col );
 	GFL_STR_DeleteBuffer( strbuf );
