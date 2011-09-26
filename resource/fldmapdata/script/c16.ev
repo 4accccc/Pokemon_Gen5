@@ -29,6 +29,9 @@ _EVENT_DATA    ev_c16_secretary_01_tutorial
 _EVENT_DATA    ev_c16_secretary_02_tutorial
 _EVENT_DATA    ev_reserve_c16_tutorial
 _EVENT_DATA    ev_recover_c16
+_EVENT_DATA    ev_resort_board_room
+_EVENT_DATA    ev_resort_board_city_front
+_EVENT_DATA    ev_resort_board_city_back
 _EVENT_DATA_END
 
 //バージョン取得
@@ -486,5 +489,36 @@ EVENT_START	ev_reserve_c16_tutorial
 
     _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
     //==================================//
+}
+EVENT_END
+
+/**************************************************************/
+/*            事務所看板                                       */
+/**************************************************************/
+EVENT_START ev_resort_board_room
+{
+  _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 1 )
+  _EASY_BGWIN_MSG( msg_c16_kanban_01, TYPE_POST )
+}
+EVENT_END
+
+/**************************************************************/
+/*            街看板、前                                       */
+/**************************************************************/
+EVENT_START ev_resort_board_city_front
+{
+  _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _EASY_BGWIN_MSG( msg_c16_kanban_02, TYPE_POST )
+}
+EVENT_END
+
+/**************************************************************/
+/*            街看板、後                                       */
+/**************************************************************/
+EVENT_START ev_resort_board_city_back
+{
+  _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _EASY_BGWIN_MSG( msg_c16_kanban_02, TYPE_POST )
 }
 EVENT_END
