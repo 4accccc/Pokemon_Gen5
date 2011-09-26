@@ -55740,11 +55740,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は……▼
-どれくらい　ずかん　とうろくを
-しているか　わかりません……▼</Text>
+どれくらい　図鑑登録を　しているか
+わかりません……▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T10:20:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T10:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62926,10 +62926,12 @@ BW♀
 			Language="JPN">
 			<Text>そうだね▼
 かわいい　てんいんさんの　いる
-おみせが　きになるかな▼</Text>
+おみせが　きになるかな▼
+てんいんさんと　しなものとの
+かんけいって　きになるよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T09:50:14" />
+				Time="2011-09-26T10:51:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62938,11 +62940,13 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうだね▼
-かわいい　てんいんさんの　いる
-おみせが　きになるかな▼</Text>
+可愛い　店員さんの　いる
+お店が　気になるかな▼
+店員さんと　品物との
+関係って　気になるよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:37" />
+				Time="2011-09-26T10:51:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62988,12 +62992,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうせ　いくなら
-キュートな　おんなのこが▽
-てんいんの　みせが　いい！▼</Text>
+			<Text>どうせ　行くなら
+キュートな　女の子が▽
+店員の　店が　いい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:37" />
+				Time="2011-09-26T10:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63041,12 +63045,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬううん……▼
-そうだね　えを　かきたくなるような
-うつくしさ！　それを　かもしだす▽
-じょせいの　てんいんが　いいねえ▼</Text>
+そうだね　絵を　描きたくなるような
+美しさ！　それを　かもしだす▽
+女性の　店員が　いいねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:37" />
+				Time="2011-09-26T10:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63081,10 +63085,10 @@ BW♀
 			Language="JPN">
 			<Text>キラキラ　まぶしく　かがやく
 かわいい　おんなのこが　いる▽
-おみせに　いきたい　きぶん！▼</Text>
+ショップに　いきたい　きぶん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:33" />
+				Time="2011-09-26T10:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63092,12 +63096,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キラキラ　まぶしく　かがやく
-かわいい　おんなのこが　いる▽
-おみせに　いきたい　きぶん！▼</Text>
+			<Text>キラキラ　まぶしく　輝く
+可愛い　女の子が　いる▽
+ショップに　行きたい　気分！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:37" />
+				Time="2011-09-26T10:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63144,11 +63148,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほりだしもの　をさがすか
-もしくは　いっかくせんきん　だな▼</Text>
+			<Text>掘り出し物を　探すか
+もしくは　のるかそるかの　勝負だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:49" />
+				Time="2011-09-26T10:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63196,13 +63200,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アタシね　おんなのこを　みて
-おしゃれの　べんきょうしたいな！▼
-だから　かわいい　おんなのこが
-はたらく　おみせを　おしえてよ！▼</Text>
+			<Text>アタシね　女の子を　みて
+おしゃれの　勉強したいな！▼
+だから　可愛い　女の子が
+働く　お店を　教えてよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:35:00" />
+				Time="2011-09-26T10:50:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63249,11 +63253,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うむう……　そうだな▼
-じょせいの　てんいんが　いる……
-そんな　おみせを　しりたいのだが▼</Text>
+女性の　店員が　いる……
+そんな　お店を　知りたいのだが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:33:54" />
+				Time="2011-09-26T10:50:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63299,12 +63303,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いまの　きぶんで　いうと
-キュートな　おんなのこが　おる▽
-おみせが　いいたい！▼</Text>
+			<Text>今の　気分で　いうと
+キュートな　女の子が　おる▽
+お店が　いいたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:33:54" />
+				Time="2011-09-26T10:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63349,11 +63353,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かわいい　てんいんさんが　いる
-おみせに　いきたいかな▼</Text>
+			<Text>可愛い　店員さんが　いる
+お店に　行きたいかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:29:57" />
+				Time="2011-09-26T10:50:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63398,11 +63402,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かわいい　てんいんさんが　いる
-おみせに　いきたいな▼</Text>
+			<Text>可愛い　店員さんが　いる
+お店に　行きたいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:29:57" />
+				Time="2011-09-26T10:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63484,11 +63488,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あんがと
-ちょっと　いってくるから！▼</Text>
+			<Text>あんがと！
+ちょっと　ばくれつ　してくる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T09:53:50" />
+				Time="2011-09-26T10:52:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63496,11 +63500,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あんがと
-ちょっと　いってくるから！▼</Text>
+			<Text>あんがと！
+ちょっと　爆裂してくる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:18:04" />
+				Time="2011-09-26T10:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63919,10 +63923,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『すごい　いいおみせね！▼</Text>
+			<Text>チェレン『ここは……
+どんな　おみせ　なの？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T10:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -63930,10 +63935,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>チェレン『ここは……
+どんな　お店　なの？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63966,10 +63972,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ホミカ『この　みせのこと
+しりたいんだけど！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T10:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -63977,10 +63984,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ホミカ『この　店のこと
+知りたいんだけど！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64013,10 +64021,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>アーティ『むむう！
+ここ　きになるよねえ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T10:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64024,10 +64033,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>アーティ『むむう！
+ここ　気になるよねえ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64060,10 +64070,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>カミツレ『このショップ
+どんな　ところか　チェックね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64071,10 +64082,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>カミツレ『このショップ
+どんな　ところか　チェックね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64107,10 +64119,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ヤーコン『で　ここは
+どんな　みせ　なんだ？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:01:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64118,10 +64131,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤーコン『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ヤーコン『で　ここは
+どんな　店なんだ？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64154,10 +64168,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>フウロ『ねえねえ
+この　おみせのこと　しりたいな！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64165,10 +64180,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>フウロ『ねえねえ
+この　お店のこと　知りたいな！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64201,10 +64217,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>シャガ『……ここは
+どのような　おみせ　なのだ？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:02:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64212,10 +64229,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>シャガ『……ここは
+どのような　お店　なのだ？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64248,10 +64266,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シズイ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>シズイ『おお！　この　みせ
+なんか　いいかんじが　するたい！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:02:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64259,10 +64278,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイ『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>シズイ『おお！　この　店
+なんか　いい感じが　するたい！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64295,10 +64315,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ブラック『この　おみせのこと
+ちょっと　しりたいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64306,10 +64327,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ブラック『この　お店のこと
+ちょっと　知りたいね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64342,10 +64364,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイト『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ホワイト『この　おみせのこと
+ちょっと　しりたいな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:51:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64353,10 +64376,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイト『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>ホワイト『この　お店のこと
+ちょっと　知りたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64389,10 +64413,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『ここは　どんな　おみせ　なのかな▼</Text>
+			<Text>チェレン『へえ！
+いい　おみせ　だね！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64400,14 +64425,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>チェレン『へえ！
+いい　お店　だね！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64436,10 +64462,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『すごい　いいおみせね！▼</Text>
+			<Text>ホミカ『ここッ
+ばくれつ　してるッ！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:05:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64447,10 +64474,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>ホミカ『ここッ
+爆裂してるッ！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64483,10 +64511,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『すごい　いいおみせね！▼</Text>
+			<Text>アーティ『ぬうう！
+ここは……　いい　みせだ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64494,10 +64523,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>アーティ『ぬうう！
+ここは……　いい　みせだ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64530,10 +64560,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>カミツレ『……！
+おもわず　いきをのむほどの
+すごい　ショップなのね！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:06:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64541,10 +64573,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>カミツレ『……！
+思わず　息をのむほどの
+すごい　ショップなのね！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64577,10 +64611,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン『すごい　いいおみせね！▼</Text>
+			<Text>ヤーコン『オレさまも
+しょうばいにん　だからな　わかるのよ▼
+この　みせは　とびっきり　だな！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64588,10 +64624,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>ヤーコン『オレさまも
+商売人　だからな　わかるのよ▼
+この　店は　とびっきり　だな！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:12:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64624,10 +64662,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ『すごい　いいおみせね！▼</Text>
+			<Text>フウロ『わあ！　この　おみせ
+アタシごのみの　すてきな　おみせ！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64635,14 +64674,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>フウロ『わあ！　この　お店
+アタシ好みの　すてきな　お店！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64671,10 +64711,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『すごい　いいおみせね！▼</Text>
+			<Text>シャガ『いい　たたずまいの
+すばらしい　みせ　だな！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64682,10 +64723,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>シャガ『いい　たたずまいの
+素晴らしい　店舗　だな！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:12:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64718,10 +64760,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シズイ『すごい　いいおみせね！▼</Text>
+			<Text>シズイ『おお！　こりゃ
+すごい　みせだと　おもうたい！▼　</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:10:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64729,10 +64772,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>シズイ『おお！　こりゃ
+すごい　店だと　思うたい！▼　</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64765,10 +64809,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック『すごい　いいおみせね！▼</Text>
+			<Text>ブラック『すごい　いい　おみせ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64776,14 +64820,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>ブラック『すごい　いい　お店　だね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64812,10 +64856,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイト『すごい　いいおみせね！▼</Text>
+			<Text>ホワイト『すごい　いい　おみせ　ね！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T03:57:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -64823,14 +64867,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『すごい　いいおみせね！▼</Text>
+			<Text>ホワイト『すごい　いい　お店　ね！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:52:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:11:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64859,11 +64903,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>チェレン『うーん……▼
+いい　おみせ　だけど
+ちょっと　このみ　ではないね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:13:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64871,11 +64916,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>チェレン『うーん……▼
+いい　お店　だけど
+ちょっと　好み　ではないね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64908,11 +64954,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ホミカ『……ゴメン！▼
+きょうの　きぶんじゃ　ないよ！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:18:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64920,11 +64966,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ホミカ『……ゴメン！▼
+今の　気分に　あわない！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64957,11 +65003,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>アーティ『ぬうん
+ちょっと　ちがうね　ここ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64969,11 +65015,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>アーティ『ぬうん
+ちょっと　違うね　ここ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65006,11 +65052,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>カミツレ『ざんねん
+かがやきが　たりないわ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:20:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65018,11 +65064,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>カミツレ『残念
+輝きが　足りないわ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65055,11 +65101,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ヤーコン『まだまだだな▼
+このみせは　まだ　のびる！
+そのときに　くると　しようか▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65067,11 +65114,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ヤーコン『まだまだだな▼
+この店は　まだ　伸びる！
+そのときに　来ると　しようか▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:25:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65104,11 +65152,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>フウロ『そうねえ
+アタシの　しゅみと　ちがいます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:21:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65116,11 +65164,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>フウロ『そうねえ
+アタシの　趣味と　違います</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65153,11 +65201,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>シャガ『ここ　か……
+しょくしが　うごかないのだが？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:21:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65165,11 +65213,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>シャガ『ここ　か……
+食指が　動かないのだが？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65202,11 +65250,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>シズイ『うーん
+なんか　いまいち　たい▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:21:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65214,11 +65262,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>シズイ『うーん
+なんか　いまいち　たい▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65251,11 +65299,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ブラック『ちょっと　ちがうかな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65263,11 +65310,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ブラック『ちょっと　違うかな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65300,11 +65346,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ホワイト『ちょっと　ちがうわね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:22:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65312,11 +65357,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレ『うーん　わたしの　このみじゃ
-ないかなーー▼</Text>
+			<Text>ホワイト『ちょっと　違うわね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T12:53:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65349,11 +65393,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>ポケモン１は　もっている？▼
+よければ　ぼくの　ポケモン２と
+こうかん　してくれないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T10:36:01" />
+				Time="2011-09-26T11:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65361,15 +65406,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>ポケモン１は　もっている？▼
+よければ　ぼくの　ポケモン２と
+交換　してくれないかな？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65398,11 +65444,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>あんたの　ポケモン１と
+ホミカの　ポケモン２　こうかんしよ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65410,15 +65456,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>あんたの　ポケモン１と
+ホミカの　ポケモン２　交換しよ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65447,11 +65493,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>やあ！　ボクの　ポケモン２と
+きみの　ポケモン１を▽
+こうかん　したら　すごいよね</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:41:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65459,15 +65506,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>やあ！　ボクの　ポケモン２と
+きみの　ポケモン１を▽
+交換したら　すごいよね</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65509,14 +65557,14 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+わたしの　リオルと　交換しようよ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65545,11 +65593,14 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>おれさまの　ポケモン２と
+おまえさんの　ポケモン１を▽
+こうかん　しないか？▼
+わるい　はなしじゃないと　おもうが
+どうだ？　うなずいてくれないか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65557,15 +65608,18 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>おれさまの　ポケモン２と
+おまえさんの　ポケモン１を▽
+交換　しないか？▼
+悪い話じゃないと　思うが
+どうだ？　うなずいてくれないか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65594,11 +65648,14 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>ねえねえ！　アタシね
+ポケモン１を　そだててみたいの！▼
+あなた　もっていたら
+アタシの　ポケモン２と▽
+こうかん　してくれないかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65606,15 +65663,18 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>ねえねえ！　アタシね
+ポケモン１を　育ててみたいの！▼
+あなた　もっていたら
+アタシの　ポケモン２と▽
+交換してくれないかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65643,11 +65703,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>よければ　きみの　ポケモン１と
+わたしの　ポケモン２を　こうかんしよう</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:05:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65655,15 +65715,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>よければ　きみの　ポケモン１と
+わたしの　ポケモン２を　交換しよう</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65692,11 +65752,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>おはん　ポケモン１　そだててる？
+おはんのこと　もっと　しりたいからな▼
+おいの　ポケモン２と　おはんの
+ポケモン１を　こうかん　しようたい！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65704,15 +65766,17 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>おはん　ポケモン１　育ててる？
+おはんのこと　もっと　知りたいからな▼
+おいの　ポケモン２と　おはんの
+ポケモン１を　交換しようたい！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:08:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65741,11 +65805,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>きみ　ポケモン１　もってない？▼
+もっていたら　わたしの
+ポケモン２と　こうかん　しよう！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65753,15 +65818,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>きみ　ポケモン１　もってない？▼
+もっていたら　わたしの
+ポケモン２と　交換しよう！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65790,11 +65856,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>きみ　ポケモン１　もってない？▼
+もっていたら　わたしの
+ポケモン２と　こうかん　しようよ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:06:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65802,15 +65869,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ピカチュウ　もってない？
-わたしの　リオルと　こうかん　しようよ！</Text>
+			<Text>きみ　ポケモン１　もってない？▼
+もっていたら　わたしの
+ポケモン２と　交換しようよ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T06:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:07:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65839,10 +65907,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>ありがとう
+それでは　えらんでよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65850,10 +65919,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>ありがとう
+それでは　選んでよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:09" />
+				Time="2011-09-26T11:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65886,10 +65956,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>じゃ　えらびなよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65897,10 +65967,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>じゃ　選びなよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65933,10 +66003,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>どれに　するの？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65944,10 +66014,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>どれに　するの？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65980,10 +66050,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>どれに　するのかしら？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65991,10 +66061,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>どれに　するのかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66027,10 +66097,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>それじゃあ　えらぶんだな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66038,10 +66108,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>それじゃあ　選ぶんだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66074,10 +66144,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>ねえねえ
+どれにするの？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66085,10 +66156,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>ねえねえ
+どれにするの？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66121,10 +66193,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>うむ　それでは
+えらぶと　いい▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:29:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66132,10 +66205,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>うむ　それでは
+選ぶと　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66168,10 +66242,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>どいつに　するたい▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66179,10 +66253,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>どいつに　するたい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66215,10 +66289,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>じゃあ　えらんでよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:29:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66226,10 +66300,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>じゃあ　選んでよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66262,10 +66336,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　えらんでー▼</Text>
+			<Text>じゃあ　えらんでね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:08:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66273,10 +66347,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　選んでー▼</Text>
+			<Text>じゃあ　選んでね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:13" />
+				Time="2011-09-26T11:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66309,10 +66383,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>そっか……
+じゃあ　また　こんど　よろしくね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66320,14 +66395,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>そっか……
+じゃあ　また　今度　よろしくね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:58" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66356,10 +66432,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>ムッ　つまんない！
+つぎは　ぜったい　こうかんだよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:09:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66367,10 +66444,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>ムッ　つまんない！
+次は　絶対　交換だよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66403,10 +66481,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>オーケー　だよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66414,10 +66492,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>オーケー　だよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66450,10 +66528,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>あら　ざんねん　ね……
+つぎ　あうときは　おねがいよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66461,10 +66540,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>あら　残念ね……
+つぎ　会うときは　お願いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:13:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66497,10 +66577,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>まっ　しかたないな
+こういうのは　タイミングだ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66508,10 +66589,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>まっ　しかたないな
+こういうのは　タイミングだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66544,10 +66626,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>うん　わかったよ！
+こんど　おねがいするね！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66555,14 +66638,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>うん　わかったよ！
+今度　おねがいするね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66591,10 +66675,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>わかった！
+きみの　きもちを　そんちょうしよう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66602,10 +66687,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>わかった！
+きみの　意思を　尊重しよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66638,10 +66724,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>だいじょうぶ　たい▼
+つぎ　こうかん　してくれたら
+おたがい　ハッピーたい！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66649,10 +66737,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>大丈夫　たい▼
+次　交換してくれたら
+お互い　ハッピーたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:13:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66685,10 +66775,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　またこんどね▼</Text>
+			<Text>じゃあ　またこんど▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:09:23" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66696,14 +66786,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　また今度ね▼</Text>
+			<Text>じゃあ　また今度▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66746,11 +66836,11 @@ BW♀
 			<Text>じゃあ　また今度ね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:56:03" />
+				Time="2011-09-26T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:12:46" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66779,11 +66869,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>うれしいな！　きみから　もらった
+ポケモン１を　たいせつに　するよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:01:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66791,15 +66881,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>うれしいな！　きみから　もらった
+ポケモン１を　大切に　するよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:37" />
+				Time="2011-09-26T12:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66828,11 +66918,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>この　ポケモン１　いいね！
+すっごい　ポケモンに　そだてるよ！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66840,11 +66930,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>この　ポケモン１　いいね！
+すっごい　ポケモンに　育てるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66877,11 +66967,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>うう！　いい　フィーリング！▼
+きみから　もらった　ポケモン１の
+えを　かきたくなっちゃった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66889,11 +66980,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>うう！　いい　フィーリング！▼
+きみから　もらった　ポケモン１の
+絵を　描きたくなっちゃった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66926,11 +67018,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>うれしい！　この　ポケモン１
+ぜったいに　たいせつに　するから▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66938,15 +67030,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>うれしい！　この　ポケモン１
+ぜったいに　大切に　するから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66975,11 +67067,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>ほう！　こいつ
+なかなかの　ポケモン１だな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66987,11 +67079,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>ほう！　こいつ
+なかなかの　ポケモン１だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67024,11 +67116,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>ありがとうございます！▼
+アナタだと　おもって　この
+ポケモン１を　たいせつに　しますね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:58:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67036,15 +67129,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>ありがとうございます！▼
+アナタだと　思って　この
+ポケモン１を　大切に　しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:02:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67073,11 +67167,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>うむ！　この　ポケモン１を
+みるたびに　きみを　おもいだすな▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T11:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67085,11 +67179,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>うむ！　この　ポケモン１を
+みるたびに　きみを　おもいだすな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67122,11 +67216,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>めちゃくちゃ　うれしいたい！▼
+ポケモンこうかんは
+ゆうじょうの　あかし　たい！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67134,15 +67229,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>めちゃくちゃ　うれしいたい！▼
+ポケモン交換は
+友情の　証　たい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:02:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:01:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67171,11 +67267,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>ありがとう！　こうかんした
+ポケモン１を　たいせつに　するよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:01:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67183,15 +67279,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>ありがとう！　交換した
+ポケモン１を　大切に　するよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67220,11 +67316,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！　
-ダンゴロ　たいせつに　するね▼</Text>
+			<Text>ありがとう！　こうかんした
+ポケモン１を　たいせつに　するね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67232,15 +67328,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！　
-ダンゴロ　大切に　するね▼</Text>
+			<Text>ありがとう！　交換した
+ポケモン１を　大切に　するね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:41" />
+				Time="2011-09-26T12:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:02:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67269,10 +67365,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>ふむ……
+その　ポケモンは　ちがうようだね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67280,14 +67377,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>ふむ……
+その　ポケモンは　違うようだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:46" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:18:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67316,10 +67414,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>ちーがーう！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67327,10 +67425,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>ちーがーう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67363,10 +67461,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>むうう　そうかあ
+その　ポケモンじゃ　ないよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:16:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67374,10 +67473,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>むうう　そうかあ
+その　ポケモンじゃ　ないよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67410,10 +67510,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>あら？
+ちがう　ポケモンみたいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67421,14 +67522,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>あら？
+違う　ポケモンみたいね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:18:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67457,10 +67559,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>おいおい！　どうした
+その　ポケモンじゃ　ないぞ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:17:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67468,10 +67571,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>おいおい！　どうした
+その　ポケモンじゃ　ないぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67504,10 +67608,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>えっ！　アタシの　ほしい
+ポケモンと　ちがいますよ！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:17:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67515,10 +67620,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>えっ！　アタシの　ほしい
+ポケモンと　違うますよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67551,10 +67657,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>まいったな
+その　ポケモンでは　ないのだが▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:17:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67562,10 +67669,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>まいったな
+その　ポケモンでは　ないのだが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67598,10 +67706,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>あっはっは！
+おはん　まちごうとるたい！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:18:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67609,10 +67718,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>あっはっは！
+おはん　まちごうとるたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67645,10 +67755,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>あれ？
+ちがう　ポケモンみたい　だね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:14:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67656,14 +67767,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>あれ？
+違う　ポケモンみたい　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:14:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:18:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -67692,10 +67804,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ　ちがう　ポケモンみたいだよ▼</Text>
+			<Text>あれ？
+ちがう　ポケモンみたい　だよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-13T03:10:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67703,14 +67816,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ　違う　ポケモンみたいだよ▼</Text>
+			<Text>あれ？
+違う　ポケモンみたい　だよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:55:50" />
+				Time="2011-09-26T12:14:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T12:18:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
