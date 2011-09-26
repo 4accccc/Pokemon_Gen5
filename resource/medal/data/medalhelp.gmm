@@ -1940,12 +1940,12 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_072">
-		<language name="JPN" width="216">データコンバート　それは
+		<language name="JPN" width="216">おもいでリンク　それは
 かこと　みらいを　つなげる
-ふしぎな　テクノロジー</language>
-		<language name="JPN_KANJI" width="216">データコンバート　それは
+ふしぎな　ノスタルジー</language>
+		<language name="JPN_KANJI" width="216">おもいでリンク　それは
 過去と　未来を　つなげる
-不思議な　テクノロジー</language>
+不思議な　ノスタルジー</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_073">
@@ -1954,16 +1954,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_074">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_075">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_076">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2191,6 +2181,16 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_097">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_098">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_099">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>

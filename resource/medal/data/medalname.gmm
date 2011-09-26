@@ -1546,21 +1546,11 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_073">
-		<language name="JPN" width="216">エリートコンバーター</language>
-		<language name="JPN_KANJI" width="216">エリートコンバーター</language>
-	</row>
-
-	<row id="MDL_NAME_APPLICATION_074">
-		<language name="JPN" width="216">ベテランコンバーター</language>
-		<language name="JPN_KANJI" width="216">ベテランコンバーター</language>
-	</row>
-
-	<row id="MDL_NAME_APPLICATION_075">
 		<language name="JPN" width="216">コンバートマスター</language>
 		<language name="JPN_KANJI" width="216">コンバートマスター</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_076">
+	<row id="MDL_NAME_APPLICATION_074">
 		<language name="JPN" width="216">エンタメマイスター</language>
 		<language name="JPN_KANJI" width="216">エンタメマイスター</language>
 	</row>
@@ -1716,6 +1706,16 @@
 	</row>
 
 	<row id="MDL_NAME_FIELD_097">
+		<language name="JPN" width="216">あきメダル</language>
+		<language name="JPN_KANJI" width="216">あきメダル</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_098">
+		<language name="JPN" width="216">あきメダル</language>
+		<language name="JPN_KANJI" width="216">あきメダル</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_099">
 		<language name="JPN" width="216">あきメダル</language>
 		<language name="JPN_KANJI" width="216">あきメダル</language>
 	</row>

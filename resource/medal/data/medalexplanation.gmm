@@ -2409,42 +2409,22 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_072">
-		<language name="JPN" width="216">データコンバートを　おこない
-●●コの　イベントを　かいほうした
+		<language name="JPN" width="216">おもいでリンクを　おこなった
 あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">データコンバートを　行い
-●●個の　イベントを　開放した
+		<language name="JPN_KANJI" width="216">おもいでリンクを　行った
 証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_073">
-		<language name="JPN" width="216">データコンバートを　おこない
-●●コの　イベントを　かいほうした
+		<language name="JPN" width="216">おもいでリンクを　おこない
+すべての　リンクイベントを　みた
 あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">データコンバートを　行い
-●●個の　イベントを　開放した
+		<language name="JPN_KANJI" width="216">おもいでリンクを　行い
+すべての　リンクイベントを　見た
 証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_074">
-		<language name="JPN" width="216">データコンバートを　おこない
-●●コの　イベントを　かいほうした
-あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">データコンバートを　行い
-●●個の　イベントを　開放した
-証しの　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_075">
-		<language name="JPN" width="216">データコンバートを　おこない
-すべての　イベントを　かいほうした
-あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">データコンバートを　行い
-すべての　イベントを　開放した
-証しの　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_076">
 		<language name="JPN" width="216">『おたのしみ』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『お楽しみ』メダルを　すべて　
@@ -2700,6 +2680,16 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_097">
+		<language name="JPN" width="216">あき</language>
+		<language name="JPN_KANJI" width="216">空き</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_098">
+		<language name="JPN" width="216">あき</language>
+		<language name="JPN_KANJI" width="216">空き</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_099">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
