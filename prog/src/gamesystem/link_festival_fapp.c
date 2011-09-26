@@ -137,26 +137,22 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, SAVE_CONTROL_WORK* save, FMISSION_SAVE* f_save )
 {
   MEDALBOX * medalbox = SaveData_GetMedalBox( save );
-  RTCDate date;
  
-  // 現在時刻を取得
-  GFL_RTC_GetDate( &date );
-
   { //エントリー数が規定値を越えた際にオープンするメダルチェック
     int entry_num = LINK_FESTIVAL_GetMissionEntryNum( wk );
 
     if( entry_num >= 10 ){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_JOIN_NUM_LV1, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV1 );
       if( entry_num >= 30 ){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_JOIN_NUM_LV2, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV2 );
       }
     }
   }
   { //フェスのトータルスコアが規定値を越えた際にオープンするメダルチェック
     if( pl->score >= 100 ){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_HIGHSCORE_LV1, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HIGHSCORE_LV1 );
       if( pl->score >= 1000 ){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_HIGHSCORE_LV2, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HIGHSCORE_LV2 );
       }
     }
   }
@@ -168,9 +164,9 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
     u32 clear_num = FMISSION_SAVE_GetMissionClearNum( f_save );
    
     if( clear_num >= 30 ){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_CLEAR_LV1, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_CLEAR_LV1 );
       if( clear_num >= 100 ){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_CLEAR_LV2, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_CLEAR_LV2 );
       }
     }
   }
@@ -195,7 +191,7 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
     }
     //ループ完了していたら、開催可能な全ミッションクリアしてる
     if( i == FMISSION_ID_MAX ){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_FES_CLEAR_ALL, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_CLEAR_ALL );
     }
   }
 }
