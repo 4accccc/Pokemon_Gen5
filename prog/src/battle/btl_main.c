@@ -5434,7 +5434,21 @@ static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, cons
   MyStatus_Copy( playerData, dst->playerStatus );
 
   dst->trainerID = TRID_NULL;
-  dst->trainerType = (MyStatus_GetMySex(dst->playerStatus) == PTL_SEX_MALE)? TRTYPE_HERO : TRTYPE_HEROINE;
+  // バージョンチェック
+  {
+    u8 version = MyStatus_GetRomCode( playerData );
+
+    // swan
+    if( version == VERSION_W2 || version == VERSION_B2 )
+    {
+      dst->trainerType = (MyStatus_GetMySex(dst->playerStatus) == PTL_SEX_MALE)? TRTYPE_HERO : TRTYPE_HEROINE;
+    }
+    // wb
+    else
+    {
+      dst->trainerType = (MyStatus_GetMySex(dst->playerStatus) == PTL_SEX_MALE)? TRTYPE_WBHERO : TRTYPE_WBHEROINE;
+    }
+  }
   dst->name = MyStatus_CreateNameString( dst->playerStatus, HEAPID_BTL_SYSTEM );
 
   PMSDAT_Clear( &dst->win_word );

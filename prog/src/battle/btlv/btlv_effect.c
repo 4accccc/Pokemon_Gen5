@@ -1019,6 +1019,18 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
         trtype = TRTYPE_HEROINE_S;
       }
       break;
+    case TRTYPE_WBHERO:
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_WBHERO_S;
+      }
+      break;
+    case TRTYPE_WBHEROINE:
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_WBHEROINE_S;
+      }
+      break;
 #if 0
       if( BTLV_EFFECT_CheckShooterEnable() )
       {
@@ -1053,6 +1065,20 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
       if( BTLV_EFFECT_CheckShooterEnable() )
       {
         trtype += TRTYPE_HERO_S;
+      }
+      break;
+    case TRTYPE_WBHERO:
+      //シューターモードでは専用の絵に差し替え
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_WBHERO_S;
+      }
+      break;
+    case TRTYPE_WBHEROINE:
+      //シューターモードでは専用の絵に差し替え
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_WBHEROINE_S;
       }
       break;
     default:
