@@ -290,7 +290,7 @@ EVENT_START   ev_pos_c09r0201_enter_02
   _FOURKINGS_EVIL_CLAW( 1 )
   _SE_PLAY( SEQ_SE_SW_GEEMA_03 )    // ’Ü‚ªˆê‹C‚É•Â‚¶‚é‰¹
 
-  _TIME_WAIT( 35 )
+  _TIME_WAIT( 50 )
 
   //‰Š“_‰Î
   _FOURKINGS_EVIL_FIRE( 1 )
