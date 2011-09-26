@@ -405,7 +405,6 @@ static BOOL Local_Tvt_Secret_TalkInner( LOCAL_TVT_PERSON_SYS *p_person, const LO
   {
     SEQ_INIT,
     SEQ_MAIN,
-    SEQ_FAREWELL,
     SEQ_END,
   };
   LOCAL_TVT_CHARA* p_secret = LOCAL_TVT_CHARA_SYS_GetWork( cp_param->p_chara_sys, 0 );
