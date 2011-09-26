@@ -14,6 +14,7 @@
   
   //@author Suginaka_katsunori
   //@author Mizuguchi_Mai（ポケウッド誘導）
+  //@author fujimura_souichirou（ホミカのセリフの一部をギザウィンに）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -194,9 +195,10 @@ EVENT_END
 //ジムリーダー戦
 ev_leader2_btl:
 {
-	//ホミカが喋る　
-	_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_swleader2_01 )
-	_BALLOONWIN_CLOSE()
+
+  //ホミカ：いくよ！　あんたの　りせい（ギザウィンで）
+  _GIZAWIN_OBJMSG_POS( msg_c13gym0102_swleader2_01, C13GYM0102_SWLEADER2ISS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
 	//トレーナー戦呼び出し
 	_TRAINER_BTL_SET( TRID_SWLEADER2_01, 0 )
