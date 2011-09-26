@@ -591,6 +591,66 @@
       </row><row id="TRADE_OYA_43">
         <language name="JPN" width="256">ハツネ</language>
         <language name="JPN_KANJI" width="256">ハツネ</language>
+      </row><row id="TRADE_POKE_44">
+        <language name="JPN" width="256">ムーランド</language>
+        <language name="JPN_KANJI" width="256">ムーランド</language>
+      </row><row id="TRADE_OYA_44">
+        <language name="JPN" width="256">チェレン</language>
+        <language name="JPN_KANJI" width="256">チェレン</language>
+      </row><row id="TRADE_POKE_45">
+        <language name="JPN" width="256">ペンドラー</language>
+        <language name="JPN_KANJI" width="256">ペンドラー</language>
+      </row><row id="TRADE_OYA_45">
+        <language name="JPN" width="256">ホミカ</language>
+        <language name="JPN_KANJI" width="256">ホミカ</language>
+      </row><row id="TRADE_POKE_46">
+        <language name="JPN" width="256">ハハコモリ</language>
+        <language name="JPN_KANJI" width="256">ハハコモリ</language>
+      </row><row id="TRADE_OYA_46">
+        <language name="JPN" width="256">アーティ</language>
+        <language name="JPN_KANJI" width="256">アーティ</language>
+      </row><row id="TRADE_POKE_47">
+        <language name="JPN" width="256">ゼブライカ</language>
+        <language name="JPN_KANJI" width="256">ゼブライカ</language>
+      </row><row id="TRADE_OYA_47">
+        <language name="JPN" width="256">カミツレ</language>
+        <language name="JPN_KANJI" width="256">カミツレ</language>
+      </row><row id="TRADE_POKE_48">
+        <language name="JPN" width="256">ドリュウズ</language>
+        <language name="JPN_KANJI" width="256">ドリュウズ</language>
+      </row><row id="TRADE_OYA_48">
+        <language name="JPN" width="256">ヤーコン</language>
+        <language name="JPN_KANJI" width="256">ヤーコン</language>
+      </row><row id="TRADE_POKE_49">
+        <language name="JPN" width="256">スワンナ</language>
+        <language name="JPN_KANJI" width="256">スワンナ</language>
+      </row><row id="TRADE_OYA_49">
+        <language name="JPN" width="256">フウロ</language>
+        <language name="JPN_KANJI" width="256">フウロ</language>
+      </row><row id="TRADE_POKE_50">
+        <language name="JPN" width="256">オノノクス</language>
+        <language name="JPN_KANJI" width="256">オノノクス</language>
+      </row><row id="TRADE_OYA_50">
+        <language name="JPN" width="256">シャガ</language>
+        <language name="JPN_KANJI" width="256">シャガ</language>
+      </row><row id="TRADE_POKE_51">
+        <language name="JPN" width="256">シズイ</language>
+        <language name="JPN_KANJI" width="256">シズイ</language>
+      </row><row id="TRADE_OYA_51">
+        <language name="JPN" width="256">シズイ</language>
+        <language name="JPN_KANJI" width="256">シズイ</language>
+      </row><row id="TRADE_POKE_52">
+        <language name="JPN" width="256">ジュペッタ</language>
+        <language name="JPN_KANJI" width="256">ジュペッタ</language>
+      </row><row id="TRADE_OYA_52">
+        <language name="JPN" width="256">トウヤ</language>
+        <language name="JPN_KANJI" width="256">トウヤ</language>
+      </row><row id="TRADE_POKE_53">
+        <language name="JPN" width="256">ジュペッタ</language>
+        <language name="JPN_KANJI" width="256">ジュペッタ</language>
+      </row><row id="TRADE_OYA_53">
+        <language name="JPN" width="256">トウコ</language>
+        <language name="JPN_KANJI" width="256">トウコ</language>
       </row>
 
   <lock>
