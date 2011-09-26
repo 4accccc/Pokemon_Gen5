@@ -59,10 +59,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん　こまったな……
-ぼくも　いそがしいし……▼</Text>
+ぼくも　忙しいし……▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T14:23:28" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,27 +131,28 @@
 			<Text>ジョインアベニューへ　ようこそ！▼
 とは　いっても　ごらんのように
 いまは　なんにも　ない▽
-ただの　みち　だけど……▼
+ただの　ストリート　だけど……▼
+おっと！　しつれい
 もうしおくれたね▼
 ぼくは　この　ジョインアベニューの
 オーナーなんだ▼
-ぼくの　ゆめは
+マイ　ドリームは
 おおくの　ひとで　にぎわう　まちを▽
 せかいじゅうに　つくること▼
 ……でも　ここを　かんりする　ひとが
 これなくなって　こまってるんだよね▼
-……　　……　　……　　……
-……　　……　　……　　……▼
+……　　……　　……
+……　　……　　……▼
 ビビっと　きた！▼
 きみは　みたところ　トレーナーで
 かくちを　めぐっているね▼
-いろんな　ひとと　であえる　たちばの
+いろんな　ひとと　であえる
 じんぶつに　たのみたいんだ▼
 どう？
 きみ　やってみない？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T12:35:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -160,29 +161,30 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニューへ　ようこそ！▼
-とは　いっても　ごらんのように
+とは　いっても　ご覧のように
 いまは　なんにも　ない▽
-ただの　みち　だけど……▼
-もうしおくれたね▼
+ただの　ストリート　だけど……▼
+おっと！　失礼
+申し遅れたね▼
 ぼくは　この　ジョインアベニューの
 オーナーなんだ▼
-ぼくの　ゆめは
-おおくの　ひとで　にぎわう　まちを▽
-せかいじゅうに　つくること▼
-……でも　ここを　かんりする　ひとが
-これなくなって　こまってるんだよね▼
-……　　……　　……　　……
-……　　……　　……　　……▼
+マイ　ドリームは
+多くの　人で　にぎわう　街を▽
+世界中に　つくること▼
+……でも　ここを　管理する　人が
+来れなくなって　こまってるんだよね▼
+……　　……　　……
+……　　……　　……▼
 ビビっと　きた！▼
 きみは　みたところ　トレーナーで
-かくちを　めぐっているね▼
-いろんな　ひとと　であえる　たちばの
-じんぶつに　たのみたいんだ▼
+各地を　巡っているね▼
+いろんな　人と　出会える
+人物に　頼みたいんだ▼
 どう？
 きみ　やってみない？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T12:35:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:15:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,12 +211,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう！▼
-じゃあ　きみという　にんげんを
-おしえてよ▼
+じゃあ　きみという
+にんげんを　おしえてよ▼
 きみの　「くちぐせ」は？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:13:05" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -223,12 +225,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとう！▼
-じゃあ　きみという　にんげんを
-おしえてよ▼
+じゃあ　きみという
+人間を　おしえてよ▼
 きみの　「くちぐせ」は？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:13:10" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,10 +257,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ビビっと　きたんだよ
-わかる　よね？</Text>
+わかるよね？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T09:56:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -267,10 +269,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ビビっと　きたんだよ
-わかる　よね？</Text>
+わかるよね？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T09:56:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:16:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -310,11 +312,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほど！▼
-じゃあ　おもわず
+じゃあ　思わず
 「かんげき」　したとき　なんていう？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T12:31:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:23:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -359,12 +361,12 @@
 			<Text>[Name:ResortGreet ]
 [Name:ResortGreet Idx="1" ]　▼
 ……うん！！▼
-おもった　とおりだ！
+思った　とおりだ！
 きみしか　いない！▽
-きみ　いがいに　ありえない！▼</Text>
+きみ以外に　ありえない！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-22T03:58:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:23:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -447,12 +449,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひしょ　たちよ▼
+			<Text>秘書たちよ▼
 そういう　ことだから
 あとのこと　よろしくー▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T12:48:37" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -507,11 +509,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:16:59" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_02"
@@ -519,11 +528,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめまして▼
-あなたのことを　なんと
+あなたの　ことを　なんと
 およびすれば　よいでしょう？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T11:33:37" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:18:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -532,11 +541,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はじめまして▼
-あなたのことを　なんと
-およびすれば　よいでしょう？▼</Text>
+あなたの　ことを　なんと
+お呼びすれば　よいでしょう？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T11:33:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:24:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -551,11 +560,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:01" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_03"
@@ -564,8 +580,8 @@
 			Language="JPN">
 			<Text>[Name:ResortMayor ]！▼
 あなたは　この　まちの
-せきにんしゃです▼
-まだ　なにも　ない　このまちを
+せきにんしゃ　です▼
+まだ　なにもない　このまちを
 たくさんの　ひとが　ゆきかう▽
 すてきな　アベニューに　してください▼
 まちを　はってん　させる　ほうほうは
@@ -573,8 +589,8 @@
 じゅんびが　ととのいましたら
 わたくしに　はなしかけて　ください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T14:14:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -583,18 +599,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortMayor ]！▼
-あなたは　この　まちの
-せきにんしゃです▼
-まだ　なにも　ない　このまちを
-たくさんの　ひとが　ゆきかう▽
+あなたは
+この街の　責任者です▼
+まだ　なにもない　この街を
+たくさんの　人が　行き交う▽
 すてきな　アベニューに　してください▼
-まちを　はってん　させる　ほうほうは
-これから　せつめい　いたします▼
-じゅんびが　ととのいましたら
-わたくしに　はなしかけて　ください▼</Text>
+まちを　発展させる　方法は
+これから　説明いたします▼
+準備が　整いましたら
+わたくしに　話しかけて　ください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T14:14:45" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:25:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -609,11 +625,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_04"
@@ -623,11 +646,11 @@
 			<Text>[Name:ResortMayor ]！▼
 あなたは　いま　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-18T10:45:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -636,13 +659,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortMayor ]！▼
-あなたは　いま　いちにんまえの
+あなたは　いま　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-18T10:44:57" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:25:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -657,11 +680,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_05"
@@ -671,18 +701,18 @@
 			<Text>ひとを　よぶためには
 べんりで　やくだつ　しせつを▽
 つくるのが　よいでしょう▼
-そう！　おみせです！▼
+そう！　おみせ　です！▼
 おみせを　つくるには
-ゆめを　もって▽
-この　まちへ　やってきた　ひとを▽
+ゆめを　もって▼
+この　まちへ　やってきた　ひとを
 「しょうたい」すると　できあがます▼
 ……おや？
 だれか　いらしたみたいです▼
-さっそく　「しょうたい」
-してみましょう▼</Text>
+さっそく
+「しょうたい」して　みましょう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:44:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -690,21 +720,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとを　よぶためには
-べんりで　やくだつ　しせつを▽
+			<Text>人を　呼ぶためには
+便利で　役立つ　施設を▽
 つくるのが　よいでしょう▼
-そう！　おみせです！▼
-おみせを　つくるには
-ゆめを　もって▽
-この　まちへ　やってきた　ひとを▽
+そう！　お店です！▼
+お店を　つくるには
+夢を　もって▼
+この街へ　やってきた　人を
 「しょうたい」すると　できあがます▼
 ……おや？
 だれか　いらしたみたいです▼
-さっそく　「しょうたい」
-してみましょう▼</Text>
+さっそく
+「しょうたい」して　みましょう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:44:32" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -719,11 +749,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_06"
@@ -744,13 +781,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　おみせを　たてましょう▼
-まちを　あるくひとに　はなしかけて
-「しょうたいする」を　えらんで▽
-おみせを　つくって　もらいましょう▼</Text>
+			<Text>まずは　お店を　たてましょう▼
+街を　歩く人に　話しかけて
+「しょうたいする」を　選んで▽
+お店を　つくって　もらいましょう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T10:06:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -765,11 +802,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_07"
@@ -783,13 +827,13 @@
 つぎは　おきゃくさまに
 おみせを　しょうかい　しましょう▼
 おきゃくさまに　はなしかけて
-「あんないする」　を　しましょう▼
+「あんないする」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
 さっそく　「あんない」　してみましょう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T11:41:55" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:27:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -798,19 +842,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとうございます！
-りっぱな　おみせが　たちましたね▼
-おみせを　つくっても　おきゃくさまが
-こなければ　いみが　ありません▼
-つぎは　おきゃくさまに
-おみせを　しょうかい　しましょう▼
-おきゃくさまに　はなしかけて
-「あんないする」　を　しましょう▼
+立派な　お店が　建ちましたね▼
+お店を　つくっても　お客さまが
+こなければ　意味が　ありません▼
+つぎは　お客さまに
+お店を　紹介しましょう▼
+お客さまに　話しかけて
+「あんないする」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
 さっそく　「あんない」　してみましょう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-11T11:42:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -825,22 +869,29 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみせに　おきゃくさまを
-「あんない」してあげましょう▼</Text>
+			<Text>おきゃくさまを　おみせに
+「あんない」して　あげましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:18:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:19:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -848,11 +899,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おみせに　おきゃくさまを
-「あんない」してあげましょう▼</Text>
+			<Text>お客さまを　お店に
+「あんない」して　あげましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:18:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -867,11 +918,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary_09"
@@ -879,14 +937,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとうございます！▼
-おみせに　おきゃくさまを
-ごあんないして▽
+おきゃくさまを
+おみせに　ごあんないして▽
 まちの　にんきが　あがりました▼
-おみせや　まちの　にんきを　あげて
+まちや　おみせの　にんきを　あげて
 ゆうめいに　していきましょう▼
 おきゃくさまを　よぶ　コツは
 とにかく　つうしんを　することです▼
-Ｃ－ＧＥＡＲを　ＯＮにして
+Ｃギアを　オンにして
 すれちがって　みたり▼
 ユニオンルームや
 グローバルターミナル　などの▽
@@ -898,8 +956,8 @@
 ぜひ　いらして　くださいね▼
 それでは▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T14:54:09" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -908,27 +966,27 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとうございます！▼
-おみせに　おきゃくさまを
-ごあんないして▽
-まちの　にんきが　あがりました▼
-おみせや　まちの　にんきを　あげて
-ゆうめいに　していきましょう▼
-おきゃくさまを　よぶ　コツは
-とにかく　つうしんを　することです▼
+お客さまを
+おみせに　ご案内して▽
+街の　人気が　あがりました▼
+街や　お店の　人気を　あげて
+有名に　していきましょう▼
+お客さまを　呼ぶ　コツは
+とにかく　通信を　することです▼
 Ｃ－ＧＥＡＲを　ＯＮにして
 すれちがって　みたり▼
 ユニオンルームや
 グローバルターミナル　などの▽
-つうしん　しせつへ　いってみましょう▼
+通信施設へ　行ってみましょう▼
 それでは　わたくしどもは
-[Name:ResortMayor ]の　ひしょとして▽
-こちらの　へやで　おまちしています▼
+[Name:ResortMayor ]の　秘書として▽
+こちらの　へやで　お待ちしています▼
 いろいろと　サポートを　いたしますので
 ぜひ　いらして　くださいね▼
 それでは▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T14:19:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -943,11 +1001,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_06"
@@ -956,11 +1021,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]と　なるため▼
-チュートリアルを
+せつめいを
 うける　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T06:33:49" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -968,13 +1033,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
-[Name:ResortMayor ]と　なるため▼
-チュートリアルを
-うける　ところで　ございます▼</Text>
+			<Text>あなたは　一人前の
+[Name:ResortMayor ]に　なるため▼
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-23T06:33:55" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -991,11 +1056,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_01"
@@ -1004,11 +1076,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:19:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1016,13 +1088,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
+			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:36" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1039,11 +1111,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_02"
@@ -1052,11 +1131,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1064,13 +1143,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
+			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:40" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1087,11 +1166,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_03"
@@ -1100,11 +1186,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:44" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1112,13 +1198,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
+			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:42" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1135,11 +1221,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_04"
@@ -1148,11 +1241,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1160,13 +1253,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
+			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1183,11 +1276,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary2_05"
@@ -1196,11 +1296,11 @@
 			Language="JPN">
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
+せつめいを
 うけている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1208,13 +1308,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　いちにんまえの
+			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
-チュートリアルを
-うけている　ところで　ございます▼</Text>
+説明を
+受けている　ところで　ございます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-21T15:36:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1231,11 +1331,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_secretary3_01"
@@ -1256,11 +1363,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー！▼
-そろそろ　つぎの　おしごとの
-おじかん　ですが……▼</Text>
+そろそろ　次の　お仕事の
+お時間ですが……▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-22T05:40:31" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1275,11 +1382,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MAN</Text>
+			<Text>OL</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:33" />
+				Time="2011-09-26T04:17:19" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_kanban_01"
@@ -1299,10 +1413,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　[Name:ResortTown ]
-[Name:ResortMayor Idx="1" ]の　じむしょ▼</Text>
+[Name:ResortMayor Idx="1" ]の　事務所▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T07:25:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1346,11 +1460,11 @@
 			Language="JPN_KANJI">
 			<Text>ここは
 [Name:ResortTown ]▼
-ひとと　こうりゅう　するほどに
-はってんする　おおどおり▼</Text>
+人と　交流するほどに
+発展する　大通り▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T07:28:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1395,11 +1509,11 @@
 			Language="JPN_KANJI">
 			<Text>ここは
 [Name:ResortTown ]▼
-ひとと　こうりゅう　するほどに
-はってんする　おおどおり▼</Text>
+人と　交流するほどに
+発展する　大通り▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-24T07:28:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-26T04:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
