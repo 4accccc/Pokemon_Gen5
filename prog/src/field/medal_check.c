@@ -1386,8 +1386,8 @@ static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA
 //-----------------------------------------------------------------------------
 static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
 {
-    s32 i;
-  u32 cnt;
+  s32 i;
+  u32 cnt = 0;
   u8 ground_id;
   HABITATLIST_STATUS list_status;
   SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
@@ -1425,7 +1425,7 @@ static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
 static BOOL MDLREC_CHECK_HabitatGetLookCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
 { 
   s32 i;
-  u32 cnt;
+  u32 cnt = 0;
   u8 ground_id;
   HABITATLIST_STATUS list_status;
   SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
