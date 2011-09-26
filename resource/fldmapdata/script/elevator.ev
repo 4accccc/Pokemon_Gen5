@@ -232,6 +232,7 @@ EVENT_END
 _ELEVATOR_LABEL elevator_c03r11
   _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C03R1101,7,0,0
   _ELEVATOR_DATA  msg_elevator_2f, ZONE_ID_C03R1102,7,0,0
+  _ELEVATOR_DATA  msg_elevator_3f, ZONE_ID_C03R1103,7,0,0
 _ELEVATOR_DATA_END
 
 /**************************************************************/
