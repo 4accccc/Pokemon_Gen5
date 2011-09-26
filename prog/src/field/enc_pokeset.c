@@ -345,6 +345,15 @@ u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
   u8 temp[ENC_N_POKE_MAX];
 	u8 i,j,enc_count;
 
+  //‚à‚µ‹N“®ðŒ‚Ý‚½‚µ‚È‚¢‚È‚©‚Á‚½‚ço‚È‚¢
+  {
+    BOOL npoke_f = EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( (GAMEDATA*)efp->gdata ),SYS_FLAG_NPOKE_OPEN ); 
+    if( !npoke_f )
+    {
+      return ENC_N_POKE_NONE;
+    }
+  }
+
   //Šm—¦”»’è
   {
     int per = 10;
