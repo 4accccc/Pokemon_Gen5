@@ -89,38 +89,39 @@ static void DEBUG_POKEPARAM_Dump( POKEMON_PARAM * pp, HEAPID tempHeapID )
 
   OS_Printf("POKEMON_PARAM:%08x\n", (u32)pp);
   value = PP_Get( pp, ID_PARA_monsno, NULL );
-  OS_Printf("monsno:%3d ",value );
+  OS_Printf("monsno:%03d ",value );
   value = PP_Get( pp, ID_PARA_form_no, NULL );
-  OS_Printf("formno:%2d ", value );
+  OS_Printf("formno:%02d ", value );
   value = PP_Get( pp, ID_PARA_sex, NULL );
   OS_Printf("sex:%d ", value );
   value = PP_Get( pp, ID_PARA_seikaku, NULL );
-  OS_Printf("seikaku:%d ", value );
+  OS_Printf("seikaku:%02d ", value );
   value = PP_Get( pp, ID_PARA_speabino, NULL );
-  OS_Printf("tokusei:%2d\n", value );
-
-  //OS_Printf("get_date(");
-  //value = PP_Get( pp, ID_PARA_get_year, NULL ); OS_Printf("%2d/", value );
-  //value = PP_Get( pp, ID_PARA_get_month, NULL ); OS_Printf("%2d/", value );
-  //value = PP_Get( pp, ID_PARA_get_day, NULL ); OS_Printf("%2d", value );
-  //OS_PutString(")\n");
-
-
-  //PP_Get( pp, ID_PARA_nickname, (void*)strbuf );
-  //OS_Printf("nickname:"); DEBUG_PrintString( strbuf );
-  //PP_Get( pp, ID_PARA_oyaname, (void*)strbuf );
-  //OS_Printf("oyaname:"); DEBUG_PrintString( strbuf ); OS_PutString("\n");
+  OS_Printf("tokusei:%03d\n", value );
 
   value = PP_CheckRare( pp );
-  OS_Printf("rare=%d ", value );
-  value = PP_Get( pp, ID_PARA_country_code, NULL );
-  OS_Printf("country_code:%3d ", value );
-  value = PP_Get( pp, ID_PARA_id_no, NULL );
-  OS_Printf("ID:%08x ", value );
-  value = PP_Get( pp, ID_PARA_personal_rnd, NULL );
-  OS_Printf("personal_rnd:%08x ", value );
-  value = PP_Get( pp, ID_PARA_power_rnd, NULL );
-  OS_Printf("power_rnd:%08x\n", value );
+  OS_Printf("rare:%d ", value );
+  value = PP_Get( pp, ID_PARA_item, NULL );
+  OS_Printf("itemno:%3d ", value );
+  value = PP_Get( pp, ID_PARA_get_ball, NULL );
+  OS_Printf("ball_id:%2d ", value );
+  value = PP_Get( pp, ID_PARA_level, NULL );
+  OS_Printf("Lv:%3d ", value );
+  value = PP_Get( pp, ID_PARA_friend, NULL );
+  OS_Printf("friendly:%3d ", value );
+  OS_PutString("\n");
+
+  for ( i = 0; i < PTL_WAZA_MAX; i ++ )
+  {
+    value = PP_Get( pp, ID_PARA_waza1 + i, NULL );
+    OS_Printf("WAZA%d:%3d ", i+1,value );
+    value = PP_Get( pp, ID_PARA_pp1 + i, NULL );
+    OS_Printf("%2d/", value );
+    value = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
+    OS_Printf("%2d ", value );
+    value = PP_Get( pp, ID_PARA_pp_count1 + i, NULL );
+    OS_Printf("(+ %d)\n", value );
+  }
 
   //パワー乱数
   OS_Printf("POWER_RND(hp,pow,def,agi,speabi,spedef) = (");
@@ -155,23 +156,15 @@ static void DEBUG_POKEPARAM_Dump( POKEMON_PARAM * pp, HEAPID tempHeapID )
   value = PP_Get( pp, ID_PARA_spedef, NULL );
   OS_PutString("\n");
 
-  value = PP_Get( pp, ID_PARA_level, NULL );
-  OS_Printf("Lv:%3d ", value );
-  value = PP_Get( pp, ID_PARA_item, NULL );
-  OS_Printf("item:%3d ", value );
-  OS_PutString("\n");
+  value = PP_Get( pp, ID_PARA_country_code, NULL );
+  OS_Printf("country_code:%3d ", value );
+  value = PP_Get( pp, ID_PARA_id_no, NULL );
+  OS_Printf("ID:%08x ", value );
+  value = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+  OS_Printf("personal_rnd:%08x ", value );
+  value = PP_Get( pp, ID_PARA_power_rnd, NULL );
+  OS_Printf("power_rnd:%08x\n", value );
 
-  for ( i = 0; i < PTL_WAZA_MAX; i ++ )
-  {
-    value = PP_Get( pp, ID_PARA_waza1 + i, NULL );
-    OS_Printf("WAZA%d:%3d ", i+1,value );
-    value = PP_Get( pp, ID_PARA_pp1 + i, NULL );
-    OS_Printf("%2d/", value );
-    value = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
-    OS_Printf("%2d ", value );
-    value = PP_Get( pp, ID_PARA_pp_count1 + i, NULL );
-    OS_Printf("(+ %d)\n", value );
-  }
   OS_Printf("\n");
 
   GFL_STR_DeleteBuffer( strbuf );
@@ -202,24 +195,31 @@ static void DEBUG_WBTDL_POKEMON_dump( const WBTDL_POKEMON * dl_poke )
     OS_Printf("%04x ", dl_poke->nickname[i]);
   }
   OS_PutString("\n");
-  OS_Printf("monsno=%03d ", dl_poke->monsno);
-  OS_Printf("itemno=%03d ", dl_poke->item_no );
-  OS_Printf("rare(%d:%d) tokusei=%2d\n", dl_poke->rare_flag, dl_poke->pad1, dl_poke->tokusei);
-  OS_Printf("form=%d sex=%d ball_id=%d\n", dl_poke->form_no, dl_poke->sex, dl_poke->ball_id );
-  OS_Printf("level=%3d friendly=%3d seikaku=%2d\n",
-      dl_poke->level, dl_poke->friend_rate, dl_poke->seikaku );
-  OS_Printf("hp_exp(%d) pow_exp(%d) def_exp(%d) agi_exp(%d) spepow_exp(%d) spedef_exp(%d)\n",
-      dl_poke->hp_exp, dl_poke->pow_exp, dl_poke->def_exp,
-      dl_poke->agi_exp, dl_poke->spepow_exp, dl_poke->spedef_exp);
-  OS_Printf("hp_rnd(%d) pow_rnd(%d) def_rnd(%d) agi_rnd(%d) spepow_rnd(%d) spedef_rnd(%d)\n",
-      dl_poke->hp_rnd, dl_poke->pow_rnd, dl_poke->def_rnd,
-      dl_poke->agi_rnd, dl_poke->spepow_rnd, dl_poke->spedef_rnd);
+  OS_Printf("monsno:%03d ", dl_poke->monsno);
+  OS_Printf("formno:%02d ", dl_poke->form_no);
+  OS_Printf("sex:%d ", dl_poke->sex);
+  OS_Printf("seikaku:%02d ", dl_poke->seikaku);
+  OS_Printf("tokusei:%03d\n", dl_poke->tokusei );
 
+  OS_Printf("rare:%d ", dl_poke->rare_flag );
+  OS_Printf("itemno:%03d ", dl_poke->item_no );
+  OS_Printf("ball_id:%2d ", dl_poke->ball_id );
+  OS_Printf("Lv:%3d friendly:%3d\n", dl_poke->level, dl_poke->friend_rate );
 
   OS_Printf("WAZA1:%3d pp(%d)\n", dl_poke->waza_id[0], dl_poke->pp_count1 );
   OS_Printf("WAZA2:%3d pp(%d)\n", dl_poke->waza_id[1], dl_poke->pp_count2 );
   OS_Printf("WAZA3:%3d pp(%d)\n", dl_poke->waza_id[2], dl_poke->pp_count3 );
   OS_Printf("WAZA4:%3d pp(%d)\n", dl_poke->waza_id[3], dl_poke->pp_count4 );
+  //パワー乱数
+  OS_Printf("POWER_RND(hp,pow,def,agi,speabi,spedef) = (%3d,%3d,%3d,%3d,%3d,%3d)\n",
+      dl_poke->hp_rnd, dl_poke->pow_rnd, dl_poke->def_rnd,
+      dl_poke->agi_rnd, dl_poke->spepow_rnd, dl_poke->spedef_rnd);
+  //努力値
+  OS_Printf("EXP(hp,pow,def,agi,speabi,spedef) = (%3d,%3d,%3d,%3d,%3d,%3d)\n",
+      dl_poke->hp_exp, dl_poke->pow_exp, dl_poke->def_exp,
+      dl_poke->agi_exp, dl_poke->spepow_exp, dl_poke->spedef_exp);
+
+  OS_Printf("\n");
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -480,21 +480,53 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
   int i;
   u64 personal_rnd;
   u32 trainer_id;
-
-  PP_Clear( pp );
+  u8 tokusei = dl_poke->tokusei;
+  u8 tokusei_flag;
+  u32 speabi1 = POKETOOL_GetPersonalParam( dl_poke->monsno, dl_poke->form_no, POKEPER_ID_speabi1 );
+  u32 speabi2 = POKETOOL_GetPersonalParam( dl_poke->monsno, dl_poke->form_no, POKEPER_ID_speabi2 );
+  u32 speabi3 = POKETOOL_GetPersonalParam( dl_poke->monsno, dl_poke->form_no, POKEPER_ID_speabi3 );
 
   DEBUG_WBTDL_POKEMON_dump( dl_poke );
   
-  personal_rnd = ( dl_poke->rare_flag == TRUE ? PTL_SETUP_RND_RARE : PTL_SETUP_RND_AUTO );
+  //特性割り出し
+  if ( tokusei == speabi1 )
+  {
+    tokusei_flag = PTL_TOKUSEI_SPEC_1;
+  }
+  else if ( tokusei == speabi2 )
+  {
+    tokusei_flag = PTL_TOKUSEI_SPEC_2;
+  }
+  else if ( tokusei == speabi3 )
+  {
+    tokusei_flag = PTL_TOKUSEI_SPEC_1;
+  }
+  else
+  {
+    OS_TPrintf("[%d]は指定できない特性です\n", tokusei );
+    //GF_ASSERT( 0 );
+    tokusei_flag = PTL_TOKUSEI_SPEC_1;
+    tokusei = speabi1;
+  }
+
+  PP_Clear( pp );
+
   trainer_id = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
-  PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, trainer_id,
-      (dl_poke->pow_rnd & 0x3FFFFFFF), personal_rnd );
+  //個性乱数決定
+  personal_rnd = POKETOOL_CalcPersonalRandSpec( trainer_id, dl_poke->monsno, dl_poke->form_no,
+      dl_poke->sex, tokusei_flag, dl_poke->rare_flag );
+  PP_SetupEx( pp, dl_poke->monsno, dl_poke->level, trainer_id, PTL_SETUP_ID_AUTO, personal_rnd );
 
   //form_no
-  PP_Put( pp, ID_PARA_form_no, dl_poke->form_no );
+  PP_ChangeFormNo( pp, dl_poke->form_no );
 
+  if ( tokusei == speabi3 )
+  {
+    PP_SetTokusei3( pp, dl_poke->monsno, dl_poke->form_no );
+  }
   //装備アイテム設定
   PP_Put( pp, ID_PARA_item, dl_poke->item_no );
+
   //技設定
   for ( i = 0; i < PTL_WAZA_MAX; i ++ )
   {
@@ -506,8 +538,14 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
     point = PP_Get( pp, ID_PARA_pp_max1 + i, NULL );
     PP_Put( pp, ID_PARA_pp1 + i, point );
   }
+
   //パワー乱数設定
-  PP_Put( pp, ID_PARA_power_rnd, dl_poke->power_rnd );
+  PP_Put( pp, ID_PARA_hp_rnd, dl_poke->hp_rnd );
+  PP_Put( pp, ID_PARA_pow_rnd, dl_poke->pow_rnd );
+  PP_Put( pp, ID_PARA_def_rnd, dl_poke->def_rnd );
+  PP_Put( pp, ID_PARA_agi_rnd, dl_poke->agi_rnd );
+  PP_Put( pp, ID_PARA_spepow_rnd, dl_poke->spepow_rnd );
+  PP_Put( pp, ID_PARA_spedef_rnd, dl_poke->spedef_rnd );
 
   //経験値設定
   PP_Put( pp, ID_PARA_hp_exp, dl_poke->hp_exp );
@@ -517,8 +555,6 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
   PP_Put( pp, ID_PARA_spepow_exp, dl_poke->spepow_exp );
   PP_Put( pp, ID_PARA_spedef_exp, dl_poke->spedef_exp );
 
-  //特性設定
-  PP_Put( pp, ID_PARA_speabino, dl_poke->tokusei );
   //なつきど設定
   PP_Put( pp, ID_PARA_friend, dl_poke->friend_rate );
 
