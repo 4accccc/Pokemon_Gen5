@@ -207,6 +207,7 @@ static void clearTutorial( FIELDMAP_WORK * fieldmap )
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_START );
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_CLEAR );
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_DPOWER );
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
 
   *( EVENTWORK_GetEventWorkAdrs( ev, WK_SCENE_PALACE01 ) ) = 1;
 }
