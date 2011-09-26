@@ -485,11 +485,10 @@ sub TownmapData_ConvertData
           push( @DATA_VERSION, $val );
         }
         #é©ï™ÇÃà íuíTçı
-        elsif( $tag eq "#zone_search" )
+        elsif( $tag eq "#pull_r" )
         {
           &UndefAssert( $w );
-          $val	= &GetArrayNumber( $w, \@ZONE_SEARCH );
-          push( @DATA_ZONESEARCH, $val );
+          push( @DATA_ZONESEARCH, $w );
         }
         #ç¿ïWX
         elsif( $tag eq "#pos_x" )

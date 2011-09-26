@@ -299,7 +299,7 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
 //-----------------------------------------------------------------------------
 void FIELD_GOOUT_EFFECT_Setup( FIELD_GOOUT_EFFECT *p_wk )
 {
-  if( p_wk->is_enable )
+  if( p_wk->is_enable && p_wk->effectID != GOOUT_EFF_NULL )
   {
     p_wk->is_setup  = TRUE;
     p_wk->is_start  = FALSE;

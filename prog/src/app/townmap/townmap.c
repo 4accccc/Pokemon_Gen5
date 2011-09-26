@@ -111,7 +111,7 @@ static const GFL_POINT sc_center_pos =
 //-------------------------------------
 ///	PLACE
 //=====================================
-#define PLACE_PULL_R				(12)
+//#define PLACE_PULL_R				(12)  //当たり判定が強すぎる箇所があるのであたり幅の1.5倍にする
 #define PLACE_PULL_STRONG		(FX32_CONST(1))	//吸い込む強さ（カーソルより弱く）
 #define PLACEDATA_ANIME_SEQ_VANISH	(0xFF)
 enum
@@ -3037,9 +3037,11 @@ static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_po
 {	
 	u32 cur_x, cur_y;
 	u32	x, y;
+  u32 pull_r;
 
 	cur_x	= PLACEDATA_GetParam( cp_wk, TOWNMAP_DATA_PARAM_CURSOR_X ) + cp_wld_pos->x;
 	cur_y	= PLACEDATA_GetParam( cp_wk, TOWNMAP_DATA_PARAM_CURSOR_Y ) + cp_wld_pos->y;
+	pull_r	= PLACEDATA_GetParam( cp_wk, TOWNMAP_DATA_PARAM_PULL_R );
 
 	x = (cur_x - cp_pos->x) * (cur_x - cp_pos->x);
 	y = (cur_y - cp_pos->y) * (cur_y - cp_pos->y);
@@ -3051,7 +3053,7 @@ static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_po
   }
   else
   { 
-    if( x + y < ((PLACE_PULL_R * PLACE_PULL_R * MATH_IAbs(cp_wk->scale)) >> FX32_SHIFT) )
+    if( x + y < ((pull_r * pull_r * MATH_IAbs(cp_wk->scale)) >> FX32_SHIFT) )
     {
       if( p_distance )
       {	
