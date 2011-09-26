@@ -404,3 +404,74 @@ u32 POKEICON_GetAnmSubArcIndex(void)
 		return NARC_poke_icon_poke_icon_128k_NANR;
 	}
 }
+
+
+#define MONSNO_MASK  ( 0x3ff )   // =10bit
+#define FORM_MASK    (   0xf )   // =10bit
+#define SP_FORM_MASK (  0x3f )   // =10bit
+#define SEX_MASK     (   0x3 )   // =2bit
+
+
+//=============================================================================================
+/**
+ * @brief	ポケモンアイコン情報を16bitにパックする
+ *
+ * @param   mons    [in] ポケモン開発NO
+ * @param   form_no [in] フォルムNO
+ * @param   sex     [in] 性別
+ *
+ * @retval  POKEICON_16BIT		
+ */
+//=============================================================================================
+POKEICON_16BIT POKEICON_PackResourceData( u32 mons, u32 form_no, u32 sex )
+{
+  POKEICON_16BIT dat=0;
+  switch(mons){
+  // アンノーンとアルセウスはフォルム違いが16種類を超えているので、性別をせず
+  // ( form:6bit, monsno:10bit）で扱う
+  case MONSNO_ARUSEUSU:
+  case MONSNO_ANNOON:
+    dat = (mons | (( SP_FORM_MASK & form_no )<<10));
+    break;
+  default:
+    // フォルムNOが16を超えないポケモンは( sex:2bit, form:4bit, monsno:10bit）で扱う
+    dat = (mons | (( FORM_MASK & form_no )<<10) | ((sex&SEX_MASK) << 14));
+  }
+  return dat;
+}
+
+//=============================================================================================
+/**
+ * @brief	16bitにパックされているポケモンアイコン情報を取り出す
+ *
+ * @param   data		POKEICON_16BIT
+ * @param   mons    [out] ポケモン開発NO
+ * @param   form_no [out] フォルムNO
+ * @param   sex     [out] 性別
+ */
+//=============================================================================================
+void POKEICON_UnpackResourceData( POKEICON_16BIT data, u32 *mons, u32 *form_no, u32 *sex )
+{
+  
+  *mons    = data&MONSNO_MASK;
+  switch(*mons){
+  // アンノーンとアルセウスはフォルム違いが16種類を超えているので、性別を入れず
+  // ( form:6bit, monsno:10bit）で扱う
+  case MONSNO_ARUSEUSU:
+  case MONSNO_ANNOON:
+    *form_no = (data>>10) & SP_FORM_MASK;
+    *sex     = 0;
+    break;
+  default:
+    // フォルムNOが16を超えないポケモンは( sex:2bit, form:4bit, monsno:10bit）で扱う
+    *form_no = (data>>10) & FORM_MASK;
+    *sex     = (data>>14) & SEX_MASK;
+  }
+  
+  // 防御策（ゲノセクト以上の値は0に初期化)
+  if(*mons>=MONSNO_TAMAGO){
+    *mons = 0;
+    *form_no = 0;
+    *sex  = 0;
+  }
+}

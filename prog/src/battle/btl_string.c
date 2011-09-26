@@ -1193,5 +1193,7 @@ void BTL_STR_Register_PokewoodWord( void )
   // TODO:8つを超えたら引数分岐させます
   
   // TAG0:手持ちポケモンのニックネームを登録
+  // TAG1:自分の名前
   register_PokeNickname( 0, 0 );
+  register_TrainerName( SysWork.wset, 1, BTL_CLIENT_PLAYER );
 }

@@ -52,9 +52,10 @@ enum{
   PW_STAGE_A_NONE_B_TRAINER    =(PWS_B_TRAINER|PWS_A_NONE),    ///< 0x12 自分側いない敵側トレーナー
   PW_STAGE_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE),       ///< 0x22 両方いない
   
+  PW_STAGE_A_POKEMON_B_NONE    =(PWS_B_NONE|PWS_A_POKE),       ///< 0x20 敵側いない自分側ポケモン
+  PW_STAGE_A_NONE_B_POKEMON    =(PWS_B_POKE|PWS_A_NONE),       ///< 0x02 自分側いない敵側ポケモン
   
   // いつかポケモンから無人状態も要望されるか？
-  POKEWOOD_STAGE_COND_MAX,
 };
 
 // 勝利条件の数値定義
@@ -95,7 +96,7 @@ typedef struct {
   s16 situ_provision_data;///< 分岐条件用データ(ポケモン指定、技指定）
   s16 bias;               ///< イベント傾向
   s16 point;              ///< エンディング時のポイント
-  s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分７つ、相手７つまで格納。
+  s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分10、相手10まで格納。
   s16 stage_cast[EVENT_TALK_TURN_MAX];                       ///< お盆の上にいるのは役者か？ポケモンか？
   POKEWOOD_EVENT_REACTION_DATA reaction[EVENT_REACTION_MAX]; ///< 選択肢対応データが格納される
 }POKEWOOD_EVENT_DATA;

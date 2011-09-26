@@ -11,6 +11,7 @@
 #include "include/buflen.h"
 #include "gamesystem/game_data.h"
 #include "battle/pokewood.h"
+#include "pokeicon/pokeicon.h"
 
 #define POKEWOOD_BOXOFFICE_DATA_MAX   ( POKEWOOD_SENARIO_MAX )  ///< 記録として残す興行成績ランキングの数
 #define POKEWOOD_MYPOKE_NUM           (  6 )                    ///< ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数

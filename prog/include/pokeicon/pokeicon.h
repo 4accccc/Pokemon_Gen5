@@ -71,4 +71,13 @@ extern u32 POKEICON_GetCellSubArcIndex(void);
 extern u32 POKEICON_GetAnmArcIndex(void);
 extern u32 POKEICON_GetAnmSubArcIndex(void);
 
+//==============================================================================
+// ポケモンアイコンデータを最小に押さえる工夫 (タマゴは含まない)
+//==============================================================================
+// ポケモンアイコンリソースを16bitで表現する型
+typedef u16 POKEICON_16BIT;
+
+extern POKEICON_16BIT POKEICON_PackResourceData( u32 mons, u32 form_no, u32 sex );
+extern void           POKEICON_UnpackResourceData( POKEICON_16BIT data, u32 *mons, u32 *form_no, u32 *sex );
+
 #endif	//__POKEICON_H__

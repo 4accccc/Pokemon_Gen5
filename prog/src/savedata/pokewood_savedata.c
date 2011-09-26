@@ -16,6 +16,9 @@
 #define POKEWOOD_ARRAY_NUM  (( POKEWOOD_SENARIO_MAX/32 )+1)
 #define POKEWOOD_RECSAVEDATA_MAX  ( 8 ) //正確にはpokewood_rec.hを参照
 
+// 初期化時の興行収入値
+#define POKEWOOD_BOXOFFICE_FIRST_PROFITS ( -9999 )
+
 //----------------------------------------------------
 // ポケウッドセーブデータ実体
 //----------------------------------------------------
@@ -58,16 +61,22 @@ void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
   int i;
 	MI_CpuClear8( sv, sizeof(POKEWOOD_SAVEDATA));
 
+  // 成績モニターデータ初期化
+  for(i=0;i<POKEWOOD_BOXOFFICE_DATA_MAX;i++){
+    sv->boxoffice_record[i].profits = POKEWOOD_BOXOFFICE_FIRST_PROFITS;
+  }
+
   // 初期シナリオオープン状態を作成
   for(i=0;i<2;i++){
     POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// ポケウッド初期状態/ハチクマン/チュートリアル
     POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
   }
+#ifdef PM_DEBUG
   for(i=33;i<40;i++){
     POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// 素材確認用シナリオオープン
     POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
   }
-
+#endif
   // スターポイント告知済みフラグ設定
   POKEWOOD_SAVEDATA_SetStarRankAnnounced( sv, 0, 1 );
 }

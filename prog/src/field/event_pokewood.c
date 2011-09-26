@@ -737,6 +737,8 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
           // シナリオオープンチェック
           PKWD_OpenCheckScenario( ps, pbew->bp->pokewoodSenario, 
                                   pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
+          // スターランク計算
+          PKWDSYS_CalcStarPoint( gamedata, pkwdsys, pbew->bp->pokewoodResult, prew->rec_id );
         }
       }
     }
@@ -851,9 +853,10 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
       {
         *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
       }
+      // 興行収入データの作成
+      PKWDSYS_MakeBoxofficeRecord( pkwdsys, pbew->bp, pbew->bp->pokewoodSenario );
     }
     deletePokewoodBSP( pbew->bp );
-    //侵入システムにフィールド中であることを伝える
     (*seq) ++;
     break;
 

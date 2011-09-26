@@ -2640,11 +2640,9 @@ static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	//--------
   for( i=0; i<PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM; i++ )
   {
-    u16 monsno  = p_pkwd_record->pokeicon[i];
-    // TODO
-    // セーブにデータがないので仮
-    u16 sex     = 0;
-    u16 form    = 0;
+    // ポケモンアイコン用情報取得
+    u32 monsno,form,sex;
+    POKEICON_UnpackResourceData( p_pkwd_record->pokeicon[i], &monsno, &form, &sex );
 
     ICHI_Printf("mon_no %d i %d\n", monsno, i);
 

@@ -132,6 +132,7 @@ typedef enum{
   BTL_POKEWOOD_RESULT_BAD=0,      // é∏îsEND
   BTL_POKEWOOD_RESULT_SUCCESS,    // ê¨å˜END
   BTL_POKEWOOD_RESULT_STRANGE,    // ÉXÉgÉåÉìÉWEND
+  BTL_POKEWOOD_RESULT_MAX,
 }BtlPokewoodResult;
 
 //-----------------------------------------------------------------------------------

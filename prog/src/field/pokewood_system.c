@@ -385,17 +385,14 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
   MEDALBOX *medalbox     = SaveData_GetMedalBox( sv );
   POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
-  RTCDate date;
   int i;
 
-  // 現在時刻を取得
-  GFL_RTC_GetDate( &date );
 
   // ポケウッドシリーズメダル取得処理
   for(i=0;i<PW_SERIES_MEDAL_MAX;i++){
     if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_SERIES1+i )==0){
       if(_check_pokewoodseries_played( ps, i )){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_PKWD_SERIES1+i, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES1+i );
       }
     }
   }
@@ -403,14 +400,14 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
   // 全ての映画を撮影したかチェック
   if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_SERIES_ALL )==0){
     if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_PLAYED)==POKEWOOD_BOXOFFICE_DATA_MAX){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_PKWD_SERIES_ALL, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES_ALL );
     }
   }
 
   // 全ての映画で成功ENDにしたかチェック
   if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_GOODEND )==0){
     if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_SUCCESS)==POKEWOOD_BOXOFFICE_DATA_MAX){
-      MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_PKWD_GOODEND, date.year, date.month, date.day );
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_GOODEND );
     }
   }
 
@@ -421,16 +418,152 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
     // 初めてのストレンジENDチェック
     if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_STRANGE_FIRST )==0){
       if(strange_count!=0){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_PKWD_STRANGE_FIRST, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_FIRST );
       }
     }
 
     // 全ての映画でストレンジENDにしたかチェック
     if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_STRANGE_ALL )==0){
       if(strange_count==POKEWOOD_BOXOFFICE_DATA_MAX){
-        MEDALBOX_SetTitleMedalGetFlg( medalbox, MDLID_PKWD_STRANGE_ALL, date.year, date.month, date.day );
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_ALL );
       }
     }
   }
   
+}
+
+//=============================================================================================
+/**
+ * @brief	興行成績データの作成
+ *
+ * @param   pkwdsys		    PKWDSYS
+ * @param   bsp		        BATTLE_SETUP_PARAM (撮影バトルの結果が入っている）
+ * @param   scenario_no		シナリオＮＯ
+ */
+//=============================================================================================
+void PKWDSYS_MakeBoxofficeRecord( PKWDSYS *pkwdsys, BATTLE_SETUP_PARAM *bsp, int scenario_no )
+{
+  POKEPARTY *party = bsp->party[0];
+  POKEWOOD_BOXOFFICE_RECORD  input;
+  int i;
+
+  MI_CpuClear8( &input, sizeof(POKEWOOD_BOXOFFICE_RECORD));
+
+  // 興行収入
+  input.profits  = bsp->pokewoodProfit;
+
+  // ポケモン情報格納
+  for(i=0;i<PokeParty_GetPokeCount(party);i++){
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party,i);
+    int mons, form, sex, star_point;
+    mons = PP_Get( pp, ID_PARA_monsno, NULL );
+    form = PP_Get( pp, ID_PARA_form_no, NULL );
+    sex  = PP_Get( pp, ID_PARA_sex, NULL );
+    input.pokeicon[i] = (u16)POKEICON_PackResourceData( mons, form, sex );
+    star_point = PP_Get(pp, ID_PARA_star_point, NULL);
+    if(POKETOOL_StarPoint2Rank(star_point) >= PTL_STAR_RANK_2){
+      input.pokeicon_star_bit |= (1<<i);
+    }
+  }
+  pkwdsys->BoxofficeData = input;
+  pkwdsys->pokewoodResult = bsp->pokewoodResult;
+
+}
+
+
+//=============================================================================================
+/**
+ * @brief	ポケウッド撮影結果を記録に反映させる
+ *
+ * @param   bsp		
+ */
+//=============================================================================================
+void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
+{
+  POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
+  const POKEWOOD_BOXOFFICE_RECORD *compare = POKEWOOD_SAVEDATA_GetBoxOfficeData( ps, pkwdsys->scenario_no );
+  
+  // 興行収入で比較して代入
+  if(pkwdsys->BoxofficeData.profits >= compare->profits){
+    OS_Printf("興行収入データ更新: シナリオ%d\n", pkwdsys->scenario_no);
+    POKEWOOD_SAVEDATA_SetBoxOfficeData( ps, pkwdsys->scenario_no, &pkwdsys->BoxofficeData );
+  }
+}
+
+
+//エンディングに対応したポケモン用取得スターポイント
+static int star_point_tbl_poke[]={
+  -250,  // BAD END
+  150,  // GOOD END
+  250,  // STRANGE END
+};
+
+//エンディングに対応したプレイヤー用取得スターポイント
+static int star_point_table_player[]={
+  1,  // BAD END
+  2,  // GOOD END
+  4,  // STRANGE END
+};
+
+
+//=============================================================================================
+/**
+ * @brief	プレイヤーのスターポイント加算処理
+ *
+ * @param   gamedata	GAMEDATA
+ * @param   pkwdsys		POKEWOOD_SYSTEM
+ * @param   result		ポケウッドの上映結果
+ * @param   play_no		録画データNO
+ */
+//=============================================================================================
+void PKWDSYS_CalcStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys, BtlPokewoodResult result, int play_no )
+{
+  POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
+  GF_ASSERT( result<BTL_POKEWOOD_RESULT_MAX );
+  
+  if(POKEWOOD_SAVEDATA_GetMovieShowed( ps, play_no )==FALSE){
+    POKEWOOD_SAVEDATA_AddStarPoint( ps, star_point_table_player[result] );
+  }
+
+}
+
+//=============================================================================================
+/**
+ * @brief	ポケモンにスターポイントを加算する
+ *
+ * @param   gamedata	GAMEDATA
+ * @param   pkwdsys		POKEWOOD_SYSTEM
+ */
+//=============================================================================================
+void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
+{
+  int max,cnt;
+  POKEPARTY  *myparty = GAMEDATA_GetMyPokemon( gamedata );
+
+  OS_Printf("手持ちポケモン? %d\n ", pkwdsys->join_mypoke);
+
+  // 手持ちポケモンじゃなかったら終了
+  if(pkwdsys->join_mypoke==FALSE){
+    return;
+  }
+  GF_ASSERT( pkwdsys->pokewoodResult < BTL_POKEWOOD_RESULT_MAX );
+  
+  
+  // 参加したポケモンにスターポイントを加算する
+  max = pkwdsys->reg.NUM_HI;
+  for ( cnt = 0; cnt < max; cnt ++ )
+  {
+    POKEMON_PARAM * pp;
+    u32 pos = pkwdsys->pokelist_select_num[ cnt ];
+    int star_point;
+    pp = PokeParty_GetMemberPointer( myparty, pos-1 );
+    star_point = PP_Get( pp, ID_PARA_star_point, NULL );
+    star_point += star_point_tbl_poke[pkwdsys->pokewoodResult];
+//    star_point = MATH_CLAMP(star_point, 0, 255 );
+    if(star_point<0){   star_point = 0;}
+    if(star_point>255){ star_point = 255;}
+    PP_Put( pp, ID_PARA_star_point, star_point );
+    OS_Printf("スターポイント加算 %d, result=%d, star_point=%d\n ", 
+      pkwdsys->pokelist_select_num[ cnt ], pkwdsys->pokewoodResult, star_point);
+  }
 }

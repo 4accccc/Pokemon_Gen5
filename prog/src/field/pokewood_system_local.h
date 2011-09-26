@@ -12,6 +12,7 @@
 #include "pokewood_system.h"
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/btl_setup.h"
+#include "savedata/pokewood_savedata.h"
 #include "battle/pokewood.h"
 
 //============================================================================================
@@ -60,5 +61,11 @@ struct _POKEWOOD_SYSTEM {
 
   /// 録画データ　バックアップ領域
   void * backup_area;
+
+  // 興行成績データ
+  POKEWOOD_BOXOFFICE_RECORD  BoxofficeData;
+
+  // ポケウッド撮影結果
+  int pokewoodResult;
 };
 
