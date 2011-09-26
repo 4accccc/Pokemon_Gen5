@@ -8,45 +8,30 @@
 #ifndef ZONE_R23_EVC_H
 #define ZONE_R23_EVC_H
 
-#define TR_MOUNT_17                        0
-#define TR_MOUNT_18                        1
-#define TR_BATTLEG_18                      2
-#define TR_ELITEM_31                       3
-#define TR_KARATE_19                       4
-#define TR_ELITEW_31                       5
-#define R23_TREE_01                        6
-#define R23_TREE_02                        7
-#define FLD_ITEM_195                       8
-#define FLD_ITEM_194                       9
-#define FLD_ITEM_196                      10
-#define FLD_ITEM_197                      11
 
 #endif //ZONE_R23_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r23.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R23_EVB_H
 #define ZONE_R23_EVB_H
 
-#define BGID_R23_ANIMAL_TRAIL_01_1        0
-#define BGID_R23_ANIMAL_TRAIL_01_2        1
-#define BG_R23_DUMMY_FES_01               2
-#define BG_R23_DUMMY_FES_02               3
-#define BG_R23_DUMMY_FES_03               4
-#define BG_R23_DUMMY_FES_04               5
-#define BG_R23_DUMMY_FES_05               6
-#define BG_R23_DUMMY_FES_06               7
-#define BG_R23_DUMMY_FES_07               8
-#define BG_R23_DUMMY_FES_08               9
-#define BG_R23_DUMMY_FES_09              10
-#define BG_R23_DUMMY_FES_10              11
-#define BG_R23_DUMMY_FES_11              12
-#define BG_R23_DUMMY_FES_12              13
-#define BG_R23_DUMMY_FES_13              14
-#define BG_R23_DUMMY_FES_14              15
-#define BG_R23_DUMMY_FES_15              16
-#define BG_R23_DUMMY_FES_16              17
-#define BG_R23_DUMMY_FES_17              18
-#define BG_R23_DUMMY_FES_18              19
-#define HIDE_ITEM_197                    20
-#define HIDE_ITEM_198                    21
+#define BG_R23_DUMMY_FES_01               0
+#define BG_R23_DUMMY_FES_02               1
+#define BG_R23_DUMMY_FES_03               2
+#define BG_R23_DUMMY_FES_04               3
+#define BG_R23_DUMMY_FES_05               4
+#define BG_R23_DUMMY_FES_06               5
+#define BG_R23_DUMMY_FES_07               6
+#define BG_R23_DUMMY_FES_08               7
+#define BG_R23_DUMMY_FES_09               8
+#define BG_R23_DUMMY_FES_10               9
+#define BG_R23_DUMMY_FES_11              10
+#define BG_R23_DUMMY_FES_12              11
+#define BG_R23_DUMMY_FES_13              12
+#define BG_R23_DUMMY_FES_14              13
+#define BG_R23_DUMMY_FES_15              14
+#define BG_R23_DUMMY_FES_16              15
+#define BG_R23_DUMMY_FES_17              16
+#define BG_R23_DUMMY_FES_18              17
+#define HIDE_ITEM_197                    18
 
 #endif //ZONE_R23_EVB_H

@@ -33,6 +33,18 @@
 #define FLD_ITEM_201                      20
 #define FLD_ITEM_202                      21
 #define FLD_ITEM_203                      22
+#define TR_ELITEW_31                      23
+#define FLD_ITEM_195                      24
+#define TR_MOUNT_17                       25
+#define TR_KARATE_19                      26
+#define FLD_ITEM_196                      27
+#define TR_ELITEM_31                      28
+#define FLD_ITEM_194                      29
+#define R23_TREE_01                       30
+#define TR_BATTLEG_18                     31
+#define R23_TREE_02                       32
+#define FLD_ITEM_197                      33
+#define TR_MOUNT_18                       34
 
 #endif //ZONE_D26_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -46,5 +58,8 @@
 #define HIDE_ITEM_099                     4
 #define HIDE_ITEM_100                     5
 #define HIDE_ITEM_101                     6
+#define HIDE_ITEM_198                     7
+#define BGID_R23_ANIMAL_TRAIL_01_1        8
+#define BGID_R23_ANIMAL_TRAIL_01_2        9
 
 #endif //ZONE_D26_EVB_H
