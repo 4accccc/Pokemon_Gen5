@@ -16,6 +16,7 @@
 
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou（WBTチュートリアルイベント作成）
+  //@author suginaka_katsunori //一言NPCとBPショップ
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -38,6 +39,9 @@ _EVENT_DATA   ev_d05r0101_swboss_01
 _EVENT_DATA   ev_reserve_d05r0101_tutorial_02
 _EVENT_DATA   ev_d05r0101_swleader1_01
 _EVENT_DATA   ev_d05r0101_swrival_01
+_EVENT_DATA		ev_d05r0101_trainerw_01
+_EVENT_DATA		ev_d05r0101_bpshop_waza
+_EVENT_DATA		ev_d05r0101_bpshop_item
 _EVENT_DATA_END
 
 
@@ -348,6 +352,28 @@ EVENT_START		ev_d05r0101_shopm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_shopm_01 )
 EVENT_END
 
+/**************************************************************/
+/*		エリートトレーナー♀	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_d05r0101_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_trainerw_01 )
+EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　BPSHOP　わざ
+//--------------------------------------------------------------
+EVENT_START ev_d05r0101_bpshop_waza
+	_TALK_OBJ_START()
+	_BP_WAZA_SHOP_CALL()
+EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　BPSHOP　アイテム
+//--------------------------------------------------------------
+EVENT_START ev_d05r0101_bpshop_item
+	_TALK_OBJ_START()
+	_BP_ITEM_SHOP_CALL()
+EVENT_END
 
 //--------------------------------------------------------------------
 //共通：ターン右                 

@@ -11,24 +11,25 @@
 #define ZONE_D05R0101_EVC_H
 
 #define D05R0101_INFOMATIONW_01            0
-#define D05R0101_SHOPM_01                  1
-#define D05R0101_TRAINERM_01               2
-#define D05R0101_FIGHTERM_01               3
-#define D05R0101_BADMAN_01                 4
-#define D05R0101_GIRL2_01                  5
-#define D05R0101_SWRIVAL_01                6
-#define D05R0101_POLICEMAN_01              7
-#define D05R0101_POLICEMAN_02              8
-#define D05R0101_INFOMATIONW_02            9
-#define D05R0101_WKOBJCODE00              10
-#define D05R0101_WKOBJCODE01              11
-#define D05R0101_WKOBJCODE02              12
-#define D05R0101_SUNGLASSES_01            13
-#define D05R0101_SWLEADER5_01             14
-#define D05R0101_SWLEADER1_01             15
-#define D05R0101_BACKPACKERW_01           16
-#define D05R0101_SWLEADER2_01             17
-#define D05R0101_SWBOSS_01                18
+#define D05R0101_TRAINERM_01               1
+#define D05R0101_TRAINERW_01               2
+#define D05R0101_BADMAN_01                 3
+#define D05R0101_GIRL2_01                  4
+#define D05R0101_SWRIVAL_01                5
+#define D05R0101_POLICEMAN_01              6
+#define D05R0101_POLICEMAN_02              7
+#define D05R0101_INFOMATIONW_02            8
+#define D05R0101_WKOBJCODE00               9
+#define D05R0101_WKOBJCODE01              10
+#define D05R0101_WKOBJCODE02              11
+#define D05R0101_SUNGLASSES_01            12
+#define D05R0101_SWLEADER5_01             13
+#define D05R0101_SWLEADER1_01             14
+#define D05R0101_BACKPACKERW_01           15
+#define D05R0101_SWLEADER2_01             16
+#define D05R0101_SWBOSS_01                17
+#define D05R0101_BPSHOP_WAZA              18
+#define D05R0101_BPSHOP_ITEM              19
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
