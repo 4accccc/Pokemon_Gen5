@@ -9181,10 +9181,10 @@
 ……えっ　もう　そんななのか！▼
 とすると　一週間は
 ここに　いたことになるのか…？▼
-よしっ　ひとしょうぶして　帰るか！▼</Text>
+よしっ　一勝負して　帰るか！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T03:45:40" />
+				Time="2011-09-26T06:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -26112,10 +26112,10 @@
 			<Text>ずっと　ブリーダーを　してきたけど
 こんな　ポケモンは　はじめてみた！▼
 じしんを　もって　いえるわ！
-これぞ　わたしの　さいこうけっさくよ！▼</Text>
+これが　さいきょうの　ポケモンよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-30T04:33:29" />
+				Time="2011-09-26T08:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26126,10 +26126,10 @@
 			<Text>ずっと　ブリーダーを　してきたけど
 こんな　ポケモンは　初めてみた！▼
 自信を　もって　いえるわ！
-これぞ　わたしの　最高傑作よ！▼</Text>
+これが　最強の　ポケモンよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-30T04:33:50" />
+				Time="2011-09-26T08:04:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26137,10 +26137,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ポケモンブリーダー 女 ― 91～100階</Comment>
+			<Comment>ポケモンブリーダー 女 ― 91～100階
+
+2011/9/26　修正</Comment>
 			<CommentModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:48:13" />
+				Time="2011-09-26T08:59:42" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
