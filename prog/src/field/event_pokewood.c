@@ -514,7 +514,8 @@ static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM 
   GFL_HEAP_FreeMemory( pp );
   
   // 現在はシナリオNOとタイトル画像指定番号を同じにする
-  param->title_no = bsp->pokewoodSenario;
+//  param->title_no = bsp->pokewoodSenario;
+  param->scenario_no = bsp->pokewoodSenario;
   param->sex      = MyStatus_GetMySex( bsp->playerStatus[0] );
 
   OS_Printf("レンタルポケモンか？=%d\n", POKEWOOD_REC_GetData(POKEWOOD_REC_PARAM_RENTAL_FLAG,NULL));

@@ -90,7 +90,7 @@ enum{
 	PKWD_COUNT_EMPTY_MAXNUM		= 3*2,		// empty
 	//
 	PKWD_COUNT_OBJ_MAXNUM		= 1,		// obj
-	PKWD_COUNT_LOGO_OBJ_MAXNUM	= 2,		// obj
+	PKWD_COUNT_LOGO_OBJ_MAXNUM	= 4,		// obj
 	//
 	PKWD_COUNT_BGNUM_MAXNUM		= 8,		// bg
 	//
@@ -98,7 +98,7 @@ enum{
 	//
 	PKWD_COUNT_MES_MAX			= 2,
 	//
-	PKWD_COUNT_MAX_TITLENUM		= 10,		// タイトル数最大
+	PKWD_COUNT_MAX_TITLENUM		= 40,		// タイトル数最大
 };
 
 
@@ -128,6 +128,8 @@ enum{
 	//
 	CLWK_LOGO_MOUSE		= 0,				// 口
 	CLWK_LOGO_EYE,							// 目
+	CLWK_LOGO_P1,							// P1
+	CLWK_LOGO_P2,							// P2
 };
 
 // SEQ
@@ -136,6 +138,8 @@ enum{
 	//
 	SEQ_LOGO_MOUSE_ANIM	= 0,				// 口
 	SEQ_LOGO_EYE_ANIM,						// 目
+	SEQ_LOGO_P1_ANIM,						// P1
+	SEQ_LOGO_P2_ANIM,						// P2
 };
 
 // フェードの種類
@@ -387,6 +391,8 @@ static const s16 pwc_obj_logo_itbl[] = {
 static const PKWD_COUNT_OBJ_DATA pwc_obj_logo_tbl[] = {
 	{ 0,	0x30,	1,	0,	0,	1,	1,	0,},		// 顔、口
 	{ 1,	0x30,	1,	0,	0,	1,	2,	0,},		// 顔、目
+	{ 2,	0x30,	1,	0,	0,	1,	2,	0,},		// 顔、p1
+	{ 3,	0x30,	1,	0,	0,	1,	2,	0,},		// 顔、p2
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -414,7 +420,8 @@ static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
 // タイトルのテーブル
 //-------------------
 static const s16 pkwd_title_tbl[] = {
-	pw_movietitle_01,			// TITLE映画の名前
+//	pw_movietitle_01,			// TITLE映画の名前
+	pw_title_00,
 	0,
 };
 
@@ -482,6 +489,8 @@ static void pwc_disp_string( PKWD_COUNT_MAIN_WORK* wk, const s32 mode, const s32
 								const PRINTSYS_LSB col );
 static u16  pwc_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode );
 static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk );
+//
+static u8 pwc_get_title_no( PKWD_COUNT_MAIN_WORK* wk );
 
 
 //=============================================================================
@@ -531,12 +540,13 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	// 参照用
 	wk->Param = pwk;
 	//
+#if 0
 	// 念のためチェック
 	if((wk->Param->title_no < 0)||(wk->Param->title_no >= PKWD_COUNT_MAX_TITLENUM)){
 		OS_Printf("title_no error :%d\n",wk->Param->title_no);
 		wk->Param->title_no = 0;
 	}
-	
+#endif
 	//描画設定初期化(上:メイン、下:サブ)
 	wk->graphic	= PKWD_COUNT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 	//
@@ -679,6 +689,7 @@ static GFL_PROC_RESULT PkwdCountProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 {
 	s32		i;
+	u8		tnum;
 	
 	//----------
 	// 初期化
@@ -708,7 +719,9 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	//---------------
 	pwc_init_bg( wk );
 	// パレットだけはセット
-	pwc_init_bg2( wk, wk->Param->title_no, 0 );
+	tnum = pwc_get_title_no( wk );
+	pwc_init_bg2( wk, tnum, 0 );
+//	pwc_init_bg2( wk, wk->Param->title_no, 0 );
 	
 	//---------------
 	// stringの初期化
@@ -807,6 +820,7 @@ static void pwc_down( PKWD_COUNT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 {
+	u8		tnum;
 	BOOL	bflg;
 	s32		tmp;
 	
@@ -893,6 +907,8 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 				// obj非表示
 				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_MOUSE, FALSE );
 				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   FALSE );
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    FALSE );
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    FALSE );
 				// 少し待ち
 				pwc_init_timer( wk, TIMER_WAIT3, WAIT_BG_MAX );
 			}
@@ -904,7 +920,9 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 			if(tmp == 0){
 				// 完全黒の状態で、BG書き換え
 				// BGセット(BGは非表示状態)
-				pwc_init_bg2( wk, wk->Param->title_no, 1 );
+				tnum = pwc_get_title_no( wk );
+				pwc_init_bg2( wk, tnum, 1 );
+//				pwc_init_bg2( wk, wk->Param->title_no, 1 );
 				// 文字列表示(BG0はそのまま表示)
 				pwc_disp_title_string( wk );
 				// BG1,BG3を表示
@@ -1503,8 +1521,12 @@ static void pwc_chg_logo( PKWD_COUNT_MAIN_WORK* wk, const s32 mode )
 		// objを表示
 		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_MOUSE, TRUE );
 		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   TRUE );
+		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    TRUE );
+		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    TRUE );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_MOUSE, SEQ_LOGO_MOUSE_ANIM );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   SEQ_LOGO_EYE_ANIM );
+		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    SEQ_LOGO_P1_ANIM );
+		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    SEQ_LOGO_P2_ANIM );
 	}
 }
 
@@ -1789,14 +1811,16 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 	
 	// タイトル(上)
 	// id(連番となっているのが前提)
-	mesid = pkwd_title_tbl[0]+wk->Param->title_no;
+//	mesid = pkwd_title_tbl[0]+wk->Param->title_no;		// title_noは未使用の方向で検討
+	mesid = pkwd_title_tbl[0]+wk->Param->scenario_no;
 	strbuf = GFL_MSG_CreateString( wk->MsgData[0], mesid );
 	pwc_disp_string( wk, 0, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	//
 	//
 	// サブタイトル表示
-	mesid = pkwd_subtitle_tbl[wk->Param->title_no][wk->Param->sex]+wk->Param->scenario_no;
+	mesid = pkwd_subtitle_tbl[wk->Param->scenario_no][wk->Param->sex];
+//	mesid = pkwd_subtitle_tbl[wk->Param->title_no][wk->Param->sex]+wk->Param->scenario_no;
 	if(wk->Param->message){
 		destbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
 		// wordset
@@ -1815,5 +1839,20 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 	//
 	// WORDSET破棄
 	WORDSET_Delete( wordset );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	タイトル番号(テーブルを使用)
+ *
+ * @param	PKWD_COUNT_MAIN_WORK* 			wk
+ *
+ * @return
+ */
+//--------------------------------------------------------------------------------------------
+static u8 pwc_get_title_no( PKWD_COUNT_MAIN_WORK* wk )
+{
+	// テーブルから取得
+	return( scenario_logo_tbl[wk->Param->scenario_no] );
 }
 

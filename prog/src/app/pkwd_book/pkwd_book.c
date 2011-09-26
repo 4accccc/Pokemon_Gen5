@@ -54,6 +54,7 @@
 #include "msg/msg_pw_movietitle.h"
 
 #include "msg/msg_pokewood_name.h"
+#include "msg/msg_pokewood_senario01_m.h"	// やくめい
 
 #include "pkwd_book_snd_def.h"
 
@@ -73,7 +74,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 {
-	UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+	UI_TEMPLATE_HEAP_SIZE = 0x38000,  ///< ヒープサイズ
 };
 
 // 段階
@@ -442,6 +443,7 @@ typedef struct
 	PKWD_BOOK_POKE_WORK		PokeWork[PKWD_BOOK_POKE_MAX];	///< ポケモン情報
 	//
 	PKWD_BOOK_FLAG_BUFFER	FlagBuffer[PKWD_BOOK_SCENARIO_MAX];	///< フラグのバッファ
+	STRBUF					*NameBuffer[PKWD_BOOK_SCENARIO_MAX]; ///< やくめいのバッファ
 	//
 	void					*PalBuf[PKWD_BOOK_COLOR_NUM];		///< 上画面パレット(4本分)(こちらを破棄)
 	NNSG2dPaletteData		*PalBufData[PKWD_BOOK_COLOR_NUM];	///< 上画面パレット(4本分)
@@ -990,6 +992,61 @@ static const s16 pwb_up_pal_tbl[] = {
 	NARC_b_scenario_gra_pkwd_scenario2_u4_NCLR,
 };
 
+//---------------------
+// やくめい
+//---------------------
+// 役名のgmm(男性、女性)
+static const s16 pwb_name_tbl[] = {
+	NARC_message_pokewood_senario01_m_dat, NARC_message_pokewood_senario01_f_dat,
+	NARC_message_pokewood_senario02_m_dat, NARC_message_pokewood_senario02_f_dat,
+	NARC_message_pokewood_senario03_m_dat, NARC_message_pokewood_senario03_f_dat,
+	NARC_message_pokewood_senario04_m_dat, NARC_message_pokewood_senario04_f_dat,
+	NARC_message_pokewood_senario05_m_dat, NARC_message_pokewood_senario05_f_dat,
+	NARC_message_pokewood_senario06_m_dat, NARC_message_pokewood_senario06_f_dat,
+	NARC_message_pokewood_senario07_m_dat, NARC_message_pokewood_senario07_f_dat,
+	NARC_message_pokewood_senario08_m_dat, NARC_message_pokewood_senario08_f_dat,
+	NARC_message_pokewood_senario09_m_dat, NARC_message_pokewood_senario09_f_dat,
+	NARC_message_pokewood_senario10_m_dat, NARC_message_pokewood_senario10_f_dat,
+	//
+	NARC_message_pokewood_senario11_m_dat, NARC_message_pokewood_senario11_f_dat,
+	NARC_message_pokewood_senario12_m_dat, NARC_message_pokewood_senario12_f_dat,
+	NARC_message_pokewood_senario13_m_dat, NARC_message_pokewood_senario13_f_dat,
+	NARC_message_pokewood_senario14_m_dat, NARC_message_pokewood_senario14_f_dat,
+	NARC_message_pokewood_senario15_m_dat, NARC_message_pokewood_senario15_f_dat,
+	NARC_message_pokewood_senario16_m_dat, NARC_message_pokewood_senario16_f_dat,
+	NARC_message_pokewood_senario17_m_dat, NARC_message_pokewood_senario17_f_dat,
+	NARC_message_pokewood_senario18_m_dat, NARC_message_pokewood_senario18_f_dat,
+	NARC_message_pokewood_senario19_m_dat, NARC_message_pokewood_senario19_f_dat,
+	NARC_message_pokewood_senario20_m_dat, NARC_message_pokewood_senario20_f_dat,
+	//
+	NARC_message_pokewood_senario21_m_dat, NARC_message_pokewood_senario21_f_dat,
+	NARC_message_pokewood_senario22_m_dat, NARC_message_pokewood_senario22_f_dat,
+	NARC_message_pokewood_senario23_m_dat, NARC_message_pokewood_senario23_f_dat,
+	NARC_message_pokewood_senario24_m_dat, NARC_message_pokewood_senario24_f_dat,
+	NARC_message_pokewood_senario25_m_dat, NARC_message_pokewood_senario25_f_dat,
+	NARC_message_pokewood_senario26_m_dat, NARC_message_pokewood_senario26_f_dat,
+	NARC_message_pokewood_senario27_m_dat, NARC_message_pokewood_senario27_f_dat,
+	NARC_message_pokewood_senario28_m_dat, NARC_message_pokewood_senario28_f_dat,
+	NARC_message_pokewood_senario29_m_dat, NARC_message_pokewood_senario29_f_dat,
+	NARC_message_pokewood_senario30_m_dat, NARC_message_pokewood_senario30_f_dat,
+	//
+	NARC_message_pokewood_senario31_m_dat, NARC_message_pokewood_senario31_f_dat,
+	NARC_message_pokewood_senario32_m_dat, NARC_message_pokewood_senario32_f_dat,
+	NARC_message_pokewood_senario33_m_dat, NARC_message_pokewood_senario33_f_dat,
+	NARC_message_pokewood_senario34_m_dat, NARC_message_pokewood_senario34_f_dat,
+	NARC_message_pokewood_senario35_m_dat, NARC_message_pokewood_senario35_f_dat,
+	NARC_message_pokewood_senario36_m_dat, NARC_message_pokewood_senario36_f_dat,
+	NARC_message_pokewood_senario37_m_dat, NARC_message_pokewood_senario37_f_dat,
+	NARC_message_pokewood_senario38_m_dat, NARC_message_pokewood_senario38_f_dat,
+	NARC_message_pokewood_senario39_m_dat, NARC_message_pokewood_senario39_f_dat,
+	NARC_message_pokewood_senario40_m_dat, NARC_message_pokewood_senario40_f_dat,
+};
+
+static const s16 pwb_name_id[] = {
+	pw_trname_show,
+	0,
+};
+
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -1142,6 +1199,9 @@ static void pwb_main_scrollbar( PKWD_BOOK_MAIN_WORK * wk );
 // newマーク
 static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate );
+//
+static void pwb_set_name( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk );
 
 // debug
 static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk );
@@ -1443,9 +1503,12 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// メッセージバッファ取得
 	//---------------------
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );	// いろいろ
-	wk->MsgData[1] = 0;
+	wk->MsgData[1] = 0;		// 役名で使用
 	wk->MsgData[2] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, 		 wk->heapID );	// 役職名
 	wk->MsgData[3] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokewood_name_dat, wk->heapID );	// 役名
+	//
+	// 「やくめい」の取得
+	pwb_set_name( wk );
 	
 	//---------------------
 	// パーティ情報セット(test)
@@ -1564,6 +1627,9 @@ static void pwb_exit( PKWD_BOOK_MAIN_WORK* wk )
 	
 	// party情報の破棄
 	pwb_delete_party( wk );
+	
+	// 「やくめい」の破棄
+	pwb_delete_name( wk );
 	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
@@ -3406,11 +3472,13 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		// シナリオ番号
 		tmp = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
 		// 職業名
-		strbuf = GFL_MSG_CreateString( wk->MsgData[2], wk->TrainerID );
-		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
-		GFL_STR_DeleteBuffer( strbuf );
+//		strbuf = GFL_MSG_CreateString( wk->MsgData[2], wk->TrainerID );
+//		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
+		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, wk->NameBuffer[tmp], 0, PRINTSYS_LSB_Make(1,2,0) );
+//		GFL_STR_DeleteBuffer( strbuf );
 		// 役名
-		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_rec_trainername_01+tmp );
+//		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_rec_trainername_01+tmp );
+		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_01+tmp );
 		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORKER, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
@@ -4999,6 +5067,56 @@ static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	やくめいの取得(初期化時)
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_set_name( PKWD_BOOK_MAIN_WORK * wk )
+{
+	s32		i;
+	u32		tmp;
+	s32		sex;
+	
+	// 性別で分岐
+	sex = 0;
+	tmp = MyStatus_GetMySex( wk->Param->mystatus );
+	if(tmp == PM_FEMALE){
+		sex = 1;
+	}
+	// 「やくめい」を全ファイル分取得してしまう
+	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+		wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, pwb_name_tbl[2*i+sex], wk->heapID );
+		// 「やくめい」をセットする
+		wk->NameBuffer[i] = GFL_MSG_CreateString( wk->MsgData[1], pwb_name_id[0] );
+		// 破棄
+		GFL_MSG_Delete( wk->MsgData[1] );
+	}
+	wk->MsgData[1] = 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	やくめいの破棄
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk )
+{
+	s32		i;
+	//
+	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+		GFL_STR_DeleteBuffer( wk->NameBuffer[i] );
+		wk->NameBuffer[i] = 0;
+	}
+}
 
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
