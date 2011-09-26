@@ -16,9 +16,9 @@
 //---------------
 // BGPAL(パレットは、始めにまとめて所定のタイトルだけを転送)
 static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 00
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 00 ハチクマン
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01 侵略者
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02 大怪獣
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 03(dummy)
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 04(dummy)
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 05(dummy)
@@ -32,9 +32,9 @@ static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
 
 // BGCHR(切り替え時に、所定のタイトルだけを転送)
 static const PKWD_COUNT_BGCHR_DATA pwc_bgchr_01_tbl[] = {
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCGR,	0,	0,},	// 00
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCGR,	0,	0,},	// 02(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCGR,	0,	0,},	// 00 ハチクマン
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01 侵略者
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCGR,	0,	0,},	// 02 大怪獣
 	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCGR,	0,	0,},	// 03(dummy)
 	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCGR,	0,	0,},	// 04(dummy)
 	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCGR,	0,	0,},	// 05(dummy)
@@ -62,53 +62,67 @@ static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
+
+// シナリオデータからタイトルロゴデータを引っ張るためのテーブル
+// pwc_bgscn_01_tbl[scenario_logo_tbl[scenario_no]].frameというようなアクセス方法になる
+static const u8 scenario_logo_tbl[]={
+  1,  1,  1,  1,  //  1 -  4本目  
+  0,  0,  0,  0,  //  5 -  8本目
+  0,  0,  0,  2,  //  9 - 12本目  
+  2,  2,  2,  3,  // 13 - 16本目
+  4,  4,  4,  4,  // 17 - 20本目  
+  5,  5,  5,  5,  // 21 - 24本目
+  6,  6,  6,  6,  // 25 - 28本目  
+  7,  7,  7,  7,  // 29 - 32本目
+  8,  8,  8,  8,  // 33 - 36本目  
+  9,  9,  9,  9,  // 37 - 40本目
+};
+
+
 //-----------------------------------------------------
 // サブタイトルのテーブル(男・女の順で入っています。)
 //-----------------------------------------------------
 static const s16 pkwd_subtitle_tbl[][2] = {
-	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 1章
-	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 2章
-	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 3章
-	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 4章
-	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 5章
-	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 6章
-	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 7章
-	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 8章
-	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 9章
-	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 10章
-
-	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 11章
-	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 12章
-	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 13章
-	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 14章
-	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 15章
-	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 16章
-	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 17章
-	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 18章
-	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 19章
-	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 20章
-
-	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 21章
-	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 22章
-	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 23章
-	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 24章
-	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 25章
-	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 26章
-	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 27章
-	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 28章
-	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 29章
-	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 30章
-
-	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 31章
-	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 32章
-	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 33章
-	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 34章
-	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 35章
-	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 36章
-	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 37章
-	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 38章
-	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 39章
-	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 40章
+	{ pw_moviesubtitle_m_01,	pw_moviesubtitle_f_01, },	// 1章
+	{ pw_moviesubtitle_m_02,	pw_moviesubtitle_f_02, },	// 2章
+	{ pw_moviesubtitle_m_03,	pw_moviesubtitle_f_03, },	// 3章
+	{ pw_moviesubtitle_m_04,	pw_moviesubtitle_f_04, },	// 4章
+	{ pw_moviesubtitle_m_05,	pw_moviesubtitle_f_05, },	// 5章
+	{ pw_moviesubtitle_m_06,	pw_moviesubtitle_f_06, },	// 6章
+	{ pw_moviesubtitle_m_07,	pw_moviesubtitle_f_07, },	// 7章
+	{ pw_moviesubtitle_m_08,	pw_moviesubtitle_f_08, },	// 8章
+	{ pw_moviesubtitle_m_09,	pw_moviesubtitle_f_09, },	// 9章
+	{ pw_moviesubtitle_m_10,	pw_moviesubtitle_f_10, },	// 10章
+	{ pw_moviesubtitle_m_11,	pw_moviesubtitle_f_11, },	// 11章
+	{ pw_moviesubtitle_m_12,	pw_moviesubtitle_f_12, },	// 12章
+	{ pw_moviesubtitle_m_13,	pw_moviesubtitle_f_13, },	// 13章
+	{ pw_moviesubtitle_m_14,	pw_moviesubtitle_f_14, },	// 14章
+	{ pw_moviesubtitle_m_15,	pw_moviesubtitle_f_15, },	// 15章
+	{ pw_moviesubtitle_m_16,	pw_moviesubtitle_f_16, },	// 16章
+	{ pw_moviesubtitle_m_17,	pw_moviesubtitle_f_17, },	// 17章
+	{ pw_moviesubtitle_m_18,	pw_moviesubtitle_f_18, },	// 18章
+	{ pw_moviesubtitle_m_19,	pw_moviesubtitle_f_19, },	// 19章
+	{ pw_moviesubtitle_m_20,	pw_moviesubtitle_f_20, },	// 20章
+	{ pw_moviesubtitle_m_21,	pw_moviesubtitle_f_21, },	// 21章
+	{ pw_moviesubtitle_m_22,	pw_moviesubtitle_f_22, },	// 22章
+	{ pw_moviesubtitle_m_23,	pw_moviesubtitle_f_23, },	// 23章
+	{ pw_moviesubtitle_m_24,	pw_moviesubtitle_f_24, },	// 24章
+	{ pw_moviesubtitle_m_25,	pw_moviesubtitle_f_25, },	// 25章
+	{ pw_moviesubtitle_m_26,	pw_moviesubtitle_f_26, },	// 26章
+	{ pw_moviesubtitle_m_27,	pw_moviesubtitle_f_27, },	// 27章
+	{ pw_moviesubtitle_m_28,	pw_moviesubtitle_f_28, },	// 28章
+	{ pw_moviesubtitle_m_29,	pw_moviesubtitle_f_29, },	// 29章
+	{ pw_moviesubtitle_m_30,	pw_moviesubtitle_f_30, },	// 30章
+	{ pw_moviesubtitle_m_31,	pw_moviesubtitle_f_31, },	// 31章
+	{ pw_moviesubtitle_m_32,	pw_moviesubtitle_f_32, },	// 32章
+	{ pw_moviesubtitle_m_33,	pw_moviesubtitle_f_33, },	// 33章
+	{ pw_moviesubtitle_m_34,	pw_moviesubtitle_f_34, },	// 34章
+	{ pw_moviesubtitle_m_35,	pw_moviesubtitle_f_35, },	// 35章
+	{ pw_moviesubtitle_m_36,	pw_moviesubtitle_f_36, },	// 36章
+	{ pw_moviesubtitle_m_37,	pw_moviesubtitle_f_37, },	// 37章
+	{ pw_moviesubtitle_m_38,	pw_moviesubtitle_f_38, },	// 38章
+	{ pw_moviesubtitle_m_39,	pw_moviesubtitle_f_39, },	// 39章
+	{ pw_moviesubtitle_m_40,	pw_moviesubtitle_f_40, },	// 40章
 
 };
 

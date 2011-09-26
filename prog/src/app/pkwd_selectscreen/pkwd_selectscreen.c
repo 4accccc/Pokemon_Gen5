@@ -781,19 +781,6 @@ static void PkwdSelectScreen_BG_LoadResource( PKWD_SELECT_SCREEN_BG_WORK* wk, HE
 	GFL_ARC_CloseDataHandle( handle );
 }
 
-// シナリオデータからタイトルロゴデータを引っ張るためのテーブル
-static const u8 scenario_logo_tbl[]={
-  0,  1,  2,  0,  //  1 -  4本目  
-  1,  1,  1,  1,  //  5 -  8本目
-  2,  2,  2,  2,  //  9 - 12本目  
-  3,  3,  3,  3,  // 13 - 16本目
-  4,  4,  4,  4,  // 17 - 20本目  
-  5,  5,  5,  5,  // 21 - 24本目
-  6,  6,  6,  6,  // 25 - 28本目  
-  7,  7,  7,  7,  // 29 - 32本目
-  8,  8,  8,  8,  // 33 - 36本目  
-  9,  9,  9,  9,  // 37 - 40本目
-};
 
 //----------------------------------------------------------------------------------
 /**
@@ -1481,7 +1468,7 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   
   // サブタイトル上部を描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
-  GFL_MSG_GetString( wk->msg, pw_movietitle_01+wk->scenario_no[index], strbuf );
+  GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[index], strbuf );
   _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_U], wk->print_que, 
                     strbuf, 6, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
   
