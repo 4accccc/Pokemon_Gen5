@@ -47,8 +47,15 @@ EVENT_START		ev_pos_local_tvt
 	_SYSWIN_MSG( msg_local_tvt_02, POS_DOWN )
 	_MSGWIN_CLOSE()
 	
+
+  _MAP_FADE_BLACK_OUT()                  // フェードアウト
+  _MAP_FADE_END_CHECK()                  //
+
 	//隠しキャラ用ライブキャスター起動
-	_CALL_TVT_SECRET( 0 )
+	_CALL_TVT_SECRET( SCR_LTVT_CALLTVT_MODE_NORMAL )
+
+  _MAP_FADE_BLACK_IN()                   // フェードイン
+  _MAP_FADE_END_CHECK()                  //
 
 	//今いるゾーンを取得する
 	_GET_ZONE_ID( LWK_ZONE )
