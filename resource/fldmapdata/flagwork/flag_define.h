@@ -856,6 +856,7 @@
 #define FV_C12R0101_TROPHY_01              888 /* 0x0378 自宅1F：バトルサブウェイのトロフィ１ */
 #define FV_C12R0101_TROPHY_02              889 /* 0x0379 自宅1F：バトルサブウェイのトロフィ２ */
 #define FV_C12R0101_TROPHY_03              890 /* 0x037a 自宅1F：バトルサブウェイのトロフィ３ */
+#define FV_D05R0101_TRAINERW_01            891 /* 0x037b WBTロビー：クリア後に出現するエリートトレーナー♀ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
