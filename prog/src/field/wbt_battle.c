@@ -37,6 +37,8 @@
 
 #include "sound/swan_sound_data.sadl"
 
+#include "system/vm.h"
+#include "src/battle/tr_ai/tr_ai.h" //AI_THINK_BIT_～
 
 //============================================================================================
 //============================================================================================
@@ -817,8 +819,34 @@ void WBTSYS_SetupEnemyParty( WBTSYS * wbtsys, GAMESYS_WORK * gsys, const WBTTRAI
  * @param[in]   aibit
  */
 //------------------------------------------------------------------
-static void setBSPTrainerData( BSP_TRAINER_DATA * tr_data, const WBTTRAINER * wbt_tr, u32 aibit )
+static void setBSPTrainerData( BSP_TRAINER_DATA * tr_data, const WBTTRAINER * wbt_tr )
 {
+  u32 aibit = 0;
+
+#if 1
+  SDK_COMPILER_ASSERT( AI_THINK_BIT_BASIC == WBT_AI_BIT_BASIC );
+  SDK_COMPILER_ASSERT( AI_THINK_BIT_STRONG == WBT_AI_BIT_STRONG );
+  SDK_COMPILER_ASSERT( AI_THINK_BIT_EXPERT == WBT_AI_BIT_EXPERT );
+  aibit |= ( wbt_tr->ai_bit & ( WBT_AI_BIT_BASIC|WBT_AI_BIT_STRONG|WBT_AI_BIT_EXPERT) );
+#else
+  if ( wbt_tr->ai_bit & WBT_AI_BIT_BASIC )
+  {
+    aibit |= AI_THINK_BIT_BASIC;
+  }
+  if ( wbt_tr->ai_bit & WBT_AI_BIT_STRONG )
+  {
+    aibit |= AI_THINK_BIT_STRONG;
+  }
+  if ( wbt_tr->ai_bit & WBT_AI_BIT_EXPERT )
+  {
+    aibit |= AI_THINK_BIT_EXPERT;
+  }
+#endif
+  if ( wbt_tr->ai_bit & WBT_AI_BIT_DOUBLE )
+  {
+    aibit |= AI_THINK_BIT_DOUBLE;
+  }
+
   tr_data->tr_id    = wbt_tr->tr_id + TRID_OFFSET_WBT;
   tr_data->tr_type  = wbt_tr->btl_tr_type;
   tr_data->ai_bit   = aibit;
@@ -853,7 +881,7 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   }
 
   //対戦トレーナーの情報をセットする
-  setBSPTrainerData( bp->tr_data[BTL_CLIENT_ENEMY1], wbt_tr, 0x00000087 );
+  setBSPTrainerData( bp->tr_data[BTL_CLIENT_ENEMY1], wbt_tr );
   PokeParty_Copy( wbtsys->npc_party, bp->party[BTL_CLIENT_ENEMY1] );
 
   //相手手持ち：レギュレーションにあわせてレベル調整

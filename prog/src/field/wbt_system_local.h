@@ -65,7 +65,8 @@ struct _WBTTRAINER{
   u8 tr_id;         ///<トレーナーID（wbt_tr_typeにより意味が変わる）
   u8 pow_rnd;       ///<パワー乱数（ロムトレーナーのみ）
   u16 mmdl_id;      ///<動作モデルコード
-  u16 btl_tr_type;  ///<トレーナータイプ（tr_tool/trtype_def.h)
+  u16 btl_tr_type:12;  ///<トレーナータイプ（tr_tool/trtype_def.h)
+  u16 ai_bit:4;     ///<ai指定
   STRBUF * name;    ///<名前
   STRBUF * title;   ///<肩書
 };

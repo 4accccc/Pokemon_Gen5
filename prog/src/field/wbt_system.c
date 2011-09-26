@@ -315,6 +315,7 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID )
   wbt_tr->pow_rnd = 0;
   wbt_tr->mmdl_id = SWHERO;
   wbt_tr->btl_tr_type = TRTYPE_HERO;
+  wbt_tr->ai_bit = WBT_AI_BIT_BASIC;  //‰¼
   wbt_tr->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
   wbt_tr->title = GFL_STR_CreateBuffer( WBTDL_TRAINER_TITLE_LEN, heapID );
 }

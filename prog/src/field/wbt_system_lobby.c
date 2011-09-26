@@ -38,6 +38,14 @@
 //#define DEBUG_STRONG_PARTY  //’è‹`‚·‚é‚ÆŽèŽ‚¿‚ªŒƒ‚µ‚­‹­‚­‚È‚é
 #endif
 
+//============================================================================================
+//============================================================================================
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  WBT_AI_BIT_ALL  = WBT_AI_BIT_BASIC | WBT_AI_BIT_STRONG | WBT_AI_BIT_EXPERT | WBT_AI_BIT_DOUBLE,
+};
 
 //============================================================================================
 //
@@ -51,7 +59,7 @@
 //------------------------------------------------------------------
 static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
     WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 pow_rnd,
-    BOOL has_ace, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
+    BOOL has_ace, u8 poketype, u16 mmdl_id, u16 btl_tr_type, u8 ai_bit )
 {
   wbt_tr->wbt_tr_type = type;
   wbt_tr->tr_id = tr_id;
@@ -62,6 +70,7 @@ static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
   wbt_tr->poketype = poketype;
   wbt_tr->mmdl_id = mmdl_id;
   wbt_tr->btl_tr_type = btl_tr_type;
+  wbt_tr->ai_bit = ai_bit;
 }
 
 //------------------------------------------------------------------
@@ -79,7 +88,7 @@ static void WBTTRAINER_SetRomTrainer(
   has_ace = tr_rom_data.ace_poke_id != 0 ? TRUE: FALSE;
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
       tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.power_rnd, has_ace, tr_rom_data.type,
-      tr_rom_data.mmdl_id, tr_rom_data.tr_type );
+      tr_rom_data.mmdl_id, tr_rom_data.tr_type, WBT_AI_BIT_ALL );
   WBTTOOL_GetRomTrainerName( heapID, tr_id, wbt_tr->name );
 }
 
@@ -107,7 +116,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
     btl_tr_type = TRTYPE_HEROINE;
   }
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
-      0, sex, pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
+      0, sex, pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type, WBT_AI_BIT_BASIC );
   MyStatus_CopyNameString( mystat, wbt_tr->name );
 }
 
@@ -143,7 +152,7 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
   mmdl_id = FBI_TOOL_GetTrainerOBJCode( trtype );
   sex = TT_TrainerTypeSexGet( trtype );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, dl_tr_id, sex,
-      pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, trtype );
+      pri, 0, FALSE, POKETYPE_NORMAL, mmdl_id, trtype, dl_char->ai_bit );
 
   GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
   GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
