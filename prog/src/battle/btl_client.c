@@ -1874,8 +1874,10 @@ enum{
   POKEWOOD_SEQ_START=0,
   POKEWOOD_SEQ_TRAINER_APPER,
   POKEWOOD_SEQ_HERO_APPER,
-  POKEWOOD_SEQ_TRAINER_TALK,
-  POKEWOOD_SEQ_TRAINER_TALK_WAIT,
+  POKEWOOD_SEQ_MY_TALK,
+  POKEWOOD_SEQ_MY_TALK_WAIT,
+  POKEWOOD_SEQ_ENEMY_TALK,
+  POKEWOOD_SEQ_ENEMY_TALK_WAIT,
   POKEWOOD_SEQ_TRAINER_OUT,
   POKEWOOD_SEQ_HERO_OUT,
   POKEWOOD_SEQ_END,
@@ -1902,7 +1904,7 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(wk->mainModule);
   switch(wk->pokewoodSeqWork.seq){
   case POKEWOOD_SEQ_START:
-    if(senario->turn_msg[1][wk->clientTurnCount-1]==-1){
+    if(senario->turn_msg[0][wk->clientTurnCount-1]==-1 && senario->turn_msg[1][wk->clientTurnCount-1]==-1){
       wk->pokewoodSeqWork.seq = POKEWOOD_SEQ_END;
     }else{
       BTL_STR_Register_PokewoodWord();  //WORDSET登録
@@ -1917,17 +1919,38 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
   // 自分登場
   case POKEWOOD_SEQ_HERO_APPER:
     BTLV_EFFECT_Add( BTLEFF_HERO_APPEAR );
-    _set_next_seq( &wk->pokewoodSeqWork, POKEWOOD_SEQ_EFFECT_WAIT, POKEWOOD_SEQ_TRAINER_TALK );
+    _set_next_seq( &wk->pokewoodSeqWork, POKEWOOD_SEQ_EFFECT_WAIT, POKEWOOD_SEQ_MY_TALK );
     break;
-  // 会話
-  case POKEWOOD_SEQ_TRAINER_TALK:
-    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
-                         senario->turn_msg[1][wk->clientTurnCount-1] );
-    BTLV_StartMsg( wk->viewCore, &wk->strParam );
-    wk->pokewoodSeqWork.seq++;
+  // 自分会話
+  case POKEWOOD_SEQ_MY_TALK:
+    if(senario->turn_msg[0][wk->clientTurnCount-1]!=-1){
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
+                           senario->turn_msg[0][wk->clientTurnCount-1] );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      wk->pokewoodSeqWork.seq++;
+    }else{
+      wk->pokewoodSeqWork.seq = POKEWOOD_SEQ_ENEMY_TALK;
+    }
     break;
-  // 会話表示待ち
-  case POKEWOOD_SEQ_TRAINER_TALK_WAIT:
+  // 自分会話表示待ち
+  case POKEWOOD_SEQ_MY_TALK_WAIT:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      wk->pokewoodSeqWork.seq++;
+    }
+    break;
+  // 敵会話
+  case POKEWOOD_SEQ_ENEMY_TALK:
+    if(senario->turn_msg[1][wk->clientTurnCount-1]!=-1){
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
+                           senario->turn_msg[1][wk->clientTurnCount-1] );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      wk->pokewoodSeqWork.seq++;
+    }else{
+      wk->pokewoodSeqWork.seq = POKEWOOD_SEQ_TRAINER_OUT;
+    }
+    break;
+  // 敵会話表示待ち
+  case POKEWOOD_SEQ_ENEMY_TALK_WAIT:
     if( BTLV_WaitMsg(wk->viewCore) ){
       wk->pokewoodSeqWork.seq++;
     }
@@ -2359,7 +2382,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       // トレーナー登場済みであれば会話ターンへ
       if( (senario->event[wk->pokewoodSeqWork.event_no].talk_msg[0][wk->pokewoodSeqWork.bookmark]==-1 &&
           senario->event[wk->pokewoodSeqWork.event_no].talk_msg[1][wk->pokewoodSeqWork.bookmark]==-1) ||
-          wk->pokewoodSeqWork.bookmark==(SITUATION_MSG_NUM+1) ){
+          wk->pokewoodSeqWork.bookmark==(EVENT_TALK_TURN_MAX) ){
           wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CHOICE_START;  // 会話ターンが終わったら選択へ
       }else{
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_MY_TALK;
@@ -2560,27 +2583,29 @@ enum{
 
 enum{
   CHECK=0,
-  ENEMY_APPEAR,
-  HERO_APPEAR,
-  ENEMY_2_POKE,
-  HERO_2_POKE,
-  ENEMY_DISSAPPEAR,
-  HERO_DISSAPPEAR,
-  ENEMY_NONE_2_APPEAR,
-  HERO_NONE_2_APPEAR,
+  ENEMY_APPEAR,   //敵登場
+  HERO_APPEAR,    // 自分登場
+  ENEMY_2_POKE,   // 敵→ポケモン
+  HERO_2_POKE,    // 自分→ポケモン
+  ENEMY_DISSAPPEAR, // 敵無人
+  HERO_DISSAPPEAR,  // 自分無人
+  ENEMY_NONE_2_APPEAR,  // 無人から敵登場
+  HERO_NONE_2_APPEAR,   // 無人から自分登場
   EFFECT_WAIT,
 };
 
 // 0:元 1:A_TRAINER_B_TRAINER 2:BOTH_POKE 3:A_NONE_B_NONE 4:A_NONE_B_TRAINER 5:A_TRAINER_B_NONE (に向かう)
 static const int stage_tbl[][6]={
-  { PW_STAGE_BOTH_POKE,           ENEMY_APPEAR, 0,            -1,                ENEMY_APPEAR,    HERO_APPEAR, },///< 両方ポケモン
-  { PW_STAGE_A_POKEMON_B_TRAINER, HERO_APPEAR,  ENEMY_2_POKE, -1,                -1,              -1, },///< 敵がトレーナー自分はポケモン
+  { PW_STAGE_BOTH_POKE,           ENEMY_APPEAR, 0,            -1,                ENEMY_APPEAR,    HERO_APPEAR,    },///< 両方ポケモン
+  { PW_STAGE_A_POKEMON_B_TRAINER, HERO_APPEAR,  ENEMY_2_POKE, ENEMY_DISSAPPEAR , -1,              -1,             },///< 敵がトレーナー自分はポケモン
   { PW_STAGE_A_TRAINER_B_TRAINER, 0,            ENEMY_2_POKE, ENEMY_DISSAPPEAR,  HERO_DISSAPPEAR, ENEMY_DISSAPPEAR},///< 両方トレーナー
-  { PW_STAGE_A_TRAINER_B_POKEMON, ENEMY_APPEAR, HERO_2_POKE,  -1,                -1,              -1, },///< 敵がポケモン自分がトレーナー
-  { PW_STAGE_A_TRAINER_B_NONE,    -1,           -1,           HERO_DISSAPPEAR,   -1,               0,  },///< 自分側いない敵側トレーナー
-  { PW_STAGE_A_NONE_B_TRAINER,    HERO_NONE_2_APPEAR,  -1,    ENEMY_DISSAPPEAR,   0,              -1  },///< 自分側いない敵側トレーナー
-  { PW_STAGE_A_NONE_B_NONE,       ENEMY_NONE_2_APPEAR, -1,    0,                 -1,              -1  },///< 両方いない
+  { PW_STAGE_A_TRAINER_B_POKEMON, ENEMY_APPEAR, HERO_2_POKE,  HERO_DISSAPPEAR,   -1,              -1,             },///< 敵がポケモン自分がトレーナー
+  { PW_STAGE_A_TRAINER_B_NONE,    -1,           -1,           HERO_DISSAPPEAR,   -1,               0,             },///< 自分側いない敵側トレーナー
+  { PW_STAGE_A_NONE_B_TRAINER,    HERO_NONE_2_APPEAR,  -1,    ENEMY_DISSAPPEAR,   0,              -1              },///< 自分側いない敵側トレーナー
+  { PW_STAGE_A_NONE_B_NONE,       ENEMY_NONE_2_APPEAR, -1,    0,                 -1,              -1              },///< 両方いない
 };
+
+#define POKEWOOD_STAGE_COND_MAX ( 7 )
 
 
 //----------------------------------------------------------------------------------
@@ -2595,30 +2620,51 @@ static const int stage_tbl[][6]={
 //----------------------------------------------------------------------------------
 static int _get_next_stage_seq( POKEWOOD_SEQ_WORK *work, int next_cond )
 {
-  int i;
+  int i,result=0,index=-1;
   OS_Printf("stage_cond=0x%02x, object=0x%02x\n", work->stage_cond, next_cond);
+
+  // 現状のお盆状態を検索
   for(i=0;i<POKEWOOD_STAGE_COND_MAX;i++){
     if(work->stage_cond==stage_tbl[i][0]){
-      switch(next_cond){
-      case PW_STAGE_A_TRAINER_B_TRAINER:
-        return stage_tbl[i][1];
-      case PW_STAGE_BOTH_POKE:
-        return stage_tbl[i][2];
-      case PW_STAGE_A_NONE_B_NONE:
-        return stage_tbl[i][3];
-      case PW_STAGE_A_NONE_B_TRAINER:
-        return stage_tbl[i][4];
-      case PW_STAGE_A_TRAINER_B_NONE:
-        return stage_tbl[i][5];
-      case PW_STAGE_A_POKEMON_B_TRAINER:
-        return stage_tbl[i][4];
-      case PW_STAGE_A_TRAINER_B_POKEMON:
-        return stage_tbl[i][5];
-      }
+      index = i;
     }
   }
-  GF_ASSERT_MSG( 0,"このお盆状態で次の行き先が無い\n" );
-  return POKEWOOD_STAGE_SEQ_END;
+  // 次の行き先を取得する
+  if(index>=0){
+    switch(next_cond){
+    case PW_STAGE_A_TRAINER_B_TRAINER:
+      result = stage_tbl[index][1];
+      break;
+    case PW_STAGE_BOTH_POKE:
+      result = stage_tbl[index][2];
+      break;
+    case PW_STAGE_A_NONE_B_NONE:
+      result = stage_tbl[index][3];
+      break;
+    case PW_STAGE_A_NONE_B_TRAINER:
+      result = stage_tbl[index][4];
+      break;
+    case PW_STAGE_A_TRAINER_B_NONE:
+      result = stage_tbl[index][5];
+      break;
+    case PW_STAGE_A_POKEMON_B_TRAINER:
+      result = stage_tbl[index][4];
+      break;
+    case PW_STAGE_A_TRAINER_B_POKEMON:
+      result = stage_tbl[index][5];
+      break;
+    case PW_STAGE_A_NONE_B_POKEMON:
+      result = stage_tbl[index][3];
+      break;
+    case PW_STAGE_A_POKEMON_B_NONE:
+      result = stage_tbl[index][3];
+      break;
+    }
+  }
+
+  GF_ASSERT_MSG(result!=0,"このお盆状態で次の行き先が無い\n" );
+  OS_Printf("result=%d\n", result);
+  return result;
 }
 
 static void _set_next_stage_seq( POKEWOOD_SEQ_WORK *swork, int next )
@@ -2709,6 +2755,9 @@ static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk 
     wk->pokewoodSeqWork.next_stage_seq = 0;
     return TRUE;
     break;
+  default:
+    OS_Printf("遷移先がない\n");
+    GF_ASSERT(0);
   }
   
   return FALSE;
