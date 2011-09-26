@@ -136,6 +136,8 @@ static const u16 data_HomeNpcTbl_WifiMan[10];
 static const u16 data_HomeNpcTbl_WifiWoman[10];
 static const MMDL_GRIDPOS data_HomeNpcWiFiPosTbl[HOME_NPC_WIFI_MAX];
 
+static u16 bsw_getObjCode_Version( const MYSTATUS* mystatus );
+
 #ifdef DEBUG_ONLY_FOR_kagaya
 const u32 d_data_NpcHomeNoTbl[];
 #endif
@@ -1572,34 +1574,36 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //BSWAY_COMM_MYSTATUS_DATA実行済みが条件
   case BSWSUB_COMM_GET_OBJCODE_OYA:
     {
-      int sex;
+      u16 obj_code;
       
       if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){ //親
         FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-        sex = FIELD_PLAYER_GetSex( fld_player );
+        int sex = FIELD_PLAYER_GetSex( fld_player );
+        obj_code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
       }else{
-        sex = bsw_scr->mystatus_fr.sex;
+        // WBとの通信互換のため、バージョンをみてOBJCODEを決める
+        obj_code = bsw_getObjCode_Version( &bsw_scr->mystatus_fr );
       }
       
-      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
-          sex, PLAYER_DRAW_FORM_NORMAL );
+      *ret_wk = obj_code;
     }
     break;
   //通信子のOBJコードを取得
   //BSWAY_COMM_MYSTATUS_DATA実行済みが条件
   case BSWSUB_COMM_GET_OBJCODE_KO:
     {
-      int sex;
+      u16 obj_code;
       
       if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){ //親
-        sex = bsw_scr->mystatus_fr.sex;
+        // WBとの通信互換のため、バージョンをみてOBJCODEを決める
+        obj_code = bsw_getObjCode_Version( &bsw_scr->mystatus_fr );
       }else{
         FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-        sex = FIELD_PLAYER_GetSex( fld_player );
+        int sex = FIELD_PLAYER_GetSex( fld_player );
+        obj_code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
       }
       
-      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
-          sex, PLAYER_DRAW_FORM_NORMAL );
+      *ret_wk = obj_code;
     }
     break;
   //通信エラー画面表示リクエスト
@@ -2759,6 +2763,51 @@ static const MMDL_GRIDPOS data_HomeNpcWiFiPosTbl[HOME_NPC_WIFI_MAX] =
   {37,0,14},
   {26,0,16},
 };
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バージョンからOBJ_CODEを求める
+ *
+ *	@param	const MYSTATUS* mystatus 
+ *
+ *	@return OBJ_CODE
+ *
+ *	SWANとWBとの通信互換処理のため
+ */
+//-----------------------------------------------------------------------------
+static u16 bsw_getObjCode_Version( const MYSTATUS* mystatus )
+{
+  u8  version = MyStatus_GetRomCode( mystatus );
+  u32 sex     = MyStatus_GetMySex( mystatus );
+  u16 obj_code;
+  
+  // swan
+  if( version == VERSION_W2 || version == VERSION_B2 )
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = SWHERO;
+    }
+    else
+    {
+      obj_code = SWHEROINE;
+    }
+  }
+  else
+  // wb
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = HERO;
+    }
+    else
+    {
+      obj_code = HEROINE;
+    }
+  }
+
+  return obj_code;
+}
 
 //======================================================================
 //  デバッグ
