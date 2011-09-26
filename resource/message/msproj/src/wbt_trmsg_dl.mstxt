@@ -2889,11 +2889,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トーナメントで　ゆうしょうしたら
-ゆうめいじんに　なれるかな？▼</Text>
+			<Text>みんなに　ぼくの　たたかいを
+みせつけて　やるのさっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:36:34" />
+				Time="2011-09-26T03:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2901,11 +2901,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメントで　優勝したら
-有名人に　なれるかな？▼</Text>
+			<Text>みんなに　ぼくの　戦いを
+みせつけて　やるのさっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:37:01" />
+				Time="2011-09-26T05:30:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2919,6 +2919,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2949,12 +2956,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなに　ちゅうもくされる
-ゆうめいトレーナーに　なるために▽
-ぼくは　かつ！▼</Text>
+			<Text>ぼくの　たたかいで　かいじょうを
+ヒートアップさせる！▽
+みんなみんな　あつくなれっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:46:54" />
+				Time="2011-09-26T03:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2962,12 +2969,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなに　注目される
-有名トレーナーに　なるために▽
-ぼくは　勝つ！▼</Text>
+			<Text>ぼくの　戦いで　会場を
+ヒートアップさせる！▽
+みんなみんな　熱くなれっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:47:17" />
+				Time="2011-09-26T05:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2981,6 +2988,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3011,13 +3025,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　しょうぶに　かてば
-いよいよ　ゆうめいトレーナーの▽
-なかまいりかな！？▼
-うん！　もりあがってきたよっ！▼</Text>
+			<Text>こんなに　たくさんの　ひとが
+ぼくたちの　たたかいを　みてる！！▼
+あつく　はげしい
+さいこうの　ぶたいに　しようよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:05:57" />
+				Time="2011-09-26T04:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3025,13 +3039,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この勝負に　勝てば
-いよいよ　有名トレーナーの▽
-仲間入りかな！？▼
-うん！　盛り上がってきたよっ！▼</Text>
+			<Text>こんなに　たくさんの　人が
+ぼくたちの　戦いを　みてる！！▼
+熱く　激しい
+最高の　舞台に　しようよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:06:03" />
+				Time="2011-09-26T05:30:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3045,6 +3059,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3075,11 +3096,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ……
-もっと　めだちたかった……▼</Text>
+			<Text>すごい　ポケモンだね……
+おもわず　みとれちゃったよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:49:07" />
+				Time="2011-09-26T05:13:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3087,11 +3108,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ……
-もっと　目立ちたかった……▼</Text>
+			<Text>すごい　ポケモンだね……
+思わず　みとれちゃったよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:49:21" />
+				Time="2011-09-26T05:30:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3105,6 +3126,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:54:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3135,11 +3163,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなー！　みたみた！？
-ぼくの　かれいな　たたかいを！！▼</Text>
+			<Text>みたかっ！！
+どうだい　ぼくの　ポケモンは！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:06:33" />
+				Time="2011-09-26T05:14:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3147,11 +3175,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなー！　みたみた！？
-ぼくの　華麗な　戦いを！！▼</Text>
+			<Text>みたかっ！！
+どうだい　ぼくの　ポケモンは！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:06:33" />
+				Time="2011-09-26T05:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3165,6 +3193,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:54:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3195,11 +3230,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんな　たくさんの　ひとのまえで
-たたかえただけでも　よしとするよ……▼</Text>
+			<Text>この　ぼくに　かったんだ！
+きみの　かつやく　きたいしてるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:13:59" />
+				Time="2011-09-26T05:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3207,11 +3242,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんな　たくさんの　人の前で
-戦えただけでも　よしとするよ……▼</Text>
+			<Text>この　ぼくに　勝ったんだ！
+きみの　活躍　期待してるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-08T05:38:24" />
+				Time="2011-09-26T05:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3225,6 +3260,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3255,11 +3297,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よーし！　このまま
-スターかいどう　つっぱしっちゃうよ！▼</Text>
+			<Text>かんきゃくも　もりあがってる！
+さいこうの　しあいが　できたよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:06:28" />
+				Time="2011-09-26T05:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3267,11 +3309,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よーし！　このまま
-スター街道　突っ走っちゃうよ！▼</Text>
+			<Text>観客も　盛り上がってる！
+最高の　試合が　できたよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:06:31" />
+				Time="2011-09-26T05:31:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3285,6 +3327,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3315,11 +3364,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めだちたがりやの　このオトコォォ！
-なを　はせるために　ぶたいに　たつ！▼</Text>
+			<Text>おれたちの　たましいを　ふるわせる！
+そのたたかい　みせてくれッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:15:07" />
+				Time="2011-09-26T05:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3327,11 +3376,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目立ちたがり屋の　このオトコォォ！
-名を　はせるために　舞台に　立つ！▼</Text>
+			<Text>おれたちの　魂を　震わせる！
+その戦い　みせてくれッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:15:39" />
+				Time="2011-09-26T05:31:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3345,6 +3394,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:11:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3405,6 +3461,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:12:35" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:55:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5731,11 +5794,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あそび　はんぶんで　かちすすむ！
-びっくりトレーナーの　とうじょうだ！▼</Text>
+			<Text>いつも　ポケモンと　いっしょ！
+ポケモンしょうぶで　あそばせろォ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T07:07:50" />
+				Time="2011-09-26T05:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -5743,11 +5806,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊び半分で　勝ち進むゥ！！
-びっくりトレーナーの　登場だッ！▼</Text>
+			<Text>いつも　ポケモンと　いっしょ！
+ポケモン勝負で　遊ばせろォ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T07:08:19" />
+				Time="2011-09-26T05:49:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -5761,6 +5824,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T05:36:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8200,11 +8270,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつやして　かんがえた　やりかたで
-あなたを　うちまかしてみせるわ！▼</Text>
+			<Text>かんがえぬいた　せんじゅつが
+わたしの　さいだいの　ぶきよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:06:34" />
+				Time="2011-09-26T03:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8212,11 +8282,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>徹夜して　考えた　戦い方で
-あなたを　打ち負かしてみせるわ！▼</Text>
+			<Text>考え抜いた　戦術が
+わたしの　最大の　武器よ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:07:12" />
+				Time="2011-09-26T03:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8230,6 +8300,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:07:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8260,12 +8337,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうの　たたかいの　ために
-ねないで　じゅんびしてきたの！▼
-ねむいけど……かつわ！▼</Text>
+			<Text>あなたが　どんな　こうげきを
+してきたって　わたしの　せんじゅつを▽
+うちやぶることは　できないわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:19:13" />
+				Time="2011-09-26T03:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8273,12 +8350,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日の　戦いの　ために
-寝ないで　準備してきたの！▼
-眠いけど……勝つわ！▼</Text>
+			<Text>あなたが　どんな　こうげきを
+してきたって　わたしの　戦術を▽
+打ち破ることは　できないわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:19:47" />
+				Time="2011-09-26T03:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8292,6 +8369,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8322,13 +8406,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふぁ～　ねむい……
-って　いけない　いけない！▼
-てつやして　あみだした　せんぽうで
-あなたに　かって　わたしは　ねむる！▼</Text>
+			<Text>あさから　ばんまで　ポケモンたちを
+どうたたかわせるか　かんがえてきた！▼
+そして　みちびきだされたのが
+わたしの　たたかいかたよ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:09:55" />
+				Time="2011-09-26T03:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8336,13 +8420,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふぁ～　眠い……
-って　いけない　いけない！▼
-徹夜して　編み出した　戦法で
-あなたに　勝って　わたしは　眠る！▼</Text>
+			<Text>朝から　晩まで　ポケモンたちを
+どう戦わせるか　考えてきた！▼
+そして　導きだされたのが
+わたしの　戦い方よ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:10:29" />
+				Time="2011-09-26T03:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8356,6 +8440,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8386,11 +8477,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダメ……ねむくて　ちゃんと
-かんがえられない……▼</Text>
+			<Text>えっ？　うらを　かかれた！？
+なんて　かしこい　トレーナーなの！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:23:45" />
+				Time="2011-09-26T03:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8398,11 +8489,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダメ……眠くて　ちゃんと
-考えられない……▼</Text>
+			<Text>えっ？　裏を　かかれた！？
+なんて　賢い　トレーナーなの！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:27:54" />
+				Time="2011-09-26T03:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8416,6 +8507,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8446,11 +8544,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねないで　かんがえた　さくせんが
-やくに　たったわ！▼</Text>
+			<Text>せんじゅつに　はまったわね！
+これが　わたしの　たたかいかたよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:37:59" />
+				Time="2011-09-26T03:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8458,11 +8556,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふふっ！　寝ないで考えた
-作戦が　役に立ったわ！▼</Text>
+			<Text>戦術に　はまったわね！
+これが　わたしの　戦い方よ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T10:03:47" />
+				Time="2011-09-26T03:41:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8476,6 +8574,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8506,11 +8611,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふぅ……もう　いえに　かえって
-ぐっすり　ねむるわ……▼</Text>
+			<Text>ううん　かしこいだけじゃない！▼
+せんじゅつを　うちやぶる　あなたの
+じょうねつ！　みごとだったわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:31:11" />
+				Time="2011-09-26T03:25:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8518,11 +8624,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふぅ……もう　家に　帰って
-ぐっすり　眠るわ……▼</Text>
+			<Text>ううん　賢いだけじゃない！▼
+戦術を　打ち破る　あなたの
+情熱！　見事だったわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:31:19" />
+				Time="2011-09-26T03:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8536,6 +8643,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8566,11 +8680,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かったら　ねむけが　さめちゃった！
-ありがと♪▼</Text>
+			<Text>さて！　ひかえしつで　つぎの
+せんじゅつを　ねらないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:27:20" />
+				Time="2011-09-26T03:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8578,11 +8692,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝ったら　眠気が　覚めちゃった！
-ありがと♪▼</Text>
+			<Text>さて！　控え室で
+次の　戦術を　ねらないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:29:00" />
+				Time="2011-09-26T03:42:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8596,6 +8710,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8626,11 +8747,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいみんぶそくでも　なんのその！
-ねむけざましの　いちげきを　みせろ！▼</Text>
+			<Text>ポケモンせんじゅつか！　きょうは
+どんな　たたかいかたを　みせるッ！？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:36:51" />
+				Time="2011-09-26T03:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -8638,11 +8759,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>睡眠不足でも　なんのその！
-眠気覚ましの　一撃を　みせてくれッ！▼</Text>
+			<Text>ポケモン戦術家！　今日は
+どんな　戦い方を　みせるんだッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-27T03:37:23" />
+				Time="2011-09-26T03:53:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -8656,6 +8777,13 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:18:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T03:04:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -11781,11 +11909,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そんな…！　おれの　けいけんが
+			<Text>そんな……！　おれの　けいけんが
 つうようしないなんて！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T02:10:14" />
+				Time="2011-09-26T02:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11793,11 +11921,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな…！
+			<Text>そんな……！
 おれの　経験が　通用しないなんて！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T02:17:22" />
+				Time="2011-09-26T02:57:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12553,11 +12681,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンしょうぶは　ときの　うん！
-ラッキーチャンスに　かけるもん！▼</Text>
+			<Text>ポケモンを　だいすきな　きもち！
+だれにも　まけないよっ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T05:31:57" />
+				Time="2011-09-26T02:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12565,11 +12693,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン勝負は　時の運！
-ラッキーチャンスに　かけるもん！▼</Text>
+			<Text>ポケモンを　大好きな　気持ち！
+だれにも　負けないよっ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T05:32:10" />
+				Time="2011-09-26T03:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12583,6 +12711,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12613,12 +12749,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいきん　すっごい　ついてるの！▼
-きっと　このしあいだって
-わたしが　うんよく　かつんだもん！▼</Text>
+			<Text>だいすきな　ポケモンたちと
+ここまで　いっしょに　やってきた！▽
+まけるわけには　いかないよ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T05:55:58" />
+				Time="2011-09-26T02:36:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12626,12 +12762,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>最近　すっごい　ついてるの！▼
-きっと　この試合だって
-わたしが　運よく　勝つんだもん！▼</Text>
+			<Text>大好きな　ポケモンたちと
+ここまで　一緒に　やってきた！▽
+負けるわけには　いかないよ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T05:56:25" />
+				Time="2011-09-26T03:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12645,6 +12781,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12675,13 +12819,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ラッキーチャンスの　れんぞくで
-かちのこってきたんだ！▼
-うんも　じつりょくの　うちってこと
-おしえてあげる！！▼</Text>
+			<Text>だれにも　まけたくないものが　ある！
+それは　ポケモンの　ことが▽
+だいすきな　この　きもち！！▼
+うんっ！　しょうぶ　だよ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:05:27" />
+				Time="2011-09-26T02:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12689,13 +12833,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ラッキーチャンスの　連続で
-勝ち残ってきたんだ！▼
-運も　実力のうちってこと
-教えてあげる！！▼</Text>
+			<Text>だれにも　負けたくないものが　ある！
+それは　ポケモンの　ことが▽
+大好きな　この　気持ち！！▼
+うんっ！　勝負だよ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T10:29:33" />
+				Time="2011-09-26T03:01:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12709,6 +12853,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12739,11 +12891,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぎゃくてん　できなかった……
-ちぇっ！　ついてなかったな！▼</Text>
+			<Text>まけたのは　くやしいけど……
+あなたも　ポケモン　だいすきなんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:08:19" />
+				Time="2011-09-26T02:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12751,11 +12903,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>逆転できなかった……
-ちぇっ！　ついてなかったな！▼</Text>
+			<Text>負けたのは　くやしいけど……
+あなたも　ポケモン　大好きなんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:08:31" />
+				Time="2011-09-26T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12769,6 +12921,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12799,11 +12959,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うふふっ！　こうなることは
-わかってたもんね！▼</Text>
+			<Text>やったね♪
+あははっ！　みんな　だーいすき！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:18:11" />
+				Time="2011-09-26T02:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12811,11 +12971,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うふふっ！　こうなることは
-分かってたもんね！▼</Text>
+			<Text>やったね♪
+あははっ！　みんな　だーい好き！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T10:32:34" />
+				Time="2011-09-26T05:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12829,6 +12989,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12852,11 +13020,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うんだのみじゃ　だめなの？
-ポケモンしょうぶって　むずかしいな</Text>
+			<Text>つぎは　まけないからね！
+だいすきな　ポケモンたちと▽
+また　とっくんするんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:14:48" />
+				Time="2011-09-26T02:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12864,11 +13033,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>運頼みじゃ　だめなの？
-ポケモン勝負って　むずかしいな</Text>
+			<Text>次は　負けないからね！
+大好きな　ポケモンたちと▽
+また　特訓するんだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:15:13" />
+				Time="2011-09-26T05:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12882,6 +13052,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12912,11 +13090,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしと　ぶつかっちゃうなんて
-うんが　なかったね！▼</Text>
+			<Text>あなたの　ポケモンへの　きもちも
+すっごい　つたわってきたよ！▽
+うんっ！　いい　しょうぶだったね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:11:49" />
+				Time="2011-09-26T02:47:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12924,11 +13103,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしと　ぶつかっちゃうなんて
-運が　なかったね！▼</Text>
+			<Text>あなたの　ポケモンへの　気持ちも
+すっごい　伝わってきたよ！▽
+うんっ！　良い　勝負だったね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:12:00" />
+				Time="2011-09-26T03:02:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12942,6 +13122,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -12972,11 +13160,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うんめいの　めがみが　しゅくふくする
-ラッキーガール！　きせきを　おこせ！▼</Text>
+			<Text>ラブ　それは　ポケモンとの　キズナ！
+その　おもい　みせてみろッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:01:38" />
+				Time="2011-09-26T03:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12984,11 +13172,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>運命の女神に　祝福された
-ラッキーガール！　奇跡を起こせッ！▼</Text>
+			<Text>ラブ　それは　ポケモンとの　キズナ！
+その　想い　みせてみろッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T06:25:27" />
+				Time="2011-09-26T03:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -13002,6 +13190,14 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-20T07:40:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>9/26　修正
+</Comment>
+			<CommentModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-09-26T02:38:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -13698,10 +13894,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……がむしゃらな　こうげきに
-わたしの　はんだんが　みだれた…？</Text>
+わたしの　はんだんが　みだれた…？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-28T09:00:12" />
+				Time="2011-09-26T05:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
