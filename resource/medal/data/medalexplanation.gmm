@@ -1059,10 +1059,10 @@
 
 	<row id="MDL_EXP_FIELD_068">
 		<language name="JPN" width="216">デルパワーを　５０かい　つかった
-きょうじんな　ちからの　ながれを
+すさまじい　ちからの　ながれを
 ひょうかする　メダル。</language>
 		<language name="JPN_KANJI" width="216">デルパワーを　５０回　使った
-強靭な　力の　流れを
+すさまじい　力の　流れを
 評価する　メダル。</language>
 	</row>
 
@@ -1161,7 +1161,7 @@
 すがたを　みた　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">マリンチューブに　まれに　現れる
 ポケモン　ホエルオーの　泳ぐ姿を
-見た　証しの　メダル</language>
+見た　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_080">
@@ -1175,9 +1175,9 @@
 
 	<row id="MDL_EXP_FIELD_081">
 		<language name="JPN" width="216">かいていいせきの
-さいしんぶに　とどりついた
+さいしんぶに　たどりついた
 ぼうけんかに　あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">海底遺跡の　最深部に　辿り着いた
+		<language name="JPN_KANJI" width="216">海底遺跡の　最深部に　たどり着いた
 冒険家に　与えられる　メダル。</language>
 	</row>
 
@@ -1810,7 +1810,7 @@
 ２つの　せかいを　またにかけた
 ポケモンこうかんの　メダル。</language>
 		<language name="JPN_KANJI" width="216">黒の世界と　白の世界
-２つの　世界を　股にかけた
+２つの　世界を　またにかけた
 ポケモン交換の　メダル。</language>
 	</row>
 
@@ -2067,8 +2067,12 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_034">
-		<language name="JPN" width="216">ジョインアベニュー　クリア</language>
-		<language name="JPN_KANJI" width="216">ジョインアベニュー　クリア</language>
+		<language name="JPN" width="216">ジョインアベニューを　はってんさせ
+オリジナルの　なまえを　つける
+けんりを　えた　きねんの　メダル。</language>
+		<language name="JPN_KANJI" width="216">ジョインアベニューを　発展させ
+オリジナルの　名前を　付ける
+権利を　得た　記念の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_035">
