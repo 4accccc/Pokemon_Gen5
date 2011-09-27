@@ -6836,18 +6836,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_641_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">くものような　エネルギーたいに
+かはんしんが　つつまれている。
+じそく３００キロで　そらを　とぶ。</language>
+		<language name="JPN_KANJI">雲のような　エネルギー体に
+下半身が　包まれている。
+時速３００キロで　空を　飛ぶ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_642_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ボルトロスが　とおりすぎた　とちには
+カミナリの　おちた　むすうの　あとが
+やけこげとなって　のこっている。</language>
+		<language name="JPN_KANJI">ボルトロスが　通り過ぎた　土地には
+雷の　落ちた　無数の　跡が
+焼け焦げとなって　残っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ランドロスの　おとずれる　とちは
+さくもつが　たくさん　みのるため
+はたけのかみさま　と　いわれている。</language>
+		<language name="JPN_KANJI">ランドロスが　訪れる　土地は
+作物が　たくさん　実るため
+畑の神様　と　言われている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_646_001">

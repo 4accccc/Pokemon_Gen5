@@ -6836,18 +6836,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_641_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">トルネロスの　しっぽから　ふきだした
+エネルギーが　おおあらしを　おこす。
+みんかを　ふきとばす　パワー。</language>
+		<language name="JPN_KANJI">トルネロスの　しっぽから　吹き出した
+エネルギーが　おおあらしを　起こす。
+民家を　吹き飛ばす　パワー。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_642_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しっぽの　トゲから　でんげきを
+うちだす。イッシュちほうの　そらを
+とびまわり　カミナリを　おとす。</language>
+		<language name="JPN_KANJI">しっぽの　トゲから　電撃を
+撃ち出す。イッシュ地方の　空を
+飛び回り　雷を　落とす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_645_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しっぽから　ふりそそぐ　エネルギーが
+つちの　えいようを　ふやすので
+さくもつが　おおきく　そだつのだ。</language>
+		<language name="JPN_KANJI">しっぽから　降り注ぐ　エネルギーが
+土の　栄養を　増やすので
+作物が　大きく　育つのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_646_001">
