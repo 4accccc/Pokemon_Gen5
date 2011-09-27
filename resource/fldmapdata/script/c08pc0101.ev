@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c08pc0101.h"
   .include  "c08pc0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,9 +21,19 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08pc0101_shop
-_EVENT_DATA    ev_c08pc0101_fix_shop
+_EVENT_DATA   ev_c08pc0101_shop
+_EVENT_DATA   ev_c08pc0101_fix_shop
+_EVENT_DATA   ev_c08pc0101_lady_01
+_EVENT_DATA   ev_c08pc0101_gentleman_01
+_EVENT_DATA   ev_c08pc0101_boy2_01
+_EVENT_DATA   ev_c08pc0101_man3_01
 _EVENT_DATA_END
+
+//マップ状態取得変数
+DEFINE_LOCAL  LWK_MAPREPLACE
+//メダル状態取得変数
+DEFINE_LOCAL  LWK_MEDALRANK
+
 
 //=============================================================
 //ショップカウンター 変動ショップ
@@ -38,3 +50,165 @@ EVENT_START ev_c08pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C08_FS )
 EVENT_END
+
+/**************************************************************/
+/*  マダム：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c08pc0101_lady_01
+
+  _TALK_OBJ_START()
+
+  //ソウリュウシティが通常マップか
+  IF FLAG_OFF( FE_C08_PLAZMA_COME ) THEN
+
+    //ゲームクリア前か
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+      //マダム：のこされた　じかんを（バージョンによってセリフが異なる）
+      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_lady_01w, msg_c08pc0101_lady_01b_02, C08PC0101_LADY_01, POS_DEFAULT )
+
+    //ゲームクリア後
+    ELSE
+
+      //マダム：あたりまえ　ですけど（バージョンによってセリフが異なる）
+      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_lady_01b_01, msg_c08pc0101_lady_01b_02, C08PC0101_LADY_01, POS_DEFAULT )
+
+    ENDIF
+
+  //ソウリュウシティが氷マップ
+  ELSE
+
+    //マダム：なあに？　なにが　どうして
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_lady_01b_00 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  ジェントルマン：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c08pc0101_gentleman_01
+
+  _TALK_OBJ_START()
+
+  //ソウリュウシティが通常マップか
+  IF FLAG_OFF( FE_C08_PLAZMA_COME ) THEN
+
+    //ゲームクリア前か
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+      //ジェントルマン：まったく　おなじ　にんげんでも（バージョンによってセリフが異なる）
+      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_gentleman_01w, msg_c08pc0101_gentleman_01b, C08PC0101_GENTLEMAN_01, POS_DEFAULT )
+
+    //ゲームクリア後
+    ELSE
+
+      //ジェントルマン：どんな　せかいでも（バージョンによってセリフが異なる）
+      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_gentleman_03w, msg_c08pc0101_gentleman_03b, C08PC0101_GENTLEMAN_01, POS_DEFAULT )
+
+    ENDIF
+
+  //ソウリュウシティが氷マップ
+  ELSE
+
+    //ジェントルマン：どうりで　ひんやり　すると　おもった
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_gentleman_02 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c08pc0101_boy2_01
+
+  _TALK_OBJ_START()
+
+  //ソウリュウシティが通常マップか
+  IF FLAG_OFF( FE_C08_PLAZMA_COME ) THEN
+
+    //ゲームクリア前か
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+      //男の子：かわった　ポケモンジムを　みたいけど
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_boy2_01 )
+
+    //ゲームクリア後
+    ELSE
+
+      //男の子：シャガさんが　ポケモンと　たびをするなら
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_boy2_03 )
+
+    ENDIF
+
+  //ソウリュウシティが氷マップ
+  ELSE
+
+    //男の子：ボク　みたんだけど
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_boy2_02 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c08pc0101_man3_01
+
+  _TALK_OBJ_START()
+
+  //ソウリュウシティが通常マップか
+  IF FLAG_OFF( FE_C08_PLAZMA_COME ) THEN
+
+    //男性：きみの　メダルボックス……！？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_01 )
+
+  //ソウリュウシティが氷マップ
+  ELSE
+
+    //男性：どうして　まちが　こおりつい……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_02 )
+
+  ENDIF
+
+  //現在のメダルリストのランクを取得
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK, LWK_MEDALRANK )
+
+  //メダルリストランクで分岐
+  SWITCH $LWK_MEDALRANK
+  CASE SCR_MEDALRANK_IRON THEN  //アイアン
+    //男性：あおぞらのように　さわやかな
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_03 )
+
+  CASE SCR_MEDALRANK_COPPER THEN  //カッパー
+    //男性：じょうひんに　かがやく
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_04 )
+
+  CASE SCR_MEDALRANK_SILVER THEN  //シルバー
+    //男性：シブさ　あふれる　シックな
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_05 )
+
+  CASE SCR_MEDALRANK_GOLD THEN  //ゴールド
+    //男性：ゴージャスで　ラグジュアリーな
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08pc0101_man3_06 )
+
+  CASE SCR_MEDALRANK_BW THEN  //レジェンド（黒or白）
+    //男性：でんせつの　ドラゴンポケモン（バージョンによってセリフが異なる）
+    _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_man3_08, msg_c08pc0101_man3_07, C08PC0101_MAN3_01, POS_DEFAULT )
+
+  ENDSWITCH
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+
