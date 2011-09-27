@@ -399,6 +399,16 @@ cnv_tmp\medal_icon_12_12_4_4.NCGR : replace_tex/medal/medal_icon.ncg
 cnv_tmp\medal_icon_12_12_4_4_LZ.bin : cnv_tmp\medal_icon_12_12_4_4.NCGR
 	ntrcomp -l 2 cnv_tmp\medal_icon_12_12_4_4.NCGR
 
+cnv_tmp\enc_mugen_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_mugen.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_mugen.NCGR cnv_tmp\enc_mugen_0_0_16_16.NCGR
+
+cnv_tmp\enc_mugen_0_0_16_16_LZ.bin : cnv_tmp\enc_mugen_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_mugen_0_0_16_16.NCGR
+
+cnv_tmp\enc_mugen.NCLR : replace_tex/VSdemo_Face/enc_mugen.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
 cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp
 

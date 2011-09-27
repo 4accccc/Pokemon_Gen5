@@ -219,7 +219,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		ENCEFFID_NEO_PLASMA,  ///<TRTYPE_GRP_IDX_NINJA      
 		ENCEFFID_CHAMP,       ///<TRTYPE_GRP_IDX_SWCHAMPION       
 		ENCEFFID_SAGE,        ///<TRTYPE_GRP_IDX_SWSAGE1           
-		ENCEFFID_TR_INNER,    ///<TRTYPE_GRP_IDX_MUGENBOSS             
+		ENCEFFID_MUGEN_BOSS,  ///<TRTYPE_GRP_IDX_MUGENBOSS             
     
   };
 

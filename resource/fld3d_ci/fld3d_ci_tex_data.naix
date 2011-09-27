@@ -117,7 +117,8 @@ enum {
 	NARC_fld3d_ci_tex_data_fldciid_get_medal_26_tex_data_bin = 103,
 	NARC_fld3d_ci_tex_data_fldciid_get_medal_27_tex_data_bin = 104,
 	NARC_fld3d_ci_tex_data_fldciid_get_medal_28_tex_data_bin = 105,
-	NARC_fld3d_ci_tex_data_fldciid_fes_finish_tex_data_bin = 106
+	NARC_fld3d_ci_tex_data_fldciid_fes_finish_tex_data_bin = 106,
+	NARC_fld3d_ci_tex_data_fldciid_mugen_boss_tex_data_bin = 107
 };
 
 /* NARC_FLD3D_CI_TEX_DATA_NAIX_ */

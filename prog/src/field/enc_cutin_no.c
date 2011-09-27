@@ -35,6 +35,7 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {FLDCIID_SAGE,  SPTR_SAGE,  0x7fff,0x0000},  //セージ
   {FLDCIID_WBT,        0,     0x7fff,0x0000},  //WBT
   {FLDCIID_POKEWOOD,   0,     0x7fff,0x0000},  //ポケウッド
+  {FLDCIID_MUGEN_BOSS, SPTR_MUGEN_BOSS, 0x7fff ,0x0000}, //無限ダンジョンボス
   //
   {FLDCIID_SHIN_MU,  0, 0x7fff,0x0000}, //パッケージ
   {FLDCIID_IDOU, 0, 0x7fff,0x0000}, //移動ポケ

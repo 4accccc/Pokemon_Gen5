@@ -107,6 +107,7 @@ $cutin_id_array = [
   "FLDCIID_GET_MEDAL_27",
   "FLDCIID_GET_MEDAL_28",
   "FLDCIID_FES_FINISH",
+  "FLDCIID_MUGEN_BOSS",
 ]
 $cutin_ncg_hash = {
   "medal_icon.ncg" => "replace_tex/medal/",
@@ -124,6 +125,7 @@ $cutin_ncg_hash = {
   "enc_gym06.ncg" => "replace_tex/VSdemo_Face/",
   "enc_gym07.ncg" => "replace_tex/VSdemo_Face/",
   "enc_gym08.ncg" => "replace_tex/VSdemo_Face/",
+  "enc_mugen.ncg" => "replace_tex/VSdemo_Face/",
   "enc_n.ncg" => "replace_tex/VSdemo_Face/",
   "enc_rival.ncg" => "replace_tex/VSdemo_Face/",
   "enc_sage.ncg" => "replace_tex/VSdemo_Face/",
@@ -148,6 +150,7 @@ $cutin_ncl_hash = {
   "enc_gym06.ncl" => "replace_tex/VSdemo_Face/",
   "enc_gym07.ncl" => "replace_tex/VSdemo_Face/",
   "enc_gym08.ncl" => "replace_tex/VSdemo_Face/",
+  "enc_mugen.ncl" => "replace_tex/VSdemo_Face/",
   "enc_n.ncl" => "replace_tex/VSdemo_Face/",
   "enc_rival.ncl" => "replace_tex/VSdemo_Face/",
   "enc_sage.ncl" => "replace_tex/VSdemo_Face/",
