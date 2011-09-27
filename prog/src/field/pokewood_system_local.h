@@ -12,6 +12,7 @@
 #include "pokewood_system.h"
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/btl_setup.h"
+#include "poke_tool/poke_regulation_ex.h"
 #include "savedata/pokewood_savedata.h"
 #include "battle/pokewood.h"
 
@@ -37,35 +38,32 @@ struct _POKEWOOD_SYSTEM {
   HEAPID heapID;
 
   ///ポケモン選択関連
-    u8 use_btlbox;            ///<バトルボックスを使用するかどうか？フラグ
-    POKEPARTY *btl_box_party; //バトルボックス用POKEPARTY
-    
+    u8 use_btlbox;              ///<バトルボックスを使用するかどうか？フラグ
+    POKEPARTY *btl_box_party;   //バトルボックス用POKEPARTY
     u8  pokelist_select_num[6]; ///<ポケモン選択で取得した手持ちNo
     u16 pokelist_result_select; ///<ポケモンリスト戻り値
     u16 pokelist_return_mode;   ///<ポケモンリスト選択結果
+    REGULATION    reg;          ///<レギュレーション
+    REGULATIONEX  reg_ex;       ///< 拡張レギュレーション
 
-    REGULATION reg;             ///<レギュレーション
-    
-    u16 scenario_no; // 台本選択で選んだシナリオＮＯ
-    
-//  BATTLE_SETUP_PARAM *btl_setup_param;
-//  BTL_REC_SEL_PARAM btl_rec_sel_param;
+
+  u16 scenario_no; ///< 台本選択で選んだシナリオＮＯ
 
   ///スクリプトとプログラムのやりとりのためのアドレスを保持するポインタ
   u16 * scr_answer_work;
-  
-  u16 join_mypoke; //手持ちでポケウッド撮影を行うか？ 
+
+  u16 join_mypoke; ///< 手持ちでポケウッド撮影を行うか？ 
 
   // ポケウッド上映画面関連
-  u16 play_no;     // セーブデータ何番を上映するか
+  u16 play_no;     ///<  セーブデータ何番を上映するか
 
-  /// 録画データ　バックアップ領域
+  /// 録画データ バックアップ領域
   void * backup_area;
 
-  // 興行成績データ
+  /// 興行成績データ
   POKEWOOD_BOXOFFICE_RECORD  BoxofficeData;
 
-  // ポケウッド撮影結果
+  /// ポケウッド撮影結果
   int pokewoodResult;
 };
 

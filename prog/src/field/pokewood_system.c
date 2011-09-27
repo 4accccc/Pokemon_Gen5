@@ -24,6 +24,7 @@
 #include "savedata/pokewood_savedata.h"
 #include "savedata/medalbox.h"
 #include "battle/battle.h"
+#include "waza_tool/wazano_def.h"
 
 #include "savedata/pokewood_rec.h"  //POKEWOOD_REC_GetWorkSize
 
@@ -132,8 +133,13 @@ void PKWDSYS_SetupPokeListData( PKWDSYS * pkwdsys, GAMEDATA * gamedata, PLIST_DA
     GFL_HEAP_FreeMemory(senario);
   }
   
+  // 拡張レギュレーション設定
+  // 技「へんしん」はボスポケになれるので禁止
+  REGULATIONEX_Init( &pkwdsys->reg_ex, POKETYPE_NULL, WAZANO_HENSIN );
+
   // パラメータに引渡し
-  plist_data->reg = (void *)&pkwdsys->reg;
+  plist_data->reg   = (void *)&pkwdsys->reg;
+  plist_data->regEx = (void *)&pkwdsys->reg_ex;
   plist_data->type = PL_TYPE_SINGLE;
 }
 
