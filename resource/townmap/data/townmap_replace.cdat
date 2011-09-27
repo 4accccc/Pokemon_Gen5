@@ -4,11 +4,10 @@
 enum{
   TOWNMAP_REPLACE_DST,
   TOWNMAP_REPLACE_SRC00,
-  TOWNMAP_REPLACE_MAX,
+  TOWNMAP_REPLACE_PARAM_MAX,
 };
-#define TOWNMAP_REPLACE_MAX  2
-static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_MAX] =
+#define TOWNMAP_REPLACE_MAX  0
+static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_PARAM_MAX] =
 {
-	{ 136, 264 },
-	{ 240, 241 },
+	{ 0xFFFF, 0xFFFF },
 };

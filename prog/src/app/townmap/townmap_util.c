@@ -139,6 +139,7 @@ BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag )
     return ( 1 <= WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE ) );
 
   case TOWNMAP_USER_FLAG_LAST_PLASMA:
+    //プラズマフリゲートは最終段階に入っているか
     return ( SCR_HIDE_SHIP_PLACE_W17 == *EVENTWORK_GetEventWorkAdrs( p_ev, WK_SYS_HIDE_SHIP_PLACE ));
 
   default:

@@ -975,16 +975,23 @@ sub TownmapData_CreateReplaceCdat
   print( FILEOUT "enum{\n" );
   print( FILEOUT "  TOWNMAP_REPLACE_DST,\n" );
   print( FILEOUT "  TOWNMAP_REPLACE_SRC00,\n" );
-  print( FILEOUT "  TOWNMAP_REPLACE_MAX,\n" );
+  print( FILEOUT "  TOWNMAP_REPLACE_PARAM_MAX,\n" );
   print( FILEOUT "};\n" );
 
   print( FILEOUT "#define TOWNMAP_REPLACE_MAX  $DATA_REPLACE_LENGTH\n", );
 
-  print( FILEOUT "static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_MAX] =\n" );
+  print( FILEOUT "static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_PARAM_MAX] =\n" );
   print( FILEOUT "{\n" );
-  for( my $i = 0; $i < $DATA_REPLACE_LENGTH; $i++ )
+  if( $DATA_REPLACE_LENGTH == 0 )
   {
-    print( FILEOUT "\t{ $DATA_REPLACE_ZONEID[$i], $DATA_REPLACE_SRCID00[$i] },\n" );
+      print( FILEOUT "\t{ 0xFFFF, 0xFFFF },\n" );
+  }
+  else
+  {
+    for( my $i = 0; $i < $DATA_REPLACE_LENGTH; $i++ )
+    {
+      print( FILEOUT "\t{ $DATA_REPLACE_ZONEID[$i], $DATA_REPLACE_SRCID00[$i] },\n" );
+    }
   }
   print( FILEOUT "};\n" );
   close( FILEOUT ); 
