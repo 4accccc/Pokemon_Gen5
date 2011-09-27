@@ -2,7 +2,7 @@
 //このファイルはtownmap_data_convによって自動生成されています
 
 //データ総数
-#define TOWNMAP_DATA_MAX	(87)
+#define TOWNMAP_DATA_MAX	(88)
 
 //データエラー値
 #define TOWNMAP_DATA_ERROR	(65535)
