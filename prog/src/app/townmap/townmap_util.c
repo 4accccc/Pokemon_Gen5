@@ -82,7 +82,7 @@ u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
     case SCR_HIDE_SHIP_PLACE_D10:
       return ZONE_ID_D10;
     case SCR_HIDE_SHIP_PLACE_W17:
-      return ZONE_ID_W17;
+      return ZONE_ID_D27R0101;
     }
   }
   else if( zoneID == ANIMAL_TRAIL_ZONE_ID )
@@ -137,6 +137,9 @@ BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag )
   case TOWNMAP_USER_FLAG_OVERSEAS_TRADE:
     //国連へは世界交換したら地図上に発見
     return ( 1 <= WIFIHISTORY_GetMyCountryCountEx( p_wifi, p_mystatus, FALSE ) );
+
+  case TOWNMAP_USER_FLAG_LAST_PLASMA:
+    return ( SCR_HIDE_SHIP_PLACE_W17 == *EVENTWORK_GetEventWorkAdrs( p_ev, WK_SYS_HIDE_SHIP_PLACE ));
 
   default:
     //さもなくばイベントフラグ
