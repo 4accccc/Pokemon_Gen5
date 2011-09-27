@@ -1101,9 +1101,7 @@ DEFINE_LOCAL  LWK_SELECT_POS
 
 EVENT_START ev_wbt_entry_checker
 
-  _SE_PLAY( SEQ_SE_PC_LOGIN )
-  _PLAYER_NAME( 0 )
-  _SYSWIN_MSG( msg_wbt_pc_on, POS_DOWN )
+  _TALK_START_SE_PLAY()
 
   $LOG_OUT = FALSE
 
@@ -1128,9 +1126,6 @@ EVENT_START ev_wbt_entry_checker
       ENDIF
 
     DEFAULT
-      _PLAYER_NAME( 0 )
-      _SYSWIN_MSG( msg_wbt_pc_off, POS_DOWN )
-      _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
       $LOG_OUT = TRUE
     ENDSWITCH
