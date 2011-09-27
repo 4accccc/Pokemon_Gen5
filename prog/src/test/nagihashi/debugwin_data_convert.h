@@ -504,6 +504,24 @@ static void DebugWin_U_DC_Work_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
 
+  u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE );
+
+  if( DebugWin_Util_DC_ChangeDataU32( &work, 0, 0xFFFF ) )
+  {
+    DATA_CONVERT_SAVE_SetWork( p_sv, WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE, work );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_DC_Work_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+  u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE );
+  DEBUGWIN_ITEM_SetNameV( p_item , "しょきポケタイプ=%d", work );
+}
+static void DebugWin_U_DC_Work_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+
   u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_N_BATTLE_RAIMON );
 
   if( DebugWin_Util_DC_ChangeDataU32( &work, 0, 0xFFFF ) )
@@ -512,11 +530,29 @@ static void DebugWin_U_DC_Work_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
     DEBUGWIN_RefreshScreen();
   }
 }
-static void DebugWin_D_DC_Work_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+static void DebugWin_D_DC_Work_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
   u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_N_BATTLE_RAIMON );
   DEBUGWIN_ITEM_SetNameV( p_item , "ライモンNバトル=%d", work );
+}
+static void DebugWin_U_DC_Work_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+
+  u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_FURNITURE_SHOP );
+
+  if( DebugWin_Util_DC_ChangeDataU32( &work, 0, 0xFFFF ) )
+  {
+    DATA_CONVERT_SAVE_SetWork( p_sv, WB_SAVE_CONV_WORK_FURNITURE_SHOP, work );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_DC_Work_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  DATA_CONVERT_SAVE *p_sv = p_wk_adrs;
+  u32 work = DATA_CONVERT_SAVE_GetWork( p_sv, WB_SAVE_CONV_WORK_FURNITURE_SHOP );
+  DEBUGWIN_ITEM_SetNameV( p_item , "かぐや=%d", work );
 }
 
 static void DebugWin_U_DC_Musical_Point( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
@@ -1092,6 +1128,16 @@ static void DEBUGWIN_DATA_CONVERT_Init( DATA_CONVERT_SAVE *p_sv, HEAPID heapID )
 
   DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Work_00, 
                               DebugWin_D_DC_Work_00, 
+                              p_sv, 
+                              DATACONV_WORK_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Work_01, 
+                              DebugWin_D_DC_Work_01, 
+                              p_sv, 
+                              DATACONV_WORK_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_DC_Work_02, 
+                              DebugWin_D_DC_Work_02, 
                               p_sv, 
                               DATACONV_WORK_GROUP, 
                               heapID );
