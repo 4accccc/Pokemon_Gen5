@@ -21799,12 +21799,10 @@
 			<Text>さいしんぶの　れんちゅうの　たたかいは
 あまりにも　はげしすぎるからな▼
 おれは　どうくつが　ぶっこわれないか
-それだけが　しんぱいだ……▼
-まだ　ここでの　たたかいなんか
-おとなしいほうだぜ！▼</Text>
+それだけが　しんぱいだ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T10:43:55" />
+				Time="2011-09-27T10:31:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -21815,12 +21813,10 @@
 			<Text>最深部の　連中の　戦いは
 あまりにも　激しすぎるからな▼
 おれは　洞穴が　ぶっ壊れないか
-それだけが　心配だ……▼
-まだ　ここでの　戦いなんか
-おとなしいほうだぜ！▼</Text>
+それだけが　心配だ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-26T10:43:47" />
+				Time="2011-09-27T10:31:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23009,7 +23005,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うえのエリアから　爆発音やら
+			<Text>上のエリアから　爆発音やら
 おたけびやらが　聞こえてくる……▼
 すっごい　危険な雰囲気だけど
 だ……大丈夫なのかしら？▼
@@ -23017,7 +23013,7 @@
 わたしも　ここまで来た　つわものよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T05:24:09" />
+				Time="2011-09-27T10:38:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
