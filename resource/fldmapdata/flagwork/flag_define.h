@@ -857,6 +857,8 @@
 #define FV_C12R0101_TROPHY_02              889 /* 0x0379 自宅1F：バトルサブウェイのトロフィ２ */
 #define FV_C12R0101_TROPHY_03              890 /* 0x037a 自宅1F：バトルサブウェイのトロフィ３ */
 #define FV_D05R0101_TRAINERW_01            891 /* 0x037b WBTロビー：クリア後に出現するエリートトレーナー♀ */
+#define FV_C02R0101_FUN_01                 892 /* 0x037c シッポウ倉庫：シタンのファン */
+#define FV_C08_PEOPLE_01                   893 /* 0x037d ソウリュウシティ：NPC */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
