@@ -519,381 +519,293 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
-	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『さあ……
-いくぞ！　ガリクソンくん！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『さあ……
-いくぞ！　ガリクソンくん！</language>
-	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">ガリクソン『はい！
-%MYNAMEはかせ！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『はい！
-%MYNAME博士！</language>
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
+おきをつけ　ください！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
+お気を付け　ください！</language>
 	</row>
 	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『まさか
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まさか
 メガネ　ひとつに　けんきゅうの▽
 めいうんが　かかっているとは……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『まさか
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『まさか
 メガネ　ひとつに　研究の▽
 命運が　かかっているとは……</language>
 	</row>
-	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">ガリクソン『わたしの　メガネ……
-ぶじでいてくれ……！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『わたしの　メガネ……
-無事でいてくれ……！</language>
-	</row>
 	<row id="pw_turn_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『それにしても
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『それにしても
 やたらと　ハデな　メガネだな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『それにしても
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『それにしても
 やたらと　ハデな　メガネだな……</language>
 	</row>
 	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">ガリクソン『そこが　いいんです！
+		<language name="JPN" width="256">ストレンジ『そこが　いいんです！
 こだわりですよ　こだわり！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『そこが　良いんです！
+		<language name="JPN_KANJI" width="256">ストレンジ『そこが　良いんです！
 こだわりですよ　こだわり！</language>
-	</row>
-	<row id="pw_turn_hero_3">
-		<language name="JPN" width="256">%MYNAMEはかせ『ムム……
-じぶんが　つくった　きかいに▽
-こうげきされる　とはな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『ムム……
-自分が　作った　機械に▽
-攻撃される　とはな……</language>
 	</row>
 	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 ここが　しょうねんばです！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
 ここが　正念場です！</language>
 	</row>
 	<row id="pw_turn_hero_4">
-		<language name="JPN" width="256">%MYNAMEはかせ『クッ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『クッ……
 まずいな……！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『クッ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『クッ……
 まずいな……！</language>
 	</row>
 	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 このままでは　じかん　てんそうきが▽
 ばくはつ　してしまいます……！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
 このままでは　時間転送機が▽
 爆発　してしまいます……！</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『いよいよ
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『いよいよ
 わたしの　かいはつした▽
 じかん　てんそうき　で▽
-わたしじしんが　みらいへと▽
-たびだつ　ときが　きた！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『いよいよ
+みらいへと　たびだつ▽
+ときが　きた！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『いよいよ
 わたしの　開発した▽
-時間転送機で▽
-わたし自身が　未来へと▽
+時間転送機で　未来へと▽
 旅立つ　ときが　きた！！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">ガリクソン『たのしみ　ですね！
-%MYNAMEはかせ！▼
-われわれの　けんきゅうが
-みを　むすぶ　このときを▽
+		<language name="JPN" width="256">ストレンジ『たのしみ　ですね！
+[1:00:トレーナー名:1]はかせ！▽
 まちに　まっていました！！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『楽しみですね！
-%MYNAME博士！▼
-我々の　研究が
-実を結ぶ　このときを▽
+		<language name="JPN_KANJI" width="256">ストレンジ『楽しみですね！
+[1:00:トレーナー名:1]博士！▽
 待ちに　待っていました！！</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『さあ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『さあ……
 じかん　てんそうきを▽
 きどう　するのだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『さあ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『さあ……
 時間転送機を▽
 起動　するのだ！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">ガリクソン『……あれ……！？
-%MYNAME　はかせ！！▼
-なんだか　てんそうきの
-ちょうしが　わるいみたいです！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『……あれ……！？
-%MYNAME　博士！！▼
-なんだか　時間転送機の
-調子が　悪いみたいです！</language>
+		<language name="JPN" width="256">ストレンジ『あとは　ポケモンの
+わざの　エネルギーを▽
+チャージ　するだけ……▼
+……あれ……！？</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『あとは　ポケモンの
+技の　エネルギーを▽
+チャージ　するだけ……▼
+……あれ……！？</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『なんだと！？
-では　みらいへ　たびだつことは▽
-できないと　いうのかね！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『なんだと！？
-では　未来へ　旅立つことは▽
-できないと　いうのかね！？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『どうした！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『どうした！？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">ガリクソン『えーと……
-あっ！　あれは……！▼
-ど　どうしよう……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『えーと……
-あっ！　あれは……！▼
-ど　どうしよう……</language>
-	</row>
-	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">%MYNAMEはかせ『なに？
-いったい　どうしたのだね！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『なに？
-一体　どうしたのだね！？</language>
-	</row>
-	<row id="pw_event0_enemy_3">
-		<language name="JPN" width="256">ガリクソン『%MYNAME　はかせ……
-はずかしながら　わたしの▽
-おきにいりの　メガネが▽
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ……
+はずかしながら　わたしの　メガネが▽
 じかん　てんそうきの▽
 ぶひんの　あいだに　はさまって▽
-トラブルの　げんいんに▽
-なっている　ようです！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME　博士……
-恥ずかしながら　わたしの▽
-お気に入りの　メガネが▽
+ごさどうが　おきています！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士……
+恥ずかしながら　わたしの　メガネが▽
 時間転送機の▽
 部品の　間に　はさまって▽
-トラブルの　原因に▽
-なっている　ようです！</language>
+誤作動が　起きています！</language>
 	</row>
-	<row id="pw_event0_hero_4">
-		<language name="JPN" width="256">%MYNAMEはかせ『メ　メガネ！？
+	<row id="pw_event0_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『メ　メガネ！？
 </language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『メ　メガネ！？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『メ　メガネ！？
 </language>
 	</row>
-	<row id="pw_event0_enemy_4">
-		<language name="JPN" width="256">ガリクソン『てんそうきに
-ちかづくのは　きけんですね……▼
-ポケモンの　わざを　つかって
-メガネを　とれれば　いいのですが……▼
-%MYNAME　はかせ！
-メガネの　かいしゅうを▽
-おねがいして　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『時間転送機に
-近付くのは　危険ですね……▼
-ポケモンの　技を　使って
-メガネを　取れれば　いいのですが……▼
-%MYNAME　博士！
-メガネの　回収を▽
-お願いして　よろしいですか？</language>
+	<row id="pw_event0_enemy_3">
+		<language name="JPN" width="256">ストレンジ『ポケモンの
+わざを　つかって　メガネを▽
+とれれば　いいのですが……▼
+[1:00:トレーナー名:1]はかせ！　メガネを
+かいしゅう　してください！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『ポケモンの
+技を　使って　メガネを▽
+取れれば　いいのですが……▼
+[1:00:トレーナー名:1]博士！　メガネを
+回収　してください！</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『まかせなさい！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『任せなさい！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まかせなさい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『任せなさい！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">ガリクソン『ありがとうございます！
-さすが　%MYNAME　はかせ！▼
+		<language name="JPN" width="256">ストレンジ『ありがとうございます！
+さすが　[1:00:トレーナー名:1]はかせ！▼
 おねがいします　あれは
-とても　だいじな　メガネなんです！▼
-くれぐれも　きをつけてください！
-モーターが　いじょうな　かいてんを▽
-している　かのうせいが　あります！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ありがとうございます！
-さすが　%MYNAME　博士！▼
+とても　だいじな　メガネなんです！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『ありがとうございます！
+さすが　[1:00:トレーナー名:1]博士！▼
 お願いします　あれは
-とても　大事な　メガネなんです！▼
-くれぐれも　気を付けてください！
-モーターが　異常な　回転を▽
-している　可能性が　あります！</language>
+とても　大事な　メガネなんです！</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『ほうっておけ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『放っておけ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ほうっておけ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『放っておけ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">ガリクソン『いや　ですが
+		<language name="JPN" width="256">ストレンジ『いや　ですが
 おおきな　トラブルに▽
 つながるかも　しれませんよ！？▼
-それに　なにより　あれは
-たいせつな　メガネなんです……▼
-……うわぁ！
-でんきの　エネルギーが▽
-もれだしてきました！▼
-もう　いわんこっちゃない！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『いや　ですが
-大きな　トラブルに▽
-つながるかも　しれませんよ！？▼
-それに　なにより　あれは
-大切な　メガネなんです……▼
-……うわぁ！
-電気の　エネルギーが▽
-もれ出してきました！▼
-もう　いわんこっちゃない！</language>
-	</row>
-	<row id="pw_event0_react_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『キミのミスだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『キミのミスだ！</language>
-	</row>
-	<row id="pw_event0_react_enemy_2">
-		<language name="JPN" width="256">ガリクソン『た……　たしかに
-そうかも　しれませんが……▽
-そんな　いいかたって▽
-あんまりじゃ　ありませんか！？▼
-それに　はかせの　せっけいが
-もんだい　だったのかも　しれませんし▽
-わたしだけの　せきにんでは……▼
 ……うわっ！　ひばなが……！
 メガネが　あぶない……！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『た……　確かに
-そうかも　しれませんが……▽
-そんな　言い方って▽
-あんまりじゃ　ありませんか！？▼
-それに　博士の　設計が
-問題　だったのかも　しれませんし▽
-わたしだけの　責任では……▼
+		<language name="JPN_KANJI" width="256">ストレンジ『いや　ですが
+大きな　トラブルに▽
+つながるかも　しれませんよ！？▼
 ……うわっ！　火花が……！
 メガネが　危ない……！</language>
 	</row>
+	<row id="pw_event0_react_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『キミのミスだ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『キミのミスだ！</language>
+	</row>
+	<row id="pw_event0_react_enemy_2">
+		<language name="JPN" width="256">ストレンジ『ひ　ひどい！
+たしかに　そうですが……▼
+そもそも　[1:00:トレーナー名:1]はかせの
+せっけいミス　かも　しれませんし▽
+わたしだけの　せきにんでは……▼
+……うわっ！　でんきが……！
+ショートする！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『ひ　ひどい！
+確かに　そうですが……▼
+そもそも　[1:00:トレーナー名:1]博士の
+設計ミスかも　しれませんし▽
+わたしだけの　責任では……▼
+……うわっ！　電気が……！
+ショートする！</language>
+	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『どうだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『どうだ……
 じかん　てんそうきの　ようすは！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『どうだ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『どうだ……
 時間転送機の　様子は！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ガリクソン『これいじょう
-トラブルが　おきなければ▽
-じかん　てんそうは▽
+		<language name="JPN" width="256">ストレンジ『じかん　てんそう
 かのうです……！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『これ以上
-トラブルが　起きなければ▽
-時間転送は　可能です……！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『時間転送
+可能です……！</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『そうなの……か？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『そうなの……か？
 けむりが　ふきでている　ような▽
 きが　するのだが……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『そうなの……か？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『そうなの……か？
 煙が　吹き出ている　ような▽
 気が　するのだが……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">ガリクソン『だいじょうぶです！
-あれは　エンジンを　ひやす▽
-みずが　じょうはつしている▽
-だけですから！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『大丈夫です！
-あれは　エンジンを　冷やす▽
-水が　蒸発している▽
-だけですから！</language>
+		<language name="JPN" width="256">ストレンジ『だいじょうぶです！
+あれは　れいきゃくすいが▽
+じょうはつしている　だけですから！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『大丈夫です！
+あれは　冷却水が▽
+蒸発している　だけですから！</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『じょうとうだ！
-かがくの　はってんには▽
-つねに　きけんが　ともなう！▼
-ガリクソンくん！
-われわれの　じっけんは▽
-それほどに　じゅうよう　なのだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『上等だ！
-科学の　発展には▽
-常に　危険が　ともなう！▼
-ガリクソンくん！
-我々の　実験は▽
-それほどに　重要　なのだ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『フフフ！
+その　ていどの　トラブルは▽
+そうていの　はんいない！▼
+じっけん　ぞっこうだ
+ストレンジくん！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『フフフ！
+その程度の　トラブルは▽
+想定の　範囲内！▼
+実験続行だ　ストレンジ君！</language>
 	</row>
 	<row id="pw_event1_enemy_2">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 なしとげましょう！▽
 わたしたちの　ちからで！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
 なしとげましょう！▽
 わたしたちの　力で！</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『どうだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『どうだ……
 じかん　てんそうきの　ようすは！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『どうだ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『どうだ……
 時間転送機の　様子は！？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">ガリクソン『ウーン……
-でんあつが　ていか　していて▽
-じかん　てんそう　するための▽
-エネルギーが　たりるかどうか▽
-びみょうな　ところですね……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ウーン……
-電圧が　低下　していて▽
-時間転送　するための▽
-エネルギーが　足りるかどうか▽
-微妙な　ところですね……</language>
+		<language name="JPN" width="256">ストレンジ『でんりょくが
+いじょうな　すうちで……▽
+これは　かなり　きけんです！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『電力が
+異常な　数値で……▽
+これは　かなり　危険です！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『よかろう！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『よかろう！
 じっけんに　トラブルは　つきもの！▽
 がぜん　もりあがってきたぞ！▼
-はかせの　ボルテージは
-さいこうちょうだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『よかろう！
+はかせも　バリバリ
+はりきっちゃうぞー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『よかろう！
 実験に　トラブルは　つきもの！▽
 がぜん　盛り上がってきたぞ！▼
-博士の　ボルテージは
-最高潮だ！</language>
+博士も　バリバリ
+張り切っちゃうぞー！</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">ガリクソン『とはいえ……
-てんそうきの　ボルテージは▽
-たりてないんですよ……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『とはいえ……
-時間転送機の　ボルテージは▽
-足りてないんですよ……</language>
+		<language name="JPN" width="256">ストレンジ『だから！
+てんそうきが　バリバリ▽
+ほうでん　してるんですよ！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『だから！
+時間転送機が　バリバリ▽
+放電　してるんですよ！</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『どうだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『どうだ……
 じかん　てんそうきの　ようすは！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『どうだ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『どうだ……
 時間転送機の　様子は！？</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ガリクソン『ウーン……
-てんそうきが　はつねつ　していて▽
-コンピュータへの　ふたんが▽
-おおきいかも　しれません▼
+		<language name="JPN" width="256">ストレンジ『ウーン……
+てんそうきが　はつねつ　していて▼
 ちょっと　きけんな
 じょうたい　ですね……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ウーン……
+		<language name="JPN_KANJI" width="256">ストレンジ『ウーン……
 時間転送機が　発熱　していて▽
-コンピュータへの　負担が▽
-大きいかも　しれません▼
 ちょっと　危険な　状態　ですね……</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『だからどうした！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『だからどうした！
 リスク　なくして　しょうり　なし！▽
-もえてきたぞ！▼
-はかせの　じょうねつは
-ばくはつ　すんぜんだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『だからどうした！
+もえてきたぞ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『だからどうした！
 リスク　なくして　勝利　なし！▽
-燃えてきたぞ！▼
-博士の　情熱は　爆発寸前だ！</language>
+燃えてきたぞ！</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">ガリクソン『とかいって……
-てんそうきが　ばくはつしたら▽
+		<language name="JPN" width="256">ストレンジ『とかいって……
+てんそうきが　もえたら▽
 どうするんですか………</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『とかいって……
-時間転送機が　爆発したら▽
+		<language name="JPN_KANJI" width="256">ストレンジ『とかいって……
+時間転送機が　燃えたら▽
 どうするんですか………</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">ガリクソン『やりました！　はかせ！
+		<language name="JPN" width="256">ストレンジ『やりました！　はかせ！
 じかん　てんそうきは▽
 せいじょうに　さどうちゅう！▽
 そして　わたしの　メガネも　ぶじ！▼
 まもなく　みらいへと　つづく
 じかんの　ゲートが　ひらきます！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『やりました！　博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『やりました！　博士！
 時間転送機は▽
 正常に　作動中！▽
 そして　わたしの　メガネも　無事！▼
@@ -901,34 +813,34 @@
 時間の　ゲートが　開きます！</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『よし！▽
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『よし！▼
 では　わたしは　みらいの
 せかいへと　たびだつ！▼
 いってくるぞ！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『よし！▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『よし！▼
 では　わたしは　未来の
 世界へと　旅立つ！▼
 行ってくるぞ！！</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">ガリクソン『きたい　しています！▼
+		<language name="JPN" width="256">ストレンジ『きたい　しています！▼
 どうか　ごぶじで　かえって
 きてくださいね！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『期待　しています！▼
+		<language name="JPN_KANJI" width="256">ストレンジ『期待　しています！▼
 どうか　ご無事で　帰って
 きてくださいね！</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……▼
 じかん　てんそうき……　はっしん！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……▼
 時間転送機……　発進！</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">ガリクソン『いってらっしゃいませ！
-%MYNAMEはかせ！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『いってらっしゃいませ！
-%MYNAME博士！</language>
+		<language name="JPN" width="256">ストレンジ『いってらっしゃいませ！
+[1:00:トレーナー名:1]はかせ！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『いってらっしゃいませ！
+[1:00:トレーナー名:1]博士！</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">こうして　わたしは　みずから
@@ -951,81 +863,81 @@
 良かったのかも　しれない……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">%MYNAMEはかせ『これは……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『これは……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『これは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『これは……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 じかん　てんそうきの　システムが▽
 ぼうそう　しています！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
 時間転送機の　システムが▽
 暴走　しています！</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『……じっけんは
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……じっけんは
 しっぱい　なのか……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『……実験は
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……実験は
 失敗　なのか……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
-あぶないっ！　じかん　てんそうきが
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
+あぶないっ！　じかん　てんそうきが▽
 ばくはつ　しますっ　にげてっ！！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
-危ないっ！　時間転送機が
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
+危ないっ！　時間転送機が▽
 爆発　しますっ　逃げてっ！！</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『ウワーッ！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『ウワーッ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ウワーッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ウワーッ！！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
-		<language name="JPN" width="256">ガリクソン『はかせーっ！！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『博士ーっ！！</language>
+		<language name="JPN" width="256">ストレンジ『はかせーっ！！</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『博士ーっ！！</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">%MYNAMEはかせ『……ググ</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『……ググ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……ググ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……ググ</language>
 	</row>
 	<row id="pw_event5_enemy_3">
-		<language name="JPN" width="256">ガリクソン『はかせ！　はかせ！！
+		<language name="JPN" width="256">ストレンジ『はかせ！　はかせ！！
 だいじょうぶ　ですかっ！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『博士！　博士！！
+		<language name="JPN_KANJI" width="256">ストレンジ『博士！　博士！！
 大丈夫　ですかっ！</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">%MYNAMEはかせE『……ウウ
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……ウウ
 ひどいめに　あった……▽
 じっけんは　やりなおしか……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士E『……ウウ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……ウウ
 ひどいめに　あった……▽
 実験は　やり直しか……</language>
 	</row>
 	<row id="pw_event5_enemy_4">
-		<language name="JPN" width="256">ガリクソン『……アア</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『……アア</language>
+		<language name="JPN" width="256">ストレンジ『……アア</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『……アア</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">%MYNAMEはかせ『……ん？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……ん？
 どうしたんだ？▼
 このとおり　わたしは　ぶじだよ！
 じっけんしっぱいは　くやしいが
 まだまだ　あきらめないよ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『……ん？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……ん？
 どうしたんだ？▼
 この通り　わたしは　無事だよ！
 実験失敗は　くやしいが
 まだまだ　あきらめないよ！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
-		<language name="JPN" width="256">ガリクソン『%MYNAME　はかせ……▼
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]　はかせ……▼
 なんて……　ことだ……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME　博士……▼
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]　博士……▼
 なんて……　ことだ……</language>
 	</row>
 	<row id="pw_event5_hero_6">
-		<language name="JPN" width="256">ガリクソンに　てわたされた
+		<language name="JPN" width="256">ストレンジに　てわたされた
 かがみを　みた　わたしは▽
 ことばを　うしなった……▼
 そこに　うつる　とても　きみょうな
@@ -1036,7 +948,7 @@
 わたしは　ひとつに　なった……▼
 こうして　わたしの　けんきゅうは
 おわったのだ……</language>
-		<language name="JPN_KANJI" width="256">ガリクソンに　手渡された
+		<language name="JPN_KANJI" width="256">ストレンジに　手渡された
 鏡を　見た　わたしは▽
 言葉を　失った……▼
 そこに　映る　とても　奇妙な
@@ -1049,29 +961,25 @@
 終わったのだ……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
-メガネの　かいしゅうは▽
-どうしたのですか！？▼
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
+ほうでんが　おさまりません！▼
 ……って　あれ？▼
 じかん　てんそうき
-せいじょうに　さどうちゅう……？</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
-メガネの　回収は▽
-どうしたのですか！？▼
+せいじょうに　さどう……？</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
+放電が　おさまりません！▼
 ……って　あれ？▼
 時間転送機
-正常に　作動中……？</language>
+正常に　作動……？</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">%MYNAMEはかせ『まあまあ
-けっか　オーライ！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まあまあ
 てんそうきが　ぶじ　うごけば▽
 よいではないか！▼
 では　さっそく　みらいの
 せかいへと　たびだつ！▼
 いってくるぞ！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『まあまあ
-結果　オーライ！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『まあまあ
 時間転送機が　無事　動けば▽
 よいではないか！▼
 では　早速　未来の
@@ -1079,70 +987,66 @@
 行ってくるぞ！！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
-		<language name="JPN" width="256">ガリクソン『%MYNAMEはかせ！
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 ちょっと　まって　ください……！▼
 バカな！　タキオン　りゅうしが
 はっせい　している……！？▼
 はかせ！　ストーップ！</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『%MYNAME博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
 ちょっと　待って　ください……！▼
 バカな！　タキオン粒子が
 発生している……！？▼
 博士！　ストーップ！</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">%MYNAMEはかせ『かまわん！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『かまわん！▼
 じかん　てんそうき……　はっしん！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME博士『かまわん！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『かまわん！▼
 時間転送機……　発進！</language>
 	</row>
 	<row id="pw_event6_enemy_2">
-		<language name="JPN" width="256">ガリクソン『ちょっと　はかせ！
+		<language name="JPN" width="256">ストレンジ『ちょっと　はかせ！
 はかせ……！　は……か……▼
 ……</language>
-		<language name="JPN_KANJI" width="256">ガリクソン『ちょっと　博士！
+		<language name="JPN_KANJI" width="256">ストレンジ『ちょっと　博士！
 博士……！　は……か……▼
 ……</language>
 	</row>
 	<row id="pw_event6_hero_3">
-		<language name="JPN" width="256">ガリクソンが　よびとめるのも　きかず
+		<language name="JPN" width="256">ストレンジが　よびとめるのも　きかず
 たびだった　わたしでは　あったが▽
 すぐに　こうかいする　はめとなった▼
-ガリクソンの　いうとおり
+ストレンジの　いうとおり
 じかん　てんそうきは　おかしかった▼
 わたしを　みらい　ではなく
 １おくねんも　まえの▽
 かこの　じだいへと▽
 タイムスリップ　させたのだから……</language>
-		<language name="JPN_KANJI" width="256">ガリクソンが　呼び止めるのも　聞かず
+		<language name="JPN_KANJI" width="256">ストレンジが　呼び止めるのも　聞かず
 旅立った　わたしでは　あったが▽
 すぐに　後悔する　はめとなった▼
-ガリクソンの　いうとおり
+ストレンジの　いうとおり
 時間転送機は　おかしかった▼
 わたしを　未来　ではなく
 １億年も　前の　過去の　時代へと▽
 タイムスリップ　させたのだから……</language>
 	</row>
 	<row id="pw_event6_hero_4">
-		<language name="JPN" width="256">きかいの　パーツは　もちろん
-にんげんすら　そんざいしない▽
-おおむかしの　せかいでは▽
+		<language name="JPN" width="256">おおむかしの　せかいでは
 てんそうきは　しゅうりできない▼
 えいえんに　もとの　じだいには
 かえれないのだ……▼
-いつか　はくぶつかんで　みた
+はくぶつかんで　みた
 カセキのような　ポケモンが▽
 いきている　すがたを　みながら▽
 かこの　せかいで　いきていくのも▽
 わるくはない……▽
 わたしは　そう　おもうことにした</language>
-		<language name="JPN_KANJI" width="256">機械の　パーツは　もちろん
-人間すら　存在しない▽
-大昔の　世界では▽
+		<language name="JPN_KANJI" width="256">大昔の　世界では
 時間転送機は　修理できない▼
 永遠に　元の　時代には
 帰れないのだ……▼
-いつか　博物館で　みた
+博物館で　みた
 カセキのような　ポケモンが▽
 生きている姿を　みながら▽
 過去の　世界で　生きていくのも▽
