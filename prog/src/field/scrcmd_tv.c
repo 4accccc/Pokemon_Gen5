@@ -32,6 +32,7 @@
 #include "savedata/misc.h"               // for MISC
 #include "savedata/person_state.h"       // for LLC
 
+#include "poke_tool/monsno_def.h"        // MONSNO_XXX
 
 #define TALENT_TV_NORMAL_MAX  (22)
 #define TALENT_TV_SEX_MAX     (10)
@@ -111,9 +112,8 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
         }
       }
       //タマゴではないポケモンを見つけられなかった
-      //@todo 仮でタブンネを登録
       if (i == num){
-        WORDSET_RegisterPokeMonsNameNo( wordset, 3, 531 );
+        WORDSET_RegisterPokeMonsNameNo( wordset, 3, MONSNO_MINEZUMI );
       }
     }
 
