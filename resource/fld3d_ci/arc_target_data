@@ -217,5 +217,4 @@ ARC_TARGET_DATA = \
 	get2_629.nsbmd \
 	get1_medal.nsbmd \
 	fes_ci.nsbmd \
-	fes_ci.nsbca \
-	fes_ci.nsbta
+	fes_ci.nsbca

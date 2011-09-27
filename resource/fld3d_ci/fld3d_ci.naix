@@ -229,8 +229,7 @@ enum {
 	NARC_fld3d_ci_get2_629_nsbmd = 215,
 	NARC_fld3d_ci_get1_medal_nsbmd = 216,
 	NARC_fld3d_ci_fes_ci_nsbmd = 217,
-	NARC_fld3d_ci_fes_ci_nsbca = 218,
-	NARC_fld3d_ci_fes_ci_nsbta = 219
+	NARC_fld3d_ci_fes_ci_nsbca = 218
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
