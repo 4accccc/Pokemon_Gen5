@@ -458,6 +458,7 @@
 #define FE_H01R0201_ITEMGET_01             442 /* 0x01ba スカイアローブリッジゲート：アイテム入手フラグ */
 #define FE_C03P14_ITEMGET_01               443 /* 0x01bb ヒウンシティ：アイテム入手フラグ */
 #define FE_C08_PLAZMA_COME                 444 /* 0x01bc ソウリュウシティ：プラズマ団襲来イベント起動フラグ */
+#define FE_C02GYM0101_ITEMGET_01           445 /* 0x01bd シッポウシティ：アロエからカセキをもらったフラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -2363,8 +2364,8 @@
 		/* not used  2460(0x099c) */
 		/* not used  2461(0x099d) */
 		/* not used  2462(0x099e) */
-		/* not used  2463(0x099f) */
-		/* not used  2464(0x09a0) */
+#define SYS_FLAG_ARRIVE_N01R0101          2463 /* 0x099f 到着フラグ：N01R0101 */
+#define SYS_FLAG_ARRIVE_D20R0501          2464 /* 0x09a0 到着フラグ：D20R0501 */
 #define SYS_FLAG_ARRIVE_D31R0201          2465 /* 0x09a1 到着フラグ：D31R0201 */
 #define SYS_FLAG_ARRIVE_D31R0101          2466 /* 0x09a2 到着フラグ：D31R0101 */
 #define SYS_FLAG_ARRIVE_C00R0101          2467 /* 0x09a3 到着フラグ：C00R0101 */
