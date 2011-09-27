@@ -27,8 +27,8 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_t01r0301_middleman2_01
 
-  //アイテム「？？？」入手【仮】入手アイテムは仮のもの
-  _EASY_TALK_ITEM_EVENT( ITEM_MASUTAABOORU, 1, FE_T01R0301_ITEMGET_01, msg_t01r0301_middleman2_01, msg_t01r0301_middleman2_02, msg_t01r0301_middleman2_02 )
+  //どうぐ入手：きのみジュース
+  _EASY_TALK_ITEM_EVENT( ITEM_KINOMIZYUUSU, 1, FE_T01R0301_ITEMGET_01, msg_t01r0301_middleman2_01, msg_t01r0301_middleman2_02, msg_t01r0301_middleman2_02 )
 
 EVENT_END
 

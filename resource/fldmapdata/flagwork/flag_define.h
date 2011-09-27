@@ -461,6 +461,7 @@
 #define FE_C02GYM0101_ITEMGET_01           445 /* 0x01bd シッポウシティ：アロエからカセキをもらったフラグ */
 #define FE_C03P13_SHIP_IN_01               446 /* 0x01be ヒウンシティ：リバティガーデン島への初回渡航フラグ */
 #define FE_C02GYM0202_LEADER2_TALK_01      447 /* 0x01bf シッポウシティ：アロエ初回会話フラグ */
+#define FE_D05_ITEMGET_01                  448 /* 0x01c0 WBT：アイテム入手フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 

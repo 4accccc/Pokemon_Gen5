@@ -199,6 +199,7 @@ EVENT_START		ev_c05r0501_sage6_01
   //ゾロア入手後
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0501_sage6_13 )
+
   ENDIF
   
 EVENT_END
@@ -243,8 +244,19 @@ ev_c05r0501_poke22_get:
     _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
     
-    //ロット：そのゾロアは
-    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    //データコンバート・クリアチェック
+    _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+    
+    //ロット：そのゾロアは(クリアデータあり）
+    IF $LOCALWORK15 >= 1 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    
+    //ロット：そのゾロアは(クリアデータなし）
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12a,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    ENDIF
+    
+    
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
@@ -253,6 +265,8 @@ ev_c05r0501_poke22_get:
     _FLAG_SET(FE_C05R0501_POKE22_GET)
     //ゾロア非表示に
     _FLAG_SET(FV_C05R0501_POKE22_01)
+    //システムフラグでNポケモン起動フラグ設定
+    _FLAG_SET(SYS_FLAG_NPOKE_OPEN)
     //========================================//
     
   ENDIF

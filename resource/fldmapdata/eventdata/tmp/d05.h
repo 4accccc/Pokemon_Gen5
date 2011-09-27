@@ -12,17 +12,23 @@
 #ifndef ZONE_D05_EVC_H
 #define ZONE_D05_EVC_H
 
-#define D05_STOPPER_01                     0
-#define D05_DUMMY_01                       1
-#define D05_DUMMY_02                       2
-#define D05_DUMMY_03                       3
-#define D05_DUMMY_04                       4
-#define D05_DUMMY_05                       5
+#define D05_WOMAN2_01                      0
+#define D05_MAN1_01                        1
+#define D05_OLDMAN1_01                     2
+#define D05_OLDMAN1_02                     3
+#define D05_TRAINERM_01                    4
+#define D05_WORKMAN1_01                    5
 #define D05_SWRIVAL_01                     6
 #define D05_SWLEADER5_01                   7
 #define D05_SWLEADER1_01                   8
 #define D05_SWBOSS_01                      9
 #define FLD_ITEM_71                       10
+#define D05_GIRL1_01                      11
+#define D05_OLDWOMAN1_01                  12
+#define D05_TENNISW_01                    13
+#define D05_FIGHTERW_01                   14
+#define D05_BADMAN_01                     15
+#define D05_VETERANW_01                   16
 
 #endif //ZONE_D05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

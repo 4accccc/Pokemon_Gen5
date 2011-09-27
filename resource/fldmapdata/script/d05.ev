@@ -23,14 +23,21 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d05_stopper_01
-_EVENT_DATA    ev_pos_d05_stopper_01
 _EVENT_DATA    ev_pos_d05_swleader5_01
 _EVENT_DATA    ev_scene_d05_swplazma_01
 _EVENT_DATA    ev_reserve_d05_swplazma_af_01
 _EVENT_DATA    ev_d05_swboss_01
 _EVENT_DATA    ev_zone_d05
 _EVENT_DATA    ev_init_d05
+
+_EVENT_DATA    ev_d05_workman1_01
+_EVENT_DATA    ev_d05_woman2_01
+_EVENT_DATA    ev_d05_oldwoman1_01
+_EVENT_DATA    ev_d05_badman_01
+_EVENT_DATA    ev_d05_veteranw_01
+_EVENT_DATA    ev_d05_fighterw_01
+_EVENT_DATA    ev_d05_tennisw_01
+_EVENT_DATA    ev_d05_man1_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -502,61 +509,117 @@ EVENT_START		ev_d05_swboss_01
 EVENT_END
 
 /**************************************************************/
-/* 			ストッパー：話しかけ			  */
+/* 			workman1：話しかけ			  */
 /**************************************************************/
-EVENT_START		ev_d05_stopper_01
-  //【仮】ストッパー：工事中（メッセージラベルが仮）
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_swboss_03 )
+EVENT_START		ev_d05_workman1_01
+  _EASY_TALK_ITEM_EVENT( ITEM_GOTUGOTUMETTO, 1, FE_D05_ITEMGET_01, msg_d05_workman1_01, msg_d05_workman1_02, msg_d05_workman1_02 )
 EVENT_END
 
 /**************************************************************/
-/* 			ストッパー：POS起動			  */
+/* 			woman2：話しかけ			  */
 /**************************************************************/
-EVENT_START		ev_pos_d05_stopper_01
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  
-  //主人公に隣接
-  IF $LCW_POSX >= 470 THEN
-    _OBJ_ANIME( D05_STOPPER_01, anm_stopper_lookpleyer_d )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-    _OBJ_ANIME_WAIT()
-  ELSE
-    _OBJ_ANIME( D05_STOPPER_01, anm_stopper_lookpleyer_u )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  
-  //【仮】ストッパー：工事中（メッセージラベルが仮）
-  _BALLOONWIN_OBJMSG_POS( msg_d05_swboss_03,D05_STOPPER_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-  
-  //主人公1歩戻る・ストッパー元の位置に戻る
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-  _OBJ_ANIME( D05_STOPPER_01 , anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
+EVENT_START		ev_d05_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_woman2_01 )
 EVENT_END
 
-//--------------------------------------------------------------------
-//	ストッパー：振り向き（上方向）
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stopper_lookpleyer_u
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-  _ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+/**************************************************************/
+/* 			oldwoman1：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_oldwoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_oldwoman1_01 )
+EVENT_END
 
-//--------------------------------------------------------------------
-//	ストッパー：振り向き（下方向）
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stopper_lookpleyer_d
-  _ANIME_DATA	AC_STAY_WALK_D_8F,1
-  _ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+/**************************************************************/
+/* 			badman：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			veteranw：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_veteranw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_veteranw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			fighterw：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_fighterw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_fighterw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			tennisw：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_tennisw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_tennisw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  d05_man1_01:めざぱ判定*/
+/**************************************************************/
+EVENT_START   ev_d05_man1_01
+{
+	_TALK_OBJ_START()
+	
+	IF FLAG_OFF(FE_MEZAPA_FIRSTTALK)	THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_01) //わたくしポケモンが
+		_FLAG_SET(FE_MEZAPA_FIRSTTALK)
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_02) //ユーのポケモンが
+	ENDIF
+		
+	_YES_NO_WIN( SCWK_ANSWER )
+		
+	IF $SCWK_ANSWER ==  SCR_NO THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_05)
+	ELSE
+		_BALLOONWIN_CLOSE()
+	    _CALL sub_d05_mezameru_power_check
+	ENDIF
+	    
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE() 
+
+}   
+EVENT_END
+
+sub_d05_mezameru_power_check:
+{
+    DEFINE_LOCAL  SEL_POS
+
+    _SELECT_TEMOTI_POKE( SCWK_ANSWER, SEL_POS, 0 )
+    IF $SCWK_ANSWER == FALSE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_05)  //「しりたくなったら～」
+        _RET
+    ENDIF
+
+    _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_06)  //「タマゴがめざめるパワーを～」
+        _RET
+    ENDIF
+
+    _GET_MEZAMERU_POWER_TYPE( SCWK_ANSWER, SEL_POS )
+    IF $SCWK_ANSWER >= POKETYPE_MAX THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_07)  //このポケモンがつかうのは無理
+        _RET
+    ENDIF
+
+    _POKETYPE_NAME( 0, SCWK_ANSWER )  //タグにタイプ名をセット
+    _DEBUG_PRINT_WK( SCWK_ANSWER )
+    _CHECK_POKE_WAZA( SCWK_ANSWER, WAZANO_MEZAMERUPAWAA, SEL_POS )
+    IF $SCWK_ANSWER == TRUE THEN
+        _BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_04)
+    ELSE
+        _BALLOONWIN_TALKOBJ_MSG(msg_d05_man1_03)
+    ENDIF
+    
+    _RET
+}
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
