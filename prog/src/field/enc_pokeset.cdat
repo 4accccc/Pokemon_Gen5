@@ -1,0 +1,30 @@
+//===============================================================================
+/*
+ *  @file   enc_pokeset.ccat
+ *  @brief  エンカウントする野生ポケモン抽選確率テーブル
+ *  @author Miyuki Iwasawa
+ *  @date   11.09.27
+ */
+//===============================================================================
+
+static const u8 DATA_EncProbGroundTbl[GPOWER_RAREPOKE_UP_LV_MAX][ENC_MONS_NUM_GROUND_L] = {
+  { 20, 20, 10, 10, 10, 10,  5,  5,  4,  4,  1,  1 }, //Lv0(平時)
+  { 10, 10, 10, 10, 10, 10, 10, 10,  5,  5,  5,  5 }, //Lv1
+  {  5,  5,  5,  5, 10, 10, 10, 10, 10, 10, 10, 10 }, //Lv2
+  {  1,  1,  4,  4,  5,  5, 10, 10, 10, 10, 20, 20 }, //Lv3
+};
+
+static const u8 DATA_EncProbWaterTbl[GPOWER_RAREPOKE_UP_LV_MAX][ENC_MONS_NUM_WATER] = {
+  { 60, 30,  5,  4,  1 }, //Lv0
+  { 50, 30, 10,  5,  5 }, //Lv1
+  { 40, 30, 10, 10, 10 }, //Lv2
+  { 30, 20, 10, 20, 20 }, //Lv3
+};
+
+static const u8 DATA_EncProbFishingTbl[GPOWER_RAREPOKE_UP_LV_MAX][ENC_MONS_NUM_FISHING] = {
+  { 40, 40, 15,  4,  1 }, //Lv0
+  { 40, 35, 15,  5,  5 }, //Lv1
+  { 30, 30, 20, 10, 10 }, //Lv2
+  { 20, 20, 20, 20, 20 }, //Lv3
+};
+
