@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T15:06:59" source="c12_build_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T17:06:24" source="c12_build_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T15:06:59" source="c12_build_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T17:06:24" source="c12_build_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -101,16 +101,16 @@
 			0002 3200 3333 1112 1111 ff11 ffff ffff
 			8888 8888 8888 8888 8888 ff88 ffff ffff
 			5555 5555 5555 5555 8888 ff88 ffff ffff
-			4444 4444 5444 5555 8888 ff88 ffff ffff
-			5555 5555 5555 5555 8888 ff88 ffff ffff
+			4444 4444 4444 5544 8888 ff88 ffff ffff
+			4444 4444 4444 5544 8888 ff88 ffff ffff
 			8888 8888 8888 8888 8888 ff88 ffff ffff
 			88bb bbbb 8888 8558 8888 ffbb ffff ffff
-			55cc cccc 8555 5447 b887 ffff ffff cccc
+			55bb bbbb 8555 5447 b887 ffff ffff cccc
 			55cc cccc 8555 5447 b887 ffff ccff bbbb
-			44dd dddd 8544 5447 b887 ffff bbcf 888b
+			44cc cccc 8544 5447 b887 ffff bbcf 888b
 			7777 7777 7777 7777 b887 ffff 8bbc 8888
-			4444 4444 4444 4444 b887 ffff 88bc 8888
-			4444 4444 4444 4444 b887 cfff 88bb 8888
+			4444 4444 4444 5444 b887 ffff 88bc 8888
+			4444 4444 4444 5444 b887 cfff 88bb 8888
 			7777 7777 7777 7777 b887 bcff 888b 8888
 		</bitmap>
 	</tex_image>
@@ -690,24 +690,24 @@
 					<pos_xz xz="-1.991211 2.018311"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="8">
-					<tex st="29.875000 8.062500"/>
+					<tex st="28.812500 6.187500"/>
 					<clr rgb="0 0 0"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_s xyz="-1.562500 2.312500 1.500000"/>
-					<tex st="30.375000 10.125000"/>
-					<pos_xy xy="-1.562500 1.889404"/>
-					<tex st="31.187500 5.000000"/>
+					<tex st="28.812500 8.187500"/>
+					<pos_xy xy="-1.562500 1.827637"/>
+					<tex st="30.812500 6.187500"/>
 					<pos_xy xy="-0.625000 2.937500"/>
-					<tex st="31.625000 7.062500"/>
-					<pos_xy xy="-0.625000 2.514404"/>
-					<tex st="31.875000 4.937500"/>
+					<tex st="30.812500 8.187500"/>
+					<pos_xy xy="-0.625000 2.452637"/>
+					<tex st="31.187500 6.187500"/>
 					<pos_xy xy="-0.375000 2.937500"/>
-					<tex st="32.062500 7.062500"/>
-					<pos_xy xy="-0.375000 2.514404"/>
-					<tex st="33.812500 5.562500"/>
+					<tex st="31.187500 8.187500"/>
+					<pos_xy xy="-0.375000 2.452637"/>
+					<tex st="33.625000 6.187500"/>
 					<pos_xy xy="0.394531 2.809082"/>
-					<tex st="33.875000 8.250000"/>
-					<pos_xy xy="0.394531 2.273682"/>
+					<tex st="33.625000 8.187500"/>
+					<pos_xy xy="0.394531 2.211914"/>
 				</primitive>
 				<primitive index="2" type="quad_strip" vertex_size="6">
 					<tex st="0.500000 6.062500"/>
@@ -740,23 +740,21 @@
 					<pos_xz xz="-1.991211 -3.556396"/>
 				</primitive>
 				<primitive index="4" type="quads" vertex_size="8">
-					<tex st="33.812500 8.312500"/>
+					<tex st="33.625000 8.187500"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="0.394531 2.273682 0.220215"/>
-					<tex st="33.812500 5.625000"/>
+					<pos_xyz xyz="0.394531 2.211914 0.220215"/>
+					<tex st="33.625000 6.187500"/>
 					<pos_xy xy="0.394531 2.809082"/>
-					<tex st="33.812500 5.562500"/>
 					<pos_xz xz="0.394531 1.500000"/>
-					<tex st="33.875000 8.250000"/>
-					<pos_xy xy="0.394531 2.273682"/>
-					<tex st="33.812500 8.312500"/>
+					<tex st="33.625000 8.187500"/>
+					<pos_xy xy="0.394531 2.211914"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xz xz="0.394531 0.220215"/>
-					<tex st="38.000000 7.937500"/>
-					<pos_xy xy="2.563721 1.696533"/>
-					<tex st="38.000000 5.625000"/>
+					<tex st="38.000000 8.187500"/>
+					<pos_xy xy="2.563721 1.634766"/>
+					<tex st="38.000000 6.187500"/>
 					<pos_xy xy="2.563721 2.135254"/>
-					<tex st="33.812500 5.625000"/>
+					<tex st="33.625000 6.187500"/>
 					<pos_xy xy="0.394531 2.809082"/>
 				</primitive>
 			</primitive_array>
