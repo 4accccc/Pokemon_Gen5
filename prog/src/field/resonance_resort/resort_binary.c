@@ -241,11 +241,6 @@ struct _RESORT_BINARY_SERVICE_DATA
   u16 param[RESORT_BINARY_SERVICE_PARAM_MAX];
 };
 
-//ショップは色んな箇所で使うため、
-//参照カウンタ方式のシングルトンにする
-static RESORT_BINARY_SHOP *sp_shop = NULL;
-static s32 s_shop_retain_cnt = 0;
-
 //-------------------------------------
 /// PUBLIC	
 //=====================================
@@ -260,19 +255,13 @@ static s32 s_shop_retain_cnt = 0;
 //-----------------------------------------------------------------------------
 RESORT_BINARY_SHOP * RESORT_BINARY_SHOP_Init( HEAPID heapID )
 {
-  heapID = GFL_HEAPID_APP;
-  if( sp_shop == NULL )
-  {
-    sp_shop = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_BINARY_SHOP) );
+  RESORT_BINARY_SHOP *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_BINARY_SHOP) );
 
-    sp_shop->p_shop = RESORT_BINARY_Init( NARC_resonance_resort_data_resort_shop_dat, RESORT_BINARY_SHOP_PARAM_MAX,heapID);
+  p_wk->p_shop = RESORT_BINARY_Init( NARC_resonance_resort_data_resort_shop_dat, RESORT_BINARY_SHOP_PARAM_MAX,heapID);
 
-    sp_shop->p_service = RESORT_BINARY_Init( NARC_resonance_resort_data_resort_service_dat, RESORT_BINARY_SERVICE_PARAM_MAX, heapID );
-  }
+  p_wk->p_service = RESORT_BINARY_Init( NARC_resonance_resort_data_resort_service_dat, RESORT_BINARY_SERVICE_PARAM_MAX, heapID );
 
-  s_shop_retain_cnt++;
-
-  return sp_shop;
+  return p_wk;
 }
 //----------------------------------------------------------------------------
 /**
@@ -283,18 +272,11 @@ RESORT_BINARY_SHOP * RESORT_BINARY_SHOP_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
 {
-  s_shop_retain_cnt--;
-
   GF_ASSERT( p_wk != NULL );
-  GF_ASSERT( s_shop_retain_cnt >= 0 );
 
-  if( s_shop_retain_cnt == 0 )
-  {
-    RESORT_BINARY_Exit(p_wk->p_service);
-    RESORT_BINARY_Exit(p_wk->p_shop);
-    GFL_HEAP_FreeMemory(p_wk);
-    sp_shop = NULL;
-  }
+  RESORT_BINARY_Exit(p_wk->p_service);
+  RESORT_BINARY_Exit(p_wk->p_shop);
+  GFL_HEAP_FreeMemory(p_wk);
 }
 
 //----------------------------------------------------------------------------

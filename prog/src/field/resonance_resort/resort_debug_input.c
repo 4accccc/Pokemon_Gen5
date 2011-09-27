@@ -469,6 +469,9 @@ struct _DEBUG_INPUT_WORK
   GAMEDATA *p_gamedata;
 };
 
+
+extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+
 //STR_TYPE_BUTTONのarg2に指定するコールバック
 typedef void (*ButtonAction_Callback)( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
@@ -3461,6 +3464,7 @@ static void ShopPos_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
 
   //まずは住人をいっぱいにする
   {
+  RESORT_BINARY_SHOP *p_shop =  RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(p_wk->HeapID) );
     RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->HeapID) );
     for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
     {
@@ -3468,11 +3472,12 @@ static void ShopPos_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
       if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
       {
         Debug_Resort_SetRecv( p_recv, p_wk->p_gamedata );
-        RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
+        RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, p_shop, 63-i, RESORT_PLACEID_FIELD );
       }
     }
 
     RESORT_RECV_DATA_Exit( p_recv );
+    RESORT_BINARY_SHOP_Exit(p_shop);
   }
 
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )

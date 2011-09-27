@@ -44,6 +44,11 @@
 
 #include "../../../resource/fldmapdata/script/resort_scr_def.h"
 
+
+extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop );
+extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+
 //--------------------------------------------------------------
 /// proto
 //--------------------------------------------------------------
@@ -480,6 +485,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
   int i;
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_BINARY_SHOP *p_shop =  RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(p_wk->heapID) );
 
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
@@ -490,9 +496,10 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
   
       RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, 1+GFL_STD_MtRand(RESORT_SHOP_ID_MAX-1) );
 
-      RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, 63-i, RESORT_PLACEID_FIELD );
+      RESORT_RESIDENT_DATA_ConvertRecv( p_dst, p_recv, p_shop, 63-i, RESORT_PLACEID_FIELD );
     }
   }
+  RESORT_BINARY_SHOP_Exit(p_shop);
 
   RESORT_RECV_DATA_Exit( p_recv );
   return FALSE;
@@ -546,6 +553,7 @@ static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk )
 }
 static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk )
 {
+  RESORT_BINARY_SHOP *p_shop =  RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   //Ç‹Ç∏èZêlÇëSïîÇ¢ÇÍÇÈ
   debugMenuCallProc_AllResident( p_wk );
 
@@ -560,9 +568,11 @@ static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk )
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, 2 );
       RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_CAFE_02_B2  );
-      RESORT_RESIDENT_DATA_JobChange( p_resident );
+      RESORT_RESIDENT_DATA_JobChange( p_resident, p_shop );
     }
   }
+
+  RESORT_BINARY_SHOP_Exit(p_shop);
 
   return FALSE;
 }

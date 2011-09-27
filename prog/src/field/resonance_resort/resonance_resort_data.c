@@ -112,7 +112,13 @@ void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date )
 }
 
 static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
+
+
+//
 extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
+extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop );
+extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 
 //-------------------------------------
 ///	リゾートデータグローバル参照
@@ -3410,7 +3416,7 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF 
  *	@param  type RESORT_RESIDENT_TYPE_xxx タイプ
  */
 //-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID )
 {
   //TODO 変換データ
   if( p_wk != cp_recv )
@@ -3425,7 +3431,7 @@ void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_
   //ロックフラグ解除
   RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
 
-  RESORT_RESIDENT_DATA_JobChange( p_wk );
+  RESORT_RESIDENT_DATA_JobChange( p_wk, cp_shop );
 }
 //----------------------------------------------------------------------------
 /**
@@ -3437,7 +3443,7 @@ void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_
  *	@param	placeID   場所ID
  */
 //-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID )
+void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID )
 {
   RESORT_RESIDENT_DATA_InitInstance( p_wk );
   //TODO 変換データ
@@ -3457,7 +3463,7 @@ void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT
 
   //ロックフラグ解除
   RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
-  RESORT_RESIDENT_DATA_JobChange( p_wk );
+  RESORT_RESIDENT_DATA_JobChange( p_wk,cp_shop );
 }
 
 //----------------------------------------------------------------------------
@@ -3524,18 +3530,14 @@ RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_D
  *	@param	RESORT_RESIDENT_DATA *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
+void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop )
 {
-  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
-
-  Resort_Recv_Data_InitInstitution( p_wk, p_shop );
+  Resort_Recv_Data_InitInstitution( p_wk, cp_shop );
   {
-    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_wk );
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( cp_shop, p_wk );
 
     p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
   }
-
-  RESORT_BINARY_SHOP_Exit( p_shop );
 }
 
 //=============================================================================

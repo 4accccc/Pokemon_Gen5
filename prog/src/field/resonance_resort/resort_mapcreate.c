@@ -45,9 +45,8 @@
 //=====================================
 struct _RESORT_MAPCREATE
 {
+  HEAPID heapID;
   u32 zoneID;
-  RESORT_BINARY_INSTITUTION *p_institution_data;
-  RESORT_BINARY_SHOP *p_shop_data;
   const RESORT_CITY_DATA *cp_city;
   const RESORT_PEOPLE_ALL_DATA *cp_people_all;
 };
@@ -72,9 +71,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 RESORT_MAPCREATE * RESORT_MAPCREATE_Init( HEAPID heapID )
 {
   RESORT_MAPCREATE *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_MAPCREATE));
+  p_wk->heapID = heapID;
   p_wk->zoneID = RESORT_MAPCREATE_ZONEID_NULL;
-  p_wk->p_institution_data = RESORT_BINARY_INSTITUTION_Init( heapID );
-  //p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( heapID );
 
   return p_wk;
 }
@@ -87,9 +85,6 @@ RESORT_MAPCREATE * RESORT_MAPCREATE_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void RESORT_MAPCREATE_Exit( RESORT_MAPCREATE *p_wk )
 {
-  //RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
-  RESORT_BINARY_INSTITUTION_Exit( p_wk->p_institution_data );
-
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -155,13 +150,14 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 {
   int i;
 
-  p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( 1 );
+  RESORT_BINARY_SHOP *p_shop_data = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_BINARY_INSTITUTION *p_institution_data = RESORT_BINARY_INSTITUTION_Init( GFL_HEAP_LOWID(p_wk->heapID) );
 
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
-    u16 grid_x = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
-    u16 grid_z = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+    u16 grid_x = RESORT_BINARY_INSTITUTION_GetData( p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
+    u16 grid_z = RESORT_BINARY_INSTITUTION_GetData( p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
     u16 size_x  = 6;
     u16 size_origin_z = 7;
@@ -175,7 +171,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
       const RESORT_RESIDENT_DATA *cp_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
       if( !RESORT_RESIDENT_DATA_IsEmpty( cp_resident ) )
       {
-        const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
+        const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
         u16 patch;
         FIELD_DATA_PATCH* p_patch;
 
@@ -244,7 +240,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
     }
   }
 
-  RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
+  RESORT_BINARY_INSTITUTION_Exit( p_institution_data );
+  RESORT_BINARY_SHOP_Exit( p_shop_data );
 
   return build_count;
 }
@@ -262,14 +259,15 @@ void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYST
 {
   int i;
 
-  p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( 1 );
+  RESORT_BINARY_SHOP *p_shop_data = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_BINARY_INSTITUTION *p_institution_data = RESORT_BINARY_INSTITUTION_Init( GFL_HEAP_LOWID(p_wk->heapID) );
 
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk->cp_people_all, i);
 
-    u16 bgID = RESORT_BINARY_INSTITUTION_GetData( p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_BOARD_ID );
+    u16 bgID = RESORT_BINARY_INSTITUTION_GetData( p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_BOARD_ID );
 
     if( RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
     {
@@ -280,20 +278,21 @@ void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYST
     {
       RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       u16 id  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data_one = RESORT_BINARY_SHOP_GetData( p_wk->p_shop_data,id);
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data_one = RESORT_BINARY_SHOP_GetData( p_shop_data,id);
       u16 data_3dmd = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data_one,RESORT_BINARY_SHOP_PARAM_3DMD_L+!(i%2));
 
       u16 x;
       u16 z;
       RESORT_MAP_GetBoardGridPosOfs( data_3dmd, &x, &z );
 
-      x += RESORT_BINARY_INSTITUTION_GetData(p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
-      z += RESORT_BINARY_INSTITUTION_GetData(p_wk->p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+      x += RESORT_BINARY_INSTITUTION_GetData( p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
+      z += RESORT_BINARY_INSTITUTION_GetData( p_institution_data, i, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
 
       EVENTDATA_MoveBGData( p_evdata, bgID, x, 0, z );
     }
   }
 
-  RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
+  RESORT_BINARY_INSTITUTION_Exit( p_institution_data );
+  RESORT_BINARY_SHOP_Exit( p_shop_data );
 }
 

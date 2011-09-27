@@ -40,6 +40,7 @@
 #include "resort_binary.h"
 #include "scrcmd_resort_def.h"
 #include "resort_sys.h"
+#include "resort_util.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //mine
@@ -3604,9 +3605,6 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
     int i;
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
     RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
-    RESORT_PEOPLE_ALL_DATA *p_all_people  = RESORT_SYSTEM_GetPeopleAllData( p_sys );
-    RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
-    RESORT_BINARY_PRESET *p_preset = RESORT_SYSTEM_GetBinaryPreset( p_sys );
     RESORT_PROXY_BUFF *p_buff = RESORT_SYSTEM_GetProxyBuff( p_sys );
     RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
     
@@ -3658,7 +3656,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 
     for( i = 0; i < fun_appear_num; i++ )
     {
-      RESORT_DATA_MANAGER_SetProxyRandom( p_proxy, RESORT_PROXY_TYPE_FUN, p_city, p_preset, p_owner, heapID );
+      RESORT_UTIL_SetProxyRandom( p_sys, p_proxy, RESORT_PROXY_TYPE_FUN, heapID );
       if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) != RESORT_SETDATA_SET )
       {
         continue;
@@ -3684,9 +3682,6 @@ static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata
   RESORT_BINARY_CITY *p_city_data = RESORT_SYSTEM_GetBinaryCity(p_sys);
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
   EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
-  RESORT_PEOPLE_ALL_DATA *p_all_people  = RESORT_SYSTEM_GetPeopleAllData( p_sys );
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
-  RESORT_BINARY_PRESET *p_preset = RESORT_SYSTEM_GetBinaryPreset( p_sys );
   RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
 
   //“a“°“ü‚è‚µ‚Ä‚¢‚é‚©‚Â‚P“ú‚P‰ñƒtƒ‰ƒO
@@ -3725,7 +3720,7 @@ static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata
         //ƒZƒŒƒu‚¢‚ê‚é
         RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
 
-        RESORT_DATA_MANAGER_SetProxyRandom( p_proxy, RESORT_PROXY_TYPE_CELEB, p_city, p_preset, p_owner, heapID );
+        RESORT_UTIL_SetProxyRandom( p_sys, p_proxy, RESORT_PROXY_TYPE_CELEB, heapID );
         
         if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
         {

@@ -45,6 +45,8 @@
 //=============================================================================
 
 extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
+extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 //=============================================================================
 /**
  *					構造体宣言
@@ -454,7 +456,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       {
         RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_ABSTRUCT_DATA_GetDataAdrs(p_abstruct) );
         u16 shopno = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-        STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_abstruct, shopno, heapID );
+        STRBUF *p_str = RESORT_UTIL_CreateShopName( p_shop, p_abstruct, shopno, heapID );
         u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_SEX, NULL );
 
         WORDSET_RegisterWord( p_wordset, 0, p_str, sex, TRUE, PM_LANG );
@@ -1083,7 +1085,7 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
     {
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
       u16 shopno = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, shopno, heapID );
+      STRBUF *p_str = RESORT_UTIL_CreateShopName( p_shop, p_data, shopno, heapID );
       u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
       WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
@@ -1097,7 +1099,7 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
       u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_VER, NULL );
       u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, p_city_data, p_shop );
-      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data, shopno, heapID );
+      STRBUF *p_str = RESORT_UTIL_CreateShopName( p_shop, p_data, shopno, heapID );
       u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
       WORDSET_RegisterWord( p_wordset, buff_idx, p_str, sex, TRUE, PM_LANG );
@@ -1982,3 +1984,567 @@ RESORT_PEOPLE * RESORT_UTIL_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS
   //GF_ASSERT( p_people != NULL );  TalkEndで人が消えることがあるため
   return p_people;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  旅行者から住民へデータ変換
+ *
+ *	@param	const RESORT_DATA_MANAGER *p_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_src 受信データ
+ *	@param	type  転職タイプ　RESORT_RESIDENT_TYPE_xxx
+ *
+ *	@retval インデックス
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESORT_DATA_TYPE dst_type )
+{
+  RESORT_DATA_MANAGER *p_wk  = RESORT_SYSTEM_GetDataManager(p_sys);
+  RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
+  u16 peopleID;
+  RESORT_ABSTRUCT_DATA *p_dst_adrs = NULL;
+  RESORT_PLACEID  placeID = RESORT_MAP_GetPeoplePlace(dst_type);
+  RESORT_DATA_TYPE src_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_src);
+
+  if( src_type == dst_type )
+  {
+    //同じ場合は住人だけのはず
+    RESORT_RESIDENT_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+
+    GF_ASSERT( src_type == RESORT_DATA_TYPE_RESIDENT );
+
+    peopleID  = RESORT_RECV_DATA_GetData( p_src_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
+    RESORT_RESIDENT_DATA_ConvertRecv( p_src_data, p_src_data, p_shop, peopleID, placeID );
+
+    return RESORT_ABSTRUCT_DATA_GetBufferIndex( p_src );
+  }
+  else if( RESORT_UTIL_CheckConvert( p_sys, RESORT_DATA_TYPE_ToBufferType(dst_type), placeID, &peopleID, &p_dst_adrs ) )
+  {
+    enum
+    {
+      JB_NONE,
+      JB_RECV_RESI,
+      JB_PROX_RESI,
+      JB_RECV_SECR,
+      JB_PROX_SECR,
+    };
+
+    static const sc_jobchnage_tbl[RESORT_DATA_TYPE_MAX][RESORT_DATA_TYPE_MAX] =
+    { 
+      //元RESI,   PROXY,        RECV,         SECR    //先
+      {JB_NONE, JB_PROX_RESI, JB_RECV_RESI, JB_NONE}, //RESI
+      {JB_NONE, JB_NONE,      JB_NONE,      JB_NONE}, //PROXY,
+      {JB_NONE, JB_NONE,      JB_NONE,      JB_NONE}, //RECV,
+      {JB_NONE, JB_PROX_SECR, JB_RECV_SECR, JB_NONE}, //SECR,
+    };
+
+    switch( sc_jobchnage_tbl[dst_type][src_type] )
+    {
+    case JB_RECV_RESI:
+      {
+        RESORT_RESIDENT_DATA *p_dst_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_dst_adrs );
+        RESORT_RECV_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+        RESORT_RESIDENT_DATA_ConvertRecv( p_dst_data, p_src_data, p_shop, peopleID, placeID );
+      }
+      break;
+    case JB_PROX_RESI:
+      {
+        RESORT_RESIDENT_DATA *p_dst_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_dst_adrs );
+        RESORT_PROXY_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+        RESORT_RESIDENT_DATA_ConvertProxy( p_dst_data, p_src_data, p_shop, peopleID, placeID );
+      }
+      break;
+    case JB_RECV_SECR:
+      {
+        RESORT_SECRETARY_DATA *p_dst_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_dst_adrs );
+        u16 secretary_type  = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_dst_adrs );
+        RESORT_RECV_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+        RESORT_SECRETARY_DATA_ConvertRecv( p_dst_data, p_src_data, peopleID, placeID, secretary_type );
+      }
+      break;
+    case JB_PROX_SECR:
+      {
+        RESORT_SECRETARY_DATA *p_dst_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_dst_adrs );
+        u16 secretary_type  = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_dst_adrs );
+        RESORT_PROXY_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+        RESORT_SECRETARY_DATA_ConvertProxy( p_dst_data, p_src_data, peopleID, placeID, secretary_type );
+      }
+      break;
+    default:
+      GF_ASSERT_MSG(0,"src%d dst%d\n",src_type,dst_type);
+      return 0;
+    }
+
+    //アップデート
+    RESORT_DATA_MANAGER_Update( p_wk );
+
+    return RESORT_ABSTRUCT_DATA_GetBufferIndex( p_dst_adrs );
+  }
+  else
+  {
+    //IsJobChangeでチェックしていない？
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  旅行者から滞在者への変換チェックとそれぞれのバッファ取得
+ *
+ *	@param	const RESORT_DATA_MANAGER *cp_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_src  旅行者
+ *	@param	placeID  場所ID受け取り
+ *	@param	*p_peopleID 人物ID受け取り
+ *	@param  *pp_dst     滞在者受け取り
+ *
+ *	@return　TRUEで転職可能 FALSEで不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_CheckConvert( RESORT_SYSTEM *p_sys, RESORT_DATA_BUFFER_TYPE type, RESORT_PLACEID placeID, u16 *p_peopleID, RESORT_ABSTRUCT_DATA **pp_dst )
+{
+  const RESORT_DATA_MANAGER *cp_wk  = RESORT_SYSTEM_GetDataManager(p_sys);
+  RESORT_ABSTRUCT_MANAGER *p_man  = RESORT_SYSTEM_GetAbstructManager(p_sys);
+
+  u16 peopleID;
+  RESORT_ABSTRUCT_DATA *p_data;
+
+  //場所の空きを検索
+  peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( cp_wk, placeID );
+
+  //バッファの空きを検索
+  p_data = RESORT_ABSTRUCT_MANAGER_GetEmptyData( p_man, type );
+
+  if( peopleID == RESORT_PEOPLE_ID_NULL )
+  {
+    OS_Printf( "施設内位置が空いていない\n" );
+    GF_ASSERT(0); //placeID == RESORT_PLACEID_NONEで弾くはずなのでここにはこない
+    return FALSE;
+  }
+
+  if( p_data == NULL )
+  {
+    OS_Printf( "バッファが空いていない" );
+    GF_ASSERT(0); //placeID == RESORT_PLACEID_NONEで弾くはずなのでここにはこない
+    return FALSE;
+  }
+
+  if( p_peopleID )
+  {
+    *p_peopleID = peopleID;
+  }
+  if( pp_dst )
+  {
+    *pp_dst = p_data;
+  }
+
+  return TRUE;
+}
+
+#if 0
+//----------------------------------------------------------------------------
+/**
+ *	@brief  転職可能かチェック
+ *
+ *	@param	const RESORT_DATA_MANAGER *cp_wk  ワーク
+ *	@param	RESORT_ABSTRUCT_DATA *cp_src 受信データ
+ *	@param  RESORT_DATA_TYPE dst_type 転職先タイプ
+ *
+ *	@return TRUEで可能  FALSEで不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_DATA_MANAGER_IsJobChange( const RESORT_DATA_MANAGER *cp_wk, const RESORT_ABSTRUCT_DATA *cp_src, RESORT_DATA_TYPE dst_type )
+{
+  RESORT_DATA_BUFFER_TYPE type  = RESORT_ABSTRUCT_DATA_GetBufferType(cp_src);
+  u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(cp_src);
+
+  GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(cp_src)!=dst_type);
+
+  return RESORT_UTIL_CheckConvert( cp_wk, RESORT_DATA_TYPE_ToBufferType(dst_type), RESORT_MAP_GetPeoplePlace(people_type), NULL, NULL );
+}
+#endif
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店名を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP_DATA *cp_wk  ROM内データ
+ *	@param	RESORT_RESIDENT_DATA *cp_data メモリデータ
+ *	@param	heapID ヒープID
+ *
+ *	@return お店名
+ */
+//-----------------------------------------------------------------------------
+STRBUF * RESORT_UTIL_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, const RESORT_ABSTRUCT_DATA *cp_data, u16 shopno, HEAPID heapID )
+{
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+
+  const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(cp_wk, shopno);
+
+  WORDSET *p_wordset = WORDSET_Create( GFL_HEAP_LOWID(heapID) );
+
+  GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+  u16 shop_name = RESORT_BINARY_SHOP_DATA_GetData( cp_shop, RESORT_BINARY_SHOP_PARAM_NAME );
+  STRBUF *p_tmp = GFL_MSG_CreateString( p_msg, shop_name );
+  STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+  STRBUF *p_str = GFL_STR_CreateBuffer( 64, heapID );
+  u32 sex = RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_SEX, NULL );
+  RESORT_ABSTRUCT_DATA_GetData( cp_data, RESORT_DATA_PARAM_NAME, name );
+  GFL_STR_SetStringCode(p_name_str, name );
+
+  WORDSET_RegisterWord( p_wordset, 0, p_name_str, sex, TRUE, PM_LANG );
+  WORDSET_ExpandStr( p_wordset, p_str, p_tmp );
+
+  GFL_STR_DeleteBuffer( p_name_str );
+  GFL_STR_DeleteBuffer( p_tmp );
+  GFL_MSG_Delete( p_msg );
+  WORDSET_Delete( p_wordset );
+
+  return p_str;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリセットデータから代理人を設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	type  代理人タイプ
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param	presetID  プリセットインデックス
+ *	@param	heapID  テンポラリ用ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Util_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 presetID, HEAPID heapID )
+{
+  RESORT_PROXY_DATA_InitInstance( p_wk );
+
+  {
+    u32 name = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_NAME);
+    u32 intro = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_INTRO);
+    u32 phrase = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_PHRASE);
+    u32 thanks = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_THANKS);
+    u32 sex = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SEX);
+    u32 view = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_VIEW);
+    u32 id = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_ID);
+    u32 job = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_JOB);
+    u32 spot = RESORT_BINARY_PRESET_GetData(cp_preset,presetID,RESORT_BINARY_PRESET_PARAM_SPOT);
+
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+
+    {
+      STRBUF *p_name = GFL_MSG_CreateString( p_msg, name );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_NAME, (u32)GFL_STR_GetStringCodePointer(p_name) );
+      GFL_STR_DeleteBuffer( p_name );
+    }
+    {
+      STRBUF *p_intro = GFL_MSG_CreateString( p_msg, intro );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)GFL_STR_GetStringCodePointer(p_intro) );
+      GFL_STR_DeleteBuffer( p_intro );
+    }
+    {
+      STRBUF *p_phrase = GFL_MSG_CreateString( p_msg, phrase );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)GFL_STR_GetStringCodePointer(p_phrase) );
+      GFL_STR_DeleteBuffer( p_phrase );
+    }
+    {
+      STRBUF *p_thanks = GFL_MSG_CreateString( p_msg, thanks );
+      RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)GFL_STR_GetStringCodePointer(p_thanks) );
+      GFL_STR_DeleteBuffer( p_thanks );
+    }
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_SEX, sex );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_OBJCODE, view );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, id );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, job );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_SPOT, spot );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_TYPE, type );
+
+    GFL_MSG_Delete( p_msg );
+  }
+
+  //日時
+  {
+    RTCDate date;
+    GFL_RTC_GetDate(&date);
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_YEAR, date.year );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_MONTH, date.month );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_MEET_DAY, date.day );
+  }
+
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_VER, GET_VERSION() );
+  RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_LANG, PM_LANG );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファン設定処理
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセットデータ
+ *	@param	RESORT_RECV_DATA *cp_owner  自分のデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID )
+{
+  static const struct
+  {
+    u16 proxy_type;
+    u16 preset_type; 
+  }
+  sc_proxy_to_preset[] =
+  {
+    {
+      RESORT_PROXY_TYPE_FUN,
+      RESORT_PRESET_TYPE_RANDOM,
+    },
+    {
+      RESORT_PROXY_TYPE_CELEB,
+      RESORT_PRESET_TYPE_APPOINT,
+    },
+  };
+
+  RESORT_CITY_DATA *p_city  = RESORT_SYSTEM_GetCityData(p_sys);
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  const RESORT_RECV_DATA *cp_owner  = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+  
+
+  int i;
+  u32 cnt;
+  u32 rnd;
+  u32 presetID  = 0xFF;
+  u32 preset_type = 0xFF;
+
+  for( i = 0; i < NELEMS(sc_proxy_to_preset);i++ )
+  {
+    if( sc_proxy_to_preset[i].proxy_type == proxy_type )
+    {
+      preset_type = sc_proxy_to_preset[i].preset_type;
+      break;
+    }
+  }
+  GF_ASSERT(preset_type != 0xFF );
+
+
+  cnt = 0;
+  for( i = 0; i < RESORT_BINARY_GetMax( cp_preset ); i++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, i, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      cnt++;
+    }
+  }
+  GF_ASSERT(cnt!=0);
+
+  rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_PRESET, cnt );
+
+  cnt = 0;
+  for( i = 0; i < RESORT_BINARY_GetMax( cp_preset ); i++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, i, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      if( cnt == rnd )
+      {
+        presetID = i;
+        break;
+      }
+      cnt++;
+    }
+  }
+  GF_ASSERT(presetID != 0xFF );
+
+  //プリセットを設定
+  Resort_Util_SetProxyPreset( p_wk, proxy_type, cp_preset, presetID, heapID );
+
+  //ファンは主人公のフリーワードをコピーする
+  if( proxy_type == RESORT_PROXY_TYPE_FUN )
+  {
+    STRCODE strcode[ 64 ];
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_INTRODUCTION, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)strcode );
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)strcode );
+
+    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_EXT7_THANKS, strcode );
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)strcode );
+  }
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書にプリセットを使用して設定
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param  preset_type タイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetSecretaryPreset( RESORT_SYSTEM *p_sys, RESORT_SECRETARY_DATA *p_wk, u16 type, u16 preset_type, u16 peopleID, HEAPID heapID )
+{
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  u32 presetID  = 0;
+  
+  for( presetID = 0; presetID < RESORT_BINARY_GetMax(cp_preset); presetID++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      break;
+    }
+  }
+  GF_ASSERT( presetID < RESORT_BINARY_GetMax(cp_preset) );
+
+  {
+    RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID ));
+    Resort_Util_SetProxyPreset( p_proxy, 0, cp_preset, presetID, heapID );
+    RESORT_SECRETARY_DATA_ConvertProxy( p_wk, p_proxy, peopleID, RESORT_PLACEID_RECEPTION, type );
+    RESORT_PROXY_DATA_Exit(p_proxy);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人にプリセットを使用して設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	type  代理人タイプ
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセット
+ *	@param	preset_type プリセットタイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u16 type, u16 preset_type, HEAPID heapID )
+{
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  u32 presetID  = 0;
+  
+  for( presetID = 0; presetID < RESORT_BINARY_GetMax(cp_preset); presetID++ )
+  {
+    if( RESORT_BINARY_PRESET_GetData( cp_preset, presetID, RESORT_BINARY_PRESET_PARAM_TYPE ) == preset_type )
+    {
+      break;
+    }
+  }
+  GF_ASSERT( presetID < RESORT_BINARY_GetMax(cp_preset) );
+
+  //プリセットを設定
+  Resort_Util_SetProxyPreset( p_wk, type, cp_preset, presetID, heapID );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリセットからデータを作成
+ *
+ *	@param	RESORT_DATA_MANAGER *p_wk ワーク
+ *	@param	*p_sys  リゾーとシステム
+ *	@param	people_type 人物タイプ
+ *	@param	preset_type プリセットタイプ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID )
+{
+  RESORT_DATA_MANAGER *p_wk = RESORT_SYSTEM_GetDataManager(p_sys);
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  RESORT_PROXY_BUFF *p_proxy_buff = RESORT_SYSTEM_GetProxyBuff(p_sys);
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+
+  switch( people_type )
+  {
+  case RESORT_PEOPLE_TYPE_PROXY:
+    {
+      static const struct 
+      {
+        u16 preset_type;
+        u16 proxy_type;
+      }sc_preset_type_to_proxy_type[] =
+      {
+        { RESORT_PRESET_TYPE_TUTORIAL1 , RESORT_PROXY_TYPE_TUTORIAL_01 },
+        { RESORT_PRESET_TYPE_TUTORIAL2 , RESORT_PROXY_TYPE_TUTORIAL_02 },
+        { RESORT_PRESET_TYPE_APPOINT,    RESORT_PROXY_TYPE_CELEB },
+      };
+      int i;
+      BOOL is_set;
+      u16 proxy_type  = 0xFF;
+
+      for( i = 0; i < NELEMS(sc_preset_type_to_proxy_type); i++)
+      {
+        if( sc_preset_type_to_proxy_type[i].preset_type == preset_type )
+        {
+          proxy_type = sc_preset_type_to_proxy_type[i].proxy_type;
+        }
+      }
+      GF_ASSERT( proxy_type != 0xFF );
+
+      {
+        RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+        RESORT_UTIL_SetProxyPreset( p_sys, p_proxy, proxy_type, preset_type, heapID );
+
+        //もしチュートリアル用ならばプレイヤーの初期お店になる
+        if( RESORT_PRESET_TYPE_TUTORIAL1 == preset_type )
+        {
+          RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+          u32 want_job = RESORT_OWNER_DATA_GetWantJob( p_owner, cp_mystatus );
+          RESORT_PROXY_DATA_SetData( p_proxy, RESORT_DATA_PARAM_WANT_JOB, want_job );
+        }
+
+        is_set = RESORT_PROXY_BUFF_Add( p_proxy_buff, p_proxy );
+        GF_ASSERT( is_set );
+        RESORT_PROXY_DATA_Exit( p_proxy );
+      }
+    }
+    break;
+  case RESORT_PEOPLE_TYPE_SECRETARY:
+    {
+      static const struct 
+      {
+        u16 preset_type;
+        u16 sec_type;
+      }sc_preset_type_to_sec_type[] =
+      {
+        { RESORT_PRESET_SECRETARY_01, RESORT_SECRETARY_TYPE_WORK },
+        { RESORT_PRESET_SECRETARY_02, RESORT_SECRETARY_TYPE_MOVE },
+        { RESORT_PRESET_SECRETARY_03, RESORT_SECRETARY_TYPE_CENTER },
+        { RESORT_PRESET_SECRETARY_04, RESORT_SECRETARY_TYPE_PC },
+      };
+      int i;
+      BOOL is_set;
+      u16 sec_type  = 0xFF;
+
+      for( i = 0; i < NELEMS(sc_preset_type_to_sec_type); i++)
+      {
+        if( sc_preset_type_to_sec_type[i].preset_type == preset_type )
+        {
+          sec_type = sc_preset_type_to_sec_type[i].sec_type;
+        }
+      }
+      GF_ASSERT( sec_type != 0xFF );
+
+      {
+        RESORT_SECRETARY_DATA *p_empty;
+        RESORT_SECRETARY_DATA *p_secretary = RESORT_SECRETARY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+        u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, RESORT_PLACEID_RECEPTION );
+        RESORT_UTIL_SetSecretaryPreset( p_sys, p_secretary, sec_type, preset_type, peopleID, heapID );
+
+        p_empty = RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( p_people_all );
+        GF_ASSERT( p_empty );
+        GFL_STD_MemCopy( p_secretary, p_empty, RESORT_SECRETARY_DATA_SIZE );
+        RESORT_DATA_MANAGER_Update( p_wk );
+        RESORT_SECRETARY_DATA_Exit( p_secretary );
+      }
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+

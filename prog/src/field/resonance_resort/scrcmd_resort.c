@@ -643,11 +643,11 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   switch( param )
   {
   case RESORT_JOBCHANGE_RESIDENT:
-    *p_ret_wk = RESORT_DATA_MANAGER_Convert( p_data_manager, p_src, RESORT_DATA_TYPE_RESIDENT );
+    *p_ret_wk = RESORT_UTIL_Convert( p_sys, p_src, RESORT_DATA_TYPE_RESIDENT );
     break;
 
   case RESORT_JOBCHANGE_SECETARY:
-    *p_ret_wk = RESORT_DATA_MANAGER_Convert( p_data_manager, p_src, RESORT_DATA_TYPE_SECRETARY );
+    *p_ret_wk = RESORT_UTIL_Convert( p_sys, p_src, RESORT_DATA_TYPE_SECRETARY );
     break;
   default:
     GF_ASSERT(0);
@@ -2098,17 +2098,13 @@ VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
-  RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
-  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
-  RESORT_PROXY_BUFF *p_proxy_buff = RESORT_SYSTEM_GetProxyBuff(p_sys);
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
   MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
 
   u16 people  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 preset  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
-  RESORT_DATA_MANAGER_SetPresetPeople( p_data_manager, p_people_all, p_proxy_buff, cp_preset, p_mystatus, people, preset, heapID );
+  RESORT_UTIL_SetPresetPeople( p_sys, p_mystatus, people, preset, heapID );
   return VMCMD_RESULT_CONTINUE;
 }
 
