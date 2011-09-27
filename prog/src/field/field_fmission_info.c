@@ -491,18 +491,24 @@ static int get_num_keta(u32 num,u8 keta)
 //--------------------------------------------------------------
 static void panel_NumberDraw( FIELD_FMISSION_INFO* wk, int num, int keta, u8 act_idx, BOOL full_f )
 {
-  int i,idx = act_idx+(keta-1);
+  int i,idx = act_idx;
+  BOOL pre = FALSE;
 
-  for(i = 0;i < keta;i++){
+  for(i = (keta-1);i >= 0; i--){
     int value = get_num_keta( num, i );
     if( i > 0 && !full_f){
-      GFL_CLACT_WK_SetDrawEnable( wk->pAct[idx], (value!=0) );
+      BOOL visible = FALSE;
+
+      if( value > 0 || pre ){
+        visible = TRUE;
+        pre = TRUE;
+      }
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[idx], visible );
     }else{
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[idx], TRUE );
     }
     GFL_CLACT_WK_SetAnmIndex( wk->pAct[idx], value );
-//    GFL_CLACT_WK_SetAnmFrame( wk->pAct[idx], FX32_CONST(value));
-    --idx;
+    idx++;
   }
 }
 
