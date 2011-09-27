@@ -74,7 +74,7 @@ RESORT_MAPCREATE * RESORT_MAPCREATE_Init( HEAPID heapID )
   RESORT_MAPCREATE *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_MAPCREATE));
   p_wk->zoneID = RESORT_MAPCREATE_ZONEID_NULL;
   p_wk->p_institution_data = RESORT_BINARY_INSTITUTION_Init( heapID );
-  p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( heapID );
+  //p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( heapID );
 
   return p_wk;
 }
@@ -87,7 +87,7 @@ RESORT_MAPCREATE * RESORT_MAPCREATE_Init( HEAPID heapID )
 //-----------------------------------------------------------------------------
 void RESORT_MAPCREATE_Exit( RESORT_MAPCREATE *p_wk )
 {
-  RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
+  //RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
   RESORT_BINARY_INSTITUTION_Exit( p_wk->p_institution_data );
 
   GFL_HEAP_FreeMemory( p_wk );
@@ -155,6 +155,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 {
   int i;
 
+  p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( 1 );
 
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -243,6 +244,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
     }
   }
 
+  RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
 
   return build_count;
 }
@@ -259,6 +261,8 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYSTEM* p_evdata )
 {
   int i;
+
+  p_wk->p_shop_data = RESORT_BINARY_SHOP_Init( 1 );
 
   //住人の数だけ配置を行う
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -289,5 +293,7 @@ void RESORT_MAPCREATE_EventDataOverWrite( RESORT_MAPCREATE *p_wk, EVENTDATA_SYST
       EVENTDATA_MoveBGData( p_evdata, bgID, x, 0, z );
     }
   }
+
+  RESORT_BINARY_SHOP_Exit( p_wk->p_shop_data );
 }
 
