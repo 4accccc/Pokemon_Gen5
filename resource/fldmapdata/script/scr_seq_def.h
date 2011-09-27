@@ -10382,9 +10382,9 @@
  */
 //--------------------------------------------------------------
 #define _CALL_TVT_DEMO( demo_no )  \
-    _ASM_CALL_TVT_DEMO demo_no
+    _ASM_CALL_TVT_DEMO_NORMAL demo_no
 
-  .macro  _ASM_TVT_DEMO demo_no
+  .macro  _ASM_CALL_TVT_DEMO_NORMAL demo_no
   .short  EV_SEQ_CALL_TVT_DEMO
   .short  \demo_no
   .short  SCR_LTVT_CALLTVT_MODE_NORMAL

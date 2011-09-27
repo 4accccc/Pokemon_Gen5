@@ -160,7 +160,7 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
 
     LOCAL_TVT_CHARA_PARAM chara_param[LOCAL_TVT_MEMBER_MAX];
     GFL_STD_MemClear( chara_param, sizeof(LOCAL_TVT_CHARA_PARAM)*LOCAL_TVT_MEMBER_MAX );
-    for( i = 0; i < work->member; i++ )
+    for( i = 0; i < LTM_4_MEMBER; i++ )
     {
       ZONEID  zoneID  = work->scriptHead->back[i];
       switch( work->scriptHead->chara[i] )
@@ -320,7 +320,7 @@ static void LOCAL_TVT_TermGraphic( LOCAL_TVT_SCRIPT *work )
 //--------------------------------------------------------------
 static void LOCAL_TVT_LoadScript( LOCAL_TVT_SCRIPT *work )
 {
-  ARI_TPrintf("Load local tvt script[%d]\n",work->scriptID);
+  NAGI_Printf("Load local tvt script[%d]\n",work->scriptID);
   
   work->scriptRes = GFL_ARCHDL_UTIL_Load( work->arcHandle , 
                                           NARC_local_tvt_script_tvt_script_01_bin + (work->scriptID-1) ,
