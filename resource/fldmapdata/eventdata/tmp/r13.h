@@ -35,6 +35,8 @@
 #define FLD_ITEM_137                      21
 #define FLD_ITEM_139                      22
 #define R13_POKE4_01                      23
+#define FLD_ITEM_138                      24
+#define FLD_ITEM_140                      25
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
