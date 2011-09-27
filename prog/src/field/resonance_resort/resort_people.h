@@ -51,6 +51,15 @@ typedef enum
 
 //ê›íË
 extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );
+
+typedef enum
+{
+  RESORT_PEOPLE_VISIBLE_ON,
+  RESORT_PEOPLE_VISIBLE_OFF,
+  RESORT_PEOPLE_VISIBLE_MASTER,
+}RESORT_PEOPLE_VISIBLE;
+extern void RESORT_PEOPLE_SetTemporaryVisible( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_VISIBLE flag );
+
 extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_PARAM param );
@@ -127,7 +136,7 @@ extern void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk );
 
 extern void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk );
 
-extern void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible );
+extern void RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( RESORT_PEOPLE_SYS *p_wk);
 
 extern void RESORT_PEOPLE_SYS_ResetMmdl( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_people );
 

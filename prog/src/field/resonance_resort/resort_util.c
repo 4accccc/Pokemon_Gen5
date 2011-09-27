@@ -1933,7 +1933,7 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_tal
       {
         if( p_wk != p_talk_people && people_type == sc_visible_type[type].array[j] )
         {
-          RESORT_PEOPLE_SetVisible( p_wk, FALSE );
+          RESORT_PEOPLE_SetTemporaryVisible( p_wk, RESORT_PEOPLE_VISIBLE_OFF );
         }
       }
     }

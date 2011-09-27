@@ -3709,7 +3709,7 @@ static BOOL CameraShop_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap
     break;
   case SEQ_FADEIN_START:
   
-    RESORT_PEOPLE_SYS_SetVisibleAll( sbw->wk.p_people_sys, TRUE );
+    RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( sbw->wk.p_people_sys);
 
     ShopCall_Exit( sbw );
 

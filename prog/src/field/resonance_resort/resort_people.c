@@ -57,6 +57,7 @@ struct _RESORT_PEOPLE
   RESORT_PEOPLE_TYPE people_type;
   u32   peopleID;
   BOOL  is_talk;
+  BOOL  is_master_visible;
   RESORT_PEOPLE_CREATE  create;
   MMDLSYS * p_mmdlsys;
   MMDL    * p_mmdl;
@@ -327,6 +328,36 @@ void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
   MMDL_SetStatusBitVanish( p_mmdl, !is_visible );
+  p_wk->is_master_visible = is_visible;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一時消去
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SetTemporaryVisible( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_VISIBLE flag )
+{
+
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+  BOOL now = MMDL_CheckStatusBitVanish( p_mmdl );
+
+  switch( flag )
+  {
+  case RESORT_PEOPLE_VISIBLE_ON:
+    MMDL_SetStatusBitVanish( p_mmdl, FALSE );
+    break;
+  case RESORT_PEOPLE_VISIBLE_OFF:
+    MMDL_SetStatusBitVanish( p_mmdl, TRUE );
+    break;
+  case RESORT_PEOPLE_VISIBLE_MASTER:
+    MMDL_SetStatusBitVanish( p_mmdl, !p_wk->is_master_visible );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -522,6 +553,8 @@ static void Resort_People_CreateMmdl( RESORT_PEOPLE *p_wk,  const RESORT_PEOPLE_
   //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
   RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
   RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, cp_param->placeID );
+
+  p_wk->is_master_visible = !MMDL_CheckStatusBitVanish( p_wk->p_mmdl );
 }
 
 //=============================================================================
@@ -827,13 +860,13 @@ void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  全ての人物に表示設定
+ *	@brief  全ての人物にマスター表示設定
  *
  *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
  *	@param	is_visible  TRUE表示  FALSE非表示
  */
 //-----------------------------------------------------------------------------
-void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible )
+void RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( RESORT_PEOPLE_SYS *p_wk)
 {
   int i;
   for( i = 0; i < p_wk->param.max; i++ )
@@ -841,7 +874,7 @@ void RESORT_PEOPLE_SYS_SetVisibleAll( RESORT_PEOPLE_SYS *p_wk, BOOL is_visible )
     RESORT_PEOPLE *p_people = p_wk->p_people[i];
     if( p_people )
     {
-      RESORT_PEOPLE_SetVisible( p_people, is_visible );
+      RESORT_PEOPLE_SetTemporaryVisible( p_people, RESORT_PEOPLE_VISIBLE_MASTER );
     }
   }
 }
