@@ -12,6 +12,8 @@
   .include  "msg_c02gym0202.h"
   .include  "c02gym0202.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,27 +21,163 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c02gym0202_book_01
-_EVENT_DATA		ev_bg_c02gym0202_case_01
+_EVENT_DATA   ev_bg_c02gym0202_book_01
+_EVENT_DATA   ev_bg_c02gym0202_case_01
+_EVENT_DATA   ev_c02gym0202_leader2_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*     						本棚 				              */
+/*  本棚                                                      */
 /**************************************************************/
-EVENT_START		 ev_bg_c02gym0202_book_01
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_bookrack1_01)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
+EVENT_START   ev_bg_c02gym0202_book_01
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN   ( msg_c02gym0202_bookrack1_01)
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
 /**************************************************************/
-/*     						ケース 				              */
+/*  ケース                                                    */
 /**************************************************************/
-EVENT_START		 ev_bg_c02gym0202_case_01
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_case1_01)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
+EVENT_START   ev_bg_c02gym0202_case_01
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN   ( msg_c02gym0202_case1_01)
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
+/**************************************************************/
+/*  アロエ：話しかけ（化石入手）                              */
+/**************************************************************/
+EVENT_START   ev_c02gym0202_leader2_01
+
+  DEFINE_LOCAL  LWK_SELECT
+  DEFINE_LOCAL  LWK_REPEAT
+
+  _TALK_OBJ_START()
+
+  //化石入手済みの場合
+  IF FLAG_ON( FE_C02GYM0101_ITEMGET_01 ) THEN
+
+    //アロエ：いっしょうを　かけて　かんがえても
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //アロエ：で　どうするんだい？▼
+    _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_02, C02GYM0202_LEADER2_01, POS_DOWN )
+
+    WHILE $LWK_REPEAT != 1
+
+      //化石選択
+      _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT )
+
+      _BMPMENU_MAKE_LIST( msg_c02gym0202_leader2_03, 0 ) //ふたのカセキ
+      _BMPMENU_MAKE_LIST( msg_c02gym0202_leader2_04, 1 ) //はねのカセキ
+      _BMPMENU_MAKE_LIST( msg_c02gym0202_leader2_05, 2 ) //やめる
+
+      //メニュー表示
+      _BMPMENU_START()
+
+      //選択結果で分岐
+      SWITCH $LWK_SELECT
+      CASE 0 THEN   //ふたのカセキ
+        //アロエ：ふたのカセキに　するんだね？
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_06, C02GYM0202_LEADER2_01, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //アロエ：ふたのカセキなんだね
+          _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_11, C02GYM0202_LEADER2_01, POS_DOWN )
+          _MSGWIN_CLOSE()
+
+          //アイテム「ふたのカセキ」入手
+          _ITEM_EVENT_NOWAIT( ITEM_HUTANOKASEKI, 1 )
+
+          //========================================/
+          //アイテム入手フラグON
+          _FLAG_SET( FE_C02GYM0101_ITEMGET_01 )
+          //繰り返し脱出
+          $LWK_REPEAT = 1
+          //========================================/
+
+        ELSE  //いいえ
+
+          //アロエ：どっちが　すきだい？
+          _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_09, C02GYM0202_LEADER2_01, POS_DOWN )
+
+        ENDIF
+
+      CASE 1 THEN   //はねのカセキ
+        //アロエ：はねのカセキで　いいんだね？
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_08, C02GYM0202_LEADER2_01, POS_DOWN )
+        _YES_NO_WIN( SCWK_ANSWER )
+
+        IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+          //アロエ：はねのカセキ　かい！
+          _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_12, C02GYM0202_LEADER2_01, POS_DOWN )
+          _MSGWIN_CLOSE()
+
+          //アイテム「はねのカセキ」入手
+          _ITEM_EVENT_NOWAIT( ITEM_HANENOKASEKI, 1 )
+
+          //========================================/
+          //アイテム入手フラグON
+          _FLAG_SET( FE_C02GYM0101_ITEMGET_01 )
+          //繰り返し脱出
+          $LWK_REPEAT = 1
+          //========================================/
+
+        ELSE  //いいえ
+
+          //アロエ：どっちが　すきだい？
+          _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_09, C02GYM0202_LEADER2_01, POS_DOWN )
+
+        ENDIF
+
+      CASE 2 THEN   //いいえ
+        //アロエ：なんだい　なんだい！▼
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_10, C02GYM0202_LEADER2_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+        //========================================/
+        //繰り返し脱出
+        $LWK_REPEAT = 1
+        //========================================/
+
+      DEFAULT
+        //アロエ：なんだい　なんだい！▼
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_10, C02GYM0202_LEADER2_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+        //========================================/
+        //繰り返し脱出
+        $LWK_REPEAT = 1
+        //========================================/
+
+      ENDSWITCH
+
+    ENDWHILE
+
+  ENDIF
+
+  //初回会話フラグがOFFの場合はONに
+  IF FLAG_OFF( FE_C02GYM0202_LEADER2_TALK_01 ) THEN
+
+    //========================================/
+    //会話フラグON
+    _FLAG_SET( FE_C02GYM0202_LEADER2_TALK_01 )
+    //========================================/
+
+  ENDIF
+
+EVENT_END
+
+

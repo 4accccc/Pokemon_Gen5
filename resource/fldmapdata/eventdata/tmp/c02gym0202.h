@@ -9,6 +9,7 @@
 #ifndef ZONE_C02GYM0202_EVC_H
 #define ZONE_C02GYM0202_EVC_H
 
+#define C02GYM0202_LEADER2_01              0
 
 #endif //ZONE_C02GYM0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02gym0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

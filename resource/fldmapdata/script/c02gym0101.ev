@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c02gym0101.h"
   .include  "c02gym0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,203 +21,462 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c02gym0101_informationw_01
-_EVENT_DATA    ev_c02gym0101_informationw_02
-_EVENT_DATA    ev_c02gym0101_ad_01
-_EVENT_DATA    ev_c02gym0101_man1_01
-_EVENT_DATA    ev_c02gym0101_girl3_01
-_EVENT_DATA    ev_c02gym0101_oldman_01
-_EVENT_DATA    ev_bg_c02gym0101_plate_01
-_EVENT_DATA    ev_bg_c02gym0101_plate_02
-_EVENT_DATA    ev_bg_c02gym0101_plate_03
-_EVENT_DATA    ev_bg_c02gym0101_plate_04
-_EVENT_DATA    ev_bg_c02gym0101_plate_05
-_EVENT_DATA    ev_bg_c02gym0101_plate_06
-_EVENT_DATA    ev_bg_c02gym0101_plate_07
-_EVENT_DATA    ev_init_c02gym0101
-_EVENT_DATA		ev_zone_c02gym0101
+_EVENT_DATA   ev_init_c02gym0101
+_EVENT_DATA   ev_zone_c02gym0101
+_EVENT_DATA   ev_pos_c02gym0101_leader2_01
+_EVENT_DATA   ev_c02gym0101_informationw_01
+_EVENT_DATA   ev_c02gym0101_informationw_02
+_EVENT_DATA   ev_c02gym0101_ad_01
+_EVENT_DATA   ev_c02gym0101_man1_01
+_EVENT_DATA   ev_c02gym0101_girl3_01
+_EVENT_DATA   ev_c02gym0101_oldman_01
+_EVENT_DATA   ev_c02gym0101_rangerw_01
+_EVENT_DATA   ev_bg_c02gym0101_plate_01
+_EVENT_DATA   ev_bg_c02gym0101_plate_02
+_EVENT_DATA   ev_bg_c02gym0101_plate_03
+_EVENT_DATA   ev_bg_c02gym0101_plate_04
+_EVENT_DATA   ev_bg_c02gym0101_plate_05
+_EVENT_DATA   ev_bg_c02gym0101_plate_06
+_EVENT_DATA   ev_bg_c02gym0101_plate_07
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+//バージョン取得
+DEFINE_LOCAL  LCWK_VERSION
+
 
 /**************************************************************/
-/*            FIELD_INIT_LABEL                              　 */
+/*  FIELD_INIT_LABEL                                          */
 /**************************************************************/
-INIT_EVENT_START	ev_init_c02gym0101
+INIT_EVENT_START  ev_init_c02gym0101
+
+  //博物館案内後、アロエと会話をするまで副館長は階段の下で待機
+  IF $WK_SCENE_C02GYM0101 == 1 && FLAG_OFF( FE_C02GYM0202_LEADER2_TALK_01 ) THEN
+
+    _OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 11, DIR_UP )
+
+  ENDIF
 
 INIT_EVENT_END
 
 /************************************************************/
-/*					ZONE_CHANGE_SCRIPT						*/
+/*  ZONE_CHANGE_SCRIPT                                      */
 /************************************************************/
-INIT_EVENT_START	ev_zone_c02gym0101
+INIT_EVENT_START  ev_zone_c02gym0101
 
 INIT_EVENT_END
 
 /**************************************************************/
-/*     博物館受付嬢 1                　　　　　　　　　　　　　*/
+/*  POS：博物館案内（化石入手）                               */
 /**************************************************************/
-EVENT_START		 ev_c02gym0101_informationw_01
+EVENT_START   ev_pos_c02gym0101_leader2_01
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter1_01)
+  DEFINE_LOCAL  LWK_SELECT
+  DEFINE_LOCAL  LWK_REPEAT
+
+  //副館長：うーむ！　この　こっかくは
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_01, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：副館長接近
+  IF $LCW_POSX != 12 THEN
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( C02GYM0101_AD_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：どうも　わたくし
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_02, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+   //フィールド上にアロエ配置
+  _OBJ_ADD_EX( 8, 11, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DMY )
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  //アニメ：アロエ接近
+  $LCW_POSX -= 1
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  //プライヤー名代入
+  _PLAYER_NAME( 0 )
+  //？？？：あんた　《主人公》だろ！
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+
+  WHILE $LWK_REPEAT != 1
+
+    //化石選択
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT )
+
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_select_01, 0 ) //ふたのカセキ
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_select_02, 1 ) //はねのカセキ
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_select_03, 2 ) //やめる
+
+    //メニュー表示
+    _BMPMENU_START()
+
+    //選択結果で分岐
+    SWITCH $LWK_SELECT
+    CASE 0 THEN   //ふたのカセキ
+      //？？？：ふたのカセキに　するんだね？
+      _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_02, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //？？？：ふたのカセキなんだね
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //アイテム「ふたのカセキ」入手
+        _ITEM_EVENT_NOWAIT( ITEM_HUTANOKASEKI, 1 )
+
+        //========================================/
+        //アイテム入手フラグON
+        _FLAG_SET( FE_C02GYM0101_ITEMGET_01 )
+        //繰り返し脱出
+        $LWK_REPEAT = 1
+        //========================================/
+
+      ELSE  //いいえ
+
+        //？？？：どっちが　すきだい？
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_04, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+
+      ENDIF
+
+    CASE 1 THEN   //はねのカセキ
+      //？？？：はねのカセキに　するんだね？
+      _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_03, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //？？？：はねのカセキなんだね
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_07, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //アイテム「はねのカセキ」入手
+        _ITEM_EVENT_NOWAIT( ITEM_HANENOKASEKI, 1 )
+
+        //========================================/
+        //アイテム入手フラグON
+        _FLAG_SET( FE_C02GYM0101_ITEMGET_01 )
+        //繰り返し脱出
+        $LWK_REPEAT = 1
+        //========================================/
+
+      ELSE  //いいえ
+
+        //？？？：どっちが　すきだい？
+        _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_04, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+
+      ENDIF
+
+    CASE 2 THEN   //いいえ
+      //？？？：なんだい　なんだい！▼
+      _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+      _MSGWIN_CLOSE()
+      //========================================/
+      //繰り返し脱出
+      $LWK_REPEAT = 1
+      //========================================/
+
+    DEFAULT
+      //？？？：なんだい　なんだい！▼
+      _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+      _MSGWIN_CLOSE()
+      //========================================/
+      //繰り返し脱出
+      $LWK_REPEAT = 1
+      //========================================/
+
+    ENDSWITCH
+
+  ENDWHILE
+
+  //アニメ：副館長振り向き
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：ちょっと　ママ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_07, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //カセキを入手している場合
+  IF FLAG_ON( FE_C02GYM0101_ITEMGET_01 ) THEN
+    //アロエ：いつもは　おくに　こもっているから
+    _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_08, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  ELSE
+    //アロエ：カセキが　ほしくなったら▽
+    _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader2_09, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  ENDIF
+  _MSGWIN_CLOSE()
+
+  //アニメ：アロエ退場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 8, 11, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )   //動作モデル削除
+
+  //アニメ：副館長と主人公向かい合う
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：ママったら……
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_03, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：副館長、主人公移動
+  _OBJ_ANIME_AUTO( C02GYM0101_AD_01, 6, 13, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 14, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：デオキシスという　ポケモンは
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_04, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：副館長、主人公移動
+  _OBJ_ANIME_AUTO( C02GYM0101_AD_01, 7, 11, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 11, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：これが　あの　ダークストーンの（バージョンによってセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_c02gym0101_ad_06, msg_c02gym0101_ad_05, C02GYM0101_AD_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：副館長、主人公移動
+  _OBJ_ANIME_AUTO( C02GYM0101_AD_01, 13, 11, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 12, 11, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C02GYM0101_AD_01, anm_common_turn_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //副館長：つぎの　へやは　としょしつ
+  _BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_06a, C02GYM0101_AD_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //POS無効
+  $WK_SCENE_C02GYM0101 = 1
+  //========================================//
 
 EVENT_END
 
 /**************************************************************/
-/*     博物館受付嬢 2                　　　　　　　　　　　　　*/
+/*  博物館受付嬢01                                            */
 /**************************************************************/
-EVENT_START		ev_c02gym0101_informationw_02
-	
-		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter2_01)
-	
+EVENT_START   ev_c02gym0101_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_counter1_01 )
 EVENT_END
 
 /**************************************************************/
-/*     副館長												　*/
+/*  博物館受付嬢02                                            */
 /**************************************************************/
-EVENT_START		ev_c02gym0101_ad_01
-	
-			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_08)
-		
+EVENT_START   ev_c02gym0101_informationw_02
+
+  _TALK_OBJ_START()
+  //受付嬢：いま　はくぶつかん　では（バージョンによってセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_c02gym0101_counter2_01w, msg_c02gym0101_counter2_01b, C02GYM0101_INFORMATIONW_02, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
+/**************************************************************/
+/*  副館長                                                    */
+/**************************************************************/
+EVENT_START   ev_c02gym0101_ad_01
+
+  //アロエと会話するまで
+  IF FLAG_OFF( FE_C02GYM0202_LEADER2_TALK_01 ) THEN
+
+    //副館長：つぎの　へやは　としょしつ
+    _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06a )
+
+  //アロエと会話後
+  ELSE
+
+    //副館長：ホネの　ひょうほん　って
+    _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_08 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  見物客その１  MAN1                                        */
+/**************************************************************/
+EVENT_START   ev_c02gym0101_man1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  見物客その２  GIRL3                                       */
+/**************************************************************/
+EVENT_START   ev_c02gym0101_girl3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  見物客その３ OLDMAN1                                      */
+/**************************************************************/
+EVENT_START   ev_c02gym0101_oldman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  見物客その４ RANGERW                                      */
+/**************************************************************/
+EVENT_START   ev_c02gym0101_rangerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_rangerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート1                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_01
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート2                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_02
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_02 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート3                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_03
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート4                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_04
+
+  _TALK_START_SE_PLAY()
+
+  //バージョンを取得してメッセージを変化
+  _GET_ROM_VERSION( LCWK_VERSION )
+  //B2:ダークストーンのレプリカ
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_04b )
+  //W2:ライトストーンのレプリカ
+  ELSE
+    _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_04w )
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート5                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_05
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_05 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート6                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_06
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_06 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  展示物の解説プレート7                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c02gym0101_plate_07
+
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02gym0101_plate_07 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
 
 //--------------------------------------------------------------------
-// 共通アニメ：びっくりする                    
+// 共通アニメ：びっくりする
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-// 共通アニメ：右振り向き                   
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_r
-
-	_ANIME_DATA AC_STAY_WALK_R_16F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-// 共通アニメ：左振り向き                      
+// 共通アニメ：右振り向き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l
-
-	_ANIME_DATA AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-// 共通アニメ：下振り向き                       
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-
-	_ANIME_DATA AC_STAY_WALK_D_16F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-// 共通アニメ：上振り向き                       
+// 共通アニメ：左振り向き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_u
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
-	_ANIME_DATA AC_STAY_WALK_U_16F,1
-	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-/**************************************************************/
-/*     見物客その１　MAN1　             						*/
-/**************************************************************/
-EVENT_START		 ev_c02gym0101_man1_01
-	
-	//世界各国の　珍しいモノ……
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_01)
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-EVENT_END
 
-/**************************************************************/
-/*     見物客その２　GIRL3               					　*/
-/**************************************************************/
-EVENT_START		 ev_c02gym0101_girl3_01
-	
-	//ここの　ジムリーダーは　カセキや
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_01)
-	
-EVENT_END
-
-/**************************************************************/
-/*     見物客その３　OLDMAN1               					 */
-/**************************************************************/
-EVENT_START		 ev_c02gym0101_oldman_01
-	
-	//いん石と　一緒に　宇宙から来た
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_01)
-	
-EVENT_END
-
-/**************************************************************/
-/*     展示物の解説プレート1               　　　　　　　　　*/
-/**************************************************************/
-
-EVENT_START		 ev_bg_c02gym0101_plate_01
-	
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート2               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_02
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_02)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()	
-
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート3               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_03
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_03)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート4               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_04
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_04)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート5               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_05
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_05)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート6               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_06
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_06)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
-EVENT_END
-/**************************************************************/
-/*     展示物の解説プレート7               　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0101_plate_07
-	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_07)
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-EVENT_END
