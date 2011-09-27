@@ -201,7 +201,7 @@ DEFINE_LOCAL  LWK_QUIZ1_CLEA
     DEFINE_LOCAL  LWK_MEDAL_CHC
     _CHECK_MEDAL_GET( LWK_MEDAL_CHC, MDLID_JUUKIMANIA )
     
-    //【仮】メダル未開放（チェック仮）
+    //メダル未開放
     IF $LWK_MEDAL_CHC == FALSE THEN 
 
       //働くおじさん：じゅうきマニアとしての

@@ -434,8 +434,6 @@ ev_vs_swsage1_01:
   _FLAG_SET( FV_D10R0501_SWSAGE1_02 )
   _FLAG_SET( FV_D10R0401_BOSS_01 )
   _FLAG_SET( FV_D10R0401_POKE_02 )
-  //プラズマフリゲート・現在地対応
-  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_W17
   //プラズマフリゲート・内部状態変更
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
   //プラズマフリゲート・キュレム非表示

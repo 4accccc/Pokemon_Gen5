@@ -29,6 +29,13 @@
 #define C08_NINJA_02                       9
 #define C08_NINJA_03                      10
 #define C08_SWCHAMPION_01                 11
+#define C08_FIGHTERM_01                   12
+#define C08_OLDMAN1_02                    13
+#define C08_GENTLEMAN_01                  14
+#define C08_BOY2_01                       15
+#define C08_MAN3_02                       16
+#define C08_WOMAN1_01                     17
+#define C08_ISS_01                        18
 
 #endif //ZONE_C08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/12 16:51:29
+#save date:2011/09/27 15:16:17
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c08.wms
 #hold event type:
 1
 #hold event number:
-12
+19
 #event number: 0
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -504
+88 0 -24
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 0 -536
+488 0 -392
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -536
+72 0 -264
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 -536
+392 0 -24
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 0 -520
+488 0 -584
 #event number: 6
 #type
 1
@@ -274,7 +274,7 @@ FV_C08_NINJA_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -288,7 +288,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 0 -504
+88 0 -88
 #event number: 9
 #type
 1
@@ -305,7 +305,7 @@ FV_C08_NINJA_02
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -319,7 +319,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -488
+56 0 -56
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -520
+120 0 -56
 #event number: 11
 #type
 1
@@ -367,7 +367,7 @@ FV_C08_SWCHAMPION_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -382,6 +382,223 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 584 0 -504
+#event number: 12
+#type
+1
+#ID name
+C08_FIGHTERM_01
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_FIGHTERM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -504
+#event number: 13
+#type
+1
+#ID name
+C08_OLDMAN1_02
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_OLDMAN1_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 0 -520
+#event number: 14
+#type
+1
+#ID name
+C08_GENTLEMAN_01
+#OBJ CODE Number
+GENTLEMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_GENTLEMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 0 -344
+#event number: 15
+#type
+1
+#ID name
+C08_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_BOY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+472 0 -120
+#event number: 16
+#type
+1
+#ID name
+C08_MAN3_02
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_MAN3_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -120
+#event number: 17
+#type
+1
+#ID name
+C08_WOMAN1_01
+#OBJ CODE Number
+WOMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_WOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -264
+#event number: 18
+#type
+1
+#ID name
+C08_ISS_01
+#OBJ CODE Number
+WKOBJCODE00
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C08_PEOPLE_01
+#Event Script Name
+SCRID_C08_ISS_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 0 -456
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -546,7 +763,7 @@ WK_SCENE_C08_NINJA
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 -472
+648 0 -472
 #size
 1 5
 #event number: 1
