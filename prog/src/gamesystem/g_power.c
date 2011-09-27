@@ -643,3 +643,112 @@ void GPOWER_Calc_Distribution(void)
     GF_ASSERT(0); //仕様待ち
   }
 }
+
+//==================================================================
+/**
+ * Gパワー計算：揺れ草パワー インターバル計算
+ *
+ * @param   interval	現在の抽選インターバル
+ *
+ * @retval  u32		パワー影響後の抽選インターバル
+ */
+//==================================================================
+u32 GPOWER_Calc_EffEncInterval( u32 interval )
+{
+  GPOWER_EFFENC_UP_LEVEL level;
+  
+  if(GPowerSys.occur_power[GPOWER_TYPE_EFFENC_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_UP];
+    if( level >= GPOWER_EFFENC_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return interval;
+    }
+    if( level >= GPOWER_EFFENC_UP_LV3 ){
+      return interval/2;
+    }
+  }
+  return interval;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：揺れ草パワー 確率アップ計算
+ *
+ * @param   prob	現在の抽選確率(0-100%)
+ *
+ * @retval  u32		パワー影響後の抽選確率
+ */
+//==================================================================
+u32 GPOWER_Calc_EffEncProb( u32 prob )
+{
+  GPOWER_EFFENC_UP_LEVEL level;
+  static const up_tbl[GPOWER_EFFENC_UP_LV_MAX] = { 10, 15, 20 };
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_EFFENC_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_EFFENC_UP];
+    if( level >= GPOWER_EFFENC_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return prob;
+    }
+    prob += up_tbl[level];
+    if( prob > 100 ){
+      prob = 100;
+    }
+    return prob;
+  }
+  return prob;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：けものみち 配置率アップ計算
+ *
+ * @param   prob	現在の抽選確率(0-100%)
+ *
+ * @retval  u32		パワー影響後の抽選確率
+ */
+//==================================================================
+u32 GPOWER_Calc_AnimalTrailProb( u32 prob )
+{
+  GPOWER_ANIMAL_TRAIL_UP_LEVEL level;
+  static const up_tbl[GPOWER_ANIMAL_TRAIL_UP_LV_MAX] = { 10, 20, 30, 50 };
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_ANIMAL_TRAIL_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_ANIMAL_TRAIL_UP];
+    if( level >= GPOWER_ANIMAL_TRAIL_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return prob;
+    }
+    prob += up_tbl[level];
+    if( prob > 100 ){
+      prob = 100;
+    }
+    return prob;
+  }
+  return prob;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：けものみち ポケモン抽選に当たるまでのトライ数計算
+ *
+ * @param   count	現在のトライ数
+ *
+ * @retval  u32		パワー影響後のトライ数(パワーが有効ならcount+2の値を返す 1なら3)
+ */
+//==================================================================
+u32 GPOWER_Calc_AnimalTrailPokeTryCount( u32 count )
+{
+  GPOWER_ANIMAL_TRAIL_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_ANIMAL_TRAIL_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_ANIMAL_TRAIL_UP];
+    if( level >= GPOWER_ANIMAL_TRAIL_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return count;
+    }
+    return count+2;
+  }
+  return count;
+}
+

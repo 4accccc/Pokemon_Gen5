@@ -24,6 +24,21 @@
 #define GPOWER_BW_ENABLE_ID_END     (GPOWER_ID_CAPTURE_MAX)  //BWで実装されているパワーIDの最大値
 #define GPOWER_DISTRIBUTION_ID_NULL (0xFF)  //配布パワーIDの無効値
 
+typedef enum{
+  GPOWER_EFFENC_UP_LV1,   //確率10%アップ
+  GPOWER_EFFENC_UP_LV2,   //確率15%アップ
+  GPOWER_EFFENC_UP_LV3,   //確率20%アップ+抽選インターバルを半分に
+  GPOWER_EFFENC_UP_LV_MAX,
+}GPOWER_EFFENC_UP_LEVEL;
+
+typedef enum{
+  GPOWER_ANIMAL_TRAIL_UP_LV1,   //確率10%アップ
+  GPOWER_ANIMAL_TRAIL_UP_LV2,   //確率20%アップ
+  GPOWER_ANIMAL_TRAIL_UP_LV3,   //確率30%アップ
+  GPOWER_ANIMAL_TRAIL_UP_LV4,   //確率50%アップ
+  GPOWER_ANIMAL_TRAIL_UP_LV_MAX,
+}GPOWER_ANIMAL_TRAIL_UP_LEVEL;
+
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
@@ -65,4 +80,8 @@ extern u32 GPOWER_Calc_Exp(u32 exp);
 extern u32 GPOWER_Calc_Money(u32 money);
 extern fx32 GPOWER_Calc_Capture(fx32 hokakuritu);
 extern void GPOWER_Calc_Distribution(void);
+extern u32 GPOWER_Calc_EffEncInterval( u32 interval );
+extern u32 GPOWER_Calc_EffEncProb( u32 prob );
+extern u32 GPOWER_Calc_AnimalTrailProb( u32 prob );
+extern u32 GPOWER_Calc_AnimalTrailPokeTryCount( u32 count );
 
