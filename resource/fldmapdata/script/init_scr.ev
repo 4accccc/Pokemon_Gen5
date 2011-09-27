@@ -340,6 +340,9 @@ init_flags:
  //D05：WBTNPC
   _FLAG_SET(FV_D05R0101_TRAINERW_01)
 
+  //C02R0101：シタンのファン
+  _FLAG_SET( FV_C02R0101_FUN_01 )
+
 }
 _RET
 

@@ -9,6 +9,11 @@
 #ifndef ZONE_C02R0101_EVC_H
 #define ZONE_C02R0101_EVC_H
 
+#define C02R0101_FURN_01                   0
+#define C02R0101_FAN1_01                   1
+#define C02R0101_FAN2_01                   2
+#define C02R0101_FAN3_01                   3
+#define C02R0101_FAN4_01                   4
 
 #endif //ZONE_C02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
