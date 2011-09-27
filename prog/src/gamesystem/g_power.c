@@ -664,6 +664,7 @@ u32 GPOWER_Calc_EffEncInterval( u32 interval )
       return interval;
     }
     if( level >= GPOWER_EFFENC_UP_LV3 ){
+      OS_Printf("EffEncInterval %d->%d\n", interval, interval/2);
       return interval/2;
     }
   }
@@ -690,10 +691,12 @@ u32 GPOWER_Calc_EffEncProb( u32 prob )
       GF_ASSERT(0); //データ設定ミス
       return prob;
     }
+    OS_Printf("EffEncProb %d->", prob );
     prob += up_tbl[level];
     if( prob > 100 ){
       prob = 100;
     }
+    OS_Printf("%d\n", prob );
     return prob;
   }
   return prob;
@@ -719,10 +722,12 @@ u32 GPOWER_Calc_AnimalTrailProb( u32 prob )
       GF_ASSERT(0); //データ設定ミス
       return prob;
     }
+    OS_Printf("ATrailProb %d->", prob );
     prob += up_tbl[level];
     if( prob > 100 ){
       prob = 100;
     }
+    OS_Printf("%d\n", prob );
     return prob;
   }
   return prob;
@@ -747,7 +752,60 @@ u32 GPOWER_Calc_AnimalTrailPokeTryCount( u32 count )
       GF_ASSERT(0); //データ設定ミス
       return count;
     }
+    OS_Printf("ATrailPokeTryCt %d->%d\n", count, count+2);
     return count+2;
+  }
+  return count;
+}
+
+//==================================================================
+/**
+ * Gパワー計算： レアポケパワー エンカウント率テーブルシフト数計算
+ *
+ * @param   calc_type	ENCPROB_CALCTYPE 
+ *
+ * @retval  u32		パワー影響後のシフト数(平時は常に0)
+ */
+//==================================================================
+u32 GPOWER_Calc_RarePokeEncTblShift( u32 shift )
+{
+  GPOWER_RAREPOKE_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_RAREPOKE_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_RAREPOKE_UP];
+    if( level >= GPOWER_RAREPOKE_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return shift;
+    }
+    OS_Printf("RarePokeEncTblShift %d->%d\n",shift,level);
+    return level;
+  }
+  return shift;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：レアポケパワー レア抽選に当たるまでのトライ数計算
+ *
+ * @param   count	現在のトライ数
+ *
+ * @retval  u32		パワー影響後のトライ数(パワーが有効ならcount+1の値を返す 1なら2)
+ */
+//==================================================================
+u32 GPOWER_Calc_RarePokeEncTryCount( u32 count )
+{
+  GPOWER_RAREPOKE_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_RAREPOKE_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_RAREPOKE_UP];
+    if( level >= GPOWER_RAREPOKE_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return count;
+    }
+    if( level == GPOWER_RAREPOKE_UP_LV3 ){
+      OS_Printf("RarePokeEncTryCt %d->%d\n",count,count+1);
+      return count+1;
+    }
   }
   return count;
 }

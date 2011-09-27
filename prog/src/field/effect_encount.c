@@ -14,6 +14,7 @@
 #include "map_attr.h"
 
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/g_power.h"
 #include "savedata/misc.h"
 #include "field_encount.h"
 #include "fldeff_encount.h"
@@ -264,9 +265,20 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
     return;
   }
   //確率チェック
-  if( GFUser_GetPublicRand0( 1000 ) >= (eff_wk->prob*10) ){
-    effenc_WalkCtClear( ewk );
-    return;
+  {
+    u32 prob = eff_wk->prob; 
+      
+#ifdef PM_DEBUG
+    if( !ewk->effect_encount.deb_prob_fix ){
+      prob = GPOWER_Calc_EffEncProb( prob );
+    }
+#else
+    prob = GPOWER_Calc_EffEncProb( prob );
+#endif
+    if( GFUser_GetPublicRand0( 1000 ) >= (prob*10) ){
+      effenc_WalkCtClear( ewk );
+      return;
+    }
   }
 
   //アトリビュートサーチ
@@ -548,12 +560,21 @@ static void effect_EffectPop( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk )
 {
   EWK_EFFECT_ENCOUNT* ewk_eff = &ewk->effect_encount;
+  u32 interval = eff_wk->walk_ct_interval;
 
   if(ewk_eff->walk_ct < 0xFFFFFFFF){
     ewk_eff->walk_ct++; //まあ、オーバーフローすることはないだろうが念のためmaxチェック
   }
 
-  if( ewk_eff->walk_ct >= eff_wk->walk_ct_interval){
+#ifdef PM_DEBUG
+  if( !ewk_eff->deb_prob_fix ){
+    interval = GPOWER_Calc_EffEncInterval(interval);
+  }
+#else
+  interval = GPOWER_Calc_EffEncInterval(interval);
+#endif
+
+  if( ewk_eff->walk_ct >= interval){
     return TRUE;
   }
   return FALSE;

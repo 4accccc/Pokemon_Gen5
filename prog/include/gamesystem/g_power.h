@@ -39,6 +39,14 @@ typedef enum{
   GPOWER_ANIMAL_TRAIL_UP_LV_MAX,
 }GPOWER_ANIMAL_TRAIL_UP_LEVEL;
 
+typedef enum{
+  GPOWER_RAREPOKE_UP_LV0,   //Table0参照(平時)
+  GPOWER_RAREPOKE_UP_LV1,   //Table1参照
+  GPOWER_RAREPOKE_UP_LV2,   //Table2参照
+  GPOWER_RAREPOKE_UP_LV3,   //Table3参照+レアポケ抽選トライ数+1
+  GPOWER_RAREPOKE_UP_LV_MAX,
+}GPOWER_RAREPOKE_UP_LEVEL;
+
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
@@ -84,4 +92,7 @@ extern u32 GPOWER_Calc_EffEncInterval( u32 interval );
 extern u32 GPOWER_Calc_EffEncProb( u32 prob );
 extern u32 GPOWER_Calc_AnimalTrailProb( u32 prob );
 extern u32 GPOWER_Calc_AnimalTrailPokeTryCount( u32 count );
+extern u32 GPOWER_Calc_RarePokeEncTblShift( u32 shift );
+extern u32 GPOWER_Calc_RarePokeEncTryCount( u32 count );
+
 

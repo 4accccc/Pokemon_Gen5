@@ -1,9 +1,11 @@
+//===============================================================================
 /*
  *  @file   enc_pokeset.c
  *  @brief  エンカウントする野生ポケモンデータ生成
  *  @author Miyuki Iwasawa
  *  @date   09.10.08
  */
+//===============================================================================
 
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -75,6 +77,9 @@ static const u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 #include "generate_enc.cdat"
 
 #define GENERATE_ENC_PROB (40*10)
+
+//エンカウント率テーブル
+#include "enc_pokeset.cdat"
 
 ////////////////////////////////////////////////////////////
 //プロトタイプ
@@ -430,17 +435,30 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   personal = POKE_PERSONAL_OpenHandle( poke->monsNo, poke->form, HEAPID_PROC );
 
   { //個体乱数セット
+    u32 i, p_rnd, try = 1;
     MYITEM_PTR myitem = GAMEDATA_GetMyItem( efp->gdata );
     BOOL rare_item = MYITEM_CheckItem( myitem, ITEM_HIKARUOMAMORI, 1, HEAPID_PROC );
-    u8 i;
+    
+    if( rare_item ){
+      ICHI_Printf("「ひかるおまもり」レア抽選\n");
+      try += RARE_POKE_CHANGE; //ひかるおまもりでトライ数+2
+    }
+    try = GPOWER_Calc_RarePokeEncTryCount( try ); //デルパワー
 
-    u32 p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
-
+    for( i = 0; i < try; i++ ){
+      p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
+      
+      // レアになった
+      if( POKETOOL_CheckRare( efp->myID, p_rnd ) ){
+        OS_Printf("レアポケモン！\n");
+        break;
+      }
+    }
+#if 0
     // 「ひかるおまもり」所持チェック
     //  かつ 既にレアでない
     if( rare_item == TRUE && POKETOOL_CheckRare( efp->myID, p_rnd ) == FALSE )
     {
-      ICHI_Printf("「ひかるおまもり」レア抽選\n");
       // 持っていたら、+２回レア抽選する
       for( i=0; i<RARE_POKE_CHANGE; i++ )
       {
@@ -453,13 +471,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
         }
       }
     }
-#ifdef PM_DEBUG
-    if( POKETOOL_CheckRare( efp->myID, p_rnd ) )
-    {
-      OS_Printf("レアポケモン！\n");
-    }
 #endif
-
     PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
   }
 
@@ -1028,6 +1040,28 @@ static u32 eps_GetPercentRand( void )
 
 //--------------------------------------------------------------
 /**
+ * ランダムポケモンセット コモン
+ * @param nothing
+ * @return u8 エンカウントデータのテーブル番号
+ */
+//--------------------------------------------------------------
+static u32 eps_GetPercentRandCommonPokeTblNo( const u8* tbl, int tbl_len )
+{
+  int i, key = 0;
+  u32 rnd = GFUser_GetPublicRand0( 10000 ); //100倍で計算
+  
+  for( i = 0; i < tbl_len; i++ ){
+    key += tbl[i];
+    if( rnd < (key*100) ){
+      return i;
+    }
+  }
+  GF_ASSERT(0); //テーブル指定が間違っていなければ、ここに抜けてくることはないはず
+  return (tbl_len-1);
+}
+
+//--------------------------------------------------------------
+/**
  * ランダムポケモンセット（草むら/砂漠/洞窟）
  * @param nothing
  * @return u8 エンカウントデータのテーブル番号
@@ -1035,21 +1069,7 @@ static u32 eps_GetPercentRand( void )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandGroundPokeTblNo( u32 max )
 {
-  u32 i;
-
-  i = eps_GetPercentRand();
-  if( i < 20 )      return  0;    // 20%
-  if( i >= 20 && i < 40 ) return  1;    // 20%
-  if( i >= 40 && i < 50 ) return  2;    // 10%
-  if( i >= 50 && i < 60 ) return  3;    // 10%
-  if( i >= 60 && i < 70 ) return  4;    // 10%
-  if( i >= 70 && i < 80 ) return  5;    // 10%
-  if( i >= 80 && i < 85 ) return  6;    //  5%
-  if( i >= 85 && i < 90 ) return  7;    //  5%
-  if( i >= 90 && i < 94 ) return  8;    //  4%
-  if( i >= 94 && i < 98 ) return  9;    //  4%
-  if( i == 98 )     return  10;   //  1%
-  return  11;               //  1%
+  return eps_GetPercentRandCommonPokeTblNo( DATA_EncProbGroundTbl[GPOWER_Calc_RarePokeEncTblShift(0)], max );
 }
 
 //--------------------------------------------------------------
@@ -1061,15 +1081,7 @@ static u32 eps_GetPercentRandGroundPokeTblNo( u32 max )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandWaterPokeTblNo( u32 max )
 {
-  u32 i;
-
-  i = eps_GetPercentRand();
-
-  if( i < 60 )      return  0;    // 60%
-  if( i >= 60 && i < 90 ) return  1;    // 30%
-  if( i >= 90 && i < 95 ) return  2;    //  5%
-  if( i >= 95 && i < 99 ) return  3;    //  4%
-  return  4;                //  1%
+  return eps_GetPercentRandCommonPokeTblNo( DATA_EncProbWaterTbl[GPOWER_Calc_RarePokeEncTblShift(0)], max );
 }
 
 //--------------------------------------------------------------
@@ -1081,15 +1093,7 @@ static u32 eps_GetPercentRandWaterPokeTblNo( u32 max )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandFishingPokeTblNo( u32 max )
 {
-  u32 i;
-
-  i = eps_GetPercentRand();
-
-  if    ( i < 40 )    return 0; // 40%
-  else if ( i < 80 )  return 1; // 40%
-  else if ( i < 95 )  return 2; // 15%
-  else if ( i < 99 )  return 3; // 4%
-  return 4; // 1%
+  return eps_GetPercentRandCommonPokeTblNo( DATA_EncProbFishingTbl[GPOWER_Calc_RarePokeEncTblShift(0)], max );
 }
 
 //--------------------------------------------------------------
@@ -1100,6 +1104,6 @@ static u32 eps_GetPercentRandFishingPokeTblNo( u32 max )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandNumPokeTblNo( u32 max )
 {
-  return eps_GetPercentRand() % max;
+  return GFUser_GetPublicRand0( max );
 }
 
