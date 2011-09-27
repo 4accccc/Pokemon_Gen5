@@ -2441,4 +2441,649 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="plc_power_s_49">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれくさの　そうぐうりつが　すこし
+あがります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:30:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:26:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆれくさの　遭遇率が　少し
+上がります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:30:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゆれくさパワー　＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_50">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれくさの　そうぐうりつが　とても
+あがります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:29:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆれくさの　遭遇率が　とても
+上がります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:30:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゆれくさパワー　＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_51">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれくさの　そうぐうりつが　かなり
+あがります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:31:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:29:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆれくさの　遭遇率が　かなり
+上がります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゆれくさパワー　＋＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_52">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあなで　ポケモンと　すこし
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:31:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:31:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあなで　ポケモンと　少し
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かくしあなパワー　＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_53">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあなで　ポケモンと　とても
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあなで　ポケモンと　とても
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かくしあなパワー　＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_54">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあなで　ポケモンと　かなり
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあなで　ポケモンと　かなり
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:32:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かくしあなパワー　＋＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_55">
+		<LanguageCell
+			Language="JPN">
+			<Text>めずらしい　ポケモンと　すこし
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めずらしい　ポケモンと　少し
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レアポケパワー　＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_56">
+		<LanguageCell
+			Language="JPN">
+			<Text>めずらしい　ポケモンと　とても
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めずらしい　ポケモンと　とても
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レアポケパワー　＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_57">
+		<LanguageCell
+			Language="JPN">
+			<Text>めずらしい　ポケモンと　かなり
+であいやすく　なります
+こうかは　３ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めずらしい　ポケモンと　かなり
+出会いやすく　なります
+効果は　３分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レアポケパワー　＋＋＋</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_58">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれくさの　そうぐうりつが　とても
+あがります
+こうかは　１０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:35:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆれくさの　遭遇率が　とても
+上がります
+効果は　１０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:37:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゆれくさパワー　Ｓ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_59">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆれくさの　そうぐうりつが　かなり
+あがります
+こうかは　３０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆれくさの　遭遇率が　かなり
+上がります
+効果は　３０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:37:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゆれくさパワー　ＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_60">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあなで　ポケモンと　とても
+であいやすく　なります
+こうかは　３０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:36:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあなで　ポケモンと　とても
+出会いやすく　なります
+効果は　３０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:36:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かくしあなパワー　Ｓ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_61">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあなで　ポケモンと　かなり
+であいやすく　なります
+こうかは　６０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:35:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:34:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあなで　ポケモンと　かなり
+出会いやすく　なります
+効果は　６０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:36:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:34:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かくしあなパワー　ＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_62">
+		<LanguageCell
+			Language="JPN">
+			<Text>めずらしい　ポケモンと　とても
+であいやすく　なります
+こうかは　３０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:35:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:33:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めずらしい　ポケモンと　とても
+出会いやすく　なります
+効果は　３０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:36:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レアポケパワー　Ｓ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_s_63">
+		<LanguageCell
+			Language="JPN">
+			<Text>めずらしい　ポケモンと　かなり
+であいやすく　なります
+こうかは　６０ふん　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:35:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:34:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めずらしい　ポケモンと　かなり
+出会いやすく　なります
+効果は　６０分　です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:36:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:34:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レアポケパワー　ＭＡＸ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-26T08:24:48" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

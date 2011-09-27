@@ -1539,10 +1539,11 @@ static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL s
   TASKWK_WIN_GPOWER* twk;
   
   //セキュリティ
-  if( gpower_id == GPOWER_ID_NULL || gpower_id > GPOWER_ENABLE_ID_END ){
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     GF_ASSERT(0);
     return FALSE;
   }
+
   //まったく同じパワーが発動中ならスルーする
   if( GPOWER_Check_OccurID( gpower_id, wk->gpower_data ) == gpower_id ){
     return FALSE;

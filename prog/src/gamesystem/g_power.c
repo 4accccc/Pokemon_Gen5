@@ -23,6 +23,7 @@
 ///1分のフレーム数
 #define ONE_MINUTE_FRAME    (ONE_SECOND_FRAME * 60)
 
+#define GPOWER_DISTRIBUTION_POWER_NUM_BW (GPOWER_ID_DISTRIBUTION_END-GPOWER_ID_DISTRIBUTION_START+1) //BWの配布パワーの数
 
 //==============================================================================
 //  構造体定義
@@ -104,6 +105,40 @@ void GPOWER_Clear_AllPower(void)
 
 //==================================================================
 /**
+ * 発動可能な有効IDかチェック
+ */
+//==================================================================
+BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id )
+{
+  //GPOWER_ID_NULL == GPOWER_ID_MAX
+  if( ( gpower_id >= GPOWER_ID_MAX ) ||
+      ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id <= GPOWER_ID_DUMMY_END ) )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
+ * 配布パワーに割り振られた連番IDを取得
+ *
+ * 配布パワーでない場合 GPOWER_DISTRIBUTION_ID_NULL を返す
+ */
+//==================================================================
+u8 GPOWER_GetDistributionPowerID( GPOWER_ID gpower_id )
+{
+  if( gpower_id >= GPOWER_ID_DISTRIBUTION_START && gpower_id <= GPOWER_ID_DISTRIBUTION_END ){
+    return gpower_id - GPOWER_ID_DISTRIBUTION_START;
+  }
+  if( gpower_id >= GPOWER_ID_DISTRIBUTION_START_SW && gpower_id <= GPOWER_ID_DISTRIBUTION_END_SW ){
+    return ((gpower_id - GPOWER_ID_DISTRIBUTION_START)+GPOWER_DISTRIBUTION_POWER_NUM_BW );
+  }
+  return GPOWER_DISTRIBUTION_ID_NULL;
+}
+
+//==================================================================
+/**
  * 発動するGパワーIDをセット
  *
  * @param   gpower_id		
@@ -115,11 +150,10 @@ void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata, B
 {
   GPOWER_TYPE type;
   
-  if(gpower_id >= GPOWER_ID_MAX){
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     GF_ASSERT_MSG(0, "gpower_id = %d", gpower_id);
     return;
   }
-  
   type = powerdata[gpower_id].type;
   GPowerSys.occur_power[type] = gpower_id;
   GPowerSys.life[type] = powerdata[gpower_id].time * ONE_MINUTE_FRAME;

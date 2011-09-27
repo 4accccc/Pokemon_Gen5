@@ -17,7 +17,7 @@
 // 全員とつながる番号は０(製品版)
 
 //誰でも繋がる(デバッグ版)　パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
-#define _DEBUG_ALONETEST_DEFAULT  (127)
+#define _DEBUG_ALONETEST_DEFAULT  (128)
 
 #ifdef DEBUG_ONLY_FOR_ohno
 #define _DEBUG_ALONETEST (1)
@@ -50,7 +50,7 @@
 #elif DEBUG_ONLY_FOR_mori
 #define _DEBUG_ALONETEST (15)
 #elif DEBUG_ONLY_FOR_iwasawa
-#define _DEBUG_ALONETEST (16)
+#define _DEBUG_ALONETEST (16) //_DEBUG_ALONETEST_DEFAULT //(16)
 #elif DEBUG_ONLY_FOR_ohmori
 #define _DEBUG_ALONETEST (17)
 //#elif DEBUG_ONLY_FOR_ariizumi_nobuhiko

@@ -82,6 +82,23 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
         pp->gpower[ pp->gpower_num++ ] = id;
       }
     }
+#ifdef PM_DEBUG
+    if( pp->gpower_num == INTRUDE_EQUIP_GPOWER_MAX ){ //@TODO ƒZ[ƒu‚ªˆø‚«Œp‚°‚È‚­‚È‚Á‚½‚çÁ‚·ˆ—
+      for( i = 0; i < pp->gpower_num; i++ ){
+        if( pp->gpower[i] != GPOWER_ID_ENCEFF_INC_A){
+          break;
+        }
+      }
+      if( i == pp->gpower_num ){
+        for( i = 0; i < pp->gpower_num; i++ ){
+          ISC_SAVE_SetGPowerID(isave,GPOWER_ID_NULL, i);
+        }
+        pp->gpower[ 1 ] = GPOWER_ID_NULL;
+        pp->gpower[ 2 ] = GPOWER_ID_NULL;
+        pp->gpower_num = 1;
+      }
+    }
+#endif
   }
   for(i = 0;i < GPOWER_TYPE_MAX; i++){
     GPOWER_ID tmp = GPOWER_Check_OccurType(i);

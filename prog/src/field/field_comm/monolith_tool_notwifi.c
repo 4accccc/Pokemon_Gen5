@@ -46,10 +46,15 @@ MONO_USE_POWER MonolithToolEx_CheckUsePower(const POWER_CONV_DATA *powerdata, GP
     return MONO_USE_POWER_NONE; //パレスパワーは習得できない
   }
   
-  //配布パワー
+  //配布パワーはセキュリティビットチェックをする
   if(powerdata[gpower_id].level_w == POWER_LEVEL_DISTRIBUTION){
+    u8 dis_id = GPOWER_GetDistributionPowerID( gpower_id );
+    if( dis_id == GPOWER_DISTRIBUTION_ID_NULL ){
+      GF_ASSERT(0); //データ設定がおかしい
+      return MONO_USE_POWER_NONE;
+    }
     distribution_bit = gpower_distribution_bit[0] | (gpower_distribution_bit[1] << 8);
-    if(distribution_bit & (1 << (gpower_id - GPOWER_ID_DISTRIBUTION_START))){
+    if(distribution_bit & (1 << dis_id)){
       return MONO_USE_POWER_OK;
     }
     return MONO_USE_POWER_NONE;

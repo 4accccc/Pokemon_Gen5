@@ -99,7 +99,7 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
   sc = SCRIPT_GetScriptWorkFromEvent( event );
 
   //セキュリティ
-  if( power == GPOWER_ID_NULL || power > GPOWER_ENABLE_ID_END ){
+  if( GPOWER_IsEnableID( power ) == FALSE ){
     power = GPOWER_ID_SOUGUU_INC_A;
     GF_ASSERT(0);
   }
@@ -112,7 +112,7 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
 
     //HP全快パワーは固定メッセージ
     if( power == GPOWER_ID_HP_RESTORE_MAX){
-      SCRIPT_SetScriptWorkParam( sc, power, msg_gpower_effect_12-msg_gpower_effect_01, prm->mine_f, 0 );
+      SCRIPT_SetScriptWorkParam( sc, power, msg_gpower_effect_17-msg_gpower_effect_01, prm->mine_f, 0 );
     }else{
       SCRIPT_SetScriptWorkParam( sc, power, type, prm->mine_f, 0 );
     }
@@ -332,7 +332,7 @@ static void sub_GPowerEnableListLineDraw( POWER_CHECK_WORK* wk, STRBUF* str, GPO
   WORDSET_RegisterNumber( wk->wset, 2, time%60, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
   WORDSET_ExpandStr( wk->wset, wk->s_tmp, str );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX02, CWIN_STR_OY*line, wk->s_tmp );
+  FLDSYSWIN_PrintStrBuf( wk->win, 0, CWIN_STR_OY*line, wk->s_tmp );
 }
 
 //-----------------------------------------------------------------
@@ -347,6 +347,7 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
   u8  no[GPOWER_TYPE_MAX];
   u16 time[GPOWER_TYPE_MAX];
 
+#if 0
   //設定しているデルパワーラベル
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_label01, wk->s_buf );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
@@ -357,9 +358,10 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
   if( tmp != GPOWER_ID_NULL ){
     sub_GPowerEnableListLineDraw( wk, wk->s_buf, tmp, 0, 1 );
   }
+#endif
   //発動しているデルパワー
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_label02, wk->s_buf );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*3, wk->s_buf );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
 
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_list02, wk->s_buf );
   for( i = 0, line = 0 ;i < GPOWER_TYPE_MAX;i++){
@@ -383,6 +385,6 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
     }
   }
   for(i = 0;i < line;i++){
-    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power[no[i]], time[no[i]], 4+i );
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power[no[i]], time[no[i]], 1+i );
   }
 }

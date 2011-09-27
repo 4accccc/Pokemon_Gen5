@@ -582,7 +582,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       {
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
         INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
-        ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos]);
+        ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos], 0 );
       }
       {
         GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);

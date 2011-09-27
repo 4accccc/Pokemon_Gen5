@@ -21,7 +21,8 @@
 ///一部のGパワー計算命令で、パワーが発動していない事を示す値
 #define GPOWER_OCCUR_NONE       (0xff)
 
-#define GPOWER_ENABLE_ID_END    (GPOWER_ID_CAPTURE_MAX)  //実装されているパワーIDの最大値
+#define GPOWER_BW_ENABLE_ID_END     (GPOWER_ID_CAPTURE_MAX)  //BWで実装されているパワーIDの最大値
+#define GPOWER_DISTRIBUTION_ID_NULL (0xFF)  //配布パワーIDの無効値
 
 //==============================================================================
 //  外部関数宣言
@@ -36,6 +37,8 @@ extern void GPOWER_SYSTEM_Update(void);
 //  発生とクリア
 //--------------------------------------------------------------
 extern void GPOWER_Clear_AllPower(void);
+extern BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id );
+extern u8 GPOWER_GetDistributionPowerID( GPOWER_ID gpower_id );
 extern void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata, BOOL my_power);
 extern GPOWER_ID GPOWER_Check_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata);
 extern GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type);

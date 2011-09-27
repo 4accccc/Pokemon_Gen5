@@ -1864,7 +1864,7 @@ static void ninput_SetDebugParam( DMENU_LIVE_COMM* wk, int param, int value )
       }else{
         value -= 1;
       }
-      ISC_SAVE_SetGPowerID( int_sv, value );
+      ISC_SAVE_SetGPowerID( int_sv, value, 0 );
     }
     break;
 

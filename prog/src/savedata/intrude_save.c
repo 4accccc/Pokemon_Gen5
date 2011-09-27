@@ -14,8 +14,7 @@
 #include "field/field_comm/mission_types.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/intrude_secret_item_def.h"
-
-
+#include "gamesystem/g_power.h"
 
 //==============================================================================
 //
@@ -260,9 +259,13 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
  * @param   gpower_id		Gƒpƒ[ID
  */
 //==================================================================
-void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id)
+void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id, int idx )
 {
-  intsave->gpower_id[0] = gpower_id;
+  if( idx >= INTRUDE_EQUIP_GPOWER_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+  intsave->gpower_id[idx] = gpower_id;
 }
 
 //==================================================================
@@ -298,8 +301,8 @@ void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
 {
   int dis_no, flag_no, bit_no;
   
-  dis_no = gpower_id - GPOWER_ID_DISTRIBUTION_START;
-  if(dis_no < 0 || gpower_id > GPOWER_ID_DISTRIBUTION_END){
+  dis_no = GPOWER_GetDistributionPowerID( gpower_id );
+  if( dis_no == GPOWER_DISTRIBUTION_ID_NULL ){
     GF_ASSERT(0);
     return;
   }
@@ -323,8 +326,8 @@ BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
 {
   int dis_no, flag_no, bit_no;
   
-  dis_no = gpower_id - GPOWER_ID_DISTRIBUTION_START;
-  if(dis_no < 0 || gpower_id > GPOWER_ID_DISTRIBUTION_END){
+  dis_no = GPOWER_GetDistributionPowerID( gpower_id );
+  if( dis_no == GPOWER_DISTRIBUTION_ID_NULL ){
     GF_ASSERT(0);
     return FALSE;
   }

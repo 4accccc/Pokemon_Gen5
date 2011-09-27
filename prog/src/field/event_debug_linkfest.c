@@ -1668,7 +1668,7 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
       }else{
         value -= 1;
       }
-      ISC_SAVE_SetGPowerID( int_sv, value );
+      ISC_SAVE_SetGPowerID( int_sv, value, 0 );
     }
     break;
   case NINPUT_MISSION_BEACON_WAIT:

@@ -216,13 +216,25 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
       if( ret == FLDMENUFUNC_NULL ){  //ëÄçÏñ≥Çµ
         break;
       }
-      if(ret == FLDMENUFUNC_CANCEL){
+      if( ret == FLDMENUFUNC_CANCEL ){
         (*seq)++;
         break;
       }
 
       if(ret < GPOWER_ID_MAX){
+        GPOWER_TYPE type = GPOWER_ID_to_Type( work->powerdata, ret );
+        POKEPARTY* party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData( work->gmSys ) );
+
         GPOWER_Set_OccurID(ret, work->powerdata, FALSE);
+ 
+        switch(type){
+        case GPOWER_TYPE_HP_RESTORE:
+          GPOWER_Calc_HPRestore(party);
+          break;
+        case GPOWER_TYPE_PP_RESTORE:
+          GPOWER_Calc_PPRestore(party);
+          break;
+        }
       }
       else{
         GPOWER_Clear_AllPower();
@@ -256,6 +268,9 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
   GFL_MSGDATA * pMsgDataDMatsu = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_d_matsu_dat );
 
   for( id = 0; id < GPOWER_ID_MAX; id++ ){
+    if( id>=GPOWER_ID_DUMMY_START && id<=GPOWER_ID_DUMMY_END ){
+      continue; //ñ¢é¿ëïÉpÉèÅ[
+    }
     GFL_MSG_GetString( msgData,  id, strBuf );
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
