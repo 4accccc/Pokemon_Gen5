@@ -7458,4 +7458,47 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D20R0501_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+３０００ねんまえに　さかえた　いせき</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T07:29:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T07:26:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+３０００年前に　栄えた　遺跡</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T07:29:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T07:26:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>海底遺跡
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T07:26:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
