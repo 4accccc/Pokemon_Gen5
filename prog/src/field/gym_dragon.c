@@ -1228,12 +1228,8 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
   // 終了フレームの取得
   end_frame = get_anmend_frame( p_md );
 
-  // 画面ゆれ
-  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE_HERO) )
-  {
-    CallShakeCamera_Bark( p_wk->p_fld_wk );
-  }
-  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE_ENEMY) )
+  // 画面ゆれ(敵ドラゴンと自機ドラゴンを共通にしました)
+  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE) )
   {
     CallShakeCamera_Bark( p_wk->p_fld_wk );
   }
@@ -1248,7 +1244,7 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
     // デフォルトカメラを切り替え
     FIELD_CAMERA_SetCameraType( p_cam, GYM_DRAGON_EFFECT_CAM_NO );  // デフォルトカメラの切り替え
     ONOUE_Printf("カメラを演出用に変更\n");
-    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
+    //FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
 
   }
   if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_END) )
@@ -1257,7 +1253,7 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
     FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
     FIELD_CAMERA_SetCameraType( p_cam, p_wk->cam_type_tmp );        // カメラタイプを復帰
     ONOUE_Printf("カメラを元に戻す\n");
-    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
+    //FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
   }
 
   // SE再生
