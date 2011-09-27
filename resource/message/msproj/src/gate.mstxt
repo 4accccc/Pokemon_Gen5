@@ -6,14 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0" ]がつ[Digit:2digits Idx="1" ]にち</Text>
+			<Text>[Digit:2digits　Idx="0"　]がつ[Digit:2digits　Idx="1"　]にち</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1089,10 +1089,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サンヨウジムは　しょうぶとしょくじを　たのしめる　レストランです　</Text>
+			<Text>◇サンヨウレストランは　しょうぶと　しょくじを　たのしめる　スポットです　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1100,10 +1100,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇サンヨウジムは　勝負と食事を　楽しめる　レストランです　</Text>
+			<Text>◇サンヨウレストランは　勝負と食事を　楽しめる　スポットです　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1116,6 +1116,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:00" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1138,8 +1145,8 @@
 			Language="JPN">
 			<Text>◇みどりゆたかなていえんが　こころを　あたたかく　させてくれます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1371,10 +1378,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サンヨウジムは　しょうぶとしょくじを　たのしめる　レストランです　</Text>
+			<Text>◇サンヨウレストランは　しょうぶと　しょくじを　たのしめる　スポットです　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1382,10 +1389,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇サンヨウジムは　勝負と食事を　楽しめる　レストランです　</Text>
+			<Text>◇サンヨウレストランは　勝負と食事を　楽しめる　スポットです　</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1398,6 +1405,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:26:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1418,10 +1432,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇シッポウシティの　たてものは　ずっとむかしは　かもつそうこでした</Text>
+			<Text>◇シッポウシティは　いしだたみとそうこが　とくちょうです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:28:31" />
+				Time="2011-09-27T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1429,10 +1443,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇シッポウシティの建物は　ずっと昔は　貨物倉庫でした</Text>
+			<Text>◇シッポウシティは　石畳と倉庫が　特徴です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:28:31" />
+				Time="2011-09-27T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1447,10 +1461,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>※swanで修正</Text>
+			<Text />
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:28:35" />
+				Time="2011-09-27T02:40:10" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1472,10 +1486,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇はくぶつかんでは　ほねからポケモンをけんきゅうしています</Text>
+			<Text>◇はくぶつかんでは　ほねからポケモンについて　けんきゅうしています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1483,10 +1497,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇博物館では　骨からポケモンを研究しています</Text>
+			<Text>◇博物館では　骨からポケモンについて研究しています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1499,6 +1513,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:27:09" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1519,10 +1540,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇シッポウジムは　しょうぶとちしきを　たんきゅうできる　はくぶつかんです</Text>
+			<Text>◇はくぶつかんでは　たすうのしょもつを　よむことができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1530,10 +1551,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇シッポウジムは　勝負と知識を　探求できる　博物館です</Text>
+			<Text>◇博物館では　多数の書物を　読むことができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:28:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,6 +1567,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:27:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1707,10 +1735,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カフェソーコで　げいじゅつかたちは　こうりゅうを　ふかめます</Text>
+			<Text>◇げいじゅつに　みせられたひとがあつまる　まちです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:34:21" />
+				Time="2011-09-27T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1718,10 +1746,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇カフェソーコで　芸術家たちは　交流を深めます</Text>
+			<Text>◇芸術に　魅せられた人が集まる　街です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:31:32" />
+				Time="2011-09-27T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1736,10 +1764,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>※swanで修正</Text>
+			<Text />
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:31:33" />
+				Time="2011-09-27T02:39:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2003,14 +2031,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ちゅうしんの ふんすいは ひととひとを つなぐばしょだと いわれています</Text>
+			<Text>◇ちゅうしんの　ふんすいは　ひととひとを　つなぐばしょだと　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2050,14 +2078,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇せかいじゅうの げいじゅつかが ヒウンシティで ギャラリーを ひらいています</Text>
+			<Text>◇せかいじゅうの　げいじゅつかが　ヒウンシティで　ギャラリーを　ひらいています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2205,10 +2233,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ヒウンシティには　いろんなくにが まざった どくじのぶんかや たべものが あります</Text>
+			<Text>◇ヒウンシティには　いろんなくにが　まざった　どくじのぶんかや　たべものがあります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2233,6 +2261,13 @@
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:31:01" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2252,10 +2287,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇すれちがいけんきゅうじょは　いつも　たいいん　ぶそくです</Text>
+			<Text>◇ひとと　ひとの　すれちがいについて　けんきゅうしている　ばしょが　あります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:35:10" />
+				Time="2011-09-27T02:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2263,10 +2298,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇すれちがい研究所は　いつも　隊員不足です</Text>
+			<Text>◇人と人の　すれ違いについて　研究している　場所があります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:35:10" />
+				Time="2011-09-27T02:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2281,10 +2316,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>※swanで修正</Text>
+			<Text />
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:35:12" />
+				Time="2011-09-27T02:40:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2306,10 +2341,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇いつもギラギラ　ライモンシティには　しげきをもとめて　おおくのトレーナーが　あつまります</Text>
+			<Text>◇ライモンシティには　しげきをもとめて　おおくのトレーナーが　あつまります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:36:17" />
+				Time="2011-09-27T02:41:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2317,10 +2352,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇いつもギラギラ　ライモンシティには　刺激を求めて　多くのトレーナーが　集まります</Text>
+			<Text>◇ライモンシティには　刺激を求めて　多くのトレーナーが　集まります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:36:17" />
+				Time="2011-09-27T02:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2360,10 +2395,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇あついテニス はくねつのバスケットボール ねっきあふれる リトルコート</Text>
+			<Text>◇あついテニス　はくねつのバスケットボール　ねっきあふれるリトルコート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2371,10 +2406,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇熱いテニス　白熱のバスケットボール　熱気あふれる　リトルコート</Text>
+			<Text>◇熱いテニス　白熱のバスケットボール　熱気あふれるリトルコート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2508,10 +2543,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇スタープレイヤー あつまる スタジアム うんがよければ せんしゅに あえるかも？</Text>
+			<Text>◇スタープレイヤーあつまるスタジアム　れんしゅうする　せんしゅとポケモンしょうぶ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:33:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2519,10 +2554,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇スタープレイヤー　集まる　スタジアム　運が良ければ　選手に会えるかも？</Text>
+			<Text>◇スタープレイヤー集まるスタジアム　練習する選手とポケモン勝負</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2535,6 +2570,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:31:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2555,10 +2597,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇めいぶつの ジェットコースターは おどろきのばしょで はしっています</Text>
+			<Text>◇めいぶつの　ジェットコースターは　おどろきのばしょではしっています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:33:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2602,10 +2644,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇キラキラけしき ワクワクたかさ ドキドキであいの あいのりかんらんしゃ</Text>
+			<Text>◇キラキラけしき　ワクワクたかさ　ドキドキであいの　あいのりかんらんしゃ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2615,8 +2657,8 @@
 			Language="JPN_KANJI">
 			<Text>◇キラキラ景色　ワクワク高さ　ドキドキ出会いの　あいのり観覧車</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2649,10 +2691,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ギアステーションからは カナワタウンへ いくことが できます</Text>
+			<Text>◇ギアステーションから　カナワタウンへ　いくことができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2660,10 +2702,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ギアステーションからは　カナワタウンに　行くことが　できます</Text>
+			<Text>◇ギアステーションから　カナワタウンに　行くことができます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2676,6 +2718,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:41:12" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2696,10 +2745,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇なんどでも　きたくなる　ごらくのまち　ライモンシティへ　ようこそ</Text>
+			<Text>◇なんどでも　きたくなる　ごらくのまち　ライモンシティへようこそ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:37:08" />
+				Time="2011-09-27T02:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2707,10 +2756,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇何度でも　来たくなる　娯楽の街　ライモンシティへ　ようこそ</Text>
+			<Text>◇何度でも　来たくなる　娯楽の街　ライモンシティへようこそ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:37:08" />
+				Time="2011-09-27T02:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2938,10 +2987,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇やねはオレンジでとういつされ　ゆうやけが　とてもはえます</Text>
+			<Text>◇まちのイメージカラーは　オレンジから　エメラルドにかわりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:47:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2949,10 +2998,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇屋根はオレンジで統一され　夕焼けが　とても映えます</Text>
+			<Text>◇街のイメージカラーは　オレンジから　エメラルドに変わりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3039,10 +3088,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ジムリーダーが　さいくつをつづけたため　ホドモエジムも　あらたに　つくりなおされました</Text>
+			<Text>◇ジムリーダー　ヤーコンは　いつまでもほりつづける　おとこです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:40:42" />
+				Time="2011-09-27T02:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3050,10 +3099,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ジムリーダーが　採掘を続けたため　ホドモエジムも　新たに　造り直されました</Text>
+			<Text>◇ジムリーダー　ヤーコンは　いつまでも掘り続ける　男です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:41:10" />
+				Time="2011-09-27T02:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3093,10 +3142,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇こどもから　おとしよりまで　ポケモンワールドトーナメントかんせんを　みんな　たのしみにしています</Text>
+			<Text>◇ポケモンワールドトーナメントかんせんを　みんな　たのしみにしています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:40:07" />
+				Time="2011-09-27T02:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3104,10 +3153,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇子供から　おとしよりまで　ポケモンワールドトーナメント観戦を　みんな　楽しみにしています</Text>
+			<Text>◇ポケモンワールドトーナメント観戦を　みんな　楽しみにしています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:40:07" />
+				Time="2011-09-27T02:42:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3147,10 +3196,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇かずかずの　みつぼしホテルが　せかいじゅうから　おこしいただく　ひとびとを　おむかえします</Text>
+			<Text>◇みつぼしホテルが　せかいじゅうから　おこしいただく　ひとびとを　おむかえします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:38:07" />
+				Time="2011-09-27T02:49:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3158,10 +3207,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇数々の三ツ星ホテルが　世界中から　お越しいただく人々を　お迎えします</Text>
+			<Text>◇三ツ星ホテルが　世界中から　お越しいただく人々を　お迎えします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T07:38:07" />
+				Time="2011-09-27T02:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4047,10 +4096,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ビルのそうしょくは １００ねんかけて しょくにんたちのてで　つくられています</Text>
+			<Text>◇ビルのそうしょくは　１００ねんかけて　しょくにんたちのてで　つくられています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4094,14 +4143,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティのれきしは せかいいちふるいと いわれています</Text>
+			<Text>◇ソウリュウシティのれきしは　せかいいちふるいと　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4141,14 +4190,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティでは むかしのぎじゅつを いまでも やくだてています</Text>
+			<Text>◇ソウリュウシティでは　むかしのぎじゅつを　いまでも　やくだてています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4188,14 +4237,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちからは まいとし こうこがくしゃが おおく　たんじょうします</Text>
+			<Text>◇まちからは　まいとし　こうこがくしゃが　おおく　たんじょうします</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4235,14 +4284,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちでは なんびゃくねんという れきしを もつ おんがくを きくことができます</Text>
+			<Text>◇まちでは　なんびゃくねんという　れきしを　もつ　おんがくを　きくことができます</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4282,14 +4331,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ビルのそうしょくは １００ねんかけて しょくにんたちのてで　つくられています</Text>
+			<Text>◇ビルのそうしょくは　１００ねんかけて　しょくにんたちのてで　つくられています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4329,14 +4378,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティのれきしは せかいいちふるいと いわれています</Text>
+			<Text>◇ソウリュウシティのれきしは　せかいいちふるいと　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4376,14 +4425,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティでは むかしのぎじゅつを いまでも やくだてています</Text>
+			<Text>◇ソウリュウシティでは　むかしのぎじゅつを　いまでも　やくだてています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4423,14 +4472,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちからは まいとし こうこがくしゃが おおく　たんじょうします</Text>
+			<Text>◇まちからは　まいとし　こうこがくしゃが　おおく　たんじょうします</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4470,14 +4519,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちのビルは ポケモンが １００ぴきのっても くずれないと いわれています</Text>
+			<Text>◇まちのビルは　ポケモンが　１００ぴきのっても　くずれないと　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4517,14 +4566,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティでは　さいしんのモンスターボールが かいはつされています</Text>
+			<Text>◇ソウリュウシティでは　さいしんのモンスターボールが　かいはつされています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4611,14 +4660,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティの セキュリティは あんぜんなことで ゆうめいです</Text>
+			<Text>◇ソウリュウシティの　セキュリティは　あんぜんなことで　ゆうめいです</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4705,14 +4754,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちのビルは ポケモンが １００ぴきのっても くずれないと いわれています</Text>
+			<Text>◇まちのビルは　ポケモンが　１００ぴきのっても　くずれないと　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4752,14 +4801,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティでは　さいしんのモンスターボールが かいはつされています</Text>
+			<Text>◇ソウリュウシティでは　さいしんのモンスターボールが　かいはつされています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4846,14 +4895,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ソウリュウシティの セキュリティは あんぜんなことで ゆうめいです</Text>
+			<Text>◇ソウリュウシティの　セキュリティは　あんぜんなことで　ゆうめいです</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5034,14 +5083,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちからみえる もりでは なぞのポケモンの もくげきじょうほうがあります</Text>
+			<Text>◇まちからみえる　もりでは　なぞのポケモンの　もくげきじょうほうがあります</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5081,14 +5130,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カゴメタウンの どうろも たてものも すべて いしで できています</Text>
+			<Text>◇カゴメタウンの　どうろも　たてものも　すべて　いしで　できています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5128,14 +5177,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇カゴメタウンでは ひるをすぎてから まちが かっぱつになります</Text>
+			<Text>◇カゴメタウンでは　ひるをすぎてから　まちが　かっぱつになります</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5175,14 +5224,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇はれのひには にっこうよくをするひとが おおくみられます</Text>
+			<Text>◇はれのひには　にっこうよくをするひとが　おおくみられます</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5316,14 +5365,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇はまべのすなは とてもこまかく あしあとがハッキリと のこります</Text>
+			<Text>◇はまべのすなは　とてもこまかく　あしあとがハッキリと　のこります</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5363,14 +5412,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サザナミタウンに べっそうをもつことは あこがれとされています</Text>
+			<Text>◇サザナミタウンに　べっそうをもつことは　あこがれとされています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5410,14 +5459,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サザナミタウンの なみのおとの うつくしさは たからものであると いわれています</Text>
+			<Text>◇サザナミタウンの　なみのおとの　うつくしさは　たからものであると　いわれています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5457,14 +5506,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇なつには すきとおるうみに およぎにくる かんこうきゃくがいます</Text>
+			<Text>◇なつには　すきとおるうみに　およぎにくる　かんこうきゃくがいます</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5504,14 +5553,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇おおきながけが サザナミタウンぜんたいを きわだたせています</Text>
+			<Text>◇おおきながけが　サザナミタウンぜんたいを　きわだたせています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5551,14 +5600,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇なみはつねに おだやかなため うみといえは とてもちかいです</Text>
+			<Text>◇なみはつねに　おだやかなため　うみといえは　とてもちかいです</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5645,14 +5694,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇サザナミタウンの うみでは　たびたび きちょうな いせきが みつかるそうです</Text>
+			<Text>◇サザナミタウンの　うみでは　たびたび　きちょうな　いせきが　みつかるそうです</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5692,14 +5741,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇はまべのすなは とてもこまかく あしあとがハッキリと のこります</Text>
+			<Text>◇はまべのすなは　とてもこまかく　あしあとがハッキリと　のこります</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5833,10 +5882,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちのひとが　きをそだて　もりは　せいちょうを　つづけています</Text>
+			<Text>◇せいちょうをつづけた　もりは　しろのじゅどうになりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5844,10 +5893,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇街の人が　木を育て　森は　成長を　続けています</Text>
+			<Text>◇成長を続けた　森は　白の樹洞になりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5860,6 +5909,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:53:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -6021,10 +6077,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちにすみたい　ひとがおおく　じんこうはへんかしつづけています</Text>
+			<Text>◇しろのじゅどうがたんじょうして　トレーナーがおおくつどっています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6032,10 +6088,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇街に住みたい　人が多く　人口は変化し続けています</Text>
+			<Text>◇白の樹洞が誕生して　トレーナーが多く集っています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6048,6 +6104,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:53:27" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -6256,10 +6319,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ブラックシティには　ひとがあつまり　ひび　はってんしています</Text>
+			<Text>◇せいちょうをつづけた　たてものは　くろのまてんろうになりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:02:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6267,10 +6330,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ブラックシティには　人が集まり　日々　発展しています</Text>
+			<Text>◇成長を続けた　建物は　黒の摩天楼になりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6283,6 +6346,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:53:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -6444,10 +6514,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇まちにすみたい　ひとがおおく　じんこうはへんかしつづけています</Text>
+			<Text>◇くろのまてんろうがたんじょうして　トレーナーがおおくつどっています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6455,10 +6525,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇街に住みたい　人が多く　人口は変化し続けています</Text>
+			<Text>◇黒の摩天楼が誕生して　トレーナーが多く集っています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:01:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6471,6 +6541,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで修正</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:53:35" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -9093,12 +9170,12 @@
 			Language="JPN">
 			<Text>[Name:Place Idx="0" ]:[Name:Weather Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9133,12 +9210,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9173,12 +9250,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]　　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9213,12 +9290,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]　　[Name:TrainerName Idx="1" ]　　[Name:TrainerName Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9253,12 +9330,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]　　[Name:TrainerName Idx="1" ]　　[Name:TrainerName Idx="2" ]　　[Name:TrainerName Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T02:52:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -10897,10 +10974,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ１</Text>
+			<Text>◇いせきめあての　りょこうしゃがおおい　かんこうスポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:25:51" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10908,10 +10985,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ１</Text>
+			<Text>◇遺跡目当ての　旅行者が多い　観光スポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10925,6 +11002,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:42" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10945,10 +11030,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ２</Text>
+			<Text>◇さばくは　ひろく　かこくです　じゅんびをととのえて　おこしください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:16" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10956,10 +11041,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ２</Text>
+			<Text>◇砂漠は　広く　過酷です　準備を整えて　お越しください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10973,6 +11058,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -10993,10 +11086,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ３</Text>
+			<Text>◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:22" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11004,10 +11097,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ３</Text>
+			<Text>◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11021,6 +11114,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11041,10 +11142,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ４</Text>
+			<Text>◇いせきが　たてられたじきについて　げんざいちょうさされています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11052,10 +11153,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ４</Text>
+			<Text>◇遺跡が　建てられた時期について　現在調査されています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:30" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11069,6 +11170,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:15" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11089,10 +11198,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ５</Text>
+			<Text>◇こだいのくにが　なぜほろびたのかは　なぞです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:35" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11100,10 +11209,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ５</Text>
+			<Text>◇古代の国が　なぜ滅びたのかは　なぞです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11117,6 +11226,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11137,10 +11254,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ６</Text>
+			<Text>◇こだいのしろないぶでは　げんざいもすなが　ながれおちています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:41" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11148,10 +11265,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ６</Text>
+			<Text>◇古代の城内部では　現在も砂が　流れ落ちています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11165,6 +11282,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11185,10 +11310,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ７</Text>
+			<Text>◇いせきめあての　りょこうしゃがおおい　かんこうスポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11196,10 +11321,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ７</Text>
+			<Text>◇遺跡目当ての　旅行者が多い　観光スポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:50" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11213,6 +11338,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:22" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11233,10 +11366,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ８</Text>
+			<Text>◇さばくは　ひろく　かこくです　じゅんびをととのえて　おこしください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11244,10 +11377,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ８</Text>
+			<Text>◇砂漠は　広く　過酷です　準備を整えて　お越しください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:55" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11261,6 +11394,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11281,10 +11422,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ホワイト　かりメッセージ９</Text>
+			<Text>◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:26:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11292,10 +11433,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ホワイト　仮メッセージ９</Text>
+			<Text>◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:27:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11309,6 +11450,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:25:44" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11329,10 +11478,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ１</Text>
+			<Text>◇いせきめあての　りょこうしゃがおおい　かんこうスポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11340,10 +11489,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ１</Text>
+			<Text>◇遺跡目当ての　旅行者が多い　観光スポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11357,6 +11506,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:32" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11377,10 +11534,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ２</Text>
+			<Text>◇さばくは　ひろく　かこくです　じゅんびをととのえて　おこしください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11388,10 +11545,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ２</Text>
+			<Text>◇砂漠は　広く　過酷です　準備を整えて　お越しください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11405,6 +11562,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11425,10 +11590,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ３</Text>
+			<Text>◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11436,10 +11601,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ３</Text>
+			<Text>◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:54" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11453,6 +11618,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:43" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11473,10 +11646,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ４</Text>
+			<Text>◇いせきが　たてられたじきについて　げんざいちょうさされています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:57" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11484,10 +11657,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ４</Text>
+			<Text>◇遺跡が　建てられた時期について　現在調査されています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:31:59" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11501,6 +11674,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:47" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11521,10 +11702,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ５</Text>
+			<Text>◇こだいのくにが　なぜほろびたのかは　なぞです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11532,10 +11713,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ５</Text>
+			<Text>◇古代の国が　なぜ滅びたのかは　なぞです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:04" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11549,6 +11730,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11569,10 +11758,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ６</Text>
+			<Text>◇こだいのしろないぶでは　げんざいもすなが　ながれおちています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:07" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11580,10 +11769,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ６</Text>
+			<Text>◇古代の城内部では　現在も砂が　流れ落ちています</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:09" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11597,6 +11786,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11617,10 +11814,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ７</Text>
+			<Text>◇いせきめあての　りょこうしゃがおおい　かんこうスポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11628,10 +11825,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ７</Text>
+			<Text>◇遺跡目当ての　旅行者が多い　観光スポットです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:14" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11645,6 +11842,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:30:59" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11665,10 +11870,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ８</Text>
+			<Text>◇さばくは　ひろく　かこくです　じゅんびをととのえて　おこしください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11676,10 +11881,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ８</Text>
+			<Text>◇砂漠は　広く　過酷です　準備を整えて　お越しください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:20" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11693,6 +11898,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:31:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11713,10 +11926,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇Ｄ０３　ブラック　かりメッセージ９</Text>
+			<Text>◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11724,10 +11937,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇Ｄ０３　ブラック　仮メッセージ９</Text>
+			<Text>◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:32:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11741,6 +11954,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T01:31:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成
+　d03と同じ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:03:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11761,10 +11982,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ１</Text>
+			<Text>◇ポケウッドでは　あなたがえいがスターに　なれるかもしれません！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:07:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11772,10 +11993,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ１</Text>
+			<Text>◇ポケウッドでは　あなたが映画スターに　なれるかもしれません！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:02" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11789,6 +12010,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:53:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:37" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11809,10 +12037,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ２</Text>
+			<Text>◇ポケウッドには　せかいかっこくの　えいががあつまります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11820,10 +12048,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ２</Text>
+			<Text>◇ポケウッドには　世界各国の　映画が集まります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11837,6 +12065,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:00" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11857,10 +12092,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ３</Text>
+			<Text>◇ポケウッドでは　スターをもとめています　きたれスター！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:13:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11868,10 +12103,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ３</Text>
+			<Text>◇ポケウッドでは　スターを求めています　来たれスター！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11885,6 +12120,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:02" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11905,10 +12147,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ４</Text>
+			<Text>◇こせいゆたかな　おおくのかんとくが　さまざまなさくひんを　つくるポケウッド</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11916,10 +12158,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ４</Text>
+			<Text>◇個性豊かな　多くの監督が　さまざまな作品を　つくるポケウッド</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11933,6 +12175,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:05" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -11953,10 +12202,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ５</Text>
+			<Text>◇さいしんの　さつえいスタジオと　シアターが　ポケウッドのじまんです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11964,10 +12213,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ５</Text>
+			<Text>◇最新の　撮影スタジオと　シアターが　ポケウッドの自慢です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11981,6 +12230,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:09" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -12001,10 +12257,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ６</Text>
+			<Text>◇ポケウッドでは　あなたがえいがスターに　なれるかもしれません！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12012,10 +12268,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ６</Text>
+			<Text>◇ポケウッドでは　あなたが映画スターに　なれるかもしれません！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12029,6 +12285,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -12049,10 +12312,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ７</Text>
+			<Text>◇ポケウッドには　せかいかっこくの　えいががあつまります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12060,10 +12323,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ７</Text>
+			<Text>◇ポケウッドには　世界各国の　映画が集まります</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12077,6 +12340,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:15" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -12097,10 +12367,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ８</Text>
+			<Text>◇こせいゆたかな　おおくのかんとくが　さまざまなさくひんを　つくるポケウッド</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12108,10 +12378,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ８</Text>
+			<Text>◇個性豊かな　多くの監督が　さまざまな作品を　つくるポケウッド</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:16:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12125,6 +12395,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -12145,10 +12422,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>◇ポケウッド　かりメッセージ９</Text>
+			<Text>◇さいしんの　さつえいスタジオと　シアターが　ポケウッドのじまんです</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12156,10 +12433,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>◇ポケウッド　仮メッセージ９</Text>
+			<Text>◇最新の　撮影スタジオと　シアターが　ポケウッドの自慢です</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T08:54:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12173,6 +12450,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-23T08:55:22" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>※swanで新規作成</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-27T03:15:39" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
