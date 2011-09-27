@@ -274,7 +274,7 @@ BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckHybridBaseSystemChange( const MAPATTR_VALUE val )
 {
-  if( (val == MATTR_HYBRID_CHANGE) )
+  if( (val == MATTR_HYBRID_CHANGE) || (val == MATTR_HYBRID_CHANGE_LIGHT) )
   {
     return TRUE;
   }
