@@ -750,7 +750,7 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
   SCRIPT_WORK * scw  = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA   * gamedata = SCRCMD_WORK_GetGameData( work );
-  GMEVENT     * next_event;
+  GMEVENT     *next_event;
   PKWDSYS     *pkwdsys = getPOKEWOODSys( wk );
 
   u16 rec_pos = SCRCMD_GetVMWorkValue( core, work );
@@ -758,9 +758,12 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
   // 上映フラグをクリア
   POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, rec_pos, FALSE );
 
+  // 興行収入のレコード登録
+  PKWDSYS_RecordSet( gamedata, pkwdsys );
+
   // この2つの関数の順番は入れ替えないこと！(スターポケモンが登録されるのが早くなる)
   {
-    // 興行成績データが上回っていれば更新
+    // シナリオ単位で興行成績データが上回っていれば更新
     PKWDSYS_RecordSet( gamedata, pkwdsys );
 
     // 手持ちポケモンを出していた場合はスターポイントを加算

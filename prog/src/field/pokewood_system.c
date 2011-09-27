@@ -484,7 +484,7 @@ void PKWDSYS_MakeBoxofficeRecord( PKWDSYS *pkwdsys, BATTLE_SETUP_PARAM *bsp, int
  * @param   bsp		
  */
 //=============================================================================================
-void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
+void PKWDSYS_BoxofficeRecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
 {
   POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
   const POKEWOOD_BOXOFFICE_RECORD *compare = POKEWOOD_SAVEDATA_GetBoxOfficeData( ps, pkwdsys->scenario_no );
@@ -494,6 +494,23 @@ void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
     OS_Printf("興行収入データ更新: シナリオ%d\n", pkwdsys->scenario_no);
     POKEWOOD_SAVEDATA_SetBoxOfficeData( ps, pkwdsys->scenario_no, &pkwdsys->BoxofficeData );
   }
+}
+
+//=============================================================================================
+/**
+ * @brief	レコードデータへの登録
+ *
+ * @param   gamedata	GAMEDATA
+ * @param   pkwdsys		POKEWOOD_SYSTEM
+ */
+//=============================================================================================
+void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
+{
+  RECORD      *record = SaveData_GetRecord(GAMEDATA_GetSaveControlWork(gamedata));
+
+  RECORD_SetIfLarge( record, RECID_POKEWOOD_HIGH, pkwdsys->BoxofficeData.profits);  // 最高
+  RECORD_Add( record, RECID_POKEWOOD_TOTAL, pkwdsys->BoxofficeData.profits); // 累計
+  
 }
 
 

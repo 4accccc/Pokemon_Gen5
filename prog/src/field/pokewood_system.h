@@ -59,9 +59,10 @@ extern void * PKWDSYS_GetBackupArea( PKWDSYS *pkwdsys );
 extern void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no, BtlPokewoodResult result );
 extern void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata );
 extern void PKWDSYS_MakeBoxofficeRecord( PKWDSYS *pkwdsys, BATTLE_SETUP_PARAM *bsp, int scenario_no );
-extern void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
+extern void PKWDSYS_BoxofficeRecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
 extern void PKWDSYS_CalcStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys, BtlPokewoodResult result, int play_no );
 extern void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
+extern void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
 
 
 
