@@ -739,6 +739,9 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
                                   pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
           // スターランク計算
           PKWDSYS_CalcStarPoint( gamedata, pkwdsys, pbew->bp->pokewoodResult, prew->rec_id );
+          // 観劇フラグを立てる
+          POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_THEATERGO, 
+                                             pbew->bp->pokewoodSenario );
         }
       }
     }
