@@ -13774,55 +13774,59 @@
 	</row>
 
 	<row id="TRID_RANGERM_25_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">でんきの　ちからを
+とりこもうと　ここに　やってきた▽
+ポケモンレンジャーが　おれだ！▼</language>
+		<language name="JPN_KANJI" width="216">電気の　力を
+取り込もうと　ここに　やってきた▽
+ポケモンレンジャーが　おれだ！▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_25_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">むう！　おれは　まだ
+でんきを　だせないのか！</language>
+		<language name="JPN_KANJI" width="216">むう！　おれは　まだ
+でんきを　だせないのか！</language>
 	</row>
 
 	<row id="TRID_RANGERM_25_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
-		<language name="JPN" width="216">カゴのみ</language>
-		<language name="JPN_KANJI" width="216">カゴのみ</language>
+		<language name="JPN" width="216">これでも▼</language>
+		<language name="JPN_KANJI" width="216">これでも▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_25_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">ポケモンが　でんきを　だすのは
+ズルイ　というか　カッコいいよな！</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　電気を　だすのは
+ズルイ　というか　カッコいいよな！</language>
 	</row>
 
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">あなたが　くることは
+かぜが　ささやいてくれたわ！▼</language>
+		<language name="JPN_KANJI" width="216">あなたが　来ることは
+風が　ささやいてくれたわ！▼</language>
 	</row>
 
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">あたしよ……
+かぜに　なれ！</language>
+		<language name="JPN_KANJI" width="216">あたしよ……
+風に　なれ！</language>
 	</row>
 
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
-		<language name="JPN" width="216">カゴのみ</language>
-		<language name="JPN_KANJI" width="216">カゴのみ</language>
+		<language name="JPN" width="216">あっ！　いけない！
+この　カゴのみを　あげなきゃ！▼</language>
+		<language name="JPN_KANJI" width="216">あっ！　いけない！
+この　カゴのみを　あげなきゃ！▼</language>
 	</row>
 
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">ほらあなって　でいりぐちが　ちかいと
+かぜが　ふいてくるのよね！</language>
+		<language name="JPN_KANJI" width="216">洞穴って　出入り口が　近いと
+風が　吹いてくるのよね！</language>
 	</row>
 
 	<row id="TRID_ELITEM_35_TRMSG_POKE_UNDER_TWO">
