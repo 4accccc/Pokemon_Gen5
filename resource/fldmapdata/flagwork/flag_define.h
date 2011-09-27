@@ -459,6 +459,7 @@
 #define FE_C03P14_ITEMGET_01               443 /* 0x01bb ヒウンシティ：アイテム入手フラグ */
 #define FE_C08_PLAZMA_COME                 444 /* 0x01bc ソウリュウシティ：プラズマ団襲来イベント起動フラグ */
 #define FE_C02GYM0101_ITEMGET_01           445 /* 0x01bd シッポウシティ：アロエからカセキをもらったフラグ */
+#define FE_C03P13_SHIP_IN_01               446 /* 0x01be ヒウンシティ：リバティガーデン島への初回渡航フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
