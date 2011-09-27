@@ -15,6 +15,7 @@
 #include "system/gfl_use.h"
 #include "system/ica_anime.h"
 #include "system/ica_camera.h"
+#include "savedata/pokewood_savedata.h"
 #include "sound/pm_voice.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
@@ -357,6 +358,8 @@ static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam );
 
 static void EndrollFunc( PKWD_BRIEFING_WORK *tw );
 
+static void initWork( PKWD_BRIEFING_WORK* tw );
+static void releaseWork( PKWD_BRIEFING_WORK* tw );
 static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID );
 static void releaseBriefingBmpwin( G2D_CONTROL* CG2d );
 static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align );
@@ -522,6 +525,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
 
   case SEQ_SETUP:
     // セットアップ
+    initWork( tw );
     setupSystem(&tw->CSys, tw->heapID);
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
@@ -592,6 +596,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     // 解放
     releaseBriefingBmpwin(&tw->CG2d);
     releaseBriefingMsgdata( &tw->CG2d );
+    releaseWork( tw );
     INFOWIN_Exit();
     BTLV_INPUT_DeleteAudienceObj( &tw->AOam );
     releaseOAMcontrol(&tw->COam);
@@ -1129,6 +1134,13 @@ static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapI
   CG2d->expandbuf[1] = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
   CG2d->endkeyword   = GFL_STR_CreateBuffer( BRIEFING_MSG_LENGTH, heapID );
   GFL_MSG_GetString(CG2d->mm, pw_briefing_end_keyword, CG2d->endkeyword);
+  CG2d->wordset    = WORDSET_Create( heapID );
+
+  // 先頭ポケモンの名前をwordsetに登録
+  {
+    const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( CG2d->myparty, 0);
+    WORDSET_RegisterPokeMonsName( CG2d->wordset, 0, pp );
+  }
 
 }
 
@@ -1137,8 +1149,44 @@ static void releaseBriefingMsgdata(G2D_CONTROL* CG2d)
   GFL_STR_DeleteBuffer(CG2d->endkeyword);
   GFL_STR_DeleteBuffer(CG2d->expandbuf[1]);
   GFL_STR_DeleteBuffer(CG2d->expandbuf[0]);
+  WORDSET_Delete( CG2d->wordset );
   GFL_MSG_Delete(CG2d->mm);
 }
+
+
+static void _swap_pointer( G2D_CONTROL *CG2d, int index1, int index2 ){
+  STRBUF *tmp;
+  tmp = CG2d->endrol_str[index1];
+  CG2d->endrol_str[index1] = CG2d->endrol_str[index2];
+  CG2d->endrol_str[index2] = tmp;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	スターランクで比較を行ってどちらが主役か決める
+ *
+ * @param   CG2d		    G2D_CONTROL
+ * @param   my_rank		  自分のスターランク
+ * @param   enemy_rank	相手のスターランク
+ */
+//----------------------------------------------------------------------------------
+static void exchange_endroll_strbuf( G2D_CONTROL *CG2d, int my_rank, int enemy_rank )
+{
+  // 相手のスターランクが自分と同じかそれ以上だったら主演を相手にする
+  if(my_rank <= enemy_rank){
+    _swap_pointer( CG2d, ENDROLL_STR_MYROLE, ENDROLL_STR_ENEMYROLE );   // トレーナー名
+    _swap_pointer( CG2d, ENDROLL_STR_MYNAME, ENDROLL_STR_ENEMYNAME );   // 役名
+    _swap_pointer( CG2d, ENDROLL_STR_MY_PARTY, ENDROLL_STR_ENEMY_PARTY ); // パーティ名
+
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME1, ENDROLL_STR_P2_MONSNAME1 );  // ポケモン6匹
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME2, ENDROLL_STR_P2_MONSNAME2 );
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME3, ENDROLL_STR_P2_MONSNAME3 );
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME4, ENDROLL_STR_P2_MONSNAME4 );
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME5, ENDROLL_STR_P2_MONSNAME5 );
+    _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME6, ENDROLL_STR_P2_MONSNAME6 );
+  }
+}
+
 
 #define ENDROLL_STR_1BLOCK_NUM  ( 15 )  // 一つのシナリオのエンドロール用の文字列の数
 #define MY_ROLE_NAME_MAX        ( 21 )  // 自分の役名の最大長
@@ -1150,6 +1198,9 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
 {
   int i;
   int mysex = MyStatus_GetMySex(param->mystatus);
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( param->gameData );
+  int enemy_rank = 0;
+
   //メッセージ取得
   CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                              NARC_message_pw_endroll_dat, heapID );
@@ -1184,10 +1235,11 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
     GFL_MSG_Delete(msgdata);
   
   }
-  // 監督名を取得
+  // 監督名を取得・相手トレーナーランクを取得
   {
     POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, scenario_no, GFL_HEAP_LOWID(heapID));
     CG2d->endrol_str[ENDROLL_STR_DIRECTOR_NAME] = GFL_MSG_CreateString( CG2d->mm, pw_er_director_name1+senario->director );
+    enemy_rank = senario->enemy_rank;
     GFL_HEAP_FreeMemory( senario );
   }
 
@@ -1216,6 +1268,14 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
     WORDSET_ExpandStr( CG2d->wordset, tempbuf, CG2d->endrol_str[ENDROLL_STR_MYROLE] );
     GFL_STR_DeleteBuffer( CG2d->endrol_str[ENDROLL_STR_MYROLE] );
     CG2d->endrol_str[ENDROLL_STR_MYROLE] = tempbuf;    //元の文字列は削除して展開済み文字列を上書き
+  }
+  
+  // スターランクを比較して主演の順番を入れ替える
+  {
+    int star_point, star_rank;
+    star_point = POKEWOOD_SAVEDATA_GetStarPoint( ps );
+    star_rank  = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank(star_point);
+    exchange_endroll_strbuf( CG2d, star_rank ,enemy_rank );
   }
 }
 
@@ -2035,12 +2095,17 @@ static void _briefing_print( G2D_CONTROL* CG2d, int page, int sex )
 {
   int linage;
   int index = page%2;
+  STRBUF *strbuf=NULL;
 
+  // 男女別であらすじ文字列を取得して、wordset展開
   if(sex==PM_MALE){
-    GFL_MSG_GetString(CG2d->mm, pw_briefing_001+page, CG2d->expandbuf[index]);
+    strbuf = GFL_MSG_CreateString( CG2d->mm, pw_briefing_001+page );
   }else{
-    GFL_MSG_GetString(CG2d->mm, pw_briefing_f_001+page, CG2d->expandbuf[index]);
+    strbuf = GFL_MSG_CreateString( CG2d->mm, pw_briefing_f_001+page );
   }
+  WORDSET_ExpandStr( CG2d->wordset, CG2d->expandbuf[index], strbuf );
+  GFL_STR_DeleteBuffer(strbuf);
+
   linage =   PRINTSYS_GetLineCount( CG2d->expandbuf[index] );
 
   //メッセージ表示
