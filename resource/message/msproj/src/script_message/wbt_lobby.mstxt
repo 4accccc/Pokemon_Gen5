@@ -6322,11 +6322,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エントリーチェッカーの
-スイッチを　きります</Text>
+			<Text>スイッチを　きります</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T06:57:47" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T11:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6334,11 +6333,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エントリーチェッカーの
-スイッチを　きります</Text>
+			<Text>スイッチを　きります</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:52:00" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-27T11:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
