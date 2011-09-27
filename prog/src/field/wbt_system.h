@@ -1,11 +1,10 @@
 //============================================================================================
 /**
  * @file  wbt_system.h
- * @brief
+ * @brief WBTシステムヘッダ
  * @author  tamada GAME FREAK inc.
  * @date  2011.02.13
  *
- * @todo  ダウンロードデータのサイズ、項目確認（肩書の長さなど）
  */
 //============================================================================================
 #pragma once
@@ -23,23 +22,40 @@
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/// 対戦トレーナーデータの不完全型
 //------------------------------------------------------------------
 typedef struct _WBTTRAINER WBTTRAINER;
 
+//------------------------------------------------------------------
+/// ROMトレーナーデータの不完全型
+//------------------------------------------------------------------
 typedef struct _WBTROM_TRDATA WBTROM_TRDATA;
-typedef u8 WBTROM_TRID;
-
-enum { WBT_AUDIENCE_TYPE_MAX = 4 };
 
 //------------------------------------------------------------------
+/// ROMトレーナー指定ID
+//------------------------------------------------------------------
+typedef u8 WBTROM_TRID;
+
+//------------------------------------------------------------------
+/// 対戦結果データの不完全型
 //------------------------------------------------------------------
 typedef struct _WBTRESULT WBTRESULT;
 
+//------------------------------------------------------------------
+/// 対戦組み合わせ生成条件の不完全型
+//------------------------------------------------------------------
 typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 
+//------------------------------------------------------------------
+/// ポケモン抽選用NG指定オブジェクトの不完全型
+//------------------------------------------------------------------
 typedef struct _WBT_NGPMINFO WBT_NGPMINFO;
 
+//------------------------------------------------------------------
+///ミックストーナメント用ウィンドウの不完全型
+//------------------------------------------------------------------
 typedef struct _WBT_MIXWIN WBT_MIXWIN;
+
 //------------------------------------------------------------------
 /// ミックストーナメントでの選択結果の保存指定
 //------------------------------------------------------------------
@@ -52,9 +68,13 @@ typedef enum {
   WBTMIX_TARGET_NUM,
 }WBTMIX_TARGET;
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
+/// WBT会場の観客パターン数
+//------------------------------------------------------------------
+enum { WBT_AUDIENCE_TYPE_MAX = 4 };
+
+//------------------------------------------------------------------
+/// トーナメント名称の長さ
 //------------------------------------------------------------------
 #define BUFLEN_TOURNAMENT_NAME  ( (18 * GLOBAL_MSGLEN) + BUFLEN_EOM_SIZE )	// 16 -> 18
 
@@ -65,6 +85,7 @@ extern WBTSYS * WBTSYS_Create( HEAPID heapID, BOOL isTutorial );
 extern void WBTSYS_Delete( WBTSYS * wbtsys );
 
 //------------------------------------------------------------------
+//  settter/getter
 //------------------------------------------------------------------
 extern void WBTSYS_SetWBTCup( WBTSYS * wbtsys, WBTCUP wbtcup );
 extern WBTCUP WBTSYS_GetWBTCup( const WBTSYS * wbtsys );
@@ -86,12 +107,6 @@ extern u8 WBTSYS_GetAudienceType( const WBTSYS * wbtsys );
 
 extern POKEPARTY * WBTSYS_GetMyParty( WBTSYS * wbtsys );
 extern POKEPARTY * WBTSYS_GetEnemyParty( WBTSYS * wbtsys );
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys );
-extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
-extern const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys );
-extern u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys );
 
 extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
 extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
@@ -104,22 +119,19 @@ extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 
 extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
 
-//============================================================================================
-//============================================================================================
-#ifdef  PM_DEBUG
-extern void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr );
-extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
-extern void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data );
-extern void WBTSYS_DEBUG_PrintRegulationEx( const REGULATIONEX * reg_ex );
-#endif
 //------------------------------------------------------------------
+//  レギュレーション関連
 //------------------------------------------------------------------
-extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
-extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list );
+extern u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys );
+extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
+extern const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys );
+extern u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys );
 
+//------------------------------------------------------------------
+/// 対戦トレーナーデータ取得関連
+//------------------------------------------------------------------
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
 extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
-
 
 //------------------------------------------------------------------
 //  WBTTRAINER関連
@@ -133,13 +145,30 @@ extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern void WBTTRAINER_CopyTitle( const WBTTRAINER * wbt_tr, STRBUF * buf );
 extern BOOL WBTTRAINER_HasAce( const WBTTRAINER * wbt_tr );
 
+//============================================================================================
+//============================================================================================
+#ifdef  PM_DEBUG
+extern void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr );
+extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
+extern void WBTSYS_DEBUG_PrintRegulation( const REGULATION * cp_data );
+extern void WBTSYS_DEBUG_PrintRegulationEx( const REGULATIONEX * reg_ex );
+#endif
+
+//============================================================================================
+//
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //  in wbt_system_lobby.c
 //------------------------------------------------------------------
+extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list );
+
 extern POKEPARTY * WBTSYS_GetUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
 
-extern BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern u32 WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_UnloadDLData( WBTSYS * wbtsys );
 
@@ -149,8 +178,6 @@ extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, const PLIST_DATA * plist_
 
 extern void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
 //  in wbt_makematch.c
 //------------------------------------------------------------------

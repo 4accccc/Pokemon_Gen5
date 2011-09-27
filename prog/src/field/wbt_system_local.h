@@ -147,7 +147,7 @@ struct _WBT_SYSTEM {
 
   ///タイプトーナメントの場合のタイプ
   PokeType poketype;
-  ///選択したダウンロードデータ
+  ///選択したダウンロードデータ(1org,0の場合存在しない）
   u8 select_dl_data;
 
   u8 audience_type;     ///<観客の種類

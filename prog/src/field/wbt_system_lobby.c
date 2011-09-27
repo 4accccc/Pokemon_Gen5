@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file  wbt_system_lobby.c
- * @brief
+ * @brief   WBTシステム：ロビー内専用処理
  * @author  tamada GAMEFREAK inc.
  * @date  2011.02.15
  */
@@ -31,12 +31,7 @@
 #include "savedata/wbt_ex_save.h"
 #include "savedata/wbt_download.h"
 
-#include "sound/swan_sound_data.sadl"
 
-#ifdef  PM_DEBUG
-//#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
-//#define DEBUG_STRONG_PARTY  //定義すると手持ちが激しく強くなる
-#endif
 
 //============================================================================================
 //============================================================================================
@@ -44,8 +39,19 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
+  ///WBT AI全部入り定義
   WBT_AI_BIT_ALL  = WBT_AI_BIT_BASIC | WBT_AI_BIT_STRONG | WBT_AI_BIT_EXPERT | WBT_AI_BIT_DOUBLE,
 };
+
+//============================================================================================
+//============================================================================================
+static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetRomTrainer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, WBTROM_TRID tr_id );
+static void WBTTRAINER_SetWBPlayer(
+    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
+    const WBTDL_CHARACTER * dl_char, u32 dl_tr_id, u8 pri );
 
 //============================================================================================
 //
@@ -282,13 +288,21 @@ u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys )
 }
 
 //============================================================================================
+//
+//
+//  ダウンロードデータ読み込み関連
+//
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief
+ * @brief 指定IDのダウンロードデータをチェック
+ * @param[in] gamedata
+ * @param[in] dl_id
+ * @return  BOOL  TRUEのとき有効なデータ、FALSEのとき無効
  */
 //------------------------------------------------------------------
-static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
+static BOOL checkWBTDownLoad( GAMEDATA * gamedata, WBT_DLID dl_id )
 {
   SAVE_CONTROL_WORK* save;
   WBTEXSAVE * save_p;
@@ -297,7 +311,7 @@ static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
   LOAD_RESULT load_res;
   BOOL result = FALSE;
 
-  save_id = SAVE_EXTRA_ID_WBT_00 + dl_id - 1;
+  save_id = SAVE_EXTRA_ID_WBT_00 + dl_id - WBT_DLID_START;
 
   save = GAMEDATA_GetSaveControlWork( gamedata );
   load_res = SaveControl_Extra_Load( save, save_id, HEAPID_PROC );
@@ -311,11 +325,18 @@ static BOOL checkWBTDownLoad( GAMEDATA * gamedata, u32 dl_id )
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 選択可能なダウンロードデータをカウントする
+ * @param[in] wbtsys
+ * @param[in] gamedata
+ * @return  u32
+ */
 //------------------------------------------------------------------
-BOOL WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata )
+u32 WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
-  int count, dl_id;
-  for ( count = 0, dl_id = 1; dl_id <= WBT_DOWNLOAD_NUM; dl_id ++ )
+  int count = 0;
+  WBT_DLID dl_id;
+  for ( dl_id = WBT_DLID_START; dl_id < WBT_DLID_START + WBT_DOWNLOAD_NUM; dl_id ++ )
   {
     if (checkWBTDownLoad( gamedata, dl_id ) == TRUE )
     {
@@ -343,13 +364,13 @@ void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata )
 
   BOOL result = FALSE;
 
-  if ( wbtsys->select_dl_data == 0 )
+  if ( wbtsys->select_dl_data == WBT_DLID_NULL )
   {
     WBTSYS_UnloadDLData( wbtsys );
     return;
   }
 
-  save_id = SAVE_EXTRA_ID_WBT_00 + wbtsys->select_dl_data - 1;
+  save_id = SAVE_EXTRA_ID_WBT_00 + wbtsys->select_dl_data - WBT_DLID_START;
 
   save = GAMEDATA_GetSaveControlWork( gamedata );
   load_res = SaveControl_Extra_Load( save, save_id, HEAPID_PROC );  //外部データを確保
@@ -374,6 +395,11 @@ void WBTSYS_LoadDLData( WBTSYS * wbtsys, GAMEDATA * gamedata )
 }
 
 //============================================================================================
+//
+//
+//  ポケモン選択画面関連
+//
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**
@@ -474,6 +500,9 @@ void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA 
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief ポケモンステータス呼び出しパラメータの設定
+ */
 //------------------------------------------------------------------
 void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus )
 {

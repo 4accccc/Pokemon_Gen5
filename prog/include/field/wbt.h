@@ -36,6 +36,14 @@ enum {
 };
 
 //------------------------------------------------------------------
+/// ダウンロードデータ指定型
+//------------------------------------------------------------------
+typedef enum {
+  WBT_DLID_NULL = 0,  ///<データ無し
+  WBT_DLID_START = 1, ///<開始ID
+}WBT_DLID;
+
+//------------------------------------------------------------------
 ///WBTトーナメントの種類
 //------------------------------------------------------------------
 typedef enum {
@@ -100,8 +108,6 @@ typedef enum {
   WBT_BTL_RESULT_LOSE = 0,
   WBT_BTL_RESULT_WIN,
   WBT_BTL_RESULT_DRAW,
-  WBT_BTL_RESULT_DKO_WIN,
-  WBT_BTL_RESULT_DKO_LOSE,
 }WBT_BTL_RESULT;
 
 //------------------------------------------------------------------
@@ -146,10 +152,10 @@ enum {
 //  WBT対戦相手のビット指定
 //------------------------------------------------------------------
 enum {
-  WBT_AI_ID_BASIC = 0,
-  WBT_AI_ID_STRONG,
-  WBT_AI_ID_EXPERT,
-  WBT_AI_ID_DOUBLE,
+  WBT_AI_ID_BASIC = 0,  ///<基本AI
+  WBT_AI_ID_STRONG,     ///<威力強AI
+  WBT_AI_ID_EXPERT,     ///<エキスパートAI
+  WBT_AI_ID_DOUBLE,     ///<ダブルバトルAI
 
   WBT_AI_BIT_BASIC = 1 << WBT_AI_ID_BASIC,
   WBT_AI_BIT_STRONG = 1 << WBT_AI_ID_STRONG,

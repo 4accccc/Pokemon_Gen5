@@ -124,8 +124,9 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 /**
  * ポケモンリスト選択イベント　呼び出し
- * @param
- * @retval
+ * @param   gsys          
+ * @param   parent_work   WBTSYS
+ * @return  GMEVENT
  */
 //--------------------------------------------------------------
 GMEVENT * WBT_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work )
@@ -150,8 +151,9 @@ GMEVENT * WBT_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work )
   work->fieldmap = fieldmap;
   work->wbtsys = wbtsys;
   
+  //ポケモンリスト呼び出しパラメータの設定
   WBTSYS_SetupPokeListData( wbtsys, gamedata, &work->list_data );
-  
+  //ポケモンスタータス呼び出しパラメータの設定
   WBTSYS_SetupPokeStatusData( wbtsys, gamedata, &work->status_data );
    
   return( event );
@@ -302,8 +304,8 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
 //-----------------------------------------------------------------------------
 /**
  * @brief WBTトレーナー対戦イベントの生成
- * @param wbtsys
  * @param gsys
+ * @param parent_work     WBTSYS
  * @return  生成イベント
  */
 //-----------------------------------------------------------------------------

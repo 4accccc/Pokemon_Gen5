@@ -21,10 +21,7 @@
 #include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
 
-#include "fld_btl_inst_tool.h"  //FBI_TOOL_GetTrainerOBJCode
 #include "message.naix"    //NARC_message_
-
-#include "savedata/etc_save.h"    //ETC_SAVE_WORK
 
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
@@ -42,13 +39,6 @@
 //============================================================================================
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID );
 static void WBTTRAINER_Release( WBTTRAINER * wbt_tr );
-static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
-static void WBTTRAINER_SetRomTrainer(
-    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, WBTROM_TRID tr_id );
-static void WBTTRAINER_SetWBPlayer(
-    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
-static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
-    const WBTDL_CHARACTER * dl_char, u32 dl_tr_id, u8 pri );
 
 //============================================================================================
 //============================================================================================
@@ -106,6 +96,11 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 }
 
 //============================================================================================
+//
+//
+//    WBTSYSメンバー  アクセサー
+//
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -297,6 +292,9 @@ u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys )
 
 
 //============================================================================================
+//
+//    WBTTRAINER関連
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**
@@ -464,6 +462,9 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 }
 
 //============================================================================================
+//
+//    レギュレーション関連
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**

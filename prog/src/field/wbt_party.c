@@ -17,9 +17,6 @@
 #include "wbt_system_local.h"
 #include "wbt_tool.h"
 
-//#include "poke_tool/poketype_def.h"
-
-#include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
 #include "savedata/bsubway_savedata.h"  //bsubway_battle_data.hの内部定義のため
 #include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
@@ -29,8 +26,7 @@
 #include "savedata/etc_save.h"    //ETC_SAVE_WORK
 
 #include "savedata/save_tbl.h"
-//#include "savedata/save_control.h"
-//#include "savedata/wbt_ex_save.h"
+
 #include "savedata/wbt_download.h"
 
 #include "sound/swan_sound_data.sadl"
@@ -49,18 +45,24 @@ enum {
 };
 
 //--------------------------------------------------------------
+/**
+ * @brief 候補ポケモンデータ
+ */
 //--------------------------------------------------------------
 typedef struct {
-  u8 available;
-  u16 index_no;
-  BSUBWAY_POKEMON_ROM_DATA prd;
+  u8 available;                 ///<BOOL TRUEのとき選択可能
+  u16 index_no;                 ///<参照アーカイブ上のインデックス値
+  BSUBWAY_POKEMON_ROM_DATA prd; ///<参照アーカイブから読み込んだ実データ
 }CANDIDATE_DATA;
 
 //--------------------------------------------------------------
+/**
+ * @brief 候補全体データ
+ */
 //--------------------------------------------------------------
 typedef struct {
-  u16 num;
-  CANDIDATE_DATA * array;
+  u16 num;                ///<候補ポケモンの要素数
+  CANDIDATE_DATA * array; ///<候補ポケモンの配列
 }POKECANDIDATE;
 
 //============================================================================================
