@@ -37,7 +37,7 @@ struct _POKEWOOD_SAVEDATA{
   u32 strange_flag[POKEWOOD_ARRAY_NUM];       ///< ストレンジエンド取得済みフラグ
   u32 senario_theatergo_flag[POKEWOOD_ARRAY_NUM];///< 指定のシナリオを一度でも上映して観た事がある
 
-  u8 array[140];                              ///<
+  u8 array[132];                              ///<
 };
 
 //---------------------------------------------------------------------------
