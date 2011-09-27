@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-04-28T16:19:13" source="batt_field23d_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-09-27T20:25:55" source="batt_field23d_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-04-28T16:19:13" source="batt_field23d_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-09-27T20:25:55" source="batt_field23d_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-2.894531 0.178711 -2.739502" whd="5.788818 0.840820 5.478760"/>
+<box_test pos_scale="1" xyz="-2.894531 0.078613 -2.745117" whd="5.788818 0.840820 5.478760"/>
 
 <tex_image_array size="6">
 	<tex_image index="0" name="batt_bk23d"
@@ -1908,7 +1908,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.313477 0.000000"
+		translate="0.000000 0.113525 -0.011475"
 		visibility="on"
 		display_size="2"
 		vertex_size="136" polygon_size="48"
