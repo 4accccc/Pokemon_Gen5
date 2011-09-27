@@ -7965,12 +7965,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんげつの　もくひょうは
-エリア４までいくことなの！▼
+つぎの　エリアまで　いくことなの！▼
 けいかくてきに　ちょうせんも
 しょうぶも　しないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T10:55:14" />
+				Time="2011-09-27T06:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -7979,12 +7979,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今月の　目標は
-エリア４まで　行くことなの！▼
+次の　エリアまで　行くことなの！▼
 計画的に
 挑戦も　勝負も　しないとね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T10:55:49" />
+				Time="2011-09-27T06:37:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -9228,11 +9228,11 @@
 			<Text>しがない　調査員だけど
 気分だけは　ボストレーナーさ！▼
 ふはははっ！
-つぎの　エリアに　行きたければ▽
+次の　エリアに　行きたければ▽
 わたしを　倒していくがいい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-10T03:54:43" />
+				Time="2011-09-27T06:38:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11293,7 +11293,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっと　したのエリアに
+			<Text>もっと　したの　エリアに
 いってきたんだが▼
 しょうじき　まったく
 はが　たたなかったぜ！▼
@@ -11301,7 +11301,7 @@
 やりなおしだ！　しょうぶ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:37:30" />
+				Time="2011-09-27T06:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11309,7 +11309,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっと　下のエリアに
+			<Text>もっと　下の　エリアに
 行ってきたんだが▼
 正直　まったく
 歯が　立たなかったぜ！▼
@@ -11317,7 +11317,7 @@
 やり直しだ！　勝負！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-09T02:37:30" />
+				Time="2011-09-27T06:39:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13070,14 +13070,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうきしんで　エリア６に　いったら
-さっきだった　ひとたちに▽
+			<Text>こうきしんで　うえの　エリアに
+いったら　さっきだった　ひとたちに▽
 おいまわされちゃいましたよ！▼
 やばんですよ　うえの　トレーナー！
-いやしの　エリア５で　しょうぶです！▼</Text>
+いやしの　とうエリアで　しょうぶです！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T10:56:20" />
+				Time="2011-09-27T06:40:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13085,14 +13085,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>好奇心で　エリア６に　行ったら
-殺気だった　人たちに▽
+			<Text>好奇心で　上の　エリアに
+行ったら　殺気だった　人たちに▽
 追い回されちゃいましたよ！▼
 やばんですよ　上の　トレーナー！
-いやしの　エリア５で　勝負です！▼</Text>
+いやしの　当エリアで　勝負です！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-11T10:57:02" />
+				Time="2011-09-27T06:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14122,13 +14122,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここ　エリア６から　したは
+			<Text>ここから　したは
 じごくの　エリアと　よばれているよ！▼
 へなちょこトレーナーは　とっとと
 おうちに　にげかえりな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T06:36:01" />
+				Time="2011-09-27T06:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14136,13 +14136,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここ　エリア６から　下は
+			<Text>ここから　下は
 地獄の　エリアと　呼ばれているよ！▼
 へなちょこトレーナーは　とっとと
 おうちに　逃げ帰りな！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-31T06:36:09" />
+				Time="2011-09-27T06:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14974,11 +14974,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どこへ　いこうっていうの！？
-エリア６に　きちゃったんだもん▽
+ここまで　きちゃったんだもん▽
 どこにも　にげられやしないわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T10:39:45" />
+				Time="2011-09-27T06:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14987,11 +14987,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どこへ　行こうっていうの！？
-エリア６に　来ちゃったんだもん▽
+ここまで　来ちゃったんだもん▽
 どこにも　逃げられやしないわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-12T10:39:53" />
+				Time="2011-09-27T06:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22909,13 +22909,13 @@
 			Language="JPN">
 			<Text>なんど　ちょうせんしても　どうしても
 このエリアを　クリアできないんだ……▼
-さすが　ベテランつぶしの　エリア９
-いままでとは　レベルが　ちがうな……▼
+いままでとは　レベルが　ちがうな……
+さいごの　なんかんって　わけか？▼
 ……はっ　おまえも　かなりやりそうだ
 おてやわらかに　たのむぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-29T07:30:53" />
+				Time="2011-09-27T06:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22925,13 +22925,13 @@
 			Language="JPN_KANJI">
 			<Text>何回も　挑戦したけど　どうしても
 このエリアを　クリアできないんだ……▼
-さすが　ベテランつぶしの　エリア９
-いままでとは　レベルが　ちがうな……▼
+いままでとは　レベルが　ちがうな……
+最後の　難関って　わけか？▼
 ……はっ　おまえも　かなりやりそうだ
 お手柔らかに　頼むぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-08-29T07:30:42" />
+				Time="2011-09-27T06:50:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
