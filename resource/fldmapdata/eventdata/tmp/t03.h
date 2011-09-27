@@ -28,6 +28,7 @@
 #define T03_SWPLAZMAM_02                  12
 #define T03_SWRIVAL_01                    13
 #define FLD_ITEM_142                      14
+#define FLD_ITEM_144_DUMMY                15
 
 #endif //ZONE_T03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

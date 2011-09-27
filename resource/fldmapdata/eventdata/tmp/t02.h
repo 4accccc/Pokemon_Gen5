@@ -21,6 +21,8 @@
 #define T02_POKE36_01                      4
 #define T02_OLDWOMAN1_01                   5
 #define T02_GIRL2_01                       6
+#define FLD_ITEM_300_DUMMY                 7
+#define FLD_ITEM_305_DUMMY                 8
 
 #endif //ZONE_T02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
