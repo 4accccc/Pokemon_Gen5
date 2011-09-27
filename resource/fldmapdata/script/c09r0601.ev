@@ -103,6 +103,19 @@ EVENT_START   ev_reserve_c09r0601_swchampion_01
 
   //カメラ処理終了
   _CAMERA_END()
+  
+  //ワンアンドオンリー（手持ち一匹）メダル処理
+  {
+  
+  _CHECK_MEDAL_GET( LOCALWORK14, MDLID_LONELY_CHAMPION )
+  _GET_PARTY_POKE_COUNT( LOCALWORK15, POKECOUNT_MODE_TOTAL )
+  
+  IF $LOCALWORK14 == FALSE && $LOCALWORK15 == 1  THEN 
+    //メダル入手条件達成
+    _SET_MEDAL_ACHIVE( MDLID_LONELY_CHAMPION )
+  ENDIF
+  
+  }
 
   //ゲームクリア前後で分岐【仮】
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
