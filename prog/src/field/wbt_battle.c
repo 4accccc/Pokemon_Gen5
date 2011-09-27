@@ -1040,14 +1040,15 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   {
     const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
     WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-    if ( wbt_tr->tr_id < WBTSAVE_FLAG_MAX )
-    { //戦ったかどうかのフラグを反映
-      WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
-    }
-    if ( wbtsys->wbtcup != WBTCUP_DOWNLOAD )
-    { //対戦相手のトレーナーIDを保存する
+
+    if ( wbtsys->wbtcup != WBTCUP_DOWNLOAD && wbt_tr->tr_id < WBTROM_TRID_MEM_MAX )
+    {
+      //対戦相手のトレーナーIDを保存する
       u8 pos = getBattleRecordIndex( wbtsys->stage );
       WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
+
+      //戦ったかどうかのフラグを反映
+      WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
     }
     if ( result == BTL_RESULT_LOSE || wbtsys->isTutorial == TRUE )
     { //敗北した場合orチュートリアル中は無効なトレーナーIDをセットしておく
