@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/23 17:32:47
+#save date:2011/09/27 15:13:55
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -552
+152 0 -568
 #event number: 1
 #type
 1
@@ -249,7 +249,7 @@ SCRID_BG_C08GYM0101_STATUE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -520
+152 0 -536
 #event number: 1
 #Bg Event Label
 BGID_C08GYM0101_STATUE_02
@@ -262,7 +262,7 @@ SCRID_BG_C08GYM0101_STATUE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -520
+88 0 -536
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
