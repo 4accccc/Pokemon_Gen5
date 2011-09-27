@@ -130,6 +130,8 @@ typedef struct PLAYER_MOVE_WORK_tag
   u32           cam_type_tmp;
 
   TRACE_MOVE_DATA move_data[ICA_MOVE_ID_MAX];
+  
+  const VecFx32   *p_watch_target;
 
 }PLAYER_MOVE_WORK;
 
@@ -920,6 +922,36 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
       // 停止演出
       MOVE_Event_StopEffectMain( p_wk );
 
+#ifdef PM_DEBUG
+      // 強制イベント終了
+      {
+        s32 trg = GFL_UI_KEY_GetTrg();
+        s32 cont = GFL_UI_KEY_GetCont();
+        if( (cont & PAD_BUTTON_L) && (trg & PAD_BUTTON_DEBUG) )
+        {
+          s32 i;
+          s32 mdl_id;
+          for( mdl_id = 0 ; mdl_id < ICA_MOVE_ID_MAX; mdl_id++ )
+          {
+            EXP_OBJ_ANM_CNT_PTR exobj_anm;
+            TRACE_MOVE_DATA *p_md = &p_wk->move_data[mdl_id];
+            for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
+            {
+              exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_md->p_model->p_ex_obj,
+                  GYM_DRAGON_UNIT_IDX, p_md->p_model->modelID, i );
+              FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+            }
+          }
+          PMSND_StopSE();
+          PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_STOP );
+          ONOUE_Printf("停止音の再生\n");
+
+          (*p_seq) = MOVE_EVENT_SEQ_CALL_BUTTON_EVENT;
+          return GMEVENT_RES_CONTINUE;
+        }
+      }
+#endif
+
       // アニメーション終了チェック
       for( i = 0; i < ICA_MOVE_ID_MAX ; i++ )
       {
@@ -1229,58 +1261,46 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
   // 終了フレームの取得
   end_frame = get_anmend_frame( p_md );
 
-  // 画面ゆれ(敵ドラゴンと自機ドラゴンを共通にしました)
-  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE) )
-  {
-    CallShakeCamera_Bark( p_wk->p_fld_wk );
-  }
-
   // カメラ切り替え
   if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_START) )
   {
     // 演出用カメラに切り替え
     FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
     p_wk->cam_type_tmp = FIELD_CAMERA_GetCameraType( p_cam );
-  
-    // デフォルトカメラを切り替え
-    FIELD_CAMERA_SetCameraType( p_cam, GYM_DRAGON_EFFECT_CAM_NO );  // デフォルトカメラの切り替え
+   
+    //カメラのターゲットを取得
+    p_wk->p_watch_target = FIELD_CAMERA_GetWatchTarget(p_cam);
+    // デフォルトカメラを切り替え(トレースOFF)
+    FIELD_CAMERA_SetCameraType( p_cam, GYM_DRAGON_EFFECT_CAM_NO );
+
     ONOUE_Printf("カメラを演出用に変更\n");
-    //FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
 
   }
   if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_END) )
   {
     // 演出用カメラから通常カメラに戻す
     FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
-    FIELD_CAMERA_SetCameraType( p_cam, p_wk->cam_type_tmp );        // カメラタイプを復帰
     ONOUE_Printf("カメラを元に戻す\n");
-    //FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
+
+    //際バインド
+    FIELD_CAMERA_SetDefaultTarget(p_cam, p_wk->p_watch_target );
+    // トレース再開
+    FIELD_CAMERA_RestartTrace(p_cam);
+    // カメラタイプを復帰
+    FIELD_CAMERA_SetCameraType( p_cam, p_wk->cam_type_tmp );
   }
 
   // SE再生
   switch( p_wk->bark_seq )
   {
-  case 0:
-    {
-      // 移動音の停止シーケンス
-      if( end_frame == (p_wk->event_frame + DRA_BARK_MOVE_STOP_SE_FRAME) )
-      {
-        // 移動音の停止
-        PMSND_StopSE();
-        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_STOP );
-        p_wk->bark_seq++;
-        ONOUE_Printf("ドラゴン咆哮：移動停止音の再生\n");
-      }
-    }
-    break;
-  case 1: // 自機ドラゴンと敵ドラゴンが咆哮するまでこのシーケンスを行う
-  case 2:
+  case 0: // 自機ドラゴンと敵ドラゴンが咆哮するまでこのシーケンスを行う
+  case 1:
     {
       // 自機ドラゴンの咆哮
 #ifdef PM_DEBUG
-      if( end_frame == (p_wk->event_frame + debug_dragon_bark_value) )
+      if( p_wk->event_frame == debug_dragon_bark_value )
 #else
-      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_HERO) )
+      if( p_wk->event_frame == DRA_BARK_FRAME_HERO )
 #endif
       {
         // 咆える音再生
@@ -1296,28 +1316,6 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
         PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BARK );
         p_wk->bark_seq++;
         ONOUE_Printf("ドラゴン咆哮：敵ドラゴン咆哮音の再生\n");
-      }
-    }
-    break;
-  case 3:
-    {
-      // 移動開始音再生
-      if( end_frame == (p_wk->event_frame + DRA_BARK_MOVE_START_SE_FRAME) )
-      {
-        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_START );
-        p_wk->bark_seq++;
-        ONOUE_Printf("ドラゴン咆哮：移動開始音の再生\n");
-      }
-    }
-    break;
-  case 4:
-    {
-      if( PMSND_CheckPlaySE() == FALSE )
-      {
-        // 移動中音を再生
-        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE );
-        p_wk->bark_seq++;
-        ONOUE_Printf("ドラゴン咆哮：移動中音の再生\n");
       }
     }
     break;
@@ -1450,7 +1448,13 @@ static void MOVE_Event_StopEffectMain( PLAYER_MOVE_WORK *p_wk )
     // カメラゆれ
     if( end_frame == ( p_wk->event_frame + DRA_BUMP_CAMERA_SHAKE_FRAME ) )
     {
-      CallShakeCamera_Bump( p_wk->p_fld_wk );
+      // 最上階に移動するとき以外処理を行う
+      if( (p_wk->event_seq != GYM_DRAGON_EVENT_SEQ_UP_BUTTON) || 
+          (p_wk->p_sv_work->now_floor_layer !=  FLOOR_LAYER_ARM))
+      {
+        CallShakeCamera_Bump( p_wk->p_fld_wk );
+      }
+
     }
   }
 }
