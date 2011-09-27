@@ -142,9 +142,9 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_INF_TRAINER_WIN ( LARGE_REC_START+48 )   ///< @無限ダンジョンでトレーナーを倒した数
 #define RECID_CTVT_BALLOON    ( LARGE_REC_START+49 )   ///< @ライブキャスターミニゲームで風船を割った数
 
-#define RECID_LARGE_51   ( LARGE_REC_START+50 ) ///< 以下は未使用
-#define RECID_LARGE_52   ( LARGE_REC_START+51 )
-#define RECID_LARGE_53   ( LARGE_REC_START+52 )
+#define RECID_POKEWOOD_HIGH   ( LARGE_REC_START+50 )   ///< ポケウッド最高興行収入
+#define RECID_POKEWOOD_TOTAL  ( LARGE_REC_START+51 )   ///< ポケウッド累計興行収入
+#define RECID_LARGE_53   ( LARGE_REC_START+52 )   /// 以下未使用
 #define RECID_LARGE_54   ( LARGE_REC_START+53 )
 #define RECID_LARGE_55   ( LARGE_REC_START+54 )
 #define RECID_LARGE_56   ( LARGE_REC_START+55 )
@@ -339,8 +339,8 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_INF_TRAINER_WIN_FLAG  ( 0 )   ///< @無限ダンジョンでトレーナーを倒した数 999,999,999
 #define RECID_CTVT_BALLOON_FLAG     ( 0 )   ///< @ライブキャスターミニゲームで風船を割った数 999,999,999
 
-#define RECID_LARGE_51_FLAG   ( 1 )
-#define RECID_LARGE_52_FLAG   ( 1 )
+#define RECID_POKEWOOD_HIGH_FLAG    ( 3 )   ///< ポケウッド最高興行収入 9,999
+#define RECID_POKEWOOD_TOTAL_FLAG   ( 0 )   ///< ポケウッド累計興行収入 999,999,999
 #define RECID_LARGE_53_FLAG   ( 1 )
 #define RECID_LARGE_54_FLAG   ( 1 )
 #define RECID_LARGE_55_FLAG   ( 1 )
