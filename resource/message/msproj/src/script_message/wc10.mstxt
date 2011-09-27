@@ -1419,8 +1419,8 @@
 おれの　にいちゃんは　やればできる
 にいちゃん　なんだー！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:00" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1434,8 +1434,8 @@
 おれの　兄ちゃんは　やればできる
 兄ちゃんなんだー！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:10" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:55:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1482,11 +1482,11 @@
 はたらいてる　ショップにも　ガンガン
 しんせいひん　ならべたりしてさー！▼
 しろのじゅどうを　せいはした
-[Name:TrainerName ]　って　ひとに▽
+[Name:TrainerName ]　って　トレーナーに▽
 しげき　されたんだって！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:57:19" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1499,11 +1499,11 @@
 働いてる　ショップにも　ガンガン
 新製品を　並べたりしてさー！▼
 白の樹洞を　制覇した
-[Name:TrainerName ]　って　人に▽
+[Name:TrainerName ]　って　トレーナーに▽
 刺激されたんだって！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:57:27" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1820,7 +1820,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクマ『さいきん　しろのたいじゅで
+			<Text>タクマ『さいきん　しろのじゅどうで
 すごうでトレーナーが　つぎつぎと▽
 たおされているんだって▼
 どうやら　[Name:TrainerName ]という　なまえの
@@ -1828,8 +1828,8 @@
 ……まさか　きみじゃないよね？
 いつか　てあわせ　ねがいたいなぁ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:29" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:57:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1837,7 +1837,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タクマ『最近　白の大樹で
+			<Text>タクマ『最近　白の樹洞で
 すごうでトレーナーが　次々と▽
 倒されているんだって▼
 どうやら　[Name:TrainerName ]という　名前の
@@ -1845,8 +1845,8 @@
 ……まさか　きみじゃないよね？
 いつか　手合わせ　願いたいなぁ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:40" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1889,14 +1889,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>タクマ『きみが　[Name:TrainerName ]　か！
-しろのたいじゅを　せいはしたんだろ？▼
+しろのじゅどうを　せいはしたんだろ？▼
 すごいなぁ　おれなんて
 ずっと　さいしょのエリアで▽
 くせん　してるんだよ……▼
 こんど　コツを　おしえてよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:35" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:57:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1905,14 +1905,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タクマ『きみが　[Name:TrainerName ]　か！
-白の大樹を　制覇したんだろ？▼
+白の樹洞を　制覇したんだろ？▼
 すごいよなぁ　おれなんて　ずっと
-最初の　エリアで▽
-苦戦してるんだよ……▼
+最初の　エリアで　苦戦してるんだ……▼
 今度　コツを　おしえてよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:57:53" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4363,13 +4362,13 @@
 			Language="JPN">
 			<Text>ガクト『おお！　[Name:TrainerName ]！▼
 はなしには　きいてるよ
-どうくつ　だいぶ　ふかいところまで▽
+どうくつの　だいぶ　ふかいところまで▽
 もぐったみたいだな！▼
 はやくも　あきらめぎみの　わしに
 かわって　さいかそうまで　いってくれ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:20" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4379,13 +4378,13 @@
 			Language="JPN_KANJI">
 			<Text>ガクト『おお！　[Name:TrainerName ]！▼
 話には　きいてるよ
-洞穴　だいぶ　深い所まで▽
+白の樹洞の　だいぶ　深い所まで▽
 潜ったみたいだな！▼
 早くも　あきらめ気味の　わしに
 代わって　最下層まで　行ってくれ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:58:23" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4428,14 +4427,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ガクト『もりの　みんなを
-だいひょうして　[Name:TrainerName ]　の▼
-しろのたいじゅ　せいはを
+だいひょうして　[Name:TrainerName ]　の▽
+しろのじゅどう　せいはを▽
 いわわせて　もらうよ！▼
 おめでとう！
 ほんとうに　よく　がんばったね！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:58:33" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4444,14 +4443,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ガクト『森の　みんなを
-代表して　[Name:TrainerName ]　の▼
-白の大樹　制覇を
-祝わせて　もらうよ！▼
+代表して　[Name:TrainerName ]　の▽
+白の樹洞　制覇を　祝わせてもらうよ！▼
 おめでとう！
 本当に　良く　頑張ったね！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T08:58:39" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

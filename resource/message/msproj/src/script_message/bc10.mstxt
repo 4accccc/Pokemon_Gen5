@@ -464,15 +464,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タクロウ『キマってる　奴ってのはさ
-欲しいものは　絶対に▽
-手に入れるんだ！▼
+欲しいものは　絶対に　手に入れるんだ▼
 おまえも　欲しいポケモンが　いたら
 ぜったい　あきらめるなよ！▼
 清く正しく　欲望に　正直に
 徹底的に　キメていこうぜ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T11:55:33" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:18:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4961,11 +4960,12 @@
 まずは　くろのまてんろう　ってのを
 だれよりも　はやく　クリアして▽
 ゆうめいじんに　なってやるんだから！▼
-って　うそ……あなた　クリアしたの？
+……って　うそ！
+あなた　クリアしたの？▽
 えー！　わたしの　けいかくがぁ！！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T11:57:54" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4978,11 +4978,12 @@
 まずは　黒の摩天楼　ってのを
 だれよりも　早く　クリアして▽
 有名人に　なってやるんだから！▼
-って　うそ……あなた　クリアしたの？
+……って　うそ！
+あなた　クリアしたの？▽
 えー！　わたしの　計画がぁ！！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T11:58:03" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6500,15 +6501,15 @@
 			Language="JPN">
 			<Text>エミ『おかねを　かせぐためとはいえ
 こんなに　おなじまちに　いたのは▽
-はじめてだな！▼
+はじめてだな……▼
 いろんなひととも　しりあったし
 おきにいりの　おみせもできた……▼
 でも　そろそろ　たびにでなきゃ
 つぎは　ホワイトフォレストで▽
 のんびりってのも　いいかもね！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T06:12:06" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6518,15 +6519,15 @@
 			Language="JPN_KANJI">
 			<Text>エミ『お金を　かせぐためとはいえ
 こんなに長く　同じ街に　いたのは▽
-初めてだな！▼
+初めてだな……▼
 色んな人とも　知り合ったし
 お気に入りの　お店もできた……▼
 でも　そろそろ　旅にでなきゃ
 次は　ホワイトフォレストで▽
 のんびりってのも　いいかもね！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T11:59:55" />
+				User="swan_scenario:W00293"
+				Time="2011-09-27T02:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
