@@ -8,11 +8,11 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ひとのような　かたちをした
 [Ctrl1:xcenter ]バケモノに　おそわれたものの
-[Ctrl1:xcenter ]なんとか　やまごやから
+[Ctrl1:xcenter ]なんとか　やどやから
 [Ctrl1:xcenter ]だっしゅつした　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:23" />
+				Time="2011-09-27T11:56:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,14 +20,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ひとのような　かたちをした
-[Ctrl1:xcenter ]バケモノに　おそわれたものの
-[Ctrl1:xcenter ]なんとか　やまごやから
-[Ctrl1:xcenter ]だっしゅつした　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]人のような　形をした
+[Ctrl1:xcenter ]バケモノに　襲われたものの
+[Ctrl1:xcenter ]なんとか　宿屋から
+[Ctrl1:xcenter ]脱出した　[Name:TrainerName ]
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:26" />
+				Time="2011-09-27T11:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66,12 +66,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ゆうえんちに　にげこみ
-[Ctrl1:xcenter ]ひとあんしん　かと
-[Ctrl1:xcenter ]おもったのも　つかのま……</Text>
+			<Text>[Ctrl1:xcenter ]遊園地に　逃げ込み
+[Ctrl1:xcenter ]一安心　かと
+[Ctrl1:xcenter ]思ったのも　束の間……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:51" />
+				Time="2011-09-27T11:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -293,11 +293,11 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ひとのような　かたちをした
 [Ctrl1:xcenter ]バケモノに　おそわれたものの
-[Ctrl1:xcenter ]なんとか　やまごやから
+[Ctrl1:xcenter ]なんとか　やどやから
 [Ctrl1:xcenter ]だっしゅつした　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:58" />
+				Time="2011-09-27T11:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -305,14 +305,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ひとのような　かたちをした
-[Ctrl1:xcenter ]バケモノに　おそわれたものの
-[Ctrl1:xcenter ]なんとか　やまごやから
-[Ctrl1:xcenter ]だっしゅつした　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]人のような　形をした
+[Ctrl1:xcenter ]バケモノに　襲われたものの
+[Ctrl1:xcenter ]なんとか　宿屋から
+[Ctrl1:xcenter ]脱出した　[Name:TrainerName ]
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:58" />
+				Time="2011-09-27T11:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -344,12 +344,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ゆうえんちに　にげこみ
-[Ctrl1:xcenter ]ひとあんしん　かと
-[Ctrl1:xcenter ]おもったのも　つかのま……</Text>
+			<Text>[Ctrl1:xcenter ]遊園地に　逃げ込み
+[Ctrl1:xcenter ]一安心　かと
+[Ctrl1:xcenter ]思ったのも　束の間……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:42:58" />
+				Time="2011-09-27T11:58:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

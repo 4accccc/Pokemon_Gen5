@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]けんきゅうに　けんきゅうを　かさね
+			<Text>[Ctrl1:xcenter ]けんきゅうを　かさね
 [Ctrl1:xcenter ]ついに　みらいへ　いくことが　できる
 [Ctrl1:xcenter ]じかん　てんそうきを　かんせいさせた
 [Ctrl1:xcenter ]てんさいかがくしゃと　その　じょしゅ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:32:59" />
+				Time="2011-09-27T12:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]けんきゅうに　けんきゅうを　かさね
-[Ctrl1:xcenter ]ついに　みらいへ　いくことが　できる
-[Ctrl1:xcenter ]じかん　てんそうきを　かんせいさせた
-[Ctrl1:xcenter ]てんさいかがくしゃと　その　じょしゅ</Text>
+			<Text>[Ctrl1:xcenter ]研究を　重ね
+[Ctrl1:xcenter ]ついに　未来へ　行くことが　できる
+[Ctrl1:xcenter ]時間転送機を　完成させた
+[Ctrl1:xcenter ]天才科学者と　その　助手</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:32:58" />
+				Time="2011-09-27T12:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66,13 +66,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]いま　れきしてきな　はつめいの
-[Ctrl1:xcenter ]しけん　うんてんが
-[Ctrl1:xcenter ]はじまろうと　していた……
+			<Text>[Ctrl1:xcenter ]今　歴史的な　発明の
+[Ctrl1:xcenter ]試験運転が
+[Ctrl1:xcenter ]始まろうと　していた……
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:33:23" />
+				Time="2011-09-27T12:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,13 +306,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]けんきゅうに　けんきゅうを　かさね
-[Ctrl1:xcenter ]ついに　みらいへ　いくことが　できる
-[Ctrl1:xcenter ]じかん　てんそうきを　かんせいさせた
-[Ctrl1:xcenter ]てんさいかがくしゃと　その　じょしゅ</Text>
+			<Text>[Ctrl1:xcenter ]研究を　重ね
+[Ctrl1:xcenter ]ついに　未来へ　行くことが　できる
+[Ctrl1:xcenter ]時間転送機を　完成させた
+[Ctrl1:xcenter ]天才科学者と　その　助手</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:35:13" />
+				Time="2011-09-27T12:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -345,13 +345,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]いま　れきしてきな　はつめいの
-[Ctrl1:xcenter ]しけん　うんてんが
-[Ctrl1:xcenter ]はじまろうと　していた……
+			<Text>[Ctrl1:xcenter ]今　歴史的な　発明の
+[Ctrl1:xcenter ]試験運転が
+[Ctrl1:xcenter ]始まろうと　していた……
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:35:13" />
+				Time="2011-09-27T12:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -8,10 +8,11 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]みずから　はつめいした
 [Ctrl1:xcenter ]じかん　てんそうきに　のり
-[Ctrl1:xcenter ]みらいへ　たびだった　かがくしゃ</Text>
+[Ctrl1:xcenter ]みらいへ　たびだった
+[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:34:20" />
+				Time="2011-09-27T12:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みずから　はつめいした
-[Ctrl1:xcenter ]じかん　てんそうきに　のり
-[Ctrl1:xcenter ]みらいへ　たびだった　かがくしゃ</Text>
+			<Text>[Ctrl1:xcenter ]自ら　発明した
+[Ctrl1:xcenter ]時間転送機に　乗り
+[Ctrl1:xcenter ]未来へ　旅立った　
+[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:34:20" />
+				Time="2011-09-27T12:03:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63,12 +65,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　そこで　まちうけて　いたのは
-[Ctrl1:xcenter ]そうぞうを　ぜっする　せかいと
-[Ctrl1:xcenter ]みらいの　じゅうにん　であった……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　そこで　待ち受けて　いたのは
+[Ctrl1:xcenter ]想像を　絶する　世界と
+[Ctrl1:xcenter ]未来の　住人　であった……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:34:47" />
+				Time="2011-09-27T12:05:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -290,10 +292,11 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]みずから　はつめいした
 [Ctrl1:xcenter ]じかん　てんそうきに　のり
-[Ctrl1:xcenter ]みらいへ　たびだった　かがくしゃ</Text>
+[Ctrl1:xcenter ]みらいへ　たびだった
+[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:35:04" />
+				Time="2011-09-27T12:05:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,12 +304,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みずから　はつめいした
-[Ctrl1:xcenter ]じかん　てんそうきに　のり
-[Ctrl1:xcenter ]みらいへ　たびだった　かがくしゃ</Text>
+			<Text>[Ctrl1:xcenter ]自ら　発明した
+[Ctrl1:xcenter ]時間転送機に　乗り
+[Ctrl1:xcenter ]未来へ　旅立った　
+[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:35:04" />
+				Time="2011-09-27T12:05:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -338,12 +342,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　そこで　まちうけて　いたのは
-[Ctrl1:xcenter ]そうぞうを　ぜっする　せかいと
-[Ctrl1:xcenter ]みらいの　じゅうにん　であった……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　そこで　待ち受けて　いたのは
+[Ctrl1:xcenter ]想像を　絶する　世界と
+[Ctrl1:xcenter ]未来の　住人　であった……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:35:04" />
+				Time="2011-09-27T12:05:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

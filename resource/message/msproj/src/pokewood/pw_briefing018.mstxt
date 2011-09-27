@@ -7,14 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ポケモンが　にんげんを　しはいする
-[Ctrl1:xcenter ]みらいの　せかいで　かがくしゃは
-[Ctrl1:xcenter ]ひさんな　かこを　かえるために
-[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくを　えた
-</Text>
+[Ctrl1:xcenter ]しょうげきの　みらいを　めにした
+[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:36:12" />
+				Time="2011-09-27T12:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,14 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ポケモンが　にんげんを　しはいする
-[Ctrl1:xcenter ]みらいの　せかいで　かがくしゃは
-[Ctrl1:xcenter ]ひさんな　かこを　かえるために
-[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくを　えた</Text>
+			<Text>[Ctrl1:xcenter ]ポケモンが　人間を　支配する
+[Ctrl1:xcenter ]衝撃の　未来を　目にした
+[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:36:17" />
+				Time="2011-09-27T12:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -55,13 +50,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ポケモンと　にんげんの
-[Ctrl1:xcenter ]しんらいを　とりもどすべく
+			<Text>[Ctrl1:xcenter ]みらいじん　レディアンの
+[Ctrl1:xcenter ]きょうりょくの　もと
 [Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
 [Ctrl1:xcenter ]ついに　かんせい　した</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:37:23" />
+				Time="2011-09-27T12:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -69,13 +64,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ポケモンと　にんげんの
-[Ctrl1:xcenter ]しんらいを　とりもどすべく
-[Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
-[Ctrl1:xcenter ]ついに　かんせい　した</Text>
+			<Text>[Ctrl1:xcenter ]未来人　レディアンの
+[Ctrl1:xcenter ]協力の　もと
+[Ctrl1:xcenter ]時間を　さかのぼる　転送機が
+[Ctrl1:xcenter ]ついに　完成　した</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:37:26" />
+				Time="2011-09-27T12:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -87,12 +82,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]しかし　てんそうきの　うみだした
-[Ctrl1:xcenter ]じかんの　ゆがみから
-[Ctrl1:xcenter ]あらわれた　ものがいた……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　かこへ　しゅっぱつする
+[Ctrl1:xcenter ][Name:TrainerName ]はかせの　まえに
+[Ctrl1:xcenter ]ふたたび　レディアンが
+[Ctrl1:xcenter ]たちふさがる……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:05" />
+				Time="2011-09-27T12:09:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -100,12 +96,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　てんそうきの　うみだした
-[Ctrl1:xcenter ]じかんの　ゆがみから
-[Ctrl1:xcenter ]あらわれた　ものがいた……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　過去へ　出発する
+[Ctrl1:xcenter ][Name:TrainerName ]博士の　前に
+[Ctrl1:xcenter ]再び　レディアンが
+[Ctrl1:xcenter ]立ちふさがる……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:13" />
+				Time="2011-09-27T12:11:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -119,8 +116,8 @@
 			Language="JPN">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-27T12:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -130,8 +127,8 @@
 			Language="JPN_KANJI">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="ito_hiroto:W00178"
+				Time="2011-09-27T12:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -300,14 +297,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ポケモンが　にんげんを　しはいする
-[Ctrl1:xcenter ]みらいの　せかいで　かがくしゃは
-[Ctrl1:xcenter ]ひさんな　かこを　かえるために
-[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくを　えた
-</Text>
+[Ctrl1:xcenter ]しょうげきの　みらいを　めにした
+[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -315,14 +309,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ポケモンが　にんげんを　しはいする
-[Ctrl1:xcenter ]みらいの　せかいで　かがくしゃは
-[Ctrl1:xcenter ]ひさんな　かこを　かえるために
-[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくを　えた</Text>
+			<Text>[Ctrl1:xcenter ]ポケモンが　人間を　支配する
+[Ctrl1:xcenter ]衝撃の　未来を　目にした
+[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -341,13 +333,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ポケモンと　にんげんの
-[Ctrl1:xcenter ]しんらいを　とりもどすべく
+			<Text>[Ctrl1:xcenter ]みらいじん　レディアンの
+[Ctrl1:xcenter ]きょうりょくの　もと
 [Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
 [Ctrl1:xcenter ]ついに　かんせい　した</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -355,13 +347,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ポケモンと　にんげんの
-[Ctrl1:xcenter ]しんらいを　とりもどすべく
-[Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
-[Ctrl1:xcenter ]ついに　かんせい　した</Text>
+			<Text>[Ctrl1:xcenter ]未来人　レディアンの
+[Ctrl1:xcenter ]協力の　もと
+[Ctrl1:xcenter ]時間を　さかのぼる　転送機が
+[Ctrl1:xcenter ]ついに　完成　した</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -373,12 +365,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]しかし　てんそうきの　うみだした
-[Ctrl1:xcenter ]じかんの　ゆがみから
-[Ctrl1:xcenter ]あらわれた　ものがいた……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　かこへ　しゅっぱつする
+[Ctrl1:xcenter ][Name:TrainerName ]はかせの　まえに
+[Ctrl1:xcenter ]ふたたび　レディアンが
+[Ctrl1:xcenter ]たちふさがる……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -386,12 +379,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　てんそうきの　うみだした
-[Ctrl1:xcenter ]じかんの　ゆがみから
-[Ctrl1:xcenter ]あらわれた　ものがいた……</Text>
+			<Text>[Ctrl1:xcenter ]しかし　過去へ　出発する
+[Ctrl1:xcenter ][Name:TrainerName ]博士の　前に
+[Ctrl1:xcenter ]再び　レディアンが
+[Ctrl1:xcenter ]立ちふさがる……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:38:21" />
+				Time="2011-09-27T12:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

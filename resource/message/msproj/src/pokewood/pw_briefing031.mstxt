@@ -11,7 +11,7 @@
 [Ctrl1:xcenter ]おんなのひとを　すくった　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:43:54" />
+				Time="2011-09-27T11:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]バケモノに　おそわれたが　にげのび
-[Ctrl1:xcenter ]ゆうえんちで　たすけを　こう
-[Ctrl1:xcenter ]おんなのひとを　すくった　[Name:TrainerName ]</Text>
+			<Text>[Ctrl1:xcenter ]バケモノに　襲われたが　逃げのび
+[Ctrl1:xcenter ]遊園地で　助けを　こう
+[Ctrl1:xcenter ]女の人を　救った　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:44:02" />
+				Time="2011-09-27T11:53:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56,7 +56,7 @@
 [Ctrl1:xcenter ]めに　した　もの　とは……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:45:12" />
+				Time="2011-09-27T11:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -64,13 +64,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]あかいきりの　げんいんを
-[Ctrl1:xcenter ]さがす　うちに
-[Ctrl1:xcenter ]はかばに　たどりついた　[Name:TrainerName ]が
-[Ctrl1:xcenter ]めに　した　もの　とは……</Text>
+			<Text>[Ctrl1:xcenter ]赤い霧の　原因を
+[Ctrl1:xcenter ]探す　うちに
+[Ctrl1:xcenter ]墓場に　たどりついた　[Name:TrainerName ]が
+[Ctrl1:xcenter ]目に　した　もの　とは……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:45:17" />
+				Time="2011-09-27T11:54:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -295,7 +295,7 @@
 [Ctrl1:xcenter ]おとこのひとを　すくった　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:45:33" />
+				Time="2011-09-27T11:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -303,12 +303,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]バケモノに　おそわれたが　にげのび
-[Ctrl1:xcenter ]ゆうえんちで　たすけを　こう
-[Ctrl1:xcenter ]おとこのひとを　すくった　[Name:TrainerName ]</Text>
+			<Text>[Ctrl1:xcenter ]バケモノに　襲われたが　逃げのび
+[Ctrl1:xcenter ]遊園地で　助けを　こう
+[Ctrl1:xcenter ]男の人を　救った　[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:45:38" />
+				Time="2011-09-27T11:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -341,13 +341,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]あかいきりの　げんいんを
-[Ctrl1:xcenter ]さがす　うちに
-[Ctrl1:xcenter ]はかばに　たどりついた　[Name:TrainerName ]が
-[Ctrl1:xcenter ]めに　した　もの　とは……</Text>
+			<Text>[Ctrl1:xcenter ]赤い霧の　原因を
+[Ctrl1:xcenter ]探す　うちに
+[Ctrl1:xcenter ]墓場に　たどりついた　[Name:TrainerName ]が
+[Ctrl1:xcenter ]目に　した　もの　とは……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:45:26" />
+				Time="2011-09-27T11:55:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
