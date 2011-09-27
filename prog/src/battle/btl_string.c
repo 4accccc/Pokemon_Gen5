@@ -1190,10 +1190,10 @@ void BTL_STR_MakeString_Director_Param( STRBUF *dst, int msgid )
 //=============================================================================================
 void BTL_STR_Register_PokewoodWord( void )
 {
-  // TODO:8つを超えたら引数分岐させます
+  const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( SysWork.mainModule );
   
   // TAG0:手持ちポケモンのニックネームを登録
   // TAG1:自分の名前
-  register_PokeNickname( 0, 0 );
-  register_TrainerName( SysWork.wset, 1, BTL_CLIENT_PLAYER );
+  register_PokeName( 0, 0 );
+  WORDSET_RegisterPlayerName( SysWork.wset, 1, status );
 }
