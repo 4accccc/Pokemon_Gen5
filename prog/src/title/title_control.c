@@ -81,7 +81,8 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #endif
     {
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
-      *seq = 1;
+      //*seq = 1; // ほんとうはムービーに移行するけど・・・
+      *seq = 4;   // 直でタイトルへ
     }
     break;
 
@@ -92,8 +93,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
       cdemo_data.skip = COMMANDDEMO_SKIP_DEBUG;
       cdemo_data.ret  = COMMANDDEMO_RET_NORMAL;
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(command_demo), &COMMANDDEMO_ProcData, &cdemo_data );
-//      *seq = 2;   // 2だとムービーだけど…
-      *seq = 4;   //こっちもタイトルで
+      *seq = 2;   // デモ１へ
     }else{
       *seq = 4;   // タイトルへ
     }
