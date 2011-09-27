@@ -163,10 +163,8 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
   OS_Printf("battle stage index=%d\n", index);
 
   // ポケウッドフラグの参照
-  if( pokewood==BTL_POKEWOOD_REC ){
-    index = BATT_BG_OBONID_27;
-  }else if( pokewood==BTL_POKEWOOD_SHOW ){
-    index = BATT_BG_OBONID_27;
+  if( pokewood==BTL_POKEWOOD_REC || pokewood==BTL_POKEWOOD_SHOW){
+    index = BATT_BG_OBONID_27;  // 何も表示しないお盆
   }
 
   //リソース読み込み

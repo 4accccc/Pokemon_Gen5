@@ -158,6 +158,7 @@ class GraFile
     @ica = [] #
     @ita = []
     @ima = []
+    @enum_name = ""
   end
 
   def set_file_name( str, kind, season )
@@ -184,6 +185,14 @@ class GraFile
     when FILE_IMA 
       @ima[ season*2+side ] = str
     end
+  end
+
+  def set_enum_name ( str )
+    @enum_name = str
+  end
+
+  def get_enum_name
+    @enum_name
   end
 
   def get_table_name
@@ -288,6 +297,7 @@ end
   AUTUMN_FILE = 4
   WINTER_FILE = 5
   EDGE_COLOR  = 6
+  ENUM_NAME   = 11
 
   file_kind = {
     "imd"=>FILE_IMD,
@@ -339,6 +349,7 @@ end
     end
     if split_data[ ATTR_NAME ] != ""
       bg << GraFile.new( split_data[ ATTR_NAME ] )
+      bg[ bg.size - 1 ].set_enum_name( split_data[ ENUM_NAME ] )
     end
     cnt = bg.size - 1
     for i in 0..7
@@ -358,6 +369,7 @@ end
   ext_table = [ "NSBMD", "NSBCA", "NSBTA", "NSBMA" ]
   stage_hash = { "×"=>0xff }
   bg_hash = { "×"=>0xff }
+  bg_name_hash = {}
 
   #お盆ファイルテーブル生成
   fp_stage.printf( "\t.text\n\n" )
@@ -395,6 +407,7 @@ end
   bg.size.times{|i|
     fp_bg.printf( "//%s\n", bg[ i ].get_table_name )
     bg_hash[ bg[ i ].get_table_name ] = i
+    bg_name_hash[ bg[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
       for season in FILE_FLD_SPRING..FILE_FLD_ANIME3
         if bg[ i ].get_file_name( kind, season ) == "×"
@@ -487,6 +500,7 @@ end
     fp_header.printf( "\tu8 padding[ %d ];\n", padding )
   end
   fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
+
   fp_header.printf( "typedef struct\n{\n" )
   fp_header.printf( "\tu16  edge_color;\n" )
 #  fp_header.printf( "\tu16  padding;\n" )
@@ -496,6 +510,7 @@ end
   fp_header.printf( "\tu16 file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n\n" )
 
+  # お盆定義出力
   fp_header.printf( "typedef enum{\n" )
   stage.size.times{ |i|
     if i == 0
@@ -506,6 +521,23 @@ end
   }
   fp_header.printf( "}BATT_BG_OBONID;\n\n" )
 
+  #背景ハッシュのソート済みデータを作成
+  bg_sort = bg_hash.sort_by{|key, value| value}
+
+  # 戦闘背景定義出力
+  fp_header.printf( "typedef enum{\n" )
+  bg_sort.each{ |name, value|
+    if value < 255
+      if value==0 then
+        fp_header.printf( "\tBATT_FIELD_ID_%s = 0,\t\t//%s\n", bg[value].get_enum_name.upcase, name )
+      else
+        fp_header.printf( "\tBATT_FIELD_ID_%s,\t\t    //%s\n", bg[value].get_enum_name.upcase, name )
+      end
+    end
+  }
+  fp_header.printf( "}BATT_FIELD_RES_ID;\n\n" )
+
+  # ファイル出力＆クローズ
   fp_r.close
   fp_spec.close
   fp_hash.close
@@ -517,4 +549,5 @@ end
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
   fp_w.close
+
 

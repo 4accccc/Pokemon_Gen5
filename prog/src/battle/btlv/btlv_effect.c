@@ -95,6 +95,7 @@ struct _BTLV_EFFECT_SETUP_PARAM
   const BTL_MAIN_MODULE*  mainModule;
   u16   pokewood;
   u16   pokewood_field;
+  BOOL  wbt_final;
 };
 
 struct _BTLV_EFFECT_WORK
@@ -217,7 +218,22 @@ static int BTLV_EFFECT_GetPokewoodMode( const BTL_MAIN_MODULE *mainModule )
   return BTL_POKEWOOD_NONE;
 }
 
-
+//----------------------------------------------------------------------------------
+/**
+ * @brief	WBT決勝戦かフラグの取得
+ *
+ * @param   mainModule		
+ *
+ * @retval  BOOL		TRUE:WBT決勝戦  FALSE:決勝戦じゃない
+ */
+//----------------------------------------------------------------------------------
+static BOOL BTLV_EFFECT_GetWbtFinal( const BTL_MAIN_MODULE *mainModule )
+{
+  if( mainModule!=NULL ){
+    return BTL_MAIN_GetWbtFinal( mainModule );
+  }
+  return FALSE;
+}
 //============================================================================================
 /**
  * @brief システム初期化用のセットアップパラメータ生成
@@ -236,6 +252,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetito
   besp->multi       = multi;
   besp->scu         = scu;
   besp->mainModule  = mainModule;
+  besp->wbt_final   = BTLV_EFFECT_GetWbtFinal( mainModule );
   besp->pokewood    = BTLV_EFFECT_GetPokewoodMode( mainModule );
   if( besp->pokewood!=BTL_POKEWOOD_NONE ){
     POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(mainModule);
@@ -353,12 +370,12 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
                                                 bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ]);
       bew->bfw  = BTLV_FIELD_Init( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ),
                                    bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID,
-                                   besp->pokewood, besp->pokewood_field );
+                                   besp->pokewood, besp->pokewood_field, besp->wbt_final );
     }
     else
     {
       bew->bfw  = BTLV_FIELD_Init( FALSE, bbtzst[ besp->bfs.bgType ].bg_file[ besp->bfs.bgAttr ], season, heapID,
-                                   besp->pokewood, besp->pokewood_field );
+                                   besp->pokewood, besp->pokewood_field, besp->wbt_final );
     }
 
     //ライト設定
@@ -533,7 +550,7 @@ void  BTLV_EFFECT_Main( void )
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
 //    BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
     BTLV_FIELD_ChangeModel( bew->bfw, debug_anime );
-    if(++debug_anime>2){ debug_anime=0; }
+    if(++debug_anime>1){ debug_anime=0; }
   }
 #endif
 

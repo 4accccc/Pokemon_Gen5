@@ -2679,6 +2679,16 @@ u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->musicWin;
 }
+/// 敗北時BGMNo（ポケウッド上映のみ）
+u16 BTL_MAIN_GetLoseBGMNo( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->musicLose;
+}
+/// ストレンジEND時BGMNo（ポケウッド上映のみ）
+u16 BTL_MAIN_GetStrangeEndBGMNo( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->musicStrange;
+}
 //=============================================================================================
 /**
  * 「にげる」を選択した時の反応タイプ
@@ -3950,6 +3960,24 @@ int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
     return wk->setupParam->PokewoodMode;
   }
   return BTL_POKEWOOD_NONE;
+}
+
+//=============================================================================================
+/**
+ * @brief	WBT決勝戦か？
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		TRUE:決勝戦です FALSE：違う
+ */
+//=============================================================================================
+BOOL BTL_MAIN_GetWbtFinal( const BTL_MAIN_MODULE* wk )
+{
+  if(wk!=NULL){
+    return wk->setupParam->WBTFinalFlag;
+  }
+  return FALSE;
+  
 }
 //=============================================================================================
 /**

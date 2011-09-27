@@ -395,6 +395,10 @@ typedef struct {
   u32 audience_bit;        ///< 観客配置のBitテーブル
   u32 pokewoodProfit;      ///< 撮影結果の興行成績
 
+  // [i]ポケウッド限定曲指定
+  u16 musicLose;
+  u16 musicStrange;
+  
   //難易度調整値
   s8 difficulty_lv;
 

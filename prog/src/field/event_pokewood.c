@@ -443,6 +443,8 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
       senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, bsp->pokewoodSenario, GetHeapLowID(heapID));
       bsp->musicDefault = senario->battle_bgm;
       bsp->musicWin     = senario->win_bgm;
+      bsp->musicLose    = senario->lose_bgm;
+      bsp->musicStrange = senario->strange_bgm;
       setTrainerTypeName( prew, bsp, bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, heapID );
       GFL_HEAP_FreeMemory( senario );
     }

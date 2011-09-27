@@ -97,6 +97,9 @@ static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
   }
 }
 
+// WBT決勝戦用のアニメモデリングデータ格納されているオフセット
+#define BATT_FIELD_ANIME_1  ( 4 )
+
 //============================================================================================
 /**
  *  システム初期化
@@ -107,23 +110,32 @@ static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
  * @param[in] heapID  ヒープID
  * @param[in] pokewood ポケウッドフラグ(battle.h参照)
  * @param[in] pokewood_field ポケウッドの背景指定ＮＯ
+ * @param[in] wbt_final wbt決勝戦かどうか？
  */
 //============================================================================================
-BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID, int pokewood, int pokewood_field )
+BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID, int pokewood, int pokewood_field, BOOL wbt_final )
 {
   BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
   BOOL  ret;
   BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
                                                        GFL_HEAP_LOWID( heapID ) );
-
   // ポケウッドフラグが立っているときは背景IDを変更
   if(pokewood==BTL_POKEWOOD_REC){
-    index = 20;
+    index = BATT_FIELD_ID_PW_REC;
   }else if(pokewood==BTL_POKEWOOD_SHOW){
     if(pokewood_field==0){
-      index = 21;
+      index = BATT_FIELD_ID_PW_SHOW_01;
     }else{
       index = pokewood_field;
+    }
+  }
+
+  // WBT決勝戦では戦闘背景がアニメする
+  if(wbt_final){
+    if(index==BATT_FIELD_ID_WBT){
+      season  = BATT_FIELD_ANIME_1;  // アニメ
+    }else{
+      GF_ASSERT_MSG( index==BATT_FIELD_ID_WBT, "WBT決勝戦なのにindexが%d",index );
     }
   }
 

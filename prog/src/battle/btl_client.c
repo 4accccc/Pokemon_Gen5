@@ -565,6 +565,7 @@ static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk 
 static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn );
 static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
 static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw );
+static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -6861,6 +6862,8 @@ static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq )
   }
   return TRUE;
 }
+
+
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 {
   enum {
@@ -6915,13 +6918,14 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       if(resultCode==BTL_RESULT_WIN){ // 勝利ENDか？
         wk->pokewoodSeqWork.seq = 0;
         wk->clientTurnCount=100;
-        BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         (*seq) = SEQ_POKEWOOD_END_EVENT;
       }else{  // 敗北END
         wk->pokewoodSeqWork.seq = 0;
         wk->clientTurnCount=101;
         (*seq) = SEQ_POKEWOOD_END_EVENT;
       }
+      _bgm_change_pokewood_show( wk->mainModule );
+
     }else if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC){   // ポケウッド撮影END
       // 終了ターン処理を実行
       SetEndturnPoint( wk, &wk->pokewoodSeqWork.Estimate );
@@ -11019,6 +11023,25 @@ static void AudienceFunc( BTL_CLIENT *wk )
         BTLV_CORE_SetAudienceCondition( wk->viewCore, TRUE, i, POKEWOOD_AUDIENCE_NOMOVE );
       }
     }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッドのエンディング状態に対応してBGMを変更
+ *
+ * @param   mainModule		
+ */
+//----------------------------------------------------------------------------------
+static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule )
+{
+  const BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSPConst( mainModule );
+  if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_BAD){
+    BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetLoseBGMNo( mainModule ) );
+  }else if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_SUCCESS){
+    BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( mainModule ) );
+  }else if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_STRANGE){
+    BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetStrangeEndBGMNo( mainModule ) );
   }
 }
 

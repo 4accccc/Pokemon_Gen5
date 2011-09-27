@@ -83,3 +83,53 @@ typedef enum{
 	BATT_BG_OBONID_34,				//WBT
 }BATT_BG_OBONID;
 
+typedef enum{
+	BATT_FIELD_ID_GRASS_NOSEAZON = 0,		//草原（四季なし）
+	BATT_FIELD_ID_GRASS_SEAZON,		    //草原（四季あり）
+	BATT_FIELD_ID_CITY_NOSEAZON,		    //街（四季なし）
+	BATT_FIELD_ID_CITY_SEAZON,		    //街（四季あり）
+	BATT_FIELD_ID_DUGEON_A,		    //洞窟A（薄暗い）
+	BATT_FIELD_ID_DUNGEON_B,		    //洞窟B(暗い）
+	BATT_FIELD_ID_FOREST,		    //森
+	BATT_FIELD_ID_MOUNTAIN,		    //山
+	BATT_FIELD_ID_SEA,		    //海
+	BATT_FIELD_ID_INDOOR,		    //室内
+	BATT_FIELD_ID_DESERT,		    //砂漠
+	BATT_FIELD_ID_PALACE,		    //パレス専用
+	BATT_FIELD_ID_GOHST,		    //四天王（ゴースト）専用
+	BATT_FIELD_ID_FIGHTING,		    //四天王（格闘）専用
+	BATT_FIELD_ID_EVIL,		    //四天王（悪）専用
+	BATT_FIELD_ID_ESP,		    //四天王（エスパー）専用
+	BATT_FIELD_ID_N,		    //N専用
+	BATT_FIELD_ID_GETISU,		    //ゲーチス専用
+	BATT_FIELD_ID_CHAMPION,		    //チャンピオン専用
+	BATT_FIELD_ID_WCS,		    //WCS専用
+	BATT_FIELD_ID_PW_REC,		    //ポケウッド撮影用
+	BATT_FIELD_ID_PW_SHOW_01,		    //ポケウッド上映01
+	BATT_FIELD_ID_PW_SHOW_02,		    //ポケウッド上映02
+	BATT_FIELD_ID_PW_SHOW_03,		    //ポケウッド上映03
+	BATT_FIELD_ID_PW_SHOW_04,		    //ポケウッド上映04
+	BATT_FIELD_ID_PW_SHOW_05,		    //ポケウッド上映05
+	BATT_FIELD_ID_PW_SHOW_06,		    //ポケウッド上映06
+	BATT_FIELD_ID_PW_SHOW_07,		    //ポケウッド上映07
+	BATT_FIELD_ID_PW_SHOW_08,		    //ポケウッド上映08
+	BATT_FIELD_ID_PW_SHOW_09,		    //ポケウッド上映09
+	BATT_FIELD_ID_PW_SHOW_10,		    //ポケウッド上映10
+	BATT_FIELD_ID_PW_SHOW_11,		    //ポケウッド上映11
+	BATT_FIELD_ID_PW_SHOW_12,		    //ポケウッド上映12
+	BATT_FIELD_ID_PW_SHOW_13,		    //ポケウッド上映13
+	BATT_FIELD_ID_PW_SHOW_14,		    //ポケウッド上映14
+	BATT_FIELD_ID_PW_SHOW_15,		    //ポケウッド上映15
+	BATT_FIELD_ID_PW_SHOW_16,		    //ポケウッド上映16
+	BATT_FIELD_ID_KYUREMU,		    //キュレム専用
+	BATT_FIELD_ID_MUGEN_W_01,		    //無限ダンジョン白01
+	BATT_FIELD_ID_MUGEN_W_02,		    //無限ダンジョン白02
+	BATT_FIELD_ID_MUGEN_W_03,		    //無限ダンジョン白03
+	BATT_FIELD_ID_MUGEN_W_04,		    //無限ダンジョン白04
+	BATT_FIELD_ID_MUGEN_B_01,		    //無限ダンジョン黒01
+	BATT_FIELD_ID_MUGEN_B_02,		    //無限ダンジョン黒02
+	BATT_FIELD_ID_MUGEN_B_03,		    //無限ダンジョン黒03
+	BATT_FIELD_ID_MUGEN_B_04,		    //無限ダンジョン黒04
+	BATT_FIELD_ID_WBT,		    //ＷＢＴ
+}BATT_FIELD_RES_ID;
+
