@@ -337,6 +337,8 @@ init_flags:
   _FLAG_SET( FV_T01R0102_TROPHY_02 ) //バトルサブウェイトロフィ（ダブル）
   _FLAG_SET( FV_T01R0102_TROPHY_03 ) //バトルサブウェイトロフィ（マルチ）
 
+ //D05：WBTNPC
+  _FLAG_SET(FV_D05R0101_TRAINERW_01)
 
 }
 _RET
@@ -584,6 +586,9 @@ ev_first_gameclear:
 
   //D26:チャンピオンロードにゾロアーク出現
   $WK_SCENE_D26_POKE23_01 = 1
+
+  //D05:WBTロビー・NPC
+  _FLAG_RESET(FV_D05R0101_TRAINERW_01)
 
 _RET
 
