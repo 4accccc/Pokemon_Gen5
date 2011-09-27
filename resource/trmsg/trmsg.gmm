@@ -15321,29 +15321,31 @@
 	</row>
 
 	<row id="TRID_DOCTOR_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">せいめいりょくが　ある　ひとは
+イキイキとして　みえるものです！▼</language>
+		<language name="JPN_KANJI" width="216">生命力が　ある　人は
+イキイキとして　みえるものです！▼</language>
 	</row>
 
 	<row id="TRID_DOCTOR_09_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">きみたちの　せいめいりょくが
+まぶしすぎて！　クッ　なんなんだ！？</language>
+		<language name="JPN_KANJI" width="216">きみたちの　生命力が
+まぶしすぎて！　クッ　なんなんだ！？</language>
 	</row>
 
 	<row id="TRID_DOCTOR_09_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
-		<language name="JPN" width="216">かいふくします▼</language>
-		<language name="JPN_KANJI" width="216">回復します▼</language>
+		<language name="JPN" width="216">では　いくぞ！
+せいめいりょく　マックスパワー！！▼</language>
+		<language name="JPN_KANJI" width="216">では　いくぞ！
+生命力マックスパワー！！▼</language>
 	</row>
 
 	<row id="TRID_DOCTOR_09_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">せいめいりょく　マックスパワー　な
+きみたちよ！　どんどん　ムチャしろ！</language>
+		<language name="JPN_KANJI" width="216">生命力マックスパワー　な
+きみたちよ！　どんどん　ムチャしろ！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_29_TRMSG_FIGHT_START">
@@ -15541,29 +15543,35 @@
 	</row>
 
 	<row id="TRID_NURSE_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">ナースである　まえに
+ひとりの　ポケモントレーナー！▼
+ポケモンしょうぶ　したくて
+ウズウズしちゃってるの！▼</language>
+		<language name="JPN_KANJI" width="216">ナースである　前に
+一人の　ポケモントレーナー！▼
+ポケモン勝負　したくて
+ウズウズしちゃってるの！▼</language>
 	</row>
 
 	<row id="TRID_NURSE_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">ウズウズしすぎて……
+じょうずに　できなかった……！</language>
+		<language name="JPN_KANJI" width="216">ウズウズしすぎて……
+上手に　できなかった……！</language>
 	</row>
 
 	<row id="TRID_NURSE_03_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
-		<language name="JPN" width="216">かいふくします▼</language>
-		<language name="JPN_KANJI" width="216">回復します▼</language>
+		<language name="JPN" width="216">かいふく　しちゃいます！
+こっちは　じょうずよ！▼</language>
+		<language name="JPN_KANJI" width="216">回復　しちゃいます！
+こっちは　上手よ▼</language>
 	</row>
 
 	<row id="TRID_NURSE_03_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">リゾートデザートの　すなあらしに
+きをつけて　かんこう　してね！</language>
+		<language name="JPN_KANJI" width="216">リゾートデザートの　すなあらしに
+気をつけて　観光してね！</language>
 	</row>
 
 	<row id="TRID_MOUNT_30_TRMSG_FIGHT_START">
@@ -15617,45 +15625,53 @@
 	</row>
 
 	<row id="TRID_ELITEM_44_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">ひがしに　けわしい　どうくつがあれば
+いって　ポケモンを　きたえ▼
+にしに　すごい　トレーナーがいれば
+いって　たたかいを　いどむ！▼</language>
+		<language name="JPN_KANJI" width="216">東に　険しい　どうくつがあれば
+行って　ポケモンを　鍛え▼
+西に　すごい　トレーナーがいれば
+行って　戦いを　挑む！▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_44_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">きたえかたが
+あっとうてきに　たりてない！！</language>
+		<language name="JPN_KANJI" width="216">鍛え方が
+圧倒的に　足りてない！！</language>
 	</row>
 
 	<row id="TRID_ELITEM_44_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">ポケモンが　ポケモンを　きたえる……▼
+きびしい　やせいに　いきるのであれば
+とうぜん　ありうること　だな</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　ポケモンを　鍛える……▼
+厳しい　野生に　生きるのであれば
+当然　ありうること　だな</language>
 	</row>
 
 	<row id="TRID_ELITEW_43_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">あっ　あなたが　ここに　くらす
+でんせつの　ポケモンなの！？▼</language>
+		<language name="JPN_KANJI" width="216">あっ　あなたが　ここに　暮らす
+伝説の　ポケモンなの！？▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_43_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">おどろいた
+あなた　ひと　よね</language>
+		<language name="JPN_KANJI" width="216">おどろいた
+あなた　人だよね</language>
 	</row>
 
 	<row id="TRID_ELITEW_43_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">わたしが　しっている　はなしでは
+でんせつの　ポケモンは▽
+でしの　ポケモンを　きたえていたそうよ</language>
+		<language name="JPN_KANJI" width="216">わたしが　知っている　話では
+伝説の　ポケモンは▽
+弟子の　ポケモンを　鍛えていたそうよ</language>
 	</row>
 
 	<row id="TRID_DAISUKIM_06_TRMSG_FIGHT_START">
