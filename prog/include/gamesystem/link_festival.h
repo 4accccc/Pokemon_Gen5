@@ -440,6 +440,13 @@ extern int DEB_LINKFEST_GetBeaconWait( LINK_FESTIVAL* wk );
  */
 extern void DEB_LINKFEST_SetBeaconWait( LINK_FESTIVAL* wk, int wait );
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ライフのデクリメントをとめるフラグをセットする
+ */
+//---------------------------------------------------------
+extern void DEB_LINKFEST_SetTimeStopFlag( LINK_FESTIVAL* wk, BOOL flag );
+
 #endif  //PM_DEBUG
 
 

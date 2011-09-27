@@ -41,5 +41,16 @@ void DEB_LINKFEST_SetBeaconWait( LINK_FESTIVAL* wk, int wait )
   wk->beacon_timer = wait;
 }
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ライフのデクリメントをとめるフラグをセットする
+ */
+//---------------------------------------------------------
+void DEB_LINKFEST_SetTimeStopFlag( LINK_FESTIVAL* wk, BOOL flag )
+{
+  wk->deb_time_stop_f = flag;
+}
+
+
 #endif  //PM_DEBUG
 

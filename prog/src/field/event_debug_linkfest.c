@@ -84,6 +84,8 @@ enum{
  MENU_MISSION_END,
  MENU_MISSION_REQ,
  MENU_MISSION_BEACON_WAIT,
+ MENU_MISSION_MY_SCORE,
+ MENU_MISSION_TIME_STOP,
  MENU_EXIT,
 };
 
@@ -180,6 +182,8 @@ typedef enum{
  NINPUT_STACK_CHECK_THROW,
  NINPUT_GPOWER,
  NINPUT_MISSION_BEACON_WAIT,
+ NINPUT_MISSION_MY_SCORE,
+ NINPUT_MISSION_TIME_STOP,
 }NINPUT_ID;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
@@ -245,7 +249,7 @@ typedef struct _DMENU_LINK_FEST{
   MYSTATUS* my_status;
 
   LINK_FESTIVAL* fest_sys;
-  FEST_MISSION* fest_mission;
+  FEST_MISSION* fmwk;
 
   BEACON_VIEW*    view_wk;
   BEACON_STATUS* b_status;
@@ -308,8 +312,10 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestFromFieldMenuList[] =
 {
   { dlf_fldmenu_01, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_02, (void*)MENU_MISSION_END, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_03, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_04, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_03, (void*)MENU_MISSION_TIME_STOP, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_04, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_05, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_06, (void*)MENU_MISSION_MY_SCORE, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -488,7 +494,7 @@ static void dmenu_RefarenceGet( DMENU_LINK_FEST* wk, GAMESYS_WORK* gsys )
   wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
 
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  wk->fest_mission = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
+  wk->fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
 
   wk->heapID = FIELDMAP_GetHeapID( wk->fieldmap );
   wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
@@ -723,13 +729,21 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         dmenu_WorkRelease( wk );
         return GMEVENT_RES_CONTINUE;
       case MENU_MISSION_END:
-        FEST_MISSION_DEBUG_KillMission( wk->fest_mission );
+        FEST_MISSION_DEBUG_KillMission( wk->fmwk );
         break;
       case MENU_MISSION_REQ:
         GMEVENT_CallEvent( event, event_CreateEventMissionReq( wk->gsys, wk ) );
         break;
       case MENU_MISSION_BEACON_WAIT:
         GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_BEACON_WAIT, 3, 60, 
+            ninput_SetDebugParam, ninput_GetDebugParam) );
+        break;
+      case MENU_MISSION_MY_SCORE:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_MY_SCORE, 0, 9999, 
+            ninput_SetDebugParam, ninput_GetDebugParam) );
+        break;
+      case MENU_MISSION_TIME_STOP:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_TIME_STOP, 0, 1, 
             ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       }
@@ -1673,6 +1687,16 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
     break;
   case NINPUT_MISSION_BEACON_WAIT:
     DEB_LINKFEST_SetBeaconWait( wk->fest_sys, value*60 );
+    break;
+  case NINPUT_MISSION_MY_SCORE:
+    if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+      wk->fmwk->beacon.my_score = value;
+    }
+    break;
+  case NINPUT_MISSION_TIME_STOP:
+    if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+      DEB_LINKFEST_SetTimeStopFlag( wk->fest_sys, value );
+    }
     break;
   }
 }

@@ -103,8 +103,14 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
   }
   if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( wk->gdata ) == FALSE ){  //表フィールドにいる間だけ更新
     u32 score;
-    FEST_MISSION_Update( &wk->mission );
 
+#ifdef PM_DEBUG
+    if( !wk->deb_time_stop_f ){
+      FEST_MISSION_Update( &wk->mission );
+    }
+#else
+    FEST_MISSION_Update( &wk->mission );
+#endif
     score = LINK_FESTIVAL_GetNowScore(wk);
     if( score-wk->now_score ){
       wk->finfo_bonus += FEST_MISSION_TimeBonusCalc( &wk->mission,  score-wk->now_score );
@@ -858,6 +864,10 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
 
   wk->ready_timer = 0;
   wk->top_score_update_f = FALSE;
+
+#ifdef PM_DEBUG
+  wk->deb_time_stop_f = FALSE;
+#endif
 }
 
 //---------------------------------------------------------
@@ -917,5 +927,4 @@ static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_BEACON* beacon )
   }
   return TRUE;
 }
-
 

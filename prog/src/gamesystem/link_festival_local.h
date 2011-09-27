@@ -58,5 +58,9 @@ struct _LINK_FESTIVAL{
   struct  _FMISSION_ENTRY_TBL   mlog_entry_tbl;   //ミッションログ　エントリーデータストックテーブル
 
   u8  m_gmk_work[FMISSION_WORK_AREA_LEN];
+
+#ifdef PM_DEBUG
+  u8  deb_time_stop_f;
+#endif
 };
 
