@@ -10585,10 +10585,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの……　[Name:TrainerName ]さん　ですか？▼</Text>
+			<Text>あの……　[Name:TrainerName ]さん　ですか？▼
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-07T03:10:37" />
+				Time="2011-09-27T06:29:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10596,10 +10598,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……もしもし？▼</Text>
+			<Text>あの……　[Name:TrainerName ]さん　ですか？▼
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:19:18" />
+				User="nishino:W00221"
+				Time="2011-09-27T06:53:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12290,8 +12294,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの……▼
-きょうは　しごとが　おやすみなので
+			<Text>きょうは　しごとが　おやすみなので
 おあずかり　してもらっている▽
 ライブキャスターを▽
 うけとりに　いきたいん　ですけど……▼
@@ -12307,8 +12310,8 @@
 [Name:TrainerName ]さんと　おあい　できるのを
 たのしみに　していますね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:33:14" />
+				User="nishino:W00221"
+				Time="2011-09-27T06:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12316,8 +12319,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの……▼
-今日は　仕事が　お休みなので
+			<Text>今日は　仕事が　お休みなので
 お預かり　してもらっている▽
 ライブキャスターを▽
 受け取りに　いきたいん　ですけど……▼
@@ -12333,8 +12335,8 @@
 [Name:TrainerName ]さんと　お会いできるのを
 楽しみに　していますね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T04:37:28" />
+				User="nishino:W00221"
+				Time="2011-09-27T06:52:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
