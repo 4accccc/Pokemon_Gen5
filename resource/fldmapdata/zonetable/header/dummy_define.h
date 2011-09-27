@@ -53,6 +53,7 @@ enum {
   RSC_GRID_WIDE_NOCROSS = 24,//グリッド3x2 立体交差無し(バッジチェックゲート)
   RSC_GRID_JA = 25, //グリッド1x3ジョインアベニュー専用
   RSC_GRID_JA_ROOM = 26, //グリッド1x1ジョインアベニュー室内専用
+  RSC_HYBRID_WFBC = 27, // WFBC専用
 
 	RSC_TYPE_END
 };
