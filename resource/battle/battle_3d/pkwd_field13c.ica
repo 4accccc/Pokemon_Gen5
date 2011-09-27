@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="yoshida" host="W00210" date="2011-08-28T18:27:23" source="pkwd_field13b_all.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="301"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="300"
+	interpolation="frame"
+	compress_node="merge" node_size="10 10"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="5">
+	1.000000 0.595947 1.532227 0.901855 0.480957
+</node_scale_data>
+
+<node_rotate_data size="605">
+	0.000000 -90.000000 12.273926 0.000000 1.211914 2.439941 3.683594 4.942871 6.217773 7.507813
+	8.812744 10.132813 11.467773 12.817383 14.181152 15.559570 16.951904 18.358398 19.778564 21.212402
+	22.659668 24.120361 25.594238 27.081299 28.581055 30.093506 31.618408 33.155762 34.705322 36.266846
+	37.840332 39.425537 41.022461 42.630615 44.250000 45.880371 47.521729 49.174072 50.836670 52.510010
+	54.193359 55.886963 57.590576 59.303955 61.026855 62.759277 64.500977 66.251709 68.011719 69.780273
+	71.557617 73.343262 75.137451 76.939941 78.750244 80.568359 82.394287 84.227539 86.068359 87.916504
+	89.771484 91.633301 93.501953 95.377197 97.258789 99.146484 101.040527 102.940430 104.845947 106.757080
+	108.673584 110.595459 112.522461 114.454590 116.391113 118.332520 120.278320 122.228516 124.182617 126.140869
+	128.103027 130.068604 132.037842 134.010498 135.986084 137.964844 139.946533 141.930664 143.917480 145.906738
+	147.897949 149.891357 151.886719 153.883789 155.882324 157.882324 159.883301 161.885742 163.888916 165.892822
+	167.897461 169.902344 171.907471 173.912842 175.918213 177.923340 179.927979 -178.067871 -176.064453 -174.061768
+	-172.060303 -170.059814 -168.060791 -166.063232 -164.067383 -162.073242 -160.081299 -158.091309 -156.103760 -154.118652
+	-152.136230 -150.156494 -148.179688 -146.206055 -144.235840 -142.269043 -140.305664 -138.346191 -136.390625 -134.438965
+	-132.491699 -130.548828 -128.610596 -126.677002 -124.748535 -122.824951 -120.906494 -118.993408 -117.085938 -115.184326
+	-113.288330 -111.398438 -109.514648 -107.637451 -105.766602 -103.902344 -102.045166 -100.194824 -98.351563 -96.515625
+	-94.687256 -92.866455 -91.053467 -89.248535 -87.451660 -85.663086 -83.882813 -82.111328 -80.348389 -78.594727
+	-76.849854 -75.114258 -73.388184 -71.671631 -69.964844 -68.268066 -66.581055 -64.904541 -63.238281 -61.582520
+	-59.937500 -58.303223 -56.680176 -55.068359 -53.467773 -51.878662 -50.301270 -48.735596 -47.182129 -45.640625
+	-44.111572 -42.594727 -41.090820 -39.599609 -38.121338 -36.656250 -35.204346 -33.766113 -32.341309 -30.930176
+	-29.533203 -28.150146 -26.781494 -25.427002 -24.087402 -22.762451 -21.452148 -20.157227 -18.877197 -17.612793
+	-16.364014 -15.130615 -13.913330 -12.711914 -11.526855 -10.358154 -9.205811 -8.070313 -6.951416 -5.849609
+	-4.765137 -3.697754 -2.647949 -1.615723 -0.601318 0.395020 1.373291 2.333496 3.274902 4.197998
+	5.102051 5.987305 6.853516 7.700439 8.527832 9.335938 10.124023 10.892334 11.640625 12.368652
+	13.076172 13.763184 14.429688 15.075195 15.699707 16.302979 16.884766 17.445313 17.983887 18.500977
+	18.995850 19.468506 19.918945 20.346924 20.752197 21.134766 21.494385 21.830811 22.144043 22.433594
+	22.699707 22.942139 23.160400 23.354736 23.524658 23.670410 23.791260 23.887695 23.958984 24.005371
+	24.026611 24.022217 23.992432 23.937012 23.855469 23.748047 23.614502 23.454590 23.268066 23.054932
+	22.814941 22.547852 22.253662 21.932373 21.583252 21.206787 20.802246 20.369873 19.909424 19.420654
+	18.903564 18.357666 17.782959 17.179443 16.546875 15.885010 15.193604 14.472656 13.722168 12.941406
+	12.130859 11.290039 10.418945 9.517090 8.584717 7.621338 6.626953 5.601318 4.544434 3.456055
+	2.335938 1.184082 0.000000 0.000000 0.000000 -1.199951 -2.399902 -3.600098 -4.800049 -6.000000
+	-7.199951 -8.399902 -9.600098 -10.800049 -12.000000 -13.199951 -14.399902 -15.600098 -16.800049 -18.000000
+	-19.199951 -20.399902 -21.600098 -22.800049 -24.000000 -25.199951 -26.399902 -27.600098 -28.800049 -30.000000
+	-31.199951 -32.399902 -33.600098 -34.800049 -36.000000 -37.199951 -38.399902 -39.600098 -40.800049 -42.000000
+	-43.199951 -44.399902 -45.600098 -46.800049 -48.000000 -49.199951 -50.399902 -51.600098 -52.800049 -54.000000
+	-55.199951 -56.399902 -57.600098 -58.800049 -60.000000 -61.199951 -62.399902 -63.600098 -64.800049 -66.000000
+	-67.199951 -68.399902 -69.600098 -70.800049 -72.000000 -73.199951 -74.399902 -75.600098 -76.800049 -78.000000
+	-79.199951 -80.399902 -81.600098 -82.800049 -84.000000 -85.199951 -86.399902 -87.600098 -88.800049 -90.000000
+	-91.199951 -92.399902 -93.600098 -94.800049 -96.000000 -97.199951 -98.399902 -99.600098 -100.800049 -102.000000
+	-103.199951 -104.399902 -105.600098 -106.800049 -108.000000 -109.199951 -110.399902 -111.600098 -112.800049 -114.000000
+	-115.199951 -116.399902 -117.600098 -118.800049 -120.000000 -121.199951 -122.399902 -123.600098 -124.800049 -126.000000
+	-127.199951 -128.399902 -129.600098 -130.800049 -132.000000 -133.199951 -134.399902 -135.600098 -136.800049 -138.000000
+	-139.199951 -140.399902 -141.600098 -142.800049 -144.000000 -145.199951 -146.399902 -147.600098 -148.800049 -150.000000
+	-151.199951 -152.399902 -153.600098 -154.800049 -156.000000 -157.199951 -158.399902 -159.600098 -160.800049 -162.000000
+	-163.199951 -164.399902 -165.600098 -166.800049 -168.000000 -169.199951 -170.399902 -171.600098 -172.800049 -174.000000
+	-175.199951 -176.399902 -177.600098 -178.800049 -180.000000 178.800049 177.600098 176.399902 175.199951 174.000000
+	172.800049 171.600098 170.399902 169.199951 168.000000 166.800049 165.600098 164.399902 163.199951 162.000000
+	160.800049 159.600098 158.399902 157.199951 156.000000 154.800049 153.600098 152.399902 151.199951 150.000000
+	148.800049 147.600098 146.399902 145.199951 144.000000 142.800049 141.600098 140.399902 139.199951 138.000000
+	136.800049 135.600098 134.399902 133.199951 132.000000 130.800049 129.600098 128.399902 127.199951 126.000000
+	124.800049 123.600098 122.399902 121.199951 120.000000 118.800049 117.600098 116.399902 115.199951 114.000000
+	112.800049 111.600098 110.399902 109.199951 108.000000 106.800049 105.600098 104.399902 103.199951 102.000000
+	100.800049 99.600098 98.399902 97.199951 96.000000 94.800049 93.600098 92.399902 91.199951 90.000000
+	88.800049 87.600098 86.399902 85.199951 84.000000 82.800049 81.600098 80.399902 79.199951 78.000000
+	76.800049 75.600098 74.399902 73.199951 72.000000 70.800049 69.600098 68.399902 67.199951 66.000000
+	64.800049 63.600098 62.399902 61.199951 60.000000 58.800049 57.600098 56.399902 55.199951 54.000000
+	52.800049 51.600098 50.399902 49.199951 48.000000 46.800049 45.600098 44.399902 43.199951 42.000000
+	40.800049 39.600098 38.399902 37.199951 36.000000 34.800049 33.600098 32.399902 31.199951 30.000000
+	28.800049 27.600098 26.399902 25.199951 24.000000 22.800049 21.600098 20.399902 19.199951 18.000000
+	16.800049 15.600098 14.399902 13.199951 12.000000 10.800049 9.600098 8.399902 7.199951 6.000000
+	4.800049 3.600098 2.399902 1.199951 0.000000
+</node_rotate_data>
+
+<node_translate_data size="22">
+	0.000000 -20.000000 4.000000 -0.479492 4.139404 -85.247070 -1.162109 -28.642334 -82.793701 -39.227051
+	-77.185303 -42.700684 7.731689 -75.666748 -50.118896 1.848633 -69.974365 -5.270752 -25.616699 -83.877930
+	-52.134766 -48.000000
+</node_translate_data>
+
+<node_anm_array size="10">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="1">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="1"/>
+		<rotate_y frame_step="1" data_size="1" data_head="2"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="1"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="2">
+		<scale_x frame_step="1" data_size="1" data_head="1"/>
+		<scale_y frame_step="1" data_size="1" data_head="1"/>
+		<scale_z frame_step="1" data_size="1" data_head="1"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="3"/>
+		<translate_y frame_step="1" data_size="1" data_head="4"/>
+		<translate_z frame_step="1" data_size="1" data_head="5"/>
+	</node_anm>
+	<node_anm index="3">
+		<scale_x frame_step="1" data_size="1" data_head="2"/>
+		<scale_y frame_step="1" data_size="1" data_head="2"/>
+		<scale_z frame_step="1" data_size="1" data_head="2"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="6"/>
+		<translate_y frame_step="1" data_size="1" data_head="7"/>
+		<translate_z frame_step="1" data_size="1" data_head="8"/>
+	</node_anm>
+	<node_anm index="4">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="9"/>
+		<translate_y frame_step="1" data_size="1" data_head="4"/>
+		<translate_z frame_step="1" data_size="1" data_head="10"/>
+	</node_anm>
+	<node_anm index="5">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="11"/>
+		<translate_y frame_step="1" data_size="1" data_head="12"/>
+		<translate_z frame_step="1" data_size="1" data_head="13"/>
+	</node_anm>
+	<node_anm index="6">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="14"/>
+		<translate_y frame_step="1" data_size="1" data_head="15"/>
+		<translate_z frame_step="1" data_size="1" data_head="16"/>
+	</node_anm>
+	<node_anm index="7">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="17"/>
+		<translate_y frame_step="1" data_size="1" data_head="18"/>
+		<translate_z frame_step="1" data_size="1" data_head="19"/>
+	</node_anm>
+	<node_anm index="8">
+		<scale_x frame_step="1" data_size="1" data_head="3"/>
+		<scale_y frame_step="1" data_size="1" data_head="3"/>
+		<scale_z frame_step="1" data_size="1" data_head="3"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="301" data_head="3"/>
+		<translate_x frame_step="1" data_size="1" data_head="1"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="20"/>
+	</node_anm>
+	<node_anm index="9">
+		<scale_x frame_step="1" data_size="1" data_head="4"/>
+		<scale_y frame_step="1" data_size="1" data_head="4"/>
+		<scale_z frame_step="1" data_size="1" data_head="4"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="301" data_head="304"/>
+		<translate_x frame_step="1" data_size="1" data_head="1"/>
+		<translate_y frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="21"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
