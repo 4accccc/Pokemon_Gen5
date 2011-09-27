@@ -24,11 +24,9 @@ _EVENT_DATA    ev_d12_pilot_01
 _EVENT_DATA    ev_d12_backpackerm_01
 _EVENT_DATA    ev_d12_babyboy1_01
 _EVENT_DATA    ev_d12_oldwoman1_01
-_EVENT_DATA    ev_d12_hakaim_01
 _EVENT_DATA    ev_d12_sunglasses_01
 _EVENT_DATA    ev_d12_woman2_01
 _EVENT_DATA    ev_d12_policeman_01
-_EVENT_DATA    ev_d12_policeman_02
 _EVENT_DATA    ev_d12_bg_board_01
 _EVENT_DATA    ev_d12_bg_board_02
 _EVENT_DATA    ev_d12_bg_board_03
@@ -37,163 +35,175 @@ _EVENT_DATA    ev_zone_d12
 _EVENT_DATA    ev_scene_d12
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_PARTY_NUM
+DEFINE_LOCAL	LWK_RET_MONSNO
+DEFINE_LOCAL	LWK_COUNT_NUM
+DEFINE_LOCAL	LWK_ZUKAN
+
+//LOCALWORK15を使用　0＝ビクティニ手持ちなし　1＝手持ちにいる
+//LOCALWORK10を使用　0＝なし　1＝手持ちにいる　2＝捕獲した　3＝みた
+
 /************************************************************/
 /*		ゾーンチェンジ                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_d12
 
-  SWITCH $WK_SCENE_VICTORY
-  CASE 1 THEN   //イベント開始
-    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
-    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
-  CASE 2 THEN   //プラズマ団一掃
-    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
-    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
-  CASE 3 THEN   //ビクティ捕獲失敗
-    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
-    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
-  CASE 4 THEN   //ビクティ捕獲直後
-    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
-    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
-    _FLAG_RESET(FV_D12_EVENTEND_01)     //プラズマ団連行イベント関連ＯＢＪいる
-    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
-    _D12_GMK_VANISH()                   //プラズマ船無し
-  CASE 5 THEN   //連行イベント直後(このシーケンスにはこないが)
-    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
-    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
-    _D12_GMK_VANISH()                   //プラズマ船無し
-  CASE 6 THEN   //イベント後の島来訪
-    _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
-    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
-    _D12_GMK_VANISH()                   //プラズマ船無し
-  DEFAULT
-    _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
-    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
-    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
-    _D12_GMK_VANISH()                   //プラズマ船無し
-  ENDSWITCH
+//アララギイベントをまだ見ていない場合
+IF $WK_SCENE_D12 == 0 THEN
+	
+	//フキヨセシティにいったことがある
+	IF FLAG_ON( SYS_FLAG_ARRIVE_C06 ) THEN
+
+		//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+		_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+		//手持ちのポケモンの中にビクティニがいるか確認（繰り返し処理）
+		WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+			//指定POSのポケモンのNOを取得
+			_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+			//ビクティニがいるかチェックする
+			IF $LWK_RET_MONSNO == 494 THEN
+				$LOCALWORK10 = 1
+			ENDIF
+
+			_DEBUG_PRINT_WK(LWK_RET_MONSNO)
+
+			//カウント
+			$LWK_COUNT_NUM += 1
+
+		ENDWHILE
+
+		//ビクティニが手持ちにいる場合
+		IF $LOCALWORK10 == 1 THEN
+			
+			//========================================/
+			
+			//イベント起動
+			$WK_SCENE_D12 = 1
+			
+			//========================================/
+		//ビクティニが手持ちにはいない場合
+		ELSE
+			
+			//捕獲済みかチェック
+			_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_GET, MONSNO_BIKUTHINI, LWK_ZUKAN )
+			
+			//捕獲済みの場合
+			IF $LWK_ZUKAN == TRUE THEN
+			
+				//========================================/
+				
+				//イベント起動＆捕獲条件の値を代入
+				$WK_SCENE_D12 = 1
+				$LOCALWORK10 = 2
+			
+				//========================================/
+			
+			//捕獲していない場合
+			ELSE
+
+				//みたかチェック
+				_GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_BIKUTHINI, LWK_ZUKAN )
+			
+				//すでにみている場合
+				IF $LWK_ZUKAN == TRUE THEN
+
+					//========================================/
+					
+					//イベント起動＆みた条件の値を代入
+					$WK_SCENE_D12 = 1
+					$LOCALWORK10 = 3
+			
+					//========================================/
+
+				ENDIF
+			
+			ENDIF
+		
+		ENDIF
+		
+	ENDIF
+
+ENDIF
+
 INIT_EVENT_END
 
 /************************************************************/
 /*		シーンチェンジ                             */
 /************************************************************/
 EVENT_START   ev_scene_d12
-  //連行イベント
 
-  //サブウィンでしゃべる
-	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 4 , 4 , 1 )
-	_TIME_WAIT( 16 )
-	_SUBWIN_MSG( msg_d12_plasma_sub_02 , 10 , 9 , 2 )
-	_TIME_WAIT(16)
-	_SUBWIN_CLOSE( 1 )
-	_TIME_WAIT(16)
-	_SUBWIN_CLOSE( 2 )
+	//博士表示
+	_OBJ_ADD_EX( 308,747,DIR_LEFT,MMDL_ID_EVENTOBJ_00,HAKASE2,MV_DMY )
 
-  _SUBWIN_MSG( msg_d12_police_sub_01 , 4 , 6 , 1 )
-	_TIME_WAIT( 16 )
-	_SUBWIN_MSG( msg_d12_police_sub_02 , 10 , 11 , 2 )
-	_TIME_WAIT(16)
-  _SUBWIN_CLOSE( 1 )
-	_TIME_WAIT(16)
-	_SUBWIN_CLOSE( 2 )
+	//博士歩く
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 299, 747, FORCE_TYPE_NOT, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+	
+	//博士：！マーク後　お互い近づく
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )	//博士イベントBGM開始
+	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_01 )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	SWITCH $LOCALWORK10
+	CASE 1 THEN	//手持ちにいる
+		_BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	CASE 2 THEN	//捕獲している
+		_BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_02 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	CASE 3 THEN	//みている
+		_BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_03 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	ENDSWITCH
+	_MSGWIN_CLOSE()
 
-  _OBJ_ANIME( D12_POLICE_07, anm_follow_police2 )
-  _OBJ_ANIME( D12_POLICE_09, anm_follow_police1 )
-  _OBJ_ANIME( D12_POLICE_08, anm_follow_police3 )
-  _OBJ_ANIME( D12_POLICE_10, anm_follow_police4 )
-  _OBJ_ANIME( D12_HAKAIM_04, anm_follow_plazuma1 )
-  _OBJ_ANIME( D12_HAKAIM_03, anm_follow_plazuma2 )
-  _OBJ_ANIME( D12_HAKAIM_02, anm_follow_plazuma3 )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 30 )
+	
+	_BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_04 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 
-  //自機移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_l )
+	_OBJ_ANIME_WAIT()
 
-  //アニメ待ち
-  _OBJ_ANIME_WAIT()
-  
-  //連行ＯＢＪ消す
-  _OBJ_DEL(D12_HAKAIM_02)
-  _OBJ_DEL(D12_HAKAIM_03)
-  _OBJ_DEL(D12_HAKAIM_04)
-  _OBJ_DEL(D12_POLICE_07)
-  _OBJ_DEL(D12_POLICE_08)
-  _OBJ_DEL(D12_POLICE_09)
-  _OBJ_DEL(D12_POLICE_10)
+	_BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_05 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士退場
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 298, 762, FORCE_TYPE_NOT, 8, DIR_UD )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME_WAIT()
 
-  //タグ０番にプレーヤー名取得
-  _PLAYER_NAME(0)
-  //○○のおかげ
-  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_01 , D12_HAKASE1_01, POS_UP )
-	_BALLOONWIN_CLOSE()
-  //自機移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
-  _OBJ_ANIME_WAIT()
+	_END_EVENT_BGM()	//博士イベントBGM終了
 
-  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_02 , D12_HAKASE1_01, POS_UP )
-	_BALLOONWIN_CLOSE()
-  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_03 , D12_HAKASE1_01, POS_UP )
-	_BALLOONWIN_CLOSE()
+	//博士OBJ削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================/
+	
+	//アララギイベント終了
+	$WK_SCENE_D12 = 2
+	
+	//========================================/
 
-  //伝令出現
-  _OBJ_ANIME( D12_POLICE_11, anm_police_in )
-  _OBJ_ANIME_WAIT()
-  //「船乗って」
-  _BALLOONWIN_OBJMSG_POS( msg_d12_police03_01 , D12_POLICE_11, POS_UR )
-	_BALLOONWIN_CLOSE()
-  //右向く
-  _OBJ_ANIME( D12_HAKASE1_01, anm_step_dir_r )
-  _OBJ_ANIME_WAIT()
-  //「すぐいく」
-  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_04 , D12_HAKASE1_01, POS_UP )
-	_BALLOONWIN_CLOSE()
-  //上向く
-  _OBJ_ANIME( D12_HAKASE1_01, anm_step_dir_u )
-  _OBJ_ANIME_WAIT()
-  //「あくようするのは　にんげん」
-  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_05 , D12_HAKASE1_01, POS_UP )
-	_BALLOONWIN_CLOSE()
-  //博士退場
-  _OBJ_ANIME( D12_HAKASE1_01, anm_doc_out )
-  //伝令退場
-  _OBJ_ANIME( D12_POLICE_11, anm_police_out )
-  //取り巻き警官退場
-  _OBJ_ANIME( D12_POLICE_03, anm_polices_out )
-  _OBJ_ANIME( D12_POLICE_04, anm_polices_out )
-  _OBJ_ANIME( D12_POLICE_05, anm_polices_out )
-  _OBJ_ANIME( D12_POLICE_06, anm_polices_out )
-
-  //アニメ待ち
-  _OBJ_ANIME_WAIT()
-
-  //アララギと取り巻きＯＢＪ消す
-  _OBJ_DEL(D12_HAKASE1_01)
-  _OBJ_DEL(D12_POLICE_03)
-  _OBJ_DEL(D12_POLICE_04)
-  _OBJ_DEL(D12_POLICE_05)
-  _OBJ_DEL(D12_POLICE_06)
-  _OBJ_DEL(D12_POLICE_11)
-
-  //汽笛鳴る
-  _SE_PLAY(SEQ_SE_FLD_78)
-  _SE_WAIT()
-  
-  //イベントバニッシュフラグＯＮ
-  _FLAG_SET( FV_D12_EVENTEND_01 )
-
-  //イベント終了　シーンワーク変更
-  $WK_SCENE_VICTORY = 5
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆博士：専用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_hakase2_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*				船から下りたところ                                */
@@ -204,15 +214,16 @@ EVENT_START	ev_reserve_d12
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
 
-  _PLACE_NAME_DISPLAY()	//地名表示演出
+	_PLACE_NAME_DISPLAY()	//地名表示演出
 
-  //自機一歩移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
-  _OBJ_ANIME_WAIT()
+	//自機一歩移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	_OBJ_ANIME_WAIT()
+
 EVENT_END
 
 /**************************************************************/
-/*  D12 pilot_01			                      */
+/*  D12 pilot_01			                      			  */
 /**************************************************************/
 EVENT_START   ev_d12_pilot_01
   _TALK_OBJ_START()
@@ -224,9 +235,10 @@ EVENT_START   ev_d12_pilot_01
   	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
     _BALLOONWIN_CLOSE()
     //船長移動
-    _OBJ_ANIME( D12_PILOT_01, anm_move_left )
+    _OBJ_ANIME( D12_PILOT_01, anm_walk_l )
+    _TIME_WAIT( 8 )
     //自機移動
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_left )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
     //スクリプトリザーブ
     _RESERVE_SCRIPT( SCRID_RESERVE_C03P13 )
@@ -250,114 +262,81 @@ EVENT_END
 /*  D12 backpackerm_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_backpackerm_01
-  IF $WK_SCENE_VICTORY <= 3 THEN
-    //プラズマ団
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_01 )
-  ELSE
-    //うみのかおり
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_02 )
-  ENDIF
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_01 )
 EVENT_END
 
 /**************************************************************/
 /*  D12 babyboy1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_babyboy1_01
-  IF $WK_SCENE_VICTORY <= 3 THEN
-    //こわい
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_01 )
-  ELSE
-  {
+
     DEFINE_LOCAL sex
     _GET_MY_SEX( sex )
     IF $sex == PM_MALE THEN
       //おにいちゃん　やっつけた
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_02 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_01 )
     ELSE
       //おねえちゃん　やっつけた
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_03 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_02 )
     ENDIF
-  }  
-  ENDIF	
+    
 EVENT_END
 
 /**************************************************************/
 /*  D12 oldwoman1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_oldwoman1_01
-	IF $WK_SCENE_VICTORY <= 3 THEN
-    //なめたら・・
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor03_01 )
-  ELSE
-    //ありがと
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor03_02 )
-  ENDIF
-EVENT_END
-
-/**************************************************************/
-/*  D12 hakaim_01			                      */
-/**************************************************************/
-EVENT_START   ev_d12_hakaim_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_plasma01_01 )
 EVENT_END
 
 /**************************************************************/
 /*  D12 sunglasses_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_sunglasses_01
-  IF $WK_SCENE_VICTORY <= 3 THEN
-    //せんきょ
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_01 )
-  ELSE
-    //ひとりごと
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_02 )
-  ENDIF	
+
+//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+//手持ちのポケモンの中にビクティニがいるか確認（繰り返し処理）
+WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+	//指定POSのポケモンのNOを取得
+	_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+	//ビクティニがいるかチェックする
+	IF $LWK_RET_MONSNO == 494 THEN
+		$LOCALWORK15 = 1
+	ENDIF
+
+	_DEBUG_PRINT_WK(LWK_RET_MONSNO)
+
+	//カウント
+	$LWK_COUNT_NUM += 1
+
+ENDWHILE
+
+//ビクティニが手持ちにいる場合
+IF $LOCALWORK15 == 1 THEN
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_02 )
+ELSE
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_01 )
+ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*  D12 woman2_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_woman2_01
-	IF $WK_SCENE_VICTORY <= 3 THEN
-    //ふるい　とうだい
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor05_01 )
-  ELSE
-    //ポケモン　あくじ
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor05_02 )
-  ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  D12 policeman_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_policeman_01
-  IF $WK_SCENE_VICTORY == 0 THEN
-    //たいくつ
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_03 )
-  ELSIF $WK_SCENE_VICTORY <= 3 THEN
     //プラズマだんの　やつら
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_01 )
-  ELSIF $WK_SCENE_VICTORY <= 5 THEN
-    //よかった
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_02 )
-  ELSE
-    //たいくつ
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_03 )
-  ENDIF
-	
-EVENT_END
-
-/**************************************************************/
-/*  D12 policeman_02			                      */
-/**************************************************************/
-EVENT_START   ev_d12_policeman_02
-  IF $WK_SCENE_VICTORY == 5 THEN
-    //けいかんたいが
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_01 )	
-  ELSE
-    //しずかな　もんだ
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_02 )	
-  ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -381,151 +360,102 @@ EVENT_START   ev_d12_bg_board_03
 	_EASY_BGWIN_MSG( msg_d12_sign_03,TYPE_POST )
 EVENT_END
 
-//--------------------------------------------------------------
-//	警官　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_police1
-  _ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	警官　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_police2
-  _ANIME_DATA	AC_WALK_R_8F,5
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	警官　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_police3
-  _ANIME_DATA	AC_WAIT_8F, 2
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_WALK_R_8F,3
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	ACMD_END,0
-  
-//--------------------------------------------------------------
-//	警官　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_police4
-  _ANIME_DATA	AC_WAIT_8F, 3
-  _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_R_8F,3
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	ACMD_END,0
-  
-  
-//--------------------------------------------------------------
-//	プラズマ団　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_plazuma1
-  _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	プラズマ団　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_plazuma2
-  _ANIME_DATA	AC_WALK_R_8F,3
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	プラズマ団　連行
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_follow_plazuma3
-  _ANIME_DATA	AC_WALK_R_8F,4
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	ACMD_END,0
-  
-//--------------------------------------------------------------
-//	自機移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_move
-  _ANIME_DATA	AC_WAIT_8F, 3
-  _ANIME_DATA	AC_WALK_D_8F,3
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	自機移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_player_move2
-  _ANIME_DATA	AC_WALK_D_8F,2
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	上向く　足踏み付き
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_step_dir_u
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-  
-//--------------------------------------------------------------
-//	上向く　足踏み付き
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_step_dir_r
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	伝令出現
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_police_in
-  _ANIME_DATA	AC_WALK_L_4F,4
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	伝令退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_police_out
-  _ANIME_DATA	AC_WAIT_8F, 2     //博士が2歩歩いてから移動するためのウェイト
-  _ANIME_DATA	AC_WALK_R_8F,4
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	博士退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_doc_out
-  _ANIME_DATA	AC_WALK_R_8F,8
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	取り巻き警官退場
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_polices_out
-  _ANIME_DATA	AC_WAIT_8F, 2     //博士が2歩歩いてから移動するためのウェイト
-  _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_R_8F,10
-	_ANIME_DATA	ACMD_END,0
- 
-//--------------------------------------------------------------
-//	船に乗るとき一歩移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_move_left
-  _ANIME_DATA	AC_WALK_L_8F,1
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	船に降りるとき一歩移動
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_move_right
-  _ANIME_DATA	AC_WALK_R_8F,1
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
 	_ANIME_DATA	ACMD_END,0
-  
-  
-  
-  
-  
 
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d2
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_r
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/25 16:49:58
+#save date:2011/09/27 17:31:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d12.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d12.wms
 #hold event type:
 1
 #hold event number:
-22
+7
 #event number: 0
 #type
 1
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D12_PEOPLE_01
+0
 #Event Script Name
 SCRID_D12_BACKPACKERM_01
 #Direction Type Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 16 24
+-136 16 -24
 #event number: 2
 #type
 1
@@ -80,11 +80,11 @@ D12_BABYBOY1_01
 #OBJ CODE Number
 BABYBOY1
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D12_PEOPLE_01
+0
 #Event Script Name
 SCRID_D12_BABYBOY1_01
 #Direction Type Number
@@ -96,76 +96,14 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 16 8
+-56 16 -104
 #event number: 3
-#type
-1
-#ID name
-D12_OLDWOMAN1_01
-#OBJ CODE Number
-OLDWOMAN1
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_PEOPLE_01
-#Event Script Name
-SCRID_D12_OLDWOMAN1_01
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 16 8
-#event number: 4
-#type
-1
-#ID name
-D12_HAKAIM_01
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_HAKAIM_01
-#Event Script Name
-SCRID_D12_HAKAIM_01
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 16 8
-#event number: 5
 #type
 1
 #ID name
@@ -177,7 +115,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D12_PEOPLE_01
+0
 #Event Script Name
 SCRID_D12_SUNGLASSES_01
 #Direction Type Number
@@ -195,8 +133,39 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 16 88
-#event number: 6
+120 16 -216
+#event number: 4
+#type
+1
+#ID name
+D12_OLDWOMAN1_01
+#OBJ CODE Number
+OLDWOMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D12_OLDWOMAN1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 16 -72
+#event number: 5
 #type
 1
 #ID name
@@ -208,11 +177,11 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D12_PEOPLE_01
+0
 #Event Script Name
 SCRID_D12_WOMAN2_01
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -226,8 +195,8 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 40
-#event number: 7
+216 16 56
+#event number: 6
 #type
 1
 #ID name
@@ -258,440 +227,6 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 72 16 88
-#event number: 8
-#type
-1
-#ID name
-D12_POLICEMAN_02
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_POLECEMAN_02
-#Event Script Name
-SCRID_D12_POLICEMAN_02
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 32 -72
-#event number: 9
-#type
-1
-#ID name
-D12_HAKAIM_02
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 32 -104
-#event number: 10
-#type
-1
-#ID name
-D12_HAKAIM_03
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 32 -104
-#event number: 11
-#type
-1
-#ID name
-D12_HAKAIM_04
-#OBJ CODE Number
-HAKAIM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 32 -104
-#event number: 12
-#type
-1
-#ID name
-D12_HAKASE1_01
-#OBJ CODE Number
-HAKASE2
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-8 16 -184
-#event number: 13
-#type
-1
-#ID name
-D12_POLICE_03
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 16 -200
-#event number: 14
-#type
-1
-#ID name
-D12_POLICE_04
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 16 -200
-#event number: 15
-#type
-1
-#ID name
-D12_POLICE_05
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 16 -200
-#event number: 16
-#type
-1
-#ID name
-D12_POLICE_06
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 16 -200
-#event number: 17
-#type
-1
-#ID name
-D12_POLICE_07
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--8 32 -104
-#event number: 18
-#type
-1
-#ID name
-D12_POLICE_08
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 32 -88
-#event number: 19
-#type
-1
-#ID name
-D12_POLICE_09
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 32 -104
-#event number: 20
-#type
-1
-#ID name
-D12_POLICE_10
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 32 -120
-#event number: 21
-#type
-1
-#ID name
-D12_POLICE_11
-#OBJ CODE Number
-POLICEMAN
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D12_EVENTEND_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 16 -184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

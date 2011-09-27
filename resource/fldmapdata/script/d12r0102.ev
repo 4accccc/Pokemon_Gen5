@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_d12r0102.h"
   .include  "d12r0102.h"
+  //@author suginaka_katsunori//ビクティニイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,34 +20,43 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d12r0102_hakaim_01
-_EVENT_DATA    ev_d12r0102_poke14_01
 _EVENT_DATA    ev_zone_d12r0102
 _EVENT_DATA    ev_init_d12r0102
 _EVENT_DATA    ev_scene_d12r0102
-
+_EVENT_DATA		ev_pos_d12r0102_01
 _EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_PARTY_NUM
+DEFINE_LOCAL	LWK_RET_MONSNO
+DEFINE_LOCAL	LWK_COUNT_NUM
+
+//LOCALWORK10使用　0＝イベント起動なし　1＝ビクティニＰＯＳイベント起動
 
 /************************************************************/
 /*		ゾーンチェンジ                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_d12r0102
 
-  IF $WK_SCENE_VICTORY == 0 THEN    //不正対策
-    _FLAG_SET(FV_D12R0102_HAKAIM_01)       //プラズマ幹部いない
-    _FLAG_SET(FV_D12R0102_POKE14_01)       //ビクティいない
-  ELSIF $WK_SCENE_VICTORY <= 3 THEN    //まだビクティつかまえてない
-    _FLAG_RESET(FV_D12R0102_HAKAIM_01)     //プラズマ幹部いる
-    _FLAG_RESET(FV_D12R0102_POKE14_01)     //ビクティいる
-  ELSE
-    _FLAG_SET(FV_D12R0102_HAKAIM_01)       //プラズマ幹部いない
-    _FLAG_SET(FV_D12R0102_POKE14_01)       //ビクティいない
-  ENDIF
+//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
 
-  //ビクティ倒した（逃げた）時に入りなおしたときは、シーンをプラズマ団掃討後にする
-  IF $WK_SCENE_VICTORY == 3 THEN
-    $WK_SCENE_VICTORY = 2
-  ENDIF
+//手持ちのポケモンの中にビクティニがいるか確認（繰り返し処理）
+WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+	//指定POSのポケモンのNOを取得
+	_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+	//ビクティニがいるかチェックする
+	IF $LWK_RET_MONSNO == 494 THEN
+		$LOCALWORK10 = 1
+	ENDIF
+
+	_DEBUG_PRINT_WK(LWK_RET_MONSNO)
+
+	//カウント
+	$LWK_COUNT_NUM += 1
+
+ENDWHILE
 
 INIT_EVENT_END
 
@@ -54,197 +64,276 @@ INIT_EVENT_END
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_d12r0102
-  IF $WK_SCENE_VICTORY == 2 THEN
-    //プラズマ団位置変更
-    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_LEFT )
-  ELSIF $WK_SCENE_VICTORY == 3 THEN
-    //プラズマ団位置変更
-    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_LEFT )
-  ENDIF
+
 INIT_EVENT_END
 
 /************************************************************/
 /*		シーンチェンジ                            */
 /************************************************************/
 EVENT_START   ev_scene_d12r0102
-  //「！」
-  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_gyoe )
-  _OBJ_ANIME_WAIT()
-  //「ビクティの力が」
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_01 , D12R0102_HAKAIM_01, POS_DOWN )
-	_BALLOONWIN_CLOSE()
-  //前進
-  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move )
-  _OBJ_ANIME_WAIT()
-  //「勝利を導く」
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_02 , D12R0102_HAKAIM_01, POS_DOWN )
-	_BALLOONWIN_CLOSE()
-  //前進
-  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move )
-  _OBJ_ANIME_WAIT()
-  //「じゃまするな」
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_03 , D12R0102_HAKAIM_01, POS_DOWN )
-	_BALLOONWIN_CLOSE()
-
-  //戦闘
-  {
-  /*
-    //トレーナー戦呼び出し
-		_TRAINER_BTL_SET( TRID_HAKAIM1_32, 0 )
-    //敗戦チェック
-		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		ELSE
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-		ENDIF
-	*/
-  }
-
-  //プラズマ団一掃
-  $WK_SCENE_VICTORY = 2
-
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_04 , D12R0102_HAKAIM_01, POS_DOWN )
-	_BALLOONWIN_CLOSE()
-  //はける
-  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move2 )
-  _OBJ_ANIME_WAIT()
-
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_05 , D12R0102_HAKAIM_01, POS_DOWN )
-  _LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
 
 EVENT_END
 
 /**************************************************************/
-/*  D12R0102 hakaim_01			                      */
+/*		ビクティニＰＯＳイベント							  */
 /**************************************************************/
-EVENT_START   ev_d12r0102_hakaim_01
-  IF $WK_SCENE_VICTORY == 2 THEN
-    //かったからといって
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_05 )
-  ELSIF $WK_SCENE_VICTORY == 3 THEN
-    //ビクティちかく
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_07 )
-  ENDIF  
+EVENT_START		ev_pos_d12r0102_01
+
+//ボールの　なかの
+_PLAINWIN_MSG_UP( msg_d12r0102_poke14_01 )
+
+//はい・いいえ分岐
+_YES_NO_WIN( SCWK_ANSWER )
+
+//はいの場合
+IF $SCWK_ANSWER == SCR_YES THEN
+	
+	_MSGWIN_CLOSE()
+	
+	//プレイヤー移動
+	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 4, 7, FORCE_TYPE_NOT, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//ビクティニ登場
+	_OBJ_ADD_EX( 4,8,DIR_DOWN,MMDL_ID_EVENTOBJ_00,POKE14,MV_DMY )
+	
+	//きゅきゅわわーん
+	_VOICE_PLAY( MONSNO_657, 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_d12r0102_poke14_02 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_VOICE_WAIT()
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 4, 4, FORCE_TYPE_NOT, 8, DIR_LR )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　部屋中央に移動
+	_CAMERA_MOVE( 9688,0,970752,294912,0,294912,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
+	
+	_OBJ_ANIME_WAIT()
+
+	//ビクティニ・部屋見渡す
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_biku_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ビクティニ・ベッドに移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_biku_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_VOICE_PLAY( MONSNO_657, 0 )
+	_VOICE_WAIT()
+	
+	//ビクティニ・トイボックスに移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_biku_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//ビクティニ・クッションに移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_biku_04 )
+	_OBJ_ANIME_WAIT()
+
+	//きゅきゅわわーん
+	_VOICE_PLAY( MONSNO_657, 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_d12r0102_poke14_02 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_VOICE_WAIT()
+	_MSGWIN_CLOSE()
+	
+	//プレイヤーの前へ戻る
+	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 4, 6, FORCE_TYPE_NOT, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_jump_d )
+	_OBJ_ANIME_WAIT()
+	
+	_VOICE_PLAY( MONSNO_657, 0 )
+	_VOICE_WAIT()
+
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	_PLAINWIN_MSG_UP( msg_d12r0102_poke14_03 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	//========================================/
+	$LOCALWORK10 = 0
+	//========================================/
+
+//いいえの場合
+ELSE
+
+_PLAINWIN_MSG_UP( msg_d12r0102_poke14_04 )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+//========================================/
+$LOCALWORK10 = 0
+//========================================/
+
+ENDIF
+
 EVENT_END
 
-/**************************************************************/
-/*  D12R0102 poke14_01			                      */
-/**************************************************************/
-EVENT_START   ev_d12r0102_poke14_01
-  _TALK_OBJ_START()
-  //ビクティ鳴き声
-  _VOICE_PLAY( MONSNO_657, 0 )
-  _GIZAPLAINWIN_MSG_POS( msg_d12r0102_victie_01, POS_DOWN)
-  _VOICE_WAIT()
-  _AB_KEYWAIT_MARK()
-  _GIZAPLAINWIN_CLOSE()
+//--------------------------------------------------------------------
+//	☆ビクティニ：イベント用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_biku_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
 
-  //チケットチェック
-  _CALL check_evt_lock
+_ANIME_LABEL	anm_biku_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,2
+	_ANIME_DATA	ACMD_END,0
 
-  IF $SCWK_ANSWER == TRUE THEN    //チェックＯＫ
-    //戦闘
-    {
-      DEFINE_LOCAL flag
-      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-      _WILD_BTL_SET_EX( MONSNO_657 , 15, flag ) // Lv15 ビクティ
-    }
-    
-    _WILD_LOSE_CHECK( SCWK_ANSWER )
-    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
-       //ビクティを消す
-       _FLAG_SET( FV_D12R0102_POKE14_01 )
-       _OBJ_DEL(D12R0102_POKE14_01)
+_ANIME_LABEL	anm_biku_03
+	_ANIME_DATA	AC_WALK_L_4F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,2
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_biku_04
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_WALK_R_4F,3
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
 
-      //位置変更
-      _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_UP )
-      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 4, 0, 4, DIR_UP )
 
-      _WILD_WIN()
-    ELSE
-      _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
-    ENDIF
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-    _WILD_RETRY_CHECK( SCWK_ANSWER )
-    SWITCH $SCWK_ANSWER
-    CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
-      //シーンワーク更新 ビクティとバトルした（捕獲してない）
-      $WK_SCENE_VICTORY = 3
-    CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
-      //シーンワーク更新 ビクティ捕獲
-      $WK_SCENE_VICTORY = 4
-      //プラズマ団消す
-      _FLAG_SET(FV_D12_HAKAIM_01)
-    ENDSWITCH
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-    //捕獲したかで分岐
-    IF $WK_SCENE_VICTORY == 4 THEN    //捕獲
-      _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_06 , D12R0102_HAKAIM_01, POS_UP )
-	    _BALLOONWIN_CLOSE()
-      //逃げる
-      _OBJ_ANIME( D12R0102_HAKAIM_01, anm_escape )
-      _OBJ_ANIME_WAIT()
-      //プラズマ団消す
-      _FLAG_SET( FV_D12R0102_HAKAIM_01 )
-      _OBJ_DEL(D12R0102_HAKAIM_01)
-    ELSE
-      //「すがたをけした」
-      _SYSWIN_MSG(msg_d12r0102_narrator_01, POS_DOWN)
-      _SYSWIN_CLOSE()
-      //
-      _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_07 , D12R0102_HAKAIM_01, POS_UP )
-      _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()
-    ENDIF
-  ENDIF  
-EVENT_END
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-//イベントロックチェックoutput:SCWK_ANSWER TRUE:チェックＯＫ　FALSE:チェックＮＧ
-check_evt_lock:
-  //リバティチケット持っているか?
-  _ITEM_CHK( ITEM_RIBATHITIKETTO, 1, SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN    //持っている
-    //イベントロックチェック
-    _CHK_EVT_LOCK( EVT_LOCK_NO_VICTYTICKET, SCWK_ANSWER )
-  ELSE                            //持っていない
-    $SCWK_ANSWER = FALSE
-  ENDIF
-_RET
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	「！」
-//--------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_jump_d2
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
 _ANIME_LABEL	anm_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
-  _ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	前進
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_move
-  _ANIME_DATA	AC_WALK_D_8F,1
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------
-//	敗北した後
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_move2
-  _ANIME_DATA	AC_DIR_L,1
-  _ANIME_DATA AC_DIR_PAUSE_ON,1
-  _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_r
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	逃げる
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_escape
-  _ANIME_DATA	AC_WALK_L_4F,2
-  _ANIME_DATA	AC_WALK_D_4F,2
-	_ANIME_DATA	ACMD_END,0
-

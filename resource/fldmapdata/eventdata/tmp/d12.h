@@ -12,25 +12,10 @@
 #define D12_PILOT_01                       0
 #define D12_BACKPACKERM_01                 1
 #define D12_BABYBOY1_01                    2
-#define D12_OLDWOMAN1_01                   3
-#define D12_HAKAIM_01                      4
-#define D12_SUNGLASSES_01                  5
-#define D12_WOMAN2_01                      6
-#define D12_POLICEMAN_01                   7
-#define D12_POLICEMAN_02                   8
-#define D12_HAKAIM_02                      9
-#define D12_HAKAIM_03                     10
-#define D12_HAKAIM_04                     11
-#define D12_HAKASE1_01                    12
-#define D12_POLICE_03                     13
-#define D12_POLICE_04                     14
-#define D12_POLICE_05                     15
-#define D12_POLICE_06                     16
-#define D12_POLICE_07                     17
-#define D12_POLICE_08                     18
-#define D12_POLICE_09                     19
-#define D12_POLICE_10                     20
-#define D12_POLICE_11                     21
+#define D12_SUNGLASSES_01                  3
+#define D12_OLDWOMAN1_01                   4
+#define D12_WOMAN2_01                      5
+#define D12_POLICEMAN_01                   6
 
 #endif //ZONE_D12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
