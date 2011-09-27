@@ -913,7 +913,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     //室外表現のために次のゾーンをチェック
     {
       FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( fieldmap );
-      FIELD_GOOUT_EFFECT_CheckZone( p_goout, work->loc_req.zone_id );
+      FIELD_GOOUT_EFFECT_CheckZone( p_goout, work->loc_req.zone_id, FIELDMAP_GetZoneID(fieldmap) );
     }
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly(gameSystem, fieldmap) );

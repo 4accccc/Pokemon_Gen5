@@ -349,15 +349,19 @@ void FIELD_GOOUT_EFFECT_Cancel( FIELD_GOOUT_EFFECT *p_wk )
  *	@param	zoneID  ゾーンID
  */
 //-----------------------------------------------------------------------------
-void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID )
+void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID )
 {
   BOOL is_enable  = FALSE;
   if( Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID) )
   {
-    //もし規定時間以上かつ外ならば、外出表現開始してもOK
-    if( FIELD_GOOUT_ROOM_COUNT_MAX*60 < GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata ) )
+    NAGI_Printf( "ゾーンID%d プレID%d\n", zoneID, preID );
+    if( !Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, preID) )
     {
-      is_enable = TRUE;
+      //もし規定時間以上かつ外ならば、外出表現開始してもOK
+      if( FIELD_GOOUT_ROOM_COUNT_MAX*60 < GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata ) )
+      {
+        is_enable = TRUE;
+      }
     }
 
     //もし外ならカウンタリセット
