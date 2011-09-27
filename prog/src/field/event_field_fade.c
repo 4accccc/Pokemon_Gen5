@@ -1018,6 +1018,12 @@ static GMEVENT_RESULT BrightOutEvent( GMEVENT* event, int* seq, void* wk )
 	case 0:
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
+
 		(*seq)++;
 		break;
 
@@ -1078,6 +1084,12 @@ static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk )
 	case 0:
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
 
 		// 画面キャプチャ→VRAM_D
 		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
@@ -1149,6 +1161,11 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
 
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
     (*seq)++;
     break;
 
@@ -1289,6 +1306,11 @@ static GMEVENT_RESULT HoleOutEvent( GMEVENT* event, int* seq, void* wk )
   // フェード開始
   case 0:
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1326,6 +1348,11 @@ static GMEVENT_RESULT ShutterDownOutEvent( GMEVENT* event, int* seq, void* wk )
   // フェード開始
   case 0:
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1365,6 +1392,11 @@ static GMEVENT_RESULT ShutterUpOutEvent( GMEVENT* event, int* seq, void* wk )
   // フェード開始
   case 0:
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1402,6 +1434,11 @@ static GMEVENT_RESULT SlideRightOutEvent( GMEVENT* event, int* seq, void* wk )
   // フェード開始
   case 0:
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1439,6 +1476,13 @@ static GMEVENT_RESULT SlideLeftOutEvent( GMEVENT* event, int* seq, void* wk )
   // フェード開始
   case 0:
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
+
 		(*seq)++;
 		break;
 
@@ -1481,6 +1525,13 @@ static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk )
     InitFieldBG( work->fieldmap );
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
+
 		(*seq)++;
 		break;
 
@@ -1521,6 +1572,11 @@ static GMEVENT_RESULT ShutterUpInEvent( GMEVENT* event, int* seq, void* wk )
     InitFieldBG( work->fieldmap );
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1561,6 +1617,11 @@ static GMEVENT_RESULT SlideRightInEvent( GMEVENT* event, int* seq, void* wk )
     InitFieldBG( work->fieldmap );
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1601,6 +1662,11 @@ static GMEVENT_RESULT SlideLeftInEvent( GMEVENT* event, int* seq, void* wk )
     InitFieldBG( work->fieldmap );
     // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
 		(*seq)++;
 		break;
 
@@ -1630,9 +1696,16 @@ static GMEVENT_RESULT SlideLeftInEvent( GMEVENT* event, int* seq, void* wk )
 //--------------------------------------------------------------------------------------------
 static GMEVENT_RESULT QuickOutEvent( GMEVENT* event, int* seq, void* wk )
 {
+	FADE_EVENT_WORK* work = wk;
+
   GFL_FADE_SetMasterBrightReq( 
       GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 
       FIELD_FADE_QUICK_WAIT);
+  //室外表現演出開始
+  {
+    FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+    FIELD_GOOUT_EFFECT_Cancel( p_goout );
+  }
 
   return GMEVENT_RES_FINISH;
 }
@@ -1676,6 +1749,11 @@ static GMEVENT_RESULT FlySkyBrightInEvent( GMEVENT* event, int* seq, void* wk )
 	case 0:
     // 輝度フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, work->FadeSpeed );
+    //室外表現演出開始
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
+      FIELD_GOOUT_EFFECT_Cancel( p_goout );
+    }
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
