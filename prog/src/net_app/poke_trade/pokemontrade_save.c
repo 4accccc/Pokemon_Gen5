@@ -62,6 +62,7 @@
 
 #include "spahead.h"
 #include "savedata/perapvoice.h"
+#include "savedata/medalbox.h"
 
 static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork);
@@ -707,6 +708,35 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     }
     WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
                                   pWork->pFriend);
+  }
+
+  //バージョン違うメダル
+  {
+    BOOL is_version = FALSE;
+    u32 version = MyStatus_GetRomCode(pWork->pFriend);
+
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      //B2ならWかW2
+      if( version == VERSION_WHITE || version == VERSION_W2 )
+      {
+        is_version = TRUE;
+      }
+    }
+    else
+    {
+      //W2ならBかB2
+      if( version == VERSION_BLACK || version == VERSION_B2 )
+      {
+        is_version = TRUE;
+      }
+    }
+
+    if( is_version )
+    {
+      MEDALBOX  *p_mdl = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork(pWork->pGameData) );
+      MEDALBOX_SetTitleMedalAchive( p_mdl, MDLID_TRADE_VERSION );
+    }
   }
 
   {

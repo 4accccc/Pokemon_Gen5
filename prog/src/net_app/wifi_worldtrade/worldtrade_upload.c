@@ -35,6 +35,7 @@
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
 #include "item/itemsym.h"
+#include "savedata/medalbox.h"
 
 #include "net_app/worldtrade.h"
 #include "worldtrade_local.h"
@@ -2028,6 +2029,35 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *rec
 
     RESORT_PROXY_DATA_Exit( p_proxy );
     GFL_HEAP_FreeMemory( p_status );
+  }
+
+  //バージョン違うメダル
+  {
+    BOOL is_version = FALSE;
+
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      //B2ならWかW2
+      if( recv_tr->versionCode == VERSION_WHITE || recv_tr->versionCode == VERSION_W2 )
+      {
+        is_version = TRUE;
+      }
+    }
+    else
+    {
+      //W2ならBかB2
+      if( recv_tr->versionCode == VERSION_BLACK || recv_tr->versionCode == VERSION_B2 )
+      {
+        is_version = TRUE;
+      }
+    }
+
+    if( is_version )
+    {
+      GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(wk->param->gamesys);
+      MEDALBOX  *p_mdl = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork(p_gamedata) );
+      MEDALBOX_SetTitleMedalAchive( p_mdl, MDLID_TRADE_VERSION );
+    }
   }
 
 #if 0	//TV_OFF

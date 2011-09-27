@@ -39,6 +39,7 @@
 
 //savedata
 #include "savedata/irc_compatible_savedata.h"
+#include "savedata/medalbox.h"
 
 //sound
 #include "../irc_compatible/irc_compatible_snd.h"
@@ -2015,13 +2016,18 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
   case SEQ_WAIT:
     if( p_wk->cnt++ > 50 )
     { 
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys) );
+      MEDALBOX* p_mdl = SaveData_GetMedalBox( p_sv );
+
       p_wk->cnt = 0;
       switch( UTIL_GetScoreRank(p_wk->p_param->score,NULL) )
       { 
       case SCORE_RANK_BEST:
         PMSND_PlayBGM( SEQ_ME_AISHOU_H );
+        MEDALBOX_SetTitleMedalAchive( p_mdl, MDLID_AFFINITY_CHECK_POINT );
         break;
       case SCORE_RANK_HIGHT:
+        MEDALBOX_SetTitleMedalAchive( p_mdl, MDLID_AFFINITY_CHECK_POINT );
         PMSND_PlayBGM( SEQ_ME_AISHOU_M );
         break;
       case SCORE_RANK_LOW_00:
