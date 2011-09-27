@@ -48,18 +48,23 @@ _EVENT_DATA_END
 INIT_EVENT_START	ev_zone_r05
 	
 	DEFINE_LOCAL	LWK_CONV
+
+	//ゲームをクリアしているかチェック
+	_DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LWK_CONV )
 	
-	//データコンバートをしているかチェック
-	_DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LWK_CONV )
-	
-	//コンバートしている場合
+	//BWをクリアしている場合
 	IF $LWK_CONV == TRUE THEN
 	
-		//チェレンと戦闘前か？
-		IF FLAG_OFF( FE_R05_SWLEADER1_BTL) THEN	
+		//今作をクリアしている場合
+		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+	
+			//チェレンと戦闘前か？
+			IF FLAG_OFF( FE_R05_SWLEADER1_BTL) THEN	
 			
-			//チェレン表示
-			_FLAG_RESET(FV_R05_SWLEADER1_01)
+				//チェレン表示
+				_FLAG_RESET(FV_R05_SWLEADER1_01)
+		
+			ENDIF
 		
 		ENDIF
 	

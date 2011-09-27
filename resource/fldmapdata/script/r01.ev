@@ -23,7 +23,7 @@ _EVENT_DATA   ev_bg_r01_board_02
 _EVENT_DATA   ev_bg_r01_board_03
 _EVENT_DATA   ev_r01_girl1_01
 _EVENT_DATA   ev_r01_man1_01
-_EVENT_DATA   ev_r01_fishing_01
+_EVENT_DATA		ev_r01_fishing_01
 _EVENT_DATA		ev_pos_r01_swbell_01
 _EVENT_DATA		ev_zone_r01
 _EVENT_DATA_END
@@ -35,16 +35,21 @@ INIT_EVENT_START	ev_zone_r01
 	
 	DEFINE_LOCAL	LWK_CONV
 	
-	//データコンバートをしているかチェック
-	_DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LWK_CONV )
+	//ゲームをクリアしているかチェック
+	_DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LWK_CONV )
 	
-	//コンバートしている場合
+	//BWをクリアしている場合
 	IF $LWK_CONV == TRUE THEN
 	
-		//チェレンと戦闘前か？
-		IF $WK_SCENE_R01_CONV == 0 THEN
+		//今作をクリアしている場合
+		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+	
+			//ベルと戦闘前か？
+			IF $WK_SCENE_R01_CONV == 0 THEN
 		
-			$WK_SCENE_R01_CONV = 1
+				$WK_SCENE_R01_CONV = 1
+		
+			ENDIF
 		
 		ENDIF
 	
