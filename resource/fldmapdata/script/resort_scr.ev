@@ -1145,6 +1145,8 @@ _RET
 //==============================================================
 sub_resident_buy_list:
 {
+	_BALLOONWIN_CLOSE()
+
   _RESORT_CHANGE_OV_TO_SHOP()
 
   _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, RESORT_LIST_CAMERA_SHOP, LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_PARAM2, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )

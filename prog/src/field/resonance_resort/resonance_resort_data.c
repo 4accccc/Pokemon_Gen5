@@ -3526,14 +3526,13 @@ RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_D
 //-----------------------------------------------------------------------------
 void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
 {
-  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_SYSTEM) );
+  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
 
   Resort_Recv_Data_InitInstitution( p_wk, p_shop );
   {
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_wk );
 
     p_wk->type      = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
-
   }
 
   RESORT_BINARY_SHOP_Exit( p_shop );

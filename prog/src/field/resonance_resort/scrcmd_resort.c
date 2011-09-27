@@ -82,12 +82,6 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
     }
   }
 
-  //フィールドで群集なら停止させる
-  if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
-  {
-    RESORT_FIELD_StopCrowdPeople( p_field, p_people );
-  }
-
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------

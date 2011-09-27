@@ -152,6 +152,11 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_BALLOONWIN_OBJMSG( msg_c16_owner_01_00, C16_OWNER_01 )
 	_MSGWIN_CLOSE()
 
+  //プレイヤー：！マーク
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+
   //プレイヤーこさせる
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 72, FORCE_TYPE_NOT, 8, DIR_LR )
 	_OBJ_ANIME_WAIT()
