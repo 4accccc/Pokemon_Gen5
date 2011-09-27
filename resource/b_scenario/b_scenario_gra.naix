@@ -37,14 +37,15 @@ enum {
 	NARC_b_scenario_gra_pkwd_list_p4_NSCR = 23,
 	NARC_b_scenario_gra_pkwd_record_monitor_NSCR = 24,
 	NARC_b_scenario_gra_pkwd_record_monitor2_NSCR = 25,
-	NARC_b_scenario_gra_pkwd_scenario_NSCR = 26,
-	NARC_b_scenario_gra_pkwd_scenario2_d_NSCR = 27,
-	NARC_b_scenario_gra_pkwd_scenario2_u_NSCR = 28,
-	NARC_b_scenario_gra_pkwd_list_obj_NANR = 29,
-	NARC_b_scenario_gra_pkwd_scenario_arrow_NANR = 30,
-	NARC_b_scenario_gra_b_scenario_pos_tblbin = 31,
-	NARC_b_scenario_gra_pkwd_book_pos_tblbin = 32,
-	NARC_b_scenario_gra_pkwd_record_monitor_pos_tblbin = 33
+	NARC_b_scenario_gra_pkwd_record_monitor3_NSCR = 26,
+	NARC_b_scenario_gra_pkwd_scenario_NSCR = 27,
+	NARC_b_scenario_gra_pkwd_scenario2_d_NSCR = 28,
+	NARC_b_scenario_gra_pkwd_scenario2_u_NSCR = 29,
+	NARC_b_scenario_gra_pkwd_list_obj_NANR = 30,
+	NARC_b_scenario_gra_pkwd_scenario_arrow_NANR = 31,
+	NARC_b_scenario_gra_b_scenario_pos_tblbin = 32,
+	NARC_b_scenario_gra_pkwd_book_pos_tblbin = 33,
+	NARC_b_scenario_gra_pkwd_record_monitor_pos_tblbin = 34
 };
 
 /* NARC_B_SCENARIO_GRA_NAIX_ */
