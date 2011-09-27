@@ -194,6 +194,7 @@ static s32 debug_fog_slope_value  = FOG_SLOPE;
 static s32 debug_fog_offset_value = FOG_OFFSET;
 static s32 debug_fog_color_a_value  = FOG_COLOR_A;
 static s32 debug_dragon_bark_value  = DRA_BARK_FRAME_HERO;
+static s32 debug_dragon_mem_free    = 0;
 #endif
 
 //-------------------------------------
@@ -1795,6 +1796,21 @@ static void DebugWin_Draw_DragonBarkFrame( void *userWork, DEBUGWIN_ITEM *item )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  メモリ開放デバッグ
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_MemFree( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item ,"MEM_FREE[%d]" ,debug_dragon_mem_free );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  咆哮音再生タイミングを調節
  *
  *	@param	*userWork
@@ -1857,6 +1873,37 @@ static void DebugWin_Update_FogCollar( void *userWork, DEBUGWIN_ITEM *item )
       FIELD_FOG_Reflect( fog );
     }
 
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリ開放デバッグ
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_DragonMemFree( void *userWork, DEBUGWIN_ITEM *item )
+{
+  s32 *p_value = &debug_dragon_mem_free;
+  FIELDMAP_WORK *p_fld_wk = userWork;
+
+  if( DebugWin_ValueUpdate( p_value, 0, 2 ,1 ) )
+  {
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fld_wk );
+
+    if( *p_value == 1 )
+    {
+      GYM_DRAGON_ReleaseAnmHeap( gsys );
+    }
+    else
+    {
+      GYM_DRAGON_MakeAnmHeap( gsys );
+    }
+    // 描画更新
+    DEBUGWIN_RefreshScreen();
   }
 }
 
@@ -1990,6 +2037,13 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fld_wk, HEAPID heapID )
   // ドラゴンの泣き声
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_DragonBarkFrame,
                               DebugWin_Draw_DragonBarkFrame,
+                              p_fld_wk,
+                              DEBUGMENU_GYM_DRAGON,
+                              heapID );
+
+  // メモリ開放デバッグ
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_DragonMemFree,
+                              DebugWin_Draw_MemFree,
                               p_fld_wk,
                               DEBUGMENU_GYM_DRAGON,
                               heapID );
