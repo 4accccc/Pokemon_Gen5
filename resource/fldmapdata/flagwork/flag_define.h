@@ -457,6 +457,7 @@
 #define FE_C03P12_ITEMGET_01               441 /* 0x01b9 ヒウンシティ：アイテム入手フラグ */
 #define FE_H01R0201_ITEMGET_01             442 /* 0x01ba スカイアローブリッジゲート：アイテム入手フラグ */
 #define FE_C03P14_ITEMGET_01               443 /* 0x01bb ヒウンシティ：アイテム入手フラグ */
+#define FE_C08_PLAZMA_COME                 444 /* 0x01bc ソウリュウシティ：プラズマ団襲来イベント起動フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
