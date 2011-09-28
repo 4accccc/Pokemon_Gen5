@@ -83,9 +83,12 @@ enum
 // 段階
 enum{
 	STEP_INIT	= 0,		// 初期化
+  STEP_LINE_ANIME = 1,
+  STEP_LINE_ANIME_WAIT = 2,
 	STEP_LV1 	= 100,
 	STEP_LV2 	= 200,
 	STEP_LV3 	= 300,
+
 	//
 	STEP_END	= 10000,
 };
@@ -119,13 +122,13 @@ enum{
 // 上(MAIN)：OBJ (14:通信アイコン)
 //
 // 下(SUB) ：BG  (0-1:リストパネル),(6,7:下地),(8:cmn),(10:font)
-// 下(SUB) ：OBJ ,(4-7:cmn),(12:font),(13,14:obj)
+// 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-14:obj)
 enum{
 	// 何本目か(bg)
   PLTID_MAIN_POKE     = 5,    // pok
 	PLTID_MAIN_FONT			= 10,		// font
 
-  PLTID_MAIN_OBJ_LIST = 9,    // obj
+  PLTID_MAIN_OBJ_LIST = 8,    // obj
 
 	//
 	PLTID_SUB_BG_BASE		= 6,		// 通常bg
@@ -133,8 +136,7 @@ enum{
 	PLTID_SUB_FONT			= 10,		// font
 	//
 	PLTID_SUB_OBJ_CMN		= 4,		// cmn
-	PLTID_SUB_OBJ_FONT		= 8,		// font
-	PLTID_SUB_OBJ_LIST		= 9,		// list
+	PLTID_SUB_OBJ_LIST	= 8,		// list
 	//
 	// 何番目か
 	MES_CLEAR_COLOR			= 0,		// クリアカラー
@@ -142,12 +144,12 @@ enum{
 
 // 最大値
 enum{
-	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 35*2,		// empty
+	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 30*2,		// empty
 	//
 	PKWD_RECORD_MONITOR_CMN_OBJ_MAXNUM	= 3,	// obj(cmn)
 	PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM	= POKEWOOD_MYPOKE_NUM,	// obj(poke)
 	PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM	= 10,	// obj(list)
-	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM	  = 8,	// obj(up)
+	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM	  = 11,	// obj(up)
 	//
 	PKWD_RECORD_MONITOR_BGNUM_MAXNUM		= 8,	// bg
 	//
@@ -243,6 +245,9 @@ enum{
   CLWK_UP_STAR_03,          // スター
   CLWK_UP_STAR_04,          // スター
   CLWK_UP_STAR_05,          // スター
+  CLWK_UP_LINE_RED,   // 赤いライン
+  CLWK_UP_LINE_GREEN, // 緑ライン
+  CLWK_UP_LINE_BLUE,  // 青いライン
 };
 
 // CLWK(List)のアニメシーケンス
@@ -254,6 +259,9 @@ enum{
   CLWK_LIST_ANM_SEQ_CROWN,
   CLWK_LIST_ANM_SEQ_KIRA,
   CLWK_LIST_ANM_SEQ_STAR,
+  CLWK_LIST_ANM_SEQ_LINE_RED,   // 赤いライン
+  CLWK_LIST_ANM_SEQ_LINE_GREEN, // 緑ライン
+  CLWK_LIST_ANM_SEQ_LINE_BLUE,  // 青いライン
 };
 
 
@@ -302,6 +310,10 @@ enum{
 	PWB_CVS_TOP_07,          // 「タグ：トレーナー名」
 	PWB_CSV_TOP_MAX,		// max
 };
+
+// 文字色
+// 上画面
+#define TEXT_COL_MAIN   ( PRINTSYS_LSB_Make(13, 12, 11 ) )   // 黒文字
 
 //=============================================================================
 /**
@@ -390,6 +402,7 @@ typedef struct
 	PKWD_RECORD_MONITOR_FLAG_BUFFER	FlagBuffer[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< フラグのバッファ
 	//
 	u8	          profits[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< 収益の高いフラグ
+  BOOL          first_anime_flag;        // 最初のアニメフラグ
 	//
 	
 } PKWD_RECORD_MONITOR_MAIN_WORK;
@@ -468,7 +481,7 @@ static const PKWD_RECORD_MONITOR_BGPAL_DATA pwc_bgpal_tbl[] = {
 
 // BGCHR
 static const PKWD_RECORD_MONITOR_BGCHR_DATA pwc_bgchr_tbl[] = {
-	{ GFL_BG_FRAME3_M,	NARC_b_scenario_gra_pkwd_record_monitor_NCGR,	0,	0,},	// 上
+	{ GFL_BG_FRAME1_M,	NARC_b_scenario_gra_pkwd_record_monitor_NCGR,	0,	0,},	// 上
 	{ GFL_BG_FRAME3_S,	NARC_b_scenario_gra_pkwd_scenario2_d_NCGR,	0,	0,},	// 下
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -476,7 +489,9 @@ static const PKWD_RECORD_MONITOR_BGCHR_DATA pwc_bgchr_tbl[] = {
 
 // BGSCN
 static const PKWD_RECORD_MONITOR_BGSCN_DATA pwc_bgscn_tbl[] = {
-	{ GFL_BG_FRAME3_M,	NARC_b_scenario_gra_pkwd_record_monitor_NSCR,	0,	0,},	// 上
+	{ GFL_BG_FRAME1_M,	NARC_b_scenario_gra_pkwd_record_monitor_NSCR,	0,	0,},	// 上
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_record_monitor2_NSCR,	0,	0,},	// 上
+	{ GFL_BG_FRAME3_M,	NARC_b_scenario_gra_pkwd_record_monitor3_NSCR,	0,	0,},	// 上
 	{ GFL_BG_FRAME3_S,	NARC_b_scenario_gra_pkwd_scenario2_d_NSCR,	0,	0,},	// 下
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -534,7 +549,7 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_poke_tbl[] = {
 //----------------
 // narc, resid, paloffset, palnum
 static const s16 pwb_obj_list_info_tbl[] = {
-	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 3, // NCL
+	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 6, // NCL
 	NARC_b_scenario_gra_pkwd_list_obj_NCGR, RESID_LIST_CHR, 0, 0,	// NCG
 	NARC_b_scenario_gra_pkwd_list_obj_NCER, RESID_LIST_CEL, 0, 0,	// NCE
 	NARC_b_scenario_gra_pkwd_list_obj_NANR, -1, 0, 0,				// NAR?
@@ -552,17 +567,17 @@ static const s16 pwb_obj_list_itbl[] = {
 
 // OBJのテーブルデータ
 const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_list_tbl[] = {
-	{ CLWK_LIST_ANM_SEQ_SLIDER,	0x30, 1, 0,	0,	1,	24,	RESID_LIST_CHR,},		// スクロールバー
+	{ CLWK_LIST_ANM_SEQ_SLIDER,	0x30, 1, 0,	0,	1,	16,	RESID_LIST_CHR,},		// スクロールバー
 	//
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	17,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	18,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	19,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	20,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	21,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	22,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	23,	RESID_LIST_CHR,},		// NEWマーク
+	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	24,	RESID_LIST_CHR,},		// NEWマーク
 	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	25,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	26,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	27,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	28,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	29,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	30,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	31,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	32,	RESID_LIST_CHR,},		// NEWマーク
-	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	33,	RESID_LIST_CHR,},		// NEWマーク
 	
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -581,14 +596,17 @@ static const s16 pwb_obj_up_itbl[] = {
 
 // OBJのテーブルデータ
 const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
-	{ CLWK_LIST_ANM_SEQ_CROWN, 0x30, 1, 0, 0, 1, 34, RESID_LIST_CHR,}, // 王冠
-	{ CLWK_LIST_ANM_SEQ_KIRA,  0x30, 0, 0, 0, 1, 34, RESID_LIST_CHR,}, // キラキラ
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 4, RESID_LIST_CHR,}, // スター
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 5, RESID_LIST_CHR,}, // スター
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 6, RESID_LIST_CHR,}, // スター
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 7, RESID_LIST_CHR,}, // スター
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 8, RESID_LIST_CHR,}, // スター
-	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 9, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_CROWN, 0x30, 1, 0, 0, 1, 26, RESID_LIST_CHR,}, // 王冠
+	{ CLWK_LIST_ANM_SEQ_KIRA,  0x30, 0, 0, 0, 1, 26, RESID_LIST_CHR,}, // キラキラ
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 10, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 11, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 12, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 13, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 14, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 15, RESID_LIST_CHR,}, // スター
+	{ CLWK_LIST_ANM_SEQ_LINE_RED, 0x30, 2, 0, 0, 0, 27, RESID_LIST_CHR,}, // 赤いライン
+	{ CLWK_LIST_ANM_SEQ_LINE_GREEN, 0x30, 2, 0, 0, 0, 28, RESID_LIST_CHR,}, // 緑ライン
+	{ CLWK_LIST_ANM_SEQ_LINE_BLUE, 0x30, 2, 0, 0, 0, 29, RESID_LIST_CHR,}, // 青いライン
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -599,13 +617,13 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
 //---------------
 // 上画面
 static const PKWD_RECORD_MONITOR_CANVAS_DATA pwb_canvas_00_tbl[] = {
-	{ GFL_BG_FRAME1_M,	2,	1,	27,	2,	10,},		// 「上映作品の最高記録」
-	{ GFL_BG_FRAME1_M,	2, 12,	28,	2,	10,},		//「興行成績記録」
-	{ GFL_BG_FRAME1_M,  2, 17,	18,	2,	10,},		//「主な出演キャスト」
-	{ GFL_BG_FRAME1_M,	3,	4,	27,	2,	10,},		// 映画のメインタイトル
-	{ GFL_BG_FRAME1_M,	3,	7,	27,	4,	10,},		// 映画のサブタイトル
-	{ GFL_BG_FRAME1_M,  9, 14,	21,	2,	10,},		//「XXXX億円」
-	{ GFL_BG_FRAME1_M, 20, 17,	10,	2,	10,},		// トレーナー名
+	{ GFL_BG_FRAME0_M,	2,	1,	27,	2,	10,},		// 「上映作品の最高記録」
+	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	10,},		//「興行成績記録」
+	{ GFL_BG_FRAME0_M,  2, 17,	18,	2,	10,},		//「主な出演キャスト」
+	{ GFL_BG_FRAME0_M,	3,	4,	27,	2,	10,},		// 映画のメインタイトル
+	{ GFL_BG_FRAME0_M,	3,	7,	27,	4,	10,},		// 映画のサブタイトル
+	{ GFL_BG_FRAME0_M,  9, 14,	21,	2,	10,},		//「XXXX億円」
+	{ GFL_BG_FRAME0_M, 20, 17,	10,	2,	10,},		// トレーナー名
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 // RECORD_MONITOR
@@ -645,11 +663,11 @@ static const s16 pwb_fix_mestbl[] = {
 //-------------
 // main(上)
 static const u16 pwb_fmes00_tbl[] = {
-	MES_ID_TOP_01,	PWB_CVS_TOP_01, 	0, 0,		// 「上映作品の最高記録」
-	MES_ID_TOP_02,	PWB_CVS_TOP_02, 	0, 0,		// 「興行成績記録」 
-	MES_ID_TOP_03,	PWB_CVS_TOP_03, 	0, 0,		// 「主な出演キャスト」 
+	MES_ID_TOP_01,	PWB_CVS_TOP_01,		// 「上映作品の最高記録」
+	MES_ID_TOP_02,	PWB_CVS_TOP_02,		// 「興行成績記録」 
+	MES_ID_TOP_03,	PWB_CVS_TOP_03,		// 「主な出演キャスト」 
 	//
-	0xffff, 0, 0, 0,		// end
+	0xffff, 0,// end
 };
 
 // fixメッセージ(まとめ)
@@ -1123,6 +1141,7 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	wk->OldPos			= -1;
 	//
 	wk->frame_list_work = 0;
+  wk->first_anime_flag = FALSE;
 	//
 	for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
 		wk->FlagBuffer[i].openid   = 0xff;
@@ -1212,13 +1231,6 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	// 上画面表示
 	//------------
 	pwb_disp_up_bg( wk, 0 );
-	
-	//---------------------------
-	// 半透明設定(フィルムのobj)
-	//---------------------------
-	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
-		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		8, 3 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1602,6 +1614,7 @@ static void pwb_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawt
 	const s16 *adr		 = info_adr;		// アドレスセット
 	//
 	// セルアニメ用の処理
+	//wk->wk_obj.res[ adr[0+1] ] = GFL_CLGRP_PLTT_RegisterComp(   p_handle, adr[0], drawtype, adr[2], wk->heapID );
 	wk->wk_obj.res[ adr[0+1] ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, adr[0], drawtype, adr[2], 0, adr[3], wk->heapID );
 	wk->wk_obj.res[ adr[4+1] ] = GFL_CLGRP_CGR_Register(      p_handle, adr[4], FALSE, drawtype, wk->heapID );
 	wk->wk_obj.res[ adr[8+1] ] = GFL_CLGRP_CELLANIM_Register( p_handle, adr[8], adr[12], wk->heapID );
@@ -1749,6 +1762,16 @@ static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	// 通信アイコンセット(上画面)
 	GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
 	//
+  // 半透明OBJ
+  GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk_up[CLWK_UP_LINE_RED], GX_OAM_MODE_XLU );
+  GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk_up[CLWK_UP_LINE_GREEN], GX_OAM_MODE_XLU );
+  GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk_up[CLWK_UP_LINE_BLUE], GX_OAM_MODE_XLU );
+
+  // アルファ設定
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE|GX_BLEND_PLANEMASK_BG3,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		8, 8 );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1851,6 +1874,7 @@ static void pwb_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, 
 		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk_up[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk_up[wnum], TRUE );
+    GFL_CLACT_WK_ResetAnm( wk->wk_obj.clwk_up[wnum] );
 	}
 }
 
@@ -2235,7 +2259,7 @@ static void pwb_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode 
 //--------------------------------------------------------------------------------------------
 static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 type, const s32 mode )
 {
-	u16		buf[4];
+	u16		buf[2];
 	const u16	*adr;
 	u16		col;
 	s32		i;
@@ -2245,32 +2269,21 @@ static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 t
 	adr = pwb_fmes_tbl[type+mode];
 	for(i=0;i<PKWD_RECORD_MONITOR_CANVAS_MAXNUM;i++){
 		// 終了判定
-		if(adr[4*i] == 0xffff){
+		if(adr[2*i] == 0xffff){
 			break;
 		}
-		buf[0] = adr[4*i];		// mesid
-		buf[1] = adr[4*i+1];	// id
-		buf[2] = adr[4*i+2];	// col
-		buf[3] = adr[4*i+3];	// num
-		// 表示
-		col = PRINTSYS_LSB_Make(15,2,0);
-		if(buf[2] == 1){
-			col = PRINTSYS_LSB_Make(1,2,0);
-		}
-		// 上画面
-		if(type == STR_MAIN){
-			col = PRINTSYS_LSB_Make(3,2,1);
-		}
+		buf[0] = adr[2*i];		// mesid
+		buf[1] = adr[2*i+1];	// id
 		strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_fix_mestbl[ buf[0] ] );
 
     if( buf[0] == MES_ID_TOP_01 )
     {
       // 中央揃え
-      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, col );
+      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, TEXT_COL_MAIN );
     }
     else
     {
-      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, col );
+      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, TEXT_COL_MAIN );
     }
 		
 		GFL_STR_DeleteBuffer( strbuf );
@@ -2323,7 +2336,6 @@ static void pwb_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// main処理へ
 	wk->Mode 		= MODE_MAIN_RECORD_MONITOR;
-	wk->SubMode 	= STEP_LV1;
 	wk->TitleMode	= TMODE_RECORD_MONITOR;
 	//
 	// bg初期化(1回目だけは転送しない)
@@ -2369,8 +2381,45 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	switch( wk->SubMode ){
 		// 初期化
 		case STEP_INIT:
-			wk->SubMode = STEP_LV1;
-			
+      wk->SubMode = STEP_LV1;
+      break;
+    case STEP_LINE_ANIME:
+      // ラインのOBJアニメ
+      
+      GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+
+      // ラインのOBJ表示
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, TRUE );
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, TRUE );
+      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, TRUE );
+
+      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, CLWK_LIST_ANM_SEQ_LINE_RED );
+      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, CLWK_LIST_ANM_SEQ_LINE_GREEN );
+      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, CLWK_LIST_ANM_SEQ_LINE_BLUE );
+      wk->SubMode = STEP_LINE_ANIME_WAIT;
+      break;
+    case STEP_LINE_ANIME_WAIT:
+      // ラインのOBJアニメ終了待ち
+      if( pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_RED) == FALSE
+          && pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN) == FALSE
+          && pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
+        )
+      {
+        GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+        GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+        GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+        GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+
+        pwb_disp_record_monitor_string( wk, 1 );
+        // poke icon 表示
+        pwb_disp_poke_obj( wk );
+        wk->SubMode = STEP_LV1;
+      }
+      break;
+
 		// 通常
 		case STEP_LV1:
 			pwb_key_record_monitor( wk );
@@ -2511,9 +2560,19 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	// 上文字列更新
 	if(flg != 0){
 
-		pwb_disp_record_monitor_string( wk, 1 );
-    // poke icon 表示
-    pwb_disp_poke_obj( wk );
+    // 画面に何も出ていない状態ならアニメ開始から入る
+    if( wk->first_anime_flag == FALSE )
+    {
+      // アニメさせるシーケンスに移行
+      wk->SubMode = STEP_LINE_ANIME;
+      wk->first_anime_flag = TRUE;
+    }
+    else
+    {
+      pwb_disp_record_monitor_string( wk, 1 );
+      // poke icon 表示
+      pwb_disp_poke_obj( wk );
+    }
 
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
@@ -2559,7 +2618,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
         strbuf = namebuf;
       }
 
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, strbuf, 1, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, strbuf, 1, TEXT_COL_MAIN );
 
       GFL_STR_DeleteBuffer( strbuf );
     }
@@ -2578,7 +2637,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       // タイトルのラベルが10個しかない為
       u32 str_id = pwb_mes_tbl[0] + ( id/4 );
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
     // サブタイトル
@@ -2589,7 +2648,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       //  興行成績の高いサブタイトルになる?
       u32 str_id = pwb_mes_tbl[1] + ( id/4 );
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
     // XXXX億円
@@ -2605,7 +2664,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
         strbuf = namebuf;
       }
 
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, strbuf, 1, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, strbuf, 1, TEXT_COL_MAIN );
 
       GFL_STR_DeleteBuffer( strbuf );
     }
@@ -2835,7 +2894,7 @@ static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	// openチェック
 	j=0;
 	for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
-		bflg = POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
+    bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_THEATERGO, i );
 		if(bflg == TRUE){
       const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, i );
 
@@ -2936,18 +2995,23 @@ static void pwb_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
 		//
 		// キーだと表示
 		if(mode == GFL_APP_END_KEY){
-      flag = VISIBLE_ON;
-      // poke icon 表示
-      pwb_disp_poke_obj( wk );
+      //flag = VISIBLE_ON;    // アニメ後ONにする
+
+      if( wk->first_anime_flag == FALSE )
+      {
+        // アニメさせるシーケンスに移行
+        wk->SubMode = STEP_LINE_ANIME;
+        wk->first_anime_flag = TRUE;
+      }
 		}
     // フォント面のみを考慮にいれる
-    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, flag );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
 	// 表示
 	else{
     flag = VISIBLE_ON;
 		// フォント面のみを考慮にいれる
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, flag );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
 }
 
@@ -3117,9 +3181,9 @@ static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 	//
 	// ここでなくてもいいはず
 	// 上画面表示
-	if(flg != 0){
-		pwb_disp_up_bg( wk, 1 );
-	}
+	//if(flg != 0){
+	//  pwb_disp_up_bg( wk, 1 );
+	//}
 	return( flg );
 }
 
@@ -3429,8 +3493,8 @@ static void pwb_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
 	// 座標初期化
 	for(i=0;i<9;i++){
 		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
-		pos.x = pwb_get_empty( wk, (25+i)*2 );
-		pos.y = pwb_get_empty( wk, (25+i)*2+1 );
+		pos.x = pwb_get_empty( wk, (17+i)*2 );
+		pos.y = pwb_get_empty( wk, (17+i)*2+1 );
 		pos.y += off*24;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 	}
@@ -3477,23 +3541,42 @@ static void pwb_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rat
 static void pwb_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 #ifdef PM_DEBUG
-	s32		i;
-	s32		tmp;
+  static int ev1;
+  static int ev2;
 	
-	// X:全オープン
-	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
-		for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
-			POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
-		}
-		OS_Printf("*** all open ***\n");
-	}
-	// Y:NEW
-	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
-		tmp = wk->FlagBuffer[wk->ScenarioCurPos].openid;
-		POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag(wk->Param->pokewood_sv, tmp );
-		//
-		OS_Printf("*** scenario [%d] played ***\n",tmp);
-	}
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    BOOL update = FALSE;
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      ev1++;
+      update = TRUE;
+      OS_Printf("ev1 %d\n", ev1);
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      ev1--;
+      update = TRUE;
+      OS_Printf("ev1 %d\n", ev1);
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      ev2++;
+      update = TRUE;
+      OS_Printf("ev2 %d\n", ev2);
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      ev2--;
+      update = TRUE;
+      OS_Printf("ev2 %d\n", ev2);
+    }
+
+    if( update )
+    {
+      G2_ChangeBlendAlpha(ev1, ev2);
+    }
+  }
+
 #endif
 }
 
