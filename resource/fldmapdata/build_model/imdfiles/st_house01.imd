@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-06-03T19:38:01" source="kore.ma"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-09-28T15:16:58" source="st_house01.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-06-03T19:38:01" source="kore.ma"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-09-28T15:16:58" source="st_house01.ma"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="4"
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="4 4"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="4 4"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -35,7 +35,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="bf_h01_a_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/st_house01/tex/bf_h01_a.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/st_house01/tex/bf_h01_a.tga"
 	>
 		<bitmap size="512">
 			0707 0707 0707 0707 0707 0707 0707 0707
@@ -108,7 +108,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/st_house01/tex/h_kage.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/st_house01/tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -122,7 +122,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/st_house01/tex/h_mado.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/st_house01/tex/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -173,7 +173,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="lambert6"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="on" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
