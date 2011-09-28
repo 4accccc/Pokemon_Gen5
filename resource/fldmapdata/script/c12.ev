@@ -119,6 +119,9 @@ INIT_EVENT_END
 /*  ライバルはなしかけ                         */
 /**************************************************************/
 EVENT_START ev_c12_swrival_01
+
+  _DEBUG_PRINT_WK( 2 )
+    
   _TALK_OBJ_START()
   
   IF $WK_SCENE_C12_WHITE_MEET < 3 THEN
@@ -348,10 +351,8 @@ EVENT_START ev_pos_c12_swbell_meet_03
 		//ニックネームをつけないんだね
 		_BALLOONWIN_OBJMSG_POS( msg_c12_white_07 , C12_SWBELL_01 , POS_DEFAULT )
 	ENDIF
-	
-	_MSGWIN_CLOSE()
-	
-
+  
+  _MSGWIN_CLOSE()
   
   //ライバル名代入
   _RIVAL_NAME( 1 )
@@ -977,7 +978,14 @@ EVENT_START		ev_scene_c12_gymclear_01
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_27,C12_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】登録デモ再生
+  /*
+  //【仮】ライブキャスター起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _CALL_TVT_DEMO( 5 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  */
   
   //========================================/
   //C12のSCENECHANGE無効

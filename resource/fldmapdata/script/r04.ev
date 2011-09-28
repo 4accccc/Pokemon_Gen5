@@ -209,8 +209,8 @@ ev_vs_r04swboss:
 	_AB_KEYWAIT_MARK()
 	_MSGWIN_CLOSE()
   
-  //【仮】イワパレス戦をセット（レベルが仮）
-  _WILD_BTL_SET_TALK( MONSNO_569, 30 )
+  //イワパレス戦をセット
+  _WILD_BTL_SET_TALK( MONSNO_569, 25 )
   _WILD_LOSE_CHECK( SCWK_ANSWER )
   
   //自機座標取得

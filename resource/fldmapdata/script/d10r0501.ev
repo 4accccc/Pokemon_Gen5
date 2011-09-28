@@ -284,7 +284,7 @@ ev_vs_swsage1_01:
   _MSGWIN_CLOSE()
   
   //【仮】トレーナー戦
-  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+  _TRAINER_BTL_SET( TRID_SWSAGE1_01, 0 )
   //結果チェック
   _CALL ev_battle_check
   
