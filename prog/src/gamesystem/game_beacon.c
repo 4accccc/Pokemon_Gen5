@@ -647,7 +647,11 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
   else if( GAMEBEACON_Check_FestMission(info) )
   {
-    BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_HYLINKFES );
+    //フェスビーコンかつ、配信ミッションではないとき
+    if( info->action.action_no != GAMEBEACON_ACTION_DISTRIBUTION_FMISSION )
+    {
+      BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_HYLINKFES );
+    }
   }
 
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU

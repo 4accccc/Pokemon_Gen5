@@ -1882,11 +1882,6 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
         {
           rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
         }
-        //‚O‚Í”ò‚Î‚·
-        if( rnkdata[cnt].value == 0 )
-        {
-          continue;
-        }
 
         if( p_resident == p_data )
         {
@@ -1921,6 +1916,11 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
     {
       break;
     }
+  }
+
+  if( rnkdata[cnt].value == 0 )
+  {
+    return 8;
   }
 
   return i;
@@ -1990,6 +1990,7 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_tal
         if( p_wk != p_talk_people && people_type == sc_visible_type[type].array[j] )
         {
           RESORT_PEOPLE_SetTemporaryVisible( p_wk, RESORT_PEOPLE_VISIBLE_OFF );
+          break;
         }
       }
     }

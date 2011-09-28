@@ -382,8 +382,8 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     QUESTIONNAIRE_SAVE_WORK *p_ques_sv = SaveData_GetQuestionnaire(p_sv);
     QUESTIONNAIRE_ANSWER_WORK *p_ques_ans = Questionnaire_GetAnswerWork(p_ques_sv);
 
-    p_wk->job   = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_JOB) + 1;
-    p_wk->hobby = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_HOBBY) + 1;
+    p_wk->job   = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_JOB);
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(p_ques_ans, QUESTION_ID_HOBBY);
   }
 
   //ƒvƒŒƒCŽžŠÔ
@@ -423,8 +423,8 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   }
   {
     const QUESTIONNAIRE_ANSWER_WORK *cp_ques_ans = &cp_beacon_info->question_answer;
-    p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB) + 1;
-    p_wk->hobby = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_HOBBY) + 1;
+    p_wk->job   = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_JOB);
+    p_wk->hobby = QuestionnaireAnswer_ReadBit(cp_ques_ans, QUESTION_ID_HOBBY);
   }
 
   p_wk->play_hour = cp_beacon_info->play_hour;

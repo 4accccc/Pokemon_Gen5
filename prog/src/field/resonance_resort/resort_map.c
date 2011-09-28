@@ -420,7 +420,7 @@ void RESORT_MAP_GetSecretaryGridPos( u16 kind, u16 *p_x, u16 *p_z, u16 *p_dir )
     {
       13,
       7,
-      DIR_DOWN,
+      DIR_UP,
     },
     //É|ÉPÉZÉì
     {
