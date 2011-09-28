@@ -12936,6 +12936,22 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief メダルIDからカットインIDを取得する
+ * @param[in] medal_id  メダルID
+ * @param[out] ret_wk    結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+#define _GET_MEDAL_CIID( medal_id, ret_wk ) \
+    _ASM_GET_MEDAL_CIID medal_id, ret_wk
+
+    .macro _ASM_GET_MEDAL_CIID medal_id, ret_wk
+    .short  EV_SEQ_GET_MEDAL_CIID
+    .short  \medal_id
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //
 //    スクリプトコマンド：WBT関連

@@ -34,6 +34,7 @@
 #include "system/medaldata.h"
 
 #include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
+#include "../../../resource/fld3d_ci/fldci_id_def.h"  //for FLDCIID_
 
 #include "field/medal_check.h"
 
@@ -268,6 +269,40 @@ VMCMD_RESULT EvCmdSetMedalHintAchieve( VMHANDLE * core, void * wk )
     MEDALBOX_SetHintMedalAchive( medalbox, medal_id );
   }
   OS_Printf("EvCmdSetMedalHintAchieve(%u) = %d\n",medal_id, medal_status );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド：メダルIDからカットインIDを取得する
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMedalCutInID( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MEDALBOX * medalbox         = SaveData_GetMedalBox( save );
+
+  u16 medal_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_wk  = SCRCMD_GetVMWork( core, wk );
+
+  GF_ASSERT( medal_id < MDLID_MAX );
+
+  // graphic_typeは０オリジンで27種類。
+  // カットインIDも0オリジンで27種類にそろえた
+  {
+    MEDALDATA medal_data;
+
+    GFL_ARC_LoadData( &medal_data, ARCID_MEDALDATA, medal_id );
+
+    *ret_wk = FLDCIID_GET_MEDAL_1 + medal_data.graphic_type;
+
+    GF_ASSERT( *ret_wk>=FLDCIID_GET_MEDAL_1 && *ret_wk<= FLDCIID_GET_MEDAL_27 );
+  }
+
+  OS_Printf("EvCmdGetMedalCutInID(%d) = %d\n",medal_id, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 

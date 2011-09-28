@@ -487,12 +487,14 @@ sub_medaloyaji_goodbye:
 
 
 sub_medaloyaji_gettitle:
-  //【仮】_CALL_FLD3D_CUTIN( ... )
-  //SE再生
-  _SE_PLAY(	SEQ_SE_FLD_56 ) 
-  _SE_WAIT()
-  _SE_PLAY(	SEQ_SE_SYS_89 ) 
-  _SE_WAIT()
+  DEFINE_LOCAL cutin_id
+
+  // メダルIDからカットインIDを取得
+  _GET_MEDAL_CIID( LWK_MEDAL_ID, cutin_id )
+  _DEBUG_PRINT_WK( cutin_id )
+
+  // カットイン再生
+  _CALL_FLD3D_CUTIN( cutin_id )
   
   //システムウィンドウ表示
   _GET_MEDAL( LWK_MEDAL_ID, TRUE )

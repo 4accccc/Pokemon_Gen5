@@ -1021,7 +1021,7 @@
   NO_CMD()
 
   //メダルイベント関連２
-  NO_CMD()
+  DEF_CMD( EvCmdGetMedalCutInID, EV_SEQ_GET_MEDAL_CIID )
   DEF_CMD( EvCmdSetMedalHintAchieve, EV_SEQ_SET_MEDAL_HINT_ACHIEVE )
  
   DEF_CMD( EvCmdCheckIsMedalGet, EV_SEQ_MEDAL_IS_GET )

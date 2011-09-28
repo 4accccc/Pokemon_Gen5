@@ -86,7 +86,7 @@ VMCMD_RESULT EvCmdFldCi_CallCutin( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD3D_CI_PTR ptr = FIELDMAP_GetFld3dCiPtr(fieldWork);
 
-  cutin_no = VMGetU16( core );
+  cutin_no = SCRCMD_GetVMWorkValue( core, wk );
 
   //カットインイベントをコール
   {

@@ -20,4 +20,5 @@ extern VMCMD_RESULT EvCmdCheckIsMedalGet( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetMostGetCategory( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSetMedalTitleAchieve( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSetMedalHintAchieve( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdGetMedalCutInID( VMHANDLE * core, void * wk );
 
