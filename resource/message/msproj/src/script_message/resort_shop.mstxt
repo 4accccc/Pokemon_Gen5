@@ -2421,11 +2421,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="2" ]さんは
-かえって　いきました▼</Text>
+			<Text>[Name:TrainerName Idx="2" ]さん　は
+もとの　せかいへ　かえります▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:35:50" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T08:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2433,11 +2433,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="2" ]さんは
-帰って　いきました▼</Text>
+			<Text>[Name:TrainerName Idx="2" ]さん　は
+もとの　世界へ　帰ります▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T12:25:44" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T08:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
