@@ -417,7 +417,7 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 
   {
     MYSTATUS* my = SaveData_GetMyStatus(save);
-    wk->my_data.tr_id = MyStatus_GetID( my ) & 0xFFFF;  //‰ºˆÊ2byte
+    wk->my_data.tr_id = MyStatus_GetID_Low( my );
     wk->my_data.sex = MyStatus_GetMySex( my );
     wk->my_data.union_char = MyStatus_GetTrainerView( my );
     wk->my_data.pm_version = PM_VERSION;
