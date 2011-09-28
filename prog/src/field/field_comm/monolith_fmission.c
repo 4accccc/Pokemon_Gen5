@@ -2501,12 +2501,14 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     flg = 1;
   }
   else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_WHITE){
-    if(GET_VERSION() == VERSION_WHITE){
+//    if(GET_VERSION() == VERSION_WHITE){
+    if(GET_VERSION() == VERSION_W2){
       flg = 1;
     }
   }
   else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_BLACK){
-    if(GET_VERSION() == VERSION_BLACK){
+//    if(GET_VERSION() == VERSION_BLACK){
+    if(GET_VERSION() == VERSION_B2){
       flg = 1;
     }
   }
