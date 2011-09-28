@@ -21,7 +21,6 @@
 //=====================================
 enum
 {
-  BADGEGATE_MDLID_GATE,
   BADGEGATE_MDLID_MONUMENT_0,
   BADGEGATE_MDLID_MONUMENT_1,
   BADGEGATE_MDLID_MONUMENT_2,
@@ -31,6 +30,7 @@ enum
   BADGEGATE_MDLID_MONUMENT_6,
   BADGEGATE_MDLID_MONUMENT_7,
   BADGEGATE_MDLID_MAX,
+  BADGEGATE_MDLID_GATE = BADGEGATE_MDLID_MAX,
 };
 
 //-------------------------------------
@@ -38,7 +38,6 @@ enum
 //=====================================
 enum
 {
-  BADGEGATE_MDLID_GATE_OFF,
   BADGEGATE_MDLID_MONUMENT_0_OFF,
   BADGEGATE_MDLID_MONUMENT_1_OFF,
   BADGEGATE_MDLID_MONUMENT_2_OFF,
@@ -47,7 +46,49 @@ enum
   BADGEGATE_MDLID_MONUMENT_5_OFF,
   BADGEGATE_MDLID_MONUMENT_6_OFF,
   BADGEGATE_MDLID_MONUMENT_7_OFF,
+  BADGEGATE_MDLID_GATE_OFF,
   BADGEGATE_MDLID_OFF_MAX,
+};
+
+//-------------------------------------
+///	モデル管理ID(イベント中)
+//=====================================
+enum
+{
+  // 像0
+  MDL_RESID_MONUMENT_0_IMD,
+  MDL_RESID_MONUMENT_0_ICA,
+  MDL_RESID_MONUMENT_0_ACTION_ITA,
+  // 像1
+  MDL_RESID_MONUMENT_1_IMD,
+  MDL_RESID_MONUMENT_1_ICA,
+  MDL_RESID_MONUMENT_1_ACTION_ITA,
+  // 像2
+  MDL_RESID_MONUMENT_2_IMD,
+  MDL_RESID_MONUMENT_2_ICA,
+  MDL_RESID_MONUMENT_2_ACTION_ITA,
+  // 像3
+  MDL_RESID_MONUMENT_3_IMD,
+  MDL_RESID_MONUMENT_3_ICA,
+  MDL_RESID_MONUMENT_3_ACTION_ITA,
+  // 像4
+  MDL_RESID_MONUMENT_4_IMD,
+  MDL_RESID_MONUMENT_4_ICA,
+  MDL_RESID_MONUMENT_4_ACTION_ITA,
+  // 像5
+  MDL_RESID_MONUMENT_5_IMD,
+  MDL_RESID_MONUMENT_5_ICA,
+  MDL_RESID_MONUMENT_5_ACTION_ITA,
+  // 像6
+  MDL_RESID_MONUMENT_6_IMD,
+  MDL_RESID_MONUMENT_6_ICA,
+  MDL_RESID_MONUMENT_6_ACTION_ITA,
+  // 像7
+  MDL_RESID_MONUMENT_7_IMD,
+  MDL_RESID_MONUMENT_7_ICA,
+  MDL_RESID_MONUMENT_7_ACTION_ITA,
+
+  MDL_RESID_MAX,
 };
 
 //-------------------------------------
@@ -55,7 +96,6 @@ enum
 //=====================================
 enum
 {
-  BADGEGATE_MDLID_GATE_ON,
   BADGEGATE_MDLID_MONUMENT_0_ON,
   BADGEGATE_MDLID_MONUMENT_1_ON,
   BADGEGATE_MDLID_MONUMENT_2_ON,
@@ -64,14 +104,13 @@ enum
   BADGEGATE_MDLID_MONUMENT_5_ON,
   BADGEGATE_MDLID_MONUMENT_6_ON,
   BADGEGATE_MDLID_MONUMENT_7_ON,
+  BADGEGATE_MDLID_GATE_ON,
   BADGEGATE_MDLID_ON_MAX,
 };
 
 //リソースID(OFF状態)
 enum
 {
-  // 門
-  MDL_RESID_GATE_OFF_IMD,
   MDL_RESID_MONUMENT_0_OFF_IMD,
   MDL_RESID_MONUMENT_1_OFF_IMD,
   MDL_RESID_MONUMENT_2_OFF_IMD,
@@ -80,14 +119,13 @@ enum
   MDL_RESID_MONUMENT_5_OFF_IMD,
   MDL_RESID_MONUMENT_6_OFF_IMD,
   MDL_RESID_MONUMENT_7_OFF_IMD,
+  MDL_RESID_GATE_OFF_IMD,
   MDL_RESID_OFF_MAX,
 };
 
 //リソースID(ON状態)
 enum
 {
-  MDL_RESID_GATE_ON_IMD,
-  MDL_RESID_GATE_ON_ITA,
   MDL_RESID_MONUMENT_0_ON_IMD,
   MDL_RESID_MONUMENT_0_ON_ITA,
   MDL_RESID_MONUMENT_1_ON_IMD,
@@ -104,18 +142,153 @@ enum
   MDL_RESID_MONUMENT_6_ON_ITA,
   MDL_RESID_MONUMENT_7_ON_IMD,
   MDL_RESID_MONUMENT_7_ON_ITA,
+  MDL_RESID_GATE_ON_IMD,
+  MDL_RESID_GATE_ON_ITA,
   MDL_RESID_ON_MAX,
+};
+     
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+
+//リソースデータ(イベント再生時)
+static const GFL_G3D_UTIL_RES sc_g3d_util_res[MDL_RESID_MAX] =
+{
+  // 像0
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像1
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_02_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像2
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_03_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像3
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_04_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像4
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_05_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像5
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_06_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像6
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_07_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像7
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_08_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
 };
 
 //リソースデータ(OFF時)
 static const GFL_G3D_UTIL_RES sc_g3d_util_res_off[MDL_RESID_OFF_MAX] =
 {
-  // 門
-  {
-    ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_09_start_nsbmd,
-    GFL_G3D_UTIL_RESARC,
-  },
   // 像1
   {
     ARCID_BADGE_GATE,
@@ -164,22 +337,17 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_off[MDL_RESID_OFF_MAX] =
     NARC_badge_gate_gmk_swanbg_08_start_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
+  // 門
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_09_start_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
 };
 
 //リソースデータ(ON時)
 static const GFL_G3D_UTIL_RES sc_g3d_util_res_on[MDL_RESID_ON_MAX] =
 {
-  // 門
-  {
-    ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_09_end_nsbmd,
-    GFL_G3D_UTIL_RESARC,
-  },
-  {
-    ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_roop_09_nsbta,
-    GFL_G3D_UTIL_RESARC,
-  },
   // 像1
   {
     ARCID_BADGE_GATE,
@@ -268,7 +436,91 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_on[MDL_RESID_ON_MAX] =
     NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
+  // 門
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_09_end_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_09_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
 };
+
+// アニメ設定
+enum
+{
+  MDL_ANM_ACTION_ICA    = 0,
+  MDL_ANM_ACTION_ITA    = 1,
+  MDL_ANM_GATE_LOOP_ITA = 2,
+  MDL_ANM_LOOP_ITA      = 0,
+};
+
+// 像0
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_0_anm[] = 
+{
+  { MDL_RESID_MONUMENT_0_ICA, 0 },
+  { MDL_RESID_MONUMENT_0_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_0_MAX  (NELEMS(sc_g3d_monument_0_anm))
+
+// 像1
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_1_anm[] = 
+{
+  { MDL_RESID_MONUMENT_1_ICA, 0 },
+  { MDL_RESID_MONUMENT_1_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_1_MAX  (NELEMS(sc_g3d_monument_1_anm))
+
+// 像2
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_2_anm[] = 
+{
+  { MDL_RESID_MONUMENT_2_ICA, 0 },
+  { MDL_RESID_MONUMENT_2_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_2_MAX  (NELEMS(sc_g3d_monument_2_anm))
+
+// 像3
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_3_anm[] = 
+{
+  { MDL_RESID_MONUMENT_3_ICA, 0 },
+  { MDL_RESID_MONUMENT_3_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_3_MAX  (NELEMS(sc_g3d_monument_3_anm))
+
+// 像4
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_4_anm[] = 
+{
+  { MDL_RESID_MONUMENT_4_ICA, 0 },
+  { MDL_RESID_MONUMENT_4_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_4_MAX  (NELEMS(sc_g3d_monument_4_anm))
+
+// 像5
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_5_anm[] = 
+{
+  { MDL_RESID_MONUMENT_5_ICA, 0 },
+  { MDL_RESID_MONUMENT_5_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_5_MAX  (NELEMS(sc_g3d_monument_5_anm))
+
+// 像6
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_6_anm[] = 
+{
+  { MDL_RESID_MONUMENT_6_ICA, 0 },
+  { MDL_RESID_MONUMENT_6_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_6_MAX  (NELEMS(sc_g3d_monument_6_anm))
+
+// 像7
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_7_anm[] = 
+{
+  { MDL_RESID_MONUMENT_7_ICA, 0 },
+  { MDL_RESID_MONUMENT_7_ACTION_ITA, 0 },
+};
+#define ANMID_MONUMENT_7_MAX  (NELEMS(sc_g3d_monument_7_anm))
 
 // 門
 static const GFL_G3D_UTIL_ANM sc_g3d_gate_anm_off[] = 
@@ -348,17 +600,79 @@ static const GFL_G3D_UTIL_ANM sc_g3d_monument_7_on_anm[] =
 };
 #define ANMID_MONUMENT_7_ON_MAX  (NELEMS(sc_g3d_monument_7_on_anm))
 
+
+//3Dオブジェクト設定（イベント時）
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[BADGEGATE_MDLID_MAX] =
+{
+  // 像0
+  {
+    MDL_RESID_MONUMENT_0_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_0_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_0_MAX,	    //アニメリソース数
+  },
+  // 像1
+  {
+    MDL_RESID_MONUMENT_1_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_1_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_1_MAX,	    //アニメリソース数
+  },
+  // 像2
+  {
+    MDL_RESID_MONUMENT_2_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_2_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_2_MAX,	    //アニメリソース数
+  },
+  // 像3
+  {
+    MDL_RESID_MONUMENT_3_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_3_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_3_MAX,	    //アニメリソース数
+  },
+  // 像4
+  {
+    MDL_RESID_MONUMENT_4_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_4_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_4_MAX,	    //アニメリソース数
+  },
+  // 像5
+  {
+    MDL_RESID_MONUMENT_5_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_5_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_5_MAX,	    //アニメリソース数
+  },
+  // 像6
+  {
+    MDL_RESID_MONUMENT_6_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_6_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_6_MAX,	    //アニメリソース数
+  },
+  // 像7
+  {
+    MDL_RESID_MONUMENT_7_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_7_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_7_MAX,	    //アニメリソース数
+  },
+};
+
 //3Dオブジェクト設定(OFF時)
 static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
 {
-  // 門
-  {
-    BADGEGATE_MDLID_GATE_OFF,   //モデルリソースID
-		0, 							        //モデルデータID(リソース内部INDEX)
-		BADGEGATE_MDLID_GATE_OFF,   //テクスチャリソースID
-		NULL,		    //アニメテーブル(複数指定のため)
-		0,	        //アニメリソース数
-  },
   // 像0
   {
     MDL_RESID_MONUMENT_0_OFF_IMD, //モデルリソースID
@@ -371,7 +685,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_1_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_1_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -379,7 +693,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_2_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_2_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -387,7 +701,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_3_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_3_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -395,7 +709,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_4_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_4_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -403,7 +717,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_5_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_5_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -411,7 +725,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_6_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_6_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
   },
@@ -419,23 +733,23 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_off[BADGEGATE_MDLID_OFF_MAX] =
   {
     MDL_RESID_MONUMENT_7_OFF_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_7_OFF_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_OFF_IMD, //テクスチャリソースID
 		NULL,		//アニメテーブル(複数指定のため)
 		0,	    //アニメリソース数
+  },
+  // 門
+  {
+    BADGEGATE_MDLID_GATE_OFF,   //モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		BADGEGATE_MDLID_GATE_OFF,   //テクスチャリソースID
+		NULL,		    //アニメテーブル(複数指定のため)
+		0,	        //アニメリソース数
   },
 };
 
 //3Dオブジェクト設定(ON時)
 static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
 {
-  // 門
-  {
-    BADGEGATE_MDLID_GATE_ON,   //モデルリソースID
-		0, 							        //モデルデータID(リソース内部INDEX)
-		BADGEGATE_MDLID_GATE_ON,   //テクスチャリソースID
-		sc_g3d_gate_on_anm,		    //アニメテーブル(複数指定のため)
-		ANMID_GATE_ON_MAX,	        //アニメリソース数
-  },
   // 像0
   {
     MDL_RESID_MONUMENT_0_ON_IMD, //モデルリソースID
@@ -448,7 +762,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_1_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_1_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_1_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_1_ON_MAX,	    //アニメリソース数
   },
@@ -456,7 +770,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_2_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_2_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_2_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_2_ON_MAX,	    //アニメリソース数
   },
@@ -464,7 +778,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_3_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_3_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_3_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_3_ON_MAX,	    //アニメリソース数
   },
@@ -472,7 +786,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_4_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_4_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_4_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_4_ON_MAX,	    //アニメリソース数
   },
@@ -480,7 +794,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_5_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_5_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_5_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_5_ON_MAX,	    //アニメリソース数
   },
@@ -488,7 +802,7 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_6_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_6_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_6_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_6_ON_MAX,	    //アニメリソース数
   },
@@ -496,10 +810,27 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_on[BADGEGATE_MDLID_ON_MAX] =
   {
     MDL_RESID_MONUMENT_7_ON_IMD, //モデルリソースID
 		0, 							          //モデルデータID(リソース内部INDEX)
-		MDL_RESID_MONUMENT_7_ON_IMD, //テクスチャリソースID
+		MDL_RESID_MONUMENT_0_ON_IMD, //テクスチャリソースID
 		sc_g3d_monument_7_on_anm,		//アニメテーブル(複数指定のため)
 		ANMID_MONUMENT_7_ON_MAX,	    //アニメリソース数
   },
+  // 門
+  {
+    MDL_RESID_GATE_ON_IMD,   //モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MDL_RESID_GATE_ON_IMD,   //テクスチャリソースID
+		sc_g3d_gate_on_anm,		    //アニメテーブル(複数指定のため)
+		ANMID_GATE_ON_MAX,	        //アニメリソース数
+  },
+};
+
+// 全情報設定(イベント)
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
+{
+  sc_g3d_util_res,        //リソーステーブル
+  MDL_RESID_MAX,          //リソース最大数
+  sc_g3d_util_obj,        //オブジェクトテーブル
+  BADGEGATE_MDLID_MAX, //オブジェクト数
 };
 
 // 全情報設定(OFF)
@@ -523,7 +854,6 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_on =
 // 配置情報
 static const VecFx32 d3obj_pos_table[] =
 {
-  { GRID_TO_FX32(36), GRID_TO_FX32(5), GRID_TO_FX32(47) },
   { GRID_TO_FX32(77), GRID_TO_FX32(5), GRID_TO_FX32(53) },
   { GRID_TO_FX32(72), GRID_TO_FX32(5), GRID_TO_FX32(53) },
   { GRID_TO_FX32(67), GRID_TO_FX32(5), GRID_TO_FX32(53) },
@@ -532,12 +862,12 @@ static const VecFx32 d3obj_pos_table[] =
   { GRID_TO_FX32(52), GRID_TO_FX32(5), GRID_TO_FX32(53) },
   { GRID_TO_FX32(47), GRID_TO_FX32(5), GRID_TO_FX32(53) },
   { GRID_TO_FX32(42), GRID_TO_FX32(5), GRID_TO_FX32(53) },
+  { GRID_TO_FX32(36), GRID_TO_FX32(5), GRID_TO_FX32(47) },  // 門
 };
 
-// モデルIDに対応したスクリプトIDテーブル
-static const u16 sc_script_work_id_table[ BADGEGATE_MDLID_MAX ] =
+// モデルIDに対応したスクリプトIDテーブル(ゲート込みなので+1)
+static const u16 sc_script_work_id_table[ BADGEGATE_MDLID_MAX + 1] =
 {
-  WK_SCENE_D26R0101_GATE_09,
   WK_SCENE_D26R0101_GATE_01,
   WK_SCENE_D26R0101_GATE_02,
   WK_SCENE_D26R0101_GATE_03,
@@ -546,36 +876,9 @@ static const u16 sc_script_work_id_table[ BADGEGATE_MDLID_MAX ] =
   WK_SCENE_D26R0101_GATE_06,
   WK_SCENE_D26R0101_GATE_07,
   WK_SCENE_D26R0101_GATE_08,
+  WK_SCENE_D26R0101_GATE_09,
 };
 
-//-------------------------------------
-///	イベント用モデル（センサー）リソースID
-//=====================================
-enum
-{
-  MDL_RESID_MONUMENT_IMD,
-  MDL_RESID_MONUMENT_ICA,
-  MDL_RESID_MONUMENT_ITA,
-  MDL_RESID_MONUMENT_MAX,
-};
-
-// センサー用
-static const GFL_G3D_UTIL_ANM sc_g3d_monument_anm[] = 
-{
-  { MDL_RESID_MONUMENT_ICA, 0 },
-  { MDL_RESID_MONUMENT_ITA , 0 },
-};
-#define ANMID_MONUMENT_MAX  (NELEMS(sc_g3d_monument_anm))
-
-// オブジェクトデータ
-static const GFL_G3D_UTIL_OBJ g3d_util_obj =
-{
-  MDL_RESID_MONUMENT_IMD,   //モデルリソースID
-  0, 							          //モデルデータID(リソース内部INDEX)
-  MDL_RESID_MONUMENT_IMD,   //テクスチャリソースID
-  sc_g3d_monument_anm,		  //アニメテーブル(複数指定のため)
-  ANMID_MONUMENT_MAX,	      //アニメリソース数
-};
 //-------------------------------------
 ///	イベント用モデル（門）リソースID
 //=====================================
@@ -586,15 +889,6 @@ enum
   MDL_RESID_GATE_ACTION_ITA,
   MDL_RESID_GATE_LOOP_ITA,
   MDL_RESID_GATE_MAX,
-};
-
-// アニメ設定
-enum
-{
-  MDL_ANM_ACTION_ICA    = 0,
-  MDL_ANM_ACTION_ITA    = 1,
-  MDL_ANM_GATE_LOOP_ITA = 2,
-  MDL_ANM_LOOP_ITA      = 0,
 };
 
 // 門アニメ
@@ -649,4 +943,6 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_gate =
   &sc_g3d_util_obj_gate,     //オブジェクトテーブル
   1,                        //オブジェクト数
 };
+
+
 

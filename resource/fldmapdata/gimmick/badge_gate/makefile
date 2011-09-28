@@ -72,8 +72,27 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
-%.nsbmd:	data/%.imd
+swanbg_01.nsbmd: data/swanbg_01.imd
 	@g3dcvtr $<
+
+swanbg_01_start.nsbmd: data/swanbg_01_start.imd
+	@g3dcvtr $<
+
+swanbg_01_end.nsbmd: data/swanbg_01_end.imd
+	@g3dcvtr $<
+
+swanbg_09.nsbmd: data/swanbg_09.imd
+	@g3dcvtr $<
+
+swanbg_09_start.nsbmd: data/swanbg_09_start.imd
+	@g3dcvtr $<
+
+swanbg_09_end.nsbmd: data/swanbg_09_end.imd
+	@g3dcvtr $<
+
+# テクスチャなしでコンバート
+%.nsbmd:	data/%.imd
+	@g3dcvtr $< -emdl
 
 %.nsbca:	data/%.ica
 	@g3dcvtr $<
@@ -93,3 +112,5 @@ $(targetname).narc: $(DATA_LIST)
 	$(NAIXCUT) $(targetname).naix
 
 endif
+
+

@@ -17,8 +17,10 @@
 #include "gmk_tmp_wk.h"
 #include "field_g3d_mapper.h"
 #include "field_gimmick_bgate.h"
+#include "field_task_fade.h"
 
 #include "../../../resource/fldmapdata/gimmick/badge_gate/bage_gate_def.h"    // 外部指定パラメータ
+#include "../../../resource/fldmapdata/script/usescript.h"  //DISP_FADE_SPEED
 
 #include "eventwork_def.h"                    // for WK_SCENE_D26R0101_GATE_*
 #include "system/main.h"                      // for HEAPID_FIELDMAP
@@ -39,6 +41,7 @@
 #define MMANAGER_FEXPOBJ_EV_UID (0)
 #define MMANAGER_FEXPOBJ_OFF_UID (1)
 #define MMANAGER_FEXPOBJ_ON_UID (2)
+#define MMANAGER_FEXPOBJ_GATE_UID (3)
 
 // 像の数
 #define MONUMENT_CNT  (8)
@@ -141,6 +144,7 @@ typedef struct GATE_START_WK_tag
   u16           is_shake_end[SHAKE_PARAM_CNT];
   VecFx32       default_cam_ofs;
   VecFx32       default_target_ofs;
+  FIELDMAP_WORK *p_fieldmap;
 }GATE_START_WK;
 
 //=============================================================================
@@ -158,7 +162,6 @@ static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
 static BOOL get_is_action_end( u32 id, EVENTWORK *p_event_wk );
 static void GateOpen_SePlayMain( GATE_START_WK *p_wk );
 static void MonumentStart_SePlayMain( MONUMENT_START_WK *p_wk );
-static void MakeEventModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj ,u8 index);
 static void DeleteEventModelData( FLD_EXP_OBJ_CNT_PTR p_ex_obj );
 static void MakeEventGateModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj );
 
@@ -193,6 +196,7 @@ void BADGEGATE_Setup( FIELDMAP_WORK *p_fieldmap )
   p_wk->p_event_wk      = GAMEDATA_GetEventWork( p_gamedata );
   p_wk->seq             = 0;
     
+  FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, MMANAGER_FEXPOBJ_EV_UID );
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_off, MMANAGER_FEXPOBJ_OFF_UID );
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_on, MMANAGER_FEXPOBJ_ON_UID );
   setup_model_data( p_wk );
@@ -213,6 +217,13 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
   //モデル初期化
   {
     int i;
+    for( i = 0; i < BADGEGATE_MDLID_MAX; i++ )
+    {
+      MODEL *p_model    = &p_wk->model[i];
+      p_model->unitID   = MMANAGER_FEXPOBJ_EV_UID;
+      p_model->modelID  = i;
+      p_model->p_ex_obj = p_wk->p_ex_obj;
+    }
     for( i = 0; i < BADGEGATE_MDLID_OFF_MAX; i++ )
     {
       MODEL *p_model    = &p_wk->model_off[i];
@@ -233,49 +244,38 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
   {
     int i;
     GFL_G3D_OBJSTATUS *p_status;
-//    for( i = 0 ; i < BADGEGATE_MDLID_MAX ; i++ )
-//    {
-//      EXP_OBJ_ANM_CNT_PTR exobj_anm;
-//      MODEL *p_model    = &p_wk->model[i];
-//
-//      // ステータス取得
-//      p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_model->p_ex_obj,
-//          MMANAGER_FEXPOBJ_EV_UID,
-//          p_model->modelID );
-//
-//      // 位置を設定
-//      p_status->trans = d3obj_pos_table[i];
-//
-//      FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
-//          MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE );
-//
-//      //カリングする
-//      FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE);
-//      
-//      // アニメーションの初期化
-//      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA );
-//      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
-//      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA ,0);
-//      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
-//      SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
-//
-//      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA );
-//      SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ITA, TRUE );
-//      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA, TRUE);
-//      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA ,0);
-//      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
-//    }
+    for( i = 0 ; i < BADGEGATE_MDLID_MAX ; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exobj_anm;
+      MODEL *p_model    = &p_wk->model[i];
 
-//    // ゲート専用アニメーション初期化
-//    {
-//      EXP_OBJ_ANM_CNT_PTR exobj_anm;
-//      MODEL *p_model = &p_wk->model[BADGEGATE_MDLID_GATE];
-//      SetAnmStopFlag( p_model ,MDL_ANM_GATE_LOOP_ITA, TRUE );
-//      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_GATE_LOOP_ITA, FALSE);
-//      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_GATE_LOOP_ITA ,0);    
-//      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_GATE_LOOP_ITA );
-//      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,TRUE );
-//    }
+      // ステータス取得
+      p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_model->p_ex_obj,
+          MMANAGER_FEXPOBJ_EV_UID,
+          p_model->modelID );
+
+      // 位置を設定
+      p_status->trans = d3obj_pos_table[i];
+
+      FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
+          MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE );
+
+      //カリングする
+      FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE);
+      
+      // アニメーションの初期化
+      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA );
+      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA ,0);
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
+      SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
+
+      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA );
+      SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ITA, TRUE );
+      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA, TRUE);
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA ,0);
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
+    }
   }
 
   // モデルステータス設定(OFF)
@@ -393,6 +393,7 @@ void BADGEGATE_End( FIELDMAP_WORK *p_fieldmap )
   // 破棄
   FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MMANAGER_FEXPOBJ_OFF_UID );
   FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MMANAGER_FEXPOBJ_ON_UID );
+  FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MMANAGER_FEXPOBJ_EV_UID );
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, BADGEGATE_WORK_ASSIGN_ID);
@@ -417,7 +418,7 @@ void BADGEGATE_Move( FIELDMAP_WORK *p_fieldmap )
   // 空きヒープサイズ
   {
     u32 heap_size = GFI_HEAP_GetHeapFreeSize( FIELDMAP_GetHeapID(p_fieldmap) );
-    OS_Printf("HeapFreeSize:%x\n",heap_size);
+    ONOUE_Printf("HeapFreeSize:%x\n",heap_size);
   }
 #endif
 
@@ -467,13 +468,15 @@ GMEVENT* BADGEGATE_CreateMonumentStartEvent( GAMESYS_WORK *p_gamesys, u16 monume
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
 {
+  MODEL *p_ev_model;
   MODEL *p_off_model;
   MODEL *p_on_model;
   MONUMENT_START_WK *p_wk = p_wk_adrs;
   
   // 像のモデルデータを取得
-  p_off_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_MONUMENT_0 + p_wk->monument_id ,MMANAGER_FEXPOBJ_OFF_UID);
-  p_on_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_MONUMENT_0 + p_wk->monument_id ,MMANAGER_FEXPOBJ_ON_UID);
+  p_ev_model = GetModelData( p_wk->p_gmk_wk , p_wk->monument_id ,MMANAGER_FEXPOBJ_EV_UID);
+  p_off_model = GetModelData( p_wk->p_gmk_wk , p_wk->monument_id ,MMANAGER_FEXPOBJ_OFF_UID);
+  p_on_model = GetModelData( p_wk->p_gmk_wk , p_wk->monument_id ,MMANAGER_FEXPOBJ_ON_UID);
 
   // SEを再生する
   MonumentStart_SePlayMain( p_wk );
@@ -484,44 +487,37 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
   {
   case 0:
     {
-      // イベント用モデルを生成
-      MakeEventModelData( &p_wk->ev_model ,p_wk->p_gmk_wk->p_ex_obj ,p_wk->monument_id);
-      (*p_seq)++;
-    }
-    break;
-  case 1:
-    {
       // OFFモデルを非表示に
       FLD_EXP_OBJ_SetVanish( p_off_model->p_ex_obj,
           p_off_model->unitID , p_off_model->modelID, TRUE );
 
       // EVモデルを表示に
-      FLD_EXP_OBJ_SetVanish( p_wk->ev_model.p_ex_obj,
-          p_wk->ev_model.unitID , p_wk->ev_model.modelID, FALSE );
+      FLD_EXP_OBJ_SetVanish( p_ev_model->p_ex_obj,
+          p_ev_model->unitID , p_ev_model->modelID, FALSE );
 
       // 起動アニメーションを開始
-      SetAnmStopFlag( &p_wk->ev_model ,MDL_ANM_ACTION_ICA, FALSE );
-      SetAnmStopFlag( &p_wk->ev_model ,MDL_ANM_ACTION_ITA, FALSE );
+      SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ICA, FALSE );
+      SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ITA, FALSE );
       (*p_seq)++;
     }
     break;
-  case 2:
+  case 1:
     {
       // モニュメントが開くアニメーション終了待ち
-      EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->ev_model.p_ex_obj, p_wk->ev_model.unitID, p_wk->ev_model.modelID, MDL_ANM_ACTION_ICA );
+      EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_ev_model->p_ex_obj, p_ev_model->unitID, p_ev_model->modelID, MDL_ANM_ACTION_ICA );
       if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
       {
-        SetAnmStopFlag( &p_wk->ev_model ,MDL_ANM_ACTION_ICA, TRUE );
+        SetAnmStopFlag( p_ev_model ,MDL_ANM_ACTION_ICA, TRUE );
         (*p_seq)++;
         return GMEVENT_RES_CONTINUE_DIRECT;
       }
     }
     break;
-  case 3:
+  case 2:
     {
       // EVモデルを表示に
-      FLD_EXP_OBJ_SetVanish( p_wk->ev_model.p_ex_obj,
-          p_wk->ev_model.unitID , p_wk->ev_model.modelID, TRUE );
+      FLD_EXP_OBJ_SetVanish( p_ev_model->p_ex_obj,
+          p_ev_model->unitID , p_ev_model->modelID, TRUE );
 
       // ONモデルを表示
       FLD_EXP_OBJ_SetVanish( p_on_model->p_ex_obj,
@@ -530,14 +526,8 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
       // フレームを設定
       FLD_EXP_OBJ_SetObjAnmFrm(p_on_model->p_ex_obj, p_on_model->unitID, p_on_model->modelID, MDL_ANM_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
       SetAnmStopFlag( p_on_model ,MDL_ANM_LOOP_ITA, FALSE );
-
-      // ユニット削除
-      DeleteEventModelData( p_wk->p_gmk_wk->p_ex_obj );
       return GMEVENT_RES_FINISH;
     }
-    break;
-  default:
-    (*p_seq)++;
     break;
   }
   return GMEVENT_RES_CONTINUE;
@@ -582,6 +572,8 @@ static MODEL* GetModelData( BADGEGATE_WK *p_gmk_wk ,u32 model_id ,u32 unit_id )
   // ユニットIDごとに返す
   switch( unit_id )
   {
+  case MMANAGER_FEXPOBJ_EV_UID:
+    return &p_gmk_wk->model[model_id];
   case MMANAGER_FEXPOBJ_OFF_UID:
     return &p_gmk_wk->model_off[model_id];
   case MMANAGER_FEXPOBJ_ON_UID:
@@ -625,7 +617,7 @@ static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk )
   for( i = 0; i < MONUMENT_CNT ; i++ )
   {
     BOOL is_stop = FALSE;
-    MODEL *p_model = GetModelData( p_wk ,BADGEGATE_MDLID_MONUMENT_0 + i ,MMANAGER_FEXPOBJ_ON_UID );
+    MODEL *p_model = GetModelData( p_wk , i ,MMANAGER_FEXPOBJ_ON_UID );
     EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA );
     is_stop = FLD_EXP_OBJ_GetAnmStopFlg( exobj_anm );
 
@@ -669,6 +661,7 @@ GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
     GFL_STD_MemClear( p_wk, sizeof(GATE_START_WK) );
     p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
     p_wk->p_cam       = FIELDMAP_GetFieldCamera( p_fld_wk );
+    p_wk->p_fieldmap  = p_fld_wk;
     p_wk->shake_event_frame = 0;
     FIELD_CAMERA_GetCamPosOffset( p_wk->p_cam, &p_wk->default_cam_ofs );
     FIELD_CAMERA_GetTargetOffset( p_wk->p_cam, &p_wk->default_target_ofs );
@@ -696,40 +689,97 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
   MODEL *p_on_model;
  
   // 門のモデルデータを取得
-  p_off_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE ,MMANAGER_FEXPOBJ_OFF_UID);
-  p_on_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE ,MMANAGER_FEXPOBJ_ON_UID);
+  p_off_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE_OFF ,MMANAGER_FEXPOBJ_OFF_UID);
+  p_on_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE_ON ,MMANAGER_FEXPOBJ_ON_UID);
 
   // カメラ揺れの更新
   GateOpen_CameraShakeMain( p_wk );
 
-  // SE再生
-  GateOpen_SePlayMain( p_wk );
 
-  // カメラ揺れフレームの加算
-  p_wk->shake_event_frame++;
+  // フレーム加算シーケンス,SE再生
+  switch( *p_seq )
+  {
+  case 4:
+  case 5:
+  case 6:
+    // カメラ揺れフレームの加算
+    GateOpen_SePlayMain( p_wk );
+    p_wk->shake_event_frame++;
+    break;
+  }
 
+  
   // アニメーション更新メイン
   switch( *p_seq )
   {
   case 0:
     {
-      // イベントモデルを生成
-      MakeEventGateModelData( &p_wk->ev_model ,p_wk->p_gmk_wk->p_ex_obj );
-
-      // OFFモデルを非表示に
-      FLD_EXP_OBJ_SetVanish( p_off_model->p_ex_obj,
-          p_off_model->unitID , p_off_model->modelID, TRUE );
-
-      // EVモデルを表示に
-      FLD_EXP_OBJ_SetVanish( p_wk->ev_model.p_ex_obj,
-          p_wk->ev_model.unitID , p_wk->ev_model.modelID, FALSE );
-
-      // 起動アニメーションを開始
-      SetAnmStopFlag( &p_wk->ev_model ,MDL_ANM_ACTION_ITA, FALSE );
+      // フェードアウトタスク
+      FIELD_TASK    *p_fade_task;
+      FIELD_TASK_MAN* p_task_man = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+      p_fade_task = FIELD_TASK_Fade( p_wk->p_fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, DISP_FADE_SPEED );
+      FIELD_TASK_MAN_AddTask( p_task_man, p_fade_task, NULL );
       (*p_seq)++;
     }
     break;
   case 1:
+    {
+      if( GFL_FADE_CheckFade() == FALSE )
+      {
+        // カメラ設定
+        FLD_CAM_MV_PARAM param;
+        u16 frame;
+        param.Core.AnglePitch = 7640;
+        param.Core.AngleYaw   = 0;
+        param.Core.Distance   = 1626112;
+        param.Core.TrgtPos.x  = 2064384;
+        param.Core.TrgtPos.y  = 393311;
+        param.Core.TrgtPos.z  = 2547712;
+        param.Chk.Shift = FALSE;
+        param.Chk.Pitch = TRUE;
+        param.Chk.Yaw = TRUE;
+        param.Chk.Dist = TRUE;
+        param.Chk.Fovy = FALSE;
+        param.Chk.Pos = TRUE;
+        frame = 1;
+        FIELD_CAMERA_SetLinerParam( p_wk->p_cam, &param, frame);
+
+        // イベントモデルを生成
+        MakeEventGateModelData( &p_wk->ev_model ,p_wk->p_gmk_wk->p_ex_obj );
+
+        (*p_seq)++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // フェードインタスク
+      FIELD_TASK    *p_fade_task;
+      FIELD_TASK_MAN* p_task_man = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+      p_fade_task = FIELD_TASK_Fade( p_wk->p_fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, DISP_FADE_SPEED );
+      FIELD_TASK_MAN_AddTask( p_task_man, p_fade_task, NULL );
+      (*p_seq)++;
+    }
+    break;
+  case 3:
+    {
+      if( GFL_FADE_CheckFade() == FALSE )
+      {
+        // OFFモデルを非表示に
+        FLD_EXP_OBJ_SetVanish( p_off_model->p_ex_obj,
+            p_off_model->unitID , p_off_model->modelID, TRUE );
+
+        // EVモデルを表示に
+        FLD_EXP_OBJ_SetVanish( p_wk->ev_model.p_ex_obj,
+            p_wk->ev_model.unitID , p_wk->ev_model.modelID, FALSE );
+
+        // 起動アニメーションを開始
+        SetAnmStopFlag( &p_wk->ev_model ,MDL_ANM_ACTION_ITA, FALSE );
+        (*p_seq)++;
+      }
+    }
+    break;
+  case 4:
     {
       // 発光アニメーション終了待ち
       EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->ev_model.p_ex_obj, p_wk->ev_model.unitID, p_wk->ev_model.modelID, MDL_ANM_ACTION_ITA );
@@ -749,7 +799,7 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
       }
     }
     break;
-  case 2:
+  case 5:
     {
       // 門が開くアニメーション終了待ち
       EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->ev_model.p_ex_obj, p_wk->ev_model.unitID, p_wk->ev_model.modelID, MDL_ANM_ACTION_ICA );
@@ -760,7 +810,7 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
       }
     }
     break;
-  case 3:
+  case 6:
     {
       for( i = 0; i < SHAKE_PARAM_CNT ; i++ )
       {
@@ -878,99 +928,6 @@ static void GateOpen_SePlayMain( GATE_START_WK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  モデルデータ作成（モニュメント）
- *
- *	@param	*p_model
- *	@param	p_ex_obj 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void MakeEventModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj ,u8 index)
-{
-  s32 i;
-  GFL_G3D_UTIL_RES g3d_util_res[MDL_RESID_MONUMENT_MAX];
-  GFL_G3D_UTIL_SETUP util_setup;
-
-  // nsbmdテーブル
-  u32 nsbmd_tlb[] = 
-  {
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
-    NARC_badge_gate_gmk_swanbg_02_nsbmd,
-    NARC_badge_gate_gmk_swanbg_03_nsbmd,
-    NARC_badge_gate_gmk_swanbg_04_nsbmd,
-    NARC_badge_gate_gmk_swanbg_05_nsbmd,
-    NARC_badge_gate_gmk_swanbg_06_nsbmd,
-    NARC_badge_gate_gmk_swanbg_07_nsbmd,
-    NARC_badge_gate_gmk_swanbg_08_nsbmd,
-  };
-
-
-  // リソースデータテーブル作成
-  for( i = 0; i < MDL_RESID_MONUMENT_MAX ; i++ )
-  {
-    g3d_util_res[i].arcive  = ARCID_BADGE_GATE;
-    g3d_util_res[i].arcType = GFL_G3D_UTIL_RESARC;
-  }
-
-  ONOUE_Printf("モニュメントID：%d生成\n",index);
-
-  // nsbmdを設定
-  g3d_util_res[MDL_RESID_MONUMENT_IMD].datID = nsbmd_tlb[index];
-  // nsbcaを設定(固定)
-  g3d_util_res[MDL_RESID_MONUMENT_ICA].datID = NARC_badge_gate_gmk_swanbg_01_nsbca;
-  // nsbtaを設定(固定)
-  g3d_util_res[MDL_RESID_MONUMENT_ITA].datID = NARC_badge_gate_gmk_swanbg_01_nsbta;
-
-  util_setup.resTbl   = g3d_util_res;
-  util_setup.resCount = MDL_RESID_MONUMENT_MAX;
-  util_setup.objTbl   = &g3d_util_obj;
-  util_setup.objCount = 1;
- 
-  // ユニット生成
-  FLD_EXP_OBJ_AddUnit( p_ex_obj, &util_setup, MMANAGER_FEXPOBJ_EV_UID );
-
-  // モデルデータ設定
-  p_model->unitID   = MMANAGER_FEXPOBJ_EV_UID;
-  p_model->modelID  = 0;
-  p_model->p_ex_obj = p_ex_obj;
-
-  {
-    EXP_OBJ_ANM_CNT_PTR exobj_anm;
-    GFL_G3D_OBJSTATUS *p_status;
-
-    // ステータス取得
-    p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_model->p_ex_obj,
-        MMANAGER_FEXPOBJ_EV_UID,
-        p_model->modelID );
-
-    // 位置を設定
-    p_status->trans = d3obj_pos_table[index+1];// 0番目は門の位置
-
-    FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
-        MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE );
-
-    //カリングする
-    FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE);
-
-    // アニメーションの初期化
-    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA );
-    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
-    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA ,0);
-    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
-    SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
-
-    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA );
-    SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ITA, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA, TRUE);
-    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ITA ,0);
-    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
-  }
-
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  モデルデータ作成（門）
  *
  *	@param	*p_model
@@ -984,10 +941,10 @@ static void MakeEventGateModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj
   s32 i;
 
   // ユニット生成
-  FLD_EXP_OBJ_AddUnit( p_ex_obj, &sc_g3d_util_setup_gate, MMANAGER_FEXPOBJ_EV_UID );
+  FLD_EXP_OBJ_AddUnit( p_ex_obj, &sc_g3d_util_setup_gate, MMANAGER_FEXPOBJ_GATE_UID );
 
   // モデルデータ設定
-  p_model->unitID   = MMANAGER_FEXPOBJ_EV_UID;
+  p_model->unitID   = MMANAGER_FEXPOBJ_GATE_UID;
   p_model->modelID  = 0;
   p_model->p_ex_obj = p_ex_obj;
 
@@ -997,17 +954,17 @@ static void MakeEventGateModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj
 
     // ステータス取得
     p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_model->p_ex_obj,
-        MMANAGER_FEXPOBJ_EV_UID,
+        MMANAGER_FEXPOBJ_GATE_UID,
         p_model->modelID );
 
     // 位置を設定
-    p_status->trans = d3obj_pos_table[0];// 0番目は門の位置
+    p_status->trans = d3obj_pos_table[BADGEGATE_MDLID_GATE];
 
     FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
-        MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE );
+        MMANAGER_FEXPOBJ_GATE_UID, p_model->modelID, TRUE );
 
     //カリングする
-    FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_EV_UID, p_model->modelID, TRUE);
+    FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_GATE_UID, p_model->modelID, TRUE);
 
     // アニメーションの初期化
     exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_ACTION_ICA );
@@ -1044,6 +1001,6 @@ static void MakeEventGateModelData( MODEL *p_model, FLD_EXP_OBJ_CNT_PTR p_ex_obj
 //-----------------------------------------------------------------------------
 static void DeleteEventModelData( FLD_EXP_OBJ_CNT_PTR p_ex_obj )
 {
-  FLD_EXP_OBJ_DelUnit( p_ex_obj, MMANAGER_FEXPOBJ_EV_UID );
+  FLD_EXP_OBJ_DelUnit( p_ex_obj, MMANAGER_FEXPOBJ_GATE_UID );
 }
 
