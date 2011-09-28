@@ -3032,10 +3032,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_mquiz01_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>さて　もんだいです！▼</Text>
+			<Text>さて　もんだいです！▼
+これから　でてくる　ポケモンの
+なまえを　おぼえてください▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:14:36" />
+				Time="2011-09-28T14:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3043,10 +3045,12 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　もんだいです！▼</Text>
+			<Text>さて　もんだいです！▼
+これから　でてくる　ポケモンの
+なまえを　おぼえてください▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T13:36:33" />
+				Time="2011-09-28T14:41:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

@@ -11,7 +11,7 @@
 
 #define  FMISSION_ID_ITEM_TUTORIAL_01  ( 0 )  ///<‰‚ß‚Ä‚Ìƒ~ƒbƒVƒ‡ƒ“
 #define  FMISSION_ID_ITEM_KAKERA_01  ( 1 )  ///<‚©‚¯‚ç‚P
-#define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<‚©‚¯‚ç‚Q
+#define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<•ó’T‚µ‚P
 #define  FMISSION_ID_ITEM_KAKERA_03B  ( 3 )  ///<‚©‚¯‚ç‚a
 #define  FMISSION_ID_ITEM_KAKERA_03W  ( 4 )  ///<‚©‚¯‚ç‚v
 #define  FMISSION_ID_ITEM_KINOMI_01  ( 5 )  ///<‚«‚Ì‚Ý‚P
@@ -49,7 +49,7 @@
 #define  FMISSION_ID_EVENT_FISH_01W  ( 37 )  ///<‚Â‚è‘å‰ï‚v
 #define  FMISSION_ID_EVENT_TRAIL_01B  ( 38 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚a
 #define  FMISSION_ID_EVENT_TRAIL_01W  ( 39 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚v
-#define  FMISSION_ID_TRBTL_ALL_01  ( 40 )  ///<ƒgƒŒ[ƒi[‚ð“|‚¹I
+#define  FMISSION_ID_TRBTL_ALL_01  ( 40 )  ///<ƒgƒŒ[ƒi[‚ð“|‚¹I–¢ŽÀ‘•
 #define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<ƒ_ƒ~[
 #define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<ƒ_ƒ~[
 #define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<ƒ_ƒ~[

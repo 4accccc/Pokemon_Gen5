@@ -156,10 +156,10 @@
 		Label="msg_fm_title_item_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>かけらを　さがせ！２</Text>
+			<Text>いっかく　せんきん！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-25T11:23:57" />
+				Time="2011-09-28T14:29:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -167,10 +167,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけらを　さがせ！２</Text>
+			<Text>いっかく　せんきん！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-28T14:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1728,13 +1728,13 @@
 		Label="msg_fm_explain_item_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>まちや　みちに　おちている
+どうぐを　ひろい　あつめろ！！
+たかねで　うれる　どうぐが
+おちている　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:26:09" />
+				Time="2011-09-28T14:33:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1742,13 +1742,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>まちや　みちに　おちている
+どうぐを　ひろい　あつめろ！！
+たかねで　うれる　どうぐが
+おちている　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-09-28T14:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

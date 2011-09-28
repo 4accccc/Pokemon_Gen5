@@ -128,7 +128,7 @@ typedef enum{
 //=========================================
 typedef enum{
   FMISSION_ITEM_SET_KAKERA1,  ///<イロのカケラセット1
-  FMISSION_ITEM_SET_KAKERA2,  ///<イロのカケラセット2
+  FMISSION_ITEM_SET_TREASURE1,  ///<宝探しセット１
   FMISSION_ITEM_SET_LOST_ITEM,  ///<落し物
   FMISSION_ITEM_SET_LOST_ITEM_W,  ///<落し物W
   FMISSION_ITEM_SET_LOST_ITEM_B,  ///<落し物B
