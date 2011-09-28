@@ -2475,6 +2475,24 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
   EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
   BOOL	bflg=TRUE;
   s32   flg=0;
+
+#ifdef PM_DEBUG
+  //デバッグ機能、特定操作で無条件ミッション開放
+  {
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+      switch(mfw->fmd_arc[id].common.host){
+      case FMISSION_HOST_FREE:
+        return TRUE;
+      case FMISSION_HOST_WHITE:
+        if(GET_VERSION() == VERSION_W2) return TRUE;
+        break;
+      case FMISSION_HOST_BLACK:
+        if(GET_VERSION() == VERSION_B2) return TRUE;
+        break;
+      }
+    }
+  }
+#endif
   //
   //--------------------------------------------
   // フェスチュートリアルが終了しているかどうか
