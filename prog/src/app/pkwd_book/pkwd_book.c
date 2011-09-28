@@ -3878,7 +3878,8 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	}else{
 		bflg = FALSE;
 	}
-	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, TRUE );
+//	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, TRUE );
+	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, bflg );
 	
 //	OS_Printf("type :%d,%d\n",buf[0],buf[1]);
 	
@@ -4898,16 +4899,24 @@ static void pwb_init_pkwd_scenario( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario
 {
 	s32					i;
 	POKEWOOD_SENARIO	*pkwd_scenario;
+	u32		tmp;
+	s32		sex;
 	
+	// 性別で分岐
+	sex = 0;
+	tmp = MyStatus_GetMySex( wk->Param->mystatus );
+	if(tmp == PM_FEMALE){
+		sex = 1;
+	}
 	// シナリオ情報の取得
 	pkwd_scenario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, scenario_id, wk->heapID );
-	// ここで情報をセットしてしまう(上映なので[1]?)
+	// ここで情報をセットしてしまう(撮影をセット、男性:0、女性:2)
 //	wk->TrainerID = pkwd_scenario->trtype[1];
-	wk->TrainerID = pkwd_scenario->trtype[0];
+	wk->TrainerID = pkwd_scenario->trtype[2*sex];
 	//
-//	for(i=0;i<4;i++){
-//		OS_Printf("%d :%d\n",i,pkwd_scenario->trtype[i]);
-//	}
+	for(i=0;i<4;i++){
+		OS_Printf("%d :%d\n",i,pkwd_scenario->trtype[i]);
+	}
 	// 破棄
 	GFL_HEAP_FreeMemory( pkwd_scenario );
 }
