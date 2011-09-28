@@ -12,7 +12,7 @@
 #define T03R0101_MIDDLEMAN2_01             0
 #define T03R0101_POKE19_01                 1
 #define T03R0101_BOY3_01                   2
-#define T03R0101_MIDDLEWOMAN1_01           3
+#define T03R0101_WOMAN2_01                 3
 
 #endif //ZONE_T03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

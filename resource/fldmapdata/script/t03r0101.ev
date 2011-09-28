@@ -24,7 +24,7 @@
 _EVENT_DATA    ev_zone_t03r0101
 _EVENT_DATA    ev_t03r0101_middleman2_01
 _EVENT_DATA    ev_t03r0101_poke19_01
-_EVENT_DATA    ev_t03r0101_middlewoman1_01
+_EVENT_DATA    ev_t03r0101_woman2_01
 _EVENT_DATA    ev_t03r0101_boy3_01
 _EVENT_DATA_END
 
@@ -77,7 +77,7 @@ EVENT_END
 /**************************************************************/
 /*  èóê´ÅFòbÇµÇ©ÇØ                                            */
 /**************************************************************/
-EVENT_START   ev_t03r0101_middlewoman1_01
+EVENT_START   ev_t03r0101_woman2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03r0101_middlewoman1_01 )
 EVENT_END
 

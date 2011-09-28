@@ -195,6 +195,7 @@ init_flags:
 
   //R22
   _FLAG_SET( FV_R22_SWBOSS_01 ) //22番道路：アクロマ
+  _FLAG_SET( FV_R22_POKE5_01 ) //22番道路：テラキオン
 
   //D02R0201
   _FLAG_SET( FV_D02R0201_POKE6_01 ) //思索の原：ビリジオン

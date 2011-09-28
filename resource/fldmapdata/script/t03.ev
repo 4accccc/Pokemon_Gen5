@@ -31,13 +31,13 @@ _EVENT_DATA    ev_pos_t03_swrival_01
 _EVENT_DATA    ev_pos_t03_swrival_02
 _EVENT_DATA    ev_bg_t03_board_01
 _EVENT_DATA    ev_t03_oldwoman1_01
-_EVENT_DATA    ev_t03_middlewoman1_01
+_EVENT_DATA    ev_t03_woman2_01
 _EVENT_DATA    ev_t03_boy3_01
-_EVENT_DATA    ev_t03_badman_01
-_EVENT_DATA    ev_t03_waitress_01
+_EVENT_DATA    ev_t03_fighterm_01
+_EVENT_DATA    ev_t03_ambrella_01
 _EVENT_DATA    ev_t03_policeman_01
 _EVENT_DATA    ev_t03_poke19_01
-_EVENT_DATA    ev_t03_middleman2_01
+_EVENT_DATA    ev_t03_breederm_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -787,7 +787,7 @@ EVENT_END
 /**************************************************************/
 /*  女性：話しかけ                                            */
 /**************************************************************/
-EVENT_START   ev_t03_middlewoman1_01
+EVENT_START   ev_t03_woman2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03_middlewoman1_01 )
 EVENT_END
 
@@ -801,7 +801,7 @@ EVENT_END
 /**************************************************************/
 /*  スキンヘッド：話しかけ                                    */
 /**************************************************************/
-EVENT_START   ev_t03_badman_01
+EVENT_START   ev_t03_fighterm_01
 
   //ゲームクリア後か
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
@@ -819,7 +819,7 @@ EVENT_END
 /**************************************************************/
 /*  ウェイトレス：話しかけ                                    */
 /**************************************************************/
-EVENT_START   ev_t03_waitress_01
+EVENT_START   ev_t03_ambrella_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03_waitress_01 )
 EVENT_END
 
@@ -851,7 +851,7 @@ EVENT_END
 /**************************************************************/
 /*  男性：話しかけ                                            */
 /**************************************************************/
-EVENT_START   ev_t03_middleman2_01
+EVENT_START   ev_t03_breederm_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03_middleman2_01 )
 EVENT_END
 

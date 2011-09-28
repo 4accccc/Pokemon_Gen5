@@ -12,7 +12,7 @@
 #define T03R0201_OLDWOMAN1_01              0
 #define T03R0201_HAKASE2_01                1
 #define T03R0201_SWBELL_01                 2
-#define T03R0201_BADMAN_01                 3
+#define T03R0201_FIGHTERM_01               3
 
 #endif //ZONE_T03R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

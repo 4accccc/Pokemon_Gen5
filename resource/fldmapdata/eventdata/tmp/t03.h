@@ -14,13 +14,13 @@
 #define ZONE_T03_EVC_H
 
 #define T03_OLDWOMAN1_01                   0
-#define T03_MIDDLEWOMAN1_01                1
+#define T03_WOMAN2_01                      1
 #define T03_BOY3_01                        2
-#define T03_BADMAN_01                      3
-#define T03_WAITRESS_01                    4
+#define T03_FIGHTERM_01                    3
+#define T03_AMBRELLA_01                    4
 #define T03_POLICEMAN_01                   5
 #define T03_HAKASE2_01                     6
-#define T03_MIDDLEMAN2_01                  7
+#define T03_BREEDERM_01                    7
 #define T03_POKE19_01                      8
 #define T03_SWBELL_01                      9
 #define T03_SWPLAZMAM_01                  10

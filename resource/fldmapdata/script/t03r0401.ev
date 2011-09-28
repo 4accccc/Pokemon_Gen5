@@ -22,7 +22,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_t03r0401
-_EVENT_DATA    ev_t03r0401_waitress_01
+_EVENT_DATA    ev_t03r0401_ambrella_01
 _EVENT_DATA_END
 
 
@@ -60,7 +60,7 @@ INIT_EVENT_END
 /**************************************************************/
 /*  ウェイトレス：話しかけ                                    */
 /**************************************************************/
-EVENT_START   ev_t03r0401_waitress_01
+EVENT_START   ev_t03r0401_ambrella_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03r0401_waitress_01 )
 EVENT_END
 
