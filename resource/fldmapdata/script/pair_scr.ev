@@ -64,29 +64,24 @@ DEFINE_LOCAL  LCW_POSZ
 EVENT_START		ev_c12_swrival
   _TALK_START_SE_PLAY()
   
-  //【仮】メッセージラベルが仮
-  _BALLOONWIN_OBJMSG( msg_pair_d06_01, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
    //主人公・チェレン名代入
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
-  /*
-  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
-  $SCWK_TEMP0 = msg_d02r0101_swleader1_05
-  $SCWK_TEMP0 += $WK_OTHER_D02R0101_PAIR
+  
+  //話しかけるごとに0～2のセリフを順番に表示（2で終わり）
+  $SCWK_TEMP0 = msg_c12_swrival_05
+  $SCWK_TEMP0 += $WK_OTHER_C12_RIVAL_PAIR
   
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
-  IF $WK_OTHER_D02R0101_PAIR != 4 THEN
-    $WK_OTHER_D02R0101_PAIR += 1
+  IF $WK_OTHER_C12_RIVAL_PAIR > 2 THEN
+    $WK_OTHER_C12_RIVAL_PAIR += 1
   ENDIF
- */
+ 
   
 EVENT_END
 
@@ -95,31 +90,17 @@ EVENT_END
 /*		話しかけ：N城のN
 /**************************************************************/
 EVENT_START		ev_n01r0401_boss
-  _TALK_START_SE_PLAY()
+{
   
-  //【仮】メッセージラベルが仮
-  _BALLOONWIN_OBJMSG( msg_pair_d06_01, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
+  _GET_ZONE_ID( LOCALWORK15 )
   
-   //主人公・チェレン名代入
-  _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 1 )
-  
-  /*
-  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
-  $SCWK_TEMP0 = msg_d02r0101_swleader1_05
-  $SCWK_TEMP0 += $WK_OTHER_D02R0101_PAIR
-  
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  IF $WK_OTHER_D02R0101_PAIR != 4 THEN
-    $WK_OTHER_D02R0101_PAIR += 1
+  IF $LOCALWORK15 == ZONE_ID_N01R0401 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0401_boss_11 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0501_boss_05 )
   ENDIF
- */
+ 
+ }
   
 EVENT_END
 
@@ -130,7 +111,7 @@ EVENT_START		ev_d24_swbell
   _TALK_START_SE_PLAY()
   
   //【仮】メッセージラベルが仮
-  _BALLOONWIN_OBJMSG( msg_pair_d06_01, PAIR_TRAINER_01 )
+  _BALLOONWIN_OBJMSG( msg_d24r0901_swbell_07, PAIR_TRAINER_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   

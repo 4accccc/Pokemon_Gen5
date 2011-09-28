@@ -325,8 +325,6 @@ ev_vs_r04w_swboss:
   _FLAG_SET( FV_R04_SWBOSS_01 )
   //R04おおきな岩非表示
   _FLAG_SET( FV_R04_BIGROCK_01 )
-  //C16 ジョインアベニュー誘導SCENE CHANGEイベント起動
-  $WK_SCENE_C16_TUTORIAL_01 = 1
   //==================================//
 
 _RET

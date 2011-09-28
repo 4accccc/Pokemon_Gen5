@@ -237,9 +237,9 @@ ev_c05r0501_poke22_get:
     //ポケモン入手処理
     _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_529, 0, 25 )
     
-    //【仮】手に入れた（メッセージ仮）
+    //手に入れた（メッセージ仮）
     _ME_PLAY( SEQ_ME_POKEGET )
-    _SYSWIN_MSG(msg_c05r0501_sage6_09, POS_DEFAULT)
+    _SYSWIN_MSG(msg_c05r0501_poke_01, POS_DEFAULT)
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
@@ -250,6 +250,11 @@ ev_c05r0501_poke22_get:
     //ロット：そのゾロアは(クリアデータあり）
     IF $LOCALWORK15 >= 1 THEN
       _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12,C05R0501_SAGE6_01, POS_DEFAULT ) 
+      
+       //========================================//
+       //システムフラグでNポケモン起動フラグ設定
+       _FLAG_SET(SYS_FLAG_NPOKE_OPEN)
+       //========================================//
     
     //ロット：そのゾロアは(クリアデータなし）
     ELSE
@@ -265,8 +270,6 @@ ev_c05r0501_poke22_get:
     _FLAG_SET(FE_C05R0501_POKE22_GET)
     //ゾロア非表示に
     _FLAG_SET(FV_C05R0501_POKE22_01)
-    //システムフラグでNポケモン起動フラグ設定
-    _FLAG_SET(SYS_FLAG_NPOKE_OPEN)
     //========================================//
     
   ENDIF

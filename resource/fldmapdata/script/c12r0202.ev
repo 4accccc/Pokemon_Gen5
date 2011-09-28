@@ -64,22 +64,26 @@ EVENT_START   ev_c12r0202_rivalsister_01
 
   //主人公名代入
   _PLAYER_NAME( 0 )
-  //先頭ポケモンの名前を取得
-  _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
   
   //殿堂入り回数を取得
   _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
 
-
-
+  //ポケモン入手前
+  IF $WK_SCENE_C12_WHITE_MEET == 1 THEN
+    
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_00 )
+  
   //ポケモン入手後から、ヒオウギジムクリアまで
-  IF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+  ELSIF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 
     //ライバル妹：あ、主人公さん！   
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
 
   //タウンマップをライバルに渡すまで
   ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+  
+    //先頭ポケモンの名前を取得
+    _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
 
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
@@ -87,6 +91,10 @@ EVENT_START   ev_c12r0202_rivalsister_01
     _DEBUG_PRINT_WK( 0 ) 
     
   ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+     
+     //先頭ポケモンの名前を取得
+    _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
+     
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
