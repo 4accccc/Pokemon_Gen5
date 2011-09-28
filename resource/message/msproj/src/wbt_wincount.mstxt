@@ -140,10 +140,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オール</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,10 +151,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オール</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -162,10 +162,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トーナメント名称</Comment>
+			<Comment>トーナメント名称
+※未使用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -176,7 +177,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#000040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -187,10 +188,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオンズ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -198,10 +199,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオンズ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:03:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -209,10 +210,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トーナメント名称</Comment>
+			<Comment>トーナメント名称
+※未使用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -223,7 +225,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#000040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1298,10 +1300,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＷＣＳ２００１</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:10:36" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1309,10 +1311,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＣＳ２００１</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:10:58" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1320,11 +1322,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トーナメント名称</Comment>
+			<Comment>トーナメント名称
+※未使用</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:10:51" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:04:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#000040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_wbt_wincount_009"
@@ -1397,10 +1407,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャッフル</Text>
+			<Text>ミックス</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:12:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1408,10 +1418,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャッフル</Text>
+			<Text>ミックス</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:12:17" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1430,10 +1440,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャッフルマスター</Text>
+			<Text>ミックスマスター</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:12:31" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:02:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1441,10 +1451,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャッフルマスター</Text>
+			<Text>ミックスマスター</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-19T06:12:42" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-09-28T02:02:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
