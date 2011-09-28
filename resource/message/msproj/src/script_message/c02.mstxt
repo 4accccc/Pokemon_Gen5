@@ -577,11 +577,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カフェ　ソーコ▼
+
 すいようび　どようびは
 おいしいサービス！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:56:07" />
+				Time="2011-09-28T02:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -590,11 +591,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カフェ　ソーコ▼
+
 水曜日　土曜日は
 おいしいサービス！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:56:17" />
+				Time="2011-09-28T02:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
