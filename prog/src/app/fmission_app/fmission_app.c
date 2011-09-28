@@ -1462,16 +1462,16 @@ static void fma_update_down_result( FMISSION_APP_WORK* wk )
 	// LV3の場合
 	//----------
 	if(wk->Flag & FLG_FMA_LEVEL3){
-		// マイスコア(左)
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[5] );
-		FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_MYSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
-		GFL_STR_DeleteBuffer( strbuf );
-		//
-		// マイスコア(右)
-		fma_disp_fes_string( wk, FMA_MES_MYSCORE, FMAR_CANVAS_DOWN_MYSCORE_R, 64, 0, PRINTTOOL_MODE_RIGHT );
-		//
 		// 一人の時は表示しない
 		if(!(wk->Flag & FLG_FMA_ONLY)){
+			// マイスコア(左)
+			strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[5] );
+			FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_MYSCORE_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
+			GFL_STR_DeleteBuffer( strbuf );
+			//
+			// マイスコア(右)
+			fma_disp_fes_string( wk, FMA_MES_MYSCORE, FMAR_CANVAS_DOWN_MYSCORE_R, 64, 0, PRINTTOOL_MODE_RIGHT );
+			//
 			// 順位(左)
 			strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[6] );
 			FmaCmn_disp_string( wk, FMAR_CANVAS_DOWN_RANK_L, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
