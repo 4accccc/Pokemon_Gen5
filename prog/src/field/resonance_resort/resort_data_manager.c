@@ -20,6 +20,7 @@
 #include "resort_data_manager.h"
 #include "system/gfl_use.h"
 #include "field/resort_work.h"
+#include "resort_debug.h"
 //=============================================================================
 /**
  *	êlï®îzíuèÓïÒ
@@ -281,6 +282,12 @@ u32 RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( const RESORT_ABSTRUCT_DATA *cp_wk,
   u32 index = RESORT_BINARY_CITY_GetIndexByCityLv( cp_city_data, lv );
   u32 present_recv  = RESORT_BINARY_CITY_GetData( cp_city_data, index, RESORT_BINARY_CITY_PARAM_PRESENT_PER );
 
+#ifdef PM_DEBUG
+    if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_PRESENT) )
+    {
+      rnd = 0;
+    }
+#endif
 
   if( rnd < present_recv )
   {

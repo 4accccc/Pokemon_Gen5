@@ -295,6 +295,10 @@ typedef enum {
   //デバッグフラグ
   EDITBOX_ID_FLAG_00,
   EDITBOX_ID_FLAG_01,
+  EDITBOX_ID_FLAG_02,
+  EDITBOX_ID_FLAG_03,
+  EDITBOX_ID_FLAG_04,
+  EDITBOX_ID_FLAG_05,
 
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
@@ -1384,6 +1388,22 @@ static const STR_PARAM StrParamsDebugFlag[] =
   {STR_TYPE_SWITCH, RESORT_DATA_110, STR_POS_X, STR_LINE4_POS_Y,
     60,STR_LINE4_POS_Y, 2*8,TOUCH_H,
     YESNO_00,2,EDITBOX_ID_FLAG_01 },
+  //強制セレブ
+  {STR_TYPE_SWITCH, RESORT_DATA_111, STR_POS_X, STR_LINE6_POS_Y,
+    60,STR_LINE6_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_02 },
+  //強制おみやげ
+  {STR_TYPE_SWITCH, RESORT_DATA_112, STR_POS_X, STR_LINE8_POS_Y,
+    60,STR_LINE8_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_03 },
+  //強制フィーバー
+  {STR_TYPE_SWITCH, RESORT_DATA_113, STR_POS_X, STR_LINE10_POS_Y,
+    60,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_04 },
+  //強制行きたいお店
+  {STR_TYPE_NUM, RESORT_DATA_114, STR_POS_X, STR_LINE12_POS_Y,
+    60,STR_LINE12_POS_Y, 3*8,TOUCH_H,
+    RESORT_SPOT_ID_MAX,0,EDITBOX_ID_FLAG_05 },
 };
 
 
@@ -3562,6 +3582,17 @@ static const struct
 {
   { EDITBOX_ID_FLAG_00, RESORT_DEBUG_FLAG_FORCE_EXCELLENT },
   { EDITBOX_ID_FLAG_01, RESORT_DEBUG_FLAG_EXP_9999 },
+  { EDITBOX_ID_FLAG_02, RESORT_DEBUG_FLAG_FORCE_CELEB },
+  { EDITBOX_ID_FLAG_03, RESORT_DEBUG_FLAG_FORCE_PRESENT },
+  { EDITBOX_ID_FLAG_04, RESORT_DEBUG_FLAG_FORCE_FEVER },
+};
+static const struct
+{
+  EDITBOX_ID  id;
+  RESORT_DEBUG_WORK work;
+}sc_debugwork_to_exitbox[]=
+{
+  { EDITBOX_ID_FLAG_05, RESORT_DEBUG_WORK_FORCE_SPOT },
 };
 static void DebugFlag_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
 { 
@@ -3570,6 +3601,10 @@ static void DebugFlag_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_
   {
     p_wk->BoxValue[ sc_debugflag_to_exitbox[i].id ] = RESORT_DEBUG_FLAG_Get( sc_debugflag_to_exitbox[i].flag );
   }
+  for( i = 0; i < NELEMS(sc_debugwork_to_exitbox); i++ )
+  {
+    p_wk->BoxValue[ sc_debugwork_to_exitbox[i].id ] = RESORT_DEBUG_WORK_Get( sc_debugwork_to_exitbox[i].work );
+  }
 }
 static BOOL DebugFlag_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
 {
@@ -3577,6 +3612,10 @@ static BOOL DebugFlag_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG
   for( i = 0; i < NELEMS(sc_debugflag_to_exitbox); i++ )
   {
     RESORT_DEBUG_FLAG_Set( sc_debugflag_to_exitbox[i].flag, cp_wk->BoxValue[ sc_debugflag_to_exitbox[i].id ] );
+  }
+  for( i = 0; i < NELEMS(sc_debugwork_to_exitbox); i++ )
+  {
+    RESORT_DEBUG_WORK_Set( sc_debugwork_to_exitbox[i].work, cp_wk->BoxValue[ sc_debugwork_to_exitbox[i].id ] );
   }
 
   return TRUE;

@@ -131,6 +131,13 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         spot = RESORT_UTIL_DrawLotsWantSpot( p_abstruct, p_sys, p_gamedata );
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
+#ifdef PM_DEBUG
+    if( RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT) != 0 )
+    {
+      spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
+    }
+#endif
+
       GF_ASSERT( spot > 0 );
       if( sex == PM_MALE )
       {
@@ -997,7 +1004,17 @@ u32 RESORT_UTIL_AddExpShop( RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_s
 BOOL RESORT_UTIL_IsFever( RESORT_SYSTEM *p_sys )
 {
   RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
-  return RESORT_CITY_DATA_GetData(p_city_data,RESORT_CITY_DATA_FEVER_FLAG,NULL);
+  BOOL is_ok  = RESORT_CITY_DATA_GetData(p_city_data,RESORT_CITY_DATA_FEVER_FLAG,NULL);
+
+
+#ifdef PM_DEBUG
+    if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_FEVER) )
+    {
+      is_ok = TRUE;
+    }
+#endif
+
+  return is_ok;
 }
 
 //----------------------------------------------------------------------------

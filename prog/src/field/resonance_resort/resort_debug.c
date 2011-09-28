@@ -31,7 +31,8 @@
 
 #define RESORT_DEBUG_BIT_ARRAY_LEN  ((RESORT_DEBUG_FLAG_MAX+7)/8)
 
-static u8  s_debug_flag[ RESORT_DEBUG_BIT_ARRAY_LEN ];
+static u8  s_debug_flag[ RESORT_DEBUG_BIT_ARRAY_LEN ] = {0};
+static u32 s_debug_work[ RESORT_DEBUG_WORK_MAX ]  = {0};
 
 //----------------------------------------------------------------------------
 /**
@@ -69,7 +70,33 @@ BOOL RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG flag )
   const u8 bit = flag%8;
   const u8 arr = flag/8;
   
-  return s_debug_flag[arr]  & (1<<bit) != 0;
+  return ( (s_debug_flag[arr] & (1<<bit)) != 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグワーク設定
+ *
+ *	@param	RESORT_DEBUG_WORK wk  ワーク
+ *	@param	value 値
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK wk, u32 value )
+{
+  s_debug_work[ wk ] = value;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグワーク取得
+ *
+ *	@param	RESORT_DEBUG_WORK wk ワーク
+ *
+ *	@return 値
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_DEBUG_WORK_Get( RESORT_DEBUG_WORK wk )
+{
+  return s_debug_work[ wk ];
 }
 
 #endif  //PM_DEBUG
