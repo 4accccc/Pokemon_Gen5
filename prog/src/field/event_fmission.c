@@ -58,10 +58,11 @@
 #define BUFLEN_TMP_MSG  (BUFLEN_FMISSION_EXP)
 
 #define SYSMSG_WIN_SX   (19)
+
 #define SYSWIN_PX       (1)
 #define SYSWIN_PY       (1)
 #define SYSWIN_SX       (30)
-#define SYSWIN_SY       (18)
+#define SYSWIN_SY       (20)
 
 #define SMSG_WIN_PX     (1)
 #define SMSG_WIN_PY     (20)
@@ -572,14 +573,18 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
     GFL_MSG_GetString( wk->msgData, msg_fmission_life01, wk->s_buf );
   }
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
-  
+ 
+  //目標
+  GFL_MSG_GetString( wk->msgData, msg_fmission_goal01+wk->mission.arc.unit, wk->s_buf );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
+
   //報酬
   if( wk->mission.beacon.pay_bonus == FMISSION_PAY_BONUS_NONE ){
     GFL_MSG_GetString( wk->msgData, msg_fmission_reward01, wk->s_buf );
   }else{
     GFL_MSG_GetString( wk->msgData, msg_fmission_reward02, wk->s_buf );
   }
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 9 );
 }
 
 //-----------------------------------------------------------------
@@ -589,33 +594,11 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
-//  int sec = LINKFEST_FRAME2SEC(wk->mission.beacon.life);
-  
   //タイトル
   GFL_MSG_GetString( wk->msgData, msg_fmission_start_title, wk->s_buf );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
 
   sub_FMissionParamDrawCommon( wk );
-
-#if 0
-  //説明文
-  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
-  
-  //パラメータまとめてWordset
-  sub_FMissionParamWordExpand( wk );
-
-  //残り時間
-  if( (sec / 60) == 0 ){
-    GFL_MSG_GetString( wk->msgData, msg_fmission_life02, wk->s_buf );
-  }else{
-    GFL_MSG_GetString( wk->msgData, msg_fmission_life01, wk->s_buf );
-  }
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
-  //報酬
-  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
-#endif
 }
 
 
@@ -631,25 +614,6 @@ static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk )
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
 
   sub_FMissionParamDrawCommon( wk );
-#if 0
-  //説明文
-  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
- 
-  //パラメータまとめてWordset
-  sub_FMissionParamWordExpand( wk );
-  
-  //残り時間
-  if( (wk->mission.beacon.life / (60*60)) == 0 ){
-    GFL_MSG_GetString( wk->msgData, msg_fmission_life02, wk->s_buf );
-  }else{
-    GFL_MSG_GetString( wk->msgData, msg_fmission_life01, wk->s_buf );
-  }
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
-  //報酬
-  GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
-#endif
 }
 
 

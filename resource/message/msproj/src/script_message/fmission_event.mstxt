@@ -379,10 +379,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:57" />
+				Time="2011-09-28T08:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -390,10 +390,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:51" />
+				Time="2011-09-28T08:39:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -411,10 +411,10 @@
 		Label="msg_fmission_reward02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ～</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ～</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:53:04" />
+				Time="2011-09-28T08:39:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -422,10 +422,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ～</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ～</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:44" />
+				Time="2011-09-28T08:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -437,10 +437,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>のこりじかん　[Ctrl1:xright value="16" ][Digit:4digits Idx="5" ]ふん[Digit:2digits Idx="6" ]びょう</Text>
+			<Text>のこりじかん　[Ctrl1:xright value="16" ][Digit:4digits Idx="2" ]ふん[Digit:2digits Idx="3" ]びょう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:31" />
+				Time="2011-09-28T08:40:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -448,10 +448,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残り時間　[Ctrl1:xright value="16" ][Digit:4digits Idx="5" ]分[Digit:2digits Idx="6" ]秒</Text>
+			<Text>残り時間　[Ctrl1:xright value="16" ][Digit:4digits Idx="2" ]分[Digit:2digits Idx="3" ]秒</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:37" />
+				Time="2011-09-28T08:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -470,10 +470,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>のこりじかん　[Ctrl1:xright value="16" ][Digit:2digits Idx="6" ]びょう</Text>
+			<Text>のこりじかん　[Ctrl1:xright value="16" ][Digit:2digits Idx="3" ]びょう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:17" />
+				Time="2011-09-28T08:40:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -481,10 +481,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残り時間　[Ctrl1:xright value="16" ][Digit:2digits Idx="6" ]秒</Text>
+			<Text>残り時間　[Ctrl1:xright value="16" ][Digit:2digits Idx="3" ]秒</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-25T08:52:24" />
+				Time="2011-09-28T08:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -499,36 +499,163 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_score"
-		Style="Large">
+		Label="msg_fmission_goal01">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]スコア　[Digit:2digits Idx="7" ]</Text>
+			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:40:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:04:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]スコア　[Digit:2digits Idx="7" ]</Text>
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:05:08" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ミッションの目標値(1-9999)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:30:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_goal02">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]にん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]にん</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ミッションの目標値(1-9999)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:30:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_goal03">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]ひき</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]ひき</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ミッションの目標値(1-9999)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:30:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_goal04">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]こ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]こ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ミッションの目標値(1-9999)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:30:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_goal05">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]かい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]かい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:41:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T09:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0：ミッションの目標値(1-9999)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-28T08:30:49" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
