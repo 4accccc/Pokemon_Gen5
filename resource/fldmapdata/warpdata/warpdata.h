@@ -84,8 +84,10 @@
 #define	WARP_ID_T07 (79)
 #define	WARP_ID_H01 (80)
 #define	WARP_ID_H03 (81)
+#define	WARP_ID_N01R0401 (82)
+#define	WARP_ID_D20R0501 (83)
 
-#define	WARP_ID_MAX		(82)
+#define	WARP_ID_MAX		(84)
 
 #endif	//__WARPDATA_H__
 //
