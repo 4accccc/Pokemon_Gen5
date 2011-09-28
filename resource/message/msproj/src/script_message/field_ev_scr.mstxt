@@ -747,4 +747,47 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fld_ev_warp_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふたりで　いるときは
+ハイリンクに　ワープできません</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T08:51:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T08:51:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>二人で　いる時は
+ハイリンクに　ワープできません</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T08:52:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T08:51:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>表フィールドからハイリンクにワープするとき、
+連れ歩き中のため、ワープ不可であることを
+伝えるメッセージ（スワン追加）</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-09-22T08:52:14" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#804040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

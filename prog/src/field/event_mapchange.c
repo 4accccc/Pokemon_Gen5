@@ -3393,21 +3393,29 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
   case SEQ_INIT:
     {
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-      BOOL is_target = FALSE;
-      BOOL is_partner = FALSE;
-      
+      BOOL is_target = FALSE;   //ミッションターゲットになってる？
+      BOOL is_partner = FALSE;  //ミッションパートナーとして侵入しようとしてる？
+
       if(intcomm != NULL){
         is_target = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
         if(Intrude_GetIntrudeStatus(game_comm) == INTRUDE_CONNECT_MISSION_PARTNER){
           is_partner = TRUE;
         }
       }
-      
+
       //進入可能座標チェック
       if ( is_target == FALSE && PLC_WP_CHK_Check(work->gameSystem) )
-      {   //進入可能
-        //進入可能メッセージコール
+      { //進入可能座標にいて、ミッションターゲットになっていない
         u32 scr_id;
+       
+        if( PAIRSYS_CheckPairFlag( work->gameData ) ){
+          //でも連れ歩き中はダメ。場所チェックメッセージを優先したいので、ここでチェック
+          SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_FAILED_PAIR, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+          (*seq) = SEQ_FINISH;
+          break;
+        }
+
+        //進入可能メッセージコール
         if(is_partner == FALSE){
           scr_id = SCRID_FLD_EV_WARP_SUCCESS;
         }
