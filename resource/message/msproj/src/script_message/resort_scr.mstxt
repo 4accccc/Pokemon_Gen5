@@ -38924,10 +38924,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　いし</Text>
+			<Text>おおきなかたまり</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T06:14:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:35:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38935,15 +38935,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　石</Text>
+			<Text>おおきなかたまり</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:36:54" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:35:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>鑑定抽選道具</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:36:47" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -38971,10 +38978,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　いし</Text>
+			<Text>どろまみれのたま</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T06:14:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38982,15 +38989,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　石</Text>
+			<Text>どろまみれのたま</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:36:54" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>鑑定抽選道具</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:36:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -39018,10 +39032,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　いし</Text>
+			<Text>なにかのこな</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T06:14:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T06:03:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39029,15 +39043,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　石</Text>
+			<Text>なにかのこな</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:36:54" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T06:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>鑑定抽選道具</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T04:36:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -39065,10 +39086,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　いし</Text>
+			<Text>よごれたいし</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T06:14:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39076,15 +39097,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　石</Text>
+			<Text>よごれたいし</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:36:54" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>鑑定抽選道具</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:27:20" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -39112,10 +39140,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　いし</Text>
+			<Text>なぞのいし</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T06:14:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39123,15 +39151,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　石</Text>
+			<Text>なぞの石</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:36:54" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>鑑定抽選道具</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:43:12" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -41180,11 +41215,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごつごつ　した　おおきい　いし
-なにかの　カセキに　にている……？</Text>
+			<Text>かたそうな　つちと　すなで
+おおかわた　かたまり。
+とても　おもい……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:44" />
+				Time="2011-09-28T04:39:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41192,16 +41228,24 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごつごつ　した　大きい　石
-なにかの　カセキに　似ている……？</Text>
+			<Text>かたそうな　つちと　すなで
+おおかわた　かたまり。
+とても　おもい……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:47" />
+				Time="2011-09-28T04:39:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かたまり</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:42:17" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -41229,11 +41273,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごつごつ　した　おおきい　いし
-なにかの　カセキに　にている……？</Text>
+			<Text>どろで　おおわれた　まるい　たま。
+かちが　ありそうな　ないような……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:44" />
+				Time="2011-09-28T07:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41241,16 +41285,23 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごつごつ　した　大きい　石
-なにかの　カセキに　似ている……？</Text>
+			<Text>どろで　おおわれた　まるい　たま。
+かちが　ありそうな　ないような……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:47" />
+				Time="2011-09-28T05:51:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>たま</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:42:33" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -41278,11 +41329,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごつごつ　した　おおきい　いし
-なにかの　カセキに　にている……？</Text>
+			<Text>サラサラした　なにかの　こな。
+からだに　ききそうな　かんじが……？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:44" />
+				Time="2011-09-28T07:21:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41290,16 +41341,23 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごつごつ　した　大きい　石
-なにかの　カセキに　似ている……？</Text>
+			<Text>サラサラした　なにかの　こな。
+からだに　ききそうな　かんじが……？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:47" />
+				Time="2011-09-28T07:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>こな</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:42:36" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -41328,10 +41386,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ごつごつ　した　おおきい　いし
-なにかの　カセキに　にている……？</Text>
+なにか　ふしぎな　ふんいきが……？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:44" />
+				Time="2011-09-28T07:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41339,16 +41397,23 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごつごつ　した　大きい　石
-なにかの　カセキに　似ている……？</Text>
+			<Text>ごつごつ　した　おおきい　いし
+なにか　ふしぎな　ふんいきが……？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T03:32:47" />
+				Time="2011-09-28T07:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>いし</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:42:40" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>
@@ -41398,6 +41463,13 @@ BW♀
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かせき</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:42:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>レストラン用説明５</Text>

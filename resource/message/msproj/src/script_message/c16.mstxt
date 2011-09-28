@@ -647,10 +647,10 @@
 あなたは　いま　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:18:58" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -662,10 +662,10 @@
 あなたは　いま　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:25:35" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -709,10 +709,10 @@
 ……おや？
 だれか　いらしたみたいです▼
 さっそく
-「しょうたい」して　みましょう▼</Text>
+「しょうたい」して　みましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:26:15" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -731,10 +731,10 @@
 ……おや？
 だれか　いらしたみたいです▼
 さっそく
-「しょうたい」して　みましょう▼</Text>
+「しょうたい」して　みましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:26:09" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -770,10 +770,10 @@
 			<Text>まずは　おみせを　たてましょう▼
 まちを　あるくひとに　はなしかけて
 「しょうたいする」を　えらんで▽
-おみせを　つくって　もらいましょう▼</Text>
+おみせを　つくって　もらいましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T10:06:16" />
+				Time="2011-09-28T07:51:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -784,10 +784,10 @@
 			<Text>まずは　お店を　たてましょう▼
 街を　歩く人に　話しかけて
 「しょうたいする」を　選んで▽
-お店を　つくって　もらいましょう▼</Text>
+お店を　つくって　もらいましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:26:37" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -830,10 +830,10 @@
 「あんないする」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
-さっそく　「あんない」　してみましょう▼</Text>
+さっそく　「あんない」　してみましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:27:26" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -851,10 +851,10 @@
 「あんないする」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
-さっそく　「あんない」　してみましょう▼</Text>
+さっそく　「あんない」　してみましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:27:22" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -888,10 +888,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おきゃくさまを　おみせに
-「あんない」して　あげましょう▼</Text>
+「あんない」して　あげましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:19:26" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -900,10 +900,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お客さまを　お店に
-「あんない」して　あげましょう▼</Text>
+「あんない」して　あげましょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:27:34" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1022,10 +1022,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]と　なるため▼
 せつめいを
-うける　ところで　ございます▼</Text>
+うける　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:19:47" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1036,10 +1036,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:53" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1077,10 +1077,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:19:53" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1091,10 +1091,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:52" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1132,10 +1132,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:19:59" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1146,10 +1146,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:51" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1187,10 +1187,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:20:05" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1201,10 +1201,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:50" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1242,10 +1242,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:20:05" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1256,10 +1256,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:49" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1297,10 +1297,10 @@
 			<Text>あなたは　いちにんまえの
 [Name:ResortMayor ]に　なるため▼
 せつめいを
-うけている　ところで　ございます▼</Text>
+うけている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:20:06" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1311,10 +1311,10 @@
 			<Text>あなたは　一人前の
 [Name:ResortMayor ]に　なるため▼
 説明を
-受けている　ところで　ございます▼</Text>
+受けている　ところで　ございます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:46" />
+				User="shimoyamada:W00184"
+				Time="2011-09-28T07:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
