@@ -90,7 +90,7 @@ enum{
 	PKWD_COUNT_EMPTY_MAXNUM		= 3*2,		// empty
 	//
 	PKWD_COUNT_OBJ_MAXNUM		= 1,		// obj
-	PKWD_COUNT_LOGO_OBJ_MAXNUM	= 4,		// obj
+	PKWD_COUNT_LOGO_OBJ_MAXNUM	= 6,		// obj
 	//
 	PKWD_COUNT_BGNUM_MAXNUM		= 8,		// bg
 	//
@@ -130,6 +130,8 @@ enum{
 	CLWK_LOGO_EYE,							// 目
 	CLWK_LOGO_P1,							// P1
 	CLWK_LOGO_P2,							// P2
+	CLWK_LOGO_P3,							// P3
+	CLWK_LOGO_P4,							// P4
 };
 
 // SEQ
@@ -140,6 +142,8 @@ enum{
 	SEQ_LOGO_EYE_ANIM,						// 目
 	SEQ_LOGO_P1_ANIM,						// P1
 	SEQ_LOGO_P2_ANIM,						// P2
+	SEQ_LOGO_P3_ANIM,						// P3
+	SEQ_LOGO_P4_ANIM,						// P4
 };
 
 // フェードの種類
@@ -392,7 +396,9 @@ static const PKWD_COUNT_OBJ_DATA pwc_obj_logo_tbl[] = {
 	{ 0,	0x30,	1,	0,	0,	1,	1,	0,},		// 顔、口
 	{ 1,	0x30,	1,	0,	0,	1,	2,	0,},		// 顔、目
 	{ 2,	0x30,	1,	0,	0,	1,	2,	0,},		// 顔、p1
-	{ 3,	0x28,	1,	0,	0,	1,	2,	0,},		// 顔、p2
+	{ 3,	0x28,	1,	0,	0,	1,	2,	0,},		// 顔、p2(歯)
+	{ 4,	0x20,	1,	0,	0,	1,	2,	0,},		// 顔、p3(文字)
+	{ 5,	0x20,	1,	0,	0,	1,	2,	0,},		// 顔、p4(文字)
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -920,6 +926,8 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   FALSE );
 				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    FALSE );
 				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    FALSE );
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P3,    FALSE );
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P4,    FALSE );
 				// 少し待ち
 				pwc_init_timer( wk, TIMER_WAIT3, WAIT_BG_MAX );
 			}
@@ -1534,10 +1542,14 @@ static void pwc_chg_logo( PKWD_COUNT_MAIN_WORK* wk, const s32 mode )
 		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   TRUE );
 		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    TRUE );
 		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    TRUE );
+		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P3,    TRUE );
+		pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_P4,    TRUE );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_MOUSE, SEQ_LOGO_MOUSE_ANIM );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   SEQ_LOGO_EYE_ANIM );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P1,    SEQ_LOGO_P1_ANIM );
 		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P2,    SEQ_LOGO_P2_ANIM );
+		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P3,    SEQ_LOGO_P3_ANIM );
+		pwc_chg_objseq( wk, CLWKMODE_LOGO, CLWK_LOGO_P4,    SEQ_LOGO_P4_ANIM );
 	}
 }
 
