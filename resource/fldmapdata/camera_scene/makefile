@@ -111,6 +111,8 @@ clean:
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 	rm -f *.dat
+	rm -f *.tab
+	rm -f *.sa
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

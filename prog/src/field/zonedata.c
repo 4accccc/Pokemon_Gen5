@@ -1365,15 +1365,12 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
   int i;
 
   static const CAMERA_SCENE_DATA DATA_CameraScene[] = {
-    { ZONE_ID_C04,     NARC_grid_camera_scene_camera_scene_C04_dat },
     { ZONE_ID_T05,     NARC_grid_camera_scene_camera_scene_T05_dat },
     { ZONE_ID_R04,     NARC_grid_camera_scene_camera_scene_R04_dat },
     { ZONE_ID_H04,     NARC_grid_camera_scene_camera_scene_H04_dat },
     { ZONE_ID_C09P02,  NARC_grid_camera_scene_camera_scene_C09P02_dat },
     // swan’Ç‰Á
     { ZONE_ID_C12,     NARC_grid_camera_scene_camera_scene_C12_dat },
-    { ZONE_ID_BC10,    NARC_grid_camera_scene_camera_scene_BC10_dat },
-    { ZONE_ID_WC10,    NARC_grid_camera_scene_camera_scene_WC10_dat },
     { ZONE_ID_R04W,    NARC_grid_camera_scene_camera_scene_R04W_dat },
     { ZONE_ID_D27R1001,NARC_grid_camera_scene_camera_scene_hide_ship_dat },
     { ZONE_ID_D27R1301,NARC_grid_camera_scene_camera_scene_hide_ship_dat },
