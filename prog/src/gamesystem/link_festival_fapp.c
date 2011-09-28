@@ -63,7 +63,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   FMISSION_SAVE_IncMissionClearNum( f_save ); //ミッション達成回数インクリメント
 
   //ミッションレベルアップ
-  FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level );
+  FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
 
   //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
@@ -191,7 +191,7 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
           wk->p_arc_data[i].host == egnore ){
         continue; //自分では開催できないミッションは除く
       }
-      if( FMISSION_SAVE_GetMissionStatusClearLevel( f_save, i ) == 0 ){
+      if( FMISSION_SAVE_GetMissionStatusClearLevel( f_save, i ) == FMISSION_CLEAR_LEVEL_0 ){
         break;  //クリアしてない
       }
     }

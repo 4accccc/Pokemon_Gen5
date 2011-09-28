@@ -1717,16 +1717,7 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
     }
     break;
   case NINPUT_MISSION_LEVEL_OPEN:
-    {
-      int level;
-      if( value == 0 ){
-        level = FMISSION_LEVEL_MAX;
-      }else{
-        level = value-1;
-      }
-      OS_Printf("value=%d level=%d\n", value, level );
-      DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( wk->fmission_sv,  level );
-    }
+    DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( wk->fmission_sv,  value );
     break;
   }
 }

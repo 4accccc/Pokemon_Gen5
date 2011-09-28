@@ -266,11 +266,11 @@ void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID
  * @brief ミッションステータス クリアしたレベルを返す	
  * @param	work		ワークへのポインタ
  *
- * @retval  0 未クリア
- * @retval  1～3  各レベルまでをクリアした
+ * @retval  FMISSION_CLEAR_LEVEL_0 未クリア
+ * @retval  FMISSION_CLEAR_LEVEL_1～4  各レベルまでをクリアした
  */
 //---------------------------------------------------------------------------
-u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+FMISSION_CLEAR_LEVEL FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
@@ -285,13 +285,13 @@ u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID 
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level )
+void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_CLEAR_LEVEL level )
 {
-  if( id >= FMISSION_ID_MAX ){
+  if( id >= FMISSION_ID_MAX || level >= FMISSION_CLEAR_LEVEL_MAX ){
     GF_ASSERT(0);
     return;
   }
-  sv->status[id].level = (level+1);
+  sv->status[id].level = level;
 }
 
 //---------------------------------------------------------------------------

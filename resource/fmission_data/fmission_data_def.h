@@ -112,6 +112,18 @@ typedef enum{
 }FMISSION_LEVEL;
 
 //=========================================
+///ミッションクリアレベル
+//=========================================
+typedef enum{
+  FMISSION_CLEAR_LEVEL_0,  ///<未クリア
+  FMISSION_CLEAR_LEVEL_1,  ///<level1
+  FMISSION_CLEAR_LEVEL_2,  ///<level2
+  FMISSION_CLEAR_LEVEL_3,  ///<level3
+  FMISSION_CLEAR_LEVEL_4,  ///<level4
+  FMISSION_CLEAR_LEVEL_MAX,  ///<
+}FMISSION_CLEAR_LEVEL;
+
+//=========================================
 ///アイテムミッション　セット名定義
 //=========================================
 typedef enum{

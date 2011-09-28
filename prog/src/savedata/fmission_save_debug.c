@@ -20,20 +20,17 @@
  * @brief ミッションステータス 全ミッションのクリアレベルをセット
  * @param	work		ワークへのポインタ
  *
- * @param   FMISSION_LEVEL_1-FMISSION_LEVEL_3  各レベルクリア FMISSION_LEVEL_MAXを指定するとレベルリセット
+ * @param   FMISSION_CLEAR_LEVEL_0-FMISSION_LEVEL_4
  */
 //---------------------------------------------------------------------------
-void DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( FMISSION_SAVE* sv,  FMISSION_LEVEL level )
+void DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( FMISSION_SAVE* sv,  FMISSION_CLEAR_LEVEL level )
 {
-  int i, lv = 0;
+  int i;
 
-  if( level < FMISSION_LEVEL_MAX ){
-    lv = level+1;
-  }
   for( i = 0;i < FMISSION_ID_MAX; i++ ){
-    sv->status[i].level = lv;
+    sv->status[i].level = level;
   }
-  IWASAWA_Printf("FMissionClearLvSet %d\n", lv );
+  IWASAWA_Printf("FMissionClearLvSet %d\n", level );
 }
 
 

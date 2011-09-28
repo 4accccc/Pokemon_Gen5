@@ -168,10 +168,10 @@ extern void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MIS
  * @param	work		ワークへのポインタ
  *
  * @retval  0 未クリア
- * @retval  1～3  各レベルまでをクリアした
+ * @retval  1～4  各レベルまでをクリアした
  */
 //---------------------------------------------------------------------------
-extern u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern FMISSION_CLEAR_LEVEL FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
@@ -179,7 +179,7 @@ extern u8 FMISSION_SAVE_GetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISS
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_LEVEL level );
+extern void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_ID id, FMISSION_CLEAR_LEVEL level );
 
 //---------------------------------------------------------------------------
 /**
@@ -229,10 +229,10 @@ extern void FMISSION_SAVE_SetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_
  * @brief ミッションステータス 全ミッションのクリアレベルをセット
  * @param	work		ワークへのポインタ
  *
- * @param   FMISSION_LEVEL_1-FMISSION_LEVEL_3  各レベルクリア FMISSION_LEVEL_MAXを指定するとレベルリセット
+ * @param   FMISSION_CLEAR_LEVEL_0-FMISSION_LEVEL_4
  */
 //---------------------------------------------------------------------------
-extern void DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( FMISSION_SAVE* sv,  FMISSION_LEVEL level );
+extern void DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( FMISSION_SAVE* sv,  FMISSION_CLEAR_LEVEL level );
 
 #endif  //PM_DEBUG
 
