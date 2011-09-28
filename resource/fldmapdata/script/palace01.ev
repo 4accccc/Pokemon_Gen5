@@ -298,7 +298,7 @@ EVENT_START ev_scene_palace01_1stguide
 	_FLAG_SET( SYS_FLAG_PALACE_MISSION_CLEAR )
 	
 	//フェスミッションを全て選択できるように【仮】
-	_FLAG_SET( SYS_FLAG_FES_TUTORIAL_CLEAR )
+	//_FLAG_SET( SYS_FLAG_FES_TUTORIAL_CLEAR )
 	//========================================//
 
 EVENT_END
