@@ -1375,7 +1375,7 @@
 			Language="JPN">
 			<Text>しろのじゅどうは　どうだい？
 ふしぎな　ばしょだろう？▼
-おれたちも　このどうくつが　
+おれたちも　ここが　
 どこまで　つづいているのか▽
 はあくして　いないぐらいだからな▼
 キミも　きになるだろう？
@@ -1384,7 +1384,7 @@
 その　じつりょくを　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:44:00" />
+				Time="2011-09-28T02:23:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1394,7 +1394,7 @@
 			Language="JPN_KANJI">
 			<Text>白の樹洞は　どうだい？
 不思議な　場所だろう？▼
-おれたちも　この洞窟が
+おれたちも　ここが
 どこまで　続いているのか▽
 把握して　いないぐらいだからな▼
 キミも　気になるだろう？
@@ -1403,7 +1403,7 @@
 その　実力を　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T02:44:12" />
+				Time="2011-09-28T02:23:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1853,14 +1853,14 @@
 その　答えを　求めて
 ここまで　来たの　だろう？▼
 わたしと　戦うことで
-イッシュ最強が　誰か▽
+イッシュ最強が　だれか▽
 その　答えに　近づけるだろう▼
 観客が　いないのが　寂しいが
 最高の　戦いを　しよう▼
 さあ　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:14:13" />
+				Time="2011-09-28T02:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -2546,14 +2546,14 @@
 その　答えを　求めて
 ここまで　来たの　でしょう？▼
 わたしと　戦うことで
-イッシュ最強が　誰か▽
+イッシュ最強が　だれか▽
 その　答えに　近づけるわ▼
 観客は　いないけど
 最高の　戦いを　しましょう▼
 さあ　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:14:57" />
+				Time="2011-09-28T02:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -2965,14 +2965,14 @@
 			<Text>はい　ごくろうさま▼
 あれ？
 まだ　たたかいたりないの？▼
-キミは　どんよくだな▼
+キミは　よくばりだな▼
 それぐらいじゃないと　このさきは
 つらいのかも　しれないけど▼
 まあ　きがむいたら　またおいで
 あいてを　するからさ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:06:03" />
+				Time="2011-09-28T02:25:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2983,14 +2983,14 @@
 			<Text>はい　ご苦労様▼
 あれ？
 まだ　戦い足りないの？▼
-キミは　貪欲だな▼
+キミは　欲張りだな▼
 それぐらいじゃないと　この先は
 つらいのかも　知れないけど▼
 まあ　気が向いたら　またおいで
 相手を　するからさ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:05:58" />
+				Time="2011-09-28T02:25:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4148,13 +4148,13 @@
 ポケモンの　強さに　年齢は
 関係ないわね▼
 でも　ここから　先は
-戦うことを　生き甲斐に▽
+戦うことを　生きがいに▽
 しているような　人ばかりよ▼
 あなたの　本気が　どこまで
 通用するのか　楽しみだわ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:53:32" />
+				Time="2011-09-28T02:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4210,11 +4210,11 @@
 ほら　次の　エリアに　行きな▼
 おれは　次の　挑戦者を
 待つからさ▼
-次は　誰だ？
+次は　だれだ？
 早く　戦わせろ！！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:57:30" />
+				Time="2011-09-28T02:25:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4752,7 +4752,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　少年んと　同等
+			<Text>さっきの　少年と　同等
 いや　それ以上の　強さね▼
 キミが　ここで　戦い続ければ
 あの少年と　戦う日が▽
@@ -4762,7 +4762,7 @@
 それじゃ　また　戦いましょうね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T08:26:15" />
+				Time="2011-09-28T02:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4882,11 +4882,11 @@
 ほら　次の　エリアに　いきなさい▼
 わたしは　次の　挑戦者を
 待つことに　するわ▼
-次は　誰？
+次は　だれ？
 早く　戦わせなさい！！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-25T08:39:11" />
+				Time="2011-09-28T02:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7766,9 +7766,8 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ん？　キミが　
 うわさの　ちょうせんしゃかい？▼
-みかけに　よらず　すごうでって
-きいているよ▼
-まだまだ　しょしんしゃの　キミに
+みかけに　よらず　つよいらしいね▼
+でも　まだまだ　しょしんしゃの　キミに
 いいことを　おしえて　あげよう▼
 ここに　エレベーターが　あるだろう？▼
 もし　キミが　これいじょうの
@@ -7785,7 +7784,7 @@ NPC：MUGENBOSS（バンジロウ）
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:26:46" />
+				Time="2011-09-28T02:22:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7795,9 +7794,8 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ん？　キミが　
 うわさの　挑戦者かい？▼
-見かけに　よらず　凄腕って
-聞いているよ▼
-まだまだ　初心者の　キミに
+見かけに　よらず　強いらしいね▼
+でも　まだまだ　初心者の　キミに
 いいことを　教えて　あげよう▼
 ここに　エレベーターが　あるだろう？▼
 もし　キミが　これ以上の
@@ -7814,7 +7812,7 @@ NPC：MUGENBOSS（バンジロウ）
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:42:30" />
+				Time="2011-09-28T02:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
