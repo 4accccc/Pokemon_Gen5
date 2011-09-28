@@ -1955,14 +1955,14 @@ u32 RESORT_UTIL_GetCelebData( RESORT_BINARY_PRESET *p_set, RESORT_ABSTRUCT_DATA 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  状況に応じて人物の表示、非表示をする
+ *	@brief  状況に応じて人物の非表示をする
  *
  *	@param	RESORT_PEOPLE_SYS *p_sys  システム
  *	@param	*p_talk_people  話している人（いないor無視したいときはNULL）
  *	@param	type  状況
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type )
+void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type )
 {
   static const struct
   {
@@ -1995,6 +1995,9 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_tal
       }
     }
   }
+
+
+  RESORT_NPC_SYS_SetVisibleAll( p_npc, FALSE );
 }
 
 
@@ -2063,12 +2066,34 @@ u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESO
 
   if( src_type == dst_type )
   {
-    //同じ場合は住人だけのはず
+    //同じ場合は住人だけ、かつ転職処理
     RESORT_RESIDENT_DATA *p_src_data = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_src );
+    RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution(p_src_data);
 
     GF_ASSERT( src_type == RESORT_DATA_TYPE_RESIDENT );
 
+    //転職処理なので、LVそのままにする
+    //タイプ取得して、タイプと経験値から施設IDを取得
+    {
+      u16 id = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+      //現在の情報
+      const RESORT_BINARY_SHOP_DATA *cp_now_data = RESORT_BINARY_SHOP_GetData( p_shop,id);
+      u16 lv = RESORT_BINARY_SHOP_DATA_GetData( cp_now_data, RESORT_BINARY_SHOP_PARAM_LV );
+      u16 type = RESORT_BINARY_SHOP_DATA_GetData( cp_now_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+
+      //なりたい情報
+      u16 want_idx = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      const RESORT_BINARY_SHOP_DATA *cp_want_data = RESORT_BINARY_SHOP_GetData( p_shop,want_idx);
+      u16 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_want_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+
+
+      u16 next_idx = RESORT_BINARY_SHOP_SearchShopID( p_shop, kind, lv, type );
+      RESORT_RESIDENT_DATA_SetData( p_src_data, RESORT_DATA_PARAM_WANT_JOB, next_idx );
+    }
+
+
     peopleID  = RESORT_RECV_DATA_GetData( p_src_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
 
     RESORT_RESIDENT_DATA_ConvertRecv( p_src_data, p_src_data, p_shop, peopleID, placeID );
 

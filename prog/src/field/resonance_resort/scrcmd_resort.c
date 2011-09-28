@@ -39,8 +39,8 @@
 #define PEOPLE_TYPE_ASSERT2( p_people, type1, type2 ) GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type1 || RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type2 )
 
 static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field );
-static u16 Resort_Scrcmd_GetMmdlID( SCRCMD_WORK *p_wk );
 static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
+static u16 Resort_Scrcmd_GetMmdlID( SCRCMD_WORK *p_wk );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 
 //=============================================================================
@@ -1247,19 +1247,21 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_NPC_SYS *p_npc_sys = Resort_Scrcmd_GetNpcSys( p_field );
   RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
   u16 mode = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   switch( mode )
   {
   case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
-    RESORT_UTIL_SetSceneVisible( p_people_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
-    RESORT_UTIL_SetSceneVisible( p_people_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
   case RESORT_SCENE_VISIBLE_DEFAULT:
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
+    RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
     break;
   default:
     GF_ASSERT(0);
@@ -2424,7 +2426,6 @@ static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field )
   GF_ASSERT(0);
   return NULL;
 }
-
 
 //----------------------------------------------------------------------------
 /**

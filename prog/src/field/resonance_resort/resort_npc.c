@@ -89,6 +89,28 @@ void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk )
 void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk )
 {
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全MMDL表示設定
+ *
+ *	@param	RESORT_NPC_SYS *p_wk  ワーク
+ *	@param	is_visible  TRUE表示  FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+void RESORT_NPC_SYS_SetVisibleAll( RESORT_NPC_SYS *p_wk, BOOL is_visible )
+{
+  u32 no = 0;
+  MMDL *p_mmdl;
+
+  while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE )
+  {
+    if( MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS
+        && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
+    {
+      MMDL_SetStatusBitVanish( p_mmdl, !is_visible );
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**

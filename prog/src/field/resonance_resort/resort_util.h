@@ -63,12 +63,11 @@ typedef enum
 {
   RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE,  //通行人を全て消す
 }RESORT_UTIL_VISIBLE;
-extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );
+extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );
 
 //フィールドからのモジュール取得
 extern RESORT_SYSTEM * RESORT_UTIL_GetSystem( FIELDMAP_WORK *p_field );
 extern RESORT_PEOPLE * RESORT_UTIL_GetFrontPeople( SCRCMD_WORK *p_wk, RESORT_PEOPLE_SYS *p_people_sys );
-
 
 //変換関連
 extern u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESORT_DATA_TYPE dst_type );

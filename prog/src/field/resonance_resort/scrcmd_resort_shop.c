@@ -188,6 +188,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   BOOL (*ShopCallFunc)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 
   RESORT_PEOPLE_SYS       *p_people_sys;
+  RESORT_NPC_SYS          *p_npc_sys;
   RESORT_SYSTEM           *p_resort_sys;
   RESORT_BINARY_SHOP      *p_shop;
   const RESORT_BINARY_SHOP_DATA *cp_shop_data;
@@ -298,6 +299,7 @@ static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
 static RESORT_PEOPLE_SYS * Resort_ScrcmdShop_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
+static RESORT_NPC_SYS * Resort_ScrcmdShop_GetNpcSys( FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
@@ -382,6 +384,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.p_resort_sys = resort_sys;
   sbw->wk.camera_type = camera_type;
   sbw->wk.p_people_sys = Resort_ScrcmdShop_GetPeopleSys( fieldmap );
+  sbw->wk.p_npc_sys = Resort_ScrcmdShop_GetNpcSys( fieldmap );
   sbw->gsys = gsys;
   sbw->wk.p_people  = RESORT_UTIL_GetFrontPeople( work, sbw->wk.p_people_sys );
   {
@@ -3009,6 +3012,24 @@ static RESORT_PEOPLE_SYS * Resort_ScrcmdShop_GetPeopleSys( FIELDMAP_WORK *p_fiel
   return p_people_sys;
 }
 
+static RESORT_NPC_SYS * Resort_ScrcmdShop_GetNpcSys( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_NPC_SYS *p_npc_sys = NULL;
+  {
+
+    if(GMK_TMP_CheckAssignID( p_fieldmap, RESORT_RECEPTION_ASSIGN_ID ) )
+    {
+      p_npc_sys = RESORT_RECEPTION_GetNpcSys( p_fieldmap );
+    }
+    else if( GMK_TMP_CheckAssignID( p_fieldmap, RESORT_FIELD_ASSIGN_ID ) )
+    {
+      p_npc_sys = RESORT_FIELD_GetNpcSys( p_fieldmap );
+    }
+    GF_ASSERT( p_npc_sys != NULL );
+  }
+  return p_npc_sys;
+}
+
 //アイテム・サービスリストの場合
 static void ItemList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id )
 {
@@ -3645,7 +3666,7 @@ static BOOL CameraShop_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldm
     break;
   case SEQ_SET_CAMERA:
     SetCameraMoveResort( sbw, fieldmap, sbw->wk.camera_type);
-    RESORT_UTIL_SetSceneVisible( sbw->wk.p_people_sys, sbw->wk.p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( sbw->wk.p_people_sys, sbw->wk.p_npc_sys, sbw->wk.p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     (*p_seq)++;
     break;
   case SEQ_SHOPLIST_CREATE:
@@ -3710,6 +3731,7 @@ static BOOL CameraShop_EndMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap
   case SEQ_FADEIN_START:
   
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( sbw->wk.p_people_sys);
+    RESORT_NPC_SYS_SetVisibleAll( sbw->wk.p_npc_sys, TRUE );
 
     ShopCall_Exit( sbw );
 

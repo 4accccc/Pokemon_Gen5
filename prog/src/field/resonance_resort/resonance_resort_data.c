@@ -3477,11 +3477,16 @@ static void Resort_Recv_Data_InitInstitution( RESORT_RECV_DATA *p_wk, const RESO
   u16 shopID  = RESORT_DATA_GetWantJobModify( want_job, id, ver, sp_city_data, cp_shop );
 
 
+  const RESORT_BINARY_SHOP_DATA* cp_shop_data = RESORT_BINARY_SHOP_GetData(cp_shop, shopID );
+  u16 lv  = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_LV );
+
+
   {
     RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
 
     RESORT_INSTITUTION_DATA_InitInstance( p_institution );
     RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, lv );
   }
 }
 //----------------------------------------------------------------------------
@@ -4391,6 +4396,24 @@ void RESORT_RECORD_AddID( u32 record_id )
 
   resort_date = RESORT_DATA_RtcToDate( &date );
 
+#ifdef PM_DEBUG
+#if 0
+  {
+    static const test[] =
+    {
+      1,4,3,2,
+    };
+    for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+    {
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, test[i] );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      NAGI_Printf( "b record %d\n", test[i] );
+    }
+  }
+#endif
+#endif
+
+
   //重複チェック
   for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
   {
@@ -4423,7 +4446,6 @@ void RESORT_RECORD_AddID( u32 record_id )
 
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, next_record );
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, next_date );
-      goto RESORT_RECORD_ADD_ID_SORT;
     }
   }
   //後尾にいれる
@@ -4431,17 +4453,35 @@ void RESORT_RECORD_AddID( u32 record_id )
   RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+RESORT_DATA_RECORD_CNT-1, resort_date );
 
 RESORT_RECORD_ADD_ID_SORT:
+
+#ifdef PM_DEBUG
+#if 0
+      {
+        int k;
+        for( k = 0; k < RESORT_DATA_RECORD_CNT; k++ )
+        {
+          u16 test = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+k, NULL );
+          NAGI_Printf( "[%d]", test );
+        }
+        NAGI_Printf( "\n" );
+      }
+#endif
+#endif
+
+
   //ソート
   for( i = 0; i < RESORT_DATA_RECORD_CNT-1; i++ )
   {
     for( j = RESORT_DATA_RECORD_CNT-1; j > i; j-- )
     {
-      u32 record1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j-1, NULL );
-      RESORT_DATE r_date1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j-1, NULL );
+      s16 idx1 = j-1;
+      s16 idx2 = j;
+      u32 record1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx1, NULL );
+      RESORT_DATE r_date1 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx1, NULL );
       RTCDate date1;
       s32 days1;
-      u32 record2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j, NULL );
-      RESORT_DATE r_date2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j, NULL );
+      u32 record2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx2, NULL );
+      RESORT_DATE r_date2 = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx2, NULL );
       RTCDate date2;
       s32 days2;
 
@@ -4457,14 +4497,28 @@ RESORT_RECORD_ADD_ID_SORT:
       if( days1 > days2 )
       {
         //1
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j-1, record2 );
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j-1, r_date2 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx1, record2 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx1, r_date2 );
         //2
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+j, record1 );
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j, r_date1 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx2, record1 );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx2, r_date1 );
       }
+#ifdef PM_DEBUG
+#if 0
+      {
+        int k;
+        for( k = 0; k < RESORT_DATA_RECORD_CNT; k++ )
+        {
+          u16 test = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+k, NULL );
+          NAGI_Printf( "[%d]", test );
+        }
+        NAGI_Printf( "\n" );
+      }
+#endif
+#endif
     }
   }
+
 }
 
 //=============================================================================
