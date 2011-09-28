@@ -2484,6 +2484,10 @@ SRCS_OVERLAY_DEBUG_ZONE_JUMP = debug/debug_zone_jump.c
 #===> GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 
+# ゲーム開始データ作成
+#===> GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_START_DATA = gamesystem/start_data.c
+
 
 #名前入力
 #===> SRCS_OVERLAY_WIFINOTE

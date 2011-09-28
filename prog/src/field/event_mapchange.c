@@ -81,6 +81,8 @@
 #include "pair_sys.h"
 #include "script_trainer.h"       // for SCRIPT_ResetBreederTrainerFlag
 
+#include "gamesystem/start_data.h"  // for GAMEINIT_SetStartData
+
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
 FS_EXTERN_OVERLAY(debug_data);
@@ -147,8 +149,6 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
 static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req );
 
 static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata );
-
-static void MailBox_SetFirstMail( GAMEDATA* gamedata );
 
 static void SheimiFromBackIllegal(GAMEDATA * gamedata);
 
@@ -412,6 +412,14 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
   fmw->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
   LOCATION_SetGameStart(&fmw->loc_req);
 
+  //手持ちどうぐ、メール等の初期化処理
+  if ( gameInitWork->mode == GAMEINIT_MODE_FIRST )
+  {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( start_data ) );
+    GAMEINIT_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( start_data ) );
+  }
+
 #ifdef PM_DEBUG
   fmw->isDebugModeFlag = FALSE;
   if ( gameInitWork->mode == GAMEINIT_MODE_DEBUG )
@@ -442,9 +450,6 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
   }
   //プレイ時間カウント　開始
   PLAYTIMECTRL_Start();
-
-  //メールボックスに最初からメールを一通入れておく
-  MailBox_SetFirstMail( fmw->gamedata );
 
   // VRAM全クリア
   GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
@@ -3587,77 +3592,6 @@ static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata )
 }
 
 
-static const PMS_DATA mail_pmsdata[]={
-  // 「しょうぶ」してくれて　ありがとう！
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_10,
-    { mail01, PMS_WORD_NULL},
-  },
-  // 「ドキドキ」で　とってもよかったです！
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_11,
-    { mail02, PMS_WORD_NULL},
-  },
-  // また「しょうぶ」しようね！　「バイバイ」
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_21,
-    { mail01, PMS_WORD_ONLY_DECO_BIT_WORD|PMS_DECOID_BYEBYE },
-  },
-};
-
-//----------------------------------------------------------------------------------
-/**
- * @brief メールボックスにベルからのメールを最初から入れておく
- *
- * @param   gamedata    
- */
-//----------------------------------------------------------------------------------
-static void MailBox_SetFirstMail( GAMEDATA* gamedata )
-{
-  MAIL_DATA   *mail;
-  GFL_MSGDATA *TrainerMsgData;
-  STRBUF  *strbuf;
-  STRCODE strdata[BUFLEN_PERSON_NAME];
-
-  // トレーナー名メッセージデータオープン
-  TrainerMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                                                NARC_message_trname_dat, GFL_HEAPID_APP );
-  strbuf = GFL_MSG_CreateString( TrainerMsgData, support_01 );
-
-  // サポート名の生文字列を取得
-  GFL_STR_GetStringCode( strbuf, strdata, BUFLEN_PERSON_NAME );
-
-  // メールデータ作成
-  mail = MailData_CreateWork( GFL_HEAPID_APP );
-
-  // サポート名セット
-  MailData_SetWriterName( mail, strdata );
-  // 性別
-  MailData_SetWriterSex( mail, PM_FEMALE );
-  // メールデザインNo
-  MailData_SetDesignNo( mail, 3 );
-  // 国コードセット
-  MailData_SetCountryCode( mail, PM_LANG );
-  // カセットバージョン
-  MailData_SetCasetteVersion( mail, PM_VERSION );
-  // 簡易会話セット
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[0], 0 );
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
-  // 簡易ワード「トレーナー」セット
-  MailData_SetPmsWord( mail, mail04 );
-
-  // メールボックスにメールをセット
-  {
-    MAIL_BLOCK *mail_block = GAMEDATA_GetMailBlock( gamedata );
-    MAIL_AddMailFormWork( mail_block, MAILBLOCK_PASOCOM, 0, mail);
-  }
-
-  // ワーク解放
-  GFL_HEAP_FreeMemory( mail );
-  GFL_STR_DeleteBuffer( strbuf );
-  GFL_MSG_Delete( TrainerMsgData );
-}
 
 //----------------------------------------------------------------------------------
 /**
