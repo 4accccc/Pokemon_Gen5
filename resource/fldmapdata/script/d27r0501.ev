@@ -29,12 +29,23 @@ _EVENT_DATA    ev_recover_d27r0501
 _EVENT_DATA    ev_scene_d27r0501_swsage7_01
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
 /************************************************************/
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0501
   
-  //
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //W2接続
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0501_D27R1201_EXIT01, 0, 0, 0 ) 
+  //W2接続
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0501_D27R0201_EXIT01, 0, 0, 0 ) 
+  ENDIF
 
 INIT_EVENT_END
 
@@ -68,7 +79,7 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   //========================================//
   
   //アニメ：主人公中央へ移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 13, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 17, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
   //七賢人動作モデル生成
@@ -101,7 +112,7 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _MSGWIN_CLOSE()
   
   //ライバル動作モデル生成
-  _OBJ_ADD_EX( 12, 17, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  _OBJ_ADD_EX( 12, 20, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
   //【仮】アニメ：ライバルワープして登場
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_warp_in )
