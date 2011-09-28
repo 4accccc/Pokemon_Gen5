@@ -386,7 +386,7 @@
 		<language name="JPN_KANJI" width="256">通信『それで！？</language>
 	</row>
 	<row id="pw_event0_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょう　きょだいな
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょうきょだいな
 バンギラスが　あばれて……▼
 いや……▼
 ……コイツは　ふつうの
@@ -499,6 +499,14 @@
 		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
 		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
 	</row>
+	<row id="pw_event1_react_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレは　ここだっ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレは　ここだっ！</language>
+	</row>
+	<row id="pw_event1_react_enemy_3">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">Ｍ・Ｖ『グ……　グゴゴ……</language>
 		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グ……　グゴゴ……</language>
@@ -564,6 +572,14 @@
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">Ｍ・Ｖ『グゴゴ……</language>
 		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴゴ……</language>
+	</row>
+	<row id="pw_event3_react_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『こわい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『こわい……</language>
+	</row>
+	<row id="pw_event3_react_enemy_3">
+		<language name="JPN" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｖ『グゴガーンッ！！</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……▼
