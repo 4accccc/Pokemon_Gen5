@@ -2198,7 +2198,8 @@ static void CheckAnimalTrail( GAMEDATA* gdata )
       BOOL is_set = ANIMAL_TRAIL_SAVE_GetObjectSetFlag( p_etc_save ,i  );
       if( is_set == FALSE )
       {
-        if( GFUser_GetPublicRand( 100 ) < ANIMAL_TRAIL_SELECT_PROBABILITY )
+        u32 prob = GPOWER_Calc_AnimalTrailProb( ANIMAL_TRAIL_SELECT_PROBABILITY );
+        if( GFUser_GetPublicRand( 100 ) < prob )
         {
           ANIMAL_TRAIL_SelectRandomTable( p_etc_save ,i);
         }

@@ -429,15 +429,21 @@ static BOOL NumInputState( ANIMAL_TRAIL_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void NumInput( ANIMAL_TRAIL_WORK* p_wk )
 {
-  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT) ||
-      (GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN))
+  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT) )
   {
     p_wk->num--;
   }
-  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT) ||
-      (GFL_UI_KEY_GetRepeat() & PAD_KEY_UP))
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+  {
+    p_wk->num-=50;
+  }
+  if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT)  )
   {
     p_wk->num++;
+  }
+  else if( (GFL_UI_KEY_GetRepeat() & PAD_KEY_UP))
+  {
+    p_wk->num+=50;
   }
 
 }

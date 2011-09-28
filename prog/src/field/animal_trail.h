@@ -19,6 +19,7 @@
 //
 //=============================================================================
 
+#define DEFAULT_LOTTERY_COUNT (1) // 抽選回数
 #define DATA_TABLE_LEN        (4) // 抽選テーブルの長さ
 #define POKEMON_TABLE_CNT     (3) // ポケモン抽選テーブル数
 #define NORMAL_ITEM_TABLE_CNT (4) // 通常配置アイテムの抽選テーブル数
