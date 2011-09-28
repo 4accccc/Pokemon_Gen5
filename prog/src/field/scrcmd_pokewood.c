@@ -686,7 +686,7 @@ VMCMD_RESULT EvCmdPokewoodCheckNewStarRank( VMHANDLE * core, void * wk )
 }
 //-----------------------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：ポケウッド 初上映データかどうかのチェック
+ * @brief スクリプトコマンド：ポケウッド 上映済みかどうかの取得
  */
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk )
@@ -696,8 +696,21 @@ VMCMD_RESULT EvCmdPokewoodIsShowedMovie( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   *ret_wk = POKEWOOD_SAVEDATA_GetMovieShowed( pkwdsave, play_id );
-  POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, play_id, TRUE );
   TAMADA_Printf("EvCmdPokewoodIsShowedMovie(%d)-->%d\n", play_id, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+//-----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ポケウッド 上映済みフラグのセット
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodSetShowedMovie( VMHANDLE * core, void * wk )
+{
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+  u16 play_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, play_id, TRUE );
+  TAMADA_Printf("EvCmdPokewoodSetShowedMovie(%d)\n", play_id );
   return VMCMD_RESULT_CONTINUE;
 }
 //-----------------------------------------------------------------------------

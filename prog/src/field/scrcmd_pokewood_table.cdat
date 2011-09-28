@@ -38,6 +38,7 @@
   DEF_CMD( EvCmdPokewoodSetStudioMMdl,          EV_SEQ_PKWD_SET_STUDIO_MMDL )
   DEF_CMD( EvCmdPokewoodGetDirectorType,        EV_SEQ_PKWD_GET_DIRECTOR_TYPE )
   DEF_CMD( EvCmdPokewoodCheckAllSuccess,        EV_SEQ_PKWD_CHECK_ALL_SUCCESS )
+  DEF_CMD( EvCmdPokewoodSetShowedMovie,         EV_SEQ_PKWD_SET_SHOWED_MOVIE )
   DEF_CMD( EvCmdPokewoodRecordMonitor,          EV_SEQ_PKWD_RECORD_MONITOR )
   
   // ‚²–J”üƒAƒCƒeƒ€

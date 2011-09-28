@@ -733,7 +733,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
       u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
       if ( ret_wk != NULL )
       {
-        *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
+        *ret_wk = ( pbew->bp->recPlayCompleteFlag );
         if(*ret_wk){
           PKWDSYS_CheckEnding( pkwdsys, gamedata, pbew->bp->pokewoodSenario, pbew->bp->pokewoodResult );
           // シナリオオープンチェック

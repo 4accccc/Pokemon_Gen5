@@ -15511,8 +15511,6 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケウッド：初上映映画かどうかのチェック
- *
- * ※このチェックの中で初上映状態→上映済み状態に変化するので注意
  */
 //--------------------------------------------------------------
 #define _PKWD_IS_SHOWED_MOVIE( play_id, ret_wk )  \
@@ -15616,6 +15614,20 @@
     .macro  _ASM_PKWD_GET_ALL_SUCCESS ret_wk
     .short  EV_SEQ_PKWD_GET_ALL_SUCCESS
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：上映済みフラグのセット
+ * @param[in] play_id
+ */
+//--------------------------------------------------------------
+#define _PKWD_SET_SHOWED_MOVIE( play_id )  \
+    _ASM_PKWD_SET_SHOWED_MOVIE play_id
+
+    .macro  _ASM_PKWD_SET_SHOWED_MOVIE play_id
+    .short  EV_SEQ_PKWD_SET_SHOWED_MOVIE
+    .short  \play_id
     .endm
 
 //--------------------------------------------------------------

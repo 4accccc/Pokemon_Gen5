@@ -1008,6 +1008,7 @@ _RET
 //
 /**************************************************************/
 DEFINE_LOCAL  LWK_BM_DOOR_ID
+DEFINE_LOCAL  LWK_PKWD_SHOW_FINISH
 
 ev_pkwd_show_watch_movie:
   //フェスミッション強制終了処理
@@ -1035,25 +1036,82 @@ ev_pkwd_show_watch_movie:
 
   _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
 
-  _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS, LWK_PKWD_SHOW_FINISH )
 
-  //========================================================
+  _PKWD_IS_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  //最後まで上映して、初上映の場合のみファンの処理を行う
+  IF $LWK_PKWD_SHOW_FINISH == TRUE && $SCWK_ANSWER == FALSE THEN
+    _CALL sub_pkwd_fan_appear
+  ENDIF
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  //閉まるアニメの1フレーム目で止めておく
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
+
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //スクリーンから出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ再開
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+  IF $LWK_PKWD_SHOW_FINISH == TRUE THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_to_reception )
+    _OBJ_ANIME_WAIT()
+
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_AFTER
+  ELSE
+    //キャンセルの場合は終わりにしてしまう
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
+  ENDIF
+_RET
+
+_ANIME_LABEL  anm_player_go_door
+  _ANIME_DATA AC_WALK_R_8F, 6
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_in_theater
+  _ANIME_DATA AC_WALK_U_8F, 1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_out_theater
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_to_reception
+  _ANIME_DATA AC_WALK_D_8F, 2
+  _ANIME_DATA AC_WALK_L_8F, 6
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+
+/**************************************************************/
+//  スターランクによりファンが出現
+/**************************************************************/
+sub_pkwd_fan_appear:
   //スターランクによりファンの表示を変更
   _PKWD_GET_STAR_RANK( SCWK_ANSWER )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
-  // スラーランク0
+  // スターランク0
   IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_0 && FLAG_ON( FV_C15R0301_BONUS_0 ) THEN
     _FLAG_RESET( FV_C15R0301_BONUS_0 )
     _OBJ_ADD( C15R0301_BACKPACKERM_01 )
   ENDIF
-  // スラーランク1
+  // スターランク1
   IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_1 && FLAG_ON( FV_C15R0301_BONUS_1 ) THEN
     _FLAG_RESET( FV_C15R0301_BONUS_1 )
     _OBJ_ADD( C15R0301_WOMAN2_01 )
     _OBJ_ADD( C15R0301_MAN3_01 )
     _OBJ_ADD( C15R0301_MUSICIANW_01 )
   ENDIF
-  // スラーランク2
+  // スターランク2
   IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_2 && FLAG_ON( FV_C15R0301_BONUS_2 ) THEN
     _FLAG_RESET( FV_C15R0301_BONUS_2 )
     _OBJ_ADD( C15R0301_POLICEMAN_01 )
@@ -1061,7 +1119,7 @@ ev_pkwd_show_watch_movie:
     _OBJ_ADD( C15R0301_BABYBOY2_01 )
     _OBJ_ADD( C15R0301_NURSE_01 )
   ENDIF
-  // スラーランク3
+  // スターランク3
   IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_3 && FLAG_ON( FV_C15R0301_BONUS_3 ) THEN
     _FLAG_RESET( FV_C15R0301_BONUS_3 )
     _OBJ_ADD( C15R0301_TRAINERM_01 )
@@ -1071,7 +1129,7 @@ ev_pkwd_show_watch_movie:
     _OBJ_ADD( C15R0301_MAN3_03 )
     _OBJ_ADD( C15R0301_TENNISW_01 )
   ENDIF
-  // スラーランク4
+  // スターランク4
   IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_4 && FLAG_ON( FV_C15R0301_BONUS_4 ) THEN
     _FLAG_RESET( FV_C15R0301_BONUS_4 )
     _OBJ_ADD( C15R0301_MAN3_04 )
@@ -1096,51 +1154,8 @@ ev_pkwd_show_watch_movie:
   $LOCALWORK13 = 0   // 道具もらえるようにする
   $LOCALWORK14 = 0   // 道具もらえるようにする
   $LOCALWORK15 = 0   // 道具もらえるようにする
-  //========================================================
 
-
-  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
-  //閉まるアニメの1フレーム目で止めておく
-  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
-  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
-  _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
-
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-
-  //スクリーンから出てくる
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
-  _OBJ_ANIME_WAIT()
-
-  //アニメ再開
-  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
-  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
-
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_to_reception )
-  _OBJ_ANIME_WAIT()
-
-
-  $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_AFTER
-_RET
-
-_ANIME_LABEL  anm_player_go_door
-  _ANIME_DATA AC_WALK_R_8F, 6
-  _ANIME_DATA AC_WALK_U_8F, 2
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_player_go_in_theater
-  _ANIME_DATA AC_WALK_U_8F, 1
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_player_go_out_theater
-  _ANIME_DATA AC_WALK_D_8F, 1
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_player_go_to_reception
-  _ANIME_DATA AC_WALK_D_8F, 2
-  _ANIME_DATA AC_WALK_L_8F, 6
-  _ANIME_DATA AC_STAY_WALK_U_8F,1
-  _ANIME_DATA ACMD_END,0
+  _RET
 
 
 /**************************************************************/
@@ -1160,8 +1175,10 @@ ev_pkwd_show_after:
   ENDSWITCH
 
   
-  //上映済みかチェック（このコマンドで上映済みフラグをONにしているので注意）
+  //上映済みかチェック
   _PKWD_IS_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER  )
+  //このコマンドで上映済みフラグをONにしているので注意）
+  _PKWD_SET_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS )
   IF $SCWK_ANSWER == FALSE THEN
     //オーナー登場POSイベント設定
     $LOCALWORK0 = 1
