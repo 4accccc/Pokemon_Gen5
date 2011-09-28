@@ -457,6 +457,7 @@ static const s16 cursor_tbl[] = {
   1,2,		// 1の場合
   2,3,		// 2の場合
   2,3,		// 3の場合
+  2,3,		// 4の場合
 };
 
 // タッチペン領域
@@ -633,7 +634,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
   }
 #else
   case 1:
-    if(_MissionNameBMPDraw(mfw, appwk->setup) == TRUE){
+    if(_MissionNameBMPDraw(mfw, appwk->setup, mfw->power_list_num) == TRUE){
       OS_TPrintf("NameDraw end\n");
       //名前描画
       _ScrollPos_NameOamReflection(mfw);
@@ -2299,18 +2300,18 @@ static void fmission_chk_startmark_disp( MONOLITH_FMSELECT_WORK *mfw )
     // 1始まり、としているのでこれでよいはず
     tmp = i+list_top_no;
     //
-    if(mfw->info_param[tmp].clear_level == 0){
+    if(mfw->info_param[tmp].clear_level == FMISSION_CLEAR_LEVEL_0){
       fmission_disp_onoff( mfw, 10+i, FALSE );
     }
-    else if(mfw->info_param[tmp].clear_level == 1){
+    else if(mfw->info_param[tmp].clear_level == FMISSION_CLEAR_LEVEL_1){
       fmission_set_seq( mfw, 10+i, FMISS_LV1_SEQ );
       fmission_disp_onoff( mfw, 10+i, TRUE );
     }
-    else if(mfw->info_param[tmp].clear_level == 2){
+    else if(mfw->info_param[tmp].clear_level == FMISSION_CLEAR_LEVEL_2){
       fmission_set_seq( mfw, 10+i, FMISS_LV2_SEQ );
       fmission_disp_onoff( mfw, 10+i, TRUE );
     }
-    else if(mfw->info_param[tmp].clear_level == 3){
+    else if(mfw->info_param[tmp].clear_level >= FMISSION_CLEAR_LEVEL_3){
       fmission_set_seq( mfw, 10+i, FMISS_LV3_SEQ );
       fmission_disp_onoff( mfw, 10+i, TRUE );
     }
@@ -2434,7 +2435,7 @@ static void fmission_chk_all_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
       fmission_disp_level( mfw, i, FALSE );
     }
   }else{
-    // 現在のカーソル位置のクリアレベルを求め(0-3)
+    // 現在のカーソル位置のクリアレベルを求め(0-4)
     // 表示するlvの個数を求める
     lv = mfw->info_param[mfw->cursor_pos].clear_level;
     num = cursor_tbl[2*lv+1];
@@ -2626,7 +2627,7 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
     return;
   }
   
-  // 現在のカーソル位置のクリアレベルを求め(0-3)
+  // 現在のカーソル位置のクリアレベルを求め(0-4)
   // 選択可能の範囲を決める
   lv = mfw->info_param[mfw->cursor_pos].clear_level;
   num = cursor_tbl[2*lv];
