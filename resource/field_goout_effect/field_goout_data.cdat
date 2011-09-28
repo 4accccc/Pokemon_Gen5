@@ -66,6 +66,14 @@ static const struct {
    NARC_field_goout_effect_g_eff_yoru_nsbta,
    NARC_field_goout_effect_g_eff_yoru_nsbtp,
  },
+ //GOOUT_EFF_DAYLIGHT_C14
+ {
+   NARC_field_goout_effect_g_eff_c14_nsbmd,
+   NARC_field_goout_effect_g_eff_c14_nsbca,
+   NARC_field_goout_effect_g_eff_c14_nsbma,
+   NARC_field_goout_effect_g_eff_c14_nsbta,
+   NARC_field_goout_effect_g_eff_c14_nsbtp,
+ },
 };
 //é∫äOïåªëfçﬁÉäÉXÉg
 static const u16 sc_goout_effect_conmbi[][4] = {
@@ -114,6 +122,13 @@ static const u16 sc_goout_effect_conmbi[][4] = {
  //GOOUT_COMBI_MOONLIGHT_ALL_ONLY
  {
    GOOUT_EFF_MOONLIGHT_ALL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_DAYLIGHT_C14_ONLY
+ {
+   GOOUT_EFF_DAYLIGHT_C14,
    GOOUT_EFF_NULL,
    GOOUT_EFF_NULL,
    GOOUT_EFF_NULL,
