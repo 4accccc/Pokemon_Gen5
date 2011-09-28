@@ -22,19 +22,19 @@
  *  お気に入りに行きたい！という場合の確率
  *    ???/100
  */
-#define RESORT_CONST_WANTSPOT_FAVORITE_LOW    (50)
+#define RESORT_CONST_WANTSPOT_FAVORITE_LOW    (35)
 /*
  *  行きたいお店抽選でグループ中のとき
  *  お気に入りに行きたい！という場合の確率
  *    ???/100
  */
-#define RESORT_CONST_WANTSPOT_FAVORITE_MIDDLE (50)
+#define RESORT_CONST_WANTSPOT_FAVORITE_MIDDLE (30)
 /*
  *  行きたいお店抽選時でグループ強のとき
  *  お気に入りに行きたい！という場合の確率
  *    ???/100
  */
-#define RESORT_CONST_WANTSPOT_FAVORITE_HIGH   (50)
+#define RESORT_CONST_WANTSPOT_FAVORITE_HIGH   (25)
 /*
  *  お店に行き、◎のときベース経験値を
  *  どれぐらいアップさせるのかの割合
