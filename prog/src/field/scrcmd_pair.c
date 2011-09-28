@@ -52,6 +52,7 @@ VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk )
   PAIRSYS_PairSet( gdata, pair_id, pair_type, obj_id, MMDL_GetOBJCode(mmdl), ev_id, tr_id );
   MMDL_ChangeMoveCode( mmdl, MV_PAIR );
   MMDL_ChangeOBJID( mmdl, MMDL_ID_PAIR );
+  MMDL_SetEventID( mmdl, ev_id );
 
   if( pair_type == PAIR_TYPE_FREE_ZONE ){
     MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
