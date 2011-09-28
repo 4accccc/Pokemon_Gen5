@@ -22586,7 +22586,7 @@ static const ZONEDATA ZoneData[] = {
 		enc_dummy,
 		0,
 		NARC_eventdata_d26pc0101_bin,
-    ZONE_ID_D26,
+    ZONE_ID_D26R0101,
 		MAPNAME_D26,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
