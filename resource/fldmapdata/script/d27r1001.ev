@@ -49,6 +49,7 @@ _EVENT_DATA_END
 //------------------------------注意--------------------------------//
 //																	//
 //	特殊な接続に LOCALWORK15 を使用しています。     //
+//	デバッグ情報に LOCALWORK10 を使用しています。     //
 //	同マップ内の使用を禁止します。									//
 //  
 //
@@ -541,9 +542,9 @@ EVENT_START ev_bg_d27r1001_pass_01
   //カードキー所持・未開放
   ELSIF $WK_SCENE_D27R1001_BARRIER_01 == 0 THEN
     
-    //【仮】デバッグ用
-    _HIDE_SHIP_PASSWORD_ID_GET( LOCALWORK15 )
-    _DEBUG_PRINT_WK( LOCALWORK15 )
+    //デバッグ用
+    _HIDE_SHIP_PASSWORD_ID_GET( LOCALWORK10 )
+    _DEBUG_PRINT_WK( LOCALWORK10 )
     
     //パスワードを入れますか？
     _SYSWIN_MSG( msg_d27r1001_pass_02 , POS_DOWN )

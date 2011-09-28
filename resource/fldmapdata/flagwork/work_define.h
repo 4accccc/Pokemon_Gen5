@@ -306,6 +306,7 @@
 #define WK_SCENE_R01_CONV                16694 /* 0x4136 1番道路：データコンバートベル戦POS制御ワーク */
 #define WK_SCENE_C03P12                  16695 /* 0x4137 ヒウンシティ：フラッシュ入手POS制御ワーク */
 #define WK_SCENE_D12                     16696 /* 0x4138 リバティガーデン島：シーンチェンジイベント用 */
+#define WK_SCENE_R05_SWBELL_01           16697 /* 0x4139 5番道路：ベルかくれあなイベントPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
