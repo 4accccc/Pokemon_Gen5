@@ -1752,7 +1752,7 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID, int no)
 {
   u16 objIdx;
   
-  CG3d->g3Dutil = GFL_G3D_UTIL_Create( resource_count_tbl[no][0], resource_count_tbl[no][1], heapID );
+  CG3d->g3Dutil = GFL_G3D_UTIL_Create( g3Dutil_setup[no].resCount, g3Dutil_setup[no].objCount, heapID );
   CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup[no] );
 
   //アニメーションを有効にする
@@ -1841,7 +1841,7 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID, int no)
     int i;
     
     // モデリング描画
-    for(i=0; i<resource_count_tbl[no][1]; i++){
+    for(i=0; i<g3Dutil_setup[no].objCount; i++){
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
       GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus);  // 全部デフォ位置でOK
     }
@@ -1851,7 +1851,7 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID, int no)
   // アニメフレーム進める
   { // ica1
     int i;
-    for(i=0;i<resource_count_tbl[no][1]; i++){
+    for(i=0;i<g3Dutil_setup[no].objCount; i++){
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
       GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
     }
