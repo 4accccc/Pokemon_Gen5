@@ -5402,16 +5402,16 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_01_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いまの　ポケモンの　いたみ！
+		<language name="JPN" width="216">いまの　あいぼうの　いたみ！
 ぜったいに　わすれないぜ！</language>
-		<language name="JPN_KANJI" width="216">今の　ポケモンの　痛み！
+		<language name="JPN_KANJI" width="216">今の　相棒の　痛み！
 絶対に　忘れないぜ！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">ポケモンを　しんじて
+		<language name="JPN" width="216">あいぼうを　しんじて
 わざを　きめるだけさッ！</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　信じて
+		<language name="JPN_KANJI" width="216">相棒を　信じて
 技を　決めるだけさッ！</language>
 	</row>
 
@@ -5423,16 +5423,16 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いまの　ポケモンの　いたみ！
+		<language name="JPN" width="216">いまの　あいぼうの　いたみ！
 ぜったいに　わすれないぜ！</language>
-		<language name="JPN_KANJI" width="216">今の　ポケモンの　痛み！
+		<language name="JPN_KANJI" width="216">今の　相棒の　痛み！
 絶対に　忘れないぜ！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">ポケモンを　しんじて
+		<language name="JPN" width="216">あいぼうを　しんじて
 わざを　きめるだけさッ！</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　信じて
+		<language name="JPN_KANJI" width="216">相棒を　信じて
 技を　決めるだけさッ！</language>
 	</row>
 
@@ -5444,16 +5444,16 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_03_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いまの　ポケモンの　いたみ！
+		<language name="JPN" width="216">いまの　あいぼうの　いたみ！
 ぜったいに　わすれないぜ！</language>
-		<language name="JPN_KANJI" width="216">今の　ポケモンの　痛み！
+		<language name="JPN_KANJI" width="216">今の　相棒の　痛み！
 絶対に　忘れないぜ！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_03_TRMSG_FIGHT_POKE_LAST_HP_HALF">
-		<language name="JPN" width="216">ポケモンを　しんじて
+		<language name="JPN" width="216">あいぼうを　しんじて
 わざを　きめるだけさッ！</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　信じて
+		<language name="JPN_KANJI" width="216">相棒を　信じて
 技を　決めるだけさッ！</language>
 	</row>
 
@@ -5507,9 +5507,9 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_04_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">たのむぜ　オレの　パートナー
+		<language name="JPN" width="216">たのむぜ　オレの　あいぼう！
 それぐらい　なんてこと　ないだろ</language>
-		<language name="JPN_KANJI" width="216">頼むぜ　オレの　パートナー
+		<language name="JPN_KANJI" width="216">頼むぜ　オレの　相棒！
 それぐらい　なんてこと　ないだろ</language>
 	</row>
 
@@ -5523,16 +5523,16 @@
 	<row id="TRID_SWRIVAL_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
 また　まけちまったか
-ポケモンに　あやまらないとな</language>
+あいぼうに　あやまらないとな</language>
 		<language name="JPN_KANJI" width="216">……！▼
 また　負けちまったか
-ポケモンに　謝らないとな</language>
+相棒に　謝らないとな</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_05_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">たのむぜ　オレの　パートナー
+		<language name="JPN" width="216">たのむぜ　オレの　あいぼう！
 それぐらい　なんてこと　ないだろ</language>
-		<language name="JPN_KANJI" width="216">頼むぜ　オレの　パートナー
+		<language name="JPN_KANJI" width="216">頼むぜ　オレの　相棒！
 それぐらい　なんてこと　ないだろ</language>
 	</row>
 
@@ -5546,16 +5546,16 @@
 	<row id="TRID_SWRIVAL_05_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
 また　まけちまったか
-ポケモンに　あやまらないとな</language>
+あいぼうに　あやまらないとな</language>
 		<language name="JPN_KANJI" width="216">……！▼
 また　負けちまったか
-ポケモンに　謝らないとな</language>
+相棒に　謝らないとな</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_06_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">たのむぜ　オレの　パートナー
+		<language name="JPN" width="216">たのむぜ　オレの　あいぼう！
 それぐらい　なんてこと　ないだろ</language>
-		<language name="JPN_KANJI" width="216">頼むぜ　オレの　パートナー
+		<language name="JPN_KANJI" width="216">頼むぜ　オレの　相棒！
 それぐらい　なんてこと　ないだろ</language>
 	</row>
 
@@ -5569,10 +5569,10 @@
 	<row id="TRID_SWRIVAL_06_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
 また　まけちまったか
-ポケモンに　あやまらないとな</language>
+あいぼうに　あやまらないとな</language>
 		<language name="JPN_KANJI" width="216">……！▼
 また　負けちまったか
-ポケモンに　謝らないとな</language>
+相棒に　謝らないとな</language>
 	</row>
 
 	<row id="TRID_TANPAN_20_TRMSG_FIGHT_START">
@@ -9976,8 +9976,10 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_10_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いくぜッ！</language>
-		<language name="JPN_KANJI" width="216">行くぜッ！</language>
+		<language name="JPN" width="216">いくぜッ！
+あいぼうッ！！</language>
+		<language name="JPN_KANJI" width="216">行くぜッ！
+相棒ッ！！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_10_TRMSG_FIGHT_POKE_LAST_HP_HALF">
@@ -9993,8 +9995,10 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_11_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いくぜッ！</language>
-		<language name="JPN_KANJI" width="216">行くぜッ！</language>
+		<language name="JPN" width="216">いくぜッ！
+あいぼうッ！！</language>
+		<language name="JPN_KANJI" width="216">行くぜッ！
+相棒ッ！！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_11_TRMSG_FIGHT_POKE_LAST_HP_HALF">
@@ -10010,8 +10014,10 @@
 	</row>
 
 	<row id="TRID_SWRIVAL_12_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">いくぜッ！</language>
-		<language name="JPN_KANJI" width="216">行くぜッ！</language>
+		<language name="JPN" width="216">いくぜッ！
+あいぼうッ！！</language>
+		<language name="JPN_KANJI" width="216">行くぜッ！
+相棒ッ！！</language>
 	</row>
 
 	<row id="TRID_SWRIVAL_12_TRMSG_FIGHT_POKE_LAST_HP_HALF">
