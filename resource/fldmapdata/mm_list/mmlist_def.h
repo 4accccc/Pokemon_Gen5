@@ -27,6 +27,5 @@
 #define	MMLID_AREA_OUT57     21
 #define	MMLID_AREA_OUT58     22
 #define	MMLID_AREA_OUT59     23
-#define	MMLID_AREA_OUT63     24
-#define	MMLID_NOENTRY        25
+#define	MMLID_NOENTRY        24
 #endif
