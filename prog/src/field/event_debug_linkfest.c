@@ -46,6 +46,7 @@
 
 #include "savedata/intrude_save.h"
 #include "savedata/playtime.h"
+#include "savedata/fmission_save.h"
 
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission_data.h"
@@ -86,6 +87,7 @@ enum{
  MENU_MISSION_BEACON_WAIT,
  MENU_MISSION_MY_SCORE,
  MENU_MISSION_TIME_STOP,
+ MENU_MISSION_LEVEL_OPEN,
  MENU_EXIT,
 };
 
@@ -184,6 +186,7 @@ typedef enum{
  NINPUT_MISSION_BEACON_WAIT,
  NINPUT_MISSION_MY_SCORE,
  NINPUT_MISSION_TIME_STOP,
+ NINPUT_MISSION_LEVEL_OPEN,
 }NINPUT_ID;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
@@ -247,6 +250,7 @@ typedef struct _DMENU_LINK_FEST{
   MYITEM_PTR item_sv;
   MISC* misc_sv;
   MYSTATUS* my_status;
+  FMISSION_SAVE* fmission_sv;
 
   LINK_FESTIVAL* fest_sys;
   FEST_MISSION* fmwk;
@@ -288,6 +292,10 @@ typedef struct {
   NINPUT_GET_FUNC get_func;
 }NINPUT_PARAM;
 
+typedef struct{
+  int min, max;
+}NINPUT_MINMAX;
+
 //======================================================================
 //
 //データ定義
@@ -310,12 +318,13 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestMenuList[] =
 
 static const DEBUG_MENU_LIST DATA_DebugLinkFestFromFieldMenuList[] =
 {
-  { dlf_fldmenu_01, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_02, (void*)MENU_MISSION_END, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_03, (void*)MENU_MISSION_TIME_STOP, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_04, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_05, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_06, (void*)MENU_MISSION_MY_SCORE, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_01, (void*)MENU_MISSION_MY_SCORE, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_02, (void*)MENU_MISSION_TIME_STOP, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_03, (void*)MENU_MISSION_END, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_04, (void*)MENU_MISSION_LEVEL_OPEN, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_05, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_06, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_07, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -396,6 +405,15 @@ static const u16 DATA_FieldWazaTbl[BREQ_FWAZA_MAX] = {
   WAZANO_HURASSYU,
   WAZANO_DAIBINGU,
   WAZANO_OSYABERI,
+};
+
+//================================================
+//数値入力パラメータ
+static const NINPUT_MINMAX DATA_NInputMinMax[] = {
+ { 3, 60 },  //MENU_MISSION_BEACON_WAIT:
+ { 0, 9999 },  //MENU_MISSION_MY_SCORE:
+ { 0, 1 },  //MENU_MISSION_TIME_STOP:
+ { 0, 4 },  //MENU_MISSION_LEVEL_OPEN:
 };
 
 //======================================================================
@@ -492,6 +510,7 @@ static void dmenu_RefarenceGet( DMENU_LINK_FEST* wk, GAMESYS_WORK* gsys )
   wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
   wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
+  wk->fmission_sv = SAVEDATA_GetFMissionSave( wk->save );
 
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
   wk->fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
@@ -735,16 +754,15 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         GMEVENT_CallEvent( event, event_CreateEventMissionReq( wk->gsys, wk ) );
         break;
       case MENU_MISSION_BEACON_WAIT:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_BEACON_WAIT, 3, 60, 
-            ninput_SetDebugParam, ninput_GetDebugParam) );
-        break;
       case MENU_MISSION_MY_SCORE:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_MY_SCORE, 0, 9999, 
-            ninput_SetDebugParam, ninput_GetDebugParam) );
-        break;
       case MENU_MISSION_TIME_STOP:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_TIME_STOP, 0, 1, 
+      case MENU_MISSION_LEVEL_OPEN:
+        {
+          int idx = ret-MENU_MISSION_BEACON_WAIT;
+          GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_BEACON_WAIT+idx,
+            DATA_NInputMinMax[idx].min, DATA_NInputMinMax[idx].max, 
             ninput_SetDebugParam, ninput_GetDebugParam) );
+        }
         break;
       }
       *seq = SEQ_MENU_INIT; 
@@ -1696,6 +1714,18 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
   case NINPUT_MISSION_TIME_STOP:
     if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
       DEB_LINKFEST_SetTimeStopFlag( wk->fest_sys, value );
+    }
+    break;
+  case NINPUT_MISSION_LEVEL_OPEN:
+    {
+      int level;
+      if( value == 0 ){
+        level = FMISSION_LEVEL_MAX;
+      }else{
+        level = value-1;
+      }
+      OS_Printf("value=%d level=%d\n", value, level );
+      DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( wk->fmission_sv,  level );
     }
     break;
   }

@@ -222,3 +222,17 @@ extern u16 FMISSION_SAVE_GetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_I
 extern void FMISSION_SAVE_SetHilinkLevelExp( FMISSION_SAVE* sv, FMISSION_SV_EXP_IDX version_idx, u16 value );
 
 
+#ifdef PM_DEBUG
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス 全ミッションのクリアレベルをセット
+ * @param	work		ワークへのポインタ
+ *
+ * @param   FMISSION_LEVEL_1-FMISSION_LEVEL_3  各レベルクリア FMISSION_LEVEL_MAXを指定するとレベルリセット
+ */
+//---------------------------------------------------------------------------
+extern void DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( FMISSION_SAVE* sv,  FMISSION_LEVEL level );
+
+#endif  //PM_DEBUG
+
