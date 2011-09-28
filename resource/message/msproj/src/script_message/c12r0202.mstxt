@@ -2,6 +2,58 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c12r0202_rivalsister_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]さん
+ベルって　ひと　みつかったの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:46:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:46:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]さん
+ベルって　ひと　みつかったの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:46:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:46:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：
+・ポケモン入手前
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:47:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル妹
+GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T03:46:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12r0202_rivalsister_01a"
 		Style="Large">
 		<LanguageCell
