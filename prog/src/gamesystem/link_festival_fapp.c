@@ -26,6 +26,9 @@
 #include "savedata/medalbox.h"
 #include "app/mdlid_def.h"  // for MDLID_
 
+#define PAY_BONUS_MAX (99)  //スコア&タイムボーナスのmax値は99
+
+
 static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, SAVE_CONTROL_WORK* save, FMISSION_SAVE* f_save );
 
 
@@ -90,6 +93,9 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
        //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
        sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
        break;
+    }
+    if( pl->bonus_num > PAY_BONUS_MAX ){
+      pl->bonus_num = PAY_BONUS_MAX;  //ボーナスには上限がある
     }
     if( sp_bonus ){
       pl->sp_item = wk->m_beacon->sp_item;

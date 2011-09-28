@@ -9,7 +9,14 @@
 
 #pragma once
 
+#include "gamesystem/fest_mission_local.h"
+
 #define FMISSION_STATUS_MAX (64)
+
+#define FMISSION_SAVE_HIGH_SCORE_MAX  ( FMISSION_SCORE_MAX )
+#define FMISSION_SAVE_OPEN_NUM_MAX ( 9999 )
+#define FMISSION_SAVE_ENTRY_NUM_MAX ( 9999 )
+#define FMISSION_SAVE_CLEAR_NUM_MAX ( 9999 )
 
 typedef struct _FMISSION_STATUS{
   u8  level:4;      ///<クリアしているミッションレベル(max3bit)

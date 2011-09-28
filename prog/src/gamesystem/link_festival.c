@@ -454,8 +454,8 @@ u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
   for(i = 0;i < wk->log_num;i++){
     score += wk->log[i].score.value;
   }
-  if( score > FMISSION_SAVE_HIGH_SCORE_MAX ){
-    return FMISSION_SAVE_HIGH_SCORE_MAX;
+  if( score > FMISSION_SCORE_MAX ){
+    return FMISSION_SCORE_MAX;
   }
   return score;
 }

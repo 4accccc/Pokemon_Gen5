@@ -27,6 +27,7 @@
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
 #include "field/event_fmission.h"
+#include "field/event_gpower_app.h"
 
 #include "beacon_status.naix"
 #include "fmission_log.naix"
@@ -195,12 +196,20 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_YESNO_YES )) );
     break;
   case EV_GPOWER_USE_MINE:
+#if 0
     {
       GPOWER_EFFECT_PARAM param;
       param.g_power = wk->my_data.power;
       param.mine_f = TRUE;
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
+    }
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_POWER );
+#endif
+    {
+      u32 mode = GPOWER_APP_MODE_FMISSION;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_gpower_app ), EVENT_GPowerApp, &mode );
     }
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_POWER );
     break;

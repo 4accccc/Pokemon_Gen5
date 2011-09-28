@@ -15,11 +15,6 @@
 ///<外部参照型定義
 typedef struct _FMISSION_SAVE FMISSION_SAVE;
 
-#define FMISSION_SAVE_HIGH_SCORE_MAX  (9999)
-#define FMISSION_SAVE_OPEN_NUM_MAX ( 9999 )
-#define FMISSION_SAVE_ENTRY_NUM_MAX ( 9999 )
-#define FMISSION_SAVE_CLEAR_NUM_MAX ( 9999 )
-
 typedef enum{
   FMISSION_SV_EXP_WHITE, ///<ホワイトLv経験値
   FMISSION_SV_EXP_BLACK, ///<ブラックLv経験値
