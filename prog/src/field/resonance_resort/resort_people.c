@@ -170,6 +170,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
     {
       Resort_People_CreateMmdl( p_wk,  cp_param );
     }
+    p_wk->is_master_visible = !MMDL_CheckStatusBitVanish( p_wk->p_mmdl );
   }
   return p_wk;
 }
