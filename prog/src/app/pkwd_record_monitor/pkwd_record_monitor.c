@@ -3175,8 +3175,10 @@ static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		// カーソル位置の取得
 		pwb_calc_framelist( wk );
 		//
-		// SE
-		PMSND_PlaySE( SND_PKWD_RECORD_MONITOR_DECIDE );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+      // SE
+      PMSND_PlaySE( SND_PKWD_RECORD_MONITOR_ARROW );
+    }
 	}
 	//
 	// ここでなくてもいいはず
