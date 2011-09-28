@@ -298,14 +298,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみにとって　初めての
-ジムちょうせん　であるように▼
+ジム挑戦　であるように▼
 ぼくにとっても　ジムリーダーとして
 初めての　ポケモン勝負！▼
 おたがい　悔いが　残らないよう
 ベストを　つくそう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T08:52:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -535,16 +535,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざマシン８３を　使うと
-ポケモンに　ふるいたてるの　わざを▽
+ポケモンに　ふるいたてるの　技を▽
 覚えさせることが　できる▼
-そして　たたかっているときに
-「ふるいたてる」を　つかうと▽
+そして　戦っているときに
+「ふるいたてる」を　使うと▽
 攻撃と　特攻が　あがるよ！▼
 ちなみに　わざマシンは
 何度でも　使えるからね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T08:52:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -647,11 +647,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン
-テストメッセージ</Text>
+			<Text>チェレン『これから　なにをするかは
+きみが　きめれば　いいんだよ▼
+まよっても　だいじょうぶ
+きみには　ポケモンが　いるからね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T08:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -659,11 +661,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン
-仮メッセージ</Text>
+			<Text>チェレン『これから　なにをするかは
+きみが　決めれば　いいんだよ▼
+迷っても　大丈夫
+きみには　ポケモンが　いるからね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T08:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

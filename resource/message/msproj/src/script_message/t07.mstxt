@@ -32,7 +32,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：WHITE
+			<Comment>♀：White2
 ・t07r0101からでるとイベント開始
 ・アララギ、下向きのままで
 　一歩ほど離れている？
@@ -40,7 +40,7 @@
 ・続けてhakase2_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:41:47" />
+				Time="2011-09-28T08:03:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,11 +94,11 @@
 			<Comment>♀
 ・アララギ、主人公と向き合ってメッセージ表示
 ・続けて
-　BLACK2→hakase2_03b
-　WHITE2→hakase2_03w</Comment>
+　Black2→hakase2_03b
+　White2→hakase2_03w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:45:03" />
+				Time="2011-09-28T08:03:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -147,11 +147,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：BLACK2ver
+			<Comment>♀：Black2ver
 ・続けてhakase2_04b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:45:08" />
+				Time="2011-09-28T08:03:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -170,7 +170,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07_hakase2_03w">
+		Label="msg_t07_hakase2_03w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そう！　この　イッシュちほうには
@@ -199,11 +200,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：WHITE２ver
+			<Comment>♀：White2ver
 ・続けてhakase2_04w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:45:12" />
+				Time="2011-09-28T08:03:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,12 +261,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：BLACK2ver
+			<Comment>♀：Black2ver
 ・アララギ、下向きでメッセージ表示
 ・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:43:02" />
+				Time="2011-09-28T08:03:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -322,12 +323,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：WHITE２ver
+			<Comment>♀：White2ver
 ・アララギ、下向きでメッセージ表示
 ・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:43:04" />
+				Time="2011-09-28T08:03:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -376,11 +377,11 @@
 			Language="JPN">
 			<Comment>♀
 ・続けて
-　BLACK2→hakase2_05b
-　WHITE2→hakase2_05w</Comment>
+　Black2→hakase2_05b
+　White2→hakase2_05w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:43:20" />
+				Time="2011-09-28T08:03:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -449,13 +450,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：BLACK2ver
+			<Comment>♀：Black2ver
 ・はい/いいえの選択肢表示
 ・はい　→hakase2_06
 　いいえ→hakase2_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:47:52" />
+				Time="2011-09-28T08:04:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -524,13 +525,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：WHITE２ver
+			<Comment>♀：White2ver
 ・はい/いいえの選択肢表示
 ・はい　→hakase2_06
 　いいえ→hakase2_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:47:54" />
+				Time="2011-09-28T08:03:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
