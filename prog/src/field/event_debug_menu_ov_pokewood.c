@@ -118,6 +118,7 @@ static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk);
 
 
 //-----------------------------------------------------------------------------
@@ -198,6 +199,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN38, (void*)debugMenu_OpenScenario38, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN39, (void*)debugMenu_OpenScenario39, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN40, (void*)debugMenu_OpenScenario40, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN_GRAPHIC, (void*)debugMenu_OpenScenario_for_Graphic, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -213,6 +215,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuPokewoodInitializer = {
   NULL
 };
 
+#include "pokeicon/pokeicon.h"
 //=============================================================================
 //=============================================================================
 
@@ -264,6 +267,26 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
       OS_Printf("StarRank%d Announced=%d\n", i, POKEWOOD_SAVEDATA_GetStarRankAnnounced(ps,i));
     }
   }
+  
+  // ポケアイコンのテスト
+  {
+    int i;
+    u32 mons,form,sex;
+    POKEICON_16BIT  data[10];
+    data[0] = POKEICON_PackResourceData( 1,0,0 );
+    data[1] = POKEICON_PackResourceData( 1,0,1 );
+    data[2] = POKEICON_PackResourceData( 493, 5, 2 );
+    data[3] = POKEICON_PackResourceData( 493,17, 2 );
+    data[4] = POKEICON_PackResourceData( 201, 8, 0 );
+    data[5] = POKEICON_PackResourceData( 201,30, 0 );
+    data[6] = POKEICON_PackResourceData( 900, 4, 1 );
+
+    for(i=0;i<7;i++){
+      POKEICON_UnpackResourceData( data[i], &mons, &form, &sex );
+      OS_Printf( "icon mons=%2d, form=%2d, sex=%2d\n", mons, form, sex);
+    }
+  }
+  
   return TRUE;
 }
 
@@ -624,172 +647,181 @@ static BOOL debugMenuCallProc_PokewoodRecordMonitor( POKEWOOD_FUNC_WORK * wk )
 
 static BOOL debugMenu_OpenScenario2 ( POKEWOOD_FUNC_WORK *wk )
 {
-  _open_flag( wk, 2 );
+  _open_flag( wk, 1 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario3 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 3 );
+  _open_flag( wk, 2 );
   return FALSE;
 }
 
 static BOOL debugMenu_OpenScenario4 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 4 );
+  _open_flag( wk, 3 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario5 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 5 );
+  _open_flag( wk, 4 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario6 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 6 );
+  _open_flag( wk, 5 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario7 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 7 );
+  _open_flag( wk, 6 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario8 (POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 8 );
+  _open_flag( wk, 7 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario10(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 10 );
+  _open_flag( wk,  9 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario11(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 11 );
+  _open_flag( wk, 10 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario12(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 12 );
+  _open_flag( wk, 11 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario13(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 13 );
+  _open_flag( wk, 12 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario14(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 14 );
+  _open_flag( wk, 13 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario15(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 15 );
+  _open_flag( wk, 14 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario16(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 16 );
+  _open_flag( wk, 15 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario18(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 18 );
+  _open_flag( wk, 17 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario19(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 19 );
+  _open_flag( wk, 18 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario20(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 20 );
+  _open_flag( wk, 19 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario22(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 22 );
+  _open_flag( wk, 21 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario23(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 23 );
+  _open_flag( wk, 22 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario24(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 24 );
+  _open_flag( wk, 23 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario26(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 26 );
+  _open_flag( wk, 25 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario27(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 27 );
+  _open_flag( wk, 26 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario28(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 28 );
+  _open_flag( wk, 27 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario29(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 29 );
+  _open_flag( wk, 28 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario30(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 30 );
+  _open_flag( wk, 29 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario31(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 31 );
+  _open_flag( wk, 30 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario32(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 32 );
+  _open_flag( wk, 31 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario34(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 34 );
+  _open_flag( wk, 33 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario35(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 35 );
+  _open_flag( wk, 34 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario36(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 36 );
+  _open_flag( wk, 35 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 37 );
+  _open_flag( wk, 36 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 38 );
+  _open_flag( wk, 37 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 39 );
+  _open_flag( wk, 38 );
   return FALSE;
 }
 static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk)
 {
-  _open_flag( wk, 40 );
+  _open_flag( wk, 39 );
+  return FALSE;
+}
+static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk)
+{
+  _open_flag( wk, 35 );
+  _open_flag( wk, 36 );
+  _open_flag( wk, 37 );
+  _open_flag( wk, 38 );
+  _open_flag( wk, 39 );
   return FALSE;
 }
