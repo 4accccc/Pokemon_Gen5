@@ -5247,9 +5247,9 @@
 
 	<row id="TRID_SWLEADER1_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！　そう　これが
-ポケモンしょうぶ　なんだね！</language>
+ポケモンしょうぶ　なんだよ！</language>
 		<language name="JPN_KANJI" width="216">……！　そう　これが
-ポケモン勝負　なんだね！</language>
+ポケモン勝負　なんだよ！</language>
 	</row>
 
 	<row id="TRID_SWLEADER2_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -5716,13 +5716,13 @@
 	</row>
 
 	<row id="TRID_FUTAGO_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">？？『わわわ！　ポケモンさん
+		<language name="JPN" width="216">ミカ『わわわ！　ポケモンさん
 もう　たたかえないの……？▼
-？？『うん？　ポケモンさん
+ミコ『うん？　ポケモンさん
 げんき　なくなっちゃった……</language>
-		<language name="JPN_KANJI" width="216">？？『わわわ！　ポケモンさん
+		<language name="JPN_KANJI" width="216">ミカ『わわわ！　ポケモンさん
 もう　たたかえないの……？▼
-？？『うん？　ポケモンさん
+ミコ『うん？　ポケモンさん
 げんき　なくなっちゃった……</language>
 	</row>
 
