@@ -43,5 +43,7 @@
   // ご褒美アイテム
   DEF_CMD( EvCmdPokewoodGetBonusItem,          EV_SEQ_PKWD_GET_BONUS_ITEM )
 
+  DEF_CMD( EvCmdPokewoodGetFlagTotal,           EV_SEQ_PKWD_GET_FLAG_TOTAL )
+
   END_CMD
   //スクリプトコマンドテーブル終了

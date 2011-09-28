@@ -1308,8 +1308,24 @@ _ANIME_LABEL anm_owner_disappear2
 //
 //==============================================================================
 EVENT_START   ev_pokewood_monitor
-  _TALK_START_SE_PLAY()
-  _PKWD_RECORD_MONITOR( SCWK_ANSWER )
+{
+  DEFINE_LOCAL  flag_total
+
+  // 上映して観たことのある総数を取得
+  _PKWD_GET_FLAG_TOTAL( SCR_PKWD_SCENARIO_THEATERGO_FLAG, flag_total )
+
+  // 一度もないなら記録がないのでSKIP
+  IF $flag_total > 0 THEN
+    _TALK_START_SE_PLAY()
+    _PKWD_RECORD_MONITOR( SCWK_ANSWER )
+
+  ELSE
+    // 「ただいま こちらの モニターは ちょうせいちゅう です・・・」
+    _SYSWIN_MSG( msg_pw__monitor_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF
+}
 EVENT_END
 
 

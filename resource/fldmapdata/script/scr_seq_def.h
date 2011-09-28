@@ -15621,6 +15621,20 @@
     .short  \ret_item_num
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：進行フラグ総数を取得
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_FLAG_TOTAL( type, ret_wk ) \
+    _ASM_PKWD_GET_FLAG_TOTAL type, ret_wk
+
+    .macro  _ASM_PKWD_GET_FLAG_TOTAL type, ret_wk
+    .short  EV_SEQ_PKWD_GET_FLAG_TOTAL
+    .short  \type
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //======================================================================
 

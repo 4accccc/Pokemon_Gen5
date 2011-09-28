@@ -589,6 +589,23 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioStatus( VMHANDLE * core, void * wk )
 
 //-----------------------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：ポケウッド  進行フラグの総数の取得
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodGetFlagTotal( VMHANDLE * core, void * wk )
+{
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+  SCRCMD_WORK*    work = wk;
+  u16 type    = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk  = SCRCMD_GetVMWork( core, work );
+  
+  *ret_wk =  POKEWOOD_SAVEDATA_GetFlagTotal( pkwdsave, type );
+  OS_Printf("EvCmdPokewoodGetFlagTotal(%d) = %d\n", type, *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：ポケウッド　上映データ数取得
  */
 //-----------------------------------------------------------------------------

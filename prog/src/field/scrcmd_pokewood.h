@@ -37,6 +37,7 @@ extern VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetScenarioStatus( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodSetScenarioStatus( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodGetFlagTotal( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMoviesCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk );

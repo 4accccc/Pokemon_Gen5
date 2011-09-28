@@ -801,6 +801,8 @@
 #define   SCR_PKWD_SCENARIO_PLAYED_FLAG       (1) ///<撮影済みか
 #define   SCR_PKWD_SCENARIO_SUCCESS_FLAG      (2) ///<成功終了したか
 #define   SCR_PKWD_SCENARIO_ANNOUNCED_FLAG    (3) ///<オープン告知済みか
+#define   SCR_PKWD_SCENARIO_STRANGE_FLAG      (4) ///<ストレンジEND取得済みか
+#define   SCR_PKWD_SCENARIO_THEATERGO_FLAG    (5) ///<一度でも上映して観たことがあるか
 
 #define   SCR_PKWD_SELECT_MODE_NORMAL         (0) ///<上映選択画面：通常
 #define   SCR_PKWD_SELECT_MODE_DELETE         (1) ///<上映選択画面：削除
