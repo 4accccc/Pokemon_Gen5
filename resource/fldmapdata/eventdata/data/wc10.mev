@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/27 20:43:52
+#save date:2011/09/28 19:40:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\wc10.wms
 #SECTION START:OBJ_EVENT
@@ -649,7 +649,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 4 0
+2 4 0
 #size
 1 1
 #rail way
