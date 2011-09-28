@@ -100,7 +100,7 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   GFL_STD_RandContext rnd_c;
 
   //ワーククリア
-  MI_CpuClear32( wk, sizeof(FES_GIMMICK_NPC_WORK) );
+//  MI_CpuClear32( wk, sizeof(FES_GIMMICK_NPC_WORK) );
   wk->zone_id = zone_id;
   wk->data_max = 0;
   wk->point_max = 0;
