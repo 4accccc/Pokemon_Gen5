@@ -409,9 +409,9 @@
 	</row>
 	<row id="pw_turn_enemy_4">
 		<language name="JPN" width="256">ハチクマン『グム……
-しまった……</language>
+しまった……　ふねが……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『グム……
-しまった……</language>
+しまった……　船が……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ゆけ！　わが　ポケモン！

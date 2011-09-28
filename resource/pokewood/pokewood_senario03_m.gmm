@@ -386,12 +386,17 @@
 かっ　からだが……</language>
 	</row>
 	<row id="pw_turn_enemy_7">
-		<language name="JPN" width="256">ハチクマン『グッ……　からだが……
-うまく……　うごかぬ……</language>
+		<language name="JPN" width="256">ハチクマン『グッ……　からだが……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『グッ……　身体が……
 うまく……　動かぬ……</language>
 	</row>
 	<row id="pw_turn_enemy_9">
+		<language name="JPN" width="256">ハチクマン『グッ……
+おもうように　うごけぬ……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『グッ……
+思うように　動けぬ……</language>
+	</row>
+	<row id="pw_turn_enemy_11">
 		<language name="JPN" width="256">ハチクマン『これまで……　か……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『これまで……　か……</language>
 	</row>
@@ -524,10 +529,10 @@
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『つよい……▼
 これが　ブラックダイアの
-もつ　パワー　なのか……</language>
+パワー　なのか……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『強い……▼
 これが　ブラックダイアの
-もつ　パワー　なのか……</language>
+パワー　なのか……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -570,8 +575,8 @@
 さあ！　かかって　くるがいい！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『チャンスだな……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『チャンスだな……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『チャンスか……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『チャンスか……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ええい！　あまいわっ！
@@ -596,10 +601,10 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
-		<language name="JPN" width="256">ハチクマン『なにを　している！？▼
+		<language name="JPN" width="256">ハチクマン『クッ！　どうした！？▼
 そちらが　こぬならば
 こちらから　いくぞっ！！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『何を　している！？▼
+		<language name="JPN_KANJI" width="256">ハチクマン『クッ！　どうした！？▼
 そちらが　来ぬならば
 こちらから　行くぞっ！！</language>
 	</row>
@@ -740,14 +745,14 @@
 いままでの　たたかいで
 きが　ついたんだ……▼
 たしかに　あなたは　おそろしい
-あくの　かいじん……
+あくの　かいじん……▼
 でも　それ　いぜんに　ひとりの▽
 すばらしい　トレーナー　だ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『違う……▼
 今までの　戦いで
 気が　ついたんだ……▼
 確かに　あなたは　恐ろしい
-悪の　怪人……
+悪の　怪人……▼
 でも　それ　以前に　ひとりの▽
 素晴らしい　トレーナー　だ……</language>
 	</row>
@@ -771,12 +776,12 @@
 	</row>
 	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『だから　たのむ……
-いまは　ひいて　くれ……
+いまは　ひいて　くれ……▼
 そして……▼
 そして　からだを　ととのえたら
 また　ぼくと　たたかえばいい……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『だから　頼む……
-今は　引いて　くれ……
+今は　引いて　くれ……▼
 そして……▼
 そして　体を　整えたら
 また　僕と　戦えばいい……</language>

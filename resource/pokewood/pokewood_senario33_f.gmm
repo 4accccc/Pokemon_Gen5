@@ -354,50 +354,50 @@
 		<language name="JPN_KANJI" width="256">アシスタント</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">%MYNAME『さあ　Ｆ−００……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『さあ　Ｆ−００……
 わたしと　いっしょに　あそぼう</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『さあ　Ｆ−００……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さあ　Ｆ−００……
 わたしと　一緒に　遊ぼう</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
-%MYNAME！　ナニシテ　アソブ？</language>
+[1:00:トレーナー名:1]！　ナニシテ　アソブ？</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『アソブ！　アソブ！
-%MYNAME！　ナニシテ　アソブ？</language>
+[1:00:トレーナー名:1]！　ナニシテ　アソブ？</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">%MYNAME『そうだね……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうだね……
 Ｆ−００は　なにが　したい？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『そうだね……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうだね……
 Ｆ−００は　何が　したい？</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
-%MYNAMEト　ポケモント　アソブ！</language>
+[1:00:トレーナー名:1]ト　ポケモント　アソブ！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『アソブ！　アソブ！
-%MYNAMEト　ポケモント　アソブ！</language>
+[1:00:トレーナー名:1]ト　ポケモント　アソブ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">じょしゅ『%MYNAMEはかせ……▼
+		<language name="JPN" width="256">じょしゅ『[1:00:トレーナー名:1]はかせ……▼
 Ｆ−００と　あそんで　ばかりで
 いいんですか？▼
 あたらしい　けんきゅうの　いらいも
 たくさん　きていますが……</language>
-		<language name="JPN_KANJI" width="256">助手『%MYNAME博士……▼
+		<language name="JPN_KANJI" width="256">助手『[1:00:トレーナー名:1]博士……▼
 Ｆ−００と　遊んで　ばかりで
 いいんですか？▼
 新しい　研究の　依頼も
 たくさん　来ていますが……</language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">%MYNAME『ほっておけば……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほっておけば……▼
 だれにでも　できる
 けんきゅう　でしょ？▼
 それより　アタシは　Ｆ−００に
 いろいろなことを　おしえて▽
 このこの　メモリーを　もっと▽
 じゅうじつして　あげたいの……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ほっておけば……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほっておけば……▼
 誰にでも　できる　研究だろ？▼
 それより　アタシは　Ｆ−００に
 色々なことを　教えて▽
@@ -405,9 +405,9 @@
 充実して　あげたいの……</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">%MYNAME『ほら　Ｆ−００！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　Ｆ−００！▼
 ポケモンに　こうげきして！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ほら　Ｆ−００！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　Ｆ−００！▼
 ポケモンに　こうげきして！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
@@ -415,13 +415,13 @@
 		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">%MYNAME『わかるでしょ？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『わかるでしょ？▼
 ポケモン　みたいにさ
 わざを　つかうのよ！▼
 Ｆ−００の　からだには
 ポケモンの　わざを　つかえる▽
 システムが　ついてるんだから！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『分かるでしょ？▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『分かるでしょ？▼
 ポケモン　みたいにさ
 わざを　つかうのよ！▼
 Ｆ−００の　身体には
@@ -433,23 +433,23 @@
 		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">%MYNAME『どうしたの？　Ｆ−００？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『どうしたの？　Ｆ−００？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆ−００？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆ−００？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
-		<language name="JPN" width="256">じょしゅ『もしかして……
-Ｆー００は　あいてを▽
+		<language name="JPN" width="256">じょしゅ『もしかして……▼
+Ｆー００は　あいてを
 きずつけることが　いやなんじゃ……</language>
-		<language name="JPN_KANJI" width="256">助手『もしかして……
-Ｆー００は　相手を▽
+		<language name="JPN_KANJI" width="256">助手『もしかして……▼
+Ｆー００は　相手を
 傷つけることが　嫌なんじゃ……</language>
 	</row>
 	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256">%MYNAME『いい？　Ｆ−００
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いい？　Ｆ−００
 ポケモンは　バトルすることが▽
 だいすきなの▼
 しんぱい　しなくても　いいのよ</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『いい？　Ｆ−００
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いい？　Ｆ−００
 ポケモンは　バトルすることが▽
 大好きなの▼
 心配しなくても　いいのよ</language>
@@ -459,100 +459,100 @@
 		<language name="JPN_KANJI" width="256">Ｆー００『……　……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">%MYNAME『ほら！　たのしいよ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ほら！　楽しいよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら！　たのしいよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら！　楽しいよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">Ｆー００『タノシイ……　タノシイ！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『タノシイ……　タノシイ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">%MYNAME『はやく　してっ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『早く　してっ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はやく　してっ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『早く　してっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">Ｆー００『ワカッタ……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ワカッタ……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">%MYNAME『しかたないな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『仕方ないな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないな……</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">Ｆー００『コウゲキ……　キライ……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……　キライ……</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">%MYNAME『どう？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どう？
 ポケモンと　バトルするのは▽
 なかなか　たのしいでしょ？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『どう？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どう？
 ポケモンと　バトルするのは▽
 なかなか　楽しいでしょ？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">Ｆー００『ポケモン！　タノシイ！
-%MYNAME！　ダイスキ！</language>
+[1:00:トレーナー名:1]！　ダイスキ！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ポケモン！　タノシイ！
-%MYNAME！　ダイスキ！</language>
+[1:00:トレーナー名:1]！　ダイスキ！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">%MYNAME『ははは……
-ありがとう　%MYNAME……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ははは……
-ありがとう　%MYNAME……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ははは……
+ありがとう　[1:00:トレーナー名:1]……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ははは……
+ありがとう　[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">Ｆー００『ボク　%MYNAME　スキ！
-%MYNAME　ボク　スキ？</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ボク　%MYNAME　スキ！
-%MYNAME　ボク　スキ？</language>
+		<language name="JPN" width="256">Ｆー００『ボク　[1:00:トレーナー名:1]　スキ！
+[1:00:トレーナー名:1]　ボク　スキ？</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ボク　[1:00:トレーナー名:1]　スキ！
+[1:00:トレーナー名:1]　ボク　スキ？</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">%MYNAME『だいすきだよ</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『大好きだよ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だいすきだよ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『大好きだよ</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">Ｆー００『%MYNAME！　ダイスキ！
+		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]！　ダイスキ！
 ボク　タノシイ！　</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『%MYNAME！　ダイスキ！
+		<language name="JPN_KANJI" width="256">Ｆー００『[1:00:トレーナー名:1]！　ダイスキ！
 ボク　タノシイ！　</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">%MYNAME『わからないな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『わからないな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『わからないな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わからないな……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">Ｆー００『キライ……
-%MYNAME……　ボク　キライ……
-ボク……　%MYNAME　キライ……</language>
+[1:00:トレーナー名:1]……　ボク　キライ……
+ボク……　[1:00:トレーナー名:1]　キライ……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『キライ……
-%MYNAME……　ボク　キライ……
-ボク……　%MYNAME　キライ……</language>
+[1:00:トレーナー名:1]……　ボク　キライ……
+ボク……　[1:00:トレーナー名:1]　キライ……</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
-		<language name="JPN" width="256">%MYNAME『はずかしいな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『はずかしいな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はずかしいな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はずかしいな……</language>
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">Ｆー００『……？</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『……？</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">じょしゅ『%MYNAME　はかせ……▼
+		<language name="JPN" width="256">じょしゅ『[1:00:トレーナー名:1]　はかせ……▼
 そろそろ　Ｆー００の
 エネルギーが　なくなりますが……</language>
-		<language name="JPN_KANJI" width="256">助手『%MYNAME博士……▼
+		<language name="JPN_KANJI" width="256">助手『[1:00:トレーナー名:1]博士……▼
 そろそろ　Ｆー００の
 エネルギーが　なくなりますが……</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">%MYNAME『しかたないわね……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないわね……
 きょうは　ここまでに　するか▼
 もっと　Ｆー００と　あそべるように
 バッテリーを　おおきな　ものと▽
 とりかえなければな……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『仕方ないわね……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないわね……
 今日は　ここまでに　するか▼
 もっと　Ｆー００と　遊べるように
 バッテリーを　大きな　ものと▽
@@ -575,15 +575,15 @@
 分かるのですが……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">%MYNAME『しりたいか……？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『知りたいか……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しりたいか……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『知りたいか……？</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">じょしゅ『ええ……　まあ……</language>
 		<language name="JPN_KANJI" width="256">助手『ええ……　まあ……</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">%MYNAME『……　……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
 アタシは　ちいさい　ころから
 べんきょう　ばかり　してきた▼
 だから　ともだちと　よべる
@@ -593,7 +593,7 @@
 まいにち　でしょ……▼
 Ｆー００だけ　なのよ……
 アタシが　いっしょに　あそべるのは</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『……　……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
 アタシは　小さい　ころから
 勉強　ばかり　してきた▼
 だから　友達と　呼べる
@@ -609,37 +609,37 @@
 		<language name="JPN_KANJI" width="256">助手『……　……</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">%MYNAME『よし……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……
 ここまでに　しようか　Ｆー００……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『よし……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし……
 ここまでに　しようか　Ｆー００……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">Ｆー００『タノシイ！　タノシイ！
-%MYNAME！　タノシイ！</language>
+[1:00:トレーナー名:1]！　タノシイ！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『タノシイ！　タノシイ！
-%MYNAME！　タノシイ！</language>
+[1:00:トレーナー名:1]！　タノシイ！</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">%MYNAME『そうか……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうか……
 わたしも　たのしいよ　Ｆー００……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『そうか……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうか……
 わたしも　楽しいよ　Ｆー００……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">Ｆー００『%MYNAME！ダイスキ！▼
-%MYNAME　トモダチ！▼
+		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]！ダイスキ！▼
+[1:00:トレーナー名:1]　トモダチ！▼
 ボクト　モット　アソボ！▼</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『%MYNAME！ダイスキ！▼
-%MYNAME　トモダチ！▼
+		<language name="JPN_KANJI" width="256">Ｆー００『[1:00:トレーナー名:1]！ダイスキ！▼
+[1:00:トレーナー名:1]　トモダチ！▼
 ボクト　モット　アソボ！▼</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">%MYNAME『Ｆー００　ごめん▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００　ごめん▼
 そろそろ　おまえの　バッテリーが
 きれちゃうの……▼
 だから　ちょっと　やすまないとね？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『Ｆー００　ごめん▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００　ごめん▼
 そろそろ　お前の　バッテリーが
 切れちゃうの……▼
 だから　ちょっと　休まないとね？</language>
@@ -649,8 +649,8 @@
 		<language name="JPN_KANJI" width="256">助手『ふふっ……</language>
 	</row>
 	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">%MYNAME『なにが　おかしいの……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『何が　可笑しいの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なにが　おかしいの……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何が　可笑しいの……</language>
 	</row>
 	<row id="pw_event4_enemy_3">
 		<language name="JPN" width="256">じょしゅ『すっ　すいません……▼
@@ -663,8 +663,8 @@
 兄弟みたい　だから……</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">%MYNAME『きょうだい……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『兄弟……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『きょうだい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『兄弟……</language>
 	</row>
 	<row id="pw_event4_enemy_4">
 		<language name="JPN" width="256">じょしゅ『すっ　すいません！
@@ -673,8 +673,8 @@
 別に　悪気は　ないんです！</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">%MYNAME『きょうだい　か……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『兄弟か……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『きょうだい　か……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『兄弟か……</language>
 	</row>
 	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">……じょしゅが　いったように
@@ -693,25 +693,25 @@
 長く　続かなかった……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">%MYNAME『ちょっと！　Ｆー００！！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　Ｆー００！！
 どうしたのっ！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『おい！　Ｆー００！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おい！　Ｆー００！！
 どうしたんだっ！？</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">Ｆー００『ポケモン……　タノシイ……
-%MYNAME……　ダイスキ……▼
+[1:00:トレーナー名:1]……　ダイスキ……▼
 ………　………　………▼
 ………　………　………</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ポケモン……　タノシイ……
-%MYNAME……　ダイスキ……▼
+[1:00:トレーナー名:1]……　ダイスキ……▼
 ………　………　………▼
 ………　………　………</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">%MYNAME『ねえ！　Ｆー００！！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ！　Ｆー００！！
 しっかりしてっ！　Ｆー００！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ねえ！　Ｆー００！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ！　Ｆー００！！
 しっかりしてっ！　Ｆー００！！</language>
 	</row>
 	<row id="pw_event5_enemy_1">
@@ -729,10 +729,10 @@
 メモリーも　すべて　消えました……</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">%MYNAME『そんなっ！！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！▼
 メモリーの　バックアップは
 とっていないのっ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『そんなっ！！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなっ！！▼
 メモリーの　バックアップは
 取っていないのっ！</language>
 	</row>
@@ -741,10 +741,10 @@
 		<language name="JPN_KANJI" width="256">助手『残念ですが……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">%MYNAME『そんなっ！！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！▼
 やっと　できた　ロボット……▼
 ……ともだち　なのよッ！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『そんなっ！！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなっ！！▼
 やっと　できた　ロボット……▼
 ……友達　なのよッ！！</language>
 	</row>
@@ -769,48 +769,48 @@
 芽生えることは　なかった……</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">%MYNAME『グワッ！！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グワッ！！▼
 なんて……　ちからなの……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『グワッ！！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グワッ！！▼
 何て……　パワーなの……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">Ｆー００『ボク　コウゲキ　スル！！
-%MYNAME　タノシイ！！</language>
+[1:00:トレーナー名:1]　タノシイ！！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ボク　コウゲキ　スル！！
-%MYNAME　タノシイ！！</language>
+[1:00:トレーナー名:1]　タノシイ！！</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">%MYNAME『うぐッ……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『うぐッ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『うぐッ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うぐッ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">じょしゅ『キャーッ！！▼
-ちょっと　%MYNAMEはかせ！
+ちょっと　[1:00:トレーナー名:1]はかせ！
 だいじょうぶ　ですかッ！？</language>
 		<language name="JPN_KANJI" width="256">助手『キャーッ！！▼
-ちょっと　%MYNAME博士！
+ちょっと　[1:00:トレーナー名:1]博士！
 大丈夫ですかッ！？</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">%MYNAME『グッ……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グッ……▼
 Ｆー００……　つよいね……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『グッ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グッ……▼
 Ｆー００……　つよいね……</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">Ｆー００『ボク　コウゲキ　スル！！
-%MYNAME　タノシイ！！</language>
+[1:00:トレーナー名:1]　タノシイ！！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ボク　コウゲキ　スル！！
-%MYNAME　タノシイ！！</language>
+[1:00:トレーナー名:1]　タノシイ！！</language>
 	</row>
 	<row id="pw_event6_hero_3">
-		<language name="JPN" width="256">%MYNAME『ハハハ……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハハハ……▼
 ほら……　Ｆー００……
 もっと……　あそぼう……▼
 おまえは……　わたしの……▼
 ……　……　……　……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ハハハ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハハハ……▼
 ほら……　Ｆー００……
 もっと……　遊ぼう……▼
 きみは……　私の……▼
@@ -819,12 +819,12 @@
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">じょしゅ『はかせっ！！▼
 ちょっとっ！　だれか　きてっ！
-%MYNAMEはかせ　がっ！！▼
+[1:00:トレーナー名:1]はかせ　がっ！！▼
 Ｆー００に　やられたのっ！！▼
 このロボット　きけんすぎるわ！</language>
 		<language name="JPN_KANJI" width="256">助手『博士っ！！▼
 ちょっとッ！　誰か　来てっ！
-%MYNAME博士　がっ！！▼
+[1:00:トレーナー名:1]博士　がっ！！▼
 Ｆー００に　やられたのっ！！▼
 このロボット　危険すぎるわ！</language>
 	</row>

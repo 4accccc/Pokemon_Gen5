@@ -50,7 +50,9 @@ enum {
 	NARC_pokewood_cutin_scr_pokewood_cutin_scr38_dat = 36,
 	NARC_pokewood_cutin_scr_pokewood_cutin_scr39_dat = 37,
 	NARC_pokewood_cutin_scr_pokewood_cutin_scr40_dat = 38,
-	NARC_pokewood_cutin_scr_pokewood_cutin_scr41_dat = 39
+	NARC_pokewood_cutin_scr_pokewood_cutin_scr41_dat = 39,
+	NARC_pokewood_cutin_scr_pokewood_cutin_scr42_dat = 40,
+	NARC_pokewood_cutin_scr_pokewood_cutin_scr43_dat = 41
 };
 
 /* NARC_POKEWOOD_CUTIN_SCR_NAIX_ */

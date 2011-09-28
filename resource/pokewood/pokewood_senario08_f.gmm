@@ -399,21 +399,21 @@
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
-おうとうせよ！　%MYNAME！▽
+おうとうせよ！　[1:00:トレーナー名:1]！▽
 じょうきょうを　ほうこく　しろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
-応答せよ！　%MYNAME！▽
+応答せよ！　[1:00:トレーナー名:1]！▽
 状況を　報告　せよ！</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">%MYNAME『りょうかい！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『りょうかい！▼
 きょだいな　ＵＦＯから
 ポケモンが　しゅつげん！▽
 しみんを　おそっています！▼　
 にげまどう　ひとびとで　まちは
 だいこんらんに▽
 おちいって　います！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『了解！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『了解！▼
 巨大な　ＵＦＯから
 ポケモンが　出現！▽
 市民を　おそっています！▼　
@@ -436,8 +436,8 @@
 誘導　しろ！　いいな！</language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">%MYNAME『ラジャー！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ラジャー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ラジャー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ラジャー！</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">にげおくれた　おんな『ありがとう！
@@ -446,9 +446,9 @@
 おかげで　助かったわ！！</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">%MYNAME『ここは　きけんです！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここは　きけんです！
 はやく　にげて　ください！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ここは　危険です！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここは　危険です！
 早く　逃げて　ください！</language>
 	</row>
 	<row id="pw_event1_hero_2">
@@ -462,8 +462,8 @@
 連れ去っていく　所を　見たわ！</language>
 	</row>
 	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256">%MYNAME『なんですって……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『何ですって……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんですって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何ですって……</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">おとしより『ごめんなさいねえ……
@@ -474,9 +474,9 @@
 なかなか　しんどくてねえ……</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">%MYNAME『ここは　きけんです！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここは　きけんです！
 はやく　にげて　ください！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ここは　危険です！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここは　危険です！
 早く　逃げて　ください！</language>
 	</row>
 	<row id="pw_event2_hero_2">
@@ -492,12 +492,12 @@
 後ろっ！！　後ろっ！</language>
 	</row>
 	<row id="pw_event2_hero_3">
-		<language name="JPN" width="256">%MYNAME『マズいわね……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『マズいわね……
 こっちに　ちかづいて　くる……▼
 ……しかも　なに？
 UFOの　からだが　すこしずつ▽
 ひかり　はじめてる……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『マズいわね……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『マズいわね……
 こっちに　近づいてくる……▼
 ……しかも　何？
 UFOの　体が　少しずつ▽
@@ -516,10 +516,10 @@ UFOの　体が　少しずつ▽
 もう　わしゃ　動けんよ……</language>
 	</row>
 	<row id="pw_event2_hero_5">
-		<language name="JPN" width="256">%MYNAME『くっ　どうする……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ　どうする……
 いま　ここを　はなれると▽
 この　ひとに　きけんが……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『どうしよう……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしよう……
 今　ここを　はなれると▽
 この　人に　危険が……</language>
 	</row>
@@ -536,24 +536,24 @@ UFOの　体が　少しずつ▽
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">%MYNAME『しらない！　にげよっと！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『知らない！　逃げよっと！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しらない！　にげよっと！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『知らない！　逃げよっと！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">%MYNAME『ここで　くいとめるわ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『ここで　くいとめるわ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここで　くいとめるわ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここで　くいとめるわ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
-		<language name="JPN" width="256">%MYNAME『どうしたら　いいの……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『どうしたら　いいの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたら　いいの……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたら　いいの……</language>
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>
@@ -564,11 +564,11 @@ UFOの　体が　少しずつ▽
 		<language name="JPN_KANJI" width="256">女『キャー！！　助けて！</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">%MYNAME『くっ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
 ほとんどの　しみんが▽
 UFOに　つかまったのね……▼
 のこったのは　わたしだけか……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『くっ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……
 ほとんどの　市民が▽
 UFOに　つかまったのね……▼
 残ったのは　私だけか……</language>
@@ -578,10 +578,10 @@ UFOに　つかまったのね……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">%MYNAME『なに！？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに！？
 UFOから　ひかりが……▼
 ああ……　まぶしい……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『何！？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何！？
 UFOから　光が……▼
 ああ……　まぶしい……</language>
 	</row>
@@ -591,19 +591,19 @@ UFOから　光が……▼
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
-おうとうせよ！　%MYNAME！▽
+おうとうせよ！　[1:00:トレーナー名:1]！▽
 じょうきょうを　ほうこく　しろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
-応答せよ！　%MYNAME！▽
+応答せよ！　[1:00:トレーナー名:1]！▽
 状況を　報告　しろ！</language>
 	</row>
 	<row id="pw_event3_hero_5">
-		<language name="JPN" width="256">%MYNAME『た……　いちょう……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『た……　いちょう……▼
 ああ……　ダメです……
 UFOの……　ひかりが……▼
 うう……　なんだか　きもちいい……▼
 ねむく……　なって……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『た……　いちょう……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『た……　いちょう……▼
 ああ……　ダメです……
 UFOの……　光が……▼
 うう……　なんだか　気持いい……▼
@@ -614,35 +614,35 @@ UFOの……　光が……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event3_hero_6">
-		<language name="JPN" width="256">つうしん『おい！　%MYNAME！▼
-しっかりしろ！　%MYNAME！
-%MYNAME！　　%MYNAME！</language>
-		<language name="JPN_KANJI" width="256">通信『おい！　%MYNAME！▼
-しっかりしろ！　%MYNAME！
-%MYNAME！　　%MYNAME！</language>
+		<language name="JPN" width="256">つうしん『おい！　[1:00:トレーナー名:1]！▼
+しっかりしろ！　[1:00:トレーナー名:1]！
+[1:00:トレーナー名:1]！　　[1:00:トレーナー名:1]！</language>
+		<language name="JPN_KANJI" width="256">通信『おい！　[1:00:トレーナー名:1]！▼
+しっかりしろ！　[1:00:トレーナー名:1]！
+[1:00:トレーナー名:1]！　　[1:00:トレーナー名:1]！</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">%MYNAME『くっ！　ここまでね！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ！　ここまでね！▼
 こうなったら　ほんぶに
 きゅえんを　たのむしか……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『くっ！　ここまでね！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ！　ここまでね！▼
 こうなったら　本部に
 救援を　頼むしか……</language>
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">つうしん『……　きこえるか……
-おうとうせよ……　%MYNAME</language>
+おうとうせよ……　[1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="256">通信『……　聞こえるか……
-応答せよ……　%MYNAME</language>
+応答せよ……　[1:00:トレーナー名:1]</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">%MYNAME『たいちょう！！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『たいちょう！！
 もうしわけ　ありません！▼
 UFOの　やられ　ポケモンが
 ぜんめつ　してしまいました！▼
 ただちに　こちらに　きゅうえんを
 おねがいします！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『隊長！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『隊長！！
 申し訳　ありません！▼
 UFOに　やられ　ポケモンが
 全滅　してしまいました！▼
@@ -650,55 +650,55 @@ UFOに　やられ　ポケモンが
 お願いします！</language>
 	</row>
 	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">つうしん『%MYNAME……
+		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……
 ざんねんだが……▼
 ……　それは　できない……</language>
-		<language name="JPN_KANJI" width="256">通信『%MYNAME……
+		<language name="JPN_KANJI" width="256">通信『[1:00:トレーナー名:1]……
 残念だが……▼
 ……　それは　できない……</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">%MYNAME『なぜですか！？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
 わたし　まだ　たたかえます！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『なぜですか！？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
 私　まだ　戦えます！</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">つうしん『%MYNAME……▽
+		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……▽
 たった　いま……
 イッシュぼうえいたい　ほんぶは▽
 べつの　きょだいUFOに　より▽
 はかい　された……▼
 われわれは　かいめつだ……▼
-%MYNAME……　おまえも……▼
+[1:00:トレーナー名:1]……　おまえも……▼
 はやく……　にげ……　……</language>
-		<language name="JPN_KANJI" width="256">通信『%MYNAME……▽
+		<language name="JPN_KANJI" width="256">通信『[1:00:トレーナー名:1]……▽
 たった　今……
 イッシュ防衛隊　本部は▽
 別の　巨大UFOに　より▽
 破壊　された……▼
 我々は　壊滅だ……▼
-%MYNAME……　お前も……▼
+[1:00:トレーナー名:1]……　お前も……▼
 早く……　にげ……　……</language>
 	</row>
 	<row id="pw_event4_hero_6">
-		<language name="JPN" width="256">%MYNAME『まさか　そんな……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まさか　そんな……
 じんるいの　みらいは▽
 ここで　おわるの……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『まさか　そんな……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まさか　そんな……
 人類の　未来は▽
 ここで　終わるの……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">%MYNAME『やれやれ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれやれ……
 ポケモンは　ぜんめつしたけど▽
 ここまで　にげれば▽
 UFOも　おって　こないよね……▼
 ……まったく　あんな　あいてと
 たたかうなんて　バカげてるわ……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『やれやれ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やれやれ……
 ポケモンは　全滅したが▽
 ここまで　逃げれば▽
 UFOも　追って　こないだろう……▼
@@ -706,9 +706,9 @@ UFOも　追って　こないだろう……▼
 戦うなんて　バカげてるよ……</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">%MYNAME『チッ！！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『チッ！！
 きが　つかれた！？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『チッ！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『チッ！！
 気が　つかれた！？</language>
 	</row>
 	<row id="pw_event5_enemy_1">
@@ -716,15 +716,15 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">%MYNAME『……　……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
 こうなったら……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『……　……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
 こうなったら……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">%MYNAME『なあ！　ＵＦＯさん！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ！　ＵＦＯさん！
 わたしの　はなしを　きいてっ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『なあ！　ＵＦＯさん！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ！　ＵＦＯさん！
 私の　話を　聞いて！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
@@ -758,29 +758,29 @@ UFOも　追って　こないだろう……▼
 	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">じんるいを　おそう　UFO……▼
 その　きょうふの　まえに
-%MYNAMEは　にんげんを▽
+[1:00:トレーナー名:1]は　にんげんを▽
 うらぎって　しまった……▼
 そのご　ＵＦＯの　てさき　として
-あらわれた　%MYNAME……▼
+あらわれた　[1:00:トレーナー名:1]……▼
 その　すがたは▽
 にんげんとは　ことなる▽
 おそろしい　すがたを　していた……</language>
 		<language name="JPN_KANJI" width="256">人類を　おそう　UFO……▼
 その　恐怖の　前に
-%MYNAMEは　人類を▽
+[1:00:トレーナー名:1]は　人類を▽
 裏切って　しまった……▼
 その後　ＵＦＯの　手先　として
-現れた　%MYNAME……▼
+現れた　[1:00:トレーナー名:1]……▼
 その　姿は▽
 人間とは　異なる▽
 恐ろしい　姿を　していた……</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">%MYNAME『よし……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……
 すべての　しみんの　ひなんは▽
 かんりょう　した　みたいね……▼
 あとは　ＵＦＯだけか……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『よし……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし……
 全ての　市民の　ひなんは▽
 完了　した　みたいね……▼
 後は　ＵＦＯか……</language>
@@ -790,14 +790,14 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">%MYNAME『……なに？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……なに？
 UFOが　そらへ　のぼっていく……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『……何？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……何？
 UFOが　空へ　上っていく……</language>
 	</row>
 	<row id="pw_event6_hero_3">
-		<language name="JPN" width="256">%MYNAME『にげたのか……？</language>
-		<language name="JPN_KANJI" width="256">%MYNAME『逃げたのか……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『にげたのか……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『逃げたのか……？</language>
 	</row>
 	<row id="pw_event6_hero_4">
 		<language name="JPN" width="256">？？？『……　ちがう▼
@@ -812,7 +812,7 @@ UFOが　空へ　上っていく……</language>
 じんるいの　ほかくを　はじめた▽
 なぞの　UFO……▼
 その　きょうふから　しみんを
-まもった　%MYNAME……▼
+まもった　[1:00:トレーナー名:1]……▼
 かれの　まえに　あらわた
 ひとりの　じんぶつ……▼
 じんるいの　そんぼうを　かけた
@@ -822,7 +822,7 @@ UFOが　空へ　上っていく……</language>
 人類の　ほかくを　始めた▽
 謎の　UFO……▼
 その　恐怖から　市民を
-守った　%MYNAME……▼
+守った　[1:00:トレーナー名:1]……▼
 彼の　前に　現れた
 ひとりの　人物……▼
 人類の　存亡を　かけた

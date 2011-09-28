@@ -392,6 +392,12 @@
 うまく……　動かぬ……</language>
 	</row>
 	<row id="pw_turn_enemy_9">
+		<language name="JPN" width="256">ハチクマン『グッ……
+おもうように　うごけぬ……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『グッ……
+思うように　動けぬ……</language>
+	</row>
+	<row id="pw_turn_enemy_11">
 		<language name="JPN" width="256">ハチクマン『これまで……　か……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『これまで……　か……</language>
 	</row>
@@ -524,10 +530,10 @@
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『つよい……▼
 これが　ブラックダイアの
-もつ　パワー　なの……</language>
+パワー　なの……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『強い……▼
 これが　ブラックダイアの
-もつ　パワー　なの……</language>
+パワー　なの……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -552,8 +558,8 @@
 ゴフッ！！　ゴフッ！！</language>
 	</row>
 	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『どうしたの……?</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『どうしたの……?</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なに……?</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『なに……?</language>
 	</row>
 	<row id="pw_event1_enemy_3">
 		<language name="JPN" width="256">ハチクマン『グムム……　もしや……</language>
@@ -596,10 +602,10 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
-		<language name="JPN" width="256">ハチクマン『なにを　している！？▼
+		<language name="JPN" width="256">ハチクマン『クッ！　どうした！？▼
 そちらが　こぬならば
 こちらから　いくぞっ！！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『何を　している！？▼
+		<language name="JPN_KANJI" width="256">ハチクマン『クッ！　どうした！？▼
 そちらが　来ぬならば
 こちらから　行くぞっ！！</language>
 	</row>
@@ -740,14 +746,14 @@
 いままでの　たたかいで
 きが　ついたんだ……▼
 たしかに　あなたは　おそろしい
-あくの　かいじん……
+あくの　かいじん……▼
 でも　それ　いぜんに　ひとりの▽
 すばらしい　トレーナー　だって……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『違うの……▼
 今までの　戦いで
 気が　ついたんだ……▼
 確かに　あなたは　恐ろしい
-悪の　怪人……
+悪の　怪人……▼
 でも　それ　以前に　ひとりの▽
 素晴らしい　トレーナー　だって……</language>
 	</row>
@@ -769,12 +775,12 @@
 	</row>
 	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『だから……
-いまは　かえって……
+いまは　かえって……▼
 そして……▼
 そして　からだを　ととのえたら
 また　わたしと　たたかいましょ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『だから……
-今は　帰って……
+今は　帰って……▼
 そして……▼
 そして　体を　整えたら
 また　私と　戦いましょ……</language>
