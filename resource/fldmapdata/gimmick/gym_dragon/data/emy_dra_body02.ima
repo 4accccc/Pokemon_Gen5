@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-22T13:31:32" source="dra_all_019.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T20:58:48" source="dra_all_025.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <mat_color_info
-	frame_size="47"
+	frame_size="1100"
 	tool_start_frame="1"
-	tool_end_frame="47"
+	tool_end_frame="1100"
 	interpolation="frame"
 	compress_material="off" material_size="3 3"
 	frame_step_mode="1"

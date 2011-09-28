@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-23T18:37:14" source="dra_all_tpa.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-27T21:13:02" source="dra_all_itp.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,10 +11,10 @@
 <body>
 
 <tex_pattern_info
-	frame_size="1070"
+	frame_size="60"
 	tool_start_frame="1"
-	tool_end_frame="1070"
-	compress_material="off" material_size="11 11"
+	tool_end_frame="60"
+	compress_material="off" material_size="14 14"
 />
 
 <tex_pattern_list_data image_size="2" palette_size="2">
@@ -25,26 +25,34 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="28">
+	<frame_idx size="42">
 		0 1 2 3 4 8 13 15 17 19
 		21 23 25 27 32 34 36 38 40 42
-		44 46 0 1 4 7 8 30
+		44 46 0 1 3 4 5 6 7 30
+		0 1 4 7 8 30 0 1 3 4
+		6 30
 	</frame_idx>
-	<image_idx size="28">
+	<image_idx size="42">
 		1 0 1 0 1 0 1 0 1 0
 		1 0 1 0 1 0 1 0 1 0
-		1 0 1 0 1 0 1 0
+		1 0 1 0 1 0 1 0 1 0
+		1 0 1 0 1 0 1 0 1 0
+		1 0
 	</image_idx>
-	<palette_idx size="28">
+	<palette_idx size="42">
 		1 0 1 0 1 0 1 0 1 0
 		1 0 1 0 1 0 1 0 1 0
-		1 0 1 0 1 0 1 0
+		1 0 1 0 1 0 1 0 1 0
+		1 0 1 0 1 0 1 0 1 0
+		1 0
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="2">
-	<tex_pattern_anm index="0" material_name="in31_dansa_4" data_size="22" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="in31_dansa_3" data_size="6" data_head="22"/>
+<tex_pattern_anm_array size="4">
+	<tex_pattern_anm index="0" material_name="yaji_up" data_size="22" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="yaji_right" data_size="8" data_head="22"/>
+	<tex_pattern_anm index="2" material_name="yaji_down" data_size="6" data_head="30"/>
+	<tex_pattern_anm index="3" material_name="yaji_left" data_size="6" data_head="36"/>
 </tex_pattern_anm_array>
 
 </body>
