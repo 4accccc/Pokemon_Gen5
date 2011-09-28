@@ -846,6 +846,7 @@ VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
 
   //パラメータセット
+  MI_CpuClear8( &prm, sizeof( ADD_POKE_PRM ) );
   {
     prm.HeapID = heap_id;
     prm.MonsNo = monsno;
@@ -890,6 +891,7 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
   u16         ball   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第9引数
 
   //パラメータセット
+  MI_CpuClear8( &prm, sizeof( ADD_POKE_PRM ) );
   {
     prm.HeapID = heap_id;
     prm.MonsNo = monsno;
