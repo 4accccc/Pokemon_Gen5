@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/10 12:52:45
+#save date:2011/09/28 14:23:08
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r1103.wms
 #SECTION START:OBJ_EVENT
@@ -81,7 +81,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+5
 #event number: 0
 #Bg Event Label
 BGID_C03R1103_PC_01
@@ -121,6 +121,32 @@ SCRID_BG_C03R1103_BOOKS_02
 EVENTDATA_POSTYPE_GRID
 #position
 -200 0 88
+#event number: 3
+#Bg Event Label
+BGID_C03R1103_ELEVATOR_FRONT
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_ELEVATOR_C03R11_FRONT
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 232
+#event number: 4
+#Bg Event Label
+BGID_C03R1103_ELEVATOR
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_ELEVATOR_C03R11
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 232
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

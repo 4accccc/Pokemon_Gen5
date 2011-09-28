@@ -761,14 +761,13 @@ EVENT_START   ev_pos_c08_ninja_01
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG( msg_c08_tvt_02, POS_DOWN )
   _SYSWIN_CLOSE()
-  /*
-  //【仮】ライブキャスター起動
+  
+  //ライブキャスター起動
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _CALL_TVT_DEMO( 5 )
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
-  */
   
   //シャガ：ぐぬう！
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_21 , C08_SWLEADER7_01 , POS_DEFAULT)

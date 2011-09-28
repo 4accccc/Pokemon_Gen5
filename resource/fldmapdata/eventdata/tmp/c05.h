@@ -23,14 +23,13 @@
 #define ZONE_C05_EVC_H
 
 #define C05_BADRIDER_01                    0
-#define C05_STOPPER_01                     1
-#define C05_STOPPER_02                     2
-#define C05_HAKAIM_01                      3
-#define C05_SWPLAZMAM_01                   4
-#define C05_SAGE6_01                       5
-#define C05_SWRIVAL_01                     6
-#define C05_SWLEADER5_01                   7
-#define FLD_ITEM_70                        8
+#define C05_STOPPER_02                     1
+#define C05_HAKAIM_01                      2
+#define C05_SWPLAZMAM_01                   3
+#define C05_SAGE6_01                       4
+#define C05_SWRIVAL_01                     5
+#define C05_SWLEADER5_01                   6
+#define FLD_ITEM_70                        7
 
 #endif //ZONE_C05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

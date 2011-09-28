@@ -19,5 +19,7 @@
 #define BGID_C03R1103_PC_01               0
 #define BGID_C03R1103_BOOKS_01            1
 #define BGID_C03R1103_BOOKS_02            2
+#define BGID_C03R1103_ELEVATOR_FRONT      3
+#define BGID_C03R1103_ELEVATOR            4
 
 #endif //ZONE_C03R1103_EVB_H

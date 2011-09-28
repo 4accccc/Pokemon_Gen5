@@ -312,10 +312,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キーシステム</Text>
+			<Text>SWAN・BWとつうしん</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-28T08:24:03" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-09-28T02:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -323,10 +323,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キーシステム</Text>
+			<Text>SWAN・BWとつうしん</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-28T08:24:05" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-09-28T02:36:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

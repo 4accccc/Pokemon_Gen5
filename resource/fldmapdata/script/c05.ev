@@ -29,7 +29,6 @@ _EVENT_DATA    ev_bg_c05_board_03
 _EVENT_DATA    ev_bg_c05_board_04
 _EVENT_DATA    ev_bg_c05_board_05
 _EVENT_DATA    ev_c05_badrider_01
-_EVENT_DATA    ev_c05_stopper_01
 _EVENT_DATA    ev_c05_stopper_02
 _EVENT_DATA    ev_c05_sage6_01
 _EVENT_DATA    ev_c05_hakaim_01
@@ -507,13 +506,6 @@ _ANIME_LABEL	anm_rival_in_pokehouse
 /**************************************************************/
 EVENT_START		ev_c05_hakaim_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_hakaim_05 )
-EVENT_END
-
-/**************************************************************/
-/* 			抜け道ストッパー：話しかけ			  */
-/**************************************************************/
-EVENT_START		ev_c05_stopper_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
 EVENT_END
 
 /**************************************************************/
