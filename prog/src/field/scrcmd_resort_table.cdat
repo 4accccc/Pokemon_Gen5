@@ -29,7 +29,7 @@
   DEF_CMD( EvCmdResortCallList, EV_SEQ_RESORT_CALL_LIST )
   DEF_CMD( EvCmdResortMergeOff, EV_SEQ_RESORT_MERGE_OFF )
   DEF_CMD( EvCmdResortSetMergeLock, EV_SEQ_RESORT_SET_MERGE_LOCK )
-  NO_CMD()
+  DEF_CMD( EvCmdResortSetSeceneVisible, EV_SEQ_RESORT_SET_SCENE_VISIBLE )
   DEF_CMD( EvCmdResortLot, EV_SEQ_RESORT_LOT )
   DEF_CMD( EvCmdResortAddKindly, EV_SEQ_RESORT_ADD_KINDLY )
   DEF_CMD( EvCmdResortAddLv, EV_SEQ_RESORT_ADD_LV )

@@ -77,9 +77,10 @@ PRESET_COL_CELEB_TRADE_BYE    = 19   #列：セレブ交換またね
 PRESET_COL_CELEB_TRADE_SELECT = 20   #列：セレブ交換選択文
 PRESET_COL_CELEB_TRADE_NG     = 21   #列：セレブ交換違うよ文
 PRESET_COL_CELEB_TRADE_OK     = 22   #列：セレブ交換OK文
+PRESET_COL_CELEB_BYE          = 23   #列：セレブまたね文
 
 PRESET_COL_CELEB_MSG_START  = PRESET_COL_CELEB_GREET      #列：セレブメッセージ開始
-PRESET_COL_CELEB_MSG_END    = PRESET_COL_CELEB_TRADE_OK    #列：セレブメッセージ終了
+PRESET_COL_CELEB_MSG_END    = PRESET_COL_CELEB_BYE    #列：セレブメッセージ終了
 def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h, trade_h )
 
   objdata = HeaderDataArray.new

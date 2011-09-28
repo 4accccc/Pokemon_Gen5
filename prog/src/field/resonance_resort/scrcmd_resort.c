@@ -566,6 +566,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_CELEB_TRADE_NO:
     *p_ret_wk = RESORT_UTIL_GetCelebData( p_preset, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE );
     break;
+  case RESORT_GET_PARAM_INDEX:
+    *p_ret_wk = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_abstruct);
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -916,6 +919,7 @@ VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   
   u16 param     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  s16 value     = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
@@ -928,7 +932,7 @@ VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs )
     const u32 nextLevelExp = POKETOOL_GetMinExp(
         PP_Get( p_pp, ID_PARA_monsno, NULL ),
         PP_Get( p_pp, ID_PARA_form_no, NULL ),
-        lv+1); //TODO いくつあがるか
+        lv+value);
 
     RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_LVUP ); 
 
@@ -1224,6 +1228,43 @@ VMCMD_RESULT EvCmdResortSetMergeLock( VMHANDLE *p_core, void *p_wk_adrs )
   u16 on_off = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   RESORT_PEOPLE_ALL_DATA_SetMergeLock( p_all_people, on_off );
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  場面にあった表示設定を行う
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
+  u16 mode = SCRCMD_GetVMWorkValue( p_core, p_wk );
+
+  switch( mode )
+  {
+  case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    break;
+  case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
+    RESORT_UTIL_SetSceneVisible( p_people_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    break;
+  case RESORT_SCENE_VISIBLE_DEFAULT:
+    RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 

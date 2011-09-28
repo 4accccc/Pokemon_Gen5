@@ -170,9 +170,6 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return shop_type + SexGetMsgID( sex, resort_shopinfo_00_m, resort_shopinfo_00_f );
     }
     break;
-  case RESORT_MSGID_GOSSIP:
-    return 0; //TODO
-    break;
   case RESORT_MSGID_MEDAL_HAVE:
     return SexGetMsgID( sex, resort_history_mdl_01_m, resort_history_mdl_01_f );
     break;
@@ -276,7 +273,14 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_tourist_item_00_m, resort_tourist_item_00_f );
     break;
   case RESORT_TOURIST_BYE_MSGID:
-    return SexGetMsgID( sex, resort_tourist_bye_00_m, resort_tourist_bye_00_f );
+    if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+    {
+      return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_BYE );
+    }
+    else
+    {
+      return SexGetMsgID( sex, resort_tourist_bye_00_m, resort_tourist_bye_00_f );
+    }
     break;
   case RESORT_TOURIST_JOY_MSGID:
     return SexGetMsgID( sex, resort_tourist_joy_00_m, resort_tourist_joy_00_f );
@@ -340,8 +344,18 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return SexGetMsgID( sex, resort_secretary_bye_03_m, resort_secretary_bye_03_f );
     }
   case RESORT_SECRETARY_CITYLV_MSGID:
-    return SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
-    break;
+    {
+      u16 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+      if( lv >= RESORT_BINARY_CITY_GetCityLvMax( p_city ) )
+      {
+        //äXÉåÉxÉãÇ™ç≈ëÂ
+        return SexGetMsgID( sex, resort_secretary_talk_10_m, resort_secretary_talk_10_f );
+      }
+      else
+      {
+        return SexGetMsgID( sex, resort_secretary_talk_00_m, resort_secretary_talk_00_f );
+      }
+    }
   case RESORT_SECRETARY_SECSORT_MSGID:
     return SexGetMsgID( sex, resort_secretary_talk_04_m, resort_secretary_talk_04_f );
     break;
@@ -369,8 +383,22 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_secretary_talk_02_m, resort_secretary_talk_02_f );
     break;
   case RESORT_RESIDENT_LV_MSGID:
-    return SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
-    break;
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
+    {
+      RESORT_RESIDENT_DATA *p_resi = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+      RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution( p_resi );
+      u16 lv = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_LV );
+
+      if( lv >= RESORT_SHOP_LVMAX )
+      {
+        //ç≈ëÂ
+        return SexGetMsgID( sex, resort_resident_lv_01_m, resort_resident_lv_01_f );
+      }
+      else
+      {
+        return SexGetMsgID( sex, resort_resident_lv_00_m, resort_resident_lv_00_f );
+      }
+    }
   case RESORT_RESIDENT_FEVER_MSGID:
     return SexGetMsgID( sex, resort_resident_fever_00_m, resort_resident_fever_00_f );
 
@@ -494,7 +522,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
   u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
-  u32 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_TYPE );
+  u32 shop = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
   int i;
 
   BOOL is_good = FALSE;
@@ -514,7 +542,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 	  switch( type )
 	  {
 	  case RESORT_SPOT_TYPE_SHOPTYPE:
-	    if( shop_type == data )
+	    if( shop == data )
 	    {
 	      is_good = TRUE;
 	    }
@@ -1610,6 +1638,10 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
         {
           rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
         }
+        if( rnkdata[cnt].value == 0 )
+        {
+          continue;
+        }
         cnt++;
       }
     }
@@ -1683,6 +1715,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
 
       //ñºëO
       {
+        GFL_MSG_GetString( p_msg, resort_rnkwnd_name_00, p_src_str );
         if( rnkdata[i].index == 8 )
         {
           WORDSET_RegisterPlayerName( p_wordset, 0, p_mystatus );
@@ -1693,7 +1726,6 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
           u32 sex = RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_SEX, NULL );
           RESORT_RESIDENT_DATA_GetData(p_data, RESORT_DATA_PARAM_NAME, name );
           GFL_STR_SetStringCode( p_name_str, name );
-          GFL_MSG_GetString( p_msg, resort_rnkwnd_name_00, p_src_str );
           WORDSET_RegisterWord( p_wordset, 0, p_name_str, sex, TRUE, PM_LANG );
         }
         {
@@ -1734,7 +1766,6 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
     u32 prize;
   } sc_param_to_prize[] =
   {
-    //TODO ÉCÉxÉìÉgî≠ê∂óDêÊìx
     {
       RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03,
       RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3,
@@ -1744,20 +1775,20 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
       RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4,
     },
     {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT,
-      RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY,
-    },
-    {
       RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON,
       RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON,
     },
     {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
-      RESORT_CITYPRIZE_TYPE_DENDOU,
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT,
+      RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY,
     },
     {
       RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME,
       RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME,
+    },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
+      RESORT_CITYPRIZE_TYPE_DENDOU,
     },
   };
 
@@ -1766,7 +1797,7 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
 
   int i;
 
-  for( i = 0; i <= NELEMS(sc_param_to_prize); i++ )
+  for( i = 0; i < NELEMS(sc_param_to_prize); i++ )
   {
     if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
       && (EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) == FALSE) )
@@ -1834,6 +1865,12 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
         {
           rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
         }
+        //ÇOÇÕîÚÇŒÇ∑
+        if( rnkdata[cnt].value == 0 )
+        {
+          continue;
+        }
+
         if( p_resident == p_data )
         {
           rnkdata[cnt].is_mark  = TRUE;

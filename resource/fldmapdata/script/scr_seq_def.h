@@ -14128,12 +14128,13 @@
  *      FALSE　 …レベルが最大
  */
 //--------------------------------------------------------------
-#define _RESORT_ADD_LV( idx, ret_wk ) \
-      _ASM_RESORT_ADD_LV idx, ret_wk
+#define _RESORT_ADD_LV( idx, value, ret_wk ) \
+      _ASM_RESORT_ADD_LV idx, value, ret_wk
 
-  .macro _ASM_RESORT_ADD_LV idx, ret_wk
+  .macro _ASM_RESORT_ADD_LV idx, value, ret_wk
   .short EV_SEQ_RESORT_ADD_LV
   .short \idx
+  .short \value
   .short \ret_wk
   .endm
 
@@ -14550,6 +14551,18 @@
   .short \on_off
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  街経験値加算
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_SCENE_VISIBLE( mode ) \
+      _ASM_RESORT_SET_SCENE_VISIBLE mode
+
+  .macro _ASM_RESORT_SET_SCENE_VISIBLE mode
+  .short EV_SEQ_RESORT_SET_SCENE_VISIBLE
+  .short \mode
+  .endm
 
 //======================================================================
 //

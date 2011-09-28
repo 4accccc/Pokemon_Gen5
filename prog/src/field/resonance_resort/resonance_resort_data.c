@@ -79,9 +79,8 @@ static BOOL s_debug_permission = FALSE;
 #endif
 
 
-//TODO  お店の数などがFixするまではぷりんと
-//#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
-#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
+#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
+//#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
 
 //----------------------------------------------------------------------------
 /**
@@ -1133,7 +1132,7 @@ struct _RESORT_RECV_DATA
   u8                  keep_flag :1;
   u8                  want_spot;
   RESORT_INSTITUTION_DATA institution;
-  u32                 kosei;  //TODO　個性？  //16
+  u32                 kosei;  //未使用  //16
   u32                 extend_flag:9;  //20
   u32                 lock      :1; //受信（マージ・置き換え不可ビット）
   u32                 update    :3; //RESORT_RECV_DATA_UPDATEの値 
@@ -1176,7 +1175,7 @@ struct _RESORT_PROXY_DATA
   u8    peopleID;
   u8    comm_type;  //RESORT_COMM_TYPE
 
-  u8                  meet_year;  //TODOセットまだ
+  u8                  meet_year;
   u8                  meet_month;
   u8                  meet_day;
   u8                  dummy;
@@ -1636,7 +1635,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     return 0;
   case RESORT_DATA_PARAM_EVENT_FLAG:
-    return 0; //TODO
+    return 0; //未使用
   case RESORT_DATA_PARAM_WANT_SPOT:
     return cp_wk->want_spot;
   case RESORT_DATA_PARAM_NATION:
@@ -2469,8 +2468,6 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
   //乱数
   p_wk->rnd_seed = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
 
-  //TODO
-  //生成？
 }
 //----------------------------------------------------------------------------
 /**
@@ -3418,7 +3415,6 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF 
 //-----------------------------------------------------------------------------
 void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID )
 {
-  //TODO 変換データ
   if( p_wk != cp_recv )
   {
     *p_wk   = *cp_recv;
@@ -3446,7 +3442,6 @@ void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_
 void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID )
 {
   RESORT_RESIDENT_DATA_InitInstance( p_wk );
-  //TODO 変換データ
   p_wk->basic1  = cp_proxy->basic1;
   p_wk->extend6 = cp_proxy->extend6;
   p_wk->extend7 = cp_proxy->extend7;
@@ -3853,7 +3848,6 @@ void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESOR
 {
   RESORT_SECRETARY_DATA_InitInstance( p_wk );
 
-  //TODO
   p_wk->basic1    = cp_recv->basic1;
   p_wk->meet_year = cp_recv->meet_year;
   p_wk->meet_month = cp_recv->meet_month;
@@ -3881,7 +3875,6 @@ void RESORT_SECRETARY_DATA_ConvertRecv( RESORT_SECRETARY_DATA *p_wk, const RESOR
 //-----------------------------------------------------------------------------
 void RESORT_SECRETARY_DATA_ConvertProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, u16 peopleID, u16 placeID, u16 type )
 {
-  //TODO
   p_wk->basic1    = cp_proxy->basic1;
 
   p_wk->meet_year = cp_proxy->meet_year;

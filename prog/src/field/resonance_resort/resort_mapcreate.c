@@ -212,18 +212,6 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
           local_grid_z  = 0;
           is_build  = FALSE;  //0版の施設がマップをまたいでいるので描画しない
         }
-#if 0
-        //建物を書き換え
-        //TODO
-        {
-          u16 rotate  = 0;
-          if( i % 2 == 1 )
-          {
-            rotate = 0xFFFF/2;
-          }
-          FIELD_DATA_PATCH_WriteBuildModelEx( p_patch, bmodel, 0, rotate );
-        }
-#endif
 
         // アトリビュートのオーバーライト
         //NAGI_Printf( "rx%d rz%d lx%d lz%d sx%d sz%d \n", read_grid_x, read_grid_z, local_grid_x, local_grid_z, size_x, size_z );

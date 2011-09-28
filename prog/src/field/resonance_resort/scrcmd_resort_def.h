@@ -53,6 +53,7 @@
 #define RESORT_GET_PARAM_CITYNAME_SEC_INDEX   (37)
 #define RESORT_GET_PARAM_NEON_SEC_INDEX       (38)
 #define RESORT_GET_PARAM_CELEB_TRADE_NO       (39)
+#define RESORT_GET_PARAM_INDEX                (40)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -145,7 +146,6 @@
 #define RESORT_MSGID_WHERETOGO      (4)  //どこへ行きたいか
 #define RESORT_MSGID_APPEAL         (5)  //アピール文
 #define RESORT_MSGID_SHOP_INFO      (6)  //お店情報
-#define RESORT_MSGID_GOSSIP         (7)  //噂（特殊NPCの話)
 #define RESORT_MSGID_MEDAL_HAVE     (8)  //メダル自慢
 #define RESORT_MSGID_MEDAL_NONE     (9)  //メダルないよ
 #define RESORT_MSGID_RECORD_NEXT    (10)  //出来事まだあるよ
@@ -377,6 +377,11 @@
 #define RESORT_RESET_MMDL_RESIDENT_07         (7)
 #define RESORT_RESET_MMDL_SECRETARY_ALL       (8)
 
+//_RESORT_SET_SCENE_VISIBLE
+#define RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE      (0) //話しかけてる以外の歩行者
+#define RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE  (1) //全歩行者
+#define RESORT_SCENE_VISIBLE_DEFAULT              (2) //通常に戻す
+
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
 #define  RESORT_RECORD_ID_DENDOU      ( 1)//殿堂入りした
@@ -400,7 +405,7 @@
 #define  RESORT_RECORD_ID_VIDEO       (19)//バトルビデオをみた
 #define  RESORT_RECORD_ID_RNDMATCH    (20)//ランダムマッチをした
 #define  RESORT_RECORD_ID_WHEEL       (21)//観覧車に乗った
-#define  RESORT_RECORD_ID_INFINITYD   (22)//無限ダンジョンをした
+#define  RESORT_RECORD_ID_INFINITYD_B (22)//くろのまてんろうへいった
 #define  RESORT_RECORD_ID_WBT         (23)//WBTへ参加した
 #define  RESORT_RECORD_ID_JA          (24)//JAへ行った
 #define  RESORT_RECORD_ID_TVT_GAME    (25)//ライブキャスターミニゲームをした
@@ -410,4 +415,5 @@
 #define  RESORT_RECORD_ID_MYSTERYGIFT (29)//ふしぎなおくりものを貰った
 #define  RESORT_RECORD_ID_IR          (30)//IRをした
 #define  RESORT_RECORD_ID_GETPOKE     (31)//ポケモンを捕まえた
-#define  RESORT_RECORD_ID_MAX         (32)//最大数
+#define  RESORT_RECORD_ID_INFINITYD_W (32)//しろのじゅどうへいった
+#define  RESORT_RECORD_ID_MAX         (33)//最大数

@@ -19,7 +19,7 @@
 */
 //=============================================================================
 //-------------------------------------
-///場所とゾーンID　//TODO
+///場所とゾーンID
 //=====================================
 static const ZONEID sc_placeIDToZoneID[RESORT_PLACEID_MAX] =
 {
@@ -165,97 +165,97 @@ void RESORT_MAP_GetResidentGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z, u16 *p
 		//LAND_DATA_PATCH_JA_CAFE_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_CAFE_02_R
-    { 2, 3, DIR_LEFT },
+    { 2, 4, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_CAFE_02_L
-    { 3, 3, DIR_RIGHT },
+    { 3, 2, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_CAFE_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_CAFE_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_LOT_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_LOT_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_LOT_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_LOT_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_LOT_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_LOT_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_PARLOR_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_PARLOR_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_PARLOR_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_PARLOR_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_PARLOR_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_PARLOR_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_MARKET_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_MARKET_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_MARKET_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_MARKET_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_MARKET_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_MARKET_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_FLORIST_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_FLORIST_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_FLORIST_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_FLORIST_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_FLORIST_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_FLORIST_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_NURSERY_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_NURSERY_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_NURSERY_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_NURSERY_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_NURSERY_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_NURSERY_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_EXERCICE_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_EXERCICE_02_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_EXERCICE_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_EXERCICE_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_EXERCICE_02_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_EXERCICE_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_01_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_02_R
     { 2, 3, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_03_R
-    { 2, 3, DIR_LEFT },
+    { 1, 4, DIR_LEFT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_01_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_02_L
     { 3, 3, DIR_RIGHT },
 		//LAND_DATA_PATCH_JA_ANTIQUE_03_L
-    { 3, 3, DIR_RIGHT },
+    { 4, 2, DIR_RIGHT },
   };
   GF_ASSERT( LAND_DATA_PATCH_MAX == NELEMS(sc_resident_pos) );
 
@@ -286,23 +286,23 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
   }sc_board_pos[]  =
   {
 		//LAND_DATA_PATCH_JA_CAFE_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_CAFE_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_CAFE_02_R
-    { 0, 1 },
+    { 0, 3 },
 		//LAND_DATA_PATCH_JA_CAFE_02_L
-    { 5, 2 },
+    { 5, 1 },
 		//LAND_DATA_PATCH_JA_CAFE_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_CAFE_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_LOT_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_LOT_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_LOT_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_LOT_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_LOT_02_L
@@ -310,11 +310,11 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_LOT_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_PARLOR_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_PARLOR_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_PARLOR_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_PARLOR_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_PARLOR_02_L
@@ -322,11 +322,11 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_PARLOR_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_MARKET_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_MARKET_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_MARKET_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_MARKET_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_MARKET_02_L
@@ -334,11 +334,11 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_MARKET_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_FLORIST_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_FLORIST_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_FLORIST_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_FLORIST_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_FLORIST_02_L
@@ -346,11 +346,11 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_FLORIST_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_NURSERY_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_NURSERY_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_NURSERY_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_NURSERY_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_NURSERY_02_L
@@ -358,11 +358,11 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_NURSERY_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_EXERCICE_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_EXERCICE_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_EXERCICE_03_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_EXERCICE_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_EXERCICE_02_L
@@ -370,17 +370,17 @@ void RESORT_MAP_GetBoardGridPosOfs( u16 shop_3dmd, u16 *p_x, u16 *p_z )
 		//LAND_DATA_PATCH_JA_EXERCICE_03_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_01_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_02_R
-    { 0, 1 },
+    { 0, 2 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_03_R
-    { 0, 1 },
+    { 0, 3 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_01_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_02_L
     { 5, 2 },
 		//LAND_DATA_PATCH_JA_ANTIQUE_03_L
-    { 5, 2 },
+    { 5, 1 },
   };
 
   GF_ASSERT( LAND_DATA_PATCH_MAX == NELEMS(sc_board_pos) );
@@ -419,20 +419,20 @@ void RESORT_MAP_GetSecretaryGridPos( u16 kind, u16 *p_x, u16 *p_z, u16 *p_dir )
     //移動
     {
       11,
-      3,
+      7,
       DIR_DOWN,
     },
     //ポケセン
     {
       11,
       11,
-      DIR_DOWN,
+      DIR_LEFT,
     },
     //パソコン
     {
-      13,
-      7,
-      DIR_UP,
+      10,
+      10,
+      DIR_DOWN,
     },
   };
 

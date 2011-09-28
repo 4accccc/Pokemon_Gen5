@@ -81,6 +81,7 @@
 #define SEQ_INFOMATION_Q04        (4)
 #define SEQ_INFOMATION_Q05        (5)
 #define SEQ_INFOMATION_Q06        (6)
+#define SEQ_INFOMATION_Q07        (7)
 
 //ƒZƒŒƒu
 #define SEQ_CELEB_SPOT            (0)

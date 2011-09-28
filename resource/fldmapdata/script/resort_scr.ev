@@ -269,6 +269,7 @@ sub_tourist_invitation:
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
   _CALL sub_shopbuild_camera
+  _CALL sub_crowdpeople_visible_off
 	_MAP_FADE_BLACK_IN_SLOW()
 	_MAP_FADE_END_CHECK()
 
@@ -408,6 +409,7 @@ sub_recent_doing:
         ENDWHILE
 
       ELSE
+        _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 0 )
         _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 1 )
         _RESORT_GET_MSGID( RESORT_MSGID_RECORD_NONE, LWK_MSGID )
       	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
@@ -489,6 +491,7 @@ sub_tourist_spot:
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
     _CALL sub_setspot_camera
+    _CALL sub_crowdpeople_visible_off
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
 
@@ -525,7 +528,6 @@ sub_tourist_spot:
       //満足した
       _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
       _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
-
 
       //お店に経験値が入る
       _RESORT_ADD_EXP_SHOP( LWK_LIST_RET_IDX, LWK_EXP, LWK_RET, LWK_LV )
@@ -569,6 +571,7 @@ sub_tourist_spot:
 		      _CAMERA_START()		//カメラ操作開始
 		      _CAMERA_PURGE()		//カメラのバインドを解く
           _CALL sub_shopbuild_camera
+          _CALL sub_crowdpeople_visible_off
 	        _MAP_FADE_WHITE_IN_SLOW()
 	        _MAP_FADE_END_CHECK()
 
@@ -583,54 +586,60 @@ sub_tourist_spot:
 
 
       _SYSWIN_CLOSE()
-      //フェードアウト
-	    _BLACK_OUT()
-	    _DISP_FADE_END_CHECK()
-
-      //街カメラで人が見えてしまうので消す
-	    _OBJ_ANIME( LWK_OBJID, anm_off_visible )
-      _OBJ_ANIME_WAIT()
-
-      _CALL sub_city_camera
-      _BLACK_IN()
-      _DISP_FADE_END_CHECK()
 
       //街に経験値が入る
       _RESORT_ADD_EXP_CITY( LWK_EXP, LWK_RET2, LWK_LV )
+      
+      //LV最大以外は街カメラへいく
+      IF $LWK_RET2 != RESORT_SET_SPOT_CITY_LVMAX THEN
 
-      //街の経験値アップ
-      _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
-      _NUMBER( 7, LWK_EXP, 5 )
-      _SYSWIN_MSG( resort_sys_17, POS_DOWN )
-      //街レベルアップ
-      IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-        _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
+        //フェードアウト
+	      _BLACK_OUT()
+	      _DISP_FADE_END_CHECK()
+        _CALL sub_crowdpeople_visible_on
 
-        _NUMBER( 8, LWK_LV, 1 )
-        _SYSWIN_MSG( resort_sys_18_00, POS_DOWN )
-        _ME_PLAY( SEQ_ME_AVENUE_02 )
-        _SYSWIN_MSG( resort_sys_18_me, POS_DOWN )
-	      _ME_WAIT()
-	      _AB_KEYWAIT_MARK()
-        _SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
+        //街カメラで人が見えてしまうので消す
+	      _OBJ_ANIME( LWK_OBJID, anm_off_visible )
+        _OBJ_ANIME_WAIT()
 
-        //肩書き
-        IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-          _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
-          _SYSWIN_MSG( resort_sys_18_02, POS_DOWN )
+        _CALL sub_city_camera
+        _BLACK_IN()
+        _DISP_FADE_END_CHECK()
+
+        //経験値加算メッセージ
+        _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+        _NUMBER( 7, LWK_EXP, 5 )
+        _SYSWIN_MSG( resort_sys_17, POS_DOWN )
+
+        //街レベルアップ
+        IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+          _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
+
+          _NUMBER( 8, LWK_LV, 1 )
+          _SYSWIN_MSG( resort_sys_18_00, POS_DOWN )
+          _ME_PLAY( SEQ_ME_AVENUE_02 )
+          _SYSWIN_MSG( resort_sys_18_me, POS_DOWN )
+	        _ME_WAIT()
+	        _AB_KEYWAIT_MARK()
+          _SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
+
+          //肩書き
+          IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+            _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
+            _SYSWIN_MSG( resort_sys_18_02, POS_DOWN )
+          ENDIF
+
+          //ご褒美
+          IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+
+            _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+            _SYSWIN_MSG( resort_sys_22, POS_DOWN )
+            //=========================================
+            //LVアップしてご褒美があったのでご褒美イベント開始
+            $WK_SCENE_C16R0101_PRIZE = 1
+            //=========================================
+          ENDIF
         ENDIF
-
-        //ご褒美
-        IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-
-          _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
-          _SYSWIN_MSG( resort_sys_22, POS_DOWN )
-          //=========================================
-          //LVアップしてご褒美があったのでご褒美イベント開始
-          $WK_SCENE_C16R0101_PRIZE = 1
-          //=========================================
-        ENDIF
-
       ENDIF
     ENDIF
 
@@ -644,6 +653,9 @@ sub_tourist_spot:
     //フェードアウト
 	  _BLACK_OUT()
 	  _DISP_FADE_END_CHECK()
+
+    //表示ON
+    _CALL sub_crowdpeople_visible_on
 
     //黒いうちにけす
     _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
@@ -736,7 +748,7 @@ sub_camera_ret:
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
-
+  _CALL sub_crowdpeople_visible_on
   _BLACK_IN()
   _DISP_FADE_END_CHECK()
 }
@@ -839,7 +851,6 @@ sub_resident_institution:
       _RESORT_SET_WORD( RESORT_WORD_SHOP_RESTEXP, RESORT_WORD_PARAM_FRONT, 0, 0 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_WORD_PARAM_FRONT, 0, 1 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP_LV, RESORT_WORD_PARAM_FRONT, 0, 2 )
-
       _RESORT_GET_MSGID( RESORT_RESIDENT_LV_MSGID, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 
@@ -960,6 +971,7 @@ sub_resident_merge:
 	  _CAMERA_START()		//カメラ操作開始
 	  _CAMERA_PURGE()		//カメラのバインドを解く
     _CALL sub_shopbuild_camera
+    _CALL sub_crowdpeople_visible_off
 	  _MAP_FADE_BLACK_IN_SLOW()
 	  _MAP_FADE_END_CHECK()
 
@@ -1012,6 +1024,28 @@ sub_shopbuild_camera:
 _RET
 
 //==============================================================
+//サブルーチン：歩行者全表示OFF
+//==============================================================
+sub_crowdpeople_visible_off:
+{
+  _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_visible_off )
+	_OBJ_ANIME_WAIT()
+}
+_RET
+
+//==============================================================
+//サブルーチン：歩行者全表示ON
+//==============================================================
+sub_crowdpeople_visible_on:
+{
+  _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_DEFAULT )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_visible_on )
+	_OBJ_ANIME_WAIT()
+}
+_RET
+
+//==============================================================
 //サブルーチン：住民くじびき処理
 //==============================================================
 sub_resident_lot:
@@ -1021,7 +1055,20 @@ sub_resident_lot:
   _RESORT_GET_DATA( RESORT_GET_PARAM_LOT_DAY_FLAG, LWK_DAY_FLAG )
 
   IF $LWK_DAY_FLAG == FALSE THEN
-   
+
+    //カメラ用インデックス取得
+    _RESORT_GET_DATA( RESORT_GET_PARAM_INDEX, LWK_INDEX )
+
+	  _BALLOONWIN_CLOSE()
+	  _BLACK_OUT()
+	  _DISP_FADE_END_CHECK()
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+    _CALL sub_shopbuild_camera
+    _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE )
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
     //くじをひく
     $LWK_INDEX  = 0
     _CALL sub_resident_lot_one
@@ -1032,11 +1079,14 @@ sub_resident_lot:
 
       //フィーバーのとき
       _RESORT_GET_MSGID( RESORT_SHOP_LOT_FEVER_MSGID, LWK_MSGID )
-  	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_UP )
 
       $LWK_INDEX  = 1
       _CALL sub_resident_lot_one
     ENDIF
+
+
+    _CALL sub_camera_ret
 
     _RESORT_SET_LOT_DAY_FLAG() 
   ELSE
@@ -1056,11 +1106,11 @@ sub_resident_lot_one:
   _RESORT_LOT( LWK_INDEX, LWK_RET_ITEM, LWK_RET )
 
   _RESORT_GET_MSGID( RESORT_SHOP_LOT_READY_MSGID, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_UP )
 
   IF $LWK_RET == RESORT_LOT_FAILURE THEN
     _RESORT_GET_MSGID( RESORT_SHOP_LOT_FAILER_MSGID, LWK_MSGID )
-  	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_UP )
   ELSE
 
     _ITEM_NAME( 1, LWK_RET_ITEM )
@@ -1072,7 +1122,7 @@ sub_resident_lot_one:
     ENDIF
 
     _ME_PLAY( SEQ_ME_AVENUE_03 )
-  	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_UP )
 	  _ME_WAIT()
 	  _AB_KEYWAIT_MARK()
     _BALLOONWIN_CLOSE()
@@ -1388,7 +1438,7 @@ sub_resident_service_lv:
       _RESORT_GET_MSGID( RESORT_SHOP_EGG_NG_MSGID, LWK_MSGID )
       _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
     ELSE
-      _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET )
+      _RESORT_ADD_LV( LWK_RET_IDX, LWK_LIST_RET_PARAM, LWK_RET )
 
       IF $LWK_RET == TRUE THEN
 
@@ -1425,6 +1475,7 @@ sub_resident_service_effect:
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
   _CALL sub_setspot_camera
+  _CALL sub_crowdpeople_visible_off
 
   //フェードイン
   _BLACK_IN()
@@ -2854,6 +2905,19 @@ sub_celeb_trade:
 }
 _RET
 
+//--------------------------------------------------------------------
+//非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_visible_off
+  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_visible_on
+  _ANIME_DATA AC_VANISH_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*            デバッグスクリプト                              */
@@ -2882,6 +2946,7 @@ EVENT_START ev_reserve_resort_debug
 		  _CAMERA_START()		//カメラ操作開始
 		  _CAMERA_PURGE()		//カメラのバインドを解く
       _CALL sub_shopbuild_camera
+      _CALL sub_crowdpeople_visible_off
       _BLACK_IN()
       _DISP_FADE_END_CHECK()
 
@@ -2901,6 +2966,7 @@ EVENT_START ev_reserve_resort_debug
 		  _CAMERA_START()		//カメラ操作開始
 		  _CAMERA_PURGE()		//カメラのバインドを解く
       _CALL sub_setspot_camera
+      _CALL sub_crowdpeople_visible_off
       _BLACK_IN()
       _DISP_FADE_END_CHECK()
 
@@ -2923,12 +2989,17 @@ EVENT_START ev_reserve_resort_debug
 
     _CALL sub_camera_ret
   CASE 3 THEN
-    $WK_SCENE_C16_TUTORIAL_SEQ  = 6
-    $WK_SCENE_C16_TUTORIAL_01   = 1
-    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
+    IF $WK_SCENE_C16_TUTORIAL_SEQ != 6 THEN
+      $WK_SCENE_C16_TUTORIAL_SEQ  = 6
+      $WK_SCENE_C16_TUTORIAL_01   = 1
+      _RESORT_SET_MY_DATA( RESORT_MY_PARAM_IS_TUTORIAL, FALSE )
+      //秘書を追加
+      _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_SECRETARY_01 )
+      _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_SECRETARY_02 )
 
-    _MAP_CHANGE( ZONE_ID_R04, 430, 490, DIR_UP )
-    $LWK_MENU_LOOP = FALSE
+      _MAP_CHANGE( ZONE_ID_R04, 430, 490, DIR_UP )
+      $LWK_MENU_LOOP = FALSE
+    ENDIF
   DEFAULT
     $LWK_MENU_LOOP = FALSE
   ENDSWITCH
