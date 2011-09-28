@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/27 21:20:52
+#save date:2011/09/28 17:49:35
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\bc10.wms
 #SECTION START:OBJ_EVENT
@@ -383,11 +383,11 @@ DOOR_ID_D31R0201_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-0 16 0
+0 11 0
 #size
 1 1
 #rail way
