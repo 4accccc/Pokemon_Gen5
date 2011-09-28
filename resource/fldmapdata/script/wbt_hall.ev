@@ -802,9 +802,6 @@ _BGM_NOW_MAP_RECOVER()
 //トーナメントの種類を格納
 _CALL ev_wbt_get_cup
 
-//入場エフェクトＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_04)
-
 _WBT_GMK_EFFECT_START( LWK_EFFECT ,SCR_WBT_EFFECT_POS_R)
 
 //チャンピオンズトーナメントの場合のみタイムウェイト
@@ -937,16 +934,18 @@ _BALLOONWIN_CLOSE()
 
 _SE_STOP()
 
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
+_OBJ_ANIME_WAIT()
+
 //煙と花火用SE
 _SE_PLAY(SEQ_SE_SW_WBT_19)
 
 _WBT_GMK_EXPLOSION( SCR_WBT_VS3 )
 
-_TIME_WAIT( 40 )
+_TIME_WAIT( 30 )
 
-_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
-_OBJ_ANIME_WAIT()
+_SE_WAIT()
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( LWK_WIN_OR_LOSE )
@@ -1238,7 +1237,7 @@ sub_mix_pokemon:
   _WBT_MIX_SELECTED_NAME( 0, LWK_TARGET_M )
   _SUBWIN_MSG( msg_wbt_yell_mix_01, 3, 3, 1 )
   _WBT_MIX_SELECTED_NAME( 0, LWK_TARGET_E )
-  _SUBWIN_MSG( msg_wbt_yell_mix_01, 18, 16, 2 )
+  _SUBWIN_MSG( msg_wbt_yell_mix_01, 19, 16, 2 )
 
   _TIME_WAIT( 60 )
 
@@ -1346,8 +1345,13 @@ _RET
 /*		声援　メッセージ表示のコール				  */
 /**************************************************************/
 ev_rnd_yell_msg_2nd:
-//優勝回数で確率決定、LWK_PROBABILITYに代入
-_CALL ev_yell_scr
+
+SWITCH $LWK_POSITION
+CASE 0 THEN	//自分側
+	_CALL ev_yell_scr
+CASE 1 THEN //相手側は１００％
+	$LWK_PROBABILITY = 99	
+ENDSWITCH
 
 //声援決め乱数
 _GET_RND( LWK_RND,100 )
@@ -1395,7 +1399,7 @@ _DEBUG_PRINT_WK(LWK_RND)
 	IF $LWK_PROBABILITY >= $LWK_RND THEN
 	
 		//X座標・Y座標・ナンバー決め
-		$LWK_YELL_POSX = 18
+		$LWK_YELL_POSX = 19
 		$LWK_YELL_POSY = 16
 		$LWK_SUBWIN_NUM = 2
 		
