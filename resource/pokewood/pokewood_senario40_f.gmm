@@ -353,135 +353,133 @@
 		<language name="JPN" width="256">せんぱい</language>
 		<language name="JPN_KANJI" width="256">せんぱい</language>
 	</row>
-	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">おねえさんの　カットインだらけ
-だからね</language>
-		<language name="JPN_KANJI" width="256">おねえさんの　カットインだらけ
-だからね</language>
-	</row>
-	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">ね！</language>
-		<language name="JPN_KANJI" width="256">ね！</language>
-	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">テストです</language>
-		<language name="JPN_KANJI" width="256">テストです</language>
+		<language name="JPN" width="256">そざいてすとよ！</language>
+		<language name="JPN_KANJI" width="256">そざいてすとよ！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">テストです</language>
-		<language name="JPN_KANJI" width="256">テストです</language>
+		<language name="JPN" width="256">みるだけー</language>
+		<language name="JPN_KANJI" width="256">みるだけー</language>
+	</row>
+	<row id="pw_event0_hero_1">
+		<language name="JPN" width="256">だれ？</language>
+		<language name="JPN_KANJI" width="256">だれ？</language>
+	</row>
+	<row id="pw_event0_enemy_1">
+		<language name="JPN" width="256">てきです。</language>
+		<language name="JPN_KANJI" width="256">てきです。</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">カットインよ！</language>
+		<language name="JPN_KANJI" width="256">カットインよ！</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">はいはいー</language>
+		<language name="JPN_KANJI" width="256">はいはいー</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">カットインだよ！</language>
-		<language name="JPN_KANJI" width="256">カットインだよ！</language>
+		<language name="JPN" width="256">つぎねー</language>
+		<language name="JPN_KANJI" width="256">つぎねー</language>
 	</row>
 	<row id="pw_event6_enemy_1">
-		<language name="JPN" width="256">ほんとだー</language>
-		<language name="JPN_KANJI" width="256">ほんとだー</language>
+		<language name="JPN" width="256">そですねー</language>
+		<language name="JPN_KANJI" width="256">そですねー</language>
 	</row>
 	<row id="pw_event7_hero_0">
-		<language name="JPN" width="256">しっぱい</language>
-		<language name="JPN_KANJI" width="256">しっぱい</language>
+		<language name="JPN" width="256">えーしっぱいぃー？</language>
+		<language name="JPN_KANJI" width="256">えーしっぱいぃー？</language>
 	</row>
 	<row id="pw_event7_enemy_0">
-		<language name="JPN" width="256">しっぱい</language>
-		<language name="JPN_KANJI" width="256">しっぱい</language>
+		<language name="JPN" width="256">ざんねん、ざんねん</language>
+		<language name="JPN_KANJI" width="256">ざんねん、ざんねん</language>
 	</row>
 	<row id="pw_event8_hero_0">
-		<language name="JPN" width="256">クリア</language>
-		<language name="JPN_KANJI" width="256">クリア</language>
+		<language name="JPN" width="256">くりあー</language>
+		<language name="JPN_KANJI" width="256">くりあー</language>
 	</row>
 	<row id="pw_event8_enemy_0">
-		<language name="JPN" width="256">クリア</language>
-		<language name="JPN_KANJI" width="256">クリア</language>
+		<language name="JPN" width="256">なんにもおきないけどねー</language>
+		<language name="JPN_KANJI" width="256">なんにもおきないけどねー</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

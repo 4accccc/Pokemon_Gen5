@@ -2361,6 +2361,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
           && POKEWOOD_CUTIN_IsExits( senario, wk->pokewoodSeqWork.event_no, _get_pokewood_success_flag(wk), BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) ) )
       {
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CUTIN_SETUP;
+        wk->pokewoodSeqWork.vfx=-1;
       }
       else
       {
