@@ -55,7 +55,7 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_init_d27r1201
 
   // ゲート状態設定
-  _CALL sub_exit_change
+  _CALL sub_gate_set
 
 INIT_EVENT_END
 /************************************************************/
@@ -64,15 +64,20 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_recover_d27r1201
 
   // ゲート状態設定
-  _CALL sub_exit_change
+  _CALL sub_gate_set
 
 INIT_EVENT_END
 
 // ゲート(バリアー)の状態をフラグを見て設定
-sub_exit_change:
+sub_gate_set:
 {
-  DEFINE_LOCAL  version   // ROMバージョン
-
+//パスワード解除済みならゲートを開放
+  IF $WK_SCENE_D27R1201_BARRIER_01 == 1 THEN
+    _HIDE_SHIP_BOW_BUTTON_SET( 0, 1 )
+    _HIDE_SHIP_BOW_BUTTON_SET( 1, 1 )
+    _HIDE_SHIP_BOW_BUTTON_SET( 2, 1 )
+    _HIDE_SHIP_BOW_BUTTON_SET( 3, 1 )
+  ENDIF
 }
 _RET
 
@@ -199,13 +204,13 @@ EVENT_START ev_bg_d27r1201_pass_01
         
         
         //バリア解除処理
-        _HIDE_SHIP_BOW_GATE_OFF( 3 )
-        _TIME_WAIT(8)
-        _HIDE_SHIP_BOW_GATE_OFF( 2 )
+        _HIDE_SHIP_BOW_GATE_OFF( 0 )
         _TIME_WAIT(8)
         _HIDE_SHIP_BOW_GATE_OFF( 1 )
         _TIME_WAIT(8)
-        _HIDE_SHIP_BOW_GATE_OFF( 0 )
+        _HIDE_SHIP_BOW_GATE_OFF( 2 )
+        _TIME_WAIT(8)
+        _HIDE_SHIP_BOW_GATE_OFF( 3 )
         
         //すべてのバリアが解除され
         _SYSWIN_MSG( msg_d27r1201_switch_02 , POS_DOWN )

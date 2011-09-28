@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 12:23:11
+#save date:2011/09/28 22:28:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1301.wms
 #SECTION START:OBJ_EVENT
@@ -772,7 +772,7 @@ SCRID_POS_D27R1301_BARRIER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_04
+WK_SCENE_D27_SWITCH_01
 #Event Trigger Work Value
 0
 #Pos Type
@@ -789,7 +789,7 @@ SCRID_POS_D27R1301_SWITCH_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_04
+WK_SCENE_D27_SWITCH_01
 #Event Trigger Work Value
 0
 #Pos Type
@@ -806,7 +806,7 @@ SCRID_POS_D27R1301_SWITCH_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_03
+WK_SCENE_D27_SWITCH_02
 #Event Trigger Work Value
 0
 #Pos Type
@@ -823,7 +823,7 @@ SCRID_POS_D27R1301_SWITCH_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_02
+WK_SCENE_D27_SWITCH_03
 #Event Trigger Work Value
 0
 #Pos Type
@@ -840,7 +840,7 @@ SCRID_POS_D27R1301_SWITCH_04
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_01
+WK_SCENE_D27_SWITCH_04
 #Event Trigger Work Value
 0
 #Pos Type
@@ -857,7 +857,7 @@ SCRID_POS_D27R1301_BARRIER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_03
+WK_SCENE_D27_SWITCH_02
 #Event Trigger Work Value
 0
 #Pos Type
@@ -874,7 +874,7 @@ SCRID_POS_D27R1301_BARRIER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_02
+WK_SCENE_D27_SWITCH_03
 #Event Trigger Work Value
 0
 #Pos Type
@@ -891,7 +891,7 @@ SCRID_POS_D27R1301_BARRIER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D27_SWITCH_01
+WK_SCENE_D27_SWITCH_04
 #Event Trigger Work Value
 0
 #Pos Type

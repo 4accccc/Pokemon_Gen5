@@ -61,13 +61,13 @@
 // ゲート
 #define GATE_NUM        ( 4 )   // ゲート数
 #define GATE_1_X        (15 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE) // ゲート1 X座標
-#define GATE_1_Z        (14 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート1 Z座標
+#define GATE_1_Z        (17 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート1 Z座標
 #define GATE_2_X        (15 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE) // ゲート2 X座標
-#define GATE_2_Z        (15 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート2 Z座標
+#define GATE_2_Z        (16 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート2 Z座標
 #define GATE_3_X        (15 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE) // ゲート3 X座標
-#define GATE_3_Z        (16 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート3 Z座標
+#define GATE_3_Z        (15 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート3 Z座標
 #define GATE_4_X        (15 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE) // ゲート4 X座標
-#define GATE_4_Z        (17 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート4 Z座標
+#define GATE_4_Z        (14 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート4 Z座標
 
 // ゲートを解除するボタン
 #define OFF_BTN_NUM     ( 4 )   // =GATE_NUM
