@@ -23,20 +23,18 @@
 #define TR_FISHING_19                      9
 #define TR_ELITEM_20                      10
 #define TR_FISHING_18                     11
-#define TR_PRINCE_09                      12
-#define TR_PRINCESS_09                    13
-#define TR_PARASOL_11                     14
-#define R13_SUNGLASSES_01                 15
-#define TR_RANGERW_14                     16
-#define FLD_ITEM_133                      17
-#define FLD_ITEM_134                      18
-#define FLD_ITEM_135                      19
-#define FLD_ITEM_136                      20
-#define FLD_ITEM_137                      21
-#define FLD_ITEM_139                      22
-#define R13_POKE4_01                      23
-#define FLD_ITEM_138                      24
-#define FLD_ITEM_140                      25
+#define TR_PARASOL_11                     12
+#define R13_SUNGLASSES_01                 13
+#define TR_RANGERW_14                     14
+#define FLD_ITEM_133                      15
+#define FLD_ITEM_134                      16
+#define FLD_ITEM_135                      17
+#define FLD_ITEM_136                      18
+#define FLD_ITEM_137                      19
+#define FLD_ITEM_139                      20
+#define R13_POKE4_01                      21
+#define FLD_ITEM_138                      22
+#define FLD_ITEM_140                      23
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
