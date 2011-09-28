@@ -1071,6 +1071,16 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
             {
               continue;
             }
+
+            // バージョンチェック
+            // ４番道路だけバージョン別でゾーンIDが２つある為
+            // 直接判定する
+            if( ( GET_VERSION() == VERSION_B2 && (u32)(item_data->zone_id) == ZONE_ID_R04W ) ||
+                ( GET_VERSION() == VERSION_W2 && (u32)(item_data->zone_id) == ZONE_ID_R04 )
+                )
+            {
+              continue;
+            }
           }
           x = item_data->x;
           z = item_data->z;
