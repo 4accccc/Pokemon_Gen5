@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-09-28T12:39:51" source="m_dun2711_00_00.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-09-28T15:51:14" source="m_dun2711_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-09-28T12:39:51" source="m_dun2711_00_00.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-09-28T15:51:14" source="m_dun2711_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1896,8 +1896,8 @@
 		vertex_size="20" polygon_size="5"
 		triangle_size="0" quad_size="5"
 		volume_min="0.710938 -0.093750 -0.226563"
-		volume_max="1.757813 0.520264 2.023438"
-		volume_r="2.730225"
+		volume_max="1.773438 0.520264 2.023438"
+		volume_r="2.740479"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1908,40 +1908,40 @@
 					<mtx idx="0"/>
 					<tex st="74.687500 67.250000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xyz xyz="1.757813 0.520264 1.789063"/>
+					<pos_xyz xyz="1.773438 0.520264 1.789063"/>
 					<tex st="75.062500 67.250000"/>
-					<pos_xz xz="1.757813 2.023438"/>
+					<pos_xz xz="1.773438 2.023438"/>
 					<tex st="75.062500 96.750000"/>
-					<pos_xy xy="1.757813 0.085938"/>
+					<pos_xy xy="1.773438 0.085938"/>
 					<tex st="74.687500 96.750000"/>
-					<pos_xz xz="1.757813 1.789063"/>
+					<pos_xz xz="1.773438 1.789063"/>
 					<tex st="73.187500 96.750000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xz xz="1.664063 2.023438"/>
+					<pos_xz xz="1.679688 2.023438"/>
 					<tex st="73.625000 96.750000"/>
-					<pos_xy xy="1.757813 0.085938"/>
+					<pos_xy xy="1.773438 0.085938"/>
 					<tex st="73.625000 67.250000"/>
-					<pos_xy xy="1.757813 0.520264"/>
+					<pos_xy xy="1.773438 0.520264"/>
 					<tex st="73.187500 67.250000"/>
-					<pos_xy xy="1.664063 0.520264"/>
+					<pos_xy xy="1.679688 0.520264"/>
 					<tex st="35.250000 3.062500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xz xz="1.664063 1.789063"/>
+					<pos_xz xz="1.679688 1.789063"/>
 					<tex st="36.250000 3.062500"/>
-					<pos_xz xz="1.664063 2.023438"/>
+					<pos_xz xz="1.679688 2.023438"/>
 					<tex st="36.250000 4.437500"/>
-					<pos_xy xy="1.757813 0.520264"/>
+					<pos_xy xy="1.773438 0.520264"/>
 					<tex st="35.250000 4.437500"/>
-					<pos_xz xz="1.757813 1.789063"/>
+					<pos_xz xz="1.773438 1.789063"/>
 					<tex st="54.375000 96.750000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_xy xy="1.664063 0.085938"/>
+					<pos_xy xy="1.679688 0.085938"/>
 					<tex st="74.250000 96.750000"/>
-					<pos_xz xz="1.664063 2.023438"/>
+					<pos_xz xz="1.679688 2.023438"/>
 					<tex st="74.250000 67.250000"/>
-					<pos_xy xy="1.664063 0.520264"/>
+					<pos_xy xy="1.679688 0.520264"/>
 					<tex st="54.375000 67.250000"/>
-					<pos_xz xz="1.664063 1.789063"/>
+					<pos_xz xz="1.679688 1.789063"/>
 					<tex st="40.562500 -68.812500"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xyz xyz="1.125000 0.345703 -0.226563"/>
