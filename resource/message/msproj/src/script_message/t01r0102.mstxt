@@ -577,10 +577,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]みずタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:12" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -588,10 +589,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]みずタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:12" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -617,10 +619,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]ほのおタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:18" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -628,10 +631,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]ほのおタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:18" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -657,10 +661,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]くさタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:18" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -668,10 +673,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl1:xcenter ]くさタイプの　ポケモン
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:50:18" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -697,10 +703,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ポケモンを　えらんでね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -708,10 +714,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ポケモンを　選んでね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -737,10 +743,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>この　ポケモンで　いいの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -748,10 +754,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>この　ポケモンで　いいの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -777,10 +783,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>これに　きめた！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -788,10 +794,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>これに　決めた！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -817,10 +823,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>はい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -828,10 +834,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>はい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:51:26" />
+				Time="2011-09-28T06:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -853,6 +859,46 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t01r0102_ball_select_no"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:08:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:08:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:08:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:08:21" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t01r0102_letter_01"
 		Style="Large">
 		<LanguageCell
@@ -860,7 +906,7 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:52:51" />
+				Time="2011-09-28T06:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -871,7 +917,7 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:52:51" />
+				Time="2011-09-28T06:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -900,7 +946,7 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:49:50" />
+				Time="2011-09-28T06:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -911,7 +957,7 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T09:49:50" />
+				Time="2011-09-28T06:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -923,6 +969,48 @@
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-16T09:49:50" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01r0102_ball_get_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:09:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-28T06:09:21" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
