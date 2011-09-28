@@ -597,6 +597,16 @@
 		<language name="JPN_KANJI" width="256">レディアン『急げ！
 時間転送機の　限界が　近い！</language>
 	</row>
+	<row id="pw_turn_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ま……
+まずいわ……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ま……
+まずいわ……！</language>
+	</row>
+	<row id="pw_turn_enemy_5">
+		<language name="JPN" width="256">レディアン『ダメなのか……！</language>
+		<language name="JPN_KANJI" width="256">レディアン『ダメなのか……！</language>
+	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『レディアン！
 どういうことなの！？▼
@@ -855,12 +865,12 @@
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『だいじょうぶだ！
-この　てんそうき　ボディの▽
-たいねつせいを　アップさせたわ！▼
+この　てんそうきは　ボディの▽
+たいねつせいが　アップしている！▼
 いける！　いけるわ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『大丈夫だ！
-この　時間転送機　ボディの▽
-耐熱性を　アップさせたわ！▼
+この　時間転送機は　ボディの▽
+耐熱性が　アップしている！▼
 いける！　いけるわ！</language>
 	</row>
 	<row id="pw_event4_enemy_0">

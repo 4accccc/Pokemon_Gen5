@@ -543,6 +543,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『相手は　人間
 傷つける　わけには　いかない……</language>
 	</row>
+	<row id="pw_turn_enemy_1">
+		<language name="JPN" width="256">おとこのニンゲン『わー！
+ポケモンだー！　にげろー！</language>
+		<language name="JPN_KANJI" width="256">男のニンゲン『わー！
+ポケモンだー！　逃げろー！</language>
+	</row>
 	<row id="pw_turn_enemy_2">
 		<language name="JPN" width="256">レディアン『あの　ニンゲン
 ためらって　いるのか……？▼
@@ -847,20 +853,16 @@
 忘れてしまったのだ！</language>
 	</row>
 	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256">ニンゲンたち『わー！
-ポケモンだー！▼
-つかまえられるぞ！▼
-たおされちゃうわ！▼
-にげろー！▼
-たすけてー！▼
-きゃー！▼</language>
-		<language name="JPN_KANJI" width="256">ニンゲンたち『わー！
-ポケモンだー！▼
-捕まえられるぞ！▼
-倒されちゃうわ！▼
-逃げろー！▼
-助けてー！▼
-きゃー！▼</language>
+		<language name="JPN" width="256">おとこのニンゲン『うわー！
+ポケモンが　こっちにくるぞ！▼
+おんなのニンゲン『きゃー！
+つかまえないで！　おねがい！▼
+ニンゲンのこども『たすけてー！</language>
+		<language name="JPN_KANJI" width="256">男のニンゲン『うわー！
+ポケモンが　こっちに来るぞ！▼
+女のニンゲン『きゃー！
+捕まえないで！　お願い！▼
+ニンゲンの子供『助けてー！</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">レディアン『みろ……！
