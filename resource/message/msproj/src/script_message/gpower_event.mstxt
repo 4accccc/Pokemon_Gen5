@@ -923,11 +923,11 @@
 		Label="msg_gpower_effect_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は
-ゆれくさを　みつけやすく　なった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　ゆれる　くさむらや
+つちけむりを　みつけやすく　なった！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:28:35" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -935,11 +935,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は
-ゆれくさを　見つけやすく　なった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　揺れる　草むらや
+土煙を　見つけやすく　なった</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:28:49" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -965,10 +965,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は　かくしあなで
-ポケモンに　そうぐうしやすく　なった</Text>
+ポケモンと　であいやすく　なった！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:30:04" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -977,10 +977,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　かくしあなで
-ポケモンに　遭遇しやすく　なった</Text>
+ポケモンに　出会いやすく　なった！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:30:41" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1006,10 +1006,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は　めずらしい
-ポケモンに　そうぐうしやすく　なった</Text>
+ポケモンと　であいやすく　なった！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:30:13" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:08:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1017,11 +1017,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は　珍しい
-ポケモンに　遭遇しやすく　なった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　めずらしい
+ポケモンと　出会いやすく　なった</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-26T11:30:33" />
+				User="masafumi_saitou:W00225"
+				Time="2011-09-28T06:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
