@@ -602,7 +602,7 @@ static void Bw_Graphic_Load( POKEWOOD_CUTIN *p_wk, ARCDATID plt, ARCDATID chr, A
     for( i = 0; i < POKEWOOD_CUTIN_CLWK_NUM; i++ )
     {
       p_wk->p_clwk[i] = GFL_CLACT_WK_Create( p_wk->p_clunit, p_wk->chr, p_wk->plt, p_wk->cel,  &clwk_data, CLSYS_DRAW_MAIN, p_wk->heapID );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
     }
   }
 
