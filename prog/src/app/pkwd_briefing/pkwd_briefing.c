@@ -367,7 +367,7 @@ static void releaseEndrollBmpwin( G2D_CONTROL* CG2d );
 
 static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  int scenario_no, HEAPID heapID );
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
-static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID);
+static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, MYSTATUS *mystatus, HEAPID heapID);
 static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
 
 static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
@@ -531,7 +531,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
     btlv_init_audience_disp( tw, TRUE, tw->heapID );
-    initBriefingMsgdata( &tw->CG2d, tw->param->scenario_no, tw->heapID );
+    initBriefingMsgdata( &tw->CG2d, tw->param->scenario_no, tw->param->mystatus, tw->heapID );
     initBriefingBmpwin( &tw->CG2d, tw->heapID );
     
     // 1ページ目の文字列を描画
@@ -1125,7 +1125,7 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
 //==============================================================================
 //  あらすじ画面用メッセージデータ初期化
 //==============================================================================
-static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
+static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, MYSTATUS *mystatus, HEAPID heapID)
 {
   //メッセージ取得
   CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
@@ -1142,6 +1142,8 @@ static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapI
     WORDSET_RegisterPokeMonsName( CG2d->wordset, 0, pp );
   }
 
+  // プレイヤー名セット
+  WORDSET_RegisterPlayerName( CG2d->wordset, 1, mystatus );
 }
 
 static void releaseBriefingMsgdata(G2D_CONTROL* CG2d)
