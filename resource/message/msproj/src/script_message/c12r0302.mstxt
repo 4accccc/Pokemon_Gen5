@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　であった　ポケモンと
+			<Text>あなたは　ポケモンと　であって
 どういう　かんけいに　なりたいの？▼
 そういう　あたしは
 いてくれるだけで　まんぞく　だけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T06:27:44" />
+				Time="2011-09-28T05:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　であった　ポケモンと
+			<Text>あなたは　ポケモンと　であって
 どういう　関係に　なりたいの？▼
 そういう　あたしは
 いてくれるだけで　満足だけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T06:44:40" />
+				Time="2011-09-28T05:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

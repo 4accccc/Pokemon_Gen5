@@ -69,13 +69,13 @@ GIRL2</Text>
 			<Text>[Name:TrainerName Idx="1" ]『どこ　いくんだ？▼
 ……　……　……
 ……　……　……▼
-ポケモンずかん！？▼
-……そのはなし　オレも　ききたいな▼
-わかった！
-ベルって　ひとを　さがすの　てつだうよ▼</Text>
+ベルって　ひとが
+ポケモンずかんを　くれる！？▼
+……わかった！　オレも
+ベルって　ひとを　さがすの　てつだう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:27:50" />
+				Time="2011-09-28T05:54:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,13 +86,13 @@ GIRL2</Text>
 			<Text>[Name:TrainerName Idx="1" ]『どこ　行くんだ？▼
 ……　……　……
 ……　……　……▼
-ポケモン図鑑！？▼
-……その話　オレも　ききたいな▼
-わかった！
-ベルって　人を　探すの　手伝うよ▼</Text>
+ベルって　人が
+ポケモン図鑑を　くれる！？▼
+……わかった！　オレも
+その人を　探すの　てつだう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:27:58" />
+				Time="2011-09-28T05:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,12 +251,12 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライバル名『さてと▼
+			<Text>[Name:TrainerName Idx="1" ]『さてと▼
 ベルって　人を　探すんだな
 どこから　探すか　決めてくれよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T05:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -264,12 +264,12 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライバル名『さてと▼
+			<Text>[Name:TrainerName Idx="1" ]『さてと▼
 ベルって　人を　探すんだな
 どこから　探すか　決めてくれよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T05:54:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1019,10 +1019,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あそこ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おい
+あの　ひと……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T05:58:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1030,10 +1031,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あそこ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おい
+あの　人……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-28T05:59:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
