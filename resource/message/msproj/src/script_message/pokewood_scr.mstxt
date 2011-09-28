@@ -3269,4 +3269,40 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				Time="2011-09-16T07:47:48" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_pw__monitor_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ただいま　こちらの　モニターは
+ちょうせいちゅう　です……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T02:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T02:54:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ただいま　こちらの　モニターは
+調整中　です……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T02:57:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T02:55:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>記録モニターの未撮影時の表示</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T02:56:58" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
