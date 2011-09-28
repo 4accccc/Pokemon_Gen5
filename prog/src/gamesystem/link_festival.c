@@ -682,14 +682,14 @@ void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRB
   if( name == NULL ){ //プレイヤー
     MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
 
-    if( tsp->score > wk->m_beacon->my_score ){
+    if( tsp->score >= wk->m_beacon->my_score ){
       return;
     }
     tsp->score = wk->m_beacon->my_score;
     tsp->tr_id = MyStatus_GetID_Low( my );
     MyStatus_CopyNameString( my, tsp->name );
   }else{
-    if( tsp->score > score ){
+    if( tsp->score >= score ){
       return; //未更新
     }
     tsp->score = score;
