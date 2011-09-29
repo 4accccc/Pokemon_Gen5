@@ -16,6 +16,7 @@ load    File.dirname(__FILE__) + '/../encount/encount_common.def'
 require File.dirname(__FILE__) + '/../encount/enc_hash_data.rb'
 require File.dirname(__FILE__) + '/../fldmapdata/zonetable/zonegroup_hash/zone_group_hash.rb'
 require File.dirname(__FILE__) + '/../personal/monsno_hash.rb'
+load    File.dirname(__FILE__) + '/../personal/chihou_zukanno_hash.rb'
 
 # 季節名
 $season_name = ["四季なし","春","夏","秋","冬"]
@@ -23,6 +24,9 @@ $season_name = ["四季なし","春","夏","秋","冬"]
 $ground_type_name = ["土","海","釣"]
 # 地形名詳細
 $info_ground_type_name = ["草地","砂地","沼","洞窟","橋","混合","なし"]
+
+$ZENKOKU_POKE_ZONE_FILE_NAME = "zenkoku_poke_zone.csv"
+$ZONE_POKE_INFO_FILE_NAME = "zone_poke_info.txt"
 
 # 出力形式用モンスターデータ
 class CMonsterData
@@ -165,6 +169,23 @@ def search_form( monsno,season,g_type ,zone_group,is_white,season_enable)
   raise "フォルムを探せませんでした"
 end
 
+# 全国ポケモンが登録されているゾーンを調べる
+def check_zenkoku_mons( mons_array ,zone_group ,file , version)
+  if_fined = FALSE
+  mons_array.each_key{|key|
+    if $chihou_zukanno_hash[key] == $NO_CHIHOU_ID then
+      if if_fined == FALSE then
+        if_fined = TRUE
+        file.print "\n%s(%s),"%[zone_group,version]
+      end
+      file.print "%s,"%[$monsname[key]]
+    end
+  }
+end
+
+#=================================================
+# メイン処理
+#=================================================
 
 # エンカウントデータの読み込み
 encount_data          = nil
@@ -206,7 +227,7 @@ encount_data.each_key{|zone_id|
 
 # 四季あり、四季なしデータが共存している場合をまとめる
 zone_group_data.each_key{|zone_group|
-  puts zone_group
+  #puts zone_group
   zone_group_data[zone_group].merge_season
   zone_group_data[zone_group].season_enable_check
 }
@@ -228,51 +249,52 @@ form_hash.each_key{|zone_id|
 }
 
 
-begin
+#=begin
 
+pi_f = open($ZONE_POKE_INFO_FILE_NAME,"w")
 # マージしたデータを格納する
 zone_group_data.each_key{|zone_group|
   data = zone_group_data[zone_group]
 
-  puts "=============================================================="
-  puts "【 %s(ホワイト) 】"%[zone_group]
-  puts " 黒有 :%s"%[data.black_enable]
-  puts " 白地形 :%s"%[$info_ground_type_name[data.white_ground_type]]
-  puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
+  pi_f.puts "=============================================================="
+  pi_f.puts "【 %s(ホワイト) 】"%[zone_group]
+  pi_f.puts " 黒有 :%s"%[data.black_enable]
+  pi_f.puts " 白地形 :%s"%[$info_ground_type_name[data.white_ground_type]]
+  pi_f.puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
   GTYPE_MAX.times{|g_type|
-    puts " 四季 :%s"%[data.ground_season_w[g_type]]
-    puts "【 %s 】"%[$ground_type_name[g_type]]
+    pi_f.puts " 四季 :%s"%[data.ground_season_w[g_type]]
+    pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
     unless data.white_data[g_type] == nil then
       data.white_data[g_type].each_key{|season|
-        print "%s(%2d種類):"%[$season_name[season],data.white_data[g_type][season].size]
+        pi_f.print "%s(%2d種類):"%[$season_name[season],data.white_data[g_type][season].size]
         if data.white_data[g_type][season].size > 20 then
           raise "20種類以上使用されています"
         end
         data.white_data[g_type][season].each{|mons_data|
-          print "%s,"%[$monsname[mons_data]]
+          pi_f.print "%s,"%[$monsname[mons_data]]
         }
-        print "\n"
+        pi_f.print "\n"
       }
     end
   }
-  print "\n"
+  pi_f.print "\n"
   
-  puts "--------------------------------------------------------------"
+  pi_f.puts "--------------------------------------------------------------"
 
   # ブラック
-  puts "【 %s(ブラック) 】"%[zone_group]
+  pi_f.puts "【 %s(ブラック) 】"%[zone_group]
   GTYPE_MAX.times{|g_type|
-    puts " 四季 :%s"%[data.ground_season_b[g_type]]
-    puts "【 %s 】"%[$ground_type_name[g_type]]
+    pi_f.puts " 四季 :%s"%[data.ground_season_b[g_type]]
+    pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
     unless data.black_data[g_type] == nil then
       data.black_data[g_type].each_key{|season|
-        print "%s(%2d種類):"%[$season_name[season],data.black_data[g_type][season].size]
+        pi_f.print "%s(%2d種類):"%[$season_name[season],data.black_data[g_type][season].size]
         data.black_data[g_type][season].each{|mons_data|
-          print "%s,"%[$monsname[mons_data]]
+          pi_f.print "%s,"%[$monsname[mons_data]]
         }
-        print "\n"
+        pi_f.print "\n"
         if data.black_data[g_type][season].size > 20 then
           raise "20種類以上使用されています"
         end
@@ -280,11 +302,14 @@ zone_group_data.each_key{|zone_group|
     end
   }
 
-  print "\n"
+  pi_f.print "\n"
 }
+pi_f.close
 
 
-end
+#=end
+# 全国ポケモン登録ゾーングループ出力ファイル
+zenkoku_poke_zone_file = open($ZENKOKU_POKE_ZONE_FILE_NAME,"w")
 
 # バイナリデータの出力
 zone_group_data.each_key{|zone_group|
@@ -296,12 +321,17 @@ zone_group_data.each_key{|zone_group|
 
   # ブラック用データ作成
   set_mons_array_data( group_data,b_mons_array ,b_mons_data )
+  check_zenkoku_mons( b_mons_array ,zone_group ,zenkoku_poke_zone_file ,"B")
   put_bin_file( "hb_b_%s.bin"%[zone_group.downcase] ,group_data ,b_mons_array,group_data.black_ground_type ,zone_group ,group_data.ground_season_b ,false)
 
   # ホワイト用データ作成
   set_mons_array_data( group_data,w_mons_array ,w_mons_data)
+  check_zenkoku_mons( w_mons_array ,zone_group ,zenkoku_poke_zone_file,"W")
   put_bin_file( "hb_w_%s.bin"%[zone_group.downcase] ,group_data ,w_mons_array,group_data.white_ground_type ,zone_group ,group_data.ground_season_w ,true)
 }
+
+# ファイル終了
+zenkoku_poke_zone_file.close
 
 # データインデックステーブルを作成
 file = open(FNAME_DATA_INDEX,"w")
