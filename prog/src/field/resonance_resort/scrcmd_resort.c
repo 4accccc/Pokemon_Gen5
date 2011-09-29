@@ -1701,7 +1701,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
       }
       else
       {
-        WORDSET_RegisterJobName( p_word, 1, job-1 );
+        WORDSET_RegisterJobName( p_word, 1, job );
         *p_ret_wk = resort_offreco_sys_10_01;
       }
     }
