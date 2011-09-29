@@ -660,7 +660,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
     sit.bgAttr = BATTLE_BG_ATTR_E_GRASS;
-    sit.bgType = BATTLE_BG_TYPE_GRASS;
+    sit.bgType = BATTLE_BG_TYPE_GRASS_SEASON;
     BTL_SETUP_CaptureDemo( bp, gdata, partyMine, partyEnemy, &sit, heapID );
 
     GFL_HEAP_FreeMemory( pp );
