@@ -388,6 +388,8 @@ FIELD_SUBSCREEN_WORK* FIELD_SUBSCREEN_Init( u32 heapID,
 u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
 {
   u8 mode = pWork->mode;
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  
   GF_ASSERT(funcTable[pWork->mode].mode == pWork->mode);
   funcTable[pWork->mode].exit_func(pWork);
 
@@ -402,6 +404,13 @@ u8 FIELD_SUBSCREEN_Exit( FIELD_SUBSCREEN_WORK* pWork )
     }
   }
 #endif
+  if( mode == FIELD_SUBSCREEN_FMISSION_VIEW )
+  {
+    //サブ画面破棄時にミッションが終了していたら、ノーマルモードに戻す
+    if( !LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork( gsys ) )){
+      mode = FIELD_SUBSCREEN_NORMAL;
+    }
+  }
   
   GFL_HEAP_FreeMemory(pWork);
   return mode;
