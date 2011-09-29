@@ -791,6 +791,8 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
   // 興行収入のレコード登録
   PKWDSYS_RecordSet( gamedata, pkwdsys );
 
+  // メダル取得計算
+  PKWDSYS_CheckPokewoodMedal( gamedata );
   // この2つの関数の順番は入れ替えないこと！(スターポケモンが登録されるのが早くなる)
   {
     // シナリオ単位で興行成績データが上回っていれば更新

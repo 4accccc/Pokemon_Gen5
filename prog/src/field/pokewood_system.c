@@ -322,7 +322,7 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
 // ポケウッド連続シナリオ定義
 //=================================================
 static const u8 series_tbl[][5]={
-  {  0,  1,  2,  3, PW_SERIES_END },   // シリーズ1
+  {  0,  1,  2,  PW_SERIES_END },      // シリーズ1
   {  4,  5,  6,  7, PW_SERIES_END },   // シリーズ2
   {  8,  9, 10, 11, PW_SERIES_END },   // シリーズ3
   { 12, 13, 14, 15, PW_SERIES_END },   // シリーズ4
@@ -396,25 +396,19 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
 
   // ポケウッドシリーズメダル取得処理
   for(i=0;i<PW_SERIES_MEDAL_MAX;i++){
-    if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_SERIES1+i )==0){
-      if(_check_pokewoodseries_played( ps, i )){
-        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES1+i );
-      }
+    if(_check_pokewoodseries_played( ps, i )){
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES1+i );
     }
   }
 
   // 全ての映画を撮影したかチェック
-  if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_SERIES_ALL )==0){
-    if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_PLAYED)==POKEWOOD_BOXOFFICE_DATA_MAX){
-      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES_ALL );
-    }
+  if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_PLAYED)==POKEWOOD_BOXOFFICE_DATA_MAX){
+    MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES_ALL );
   }
 
   // 全ての映画で成功ENDにしたかチェック
-  if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_GOODEND )==0){
-    if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_SUCCESS)==POKEWOOD_BOXOFFICE_DATA_MAX){
-      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_GOODEND );
-    }
+  if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_SUCCESS)==POKEWOOD_BOXOFFICE_DATA_MAX){
+    MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_GOODEND );
   }
 
   // ストレンジEND関連
@@ -422,17 +416,13 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
     int strange_count = POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_STRANGE);
 
     // 初めてのストレンジENDチェック
-    if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_STRANGE_FIRST )==0){
-      if(strange_count!=0){
-        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_FIRST );
-      }
+    if(strange_count!=0){
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_FIRST );
     }
 
     // 全ての映画でストレンジENDにしたかチェック
-    if( MEDALBOX_GetMedalState( medalbox, MDLID_PKWD_STRANGE_ALL )==0){
-      if(strange_count==POKEWOOD_BOXOFFICE_DATA_MAX){
-        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_ALL );
-      }
+    if(strange_count==POKEWOOD_BOXOFFICE_DATA_MAX){
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_ALL );
     }
   }
   

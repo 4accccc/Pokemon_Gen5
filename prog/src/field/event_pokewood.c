@@ -544,7 +544,7 @@ static void _delete_pkwd_count_param( PKWD_COUNT_PARAM *param )
  * @param   bsp		
  */
 //----------------------------------------------------------------------------------
-static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_PARAM *bsp, MYSTATUS *mystatus )
+static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_PARAM *bsp, MYSTATUS *mystatus, GAMEDATA *gamedata )
 {
   param->scenario_no  = bsp->pokewoodSenario;
   param->audienceNum  = bsp->audience_num;
@@ -676,7 +676,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     break;
   // あらすじアプリ実行
   case PW_SHOW_SEQ_BRIEFING_APP:
-    _init_pkwd_briefing_param( &prew->pkwd_briefing_param, pbew->bp, mystatus );
+    _init_pkwd_briefing_param( &prew->pkwd_briefing_param, pbew->bp, mystatus, gamedata );
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdBriefingProcData, &prew->pkwd_briefing_param );
     (*seq)++;
     break;
@@ -696,8 +696,12 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     break;
   // エンドロール呼び出し
   case PW_SHOW_SEQ_CALL_ENDROLL:
-    _init_pkwd_endroll_param( &prew->pkwd_endroll_param, pbew->bp, mystatus, gamedata );
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdEndrollProcData, &prew->pkwd_endroll_param );
+    OS_Printf("最後まで再生した？ = %d\n", pbew->bp->recPlayCompleteFlag);
+    // 上映をキャンセルしていなかったらエンドロール
+    if(pbew->bp->recPlayCompleteFlag){
+      _init_pkwd_endroll_param( &prew->pkwd_endroll_param, pbew->bp, mystatus, gamedata );
+      GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdEndrollProcData, &prew->pkwd_endroll_param );
+    }
     (*seq)++;
     break;
   // フィールドBGMを復帰
@@ -733,7 +737,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
       u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
       if ( ret_wk != NULL )
       {
-        *ret_wk = ( pbew->bp->recPlayCompleteFlag );
+        *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
         if(*ret_wk){
           PKWDSYS_CheckEnding( pkwdsys, gamedata, pbew->bp->pokewoodSenario, pbew->bp->pokewoodResult );
           // シナリオオープンチェック
