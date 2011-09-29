@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //system
 #include <gflib.h>
+#include "../fieldmap.h"
 //mine
 #include "resort_map.h"
 #include "resort_data_manager.h"
@@ -36,6 +37,7 @@ struct _RESORT_NPC_SYS
   RESORT_BINARY_OFFRECO *p_binary_offreco;
   RESORT_BINARY_MOUTHCOMM *p_binary_mouthcomm;
   RESORT_NPC_SYS_PARAM param;
+  BOOL  is_pause;
 };
 //=============================================================================
 /**
@@ -43,7 +45,7 @@ struct _RESORT_NPC_SYS
 */
 //=============================================================================
 static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk );
-
+static void Resort_Npc_Sys_PauseAll( RESORT_NPC_SYS *p_wk, BOOL is_pause );
 //----------------------------------------------------------------------------
 /**
  *	@brief  NPC初期化
@@ -86,8 +88,24 @@ void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk )
  *	@param	RESORT_NPC_SYS *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk )
+void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk, const FIELDMAP_WORK* cp_fieldmap )
 {
+  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) )
+  {
+    if( !p_wk->is_pause )
+    {
+      Resort_Npc_Sys_PauseAll( p_wk, TRUE );
+      p_wk->is_pause = TRUE;
+    }
+  }
+  else
+  {
+    if( p_wk->is_pause )
+    {
+      Resort_Npc_Sys_PauseAll( p_wk, FALSE );
+      p_wk->is_pause = FALSE;
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -211,6 +229,36 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
       MMDLSYS_AddMMdl( p_wk->param.p_mmdlsys, &header, RESORT_ZONE_ID_FIELD );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NPCを全部ポーズさせる
+ *
+ *	@param	RESORT_NPC_SYS *p_wk  ワーク
+ *	@param	is_pause  TRUEポーズ  FALSEなし
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Npc_Sys_PauseAll( RESORT_NPC_SYS *p_wk, BOOL is_pause )
+{
+  u32 no = 0;
+  MMDL *p_mmdl;
+  while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE )
+  {
+    if( (MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS)
+        && MMDL_GetOBJID(p_mmdl) < (RESORT_NPC_MMDLID_OFS + RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ))
+        && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
+    {
+      if( is_pause )
+      {
+        MMDL_OnMoveBitMoveProcPause( p_mmdl );
+      }
+      else
+      {
+        MMDL_OffMoveBitMoveProcPause( p_mmdl );
+      }
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------

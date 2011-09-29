@@ -177,7 +177,7 @@ void RESORT_RECEPTION_Move( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
 
-  RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
+  RESORT_NPC_SYS_Main( p_wk->p_npc_sys, p_fieldmap );
   RESORT_PEOPLE_SYS_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
 }
 //=============================================================================

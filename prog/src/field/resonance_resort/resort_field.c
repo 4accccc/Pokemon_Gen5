@@ -324,7 +324,7 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
   RESORT_FIELD_PEOPLE_Main( p_wk->p_people_sys, p_fieldmap );
-  RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
+  RESORT_NPC_SYS_Main( p_wk->p_npc_sys, p_fieldmap );
   RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
   RESORT_FIELD_EFFECT_Main( p_wk->p_effect );
 }

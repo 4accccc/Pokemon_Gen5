@@ -43,7 +43,7 @@ typedef struct
 
 extern RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAPID heapID );
 extern void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk );
-extern void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk );
+extern void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk, const FIELDMAP_WORK* cp_fieldmap );
 
 extern void RESORT_NPC_SYS_SetVisibleAll( RESORT_NPC_SYS *p_wk, BOOL is_visible );
 
