@@ -44,7 +44,7 @@
 */
 //=============================================================================
 
-extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
+extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 //=============================================================================
@@ -154,8 +154,9 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       u16 src_want_job = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_WANT_JOB, NULL );
       u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TRAINER_ID, NULL );
       u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_VER, NULL );
+      u16 sp = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_SPECIAL, NULL );
 
-      u16 want_job = RESORT_DATA_GetWantJobModify( src_want_job, trainerID, ver, p_city_data, p_shop );
+      u16 want_job = RESORT_DATA_GetWantJobModify( src_want_job, trainerID, ver, sp, p_city_data, p_shop );
 
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, want_job );
 
@@ -1143,7 +1144,8 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       u16 wantjob = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
       u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
       u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_VER, NULL );
-      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, p_city_data, p_shop );
+      u16 sp = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SPECIAL, NULL );
+      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, sp, p_city_data, p_shop );
       STRBUF *p_str = RESORT_UTIL_CreateShopName( p_shop, p_data, shopno, heapID );
       u32 sex = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SEX, NULL );
 
@@ -1265,7 +1267,8 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       u16 wantjob = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
       u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
       u16 ver = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_VER, NULL );
-      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, p_city_data, p_shop );
+      u16 sp = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_SPECIAL, NULL );
+      u16 shopno = RESORT_DATA_GetWantJobModify( wantjob, trainerID, ver, sp, p_city_data, p_shop );
       const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
       u32 data = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
@@ -2094,8 +2097,14 @@ u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESO
 
     peopleID  = RESORT_RECV_DATA_GetData( p_src_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
 
-
-    RESORT_RESIDENT_DATA_ConvertRecv( p_src_data, p_src_data, p_shop, peopleID, placeID );
+    //ConvertRecvの中で特別配信以外はLV0の建物しか作れないとやっているので、
+    //一旦特別配信フラグを立ててから落とす。
+    {
+      BOOL sp = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_SPECIAL, NULL );
+      RESORT_RESIDENT_DATA_SetData( p_src_data, RESORT_DATA_PARAM_SPECIAL, TRUE );
+      RESORT_RESIDENT_DATA_ConvertRecv( p_src_data, p_src_data, p_shop, peopleID, placeID );
+      RESORT_RESIDENT_DATA_SetData( p_src_data, RESORT_DATA_PARAM_SPECIAL, sp );
+    }
 
     return RESORT_ABSTRUCT_DATA_GetBufferIndex( p_src );
   }

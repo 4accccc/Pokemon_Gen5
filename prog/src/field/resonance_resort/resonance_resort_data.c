@@ -115,7 +115,7 @@ static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
 
 
 //
-extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
+extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop );
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
@@ -2553,7 +2553,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return cp_wk->meet_month;
   case RESORT_DATA_PARAM_MEET_DAY:
     return cp_wk->meet_day;
-
+  case RESORT_DATA_PARAM_SPECIAL:
+    return FALSE;
 
   default:
     GF_ASSERT_MSG(0,"ñ¢ëŒâû%d\n",param);
@@ -3475,7 +3476,9 @@ static void Resort_Recv_Data_InitInstitution( RESORT_RECV_DATA *p_wk, const RESO
   int id  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_TRAINER_ID, NULL );
   int ver  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_VER, NULL );
 
-  u16 shopID  = RESORT_DATA_GetWantJobModify( want_job, id, ver, sp_city_data, cp_shop );
+  int sp  = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_SPECIAL, NULL );
+
+  u16 shopID  = RESORT_DATA_GetWantJobModify( want_job, id, ver, sp, sp_city_data, cp_shop );
 
 
   const RESORT_BINARY_SHOP_DATA* cp_shop_data = RESORT_BINARY_SHOP_GetData(cp_shop, shopID );
@@ -4952,13 +4955,14 @@ static u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
  *	@return èCê≥å„ÇÃÇ®ìXID
  */
 //-----------------------------------------------------------------------------
-u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop )
+u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop )
 {
   BOOL is_dendou = RESORT_CITY_DATA_GetData( cp_data,RESORT_CITY_DATA_PARAM_PRIZE_DENDOU,NULL );
   const RESORT_BINARY_SHOP_DATA* cp_shop_data = RESORT_BINARY_SHOP_GetData(cp_shop, want_job );
+  u16 lv = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_LV );
   u16 shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
-  if( (want_job == RESORT_SHOP_ID_NULL) || (!is_dendou && shop_type == RESORT_RESIDENT_TYPE_NURSERY ) )
+  if( (want_job == RESORT_SHOP_ID_NULL) || (!is_dendou && shop_type == RESORT_RESIDENT_TYPE_NURSERY ) || ((lv!=0) && !is_special ) )
   {
     return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
   }

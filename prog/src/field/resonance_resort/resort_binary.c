@@ -464,5 +464,6 @@ u16 RESORT_BINARY_PRESENT_DrawLotsIndex( const RESORT_BINARY_PRESENT *cp_wk, u32
       return i;
     }
   }
+  NAGI_Printf( "list%d per%d\n", listID, percent );
   return RESORT_BINARY_PRESENT_PARAM_ITEM_MAX;
 }
