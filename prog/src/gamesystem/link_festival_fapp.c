@@ -26,6 +26,8 @@
 #include "savedata/medalbox.h"
 #include "app/mdlid_def.h"  // for MDLID_
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 #define PAY_BONUS_MAX (99)  //スコア&タイムボーナスのmax値は99
 
 
@@ -105,7 +107,8 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   //ハイリンクの経験値
   {
-    u8 level;
+    u16 up_level,now_level;
+    int step;
     OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( wk->gdata );
     u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_idx );
 
@@ -113,21 +116,37 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     if( exp > FMISSION_SV_HILINK_LEVEL_EXP_MAX ){
       exp = FMISSION_SV_HILINK_LEVEL_EXP_MAX; //上限超えていたら、上限で切り捨て
     }
-    level = exp/FMISSION_SV_HILINK_LEVEL_EXP_STEP;
+    
+    if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
+      now_level = OccupyInfo_GetWhiteLevel( occupy_sv );
+    }else{
+      now_level = OccupyInfo_GetBlackLevel( occupy_sv );
+    }
+    //閾値は現Lv*10(上限100) ミッション未クリア時のレベルは0～なので+1
+    step = (now_level+1)*10;
+    if( step > 100 ){
+      step = 100;
+    }
+    up_level = exp/step;
     //余りの経験値をセーブに書き戻し
-    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp%FMISSION_SV_HILINK_LEVEL_EXP_STEP );
+    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp%step );
   
     //パレスレベルを上げる
     pl->hilink_version = wk->m_beacon->version_idx;
     if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
-      pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, level );
+      pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, up_level );
     }else{
-      pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, level );
+      pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, up_level );
     }
   }
 
   //メダルチェック
   linkfes_SetMissionResultMedal( wk, pl, save, f_save );
+
+  //@TODO フェスチュートリアルができるまでの仮処理
+  if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
+    EVENTWORK_SetEventFlag( GAMEDATA_GetEventWork( wk->gdata ), SYS_FLAG_FES_TUTORIAL_CLEAR );
+  }
 }
 
 //---------------------------------------------------------
