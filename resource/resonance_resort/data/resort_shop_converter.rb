@@ -294,7 +294,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END
       list   = csv.get( row, i )
       if list == nil
-        data.write_u16(0xFF);
+        data.write_u16(0xFFFF);
       else
         if h_service[list] == nil
           puts "#{list}がサービスに登録されていません"
