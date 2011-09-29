@@ -145,6 +145,7 @@ sub_wheel_talk_swan:
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
 
 	//暗転中にトレーナーの位置を変更
+	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 54, 1, 16, DIR_UP )
 	_OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 54, 1, 15, DIR_DOWN )
   _TURN_HERO_SITE()
 
