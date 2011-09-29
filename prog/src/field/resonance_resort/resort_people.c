@@ -329,6 +329,7 @@ void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible )
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
   MMDL_SetStatusBitVanish( p_mmdl, !is_visible );
+  MMDL_SetStatusBitFellowHit( p_mmdl, is_visible );
   p_wk->is_master_visible = is_visible;
 }
 //----------------------------------------------------------------------------

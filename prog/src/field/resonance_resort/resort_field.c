@@ -1448,16 +1448,18 @@ static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK*
   {
     if( FIELD_PLAYER_GetMoveValue(cp_player) != PLAYER_MOVE_VALUE_STOP )
     {
-      MMDL *p_plyaer_mmdl = FIELD_PLAYER_GetMMdl(cp_player);
-      s16 px, py, pz;
-      s16 mydir = MMDL_GetDirDisp( p_mmdl );
-      s16 my_gx = MMDL_GetGridPosX( p_mmdl );
-      s16 my_gz = MMDL_GetGridPosZ( p_mmdl );
-      FIELD_PLAYER_GetGridPos( cp_player, &px, &py, &pz );
-      
-      if( Resort_Crowd_People_Wk_IsGridHit( my_gx, my_gz, px, pz, grid, grid, cp_wk->move_dir ) )
       {
-        return TRUE;
+        MMDL *p_plyaer_mmdl = FIELD_PLAYER_GetMMdl(cp_player);
+        s16 px, py, pz;
+        s16 mydir = MMDL_GetDirDisp( p_mmdl );
+        s16 my_gx = MMDL_GetGridPosX( p_mmdl );
+        s16 my_gz = MMDL_GetGridPosZ( p_mmdl );
+        FIELD_PLAYER_GetGridPos( cp_player, &px, &py, &pz );
+
+        if( Resort_Crowd_People_Wk_IsGridHit( my_gx, my_gz, px, pz, grid, grid, cp_wk->move_dir ) )
+        {
+          return TRUE;
+        }
       }
     }
   }
