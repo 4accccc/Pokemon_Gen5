@@ -836,7 +836,8 @@ static void RESORT_CROWD_PEOPLE_Main( RESORT_CROWD_PEOPLE *p_wk, const FIELDMAP_
         RESORT_CROWD_LINE_Main( &p_wk->line[i], p_wk->cp_player );
       }
     }
-
+  }
+  {
     //Šeƒ[ƒN“®ì
     {
       int i;
@@ -1783,8 +1784,6 @@ static BOOL (* const Resort_Crowd_People_Walk[])(RESORT_CROWD_PEOPLE_WK *, MMDLS
 //-----------------------------------------------------------------------------
 static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player )
 {
-
-
   if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
   {
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
@@ -1794,7 +1793,10 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
       return;
     }
 
-    while( Resort_Crowd_People_Walk[p_wk->seq](p_wk,p_mmdlsys,cp_player) == TRUE ){}
+    if( p_wk->is_walk )
+    {
+      while( Resort_Crowd_People_Walk[p_wk->seq](p_wk,p_mmdlsys,cp_player) == TRUE ){}
+    }
   }
 }
 //----------------------------------------------------------------------------
