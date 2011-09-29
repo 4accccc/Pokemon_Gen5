@@ -105,6 +105,7 @@ RESORT_DATE RESORT_DATA_RtcToDate( const RTCDate *cp_date )
 //-----------------------------------------------------------------------------
 void RESORT_DATA_DateToRtc( RESORT_DATE date, RTCDate *p_date )
 {
+  GFL_STD_MemClear(p_date,sizeof(RTCDate));
   p_date->year  = RESORT_DATE_GET_YEAR( date );
   p_date->month = RESORT_DATE_GET_MONTH( date );
   p_date->day   = RESORT_DATE_GET_DAY( date );
@@ -4377,6 +4378,8 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
 //-----------------------------------------------------------------------------
 void RESORT_RECORD_AddID( u32 record_id )
 {
+  //#define DEBUG_RECORD_ADDID
+
   enum
   {
     RESORT_DATA_RECORD_CNT  = RESORT_DATA_PARAM_EXT5_RECORD_03 - RESORT_DATA_PARAM_EXT5_RECORD_00 + 1,
@@ -4397,16 +4400,23 @@ void RESORT_RECORD_AddID( u32 record_id )
   resort_date = RESORT_DATA_RtcToDate( &date );
 
 #ifdef PM_DEBUG
-#if 0
+#ifdef DEBUG_RECORD_ADDID
   {
-    static const test[] =
+    static const int test[] =
     {
-      1,4,3,2,
+      0,0,0,1,
     };
     for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
     {
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, test[i] );
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      if( test[i] != 0 )
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      }
+      else
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
+      }
       NAGI_Printf( "b record %d\n", test[i] );
     }
   }
@@ -4455,7 +4465,7 @@ void RESORT_RECORD_AddID( u32 record_id )
 RESORT_RECORD_ADD_ID_SORT:
 
 #ifdef PM_DEBUG
-#if 0
+#ifdef DEBUG_RECORD_ADDID
       {
         int k;
         for( k = 0; k < RESORT_DATA_RECORD_CNT; k++ )
@@ -4494,7 +4504,7 @@ RESORT_RECORD_ADD_ID_SORT:
       days1 = (record1 == RESORT_RECORD_ID_NONE)? 0: days1;
       days2 = (record2 == RESORT_RECORD_ID_NONE)? 0: days2;
 
-      if( days1 > days2 )
+      if( days1 < days2 )
       {
         //1
         RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx1, record2 );
@@ -4503,20 +4513,25 @@ RESORT_RECORD_ADD_ID_SORT:
         RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+idx2, record1 );
         RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+idx2, r_date1 );
       }
+    }
 #ifdef PM_DEBUG
-#if 0
+#ifdef DEBUG_RECORD_ADDID
       {
         int k;
         for( k = 0; k < RESORT_DATA_RECORD_CNT; k++ )
         {
           u16 test = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+k, NULL );
-          NAGI_Printf( "[%d]", test );
+          RESORT_DATE r_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+k, NULL );
+          RTCDate date;
+          s32 days;
+          RESORT_DATA_DateToRtc( r_date, &date );
+          days = RTC_ConvertDateToDay( &date );
+          NAGI_Printf( "[%d:%dy%dm%dd%d]", test, days, date.year, date.month, date.day );
         }
         NAGI_Printf( "\n" );
       }
 #endif
 #endif
-    }
   }
 
 }
