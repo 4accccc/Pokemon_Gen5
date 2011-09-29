@@ -130,6 +130,43 @@ BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェス　NPCミッションギミック トレーナー対戦データ加工
+ *
+ *  フェス対戦トレーナーのPOKEPARTYを渡すと加工して返す
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_NPC_FesTrainerPartySet( FES_GIMMICK* sys_wk, POKEPARTY* party )
+{
+  int i, ct;
+  int score;
+  if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_TR_BATTLE ){
+    GF_ASSERT(0);
+    return;
+  }
+  ct = PokeParty_GetPokeCount( party );
+
+  score = LINK_FESTIVAL_GetNowScore( sys_wk->fest_sys );
+  if( score > 30 ){
+    score = 30; //増分上限は30レベル
+  }
+  for( i = 0;i < ct; i++ ){
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
+    int level = PP_Get( pp, ID_PARA_level, NULL )+score;
+    u32 exp;
+
+    if( level > PTL_LEVEL_MAX ){
+      level = PTL_LEVEL_MAX;  //レベルはMax100
+    }
+    exp = POKETOOL_GetMinExp( PP_Get(pp, ID_PARA_monsno, NULL), PP_Get(pp, ID_PARA_form_no, NULL), level );
+
+    PP_Put( pp, ID_PARA_exp, exp );
+    PP_Renew( pp ); //レベルはRenewの中で経験値から再計算される
+    IWASAWA_Printf("FesTrainer = %d\n", PP_Get( pp, ID_PARA_level, NULL ) );
+  }
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェス　NPCミッションギミック 交換アイテム取得
  */
 //----------------------------------------------------------------------
@@ -382,6 +419,4 @@ static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_NP
   }
   return FALSE;
 }
-
-
 

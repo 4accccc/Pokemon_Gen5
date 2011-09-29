@@ -715,7 +715,7 @@ sub_npc_tr_battle_main:
   _MSGWIN_CLOSE()
 
   //トレーナー戦呼び出し
-  _TRAINER_BTL_SET( i_tr_id, 0 )
+  _TRAINER_BTL_SP_SET( i_tr_id, 0, SCR_BATTLE_MODE_FES_TRAINER )
   
   //敗戦チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )

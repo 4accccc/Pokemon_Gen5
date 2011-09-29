@@ -271,6 +271,19 @@ BOOL FES_GIMMICK_Delete( FES_GIMMICK* wk )
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック ミッションタイプチェック
+ */
+//----------------------------------------------------------------------
+BOOL FES_GIMMICK_MissionTypeCheck( FES_GIMMICK* wk, FMISSION_TYPE_ID type )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return FALSE;
+  }
+  return( wk->fmwk->arc.m_type == type );
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェスミッションギミック イベントチェック
  *
  *  @param  wk
@@ -352,12 +365,24 @@ void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx )
 //----------------------------------------------------------------------
 u8 FES_GIMMICK_ObjTypeGetForNpcMission( FES_GIMMICK* wk )
 {
-  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+  if( !FES_GIMMICK_MissionTypeCheck( wk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
     return 0;
   }
-  if( wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
-    return FES_GIMMICK_NPC_SUB_GetObjType( wk->fmwk );
+  return FES_GIMMICK_NPC_SUB_GetObjType( wk->fmwk );
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フェストレーナーデータ書き換え(NPCミッション専用)
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_FesTrainerPartySetForNpcMission( FES_GIMMICK* wk, POKEPARTY* party )
+{
+  if( !FES_GIMMICK_MissionTypeCheck( wk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    return;
   }
-  return 0;
+  FES_GIMMICK_NPC_FesTrainerPartySet( wk, party );
 }
 

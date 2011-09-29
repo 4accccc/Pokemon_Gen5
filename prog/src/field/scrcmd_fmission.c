@@ -128,6 +128,10 @@ VMCMD_RESULT EvCmdFMissionNpcEventClear( VMHANDLE *core, void *wk )
  
   u8 obj_idx = ( MMDL_GetOBJID(mmdl)-MMDL_ID_FMISSION_OBJ_01 );
 
+  if( !FES_GIMMICK_MissionTypeCheck( FIELDMAP_GetFesGimmickSys( fieldmap ), FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
   //取得済みフラグセットと動作モデルの削除
   FES_GIMMICK_FlagSet( FIELDMAP_GetFesGimmickSys( fieldmap ), zone_id, obj_idx );
 
@@ -154,9 +158,12 @@ VMCMD_RESULT EvCmdFMissionNpcParamGet( VMHANDLE *core, void *wk )
   u16 param_no = SCRCMD_GetVMWorkValue( core, wk );
   u16* ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  MMDL *mmdl = SCRIPT_GetTargetObj( scw );
- 
-  *ret_wk = MMDL_GetParam( mmdl, param_no );
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_wk = 0;
+    return VMCMD_RESULT_SUSPEND;
+  }
+  *ret_wk = MMDL_GetParam( SCRIPT_GetTargetObj( scw ), param_no );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -183,6 +190,11 @@ VMCMD_RESULT EvCmdFMissionNpcTradeItemGet( VMHANDLE *core, void *wk )
   u16* ret_mine = SCRCMD_GetVMWork( core, wk );
   u16* ret_npc = SCRCMD_GetVMWork( core, wk );
 
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_mine = *ret_npc = ITEM_KIZUGUSURI;
+    return VMCMD_RESULT_SUSPEND;
+  }
   FES_GIMMICK_NPC_TradeItemGet( fes_gmk, SCRIPT_GetTargetObj( scw ), my_rank, npc_rank, ret_mine, ret_npc );
   
   return VMCMD_RESULT_SUSPEND;
@@ -209,6 +221,12 @@ VMCMD_RESULT EvCmdFMissionNpcShoppingItemGet( VMHANDLE *core, void *wk )
   u16* ret_item = SCRCMD_GetVMWork( core, wk );
   u16* ret_price = SCRCMD_GetVMWork( core, wk );
 
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_item = ITEM_KIZUGUSURI;
+    *ret_price = 9999;
+    return VMCMD_RESULT_SUSPEND;
+  }
   FES_GIMMICK_NPC_ShoppingItemGet( fes_gmk, SCRIPT_GetTargetObj(scw), ret_item, ret_price );
 
   return VMCMD_RESULT_SUSPEND;
@@ -236,6 +254,12 @@ VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGet( VMHANDLE *core, void *wk )
   u16* ret_q_idx = SCRCMD_GetVMWork( core, wk );
   u16* ret_a_idx = SCRCMD_GetVMWork( core, wk );
   
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_q_num = 1;
+    *ret_q_idx = *ret_a_idx = 0;
+    return VMCMD_RESULT_SUSPEND;
+  }
   FES_GIMMICK_NPC_MemoryQuizParamGet( fes_gmk, ret_q_num, ret_q_idx, ret_a_idx );
 
   return VMCMD_RESULT_SUSPEND;
@@ -262,6 +286,11 @@ VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGetQuestionPoke( VMHANDLE *core, voi
   u16  q_idx = SCRCMD_GetVMWorkValue( core, wk );
   u16* ret_q_poke = SCRCMD_GetVMWork( core, wk );
 
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_q_poke = MONSNO_MINEZUMI+q_idx;
+    return VMCMD_RESULT_SUSPEND;
+  }
   *ret_q_poke = FES_GIMMICK_NPC_MemoryQuizParamGetQuestionPoke( fes_gmk, q_idx );
 
   return VMCMD_RESULT_SUSPEND;
@@ -288,6 +317,11 @@ VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGetAnswerPoke( VMHANDLE *core, void 
   u16  a_idx = SCRCMD_GetVMWorkValue( core, wk );
   u16* ret_a_poke = SCRCMD_GetVMWork( core, wk );
 
+  if( !FES_GIMMICK_MissionTypeCheck( fes_gmk, FMISSION_TYPE_NPC ) ){
+    GF_ASSERT(0);
+    *ret_a_poke = MONSNO_MINEZUMI+a_idx;
+    return VMCMD_RESULT_SUSPEND;
+  }
   *ret_a_poke = FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( fes_gmk, a_idx );
 
   return VMCMD_RESULT_SUSPEND;

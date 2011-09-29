@@ -98,6 +98,7 @@ extern void FES_GIMMICK_NPC_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_
 extern void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16 zone_id, u16 idx );
 extern BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 
+extern void FES_GIMMICK_NPC_FesTrainerPartySet( FES_GIMMICK* sys_wk, POKEPARTY* party );
 extern void FES_GIMMICK_NPC_TradeItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16 my_rank, u16 npc_rank, u16* my_item, u16* npc_item );
 extern void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item, u16* price );
 extern void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk,u16* q_num, u16* q_idx, u16* a_idx );

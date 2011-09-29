@@ -43,6 +43,13 @@ extern void FES_GIMMICK_SYS_Delete( FES_GIMMICK* wk );
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック ミッションタイプチェック
+ */
+//----------------------------------------------------------------------
+extern BOOL FES_GIMMICK_MissionTypeCheck( FES_GIMMICK* wk, FMISSION_TYPE_ID type );
+
+//----------------------------------------------------------------------
+/*
  *  @brief  フェスミッションギミック　動作モデルセットアップ処理
  *
  *  システム初期化のタイミングだと MMDLSYSが未初期化のため
@@ -135,4 +142,10 @@ extern void FES_GIMMICK_FlagSet( FES_GIMMICK* wk, u16 zone_id, u16 idx );
 //----------------------------------------------------------------------
 extern u8 FES_GIMMICK_ObjTypeGetForNpcMission( FES_GIMMICK* wk );
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フェストレーナーデータ書き換え(NPCミッション専用)
+ */
+//----------------------------------------------------------------------
+extern void FES_GIMMICK_FesTrainerPartySetForNpcMission( FES_GIMMICK* wk, POKEPARTY* party );
 

@@ -16,6 +16,7 @@
 #include "gamesystem/pm_weather.h"
 
 #include "field/fieldmap.h"
+#include "field/fes_gimmick.h"
 
 #include "./event_fieldmap_control.h"
 #include "./event_battle.h"
@@ -390,6 +391,16 @@ GMEVENT * EVENT_TrainerBattle(
   {
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_NO_LOSE );
     bew->is_no_lose = TRUE;
+  }
+  
+  if ( flags & SCR_BATTLE_MODE_FES_TRAINER )
+  {
+    POKEPARTY* party = BATTLE_PARAM_GetPokePartyPointer( bp, BTL_CLIENT_ENEMY1 );
+    
+    FES_GIMMICK_FesTrainerPartySetForNpcMission(
+      FIELDMAP_GetFesGimmickSys( fieldmap ), party );
+  
+    IWASAWA_Printf( "FesTrLevel = %d\n", PP_Get( PokeParty_GetMemberPointer(party,0), ID_PARA_level, NULL ));
   }
 
   if ( (flags & SCR_BATTLE_MODE_MUGEN) != 0 )
