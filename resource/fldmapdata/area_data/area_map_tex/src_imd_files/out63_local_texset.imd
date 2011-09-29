@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-09-24T16:22:26" source="out63_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-09-29T16:42:41" source="out63_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-09-24T16:22:26" source="out63_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-09-29T16:42:41" source="out63_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -32,27 +32,27 @@
 <tex_image_array size="26">
 	<tex_image index="0" name="ga_s01a"
 		width="16" height="16" original_width="16" original_height="16"
-		format="a3i5"
+		format="a5i3"
 		palette_name="ga_s01a_pl"
 		path="C:/home/swan_data3d/field/out63/chip/tex/ga_s01a.tga"
 	>
 		<bitmap size="128">
-			e3e3 e6e5 e7e7 e6e7 e4e5 e4e4 e5e5 e2e0
-			e3e3 e4e3 e4e4 e4e4 e5e4 e5e5 e5e5 e3e0
-			e4e3 e5e5 e3e5 e3e3 e3e3 e5e4 e0e5 e3e0
-			e5e4 e5e5 e4e4 e4e3 e4e4 e3e4 e0e1 e4e0
-			e5e5 e5e5 e3e4 e4e4 e4e4 e2e4 e1e0 e4e0
-			e5e5 e4e4 e4e3 e4e3 e4e4 e2e4 e0e0 e0e1
-			e2e4 e3e0 e4e4 e3e4 e4e4 e2e4 e0e0 e0e1
-			e0e2 e4e3 e4e4 e4e4 e4e3 e2e3 e0e1 e0e1
-			e0e2 e4e3 e4e4 e4e4 e2e3 e0e2 e1e1 e0e1
-			e0e2 e4e3 e4e4 e3e4 e2e2 e1e2 e1e1 e0e1
-			e1e0 e4e4 e4e4 e3e4 e2e2 e1e0 e1e1 e0e1
-			e0e1 e4e3 e4e4 e2e3 e0e2 e1e1 e1e1 e0e1
-			e3e1 e0e0 e4e3 e2e0 e1e2 e1e1 e1e1 e1e1
-			e181 e0e1 e0e0 e2e0 e1e0 e1e1 e1e1 8181
-			0101 8181 80e1 e0e0 e1e1 e1e1 81e1 0181
-			0101 0101 0101 8101 e181 e181 0181 0101
+			ffff fdfd fefd fefd fdfd fdfd fefe fefe
+			ffff ffff fdff fdff fdff fffd ffff ffff
+			fcfc fcfc ffff fffd fffd fcff fcfc fcfc
+			fcfc fcfc fcfc fffc fffc fcfc fcfc fcfc
+			fcfe fcfe fcfc fcfc fcfc fefe fefe fefe
+			fefe fefc fefe fefe fdfd fffd fffd fefe
+			fefd fefe fdfe fdfd fdfd fdff fdff fdfd
+			fdfd fdfd fdfd fdfd fffd feff fdff fdfd
+			fdfd fdfd fdfd ffff ffff ffff ffff ffff
+			fdfd fdfd fffe ffff ffff ffff ffff ffff
+			feff fefe feff fbfb fbfb fffb ffff fbff
+			ffff ffff fbfb fafb faf9 f9f9 f9fb fffb
+			fbfb fbfb fbfb f9fa f9fa f9fa fbf9 fbfb
+			fb7b fb7b f9fb faf9 faf8 f9f8 f9f9 7bfa
+			7a02 7bfb fafb f8fa f8fa f8f8 f8fa 027a
+			0000 0202 f87a f8f8 f8f8 f8f8 0278 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="ga_s1_0"
@@ -63,10 +63,10 @@
 		path="C:/home/swan_data3d/field/out63/chip/tex/ga_s1_0.tga"
 	>
 		<bitmap size="32">
-			6664 6134 6666 4346 1141 4341 6666 4144
-			0622 3311 6664 6614 2577 3400 4411 6222
-			0257 0020 0220 7775 2022 7522 2577 7502
-			2200 7775 7777 0025 5002 7777 5777 2200
+			2002 5054 4442 0024 4202 5244 4442 0022
+			4202 5344 4422 0522 4022 3444 2225 5552
+			2221 5444 2225 1155 2211 5522 5223 1125
+			1111 3222 5223 1112 1111 2221 2233 1112
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="ga_s_futa"
@@ -77,14 +77,14 @@
 		path="C:/home/swan_data3d/field/out63/chip/tex/ga_s_futa.tga"
 	>
 		<bitmap size="64">
-			0111 5110 1455 1100 0123 5300 3345 2321
-			1133 4000 2334 3331 1233 3001 1455 3332
-			2334 3111 2454 3333 3345 1112 4353 5433
-			3333 4313 5345 4333 1233 4431 5003 3334
-			1111 1111 4100 3335 2333 1111 3010 3335
-			2333 2111 1011 3344 1233 3211 1111 2453
-			0111 3321 1111 0011 0000 4331 1111 1001
-			0001 5541 1113 1100 0011 5551 0135 1110
+			4111 2114 3333 2333 4102 2244 3333 3333
+			1122 3244 3333 3333 1122 2221 3332 3333
+			1112 3331 3222 2333 2111 3332 3233 2223
+			3211 3333 2233 1112 3321 3333 2113 1222
+			3321 3333 2111 1122 3311 4333 2114 1122
+			2221 4442 1411 1111 2222 4442 4411 1114
+			2222 1442 4441 4444 4222 2211 2441 1423
+			4441 2221 3321 1133 4411 1221 3321 1133
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gake1_s0"
@@ -946,35 +946,35 @@
 		path="C:/home/swan_data3d/field/out63/chip/tex/yamaga_s01.tga"
 	>
 		<bitmap size="128">
-			6533 6666 4445 2055 4333 4444 5554 3055
-			5543 3335 5433 3005 5554 4344 3444 4001
-			5555 4434 4444 4010 4455 4343 4444 0110
-			3024 3444 4444 0122 4302 4444 4443 0122
-			4302 4444 4433 0023 4302 4444 3434 0024
-			4410 4444 4334 0244 4301 4444 4344 0244
-			0011 4443 4344 0244 0111 4430 4344 0244
-			1111 3200 2024 0244 1111 0011 0011 0244
-			1011 1111 0001 0222 1001 1111 0111 0020
-			0001 1111 1111 1000 0000 1111 1111 1101
-			0000 2211 1112 1111 1000 0001 1020 1111
-			1100 0000 2200 1111 0110 0000 2220 1102
-			0011 0000 2222 0110 0001 0000 0222 2010
-			0200 2002 0222 2200 2220 2220 2022 2220
-			4442 2242 2222 2002 4444 4444 5444 0245
-			4444 5544 4445 4455 5445 6665 4456 5544
+			4444 5544 6655 4446 4444 5444 6645 4446
+			4444 5444 4444 4466 4444 5544 4446 4466
+			4444 5544 6446 4666 4444 5564 6465 6666
+			4444 5564 6655 6666 4446 5566 6655 6666
+			4666 5556 6555 6666 6333 5556 6555 6666
+			3333 5553 6555 3666 3333 5553 6555 6366
+			3333 3553 6533 3366 3333 3300 6613 0036
+			2000 3322 3111 2203 2222 3122 1111 2220
+			2222 0122 1110 2220 2222 0122 1110 2220
+			2222 0122 1110 2220 2222 0122 0030 2210
+			1222 3001 3333 2103 3300 3333 3333 0333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 0333 3300 3330 3333 0000 0000
+			3300 0033 0000 0000 0000 0000 0002 1110
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="26">
 	<tex_palette index="0" name="ga_s01a_pl" color_size="8">
-		1dd0 218d 21f0 21f1 2612 2655 2a97 2eb8
+		3b1c 3b1b 3afc 3ada 36ba 3277 3698 36b9
 	</tex_palette>
 	<tex_palette index="1" name="ga_s1_0_pl" color_size="8">
-		21f1 2611 2655 29cf 2a32 2a97 2e54 2eb8
+		29d0 2e56 25f3 2a14 2e14 29d2 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="ga_s_futa_pl" color_size="8">
-		1dae 21f0 2211 2653 2a95 2eb7 7fff 7fff
+		29f2 29d1 2e14 3236 258f 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gake1_s0_pl" color_size="16">
 		2213 2256 2634 2e76 2e99 3ab9 433d 435e
@@ -1053,7 +1053,7 @@
 		42fd 42fe 431e 433f 435e 437e 437f 7fff
 	</tex_palette>
 	<tex_palette index="25" name="yamaga_s01_pl" color_size="8">
-		2611 29cf 2a32 2a33 2e54 2e97 3afa 7fff
+		3277 3698 36b9 2a36 2e56 25f3 2a14 7fff
 	</tex_palette>
 </tex_palette_array>
 
