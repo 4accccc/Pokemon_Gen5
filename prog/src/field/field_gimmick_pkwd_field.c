@@ -325,8 +325,13 @@ static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index )
 
     ICHI_Printf("看板のNO %d \n", dat_id );
 
-    // テクスチャ転送
-    TexTransToGra( p_res, tex_name[tex_index], plt_name[tex_index], dat_id, heapID );
+    // 0は何も上映していないのでSKIP
+    if( dat_id > 0 )
+    {
+      dat_id -= 1;  // アーカイブデータは0オリジンなので-1する
+      // テクスチャ転送
+      TexTransToGra( p_res, tex_name[tex_index], plt_name[tex_index], dat_id, heapID );
+    }
   }
 }
 
