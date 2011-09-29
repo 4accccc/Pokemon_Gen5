@@ -37,9 +37,12 @@ DEFINE_LOCAL  LCW_POSZ
 /*  POS：SWBOSS_01                                            */
 /**************************************************************/
 EVENT_START   ev_pos_c03P01_swboss_01
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
   //アニメ：向きなおる
-   IF $LCW_POSX ==18 THEN
+   IF $LCW_POSX == 18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
@@ -66,9 +69,12 @@ EVENT_START   ev_pos_c03P01_swboss_01
   //アニメ：アクロマ接近
   _OBJ_ANIME_AUTO( C03P01_SWBOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
   //アニメ：向きなおる
-   IF $LCW_POSX ==18 THEN
+   IF $LCW_POSX == 18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)

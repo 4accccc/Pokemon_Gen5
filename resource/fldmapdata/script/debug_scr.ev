@@ -534,6 +534,7 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_17, 16 )	//D10・キュレム手前
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_18, 17 )	//d24連れ歩き開始
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_19, 18 )	//c14イベント開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 19 )	//c15チュートリアル開始
 		
 		//メニュー表示
 		_BMPMENU_START()
@@ -562,12 +563,15 @@ EVENT_START   ev_debug_mizuguchi
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
 			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
 		ELSIF $SCWK_TEMP2 == 4 THEN
+		  //C08アイリス表示
+      $WK_SCENE_C08_SWCHAMPION = 1
+      _FLAG_SET( FV_C08_SWCHAMPION_01 )
 		  //C08プラズマ団イベント開始
       $WK_SCENE_C08_LEADER7 = 1
-		    _MAP_CHANGE( ZONE_ID_C08, 405, 145, DIR_DOWN )
+		  _MAP_CHANGE( ZONE_ID_C08, 405, 145, DIR_DOWN )
 		ELSIF $SCWK_TEMP2 == 5 THEN
         //C08ヴィオ戦前
-        //C08アイリス表示
+        //C08アイリス非表示
         $WK_SCENE_C08_SWCHAMPION = 1
         _FLAG_SET( FV_C08_SWCHAMPION_01 )
 		    $WK_SCENE_C08_NINJA = 0
@@ -807,16 +811,16 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_C03P08_FESGUIDE_01 = 1
     
     ELSIF $SCWK_TEMP2 == 18 THEN
-      //C03P15アジト船非表示
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, FALSE, FALSE )
-      //マップ遷移
-      _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
-    
-    ELSIF $SCWK_TEMP2 == 19 THEN
       //C14 SCENE_CHANGE有効
       $WK_SCENE_C14_SWRIVAL_01 = 1
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_C14R0601, 3, 6, DIR_LEFT)
+    
+    ELSIF $SCWK_TEMP2 == 19 THEN
+      //C15チュートリアル開始
+      $WK_SCENE_C15_TUTORIAL_01 = 1
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_C13R0501, 5, 3, DIR_UP)
 
     ELSIF $SCWK_TEMP2 == 20 THEN
       //D05アジト船非表示
