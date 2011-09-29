@@ -159,7 +159,7 @@ static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup, PokeType poketyp
     id_end = id_start + 1;
   }
 
-  for ( id_start = 0; id_start < id_end; id_start ++ )
+  for ( ; id_start < id_end; id_start ++ )
   {
     count += WBTSAVE_GetWinCount( wbtsave, id_start );
     if ( count >= WBTWIN_MAX )
