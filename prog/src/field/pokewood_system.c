@@ -479,6 +479,8 @@ void PKWDSYS_BoxofficeRecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
   POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
   const POKEWOOD_BOXOFFICE_RECORD *compare = POKEWOOD_SAVEDATA_GetBoxOfficeData( ps, pkwdsys->scenario_no );
   
+  OS_Printf("興行収入比較 シナリオ=%d\n", pkwdsys->scenario_no);
+  
   // 興行収入で比較して代入
   if(pkwdsys->BoxofficeData.profits >= compare->profits){
     OS_Printf("興行収入データ更新: シナリオ%d\n", pkwdsys->scenario_no);
@@ -579,4 +581,35 @@ void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
     OS_Printf("スターポイント加算 %d, result=%d, star_point=%d\n ", 
       pkwdsys->pokelist_select_num[ cnt ], pkwdsys->pokewoodResult, star_point);
   }
+}
+
+// todo:pkwd_movie_title.cdatにも存在しているので、
+// 共通アクセスにすべき
+static const u8 scenario_logo_tbl[]={
+  1,  1,  1,  1,  //  1 -  4本目  
+  0,  0,  0,  0,  //  5 -  8本目
+  0,  0,  0,  2,  //  9 - 12本目  
+  2,  2,  2,  3,  // 13 - 16本目
+  4,  4,  4,  4,  // 17 - 20本目  
+  5,  5,  5,  5,  // 21 - 24本目
+  6,  6,  6,  6,  // 25 - 28本目  
+  7,  7,  7,  7,  // 29 - 32本目
+  8,  8,  8,  8,  // 33 - 36本目  
+  9,  9,  9,  9,  // 37 - 40本目
+};
+
+//=============================================================================================
+/**
+ * @brief	上映決定時の看板を設定する
+ *
+ * @param   gamedata	GAMEDATA
+ * @param   pkwdsys		PKWDSYS
+ * @param   rec_pos		外部セーブ番号
+ */
+//=============================================================================================
+void PKWDSYS_SetKanban( GAMEDATA * gamedata, PKWDSYS *pkwdsys, int rec_pos )
+{
+  POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
+
+  POKEWOOD_SAVEDATA_SetKanbanNo( ps, rec_pos, scenario_logo_tbl[pkwdsys->scenario_no] );
 }

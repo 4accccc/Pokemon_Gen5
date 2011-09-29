@@ -767,6 +767,7 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
 }
 #endif
 
+
 //-----------------------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ポケウッド  映画をセーブ
@@ -787,6 +788,9 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
 
   // 上映フラグをクリア
   POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, rec_pos, FALSE );
+
+  // 看板を設定
+  PKWDSYS_SetKanban( gamedata, pkwdsys, rec_pos );
 
   // 興行収入のレコード登録
   PKWDSYS_RecordSet( gamedata, pkwdsys );

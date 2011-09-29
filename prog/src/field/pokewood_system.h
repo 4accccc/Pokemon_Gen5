@@ -63,6 +63,7 @@ extern void PKWDSYS_BoxofficeRecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
 extern void PKWDSYS_CalcStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys, BtlPokewoodResult result, int play_no );
 extern void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
 extern void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
+extern void PKWDSYS_SetKanban( GAMEDATA * gamedata, PKWDSYS *pkwdsys, int rec_pos );
 
 
 
