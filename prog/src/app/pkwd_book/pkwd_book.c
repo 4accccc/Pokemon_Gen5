@@ -1591,8 +1591,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//------------
 	// 上画面表示
 	//------------
-	// 本来は引き継ぐのだがタッチで入ることはないのでは..
-	pwb_disp_up_bg( wk, 1 );
+	pwb_disp_up_bg( wk, 0 );
 	
 	//---------------------------
 	// 半透明設定(フィルムのobj)
@@ -4552,6 +4551,9 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		case FRAMELIST_RET_MOVE:			// move
 		case FRAMELIST_RET_SCROLL:			// move
 			flg = 1;
+			break;
+		case FRAMELIST_RET_CURSOR_ON:		// カーソルがついた(タッチ/キー)
+			flg = 3;
 			break;
 		default:
 			break;
