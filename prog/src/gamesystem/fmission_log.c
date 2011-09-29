@@ -89,6 +89,7 @@ void FMISSION_LOG_TBL_Clear( FMISSION_LOG_TBL* tbl )
   }
   tbl->ring_top = 0;
   tbl->entry_num = 0;
+  tbl->view_top = 0;
 }
 
 //------------------------------------------------------------------
