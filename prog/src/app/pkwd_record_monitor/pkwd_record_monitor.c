@@ -621,7 +621,7 @@ static const PKWD_RECORD_MONITOR_CANVAS_DATA pwb_canvas_00_tbl[] = {
 	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	10,},		//「興行成績記録」
 	{ GFL_BG_FRAME0_M,  2, 17,	18,	2,	10,},		//「主な出演キャスト」
 	{ GFL_BG_FRAME0_M,	3,	4,	27,	2,	10,},		// 映画のメインタイトル
-	{ GFL_BG_FRAME0_M,	3,	7,	27,	4,	10,},		// 映画のサブタイトル
+	{ GFL_BG_FRAME0_M,	3,	6,	27,	4,	10,},		// 映画のサブタイトル
 	{ GFL_BG_FRAME0_M,  9, 14,	21,	2,	10,},		//「XXXX億円」
 	{ GFL_BG_FRAME0_M, 20, 17,	10,	2,	10,},		// トレーナー名
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
@@ -2648,6 +2648,20 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       //  興行成績の高いサブタイトルになる?
       u32 str_id = pwb_mes_tbl[1] + ( id/4 );
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
+
+      // 単語登録 先頭ポケモン名
+      {
+        STRBUF  *monsbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
+        u32 monsno,form,sex;
+
+        POKEICON_UnpackResourceData( p_pkwd_record->pokeicon[0], &monsno, &form, &sex );
+        WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, monsno );
+        WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
+        WORDSET_ExpandStr( wk->Wordset, monsbuf, strbuf );
+        GFL_STR_DeleteBuffer( strbuf );
+        strbuf = monsbuf;
+      }
+
       pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
@@ -2658,7 +2672,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       // 単語登録
       {
         STRBUF  *namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
-        WORDSET_RegisterNumber( wk->Wordset, 0, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
         GFL_STR_DeleteBuffer( strbuf );
         strbuf = namebuf;
