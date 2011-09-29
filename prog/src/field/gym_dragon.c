@@ -90,6 +90,9 @@ typedef struct GYM_DRAGON_TMP_tag
   GYM_DRAGON_SV_WORK  *p_sv_work;
   MODEL               model[GYM_DRAGON_MODELID_MAX]; // モデル
   
+  // アニメーションヒープフラグ(TRUEの時ヒープ作成済み)
+  BOOL                is_set_anm_heep;  
+  
 }GYM_DRAGON_TMP;
 
 //-------------------------------------
@@ -130,7 +133,7 @@ typedef struct PLAYER_MOVE_WORK_tag
   u32           cam_type_tmp;
 
   TRACE_MOVE_DATA move_data[ICA_MOVE_ID_MAX];
-  
+ 
   const VecFx32   *p_watch_target;
 
 }PLAYER_MOVE_WORK;
@@ -237,6 +240,8 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 
   // アニメーション用ヒープ生成
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_GYM_DRAGON_ANM, GYM_DRAGON_ANM_HEAP_SIZE );
+  p_wk->is_set_anm_heep = TRUE;
+  ONOUE_Printf("アニメーションヒープ作成\n");
 
   // パラメータの初期化
   p_wk->heapID          = HEAPID_FIELDMAP;
@@ -444,8 +449,12 @@ void GYM_DRAGON_End(FIELDMAP_WORK *fieldWork)
   // 破棄
   FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, GYM_DRAGON_UNIT_IDX );
   
-  // アニメーション用ヒープを削除
-  GFL_HEAP_DeleteHeap( p_wk->heapAnmID );
+  // ヒープ作成確認
+  if( p_wk->is_set_anm_heep == TRUE )
+  {
+    // アニメーション用ヒープを削除
+    GFL_HEAP_DeleteHeap( p_wk->heapAnmID );
+  }
   
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
@@ -1722,6 +1731,8 @@ void GYM_DRAGON_ReleaseAnmHeap( GAMESYS_WORK *p_gamesys )
   GYM_DRAGON_TMP *p_gmkwk = GMK_TMP_WK_GetWork( p_fld_wk, GYM_DRAGON_TMP_ASSIGN_ID);
   // アニメーション用ヒープを削除
   GFL_HEAP_DeleteHeap( p_gmkwk->heapAnmID );
+  p_gmkwk->is_set_anm_heep = FALSE;
+  ONOUE_Printf("アニメーションヒープ開放\n");
 }
 
 //----------------------------------------------------------------------------
@@ -1739,6 +1750,8 @@ void GYM_DRAGON_MakeAnmHeap( GAMESYS_WORK *p_gamesys )
   GYM_DRAGON_TMP *p_gmkwk = GMK_TMP_WK_GetWork( p_fld_wk, GYM_DRAGON_TMP_ASSIGN_ID);
   // アニメーション用ヒープ生成
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, p_gmkwk->heapAnmID, GYM_DRAGON_ANM_HEAP_SIZE );
+  p_gmkwk->is_set_anm_heep = TRUE;
+  ONOUE_Printf("アニメーションヒープ作成\n");
 }
 
 #ifdef PM_DEBUG

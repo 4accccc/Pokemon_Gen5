@@ -499,11 +499,14 @@ EVENT_START ev_tr_c08gym0101_swleader7
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 	
+    // アニメーションヒープ開放
+    _GYM_DRAGON_RELEASE_ANM_HEAP()
+			
     // 【仮】引継ぎチェックを入れる必要がある
 		//会話
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_01 )
 		_BALLOONWIN_CLOSE()
-		
+
     //戦闘処理
 		_TRAINER_BTL_SET( TRID_SWLEADER7_01, 0 )
 
@@ -514,10 +517,7 @@ EVENT_START ev_tr_c08gym0101_swleader7
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
-		
-    // アニメーションヒープ開放
-    _GYM_DRAGON_RELEASE_ANM_HEAP()
-
+	
 		//勝利後会話
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_02 )
 		_BALLOONWIN_CLOSE()
@@ -536,6 +536,9 @@ EVENT_START ev_tr_c08gym0101_swleader7
 		//性別が格納されるローカル変数を定義
 		DEFINE_LOCAL SCWK_SEX
 		_GET_MY_SEX(SCWK_SEX)
+	
+    // アニメーションヒープ開放
+    _GYM_DRAGON_RELEASE_ANM_HEAP()
 		
 		//男性だった場合
 		IF $SCWK_SEX == PM_MALE THEN
@@ -547,11 +550,11 @@ EVENT_START ev_tr_c08gym0101_swleader7
 		
 		//ME待ち
 		_ME_WAIT()
-			
-	  }
 		
     // アニメーションヒープ作成
     _GYM_DRAGON_MAKE_ANM_HEAP()
+			
+	  }
 	
 		//バッジをもらった
 		_PLAYER_NAME( 0 )
