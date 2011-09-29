@@ -63,6 +63,8 @@ extern BOOL BTL_MAIN_GetWbtFinal( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPlayerClientSelectWaza( const BTL_MAIN_MODULE *wk );
 extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE *wk );
+extern BOOL BTL_MAIN_GetPokewoodShowNoCancelFlag( const BTL_MAIN_MODULE *wk );
+extern void BTL_MAIN_notifyRecStop( BTL_MAIN_MODULE *wk );
 
 
 /*------------------------------------------------------------------------------*/

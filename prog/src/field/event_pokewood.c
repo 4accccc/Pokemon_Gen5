@@ -421,9 +421,12 @@ static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodBSP(
-    PREW * prew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
+    PREW * prew, GAMESYS_WORK * gsys, GAMEDATA *gamedata, FIELDMAP_WORK * fieldmap, HEAPID heapID )
 {
   BATTLE_SETUP_PARAM * bsp;
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
+
+
   switch ( prew->PokewoodMode )
   {
   case BTL_POKEWOOD_NONE:
@@ -447,6 +450,17 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
       bsp->musicStrange = senario->strange_bgm;
       setTrainerTypeName( prew, bsp, bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, heapID );
       GFL_HEAP_FreeMemory( senario );
+    }
+    
+    // 上映キャンセル可能にするか
+    {
+      // この録画データは一度上映しているか？
+      if(POKEWOOD_SAVEDATA_GetMovieShowed( ps, prew->rec_id )==0){
+        OS_Printf("上映してない id=%d\n", prew->rec_id);
+        bsp->PokewoodShowNoCancelFlag = TRUE;
+      }else{
+        OS_Printf("上映済み id=%d\n", prew->rec_id);
+      }
     }
     break;
   }
@@ -573,7 +587,7 @@ static void _init_pkwd_endroll_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_P
   param->audienceNum = bsp->audience_num;
   param->audienceBit = bsp->audience_bit;
   param->bsp         = bsp;
-  
+  param->scenario_no = bsp->pokewoodSenario;
 }
 
 //----------------------------------------------------------------------------------
@@ -632,7 +646,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   // 戦闘用ＢＧＭセット
   case PW_SHOW_SEQ_START:
     // BATTLE_SETUP_PARAM生成
-    pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
+    pbew->bp = createPokewoodBSP( prew, gsys, gamedata, fieldmap, prew->heapID );
     // プレイヤーボリュームをフェードアウト
     FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, pbew->bp->musicDefault));
@@ -696,9 +710,9 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     break;
   // エンドロール呼び出し
   case PW_SHOW_SEQ_CALL_ENDROLL:
-    OS_Printf("最後まで再生した？ = %d\n", pbew->bp->recPlayCompleteFlag);
+    OS_Printf("キャンセルした？ = %d\n", pbew->bp->recPlayCancel);
     // 上映をキャンセルしていなかったらエンドロール
-    if(pbew->bp->recPlayCompleteFlag){
+    if(pbew->bp->recPlayCancel==FALSE){
       _init_pkwd_endroll_param( &prew->pkwd_endroll_param, pbew->bp, mystatus, gamedata );
       GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_briefing), &PkwdEndrollProcData, &prew->pkwd_endroll_param );
     }
@@ -792,7 +806,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
   // 戦闘用ＢＧＭセット
   case PW_REC_SEQ_START:
     // BATTLE_SETUP_PARAM生成
-    pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
+    pbew->bp = createPokewoodBSP( prew, gsys, gamedata, fieldmap, prew->heapID );
     // プレイヤーボリュームをフェードアウト
     FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, pbew->bp->musicDefault));
@@ -1543,7 +1557,7 @@ static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
   { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ1
   { PW_OPEN_PROVISION_SUCCESS,   0 },   // シナリオ2
   { PW_OPEN_PROVISION_SUCCESS,   1 },   // シナリオ3
-  { PW_OPEN_PROVISION_SUCCESS,   2 },   // シナリオ4
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ4
   { PW_OPEN_PROVISION_SUCCESS,   3 },   // シナリオ5
   { PW_OPEN_PROVISION_SUCCESS,   4 },   // シナリオ6
   { PW_OPEN_PROVISION_SUCCESS,   5 },   // シナリオ7
@@ -1551,11 +1565,11 @@ static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
   { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ9
   { PW_OPEN_PROVISION_SUCCESS,   8 },   // シナリオ10
   { PW_OPEN_PROVISION_SUCCESS,   9 },   // シナリオ11
-  { PW_OPEN_PROVISION_SUCCESS,  10 },   // シナリオ12
-  { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ13
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ12
+  { PW_OPEN_PROVISION_SUCCESS,  11 },   // シナリオ13
   { PW_OPEN_PROVISION_SUCCESS,  12 },   // シナリオ14
   { PW_OPEN_PROVISION_SUCCESS,  13 },   // シナリオ15
-  { PW_OPEN_PROVISION_SUCCESS,  14 },   // シナリオ16
+  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ16
   { PW_OPEN_PROVISION_BEGINING     },   // シナリオ17
   { PW_OPEN_PROVISION_SUCCESS,  16 },   // シナリオ18
   { PW_OPEN_PROVISION_SUCCESS,  17 },   // シナリオ19

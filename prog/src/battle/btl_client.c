@@ -10633,6 +10633,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           ctrl->fFadeOutStart = TRUE;
           ctrl->seq = SEQ_FADEOUT;
           BTLV_RecPlayer_StartQuit( wk->viewCore, ctrl->turnCount, BTLV_INPUT_BR_STOP_KEY );
+          BTL_MAIN_notifyRecStop( wk->mainModule );   // “r’†Ä¶I—¹‚µ‚½‚±‚Æ‚ð’Ê’m
 
           //BGMASE’âŽ~
           //BTS:2360

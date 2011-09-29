@@ -131,6 +131,8 @@ struct _BTLV_SCD {
   u8                audienceNum;   // ポケウッド上映時の観客数（他は0）
   u32               audienceBit;   // ポケウッド上映時の観客数（他は0）
   int               yesno_result;
+  BOOL              show_no_cancel_flag;  //TRUE:ポケウッド上映をキャンセルできない
+  
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -216,6 +218,7 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->fForceQuitDoing = FALSE;
   wk->audienceNum = BTL_CLINET_GetAudienceNum( client );
   wk->audienceBit = BTL_CLINET_GetAudienceBit( client );
+  wk->show_no_cancel_flag = BTL_MAIN_GetPokewoodShowNoCancelFlag( mainModule );
 
 
   // ゲームデータにカーソルモードを保存しておくように変更した
@@ -252,7 +255,7 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
                              BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->bagMode, 
                              BTL_MAIN_GetMultiMode(wk->mainModule),
                              BTL_MAIN_GetPokewoodMode( wk->mainModule ),
-                             wk->audienceNum, wk->audienceBit,
+                             wk->audienceNum, wk->audienceBit, wk->show_no_cancel_flag,
                              wk->heapID );
 
   ///<obj

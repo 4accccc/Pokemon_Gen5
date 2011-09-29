@@ -560,7 +560,8 @@ struct _BTLV_INPUT_WORK
   u32                   decide_pos_flag     :1;     //決定ボタン位置記憶フラグ
   u32                   waza_target         :8;     ///<対象選択タイプ
   u32                   waza_cursor_pos     :8;     ///<技選択位置記憶ワーク
-  u32                                       :14;
+  u32                   show_no_cancel_flag :1;     ///< TRUE:ポケウッド上映をキャンセルできない
+  u32                                       :13;
 
   int                   hit;
 
@@ -780,8 +781,8 @@ typedef struct
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood,
-                                               int audienceNum, u32 audienceBit, HEAPID heapID );
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, 
+                                               int audienceNum, u32 audienceBit, BOOL show_no_cancel_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
@@ -910,7 +911,7 @@ static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, 
-                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, 0, 0, heapID );
+                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, 0, 0, 0, heapID );
 }
 
 //============================================================================================
@@ -934,10 +935,11 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, 
                                    PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, 
-                                   BtlMultiMode multiMode, int pokewood, int audienceNum, u32 audienceBit, HEAPID heapID )
+                                   BtlMultiMode multiMode, int pokewood, int audienceNum, u32 audienceBit, 
+                                   BOOL show_no_cancel_flag, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, 
-                              multiMode, pokewood, audienceNum, audienceBit, heapID );
+                              multiMode, pokewood, audienceNum, audienceBit, show_no_cancel_flag, heapID );
 }
 
 //============================================================================================
@@ -962,7 +964,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
                                                BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, 
-                                               int audienceNum, u32 audienceBit, HEAPID heapID )
+                                               int audienceNum, u32 audienceBit, BOOL show_no_cancel_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -985,6 +987,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->pokewood    = pokewood;
   biw->audienceNum = audienceNum;
   biw->audienceBit = audienceBit;
+  biw->show_no_cancel_flag = show_no_cancel_flag;
 
   //パレットフェード初期化
   biw->pfd = pfd;
@@ -1822,7 +1825,7 @@ static int _input_BattleRecorder( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL*
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	仮ポケウッド上映画面操作入力処理
+ * @brief	ポケウッド上映画面操作入力処理
  *
  * @param   biw		
  * @param   tp_tbl		
@@ -1836,12 +1839,16 @@ static int _input_PokewoodPlay( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* t
   int rp = GFL_UI_KEY_GetRepeat();
   hit = GFL_UI_TP_HIT_NONE;
 
+  // 上映キャンセルOKならBボタンキャンセルを受け付ける
   if( rp & PAD_BUTTON_B )
   {
-    SePlayCancel( biw );
-    hit = BTLV_INPUT_BR_SEL_STOP;
+    if(biw->show_no_cancel_flag==FALSE){
+      SePlayCancel( biw );
+      hit = BTLV_INPUT_BR_SEL_STOP;
+    }else{
+      OS_Printf("キャンセル不可です\n");
+    }
   }
-  
   return hit;
 }
 
@@ -3031,7 +3038,7 @@ static const GFL_CLWK_DATA audience_param[] =
 {
   {
     0, 0,     //x, y
-    0, 2, 0,  //アニメ番号、優先順位、BGプライオリティ
+    0, 2, 1,  //アニメ番号、優先順位、BGプライオリティ
   },
 };
 
@@ -3181,7 +3188,7 @@ static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_pkwd_movie02_c_NSCR,	// test
                                           GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( biw->handle, NARC_battgra_wb_pkwd_movie_c_NCLR,
-                                          PALTYPE_SUB_BG, 0, 7*0x20, biw->heapID );
+                                          PALTYPE_SUB_BG, 0, 14*0x20, biw->heapID );
   // BGのパレット
   PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_BG, 0, 0x20*15 );
   // 念のため

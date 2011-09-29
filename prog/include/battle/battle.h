@@ -369,14 +369,15 @@ typedef struct {
   u8 LosePokeNum;   //倒されたポケモン数
   u8 UseWazaNum;    //使用した技の数
 
-  u8 cmdIllegalFlag      : 1;  // コマンド不正チェックフラグ（子機のみ操作。親機は常にFALSE）
-  u8 recPlayCompleteFlag : 1;  // 録画再生モードで最後まで再生できたらTRUE。それ以外はFALSE
-  u8 WifiBadNameFlag     : 1;  // Wifiで対戦相手が不正名だったらTRUE。それ以外はFALSE
-  u8 PokewoodMode        : 2;  // 0:通常(ポケウッドじゃない）、1:撮影モード、2：上映モード
+  u8 cmdIllegalFlag           : 1;  // コマンド不正チェックフラグ（子機のみ操作。親機は常にFALSE）
+  u8 recPlayCompleteFlag      : 1;  // 録画再生モードで最後まで再生できたらTRUE。それ以外はFALSE
+  u8 WifiBadNameFlag          : 1;  // Wifiで対戦相手が不正名だったらTRUE。それ以外はFALSE
+  u8 PokewoodMode             : 2;  // 0:通常(ポケウッドじゃない）、1:撮影モード、2：上映モード
 
-  u8 bag_nouse_flag       :1;  // アイテム使用禁止フラグ
-  u8 WBTFinalFlag         :1;  // swan追加：WBT決勝かどうか（戦闘背景制御用）
-  u8 pad1bit              :1;  // 1bitあまり領域
+  u8 bag_nouse_flag           : 1;  // アイテム使用禁止フラグ
+  u8 WBTFinalFlag             : 1;  // swan追加：WBT決勝かどうか（戦闘背景制御用）
+  u8 PokewoodShowNoCancelFlag : 1;  // [in]ポケウッド上映でBボタンキャンセルをできなくさせるフラグ
+                                    //     (TRUE:キャンセルできない）
 
   u8 pokewoodSenario;         // ポケウッドのシナリオNo
   u8 pokewoodRentalFlag;      // ポケウッドにレンタルポケモンで参加しているか？(1:レンタル 0:自前）
@@ -394,6 +395,7 @@ typedef struct {
   u8  player_star_rank;    ///< Player Star Rank
   u32 audience_bit;        ///< 観客配置のBitテーブル
   u32 pokewoodProfit;      ///< 撮影結果の興行成績
+  u32 recPlayCancel;       ///< 上映をキャンセルしたかどうか（TRUE:した,FALSE:してない）
 
   // [i]ポケウッド限定曲指定
   u16 musicLose;

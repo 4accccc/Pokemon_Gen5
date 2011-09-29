@@ -3998,6 +3998,36 @@ int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
+ * @brief	ポケウッド上映をキャンセルできるか？
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL	TRUE:キャンセルできない   FALSE:キャンセルできる
+ */
+//=============================================================================================
+BOOL BTL_MAIN_GetPokewoodShowNoCancelFlag( const BTL_MAIN_MODULE *wk )
+{
+  if(wk!=NULL){
+    return wk->setupParam->PokewoodShowNoCancelFlag;
+  }
+  return FALSE;
+}
+
+//=============================================================================================
+/**
+ * @brief	再生をキャンセルしたことをBATTLE_SETUP_PARAMに通知
+ *
+ * @param   wk		BTL_MAIN_MODULE
+ */
+//=============================================================================================
+void BTL_MAIN_notifyRecStop( BTL_MAIN_MODULE *wk )
+{
+  wk->setupParam->recPlayCancel = TRUE;
+}
+
+
+//=============================================================================================
+/**
  * @brief	ポケウッド敗北理由を取得する
  *
  * @param   wk		
