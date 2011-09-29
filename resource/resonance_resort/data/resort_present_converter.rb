@@ -73,9 +73,11 @@ def convertPresent( csv, data, header, hash )
     data.write_u16(denominator)
     data.write_u16(0)
 
+    percent = 0
     for cnt in 0...PRE_COL_ITEM_MAX
       per     = csv.get( row, PRE_COL_PERCENT+cnt*PRE_COL_CEL_NUM )
       item    = csv.get( row, PRE_COL_ITEM+cnt*PRE_COL_CEL_NUM )
+      percent += per.to_i
 
       if per == nil || item == nil 
         data.write_u16(0)
@@ -89,6 +91,10 @@ def convertPresent( csv, data, header, hash )
           data.write_u16( $item_hash[ item ] )
         end
       end
+    end
+    if percent < denominator.to_i
+      p "合計確率が分母より低いです！ #{tag} 合計#{percent}％ 分母#{denominator}";
+      exit(1)
     end
   end
   header.write( "#define RESORT_LIST_ID_MAX  (#{row-PRE_ROW_START+1})\n")
