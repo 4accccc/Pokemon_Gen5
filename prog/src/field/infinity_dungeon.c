@@ -3326,6 +3326,28 @@ static void SetTutorialTrainerData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DA
       GFL_STD_MemCopy( p_w_tutorialtr_table[tutorial_data_index][0], &p_dungeon_data->tr_data[0], sizeof(DUNGEON_TRAINER));
       GFL_STD_MemCopy16( p_w_tutorialtr_table[tutorial_data_index][1], p_dungeon_data->recover_data, sizeof(p_dungeon_data->recover_data));
     }
+
+    // 回復トレーナー位置を設定(1階のみ設定)
+    {
+      s32 i,n;
+      GFL_STD_MemFill(p_dungeon_data->recover_room_id, 0, sizeof(p_dungeon_data->recover_room_id));
+      for( i = 0; i < ROOM_MAX ;i++ )
+      {
+        ROOM_DATA *p_room_data = &p_dungeon_data->room_data[0][i];
+        for( n= 0; n<GetMemberNum(p_room_data->tr_pos_type); n++ )
+        {
+          u16 tr_id;
+          s32 id_pos;
+          id_pos = GetRoomTrainerIDPos( p_dungeon_data,0, p_room_data->room_id ,n );
+          tr_id = p_dungeon_data->tr_data[0].tr_id[id_pos];
+          if( (tr_id >= INF_TRID_START_RECOVERY) 
+              && (tr_id < (INF_TRID_START_RECOVERY+INF_TRID_CNT_RECOVERY)) )
+          {
+            p_dungeon_data->recover_room_id[0] = p_room_data->room_id;
+          }
+        }
+      }
+    }
   }
 }
 
