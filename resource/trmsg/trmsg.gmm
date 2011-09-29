@@ -6065,9 +6065,9 @@
 		<language name="JPN" width="216">つりは　じんせいと　おなじ▼
 ねらわないと　つれないし
 ねらっても　つれないんだよ……</language>
-		<language name="JPN_KANJI" width="216">釣り　人生と　同じ▼
-狙わないと　釣れないし
-狙っても　釣れないんだよ……</language>
+		<language name="JPN_KANJI" width="216">釣りは　人生と　同じ▼
+ねらわないと　釣れないし
+ねらっても　釣れないんだよ……</language>
 	</row>
 
 	<row id="TRID_BREEDERW_04_TRMSG_FIGHT_START">
