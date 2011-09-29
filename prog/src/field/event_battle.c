@@ -578,7 +578,7 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
   
   bew->is_sub_event = TRUE; //サブイベント呼び出し
   
-  bew->is_no_lose = TRUE; //敗戦処理無し
+  bew->is_no_lose = FALSE; //敗戦処理有り
   bew->not_free_bsp = FALSE; //開放する
   
   //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
