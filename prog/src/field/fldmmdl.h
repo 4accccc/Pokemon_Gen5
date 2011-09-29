@@ -1030,6 +1030,8 @@ extern void MMDLSYS_ROCKPOS_ResetFallParam( const MMDLSYS *mmdlsys, const u16 zo
 extern void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y );
 extern void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side );
 
+extern void MMDL_SetMoveProcList( MMDL *mmdl, const MMDL_MOVE_PROC_LIST *cp_proc_list );
+
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
 extern void DEBUG_MMDL_PrintState(

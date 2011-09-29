@@ -5552,6 +5552,23 @@ void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
   pos->side_grid  = side;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外部から動作リストを設定する
+ *
+ *	@param	MMDL *mmdl  動作モデル
+ *	@param	MMDL_MOVE_PROC_LIST *cp_proc_list 動作リスト
+ */
+//-----------------------------------------------------------------------------
+void MMDL_SetMoveProcList( MMDL *mmdl, const MMDL_MOVE_PROC_LIST *cp_proc_list )
+{
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  
+  MMDL_CallMoveDeleteProc( mmdl );
+  MMDL_SetMoveCode( mmdl, cp_proc_list->move_code );
+  mmdl->move_proc_list =  cp_proc_list;
+  mmdl_InitMoveProc( mmdlsys, mmdl );
+}
 
 //======================================================================
 //  debug

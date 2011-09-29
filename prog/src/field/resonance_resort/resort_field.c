@@ -120,7 +120,6 @@ static void RESORT_CROWD_PEOPLE_SetUp( RESORT_CROWD_PEOPLE *p_wk, RESORT_CROWD_M
 
 static void RESORT_CROWD_PEOPLE_Add( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
-static void RESORT_CROWD_PEOPLE_Stop( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 
 //=============================================================================
@@ -149,12 +148,13 @@ static void RESORT_CROWD_NOISE_Start( RESORT_CROWD_NOISE *p_wk );
 typedef struct _RESORT_FIELD_PEOPLE RESORT_FIELD_PEOPLE;
 
 static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYSTEM *p_sys, MMDLSYS *p_mmdlsys, const FIELD_PLAYER* cp_player, BOOL is_tutorial, BOOL is_mapchange );
+void RESORT_FIELD_PEOPLE_Setup( RESORT_FIELD_PEOPLE *p_wk, BOOL is_tutorial, BOOL is_mapchange );
 static void RESORT_FIELD_PEOPLE_Exit( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELDMAP_WORK* p_fieldmap );
 static void RESORT_FIELD_PEOPLE_StartAdd( RESORT_FIELD_PEOPLE *p_wk );
 static RESORT_PEOPLE_SYS * RESORT_FIELD_PEOPLE_GetPeopleSys( RESORT_FIELD_PEOPLE *p_wk );
 static void RESORT_FIELD_PEOPLE_DeleteCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
-static void RESORT_FIELD_PEOPLE_StopCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
+static RESORT_CROWD_PEOPLE * RESORT_FIELD_PEOPLE_GetCrowdPeople( RESORT_FIELD_PEOPLE *p_wk );
 
 //=============================================================================
 /**
@@ -264,6 +264,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   {
     BOOL is_mapchange = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_IS_MAPCHANGE );
     p_wk->p_people_sys = RESORT_FIELD_PEOPLE_Init( heapID, p_wk->p_sys, GAMEDATA_GetMMdlSys(p_gamedata), FIELDMAP_GetFieldPlayer(p_fieldmap), is_tutorial, is_mapchange );
+    RESORT_FIELD_PEOPLE_Setup( p_wk->p_people_sys, is_tutorial, is_mapchange );
   }
 
   //NPCシステム
@@ -384,20 +385,6 @@ void RESORT_FIELD_DeleteCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_people )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   RESORT_FIELD_PEOPLE_DeleteCrowd( p_wk->p_people_sys, p_people );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  フィールド上の群集の人を停止（p_peopleの人が群集にいなかったら何もしない）
- *
- *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
- *	@param  void* p_people  (RESORT_PEOPLE*)
- */
-//-----------------------------------------------------------------------------
-/*void RESORT_FIELD_StopCrowdPeople( FIELDMAP_WORK *p_fieldmap, void* p_people )
-{
-  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
-  RESORT_FIELD_PEOPLE_StopCrowd( p_wk->p_people_sys, p_people );
-}*/
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  演出開始
@@ -680,7 +667,6 @@ static BOOL RESORT_CROWD_PEOPLE_WK_IsCompPeople( const RESORT_CROWD_PEOPLE_WK *c
 static BOOL RESORT_CROWD_PEOPLE_WK_IsExist( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 static void RESORT_CROWD_PEOPLE_WK_StartMove( RESORT_CROWD_PEOPLE_WK *p_wk, u16 acmd, u16 move_dir, u16 x );
 static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u16 acmd, u16 move_dir, u16 x, u16 z );
-static void RESORT_CROWD_PEOPLE_WK_Stop( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER *cp_player );
 static BOOL RESORT_CROWD_PEOPLE_WK_IsEndMove( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 static BOOL RESORT_CROWD_PEOPLE_WK_IsNewData( const RESORT_CROWD_PEOPLE_WK *cp_wk );
 static u16 RESORT_CROWD_PEOPLE_WK_GetDir( const RESORT_CROWD_PEOPLE_WK *cp_wk );
@@ -697,6 +683,20 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
 static void Resort_Crowd_People_Wk_InitInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const RESORT_BINARY_SHOP *cp_shop, const RESORT_BINARY_INSTITUTION *cp_institution, RESORT_PEOPLE_ALL_DATA *p_all_people );
 static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk );
 static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER* cp_player );
+
+static void Resort_Crowd_People_Mmdl_Init( MMDL * mmdl );
+static void Resort_Crowd_People_Mmdl_Move( MMDL * mmdl );
+static void Resort_Crowd_People_Mmdl_Delete( MMDL * mmdl );
+static void Resort_Crowd_People_Mmdl_Recover( MMDL * mmdl );
+
+static const MMDL_MOVE_PROC_LIST sc_Resort_Crowd_People_Proc  =
+{
+  MV_DMY,
+  Resort_Crowd_People_Mmdl_Init,
+  Resort_Crowd_People_Mmdl_Move,
+  Resort_Crowd_People_Mmdl_Delete,
+  Resort_Crowd_People_Mmdl_Recover,
+};
 
 //-------------------------------------
 ///	隊列ワーク
@@ -741,6 +741,9 @@ struct _RESORT_CROWD_PEOPLE
 };
 
 static RESORT_CROWD_PEOPLE_WK * Resort_Crowd_People_GetWkByPeople( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
+
+
+static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 
 //----------------------------------------------------------------------------
 /**
@@ -922,28 +925,8 @@ static void RESORT_CROWD_PEOPLE_Delete( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE
       RESORT_CROWD_LINE_UnRegister( &p_wk->line[line], index );
 
       //群集人物から外す
-      RESORT_CROWD_PEOPLE_WK_Clear( p_crowd );
+      RESORT_CROWD_PEOPLE_WK_Exit( p_crowd );
     }
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  群集から停止
- *
- *	@param	RESORT_CROWD_PEOPLE *p_wk ワーク
- *	@param	*p_people                 人物
- */
-//-----------------------------------------------------------------------------
-static void RESORT_CROWD_PEOPLE_Stop( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
-{
-  RESORT_CROWD_PEOPLE_WK *p_crowd = Resort_Crowd_People_GetWkByPeople( p_wk, p_people );
-
-  //登録されていた
-  if( p_crowd )
-  {
-    //群集人物を停止
-    RESORT_CROWD_PEOPLE_WK_Stop( p_crowd, p_wk->cp_player );
   }
 }
 
@@ -1016,6 +999,10 @@ static void RESORT_CROWD_PEOPLE_WK_Init( RESORT_CROWD_PEOPLE_WK *p_wk, HEAPID he
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_WK_Exit( RESORT_CROWD_PEOPLE_WK *p_wk )
 {
+  if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
+  {
+    MMDL_ChangeMoveCode( RESORT_PEOPLE_GetMmdl(p_wk->p_people), MV_DMY );
+  }
   RESORT_CROWD_PEOPLE_WK_Clear( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -1027,19 +1014,16 @@ static void RESORT_CROWD_PEOPLE_WK_Exit( RESORT_CROWD_PEOPLE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_PEOPLE_WK_Main( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player )
 {
-  //歩き動作
-  if( p_wk->UpdateMove )
-  {
-    p_wk->UpdateMove( p_wk, p_mmdlsys, cp_player );
-  }
-
   //見た目変更処理
-  if( p_wk->changeObjCode )
+  if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
   {
-    if( RESORT_CROWD_PEOPLE_WK_IsEndMove(p_wk) )
+    if( p_wk->changeObjCode )
     {
-      RESORT_PEOPLE_ChangeOBJCode( p_wk->p_people );
-      p_wk->changeObjCode = FALSE;
+      if( RESORT_CROWD_PEOPLE_WK_IsEndMove(p_wk) )
+      {
+        RESORT_PEOPLE_ChangeOBJCode( p_wk->p_people );
+        p_wk->changeObjCode = FALSE;
+      }
     }
   }
 }
@@ -1057,6 +1041,8 @@ static void RESORT_CROWD_PEOPLE_WK_SetUp( RESORT_CROWD_PEOPLE_WK *p_wk, RESORT_P
   GF_ASSERT( p_wk->p_people == NULL );
   GFL_STD_MemClear( p_wk, sizeof(RESORT_CROWD_PEOPLE_WK) );
   p_wk->p_people = p_people;
+
+  MMDL_SetMoveProcList( RESORT_PEOPLE_GetMmdl(p_people), &sc_Resort_Crowd_People_Proc );
 
   RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
 
@@ -1246,40 +1232,6 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  停止
- *
- *	@param	RESORT_CROWD_PEOPLE_WK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void RESORT_CROWD_PEOPLE_WK_Stop( RESORT_CROWD_PEOPLE_WK *p_wk, const FIELD_PLAYER *cp_player )
-{
-  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-  s16 px, py, pz;
-  s16 ez;
-  FIELD_PLAYER_GetGridPos( cp_player, &px, &py, &pz );
-  ez  = MMDL_GetGridPosZ( p_mmdl );
-
-  if( MMDL_GetDirMove(p_mmdl) == DIR_UP )
-  {
-    if( pz > ez )
-    {
-      MMDL_FreeAcmd( p_mmdl );
-
-      OS_Printf( "とめた\n" );
-    }
-  }
-  else if( MMDL_GetDirMove(p_mmdl) == DIR_DOWN )
-  {
-    if( pz < ez )
-    {
-      MMDL_FreeAcmd( p_mmdl );
-
-      OS_Printf( "とめた\n" );
-    }
-  }
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  動作終了チェック
  *
  *	@param	const RESORT_CROWD_PEOPLE_WK *cp_wk ワーク
@@ -1420,7 +1372,7 @@ static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK*
 
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( cp_wk->p_people );
 
-#if 0
+#if 1
   {
     u32 ret = MMDL_HitCheckMoveDir( p_mmdl, cp_wk->move_dir );
     if( ret & MMDL_MOVEHITBIT_OBJ )
@@ -1604,7 +1556,7 @@ static BOOL Resort_Crowd_People_Move_Check(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
   {
     //当たり判定にあたった
     //u16 ac = MMDL_ChangeDirAcmdCode( p_wk->move_dir, AC_WAIT_8F );
-    MMDL_SetAcmd( p_mmdl, AC_WAIT_8F );
+    MMDL_SetLocalAcmd( p_mmdl, AC_WAIT_8F );
     MMDL_OnMoveBitMove( p_mmdl );
     p_wk->seq = CROWD_PEOPLE_WALK_SEQ_WAIT;
   }
@@ -1623,7 +1575,7 @@ static BOOL Resort_Crowd_People_Move_Check(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
   {
     //通常歩行
     u16 ac = MMDL_ChangeDirAcmdCode( p_wk->move_dir, p_wk->move_acmd );
-    MMDL_SetAcmd( p_mmdl, ac );
+    MMDL_SetLocalAcmd( p_mmdl, ac );
     MMDL_SetDirMove( p_mmdl, p_wk->move_dir );
     MMDL_OnMoveBitMove( p_mmdl );
     p_wk->move_grid--;
@@ -1647,7 +1599,7 @@ static BOOL Resort_Crowd_People_Move_Check(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
 static BOOL Resort_Crowd_People_Walk_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
 {
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-  if( MMDL_CheckEndAcmd( p_mmdl ) )
+  if( MMDL_ActionLocalAcmd( p_mmdl ) )
   {
     MMDL_OffMoveBitMove( p_mmdl );
     p_wk->seq = CROWD_PEOPLE_WALK_SEQ_CHEK_END;
@@ -1684,11 +1636,11 @@ static BOOL Resort_Crowd_People_Kyoro_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
   {
   case KYORO_SEQ_START:
     p_wk->kyoro.dir = GFL_STD_MtRand(2) ? AC_DIR_L: AC_DIR_R;
-    MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
+    MMDL_SetLocalAcmd( p_mmdl, p_wk->kyoro.dir);
     p_wk->kyoro.seq++;
     /*  fall  */
   case KYORO_SEQ_WAIT:
-    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    if( MMDL_ActionLocalAcmd( p_mmdl ) )
     {
       p_wk->kyoro.seq++;
       /* fall */
@@ -1710,11 +1662,11 @@ static BOOL Resort_Crowd_People_Kyoro_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
     }
   case KYORO_SEQ_START2:
     p_wk->kyoro.dir = p_wk->kyoro.dir == AC_DIR_R ? AC_DIR_L: AC_DIR_R;
-    MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
+    MMDL_SetLocalAcmd( p_mmdl, p_wk->kyoro.dir);
     p_wk->kyoro.seq++;
     /* fall */
   case KYORO_SEQ_WAIT2:
-    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    if( MMDL_ActionLocalAcmd( p_mmdl ) )
     {
       p_wk->kyoro.seq++;
       /* fall */
@@ -1784,20 +1736,7 @@ static BOOL (* const Resort_Crowd_People_Walk[])(RESORT_CROWD_PEOPLE_WK *, MMDLS
 //-----------------------------------------------------------------------------
 static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player )
 {
-  if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
-  {
-    MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-
-    if( MMDL_CheckMoveBitMoveProcPause(p_mmdl) )
-    {
-      return;
-    }
-
-    if( p_wk->is_walk )
-    {
-      while( Resort_Crowd_People_Walk[p_wk->seq](p_wk,p_mmdlsys,cp_player) == TRUE ){}
-    }
-  }
+  while( Resort_Crowd_People_Walk[p_wk->seq](p_wk,p_mmdlsys,cp_player) == TRUE ){}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1875,11 +1814,11 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
   switch( p_wk->interest_seq )
   {
   case SEQ_DIR_START:
-    MMDL_SetAcmd( p_mmdl, p_wk->interest_dir[p_wk->interest_index] );
+    MMDL_SetLocalAcmd( p_mmdl, p_wk->interest_dir[p_wk->interest_index] );
     p_wk->interest_seq++;
     /* fall */
   case SEQ_DIR_END:
-    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    if( MMDL_ActionLocalAcmd( p_mmdl ) )
     {
       p_wk->interest_seq++;
       /* fall */
@@ -1889,11 +1828,11 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
       break;
     }
   case SEQ_MARK_START:
-    MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU_NO_SE );
+    MMDL_SetLocalAcmd( p_mmdl, AC_MARK_ONPU_NO_SE );
     p_wk->interest_seq++;
     /* fall */
   case SEQ_MARK_END:
-    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    if( MMDL_ActionLocalAcmd( p_mmdl ) )
     {
       return TRUE;
     }
@@ -1943,6 +1882,69 @@ static BOOL Resort_Crowd_People_Wk_CheckInterest( RESORT_CROWD_PEOPLE_WK *p_wk, 
     }
   }
   return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	MMDL * mmdl 動作モデル
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_Mmdl_Init( MMDL * p_mmdl )
+{
+  /*
+  MMDLSYS   *p_mmdlsys = MMDL_GetMMdlSys( p_mmdl );
+  FIELDMAP_WORK *p_fieldmap = MMDLSYS_GetFieldMapWork( p_mmdlsys );
+  RESORT_FIELD_WORK *p_resort_field = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+
+  ESORT_CROWD_PEOPLE_WK **pp_wk = MMDL_InitMoveProcWork( p_mmdl, sizeof(RESORT_CROWD_PEOPLE_WK*) );
+
+  *pp_wk = Resort_Crowd_People_GetWkByPeople( RESORT_FIELD_PEOPLE_GetCrowdPeople(p_resort_field->p_people_sys), RESORT_PEOPLE_SYS_GetPeopleByMmdl(RESORT_FIELD_PEOPLE_GetPeopleSys(p_resort_field->p_people_sys), p_mmdl) );
+*/}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作
+ *
+ *	@param	MMDL * mmdl 動作モデル
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_Mmdl_Move( MMDL * p_mmdl )
+{
+  MMDLSYS   *p_mmdlsys = MMDL_GetMMdlSys( p_mmdl );
+  FIELDMAP_WORK *p_fieldmap = MMDLSYS_GetFieldMapWork( p_mmdlsys );
+  RESORT_FIELD_WORK *p_resort_field = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+
+  RESORT_CROWD_PEOPLE_WK *p_wk = Resort_Crowd_People_GetWkByPeople( RESORT_FIELD_PEOPLE_GetCrowdPeople(p_resort_field->p_people_sys), RESORT_PEOPLE_SYS_GetPeopleByMmdl(RESORT_FIELD_PEOPLE_GetPeopleSys(p_resort_field->p_people_sys), p_mmdl) );
+
+
+  if( p_wk->UpdateMove && p_wk->is_walk )
+  {
+    p_wk->UpdateMove( p_wk, p_mmdlsys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  削除
+ *
+ *	@param	MMDL * mmdl モデル
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_Mmdl_Delete( MMDL * mmdl )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リカバー
+ *
+ *	@param	MMDL * mmdl 動作モデル
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_Mmdl_Recover( MMDL * mmdl )
+{
 }
 
 //----------------------------------------------------------------------------
@@ -3160,6 +3162,34 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     param.cp_shop = RESORT_SYSTEM_GetBinaryShop(p_sys);
     param.cp_institution = RESORT_SYSTEM_GetBinaryInstitution(p_sys);
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
+
+  }
+
+  //群集システム
+  {
+    p_wk->p_crowd = RESORT_CROWD_PEOPLE_Init( heapID, p_mmdlsys, cp_player, 
+        RESORT_SYSTEM_GetBinaryShop(p_sys),
+        RESORT_SYSTEM_GetBinaryInstitution(p_sys), 
+        RESORT_SYSTEM_GetPeopleAllData(p_sys) );
+  }
+
+  return p_wk;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セットアップ
+ *
+ *	@param	RESORT_FIELD_PEOPLE *p_wk
+ *	@param	is_tutorial
+ *	@param	is_mapchange 
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_PEOPLE_Setup( RESORT_FIELD_PEOPLE *p_wk, BOOL is_tutorial, BOOL is_mapchange )
+{
+  //人物追加
+  {
     if( is_tutorial )
     {
       static const RESORT_DATA_BUFFER_TYPE type = RESORT_DATA_BUFFER_TYPE_RESIDENT;
@@ -3171,15 +3201,10 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
     }
   }
 
-  //群集システム
+  //群集登録
   {
     int i;
     RESORT_CROWD_MOVE move;
-
-    p_wk->p_crowd = RESORT_CROWD_PEOPLE_Init( heapID, p_mmdlsys, cp_player, 
-        RESORT_SYSTEM_GetBinaryShop(p_sys),
-        RESORT_SYSTEM_GetBinaryInstitution(p_sys), 
-        RESORT_SYSTEM_GetPeopleAllData(p_sys) );
 
     for( i = 0; i < RESORT_FIELD_PEOPLE_MAX; i++ )
     {
@@ -3202,9 +3227,8 @@ static RESORT_FIELD_PEOPLE * RESORT_FIELD_PEOPLE_Init( HEAPID heapID, RESORT_SYS
 
     RESORT_CROWD_PEOPLE_SetUp( p_wk->p_crowd, move );
   }
-
-  return p_wk;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物管理ワーク破棄
@@ -3277,15 +3301,16 @@ static void RESORT_FIELD_PEOPLE_DeleteCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_P
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  群集人物を停止
+ *	@brief  群集システムを取得
  *
- *	@param	RESORT_FIELD_PEOPLE *p_wk ワーク
- *	@param	*p_people 人物
+ *	@param	RESORT_FIELD_PEOPLE *p_wk   ワーク
+ *
+ *	@return 群集システム
  */
 //-----------------------------------------------------------------------------
-static void RESORT_FIELD_PEOPLE_StopCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_PEOPLE *p_people )
+static RESORT_CROWD_PEOPLE * RESORT_FIELD_PEOPLE_GetCrowdPeople( RESORT_FIELD_PEOPLE *p_wk )
 {
-  RESORT_CROWD_PEOPLE_Stop( p_wk->p_crowd, p_people );
+  return p_wk->p_crowd;
 }
 //----------------------------------------------------------------------------
 /**
