@@ -501,15 +501,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みてわかるぞ！
-おまえ　もっと　つよくなったな▼
-たたかいを　たのしみに　おもうのは
-ひさしぶりだぜ！▼
-こんどは　まけないぜ
-リベンジマッチだ！▼</Text>
+			<Text>おまえと　おいら！▼
+おたがいの　ポケモンたち！▼
+もてる　ちから！▼
+のこすところなく　ぶつけるぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:26:47" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -517,15 +515,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見てわかるぞ！
-おまえ　もっと　強くなったな▼
-戦いを　楽しみに　思うのは
-ひさしぶりだぜ！▼
-今度は　負けないぜ
-リベンジマッチだ！▼</Text>
+			<Text>おまえと　おいら！▼
+お互いの　ポケモンたち！▼
+持てる　力！▼
+残すところなく　ぶつけるぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:27:25" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1096,15 +1092,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みてわかるぞ！
-おまえ　もっと　つよくなったな▼
-たたかいを　たのしみに　おもうのは
-ひさしぶりだぜ！▼
-こんどは　まけないぜ
-リベンジマッチだ！▼</Text>
+			<Text>おまえと　おいら！▼
+おたがいの　ポケモンたち！▼
+もてる　ちから！▼
+のこすところなく　ぶつけるぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:31:46" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1112,15 +1106,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見てわかるぞ！
-おまえ　もっと　強くなったな▼
-戦いを　楽しみに　思うのは
-ひさしぶりだぜ！▼
-今度は　負けないぜ
-リベンジマッチだ！▼</Text>
+			<Text>おまえと　おいら！▼
+お互いの　ポケモンたち！▼
+持てる　力！▼
+残すところなく　ぶつけるぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:32:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:01:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1150,7 +1142,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_b_boss_start_10">
+		Label="msg_b_boss_start_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さいきょうとは　なにか？
@@ -1755,21 +1748,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようやくきたな　まちくたびれたぜ▼
-いままで　なんにんも　あいてを
-してきたけど　みんな　よわくてな▼
-おまえを　まっていたんだ▼
-あのとき　おまえに　あったときに
-おまえの　めを　みて　おもったんだ▼
-こいつは　……　つよい　ってな▼
-さあ　あのときの　やくそくだ
-しんけんしょうぶを　してもらうぞ！▼
-ここで　いちばんつよいのは
-おれか　おまえか　……▼
-しろくろ　つけようぜ▼</Text>
+			<Text>アデクじーちゃんの　いえで▼
+やくそく　したよな！▼
+どっちが　つよいか！▼
+おもうぞんぶん　きそおーぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:46:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:43:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1777,21 +1762,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようやく来たな　待ちくたびれたぜ▼
-今まで　何人も　相手を
-してきたけど　みんな　弱くてな▼
-おまえを　待っていたんだ▼
-あのとき　おまえに　会ったときに
-おまえの　目を　見て　思ったんだ▼
-こいつは　……　強い　ってな▼
-さあ　あのときの　約束だ
-真剣勝負を　してもらうぞ！▼
-ここで　一番強いのは
-おれか　おまえか　……▼
-白黒　つけようぜ▼</Text>
+			<Text>アデクじーちゃんの　家で▼
+約束したよな！▼
+どっちが　強いか！▼
+思う存分　競おーぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:46:43" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:43:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1821,7 +1798,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w_boss_first_start_10">
+		Label="msg_w_boss_first_start_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしは　さいきょうの　トレーナーを
@@ -2447,21 +2425,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようやくきたな　まちくたびれたぜ▼
-いままで　なんにんも　あいてを
-してきたけど　みんな　よわくてな▼
-おまえを　まっていたんだ▼
-あのとき　おまえに　あったときに
-おまえの　めを　みて　おもったんだ▼
-こいつは　……　つよい！　ってな▼
-さあ　あのときの　やくそくだ
-しんけんしょうぶを　してもらうぞ！▼
-ここで　いちばんつよいのは
-おれか　おまえか　……▼
-しろくろ　つけようぜ▼</Text>
+			<Text>アデクじーちゃんの　いえで▼
+やくそく　したよな！▼
+どっちが　つよいか！▼
+おもうぞんぶん　きそおーぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:46:19" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:43:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2469,21 +2439,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようやく来たな　待ちくたびれたぜ▼
-今まで　何人も　相手を
-してきたけど　みんな　弱くてな▼
-おまえを　待っていたんだ▼
-あのとき　おまえに　会ったときに
-おまえの　目を　見て　思ったんだ▼
-こいつは　……　強い！　ってな▼
-さあ　あのときの　約束だ
-真剣勝負を　してもらうぞ！▼
-ここで　一番強いのは
-おれか　おまえか　……▼
-白黒　つけようぜ！▼</Text>
+			<Text>アデクじーちゃんの　家で▼
+約束したよな！▼
+どっちが　強いか！▼
+思う存分　競おーぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T11:20:53" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3082,14 +3044,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　かてなかたか▼
-ひさしぶりに　じいちゃんに
-しゅぎょうを　つけてもらうか　……▼
-ぜったい　また　しょうぶしろよ！
-かちにげは　ゆるさないからな！▼</Text>
+			<Text>ゾクゾクする！▼
+チャンピオンだった　じーちゃんより▼
+つよい　トレーナーが　わんさかいる！▼
+みんなで　きそいあえば▼
+ポケモントレーナーとして▼
+そして　ひと　として▼
+たかみを　めざせるよな！▼
+これも　ポケモンの　おかげだな！▼
+また　こい！▼
+もっと　たかみに　いきたいからな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:43:24" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3097,14 +3064,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　勝てなかったか▼
-久しぶりに　じいちゃんに
-修行を　つけてもらうか　……▼
-絶対　また　勝負しろよ！
-勝ち逃げは　許さないからな！▼</Text>
+			<Text>ゾクゾクする！▼
+チャンピオンだった　じーちゃんより▼
+強い　トレーナーが　わんさかいる！▼
+みんなで　競いあえば▼
+ポケモントレーナーとして▼
+そして　人として▼
+高みを　目指せるよな！▼
+これも　ポケモンの　おかげだな！▼
+また　来い！▼
+もっと　高みに　行きたいからな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:43:29" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3708,14 +3680,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　かてなかたか▼
-ひさしぶりに　じいちゃんに
-しゅぎょうを　つけてもらうか　……▼
-ぜったい　また　しょうぶしろよ！
-かちにげは　ゆるさないからな！▼</Text>
+			<Text>ゾクゾクする！▼
+チャンピオンだった　じーちゃんより▼
+つよい　トレーナーが　わんさかいる！▼
+みんなで　きそいあえば▼
+ポケモントレーナーとして▼
+そして　ひと　として▼
+たかみを　めざせるよな！▼
+これも　ポケモンの　おかげだな！▼
+また　こい！▼
+もっと　たかみに　いきたいからな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:42:18" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:04:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3723,14 +3700,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　勝てなかったか▼
-久しぶりに　じいちゃんに
-修行を　つけてもらうか　……▼
-絶対　また　勝負しろよ！
-勝ち逃げは　許さないからな！▼</Text>
+			<Text>ゾクゾクする！▼
+チャンピオンだった　じーちゃんより▼
+強い　トレーナーが　わんさかいる！▼
+みんなで　競いあえば▼
+ポケモントレーナーとして▼
+そして　人として▼
+高みを　目指せるよな！▼
+これも　ポケモンの　おかげだな！▼
+また　来い！▼
+もっと　高みに　行きたいからな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:43:12" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T04:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3760,7 +3742,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_b_boss_end_10">
+		Label="msg_b_boss_end_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいわね▼
@@ -4370,20 +4353,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけた　ここで　はじめてまけた！▼
-やっぱり　おまえ　つよいな！
-おれの　めに　くるいはなかった▼
-まけたのに　ふしぎと　きもちが　いいぜ▼
-ここでの　もくひょうが　なくて
-こまっていたけど▽
-あたらしい　もくひょうが　できたぞ▼
-……　おまえを　たおす！▼
-つぎは　かならず　おれが　かつ！▼
-おれも　もっと　しゅぎょうするから
-また　しょうぶしてくれよな！▼</Text>
+			<Text>ゾクゾクする！▼
+おまえと！▼
+ポケモンたちの　コンビネーション！▼
+さいこうの　チームワークだった▼
+ひとだけでは　いけない　ばしょ▼
+ポケモンが　いこうとしない　ばしょ▼
+おまえみたいに！　おいらのように！▼
+トレーナーと　ポケモンの▼
+チームワークなら　どこでも　いける▼
+それが　わかって　うれしいぜ！▼
+サンキュー！▼
+また　ぜんりょくで　しょうぶな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T11:23:17" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:53:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4391,19 +4375,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けた　ここで　はじめて負けた！▼
-やっぱり　おまえ　強いな！
-おれの　目に　くるいはなかった▼
-負けたのに　不思議と　気持ちが　いいぜ▼
-ここでの　目標が　なくて困っていたけど
-新しい　目標が　できたぞ▼
-……　おまえを　倒す！
-次は　必ず　おれが　勝つ！▼
-おれも　もっと　修行するから
-また　勝負してくれよな！▼</Text>
+			<Text>ゾクゾクする！▼
+おまえと！▼
+ポケモンたちの　コンビネーション！▼
+最高の　チームワークだった▼
+人だけでは　行けない　場所▼
+ポケモンが　行こうとしない　場所▼
+おまえみたいに！　おいらのように！▼
+トレーナーと　ポケモンの▼
+チームワークなら　どこでも　行ける▼
+それが　わかって　うれしいぜ！▼
+サンキュー！▼
+また　全力で　勝負な！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T07:38:38" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:53:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4433,7 +4419,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_b_boss_first_end_10">
+		Label="msg_b_boss_first_end_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいわね▼
@@ -5042,20 +5029,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけた　ここで　はじめてまけた！▼
-やっぱり　おまえ　つよいな！
-おれの　めに　くるいはなかった▼
-まけたのに　ふしぎと　きもちが　いいぜ▼
-ここでの　もくひょうが　なくて
-こまっていたけど▽
-あたらしい　もくひょうが　できたぞ▼
-……　おまえを　たおす！▼
-つぎは　かならず　おれが　かつ！▼
-おれも　もっとしゅぎょうするから
-また　しょうぶしてくれよな！▼</Text>
+			<Text>ゾクゾクする！▼
+おまえと！▼
+ポケモンたちの　コンビネーション！▼
+さいこうの　チームワークだった▼
+ひとだけでは　いけない　ばしょ▼
+ポケモンが　いこうとしない　ばしょ▼
+おまえみたいに！　おいらのように！▼
+トレーナーと　ポケモンの▼
+チームワークなら　どこでも　いける▼
+それが　わかって　うれしいぜ！▼
+サンキュー！▼
+また　ぜんりょくで　しょうぶな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T03:22:26" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5063,19 +5051,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けた　ここで　はじめて負けた！▼
-やっぱり　おまえ　強いな！
-おれの　目に　くるいはなかった▼
-負けたのに　不思議と　気持ちが　いいぜ▼
-ここでの　目標が　なくて困っていたけど
-新しい　目標が　できたぞ▼
-……　おまえを　倒す！
-次は　必ず　おれが　勝つ！▼
-おれも　もっと　修行するから
-また　勝負してくれよな！▼</Text>
+			<Text>ゾクゾクする！▼
+おまえと！▼
+ポケモンたちの　コンビネーション！▼
+最高の　チームワークだった▼
+人だけでは　行けない　場所▼
+ポケモンが　行こうとしない　場所▼
+おまえみたいに！　おいらのように！▼
+トレーナーと　ポケモンの▼
+チームワークなら　どこでも　行ける▼
+それが　わかって　うれしいぜ！▼
+サンキュー！▼
+また　全力で　勝負な！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T03:22:15" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5105,7 +5095,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_w_boss_first_end_10">
+		Label="msg_w_boss_first_end_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいな▼
@@ -7630,21 +7621,19 @@ NPC：ASSISTANTM
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ん？▼
-おまえ　このまえ　エリア3で
-あったな▼
-ここまで　これるってことは
-やっぱり　おまえ　つよいようだな▼
-おれは　このエリアも　らくしょうで
-クリアしたところだぜ▼
-もっと　もっと　しゅぎょうして
-じいちゃんを　こえるんだ！▼
-おまえとも　つぎに　あったときは　
-しんけんしょうぶを　してもらうぜ！▼
-それじゃ　またあおうぜ▼</Text>
+			<Text>お！　ここまで　きたか！▼
+ポケモンと　おまえ！▼
+ちからを　あわせてるんだな！▼
+この　せかいを　きりひらいたのは▼
+ポケモンと　ひとの　チームワーク▼
+たがいに　ないものを　おぎない▼
+しらない　せかいに　いどんできた！▼
+ここは　その　れきしを▼
+たしかめる　ばしょ　なのかもな▼
+じゃな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:52:48" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7652,21 +7641,19 @@ NPC：ASSISTANTM
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ん？▼
-おまえ　この前　エリア3で
-会ったな▼
-ここまで　来れるってことは
-やっぱり　おまえ　強いようだな▼
-おれは　このエリアも　楽勝で
-クリアしたところだぜ▼
-もっと　もっと　修行して
-じいちゃんを　越えるんだ！▼
-おまえとも　次に　会ったときは　
-真剣勝負を　してもらうぜ！▼
-それじゃ　また会おうぜ▼</Text>
+			<Text>お！　ここまで　来たか！▼
+ポケモンと　おまえ！▼
+力を　あわせてるんだな！▼
+この世界を　切り拓いたのは▼
+ポケモンと　人の　チームワーク▼
+互いに　ないものを　補い▼
+未知の　世界に　挑んできた！▼
+ここは　その歴史を▼
+確かめる　場所なのかもな▼
+じゃな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:52:52" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7965,21 +7952,19 @@ NPC：FIGHTERM
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ん？▼
-おまえ　このまえ　エリア3で
-あったな▼
-ここまで　これるってことは
-やっぱり　おまえ　つよいようだな▼
-おれは　このエリアも　らくしょうで
-クリアしたところだぜ▼
-もっと　もっと　しゅぎょうして
-じいちゃんを　こえるんだ！▼
-おまえとも　つぎに　あったときは　
-しんけんしょうぶを　してもらうぜ！▼
-それじゃ　またあおうぜ▼</Text>
+			<Text>お！　ここまで　きたか！▼
+ポケモンと　おまえ！▼
+ちからを　あわせてるんだな！▼
+この　せかいを　きりひらいたのは▼
+ポケモンと　ひとの　チームワーク▼
+たがいに　ないものを　おぎない▼
+しらない　せかいに　いどんできた！▼
+ここは　その　れきしを▼
+たしかめる　ばしょ　なのかもな▼
+じゃな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:52:34" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7987,21 +7972,19 @@ NPC：FIGHTERM
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ん？▼
-おまえ　この前　エリア3で
-会ったな▼
-ここまで　来れるってことは
-やっぱり　おまえ　強いようだな▼
-おれは　このエリアも　楽勝で
-クリアしたところだぜ▼
-もっと　もっと　修行して
-じいちゃんを　越えるんだ！▼
-おまえとも　次に　会ったときは　
-真剣勝負を　してもらうぜ！▼
-それじゃ　また会おうぜ▼</Text>
+			<Text>お！　ここまで　来たか！▼
+ポケモンと　おまえ！▼
+力を　あわせてるんだな！▼
+この世界を　切り拓いたのは▼
+ポケモンと　人の　チームワーク▼
+互いに　ないものを　補い▼
+未知の　世界に　挑んできた！▼
+ここは　その歴史を▼
+確かめる　場所なのかもな▼
+じゃな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:52:39" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8316,19 +8299,15 @@ Xメニューを　見てごらん▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このエリアも　このていどか▼
-じいちゃんに　しゅぎょうだって
-いわれてきたけど▽
-ぜんぜん　たいしたことないな▼
-ん？　おまえも　ちょうせんしゃか？▼
-おれの　なまえは　バンジロウ！▼
-いずれ　チャンピオンを　こえるおとこだ▼
-おまえのほうが　ここの　トレーナーより
-つよそうだな▼
-そのうち　しょうぶ　しようぜ！▼</Text>
+			<Text>おまえたちなら！▼
+この　エリアも　よゆうだろ？▼
+だって　ポケモンが　いるもんな！▼
+そう！　ポケモンと　ともに　あゆめ！▼
+その　いみを　かんがえるんだ！▼
+おいら！　もっと　うえで　まつ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:24:58" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8336,19 +8315,15 @@ Xメニューを　見てごらん▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このエリアも　この程度か▼
-じいちゃんに　修行だって
-言われて来たけど▽
-全然　たいしたないな▼
-ん？　おまえも　挑戦者か？▼
-おれの　名前は　バンジロウ！▼
-いずれ　チャンピオンを　越える男だ▼
-おまえの方が　ここの　トレーナーより
-強そうだな▼
-そのうち　勝負　しようぜ！▼</Text>
+			<Text>おまえたちなら！▼
+この　エリアも　余裕だろ？▼
+だって　ポケモンが　いるもんな！▼
+そう！　ポケモンと　ともに　歩め！▼
+その　意味を　考えるんだ！▼
+おいら！　もっと　上で　待つ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:24:58" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:30:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8371,19 +8346,15 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このエリアも　このていどか▼
-じいちゃんに　しゅぎょうだって
-いわれてきたけど▽
-ぜんぜん　たいしたことないな▼
-ん？　おまえも　ちょうせんしゃか？▼
-おれの　なまえは　バンジロウ！▼
-いずれ　チャンピオンを　こえるおとこだ▼
-おまえのほうが　ここの　トレーナーより
-つよそうだな▼
-そのうち　しょうぶ　しようぜ！▼</Text>
+			<Text>おまえたちなら！▼
+この　エリアも　よゆうだろ？▼
+だって　ポケモンが　いるもんな！▼
+そう！　ポケモンと　ともに　あゆめ！▼
+その　いみを　かんがえるんだ！▼
+おいら！　もっと　したで　まつ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:25:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:30:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8391,19 +8362,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このエリアも　この程度か▼
-じいちゃんに　修行だって
-言われて来たけど▽
-全然　たいしたないな▼
-ん？　おまえも　挑戦者か？▼
-おれの　名前は　バンジロウ！▼
-いずれ　チャンピオンを　越える男だ▼
-おまえの方が　ここの　トレーナーより
-強そうだな▼
-そのうち　勝負　しようぜ！▼</Text>
+			<Text>おまえたちなら！▼
+この　エリアも　余裕だろ？▼
+だって　ポケモンが　いるもんな！▼
+そう！　ポケモンと　ともに　歩め！▼
+その　意味を　考えるんだ！▼
+おいら！　もっと　下で　待つ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:25:01" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T03:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8422,7 +8389,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_01">
+		Label="msg_hint_up_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え？　ボストレーナーなら
@@ -8456,7 +8424,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_02">
+		Label="msg_hint_up_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーなら
@@ -8490,7 +8459,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_03">
+		Label="msg_hint_up_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -8524,7 +8494,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_04">
+		Label="msg_hint_up_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -8558,7 +8529,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_05">
+		Label="msg_hint_up_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -8592,7 +8564,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_06">
+		Label="msg_hint_up_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -8626,7 +8599,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_07">
+		Label="msg_hint_up_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？　ひみつじゃぞ
@@ -8660,7 +8634,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_up_08">
+		Label="msg_hint_up_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -8694,7 +8669,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_01">
+		Label="msg_hint_down_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え？　ボストレーナーなら
@@ -8728,7 +8704,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_02">
+		Label="msg_hint_down_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーなら
@@ -8762,7 +8739,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_03">
+		Label="msg_hint_down_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -8796,7 +8774,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_04">
+		Label="msg_hint_down_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -8830,7 +8809,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_05">
+		Label="msg_hint_down_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -8864,7 +8844,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_06">
+		Label="msg_hint_down_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -8898,7 +8879,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_07">
+		Label="msg_hint_down_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -8932,7 +8914,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_down_08">
+		Label="msg_hint_down_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですて？
@@ -8966,7 +8949,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_01">
+		Label="msg_hint_updown_unknown_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9000,7 +8984,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_02">
+		Label="msg_hint_updown_unknown_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9034,7 +9019,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_03">
+		Label="msg_hint_updown_unknown_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーか？
@@ -9068,7 +9054,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_04">
+		Label="msg_hint_updown_unknown_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え？　ボストレーナー？
@@ -9102,7 +9089,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_05">
+		Label="msg_hint_updown_unknown_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ん？　ボストレーナー？
@@ -9136,7 +9124,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_06">
+		Label="msg_hint_updown_unknown_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9170,7 +9159,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_07">
+		Label="msg_hint_updown_unknown_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9204,7 +9194,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_updown_unknown_08">
+		Label="msg_hint_updown_unknown_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9238,7 +9229,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_01">
+		Label="msg_hint_boss_floor_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーが　みつからないの？
@@ -9273,7 +9265,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_02">
+		Label="msg_hint_boss_floor_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーが　いないの？
@@ -9308,7 +9301,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_03">
+		Label="msg_hint_boss_floor_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9343,7 +9337,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_04">
+		Label="msg_hint_boss_floor_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9378,7 +9373,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_05">
+		Label="msg_hint_boss_floor_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9413,7 +9409,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_06">
+		Label="msg_hint_boss_floor_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9448,7 +9445,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_07">
+		Label="msg_hint_boss_floor_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -9483,7 +9481,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_floor_08">
+		Label="msg_hint_boss_floor_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？　それなら
@@ -9518,7 +9517,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_01">
+		Label="msg_hint_boss_dir_u_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9559,7 +9559,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_02">
+		Label="msg_hint_boss_dir_u_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9600,7 +9601,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_03">
+		Label="msg_hint_boss_dir_u_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9641,7 +9643,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_04">
+		Label="msg_hint_boss_dir_u_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -9682,7 +9685,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_05">
+		Label="msg_hint_boss_dir_u_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -9723,7 +9727,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_06">
+		Label="msg_hint_boss_dir_u_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9764,7 +9769,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_07">
+		Label="msg_hint_boss_dir_u_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -9807,7 +9813,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_u_08">
+		Label="msg_hint_boss_dir_u_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -9848,7 +9855,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_01">
+		Label="msg_hint_boss_dir_d_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9889,7 +9897,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_02">
+		Label="msg_hint_boss_dir_d_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9930,7 +9939,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_03">
+		Label="msg_hint_boss_dir_d_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -9971,7 +9981,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_04">
+		Label="msg_hint_boss_dir_d_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -10012,7 +10023,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_05">
+		Label="msg_hint_boss_dir_d_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -10053,7 +10065,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_06">
+		Label="msg_hint_boss_dir_d_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10094,7 +10107,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_07">
+		Label="msg_hint_boss_dir_d_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -10137,7 +10151,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_d_08">
+		Label="msg_hint_boss_dir_d_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -10178,7 +10193,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_01">
+		Label="msg_hint_boss_dir_r_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10219,7 +10235,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_02">
+		Label="msg_hint_boss_dir_r_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10260,7 +10277,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_03">
+		Label="msg_hint_boss_dir_r_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10301,7 +10319,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_04">
+		Label="msg_hint_boss_dir_r_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -10342,7 +10361,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_05">
+		Label="msg_hint_boss_dir_r_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -10383,7 +10403,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_06">
+		Label="msg_hint_boss_dir_r_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10424,7 +10445,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_07">
+		Label="msg_hint_boss_dir_r_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -10467,7 +10489,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_r_08">
+		Label="msg_hint_boss_dir_r_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -10508,7 +10531,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_01">
+		Label="msg_hint_boss_dir_l_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10549,7 +10573,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_02">
+		Label="msg_hint_boss_dir_l_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10590,7 +10615,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_03">
+		Label="msg_hint_boss_dir_l_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10631,7 +10657,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_04">
+		Label="msg_hint_boss_dir_l_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -10672,7 +10699,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_05">
+		Label="msg_hint_boss_dir_l_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -10713,7 +10741,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_06">
+		Label="msg_hint_boss_dir_l_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10754,7 +10783,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_07">
+		Label="msg_hint_boss_dir_l_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -10797,7 +10827,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_l_08">
+		Label="msg_hint_boss_dir_l_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -10838,7 +10869,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_01">
+		Label="msg_hint_boss_dir_ru_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10879,7 +10911,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_02">
+		Label="msg_hint_boss_dir_ru_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10920,7 +10953,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_03">
+		Label="msg_hint_boss_dir_ru_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -10961,7 +10995,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_04">
+		Label="msg_hint_boss_dir_ru_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -11002,7 +11037,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_05">
+		Label="msg_hint_boss_dir_ru_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -11043,7 +11079,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_06">
+		Label="msg_hint_boss_dir_ru_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？▼
@@ -11085,7 +11122,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_07">
+		Label="msg_hint_boss_dir_ru_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？　
@@ -11128,7 +11166,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ru_08">
+		Label="msg_hint_boss_dir_ru_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -11169,7 +11208,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_01">
+		Label="msg_hint_boss_dir_rd_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11210,7 +11250,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_02">
+		Label="msg_hint_boss_dir_rd_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11251,7 +11292,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_03">
+		Label="msg_hint_boss_dir_rd_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11292,7 +11334,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_04">
+		Label="msg_hint_boss_dir_rd_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -11333,7 +11376,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_05">
+		Label="msg_hint_boss_dir_rd_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -11374,7 +11418,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_06">
+		Label="msg_hint_boss_dir_rd_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？▼
@@ -11416,7 +11461,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_07">
+		Label="msg_hint_boss_dir_rd_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -11459,7 +11505,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_rd_08">
+		Label="msg_hint_boss_dir_rd_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -11500,7 +11547,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_01">
+		Label="msg_hint_boss_dir_lu_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11541,7 +11589,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_02">
+		Label="msg_hint_boss_dir_lu_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11582,7 +11631,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_03">
+		Label="msg_hint_boss_dir_lu_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11623,7 +11673,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_04">
+		Label="msg_hint_boss_dir_lu_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -11664,7 +11715,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_05">
+		Label="msg_hint_boss_dir_lu_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -11705,7 +11757,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_06">
+		Label="msg_hint_boss_dir_lu_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？▼
@@ -11747,7 +11800,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_07">
+		Label="msg_hint_boss_dir_lu_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -11790,7 +11844,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_lu_08">
+		Label="msg_hint_boss_dir_lu_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -11831,7 +11886,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_01">
+		Label="msg_hint_boss_dir_ld_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11872,7 +11928,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_02">
+		Label="msg_hint_boss_dir_ld_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11913,7 +11970,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_03">
+		Label="msg_hint_boss_dir_ld_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -11954,7 +12012,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_04">
+		Label="msg_hint_boss_dir_ld_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーを　さがしているの？
@@ -11995,7 +12054,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_05">
+		Label="msg_hint_boss_dir_ld_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーかい？
@@ -12036,7 +12096,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_06">
+		Label="msg_hint_boss_dir_ld_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？▼
@@ -12078,7 +12139,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_07">
+		Label="msg_hint_boss_dir_ld_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
@@ -12121,7 +12183,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_dir_ld_08">
+		Label="msg_hint_boss_dir_ld_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？
@@ -12162,7 +12225,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_01">
+		Label="msg_hint_boss_poke_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいことを　おしえてあげるよ▼
@@ -12199,7 +12263,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_02">
+		Label="msg_hint_boss_poke_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいことを　おしえてあげる▼
@@ -12236,7 +12301,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_03">
+		Label="msg_hint_boss_poke_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　うわさなんだけど▼
@@ -12273,7 +12339,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_04">
+		Label="msg_hint_boss_poke_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ねえ　ねえ　しってる？▼
@@ -12310,7 +12377,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_05">
+		Label="msg_hint_boss_poke_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっき　たたかったんだけど▼
@@ -12347,7 +12415,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_06">
+		Label="msg_hint_boss_poke_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　ひみつなんだけど▼
@@ -12384,7 +12453,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_07">
+		Label="msg_hint_boss_poke_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ひとつ　じょげんしてやろう▼
@@ -12421,7 +12491,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_boss_poke_08">
+		Label="msg_hint_boss_poke_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>すこし　ヒントを　あげましょう▼
@@ -12458,7 +12529,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_01">
+		Label="msg_hint_nurse_dir_u_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -12501,7 +12573,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_02">
+		Label="msg_hint_nurse_dir_u_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -12544,7 +12617,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_03">
+		Label="msg_hint_nurse_dir_u_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -12587,7 +12661,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_04">
+		Label="msg_hint_nurse_dir_u_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -12630,7 +12705,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_05">
+		Label="msg_hint_nurse_dir_u_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -12671,7 +12747,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_06">
+		Label="msg_hint_nurse_dir_u_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -12714,7 +12791,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_07">
+		Label="msg_hint_nurse_dir_u_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -12757,7 +12835,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_u_08">
+		Label="msg_hint_nurse_dir_u_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -12800,7 +12879,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_01">
+		Label="msg_hint_nurse_dir_d_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -12843,7 +12923,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_02">
+		Label="msg_hint_nurse_dir_d_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -12886,7 +12967,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_03">
+		Label="msg_hint_nurse_dir_d_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -12929,7 +13011,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_04">
+		Label="msg_hint_nurse_dir_d_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -12972,7 +13055,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_05">
+		Label="msg_hint_nurse_dir_d_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -13013,7 +13097,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_06">
+		Label="msg_hint_nurse_dir_d_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -13056,7 +13141,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_07">
+		Label="msg_hint_nurse_dir_d_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -13099,7 +13185,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_d_08">
+		Label="msg_hint_nurse_dir_d_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -13142,7 +13229,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_01">
+		Label="msg_hint_nurse_dir_r_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13185,7 +13273,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_02">
+		Label="msg_hint_nurse_dir_r_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13228,7 +13317,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_03">
+		Label="msg_hint_nurse_dir_r_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -13271,7 +13361,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_04">
+		Label="msg_hint_nurse_dir_r_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -13314,7 +13405,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_05">
+		Label="msg_hint_nurse_dir_r_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -13355,7 +13447,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_06">
+		Label="msg_hint_nurse_dir_r_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -13398,7 +13491,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_07">
+		Label="msg_hint_nurse_dir_r_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -13441,7 +13535,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_r_08">
+		Label="msg_hint_nurse_dir_r_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -13484,7 +13579,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_01">
+		Label="msg_hint_nurse_dir_l_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13527,7 +13623,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_02">
+		Label="msg_hint_nurse_dir_l_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13570,7 +13667,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_03">
+		Label="msg_hint_nurse_dir_l_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -13613,7 +13711,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_04">
+		Label="msg_hint_nurse_dir_l_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -13656,7 +13755,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_05">
+		Label="msg_hint_nurse_dir_l_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -13697,7 +13797,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_06">
+		Label="msg_hint_nurse_dir_l_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -13740,7 +13841,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_07">
+		Label="msg_hint_nurse_dir_l_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -13783,7 +13885,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_l_08">
+		Label="msg_hint_nurse_dir_l_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -13826,7 +13929,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_01">
+		Label="msg_hint_nurse_dir_ru_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13869,7 +13973,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_02">
+		Label="msg_hint_nurse_dir_ru_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -13912,7 +14017,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_03">
+		Label="msg_hint_nurse_dir_ru_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -13955,7 +14061,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_04">
+		Label="msg_hint_nurse_dir_ru_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -13998,7 +14105,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_05">
+		Label="msg_hint_nurse_dir_ru_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -14039,7 +14147,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_06">
+		Label="msg_hint_nurse_dir_ru_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -14082,7 +14191,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_07">
+		Label="msg_hint_nurse_dir_ru_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -14125,7 +14235,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ru_08">
+		Label="msg_hint_nurse_dir_ru_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -14168,7 +14279,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_01">
+		Label="msg_hint_nurse_dir_rd_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14211,7 +14323,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_02">
+		Label="msg_hint_nurse_dir_rd_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14254,7 +14367,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_03">
+		Label="msg_hint_nurse_dir_rd_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -14297,7 +14411,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_04">
+		Label="msg_hint_nurse_dir_rd_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -14340,7 +14455,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_05">
+		Label="msg_hint_nurse_dir_rd_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -14381,7 +14497,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_06">
+		Label="msg_hint_nurse_dir_rd_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -14424,7 +14541,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_07">
+		Label="msg_hint_nurse_dir_rd_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -14467,7 +14585,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_rd_08">
+		Label="msg_hint_nurse_dir_rd_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -14510,7 +14629,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_01">
+		Label="msg_hint_nurse_dir_lu_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14553,7 +14673,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_02">
+		Label="msg_hint_nurse_dir_lu_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14596,7 +14717,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_03">
+		Label="msg_hint_nurse_dir_lu_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -14639,7 +14761,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_04">
+		Label="msg_hint_nurse_dir_lu_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -14682,7 +14805,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_05">
+		Label="msg_hint_nurse_dir_lu_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -14723,7 +14847,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_06">
+		Label="msg_hint_nurse_dir_lu_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -14766,7 +14891,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_07">
+		Label="msg_hint_nurse_dir_lu_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -14809,7 +14935,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_lu_08">
+		Label="msg_hint_nurse_dir_lu_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -14852,7 +14979,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_01">
+		Label="msg_hint_nurse_dir_ld_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14895,7 +15023,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_02">
+		Label="msg_hint_nurse_dir_ld_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
@@ -14938,7 +15067,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_03">
+		Label="msg_hint_nurse_dir_ld_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
@@ -14981,7 +15111,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_04">
+		Label="msg_hint_nurse_dir_ld_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
@@ -15024,7 +15155,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_05">
+		Label="msg_hint_nurse_dir_ld_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
@@ -15065,7 +15197,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_06">
+		Label="msg_hint_nurse_dir_ld_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
@@ -15108,7 +15241,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_07">
+		Label="msg_hint_nurse_dir_ld_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
@@ -15151,7 +15285,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_nurse_dir_ld_08">
+		Label="msg_hint_nurse_dir_ld_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
@@ -15194,7 +15329,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_01">
+		Label="msg_hint_dir_unknown_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -15228,7 +15364,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_02">
+		Label="msg_hint_dir_unknown_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -15262,7 +15399,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_03">
+		Label="msg_hint_dir_unknown_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーか？
@@ -15296,7 +15434,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_04">
+		Label="msg_hint_dir_unknown_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え？　ボストレーナー？
@@ -15330,7 +15469,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_05">
+		Label="msg_hint_dir_unknown_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ん？　ボストレーナー？
@@ -15364,7 +15504,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_06">
+		Label="msg_hint_dir_unknown_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -15398,7 +15539,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_07">
+		Label="msg_hint_dir_unknown_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -15432,7 +15574,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_dir_unknown_08">
+		Label="msg_hint_dir_unknown_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
@@ -15466,7 +15609,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_01">
+		Label="msg_hint_unknown_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キミ　つよいんだね
@@ -15500,7 +15644,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_02">
+		Label="msg_hint_unknown_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アナタ　すごいわ
@@ -15534,7 +15679,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_03">
+		Label="msg_hint_unknown_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なかなか　やるな！
@@ -15568,7 +15714,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_04">
+		Label="msg_hint_unknown_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まけたわ
@@ -15602,7 +15749,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_05">
+		Label="msg_hint_unknown_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まいった　まいった
@@ -15636,7 +15784,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_06">
+		Label="msg_hint_unknown_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいわね　アナタ
@@ -15670,7 +15819,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_07">
+		Label="msg_hint_unknown_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あ　いたたた　……
@@ -15704,7 +15854,8 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_unknown_08">
+		Label="msg_hint_unknown_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あら　あら
