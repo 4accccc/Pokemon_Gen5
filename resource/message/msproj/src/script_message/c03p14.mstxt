@@ -67,10 +67,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ハロー！　この　ふねは
+ユナイテッドタワー　いきです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:22:06" />
+				Time="2011-09-29T07:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,10 +79,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ハロー！　この船は
+ユナイテッドタワー　行きです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:22:09" />
+				Time="2011-09-29T07:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
