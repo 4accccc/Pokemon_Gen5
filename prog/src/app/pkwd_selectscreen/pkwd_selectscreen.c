@@ -317,6 +317,7 @@ typedef struct{
 
 // BG定義とサブタイトル定義を取り込み
 #include "../pkwd_announce/pkwd_movie_title.cdat"
+#include "../pkwd_book/pokewood_category.cdat"
 
 //=============================================================================
 /**
@@ -534,7 +535,7 @@ static void _blink_palanime_init( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     // セーブされているシナリオNOからカテゴリーを取得
     int category;
     if(wk->load_result[i]){
-      category = pkwd_movie_type[wk->scenario_no[i]];
+      category = PokewoodCategoryData[wk->scenario_no[i]];
     }else{
       category = 4;
     }
