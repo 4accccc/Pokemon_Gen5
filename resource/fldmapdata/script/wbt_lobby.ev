@@ -1060,7 +1060,7 @@ ev_wbt_unlock_tournament:
       _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
     ELSE
       _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_WORLD, POKETYPE_NULL, SCWK_ANSWER )
-      $LWK_TEMP = 10
+      $LWK_TEMP = 9  //この時点では優勝回数を更新していないので10から-1して計算する
       $LWK_TEMP -= $SCWK_ANSWER
       _NUMBER( 0, LWK_TEMP, 2 )
       _BALLOONWIN_OBJMSG_POS( msg_wbt_info_25, SCWK_TARGET_OBJID, POS_DL )
