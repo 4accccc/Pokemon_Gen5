@@ -17,6 +17,7 @@
 
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
+#include "map_replace.h"
 
 // gimmick
 #include "field_gimmick_def.h"
@@ -143,6 +144,9 @@ static void EXPOBJ_ObjMain( HIDE_SHIP_TMP *p_wk );
 //--------------------------------------------------------------
 void HIDE_SHIP_DECK_Setup( FIELDMAP_WORK *p_fieldmap )
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+
   // 汎用ワーク確保
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID,
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(HIDE_SHIP_TMP) );
@@ -152,6 +156,22 @@ void HIDE_SHIP_DECK_Setup( FIELDMAP_WORK *p_fieldmap )
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+
+  // クリア後だとどちらのハッチも非表示
+  {
+    BOOL clear = MAPREPLACE_GetFlag( p_gdata, MAPREPLACE_ID_02 );
+    int i;
+
+    // マップ置き換えが発生していたらクリア後
+    if( clear == TRUE )
+    {
+      for( i=0; i<OBJ_NUM; i++ )
+      {
+        // 非表示
+        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, i, TRUE );
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------
