@@ -12043,23 +12043,23 @@
 
 	<row id="TRID_SCIENTISTM_15_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ひかり　とどかぬ　やみの　せかい……
-ふふっ……　さいこうだっ！！</language>
+ふふっ……　さいこうだっ！！▼</language>
 		<language name="JPN_KANJI" width="216">光が届かぬ　闇の世界……
-ふふっ……　最高だっ！！</language>
+ふふっ……　最高だっ！！▼</language>
 	</row>
 
 	<row id="TRID_SCIENTISTM_15_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">おまえの　ような　かがやきは
-げすいどうに　ふさわしくない……▼</language>
+げすいどうに　ふさわしくない……</language>
 		<language name="JPN_KANJI" width="216">おまえの　ような　輝きは
-下水道に　ふさわしくない……▼</language>
+下水道に　ふさわしくない……</language>
 	</row>
 
 	<row id="TRID_SCIENTISTM_15_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ふふっ……　すべては
-やみに　のみこまれてしまえ！▼</language>
+やみに　のみこまれてしまえ！</language>
 		<language name="JPN_KANJI" width="216">ふふっ……　すべては
-闇に　飲み込まれてしまえ！▼</language>
+やみに　飲み込まれてしまえ！</language>
 	</row>
 
 	<row id="TRID_SCIENTISTW_11_TRMSG_FIGHT_START">
