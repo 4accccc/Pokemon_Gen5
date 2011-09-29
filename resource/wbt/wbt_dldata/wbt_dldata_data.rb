@@ -161,14 +161,14 @@ class WBT_DATA
   #----------------
   def chk_tournament_id()
     #
-    ret = chkblank( @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW ),
-                                     $title_str[0] )
+    cstr = @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
+    ret = chkblank( cstr, $title_str[0] )
     if(ret == -1)
       print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
       data_exit();
     end
     # セット
-    @tournament_id = @conv.get_cell(0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW).to_i;
+    @tournament_id = cstr.to_i;
     
     # 範囲のチェック(1 - 65535)
     flg = chk_num_range( @tournament_id, 1, 65535 );
@@ -189,14 +189,14 @@ class WBT_DATA
   def chk_day()
     #
     3.times{|i|
-      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW),
-                                        $title_str[1+i] )
+      cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW)
+      ret = chkblank( cstr, $title_str[1+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW );
         data_exit();
       end
       # セット
-      @day[i] = @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW).to_i;
+      @day[i] = cstr.to_i;
       
       # 範囲チェック
       if(i == 0)
@@ -228,16 +228,16 @@ class WBT_DATA
   #------------------------
   def chk_version()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW),
-                                      $title_str[4] )
+    cstr = @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW)
+    ret = chkblank( cstr, $title_str[4] )
     if(ret == -1)
       print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
       data_exit();
     end
     # セット
-    num = hash2no( $version_hash, @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
+    num = hash2no( $version_hash, cstr );
     if(num == -1)
-      print_error_str( $title_str[4], @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW) );
+      print_error_str( $title_str[4], cstr );
       print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
       data_exit();
     else
@@ -254,14 +254,14 @@ class WBT_DATA
   def chk_lang()
     #
     DATA_LANG_NUM.times{|i|
-      ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW),
-                                        $title_str[DATA_LANG_JPN+i] )
+      cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW)
+      ret = chkblank( cstr, $title_str[DATA_LANG_JPN+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
         data_exit();
       end
       # セット
-      num = hash2no( $ng_hash, @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW) );
+      num = hash2no( $ng_hash, cstr );
       if(num >= 2)
         @lang_id = 1+i;
         #

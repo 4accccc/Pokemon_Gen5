@@ -152,14 +152,14 @@ class WBT_POKEMON_SINGLE
   def chk_pokename()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW ),
-                                      $poke_str[0] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW )
+    ret = chkblank( cstr, $poke_str[0] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW)
+    str = cstr
     id = hash2no( $monsno_hash, str );
     if(id == -1)
       # 該当するポケモンがない=>エラー
@@ -181,14 +181,14 @@ class WBT_POKEMON_SINGLE
   def chk_form()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1 ),
-                                      $poke_str[1] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1 )
+    ret = chkblank( cstr, $poke_str[1] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+1 );
       poke_exit();
     end
     # セット
-    @form_no = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+1).to_i
+    @form_no = cstr.to_i
     #
     # 範囲チェック(0-255)(u8)
     flg = chk_num_range( @form_no, 0, 255 )
@@ -209,14 +209,14 @@ class WBT_POKEMON_SINGLE
   def chk_level()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2 ),
-                                      $poke_str[2] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2 )
+    ret = chkblank( cstr, $poke_str[2] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+2 );
       poke_exit();
     end
     # セット
-    @level = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+2).to_i
+    @level = cstr.to_i
     #
     # 範囲チェック(0-100)(u8)
     flg = chk_num_range( @level, 0, 100 )
@@ -237,14 +237,14 @@ class WBT_POKEMON_SINGLE
   def chk_sex()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+3 ),
-                                      $poke_str[3] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+3 )
+    ret = chkblank( cstr, $poke_str[3] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+3 );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+3)
+    str = cstr
     id = hash2no( $sex_hash, str );
     if(id == -1)
       # 該当する性別がない=>エラー
@@ -293,15 +293,15 @@ class WBT_POKEMON_SINGLE
   def chk_seikaku()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5 ),
-                                      $poke_str[4] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5 )
+    ret = chkblank( cstr, $poke_str[4] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+5 );
       poke_exit();
     end
     #
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+5)
+    str = cstr
     id = hash2no( $seikaku_hash, str );
     if(id == -1)
       # 該当する性格がない=>エラー
@@ -323,14 +323,14 @@ class WBT_POKEMON_SINGLE
   def chk_tokusei()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6 ),
-                                      $poke_str[5] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6 )
+    ret = chkblank( cstr, $poke_str[5] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+6 );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+6)
+    str = cstr
     id = hash2no( $tokusei_hash, str );
     if(id == -1)
       # 該当する特性がない=>エラー
@@ -352,14 +352,14 @@ class WBT_POKEMON_SINGLE
   def chk_item()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7 ),
-                                      $poke_str[6] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7 )
+    ret = chkblank( cstr, $poke_str[6] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+7 );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+7)
+    str = cstr
     id = hash2no( $item_hash, str );
     if(id == -1)
       # 該当するアイテムがない=>エラー
@@ -381,14 +381,14 @@ class WBT_POKEMON_SINGLE
   def chk_ball()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8 ),
-                                      $poke_str[7] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8 )
+    ret = chkblank( cstr, $poke_str[7] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+8 );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+8)
+    str = cstr
     id = hash2no( $ball_hash, str );
     if(id == -1)
       # 該当するボールがない=>エラー
@@ -411,15 +411,15 @@ class WBT_POKEMON_SINGLE
     #
     offset = 2*@poke_id+17*@trainer_id
     6.times{|i|
-      ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i ),
-                                        $poke_str[15+i] )
+      cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i )
+      ret = chkblank( cstr, $poke_str[15+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+10+i );
         poke_exit();
       end
       #
       # セット
-      id = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+10+i).to_i
+      id = cstr.to_i
       #
       # 範囲チェック(0 - 31)
       flg = chk_num_range( id, 0, 31 )
@@ -448,15 +448,15 @@ class WBT_POKEMON_SINGLE
     #
     offset = 2*@poke_id+17*@trainer_id
     6.times{|i|
-      ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i ),
-                                        $poke_str[21+i] )
+      cstr = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i )
+      ret = chkblank( cstr, $poke_str[21+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 6, POKE_START_COL+1+offset, POKE_START_ROW+10+i );
         poke_exit();
       end
       #
       # セット
-      @expbuf[i] = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+10+i).to_i
+      @expbuf[i] = cstr.to_i
       #
       # 範囲チェック(0 - 255)(u8)
       flg = chk_num_range( @expbuf[i], 0, 255 )
@@ -483,14 +483,15 @@ class WBT_POKEMON_SINGLE
     offset = 2*@poke_id+17*@trainer_id
     #
     PTL_WAZA_MAX.times{|i|
-      ret = chkblank_no_print( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i ) );
+      cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i )
+      ret = chkblank_no_print( cstr );
       # 空白の場合は「なし」で処理
       if(ret == -1)
         break;
 #        poke_exit();
       end
       # セット
-      str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+16+i)
+      str = cstr
       id = hash2no( $wazano_hash, str );
       if(id == -1)
         # 該当する技がない=>エラー
@@ -515,8 +516,8 @@ class WBT_POKEMON_SINGLE
     offset = 2*@poke_id+17*@trainer_id
     #
     PTL_WAZA_MAX.times{|i|
-      ret = chkblank( @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i ),
-                                        $poke_str[31+i] )
+      cstr = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i )
+      ret = chkblank( cstr, $poke_str[31+i] )
       # 念のため
       if(ret == -1)
         print_error_info( $current_xls_name, 6, POKE_START_COL+1+offset, POKE_START_ROW+16+i );
@@ -524,7 +525,7 @@ class WBT_POKEMON_SINGLE
       end
       #
       # セット
-      str = @conv.get_cell(6, POKE_START_COL+1+offset, POKE_START_ROW+16+i)
+      str = cstr
       id = hash2no( $ppup_hash, str );
       if(id == -1)
         # 該当するPPUPがない=>エラー
@@ -547,14 +548,14 @@ class WBT_POKEMON_SINGLE
   def chk_friend()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20 ),
-                                      $poke_str[11] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20 )
+    ret = chkblank( cstr, $poke_str[11] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+20 );
       poke_exit();
     end
     # セット
-    @friend_rate = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+20).to_i
+    @friend_rate = cstr.to_i
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @friend_rate, 0, 255 )
@@ -575,14 +576,14 @@ class WBT_POKEMON_SINGLE
   def chk_rare()
     #
     offset = 2*@poke_id+17*@trainer_id
-    ret = chkblank( @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+21 ),
-                                      $poke_str[12] )
+    cstr = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+21 )
+    ret = chkblank( cstr, $poke_str[12] )
     if(ret == -1)
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+21 );
       poke_exit();
     end
     # セット
-    str = @conv.get_cell(6, POKE_START_COL+offset, POKE_START_ROW+21)
+    str = cstr
     id = hash2no( $onoff_hash, str );
     if(id >= 2)
       @rate_flag = 1;

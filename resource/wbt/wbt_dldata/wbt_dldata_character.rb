@@ -351,14 +351,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_before_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+11, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[6] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+11, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[6] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+11, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_before_id = @conv.get_cell(4, TRAINER_START_COL+11, TRAINER_START_ROW+@char_id).to_i;
+    @msg_before_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_before_id, 0, 255 )
@@ -378,14 +378,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------------
   def chk_after_win_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[9] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[9] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_after_win_id = @conv.get_cell(4, TRAINER_START_COL+23, TRAINER_START_ROW+@char_id).to_i;
+    @msg_after_win_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_after_win_id, 0, 255 )
@@ -405,14 +405,14 @@ class WBT_CHARACTER_SINGLE
   #------------------------------
   def chk_after_lose_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[10] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[10] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_after_lose_id = @conv.get_cell(4, TRAINER_START_COL+33, TRAINER_START_ROW+@char_id).to_i;
+    @msg_after_lose_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_after_lose_id, 0, 255 )
@@ -432,14 +432,14 @@ class WBT_CHARACTER_SINGLE
   #-------------------------------
   def chk_win_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[7] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[7] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_win_id = @conv.get_cell(4, TRAINER_START_COL+20, TRAINER_START_ROW+@char_id).to_i;
+    @msg_win_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_win_id, 0, 255 )
@@ -459,14 +459,14 @@ class WBT_CHARACTER_SINGLE
   #------------------------------
   def chk_lose_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[8] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[8] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_lose_id = @conv.get_cell(4, TRAINER_START_COL+21, TRAINER_START_ROW+@char_id).to_i;
+    @msg_lose_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_lose_id, 0, 255 )
@@ -486,14 +486,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------------
   def chk_announce_mes_id()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[11] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[11] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    @msg_announce_id = @conv.get_cell(4, TRAINER_START_COL+42, TRAINER_START_ROW+@char_id).to_i;
+    @msg_announce_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_announce_id, 0, 255 )
@@ -513,14 +513,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_lang()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[12] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[12] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    str = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id)
+    str = cstr
     id = hash2no( $lang_hash, str );
     if(id == -1)
       # 該当する性別がない=>エラー
@@ -542,14 +542,14 @@ class WBT_CHARACTER_SINGLE
   def chk_ai()
     #
     4.times{|i|
-      ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+3+i, TRAINER_START_ROW+@char_id ),
-                                        $trainer_str[15+i] )
+      cstr = @conv.get_cell(4, TRAINER_START_COL+3+i, TRAINER_START_ROW+@char_id )
+      ret = chkblank( cstr, $trainer_str[15+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 4, TRAINER_START_COL+3+i, TRAINER_START_ROW+@char_id );
         trainer_exit();
       end
       # セット
-      str = @conv.get_cell(4, TRAINER_START_COL+3+i, TRAINER_START_ROW+@char_id)
+      str = cstr
       id = hash2no( $onoff_hash, str );
       if(id >= 2)
         @ai_bit |= (1<<i);
@@ -566,15 +566,15 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_trtype()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[14] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[14] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     
     # 番号を取得
-    num = @conv.get_cell(4, TRAINER_START_COL+2, TRAINER_START_ROW+@char_id).to_i
+    num = cstr.to_i
     #
     # 番号をそのままセット
     # 変換はプログラム側で対応(仕様変更)
@@ -676,14 +676,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------
   def chk_local_language()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id ),
-                                      $trainer_str[12] )
+    cstr = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id )
+    ret = chkblank( cstr, $trainer_str[12] )
     if(ret == -1)
       print_error_info( $current_xls_name, 4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id );
       trainer_exit();
     end
     # セット
-    str = @conv.get_cell(4, TRAINER_START_COL+9, TRAINER_START_ROW+@char_id)
+    str = cstr
     id = hash2no( $lang_tbl_hash, str );
     if(id == -1)
       # 該当する国がない=>エラー

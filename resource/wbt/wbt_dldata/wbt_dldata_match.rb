@@ -67,16 +67,16 @@ class WBT_MATCH_SINGLE
   #----------------
   def chk_match()
     #
-    ret = chkblank( @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id ),
-                                      $match_str[0] )
+    cstr = @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id )
+    ret = chkblank( cstr, $match_str[0] )
     if(ret == -1)
       print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
       match_exit();
     end
     # セット
-    num = hash2no( $match_hash, @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
+    num = hash2no( $match_hash, cstr );
     if(num == -1)
-      print_error_str( $match_str[0], @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id) );
+      print_error_str( $match_str[0], cstr );
       print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
       match_exit();
     else
@@ -93,14 +93,14 @@ class WBT_MATCH_SINGLE
   #----------------
   def chk_prio()
     #
-    ret = chkblank( @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id ),
-                                      $match_str[1] )
+    cstr = @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id )
+    ret = chkblank( cstr, $match_str[1] )
     if(ret == -1)
       print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
       match_exit();
     end
     # セット
-    @pri = @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id).to_i
+    @pri = cstr.to_i
     # 範囲のチェック(0 - 5)
     flg = chk_num_range( @pri, 0, 5 );
     if(flg == -1)
@@ -119,16 +119,16 @@ class WBT_MATCH_SINGLE
   #----------------
   def chk_id()
     #
-    ret = chkblank( @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id ),
-                                      $match_str[2] )
+    cstr = @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id )
+    ret = chkblank( cstr, $match_str[2] )
     if(ret == -1)
       print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
       match_exit();
     end
     #
-    num = hash2no( $skip_hash, @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id) );
+    num = hash2no( $skip_hash, cstr );
     if(num == -1)
-      @id = @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id).to_i
+      @id = cstr.to_i
     else
       @id = 0
     end

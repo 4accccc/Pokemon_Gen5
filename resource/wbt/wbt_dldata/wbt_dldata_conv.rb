@@ -21,7 +21,9 @@ $current_xls_name = ""
 $debug_chkstr = 1
 
 # ruby or exe(0:ruby、1:exe)
-$current_mode = 0
+#$current_mode = 0
+#
+require "version.rb"
 #
 require "my_tab_out_direct_sheet.rb"
 
@@ -46,8 +48,8 @@ LANG_MAX_NUM = 7
 
 # 使用方法メッセージ
 $usage_str = [
-  "\n使い方\nruby wbt_dldata_conv.rb in.xls",    # ruby
-  "\n使い方\nwbt_dldata_conv.exe in.xls",        # exe
+  "\n使い方 (#{$version_str})\nruby wbt_dldata_conv.rb in.xls\n",    # ruby
+  "\n使い方 (#{$version_str})\nwbt_dldata_conv.exe in.xls\n",        # exe
 ]
 
 #-------------------------------------------------------
@@ -57,7 +59,7 @@ $usage_str = [
 #------------
 if ARGV[0] == nil
   puts "引数1に入力(xls)ファイル名を指定してください"
-  puts $usage_str[$current_mode]
+  puts $usage_str[$ruby_mode]
   exit(1)
 end
 #

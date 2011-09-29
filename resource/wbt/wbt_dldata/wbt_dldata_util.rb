@@ -4,10 +4,16 @@
 #---------------------------
 require 'kconv'
 
+require "version.rb"
+
 require "my_tab_out_direct_sheet.rb"
 
 # パス要変更
-HASHPATH = "../../../../swan/tools/hash/"
+if($exe_mode == 0)
+  HASHPATH = "../../../../swan/tools/hash/"
+else
+  HASHPATH = ""
+end
 #
 require HASHPATH + "monsno_hash.rb"	# ポケモン番号
 require HASHPATH + "item_hash.rb"	# アイテム番号

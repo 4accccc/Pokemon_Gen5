@@ -118,14 +118,14 @@ class WBT_RULE
   def chk_join_info()
     #
     3.times{|i|
-      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW),
-                                        $reg_str[i] )
+      cstr = @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW)
+      ret = chkblank( cstr, $reg_str[i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW );
         rule_exit();
       end
       # セット
-      @join_info[i] = @conv.get_cell(1, REG_UP_START_COL+i, REG_UP_START_ROW).to_i;
+      @join_info[i] = cstr.to_i;
       # 範囲チェック
       if(i == 0)    # 下限
         min = 1
@@ -156,16 +156,16 @@ class WBT_RULE
   #----------------
   def chk_level_range()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW),
-                                      $reg_str[3] )
+    cstr = @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[3] )
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
-    num = hash2no( $level_range_hash, @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW) );
+    num = hash2no( $level_range_hash, cstr );
     if(num == -1)
-      print_error_str( $reg_str[3], @conv.get_cell(1, REG_UP_START_COL+3, REG_UP_START_ROW) );
+      print_error_str( $reg_str[3], cstr );
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
       rule_exit();
     else
@@ -182,14 +182,14 @@ class WBT_RULE
   #----------------
   def chk_level_total()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+4, REG_UP_START_ROW),
-                                      $reg_str[4] )
+    cstr = @conv.get_cell(1, REG_UP_START_COL+4, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[4] )
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
-    @level_total = @conv.get_cell(1, REG_UP_START_COL+4, REG_UP_START_ROW).to_i;
+    @level_total = cstr.to_i;
     #
     # 範囲チェック
     flg = chk_num_range( @level_total, 0, 600 )
@@ -211,15 +211,15 @@ class WBT_RULE
     #
     2.times{|i|
       # ブランクチェック
-      ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+5+i, REG_UP_START_ROW),
-                                        $reg_str[5+i] )
+      cstr = @conv.get_cell(1, REG_UP_START_COL+5+i, REG_UP_START_ROW)
+      ret = chkblank( cstr, $reg_str[5+i] )
       if(ret == -1)
         print_error_info( $current_xls_name, 1, REG_UP_START_COL+5+i, REG_UP_START_ROW );
         rule_exit();
       end
       #
       # セット
-      num = hash2no( $ng_hash, @conv.get_cell(1, REG_UP_START_COL+5+i, REG_UP_START_ROW) );
+      num = hash2no( $ng_hash, cstr );
       if(num >= 2)
         @both_info[i] = 1;
       else
@@ -240,8 +240,8 @@ class WBT_RULE
     #
     WBTDL_POKE_MAX.times{|i|
       # ブランクチェック
-      ret = chkblank( @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW),
-                                        $reg_str[7] )
+      cstr = @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW)
+      ret = chkblank( cstr, $reg_str[7] )
       if(ret == -1)
         print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW );
         rule_exit();
@@ -249,7 +249,7 @@ class WBT_RULE
       #
       # セット
       flg = 0;
-      num = hash2no( $ng_hash, @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW) );
+      num = hash2no( $ng_hash, cstr );
       # NGの場合=>ビットを立てる
       if(num < 2)
         flg = 1;
@@ -285,8 +285,8 @@ class WBT_RULE
     #
     WBTDL_ITEM_MAX.times{|i|
       # ブランクチェック
-      ret = chkblank( @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4),
-                                        $reg_str[8] );
+      cstr = @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4)
+      ret = chkblank( cstr, $reg_str[8] );
       if(ret == -1)
         print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4 );
         rule_exit();
@@ -294,7 +294,7 @@ class WBT_RULE
       #
       # セット
       flg = 0;
-      num = hash2no( $ng_hash, @conv.get_cell(2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4) );
+      num = hash2no( $ng_hash, cstr );
       # NGの場合=>ビットを立てる
       if(num < 2)
         flg = 1;
@@ -328,14 +328,14 @@ class WBT_RULE
   def chk_skill()
     #
     # ブランクチェック
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+22, REG_UP_START_ROW),
-                                      $reg_str[11] );
+    cstr = @conv.get_cell(1, REG_UP_START_COL+22, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[11] );
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+22, REG_UP_START_ROW );
       rule_exit();
     end
     #
-    str = @conv.get_cell(1, REG_UP_START_COL+22, REG_UP_START_ROW);
+    str = cstr;
     id = hash2no( $wazano_hash, str );
     if(id == -1)
       # 該当する禁止技がない=>エラー
@@ -356,16 +356,16 @@ class WBT_RULE
   #----------------
   def chk_battle_rule()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW),
-                                      $reg_str[10] )
+    cstr = @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[10] )
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+19, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
-    num = hash2no( $battle_rule_hash, @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW) );
+    num = hash2no( $battle_rule_hash, cstr );
     if(num == -1)
-      print_error_str( $reg_str[10], @conv.get_cell(1, REG_UP_START_COL+19, REG_UP_START_ROW) );
+      print_error_str( $reg_str[10], cstr );
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+19, REG_UP_START_ROW );
       rule_exit();
     else
@@ -382,16 +382,16 @@ class WBT_RULE
   #----------------
   def chk_type()
     #
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW),
-                                      $reg_str[12] )
+    cstr = @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[12] )
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+23, REG_UP_START_ROW );
       rule_exit();
     end
     # セット
-    num = hash2no( $type_hash, @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW) );
+    num = hash2no( $type_hash, cstr );
     if(num == -1)
-      print_error_str( $reg_str[12], @conv.get_cell(1, REG_UP_START_COL+23, REG_UP_START_ROW) );
+      print_error_str( $reg_str[12], cstr );
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+23, REG_UP_START_ROW );
       rule_exit();
     else
@@ -409,14 +409,14 @@ class WBT_RULE
   def chk_bgm()
     #
     # ブランクチェック
-    ret = chkblank( @conv.get_cell(1, REG_UP_START_COL+24, REG_UP_START_ROW),
-                                      $reg_str[13] );
+    cstr = @conv.get_cell(1, REG_UP_START_COL+24, REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[13] );
     if(ret == -1)
       print_error_info( $current_xls_name, 1, REG_UP_START_COL+24, REG_UP_START_ROW );
       rule_exit();
     end
     #
-    num = @conv.get_cell(1, REG_UP_START_COL+24, REG_UP_START_ROW).to_i;
+    num = cstr.to_i;
     # 範囲のチェック(0、1)
     flg = chk_num_range( num, 0, 1 );
     if(flg == -1)
