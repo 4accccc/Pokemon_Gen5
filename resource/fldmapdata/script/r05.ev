@@ -15,6 +15,7 @@
 
   //@author	suginaka_katsunori
   //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
+  //@author Mizuguchi_Mai（ベル）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -40,8 +41,12 @@ _EVENT_DATA		ev_r05_stop09_01
 _EVENT_DATA   ev_r05_cameraman_01
 _EVENT_DATA		ev_r05_swleader1_01
 _EVENT_DATA		ev_zone_r05
+_EVENT_DATA		ev_pos_r05_swbell_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LCW_POSX
+DEFINE_LOCAL LCW_POSZ
 /**************************************************************/
 /*			ゾーンチェンジラベル							  */
 /**************************************************************/
@@ -95,6 +100,100 @@ EVENT_START	ev_bg_r05_board_03
 	_EASY_BGWIN_MSG( msg_r05_sign4_01, TYPE_INFO )
   _FLAG_SET( MDL_FLAG_BOARD_R05_04 )
 EVENT_END
+
+/**************************************************************/
+/*		【仮】POS：ベルかくしあなイベント							  */
+/**************************************************************/
+EVENT_START		ev_pos_r05_swbell_01
+
+  //2011.09.29 かくしあなへの誘導とr16との連携が仮
+  
+  _PLAYER_NAME( 0 )
+
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //フィールド上にベル配置
+  _OBJ_ADD_EX( 377, 438, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+  
+  //メッセージ：おうい！
+  _BALLOONWIN_OBJMSG_MF( msg_r05_swbell_01,msg_r05_swbell_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公振り向き
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //アニメ：主人公中央へ
+  IF $LCW_POSZ != 438 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 373, 438, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //アニメ：ベル隣接・主人公振り向き
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_to_player)
+  IF $LCW_POSZ != 438 THEN
+    _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_r)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：いいところで
+  _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_03,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //わざマシン入手処理　「そらをとぶ」
+  _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN02, 1 )
+  
+  //メッセージ：そらをとぶ
+  _BALLOONWIN_OBJMSG_MF( msg_r05_swbell_04,msg_r05_swbell_05,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_06,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_07,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  ENDIF
+  }
+  _MSGWIN_CLOSE()
+  
+  //アニメ：
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_bye)
+  _OBJ_ANIME_WAIT()
+  
+  //ベル動作モデル削除
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //========================================//
+  //R05かくしあなイベントPOS無効
+  $WK_SCENE_R05_SWBELL_01 = 1
+  //========================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ベル：隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_bell_to_player
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ベル：ゲートへ帰る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_bell_bye
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*		R05		きのみ販売イベント							  */

@@ -22,5 +22,6 @@
 #define SCRID_R05_CAMERAMAN_01 (15)
 #define SCRID_R05_SWLEADER1_01 (16)
 #define SCRID_ZONE_R05 (17)
+#define SCRID_POS_R05_SWBELL_01 (18)
 
 #endif //_R05_DEF_H_

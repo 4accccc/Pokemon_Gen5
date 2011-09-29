@@ -99,6 +99,9 @@ EVENT_START   ev_scene_c03p15_first_01
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
+  //ライバルライブキャスター登録
+  _PERSON_TVT_CALL_SET_RIVAL()
+  
   //==================================//
   //c03p15のPOS無効
   $WK_SCENE_C03P15 = 2
