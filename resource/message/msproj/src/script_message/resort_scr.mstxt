@@ -4216,10 +4216,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ごようけんは　ありますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-16T02:18:10" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-29T16:45:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4230,10 +4230,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ご用件は　ありますか？▼</Text>
+ご用件は　ありますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:40:37" />
+				User="nagihashi_toru:W00268"
+				Time="2011-09-29T16:45:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

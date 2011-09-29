@@ -155,8 +155,8 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
 
   typedef BOOL (*IS_VALID)(  const void *cp_data_adrs );
 
-  typedef BOOL (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
-  typedef BOOL (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
+  typedef RESORT_MERGE_RESULT (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+  typedef RESORT_MERGE_RESULT (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
   typedef BOOL (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
   typedef BOOL (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
 
@@ -229,11 +229,17 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
   }
 
   //市民データのマージ
-  if( RESORT_PEOPLE_ALL_DATA_MergeData( p_all_people, cp_data_adrs, type ) )
   {
-    return RESORT_SETDATA_MERGE;
+    RESORT_MERGE_RESULT ret = RESORT_PEOPLE_ALL_DATA_MergeData( p_all_people, cp_data_adrs, type );
+    if( ret == RESORT_MERGE_RESULT_OK )
+    {
+      return RESORT_SETDATA_MERGE;
+    }
+    else if( ret == RESORT_MERGE_RESULT_DISABLE )
+    {
+      return RESORT_SETDATA_NONE;
+    }
   }
-  else
   {
     int i;
     //バッファのマージ
@@ -244,23 +250,42 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
       switch( order )
       {
       case RESRT_MERGE_ORDER_PROXY_RECV:
-        if( sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs ) )
         {
-          return RESORT_SETDATA_MERGE;
+          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs );
+          if( ret == RESORT_MERGE_RESULT_OK )
+          {
+            return RESORT_SETDATA_MERGE;
+          }
+          else if( ret == RESORT_MERGE_RESULT_DISABLE )
+          {
+            return RESORT_SETDATA_NONE;
+          }
         }
         if( p_temp_buff )
         {
-          if( sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs ) )
+          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs );
+          if( ret == RESORT_MERGE_RESULT_OK )
           {
             return RESORT_SETDATA_MERGE;
+          }
+          else if( ret == RESORT_MERGE_RESULT_DISABLE )
+          {
+            return RESORT_SETDATA_NONE;
           }
         }
         order ^=  1;
         break;
       case RESRT_MERGE_ORDER_RECV_PROXY:
-        if( sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs ) )
         {
-          return RESORT_SETDATA_MERGE;
+          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs );
+          if( ret == RESORT_MERGE_RESULT_OK )
+          {
+            return RESORT_SETDATA_MERGE;
+          }
+          else if( ret == RESORT_MERGE_RESULT_DISABLE )
+          {
+            return RESORT_SETDATA_NONE;
+          }
         }
         order ^=  1;
         break;

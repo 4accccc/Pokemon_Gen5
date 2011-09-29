@@ -1434,14 +1434,14 @@ BOOL RESORT_RECV_DATA_AddRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *c
  *	@retval TRUEマージした  FALSEマージしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+RESORT_MERGE_RESULT RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   GF_ASSERT( !RESORT_RECV_DATA_IsEmpty( p_wk ) );
 
   //ロックされていたらマージしない
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
-    return FALSE;
+    return RESORT_MERGE_RESULT_DISABLE;
   }
   else
   {
@@ -1475,7 +1475,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
 
-    return TRUE;
+    return RESORT_MERGE_RESULT_OK;
   }
 }
 //----------------------------------------------------------------------------
@@ -1486,14 +1486,14 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
  *	@param	RESORT_RECV_DATA *cp_recv   受信データ
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+RESORT_MERGE_RESULT RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   GF_ASSERT( !RESORT_RECV_DATA_IsEmpty( p_wk ) );
 
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
-    return FALSE;
+    return RESORT_MERGE_RESULT_DISABLE;
   }
   else
   {
@@ -1529,7 +1529,7 @@ BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
 
-    return TRUE;
+    return RESORT_MERGE_RESULT_OK;
   }
 }
 //----------------------------------------------------------------------------
@@ -1540,14 +1540,14 @@ BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
  *	@param	RESORT_PROXY_DATA *cp_proxy 代理人
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_DATA_MergeProxy( RESORT_RECV_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+RESORT_MERGE_RESULT RESORT_RECV_DATA_MergeProxy( RESORT_RECV_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
 {
   GF_ASSERT( !RESORT_RECV_DATA_IsEmpty(p_wk ) );
 
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
-    return FALSE;
+    return RESORT_MERGE_RESULT_DISABLE;
   }
   else
   {
@@ -1564,7 +1564,7 @@ BOOL RESORT_RECV_DATA_MergeProxy( RESORT_RECV_DATA *p_wk, const RESORT_PROXY_DAT
     {
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
-    return TRUE;
+    return RESORT_MERGE_RESULT_OK;
   }
 
 }
@@ -3126,28 +3126,29 @@ void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index )
  *	@retval TRUEビーコン挿し込みした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_RECV_DATA *p_data;
 
-  //ロック中は追加しない
-  if( p_wk->is_lock )
-  {
-    RESORT_RECV_Printf( "リゾート　ロック中\n" );
-    return FALSE;
-  }
 
   //同じ所有者のものがあったら優先的に入れる
   p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
-    RESORT_RECV_Printf( "マージしていれた！%d\n", cp_beacon->extend_type );
-    return TRUE;
+    //ロック中は追加しない
+    if( p_wk->is_lock )
+    {
+      RESORT_RECV_Printf( "リゾート　ロック中\n" );
+      return RESORT_MERGE_RESULT_DISABLE;
+    }
+    else
+    {
+      return RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
+    }
   }
 
   RESORT_RECV_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3160,27 +3161,28 @@ BOOL RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_D
  *	@retval TRUEビーコン挿し込みした  FALSEしていない*
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   RESORT_RECV_DATA *p_data;
 
-  //ロック中は追加しない
-  if( p_wk->is_lock )
-  {
-    RESORT_RECV_Printf( "リゾート　ロック中\n" );
-    return FALSE;
-  }
 
   //同じ所有者のものがあったら優先的に入れる
   p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
-    RESORT_RECV_Printf( "受信データをマージした！\n" );
-    return TRUE;
+    //ロック中は追加しない
+    if( p_wk->is_lock )
+    {
+      RESORT_RECV_Printf( "リゾート　ロック中\n" );
+      return RESORT_MERGE_RESULT_DISABLE;
+    }
+    else
+    {
+      return RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+    }
   }
 
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3192,27 +3194,28 @@ BOOL RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA 
  *	@return TRUEマージした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
 {
   RESORT_RECV_DATA *p_data;
 
-  //ロック中は追加しない
-  if( p_wk->is_lock )
-  {
-    RESORT_RECV_Printf( "リゾート　ロック中\n" );
-    return FALSE;
-  }
 
   //同じ所有者のものがあったら優先的に入れる
   p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_proxy->basic1 );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeProxy( p_data, cp_proxy );
-    RESORT_RECV_Printf( "受信データをマージした！\n" );
-    return TRUE;
+    //ロック中は追加しない
+    if( p_wk->is_lock )
+    {
+      RESORT_RECV_Printf( "リゾート　ロック中\n" );
+      return RESORT_MERGE_RESULT_DISABLE;
+    }
+    else
+    {
+      return RESORT_RECV_DATA_MergeProxy( p_data, cp_proxy );
+    }
   }
 
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3674,7 +3677,7 @@ BOOL RESORT_SECRETARY_DATA_IsSameOwnerProxy( const RESORT_SECRETARY_DATA *cp_wk,
  *	@return TRUEマージした  FALSEマージしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_SECRETARY_DATA_MergeBeacon( RESORT_SECRETARY_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+RESORT_MERGE_RESULT RESORT_SECRETARY_DATA_MergeBeacon( RESORT_SECRETARY_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
 
@@ -3692,7 +3695,7 @@ BOOL RESORT_SECRETARY_DATA_MergeBeacon( RESORT_SECRETARY_DATA *p_wk, const RESOR
 
   //秘書は見た目とフリーワードが変わるだけなのでフラグたてる必要ないはず
 
-  return TRUE;
+  return RESORT_MERGE_RESULT_OK;
 }
 
 //----------------------------------------------------------------------------
@@ -3706,7 +3709,7 @@ BOOL RESORT_SECRETARY_DATA_MergeBeacon( RESORT_SECRETARY_DATA *p_wk, const RESOR
  *	@return TRUEマージした  FALSEマージしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_SECRETARY_DATA_MergeRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+RESORT_MERGE_RESULT RESORT_SECRETARY_DATA_MergeRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
 
@@ -3725,7 +3728,7 @@ BOOL RESORT_SECRETARY_DATA_MergeRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_
 
   //秘書は見た目とフリーワードが変わるだけなのでフラグたてる必要ないはず
 
-  return TRUE;
+  return RESORT_MERGE_RESULT_OK;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3737,14 +3740,14 @@ BOOL RESORT_SECRETARY_DATA_MergeRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_
  *	@return TRUEマージした  FALSEマージしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_SECRETARY_DATA_MergeProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+RESORT_MERGE_RESULT RESORT_SECRETARY_DATA_MergeProxy( RESORT_SECRETARY_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy )
 {
   GF_ASSERT( !RESORT_SECRETARY_DATA_IsEmpty( p_wk ) );
 
   //見た目だけマージ
   p_wk->basic1.objcode = cp_proxy->basic1.objcode;
 
-  return TRUE;
+  return RESORT_MERGE_RESULT_OK;
 }
 //----------------------------------------------------------------------------
 /**
@@ -4126,10 +4129,10 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOP
  *
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
+RESORT_MERGE_RESULT RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
 {
   typedef BOOL (*IS_SAME_OWNER)( const void *, const void * );
-  typedef BOOL (*MERGE_DATA)( void *, const void * );
+  typedef RESORT_MERGE_RESULT (*MERGE_DATA)( void *, const void * );
 
   static const struct
   {
@@ -4164,11 +4167,6 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void 
 
   int i;
 
-  if( p_wk->merge_lock )
-  {
-    return FALSE;
-  }
-
   //住人マージ
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
@@ -4176,9 +4174,17 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void 
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) 
       &&  sc_data_function_tbl[type].Resident_IsSameOwner(p_resident,cp_data_adrs) )
     {
-      if( sc_data_function_tbl[type].Resident_MergeData(p_resident,cp_data_adrs) )
+      if( p_wk->merge_lock )
       {
-        return TRUE;
+        return RESORT_MERGE_RESULT_DISABLE;
+      }
+      else
+      {
+        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].Resident_MergeData(p_resident,cp_data_adrs);
+        if( ret == RESORT_MERGE_RESULT_OK || ret == RESORT_MERGE_RESULT_DISABLE )
+        {
+          return ret;
+        }
       }
     }
   }
@@ -4190,14 +4196,22 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void 
     if( !RESORT_SECRETARY_DATA_IsEmpty(p_secret) 
       &&  sc_data_function_tbl[type].Secretary_IsSameOwner(p_secret,cp_data_adrs) )
     {
-      if( sc_data_function_tbl[type].Secretary_MergeData(p_secret,cp_data_adrs) )
+      if( p_wk->merge_lock )
       {
-        return TRUE;
+        return RESORT_MERGE_RESULT_DISABLE;
+      }
+      else
+      {
+        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].Secretary_MergeData(p_secret,cp_data_adrs);
+        if( ret == RESORT_MERGE_RESULT_OK || ret == RESORT_MERGE_RESULT_DISABLE )
+        {
+          return ret;
+        }
       }
     }
   }
 
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 
 //----------------------------------------------------------------------------
