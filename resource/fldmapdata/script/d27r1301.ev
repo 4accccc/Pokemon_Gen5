@@ -47,6 +47,20 @@ _EVENT_DATA    ev_d27r1301_swplazmaw_01
 _EVENT_DATA    ev_pos_d27r1301_stopper_01
 _EVENT_DATA    ev_pos_d27r1301_stopper_02
 _EVENT_DATA    ev_d27r1301_stopper_03
+_EVENT_DATA    ev_pos_d27r1301_warp_a_01
+_EVENT_DATA    ev_pos_d27r1301_warp_a_02
+_EVENT_DATA    ev_pos_d27r1301_warp_b_01
+_EVENT_DATA    ev_pos_d27r1301_warp_b_02
+_EVENT_DATA    ev_pos_d27r1301_warp_c_01
+_EVENT_DATA    ev_pos_d27r1301_warp_c_02
+_EVENT_DATA    ev_pos_d27r1301_warp_d_01
+_EVENT_DATA    ev_pos_d27r1301_warp_d_02
+_EVENT_DATA    ev_pos_d27r1301_warp_e_01
+_EVENT_DATA    ev_pos_d27r1301_warp_e_02
+_EVENT_DATA    ev_pos_d27r1301_warp_f_01
+_EVENT_DATA    ev_pos_d27r1301_warp_f_02
+_EVENT_DATA    ev_pos_d27r1301_warp_g_01
+_EVENT_DATA    ev_pos_d27r1301_warp_g_02
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -71,6 +85,11 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+// pos_warpの引数
+DEFINE_LOCAL  param_x
+DEFINE_LOCAL  param_y
+DEFINE_LOCAL  param_z
 
 /************************************************************/
 /*					ZONE_CHANGE_LABEL 						*/
@@ -644,6 +663,167 @@ EVENT_START ev_pos_d27r1301_barrier_01
   
   
 EVENT_END
+
+//-------------------------------------
+///	ワープの位置
+//=====================================
+/*
+  A_01  (  7, 16 )
+  A_02  ( 11, 48 )
+  B_01  (  7, 21 )
+  B_02  (  5, 41 )
+  C_01  ( 23, 16 )
+  C_02  ( 25, 41 )
+  D_01  ( 23, 21 )
+  D_02  ( 19, 48 )
+  E_01  ( 11, 41 )
+  E_02  (  5, 54 )
+  F_01  ( 11, 54 )
+  F_02  ( 25, 54 )
+  G_01  ( 19, 41 )
+  G_02  ( 19, 54 )
+*/
+
+
+/************************************************************/
+/*					ワープA						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_a_01
+  $param_x = 11
+  $param_y = -3
+  $param_z = 48
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_a_02
+  $param_x = 7
+  $param_y = 0
+  $param_z = 16
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープB						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_b_01
+  $param_x = 5
+  $param_y = -3
+  $param_z = 41
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_b_02
+  $param_x = 7
+  $param_y = 0
+  $param_z = 21
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープC						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_c_01
+  $param_x = 25
+  $param_y = -3
+  $param_z = 41
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_c_02
+  $param_x = 23
+  $param_y = 0
+  $param_z = 16
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープD						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_d_01
+  $param_x = 19
+  $param_y = -3
+  $param_z = 48
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_d_02
+  $param_x = 23
+  $param_y = 0
+  $param_z = 21
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープE						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_e_01
+  $param_x = 5
+  $param_y = -3
+  $param_z = 54
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_e_02
+  $param_x = 11
+  $param_y = -3
+  $param_z = 41
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープF						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_f_01
+  $param_x = 25
+  $param_y = -3
+  $param_z = 54
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_f_02
+  $param_x = 11
+  $param_y = -3
+  $param_z = 54
+  _CALL pos_warp
+EVENT_END
+/************************************************************/
+/*					ワープG						                              */
+/************************************************************/
+EVENT_START ev_pos_d27r1301_warp_g_01
+  $param_x = 19
+  $param_y = -3
+  $param_z = 54
+  _CALL pos_warp
+EVENT_END
+EVENT_START ev_pos_d27r1301_warp_g_02
+  $param_x = 19
+  $param_y = -3
+  $param_z = 41
+  _CALL pos_warp
+EVENT_END
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief    ワープをゾーンチェンジしないで行う関数
+ *
+ *	@param	  param_x   移動先X座標
+ *	@param	  param_z   移動先Z座標
+ */
+//-----------------------------------------------------------------------------
+pos_warp:
+{
+  DEFINE_LOCAL  player_dir
+
+  _DEBUG_PRINT_WK( param_x )
+  _DEBUG_PRINT_WK( param_z )
+
+  _PLAYER_DIR_GET( player_dir )
+
+  _BLACK_OUT()                      // フェードアウト
+  //_OBJ_WARP_OUT( MMDL_ID_PLAYER )   // ワープ消去
+  _DISP_FADE_END_CHECK()            // フェードアウト待ち
+
+  _TIME_WAIT( 6 )
+
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, param_x, param_y, param_z, player_dir )
+
+  // 落下だと、POSイベントが発動してしまう
+  //_OBJ_FALL_IN( MMDL_ID_PLAYER, param_x, param_z, player_dir  ) // 落下
+  
+  // フェードイン
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()            // フェードアウト待ち
+}
+_RET
 
 //--------------------------------------------------------------------
 //	主人公：上を向いて「！」

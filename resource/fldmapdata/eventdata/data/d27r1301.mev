@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/28 22:28:47
+#save date:2011/09/29 10:45:13
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1301.wms
 #SECTION START:OBJ_EVENT
@@ -644,7 +644,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-17
+31
 #event number: 0
 #Pos Event Label
 POS_D27R1301_WARP_01
@@ -934,6 +934,244 @@ EVENTDATA_POSTYPE_GRID
 -120 0 56
 #size
 1 1
+#event number: 17
+#Pos Event Label
+POS_D27R1301_WARP_A_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_A_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -8
+#size
+1 1
+#event number: 18
+#Pos Event Label
+POS_D27R1301_WARP_C_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_C_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -8
+#size
+1 1
+#event number: 19
+#Pos Event Label
+POS_D27R1301_WARP_D_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_D_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 -88
+#size
+1 1
+#event number: 20
+#Pos Event Label
+POS_D27R1301_WARP_B_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_B_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -88
+#size
+1 1
+#event number: 21
+#Pos Event Label
+POS_D27R1301_WARP_B_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_B_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 -48 -408
+#size
+1 1
+#event number: 22
+#Pos Event Label
+POS_D27R1301_WARP_E_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_E_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 -48 -408
+#size
+1 1
+#event number: 23
+#Pos Event Label
+POS_D27R1301_WARP_A_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_A_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 -48 -520
+#size
+1 1
+#event number: 24
+#Pos Event Label
+POS_D27R1301_WARP_F_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_F_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 -48 -616
+#size
+1 1
+#event number: 25
+#Pos Event Label
+POS_D27R1301_WARP_E_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_E_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 -48 -616
+#size
+1 1
+#event number: 26
+#Pos Event Label
+POS_D27R1301_WARP_G_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_G_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 -48 -616
+#size
+1 1
+#event number: 27
+#Pos Event Label
+POS_D27R1301_WARP_F_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_F_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 -48 -616
+#size
+1 1
+#event number: 28
+#Pos Event Label
+POS_D27R1301_WARP_G_01
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_G_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 -48 -408
+#size
+1 1
+#event number: 29
+#Pos Event Label
+POS_D27R1301_WARP_D_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_D_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 -48 -520
+#size
+1 1
+#event number: 30
+#Pos Event Label
+POS_D27R1301_WARP_C_02
+#Pos Script Name
+SCRID_POS_D27R1301_WARP_C_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 -48 -408
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -943,244 +1181,6 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-14
-#event number: 0
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT01
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT02
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 0 -8
-#size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT02
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT01
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 -48 -520
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT03
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT04
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 0 -88
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT04
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT03
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 -48 -408
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT05
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT06
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 -8
-#size
-1 1
-#event number: 5
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT06
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT05
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-152 -48 -408
-#size
-1 1
-#event number: 6
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT07
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT08
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 -88
-#size
-1 1
-#event number: 7
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT08
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT07
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 -48 -520
-#size
-1 1
-#event number: 8
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT09
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT10
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 -48 -408
-#size
-1 1
-#event number: 9
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT10
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT09
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 -48 -616
-#size
-1 1
-#event number: 10
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT11
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT12
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-152 -48 -616
-#size
-1 1
-#event number: 11
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT12
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT11
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 -48 -616
-#size
-1 1
-#event number: 12
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT13
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT14
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--72 -48 -408
-#size
-1 1
-#event number: 13
-#Door Event Label
-DOOR_ID_D27R1301_D27R1301_EXIT14
-#Next Zone ID Name
-ZONE_ID_D27R1301
-#Next Door ID Name
-DOOR_ID_D27R1301_D27R1301_EXIT13
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 -48 -616
-#size
-1 1
+0
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
