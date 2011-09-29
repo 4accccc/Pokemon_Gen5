@@ -662,10 +662,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『なんだ　おまえら？▼</Text>
+			<Text>プラズマだん『なんだ　おまえら？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-09-29T08:47:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,10 +673,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『なんだ　おまえら？▼</Text>
+			<Text>プラズマ団『なんだ　おまえら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:02:44" />
+				Time="2011-09-29T08:48:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -770,7 +770,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『なんだと？
+			<Text>プラズマだん『なんだと？
 われわれは　プラズマだん　だぞ！▼
 こんどこそ　せかいを　てにするため
 にちや　かつどうを　つづけている！▼
@@ -778,7 +778,7 @@
 たたかおう　っていうのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:44:27" />
+				Time="2011-09-29T08:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -786,15 +786,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『なんだと？
-われわれは　プラズマだん　だぞ！▼
-こんどこそ　せかいを　てにするため
-にちや　かつどうを　つづけている！▼
+			<Text>プラズマ団『なんだと？
+われわれは　プラズマだ団　だぞ！▼
+今度こそ　世界を　手にするため
+日夜　活動を　続けている！▼
 で　そんな　われわれと
-たたかおう　っていうのか？▼</Text>
+戦おう　っていうのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:44:32" />
+				Time="2011-09-29T08:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -894,13 +894,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『タチワキ？　そいつらは
+			<Text>プラズマだん『タチワキ？　そいつらは
 おれたちと　べつの　チームだな▼
 だが　おまえらは　ジャマ！
 ここで　かたづけておくか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:07:34" />
+				Time="2011-09-29T08:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -908,13 +908,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『タチワキ？　そいつらは
+			<Text>プラズマ団『タチワキ？　そいつらは
 おれたちと　別の　チームだな▼
 だが　おまえらは　ジャマ！
 ここで　かたづけておくか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:07:29" />
+				Time="2011-09-29T08:48:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1008,14 +1008,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『チッ！
+			<Text>プラズマ団『チッ！
 こいつら　つよいな！▼
-まあいい！　もくてきの　ポケモンは
-てにいれることが　できた▽
+まあいい！　ひつような
+ポケモンは　てにいれた！▽
 ここは　ひきあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:08:04" />
+				Time="2011-09-29T08:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1023,14 +1023,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『チッ！
-こいつら　つよいな！▼
-まあいい！　目的の　ポケモンは
-手に入れることが　できた▽
+			<Text>プラズマ団『チッ！
+こいつら　強いな！▼
+まあいい！　必要な
+ポケモンは　手に入れた！▽
 ここは　ひきあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:07:58" />
+				Time="2011-09-29T08:49:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
