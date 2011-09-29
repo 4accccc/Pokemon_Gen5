@@ -1,0 +1,2 @@
+SET USERNAME=NOUSER
+make %1
