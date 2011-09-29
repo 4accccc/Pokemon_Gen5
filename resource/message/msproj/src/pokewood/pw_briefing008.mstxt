@@ -73,10 +73,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]大都会の　上空に
 [Ctrl1:xcenter ]突如　現れた
-[Ctrl1:xcenter ]謎の　飛行物体</Text>
+[Ctrl1:xcenter ]なぞの　飛行物体</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:24:26" />
+				Time="2011-09-29T07:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -89,11 +89,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そのしょうたいを　さぐるべく
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:23:08" />
+				Time="2011-09-28T07:57:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -102,11 +102,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]その正体を　探るべく
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:24:58" />
+				Time="2011-09-28T07:58:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -347,10 +347,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]だいとかいの　じょうくうに
 [Ctrl1:xcenter ]とつじょ　あらわれた
-[Ctrl1:xcenter ]なぞの　ひこうぶったい</Text>
+[Ctrl1:xcenter ]なぞの　ひこうぶったい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:04" />
+				Time="2011-09-28T07:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,10 +360,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]大都会の　上空に
 [Ctrl1:xcenter ]突如　現れた
-[Ctrl1:xcenter ]謎の　飛行物体</Text>
+[Ctrl1:xcenter ]なぞの　飛行物体</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:10" />
+				Time="2011-09-29T07:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -376,11 +376,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そのしょうたいを　さぐるべく
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:04" />
+				Time="2011-09-28T07:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -389,11 +389,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]その正体を　探るべく
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:10" />
+				Time="2011-09-28T07:58:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

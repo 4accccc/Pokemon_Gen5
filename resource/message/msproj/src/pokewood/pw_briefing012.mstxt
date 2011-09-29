@@ -88,11 +88,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そのしょうたいを　さぐるべく
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:58:08" />
+				Time="2011-09-28T07:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -101,11 +101,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]その正体を　探るべく
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:58:28" />
+				Time="2011-09-28T07:46:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -304,11 +304,11 @@
 [Ctrl1:xcenter ]それは　イッシュちほうの
 [Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
 
-[Ctrl1:xcenter ]これは　かれらの　たたかいの
+[Ctrl1:xcenter ]これは　かのじょらの　たたかいの
 [Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:59:07" />
+				Time="2011-09-28T07:52:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -321,11 +321,11 @@
 [Ctrl1:xcenter ]それは　イッシュ地方の
 [Ctrl1:xcenter ]平和を　守る　チームで　ある……
 
-[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]これは　彼女らの　戦いを
 [Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:59:11" />
+				Time="2011-09-28T07:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -333,10 +333,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>あらすじ♂</Comment>
+			<Comment>あらすじ♀</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T11:14:25" />
+				Time="2011-09-28T07:52:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -374,11 +374,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そのしょうたいを　さぐるべく
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:59:07" />
+				Time="2011-09-28T07:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -387,11 +387,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]その正体を　探るべく
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:59:11" />
+				Time="2011-09-28T07:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

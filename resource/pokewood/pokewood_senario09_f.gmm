@@ -465,6 +465,14 @@
 まずは　お前の　好きなように
 こうげき　してみろ……</language>
 	</row>
+	<row id="pw_event1_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『うーん……▼
+みればみるほど　よくできてる……
+まるで　ほんとうの　ＵＦＯみたい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うーん……▼
+見れば見るほど　よくできてる……
+まるで　本当の　ＵＦＯみたい……</language>
+	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">Ｅ『つぎは　バリアシステムの
 テストに　はいるぞ……▼
@@ -510,6 +518,14 @@
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">Ｅ『おい……　はやく　しろ！</language>
 		<language name="JPN_KANJI" width="256">Ｅ『おい……　早く　しろ！</language>
+	</row>
+	<row id="pw_event1_react_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『めんどくさいな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『めんどくさいな……</language>
+	</row>
+	<row id="pw_event1_react_enemy_3">
+		<language name="JPN" width="256">Ｅ『おい……　マジメに　やれ……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『おい……　マジメに　やれ……</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うわ……

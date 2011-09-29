@@ -791,11 +791,10 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！
-</Text>
+			<Text>セットの　タイプを　みきわめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T04:01:13" />
+				Time="2011-09-28T11:53:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -803,11 +802,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　守れ！
-</Text>
+			<Text>セットの　タイプを　見極めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:32" />
+				Time="2011-09-28T11:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -828,11 +826,10 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！
-</Text>
+			<Text>あいての　いれかえに　ちゅうい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:23:59" />
+				Time="2011-09-28T09:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -840,11 +837,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　守れ！
-</Text>
+			<Text>相手の　入れ替えに　注意！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:24:13" />
+				Time="2011-09-28T09:42:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -865,10 +861,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっきに　きめろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T04:01:22" />
+				Time="2011-09-28T09:44:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -876,10 +872,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　決めろ！</Text>
+			<Text>セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T04:02:55" />
+				Time="2011-09-28T09:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -900,10 +896,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっきに　きめろ！</Text>
+			<Text>あいての　いれかえに　ちゅうい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:03" />
+				Time="2011-09-28T11:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -911,10 +907,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　決めろ！</Text>
+			<Text>相手の　入れ替えに　注意！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:07" />
+				Time="2011-09-28T11:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -938,7 +934,7 @@
 			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:03" />
+				Time="2011-09-28T13:37:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -949,7 +945,7 @@
 			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:07" />
+				Time="2011-09-28T13:37:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1183,7 +1179,7 @@
 			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:03" />
+				Time="2011-09-28T12:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1194,7 +1190,7 @@
 			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:12:07" />
+				Time="2011-09-28T12:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1215,10 +1211,10 @@
 		Label="pw_movie_hint_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:32" />
+				Time="2011-09-28T12:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1226,10 +1222,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:35" />
+				Time="2011-09-28T12:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1250,10 +1246,10 @@
 		Label="pw_movie_hint_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:32" />
+				Time="2011-09-28T12:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1261,10 +1257,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:35" />
+				Time="2011-09-28T12:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1287,7 +1283,7 @@
 			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:32" />
+				Time="2011-09-28T12:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -91,11 +91,11 @@
 			<Text>[Ctrl1:xcenter ]わんがんを　パトロールちゅうに
 [Ctrl1:xcenter ]はとばから　ひびく　さけびごえ……
 
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T10:36:15" />
+				Time="2011-09-28T07:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -106,11 +106,11 @@
 			<Text>[Ctrl1:xcenter ]湾岸を　パトロール中に
 [Ctrl1:xcenter ]波止場から　ひびく　さけび声……
 
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T10:36:21" />
+				Time="2011-09-28T07:47:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -309,11 +309,11 @@
 [Ctrl1:xcenter ]それは　イッシュちほうの
 [Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
 
-[Ctrl1:xcenter ]これは　かれらの　たたかいの
+[Ctrl1:xcenter ]これは　かのじょらの　たたかいを
 [Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T04:00:17" />
+				Time="2011-09-28T07:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -321,16 +321,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
+			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
-[Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
+[Ctrl1:xcenter ]それは　イッシュ地方の
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……
 
-[Ctrl1:xcenter ]これは　かれらの　たたかいの
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]これは　彼女らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T04:07:13" />
+				Time="2011-09-28T07:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -338,10 +338,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>あらすじ♀用</Comment>
+			<Comment>あらすじ♀</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T07:53:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -380,13 +380,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]わんがんを　パトロールちゅうに
-[Ctrl1:xcenter ]はとばから　ひびいた　さけびごえ……
+[Ctrl1:xcenter ]はとばから　ひびく　さけびごえ……
 
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T04:11:52" />
+				Time="2011-09-28T07:52:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -395,13 +395,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]湾岸を　パトロール中に
-[Ctrl1:xcenter ]波止場から　ひびいた　さけび声……
+[Ctrl1:xcenter ]波止場から　ひびく　さけび声……
 
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T04:12:17" />
+				Time="2011-09-28T07:52:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

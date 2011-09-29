@@ -236,12 +236,12 @@ C15に入室と同時にイベント起動
 			Language="JPN">
 			<Text>おいっ！　ＡＤ！！▼
 あそこの　さつえいスタジオが
-わしの　さくひんの　じゃまだっ！▼
+わしの　さくひんの　じゃまだッ！▼
 さつえいが　すすまんから
-いますぐ　ブッつぶして　こいっ！</Text>
+いますぐ　ブッつぶして　こいッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T12:00:55" />
+				Time="2011-09-29T01:44:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -250,13 +250,13 @@ C15に入室と同時にイベント起動
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おいっ！　ＡＤ！！▼
-あそこの　さつえいスタジオが
-わしの　さくひんの　じゃまだっ！▼
-さつえいが　すすまんから
-いますぐ　ブッつぶして　こいっ！</Text>
+あの　撮影スタジオが
+わしの　作品の　邪魔だッ！▼
+撮影が　すすまんから
+いますぐ　ブッつぶして　こいッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-12T12:01:04" />
+				Time="2011-09-29T01:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -300,13 +300,13 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おいっ！　ＡＤ！！▼
-あの　そらの　くもが
-わしの　さくひんの　じゃまだっ！▼
-さつえいが　すすまんから
-いますぐ　どかして　こいっ！▼</Text>
+あの　空の　雲の　形が
+わしの　イメージと　違うッ！▼
+撮影が　進まんから
+今すぐ　どかして　こいっッ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:53" />
+				Time="2011-09-29T01:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -334,13 +334,13 @@ msg_c15_oldman1_01_04
 		Label="msg_c15_oldman2_01_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいっ！　ＡＤ！！▼
-さいこうの　カットが　とれたぞっ！
+			<Text>やったぞ！　ＡＤ！！▼
+さいこうな　カットが　とれたぞッ！
 だから　いままでの　シーンも▽
-いちから　とりなおすぞっ！</Text>
+ゼロから　とりなおすぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T07:06:59" />
+				Time="2011-09-29T01:48:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -348,13 +348,13 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいっ！　ＡＤ！！▼
-さいこうの　カットが　とれたぞっ！
-だから　いままでの　シーンも▽
-いちから　とりなおすぞっ！</Text>
+			<Text>やったぞ！　ＡＤ！！▼
+最高の　カットが　撮れたぞッ！
+だから　今までの　シーンも▽
+ゼロから　撮り直すぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:53" />
+				Time="2011-09-29T01:48:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -384,12 +384,12 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>おいっ！　ＡＤ！！▼
 この　ヨーテリーの　けなみは
-わしの　イメージと　ちがうっ！！▼
+わしの　イメージと　ちがうッ！！▼
 さっさと　べつの　ヨーテリーを
-つれてこんかっ！！</Text>
+つれてこんかッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T07:12:48" />
+				Time="2011-09-29T01:48:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -399,12 +399,12 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>おいっ！　ＡＤ！！▼
 この　ヨーテリーの　毛並みは
-わしの　イメージと　違うっ！！▼
+わしの　イメージと　違うッ！！▼
 さっさと　別の　ヨーテリーを
-連れてこんかっ！！</Text>
+連れてこんかッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:49:12" />
+				Time="2011-09-29T01:48:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -437,10 +437,10 @@ msg_c15_oldman1_01_04
 おまえほどの　スター　ならば
 わしの　えいがに　だしてもよいぞ！▼
 あのヨーテリーの　かわりに
-ポケモンを　やってみんか！？</Text>
+ポケモンやくを　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:49:46" />
+				Time="2011-09-29T01:49:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -453,10 +453,10 @@ msg_c15_oldman1_01_04
 お前ほどの　スター　ならば
 わしの　映画に　だしてもよいぞ！▼
 あのヨーテリーの　かわりに
-ポケモンを　やってみんか！？</Text>
+ポケモン役を　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:49:36" />
+				Time="2011-09-29T01:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

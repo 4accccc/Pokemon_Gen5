@@ -749,10 +749,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:25:09" />
+				Time="2011-09-28T13:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +760,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　まもれ！</Text>
+			<Text>セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:25:03" />
+				Time="2011-09-28T13:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -826,10 +826,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざから　みを　まもれ！</Text>
+			<Text>あいての　わざから　みを　まもれ！
+（セリフのせんたくが　じゅうよう！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:25:20" />
+				Time="2011-09-28T13:42:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -837,10 +838,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざから　身を　まもれ！</Text>
+			<Text>相手の　わざから　身を　まもれ！
+（セリフの　選択が　重要！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:25:26" />
+				Time="2011-09-28T13:42:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

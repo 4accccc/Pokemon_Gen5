@@ -62,11 +62,11 @@
 [Ctrl1:xcenter ]おとりの　ＵＦＯを　つかった
 [Ctrl1:xcenter ]デコイさくせんを　ていあん……
 
-[Ctrl1:xcenter ][Name:TrainerName ]に　きょうりょくを
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　きょうりょくを
 [Ctrl1:xcenter ]たのむのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:59:01" />
+				Time="2011-09-28T07:54:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -78,11 +78,11 @@
 [Ctrl1:xcenter ]おとりの　ＵＦＯを　使った
 [Ctrl1:xcenter ]デコイ作戦を　提案……
 
-[Ctrl1:xcenter ][Name:TrainerName ]に　協力を
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　協力を
 [Ctrl1:xcenter ]頼むのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:59:23" />
+				Time="2011-09-28T07:54:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -97,11 +97,11 @@
 			<Text>[Ctrl1:xcenter ]いっぽう　だいとかいでは
 [Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
 
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:00:27" />
+				Time="2011-09-28T07:55:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -112,11 +112,11 @@
 			<Text>[Ctrl1:xcenter ]一方　大都会では
 [Ctrl1:xcenter ]再び　ＵＦＯが　出現……
 
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:57:19" />
+				Time="2011-09-28T07:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -359,11 +359,11 @@
 [Ctrl1:xcenter ]おとりの　ＵＦＯを　つかった
 [Ctrl1:xcenter ]デコイさくせんを　ていあん……
 
-[Ctrl1:xcenter ][Name:TrainerName ]に　きょうりょくを
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　きょうりょくを
 [Ctrl1:xcenter ]たのむのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:07" />
+				Time="2011-09-28T07:55:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -375,11 +375,11 @@
 [Ctrl1:xcenter ]おとりの　ＵＦＯを　使った
 [Ctrl1:xcenter ]デコイ作戦を　提案……
 
-[Ctrl1:xcenter ][Name:TrainerName ]に　協力を
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　協力を
 [Ctrl1:xcenter ]頼むのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:15" />
+				Time="2011-09-28T07:55:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -394,11 +394,11 @@
 			<Text>[Ctrl1:xcenter ]いっぽう　だいとかいでは
 [Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
 
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName ]は
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:07" />
+				Time="2011-09-28T07:55:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -409,11 +409,11 @@
 			<Text>[Ctrl1:xcenter ]一方　大都会では
 [Ctrl1:xcenter ]再び　ＵＦＯが　出現……
 
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName ]は
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
 [Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:15" />
+				Time="2011-09-28T07:55:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

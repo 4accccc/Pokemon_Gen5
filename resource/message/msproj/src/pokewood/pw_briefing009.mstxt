@@ -58,7 +58,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName ]の
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName Idx="1" ]の
 [Ctrl1:xcenter ]まえに　とつじょ　あらわれた
 [Ctrl1:xcenter ]なぞの　おんな　Ｅ……
 
@@ -66,7 +66,7 @@
 [Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:41:10" />
+				Time="2011-09-28T07:56:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -76,13 +76,13 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
 [Ctrl1:xcenter ]前に　突如　現れた
-[Ctrl1:xcenter ]謎の　女　Ｅ……
+[Ctrl1:xcenter ]なぞの　女　Ｅ……
 
 [Ctrl1:xcenter ]彼女は　自らを
 [Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:43:06" />
+				Time="2011-09-29T07:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -95,11 +95,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+
+
 [Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
-[Ctrl1:xcenter ][Name:TrainerName ]を　よびだしたのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:41:55" />
+				Time="2011-09-28T07:56:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -107,12 +109,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　数日後……
+			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
+
+
 [Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
-[Ctrl1:xcenter ][Name:TrainerName ]を　呼び出したのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:42:31" />
+				Time="2011-09-28T07:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -351,7 +355,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName ]の
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName Idx="1" ]の
 [Ctrl1:xcenter ]まえに　とつじょ　あらわれた
 [Ctrl1:xcenter ]なぞの　おんな　Ｅ……
 
@@ -359,7 +363,7 @@
 [Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:43:13" />
+				Time="2011-09-28T07:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -369,13 +373,13 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
 [Ctrl1:xcenter ]前に　突如　現れた
-[Ctrl1:xcenter ]謎の　女　Ｅ……
+[Ctrl1:xcenter ]なぞの　女　Ｅ……
 
 [Ctrl1:xcenter ]彼女は　自らを
 [Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:43:18" />
+				Time="2011-09-29T07:01:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -388,11 +392,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+
+
 [Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
-[Ctrl1:xcenter ][Name:TrainerName ]を　よびだしたのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:43:13" />
+				Time="2011-09-28T07:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -400,12 +406,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　数日後……
+			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
+
+
 [Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
-[Ctrl1:xcenter ][Name:TrainerName ]を　呼び出したのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:43:18" />
+				Time="2011-09-28T07:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

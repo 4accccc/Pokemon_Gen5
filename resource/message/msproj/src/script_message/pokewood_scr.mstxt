@@ -1698,10 +1698,16 @@
 		Label="msg_pw_theater_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>シアターせつめいテキスト▼</Text>
+			<Text>こちらでは　さつえいスタジオで
+せいさくされた　えいがを▽
+こうかい　しております▼
+また　シアターないに　あります
+モニターでは　こうかいされた▽
+えいがに　かんする　きろくを▽
+ごらんいただくことが　できます▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:20:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T14:00:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1709,10 +1715,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シアターせつめいテキスト▼</Text>
+			<Text>こちらでは　撮影スタジオで
+製作された　映画を▽
+公開　しております▼
+また　シアター内に　あります
+モニターでは　公開された▽
+映画に　関する　記録を▽
+ご覧いただくことが　できます▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:20:37" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T14:00:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2066,11 +2078,12 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
 さくひん　だけど　さあ……▼
-なかなか　オリジナリティが　あって
+ハッキリいって　コケちゃったけど
+なかなか　オリジナリティが　あって▽
 よかったとおもうよ　ボクはさ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T08:49:55" />
+				Time="2011-09-28T03:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2080,11 +2093,12 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
 作品　だけど　さあ……▼
-なかなか　オリジナリティが　あって
-良かったと思うよよ　ボクはさ！▼</Text>
+ハッキリいって　コケちゃったけど
+なかなか　オリジナリティが　あって▽
+良かったと思うよ　ボクはさ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:08:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-28T03:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

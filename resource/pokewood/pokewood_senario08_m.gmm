@@ -350,8 +350,8 @@
 		<language name="JPN_KANJI" width="256">スーツアクター</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">みかくにんひこうぶったい</language>
-		<language name="JPN_KANJI" width="256">みかくにんひこうぶったい</language>
+		<language name="JPN" width="256">なぞのえんばん</language>
+		<language name="JPN_KANJI" width="256">なぞのえんばん</language>
 	</row>
 	<row id="pw_turn_hero_0">
 		<language name="JPN" width="256">さけぶ　おんな『ねえ！　だれかー！
@@ -409,14 +409,14 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『りょうかい！▼
 きょだいな　ＵＦＯから
 ポケモンが　しゅつげん！▽
-しみんを　おそっています！▼　
+しみんを　おそっています！▼
 にげまどう　ひとびとで　まちは
 だいこんらんに▽
 おちいって　います！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『了解！▼
 巨大な　ＵＦＯから
 ポケモンが　出現！▽
-市民を　おそっています！▼　
+市民を　おそっています！▼
 逃げ惑う　人々で　街は
 パニック状態に▽
 おちいって　います！</language>
@@ -525,10 +525,10 @@ UFOの　体が　少しずつ▽
 	</row>
 	<row id="pw_event2_hero_6">
 		<language name="JPN" width="256">おとしより『これまで　じゃ……
-ああ……　じいさん　や……
+ああ……　じいさん　や……▽
 いま　あいに　いきますぞ……</language>
 		<language name="JPN_KANJI" width="256">老人『これまで　じゃ……
-ああ……　じいさん　や……
+ああ……　じいさん　や……▽
 いま　逢いに　行きますぞ……</language>
 	</row>
 	<row id="pw_event2_enemy_6">
@@ -693,13 +693,13 @@ UFOに　やられ　ポケモンが
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれやれ……
-ポケモンは　ぜんめつしたが▽
+ザコどもは　たおしたし
 ここまで　にげれば▽
 UFOも　おって　こないだろう……▼
 ……まったく　あんな　あいてと
 たたかうなんて　バカげてるよ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やれやれ……
-ポケモンは　全滅したが▽
+ザコどもは　倒したし
 ここまで　逃げれば▽
 UFOも　追って　こないだろう……▼
 ……まったく　あんな　相手と
@@ -732,7 +732,7 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">ｃ『なあ！　あんたたちの
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ！　あんたたちの
 もくてきは　なんだい？▼
 この　ほしの　せいふくでも
 かんがえてるのかい？▼
@@ -741,7 +741,7 @@ UFOも　追って　こないだろう……▼
 だから　そのかわり……　
 どうか　ぼくだけは▽
 みのがして　くれないかなっ！？</language>
-		<language name="JPN_KANJI" width="256">ｃ『なあ！　あんたたちの
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ！　あんたたちの
 目的は　なんだい？▼
 この　星の　征服でも
 考えてるのかい？▼

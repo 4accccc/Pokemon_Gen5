@@ -3271,11 +3271,11 @@
 		Label="pw_goal_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほうでん　で　セットを　たおせ！
+			<Text>でんじほう　で　セットを　たおせ！
 それいがいの　わざは　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-20T12:06:34" />
+				Time="2011-09-29T12:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3283,11 +3283,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうでん　で　セットを　倒せ！
+			<Text>でんじほう　で　セットを　倒せ！
 それ以外の　わざは　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-20T12:06:47" />
+				Time="2011-09-29T12:12:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

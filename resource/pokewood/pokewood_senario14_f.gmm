@@ -353,41 +353,33 @@
 		<language name="JPN" width="256">なぞのひかり</language>
 		<language name="JPN_KANJI" width="256">なぞのひかり</language>
 	</row>
-	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
-	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
 	<row id="pw_turn_enemy_2">
 		<language name="JPN" width="256">？？？『グロロロ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
 	</row>
-	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
-	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
-	<row id="pw_turn_enemy_6">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
-	</row>
-	<row id="pw_turn_enemy_7">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
+		<language name="JPN" width="256">？？？『グロロロ……
+よい　ちから　じゃ……</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロロ……
+なかなかの　力　じゃ……</language>
 	</row>
 	<row id="pw_turn_enemy_8">
-		<language name="JPN" width="256">？？？『グロロロ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……</language>
+		<language name="JPN" width="256">？？？『グロロロ……
+しぶといのか　ねばりづよいのか……</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロロ……
+しぶといのか　ねばり強いのか……</language>
+	</row>
+	<row id="pw_turn_enemy_11">
+		<language name="JPN" width="256">？？？『グロロロ……
+たいりょく　だけが　じまんか？</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロロ……
+体力　だけが　自慢か？</language>
+	</row>
+	<row id="pw_turn_enemy_14">
+		<language name="JPN" width="256">？？？『グロロロ……
+そろそろ　よいかのう……</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロロ……
+そろそろ　よいかのう……</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]！『あっ！！
@@ -429,11 +421,11 @@
 		<language name="JPN" width="256">つうしん『ふしぎな　ひかりだと？▼
 こちらのモニターからは
 なにも　みえないぞ！▼
-それは　きっと　しんきろう　だろう！</language>
+つかれてるんじゃないのか？</language>
 		<language name="JPN_KANJI" width="256">通信『不思議な　光だと？▼
 こちらの　モニターからは
 なにも　見えないぞ！▼
-それは　きっと　しんきろう　だろう！</language>
+疲れているんじゃないか？</language>
 	</row>
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]！『うわっ！！</language>
@@ -517,6 +509,14 @@
 バンギラスの　放つ▽
 いちげきを　こらえてみよ……　</language>
 	</row>
+	<row id="pw_event1_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
+	</row>
+	<row id="pw_event1_hero_6">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
+	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『へ？　なに？　なに？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『へ？　何？　何？</language>
@@ -532,18 +532,16 @@
 その頭　目覚めさせるがよい……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">？？？『グロロロ……
-かんがえる　じかんは　ない……▼
+		<language name="JPN" width="256">？？？『グロロ……　よろしい……▼
 わが　ひかりを　あびて
-かくごを　きめよ……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-考える　時は　ない……▼
+いっそうの　かくごを　きめよ……</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロ……　よろしい……▼
 我が　光を　あび
-覚悟を　決めよ……</language>
+一層の　覚悟を　決めよ……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふざけないでっ！</language>
@@ -560,16 +558,16 @@
 怒りを　かうことを　知れ……</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
 		<language name="JPN" width="256">？？？『グロロロ……▼
-その　かくご……
-わが　キバを　はじけるか……？</language>
+あわてても　はじまらぬ……
+まずは　わがキバを　はじいてみよ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……▼
-その　覚悟……
-我が　キバを　弾けるか……？</language>
+あわてても　始まらぬ……
+まずは　我がキバを　弾いてみよ……</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やった……　こらえたわ！</language>

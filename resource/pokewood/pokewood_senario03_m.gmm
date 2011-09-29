@@ -569,10 +569,10 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『どうしたんだ！？</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">ハチクマン『なんでも　ないわっ！
-さあ！　かかって　くるがいい！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『何でも　ないわっ！
-さあ！　かかって　くるがいい！</language>
+		<language name="JPN" width="256">ハチクマン『クッ！　なんでもないわ！
+さっさと　かかって　こんかっ！</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『クッ！　何でもないわ！
+さっさと　かかって　こんかっ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『チャンスか……</language>
@@ -589,12 +589,12 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『いくぞっ！！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">ハチクマン『ファファファ！！▼
+		<language name="JPN" width="256">ハチクマン『ファ……　ファファ！！▼
 きさまを　たおし　このよを
-わがものに　してくれる！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！▼
+わがものに　してくれるっ！</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『ファ……　ファファ！！▼
 貴様を　倒し　この世を
-我が物に　してくれる！</language>
+我が物に　してくれるっ！</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……</language>
@@ -746,15 +746,15 @@
 きが　ついたんだ……▼
 たしかに　あなたは　おそろしい
 あくの　かいじん……▼
-でも　それ　いぜんに　ひとりの▽
-すばらしい　トレーナー　だ……</language>
+でも　それ　いぜんに　ひとりの
+うでききの　トレーナー　だ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『違う……▼
 今までの　戦いで
 気が　ついたんだ……▼
 確かに　あなたは　恐ろしい
 悪の　怪人……▼
-でも　それ　以前に　ひとりの▽
-素晴らしい　トレーナー　だ……</language>
+でも　それ　以前に　ひとりの
+腕利きの　トレーナー　だ……</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">ハチクマン『[1:02:ポケモンニックネーム:0]キッド……</language>
