@@ -9656,7 +9656,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_01">
+		Label="pw_moviesubtitle_m_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
@@ -9681,7 +9681,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_02">
+		Label="pw_moviesubtitle_m_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド２</Text>
@@ -9706,7 +9706,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_03">
+		Label="pw_moviesubtitle_m_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　ファイナル</Text>
@@ -9731,7 +9731,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_04">
+		Label="pw_moviesubtitle_m_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -9756,7 +9756,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_05">
+		Label="pw_moviesubtitle_m_05">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -9781,7 +9781,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_06">
+		Label="pw_moviesubtitle_m_06">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -9806,7 +9806,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_07">
+		Label="pw_moviesubtitle_m_07">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -9831,7 +9831,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_08">
+		Label="pw_moviesubtitle_m_08">
 		<LanguageCell
 			Language="JPN">
 			<Text>そらからの　きょうふ</Text>
@@ -9856,7 +9856,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_09">
+		Label="pw_moviesubtitle_m_09">
 		<LanguageCell
 			Language="JPN">
 			<Text>UFOと　なぞのおんな</Text>
@@ -9881,7 +9881,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_10">
+		Label="pw_moviesubtitle_m_10">
 		<LanguageCell
 			Language="JPN">
 			<Text>デコイさくせん</Text>
@@ -9906,7 +9906,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_11">
+		Label="pw_moviesubtitle_m_11">
 		<LanguageCell
 			Language="JPN">
 			<Text>じんるい　さいごのけっせん</Text>
@@ -9931,7 +9931,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_12">
+		Label="pw_moviesubtitle_m_12">
 		<LanguageCell
 			Language="JPN">
 			<Text>しゅつげん！　だいバンギラス</Text>
@@ -9956,7 +9956,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_13">
+		Label="pw_moviesubtitle_m_13">
 		<LanguageCell
 			Language="JPN">
 			<Text>きかいじかけの　かいぶつ</Text>
@@ -9981,7 +9981,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_14">
+		Label="pw_moviesubtitle_m_14">
 		<LanguageCell
 			Language="JPN">
 			<Text>しんぴの　すなはま</Text>
@@ -10006,7 +10006,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_15">
+		Label="pw_moviesubtitle_m_15">
 		<LanguageCell
 			Language="JPN">
 			<Text>M・V　ふたたび</Text>
@@ -10031,7 +10031,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_16">
+		Label="pw_moviesubtitle_m_16">
 		<LanguageCell
 			Language="JPN">
 			<Text>デスティニー・メガネ</Text>
@@ -10056,7 +10056,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_17">
+		Label="pw_moviesubtitle_m_17">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモン・ウォーリアー</Text>
@@ -10081,7 +10081,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_18">
+		Label="pw_moviesubtitle_m_18">
 		<LanguageCell
 			Language="JPN">
 			<Text>ロスト・アンド・リゲイン</Text>
@@ -10106,7 +10106,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_19">
+		Label="pw_moviesubtitle_m_19">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -10131,7 +10131,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_20">
+		Label="pw_moviesubtitle_m_20">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -10156,7 +10156,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_21">
+		Label="pw_moviesubtitle_m_21">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -10181,7 +10181,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_22">
+		Label="pw_moviesubtitle_m_22">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの１サブタイトル</Text>
@@ -10206,7 +10206,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_23">
+		Label="pw_moviesubtitle_m_23">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの２サブタイトル</Text>
@@ -10231,7 +10231,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_24">
+		Label="pw_moviesubtitle_m_24">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの３サブタイトル</Text>
@@ -10256,7 +10256,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_25">
+		Label="pw_moviesubtitle_m_25">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -10281,7 +10281,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_26">
+		Label="pw_moviesubtitle_m_26">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -10306,7 +10306,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_27">
+		Label="pw_moviesubtitle_m_27">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -10331,7 +10331,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_28">
+		Label="pw_moviesubtitle_m_28">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -10356,7 +10356,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_29">
+		Label="pw_moviesubtitle_m_29">
 		<LanguageCell
 			Language="JPN">
 			<Text>モーテル の　かいき</Text>
@@ -10381,7 +10381,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_30">
+		Label="pw_moviesubtitle_m_30">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆうえんちを　さまようもの</Text>
@@ -10406,7 +10406,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_31">
+		Label="pw_moviesubtitle_m_31">
 		<LanguageCell
 			Language="JPN">
 			<Text>はかばからの　よびごえ</Text>
@@ -10431,7 +10431,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_32">
+		Label="pw_moviesubtitle_m_32">
 		<LanguageCell
 			Language="JPN">
 			<Text>きどう</Text>
@@ -10456,7 +10456,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_33">
+		Label="pw_moviesubtitle_m_33">
 		<LanguageCell
 			Language="JPN">
 			<Text>ともだち</Text>
@@ -10481,7 +10481,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_34">
+		Label="pw_moviesubtitle_m_34">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼうそう</Text>
@@ -10506,7 +10506,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_35">
+		Label="pw_moviesubtitle_m_35">
 		<LanguageCell
 			Language="JPN">
 			<Text>サヨナラ</Text>
@@ -10531,7 +10531,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_36">
+		Label="pw_moviesubtitle_m_36">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -10556,7 +10556,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_37">
+		Label="pw_moviesubtitle_m_37">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -10581,7 +10581,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_38">
+		Label="pw_moviesubtitle_m_38">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -10606,7 +10606,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_39">
+		Label="pw_moviesubtitle_m_39">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -10631,7 +10631,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_f_40">
+		Label="pw_moviesubtitle_m_40">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマンのぎゃくしゅうサブ</Text>
@@ -10656,7 +10656,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_01">
+		Label="pw_moviesubtitle_f_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール</Text>
@@ -10681,7 +10681,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_02">
+		Label="pw_moviesubtitle_f_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール２</Text>
@@ -10706,7 +10706,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_03">
+		Label="pw_moviesubtitle_f_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール　ファイナル</Text>
@@ -10731,7 +10731,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_04">
+		Label="pw_moviesubtitle_f_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -10756,7 +10756,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_05">
+		Label="pw_moviesubtitle_f_05">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -10781,7 +10781,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_06">
+		Label="pw_moviesubtitle_f_06">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -10806,7 +10806,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_07">
+		Label="pw_moviesubtitle_f_07">
 		<LanguageCell
 			Language="JPN">
 			<Text>フルメタルコップのサブタイトル</Text>
@@ -10831,7 +10831,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_08">
+		Label="pw_moviesubtitle_f_08">
 		<LanguageCell
 			Language="JPN">
 			<Text>そらからの　きょうふ</Text>
@@ -10856,7 +10856,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_09">
+		Label="pw_moviesubtitle_f_09">
 		<LanguageCell
 			Language="JPN">
 			<Text>UFOと　なぞのおんな</Text>
@@ -10881,7 +10881,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_10">
+		Label="pw_moviesubtitle_f_10">
 		<LanguageCell
 			Language="JPN">
 			<Text>デコイさくせん</Text>
@@ -10906,7 +10906,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_11">
+		Label="pw_moviesubtitle_f_11">
 		<LanguageCell
 			Language="JPN">
 			<Text>じんるい　さいごのけっせん</Text>
@@ -10931,7 +10931,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_12">
+		Label="pw_moviesubtitle_f_12">
 		<LanguageCell
 			Language="JPN">
 			<Text>しゅつげん！　だいバンギラス</Text>
@@ -10956,7 +10956,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_13">
+		Label="pw_moviesubtitle_f_13">
 		<LanguageCell
 			Language="JPN">
 			<Text>きかいじかけの　かいぶつ</Text>
@@ -10981,7 +10981,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_14">
+		Label="pw_moviesubtitle_f_14">
 		<LanguageCell
 			Language="JPN">
 			<Text>しんぴの　すなはま</Text>
@@ -11006,7 +11006,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_15">
+		Label="pw_moviesubtitle_f_15">
 		<LanguageCell
 			Language="JPN">
 			<Text>M・V　ふたたび</Text>
@@ -11031,7 +11031,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_16">
+		Label="pw_moviesubtitle_f_16">
 		<LanguageCell
 			Language="JPN">
 			<Text>デスティニー・メガネ</Text>
@@ -11056,7 +11056,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_17">
+		Label="pw_moviesubtitle_f_17">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモン・ウォーリアー</Text>
@@ -11081,7 +11081,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_18">
+		Label="pw_moviesubtitle_f_18">
 		<LanguageCell
 			Language="JPN">
 			<Text>ロスト・アンド・リゲイン</Text>
@@ -11106,7 +11106,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_19">
+		Label="pw_moviesubtitle_f_19">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -11131,7 +11131,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_20">
+		Label="pw_moviesubtitle_f_20">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -11156,7 +11156,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_21">
+		Label="pw_moviesubtitle_f_21">
 		<LanguageCell
 			Language="JPN">
 			<Text>れんあいサブタイトル</Text>
@@ -11181,7 +11181,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_22">
+		Label="pw_moviesubtitle_f_22">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの１サブタイトル</Text>
@@ -11206,7 +11206,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_23">
+		Label="pw_moviesubtitle_f_23">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの２サブタイトル</Text>
@@ -11231,7 +11231,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_24">
+		Label="pw_moviesubtitle_f_24">
 		<LanguageCell
 			Language="JPN">
 			<Text>まほうもの３サブタイトル</Text>
@@ -11256,7 +11256,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_25">
+		Label="pw_moviesubtitle_f_25">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -11281,7 +11281,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_26">
+		Label="pw_moviesubtitle_f_26">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -11306,7 +11306,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_27">
+		Label="pw_moviesubtitle_f_27">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -11331,7 +11331,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_28">
+		Label="pw_moviesubtitle_f_28">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャイアントサブタイトル</Text>
@@ -11356,7 +11356,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_29">
+		Label="pw_moviesubtitle_f_29">
 		<LanguageCell
 			Language="JPN">
 			<Text>モーテル の　かいき</Text>
@@ -11381,7 +11381,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_30">
+		Label="pw_moviesubtitle_f_30">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆうえんちを　さまようもの</Text>
@@ -11406,7 +11406,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_31">
+		Label="pw_moviesubtitle_f_31">
 		<LanguageCell
 			Language="JPN">
 			<Text>はかばからの　よびごえ</Text>
@@ -11431,7 +11431,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_32">
+		Label="pw_moviesubtitle_f_32">
 		<LanguageCell
 			Language="JPN">
 			<Text>きどう</Text>
@@ -11456,7 +11456,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_33">
+		Label="pw_moviesubtitle_f_33">
 		<LanguageCell
 			Language="JPN">
 			<Text>ともだち</Text>
@@ -11481,7 +11481,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_34">
+		Label="pw_moviesubtitle_f_34">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼうそう</Text>
@@ -11506,7 +11506,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_35">
+		Label="pw_moviesubtitle_f_35">
 		<LanguageCell
 			Language="JPN">
 			<Text>サヨナラ</Text>
@@ -11531,7 +11531,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_36">
+		Label="pw_moviesubtitle_f_36">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -11556,7 +11556,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_37">
+		Label="pw_moviesubtitle_f_37">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -11581,7 +11581,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_38">
+		Label="pw_moviesubtitle_f_38">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -11606,7 +11606,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_39">
+		Label="pw_moviesubtitle_f_39">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンターサブタイトル</Text>
@@ -11631,7 +11631,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_moviesubtitle_m_40">
+		Label="pw_moviesubtitle_f_40">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマンのぎゃくしゅうサブ</Text>
