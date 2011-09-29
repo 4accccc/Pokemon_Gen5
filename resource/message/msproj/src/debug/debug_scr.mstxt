@@ -3427,10 +3427,10 @@
 		Label="msg_debug_mizu_20">
 		<LanguageCell
 			Language="JPN">
-			<Text>D05 船表示</Text>
+			<Text>C15 チュートリアル開始</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00226"
-				Time="2011-08-30T06:40:11" />
+				Time="2011-09-29T11:29:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -3438,10 +3438,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>D05 船表示</Text>
+			<Text>C15 チュートリアル開始</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00226"
-				Time="2011-08-30T06:40:13" />
+				Time="2011-09-29T11:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
