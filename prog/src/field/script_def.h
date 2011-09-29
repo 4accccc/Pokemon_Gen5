@@ -131,9 +131,10 @@
 #define SCR_BATTLE_RESULT_LOSE (0) //負け
 #define SCR_BATTLE_RESULT_WIN  (1) //勝ち
 
-#define SCR_BATTLE_MODE_NONE    (0) //特にモード指定なし
-#define SCR_BATTLE_MODE_NOLOSE  (1) //負けないモード
-#define SCR_BATTLE_MODE_MUGEN   (2) //無限ダンジョン用戦闘背景、お盆設定モード
+#define SCR_BATTLE_MODE_NONE          (0x0000) //特にモード指定なし
+#define SCR_BATTLE_MODE_NOLOSE        (0x0001) //負けないモード
+#define SCR_BATTLE_MODE_MUGEN         (0x0002) //無限ダンジョン用戦闘背景、お盆設定モード
+#define SCR_BATTLE_MODE_FES_TRAINER   (0x0004) //フェストレーナーモード
 
 ///野生ポケモン戦闘呼び出し時に指定できるフラグ
 #define SCR_WILD_BTL_FLAG_NONE      (0x0000)  //フラグ無し
