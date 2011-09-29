@@ -647,7 +647,7 @@ typedef struct _RESORT_CROWD_PEOPLE_WK
   u16 move_dir;
   u16 seq;
   s16 move_grid;
-  u16 state;
+  u16 dummy;
   u16 changeObjCode;
   void (*InitMove)(struct _RESORT_CROWD_PEOPLE_WK* );
   void (*UpdateMove)(struct _RESORT_CROWD_PEOPLE_WK*, MMDLSYS*, const FIELD_PLAYER* );
@@ -1419,6 +1419,16 @@ static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK*
 
   MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( cp_wk->p_people );
 
+#if 0
+  {
+    u32 ret = MMDL_HitCheckMoveDir( p_mmdl, cp_wk->move_dir );
+    if( ret & MMDL_MOVEHITBIT_OBJ )
+    {
+      return TRUE;
+    }
+    return FALSE;
+  }
+#else
 	while( MMDLSYS_SearchUseMMdl(cp_fos,&mmdl,&no) == TRUE ){
     if( p_mmdl != mmdl ){
       if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
@@ -1436,8 +1446,9 @@ static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK*
   //プレイヤーとの当たり判定チェック
   //プレイヤーが動作しているときはプレイヤーとMMDLの間１マスグリッドまで歩かない
   {
-    if( FIELD_PLAYER_GetMoveValue( cp_player ) != PLAYER_MOVE_VALUE_STOP )
+    if( FIELD_PLAYER_GetMoveValue(cp_player) != PLAYER_MOVE_VALUE_STOP )
     {
+      MMDL *p_plyaer_mmdl = FIELD_PLAYER_GetMMdl(cp_player);
       s16 px, py, pz;
       s16 mydir = MMDL_GetDirDisp( p_mmdl );
       s16 my_gx = MMDL_GetGridPosX( p_mmdl );
@@ -1450,6 +1461,7 @@ static BOOL Resort_Crowd_People_Wk_IsFrontAllMMdl( const RESORT_CROWD_PEOPLE_WK*
       }
     }
   }
+#endif
 
   return FALSE;
 }
@@ -1524,12 +1536,242 @@ static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk 
   p_wk->kyoro.sync  = 15;
   p_wk->kyoro.max   = bit_num;
   p_wk->kyoro.grid  = (p_wk->move_grid / p_wk->kyoro.max) + 5/2 - GFL_STD_MtRand(5);
-  if( p_wk->kyoro.grid < 0 )
+  if( p_wk->kyoro.grid <= 0 )
   {
     p_wk->kyoro.grid = 1;
   }
   p_wk->kyoro.start_grid  = p_wk->move_grid - p_wk->kyoro.grid;
 }
+
+enum
+{
+  CROWD_PEOPLE_WALK_SEQ_CHEK_END,
+  CROWD_PEOPLE_MOVE_SEQ_CHECK,
+  CROWD_PEOPLE_WALK_SEQ_WAIT,
+
+  CROWD_PEOPLE_KYORO_SEQ_WAIT,
+
+  CROWD_PEOPLE_INTEREST_SEQ_WAIT,
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了チェック
+ *
+ *	@param	*p_wk ワーク
+ *	@param	p_mmdlsys 動作モデルシステム
+ *	@param	FIELD_PLAYER* cp_player フィールド
+ *
+ *	@return TRUE続行  FALSE続行していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Walk_CheckEnd(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
+{
+  //歩き終了
+  if( p_wk->move_grid <= 0 )
+  {
+    p_wk->is_walk = FALSE;
+    p_wk->seq = 0;
+    RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
+    RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
+    return FALSE;
+  }
+  else
+  {
+    p_wk->seq = CROWD_PEOPLE_MOVE_SEQ_CHECK;
+    return TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作開始チェック
+ *
+ *	@param	*p_wk ワーク
+ *	@param	p_mmdlsys 動作モデルシステム
+ *	@param	FIELD_PLAYER* cp_player フィールド
+ *
+ *	@return TRUE続行  FALSE続行していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Move_Check(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
+{
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+  if( Resort_Crowd_People_Wk_IsFrontAllMMdl( p_wk, p_mmdlsys, cp_player, 1, 0 ) )
+  {
+    //当たり判定にあたった
+    //u16 ac = MMDL_ChangeDirAcmdCode( p_wk->move_dir, AC_WAIT_8F );
+    MMDL_SetAcmd( p_mmdl, AC_WAIT_8F );
+    MMDL_OnMoveBitMove( p_mmdl );
+    p_wk->seq = CROWD_PEOPLE_WALK_SEQ_WAIT;
+  }
+  else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
+  {
+    //興味がある場所
+    p_wk->seq = CROWD_PEOPLE_INTEREST_SEQ_WAIT;
+  }
+  else if( p_wk->kyoro.start_grid == p_wk->move_grid )
+  {
+    //キョロキョロポイント
+    p_wk->kyoro.seq = 0;
+    p_wk->seq = CROWD_PEOPLE_KYORO_SEQ_WAIT;
+  }
+  else
+  {
+    //通常歩行
+    u16 ac = MMDL_ChangeDirAcmdCode( p_wk->move_dir, p_wk->move_acmd );
+    MMDL_SetAcmd( p_mmdl, ac );
+    MMDL_SetDirMove( p_mmdl, p_wk->move_dir );
+    MMDL_OnMoveBitMove( p_mmdl );
+    p_wk->move_grid--;
+    p_wk->seq = CROWD_PEOPLE_WALK_SEQ_WAIT;
+  }
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  歩行待機
+ *
+ *	@param	*p_wk ワーク
+ *	@param	p_mmdlsys 動作モデルシステム
+ *	@param	FIELD_PLAYER* cp_player フィールド
+ *
+ *	@return TRUE続行  FALSE続行していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Walk_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
+{
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+  if( MMDL_CheckEndAcmd( p_mmdl ) )
+  {
+    MMDL_OffMoveBitMove( p_mmdl );
+    p_wk->seq = CROWD_PEOPLE_WALK_SEQ_CHEK_END;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  きょろきょろ待機
+ *
+ *	@param	*p_wk ワーク
+ *	@param	p_mmdlsys 動作モデルシステム
+ *	@param	FIELD_PLAYER* cp_player フィールド
+ *
+ *	@return TRUE続行  FALSE続行していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Kyoro_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
+{
+  enum
+  {
+    KYORO_SEQ_START,
+    KYORO_SEQ_WAIT,
+    KYORO_SEQ_END,
+    KYORO_SEQ_START2,
+    KYORO_SEQ_WAIT2,
+    KYORO_SEQ_END2,
+  };
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+
+  switch( p_wk->kyoro.seq )
+  {
+  case KYORO_SEQ_START:
+    p_wk->kyoro.dir = GFL_STD_MtRand(2) ? AC_DIR_L: AC_DIR_R;
+    MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
+    p_wk->kyoro.seq++;
+    /*  fall  */
+  case KYORO_SEQ_WAIT:
+    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    {
+      p_wk->kyoro.seq++;
+      /* fall */
+    }
+    else
+    {
+      break;
+    }
+  case KYORO_SEQ_END:
+    if( p_wk->kyoro.cnt++ >= p_wk->kyoro.sync )
+    {
+      p_wk->kyoro.cnt = 0;
+      p_wk->kyoro.seq++;
+      /*  fall  */
+    }
+    else
+    {
+      break;
+    }
+  case KYORO_SEQ_START2:
+    p_wk->kyoro.dir = p_wk->kyoro.dir == AC_DIR_R ? AC_DIR_L: AC_DIR_R;
+    MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
+    p_wk->kyoro.seq++;
+    /* fall */
+  case KYORO_SEQ_WAIT2:
+    if( MMDL_CheckEndAcmd( p_mmdl ) )
+    {
+      p_wk->kyoro.seq++;
+      /* fall */
+    }
+    else
+    {
+      break;
+    }
+  case KYORO_SEQ_END2:
+    if( p_wk->kyoro.cnt++ >= p_wk->kyoro.sync )
+    {
+      p_wk->kyoro.cnt = 0;
+      p_wk->kyoro.seq = 0;
+      p_wk->kyoro.start_grid  = p_wk->move_grid - p_wk->kyoro.grid;
+
+      p_wk->seq = CROWD_PEOPLE_WALK_SEQ_CHEK_END;
+      return TRUE;
+    }
+    break;
+
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  興味待機
+ *
+ *	@param	*p_wk ワーク
+ *	@param	p_mmdlsys 動作モデルシステム
+ *	@param	FIELD_PLAYER* cp_player フィールド
+ *
+ *	@return TRUE続行  FALSE続行していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Crowd_People_Interest_Wait(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player)
+{
+  if( Resort_Crowd_People_Wk_UpdateInterest(p_wk ) )
+  {
+    p_wk->seq = CROWD_PEOPLE_WALK_SEQ_WAIT;
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
+
+static BOOL (* const Resort_Crowd_People_Walk[])(RESORT_CROWD_PEOPLE_WK *, MMDLSYS* , const FIELD_PLAYER* )  =
+{
+  Resort_Crowd_People_Walk_CheckEnd,
+  Resort_Crowd_People_Move_Check,
+  Resort_Crowd_People_Walk_Wait,
+
+  Resort_Crowd_People_Kyoro_Wait,
+
+  Resort_Crowd_People_Interest_Wait,
+};
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  人物動作メイン処理  キョロキョロ
@@ -1539,26 +1781,7 @@ static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk 
 //-----------------------------------------------------------------------------
 static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS* p_mmdlsys, const FIELD_PLAYER* cp_player )
 {
-  enum
-  {
-    SEQ_WAIT,
-    SEQ_WALKWAIT,
-    SEQ_NORMAL_WALK,
-  };
 
-  enum
-  {
-    KYORO_SEQ_NONE,
-    KYORO_SEQ_START,
-    KYORO_SEQ_START2,
-  };
-
-  enum
-  {
-    STATE_NORMAL,
-    STATE_INTEREST,
-    STATE_KYOROKYORO,
-  };
 
   if( RESORT_CROWD_PEOPLE_WK_IsExist(p_wk) )
   {
@@ -1569,95 +1792,7 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
       return;
     }
 
-    switch( p_wk->seq )
-    {
-    case SEQ_WAIT:
-      if( p_wk->is_walk )
-      {
-        p_wk->seq = SEQ_WALKWAIT;
-      }
-      break;
-
-    case SEQ_NORMAL_WALK:
-      //歩き終了
-      if( p_wk->move_grid <= 0 )
-      {
-        p_wk->is_walk = FALSE;
-        p_wk->seq = SEQ_WAIT;
-        RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
-        RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
-      }
-      else
-      {
-        if( p_wk->state == STATE_INTEREST )
-        {
-          if( Resort_Crowd_People_Wk_UpdateInterest(p_wk ))
-          {
-            p_wk->state = STATE_NORMAL;
-          }
-        }
-        else if( p_wk->state == STATE_KYOROKYORO )
-        {
-          switch( p_wk->kyoro.seq )
-          {
-          case KYORO_SEQ_START:
-            if( p_wk->kyoro.cnt++ >= p_wk->kyoro.sync )
-            {
-              p_wk->kyoro.cnt = 0;
-              p_wk->kyoro.dir = p_wk->kyoro.dir == AC_DIR_R ? AC_DIR_L: AC_DIR_R;
-              MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
-              p_wk->kyoro.seq++;
-              p_wk->seq = SEQ_WALKWAIT;
-            }
-            break;
-          case KYORO_SEQ_START2:
-            if( p_wk->kyoro.cnt++ >= p_wk->kyoro.sync )
-            {
-              p_wk->kyoro.cnt = 0;
-              p_wk->kyoro.seq = 0;
-              p_wk->kyoro.start_grid  = p_wk->move_grid - p_wk->kyoro.grid;
-              p_wk->state = STATE_NORMAL;
-            }
-            break;
-          }
-          break;
-        }
-        else
-        {
-          if( Resort_Crowd_People_Wk_IsFrontAllMMdl( p_wk, p_mmdlsys, cp_player, 1, 0 ) )
-          {
-            break;
-          }
-          else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
-          {
-            p_wk->state = STATE_INTEREST;
-            break;
-          }
-          else if( p_wk->kyoro.start_grid == p_wk->move_grid )
-          {
-            p_wk->kyoro.dir = GFL_STD_MtRand(2) ? AC_DIR_L: AC_DIR_R;
-            p_wk->kyoro.seq = KYORO_SEQ_START;
-            MMDL_SetAcmd( p_mmdl, p_wk->kyoro.dir);
-            p_wk->seq = SEQ_WALKWAIT;
-            p_wk->state = STATE_KYOROKYORO;
-          }
-          else
-          {
-            MMDL_SetAcmd( p_mmdl, p_wk->move_acmd + p_wk->move_dir );
-            p_wk->move_grid--;
-            p_wk->seq = SEQ_WALKWAIT;
-          }
-        }
-      }
-      /* fallthow */
-
-    case SEQ_WALKWAIT:
-      if( MMDL_CheckEndAcmd( p_mmdl ) )
-      {
-        p_wk->seq = SEQ_NORMAL_WALK;
-      }
-      break;
-    }
+    while( Resort_Crowd_People_Walk[p_wk->seq](p_wk,p_mmdlsys,cp_player) == TRUE ){}
   }
 }
 //----------------------------------------------------------------------------
@@ -1738,11 +1873,12 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
   case SEQ_DIR_START:
     MMDL_SetAcmd( p_mmdl, p_wk->interest_dir[p_wk->interest_index] );
     p_wk->interest_seq++;
-    break;
+    /* fall */
   case SEQ_DIR_END:
     if( MMDL_CheckEndAcmd( p_mmdl ) )
     {
       p_wk->interest_seq++;
+      /* fall */
     }
     else
     {
@@ -1751,7 +1887,7 @@ static BOOL Resort_Crowd_People_Wk_UpdateInterest( RESORT_CROWD_PEOPLE_WK *p_wk 
   case SEQ_MARK_START:
     MMDL_SetAcmd( p_mmdl, AC_MARK_ONPU_NO_SE );
     p_wk->interest_seq++;
-    break;
+    /* fall */
   case SEQ_MARK_END:
     if( MMDL_CheckEndAcmd( p_mmdl ) )
     {
