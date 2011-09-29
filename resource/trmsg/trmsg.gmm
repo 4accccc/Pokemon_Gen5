@@ -9883,6 +9883,23 @@
 	</row>
 
 	<row id="TRID_BCHAMP_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ブラボー！！▼
+あなたさまに　みせていただいたのは
+トレーナーとしての　きらめきです▼
+ですが　ひとこと
+いわせて　いただきましょう！▼
+あなたさまがた　なら
+もっともっと　うえを　めざせましょう▼</language>
+		<language name="JPN_KANJI" width="216">ブラボー！！▼
+あなたさまに　みせていただいたのは
+トレーナーとしての　きらめきです▼
+ですが　一言
+いわせて　いただきましょう！▼
+あなたさまがた　なら
+もっともっと　上を　目指せましょう▼</language>
+	</row>
+
+	<row id="TRID_BCHAMP2_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ぼく　クダリ▼
 ノボリと　いっしょに　まけちゃった▼
 きみたちの　コンビネーション
@@ -9893,23 +9910,6 @@
 きみたちの　コンビネーション
 最高　バツグン！▽
 ものすごーく　強い　トレーナー！▼</language>
-	</row>
-
-	<row id="TRID_BCHAMP2_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ブラボー！！▼
-あなたさまに　みせていただいたのは
-トレーナーとしての　きらめきです▼
-ですが　ひとこと
-いわせて　いただきましょう！▼
-あなたさまなら
-もっともっと　うえを　めざせましょう▼</language>
-		<language name="JPN_KANJI" width="216">ブラボー！！▼
-あなたさまに　みせていただいたのは
-トレーナーとしての　きらめきです▼
-ですが　一言
-いわせて　いただきましょう！▼
-あなたさまなら
-もっともっと　上を　目指せましょう▼</language>
 	</row>
 
 	<row id="TRID_BADRIDER_01_10_TRMSG_FIGHT_LOSE">
