@@ -55,9 +55,10 @@ EVENT_START		ev_t04r0101_informationw_01
 EVENT_END
 
 /**************************************************************/
-/* 			ストッパー：話しかけ			  */
+/* 			【仮】ストッパー：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_t04r0101_stopper_01
+  //ソウリュウシティジムクリアで会話分岐・バニッシュせずに位置変更
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_01 )
 EVENT_END
 
@@ -71,16 +72,16 @@ EVENT_START		ev_pos_t04r0101_stopper_01
   
   //主人公にふりむき
   IF $LCW_POSZ == 7 THEN
-    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_d )
+    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_u )
     _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
   
   ELSE
   
-    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_u )
+    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_d )
     _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME_WAIT()
     
   ENDIF

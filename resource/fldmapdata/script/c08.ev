@@ -103,14 +103,16 @@ INIT_EVENT_START ev_init_c08
   //シャガイベントごとに配置変更
   
   //誘導イベント起動（１）
-  IF $WK_SCENE_C08_LEADER7 == 2 THEN
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 175, DIR_DOWN )
+  IF $WK_SCENE_C08_LEADER7 == 2  && $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 167, DIR_DOWN )
+  ELSIF $WK_SCENE_C08_LEADER7 == 2  && $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
   //誘導イベント起動（２）ホワイトver
   ELSIF $WK_SCENE_C08_LEADER7 == 3 && $LCWK_VERSION == VERSION_W2 THEN
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 164, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 162, DIR_DOWN )
   //誘導イベント起動（２）ブラックver
   ELSIF $WK_SCENE_C08_LEADER7 == 3 && $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 164, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 162, DIR_DOWN )
   //プラズマ団襲来　ホワイトver
   ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_W2 THEN
     _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, -1, 162, DIR_DOWN )
@@ -197,7 +199,7 @@ EVENT_END
 /* SCENE_CHANGE：シャガ誘導（１）                                   */
 /**************************************************************/
 EVENT_START   ev_scene_c08_guide_01
-
+{
   //ハイリンク通信ブロック処理
   _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 
@@ -233,8 +235,8 @@ EVENT_START   ev_scene_c08_guide_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_01 , C08_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //アニメ：シャガ自宅方面へ
-  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 406, 158, FORCE_TYPE_NOT, 8, DIR_LR)
+  //【仮】アニメ：シャガ自宅方面へ
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 406, 168, FORCE_TYPE_ALL, 8, DIR_LR)
   _TIME_WAIT(24)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
   _OBJ_ANIME_WAIT()
@@ -246,7 +248,15 @@ EVENT_START   ev_scene_c08_guide_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
-  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 175, DIR_DOWN )
+  DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+  
+  //OBJ配置変更
+  IF $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 167, DIR_DOWN )
+  ELSIF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+  ENDIF
   
   //========================================//
   //C08：誘導イベントPOS起動（１）
@@ -254,6 +264,7 @@ EVENT_START   ev_scene_c08_guide_01
   //========================================//
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+}
 EVENT_END
 
 /**************************************************************/
@@ -267,22 +278,12 @@ EVENT_START   ev_pos_c08_guide_02
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  //アニメ：シャガ主人公の方を向く
-  IF $LCW_POSX < 419 THEN
-  //アニメ：主人公接近
-    _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_l )
-  ELSE
-    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_r)
-    
-  ENDIF
-  _OBJ_ANIME_WAIT()
-  
   //シャガ：コチラだ
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_02 , C08_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
   //アニメ：シャガ退場
-  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 418, 164, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 418, 161, FORCE_TYPE_ALL, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C08_SWLEADER7_01,anm_dir_d )
   _OBJ_ANIME_WAIT()
@@ -613,10 +614,10 @@ ev_c08_ninja_comming:
 	
 	_TIME_WAIT( 8*5 )
 	
-	//ダークトリニティ移動
-  _OBJ_ANIME_AUTO( C08_NINJA_01, 418, 146, FORCE_TYPE_NOT, 4, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_NINJA_02, 403, 155, FORCE_TYPE_NOT, 4, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_NINJA_03, 407, 155, FORCE_TYPE_NOT, 4, DIR_UD)
+	//【仮】ダークトリニティ移動
+  _OBJ_ANIME_AUTO( C08_NINJA_01, 418, 146, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_AUTO( C08_NINJA_02, 403, 155, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_AUTO( C08_NINJA_03, 407, 155, FORCE_TYPE_ALL, 4, DIR_UD)
 	_OBJ_ANIME_WAIT()
 	
 	//ダークトリニティ2～3削除
