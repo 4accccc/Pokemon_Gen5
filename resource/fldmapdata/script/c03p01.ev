@@ -56,6 +56,16 @@ EVENT_START   ev_pos_c03P01_swboss_01
   //アクロマ：そこのあなたっ！
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_01, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //アニメ：主人公
+  IF $LCW_POSX == 18 && $LCW_POSZ == 8 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+  ELSIF $LWK_DIR != DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  ENDIF
+  _OBJ_ANIME_WAIT()
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 

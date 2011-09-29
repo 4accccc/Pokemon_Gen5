@@ -148,6 +148,8 @@ _RET
 /************************************************************/
 EVENT_START	ev_scene_d27r0101_firstbtl_01
 
+  _DEBUG_PRINT_WK( 8 )
+
   //アニメ：3人右方向に移動
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 13, 32, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 12, 31, FORCE_TYPE_NPC, 8, DIR_UD)
@@ -819,6 +821,8 @@ EVENT_END
 /*					SCEME_CHANGE：搭乗2回目イベント  						*/
 /************************************************************/
 EVENT_START	ev_scene_d27r0101_secondbtl_01
+
+  _DEBUG_PRINT_WK( 10 )
   
   //主人公・ライバル名を代入
   _PLAYER_NAME(0)
@@ -999,7 +1003,7 @@ EVENT_START	ev_pos_d27r0101_second_w_01
     //ハッチ手前にライバルを移動
     _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,13,0,35,DIR_DOWN)
     //アニメ：ライバル隣接
-    _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 18, 45, FORCE_TYPE_NPC, 4, DIR_UD)
+    _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 17, 45, FORCE_TYPE_NPC, 4, DIR_UD)
     _OBJ_ANIME_WAIT()
     
     //ライバル：おい！こっちだ！
@@ -1007,7 +1011,7 @@ EVENT_START	ev_pos_d27r0101_second_w_01
     _MSGWIN_CLOSE()
     
     //アニメ：主人公中央へ
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 18, 44, FORCE_TYPE_NPC, 4, DIR_LR)
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 18, 45, FORCE_TYPE_ALL, 8, DIR_LR)
     _OBJ_ANIME_WAIT()
     
     //アニメ：主人公・ライバル連れ立って
