@@ -132,7 +132,7 @@ static const s16 pkwd_subtitle_tbl[][2] = {
 //-----------------------------------------------------
 static const u8 pkwd_movie_type[]={
     PKWD_CATEGORY_ACTION, // 1èÕ
-    PKWD_CATEGORY_SF,     // 2èÕ
+    PKWD_CATEGORY_ACTION, // 2èÕ
     PKWD_CATEGORY_ACTION, // 3èÕ
     PKWD_CATEGORY_ACTION, // 4èÕ
     PKWD_CATEGORY_SF,     // 5èÕ
@@ -143,10 +143,10 @@ static const u8 pkwd_movie_type[]={
     PKWD_CATEGORY_HUMAN,  // 10èÕ
     
     PKWD_CATEGORY_HUMAN,  // 11èÕ
-    PKWD_CATEGORY_HUMAN,  // 12èÕ
-    PKWD_CATEGORY_HORROR, // 13èÕ
-    PKWD_CATEGORY_HORROR, // 14èÕ
-    PKWD_CATEGORY_HORROR, // 15èÕ
+    PKWD_CATEGORY_SF,     // 12èÕ
+    PKWD_CATEGORY_SF,     // 13èÕ
+    PKWD_CATEGORY_SF,     // 14èÕ
+    PKWD_CATEGORY_SF,     // 15èÕ
     PKWD_CATEGORY_HORROR, // 16èÕ
     PKWD_CATEGORY_ACTION, // 17èÕ
     PKWD_CATEGORY_ACTION, // 18èÕ
