@@ -675,6 +675,20 @@ VMCMD_RESULT EvCmdSetZukanGraphicFlag( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ずかんの機能操作：生息地画面追加
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetZukanHabitatFlag( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*      work = wk;
+  GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
+  ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+  ZUKANSAVE_SetHabitatListFlag( zukan );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------

@@ -5190,6 +5190,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _SET_ZUKAN_HABITAT_FLAG
+ * @brief ずかんバージョンアップ：生息地リスト追加
+ */
+//--------------------------------------------------------------
+#define _SET_ZUKAN_HABITAT_FLAG() \
+    _ASM_SET_ZUKAN_HABITAT_FLAG
+
+    .macro  _ASM_SET_ZUKAN_HABITAT_FLAG
+    .short  EV_SEQ_SET_ZUKAN_HABITAT_FLAG
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_BADGE_FLAG
  * @brief バッジフラグの取得
  * @param ret_wk    結果を受けるワーク
