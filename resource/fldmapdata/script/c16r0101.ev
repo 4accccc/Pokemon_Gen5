@@ -119,7 +119,8 @@ EVENT_START ev_c16r0101_infomation
       $LWK_MENU_LOOP = FALSE //”O‚Ì‚½‚ß–³ŒÀƒ‹[ƒv‚ð”ð‚¯‚é
     ENDSWITCH
   ENDWHILE
-  _BALLOONWIN_CLOSE()
+  _LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 }
 EVENT_END
 

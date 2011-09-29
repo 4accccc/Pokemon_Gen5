@@ -104,7 +104,8 @@ void RESORT_NPC_SYS_SetVisibleAll( RESORT_NPC_SYS *p_wk, BOOL is_visible )
 
   while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE )
   {
-    if( MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS
+    if( (MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS)
+        && MMDL_GetOBJID(p_mmdl) < (RESORT_NPC_MMDLID_OFS + RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ))
         && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
     {
       MMDL_SetStatusBitVanish( p_mmdl, !is_visible );

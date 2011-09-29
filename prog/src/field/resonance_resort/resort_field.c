@@ -1163,6 +1163,10 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
         MMDL_SetGridPosZ( p_mmdl, z );
         vec.z = GRID_TO_FX32(z) + MMDL_VEC_Z_GRID_OFFS_FX32;
         p_wk->move_grid = z - RESORT_CROWD_MOVE_LIMIT_BACK+1;
+        if( p_wk->move_grid <= 0 )
+        {
+          p_wk->move_grid = 1;
+        }
       }
       else
       {
@@ -1174,6 +1178,10 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
         MMDL_SetGridPosZ( p_mmdl, z );
         vec.z = GRID_TO_FX32(z) + MMDL_VEC_Z_GRID_OFFS_FX32;
         p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-z+1;
+        if( p_wk->move_grid <= 0 )
+        {
+          p_wk->move_grid = 1;
+        }
       }
       MMDL_SetVectorPos( p_mmdl, &vec );
     }
@@ -1187,11 +1195,19 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
           MMDL_SetGridPosZ( p_mmdl, RESORT_CROWD_MOVE_LIMIT_FRONT );
           vec.z = GRID_TO_FX32(RESORT_CROWD_MOVE_LIMIT_FRONT) + MMDL_VEC_Z_GRID_OFFS_FX32;
           p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK+1;
+          if( p_wk->move_grid <= 0 )
+          {
+            p_wk->move_grid = 1;
+          }
           MMDL_SetVectorPos( p_mmdl, &vec );
         }
         else
         {
           p_wk->move_grid = now_z - RESORT_CROWD_MOVE_LIMIT_BACK+1;
+          if( p_wk->move_grid <= 0 )
+          {
+            p_wk->move_grid = 1;
+          }
         }
       }
       else if( p_wk->move_dir == DIR_DOWN )
@@ -1201,11 +1217,19 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
           MMDL_SetGridPosZ( p_mmdl, RESORT_CROWD_MOVE_LIMIT_BACK );
           vec.z = GRID_TO_FX32(RESORT_CROWD_MOVE_LIMIT_BACK) + MMDL_VEC_Z_GRID_OFFS_FX32;
           p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK+1;
+          if( p_wk->move_grid <= 0 )
+          {
+            p_wk->move_grid = 1;
+          }
           MMDL_SetVectorPos( p_mmdl, &vec );
         }
         else
         {
           p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT - now_z+1;
+          if( p_wk->move_grid <= 0 )
+          {
+            p_wk->move_grid = 1;
+          }
         }
       }
     }
@@ -1490,7 +1514,10 @@ static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk 
 {
   u16 bit_num = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
 
-  bit_num = p_wk->move_grid * bit_num / (RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK);
+  GF_ASSERT(p_wk->move_grid > 0 );
+
+  //‹——£‚É‰ž‚¶‚½U‚èŒü‚«‰ñ”‚ðo‚·
+  bit_num = p_wk->move_grid * bit_num / (RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK+1);
 
   p_wk->kyoro.cnt   = 0;
   p_wk->kyoro.seq   = 0;
@@ -1597,12 +1624,6 @@ static void Resort_Crowd_People_Wk_UpdateKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_w
         }
         else
         {
-          /*
-          if( (MMDL_HitCheckMoveDir(p_mmdl,p_wk->move_dir) & ~(MMDL_MOVEHITBIT_LIM|MMDL_MOVEHITBIT_ATTR)) != MMDL_MOVEHITBIT_NON )
-          {
-          }
-          else
-          */
           if( Resort_Crowd_People_Wk_IsFrontAllMMdl( p_wk, p_mmdlsys, cp_player, 1, 0 ) )
           {
             break;

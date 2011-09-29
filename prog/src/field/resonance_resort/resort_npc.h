@@ -22,7 +22,7 @@
 //-------------------------------------
 ///	NPC’è‹`
 //=====================================
-#define RESORT_NPC_MMDLID_OFS (160)
+#define RESORT_NPC_MMDLID_OFS (192)
 #define RESORT_NPC_MMDLID_TO_INDEX(x) (x-RESORT_NPC_MMDLID_OFS)
 #define RESORT_NPC_INDEX_TO_MMDLID(x) (x+RESORT_NPC_MMDLID_OFS)
 //-------------------------------------
