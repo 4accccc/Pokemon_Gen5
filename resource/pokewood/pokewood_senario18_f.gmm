@@ -519,7 +519,7 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
-	<row id="pw_turn_hero_0">
+	<row id="pw_turn_enemy_1">
 		<language name="JPN" width="256">レディアン『ニンゲンと　ポケモン
 おたがいの　みらいを　かけた▽
 しんけんしょうぶだ……！</language>
@@ -527,11 +527,7 @@
 お互いの　未来を　かけた▽
 真剣勝負だ……！</language>
 	</row>
-	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……！</language>
-	</row>
-	<row id="pw_turn_hero_1">
+	<row id="pw_turn_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『はたして……
 ちゃんと　もとの　じだいに▽
 もどれるのかしら……</language>
@@ -539,7 +535,7 @@
 ちゃんと　元の　時代に▽
 もどれるのかしら……</language>
 	</row>
-	<row id="pw_turn_enemy_1">
+	<row id="pw_turn_enemy_2">
 		<language name="JPN" width="256">レディアン『いまよりも　もっと
 みらいに　とばされる　かもな▼
 ……すまない　じょうだん　だよ</language>
@@ -547,7 +543,7 @@
 未来に　飛ばされる　かもな▼
 ……すまない　冗談　だよ</language>
 	</row>
-	<row id="pw_turn_hero_2">
+	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『クッ……
 エネルギーが　たりないわ！▼
 きょうれつな　でんげき……
@@ -559,7 +555,7 @@
 かみなりが　落ちるくらいの▽
 電気　エネルギーが　必要だわ！</language>
 	</row>
-	<row id="pw_turn_enemy_2">
+	<row id="pw_turn_enemy_3">
 		<language name="JPN" width="256">レディアン『かみなり……？
 しかし　かみなりぐもは　どこにも……▼
 そうか！　ポケモンの　わざか！▼
@@ -571,7 +567,7 @@
 時間転送機に　かみなりを
 おみまい　するんだ！</language>
 	</row>
-	<row id="pw_turn_hero_3">
+	<row id="pw_turn_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『みらいから
 かこに　とぶのは　むずかしい▼
 かこから　みらいへ　とぶときより
@@ -585,25 +581,25 @@
 必要に　なる……▼
 実験は　していないわ……！</language>
 	</row>
-	<row id="pw_turn_hero_4">
+	<row id="pw_turn_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まだ……
 まだなの……！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『まだ……
 まだなの……！？</language>
 	</row>
-	<row id="pw_turn_enemy_4">
+	<row id="pw_turn_enemy_5">
 		<language name="JPN" width="256">レディアン『いそげ！
 てんそうきの　げんかいが　ちかい！</language>
 		<language name="JPN_KANJI" width="256">レディアン『急げ！
 時間転送機の　限界が　近い！</language>
 	</row>
-	<row id="pw_turn_hero_5">
+	<row id="pw_turn_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ま……
 まずいわ……！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ま……
 まずいわ……！</language>
 	</row>
-	<row id="pw_turn_enemy_5">
+	<row id="pw_turn_enemy_6">
 		<language name="JPN" width="256">レディアン『ダメなのか……！</language>
 		<language name="JPN_KANJI" width="256">レディアン『ダメなのか……！</language>
 	</row>
@@ -621,7 +617,7 @@
 		<language name="JPN_KANJI" width="256">レディアン『いや……　これでいい▼
 キミを　試したい</language>
 	</row>
-	<row id="pw_event0_hero_1">
+	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">カラテオー『[1:00:トレーナー名:1]さま　これは
 マスターの　いしで　あるとともに▼
 わたしたち　この　じだいの
