@@ -3013,11 +3013,11 @@
 		Label="pw_goal_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>５ターンの　あいだ　いきのこれ！
+			<Text>５カットの　あいだ　いきのこれ！
 あいてを　たおすと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:40:45" />
+				Time="2011-09-28T13:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3025,11 +3025,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５ターンの　あいだ　生き残れ！
+			<Text>５カットの　あいだ　生き残れ！
 相手を　倒すと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:40:49" />
+				Time="2011-09-28T13:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3051,11 +3051,11 @@
 		Label="pw_goal_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>１２カットいないに　セットをたおせ！
+			<Text>１５カットいないに　セットをたおせ！
 ほかの　あいては　むししても　OK！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:14:59" />
+				Time="2011-09-28T12:04:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3063,11 +3063,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１２カット以内に　セットを　倒せ！
+			<Text>１５カット以内に　セットを　倒せ！
 他の　相手は　無視しても　OK！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T08:15:22" />
+				Time="2011-09-28T12:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3233,11 +3233,11 @@
 		Label="pw_goal_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カットいないに　リグレーを　たおせ！
-ほかのポケモンは　たおすと　ＮＧ！</Text>
+			<Text>９カットいないに　リグレーをたおせ！
+ほかのポケモンを　たおすと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:32:24" />
+				Time="2011-09-28T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3245,11 +3245,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カット以内に　リグレーを　たおせ！
-他のポケモンは　倒すと　ＮＧ！</Text>
+			<Text>９カット以内に　リグレーを倒せ！
+他のポケモンを　倒すと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:32:29" />
+				Time="2011-09-28T10:29:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3457,10 +3457,11 @@
 		Label="pw_goal_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>８カットいないに　あいてを　たおせ！</Text>
+			<Text>１５カットいないに
+すべての　あいてを　たおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:31:26" />
+				Time="2011-09-28T05:48:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3468,10 +3469,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８カット以内に　相手を　倒せ！</Text>
+			<Text>１５カット以内に
+すべての　相手を　倒せ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:31:28" />
+				Time="2011-09-28T05:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3493,10 +3495,10 @@
 		Label="pw_goal_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>７カットいないに　セットを　たおせ！</Text>
+			<Text>１０カットいないに　セットをたおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:31:33" />
+				Time="2011-09-28T07:12:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3504,10 +3506,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７カット以内に　セットを　倒せ！</Text>
+			<Text>１０カット以内に　セットを倒せ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:31:38" />
+				Time="2011-09-28T07:12:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3529,10 +3531,11 @@
 		Label="pw_goal_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>４カットいないに　セットを　たおせ！
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3540,10 +3543,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>４カット以内に　セットを　倒せ！
+
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:46:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3565,10 +3570,11 @@
 		Label="pw_goal_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カットの　あいだ　いきのこれ！
+セットを　たおすと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3576,10 +3582,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カットの　あいだ　生き残れ！
+セットを　倒すと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:46:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3602,10 +3609,11 @@
 		Label="pw_goal_17">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>かみなり　で　セットをたおせ！
+それいがいの　わざは　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:54:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3613,10 +3621,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>かみなり　で　セットを倒せ！
+それ以外の　わざは　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T03:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3999,10 +4008,11 @@
 		Label="pw_goal_28">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>４カットの　あいだ　いきのこれ！
+あいてを　たおすと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4010,10 +4020,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>４カットの　あいだ　生き残れ！
+相手を　倒すと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:55:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4035,10 +4046,11 @@
 		Label="pw_goal_29">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>７カットの　あいだ　いきのこれ！
+あいてを　ぜんめつさせると　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4046,10 +4058,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>７カットの　あいだ　生き残れ！
+相手を　全滅させると　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T02:59:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4071,10 +4084,10 @@
 		Label="pw_goal_30">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カットいないに　セットをたおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T03:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4082,10 +4095,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カット以内に　セットを倒せ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-09-29T03:00:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4221,10 +4234,10 @@
 		Label="pw_goal_34">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないに　セットを　たおせ！</Text>
+			<Text>５カットいないに　セットをたおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:39:36" />
+				Time="2011-09-29T03:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4232,10 +4245,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　セットを　倒せ！</Text>
+			<Text>５カット以内に　セットを倒せ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T06:39:47" />
+				Time="2011-09-29T03:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
