@@ -92,7 +92,7 @@ EVENT_START		ev_pos_c03p08_fesguide_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
 
-/*【仮】移動バグが出たため以下の処理をコメントアウト。演出を要検討
+/*【仮】移動バグが出たため以下の処理をコメントアウト。演出を要検討。
 
   IF $LCW_POSX != 13 THEN
     $LCW_POSX -= 1
