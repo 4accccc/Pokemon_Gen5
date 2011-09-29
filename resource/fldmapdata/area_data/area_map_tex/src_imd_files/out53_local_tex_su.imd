@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-28T11:05:02" source="out53_local_tex_su.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-29T10:42:20" source="out53_local_tex_su.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-28T11:05:02" source="out53_local_tex_su.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-09-29T10:42:20" source="out53_local_tex_su.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -489,21 +489,21 @@
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			3300 0023 0000 0000 5530 2335 3000 0033
-			3440 1133 5200 0435 4000 2414 5520 0043
-			0000 4240 3114 0004 0000 4000 4242 0000
-			0000 2000 0022 0000 3000 2213 0001 0000
-			5300 4135 0001 0000 5520 2413 1101 0001
-			4440 1444 5122 0015 0000 1200 3444 0155
-			0000 1200 4223 0444 0000 4200 0253 0000
-			0000 4200 2551 0000 0000 2200 2514 0000
-			0000 1200 2242 0000 1000 1222 0002 0000
-			5300 1415 0222 0000 5530 1421 3112 0000
-			2310 1442 5521 0003 4420 2000 5243 0035
-			0000 2000 4023 0014 0000 2000 0023 0000
-			0000 4000 0021 0000 0000 4600 0621 0000
-			0000 4660 6642 0000 0000 4666 6642 0006
-			0000 6660 6666 0000 0000 6600 0066 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 6000 0115 0000 0000
+			6000 5331 350b 0018 0000 b156 88bc 0065
+			0000 5660 533b 0006 5000 6444 7b77 0000
+			8500 6188 bcb7 0000 8850 6b13 8b67 0005
+			1830 bcb4 8341 0058 4440 3b00 5518 0733
+			0000 8111 7418 0777 1000 3638 6748 0000
+			8100 6763 4671 0004 6600 4077 6777 0044
+			0000 4000 7074 0077 0000 6000 0072 0000
+			0000 6ee0 ee72 0000 0000 aeee eea9 000e
+			0000 feee eeff 000e 0000 eee0 efff 0000
+			0000 0000 0dd0 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="C12_saku01"
@@ -2122,8 +2122,8 @@
 		4696 4275 298e 256d 214d 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="C12_kadan02_pl" color_size="16">
-		7fff 634f 4a8a 5b0e 4fde 5bff 4f7f 433f
-		19bd 2e3e 7fff 739c 7fff 7fff 7fff 7fff
+		7fff 634f 4a8a 5b0e 3f9c 5bff 4f7f 32fe
+		2e1b 3e7d 7fff 739c 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="C12_ki01_pl" color_size="16">
 		7fff 3163 4201 31c1 4aa4 4264 3623 3a64
@@ -2151,8 +2151,9 @@
 	<tex_palette index="14" name="C12_saien04_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="15" name="C12_saien05_pl" color_size="8">
-		7fff 2f2c 2aeb 336d 2acb 4392 3698 7fff
+	<tex_palette index="15" name="C12_saien05_pl" color_size="16">
+		7fff 2f2c 2aeb 336d 26aa 2acb 266a 21e9
+		4392 224e 1dcd 53ff 379d 2614 3698 1db1
 	</tex_palette>
 	<tex_palette index="16" name="C12_saku01_pl" color_size="8">
 		7fff 7fff 739c 6b5a 6318 5ad6 5294 7fff
