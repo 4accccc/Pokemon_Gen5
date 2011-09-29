@@ -534,6 +534,8 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
     if( map_array[gz][gx] == MAP_ARRAY_TIMECOUNT_START )
     {
       p_wk->time_start = TRUE;
+      // ƒZ[ƒu‚·‚é
+      SAVE_SetTimeFlg( p_wk->p_sv_wk, TRUE );
     }
     return NULL;
   }
