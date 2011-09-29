@@ -51,28 +51,28 @@ begin
           outFile.write( ary.pack("C") )
           ary = Array( sheet.Range('M6').Value.to_i )
           outFile.write( ary.pack("C") )
-          value = sheet.Range('L3').Value.to_s
+          value = sheet.Range('L3').Value.to_s.upcase
           if value != ""
             ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
             outFile.write( ary.pack("S") )
           else
             outFile.write([0].pack("S"))
           end
-          value = sheet.Range('L4').Value.to_s
+          value = sheet.Range('L4').Value.to_s.upcase
           if value != ""
             ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
             outFile.write( ary.pack("S") )
           else
             outFile.write([0].pack("S"))
           end
-          value = sheet.Range('L5').Value.to_s
+          value = sheet.Range('L5').Value.to_s.upcase
           if value != ""
             ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
             outFile.write( ary.pack("S") )
           else
             outFile.write([0].pack("S"))
           end
-          value = sheet.Range('L6').Value.to_s
+          value = sheet.Range('L6').Value.to_s.upcase
           if value != ""
             ary = Array(zonedata.search( "ZONE_ID_#{value}", "#{ARGV[0]}" ))
             outFile.write( ary.pack("S") )
