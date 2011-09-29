@@ -167,8 +167,8 @@ void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no )
  * @param[in]   ng_info
  * @param[in]   mons_no
  * @param[in]   item_no
- * @retval  TRUE  問題ない
- * @retval  FALSE 問題あり（NGのものと一致した）
+ * @retval  TRUE  問題あり（NGのものと一致した）
+ * @retval  FALSE 問題ない
  */
 //--------------------------------------------------------------
 static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 item_no )
