@@ -45,6 +45,8 @@
 
 #include "../../battle/pokewood/pokewood_senario.h"
 
+
+//#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -689,7 +691,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
     tw->seq = SEQ_SETUP;
 
-#ifdef PM_DEBUG
+#if 0
     // エンディング画面のレイアウトを変更する
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
       tw->mode = 1;
@@ -697,6 +699,10 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
       tw->mode = 2;
     }
 #endif
+    // ランダムでエンディングのパターンを切り替える
+    // todo:ランダム切り替え仕様を詰める必要アリ
+    tw->mode = GFUser_GetPublicRand(3);
+
     break;
 
   case SEQ_SETUP:
@@ -1202,6 +1208,8 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
   int mysex = MyStatus_GetMySex(param->mystatus);
   POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( param->gameData );
   int enemy_rank = 0;
+
+  OS_Printf("エンドロール シナリオNO=%d\n",scenario_no);
 
   //メッセージ取得
   CG2d->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
@@ -2636,10 +2644,16 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
 static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll )
 {
   int pokewood_pos = (CG2d->line_count*8-128);
+#ifdef SCROLL_DEBUG
   OS_Printf( "now=%d,", scroll);
+#endif
   if(scroll > pokewood_pos){
+#ifdef SCROLL_DEBUG
     OS_Printf("limit=%d,  bg3pos=%d", pokewood_pos,  CG2d->scroll- pokewood_pos );
+#endif
     G2_SetBG3Offset( 0, CG2d->scroll- pokewood_pos  );
   }
+#ifdef SCROLL_DEBUG
   OS_Printf("\n");
+#endif
 }
