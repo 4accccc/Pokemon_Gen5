@@ -2996,10 +2996,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname ]が　瀕死です</Text>
+			<Text>[Name:PokemonNickname ]が　ひんしです</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-13T09:25:12" />
+				Time="2011-09-30T04:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
