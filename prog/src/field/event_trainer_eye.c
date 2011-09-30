@@ -1051,7 +1051,7 @@ u16 TRAINER_MMDL_GetTrainerID( const MMDL *mmdl )
   }
   else
   {
-    // 無限ダンジョン内はOBJIDをトレーナーIDとして使用している
+    // 無限ダンジョン内はOBJIDをトレーナーIDとして使用している（オフセットつき）
     return MMDL_GetOBJID( mmdl );
   }
 }
@@ -1101,7 +1101,7 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
     INFINITYDUNGEON_SAVE  *p_save;
     u16 floor_id;
     BOOL tr_flag;
-    u32 id_pos  = TRAINER_MMDL_GetTrainerID( mmdl );
+    u32 id_pos  = TRAINER_MMDL_GetTrainerID( mmdl ) - INFINITY_DUNGEON_TR_OBJ_ID_OFS;
     
     p_save_data = GAMEDATA_GetSaveControlWork( gdata );
     p_save      = SaveData_GetINFINITYDUNGEON( p_save_data );

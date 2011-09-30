@@ -2979,7 +2979,7 @@ static void SetTrainer( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
       {
         u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
         MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,p_md->g_x, p_md->g_y, p_mmdlp->direction,
-            id_pos , obj_code, p_mmdlp->move_code,
+            id_pos + INFINITY_DUNGEON_TR_OBJ_ID_OFS , obj_code, p_mmdlp->move_code,
             p_next_map_data->zone_id );
         MMDL_SetEventType( mmdl , p_mmdlp->ev_type);
         MMDL_SetParam( mmdl, p_mmdlp->param0 , MMDL_PARAM_0 );

@@ -14,7 +14,7 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 #include "scrcmd_infinity_dungeon.h"
-#include "field/infinity_dungeon.h"
+#include "infinity_dungeon.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "tr_tool/trno_def.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
@@ -296,7 +296,7 @@ VMCMD_RESULT EvCmdInfinityDungeonBattleTrainer( VMHANDLE *p_core, void *p_wk_adr
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   const MMDL *mmdl = SCRIPT_GetTargetObj( p_scr_wk );
-  u8 obj_id = MMDL_GetOBJID( mmdl );
+  u8 obj_id = MMDL_GetOBJID( mmdl ) - INFINITY_DUNGEON_TR_OBJ_ID_OFS;
 
   SCRIPT_CallEvent(
       p_scr_wk, INFINITY_DUNGEON_EVENT_TrainerBattle(p_gamesys,p_fieldmap,obj_id) );
@@ -394,7 +394,7 @@ VMCMD_RESULT EvCmdInfinityDungeonSetTrainerBattleFlag( VMHANDLE *p_core, void *p
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
-  u16 id_pos  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 id_pos  = SCRCMD_GetVMWorkValue( p_core, p_wk ) - INFINITY_DUNGEON_TR_OBJ_ID_OFS;
   u16 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
@@ -422,7 +422,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrainerBattleFlag( VMHANDLE *p_core, void *p
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
-  u16 id_pos  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 id_pos  = SCRCMD_GetVMWorkValue( p_core, p_wk )- INFINITY_DUNGEON_TR_OBJ_ID_OFS;
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
@@ -729,7 +729,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrIDByIDPos( VMHANDLE *p_core, void *p_wk_ad
   SAVE_CONTROL_WORK *p_save_data    = GAMEDATA_GetSaveControlWork(p_gamedata);
   FIELDMAP_WORK     *p_fieldmap     = GAMESYSTEM_GetFieldMapWork( p_gsys );
   INF_DUNGEON_DATA  *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
-  u8                id_pos          = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u8                id_pos          = SCRCMD_GetVMWorkValue( p_core, p_wk ) - INFINITY_DUNGEON_TR_OBJ_ID_OFS;
   u16               *p_ret_wk	      = SCRCMD_GetVMWork( p_core, p_wk );
   u8                floor_id;
 

@@ -31,6 +31,7 @@ typedef struct _INF_DUNGEON_DATA INF_DUNGEON_DATA;
 #define ROOM_MAX              (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
 #define INF_MAX_SEARC_CNT     (100)                     // 乱数生成時最高思考数
 #define INF_TUTORIAL_DATA_CNT (2)                       // チュートリアルデータ数
+#define INFINITY_DUNGEON_TR_OBJ_ID_OFS     (0xB4)       // トレーナー用IDオフセット
 
 //=============================================================================
 //
