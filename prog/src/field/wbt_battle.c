@@ -911,10 +911,11 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
     //
     bp->fieldSituation.bgType = BATTLE_BG_TYPE_WBT;
     bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
-  }
-  if (WBTSYS_GetStage( wbtsys ) == WBTSTAGE_FINAL)
-  { //WBT決勝かどうかを示すフラグ
-    bp->WBTFinalFlag = TRUE;
+    //WCS背景は対応していないため、通常トーナメントのみ決勝フラグを立てる
+    if (WBTSYS_GetStage( wbtsys ) == WBTSTAGE_FINAL)
+    { //WBT決勝かどうかを示すフラグ
+      bp->WBTFinalFlag = TRUE;
+    }
   }
 #ifdef  PM_DEBUG
   OS_PutString("WBT:dump Enemy Party:\n");
