@@ -569,6 +569,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_INDEX:
     *p_ret_wk = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_abstruct);
     break;
+  case RESORT_GET_PARAM_PEOPLE_TYPE:
+    *p_ret_wk = RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE);
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1630,7 +1633,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
 	case RESORT_OFFRECO_PLAYTIME_MSGID:
     {
       u16 play_h = RESORT_RECV_DATA_GetData(p_resident,RESORT_DATA_PARAM_PLAY_HOUR,NULL);
-      u16 play_m = RESORT_RECV_DATA_GetData(p_resident,RESORT_DATA_PARAM_PLAY_HOUR,NULL);
+      u16 play_m = RESORT_RECV_DATA_GetData(p_resident,RESORT_DATA_PARAM_PLAY_MIN,NULL);
       if( play_h == 0 && play_m == 0 )
       {
         *p_ret_wk = resort_offreco_sys_05_02;

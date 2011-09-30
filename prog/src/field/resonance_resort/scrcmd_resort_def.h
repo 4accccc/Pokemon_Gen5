@@ -54,6 +54,7 @@
 #define RESORT_GET_PARAM_NEON_SEC_INDEX       (38)
 #define RESORT_GET_PARAM_CELEB_TRADE_NO       (39)
 #define RESORT_GET_PARAM_INDEX                (40)
+#define RESORT_GET_PARAM_PEOPLE_TYPE          (41)
 
 //RESORT_GET_PARAM_CHECK_SCOUT‚Ì–ß‚è’l
 #define RESORT_CHECK_SCOUT_YES          (0) //‚¢‚¢‚æ

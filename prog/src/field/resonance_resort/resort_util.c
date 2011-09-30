@@ -191,7 +191,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_history_00_m, resort_history_00_f );
     break;
   case RESORT_TOURIST_GREET_MSGID:
-    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
       RESORT_COMM_TYPE  comm  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_COMM_ID, NULL );
       u32 num  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
@@ -228,12 +228,19 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       }
       else
       {
-        return SexGetMsgID( sex, resort_tourist_greet_18_m, resort_tourist_greet_18_f);
+        if( comm == RESORT_COMM_TYPE_GTS )
+        {
+          return SexGetMsgID( sex, resort_tourist_greet_05_m, resort_tourist_greet_05_f);
+        }
+        else
+        {
+          return SexGetMsgID( sex, resort_tourist_greet_18_m, resort_tourist_greet_18_f);
+        }
       }
     }
     break;
   case RESORT_TOURIST_CITY_MSGID:
-    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST );
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
       u32 nation  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_NATION, NULL );
       u32 area  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_AREA, NULL );

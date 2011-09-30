@@ -2514,10 +2514,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_AREA:
     return cp_wk->basic1.area;
   case RESORT_DATA_PARAM_PLAY_HOUR:
-    //TODO
     return 0;
   case RESORT_DATA_PARAM_PLAY_MIN:
-    //TODO
     return 0;
   case RESORT_DATA_PARAM_TRAINER_ID:
     return cp_wk->basic1.trainerID;
@@ -2541,7 +2539,6 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
       GFL_MSG_Delete( p_msg );
     }
     return 0;
-
   case RESORT_DATA_PARAM_EXTEND_NUM:
     return 0;
   case RESORT_DATA_PARAM_WANT_SPOT:
@@ -2639,6 +2636,9 @@ void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param
   case RESORT_DATA_PARAM_MEET_DAY:
     p_wk->meet_day  = data;
     break;
+  case RESORT_DATA_PARAM_PRESENT_BIT:
+   p_wk->present_bit  = data;
+   break;
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
   }

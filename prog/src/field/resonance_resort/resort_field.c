@@ -1560,11 +1560,12 @@ static BOOL Resort_Crowd_People_Move_Check(RESORT_CROWD_PEOPLE_WK *p_wk, MMDLSYS
     MMDL_OnMoveBitMove( p_mmdl );
     p_wk->seq = CROWD_PEOPLE_WALK_SEQ_WAIT;
   }
-  else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
+ /* else if( Resort_Crowd_People_Wk_CheckInterest(p_wk, cp_player) )
   {
     //興味がある場所
     p_wk->seq = CROWD_PEOPLE_INTEREST_SEQ_WAIT;
   }
+*/
   else if( p_wk->kyoro.start_grid == p_wk->move_grid )
   {
     //キョロキョロポイント
