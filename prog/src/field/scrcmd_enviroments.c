@@ -644,6 +644,11 @@ VMCMD_RESULT EvCmdSetZukanZenkokuFlag( VMHANDLE * core, void *wk )
   SCRCMD_WORK*      work = wk;
   GAMEDATA*     gamedata = SCRCMD_WORK_GetGameData( work );
   ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gamedata );
+
+  // 全国図鑑入手時には必ず生息地リストを取得している必要がある
+  // (ずかん側のボタン配置などが未対応のため)
+  ZUKANSAVE_SetHabitatListFlag( zukan );
+  // 全国図鑑フラグセット
   ZUKANSAVE_SetZenkokuZukanFlag( zukan );
   return VMCMD_RESULT_CONTINUE;
 }
