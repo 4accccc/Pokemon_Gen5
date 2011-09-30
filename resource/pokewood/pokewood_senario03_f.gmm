@@ -451,7 +451,7 @@
 強力な　エネルギーとともに▽
 人や　ポケモンを▽
 発射する　マシン！▼
-しかも　発射した　者の▽
+しかも　発射した　者の
 能力を　何倍　にも▽
 パワーアップ　するのだっ！</language>
 	</row>
@@ -462,16 +462,16 @@
 何て　恐ろしい　ものを……</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">ハチクマン『ファファファ！！
+		<language name="JPN" width="256">ハチクマン『ファファファ！！▼
 さあ！　かくごは　よいか！？
 [1:02:ポケモンニックネーム:0]ガール！！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
+		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！▼
 さあ！　覚悟は　よいか！？
 [1:02:ポケモンニックネーム:0]ガール！！</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『らくしょうさ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『楽勝よ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『楽勝よ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファファファ！▼
@@ -485,7 +485,7 @@
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『もう　ダメだ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『もう　ダメかも……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『もう　ダメかも……</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！▼
@@ -497,7 +497,7 @@
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……いくよっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……いくよっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……いくよっ！！</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！！
@@ -507,7 +507,7 @@
 	</row>
 	<row id="pw_event0_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『にげようかな……</language>
 	</row>
 	<row id="pw_event0_react_enemy_3">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -678,7 +678,7 @@
 ハチクほうに　よって▽
 そらの　かなたへと　ちった▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
-かれの　きえた　ほうがくには
+かのじょの　きえた　ほうがくには
 おおきな　ほしが　ひとつ▽
 ひかっていると　いう……▼
 さらば！
@@ -689,7 +689,7 @@
 ハチク砲に　よって▽
 空の　彼方へと　散った▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
-彼の　消えた　方角には
+彼女の　消えた　方角には
 大きな　星が　ひとつ▽
 光っていると　いう……▼
 さらば！

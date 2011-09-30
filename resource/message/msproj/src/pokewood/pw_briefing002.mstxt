@@ -149,10 +149,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　名は！
+
 [Ctrl1:xcenter ][Name:PokemonNickname ]キッド！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:54:25" />
+				Time="2011-09-30T06:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -430,10 +431,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　名は！
+
 [Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T03:55:27" />
+				Time="2011-09-30T06:30:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

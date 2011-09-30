@@ -66,7 +66,7 @@
 [Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:56:05" />
+				Time="2011-09-30T06:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -74,7 +74,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName Idx="1" ]の
 [Ctrl1:xcenter ]前に　突如　現れた
 [Ctrl1:xcenter ]なぞの　女　Ｅ……
 
@@ -82,7 +82,7 @@
 [Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:01:17" />
+				Time="2011-09-30T06:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

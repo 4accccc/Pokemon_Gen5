@@ -450,7 +450,7 @@
 強力な　エネルギーとともに▽
 人や　ポケモンを▽
 発射する　マシン！▼
-しかも　発射した　者の▽
+しかも　発射した　者の
 能力を　何倍　にも▽
 パワーアップ　するのだっ！</language>
 	</row>
@@ -461,10 +461,10 @@
 何て　恐ろしい　ものを……</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">ハチクマン『ファファファ！！
+		<language name="JPN" width="256">ハチクマン『ファファファ！！▼
 さあ！　かくごは　よいか！？
 [1:02:ポケモンニックネーム:0]キッド！！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
+		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！▼
 さあ！　覚悟は　よいか！？
 [1:02:ポケモンニックネーム:0]キッド！！</language>
 	</row>
