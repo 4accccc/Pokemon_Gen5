@@ -680,8 +680,9 @@ static const u16 *pwb_fmes_tbl[] = {
 // 単語登録するメッセージ
 //--------------
 static const u16 pwb_mes_tbl[] = {
-  pw_movietitle_01,         // メインタイトル
-  pw_moviesubtitle_01_01,   // サブタイトル
+  pw_title_00,              // メインタイトル
+  pw_moviesubtitle_m_01,    // サブタイトル 男
+  pw_moviesubtitle_f_01,    // サブタイトル 女
 	pw_record_monitor_03,     // 「タグ:4桁数値 億円」
 	pw_record_monitor_05,     // 「タグ：トレーナー名」
 };
@@ -2607,7 +2608,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 	if(mode == 0){
     // トレーナ名
     {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[3] );
+      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[4] );
 
       // 単語登録
       {
@@ -2633,20 +2634,24 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 
     // メインタイトル
     {
-      // TODO
-      // タイトルのラベルが10個しかない為
-      u32 str_id = pwb_mes_tbl[0] + ( id/4 );
+      u32 str_id = pwb_mes_tbl[0] + id;
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
       pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
     // サブタイトル
     {
-      // TODO
-      // サブタイトルはラベルの数が決まっていない
-      // かつ本来は男女別にラベルがある
-      //  興行成績の高いサブタイトルになる?
-      u32 str_id = pwb_mes_tbl[1] + ( id/4 );
+      u32 str_id;
+      
+      // 男女別でラベルがある
+      if( MyStatus_GetMySex( wk->Param->mystatus ) == PM_MALE )
+      {
+        str_id = pwb_mes_tbl[1] + id;
+      }
+      else
+      {
+        str_id = pwb_mes_tbl[2] + id;
+      }
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
 
       // 単語登録 先頭ポケモン名
@@ -2667,7 +2672,7 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
     }
     // XXXX億円
     {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[2] );
+      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[3] );
 
       // 単語登録
       {
