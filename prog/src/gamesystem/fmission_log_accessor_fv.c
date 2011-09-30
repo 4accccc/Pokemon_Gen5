@@ -40,6 +40,8 @@
 
 #define BUFLEN_LOGACT_WORDSET_TMP (10+EOM_SIZE)
 
+SDK_COMPILER_ASSERT( sizeof(FMISSION_LOG) == 42); //フェスミッション構造体型サイズはmax20byteまで
+
 typedef enum{
   LOG_WORDSET_NULL,
   LOG_WORDSET_ITEM,

@@ -108,7 +108,7 @@ int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p_log )
 {
   if( tbl->entry_num == FMISSION_LOG_MAX ){
     //スタックテーブル前詰め
-    GFL_STD_MemCopy32( &tbl->log[1], &tbl->log[0], sizeof(FMISSION_LOG)*FMISSION_LOG_END);
+    GFL_STD_MemCopy16( &tbl->log[1], &tbl->log[0], sizeof(FMISSION_LOG)*FMISSION_LOG_END);
     tbl->log[FMISSION_LOG_END] = *p_log;
   }else{
     tbl->log[tbl->entry_num++] = *p_log;
