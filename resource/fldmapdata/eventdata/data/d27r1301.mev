@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/29 10:45:13
+#save date:2011/09/30 12:13:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1301.wms
 #SECTION START:OBJ_EVENT
@@ -644,7 +644,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-31
+32
 #event number: 0
 #Pos Event Label
 POS_D27R1301_WARP_01
@@ -1172,6 +1172,23 @@ EVENTDATA_POSTYPE_GRID
 152 -48 -408
 #size
 1 1
+#event number: 31
+#Pos Event Label
+POS_D27R1301_SWSAGE7_01
+#Pos Script Name
+SCRID_POS_D27R1301_SWSAGE7_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D27R1301_SWSAGE7_01
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 24
+#size
+5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
