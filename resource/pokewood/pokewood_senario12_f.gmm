@@ -396,7 +396,7 @@
 ただ今から　我々は　その個体を▽
 大バンギラスと　呼称する！▼
 いいか！　[1:00:トレーナー名:1]！
-何としても　大バンギラスが
+何としても　大バンギラスが▽
 街に　入るのを　防いでくれ！
 </language>
 	</row>
@@ -417,14 +417,14 @@
 ただの　バンギラスじゃない……▼
 あしどめすると　いっても
 まとも　たたかった　ところで▽
-あいつに　かてそうもないな……▼
+あいつに　かてそうもないし……▼
 まずは　しみんを
 ここから　ひなんさせるか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やはり　こいつは
 ただの　バンギラスじゃない……▼
 足止めすると　いっても
 まともに　戦った　ところで▽
-あいつには　勝てそうもないな……▼
+あいつには　勝てそうもないし……▼
 まずは　市民を
 ここから　避難させるか……</language>
 	</row>
@@ -455,8 +455,8 @@
 なんで　こんなことにっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『やられるぞー！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やられるぞー！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やられるわよー！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やられるわよー！！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！
@@ -529,10 +529,10 @@
 	<row id="pw_event2_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まただ……
 なんだ？　このひかりは……？▼
-まるで　ひとの　ようだ……</language>
+まるで　ひと　みたい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まただ……
 何だ？　この光は……？▼
-まるで　人の　ようだ……</language>
+まるで　人　みたい……</language>
 	</row>
 	<row id="pw_event2_enemy_5">
 		<language name="JPN" width="256">だいバンギラス『グロロローンッ！</language>
@@ -563,14 +563,14 @@
 なぜ　みずのにがてな　バンギラスが
 うみのそばに　あらわれたんだろ？▼
 ……それに　さっき　みた
-なぞの　ひかり……▽
-あれは　まぼろし　だったの……？</language>
+ふしぎな　ひかり……▽
+あれは　いったい……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『でも……▼
 なぜ　水の苦手な　バンギラスが
 海の側に　現れたんだろ？▼
 ……それに　さっき　見た
-謎の　光……▽
-あれは　まぼろし　だったの……？</language>
+ふしぎな　ひかり……▽
+あれは　いったい……？</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメ……

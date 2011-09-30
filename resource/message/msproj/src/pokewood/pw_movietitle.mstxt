@@ -42,11 +42,11 @@
 		Label="pw_plot_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごうかきゃくせんの　とまる　はとば
-そこに　あらわれる　かいじん</Text>
+			<Text>ごうかきゃくせんの　とまる　はとばに
+あくの　かいじんが　しゅつげん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:17:16" />
+				Time="2011-09-30T02:14:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -54,11 +54,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>豪華客船の　停まる　波止場
-怪人が　出現</Text>
+			<Text>豪華客船の　停まる　波止場に
+悪の　怪人が　出現</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:18:01" />
+				Time="2011-09-30T02:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -78,11 +78,11 @@
 		Label="pw_plot_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいじん　VS　ヒーローの
+			<Text>あくのかいじん　VS　ヒーローの
 うんめいを　かけた　たたかい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:19:15" />
+				Time="2011-09-30T02:14:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -90,11 +90,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪人　VS　ヒーローの
+			<Text>悪の怪人　VS　ヒーローの
 運命を　かけた　戦い</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T12:19:39" />
+				Time="2011-09-30T02:14:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -256,11 +256,11 @@
 		Label="pw_plot_007">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいとかいに　ＵＦＯ　しゅつげん！
-イッシュぼうえいたい　しゅつどう！</Text>
+			<Text>だいとかいに　ＵＦＯ　しゅつげん
+しゅつどうする　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:02:34" />
+				Time="2011-09-30T02:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -268,11 +268,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大都会に　ＵＦＯ　出現！
-イッシュ防衛隊　出動！</Text>
+			<Text>大都会に　ＵＦＯ　出現
+出動する　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:02:44" />
+				Time="2011-09-30T02:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -295,10 +295,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＵＦＯを　あやつる　なぞの　おんな
-かのじょの　じっけんに　さんかせよ！</Text>
+かのじょの　なぞのじっけんに　さんか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:04:24" />
+				Time="2011-09-30T02:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -307,10 +307,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＵＦＯを　あやつる　謎の　女
-彼女の　実験に　参加せよ！</Text>
+彼女の　謎の実験に　参加</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:04:53" />
+				Time="2011-09-30T02:16:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -332,11 +332,11 @@
 		Label="pw_plot_009">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＵＦＯが　ふたたび　しゅつげん！
-デコイさくせんを　けっこうせよ！</Text>
+			<Text>ふたたび　しゅつげんする　ＵＦＯと
+デコイさくせんの　ゆくえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:05:54" />
+				Time="2011-09-30T02:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -344,11 +344,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＵＦＯが　再び　出現！
-デコイ作戦を　決行せよ！</Text>
+			<Text>再び　出現する　ＵＦＯと
+デコイ作戦の　行方</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:06:25" />
+				Time="2011-09-30T02:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -370,11 +370,11 @@
 		Label="pw_plot_010">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　おんなは　エイリアン！
-じんるい　さいごの　たたかい！</Text>
+			<Text>なぞの　おんなは　エイリアン
+じんるい　さいごの　たたかい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:06:52" />
+				Time="2011-09-30T02:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -382,11 +382,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>謎の　女は　エイリアン！
-人類　最後の　戦い！</Text>
+			<Text>謎の　女は　エイリアン
+人類　最後の　戦い</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:07:12" />
+				Time="2011-09-30T02:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -408,11 +408,11 @@
 		Label="pw_plot_011">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　きょだいせいぶつ　しゅつげん！
-イッシュぼうえいたい　しゅつどう！</Text>
+			<Text>なぞの　きょだいせいぶつ　しゅつげん
+しゅつどうする　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:08:15" />
+				Time="2011-09-30T02:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -420,11 +420,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>謎の　巨大生物　出現！
-イッシュ防衛隊　出動！</Text>
+			<Text>なぞの　巨大生物　出現
+出動する　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:08:43" />
+				Time="2011-09-30T02:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -446,11 +446,11 @@
 		Label="pw_plot_012">
 		<LanguageCell
 			Language="JPN">
-			<Text>パトロールちゅうに　なぞの　ひめい！
-きゅうこう！　イッシュぼうえいたい！</Text>
+			<Text>パトロールちゅうに　なぞの　ひめい
+きゅうこうする　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:09:55" />
+				Time="2011-09-30T02:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -458,11 +458,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パトロール中に　謎の　悲鳴！
-急行！　イッシュ防衛隊！</Text>
+			<Text>パトロール中に　なぞの　悲鳴
+急行する　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:10:20" />
+				Time="2011-09-30T02:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -484,11 +484,11 @@
 		Label="pw_plot_013">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいバンギラス　ふたたび！
-なぞの　おんなの　しょうたい！</Text>
+			<Text>だいバンギラス　ふたたび
+なぞの　ひかりの　しょうたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:11:01" />
+				Time="2011-09-30T02:19:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -496,11 +496,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大バンギラス　再び！
-謎の　女の　正体！</Text>
+			<Text>大バンギラス　再び
+なぞの　光の　正体</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:11:30" />
+				Time="2011-09-30T02:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -522,11 +522,11 @@
 		Label="pw_plot_014">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・Ｖ２　あらわる！
-けっせん！　イッシュぼうえいたい！</Text>
+			<Text>Ｍ・Ｖが　ふたたび　しゅつげん
+けっせん　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:13:05" />
+				Time="2011-09-30T02:20:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -534,11 +534,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｖ２　現る！
-決戦！　イッシュ防衛隊！</Text>
+			<Text>Ｍ・Ｖ２が　再び　出現
+決戦　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T11:13:03" />
+				Time="2011-09-30T02:21:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
