@@ -25,6 +25,7 @@
 typedef enum {
   FIELD_DEBUG_PRINT_TYPE_POSITION = 0,
   FIELD_DEBUG_PRINT_TYPE_MEMORY,
+  FIELD_DEBUG_PRINT_TYPE_NONE,          // FIELD_DEBUG_UpdateProc‚Åmain‚ðŒÄ‚Î‚È‚¢
 }FIELD_DEBUG_PRINT_TYPE;
 
 //======================================================================
@@ -50,5 +51,7 @@ extern void FIELD_DEBUG_SetDrawCallBackFunc(const BOOL sw);
 extern void FIELD_DEBUG_ClearDrawCallBackWork(void);
 
 extern void FIELD_DEBUG_AddDrawLandNum(void);
+extern void FIELD_DEBUG_DebugFont_Print( FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf );
+extern void FIELD_DEBUG_DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y );
 
 #endif //FIELD_DEBUG_H_FILE

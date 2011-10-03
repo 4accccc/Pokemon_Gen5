@@ -36,12 +36,17 @@
 #include "arc/fieldmap/fldmmdl_objcode.h"   //for OBJCODE
 #include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 
-// グローバル変数
 #ifdef PM_DEBUG
+
+// フィールドデバッグ
+#include "field_debug.h" 
+
+// デバッグ変数
 extern int  g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
 extern u32  g_debug_inf_master_seed;
 extern BOOL g_debug_inf_is_presentation;
+extern BOOL g_debug_inf_is_map_info;
 #endif
 
 //=============================================================================
@@ -585,7 +590,7 @@ static u8  GetPosDirID( u8 x1, u8 y1, u8 x2 ,u8 y2 );
 static u32 INFINITY_DUNGEON_GetBossRoom( INF_DUNGEON_DATA *p_dungeon_data );
 
 #ifdef PM_DEBUG
-static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save );
+static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save ,FIELDMAP_WORK *p_field_work );
 static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data );
 #endif
 
@@ -633,6 +638,7 @@ void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,GAMEDATA *p_gdata, HEAPID heapI
 
   // フロアデータの生成
   GetFloorData( p_inf_save , p_wk );
+
 }
 
 //----------------------------------------------------------------------------
@@ -874,14 +880,6 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       // ギミックワークのポインタを再取得
       p_wk->p_dungeon_data  = INFINITY_DUNGEON_DataGet( p_wk->p_field_work );
 
-#ifdef PM_DEBUG      
-      {
-        u8 now_floor;
-        now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
-        INF_DEBUG_OutPutFloorData(p_wk->p_dungeon_data->room_data[now_floor] ,p_wk->p_save );
-      }
-#endif
-
       // 受付の場合は配置モデルを置かない
       if( p_wk->warp_dir != WARP_INFORMATION )
       {
@@ -918,7 +916,24 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
     {
       // 動作モデル移動開始
       MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(p_wk->p_field_work));
-      
+ 
+#ifdef PM_DEBUG      
+      {
+        u8 now_floor;
+
+        // MAP表示デバッグメニュー起動中かチェック
+        if( g_debug_inf_is_map_info == TRUE )
+        {
+          FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( p_wk->p_field_work );
+          FIELD_DEBUG_SetPrint(debug,FIELD_DEBUG_PRINT_TYPE_NONE);
+        }
+
+        // マップ状況をデバッグ表示
+        now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
+        INF_DEBUG_OutPutFloorData(p_wk->p_dungeon_data->room_data[now_floor] ,p_wk->p_save ,p_wk->p_field_work);
+      }
+#endif
+
       return GMEVENT_RES_FINISH;
     }
   }
@@ -4045,6 +4060,28 @@ static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  デバッグ文字列描画
+ *
+ *	@param	*debug 
+ *	@param	*p_debug_draw_pos
+ *	@param	*p_debug_draw_line
+ *	@param	*str
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DDebugStr( FIELD_DEBUG_WORK *debug ,s32 *p_debug_draw_pos,s32 *p_debug_draw_line,const char *str )
+{
+  if( g_debug_inf_is_map_info == TRUE )
+  {
+    FIELD_DEBUG_DebugFont_Print(debug ,*p_debug_draw_pos,*p_debug_draw_line,str);
+
+    // 文字数を数える
+    while( (*str) != '\0' ){ (*p_debug_draw_pos)++; str++; };
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  フロアデータのデバッグ出力
  *
  *	@param	*p_room_data 
@@ -4053,15 +4090,30 @@ static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save )
+static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save ,FIELDMAP_WORK *p_field_work )
 {
   int i,j,k;
   int draw;
+  s32 dd_pos = 0;
+  s32 dd_line = 0;
+  char str_buf[256];
+  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( p_field_work );
+
+  if( g_debug_inf_is_map_info == TRUE )
+  {
+    FIELD_DEBUG_DebugFont_Print(debug ,0,0,"TEST");
+  }
 
   for( i = 0; i<ROOM_MAX_Y; i++ )
   {
     for( draw = 0 ; draw <= 4; draw++ )
     {
+      // デバッグ表示を消す
+      if( g_debug_inf_is_map_info == TRUE )
+      {
+        FIELD_DEBUG_DebugFont_ClearLine(debug,dd_line);
+      }
+
       for( j = 0; j<ROOM_MAX_X; j++ )
       {
         int room_id = i*ROOM_MAX_Y + j;
@@ -4071,16 +4123,20 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
         case 0:
           {
             OS_TFPrintf( 3,"■■");
+            DDebugStr(debug,&dd_pos,&dd_line,"OO");
             if( p_room_data[room_id].can_move[INF_MOVE_UP] == TRUE )
             {
               OS_TFPrintf( 3,"　");
+              DDebugStr(debug,&dd_pos,&dd_line," ");
             }
             else
             {
               OS_TFPrintf( 3,"■");
+              DDebugStr(debug,&dd_pos,&dd_line,"O");
             }
 
             OS_TFPrintf( 3,"■■");
+            DDebugStr(debug,&dd_pos,&dd_line,"OO");
           }
           break;
         case 1:
@@ -4088,14 +4144,17 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
             if( p_room_data[room_id].room_type == ROOM_TYPE_BOSS)
             {
               OS_TFPrintf( 3,"■Ｂ　　■");
+              DDebugStr(debug,&dd_pos,&dd_line,"OB  O");
             }
             else if( p_room_data[room_id].room_type == ROOM_TYPE_ELEVATOR)
             {
               OS_TFPrintf( 3,"■Ｅ　　■");
+              DDebugStr(debug,&dd_pos,&dd_line,"OE  O");
             }
             else
             {
               OS_TFPrintf( 3,"■　　　■");
+              DDebugStr(debug,&dd_pos,&dd_line,"O   O");
             }
           }
           break;
@@ -4106,29 +4165,35 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
             if( p_room_data[room_id].can_move[INF_MOVE_LEFT] == TRUE )
             {
               OS_TFPrintf( 3,"　");
+              DDebugStr(debug,&dd_pos,&dd_line," ");
             }
             else
             {
               OS_TFPrintf( 3,"■");
+              DDebugStr(debug,&dd_pos,&dd_line,"O");
             }
 
             // 現在地表示
             if( room_id == now_room_id )
             {
-              OS_TFPrintf( 3,"　主　"); //部屋の中心
+              OS_TFPrintf( 3,"　Ｐ　"); //部屋の中心
+              DDebugStr(debug,&dd_pos,&dd_line," P ");
             }
             else
             {
               OS_TFPrintf( 3,"　　　"); //部屋の中心
+              DDebugStr(debug,&dd_pos,&dd_line,"   ");
             }
 
             if( p_room_data[room_id].can_move[INF_MOVE_RIGHT] == TRUE )
             {
               OS_TFPrintf( 3,"　");
+              DDebugStr(debug,&dd_pos,&dd_line," ");
             }
             else
             {
               OS_TFPrintf( 3,"■");
+              DDebugStr(debug,&dd_pos,&dd_line,"O");
             }
           }
           break;
@@ -4137,10 +4202,14 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
             if( GetMemberNum(p_room_data[room_id].tr_pos_type) > 0 )
             {
               OS_TFPrintf( 3,"■%2d　%2d■",room_id,p_room_data[room_id].tr_pos_type);
+              sprintf( str_buf,"O%2d O",room_id);
+              DDebugStr(debug,&dd_pos,&dd_line,str_buf);
             }
             else
             {
               OS_TFPrintf( 3,"■%2d　×■",room_id,p_room_data[room_id].tr_pos_type);
+              sprintf( str_buf,"O%2dxO",room_id);
+              DDebugStr(debug,&dd_pos,&dd_line,str_buf);
             }
           }
           break;
@@ -4148,24 +4217,31 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_S
         case 4:
           {
             OS_TFPrintf( 3,"■■");
+            DDebugStr(debug,&dd_pos,&dd_line,"OO");
             if( p_room_data[room_id].can_move[INF_MOVE_DOWN] == TRUE )
             {
               OS_TFPrintf( 3,"　");
+              DDebugStr(debug,&dd_pos,&dd_line," ");
             }
             else
             {
               OS_TFPrintf( 3,"■");
+              DDebugStr(debug,&dd_pos,&dd_line,"O");
             }
 
             OS_TFPrintf( 3,"■■");
+            DDebugStr(debug,&dd_pos,&dd_line,"OO");
           }
           break;
         }
       }
       OS_TFPrintf( 3,"\n");
+      dd_pos=0;
+      dd_line++;
     }
   }
 }
+
 
 //----------------------------------------------------------------------------
 /**

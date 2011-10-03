@@ -38,7 +38,8 @@
 extern int  g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
 extern u32  g_debug_inf_master_seed;
-extern BOOL g_debug_inf_is_presentation;
+extern u32  g_debug_inf_is_presentation;
+extern BOOL g_debug_inf_is_map_info;
 
 
 //=============================================================================
@@ -93,6 +94,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_PRESENTATION , (void*)DEBUG_STR_INFINITY_PRESENTATION , GFL_OVERLAY_BLANK_ID },  // プレゼン
   { DEBUG_STR_INFINITY_BLACK_VERSION , (void*)DEBUG_STR_INFINITY_BLACK_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_WHITE_VERSION , (void*)DEBUG_STR_INFINITY_WHITE_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_AUTO_MAP , (void*)DEBUG_STR_INFINITY_AUTO_MAP , GFL_OVERLAY_BLANK_ID },  // ジャンプ
 };
 
 ///リスト メニューヘッダー
@@ -500,6 +502,23 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
         (*seq)=3; 
         break;
       }
+    case DEBUG_STR_INFINITY_AUTO_MAP:
+      {
+        // デバッグプリント設定
+        FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( work->fieldWork );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        FIELD_DEBUG_SetPrint(debug,FIELD_DEBUG_PRINT_TYPE_NONE);
+        // 表示状態設定
+        if( g_debug_inf_is_map_info == FALSE )
+        {
+          g_debug_inf_is_map_info = TRUE;
+        }
+        else
+        {
+          g_debug_inf_is_map_info = FALSE;
+        }
+      }
+      return GMEVENT_RES_FINISH;
 
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;
@@ -526,10 +545,8 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
     }
     break;
   case 3:
-    // 移動終了待ち
     return GMEVENT_RES_FINISH;
   case 4:
-    // 終了待ち
     if( DebugDungeonMake( ) == TRUE)
     {
       return GMEVENT_RES_FINISH;

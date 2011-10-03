@@ -662,7 +662,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STR_INFINITY_BLACK_VERSION">
+		Label="DEBUG_STR_INFINITY_BLACK_VERSION"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ブラックバージョンに切り替え</Text>
@@ -687,7 +688,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STR_INFINITY_WHITE_VERSION">
+		Label="DEBUG_STR_INFINITY_WHITE_VERSION"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホワイトバージョンに切り替え</Text>
@@ -709,6 +711,32 @@
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
 				Time="2011-08-05T03:49:52" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_INFINITY_AUTO_MAP"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マップ表示</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-03T02:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-03T02:40:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マップ表示</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-03T02:40:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-03T02:40:43" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

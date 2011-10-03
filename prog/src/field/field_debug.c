@@ -575,6 +575,21 @@ static void DebugFont_Print(
 
 //--------------------------------------------------------------
 /**
+ * システムフォント表示 表示
+ * @param	work	FIELD_DEBUG_WORK
+ * @param	x		表示するX座標 キャラ単位
+ * @param	y		表示するY座標 キャラ単位
+ * @param	msgBuf	表示する文字列
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_DebugFont_Print( FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf )
+{
+  DebugFont_Print( work, x, y, msgBuf );
+}
+
+//--------------------------------------------------------------
+/**
  * システムフォント表示　行クリア
  * @param	y
  * @retval	nothing
@@ -586,6 +601,18 @@ static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
 	MI_CpuFill8( buf, 0x20, 32 );
 	buf[32] = 0;
 	DebugFont_Print( work, 0, y, buf );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムフォント表示　行クリア
+ * @param	y
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
+{
+  DebugFont_ClearLine( work ,y);
 }
 
 //======================================================================
