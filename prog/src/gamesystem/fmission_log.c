@@ -426,11 +426,16 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   //–¼‘O(info->name‚ÍEOM”²‚«)
   GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE);
 
+#if 0
   if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_FREEWORD ){
     //EOMž‚Ý
     GFL_STD_MemCopy16( info->action.freeword.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
     p_log->param = info->action.freeword.shortcut_id;
-  }else if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_DOWN ){
+  }else if(
+    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_DOWN ||
+    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE ||
+    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE
+    ){
     //EOMž‚Ý
     GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));
     p_log->param = 0;
@@ -439,6 +444,28 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   }else{
     p_log->param = info->action.fmission.act_param;
   }
+#else
+  switch( action ){
+  case FMISSION_LOG_ACT_FREEWORD:
+    //EOMž‚Ý
+    GFL_STD_MemCopy16( info->action.freeword.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
+    p_log->param = info->action.freeword.shortcut_id;
+    break;
+  case FMISSION_LOG_ACT_POKE_DOWN:
+  case FMISSION_LOG_ACT_POKE_HP_LITTLE:
+  case FMISSION_LOG_ACT_POKE_PP_LITTLE:
+    //EOMž‚Ý
+    GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));
+    p_log->param = 0;
+    break;
+  case FMISSION_LOG_ACT_MAP_CHANGE:
+    p_log->param = info->townmap_root_zone_id;
+    break;
+  default:
+    p_log->param = info->action.fmission.act_param;
+    break;
+  }
+#endif
   return TRUE;
 }
 
