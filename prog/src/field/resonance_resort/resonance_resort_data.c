@@ -2264,24 +2264,28 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
 
   if( cp_beacon_info->pm_version == VERSION_W2 || cp_beacon_info->pm_version == VERSION_B2 )
   {
-    //W2B2ならば拡張データあり
-    //拡張データの先頭はBASIC2
+    if( comm_type == RESORT_COMM_TYPE_BEACON )
     {
-      const void *cp_basic2_adrs = cp_beacon_info->action.extend_buff;
-      GFL_STD_MemCopy( cp_basic2_adrs, &p_wk->basic2, RESORT_BASIC2_DATA_SIZE );
+      //W2B2ならば拡張データあり
+      //拡張データの先頭はBASIC2
+      {
+        const void *cp_basic2_adrs = cp_beacon_info->action.extend_buff;
+        GFL_STD_MemCopy( cp_basic2_adrs, &p_wk->basic2, RESORT_BASIC2_DATA_SIZE );
+      }
+      //後ろがEXTEND
+      {
+        const void *cp_extend_adrs = (const u8 *)cp_beacon_info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
+        GFL_STD_MemCopy( cp_extend_adrs, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+      }
+      p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
     }
-    //後ろがEXTEND
+    else
     {
-      const void *cp_extend_adrs = (const u8 *)cp_beacon_info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
-      GFL_STD_MemCopy( cp_extend_adrs, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+      p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
     }
-    p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
   }
   else
   {
-    //TODO  あとハイリンクフェスも
-    //BASIC2を作らないといけない
-
     //その他のソフトでは基本情報のみ
     p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
   }
