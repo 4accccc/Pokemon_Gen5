@@ -1025,6 +1025,7 @@ static void PokeIconObjAdd( BOX2_APP_WORK * appwk )
 //    OS_Printf("%d:chrres=%d\n",i,BOX2MAIN_CHRRES_POKEICON + i);
     appwk->clwk[BOX2OBJ_ID_POKEICON+i] = ClactWorkCreate( appwk, &prm );
     appwk->pokeicon_id[i] = BOX2OBJ_ID_POKEICON+i;  // OBJID‚ð•Û‘¶
+	  BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKEICON+i, FALSE );
   }
 
 }
