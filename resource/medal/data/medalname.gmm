@@ -1156,8 +1156,8 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_051">
-		<language name="JPN" width="216">ぜんぬきハード</language>
-		<language name="JPN_KANJI" width="216">ぜんぬきハード</language>
+		<language name="JPN" width="216">ぜんぬきマスター</language>
+		<language name="JPN_KANJI" width="216">ぜんぬきマスター</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_052">
@@ -1531,8 +1531,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_070">
-		<language name="JPN" width="216">ミッションぜんぶ</language>
-		<language name="JPN_KANJI" width="216">ミッションぜんぶ</language>
+		<language name="JPN" width="216">フェスコンプリート</language>
+		<language name="JPN_KANJI" width="216">フェスコンプリート</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_071">

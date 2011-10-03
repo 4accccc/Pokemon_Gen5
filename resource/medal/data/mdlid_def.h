@@ -153,7 +153,7 @@
 #define MDLID_MUGEN_WIN_LV3	(139)	// １００にんぎり
 #define MDLID_MUGEN_WIN_LV4	(140)	// サウザンドウィナー
 #define MDLID_MUGEN_ALL_WIN_LV1	(141)	// ぜんぬきイージー
-#define MDLID_MUGEN_ALL_WIN_LV2	(142)	// ぜんぬきハード
+#define MDLID_MUGEN_ALL_WIN_LV2	(142)	// ぜんぬきマスター
 #define MDLID_MUGEN_BOSS_ONLY_LV1	(143)	// ねらいうちイージー
 #define MDLID_MUGEN_BOSS_ONLY_LV2	(144)	// ねらいうちマスター
 #define MDLID_MUGEN_SPEEDY_LV1	(145)	// そっこうイージー
@@ -228,7 +228,7 @@
 #define MDLID_FES_JOIN_LV2	(214)	// さんかＬＶ２
 #define MDLID_FES_CLEAR_LV1	(215)	// たっせいＬＶ１
 #define MDLID_FES_CLEAR_LV2	(216)	// たっせいＬＶ２
-#define MDLID_FES_CLEAR_ALL	(217)	// ミッションぜんぶ
+#define MDLID_FES_CLEAR_ALL	(217)	// フェスコンプリート
 #define MDLID_GAMESYNC	(218)	// おやすみなさい
 #define MDLID_DATACONVERT_LV1	(219)	// ビギナーコンバーター
 #define MDLID_DATACONVERT_ALL	(220)	// コンバートマスター

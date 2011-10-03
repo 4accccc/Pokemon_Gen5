@@ -134,7 +134,7 @@ u32 MedalSortList[] = {
     MDLID_REPORT_LV2,	//せかせかれぽーたー
     MDLID_SHOPPING_MONEY_LV1,	//ぜいたくかすたまー
     MDLID_MUGEN_ALL_WIN_LV1,	//ぜんぬきいーじー
-    MDLID_MUGEN_ALL_WIN_LV2,	//ぜんぬきはーど
+    MDLID_MUGEN_ALL_WIN_LV2,	//ぜんぬきますたー
     MDLID_SODATEYA_CNT_LV1,	//そだてやまにあ
     MDLID_MUGEN_SPEEDY_LV1,	//そっこういーじー
     MDLID_MUGEN_SPEEDY_LV2,	//そっこうますたー
@@ -214,6 +214,7 @@ u32 MedalSortList[] = {
     MDLID_CTVT_BALLOON_LV3,	//ふうせんくらっしゃー
     MDLID_CTVT_BALLOON_LV1,	//ふうせんばすたー
     MDLID_CTVT_BALLOON_LV2,	//ふうせんぶれいかー
+    MDLID_FES_CLEAR_ALL,	//ふぇすこんぷりーと
     MDLID_BRIDGE_ALL,	//ぶりっじまにあ
     MDLID_WALK_LV3,	//へびーうぉーかー
     MDLID_CTVT_GAME_PLAY_LV4,	//べすとみにげーまー
@@ -239,7 +240,6 @@ u32 MedalSortList[] = {
     MDLID_SUBWAY_MULTI_LV1,	//まるちえくすぷれす
     MDLID_COMPLETE_MIZU,	//みずこれくたー
     MDLID_CHAMPION_MIZU,	//みずちゃんぷ
-    MDLID_FES_CLEAR_ALL,	//みっしょんぜんぶ
     MDLID_WALK_LV2,	//みどるうぉーかー
     MDLID_MUGEN_AREA_W_LV1,	//みどるじゅどう
     MDLID_MUGEN_AREA_B_LV1,	//みどるまてんろう
