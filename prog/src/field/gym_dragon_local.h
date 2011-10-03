@@ -51,7 +51,10 @@ typedef struct {
   u16   en_model_id;        // 敵ドラゴン用モデルID
   u16   en_trace_data_id;   // NULL追従用データID
   u16   en_obj_id;          // 敵トレーナーのOBJID
+  u16   pa_trace_data_id;   // NULL追従用データID(ペア)
+  u16   pa_obj_id;          // 敵トレーナーのOBJID
   BOOL  is_enemy_move;      // 敵も移動するかどうか
+  BOOL  is_pair_move;       // ペアも移動するかどうか
   BOOL  is_bump;            // 衝突パターンかどうか
 }BUTTON_EVENT_DATA;
 
@@ -92,6 +95,7 @@ typedef enum{
 typedef enum{
   ICA_MOVE_ID_PLAYER,
   ICA_MOVE_ID_ENEMY,
+  ICA_MOVE_ID_ENEMY_PAIR,
   ICA_MOVE_ID_MAX,
 }ICA_MOVE_ID;
 

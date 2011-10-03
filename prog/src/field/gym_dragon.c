@@ -176,6 +176,7 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_UpdateTrainerPosCalc( TRACE_MOVE_DATA *p_md );
 static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_StopEffectMain( PLAYER_MOVE_WORK *p_wk );
@@ -1097,6 +1098,14 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
 
       }
     }
+
+#ifdef PM_DEBUG
+    // 空きヒープサイズ
+    {
+      u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->p_gmkwk->heapAnmID );
+      OS_Printf("残りアニメーションヒープサイズ（自機読み込み後）:%x\n",heap_size);
+    }
+#endif
   }
 
   // 敵ICA移動データ
@@ -1109,8 +1118,8 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY];
       u8  move_data_index;
       p_md->model_id            = p_bev->en_model_id;
-      p_md->p_trace_data = &sc_trace_data[trace_data_id];
-      move_data_index = p_md->p_trace_data->data_index;
+      p_md->p_trace_data        = &sc_trace_data[trace_data_id];
+      move_data_index           = p_md->p_trace_data->data_index;
       p_md->p_ica_move_data     = ICA_ANIME_CreateAlloc( p_wk->p_gmkwk->heapAnmID,
           ARCID_GYM_DRAGON,sc_hero_move_data[move_data_index] );
       p_md->p_model             = &p_wk->p_gmkwk->model[p_md->model_id];
@@ -1140,7 +1149,15 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
         FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-      }      
+      }     
+      
+#ifdef PM_DEBUG
+    // 空きヒープサイズ
+    {
+      u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->p_gmkwk->heapAnmID );
+      OS_Printf("残りアニメーションヒープサイズ（敵読み込み後）:%x\n",heap_size);
+    }
+#endif
     }
     else{
       // 再生しないときは、アニメーションが終了したことにする
@@ -1148,7 +1165,59 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       p_md->is_move_end = TRUE;
       p_md->p_ica_move_data     = NULL;
     }
+
+    // ペア移動設定
+    if( p_bev->is_pair_move == TRUE )
+    {
+      int i;
+      u16 trace_data_id = p_bev->pa_trace_data_id;
+      TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY_PAIR];
+      u8  move_data_index;
+      p_md->model_id            = p_bev->en_model_id; // ペアは基本的に同じID
+      p_md->p_trace_data        = &sc_trace_data[trace_data_id];
+      move_data_index           = p_md->p_trace_data->data_index;
+      p_md->p_ica_move_data     = ICA_ANIME_CreateAlloc( p_wk->p_gmkwk->heapAnmID,
+          ARCID_GYM_DRAGON,sc_hero_move_data[move_data_index] );
+      p_md->p_model             = NULL; // モデルは使用しない
+      p_md->move_data_frame_max = ICA_ANIME_GetMaxFrame( p_md->p_ica_move_data ) - 1;
+      p_md->move_data_frame     = p_md->p_trace_data->start_frame;
+      p_md->p_mmdl              = MMDLSYS_SearchOBJID( p_wk->p_mmdl_sys ,p_bev->pa_obj_id );
+      p_md->is_move_end         = FALSE;
+
+      // 逆再生を調べる
+      if( p_md->p_trace_data->start_frame < p_md->p_trace_data->end_frame )
+      {
+        p_md->is_reverse_move = FALSE;
+      }
+      else
+      {
+        p_md->is_reverse_move = TRUE;
+      }
+ 
+#ifdef PM_DEBUG
+      // 空きヒープサイズ
+      {
+        u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->p_gmkwk->heapAnmID );
+        OS_Printf("残りアニメーションヒープサイズ（ペア読み込み後）:%x\n",heap_size);
+      }
+#endif
+    }
+    else{
+      // 再生しないときは、アニメーションが終了したことにする
+      TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY_PAIR];
+      p_md->is_move_end = TRUE;
+      p_md->p_ica_move_data     = NULL;
+    }
   }
+
+#ifdef PM_DEBUG
+  // 空きヒープサイズ
+  {
+    u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->p_gmkwk->heapAnmID );
+    OS_Printf("残りアニメーションヒープサイズ:%x\n",heap_size);
+  }
+#endif
+
 }
 
 //----------------------------------------------------------------------------
@@ -1511,9 +1580,9 @@ static void UpdateFrame( TRACE_MOVE_DATA *p_md )
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
 {
   int i;
-  s32  frame_offset;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY];
+  TRACE_MOVE_DATA *p_md_pair = &p_wk->move_data[ICA_MOVE_ID_ENEMY_PAIR];
   const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
 
   if( p_bev->is_enemy_move == TRUE )
@@ -1528,38 +1597,60 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
       }
     }
 
-    // 移動開始アニメーションのオフセットを設定（0フレーム目はスタート位置なのでスキップ）
-    if( p_md->is_reverse_move == FALSE )
+    // 敵移動再生
+    MOVE_Event_UpdateTrainerPosCalc( p_md );
+
+    // ペア移動がある場合は再生
+    if( p_bev->is_pair_move == TRUE )
     {
-      frame_offset = 1;
-    }else
-    {
-      frame_offset = -1;
+      MOVE_Event_UpdateTrainerPosCalc( p_md_pair );
     }
 
-    // 移動処理
-    if( p_md->is_move_end == FALSE )
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief トレーナー位置を計算して設定
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_Event_UpdateTrainerPosCalc( TRACE_MOVE_DATA *p_md )
+{
+  s32  frame_offset;
+
+  // 移動開始アニメーションのオフセットを設定（0フレーム目はスタート位置なのでスキップ）
+  if( p_md->is_reverse_move == FALSE )
+  {
+    frame_offset = 1;
+  }else
+  {
+    frame_offset = -1;
+  }
+
+  // 移動処理
+  if( p_md->is_move_end == FALSE )
+  {
+    VecFx32 vec = {0,0,0};
+    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + frame_offset ) )
     {
-      VecFx32 vec = {0,0,0};
-      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + frame_offset ) )
-      {
-        MtxFx43 trans;
-        MODEL *p_model    = p_md->p_model;
+      MtxFx43 trans;
+      // 実座標の設定
+      vec.x += sc_mdl_offset_table[p_md->model_id].x;
+      vec.y += sc_mdl_offset_table[p_md->model_id].y;
+      vec.z += sc_mdl_offset_table[p_md->model_id].z;
+      MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
 
-        // 実座標の設定
-        vec.x += sc_mdl_offset_table[p_md->model_id].x;
-        vec.y += sc_mdl_offset_table[p_md->model_id].y;
-        vec.z += sc_mdl_offset_table[p_md->model_id].z;
-        MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+      // グリッド座標の設定
+      MMDL_SetGridPosX( p_md->p_mmdl ,FX32_TO_GRID(vec.x) );
+      MMDL_SetGridPosY( p_md->p_mmdl ,FX32_TO_GRID(vec.y) );
+      MMDL_SetGridPosZ( p_md->p_mmdl ,FX32_TO_GRID(vec.z) );
 
-        // グリッド座標の設定
-        MMDL_SetGridPosX( p_md->p_mmdl ,FX32_TO_GRID(vec.x) );
-        MMDL_SetGridPosY( p_md->p_mmdl ,FX32_TO_GRID(vec.y) );
-        MMDL_SetGridPosZ( p_md->p_mmdl ,FX32_TO_GRID(vec.z) );
-
-        // フレームの更新
-        UpdateFrame( p_md );
-      }
+      // フレームの更新
+      UpdateFrame( p_md );
     }
   }
 }
