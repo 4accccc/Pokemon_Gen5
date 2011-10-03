@@ -13,8 +13,8 @@
 #define  FOG_SLOPE (7) // フォグのかかり具合
 #define  FOG_OFFSET (32607) // フォグオフセット
 #define  DRA_BARK_MOVE_STOP_SE_FRAME (60) // 咆える前の停止音再生タイミング
-#define  DRA_BARK_FRAME_HERO (10) // ドラゴンがほえるタイミング（アニメーション終了タイミングから値分さかのぼったタイミングでなく）
-#define  DRA_BARK_FRAME_ENEMY (10) // ドラゴンがほえるタイミング（アニメーション終了タイミングから値分さかのぼったタイミングでなく）
+#define  DRA_BARK_FRAME_HERO (50) // ドラゴンがほえるタイミング
+#define  DRA_BARK_FRAME_ENEMY (50) // ドラゴンがほえるタイミング
 #define  DRA_BARK_MOVE_START_SE_FRAME (26) // 咆えた後の移動開始音再生タイミング
 #define  DRA_BUMP_SE_FRAME (6) // 衝突音の再生タイミング
 #define  DRA_STOP_SE_FRAME (5) // ドラゴン停止音の再生タイミング

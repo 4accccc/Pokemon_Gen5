@@ -186,7 +186,6 @@ static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
 static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void UpdateFrame( TRACE_MOVE_DATA *p_md );
-static void CallShakeCamera_Bark( FIELDMAP_WORK *p_fld_wk );
 static void CallShakeCamera_Bump( FIELDMAP_WORK *p_fld_wk );
 static u32 get_anmend_frame( TRACE_MOVE_DATA *p_md );
 
@@ -1376,9 +1375,9 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
     {
       // ©‹@ƒhƒ‰ƒSƒ“‚Ì™ôšK
 #ifdef PM_DEBUG
-      if( p_wk->event_frame == debug_dragon_bark_value )
+      if( end_frame == (p_wk->event_frame + debug_dragon_bark_value) )
 #else
-      if( p_wk->event_frame == DRA_BARK_FRAME_HERO )
+      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_HERO) )
 #endif
       {
         // ™ô‚¦‚é‰¹Ä¶
@@ -1388,13 +1387,23 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
       }
 
       // “Gƒhƒ‰ƒSƒ“‚Ì™ôšK
-      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_ENEMY) )
+      if( end_frame == (p_wk->event_frame + DRA_BARK_MOVE_STOP_SE_FRAME) )
       {
         // ™ô‚¦‚é‰¹Ä¶
-        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BARK );
+        PMSND_StopSE();
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_STOP );
         p_wk->bark_seq++;
         ONOUE_Printf("ƒhƒ‰ƒSƒ“™ôšKF“Gƒhƒ‰ƒSƒ“™ôšK‰¹‚ÌÄ¶\n");
       }
+
+//      // “Gƒhƒ‰ƒSƒ“‚Ì™ôšK
+//      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_ENEMY) )
+//      {
+//        // ™ô‚¦‚é‰¹Ä¶
+//        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BARK );
+//        p_wk->bark_seq++;
+//        ONOUE_Printf("ƒhƒ‰ƒSƒ“™ôšKF“Gƒhƒ‰ƒSƒ“™ôšK‰¹‚ÌÄ¶\n");
+//      }
     }
     break;
   }
@@ -1423,35 +1432,6 @@ static u32 get_anmend_frame( TRACE_MOVE_DATA *p_md )
 
   GF_ASSERT(0);
   return 0;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ƒJƒƒ‰U“®ƒCƒxƒ“ƒgŒÄ‚Ño‚µ(ƒhƒ‰ƒSƒ“™ôšK)
- *
- *	@param	*p_fld_wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void CallShakeCamera_Bark( FIELDMAP_WORK *p_fld_wk )
-{
-  FIELD_TASK* cam;
-  FIELD_TASK_MAN* taskMan;
-
-  CAM_SHAKE_PARAM shakeParam;
-  GFL_STD_MemFill(&shakeParam, 0, sizeof(shakeParam)); // ƒpƒ‰ƒ[ƒ^‚Ì‰Šú‰»
-  shakeParam.Width           = DRA_BARK_CAMERA_SHAKE_W;
-  shakeParam.Height          = DRA_BARK_CAMERA_SHAKE_H;
-  shakeParam.Sync            = DRA_BARK_CAMERA_SHAKE_SYNC;
-  shakeParam.Time            = DRA_BARK_CAMERA_SHAKE_TIME;
-  shakeParam.ShakeType       = CAM_SHAKE_TYPE_TARGET_POS;
-
-  cam = FIELD_TASK_ShakeCamera( p_fld_wk, &shakeParam );
-  taskMan = FIELDMAP_GetTaskManager( p_fld_wk );
-  FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
-
-  ONOUE_Printf("ƒJƒƒ‰‚ä‚êÄ¶iƒhƒ‰ƒSƒ“™ôšKj\n");
 }
 
 //----------------------------------------------------------------------------
