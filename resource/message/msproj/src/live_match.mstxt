@@ -42,7 +42,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -95,7 +95,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -141,6 +141,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_04"
@@ -180,6 +187,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_05"
@@ -219,6 +233,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_06"
@@ -270,7 +291,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -308,6 +329,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_SELECT_01"
@@ -341,6 +369,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_07"
@@ -376,6 +411,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_08"
@@ -410,6 +452,14 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANから未使用になる
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-10-03T10:07:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -417,6 +467,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_09"
@@ -452,6 +509,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_10"
@@ -495,6 +559,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_11"
@@ -530,6 +601,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_SELECT_02"
@@ -563,6 +641,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_SELECT_03"
@@ -596,6 +681,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_SELECT_04"
@@ -629,6 +721,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_12"
@@ -664,6 +763,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_13"
@@ -701,6 +807,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_14"
@@ -736,6 +849,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_15"
@@ -773,7 +893,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -819,6 +939,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_17"
@@ -854,6 +981,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_18"
@@ -895,6 +1029,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_19"
@@ -930,6 +1071,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_20"
@@ -965,6 +1113,13 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_21"
@@ -1004,7 +1159,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1051,6 +1206,13 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_22_2"
@@ -1093,6 +1255,13 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_22_3"
@@ -1135,6 +1304,13 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_STR_23"
@@ -1168,6 +1344,13 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="LIVE_SELECT_05"
@@ -1273,7 +1456,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1315,7 +1498,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1366,7 +1549,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1415,7 +1598,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1468,7 +1651,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1523,7 +1706,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1572,7 +1755,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1657,7 +1840,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1709,7 +1892,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1732,15 +1915,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　かずが
-じょうけん　みたしていません▼</Text>
+			<Text>ポケモンの　数が
+条件　満たしていません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:57:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1761,7 +1944,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1785,14 +1968,14 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　レベルが
-じょうけん　みたしていません▼</Text>
+条件　満たしていません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:57:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1812,7 +1995,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1835,15 +2018,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんかが　できない
+			<Text>参加が　できない
 ポケモンが　います▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:55:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1863,7 +2046,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1886,15 +2069,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おなじ　しゅるいの
+			<Text>同じ　しゅるいの
 ポケモンが　います▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:55:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1914,7 +2097,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1937,15 +2120,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おなじ　どうぐを　もった
+			<Text>同じ　どうぐを　もった
 ポケモンが　います▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:55:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1966,7 +2149,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2015,7 +2198,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2038,15 +2221,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もたせられない　どうぐを
+			<Text>持たせられない　どうぐを
 もっています▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T13:01:41" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2067,7 +2250,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2090,15 +2273,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんかが　ひつような
+			<Text>参加が　必要な
 ポケモンが　いません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T13:01:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2119,7 +2302,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2142,15 +2325,15 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんか　できる　レベルの　ごうけいが
-じょうけんを　みたして　いません▼</Text>
+			<Text>参加　できる　レベルの　合計が
+条件を　満たして　いません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T13:01:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2170,7 +2353,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2194,7 +2377,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいかいの　ルールを　かくにんして
+			<Text>大会の　ルールを　確認して
 バトルボックスに　ポケモンを▽
 セット　してください▼</Text>
 			<TextModifiedBy
@@ -2202,8 +2385,8 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:57:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2222,7 +2405,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2246,16 +2429,16 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]　のこり　[Digit:1digit Idx="2" ]ひき
-[Name:TrainerName Idx="1" ]　のこり　[Digit:1digit Idx="3" ]ひき▽
-[Name:TrainerName ]　は　かちました▼</Text>
+			<Text>[Name:TrainerName ]　残り　[Digit:1digit Idx="2" ]匹
+[Name:TrainerName Idx="1" ]　残り　[Digit:1digit Idx="3" ]匹▽
+[Name:TrainerName ]　は　勝ちました▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:59:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2277,7 +2460,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2301,16 +2484,16 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]　のこり　[Digit:1digit Idx="2" ]ひき
-[Name:TrainerName Idx="1" ]　のこり　[Digit:1digit Idx="3" ]ひき▽
-[Name:TrainerName ]　は　まけました▼</Text>
+			<Text>[Name:TrainerName ]　残り　[Digit:1digit Idx="2" ]匹
+[Name:TrainerName Idx="1" ]　残り　[Digit:1digit Idx="3" ]匹▽
+[Name:TrainerName ]　は　負けました▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:59:52" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2332,7 +2515,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2356,16 +2539,16 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]　のこり　[Digit:1digit Idx="2" ]ひき
-[Name:TrainerName Idx="1" ]　のこり　[Digit:1digit Idx="3" ]ひき▽
-[Name:TrainerName ]　は　ひきわけました▼</Text>
+			<Text>[Name:TrainerName ]　残り　[Digit:1digit Idx="2" ]匹
+[Name:TrainerName Idx="1" ]　残り　[Digit:1digit Idx="3" ]匹▽
+[Name:TrainerName ]　は　引き分けました▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-03T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="shimoyamada:W00184"
+				Time="2011-10-03T12:59:52" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2387,7 +2570,7 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
