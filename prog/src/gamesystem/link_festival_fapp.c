@@ -108,7 +108,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   //ハイリンクの経験値
   {
     u16 up_level,now_level;
-    int step;
+    int step, is_up;
     OCCUPY_INFO* occupy_sv = GAMEDATA_GetMyOccupyInfo( wk->gdata );
     u32 exp = FMISSION_SAVE_GetHilinkLevelExp( f_save, wk->m_beacon->version_idx );
 
@@ -122,6 +122,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     }else{
       now_level = OccupyInfo_GetBlackLevel( occupy_sv );
     }
+#if 0
     //閾値は現Lv*10(上限100) ミッション未クリア時のレベルは0～なので+1
     step = (now_level+1)*10;
     if( step > 100 ){
@@ -138,6 +139,36 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     }else{
       pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, up_level );
     }
+#else
+    IWASAWA_Printf("FMResult exp = %d, n_level = %d\n", exp, now_level );
+    up_level = 0;
+    do{
+      //閾値は現Lv*10(上限100) ミッション未クリア時のレベルは0～なので+1
+      step = (now_level+1)*10;
+      if( step > 100 ){
+        step = 100;
+      }
+      is_up = exp/step;
+      
+      if( is_up > 0 ){
+        up_level += 1;
+        now_level += 1;
+        exp -= step;
+      }
+    }while( is_up );
+    
+    //パレスレベルを上げる
+    pl->hilink_version = wk->m_beacon->version_idx;
+    if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
+      pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, up_level );
+    }else{
+      pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, up_level );
+    }
+    IWASAWA_Printf(" -> up = %d, exp = %d\n", pl->hilink_level_up, exp );
+    
+    //余りの経験値をセーブに書き戻し
+    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp );
+#endif
   }
 
   //メダルチェック
