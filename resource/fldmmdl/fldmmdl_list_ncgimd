@@ -325,6 +325,7 @@ FMMDL_RESLIST_NCGIMD = \
 	poke57.imd \
 	swsage1b.imd \
 	wand.imd \
+	swiris.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
