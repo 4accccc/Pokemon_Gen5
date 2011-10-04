@@ -430,13 +430,28 @@
 ムイミ……▽
 ワレワレ　エイエン……</language>
 	</row>
-	<row id="pw_turn_hero_6">
+	<row id="pw_turn_hero_7">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　のこされた
+じかんは　すくない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　残された
+時間は　少ない！</language>
+	</row>
+	<row id="pw_turn_enemy_7">
+		<language name="JPN" width="256">かいぶつ『ジカン……
+ムイミ……▽
+ワレワレ　エイエン……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『ジカン……▼
+ダイ４ノ　ポテンシャル
+ムイミ……▽
+ワレワレ　エイエン……</language>
+	</row>
+	<row id="pw_turn_hero_9">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……
 いますぐ　なんとかしないと！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……
 今すぐ　なんとかしないと！</language>
 	</row>
-	<row id="pw_turn_enemy_6">
+	<row id="pw_turn_enemy_9">
 		<language name="JPN" width="256">かいぶつ『イノチ……　オワル
 スベテ……　ム……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『イノチ……　オワル▼
@@ -562,8 +577,8 @@
 		<language name="JPN_KANJI" width="256">かいぶつ『バヒュッ！▼
 コレガ　コノ　ホシノ
 イキモノノ……　カンジョウ……▼
-シンケイ　ノウサイボウ
-フカンゼン　ユエノ……</language>
+コタイトシテノ　レゾンデートルニ
+コシツスル　ユエノ……</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">かいぶつ『ココロ……
