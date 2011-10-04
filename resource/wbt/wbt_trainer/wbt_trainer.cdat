@@ -1227,7 +1227,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 3, //優先度
 		12, //パワー乱数
 		 0, //AI
-		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_VS_HUE                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
@@ -1249,7 +1249,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 4, //優先度
 		12, //パワー乱数
 		 0, //AI
-		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
