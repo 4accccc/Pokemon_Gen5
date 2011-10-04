@@ -786,6 +786,8 @@ _EVENT_DATA ev_TRID_BUSINESS1_13
 _EVENT_DATA ev_TRID_OL_10
 _EVENT_DATA ev_TRID_KARATE_33
 _EVENT_DATA ev_TRID_BATTLEG_25
+_EVENT_DATA ev_TRID_BCHAMP_1_01
+_EVENT_DATA ev_TRID_BCHAMP2_1_01
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1562,6 +1564,8 @@ ev_TRID_BUSINESS1_13:
 ev_TRID_OL_10:
 ev_TRID_KARATE_33:
 ev_TRID_BATTLEG_25:
+ev_TRID_BCHAMP_1_01:
+ev_TRID_BCHAMP2_1_01:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------

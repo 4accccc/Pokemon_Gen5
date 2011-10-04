@@ -165,7 +165,7 @@
 #define	TRTYPE_RANGERM_2    ( 152 )    //RANGERM_2♂ボストレーナー
 #define	TRTYPE_RANGERW_1    ( 153 )    //RANGERW_1♀ボストレーナー
 #define	TRTYPE_RANGERW_2    ( 154 )    //RANGERW_2♀ボストレーナー
-#define	TRTYPE_BCHAMP_1    ( 155 )    //BCHAMP_1♂ボストレーナー
+#define	TRTYPE_BCHAMP_1    ( 155 )    //BCHAMP_1♂サブウェイマスター
 #define	TRTYPE_BCHAMP_2    ( 156 )    //BCHAMP_2♂ボストレーナー
 #define	TRTYPE_ELITEM_2    ( 157 )    //ELITEM_2♂ボストレーナー
 #define	TRTYPE_ELITEM_3    ( 158 )    //ELITEM_3♂ボストレーナー
@@ -175,7 +175,7 @@
 #define	TRTYPE_VETERANM_4    ( 162 )    //VETERANM_4♂ボストレーナー
 #define	TRTYPE_VETERANW_3    ( 163 )    //VETERANW_3♀ボストレーナー
 #define	TRTYPE_VETERANW_4    ( 164 )    //VETERANW_4♀ボストレーナー
-#define	TRTYPE_BCHAMP2_1    ( 165 )    //BCHAMP2_1♂ボストレーナー
+#define	TRTYPE_BCHAMP2_1    ( 165 )    //BCHAMP2_1♂サブウェイマスター
 #define	TRTYPE_BCHAMP2_2    ( 166 )    //BCHAMP2_2♂ボストレーナー
 #define	TRTYPE_DPLEADER1    ( 167 )    //DPLEADER1♂ヒョウタ
 #define	TRTYPE_DPLEADER2    ( 168 )    //DPLEADER2♀ナタネ

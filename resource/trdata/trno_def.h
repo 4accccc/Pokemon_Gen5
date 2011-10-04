@@ -781,7 +781,9 @@
 #define	TRID_OL_10   ( 768 ) 
 #define	TRID_KARATE_33   ( 769 ) 
 #define	TRID_BATTLEG_25   ( 770 ) 
-#define TRID_MAX  ( 771 )
+#define	TRID_BCHAMP_1_01   ( 771 ) 
+#define	TRID_BCHAMP2_1_01   ( 772 ) 
+#define TRID_MAX  ( 773 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

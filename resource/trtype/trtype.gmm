@@ -1221,8 +1221,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP_1">
-		<language name="JPN" width="216">ボストレーナー</language>
-		<language name="JPN_KANJI" width="216">ボストレーナー</language>
+		<language name="JPN" width="216">サブウェイマスター</language>
+		<language name="JPN_KANJI" width="216">サブウェイマスター</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP_2">
@@ -1271,8 +1271,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP2_1">
-		<language name="JPN" width="216">ボストレーナー</language>
-		<language name="JPN_KANJI" width="216">ボストレーナー</language>
+		<language name="JPN" width="216">サブウェイマスター</language>
+		<language name="JPN_KANJI" width="216">サブウェイマスター</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP2_2">

@@ -627,7 +627,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 25,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.155 BCHAMP_1♂ボストレーナー
+	{ // No.155 BCHAMP_1♂サブウェイマスター
 		 87,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -667,7 +667,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 70,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.165 BCHAMP2_1♂ボストレーナー
+	{ // No.165 BCHAMP2_1♂サブウェイマスター
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
