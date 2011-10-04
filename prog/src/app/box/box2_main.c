@@ -2055,8 +2055,10 @@ static BOOL PokeIconObjMoveMultiSelect( BOX2_SYS_WORK * syswk )
 //			BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
 //			BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
 
-			BOX2OBJ_VanishMultiSelectIcon( syswk->app, FALSE );
+//			BOX2OBJ_VanishMultiSelectIcon( syswk->app, FALSE );
 		}
+
+		BOX2OBJ_VanishMultiSelectIcon( syswk->app, FALSE );
 
 		return FALSE;
 	}
@@ -7763,18 +7765,21 @@ BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 {
 	int x,y;
 	int state;
+	u32	sx;
   
 	// 元の場所か?
 	if( syswk->get_tray == tray && syswk->get_pos == pos ){
 		return TRUE;
 	}
 
+	sx = BOX2MAIN_GetMultiWidth( syswk, syswk->get_pos );
+
 	// トレイ
 	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 		for( y=0; y<syswk->app->multi_h; y++ ){
 			for( x=0; x<syswk->app->multi_w; x++ ){
 				// 存在チェック
-				if( syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 0 ){
+				if( syswk->app->multi_pokemon_id[y*sx+x] == 0 ){
 					continue;
 				}
 				// 範囲チェック
@@ -7783,6 +7788,11 @@ BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 				}
 				// 衝突しているかどうか
 				if( BOXDAT_PokeParaGet(syswk->dat->sv_box,tray,pos+y*BOX_MAX_COLUMN+x,ID_PARA_poke_exist,NULL) == 1 ){
+					// 手持ちを取得している
+					if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+						return FALSE;
+					}
+					// トレイが違う
 					if( syswk->tray != syswk->get_tray ){
 						return FALSE;
 					}
