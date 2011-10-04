@@ -442,11 +442,9 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   { 
     L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
   },
-#if 0
   { 
     L"レギュレーション赤外線送信", LISTDATA_SEQ_SEND_IRC_REGULATION,
   },
-#endif
   { 
     L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
   },

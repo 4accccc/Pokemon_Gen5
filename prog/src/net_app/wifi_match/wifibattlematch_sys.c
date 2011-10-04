@@ -1309,6 +1309,7 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     u8 dummy;
 
     Util_GetRestPoke( p_param->p_btl_setup_param, &my_rest_poke, &you_rest_poke );
+    p_wk->btl_score.player_rest_poke = my_rest_poke;
     p_wk->btl_score.enemy_rest_poke = you_rest_poke;
     
     Util_GetRestHp( p_param->p_btl_setup_param, &dummy, &p_wk->btl_score.enemy_rest_hp );

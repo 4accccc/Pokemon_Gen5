@@ -51,6 +51,7 @@ extern void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, 
 extern BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk );
 extern void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk );
 extern void WBM_TEXT_ClearCharacterVram( WBM_TEXT_WORK* p_wk );
+extern void WBM_TEXT_PrintBuf( WBM_TEXT_WORK* p_wk, const STRBUF *cp_str, WBM_TEXT_TYPE type );
 
 
 extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font );

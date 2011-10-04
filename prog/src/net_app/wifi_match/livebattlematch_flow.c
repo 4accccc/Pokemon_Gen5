@@ -155,6 +155,8 @@ struct _LIVEBATTLEMATCH_FLOW_WORK
 
   BOOL                          is_my_matching_ok;
   BOOL                          is_you_matching_ok;
+  u32                           failed_bit;
+  u32                           failed_cnt;
 };
 
 //=============================================================================
@@ -191,6 +193,7 @@ static void UTIL_LIST_Delete( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static u32 UTIL_LIST_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 //テキスト
 static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type );
+static void UTIL_TEXT_PrintExpand( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type );
 static BOOL UTIL_TEXT_IsEnd( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 //フロー終了
 static void UTIL_FLOW_End( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LIVEBATTLEMATCH_FLOW_RET ret );
@@ -215,6 +218,8 @@ static void UTIL_DATA_GetBtlBoxParty( LIVEBATTLEMATCH_FLOW_WORK *p_wk, POKEPARTY
 //自分のデータ作成
 static void UTIL_DATA_SetupMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static void UTIL_DATA_SetupMyData_Debug( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, LIVEBATTLEMATCH_FLOW_WORK *p_wk );
+
+static u32 Util_BtlResult_GetStrID( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 
 //-------------------------------------
 ///	デバッグ
@@ -975,6 +980,9 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_DIRTY_END,        //失敗したので戻る
 
     SEQ_WAIT_MSG,       //メッセージ待ち 
+
+    SEQ_START_MSG_DIRTY_REG_NEXT,
+    SEQ_START_MSG_DIRTY_REG_END,
   };
 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
@@ -1065,7 +1073,6 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
   case SEQ_CHECK_REG:        //バトルボックスのポケモンがレギュレーションと一致するかチェック
     { 
-      u32 failed_bit  = 0;
       REGULATION      *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
       UTIL_DATA_GetBtlBoxParty( p_wk, p_wk->p_party );
 
@@ -1076,21 +1083,71 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
       else
       { 
-        if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_party, &failed_bit) )
+        POKE_REG_RETURN_ENUM reg = PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_party, &p_wk->failed_bit);
+        p_wk->failed_cnt = 0;
+        if( POKE_REG_OK == reg )
         {
           OS_TPrintf( "バトルボックスのポケモンレギュレーションOK\n" );
           *p_seq  = SEQ_LOCK_BTLBOX;
         }
         else
         { 
-          OS_TPrintf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
-          *p_seq  = SEQ_START_MSG_DIRTY_REG;
+          OS_TPrintf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", p_wk->failed_bit );
+
+          //条件を満たしていません
+          UTIL_TEXT_Print( p_wk, LIVE_STR_32, WBM_TEXT_TYPE_STREAM );
+          *p_seq       = SEQ_WAIT_MSG;
+          WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_DIRTY_REG );
         }
       }
     }
     break;
   case SEQ_START_MSG_DIRTY_REG:  //レギュレーションと一致しなかった
-    UTIL_TEXT_Print( p_wk, LIVE_STR_08, WBM_TEXT_TYPE_STREAM );
+
+    //ビットがたってるとこまですすめる
+    while( (1<<p_wk->failed_cnt) <= POKEFAILEDBIT_SUM_LEVEL )
+    {
+      if( p_wk->failed_bit & (1<<p_wk->failed_cnt))
+      {
+        break;
+      }
+      p_wk->failed_cnt++;
+    }
+
+    if( (1<<p_wk->failed_cnt) <= POKEFAILEDBIT_SUM_LEVEL )
+    {
+      UTIL_TEXT_Print( p_wk, LIVE_STR_33+p_wk->failed_cnt, WBM_TEXT_TYPE_STREAM );
+      *p_seq       = SEQ_WAIT_MSG;
+      WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_DIRTY_REG_NEXT );
+    }
+    else
+    {
+      *p_seq      = SEQ_START_MSG_DIRTY_REG_NEXT;
+    }
+    break;
+
+  case SEQ_START_MSG_DIRTY_REG_NEXT:
+    p_wk->failed_cnt++;
+    while( (1<<p_wk->failed_cnt) <= POKEFAILEDBIT_SUM_LEVEL )
+    {
+      if( p_wk->failed_bit & (1<<p_wk->failed_cnt))
+      {
+        break;
+      }
+      p_wk->failed_cnt++;
+    }
+    if( (1<<p_wk->failed_cnt) <= POKEFAILEDBIT_SUM_LEVEL )
+    {
+      *p_seq = SEQ_START_MSG_DIRTY_REG;
+    }
+    else
+    {
+      *p_seq = SEQ_START_MSG_DIRTY_REG_END;
+    }
+    break;
+
+  case SEQ_START_MSG_DIRTY_REG_END:
+    UTIL_TEXT_Print( p_wk, LIVE_STR_42, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
     break;
@@ -1246,6 +1303,9 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_UNREGISTER_END,   //解除して終了した
 
     SEQ_WAIT_MSG,         //メッセージ待ち 
+
+    //SWANで追加
+    SEQ_BTL_RESULT,     //対戦結果
   };
 
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
@@ -1350,7 +1410,11 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             *p_seq  = SEQ_CHECK_LOOKBACK;
             break;
 
-          case 2: //参加解除する
+          case 2: //結果を確認
+            *p_seq  = SEQ_BTL_RESULT;
+            break;
+
+          case 3: //参加解除する
             *p_seq  = SEQ_START_MSG_UNREG;
             break;
           }
@@ -1519,6 +1583,15 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       WBM_SEQ_NextReservSeq( p_seqwk );
     } 
 		break;
+
+  case SEQ_BTL_RESULT:     //対戦結果
+    {
+      u32 strID = Util_BtlResult_GetStrID( p_wk );
+      UTIL_TEXT_PrintExpand( p_wk, strID, WBM_TEXT_TYPE_STREAM );
+    }
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MENU );
+    break;
   }
 }
 //----------------------------------------------------------------------------
@@ -2099,6 +2172,8 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_RETURN,   //まだ戦える
 
     SEQ_WAIT_MSG,         //メッセージ待ち 
+
+    SEQ_BTL_RESULT,     //対戦結果
   };
   LIVEBATTLEMATCH_FLOW_WORK *p_wk = p_wk_adrs;
 
@@ -2199,8 +2274,12 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
             *p_seq  = SEQ_LOOKBACK_END;
 #endif
             break;
+          
+          case 1: //結果を確認
+            *p_seq  = SEQ_BTL_RESULT;
+            break;
 
-          case 1: //おわる
+          case 2: //おわる
             *p_seq  = SEQ_START_MSG_END;
             break;
           }
@@ -2282,6 +2361,16 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       WBM_SEQ_NextReservSeq( p_seqwk );
     }
 		break;
+
+
+  case SEQ_BTL_RESULT:     //対戦結果
+    {
+      u32 strID = Util_BtlResult_GetStrID( p_wk );
+      UTIL_TEXT_PrintExpand( p_wk, strID, WBM_TEXT_TYPE_STREAM );
+    }
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_LAST );
+    break;
   }
 }
 
@@ -2340,8 +2429,9 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     { 
       setup.strID[0]= LIVE_SELECT_02;
       setup.strID[1]= LIVE_SELECT_03;
-      setup.strID[2]= LIVE_SELECT_04;
-      setup.list_max= 3;
+      setup.strID[2]= LIVE_SELECT_06;
+      setup.strID[3]= LIVE_SELECT_04;
+      setup.list_max= 4;
     }
     else
     { 
@@ -2356,8 +2446,9 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
     if( p_wk->is_rec  && !p_wk->param.p_btl_score->is_error )
     { 
       setup.strID[0]= LIVE_SELECT_03;
-      setup.strID[1]= LIVE_SELECT_05;
-      setup.list_max= 2;
+      setup.strID[1]= LIVE_SELECT_06;
+      setup.strID[2]= LIVE_SELECT_05;
+      setup.list_max= 3;
     }
     else
     { 
@@ -2428,6 +2519,27 @@ static u32 UTIL_LIST_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type )
 { 
   WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, type );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字列展開した文章を表示
+ *
+ *	@param	LIVEBATTLEMATCH_FLOW_WORK *p_wk ワーク
+ *	@param	strID 文字
+ *	@param	type  タイプ
+ */
+//-----------------------------------------------------------------------------
+static void UTIL_TEXT_PrintExpand( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type )
+{
+  STRBUF *p_src = GFL_MSG_CreateString( p_wk->p_msg, strID );
+  STRBUF *p_dst = GFL_MSG_CreateString( p_wk->p_msg, strID );
+
+  WORDSET_ExpandStr( p_wk->p_word, p_dst, p_src );
+
+  WBM_TEXT_PrintBuf( p_wk->param.p_text, p_dst, type );
+
+  GFL_STR_DeleteBuffer( p_dst );
+  GFL_STR_DeleteBuffer( p_src );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2790,6 +2902,44 @@ static void UTIL_DATA_SetupMyData_Debug( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, L
   { 
     p_my_data->wificup_no = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトル結果文字ID取得（内部でワードセットも行う）
+ *
+ *	@param	LIVEBATTLEMATCH_FLOW_WORK *p_wk ワーク
+ *
+ *	@return 結果MSGID取得
+ */
+//-----------------------------------------------------------------------------
+static u32 Util_BtlResult_GetStrID( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
+{
+  const BATTLEMATCH_BATTLE_SCORE *cp_score = p_wk->param.p_btl_score;
+  MYSTATUS  *p_my  = GAMEDATA_GetMyStatus(p_wk->param.p_gamedata);
+  const WIFIBATTLEMATCH_ENEMYDATA *cp_enemy_data = p_wk->param.p_enemy_data;
+  u32 strID = 0;
+  switch( cp_score->result )
+  {
+  case BTL_RESULT_RUN_ENEMY:
+  case BTL_RESULT_WIN:
+    strID = LIVE_STR_43;
+    break;
+  case BTL_RESULT_RUN:
+  case BTL_RESULT_LOSE:
+    strID = LIVE_STR_44;
+    break;
+  default:
+    GF_ASSERT_MSG_HEAVY(0, "バトル結果不正値 %d\n", cp_score->result );
+  case BTL_RESULT_DRAW:
+    strID = LIVE_STR_45;
+    break;
+  }
+  WORDSET_RegisterPlayerName( p_wk->p_word, 0, p_my );
+  WORDSET_RegisterPlayerName( p_wk->p_word, 1, (MYSTATUS*)cp_enemy_data->mystatus );
+  WORDSET_RegisterNumber( p_wk->p_word, 2, cp_score->player_rest_poke, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( p_wk->p_word, 3, cp_score->enemy_rest_poke, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+  return strID;
 }
 
 //=============================================================================

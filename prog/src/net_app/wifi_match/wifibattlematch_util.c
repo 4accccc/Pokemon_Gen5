@@ -219,6 +219,21 @@ void WBM_TEXT_Print( WBM_TEXT_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, WBM_TEX
 
   WBM_TEXT_PrintInner( p_wk, type );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ *	@param	STRBUF *cp_str  文字
+ *	@param	type  タイプ
+ */
+//-----------------------------------------------------------------------------
+void WBM_TEXT_PrintBuf( WBM_TEXT_WORK* p_wk, const STRBUF *cp_str, WBM_TEXT_TYPE type )
+{
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_str );
+
+  WBM_TEXT_PrintInner( p_wk, type );
+}
 
 //----------------------------------------------------------------------------
 /**
