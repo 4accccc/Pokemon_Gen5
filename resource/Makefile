@@ -23,7 +23,6 @@ endif
 
 
 SUBDIRS	=	wmi \
-			demo3d \
 			tokusei\
 			waza_tbl\
 			itemconv\
@@ -50,6 +49,7 @@ SUBDIRS	=	wmi \
 			manual \
 			medal\
 			fldmmdl \
+			demo3d \
 			wbt \
 			entry_checker \
 			pokewood \
