@@ -3258,9 +3258,6 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         // 草原、水、釣りのアイコンの明るさを変更する
         Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
 
-        // 生息地リストへ飛ぶボタンの状況を設定する
-        SetAreaJumpButtonState( param,work ,cmn ,TRUE);
-
         if( work->select_data_idx != DATA_IDX_NONE )
         {
           PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -3284,9 +3281,6 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 
       // 草原、水、釣りのアイコンの明るさを変更する
       Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
-
-      // 生息地リストへ飛ぶボタンの状況を設定する
-      SetAreaJumpButtonState( param,work ,cmn ,TRUE);
 
       if( old_select_data_idx == work->select_data_idx )
       {
@@ -3316,7 +3310,6 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work ,ZKNDTL_COMMON_WORK* cmn)
 {
   u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[work->select_data_idx];
-  u8 place_bitflag = work->area_data->season_data[PMSEASON_SPRING].place_bitflag[zkn_area_idx];
 
   // 今の季節の生息地が判明しているとき
   if( work->habitat == HABITAT_KNOWN )
@@ -3324,15 +3317,21 @@ static BOOL CheckCanSelectNowZone( ZUKAN_DETAIL_MAP_WORK* work ,ZKNDTL_COMMON_WO
     if( work->select_data_idx != DATA_IDX_NONE )
     {
       // 選択判定(1年中同じ時は春のデータしか見ない)
+      u8 place_bitflag;
       u8 season_id;
       if( work->appear_rule == APPEAR_RULE_YEAR )
       {
-        season_id = work->season_id;
+        season_id =PMSEASON_SPRING;
       }
       else
       {
-        season_id =PMSEASON_SPRING;
+        season_id = work->season_id;
       }
+
+      // ビットフラグを設定
+      place_bitflag = work->area_data->season_data[season_id].place_bitflag[zkn_area_idx];
+
+      // チェック
       if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] )
       {
         // 表示状態更新
@@ -4467,6 +4466,14 @@ static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* para
         place_icon_screen_chr[i][2],
         place_icon_screen_chr[i][3],
         place_icon_bg_pal_pos[i][brighten[i]] );
+  }
+
+  
+  // 選択状態の時のみ
+  if( (work->state == STATE_SELECT) || (work->state == STATE_SELECT_DRAW_SEASON_AREA) )
+  {
+    // 生息地リストへ飛ぶボタンの状況を設定する
+    SetAreaJumpButtonState( param,work ,cmn ,TRUE);
   }
 
   GFL_BG_LoadScreenV_Req( BG_FRAME_S_PLACE );
