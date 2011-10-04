@@ -26,7 +26,7 @@
 #define  DRA_BARK_CAMERA_SHAKE_SYNC (3) // 1周期するのにかかるシンク数(ドラゴン咆哮時)
 #define  DRA_BARK_CAMERA_SHAKE_TIME (6) // ゆれ回数(ドラゴン咆哮時)
 #define  DRA_BARK_EFFECT_CAM_START (70) // ドラゴン咆哮時の演出カメラの開始タイミング
-#define  DRA_BARK_EFFECT_CAM_END (0) // ドラゴン咆哮時の演出カメラの終了タイミング
+#define  DRA_BARK_EFFECT_CAM_END (30) // ドラゴン咆哮時の演出カメラの終了タイミング
 #define  DRA_BUMP_CAMERA_SHAKE_FRAME (5) // 衝突時のカメラゆれ開始タイミング（ドラゴン衝突時）
 #define  DRA_BUMP_CAMERA_SHAKE_W (1) // 揺れ幅（ドラゴン衝突時）
 #define  DRA_BUMP_CAMERA_SHAKE_H (2) // 揺れ高さ（ドラゴン衝突時）
