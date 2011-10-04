@@ -247,8 +247,6 @@ enum{
 enum{
 	MOVE_IN_SPEED		= 9,		// スクロールイン
 	MOVE_OUT_SPEED		= 9,		// スクロールアウト
-//	MOVE_IN_SPEED		= 18,		// スクロールイン
-//	MOVE_OUT_SPEED		= 36,		// スクロールアウト
 };
 
 // empty
@@ -664,7 +662,6 @@ static void wbt_main( WBTLIST_MAIN_WORK* wk );
 static void wbt_exit( WBTLIST_MAIN_WORK* wk );
 static BOOL wbt_wait_exit( WBTLIST_MAIN_WORK* wk );
 static void wbt_up(   WBTLIST_MAIN_WORK* wk );
-static void wbt_down( WBTLIST_MAIN_WORK* wk );
 //
 static void wbt_key_00( WBTLIST_MAIN_WORK* wk );
 static void wbt_key_all( WBTLIST_MAIN_WORK* wk );
@@ -1161,7 +1158,6 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	
 	// 会話ウィンドウセット(キャラデータを転送)
 	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, MES_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_SYSTEM, wk->heapID);
-//	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, MES_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_TALK, wk->heapID);
 	// 会話ウインドウ表示
 	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON, MES_WIN_TOP_CHR, PLTID_BG_MESWIN );
 	//
@@ -1208,8 +1204,6 @@ static void wbt_main( WBTLIST_MAIN_WORK* wk )
 {
 	// 上画面
 	wbt_up( wk );
-	// 下画面
-	wbt_down( wk );
 	//
 	// debug
 	wbt_debug( wk );
@@ -1266,20 +1260,6 @@ static void wbt_up( WBTLIST_MAIN_WORK* wk )
 {
 	// 入力
 	wbt_key_all( wk );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  処理の流れ(main)(下画面)
- *
- *	@param	WBTLIST_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wbt_down( WBTLIST_MAIN_WORK* wk )
-{
-	// 念のため用意しておく
 }
 
 //-----------------------------------------------------------------------------
@@ -1580,7 +1560,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 	// debug
 	if(step != wk->Step){
 #ifdef _DEBUG_LOCAL_
-		OS_Printf("step :%d\n",wk->Step);
+//		OS_Printf("step :%d\n",wk->Step);
 #endif
 	}
 }
@@ -2260,7 +2240,7 @@ static void wbt_init_move_panel_pos( WBTLIST_MAIN_WORK* wk, const s32 wnum, cons
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  パネル移動(要整理)
+ *	@brief  パネル移動
  *
  *	@param	WBTLIST_MAIN_WORK* wk
  *
@@ -2437,7 +2417,7 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 		if(wk->RandCount >= 3){
 			wk->RandCount = 3;
 		}
-		OS_Printf("rand :%d\n",num);
+//		OS_Printf("rand :%d\n",num);
 		//
 		tmp = wbt_get_param( wk, PRM_MESID, 0 );
 		wbt_set_meswin( wk, (tmp+num) );
@@ -2561,7 +2541,6 @@ static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 m
 	
 	// アニメのシーケンスセット
 	anum = wbt_bar_anim_tbl[wnum*8+umode*4+2+mode];
-//	u16		anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[clwnum] );
 	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[clwnum], anum );
 	//
 	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[clwnum], TRUE );

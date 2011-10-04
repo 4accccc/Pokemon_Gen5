@@ -79,11 +79,8 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
 	GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-//	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-//	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
-//	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
 	GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_32K,// メイン画面OBJマッピングモード		
@@ -103,7 +100,6 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 //=====================================
 static const GFL_BG_SYS_HEADER sc_bgsys_header	=
 {	
-//	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 };
 //-------------------------------------
@@ -148,7 +144,6 @@ static const struct
 		{
 			0, 0, 0x0800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-//			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ(BG3と共有)
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
@@ -184,7 +179,6 @@ static const struct
 		{
 			0, 0, 0x800, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-//			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
 			GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ(BG2と共有)
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		},
