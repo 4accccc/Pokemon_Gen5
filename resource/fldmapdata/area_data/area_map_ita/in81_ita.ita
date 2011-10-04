@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-09-28T14:47:36" source="in81_ita.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-10-03T16:48:06" source="in81_ita.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="150"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="17 17"
+	compress_material="on" material_size="16 16"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -140,7 +140,7 @@
 	0.959961 0.966553 0.973389 0.979980 0.986572 0.993408 1.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="13">
+<tex_srt_anm_array size="12">
 	<tex_srt_anm index="0" material_name="in81_magu01">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
@@ -219,13 +219,6 @@
 		<tex_translate_t frame_step="1" data_size="151" data_head="906"/>
 	</tex_srt_anm>
 	<tex_srt_anm index="11" material_name="in81_magu06_4">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="151" data_head="906"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="12" material_name="in81_magu06_5">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
