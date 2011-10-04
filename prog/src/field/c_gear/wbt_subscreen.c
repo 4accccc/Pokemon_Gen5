@@ -67,13 +67,11 @@ struct _WBTSUBSCRN_WORK {
 	GAMESYS_WORK* pGameSys;
 	//
 	GFL_FONT		*font;							// フォント
-	PRINT_QUE		*print_que;						// que
+//	PRINT_QUE		*print_que;						// que(念のため使わない)
 	PRINT_UTIL		PrintUtil[WBTS_CANVAS_MAXNUM];	// 文字表示用
 	
 	u16 tpx;
 	u16 tpy;
-
-	
 };
 
 //-----------------------------------------
@@ -452,7 +450,7 @@ void WBTSUBSCRN_Main( WBTSUBSCRN_WORK* pWork,BOOL bAction )
   }
   
   // PRINT_QUE
-  PRINTSYS_QUE_Main( pWork->print_que );
+//  PRINTSYS_QUE_Main( pWork->print_que );
 }
 
 
@@ -510,7 +508,7 @@ static void _wbts_setup_bg( WBTSUBSCRN_WORK* wk )
 	//フォント作成
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	//PRINT_QUE作成
-	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+//	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
 }
 
 //-----------------------------------------------------------------------------
@@ -615,12 +613,14 @@ static void _wbts_disp_string( WBTSUBSCRN_WORK* wk, const s32 mode, const s32 x,
 {
 	s32		size = PRINTSYS_GetStrWidth( strbuf, wk->font, 0 ) / 2;
 	//
-	PRINT_UTIL_PrintColor( &wk->PrintUtil[mode], wk->print_que, x-size, y, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+//	PRINT_UTIL_PrintColor( &wk->PrintUtil[mode], wk->print_que, x-size, y, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+	PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), x-size, y, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
 	// 転送
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
 	// 転送
-	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
+//	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
+	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -640,7 +640,7 @@ static void _wbts_exit_string( WBTSUBSCRN_WORK* wk )
 		GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
 	}
 	//PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
+//	PRINTSYS_QUE_Delete( wk->print_que );
 	//FONT
 	GFL_FONT_Delete( wk->font );
 }
