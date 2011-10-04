@@ -16668,7 +16668,7 @@ static const ZONEDATA ZoneData[] = {
 		310,
 	},
 	{//ZONE_ID_D25R0101 = 463
-		RSC_GRID_DEFAULT,
+		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN66,
 		MATRIX_ID_DUN2501,
@@ -16699,9 +16699,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_DUN2501, // camera_area
 		19,   // padding > placeicon
     0,
-		5,
+		18,
 		0,
-		4,
+		27,
 	},
 	{//ZONE_ID_W21 = 464
 		RSC_GRID_DEFAULT,
