@@ -856,11 +856,11 @@
 #define FV_C15R0301_BONUS_3                883 /* 0x0373 ポケウッド：ファン（スターランク3） */
 #define FV_C15R0301_BONUS_4                884 /* 0x0374 ポケウッド：ファン（スターランク4） */
 #define FV_C14_KAODASI_01                  885 /* 0x0375 セイガイハシティ：顔出し看板イベントのカメラマン */
-#define FV_C12R0101_AWARD_01               886 /* 0x0376 自宅1F：イッシュ図鑑完成の表彰状 */
-#define FV_C12R0101_AWARD_02               887 /* 0x0377 自宅1F：全国図鑑完成の表彰状 */
-#define FV_C12R0101_TROPHY_01              888 /* 0x0378 自宅1F：バトルサブウェイのトロフィ１ */
-#define FV_C12R0101_TROPHY_02              889 /* 0x0379 自宅1F：バトルサブウェイのトロフィ２ */
-#define FV_C12R0101_TROPHY_03              890 /* 0x037a 自宅1F：バトルサブウェイのトロフィ３ */
+		/* not used   886(0x0376) */
+		/* not used   887(0x0377) */
+		/* not used   888(0x0378) */
+		/* not used   889(0x0379) */
+		/* not used   890(0x037a) */
 #define FV_D05R0101_TRAINERW_01            891 /* 0x037b WBTロビー：クリア後に出現するエリートトレーナー♀ */
 #define FV_C02R0101_FUN_01                 892 /* 0x037c シッポウ倉庫：シタンのファン */
 #define FV_C08_PEOPLE_01                   893 /* 0x037d ソウリュウシティ：NPC */
