@@ -52,9 +52,7 @@ FS_EXTERN_OVERLAY(townmap);
 #define APP_WINFRAME_USE_PALETE       ( 12 )      // ウィンドウフレーム用パレット
 #define	HABITAT_ZONE_MBG_PAL_FONT			( 15 )		// メイン画面フォントパレット
 #define	HABITAT_ZONE_SBG_PAL_FONT			( 15 )		// サブ画面フォントパレット
-
-// サブオブジェクトパレットフェードリクエストビット
-#define PF_SUB_OBJ_REQ_BIT              (0x00FF)  // 0000 0000 1111 1111  // 0<= <8
+#define	HABITAT_ZONE_TITLE_PAL_FONT		( 4 )		// サブ画面フォントパレット
 
 // タッチバー定義
 #define	HABITAT_ZONE_TOUCH_BAR_PX		( 0 )
@@ -72,12 +70,7 @@ FS_EXTERN_OVERLAY(townmap);
 #define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
 #define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
 #define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
-
-//=============================================================================
-/**
- *					構造体宣言
-*/
-//=============================================================================
+#define DATA_IDX_NONE (0xFF)
 
 //=============================================================================
 /**
@@ -96,6 +89,7 @@ static void GRA_InitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitFrameScroll( HABITAT_ZONE_GRA_WK *p_wk );
 static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk );
+static void GRA_HideSpotInit( HABITAT_ZONE_GRA_WK* p_wk );
 
 // 終了系
 static void GRA_ResetWindow( void );
@@ -158,6 +152,10 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   // アーカイブハンドル取得
 	p_wk->p_pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_ZUKAN_HABITAT_ZONE );
 
+  // ゲームデータを保存
+  p_wk->p_gdata = p_gdata;
+  p_wk->is_stop_blink = FALSE;
+  
   // 初期化
   GRA_InitVram();           // VRAM
   GRA_InitBg();             // BG
@@ -168,6 +166,7 @@ void HABITAT_ZONE_GRA_Init( HABITAT_ZONE_GRA_WK *p_wk ,GAMEDATA *p_gdata )
   GRA_InitPaletteFade( p_wk );    // パレットフェード
   GRA_InitBlinkAnm( p_wk );       // 点滅アニメ
   GRA_InitFrameScroll( p_wk );    // スクロール
+  GRA_HideSpotInit( p_wk );       // 隠しマップ
  
 }
 
@@ -279,9 +278,17 @@ void HABITAT_ZONE_GRA_VblankMain( HABITAT_ZONE_GRA_WK *p_wk )
     // 点滅アニメ読み込み
     GRA_ReLoadBlinkAnm( p_wk ,p_wk->set_trance_traypal_type );
   
+    // フェードパレット再読み込み
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+    PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
+
     // 転送終了
     p_wk->is_trance_pal_col = FALSE;
   }
+
+  PaletteFadeTrans( p_wk->p_pfd );
 }
 
 //----------------------------------------------------------------------------
@@ -321,8 +328,11 @@ void HABITAT_ZONE_GRA_Main( HABITAT_ZONE_GRA_WK *p_wk )
   // 文字描画更新
   GRA_PrintMain( p_wk );
  
-  // カーソル点滅アニメ
-  GRA_BlinkAnmMain( p_wk );
+  if( p_wk->is_stop_blink == FALSE )
+  {
+    // カーソル点滅アニメ
+    GRA_BlinkAnmMain( p_wk );
+  }
 
   // アルファアニメーション
   GRA_AlpaMain( p_wk );
@@ -407,6 +417,9 @@ static void GRA_InitVram( void )
 //-----------------------------------------------------------------------------
 static void GRA_InitBg(void)
 {
+  u16 col = 0;
+  GXS_LoadBGPltt( &col ,0 ,sizeof(col) ); // バックドロップを黒にしておく
+
 	GFL_BG_Init( HEAPID_ZUKAN_HABITAT_ZONE );
 
 	{	// BG SYSTEM
@@ -516,7 +529,6 @@ static void GRA_InitBg(void)
       ,VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl(
 		BGS_FRAME_FONT | BGS_FRAME_BAR | BGS_FRAME_MAP | BGS_FRAME_ROOT , VISIBLE_ON );
-
 }
 
 //----------------------------------------------------------------------------
@@ -585,12 +597,12 @@ static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
     PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_INFO_WIN ] ,p_wk->p_font_win  );
   }
 
-  // メニュー用BMPWIN作成
+  // タイトル用BMPWIN作成
   {
     p_wk->p_font_win_sub = GFL_BMPWIN_Create( BGS_FRAME_FONT,
         0   , 0   ,
         32  , 24  ,
-        HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
+        HABITAT_ZONE_TITLE_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
 
     // スクリーンの作成
     GFL_BMPWIN_MakeScreen( p_wk->p_font_win_sub );
@@ -840,6 +852,24 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
     UI_EASY_CLWK_LoadResource( &p_wk->clres_root_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
   }
 
+  // タウンマップリソース読み込み
+  {
+    UI_EASY_CLWK_RES_PARAM prm;
+
+    prm.draw_type = CLSYS_DRAW_SUB;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = ARCID_TOWNMAP_GRAPHIC;
+    prm.pltt_id   = NARC_townmap_gra_tmap_obj_NCLR;
+    prm.ncg_id    = NARC_townmap_gra_tmap_obj_d_NCGR;
+    prm.cell_id   = NARC_townmap_gra_tmap_obj_d_NCER; 
+    prm.anm_id    = NARC_townmap_gra_tmap_obj_d_NANR;
+    prm.pltt_line = 0x1;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num  = 0x05;
+
+    UI_EASY_CLWK_LoadResource( &p_wk->clres_tmap_obj, &prm, p_wk->p_clunit, HEAPID_ZUKAN_HABITAT_ZONE );
+  }
+
   // セルアクターワークを作成
   {
     // 季節Lボタン
@@ -923,6 +953,15 @@ static void GRA_LoadObjGraphic( HABITAT_ZONE_GRA_WK *p_wk )
         p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION],FALSE);
     GFL_CLACT_WK_SetBgPri( p_wk->p_clwk_common_obj[OBJ_WK_BUTTON_EXPLANATION] ,1 );
  
+    // 主人公アイコン
+    p_wk->p_clwk_common_obj[OBJ_WK_MAP_HERO] = UI_EASY_CLWK_CreateCLWK( 
+      &p_wk->clres_tmap_obj, p_wk->p_clunit, 
+      0, 0,
+      OBJ_ANM_SEQ_HERO_ICON, HEAPID_ZUKAN_HABITAT_ZONE );
+    GFL_CLACT_WK_SetDrawEnable( 
+        p_wk->p_clwk_common_obj[OBJ_WK_MAP_HERO],FALSE);
+    GFL_CLACT_WK_SetAutoAnmFlag(p_wk->p_clwk_common_obj[OBJ_WK_MAP_HERO],TRUE );
+ 
     // マップ上点滅アイコン(ゾーン情報にあわせて、マップ情報を切り替える)
     p_wk->p_clwk_common_obj[OBJ_WK_MAP_BLINK] = UI_EASY_CLWK_CreateCLWK( 
       &p_wk->clres_root_obj, p_wk->p_clunit, 
@@ -989,7 +1028,6 @@ static GFL_CLWK* GRA_LoadPokeIcon( HABITAT_ZONE_GRA_WK *p_wk ,u32 mons_no , u32 
   {
     UI_EASY_CLWK_RES_PARAM prm;
 
-    // @todo パレット番号を定数化する
     prm.draw_type = CLSYS_DRAW_MAIN;
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
     prm.arc_id    = ARCID_POKEICON;
@@ -1040,6 +1078,12 @@ static void GRA_InitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk )
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_ZONE );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_ZONE );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_ZONE );
+  
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
+
 }
 
 //----------------------------------------------------------------------------
@@ -1105,6 +1149,8 @@ static void GRA_ExitObj( HABITAT_ZONE_GRA_WK *p_wk )
     }
   }
   UI_EASY_CLWK_UnLoadResource( &p_wk->clres_common_obj );
+  UI_EASY_CLWK_UnLoadResource( &p_wk->clres_tmap_obj );
+
   // ユニットの開放
   GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
   // セルアクターシステムの終了
@@ -1122,6 +1168,7 @@ static void GRA_ExitObj( HABITAT_ZONE_GRA_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRA_ExitPaletteFade( HABITAT_ZONE_GRA_WK *p_wk )
 {
+ 
 	PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_MAIN_BG );
 	PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_SUB_BG );
 	PaletteFadeWorkAllocFree( p_wk->p_pfd, FADE_MAIN_OBJ );
@@ -1188,9 +1235,10 @@ void HABITAT_ZONE_GRA_CallFade( HABITAT_ZONE_GRA_WK *p_wk, u8 start, u8 end )
                                         start, end, 0, GFUser_VIntr_GetTCBSYS() );
 	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, 
       ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf878, 
+	//PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf8bf, 
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf8b8, 
       ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  PF_SUB_OBJ_REQ_BIT, 
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0xffff, 
 	ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
 }
 
@@ -1763,6 +1811,7 @@ static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk )
         p_wk->obj_exist_ev1,
         16 - p_wk->obj_exist_ev1 );
   }
+
 }
 
 //----------------------------------------------------------------------------
@@ -1917,6 +1966,39 @@ void HABITAT_ZONE_GRA_SetAnmSeq( HABITAT_ZONE_GRA_WK *p_wk ,s32 clwkid ,u32 anm_
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  主人公アイコンを表示
+ *
+ *	@param	*p_wk 
+ *	@param	zone_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetHeroIcon( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  GFL_CLACTPOS pos;
+  GFL_CLWK    *p_clwk = p_wk->p_clwk_common_obj[OBJ_WK_MAP_HERO];
+  const PLAYER_WORK *p_player_wk = GAMEDATA_GetMyPlayerWork( p_wk->p_gdata );
+  ZONEID zone_id = PLAYERWORK_getZoneID( p_player_wk );
+
+  u16 root_zone = TOWNMAP_UTIL_GetRootZoneID(p_wk->p_gdata, zone_id );
+  u16 player_pos_data_idx = TOWNMAP_DATA_SearchRootZoneID( p_wk->p_townmap_data ,root_zone );
+  if( player_pos_data_idx != TOWNMAP_DATA_ERROR )
+  {
+    pos.x = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_X );
+    pos.y = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data ,player_pos_data_idx, TOWNMAP_DATA_PARAM_POS_Y );
+    pos.y -= MAP_Y_SCROLL_COUNT;
+    GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk,TRUE);
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( p_clwk,FALSE);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  指定フレームのスクロールオブジェクトを操作する
  *
  *	@param	*p_wk 
@@ -2025,5 +2107,71 @@ static void GRA_ReLoadBlinkAnm( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE t
 BOOL HABITAT_ZONE_GRA_CheckTrayPalTrance( HABITAT_ZONE_GRA_WK *p_wk )
 {
   return p_wk->is_trance_pal_col;
+}
+
+
+//-------------------------------------
+/// 隠しスポット
+//-------------------------------------
+static void GRA_HideSpotInit( HABITAT_ZONE_GRA_WK* p_wk )
+{
+  u8 i;
+  
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    u16 hide_flag	= TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, i, TOWNMAP_DATA_PARAM_HIDE_FLAG );
+    if( hide_flag != TOWNMAP_DATA_ERROR )
+    {
+      BOOL is_hide = !TOWNMAP_UTIL_CheckFlag( p_wk->p_gdata, hide_flag );
+      if( is_hide )
+      {
+        p_wk->hide_spot[i].state    = HIDE_STATE_HIDE_TRUE;
+        p_wk->hide_spot[i].obj_clwk = NULL;
+      }
+      else
+      {
+        u16 placetype = TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, i, TOWNMAP_DATA_PARAM_PLACE_TYPE );
+        s16	pos_x;				// ｘ座標
+        s16 pos_y;				// ｙ座標
+	      u16 anmseq;				// アニメーションシーケンス
+
+        pos_x    = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, i, TOWNMAP_DATA_PARAM_POS_X );
+        pos_y    = (s16)TOWNMAP_DATA_GetParam( p_wk->p_townmap_data, i, TOWNMAP_DATA_PARAM_POS_Y );
+        pos_y -= MAP_Y_SCROLL_COUNT;
+        anmseq   = (placetype==TOWNMAP_PLACETYPE_HIDE)?(14):(16);  // 偽の場合はTOWNMAP_PLACETYPE_HIDE_TOWN_Sとなっているはず
+
+        p_wk->hide_spot[i].state    = HIDE_STATE_HIDE_FALSE;
+
+        // 隠しMAPアイコン
+        p_wk->hide_spot[i].obj_clwk = UI_EASY_CLWK_CreateCLWK( 
+            &p_wk->clres_tmap_obj, p_wk->p_clunit, 
+            pos_x, pos_y,
+            anmseq, HEAPID_ZUKAN_HABITAT_ZONE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->hide_spot[i].obj_clwk, TRUE);
+        GFL_CLACT_WK_SetAutoAnmFlag( p_wk->hide_spot[i].obj_clwk, TRUE);
+        GFL_CLACT_WK_SetObjMode( p_wk->hide_spot[i].obj_clwk, GX_OAM_MODE_NORMAL );
+      }
+    }
+    else
+    {
+      p_wk->hide_spot[i].state    = HIDE_STATE_NO;
+      p_wk->hide_spot[i].obj_clwk = NULL;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅の停止フラグを設定
+ *
+ *	@param	*p_wk
+ *	@param	is_stop 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetBlinkStop( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_stop )
+{
+  p_wk->is_stop_blink = is_stop;
 }
 

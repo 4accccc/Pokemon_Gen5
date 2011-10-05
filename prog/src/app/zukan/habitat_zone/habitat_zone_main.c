@@ -24,6 +24,7 @@
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_ARRIVE_*
 #include "../../../../resource/habitat_list/habitat_list_data.h" // for HABITAT_LIST_DATA_MAX
 #include "../../../../../resource/habitat_list/habitat_list_data.cdat" // for sc_habitat_list_data
+#include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
 
 #define GET_CURPOS_X(i) ((POKEICON_CURSOR_POS_X + (i%POKEICON_LINE)*POKEICON_CURSOR_POS_W)*8)
 #define GET_CURPOS_Y(i) ((POKEICON_CURSOR_POS_Y + (i/POKEICON_LINE)*POKEICON_CURSOR_POS_H)*8)
@@ -33,8 +34,10 @@
 #define FCOL_WP01WN		( PRINTSYS_LSB_Make(0xF,0x1,0x2) )	// フォントカラー：両用０１白抜
 #define FCOL_BP01WN		( PRINTSYS_LSB_Make(0x1,0x2,0xF) )	// フォントカラー：両用０１黒抜
 #define FCOL_GP01WN		( PRINTSYS_LSB_Make(0x2,0x1,0x0) )	// フォントカラー：両用０１グレー
+#define SBG_TITLE_FONT_COL PRINTSYS_LSB_Make(0xE,0xF,0)
 
-#include "../list/zknlist_snd_def.h"  // リストと同じ音を使用
+#define MENU_BAR_SCROLL_SPEED   (3)   // メニューバーのスクロールスピード
+
 
 
 //=============================================================================
@@ -410,7 +413,7 @@ static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk )
         p_wk->main_scroll_cnt = FRAME_SCROLL_COUNT;
         p_wk->sub_scroll_cnt  = -FRAME_SCROLL_COUNT;
         // パレットフェードを行う
-        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,16,16 );
+        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,0,0 );
         HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->main_scroll_cnt,TRUE );
         HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,p_wk->sub_scroll_cnt,FALSE );
         p_wk->sub_seq++;
@@ -424,40 +427,43 @@ static void MAINSEQ_FadeIn( HABITAT_ZONE_WK *p_wk )
         // マスター輝度を戻す
         GX_SetMasterBrightness( 0 );
         GXS_SetMasterBrightness( 0 );
-        // オープニングフェード
-        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,16,0 );
         p_wk->sub_seq++;
       }
     }
     break;
   case 2:
     {
+     
+      // フェードが終わり次第、マップを表示する
+      if( HABITAT_ZONE_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+      {
+        GFL_BG_SetVisible( BGS_FRAME_MAP ,VISIBLE_ON );
+        GFL_BG_SetVisible( BGS_FRAME_ROOT ,VISIBLE_ON );
+      }
+
       // スクロール待ち
       if( p_wk->main_scroll_cnt <= 0)
       {
-        if( HABITAT_ZONE_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
+        HABITATLIST_STATUS event;
+        event = CheckCompleteEventNowLandType( p_wk );
+        if( event != HABITAT_ZONE_STATUS_NONE )
         {
-          HABITATLIST_STATUS event;
-          event = CheckCompleteEventNowLandType( p_wk );
-          if( event != HABITAT_ZONE_STATUS_NONE )
-          {
-            // イベントIDを設定する
-            SetCompleteEvetnID( p_wk ,event );
-            SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
-          }
-          else
-          {
-            // 通常キー入力に起動
-            SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
-          }
+          // イベントIDを設定する
+          SetCompleteEvetnID( p_wk ,event );
+          SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_EVETN ,SEQ_CHANGE_PARAM_NONE);
+        }
+        else
+        {
+          // 通常キー入力に起動
+          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
         }
       }
       else
       {
-        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,TRUE );
-        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,FALSE );
-        p_wk->main_scroll_cnt-=ZKNCOMM_BAR_SPEED;
-        p_wk->sub_scroll_cnt+=ZKNCOMM_BAR_SPEED;
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-MENU_BAR_SCROLL_SPEED,TRUE );
+        HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,MENU_BAR_SCROLL_SPEED,FALSE );
+        p_wk->main_scroll_cnt-=MENU_BAR_SCROLL_SPEED;
+        p_wk->sub_scroll_cnt+=MENU_BAR_SCROLL_SPEED;
       }
     }
     break;
@@ -485,10 +491,13 @@ static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
       {
         GFL_CLWK *p_clwk;
 
+        // 点滅アニメを停止
+        HABITAT_ZONE_GRA_SetBlinkStop( &p_wk->gra_sys ,TRUE );
+
         p_wk->main_scroll_cnt = 0;
         p_wk->sub_scroll_cnt  = 0;
         // パレットフェードを行う
-        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,0,16 );
+        HABITAT_ZONE_GRA_CallFade( &p_wk->gra_sys ,16,16 );
 
         // 説明を見るボタンを削除
         ClearExplanationMsg( p_wk );
@@ -496,7 +505,26 @@ static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
         p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
             OBJ_WK_BUTTON_EXPLANATION );
         GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
- 
+
+        // イベントアイコンも非表示に（アイコンをフェードできない）
+        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
+            OBJ_WK_EVENT_ICON_01 );
+        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
+            OBJ_WK_EVENT_ICON_02 );
+        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
+            OBJ_WK_EVENT_ICON_03 );
+        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+
+        // マップ面を非表示にする
+        {
+          u16 col = 0;
+          GXS_LoadBGPltt( &col ,0 ,sizeof(col) ); // バックドロップを黒にしておく
+          GFL_BG_SetVisible( BGS_FRAME_MAP ,VISIBLE_OFF );
+          GFL_BG_SetVisible( BGS_FRAME_ROOT ,VISIBLE_OFF );
+        }
+
         p_wk->sub_seq++;
       }
     }
@@ -517,10 +545,10 @@ static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
         }
         else
         {
-          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,ZKNCOMM_BAR_SPEED,TRUE );
-          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-ZKNCOMM_BAR_SPEED,FALSE );
-          p_wk->main_scroll_cnt+=ZKNCOMM_BAR_SPEED;
-          p_wk->sub_scroll_cnt-=ZKNCOMM_BAR_SPEED;
+          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,MENU_BAR_SCROLL_SPEED,TRUE );
+          HABITAT_ZONE_GRA_AddScrollFrame( &p_wk->gra_sys ,-MENU_BAR_SCROLL_SPEED,FALSE );
+          p_wk->main_scroll_cnt+=MENU_BAR_SCROLL_SPEED;
+          p_wk->sub_scroll_cnt-=MENU_BAR_SCROLL_SPEED;
         }
       }
     }
@@ -2301,7 +2329,7 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk )
   HABITAT_ZONE_GRA_DrawStr( PRINT_UTIL_MAP_NAME ,dest_str ,&p_wk->gra_sys ,
       MAPNAME_MSG_POS_X , MAPNAME_MSG_POS_Y,
       MAPNAME_MSG_W,MAPNAME_MSG_H ,
-      FCOL_WP01WN );
+      SBG_TITLE_FONT_COL );
 
   // バッファーの消去 
   GFL_STR_DeleteBuffer( str );
@@ -2943,6 +2971,9 @@ static void RefreshMapWin( HABITAT_ZONE_WK *p_wk )
   // マップ上の点滅アニメーションを表示
   ONOUE_Printf("zone_group = %d\n",p_list_data->zone_group);
   HABITAT_ZONE_GRA_SetMapBlink( &p_wk->gra_sys ,p_list_data->zone_group);
+
+  // 主人公アイコンを表示する
+  HABITAT_ZONE_GRA_SetHeroIcon( &p_wk->gra_sys );
 
   // マップ名を上画面に書き込む
   DrawMapNameMsg( p_wk );

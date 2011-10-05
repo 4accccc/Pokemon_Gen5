@@ -45,6 +45,7 @@ FS_EXTERN_OVERLAY(ui_common);
 #define	HABITAT_LIST_MBG_PAL_TOUCHBAR	( 14 )		// タッチバー
 #define	HABITAT_LIST_MBG_PAL_FONT			( 15 )		// メイン画面フォントパレット
 #define	HABITAT_LIST_SBG_PAL_FONT			( 15 )		// サブ画面フォントパレット
+#define	HABITAT_TITLE_SBG_PAL_FONT		( 0 )		// サブ画面フォントパレット
 
 // サブオブジェクトパレットフェードリクエストビット
 #define PF_SUB_OBJ_REQ_BIT              (0x00FF)  // 0000 0000 1111 1111  // 0<= <8
@@ -326,6 +327,7 @@ void HABITAT_LIST_GRA_Exit( HABITAT_LIST_GRA_WK *p_wk )
 void HABITAT_LIST_GRA_VblankMain( HABITAT_LIST_GRA_WK *p_wk )
 {
 	GFL_CLACT_SYS_VBlankFunc();
+  PaletteFadeTrans( p_wk->p_pfd );
 }
 
 //----------------------------------------------------------------------------
@@ -374,7 +376,10 @@ void HABITAT_LIST_GRA_Main( HABITAT_LIST_GRA_WK *p_wk )
   HABITAT_LIST_GRA_GetScrollBarYPos( p_wk );
 
   // カーソル点滅アニメ
-  GRA_BlinkAnmMain( p_wk );
+  if( p_wk->is_stop_blink == FALSE )
+  {
+    GRA_BlinkAnmMain( p_wk );
+  }
 
   // 背景スクロール
   p_wk->back_bg_scroll_wait_count++;
@@ -626,7 +631,7 @@ static void GRA_InitBmpWin( HABITAT_LIST_GRA_WK *p_wk )
     p_wk->p_font_win_sub = GFL_BMPWIN_Create( BGS_FRAME_FONT,
         0   , 0   ,
         32  , 24  ,
-        HABITAT_LIST_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
+        HABITAT_TITLE_SBG_PAL_FONT , GFL_BMP_CHRAREA_GET_F );
 
     // スクリーンの作成
     GFL_BMPWIN_MakeScreen( p_wk->p_font_win_sub );
@@ -991,6 +996,12 @@ static void GRA_InitPaletteFade( HABITAT_LIST_GRA_WK *p_wk )
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_BG, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
 	PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_SUB_OBJ, FADE_PAL_ALL_SIZE, HEAPID_ZUKAN_HABITAT_LIST );
+
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_BG, 0, FADE_PAL_ALL_SIZE );
+  PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+	PaletteWorkSet_VramCopy( p_wk->p_pfd, FADE_SUB_OBJ, 0, FADE_PAL_ALL_SIZE );
+
 }
 
 //----------------------------------------------------------------------------------
@@ -1127,9 +1138,9 @@ static void GRA_ExitBmpWin( HABITAT_LIST_GRA_WK *p_wk )
 void HABITAT_LIST_GRA_CallFade( HABITAT_LIST_GRA_WK *p_wk, u8 start, u8 end )
 {
   PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-  PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0xffef, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-  PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0xf87f, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+  PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0x3ffe, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+  PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0x3f, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0xffff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
 }
 
 //----------------------------------------------------------------------------
@@ -1158,7 +1169,10 @@ static void GRA_InitBlinkAnm( HABITAT_LIST_GRA_WK *p_wk )
                     NARC_zukan_gra_list_list_objd_NCLR, 
                     BLINK_PALID_POKE_CURSOR_START*16, 
                     BLINK_PALID_POKE_CURSOR_END*16 );
-    
+   
+  // 点滅は停止状態で開始
+  p_wk->is_stop_blink = TRUE;
+
   // アーカイブクローズ
   GFL_ARC_CloseDataHandle( ah );
 }
@@ -2242,5 +2256,20 @@ void HABITAT_LIST_GRA_StartMiniMapIconAnm( HABITAT_LIST_GRA_WK *p_wk )
   {
     GFL_CLACT_WK_SetAnmSeq( p_clwk, OBJ_ANM_SEQ_MINIMAP );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  点滅アニメの停止状況を設定
+ *
+ *	@param	*p_wk 
+ *	@param	is_stop 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_LIST_GRA_SetBlinkStop( HABITAT_LIST_GRA_WK *p_wk ,BOOL is_stop )
+{
+  p_wk->is_stop_blink = is_stop;
 }
 

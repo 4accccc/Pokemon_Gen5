@@ -99,12 +99,6 @@ static GFL_PROC_RESULT ZukanHabitatList_Init( GFL_PROC * proc, int * seq, void *
       // ワークの生成
       p_wk = CreateWkData( proc ,p_list_info );
 
-       // Vブランクタスク初期化
-       ZukanHabitatList_VBlankInit( p_wk );
-
-       // Hブランクタスク初期化
-       ZukanHabitatList_HBlankInit( p_wk );
-
       // サブシーケンスを進める
       (*seq)++;
     }
@@ -113,6 +107,12 @@ static GFL_PROC_RESULT ZukanHabitatList_Init( GFL_PROC * proc, int * seq, void *
     {
       // グラフィック初期化
       HABITAT_LIST_GRA_Init( &p_wk->gra_sys ,p_wk->p_init_param->p_gdata );
+
+      // Vブランクタスク初期化
+      ZukanHabitatList_VBlankInit( p_wk );
+
+      // Hブランクタスク初期化
+      ZukanHabitatList_HBlankInit( p_wk );
       
       // リストデータの作成
       MakeFrameListData( p_wk );

@@ -104,7 +104,7 @@ static const BOOL ListEnable[] = {
   TRUE,   // メインキー処理
   FALSE,  // アニメ待ち
   FALSE,  // ページ移動
-  TRUE,  // アイテム点滅
+  FALSE,  // アイテム点滅
   FALSE,  // アプリケーションの終了処理
   FALSE,  // 何も処理をしない
 };
@@ -301,6 +301,7 @@ static void MAINSEQ_FadeIn( HABITAT_LIST_WK *p_wk )
       {
         if( HABITAT_LIST_GRA_CheckFade( &p_wk->gra_sys ) == 0 )
         {
+          HABITAT_LIST_GRA_SetBlinkStop( &p_wk->gra_sys , FALSE );
           SetNextSeq( p_wk, MAIN_SEQ_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
         }
       }
@@ -334,6 +335,8 @@ static void MAINSEQ_FadeOut( HABITAT_LIST_WK *p_wk )
       // 文字描画終了を待ってフェードを呼び出す
       if( HABITAT_LIST_GRA_CheckPrintUtilStatus( &p_wk->gra_sys ) )
       {
+        // 点滅アニメを停止
+        HABITAT_LIST_GRA_SetBlinkStop( &p_wk->gra_sys , TRUE );
         p_wk->main_scroll_cnt = 0;
         p_wk->sub_scroll_cnt  = 0;
         // パレットフェードを行う

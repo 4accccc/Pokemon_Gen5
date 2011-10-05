@@ -24,7 +24,7 @@
 //=====================================
 
 #define MBG_BUTTON_FONT_COL PRINTSYS_LSB_Make(15,2,1)
-#define SBG_TITLE_FONT_COL PRINTSYS_LSB_Make(15,2,1)
+#define SBG_TITLE_FONT_COL PRINTSYS_LSB_Make(0xE,0xF,0)
 
 
 //-------------------------------------

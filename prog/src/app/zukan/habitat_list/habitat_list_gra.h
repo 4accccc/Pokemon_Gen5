@@ -212,6 +212,7 @@ typedef struct {
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
   BLINKPALANM_WORK  *p_blinkanm_wk; // 点滅用
+  BOOL              is_stop_blink;
 	
   // セルアクターユニット
   GFL_CLUNIT			*p_clunit;
@@ -288,4 +289,5 @@ extern u16 HABITAT_LIST_GRA_GetAnmSeq( HABITAT_LIST_GRA_WK *p_wk ,s32 clwkid );
 extern u16 HABITAT_LIST_GRA_CheckFade( HABITAT_LIST_GRA_WK *p_wk );
 extern void HABITAT_LIST_GRA_AddScrollFrame( HABITAT_LIST_GRA_WK *p_wk ,s32 ypos,BOOL is_main  );
 extern void HABITAT_LIST_GRA_StartMiniMapIconAnm( HABITAT_LIST_GRA_WK *p_wk );
+extern void HABITAT_LIST_GRA_SetBlinkStop( HABITAT_LIST_GRA_WK *p_wk ,BOOL is_stop );
 

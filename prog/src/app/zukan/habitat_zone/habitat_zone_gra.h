@@ -102,6 +102,7 @@ enum
   OBJ_ANM_SEQ_BUTTON_EXPLANATION_OFF  = 41,
   OBJ_ANM_SEQ_MENU_BAR    = 31,
   OBJ_ANM_SEQ_EVENT_ICON  = 11,
+  OBJ_ANM_SEQ_HERO_ICON   = 6,
 };
 
 // OBJWKID
@@ -110,6 +111,7 @@ enum
   OBJ_WK_SEASON_L,
   OBJ_WK_SEASON_R,
   OBJ_WK_STAMP_BIG,
+  OBJ_WK_MAP_HERO,
   OBJ_WK_MAP_BLINK,
 
   // ↓ここからスクロール
@@ -140,7 +142,8 @@ enum
 
 // 定数定義
 enum{
-  HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX,
+  HABITAT_ZONE_HIDE_CLWK_MAX  = 16,  // 隠し地形アイコン最大数
+  HABITAT_ZONE_UNIT_CLWK_MAX  = HABITAT_ZONE_POKE_LIST_MAX + COMMON_OBJ_WK_MAX + HABITAT_ZONE_HIDE_CLWK_MAX,
   LAND_TYPE_ICON_W            = 4,   // 地形タイプアイコンの幅
   LAND_TYPE_ICON_H            = 3,   // 地形タイプアイコンの高さ
   BLINK_PALID_POKE_CURSOR_CHANGE  = 0xA,  // 滅用パレット番号(書き換え対象)
@@ -257,6 +260,15 @@ typedef enum{
   GRA_POKEICON_CURSOR_NONE,
 }GRA_POKEICON_CURSOR_STATUS;
 
+// 隠しスポット
+typedef enum
+{
+  HIDE_STATE_NO,          // 隠しスポットではない
+  HIDE_STATE_HIDE_TRUE,   // 隠しスポットで隠し中
+  HIDE_STATE_HIDE_FALSE,  // 隠しスポットで表示中
+}
+HIDE_STATE;
+
 //=============================================================================
 //
 //					構造体宣言
@@ -271,6 +283,19 @@ typedef struct {
   u32 sex;
 }POKEICON_TRANCE_DATA;
 
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+
+typedef struct
+{
+  HIDE_STATE    state;
+  GFL_CLWK*     obj_clwk;  // stateがHIDE_STATE_NOまたはHIDE_STATE_HIDE_TRUEのときはNULL
+}
+HIDE_SPOT;
+
 // ゾーン詳細画面ワーク:グラフィック
 typedef struct {
   // ゲームデータ
@@ -279,6 +304,7 @@ typedef struct {
   // パレットフェード　-------------------------------
   PALETTE_FADE_PTR  p_pfd;
   // パレット点滅　    -------------------------------
+  BOOL is_stop_blink;
   BLINKPALANM_WORK  *p_blinkanm_wk; // カーソル
   BLINKPALANM_WORK  *p_blinkanm_wk_land_icon; // 地形アイコン
 	
@@ -294,7 +320,10 @@ typedef struct {
   // 共通OBJリソース
   UI_EASY_CLWK_RES  clres_common_obj;
   GFL_CLWK          *p_clwk_common_obj[COMMON_OBJ_WK_MAX];
-  
+ 
+  // タウンマップOBJリソース
+  UI_EASY_CLWK_RES  clres_tmap_obj;
+    
   // 共通素材
   UI_EASY_CLWK_RES  clres_app_menu_obj;
   
@@ -331,6 +360,9 @@ typedef struct {
   // トレイパレット転送 ------------
   BOOL is_trance_pal_col;
   HABITAT_GROUND_TYPE set_trance_traypal_type;
+
+  // 隠しスポット
+  HIDE_SPOT                   hide_spot[TOWNMAP_DATA_MAX];
 
 }HABITAT_ZONE_GRA_WK;
 
@@ -372,4 +404,6 @@ extern void HABITAT_ZONE_GRA_AddScrollFrame( HABITAT_ZONE_GRA_WK *p_wk ,s32 yval
 extern void HABITAT_ZONE_GRA_TransTrayColor( HABITAT_ZONE_GRA_WK *p_wk ,HABITAT_GROUND_TYPE type  );
 extern BOOL HABITAT_ZONE_GRA_CheckPokeIconTranceEnd( HABITAT_ZONE_GRA_WK *p_wk );
 extern BOOL HABITAT_ZONE_GRA_CheckTrayPalTrance( HABITAT_ZONE_GRA_WK *p_wk );
-
+extern void HABITAT_ZONE_GRA_SetHeroIcon( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_SetBlinkStop( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_stop )
+;
