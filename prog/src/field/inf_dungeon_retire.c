@@ -475,7 +475,9 @@ static void INFRETIRESUBSCRN_CreateYesNo( INFRETIRESUBSCRN_WORK* p_wk, HEAPID he
 
 
 	p_wk->p_yesno	= APP_TASKMENU_OpenMenuEx( &s_APP_TASKMENU_INITWORK, p_wk->p_yesno_res );
-  APP_TASKMENU_SetDisableKey( p_wk->p_yesno, TRUE );
+
+  // ƒL[‘€ì—LŒø
+  APP_TASKMENU_SetDisableKey( p_wk->p_yesno, FALSE );
 
   GFL_STR_DeleteBuffer( s_APP_TASKMENU_ITEMWORK[ YESNO_LIST_YES ].str );
   GFL_STR_DeleteBuffer( s_APP_TASKMENU_ITEMWORK[ YESNO_LIST_NO ].str );
