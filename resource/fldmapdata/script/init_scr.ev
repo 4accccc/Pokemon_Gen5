@@ -56,9 +56,6 @@ init_flags:
 	//各ポケセンにいるふしぎな贈り物配達員
 	_FLAG_SET( FV_POSTMAN )
 
-	//映画関連ゾロアークイベントの女性（ゾロアーク）。イベント起動で表示。
-	_FLAG_SET( FV_R16R0201_WOMAN3 )
-
 	//R14R0201：ツチノカミ
 	_FLAG_SET( FV_R14R0201_LEG )
 
@@ -124,7 +121,6 @@ init_flags:
 	_FLAG_SET( FV_C03_SWCHAMPION_01 ) //アイリス：ジム前イベント後表示
 	_FLAG_SET( FV_C03P17_SWCHAMPION_01 )  //アイリス：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P17_SWRIVAL_01 ) //ライバル：下水道前イベント起動時表示
-	_FLAG_SET( FV_C03P17_PILOT_01 ) //ライバル：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P01_SWBOSS_01 )  //アクロマ：ジムクリア後表示
 	_FLAG_SET( FV_C03P07_MACOMO_01 )  //マコモ：ジムクリア後表示
 	_FLAG_SET( FV_C03R1103_MACOMO_01 )  //マコモ：Cギア入手後表示
@@ -417,12 +413,6 @@ INIT_EVENT_START  ev_init_gameclear_script
   //↑で設定した特殊接続先からゲームを開始するリクエスト
   _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
 
-  //ライの復活処理
-  IF FLAG_ON( FV_D10R0401_POKE10 ) && FLAG_OFF( FE_D10R0401_POKE10_GET ) THEN
-    //OBJを消していて、捕まえていなければ復活させる
-    _FLAG_RESET( FV_D10R0401_POKE10 )
-  ENDIF
-
   //ドラー未捕獲時の復活処理
   IF FLAG_ON(FV_D04R2301_POKE13) && FLAG_OFF(FE_D04R2301_POKE13_GET) THEN
     //OBJを消していて、捕まえていなければ復活させる
@@ -554,11 +544,6 @@ ev_first_gameclear:
   _FLAG_RESET( FV_H01R0201_STOPPER_01 )
   _FLAG_SET( FV_H01R0201_STOP_01 )
   $WK_SCENE_H01R0201_STOP_01 = 1
-
-  //【仮】C05,D05の抜け道ストッパーを無効に
-  _FLAG_SET( FV_C05_STOPPER_01 )
-  _FLAG_SET( FV_D05_STOPPER_01 )
-  $WK_SCENE_D05_STOPPER_01 = 1
   
   //D27の人々をクリア後状態
   _FLAG_SET( FV_D27_BEFORE_PWPLAZMA_01 )

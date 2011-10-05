@@ -497,11 +497,11 @@
 #define FV_MUSICAL_FUN_03                  524 /* 0x020c ミュージカルホール：出待ちのファン３人目 */
 #define FV_MUSICAL_FUN_04                  525 /* 0x020d ミュージカルホール：出待ちのファン４人目 */
 #define FV_MUSICAL_FUN_05                  526 /* 0x020e ミュージカルホール：出待ちのファン５人目 */
-#define FV_T01R0102_AWARD_01               527 /* 0x020f 自宅２F：イッシュ図鑑完成の表彰状 */
-#define FV_T01R0102_AWARD_02               528 /* 0x0210 自宅２F：全国図鑑完成の表彰状 */
-#define FV_T01R0102_TROPHY_01              529 /* 0x0211 自宅２F：バトルサブウェイのトロフィ１ */
-#define FV_T01R0102_TROPHY_02              530 /* 0x0212 自宅２F：バトルサブウェイのトロフィ２ */
-#define FV_T01R0102_TROPHY_03              531 /* 0x0213 自宅２F：バトルサブウェイのトロフィ３ */
+#define FV_T01R0102_AWARD_01               527 /* 0x020f 自宅２F：イッシュ図鑑完成の表彰状（データコンバート） */
+#define FV_T01R0102_AWARD_02               528 /* 0x0210 自宅２F：全国図鑑完成の表彰状（データコンバート） */
+#define FV_T01R0102_TROPHY_01              529 /* 0x0211 自宅２F：バトルサブウェイのトロフィ１（データコンバート） */
+#define FV_T01R0102_TROPHY_02              530 /* 0x0212 自宅２F：バトルサブウェイのトロフィ２（データコンバート） */
+#define FV_T01R0102_TROPHY_03              531 /* 0x0213 自宅２F：バトルサブウェイのトロフィ３（データコンバート） */
 #define FV_R08R0101_POKE4                  532 /* 0x0214 セッカ湿原：ダルタニスイベントのアトス */
 #define FV_R08R0101_POKE5                  533 /* 0x0215 セッカ湿原：ダルタニスイベントのポルトス */
 #define FV_R08R0101_POKE6                  534 /* 0x0216 セッカ湿原：ダルタニスイベントのアラミス */
@@ -514,7 +514,7 @@
 #define FV_C03R0101_MEMBER_E               541 /* 0x021d 調査隊一般隊員E */
 #define FV_C03R0101_MEMBER_F               542 /* 0x021e 調査隊一般隊員F */
 #define FV_C03R0101_MEMBER_G               543 /* 0x021f 調査隊一般隊員G */
-#define FV_C05R0601_OKOU                   544 /* 0x0220 クリア後：お香売り */
+		/* not used   544(0x0220) */
 #define FV_POKE_JUDGE_01                   545 /* 0x0221 ジャッジ（ポケモンの個体値を調べてくれる人） */
 #define FV_STADIUM_TRAINER_01              546 /* 0x0222 ビッグスタジアム／リトルコートの選手トレーナー１人目 */
 #define FV_STADIUM_TRAINER_02              547 /* 0x0223 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
@@ -527,8 +527,8 @@
 #define FV_PDW_POSTMAN                     554 /* 0x022a PDWのアイテム配達員 */
 #define FV_STADIUM_PLAYING                 555 /* 0x022b ビッグスタジアム／リトルコート：試合中に表示されるＮＰＣ ・エントランスの警備員 ・スタンドの観客 */
 #define FV_D13R0101_ASSISTANTM_01          556 /* 0x022c P2ラボ：配布インセクタイベントの研究員 */
-#define FV_R16R0201_BACKPACKERM            557 /* 0x022d 迷いの森：ゾロアークイベントの青年 */
-#define FV_R16R0201_WOMAN3                 558 /* 0x022e 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
+		/* not used   557(0x022d) */
+		/* not used   558(0x022e) */
 #define FV_R14R0201_GIRL1                  559 /* 0x022f ツチノカミイベント：きょうだい */
 #define FV_R14R0201_LEG                    560 /* 0x0230 ツチノカミイベント：ツチノカミ */
 #define FV_MUSICAL_FUN_06                  561 /* 0x0231 ミュージカルホール：出待ちのファン６人目 */
@@ -538,16 +538,16 @@
 #define FV_MUSICAL_FUN_10                  565 /* 0x0235 ミュージカルホール：出待ちのファン１０人目 */
 #define FV_STADIUM_SPORTSMAN               566 /* 0x0236 ビッグスタジアム／リトルコートエントランス：選手とファン */
 #define FV_D08R0901_PACKAGE_POKE           567 /* 0x0237 リュウラセンの塔（屋上）：パッケージポケモン */
-#define FV_H03_BADRIDER                    568 /* 0x0238 シリンダーブリッジ：暴走族リーダーと子分 */
-#define FV_H03_GENERALPERSON               569 /* 0x0239 シリンダーブリッジ：おばさんと格闘家（女） */
-#define FV_D12R0102_POKE14_01              570 /* 0x023a リバティ島：ビクティ */
-#define FV_D12_PEOPLE_01                   571 /* 0x023b リバティーとう：群集 */
-#define FV_D12_HAKAIM_01                   572 /* 0x023c リバティーとう：プラズマ団 */
-#define FV_D12_POLECEMAN_02                573 /* 0x023d リバティーとう：警官 */
-#define FV_D12R0101_POLECEMAN_01           574 /* 0x023e リバティー室内1：警官 */
-#define FV_D12R0102_HAKAIM_01              575 /* 0x023f リバティー室内2：プラズマ団 */
-#define FV_D12_EVENTEND_01                 576 /* 0x0240 リバティーとう：イベント終了時表示OBJ */
-#define FV_D10R0401_POKE10                 577 /* 0x0241 ジャイアントホール：ライ */
+		/* not used   568(0x0238) */
+		/* not used   569(0x0239) */
+		/* not used   570(0x023a) */
+		/* not used   571(0x023b) */
+		/* not used   572(0x023c) */
+		/* not used   573(0x023d) */
+		/* not used   574(0x023e) */
+		/* not used   575(0x023f) */
+		/* not used   576(0x0240) */
+		/* not used   577(0x0241) */
 #define FV_T04_SUMMER                      578 /* 0x0242 サザナミタウン：夏だけ町民 */
 #define FV_D04R2301_POKE13                 579 /* 0x0243 古代の城：ドラー */
 #define FV_T05_RAILFAN                     580 /* 0x0244 カナワタウン：電車前の人々（鉄道ファン） */
@@ -561,7 +561,7 @@
 #define FV_T04R0301_SWLEADER4_01           588 /* 0x024c サザナミタウン別荘：カミツレ */
 #define FV_T04R0301_SWLEADER2_01           589 /* 0x024d サザナミタウン別荘：ホミカ */
 #define FV_D07_STONE_01                    590 /* 0x024e ネジ山：季節対応・冬季岩ストッパー */
-#define FV_C03R1101_ITEM_01                591 /* 0x024f ヒウンビル：ゲーチスイベント後のアイテムボール */
+		/* not used   591(0x024f) */
 		/* not used   592(0x0250) */
 		/* not used   593(0x0251) */
 		/* not used   594(0x0252) */
@@ -579,7 +579,7 @@
 #define FV_C05_HAKAIM_01                   606 /* 0x025e ホドモエシティ：旧プラズマ団 */
 #define FV_C05_SWPLAZMAM_01                607 /* 0x025f ホドモエシティ：ネオプラズマ団 */
 #define FV_C05R0701_STOPPER_01             608 /* 0x0260 WBT方面ゲート：ストッパー */
-#define FV_D05_STOPPER_01                  609 /* 0x0261 WBT前：抜け道ストッパー */
+		/* not used   609(0x0261) */
 #define FV_D05_SWBOSS_01                   610 /* 0x0262 WBT前：アクロマ */
 #define FV_D05_SWRIVAL_01                  611 /* 0x0263 WBT前：ライバル */
 #define FV_D05_SWLEADER1_01                612 /* 0x0264 WBT前：チェレン */
@@ -588,7 +588,7 @@
 #define FV_C05_SAGE6_01                    615 /* 0x0267 ホドモエシティ：七賢人たち */
 #define FV_C05_SWRIVAL_01                  616 /* 0x0268 ホドモエシティ：ライバル */
 #define FV_C05_SWLEADER5_01                617 /* 0x0269 ホドモエシティ：ヤーコン */
-#define FV_C05_STOPPER_01                  618 /* 0x026a ホドモエシティ：抜け道ストッパー */
+		/* not used   618(0x026a) */
 #define FV_C05_STOPPER_02                  619 /* 0x026b ホドモエシティ：ジムストッパー */
 #define FV_C13GYM0102_SUNGLASSES           620 /* 0x026c ポケウッド：サングラス */
 #define FV_C13GYM0102_SWLEADER2            621 /* 0x026d C12GYM0102：ホミカ */
@@ -620,7 +620,7 @@
 #define FV_D06R0101_PAIR                   647 /* 0x0287 電気穴の洞窟連れ歩き */
 #define FV_C03P15_SWRIVAL_01               648 /* 0x0288 ヒウンシティ：船着場ライバル */
 #define FV_H01R0201_STOPPER_01             649 /* 0x0289 スカイアローブリッジ：ストッパー */
-#define FV_C03_MACOMO_01                   650 /* 0x028a ヒウンシティ外周：マコモ */
+		/* not used   650(0x028a) */
 #define FV_C03_SWCHAMPION_01               651 /* 0x028b ヒウンシティ外周：アイリス */
 #define FV_C03P07_SUNGLASSES_01            652 /* 0x028c ヒウンシティジム前：ダンペイ */
 #define FV_C03P17_SWCHAMPION_01            653 /* 0x028d ヒウンシティ下水道前：アイリス */
@@ -629,7 +629,7 @@
 #define FV_C03P01_SWBOSS_01                656 /* 0x0290 ヒウンシティセントラルエリア：アクロマ */
 #define FV_R04_BIGROCK_01                  657 /* 0x0291 4番道路：イワパレス擬態大きな岩 */
 #define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
-#define FV_C03P17_PILOT_01                 659 /* 0x0293 ヒウンシティ下水道前：パイロット */
+		/* not used   659(0x0293) */
 #define FV_R05_STOP                        660 /* 0x0294 5番道路：チャールズ、ストッパー */
 #define FV_C04_SWRIVAL_01                  661 /* 0x0295 ライモンシティ：ライバル */
 #define FV_C04_SWPLASMAM_01                662 /* 0x0296 ライモンシティ：プラズマ団 */
@@ -739,8 +739,8 @@
 #define FV_T05_POKE33_01                   766 /* 0x02fe カナワタウン：ヤナップ */
 #define FV_D32R0101_FIGHTERM_01            767 /* 0x02ff D32：がんじょうストッパー */
 #define FV_D32R0101_POKE50_01              768 /* 0x0300 D32：イワパレス */
-#define FV_C15_SWRIVAL_01                  769 /* 0x0301 ポケウッド：ライバル */
-#define FV_C16_SWRIVAL_01                  770 /* 0x0302 ジョインアベニュー：ライバル */
+		/* not used   769(0x0301) */
+		/* not used   770(0x0302) */
 #define FV_WBT_LOBBY_LEADER1               771 /* 0x0303 WBTロビー：優勝後ロビーにいる対戦者 */
 #define FV_WBT_LOBBY_LEADER2               772 /* 0x0304 WBTロビー：優勝後ロビーにいる対戦者 */
 #define FV_WBT_LOBBY_LEADER3               773 /* 0x0305 WBTロビー：優勝後ロビーにいる対戦者 */
