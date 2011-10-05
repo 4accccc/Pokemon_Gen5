@@ -166,7 +166,7 @@ EVENT_START		ev_scene_c15_tutorial_01
   //C16誘導イベント終了
   $WK_SCENE_C15_TUTORIAL_01 = 2
   //C16ライバル非表示
-  _FLAG_SET( FV_C15_SWRIVAL_01 )
+  _FLAG_SET( FV_C15_SUNGLASSES_01 )
   
   //C13プラズマ団イベント開始
   $WK_SCENE_C13 = 5
