@@ -175,6 +175,7 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
 static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_MoveStartSePlayMain( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdateTrainerPosCalc( TRACE_MOVE_DATA *p_md );
 static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
@@ -884,25 +885,6 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
   PLAYER_MOVE_WORK *p_wk = p_wk_adrs;
   switch( (*p_seq) )
   {
-  // 移動開始音
-  case MOVE_EVENT_SEQ_START_SE:
-    {
-      PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_START );
-      (*p_seq) = MOVE_EVENT_SEQ_START_SE_WAIT;
-    }
-    break;
-
-  // 移動中音再生
-  case MOVE_EVENT_SEQ_START_SE_WAIT:
-    {
-      if( PMSND_CheckPlaySE() == FALSE )
-      {
-        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE );
-        (*p_seq) = MOVE_EVENT_SEQ_INIT;
-      }
-    }
-    break;
-
   // ギミックの初期化
   case MOVE_EVENT_SEQ_INIT:
     {
@@ -918,6 +900,9 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
 
       // フレームの加算
       p_wk->event_frame++;
+
+      // 移動開始音再生、移動音再生メイン
+      MOVE_Event_MoveStartSePlayMain( p_wk );
 
       // トレーナー位置のアップデート
       MOVE_Event_UpdatePlayerPos( p_wk );
@@ -1311,6 +1296,30 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
     }
   }
  
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動開始音と、移動音再生メイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_Event_MoveStartSePlayMain( PLAYER_MOVE_WORK *p_wk )
+{
+  // 移動開始音再生
+  if( p_wk->event_frame == DRA_MOVE_START_SE_PLAY_FRAME )
+  {
+    PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_START );
+  }
+
+  // 移動開始音再生
+  if( p_wk->event_frame == DRA_MOVE_SE_PLAY_FRAME )
+  {
+    PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE );
+  }
 }
 
 //----------------------------------------------------------------------------

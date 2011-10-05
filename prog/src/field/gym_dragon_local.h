@@ -62,8 +62,6 @@ typedef struct {
 ///	プレイヤー移動イベントシーケンス
 //=====================================
 typedef enum{
-  MOVE_EVENT_SEQ_START_SE,
-  MOVE_EVENT_SEQ_START_SE_WAIT,
   MOVE_EVENT_SEQ_INIT,
   MOVE_EVENT_SEQ_MOVE,
   MOVE_EVENT_SEQ_CALL_BUTTON_EVENT,

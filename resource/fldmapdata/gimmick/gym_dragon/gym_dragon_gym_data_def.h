@@ -12,6 +12,8 @@
 #define  FOG_COLOR_A (30) // フォグカラーA
 #define  FOG_SLOPE (7) // フォグのかかり具合
 #define  FOG_OFFSET (32607) // フォグオフセット
+#define  DRA_MOVE_START_SE_PLAY_FRAME (5) // ドラゴンの移動開始音再生タイミング（さかのぼらず、アニメ開始からのフレームを指定）
+#define  DRA_MOVE_SE_PLAY_FRAME (10) // ドラゴンの移動音再生タイミング（さかのぼらず、アニメ開始からのフレームを指定）
 #define  DRA_BARK_MOVE_STOP_SE_FRAME (60) // 咆える前の停止音再生タイミング
 #define  DRA_BARK_FRAME_HERO (50) // ドラゴンがほえるタイミング
 #define  DRA_BARK_FRAME_ENEMY (50) // ドラゴンがほえるタイミング
