@@ -1,0 +1,30 @@
+IS-NITRO-DEBUGGER Project file version 0100
+#PROPLIST.VER 100/LINE 182
+# =======================
+# プロジェクト設定
+# =======================
+# プロジェクト名
+Property.Project.ProjectConfig.General.ProjectName=SWAN
+# ソースフォルダ
+Property.Project.ProjectConfig.SourcePath.SourcePathList=C%3a%5chome%5cswan%5clib%5cTwlSDK%5cbuild%5clibraries%3bC%3a%5chome%5cswan%5clib%5cTwlSystem%5cbuild%3b
+# ソースが発見できない場合、ダイアログを開いてソースパスを設定(0=OFF)
+Property.Project.ProjectConfig.SourcePath.AskSourcePath=0
+# デバッグボタン設定(2=デバッグボタン)
+Property.Project.ProjectConfig.Contoller.DbgButton=2
+# 読み込みデフォルトページ
+Property.Project.Load.LastPage=TLF
+# =======================
+# TLF読み込み設定
+# =======================
+# 読み込みTLFファイル名
+Property.Project.Load.TLF.FileLoadNLFFileName=C%3a%5chome%5cswan%5cprog%5cbin%5cARM9-TS.HYB%5cRelease%5cmain.tlf
+# TWL/NITRO両対応ソフトは"NITORO互換モード"でデバッグする(1=TRUE)
+Property.Project.Load.TLF.FileLoadNLFCheckForceNTRMode=1
+# =======================
+# SRL読み込み設定
+# =======================
+# TWL/NITRO両対応ソフトは"NITORO互換モード"でデバッグする(1=TRUE)
+Property.Project.Load.SRL.FileLoadSRLCheckForceNTRMode=1
+# 読み込みSRLファイル名
+Property.Project.Load.SRL.FileLoadSRLFileName=C%3a%5chome%5cswan%5cprog%5cbin%5cARM9-TS.HYB%5cRelease%5cmain.srl
+
