@@ -187,7 +187,7 @@ enum
 	CLWKID_PANEL_05A,				// パネル
 	CLWKID_PANEL_06A,				// パネル
 	CLWKID_PANEL_07A,				// パネル
-	CLWKID_BOMB,					// 爆発アニメ
+	CLWKID_BOMB,					// 爆発アニメ(未使用)
 	CLWKID_BAR_00,					// バー0(横)
 	CLWKID_BAR_01,					// バー1
 	CLWKID_BAR_02,					// バー2
@@ -346,8 +346,6 @@ typedef struct
 
 //-------------------------------------
 /// 移動用管理ワーク
-/// (どこかにあるはずなので仮作成)
-/// (後に修正:固定小数点にする?)
 //-------------------------------------
 typedef struct
 {
@@ -660,7 +658,6 @@ static void WBTList_OAM_MAPMODEL_DeleteCLWK( WBTLIST_MAIN_WORK* wk );
 static void wbt_init( WBTLIST_MAIN_WORK* wk );
 static void wbt_main( WBTLIST_MAIN_WORK* wk );
 static void wbt_exit( WBTLIST_MAIN_WORK* wk );
-static BOOL wbt_wait_exit( WBTLIST_MAIN_WORK* wk );
 static void wbt_up(   WBTLIST_MAIN_WORK* wk );
 //
 static void wbt_key_00( WBTLIST_MAIN_WORK* wk );
@@ -705,7 +702,6 @@ static s16 wbt_get_empty( WBTLIST_MAIN_WORK *wk, const s32 num );
 // (アプリの)表示関連
 static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 mode, const s32 umode );
 static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum );
-static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num );
 static void wbt_chg_gage_color( WBTLIST_MAIN_WORK* wk );
 static void wbt_init_mode( WBTLIST_MAIN_WORK* wk );
 //
@@ -914,10 +910,7 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 		case 3:
 			if (WIPE_SYS_EndCheck())
 			{
-				// 終了待ち(いれても大丈夫?)
-				if( wbt_wait_exit( wk ) == TRUE ){
-					return GFL_PROC_RES_FINISH;
-				}
+				return GFL_PROC_RES_FINISH;
 			}
 			break;
 		default:
@@ -1234,21 +1227,6 @@ static void wbt_exit( WBTLIST_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  処理の流れ(完全終了待ち)
- *
- *	@param	WBTLIST_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL wbt_wait_exit( WBTLIST_MAIN_WORK* wk )
-{
-	// 必要であれば追加
-	return( TRUE );
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  処理の流れ(main)(上画面)
  *
  *	@param	WBTLIST_MAIN_WORK* wk 
@@ -1386,10 +1364,6 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				//
 				// 移動可能パラメータの更新
 				wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
-				//
-				// 爆発(保留)
-//				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
-//				wbt_disp_bomb( wk, tmp );
 				//
 				// パネル点滅
 				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
@@ -1963,7 +1937,7 @@ static void wbt_set_obj_visible( WBTLIST_MAIN_WORK *wk, const s32 wnum, const BO
  *	@param	WBTLIST_MAIN_WORK* wk
  *	@param	const s32		objワーク番号
  *
- *	@retval	const BOOL		(TRUE:再生中、FALSE:停止、終了)
+ *	@retval	BOOL		(TRUE:再生中、FALSE:停止、終了)
  */
 //-----------------------------------------------------------------------------
 static BOOL wbt_is_anime_end( WBTLIST_MAIN_WORK *wk, const s32 wnum )
@@ -2411,6 +2385,7 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 		wbt_clear_meswin( wk );
 		// 指定した番号 + (0-(MES_RANDOM_MAX-1))のランダム
 //		num = GFUser_GetPublicRand( MES_RANDOM_MAX );
+		// 完全ランダムではないようにした
 		num = wk->RandBuffer[wk->RandCount];
 		wk->RandCount++;
 		// 念のため
@@ -2588,37 +2563,6 @@ static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum )
 {
 	BOOL	bflg = wbt_is_anime_end( wk, CLWKID_BAR_00+wnum );
 	return( bflg );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  爆発アニメ
- *
- *	@param	WBTLIST_MAIN_WORK* wk
- *	@param	const s32		表示場所(0-7)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num )
-{
-	u16				anum;
-	GFL_CLACTPOS	pos;
-	
-	// 左側
-	pos.x = wbt_get_empty( wk, (BOMB_EMPTY_ID+num)*2 );
-	pos.y = wbt_get_empty( wk, (BOMB_EMPTY_ID+num)*2+1 );
-	// 座標セット
-	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BOMB], &pos, CLSYS_DEFREND_MAIN );
-	
-	// 再度アニメを再生するときは、
-	// SetAnimSeqとAutoAnmFlagをする必要があるようだ
-	anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB] );
-	// 表示
-	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB], anum );
-	//
-	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
-	GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
 }
 
 //-----------------------------------------------------------------------------

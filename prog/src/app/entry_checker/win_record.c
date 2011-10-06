@@ -191,7 +191,7 @@ enum{
 	TMT_SINOU,								// シンオウ
 	TMT_WORLD,								// ワールド
 	TMT_CHAMPION,							// チャンピオン
-//	TMT_WCS,								// WCS2011
+//	TMT_WCS,								// WCS2011(未使用)
 	TMT_RENTAL,								// レンタル
 	//
 	TMT_RENTAL_MASTER,						// レンタルマスター
@@ -566,7 +566,7 @@ static const s16 wr_tmt_gmm_tbl[] = {
 	msg_wbt_wincount_005,			// シンオウ
 	msg_wbt_wincount_006,			// ワールド
 	msg_wbt_wincount_007,			// チャンピオン
-//	msg_wbt_wincount_008,			// WCS
+//	msg_wbt_wincount_008,			// WCS(未使用)
 	msg_wbt_wincount_009,			// レンタル
 	//
 	msg_wbt_wincount_010,			// レンタルマスター
@@ -605,7 +605,7 @@ static const s16 wbtwin_tbl[] = {
 	WBTWIN_COUNT_SINOU,				// シンオウ
 	WBTWIN_COUNT_WORLD,				// ワールド
 	WBTWIN_COUNT_CHAMPION,			// チャンピオンズ
-//	WBTWIN_COUNT_WCS,				// WCS
+//	WBTWIN_COUNT_WCS,				// WCS(未使用)
 	WBTWIN_COUNT_RENTAL,			// レンタル
 	//
 	WBTWIN_COUNT_RENTALMASTER,		// レンタルマスター
@@ -1808,8 +1808,7 @@ static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 
 				x, y,							// 表示基準座標
 				strbuf,							// 文字列
 				wk->font,						// フォント
-//				PRINTSYS_LSB_Make(15,2,0),		// カラー
-				col,							// カラー
+				col,							// カラー(PRINTSYS_LSB_Make(15,2,0)等)
 				dispmode );						// 位置
 }
 
@@ -1910,7 +1909,6 @@ static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
 	//
 	// 回数
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-//	STRTOOL_SetNumber( strbuf2, 1234, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	STRTOOL_SetNumber( strbuf2, wk->TotalWinCount, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 	// 最終出力バッファ
@@ -2333,10 +2331,7 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	// 判定
 	switch(mode){
 		//
-		// 初期(念のため)
-//		case TMT_HODOMOE:		// ホドモエ
-//		case TMT_RENTAL:		// レンタル
-//		case TMT_SHAFFLE:		// シャッフル
+		// 念のため
 		case WBTWIN_COUNT_HODOMOE:		// ホドモエ
 		case WBTWIN_COUNT_RENTAL:		// レンタル
 		case WBTWIN_COUNT_SHUFFLE:		// シャッフル
@@ -2620,7 +2615,6 @@ static void PrintStrBuf( WIN_RECORD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT
 	// 回数表示
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
 	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[wk->DispBuffer[pos]], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-//	STRTOOL_SetNumber( strbuf2, pos, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 	// 最終出力バッファ
 	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -2691,8 +2685,6 @@ static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk )
 	int		offy;
 	//
 	// 0.25ずつ移動、32dotで戻し(0x100 = 1.0)
-//	wk->ScrollOffy += 0x40;
-//	if(wk->ScrollOffy >= 0x2000){
 	wk->ScrollOffy += wr_scroll_tbl[0];
 	if(wk->ScrollOffy >= wr_scroll_tbl[1]){
 		wk->ScrollOffy = 0;
