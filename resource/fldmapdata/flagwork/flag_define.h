@@ -2347,7 +2347,7 @@
 #define SYS_FLAG_POKEWOOD_TUTORIAL        2440 /* 0x0988 ポケウッド：チュートリアル中のフラグ */
 #define SYS_FLAG_WBT_TUTORIAL             2441 /* 0x0989 WBT:チュートリアル中のフラグ */
 #define SYS_FLAG_NPOKE_OPEN               2442 /* 0x098a ホドモエシティ：Nポケ開放フラグ */
-		/* not used  2443(0x098b) */
+#define SYS_FLAG_FMISSION_ENTRY           2443 /* 0x098b フェスミッション参加フラグ */
 		/* not used  2444(0x098c) */
 		/* not used  2445(0x098d) */
 		/* not used  2446(0x098e) */
