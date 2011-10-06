@@ -790,7 +790,8 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
  
   //ƒŒƒ“ƒ_ƒ‰[ì¬
   {
-    const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NOT_AFFINE};
+//    const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NOT_AFFINE};
+    const GFL_REND_SURFACE_INIT renderInitData = { 0,0,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NONE};
     
     wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heap_sID );
     GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );
