@@ -20,9 +20,6 @@
 #define SAVE_SECTOR_SIZE        (0x1000)
 #define EXTRA_SAVE_SECTOR_SIZE  ( 0x100 )
 
-//以下はデバッグツール用のセーブ領域です
-#define DEBUG_FIGHT_SAVE  (126*SAVE_SECTOR_SIZE)    //デバッグファイト用セーブ領域
-#define DEBUG_SURETIGAI_SAVE  (125*SAVE_SECTOR_SIZE)  //すれ違い通信用セーブ領域
 
 ///EXTRA領域で戦闘録画が使用するセーブサイズ
 #define SAVESIZE_EXTRA_BATTLE_REC     (EXTRA_SAVE_SECTOR_SIZE * 26 ) // (SAVE_SECTOR_SIZE * 2)
@@ -117,6 +114,10 @@ enum{
 
   ALL_SAVE_END = OUTSIDE_MM_PERMANENT + SAVESIZE_OUTSIDE_PERMANENT,
 };
+
+
+//以下はデバッグツール用のセーブ領域です
+#define DEBUG_FIGHT_SAVE  (EXTRA_MM_DENDOU_MIRROR)    //デバッグファイト用セーブ領域(殿堂裏を書き潰し)
 
 //--------------------------------------------------------------
 //  
