@@ -572,7 +572,7 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
       if( !with_param ){
         log->score.value = value; //パラメータ無しタイプはスコア取得できないので元の値を書き戻す
       }
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
+//      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
 
       *log_score = log->score.value;  //今のスコアを返す
 
@@ -586,14 +586,14 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
     return LINKFEST_SCORELOG_SET_FAILED;  //ミッションパラメータを持たないタイプは、新規では取得しない
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
+//    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
     return LINKFEST_SCORELOG_SET_FAILED;  //もう入らない
   }
   //新規
   log = &wk->log[wk->log_num];
   log->score = src->prm.score;
   *log_score = log->score.value;  //今のスコアを返す
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
+//  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
   return LINKFEST_SCORELOG_SET_NEW_ENTRY;
 }
