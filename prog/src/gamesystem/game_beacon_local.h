@@ -53,7 +53,8 @@ typedef struct{
   u8 resort_enable;                   ///<リゾート用のデータ配信許可フラグ
   u8 resort_extend_index;             ///<リゾート現在送信中の拡張インデックス
   void *p_resort_buff;                ///<リゾート用拡張バッファ
-  u16 resort_extend_count;            ///<リゾート用拡張切り替えカウント
+  u8 resort_extend_count;            ///<リゾート用拡張切り替えカウント
+  u8 resort_set_request;              ///<リゾート用データセットリクエスト
 
   u8  cgear_info_flags;               ///<調査隊の調査依頼を達成していることをCギアに通知(GAMEBEACON_CGEAR_INFO_FLAG)
 

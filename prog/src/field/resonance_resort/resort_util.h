@@ -83,3 +83,4 @@ extern void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA 
 
 extern void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID );
 
+extern u32 RESORT_UTIL_GetRecommendedShop( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_reason );

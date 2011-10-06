@@ -55,6 +55,8 @@
 #define RESORT_GET_PARAM_CELEB_TRADE_NO       (39)
 #define RESORT_GET_PARAM_INDEX                (40)
 #define RESORT_GET_PARAM_PEOPLE_TYPE          (41)
+#define RESORT_GET_PARAM_RECOMMENDED_SHOP     (42)
+#define RESORT_GET_PARAM_RECOMMENDED_REASON   (43)
 
 //RESORT_GET_PARAM_CHECK_SCOUTÇÃñﬂÇËíl
 #define RESORT_CHECK_SCOUT_YES          (0) //Ç¢Ç¢ÇÊ
@@ -418,3 +420,6 @@
 #define  RESORT_RECORD_ID_GETPOKE     (31)//É|ÉPÉÇÉìÇïﬂÇ‹Ç¶ÇΩ
 #define  RESORT_RECORD_ID_INFINITYD_W (32)//ÇµÇÎÇÃÇ∂Ç„Ç«Ç§Ç÷Ç¢Ç¡ÇΩ
 #define  RESORT_RECORD_ID_MAX         (33)//ç≈ëÂêî
+
+
+#define  RESORT_RECOMMENDEDSHOP_NONE  (8)

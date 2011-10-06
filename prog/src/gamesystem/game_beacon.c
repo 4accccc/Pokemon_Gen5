@@ -81,15 +81,16 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
+static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type );
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
-static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type );
-static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys );
+static void BeaconInfo_RecvResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type );
+static void GAMEBEACON_Set_SendResortData( GAMEBEACON_SYSTEM *bsys );
+static BOOL SendBeacon_Update_ResortData( GAMEBEACON_SYSTEM *bsys );
 static void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
 static void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
 static BOOL GAMEBEACON_Set_FMissionWildPokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
@@ -186,12 +187,31 @@ void GAMEBEACON_Update(void)
     bsys->backup_hour = play_hour;
   }
 
-  //リゾートデータを設定するのは常時通信モードだけ
-  if(bsys->gamedata != NULL
-    && WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() ){
-    GAMEBEACON_Set_ResortData( bsys );
+  if( SendBeacon_Update(&bsys->send) )
+  {
+    bsys->resort_set_request = TRUE;
   }
-  SendBeacon_Update(&bsys->send);
+  if( SendBeacon_Update_ResortData(bsys) )
+  {
+    bsys->resort_set_request = TRUE;
+  }
+
+  
+
+  if( bsys->resort_set_request == TRUE )
+  {
+    if( bsys->gamedata != NULL
+        && bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH
+        && GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE
+        && bsys->resort_enable 
+        && WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
+        && GFL_NET_IsParentMachine()
+      )
+    {
+      GAMEBEACON_Set_SendResortData( bsys );
+    }
+    bsys->resort_set_request = FALSE;
+  }
   
   for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
     if(bsys->log[i].info.version_bit != 0){
@@ -333,7 +353,7 @@ BOOL GAMEBEACON_GetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag )
  * @param   send		
  */
 //--------------------------------------------------------------
-static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
+static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
 {
   if(send->info.action.action_no != GAMEBEACON_ACTION_SEARCH){
     send->life++;
@@ -341,8 +361,11 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
       send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
+      return TRUE;
     }
   }
+
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -630,6 +653,8 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
   BOOL same_player = FALSE;
+  BOOL same_data   = FALSE;
+  BOOL is_search   = FALSE;
   
   if((info->version_bit & (1 << (PM_VERSION - VERSION_WHITE))) == 0){
     return FALSE; //受け取れないバージョン
@@ -640,20 +665,6 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     return FALSE;
   }
 
-  //リゾートビーコン受け取り
-  if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
-  {
-    BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_BEACON );
-  }
-  else if( GAMEBEACON_Check_FestMission(info) )
-  {
-    //フェスビーコンかつ、配信ミッションではないとき
-    if( info->action.action_no != GAMEBEACON_ACTION_DISTRIBUTION_FMISSION )
-    {
-      BeaconInfo_SetResortData( bsys, info, RESORT_COMM_TYPE_HYLINKFES );
-    }
-  }
-
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
       && GameBeaconSys->send.info.trainer_id != info->action.thanks.target_trainer_id){
     return FALSE;
@@ -662,9 +673,14 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   if(bsys->start_log <= bsys->end_log){
     for(i = bsys->start_log; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
-            || bsys->log[i].info.send_counter == info->send_counter){
-          return FALSE; //ログに同じデータを受信済み
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
+        {
+          is_search = TRUE;
+          break;
+        }
+        if( bsys->log[i].info.send_counter == info->send_counter){
+          same_data = TRUE; //ログに同じデータを受信済み
+          break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
         break;
@@ -674,9 +690,14 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   else{
     for(i = bsys->start_log; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
-            || bsys->log[i].info.send_counter == info->send_counter){
-          return FALSE; //ログに同じデータを受信済み
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
+        {
+          is_search = TRUE;
+          break;
+        }
+        if( bsys->log[i].info.send_counter == info->send_counter){
+          same_data = TRUE; //ログに同じデータを受信済み
+          break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
         break;
@@ -684,14 +705,43 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     }
     for(i = 0; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH 
-            || bsys->log[i].info.send_counter == info->send_counter){
-          return FALSE; //ログに同じデータを受信済み
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
+        {
+          is_search = TRUE;
+          break;
+        }
+        if( bsys->log[i].info.send_counter == info->send_counter){
+          same_data = TRUE; //ログに同じデータを受信済み
+          break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
         break;
       }
     }
+  }
+
+  //リゾートビーコン受け取り
+  if( same_data == FALSE )
+  {
+    if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
+    {
+      BeaconInfo_RecvResortData( bsys, info, RESORT_COMM_TYPE_BEACON );
+    }
+    else if( GAMEBEACON_Check_FestMission(info) )
+    {
+      //フェスビーコンかつ、配信ミッションではないとき
+      if( info->action.action_no != GAMEBEACON_ACTION_DISTRIBUTION_FMISSION )
+      {
+        BeaconInfo_RecvResortData( bsys, info, RESORT_COMM_TYPE_HYLINKFES );
+      }
+    }
+  }
+
+  //ログに同じデータがあるので受信しない
+  //  間にリゾートの処理を挟むため、直接returnする形式から変更
+  if( is_search || same_data )
+  {
+    return FALSE;
   }
   
   //受信ビーコンデータ整合性チェック
@@ -715,6 +765,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       return FALSE; //マジックキー不一致の為、受け取り拒否
     }
   }
+
   BeaconInfo_SetFestMissionLog( bsys, info );
   BeaconInfo_CheckCGearInfo( bsys, info, !same_player );
  
@@ -1015,7 +1066,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
  *	@param	GAMEBEACON_INFO *info   ビーコン情報
  */
 //-----------------------------------------------------------------------------
-static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type )
+static void BeaconInfo_RecvResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type )
 {
   if( GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
   {
@@ -2111,38 +2162,39 @@ void * GAMEBEACON_DEBUG_GetResortRecvBuffer( void )
  * @param   const RESORT_BEACON_DATA *cp_data
  */
 //==================================================================
-static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
+static void GAMEBEACON_Set_SendResortData( GAMEBEACON_SYSTEM *bsys )
 {
-  if( bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH )
+
+  RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
+
+  //一旦ビーコンデータにデータ集積
+  RESORT_BEACON_DATA_SetMyData( p_data, bsys->resort_extend_index, bsys->gamedata );
+
+  //ビーコンデータからビーコンにデータ設定
+  RESORT_BEACON_DATA_GetBeaconInfo( p_data, &bsys->send.info );
+
+  GAMEBEACON_SUB_SendBeaconSetCommon(&bsys->send);
+
+  RESORT_BEACON_DATA_Exit( p_data );
+
+}
+//==================================================================
+/**
+ * リゾート用ビーコンの更新
+ *
+ */
+//==================================================================
+static BOOL SendBeacon_Update_ResortData( GAMEBEACON_SYSTEM *bsys )
+{
+  //拡張切り替えカウント
+  if( bsys->resort_extend_count++ > sc_extend_frame_max[bsys->resort_extend_index] )
   {
-    if( bsys->resort_enable && GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
-    {
-
-      RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
-
-      //一旦ビーコンデータにデータ集積
-      RESORT_BEACON_DATA_SetMyData( p_data, bsys->resort_extend_index, bsys->gamedata );
-
-      //ビーコンデータからビーコンにデータ設定
-      RESORT_BEACON_DATA_GetBeaconInfo( p_data, &bsys->send.info );
-
-      GAMEBEACON_SUB_SendBeaconSetCommon(&bsys->send);
-
-      RESORT_BEACON_DATA_Exit( p_data );
-
-      //拡張切り替えカウント
-      if( bsys->resort_extend_count++ > sc_extend_frame_max[bsys->resort_extend_index] )
-      {
-        bsys->resort_extend_count = 0;
-        bsys->resort_extend_index++;
-        bsys->resort_extend_index %= RESORT_EXTEND_TYPE_MAX;
-      }
-    }
-    else
-    {
-      bsys->send.info.action.resort_extend_type = RESORT_EXTEND_TYPE_NULL;
-    }
+    bsys->resort_extend_count = 0;
+    bsys->resort_extend_index++;
+    bsys->resort_extend_index %= RESORT_EXTEND_TYPE_MAX;
+    return TRUE;
   }
+  return FALSE;
 }
 //==================================================================
 /**

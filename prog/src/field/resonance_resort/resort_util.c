@@ -528,6 +528,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 //-----------------------------------------------------------------------------
 BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_sys, u32 *p_index )
 {
+  int i;
   RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
   RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
   RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
@@ -538,7 +539,6 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
   u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
   u32 shop = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
-  int i;
 
   BOOL is_good = FALSE;
   u32 ret_grade = 0;
@@ -2644,3 +2644,162 @@ void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mysta
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ÉIÉXÉXÉÅÇÃÇ®ìXÇéÊìæ
+ *
+ *	@param	RESORT_SYSTEM *p_sys
+ *	@param	*p_abstruct 
+ *
+ *	@return RESIDENT_DATAÉCÉìÉfÉbÉNÉX   RESORT_RESIDENT_DATA_NUMÇ≈Ç†ÇÍÇŒÉIÉXÉXÉÅÇ»Çµ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_GetRecommendedShop( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_reason )
+{
+  enum
+  {
+    RECOMMENDED_TYPE_EXT1_1,  //ägí£ÇP  ê}ä”ÇÃêîÇ™ÇPÇTÇOà»è„
+    RECOMMENDED_TYPE_EXT2_1,  //ägí£ÇQ  í êMåä∑Ç™10âÒà»è„
+    RECOMMENDED_TYPE_EXT3_1,  //ägí£ÇR  ïﬂÇ‹Ç¶ÇΩÉ|ÉPÉÇÉìÇÃêîÇ™ÇPÇOÇOà»è„
+    RECOMMENDED_TYPE_EXT4_1,  //ägí£ÇS  â\Ç…ìöÇ¶ÇΩêîÇPÇOà»è„
+    RECOMMENDED_TYPE_EXT5_1,  //ägí£ÇT  ç≈ãﬂÉåÉRÅ[ÉhÇí«â¡ÇµÇƒÇ¢ÇÈÇPì˙
+    RECOMMENDED_TYPE_MAX,
+  };
+  int i;
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  u32 id = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+  u32 reason  = id%RECOMMENDED_TYPE_MAX;
+  RESORT_RESIDENT_DATA *p_my  = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+
+  GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+  if( p_reason )
+  {
+    *p_reason = reason;
+  }
+  
+  return RESORT_RESIDENT_DATA_NUM;
+
+#ifdef PM_DEBUG
+  {
+    int next_idx = (RESORT_ABSTRUCT_DATA_GetBufferIndex(p_abstruct)+1);
+    
+    if( next_idx >= RESORT_RESIDENT_DATA_NUM )
+    {
+      return  RESORT_RESIDENT_DATA_NUM;
+    }
+    else
+    {
+      RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, next_idx );
+      if( !RESORT_RESIDENT_DATA_IsEmpty(p_resi) )
+      {
+        return next_idx;
+      }
+      else
+      {
+        return  RESORT_RESIDENT_DATA_NUM;
+      }
+    }
+  }
+#endif
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+
+    RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
+    BOOL is_ok  = FALSE;
+
+    //Ç‡ÇµãÛÇ©é©ï™Ç∆ìØÇ∂Ç»ÇÁÉ~Ç»Ç¢
+    if( RESORT_RESIDENT_DATA_IsEmpty(p_resi) || (p_my!=p_resi) )
+    {
+      continue;
+    }
+
+    //é©ï™ÇÃçDÇ›Ç…ÇÊÇ¡Çƒï™äÚ
+    switch( reason )
+    {
+    case RECOMMENDED_TYPE_EXT1_1:  //ägí£ÇP  ê}ä”ÇÃêîÇ™ÇPÇTÇOà»è„
+      {
+        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT1_ZUKAN,NULL);
+        if( num >= 100 )
+        {
+          is_ok = TRUE;
+        }
+      }
+      break;
+    case RECOMMENDED_TYPE_EXT2_1:  //ägí£ÇQ  í êMåä∑Ç™10âÒà»è„
+      {
+        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT2_RANK_00,NULL);
+        if( num >= 10 )
+        {
+          is_ok = TRUE;
+        }
+      }
+      break;
+    case RECOMMENDED_TYPE_EXT3_1:  //ägí£ÇR  ïﬂÇ‹Ç¶ÇΩÉ|ÉPÉÇÉìÇÃêîÇ™ÇPÇOÇOà»è„
+      {
+        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT3_RANK_06,NULL);
+        if( num >= 100 )
+        {
+          is_ok = TRUE;
+        }
+      }
+      break;
+    case RECOMMENDED_TYPE_EXT4_1:  //ägí£ÇS  â\Ç…ìöÇ¶ÇΩêîÇPÇOà»è„
+      {
+        int j;
+        u32 cnt = 0;
+        for( j = RESORT_DATA_PARAM_EXT4_GOSSIP_00; j <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; j++ )
+        {
+          u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT4_GOSSIP_00+j,NULL);
+          if( num > 0 )
+          {
+            cnt++;
+          }
+        }
+        if( cnt >= 10 )
+        {
+          is_ok = TRUE;
+        }
+      }
+      break;
+    case RECOMMENDED_TYPE_EXT5_1:  //ägí£ÇT  ç≈ãﬂÉåÉRÅ[ÉhÇí«â¡ÇµÇƒÇ¢ÇÈÅiÇRì˙à»ì‡Åj
+      {
+        int j;
+        u32 cnt = 0;
+        s32 days1, days2;
+        RTCDate now;
+        RTCDate date;
+        GFL_RTC_GetDate( &now );
+        days1 = RTC_ConvertDateToDay( &now );
+
+        for( j = 0; j < 4; j++ )
+        {
+          u32 id = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT5_RECORD_00+j,NULL);
+          RESORT_DATE r_date = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j,NULL);
+          if( id != RESORT_RECORD_ID_NONE )
+          {
+            RESORT_DATA_DateToRtc( r_date, &date );
+            days2 = RTC_ConvertDateToDay( &date );
+            if( MATH_IAbs(days1 - days2) <= 3 )
+            {
+              is_ok = TRUE;
+              break;
+            }
+          }
+        }
+      }
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+
+    if( is_ok )
+    {
+      return i;
+    }
+  }
+
+  return RESORT_RESIDENT_DATA_NUM;
+}

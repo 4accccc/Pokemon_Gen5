@@ -46,6 +46,7 @@ DEFINE_LOCAL  LWK_MENU_LOOP
 DEFINE_LOCAL  LWK_MENU_SUBLOOP
 DEFINE_LOCAL  LWK_OBJID
 DEFINE_LOCAL  LWK_MSGID
+DEFINE_LOCAL LWK_MSGID2
 DEFINE_LOCAL  LWK_RET
 DEFINE_LOCAL  LWK_YESNO
 DEFINE_LOCAL  LWK_RET_IDX
@@ -59,6 +60,10 @@ DEFINE_LOCAL LWK_INDEX
 
 DEFINE_LOCAL LWK_FUNCTION_RETURN
 DEFINE_LOCAL LWK_TUTORIAL_MODE
+
+DEFINE_LOCAL LWK_COME_SHOP_RET
+DEFINE_LOCAL LWK_EXP
+DEFINE_LOCAL LWK_SPOT_RESULT
 
 //------------------------------注意--------------------------------//
 //																	//
@@ -451,13 +456,9 @@ _RET
 //==============================================================
 sub_tourist_spot:
 {
-  DEFINE_LOCAL LWK_MSGID2
-  DEFINE_LOCAL LWK_RET2
-  DEFINE_LOCAL LWK_MSGID3
-  DEFINE_LOCAL LWK_SPOT_RESULT
-  DEFINE_LOCAL LWK_EXP
-  DEFINE_LOCAL LWK_LV
-
+  DEFINE_LOCAL  LWK_LOOP
+  DEFINE_LOCAL  LWK_MAIN_EXP
+  DEFINE_LOCAL  LWK_RECOMMEND
 
   $LWK_FUNCTION_RETURN  = FALSE
 
@@ -473,8 +474,7 @@ sub_tourist_spot:
 
   _RESORT_CHANGE_OV_TO_COMMON()
 
-  IF $LWK_LIST_RET_TYPE == RESORT_LIST_CANCEL THEN
-  ELSE
+  IF $LWK_LIST_RET_TYPE != RESORT_LIST_CANCEL THEN
     //案内カウント
     _ADD_RECORD( RECID_RESORT_GUID_CNT, 1 )
 
@@ -485,169 +485,41 @@ sub_tourist_spot:
 	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 	  _BALLOONWIN_CLOSE()
 
-    //フェードアウト
-	  _BLACK_OUT()
-	  _DISP_FADE_END_CHECK()
-
-
     //おすすめスポットをチェック
-    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_SPOT_RESULT, LWK_MSGID, LWK_MSGID2, LWK_EXP )
-
-	  //カメラ切り替え
-		_CAMERA_START()		//カメラ操作開始
-		_CAMERA_PURGE()		//カメラのバインドを解く
-    _CALL sub_setspot_camera
-    _CALL sub_crowdpeople_visible_off
-    _BLACK_IN()
+    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_SPOT_RESULT, LWK_MSGID, LWK_MSGID2, LWK_MAIN_EXP )
+    $LWK_EXP  = $LWK_MAIN_EXP
+    
+    //フェードアウト
+    _BLACK_OUT()
     _DISP_FADE_END_CHECK()
+	  _CAMERA_START()		//カメラ操作開始
+	  _CAMERA_PURGE()		//カメラのバインドを解く
 
-    //～が　おすすめしたみせに　やってきた！
-    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-    _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
-    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 2 )
-    _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 3 )
-    _SYSWIN_MSG( resort_sys_15, POS_DOWN )
+    //お店にきた
+    _CALL sub_come_shop
 
-    //お店に来た人の挨拶文
-    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-    _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 4 )
-    _RESORT_GET_MSGID( RESORT_TOURIST_SHOP_GREET_MSGID, LWK_MSGID3 )
-    _SYSWIN_MSG( LWK_MSGID3, POS_DOWN )
-
-    //満足したかどうか
-    IF $LWK_SPOT_RESULT == FALSE THEN
-      //満足しなかった
-      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-      _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
-      _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
-    ELSE
-
-      //演出文
-      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-      _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_WORD_PARAM_FRONT, 0, 2 )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 3 )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 4 )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 5 )
-      _SYSWIN_MSG( LWK_MSGID2, POS_DOWN )
-
-      //満足した
-      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
-      _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
-
-      //お店に経験値が入る
-      _RESORT_ADD_EXP_SHOP( LWK_LIST_RET_IDX, LWK_EXP, LWK_RET, LWK_LV )
-      $LWK_LV += 1
-
-      //LVMAXの分岐
-      IF $LWK_RET != RESORT_SET_SPOT_SHOP_LVMAX THEN
-
-        _NUMBER( 5, LWK_EXP, 5 )
-        _SYSWIN_MSG( resort_sys_16, POS_DOWN )
-
-        _NUMBER( 6, LWK_LV, 1 )
-        //施設レベルアップ
-        SWITCH $LWK_RET
-        CASE RESORT_SET_SPOT_SHOP_LVUP THEN
-          _SYSWIN_MSG( resort_sys_13_00, POS_DOWN )
-          _ME_PLAY( SEQ_ME_AVENUE_01 )
-          _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
-	        _ME_WAIT()
-	        _AB_KEYWAIT_MARK()
-          _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
-
-        CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
-          _SYSWIN_MSG( resort_sys_13_00, POS_DOWN )
-          _ME_PLAY( SEQ_ME_AVENUE_01 )
-          _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
-	        _ME_WAIT()
-	        _AB_KEYWAIT_MARK()
-          _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
-
-          _SYSWIN_CLOSE()
-          //変化した店を見せるためにフィールド開き直し
-          //フェードアウト
-	        _MAP_FADE_WHITE_OUT_SLOW()
-	        _MAP_FADE_END_CHECK()
-	        _FIELD_CLOSE()
-	        _FIELD_OPEN()
-
-          _RESORT_RESET_MMDL( LWK_LIST_RET_IDX )
-
-		      _CAMERA_START()		//カメラ操作開始
-		      _CAMERA_PURGE()		//カメラのバインドを解く
-          $LWK_INDEX = $LWK_LIST_RET_IDX
-          _CALL sub_shopbuild_camera
-          _CALL sub_crowdpeople_visible_off
-	        _MAP_FADE_WHITE_IN_SLOW()
-	        _MAP_FADE_END_CHECK()
-
-          _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
-          //○○から○○になった！
-          _ME_PLAY( SEQ_ME_AVENUE_02 )
-          _SYSWIN_MSG( resort_sys_20_me, POS_DOWN )
-	        _ME_WAIT()
-	        _AB_KEYWAIT_MARK()
-        ENDSWITCH
-      ENDIF
-
-
-      _SYSWIN_CLOSE()
-
-      //街に経験値が入る
-      _RESORT_ADD_EXP_CITY( LWK_EXP, LWK_RET2, LWK_LV )
-      
-      //LV最大以外は街カメラへいく
-      IF $LWK_RET2 != RESORT_SET_SPOT_CITY_LVMAX THEN
-
-        //フェードアウト
-	      _BLACK_OUT()
-	      _DISP_FADE_END_CHECK()
-        _CALL sub_crowdpeople_visible_on
-
-        //街カメラで人が見えてしまうので消す
-	      _OBJ_ANIME( LWK_OBJID, anm_off_visible )
-        _OBJ_ANIME_WAIT()
-
-        _CALL sub_city_camera
-        _BLACK_IN()
-        _DISP_FADE_END_CHECK()
-
-        //経験値加算メッセージ
-        _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
-        _NUMBER( 7, LWK_EXP, 5 )
-        _SYSWIN_MSG( resort_sys_17, POS_DOWN )
-
-        //街レベルアップ
-        IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-          _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
-
-          _NUMBER( 8, LWK_LV, 1 )
-          _SYSWIN_MSG( resort_sys_18_00, POS_DOWN )
-          _ME_PLAY( SEQ_ME_AVENUE_02 )
-          _SYSWIN_MSG( resort_sys_18_me, POS_DOWN )
-	        _ME_WAIT()
-	        _AB_KEYWAIT_MARK()
-          _SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
-
-          //肩書き
-          IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-            _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
-            _SYSWIN_MSG( resort_sys_18_02, POS_DOWN )
-          ENDIF
-
-          //ご褒美
-          IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
-
-            _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
-            _SYSWIN_MSG( resort_sys_22, POS_DOWN )
-            //=========================================
-            //LVアップしてご褒美があったのでご褒美イベント開始
-            $WK_SCENE_C16R0101_PRIZE = 1
-            //=========================================
-          ENDIF
+    //もしオススメがあれば
+    IF $LWK_COME_SHOP_RET == 2 THEN
+      $LWK_LOOP = TRUE
+      WHILE $LWK_LOOP == TRUE
+        _RESORT_GET_RECOMMEND( LWK_LIST_RET_IDX,  LWK_RECOMMEND )
+        IF $LWK_RECOMMEND == RESORT_RECOMMENDEDSHOP_NONE THEN
+          $LWK_LOOP = FALSE
+        ELSE
+          //オススメのお店にきた
+          $LWK_LIST_RET_IDX = $LWK_RECOMMEND
+          $LWK_SPOT_RESULT  = TRUE
+          $LWK_MSGID  = resort_sys_05
+          $LWK_MSGID2 = resort_go_eff_79
+          $LWK_EXP  = 50
+          _CALL sub_come_shop
         ENDIF
-      ENDIF
+      ENDWHILE
+    ENDIF
+
+    IF $LWK_COME_SHOP_RET != 0 THEN
+      //街へ経験値加算
+      _CALL sub_city_app_exp
     ENDIF
 
     _SYSWIN_CLOSE()
@@ -657,9 +529,6 @@ sub_tourist_spot:
       _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 71, DIR_UP )
     ENDIF
 
-    //フェードアウト
-	  _BLACK_OUT()
-	  _DISP_FADE_END_CHECK()
 
     //表示ON
     _CALL sub_crowdpeople_visible_on
@@ -693,6 +562,212 @@ sub_tourist_spot:
 
     //成功
     $LWK_FUNCTION_RETURN  = TRUE
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：お店に来る処理
+//  LWK_LIST_RET_IDX[in]    お店番号
+//  LWK_SPOT_RESULT[in]     スポット結果  
+//  LWK_MSGID[in]           満足文章
+//  LWK_MSGID2[in]          演出文章
+//  LWK_EXP[in]             経験値
+//
+//  LWK_COME_SHOP_RET[out]  0 気に入らなかった
+//                          1 気に入った終了 
+//                          2 気に入ってオススメのお店
+//  
+//==============================================================
+sub_come_shop:
+{
+  DEFINE_LOCAL LWK_MSGID3
+  DEFINE_LOCAL LWK_RECOMMEND
+  DEFINE_LOCAL LWK_LV
+
+  //カメラ切り替え
+  _CALL sub_setspot_camera
+  _CALL sub_crowdpeople_visible_off
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
+  //～が　おすすめしたみせに　やってきた！
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 2 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 3 )
+  _SYSWIN_MSG( resort_sys_15, POS_DOWN )
+
+  //お店に来た人の挨拶文
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 4 )
+  _RESORT_GET_MSGID( RESORT_TOURIST_SHOP_GREET_MSGID, LWK_MSGID3 )
+  _SYSWIN_MSG( LWK_MSGID3, POS_DOWN )
+
+  //満足したかどうか
+  IF $LWK_SPOT_RESULT == FALSE THEN
+    //満足しなかった
+    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+    _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
+    _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
+
+    //気に入らなかった
+    $LWK_COME_SHOP_RET  = 0
+
+  ELSE
+
+    $LWK_COME_SHOP_RET  = 1
+    //演出文
+    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+    _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_WORD_PARAM_FRONT, 0, 2 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_WORD_PARAM_FRONT, 0, 3 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 4 )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 5 )
+    _SYSWIN_MSG( LWK_MSGID2, POS_DOWN )
+
+    //満足した
+    _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+    _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
+
+    //お店に経験値が入る
+    _RESORT_ADD_EXP_SHOP( LWK_LIST_RET_IDX, LWK_EXP, LWK_RET, LWK_LV )
+    $LWK_LV += 1
+
+    //LVMAXの分岐
+    IF $LWK_RET != RESORT_SET_SPOT_SHOP_LVMAX THEN
+
+      _NUMBER( 5, LWK_EXP, 5 )
+      _SYSWIN_MSG( resort_sys_16, POS_DOWN )
+
+      _NUMBER( 6, LWK_LV, 1 )
+      //施設レベルアップ
+      SWITCH $LWK_RET
+      CASE RESORT_SET_SPOT_SHOP_LVUP THEN
+        _SYSWIN_MSG( resort_sys_13_00, POS_DOWN )
+        _ME_PLAY( SEQ_ME_AVENUE_01 )
+        _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+        _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
+
+      CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
+        _SYSWIN_MSG( resort_sys_13_00, POS_DOWN )
+        _ME_PLAY( SEQ_ME_AVENUE_01 )
+        _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+        _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
+
+        _SYSWIN_CLOSE()
+        //変化した店を見せるためにフィールド開き直し
+        //フェードアウト
+        _MAP_FADE_WHITE_OUT_SLOW()
+        _MAP_FADE_END_CHECK()
+        _FIELD_CLOSE()
+        _FIELD_OPEN()
+
+        _RESORT_RESET_MMDL( LWK_LIST_RET_IDX )
+
+        $LWK_INDEX = $LWK_LIST_RET_IDX
+        _CALL sub_shopbuild_camera
+        _CALL sub_crowdpeople_visible_off
+        _MAP_FADE_WHITE_IN_SLOW()
+        _MAP_FADE_END_CHECK()
+
+        _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 0 )
+          //○○から○○になった！
+        _ME_PLAY( SEQ_ME_AVENUE_02 )
+        _SYSWIN_MSG( resort_sys_20_me, POS_DOWN )
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+      ENDSWITCH
+    ENDIF
+
+    //オススメするかどうか
+    _RESORT_GET_RECOMMEND( LWK_LIST_RET_IDX,  LWK_RECOMMEND )
+    IF $LWK_RECOMMEND != RESORT_RECOMMENDEDSHOP_NONE THEN
+      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0, 0 )
+      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_RECOMMEND, 1 )
+      _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_RECOMMEND, 2 )
+
+      _SYSWIN_MSG( resort_resident_recommend_00_m, POS_DOWN )
+      $LWK_COME_SHOP_RET  = 2
+    ENDIF
+  ENDIF
+
+  _SYSWIN_CLOSE()
+
+  //フェードアウト
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+}
+_RET
+
+//==============================================================
+//サブルーチン：街経験値加算処理
+//  LWK_EXP[in]             経験値
+//==============================================================
+sub_city_app_exp:
+{
+  DEFINE_LOCAL LWK_RET2
+  DEFINE_LOCAL LWK_LV
+
+  //街に経験値が入る
+  _RESORT_ADD_EXP_CITY( LWK_EXP, LWK_RET2, LWK_LV )
+      
+  //LV最大以外は街カメラへいく
+  IF $LWK_RET2 != RESORT_SET_SPOT_CITY_LVMAX THEN
+
+    _CALL sub_crowdpeople_visible_on
+
+    //街カメラで人が見えてしまうので消す
+	  _OBJ_ANIME( LWK_OBJID, anm_off_visible )
+    _OBJ_ANIME_WAIT()
+
+    _CALL sub_city_camera
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+    //経験値加算メッセージ
+    _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+    _NUMBER( 7, LWK_EXP, 5 )
+    _SYSWIN_MSG( resort_sys_17, POS_DOWN )
+
+    //街レベルアップ
+    IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+      _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
+
+      _NUMBER( 8, LWK_LV, 1 )
+      _SYSWIN_MSG( resort_sys_18_00, POS_DOWN )
+      _ME_PLAY( SEQ_ME_AVENUE_02 )
+      _SYSWIN_MSG( resort_sys_18_me, POS_DOWN )
+	    _ME_WAIT()
+	    _AB_KEYWAIT_MARK()
+      _SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
+
+      //肩書き
+      IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+        _RESORT_SET_WORD( RESORT_WORD_CITY_RANK, RESORT_WORD_PARAM_NONE, 0, 2 )
+        _SYSWIN_MSG( resort_sys_18_02, POS_DOWN )
+      ENDIF
+
+      //ご褒美
+      IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
+
+        _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+        _SYSWIN_MSG( resort_sys_22, POS_DOWN )
+        //=========================================
+        //LVアップしてご褒美があったのでご褒美イベント開始
+        $WK_SCENE_C16R0101_PRIZE = 1
+        //=========================================
+      ENDIF
+    ENDIF
+
+    //フェードイン
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+
   ENDIF
 }
 _RET

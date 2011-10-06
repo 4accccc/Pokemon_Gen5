@@ -572,6 +572,16 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_PEOPLE_TYPE:
     *p_ret_wk = RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE);
     break;
+  case RESORT_GET_PARAM_RECOMMENDED_SHOP:
+    *p_ret_wk = RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, NULL );
+    break;
+  case RESORT_GET_PARAM_RECOMMENDED_REASON:
+    {
+      u32 reason;
+      RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, &reason );
+      *p_ret_wk = reason;
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1273,6 +1283,37 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  場面にあった表示設定を行う
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortGetRecommendedShop( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
+
+  RESORT_ABSTRUCT_MANAGER * p_man = RESORT_SYSTEM_GetAbstructManager( p_sys );
+
+  u16 idx = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, idx );
+
+  GF_ASSERT( !RESORT_ABSTRUCT_DATA_IsEmpty(p_abstruct) );
+
+  *p_ret_wk = RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, NULL );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  街の名前を登録
