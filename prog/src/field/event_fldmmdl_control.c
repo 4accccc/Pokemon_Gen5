@@ -561,6 +561,8 @@ static GMEVENT_RESULT EVENTFUNC_ObjTrans(GMEVENT * event, int *seq, void*work)
 
     // “®ìƒ|[ƒY‚ð‰ðœ
     MMDL_OffMoveBitMoveProcPause( p_wk->mmdl );
+    // ‰e‚ðOFF
+    MMDL_OnMoveBit( p_wk->mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
 
     *seq = SEQ_MOVE;
     break;
