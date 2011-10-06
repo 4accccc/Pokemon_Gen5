@@ -6,7 +6,7 @@
 #define DOOR_ID_D10R0101_D10R0201_EXIT01  1
 #define DOOR_ID_D10R0101_D10R0301_EXIT01  2
 #define DOOR_ID_D10R0101_R22_EXIT01       3
-#define DOOR_ID_D10R0101_D26_EXIT01       4
+#define DOOR_ID_D10R0101_R23_EXIT01       4
 
 #endif //ZONE_D10R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

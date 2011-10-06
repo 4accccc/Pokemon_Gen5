@@ -2,81 +2,17 @@
 #ifndef ZONE_D26_EVD_H
 #define ZONE_D26_EVD_H
 
-#define DOOR_ID_D26_D26R0101_EXIT01       0
-#define DOOR_ID_D26_D10R0101_EXIT01       1
 
 #endif //ZONE_D26_EVD_H
 //このファイルは../data/d26.mevから自動生成されました
 #ifndef ZONE_D26_EVC_H
 #define ZONE_D26_EVC_H
 
-#define TR_RANGERW_21                      0
-#define TR_RANGERM_21                      1
-#define TR_ELITEM_32                       2
-#define TR_ELITEW_32                       3
-#define TR_KARATE_20                       4
-#define TR_BATTLEG_19                      5
-#define D26_TREE_01                        6
-#define D26_TREE_02                        7
-#define D26_TREE_03                        8
-#define D26_TREE_04                        9
-#define D26_ROCK_01                       10
-#define D26_ROCK_02                       11
-#define D26_ROCK_03                       12
-#define D26_ROCK_04                       13
-#define D26_ROCK_05                       14
-#define D26_ROCK_06                       15
-#define D26_SPPOKE3_01                    16
-#define FLD_ITEM_198                      17
-#define FLD_ITEM_199                      18
-#define FLD_ITEM_200                      19
-#define FLD_ITEM_201                      20
-#define FLD_ITEM_202                      21
-#define FLD_ITEM_203                      22
-#define TR_ELITEW_31                      23
-#define FLD_ITEM_195                      24
-#define TR_MOUNT_17                       25
-#define TR_KARATE_19                      26
-#define FLD_ITEM_196                      27
-#define TR_ELITEM_31                      28
-#define FLD_ITEM_194                      29
-#define R23_TREE_01                       30
-#define TR_BATTLEG_18                     31
-#define R23_TREE_02                       32
-#define FLD_ITEM_197                      33
-#define TR_MOUNT_18                       34
 
 #endif //ZONE_D26_EVC_H
 //このファイルは../data/d26.mevから自動生成されました
 #ifndef ZONE_D26_EVB_H
 #define ZONE_D26_EVB_H
 
-#define BG_D26_DUMMY_FES_01               0
-#define BG_D26_DUMMY_FES_02               1
-#define BG_D26_DUMMY_FES_03               2
-#define BG_D26_DUMMY_FES_04               3
-#define HIDE_ITEM_099                     4
-#define HIDE_ITEM_100                     5
-#define HIDE_ITEM_101                     6
-#define HIDE_ITEM_198                     7
-#define BGID_R23_ANIMAL_TRAIL_01_1        8
-#define BGID_R23_ANIMAL_TRAIL_01_2        9
-#define BG_D26_DUMMY_FES_05              10
-#define BG_D26_DUMMY_FES_06              11
-#define BG_D26_DUMMY_FES_07              12
-#define BG_D26_DUMMY_FES_08              13
-#define BG_D26_DUMMY_FES_09              14
-#define BG_D26_DUMMY_FES_10              15
-#define BG_D26_DUMMY_FES_11              16
-#define BG_D26_DUMMY_FES_12              17
-#define BG_D26_DUMMY_FES_13              18
-#define BG_D26_DUMMY_FES_14              19
-#define BG_D26_DUMMY_FES_15              20
-#define BG_D26_DUMMY_FES_16              21
-#define BG_D26_DUMMY_FES_17              22
-#define BG_D26_DUMMY_FES_18              23
-#define BG_D26_DUMMY_FES_19              24
-#define BG_D26_DUMMY_FES_20              25
-#define BG_D26_DUMMY_FES_21              26
 
 #endif //ZONE_D26_EVB_H

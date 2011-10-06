@@ -273,7 +273,7 @@ init_flags:
   //ユクシー・エムリット・アグノム
   _FLAG_SET( FV_C02_SPPOKE1_01 )  //ユクシー
   _FLAG_SET( FV_R07R0105_SPPOKE2_01 )  //エムリット
-  _FLAG_SET( FV_D26_SPPOKE3_01 )  //アグノム
+  _FLAG_SET( FV_R23_SPPOKE3_01 )  //アグノム
   
   //N05R0201：謁見の間
   _FLAG_SET( FV_N01R0502_BOSS_01 )
@@ -468,9 +468,9 @@ INIT_EVENT_START  ev_init_gameclear_script
   ENDIF
 
   //アグノム未捕獲時の復活処理
-  IF FLAG_OFF( FE_D26_SPPOKE3_GET_01 )  && $WK_SCENE_D26_SPPOKE3_01 == 3 THEN 
+  IF FLAG_OFF( FE_R23_SPPOKE3_GET_01 )  && $WK_SCENE_R23_SPPOKE3_01 == 3 THEN 
     //POSイベントリセット
-    $WK_SCENE_D26_SPPOKE3_01 = 1
+    $WK_SCENE_R23_SPPOKE3_01 = 1
   ENDIF
 
   //ウルガモス未捕獲時の復活処理

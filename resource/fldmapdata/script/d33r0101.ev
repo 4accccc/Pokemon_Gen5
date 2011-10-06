@@ -233,7 +233,7 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   //エムリットPOSイベント配置
   $WK_SCENE_R07R0105_SPPOKE2_01 = 1
   //アグノムPOSイベント配置
-  $WK_SCENE_D26_SPPOKE3_01 = 1
+  $WK_SCENE_R23_SPPOKE3_01 = 1
   //ユクシー・エムリット・アグノム非表示
   _FLAG_SET( FV_D33R0101_SPPOKE_01 )
   //博士非表示

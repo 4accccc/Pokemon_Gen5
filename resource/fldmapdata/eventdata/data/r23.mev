@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/26 17:08:24
+#save date:2011/09/29 20:17:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r23.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,1092 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r23.wms
 #hold event type:
 1
 #hold event number:
+35
+#event number: 0
+#type
+1
+#ID name
+TR_RANGERW_21
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RND_DR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_RANGERW_21
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 80 -472
+#event number: 1
+#type
+1
+#ID name
+TR_RANGERM_21
+#OBJ CODE Number
+RANGERM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERM_21
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+280 80 -424
+#event number: 2
+#type
+1
+#ID name
+TR_ELITEM_32
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEM_32
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+7
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 80 -312
+#event number: 3
+#type
+1
+#ID name
+TR_ELITEW_32
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_32
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+7
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 80 -520
+#event number: 4
+#type
+1
+#ID name
+TR_KARATE_20
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_20
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 80 -392
+#event number: 5
+#type
+1
+#ID name
+TR_BATTLEG_19
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_RTUL         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BATTLEG_19
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+9
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+888 160 -680
+#event number: 6
+#type
+1
+#ID name
+R23_TREE_01
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+728 80 -456
+#event number: 7
+#type
+1
+#ID name
+R23_TREE_02
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 80 -424
+#event number: 8
+#type
+1
+#ID name
+R23_TREE_03
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 80 -456
+#event number: 9
+#type
+1
+#ID name
+R23_TREE_04
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 80 -456
+#event number: 10
+#type
+1
+#ID name
+R23_ROCK_01
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 80 -568
+#event number: 11
+#type
+1
+#ID name
+R23_ROCK_02
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 80 -584
+#event number: 12
+#type
+1
+#ID name
+R23_ROCK_03
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 80 -648
+#event number: 13
+#type
+1
+#ID name
+R23_ROCK_04
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+296 64 -728
+#event number: 14
+#type
+1
+#ID name
+R23_ROCK_05
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 80 -648
+#event number: 15
+#type
+1
+#ID name
+R23_ROCK_06
+#OBJ CODE Number
+BIGROCK
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_KAIRIKI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+488 80 -760
+#event number: 16
+#type
+1
+#ID name
+R23_SPPOKE3_01
+#OBJ CODE Number
+TPOKE_0525
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R23_SPPOKE3_01
+#Event Script Name
+SCRID_R23_SPPOKE3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 96 -520
+#event number: 17
+#type
+1
+#ID name
+FLD_ITEM_198
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_198
+#Event Script Name
+SCRID_FLD_ITEM_198
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 80 -264
+#event number: 18
+#type
+1
+#ID name
+FLD_ITEM_199
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_199
+#Event Script Name
+SCRID_FLD_ITEM_199
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 80 -728
+#event number: 19
+#type
+1
+#ID name
+FLD_ITEM_200
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_200
+#Event Script Name
+SCRID_FLD_ITEM_200
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 96 -552
+#event number: 20
+#type
+1
+#ID name
+FLD_ITEM_201
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_201
+#Event Script Name
+SCRID_FLD_ITEM_201
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 80 -424
+#event number: 21
+#type
+1
+#ID name
+FLD_ITEM_202
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_202
+#Event Script Name
+SCRID_FLD_ITEM_202
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+936 160 -632
+#event number: 22
+#type
+1
+#ID name
+FLD_ITEM_203
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_203
+#Event Script Name
+SCRID_FLD_ITEM_203
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 160 -344
+#event number: 23
+#type
+1
+#ID name
+TR_ELITEW_31
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_31
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1512 80 -440
+#event number: 24
+#type
+1
+#ID name
+FLD_ITEM_195
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_195
+#Event Script Name
+SCRID_FLD_ITEM_195
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1736 80 -472
+#event number: 25
+#type
+1
+#ID name
+TR_MOUNT_17
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TR_D_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MOUNT_17
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+7
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1352 0 -616
+#event number: 26
+#type
+1
+#ID name
+TR_KARATE_19
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RTLU         
+#EVENT TYPE Number
+EV_TYPE_TRAINER_SPIN_STOP_R
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_19
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+6
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1640 80 -808
+#event number: 27
+#type
+1
+#ID name
+FLD_ITEM_196
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_196
+#Event Script Name
+SCRID_FLD_ITEM_196
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1336 80 -920
+#event number: 28
+#type
+1
+#ID name
+TR_ELITEM_31
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_RND_DL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEM_31
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1560 0 -888
+#event number: 29
+#type
+1
+#ID name
+FLD_ITEM_194
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_194
+#Event Script Name
+SCRID_FLD_ITEM_194
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1336 80 -1080
+#event number: 30
+#type
+1
+#ID name
+R23_TREE_05
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1368 80 -1208
+#event number: 31
+#type
+1
+#ID name
+TR_BATTLEG_18
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BATTLEG_18
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1448 0 -1208
+#event number: 32
+#type
+1
+#ID name
+R23_TREE_06
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1560 0 -1544
+#event number: 33
+#type
+1
+#ID name
+FLD_ITEM_197
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_197
+#Event Script Name
+SCRID_FLD_ITEM_197
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1528 0 -1576
+#event number: 34
+#type
+1
+#ID name
+TR_MOUNT_18
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_HIDE_KUSA
+#EVENT TYPE Number
+EV_TYPE_TRAINER_EYEALL
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MOUNT_18
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1384 80 -904
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -19,7 +1104,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r23.wms
 #hold event type:
 1
 #hold event number:
-19
+27
 #event number: 0
 #Bg Event Label
 BG_R23_DUMMY_FES_01
@@ -32,7 +1117,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -1048
+920 80 -344
 #event number: 1
 #Bg Event Label
 BG_R23_DUMMY_FES_02
@@ -45,7 +1130,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -1080
+1048 80 -344
 #event number: 2
 #Bg Event Label
 BG_R23_DUMMY_FES_03
@@ -58,7 +1143,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -648
+968 80 -440
 #event number: 3
 #Bg Event Label
 BG_R23_DUMMY_FES_04
@@ -71,8 +1156,86 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -664
+1080 80 -552
 #event number: 4
+#Bg Event Label
+HIDE_ITEM_099
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_099
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 80 -760
+#event number: 5
+#Bg Event Label
+HIDE_ITEM_100
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_100
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+776 80 -344
+#event number: 6
+#Bg Event Label
+HIDE_ITEM_101
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_101
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1112 160 -408
+#event number: 7
+#Bg Event Label
+HIDE_ITEM_198
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_198
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1336 80 -1512
+#event number: 8
+#Bg Event Label
+BGID_R23_ANIMAL_TRAIL_01_1
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ANIMAL_TRAIL_12
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1368 80 -1400
+#event number: 9
+#Bg Event Label
+BGID_R23_ANIMAL_TRAIL_01_2
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_ANIMAL_TRAIL_12
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1384 80 -1400
+#event number: 10
 #Bg Event Label
 BG_R23_DUMMY_FES_05
 #Bg Event Type
@@ -84,8 +1247,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -648
-#event number: 5
+1528 0 -1560
+#event number: 11
 #Bg Event Label
 BG_R23_DUMMY_FES_06
 #Bg Event Type
@@ -97,8 +1260,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -648
-#event number: 6
+1512 0 -1592
+#event number: 12
 #Bg Event Label
 BG_R23_DUMMY_FES_07
 #Bg Event Type
@@ -110,8 +1273,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -168
-#event number: 7
+1560 0 -1160
+#event number: 13
 #Bg Event Label
 BG_R23_DUMMY_FES_08
 #Bg Event Type
@@ -123,8 +1286,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -72
-#event number: 8
+1560 0 -1176
+#event number: 14
 #Bg Event Label
 BG_R23_DUMMY_FES_09
 #Bg Event Type
@@ -136,8 +1299,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -8
-#event number: 9
+1592 0 -1160
+#event number: 15
 #Bg Event Label
 BG_R23_DUMMY_FES_10
 #Bg Event Type
@@ -149,8 +1312,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -168
-#event number: 10
+1576 0 -1160
+#event number: 16
 #Bg Event Label
 BG_R23_DUMMY_FES_11
 #Bg Event Type
@@ -162,8 +1325,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 80 -392
-#event number: 11
+1448 0 -680
+#event number: 17
 #Bg Event Label
 BG_R23_DUMMY_FES_12
 #Bg Event Type
@@ -175,8 +1338,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 80 -200
-#event number: 12
+1704 0 -584
+#event number: 18
 #Bg Event Label
 BG_R23_DUMMY_FES_13
 #Bg Event Type
@@ -188,8 +1351,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 80 -728
-#event number: 13
+1768 0 -520
+#event number: 19
 #Bg Event Label
 BG_R23_DUMMY_FES_14
 #Bg Event Type
@@ -201,8 +1364,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 80 -744
-#event number: 14
+1528 0 -680
+#event number: 20
 #Bg Event Label
 BG_R23_DUMMY_FES_15
 #Bg Event Type
@@ -214,8 +1377,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -72
-#event number: 15
+1320 80 -904
+#event number: 21
 #Bg Event Label
 BG_R23_DUMMY_FES_16
 #Bg Event Type
@@ -227,8 +1390,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 80 -936
-#event number: 16
+1576 80 -712
+#event number: 22
 #Bg Event Label
 BG_R23_DUMMY_FES_17
 #Bg Event Type
@@ -240,8 +1403,8 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 80 -632
-#event number: 17
+1576 80 -1240
+#event number: 23
 #Bg Event Label
 BG_R23_DUMMY_FES_18
 #Bg Event Type
@@ -253,20 +1416,46 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 80 -1016
-#event number: 18
+1560 80 -1256
+#event number: 24
 #Bg Event Label
-HIDE_ITEM_197
+BG_R23_DUMMY_FES_19
 #Bg Event Type
-BG_TALK_TYPE_HIDE
+BG_TALK_TYPE_DUMMY_FES
 #Bg Event Reaction Direction ID
 BG_TALK_DIR_ALL
 #Bg Script Name
-SCRID_HIDE_ITEM_197
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 80 -584
+1416 80 -1448
+#event number: 25
+#Bg Event Label
+BG_R23_DUMMY_FES_20
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1416 80 -1528
+#event number: 26
+#Bg Event Label
+BG_R23_DUMMY_FES_21
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1448 80 -1144
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -276,7 +1465,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_R23_SPPOKE3_01
+#Pos Script Name
+SCRID_POS_R23_SPPOKE3_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R23_SPPOKE3_01
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 96 -520
+#size
+1 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -286,6 +1492,41 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+2
+#event number: 0
+#Door Event Label
+DOOR_ID_R23_D26R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_D26R0101
+#Next Door ID Name
+DOOR_ID_D26R0101_R23_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_STAIRS
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+952 119 -344
+#size
+3 1
+#event number: 1
+#Door Event Label
+DOOR_ID_R23_D10R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_D10R0101
+#Next Door ID Name
+DOOR_ID_D10R0101_R23_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1672 -32 -1448
+#size
+1 2
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
+
