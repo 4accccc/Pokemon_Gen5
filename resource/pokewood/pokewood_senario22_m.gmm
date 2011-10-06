@@ -350,8 +350,8 @@
 		<language name="JPN_KANJI" width="256">スター</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">ジュジュベ</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ</language>
+		<language name="JPN" width="256">まじょ</language>
+		<language name="JPN_KANJI" width="256">まじょ</language>
 	</row>
 	<row id="pw_turn_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『まちなさーい……</language>
@@ -403,22 +403,22 @@
 		<language name="JPN" width="256">あやしいおんな『わたしは
 まほうのくにの　クイーン　ジュジュベ▼
 おほほ……　にがしは　しないよ
-しもべたち　あの　とびらを▼
+しもべたち　あの　とびらを▽
 ふさいで　おしまい！</language>
 		<language name="JPN_KANJI" width="256">怪しい女『私は
 魔法の国のクイーン　ジュジュベ▼
 おほほ……　にがしは　しないよ
-しもべたち　あの　扉を▼
+しもべたち　あの　扉を▽
 ふさいで　おしまい！</language>
 	</row>
 	<row id="pw_event0_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くそ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くそ！　とびらが……▼
 ちちうえが　いれば　こんなやつ▽
 ろうやに　いれてやるのに！▼
 でも　ぼくだけだし……▼
 おいつかれる　まえに
 こいつら　ぜんぶ　たおすしかない</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くそ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くそ！　扉が……▼
 父上が　いれば　こんな奴▽
 ろうやに　入れてやるのに！▼
 でも　ぼくだけだし……▼
@@ -480,12 +480,12 @@
 	<row id="pw_event3_react_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『まあ……
 つよき　なのねえ？▼
-そう　いわれると　もっともっと▽
+そう　いわれると　もっともっと
 くるしめたく　なっちゃうわ▼
 あっはははは……</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『まあ……
 強気なのねえ？▼
-そう　言われると　もっともっと▽
+そう　言われると　もっともっと
 苦しめたく　なっちゃうわ▼
 あっはははは……</language>
 	</row>
