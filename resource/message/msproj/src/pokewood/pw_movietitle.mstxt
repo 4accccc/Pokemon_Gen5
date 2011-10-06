@@ -302,11 +302,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＵＦＯを　あやつる　なぞの　おんな
-かのじょの　なぞのじっけんに　さんか</Text>
+			<Text>なぞの　おんなの　じっけん
+あかされる　デコイさくせん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:16:09" />
+				Time="2011-10-04T13:04:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -314,11 +314,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＵＦＯを　あやつる　謎の　女
-彼女の　謎の実験に　参加</Text>
+			<Text>なぞの　女の　実験
+明かされる　デコイ作戦</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:16:38" />
+				Time="2011-10-04T13:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -380,11 +380,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　おんなは　エイリアン
+			<Text>なぞの　おんなの　しょうたい
 じんるい　さいごの　たたかい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:18:35" />
+				Time="2011-10-04T13:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -392,11 +392,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>謎の　女は　エイリアン
+			<Text>なぞの　女の　正体
 人類　最後の　戦い</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:18:39" />
+				Time="2011-10-04T13:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3313,11 +3313,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>９カットいないに　リグレーをたおせ！
+			<Text>７カットいないに　リグレーをたおせ！
 ほかのポケモンを　たおすと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T10:29:43" />
+				Time="2011-10-04T03:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3325,11 +3325,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>９カット以内に　リグレーを倒せ！
+			<Text>７カット以内に　リグレーを倒せ！
 他のポケモンを　倒すと　ＮＧ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T10:29:46" />
+				Time="2011-10-04T03:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
