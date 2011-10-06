@@ -53,6 +53,8 @@ $CRC16Table = [
     0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0,
 ]
 
+require "version.rb"
+
 # (0:ブロックごとのcrcを埋め込む、1:全体のcrcを最後に付け足す)
 $chk_mode = 0
 #
@@ -60,7 +62,7 @@ $chk_mode = 0
 $debug_mode = 0;
 #
 # ruby or exe(0:ruby、1:exe)
-$current_mode = 0
+$current_mode = $exe_mode
 
 #BLOCK_SIZE = 0x120c	# 4620byte
 #BLOCK_SIZE = 0x122c	# 4652byte

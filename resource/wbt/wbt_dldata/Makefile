@@ -19,6 +19,9 @@ targetname = wbt_dldata
 TARGETDIR = $(PROJECT_ARCDIR)
 #TARGETDIR = ./out
 
+WBT_EXE = wbt_dldata_conv.exe
+WBT_CRC_EXE = my_crc_ccitt.exe
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -45,11 +48,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .xls .bin
 
 .xls.bin:
-	ruby wbt_dldata_conv.rb $(input_file)
-	ruby my_crc_ccitt.rb $(output_file) $(output_file_crc)
-#	ruby my_crc_ccitt.rb $(output_file) $(output_file_tmp)
-#	ruby my_crc_ccitt.rb $(output_file_tmp) $(output_file_crc) -t
-#	rm $(output_file_tmp)
+	$(WBT_EXE) $(input_file)
+	$(WBT_CRC_EXE) $(output_file) $(output_file_crc)
+
+# ruby版(しばらく残し)
+#.xls.bin:
+#	ruby wbt_dldata_conv.rb $(input_file)
+#	ruby my_crc_ccitt.rb $(output_file) $(output_file_crc)
+##	ruby my_crc_ccitt.rb $(output_file) $(output_file_tmp)
+##	ruby my_crc_ccitt.rb $(output_file_tmp) $(output_file_crc) -t
+##	rm $(output_file_tmp)
 
 endif
 
