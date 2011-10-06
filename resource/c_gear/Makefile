@@ -92,7 +92,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lsources) $(gsources) $(esources) $(csources) $(asources) cnv.bat Makefile arc_list.txt
 	cnv.bat
-	nnsarc -c -l -n -i $(targetname) -S arc_list.txt
+	nnsarc -c -l -n -i $(targetname) -S arc_list.txt > arc_result.txt
 	$(NAIXCUT) $(targetname).naix
 	rm -f *.NCGR
 	rm -f *.NCLR

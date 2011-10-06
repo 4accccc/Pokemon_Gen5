@@ -409,24 +409,17 @@ typedef enum{
 enum{
   ACT_T_HOUR1,
   ACT_T_HOUR2,
-  ACT_T_COLON,
   ACT_T_MIN1,
   ACT_T_MIN2,
 
-  ACT_AMPM_BASE,
   ACT_AMPM,
-  ACT_BATTERY_BASE,
   ACT_BATTERY,
   ACT_LOGO,
   ACT_POWER,
-  ACT_POWER_I,
   //↑電源Off時でも表示
   ACT_HELP,
-  ACT_HELP_I,
   ACT_CUSTOM,
-  ACT_CUSTOM_I,
   ACT_S_RADAR,
-  ACT_S_RADAR_I,
   //↑Ring4に属してる(ACT_LOGO以外)
   ACT_CROSS,
   ACT_CONNECT,
@@ -448,45 +441,34 @@ enum{
 };
 
 #define ACT_TIME_MAX    (ACT_T_MIN2-ACT_T_HOUR1+1)
-#define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM_BASE) //初期化時だけ使用してる
-#define ACT_COMMON_MAX  ( ACT_POWER_I ) //電源Offでも表示するOBJIDのmax
+#define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM) //初期化時だけ使用してる
+#define ACT_COMMON_MAX  ( ACT_POWER ) //電源Offでも表示するOBJIDのmax
 #define ACT_PANEL_SET_NUM (3)
 #define ACT_R4_OBJ_START  (ACT_T_HOUR1) //Ring4に属してる
-#define ACT_R4_OBJ_END    (ACT_S_RADAR_I)
+#define ACT_R4_OBJ_END    (ACT_S_RADAR)
 
 enum{
  ACTANM_N10,
- ACTANM_AMPM,
- ACTANM_N_COLON,
+ ACTANM_AM,
+ ACTANM_PM,
  ACTANM_CROSS,
  ACTANM_BATT3,
  ACTANM_BATT2,
  ACTANM_POWER,
- ACTANM_POWER_I,
  ACTANM_POWER_ANM,
- ACTANM_POWER_I_ANM,
  ACTANM_HELP,
- ACTANM_HELP_I,
  ACTANM_HELP_ANM,
- ACTANM_HELP_I_ANM,
  ACTANM_CUSTOM,
- ACTANM_CUSTOM_I,
  ACTANM_CUSTOM_ANM,
- ACTANM_CUSTOM_I_ANM,
  ACTANM_S_RADAR,
- ACTANM_S_RADAR_I,
  ACTANM_S_RADAR_ANM,
- ACTANM_S_RADAR_I_ANM,
  ACTANM_S_RADAR_OFF,
- ACTANM_S_RADAR_I_OFF,
  ACTANM_S_RADAR_INFO,
- ACTANM_S_RADAR_I_INFO,
  ACTANM_CONNECT,
  ACTANM_CONNECT_OFF,
  ACTANM_FMISSION,
  ACTANM_FMISSION_OFF,
  ACTANM_CONNECT_INFO,
- ACTANM_WIN,
  ACTANM_LOGO_ALL,
  ACTANM_S_IR,
  ACTANM_S_WIRELESS,
@@ -2085,7 +2067,7 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
     ACT_WIFI_RING,
     ACT_CONNECT,
     ACT_S_RADAR,
-    ACT_S_RADAR_I,
+//    ACT_S_RADAR_I,
   };
 
   if(on_flag){
@@ -2115,17 +2097,17 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
   if(off_flag){
     evy = 8;
     _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
-    _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_OFF );
+//    _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_OFF );
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 1, CLWK_PLTTOFFS_MODE_OAM_COLOR );  //暗色パレットに変更
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], FALSE );
   }else{
     evy = 0;
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
+//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
     }else{
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
+//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
     }
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 0, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], TRUE );
@@ -2632,12 +2614,12 @@ static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn)
 
   if(bOn){
     _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM ], ACTANM_CUSTOM_ANM );
-    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I_ANM );
+//    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I_ANM );
     view = PANEL_VIEW_CUSTOM;
   }
   else{
     _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM ], ACTANM_CUSTOM );
-    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I );
+//    _gearObjSetAnmSeq( pWork->cellCursor[ ACT_CUSTOM_I ], ACTANM_CUSTOM_I );
     view = PANEL_VIEW_NORMAL;
   }
   for( i = 0;i < CGEAR_PANEL_MAX;i++){
@@ -2795,7 +2777,7 @@ static void _gearObjSetAnmSeq( GFL_CLWK* p_cell, int anm_id )
 static void _gearObjCreate(C_GEAR_WORK* pWork)
 {
   int i,pos;
-  static const u8 num_ofs[] = { 0, POS_T_NUM_OX, (POS_T_NUM_OX-2), (POS_T_NUM_OX-1), POS_T_NUM_OX };
+  static const u8 num_ofs[] = { 0, POS_T_NUM_OX, (POS_T_NUM_OX*2-3), POS_T_NUM_OX };
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
   
@@ -2808,8 +2790,10 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
 
   }
+#if 0
   _gearObjSetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
-
+  GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_T_COLON], FALSE );
+#endif
   for(i=0;i < ACT_NORMAL_MAX ;i++)
   {
     static const struct {
@@ -2820,20 +2804,20 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       u8  res_idx:4;
     }prm[]=
     {
-      { ACTANM_WIN,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_WIN,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_AM,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+//      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_BATT2,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+//      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI,    ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_POWER_I,   POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+//      { ACTANM_POWER_I,   POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
       { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_HELP_I,    POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+//      { ACTANM_HELP_I,    POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_CUSTOM_I,  POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+//      { ACTANM_CUSTOM_I,  POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-      { ACTANM_S_RADAR_I, POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+//      { ACTANM_S_RADAR_I, POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       
@@ -2851,8 +2835,10 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     };
 
     //セルの生成
-    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, prm[i].bg_pri, prm[i].s_pri, prm[i].res_idx );
+    pWork->cellCursor[ACT_AMPM+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, prm[i].anm, prm[i].bg_pri, prm[i].s_pri, prm[i].res_idx );
   }
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_AMPM], FALSE );
+
   if( OS_IsRunOnTwl() ){  //DSIならバッテリー表示パターンを変更
     _gearObjSetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
   }
@@ -3635,9 +3621,14 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 
   {  //AMPM
     GFL_CLWK* cp_wk = pWork->cellCursor[ ACT_AMPM ];
-    int num = time.hour / 12;
+    int anm = (time.hour / 12)+ACTANM_AM;
+#if 0
     if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
       GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
+    }
+#endif
+    if( GFL_CLACT_WK_GetAnmSeq( pWork->cellCursor[ ACT_AMPM ] ) != anm ){
+      _gearObjSetAnmSeq( pWork->cellCursor[ ACT_AMPM ], anm );
     }
   }
   {  //時10
@@ -3658,7 +3649,7 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
   }
 
   {  //コロン
-    GFL_CLWK* cp_wk = pWork->cellCursor[ ACT_T_COLON ];
+    GFL_CLWK* cp_wk = pWork->cellCursor[ ACT_AMPM ];
     int num = time.second % 2;
 
     if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
@@ -4376,7 +4367,7 @@ static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
   case 0:
     // アニメーション開始(ベースとフォントのパーツが対)
     _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor ], pWork->select_cursor_anm );
-    _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor+1 ], pWork->select_cursor_anm+1 );
+//    _gearObjSetAnmSeq( pWork->cellCursor[ pWork->select_cursor+1 ], pWork->select_cursor_anm+1 );
     //Xメニューから復帰時のスリープブラック_PFadeSetSleepBlack()時対策でオートアニメをセットしなおす
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor ], TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor + 1 ], TRUE );
@@ -5005,13 +4996,13 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
   if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_RADAR ) ){
     if( !pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
+//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
       pWork->info_flag[INFO_FLAG_RADAR] = TRUE;
     }
   }else{
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
+//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
       pWork->info_flag[INFO_FLAG_RADAR] = FALSE;
     }
   }
