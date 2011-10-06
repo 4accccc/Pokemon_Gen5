@@ -3003,6 +3003,9 @@
             カスタムタグ要素のハンドリング
             </summary>
             <param name="customElement"></param>
+            <remarks>
+            tag.Paramsをtag.BinaryParamsへ変更(#2151)
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Binaries.BinaryTextWriterVisitor.WriteTagNumber(Nintendo.MessageStudio.Core.TagText.TagStringElement)">
             <summary>
@@ -3883,6 +3886,9 @@
             <param name="binaryWriter">バイナリ出力を行うライター</param>
             <param name="startParamIndex">現在のパラメータインデックス</param>
             <returns>このタブを書き出した後のパラメータインデックス。</returns>
+            <remarks>
+            tag.Paramsをtag.BinaryParamsへ変更(#2151)
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Binaries.TagInfoBlock.WriteBody(System.IO.BinaryWriter)">
             <summary>
@@ -4006,6 +4012,9 @@
             ブロックの内容を書き出す処理です
             </summary>
             <param name="binWriter">書き出し先バイナリライター</param>
+            <remarks>
+            tag.Paramsをtag.BinaryParamsへ変更(#2151)
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Binaries.TagListItemInfoBlock.CheckError(Nintendo.MessageStudio.Core.Project.TagParameterListItem,System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Boolean},System.Int32)">
             <summary>
@@ -4141,6 +4150,9 @@
             ブロックの内容を書き出す処理です
             </summary>
             <param name="binWriter">書き出し先バイナリライター</param>
+            <remarks>
+            tag.Paramsをtag.BinaryParamsへ変更(#2151)
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Binaries.TagParamInfoBlock.CheckError(Nintendo.MessageStudio.Core.Project.TagParameter,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Boolean},System.Int32)">
             <summary>
@@ -5566,6 +5578,9 @@
             <para>
             このメソッドはVer1.2.x系にて<c>WriteTagGroupDefnition</c>から名前が変わりました。
             </para>
+            <para>
+            tag.Paramsをtag.BinaryParamsへ変更(#2151)
+            </para>
             </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Headers.TagHeaderBuilder.WriteListItemDefinition(System.IO.StreamWriter,Nintendo.MessageStudio.Core.Builders.Headers.TagHeaderParameters,Nintendo.MessageStudio.Core.Project.TagParameter,Nintendo.MessageStudio.Core.Project.TagGroup,Nintendo.MessageStudio.Core.Project.Tag)">
@@ -6416,6 +6431,17 @@
             <summary>
             xlltドキュメントを扱うためのクラスです。指定された情報をもとにデータをセーブすることができます。
             </summary>
+            <remarks>
+            このクラスのバージョンごとの更新情報は以下のとおりです。
+            <list type="table">
+            <item>
+            	<term>Ver1.3.x系</term>
+            	<description>
+            		<see cref="P:Nintendo.MessageStudio.Core.Builders.Xllt.XlltDocument.WriteCreateInfo"/>プロパティが追加されました。
+            	</description>
+            </item>
+            </list>
+            </remarks>
             <example>
             このクラスの簡単な利用法を以下に示します。
             <code lang="C#">
@@ -6557,6 +6583,16 @@
             <summary>
             ドキュメントの記述方式を取得または設定します。
             </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Builders.Xllt.XlltDocument.WriteCreateInfo">
+            <summary>
+            ファイルを出力したユーザーやマシンの情報をxlltに書き出すかどうかのフラグを取得または設定します。
+            </summary>
+            <remarks>
+            このプロパティはVer1.3.x系以降で利用可能です。
+            Ver1.2.x系では、Ver1.2.10以降にて内部的に(<see langword="internal"/>)利用可能です。
+            このプロパティはデフォルトが<see langword="true"/>です。
+            </remarks>
         </member>
         <member name="T:Nintendo.MessageStudio.Core.Builders.Xllt.XlltMapEvaluator">
             <summary>
@@ -6999,6 +7035,17 @@
             <summary>
             xlltのパラメータを保持するパラメータクラスです。
             </summary>
+            <remarks>
+            このクラスのバージョンごとの更新情報は以下のとおりです。
+            <list type="table">
+            <item>
+            	<term>Ver1.3.x系</term>
+            	<description>
+            		<see cref="P:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.WriteCreateInfo"/>プロパティが追加されました。
+            	</description>
+            </item>
+            </list>
+            </remarks>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.OutputXlltPathElementName">
             <summary>
@@ -7015,9 +7062,19 @@
             
             </summary>
         </member>
+        <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.WriteCreateInfoAttributeName">
+            <summary>
+            作成時情報を出力するかどうかの設定を保存するためのXML属性名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.AllFontsIfStyleEmptyAttributeName">
+            <summary>
+            スタイル名が空のときにすべてのフォントのxlltに出力するかどうかを保存するためのXML属性名
+            </summary>
+        </member>
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.ForceCharInfoFontAttributeName">
             <summary>
-            
+            強制的に出力する設定の中で、フォント名を保存するためのXML属性名
             </summary>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.outputXlltPath">
@@ -7033,6 +7090,16 @@
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.forceCharOutputInfo">
             <summary>
             フォント毎に設定される文字強制出力に関する設定内容
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.writeCreateInfo">
+            <summary>
+            ファイルを出力したユーザーやマシンの情報をxlltに書き出すか(#2111)
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.outputAllFontsIfStyleEmpty">
+            <summary>
+            スタイルが未設定の場合にすべてのフォントのxlltに出力するかどうかを示します(#2114)
             </summary>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.LoadFromXml(System.Xml.XmlReader)">
@@ -7094,6 +7161,26 @@
             強制出力文字設定の集合を取得します
             </summary>
         </member>
+        <member name="P:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.WriteCreateInfo">
+            <summary>
+            ファイルを出力したユーザーやマシンの情報をxlltに書き出すかどうかのフラグを取得または設定します。
+            </summary>
+            <remarks>
+            このプロパティはVer1.3.x系以降で利用可能です。
+            Ver1.2.x系では、Ver1.2.10以降にて内部的に(<see langword="internal"/>)利用可能です。
+            このプロパティはデフォルトが<see langword="true"/>です。
+            </remarks>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParameters.OutputAllFontsIfStyleEmpty">
+            <summary>
+            スタイルが未設定の場合にすべてのフォントのxlltに出力するかどうかを取得または設定します。
+            </summary>
+            <remarks>
+            このプロパティはVer1.3.x系以降で利用可能です。
+            Ver1.2.x系では、Ver1.2.10以降にて内部的に(<see langword="internal"/>)利用可能です。
+            このプロパティはデフォルトが<see langword="true"/>です。
+            </remarks>
+        </member>
         <member name="T:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting">
             <summary>
             xlltファイルを出力するための設定情報
@@ -7117,6 +7204,11 @@
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.acceptBtnOfForm">
             <summary>
             最上位の親フォームのAcceptButtonに設定されているIButtonControl
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.updatingCheckBoxes">
+            <summary>
+            現在、チェックボックスをプログラム上から更新しているかどうかを示します。
             </summary>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.#ctor(Nintendo.MessageStudio.Core.Project.ProjectData)">
@@ -7201,6 +7293,26 @@
             </summary>
             <param name="sender">イベントの送信オブジェクト</param>
             <param name="e">イベント引数</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.chkWriteCreateInfo_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            作者名を出力するかどうかのチェックボックスが切り替えられたときの処理
+            </summary>
+            <remarks>
+            この処理はVer1.2.10～にて追加されましたが、Ver1.3.x系では含まれません。
+            </remarks>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.chkAllFontsIfStyleEmpty_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            スタイルが無効なときにすべてのフォントに対して出力するかどうかのチェックボックスが切り替えられたときの処理
+            </summary>
+            <remarks>
+            この処理はVer1.2.10～にて追加されましたが、Ver1.3.x系では含まれません。
+            </remarks>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Builders.Xllt.XlltParamSetting.components">
             <summary> 
@@ -15641,6 +15753,15 @@
             プロジェクトをチェックアウト中に表示されるダイアログです
             </summary>
         </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormCheckingOut.CS_NOCLOSE">
+            <summary>
+            クローズボタンの無効化フラグ
+            </summary>
+            <remarks>
+            バックグラウンドワーカーにキャンセルを送ってもIronSvn側で対応できないので
+            暫定的に×ボタンを無効化します。1.3系以降ではIronSvnを修正して対応してください。
+            </remarks>
+        </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormCheckingOut.versionProxy">
             <summary>
             バージョン管理システムにアクセスするオブジェクト
@@ -15716,6 +15837,11 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormCheckingOut.CreateParams">
+            <summary>
+            閉じるボタンの無効化
             </summary>
         </member>
         <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormCheckingOut.IsSucceeded">
@@ -17234,17 +17360,17 @@
             </para>
             </remarks>
         </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.OptionOpenHeight">
-            <summary>
-            オプションを開いているときの高さ
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.OptionCloseHeight">
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.closedOptionHeight">
             <summary>
             オプションを閉じているときの高さ
             </summary>
         </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.DefaultHeight">
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.defaultOptionOpenHeight">
+            <summary>
+            初期状態のオプションを開いているときの高さ
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormSearchMessage.defaultWindowHeight">
             <summary>
             初期状態の高さ
             </summary>
@@ -18880,6 +19006,11 @@
             タグ比較用のフォームです
             </summary>
         </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.closedOptionHeight">
+            <summary>
+            閉じているときのオプショングループの高さ
+            </summary>
+        </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.hostProject">
             <summary>
             対象のプロジェクト
@@ -18908,6 +19039,16 @@
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.frmMain">
             <summary>
             メインフォームです
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.defaultOptionHeight">
+            <summary>
+            デフォルトのオプショングループの高さ
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.defaultWindowHeight">
+            <summary>
+            デフォルトのウィンドウの高さ
             </summary>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.#ctor(Nintendo.MessageStudio.Core.Project.ProjectData,Nintendo.MessageStudio.Core.FormMain)">
@@ -18941,6 +19082,11 @@
             </summary>
             <param name="sender">イベントの送信オブジェクト</param>
             <param name="e">イベント引数</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.SaveSettings">
+            <summary>
+            設定をユーザーオプションとして保存します。
+            </summary>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.StartCompare">
             <summary>
@@ -18981,12 +19127,39 @@
             <param name="args">ビルド引数</param>
             <param name="filePath">比較処理を行うファイルのパス</param>
         </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.IsIgnoreContent(Nintendo.MessageStudio.Core.Project.ProjectContent)">
+            <summary>
+            無視すべきファイルかどうかを取得して返します。
+            </summary>
+            <param name="content">プロジェクトコンテンツ</param>
+            <returns>trueの場合は無視する</returns>
+        </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.CreateParamString(System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             パラメータからエラー表示用の文字列を作成します
             </summary>
             <param name="parameters">パラメータ</param>
             <returns>パラメータを文字列化したものが返ります</returns>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.btnCheckOption_Click(System.Object,System.EventArgs)">
+            <summary>
+            オプション項目の開閉ボタンを押下した際の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.FlipOptionGroup(System.Boolean)">
+            <summary>
+            オプションのグループを開閉する
+            </summary>
+            <param name="isOpen"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.FormTagCompare_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            フォームを閉じる際の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.components">
             <summary>
@@ -19003,6 +19176,11 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.OptionParams">
+            <summary>
+            検索オプションを取得します。
             </summary>
         </member>
         <member name="T:Nintendo.MessageStudio.Core.Dialogs.FormTagCompare.CompareCondition">
@@ -19903,24 +20081,14 @@
             幅チェックを行うダイアログです
             </summary>
         </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.closedOptionHeight">
+            <summary>
+            閉じているときのオプショングループの高さ
+            </summary>
+        </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.targetProject">
             <summary>
             ターゲットプロジェクト
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.targetScope">
-            <summary>
-            ターゲットスコープ
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.targetLanguage">
-            <summary>
-            ターゲット言語
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.targetAllLanguage">
-            <summary>
-            すべての言語になっている？
             </summary>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.frmMain">
@@ -19928,14 +20096,14 @@
             メインフォームです
             </summary>
         </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.checkCondition">
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.defaultOptionHeight">
             <summary>
-            チェック条件
+            デフォルトのオプショングループの高さ
             </summary>
         </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.pixelWidth">
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.defaultWindowHeight">
             <summary>
-            指定ピクセル幅
+            デフォルトのウィンドウの高さ
             </summary>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.#ctor(Nintendo.MessageStudio.Core.Project.ProjectData,Nintendo.MessageStudio.Core.FormMain)">
@@ -20009,6 +20177,14 @@
             <param name="args">ビルド引数</param>
             <param name="filePath">比較処理を行うファイルのパス</param>
         </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.IsSkipWidthZeroStyle(System.String,Nintendo.MessageStudio.Core.Message.Model.TextData)">
+            <summary>
+            スタイルの幅がゼロなのでスキップするかどうか
+            </summary>
+            <param name="curLanguageName"></param>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.CheckText(Nintendo.MessageStudio.Core.Plugin.BuildArgs,System.String,Nintendo.MessageStudio.Core.Message.Model.TextData,System.String)">
             <summary>
             テキストの幅チェックを行います
@@ -20018,12 +20194,32 @@
             <param name="text">テキスト</param>
             <param name="languageName">対象の言語</param>
         </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.IsIgnoreContent(Nintendo.MessageStudio.Core.Project.ProjectContent)">
+            <summary>
+            無視すべきファイルかどうかを取得して返します。
+            </summary>
+            <param name="content">プロジェクトコンテンツ</param>
+            <returns>trueの場合は無視する</returns>
+        </member>
         <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.FormTextWidthCheck_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
             <summary>
             フォームが閉じる時の処理
             </summary>
             <param name="sender">イベントの送信オブジェクト</param>
             <param name="e">イベント引数</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.btnCheckOption_Click(System.Object,System.EventArgs)">
+            <summary>
+            オプション開閉ボタンを押した場合の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.FlipOptionGroup(System.Boolean)">
+            <summary>
+            オプションのグループを開閉する
+            </summary>
+            <param name="isOpen"></param>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.components">
             <summary>
@@ -20042,30 +20238,24 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="T:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.CheckCondition">
+        <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.OptionParams">
             <summary>
-            チェック条件
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.CheckCondition.AllOvers">
-            <summary>
-            はみ出しているもの全て
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.CheckCondition.OverSpecifiedPixLen">
-            <summary>
-            指定したピクセル幅以上はみだしているもの
-            </summary>
-        </member>
-        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormTextWidthCheck.CheckCondition.LeftoverSpecifiedPixLen">
-            <summary>
-            指定したピクセル幅以上余っているもの
+            検索オプションを取得します。
             </summary>
         </member>
         <member name="T:Nintendo.MessageStudio.Core.Dialogs.FormUpdating">
             <summary>
             プロジェクトをチェックアウト中に表示されるダイアログです
             </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormUpdating.CS_NOCLOSE">
+            <summary>
+            クローズボタンの無効化フラグ
+            </summary>
+            <remarks>
+            バックグラウンドワーカーにキャンセルを送ってもIronSvn側で対応できないので
+            暫定的に×ボタンを無効化します。1.3系以降ではIronSvnを修正して対応してください。
+            </remarks>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormUpdating.versionProxy">
             <summary>
@@ -20155,6 +20345,11 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormUpdating.CreateParams">
+            <summary>
+            閉じるボタンの無効化
             </summary>
         </member>
         <member name="P:Nintendo.MessageStudio.Core.Dialogs.FormUpdating.IsSucceeded">
@@ -24092,6 +24287,30 @@
             </summary>
             <remarks>
             編集中のプロジェクトがないときは無視します。
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.FormMain.SetupLanguageMapExtraData">
+            <summary>
+            現在登録されているプロジェクトの言語データとGUIDとのマッピングテーブルを作成します。
+            作成できるのは、現在管理者として利用されている場合のみです。
+            </summary>
+            <remarks>
+            この処理は#1830の解決のために追加されました。
+            プロジェクトの新規作成ウィザード経由で呼び出す場合は、
+            <see langword="bool"/>値を設定可能なオーバーロードを利用してください。
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.FormMain.SetupLanguageMapExtraData(System.Boolean)">
+            <summary>
+            現在登録されているプロジェクトの言語データとGUIDとのマッピングテーブルを作成します。
+            作成できるのは、現在管理者として利用されている場合のみです。
+            </summary>
+            <param name="setupAtCreating">
+            この処理を、プロジェクトの新規作成ウィザードの後に呼び出す場合は<see langword="true"/>を、
+            そうでなければ<see langword="false"/>を指定します。
+            </param>
+            <remarks>
+            この処理は#1830の解決のために追加されました。
             </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.FormMain.ShowConfirmSaveDialog">
@@ -31237,6 +31456,10 @@
             <summary>
             編集作業がキャンセルされたかどうかのフラグです
             </summary>
+            <remarks>
+            #2135によって、このフラグは常に<see langword="false"/>のまま変化しなくなりました。
+            ですが、今後再度必要になった場合のために残しておきます。
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Grid.TextBoxColumn.Finalize">
             <summary>
@@ -39361,6 +39584,247 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput">
+            <summary>
+            ユニコード値による文字入力用のダイアログ
+            </summary>
+            <remarks>
+            1.2系以前ではinternalにします。
+            </remarks>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.regCode">
+            <summary>
+            コード値として有効な文字列をチェックする正規表現
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.inputChar">
+            <summary>
+            入力コードに基づき変換された文字
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.#ctor(Nintendo.MessageStudio.Core.Project.ProjectData)">
+            <summary>
+            コンストラクタです。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.TryGetCharFromCode(System.String,System.String@)">
+            <summary>
+            コードから文字を取得します。
+            </summary>
+            <param name="code">コード</param>
+            <param name="c">文字</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.IsValidChar(System.Char)">
+            <summary>
+            有効な文字コードであるかを判別します。
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.FormUnicodeDialog_Load(System.Object,System.EventArgs)">
+            <summary>
+            ダイアログをロードした際の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.tbCode_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            入力テキストが変わった際の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.btnOK_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKボタン押下時の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.HostProject">
+            <summary>
+            ホストプロジェクトを取得／設定します。
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.InputChar">
+            <summary>
+            入力されたコード値からユニコード文字を取得します。
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.PopupEditor.DialogUnicodeInput.DialogOptionParams">
+            <summary>
+            ユーザーオプションを取得します。
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams">
+            <summary>
+            タグ比較オプション情報です。
+            </summary>
+            <remarks>
+            #2148 への対応で追加されました。
+            1.2系ではinternal扱いです。
+            </remarks>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.TagCompareOptionElementName">
+            <summary>
+            幅チェックオプションを保存するためのXML属性名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.IsOpenedOptionAttributeName">
+            <summary>
+            オプションを開いていいるかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.ExcludeNoBinTargetFilesAttributeName">
+            <summary>
+            バイナリ出力しないファイルを除外するかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.ExcludeDebugFilesAttributeName">
+            <summary>
+            デバッグ用ファイルを除外するかどうかのXML要素名
+            </summary>	
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.SaveToXml(System.Xml.XmlWriter)">
+            <summary>
+            検索設定情報を保存します
+            </summary>
+            <param name="xmlWriter">書き出し先XMLライター</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            検索設定情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.LoadSettingDetailFromXml(System.Xml.XmlReader)">
+            <summary>
+            設定の詳細情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.IsOpenedOption">
+            <summary>
+            オプションをコントロールを開いているかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.ExcludeNoBinTargetFiles">
+            <summary>
+            スタイル未設定のテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionParams.ExcludeDebugFiles">
+            <summary>
+            幅ゼロのスタイルのテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.TagCompareOptionPluginImpl">
+            <summary>
+            タグ比較のオプションを保存するためのプラグインです。
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Plugin.IExtraProjectOptionPlugin">
+            <summary>
+            このインターフェイスは、プロジェクトユーザーオプションに対してプラグイン独自の情報の読み書きが行えるようにするプラグインです。
+            </summary>
+            <remarks>
+            <para>
+		このインターフェイスを実装するクラスでは、データファイルに対して情報の書き込み、読み込みアクセスが可能になります。
+		適切に保存処理を実行するために一意なGUIDを生成し、その内容をクラスのGUIDとして登録し、
+		開発者で適切に保管しておくことを強く推奨します。
+		適切にGUIDを宣言しない場合、タイプライブラリインポーターによって自動的に一意なGUIDが生成されます。
+		</para>
+            <code lang="C#">
+		[ GuidAttribute( "5B4712AB-77D0-44f4-AFCE-565B8511C73A" ) ]
+		public class NewMyImplement : IExtraProjectOptionPlugin
+		{
+			/* 以下省略 */
+		</code>
+            <para>
+		このGuidAttribute属性をつけるためには、GUID生成ツールを利用してください。
+		VisualStudioを利用している場合は、「ツール」メニューの「GUIDの作成」をクリックします。
+		上記コードで宣言されているクラスのGUID情報を取得するためには以下のように記述します。
+		</para><code lang="C#">
+		Guid identifier = typeof( NewMyImplement ).GUID;
+		</code><para>
+		また、インスタンスからGUIDを引きなおす場合は以下のように記述します。
+		</para><code lang="C#">
+		NewMyImplement myPlugin = new NewMyImplement();
+		Guid identifier = myPlugin.GetType().GUID;
+		</code>
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Plugin.IExtraProjectOptionPlugin.CreateParameters">
+            <summary>
+            プロジェクトユーザーオプションとして利用するパラメータを作成します。
+            </summary>
+            <returns>作成されたパラメータクラスを返します。</returns>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams">
+            <summary>
+            ユニコードダイアログの情報でユーザーデータに保持するパラメータを表すクラス（#2142）
+            </summary>
+            <remarks>
+            1.2系ではinternal扱いです。
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            検索設定情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams.LoadSettingDetailFromXml(System.Xml.XmlReader)">
+            <summary>
+            設定の詳細情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams.SaveToXml(System.Xml.XmlWriter)">
+            <summary>
+            XMLに情報をセーブします。
+            </summary>
+            <param name="xmlWriter"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams.Clone">
+            <summary>
+            自身のクローンを生成して返します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionParams.PreviousCode">
+            <summary>
+            前回入力中のコードを取得／設定します。
+            </summary>
+        </member>
         <member name="T:Nintendo.MessageStudio.Core.Message.PopupEditor.EditArea">
             <summary>
             メッセージ編集ダイアログにおける、一つ分の編集コントロールエリアです。
@@ -40925,6 +41389,13 @@
             </summary>
             <param name="sender">イベントの送信オブジェクト</param>
             <param name="e">イベント引数</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.mnuUnicodeInput_Click(System.Object,System.EventArgs)">
+            <summary>
+            ユニコード値で文字を入力します。（#2142）
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.components">
             <summary> 
@@ -42718,43 +43189,6 @@
             <summary>
             グリッド関連設定
             </summary>
-        </member>
-        <member name="T:Nintendo.MessageStudio.Core.Plugin.IExtraProjectOptionPlugin">
-            <summary>
-            このインターフェイスは、プロジェクトユーザーオプションに対してプラグイン独自の情報の読み書きが行えるようにするプラグインです。
-            </summary>
-            <remarks>
-            <para>
-		このインターフェイスを実装するクラスでは、データファイルに対して情報の書き込み、読み込みアクセスが可能になります。
-		適切に保存処理を実行するために一意なGUIDを生成し、その内容をクラスのGUIDとして登録し、
-		開発者で適切に保管しておくことを強く推奨します。
-		適切にGUIDを宣言しない場合、タイプライブラリインポーターによって自動的に一意なGUIDが生成されます。
-		</para>
-            <code lang="C#">
-		[ GuidAttribute( "5B4712AB-77D0-44f4-AFCE-565B8511C73A" ) ]
-		public class NewMyImplement : IExtraProjectOptionPlugin
-		{
-			/* 以下省略 */
-		</code>
-            <para>
-		このGuidAttribute属性をつけるためには、GUID生成ツールを利用してください。
-		VisualStudioを利用している場合は、「ツール」メニューの「GUIDの作成」をクリックします。
-		上記コードで宣言されているクラスのGUID情報を取得するためには以下のように記述します。
-		</para><code lang="C#">
-		Guid identifier = typeof( NewMyImplement ).GUID;
-		</code><para>
-		また、インスタンスからGUIDを引きなおす場合は以下のように記述します。
-		</para><code lang="C#">
-		NewMyImplement myPlugin = new NewMyImplement();
-		Guid identifier = myPlugin.GetType().GUID;
-		</code>
-            </remarks>
-        </member>
-        <member name="M:Nintendo.MessageStudio.Core.Plugin.IExtraProjectOptionPlugin.CreateParameters">
-            <summary>
-            プロジェクトユーザーオプションとして利用するパラメータを作成します。
-            </summary>
-            <returns>作成されたパラメータクラスを返します。</returns>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.ColumnOrderOptionImpl.pluginArgs">
             <summary>
@@ -44560,6 +44994,206 @@
             このプロパティはVer1.2.x系にて追加されました。
             </remarks>
         </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams">
+            <summary>
+            テキスト幅チェックオプション情報です。
+            </summary>
+            <remarks>
+            1.2系ではinternal扱いです。
+            </remarks>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.TextWidthCheckOptionElementName">
+            <summary>
+            幅チェックオプションを保存するためのXML属性名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ScopeTypeAttributeName">
+            <summary>
+            スコープのタイプのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IsAllLanguageAttributeName">
+            <summary>
+            全言語が対象になっているかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.LanguageNameAttributeName">
+            <summary>
+            言語のXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IsOpenedOptionAttributeName">
+            <summary>
+            オプションを開いていいるかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IgnoreEmptyStyleAttributeName">
+            <summary>
+            スタイルのないテキストを無視するかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IgnoreWidthZeroStyleAttributeName">
+            <summary>
+            幅ゼロのスタイルを持つテキストを無視するかどうかのXML要素名
+            </summary>	
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ExcludeNoBinTargetFilesAttributeName">
+            <summary>
+            バイナリ出力しないファイルを除外するかどうかのXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ExcludeDebugFilesAttributeName">
+            <summary>
+            デバッグ用ファイルを除外するかどうかのXML要素名
+            </summary>	
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.CheckConditionAttributeName">
+            <summary>
+            チェック条件のXML要素名
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.SpecifiedPixLenAttributeName">
+            <summary>
+            幅指定のある条件の場合の指定ピクセル数のXML要素名
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.SaveToXml(System.Xml.XmlWriter)">
+            <summary>
+            検索設定情報を保存します
+            </summary>
+            <param name="xmlWriter">書き出し先XMLライター</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            検索設定情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.LoadSettingDetailFromXml(System.Xml.XmlReader)">
+            <summary>
+            設定の詳細情報を読み込みます
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ScopeType">
+            <summary>
+            検索のスコープ
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IsAllLanguage">
+            <summary>
+            全ての言語が検索対象になっているかどうか
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.LanguageName">
+            <summary>
+            検索対象の言語名
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IsOpenedOption">
+            <summary>
+            オプションをコントロールを開いているかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IgnoreEmptyStyle">
+            <summary>
+            スタイル未設定のテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.IgnoreWidthZeroStyle">
+            <summary>
+            幅ゼロのスタイルのテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ExcludeNoBinTargetFiles">
+            <summary>
+            スタイル未設定のテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.ExcludeDebugFiles">
+            <summary>
+            幅ゼロのスタイルのテキストを無視するかどうかを取得／設定します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.CheckCondition">
+            <summary>
+            幅チェックの条件を取得／設定します。
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionParams.SpecifiedPixLen">
+            <summary>
+            幅指定のある条件の場合の指定ピクセル数を取得／設定します。
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.WidthCheckCondition">
+            <summary>
+            幅チェック条件
+            </summary>
+            <remarks>
+            1.2系ではinternal扱いです。
+            </remarks> 
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.WidthCheckCondition.AllOvers">
+            <summary>
+            はみ出しているもの全て
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.WidthCheckCondition.OverSpecifiedPixLen">
+            <summary>
+            指定したピクセル幅以上はみだしているもの
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Message.UserSettings.WidthCheckCondition.LeftoverSpecifiedPixLen">
+            <summary>
+            指定したピクセル幅以上余っているもの
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.TextWidthCheckOptionPluginImpl">
+            <summary>
+            テキスト幅チェックのオプションを保存するためのプラグインです。
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionImpl">
+            <summary>
+            ユニコードダイアログの情報でユーザーデータに保持するパラメータのプラグイン（#2142）
+            </summary>
+            <remarks>
+            1.2系ではinternal扱いです。
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionImpl.CreateParameters">
+            <summary>
+            パラメータを生成して返します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionImpl.SetupPlugin(Nintendo.MessageStudio.Core.Plugin.PluginInitArgs)">
+            <summary>
+            プラグインを初期化します。
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionImpl.TearDownPlugin">
+            <summary>
+            プラグインの終了処理です。
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Message.UserSettings.UnicodeDialogOptionImpl.PluginArgs">
+            <summary>
+            プラグインの初期化プロパティを取得／設定します。
+            </summary>
+        </member>
         <member name="T:Nintendo.MessageStudio.Core.Message.Util.CategoryHelper">
             <summary>
             テキストの種類に関するヘルパユーティリティクラスです。
@@ -45211,6 +45845,12 @@
             このクラスの更新履歴は以下のとおりです。
             <list type="table">
             <item>
+            	<term>Ver1.3.x系</term>
+            	<description>
+            		<see cref="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateChangeCellStatusCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,Nintendo.MessageStudio.Core.Project.Language,Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)"/>のオーバーロードが追加されました。
+            	</description>
+            </item>
+            <item>
             	<term>Ver1.2.x系</term>
             	<description>
             		例外がスローされるタイミングが変更されました。
@@ -45230,6 +45870,18 @@
             </list>
             </para>
             </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateChangeCellStatusCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,System.String,Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)">
+            <summary>
+            ステータス変更のためのコマンドを作成します。
+            </summary>
+            <param name="text">変更対象のテキストデータ</param>
+            <param name="languageName">言語名</param>
+            <param name="cellState">変更先ステータス</param>
+            <returns>作成された、変更するためのコマンド</returns>
+            <exception cref="T:System.ArgumentNullException">
+            指定された<paramref name="text"/>または<paramref name="languageName"/>が<see langword="null"/>であるときにスローされます。
+            </exception>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateAddLanguageCellCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,System.String,System.String)">
             <summary>
@@ -45363,16 +46015,20 @@
             指定された<paramref name="text"/>または<paramref name="languageName"/>が<see langword="null"/>であるときにスローされます。
             </exception>
         </member>
-        <member name="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateChangeCellStatusCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,System.String,Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)">
+        <member name="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateChangeCellStatusCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,Nintendo.MessageStudio.Core.Project.Language,Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)">
             <summary>
             ステータス変更のためのコマンドを作成します。
             </summary>
-            <param name="text">変更対象のテキストデータ</param>
-            <param name="languageName">言語名</param>
+            <remarks>
+            このオーバーロードは Ver1.3.x 系で追加されました。
+            Ver1.2.12以降は<see langword="internal"/>で利用することが出来ます。
+            </remarks>
+            <param name="text">変更対象のテキストデータを指定します。</param>
+            <param name="language">言語オブジェクトを指定します。</param>
             <param name="cellState">変更先ステータス</param>
-            <returns>作成された、変更するためのコマンド</returns>
+            <returns>作成された、変更するためのコマンドが返ります。</returns>
             <exception cref="T:System.ArgumentNullException">
-            指定された<paramref name="text"/>または<paramref name="languageName"/>が<see langword="null"/>であるときにスローされます。
+            指定された<paramref name="text"/>または<paramref name="language"/>が<see langword="null"/>であるときにスローされます。
             </exception>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Util.CommandHelper.CreateRemoveAttributeCellCommand(Nintendo.MessageStudio.Core.Message.Model.TextData,System.String)">
@@ -46259,6 +46915,12 @@
             		<see cref="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.SearchHistoryText(System.DateTime)"/>メソッドが追加されました。
             	</description>
             </item>
+            <item>
+            	<term>Ver1.3.x系</term>
+            	<description>
+            		<see cref="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.UpdateState(Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType,Nintendo.MessageStudio.Core.Project.Language)"/>に引数を追加しました。
+            	</description>
+            </item>
             </list>
             </para>
             </remarks>
@@ -46307,6 +46969,12 @@
             <summary>
             履歴を保存するためのXML要素名
             </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.UpdateState(Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)">
+            <summary>
+            ステータスを更新します。
+            </summary>
+            <param name="state">ステータス</param>
         </member>
         <member name="F:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.parentText">
             <summary>
@@ -46420,11 +47088,18 @@
             ※ロールに編集権限がなければ編集は行えません
             </remarks>
         </member>
-        <member name="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.UpdateState(Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType)">
+        <member name="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.UpdateState(Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType,Nintendo.MessageStudio.Core.Project.Language)">
             <summary>
             ステータスを更新します。
             </summary>
-            <param name="state">ステータス</param>
+            <param name="state">変更する内部ステータスを指定します。</param>
+            <param name="language">この言語セルと対になる言語オブジェクトを指定します。</param>
+            <exception cref="T:System.ArgumentNullException">
+            指定された<paramref name="language"/>が<see langword="null"/>のときスローされます。
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            指定された<paramref name="language"/>が問題ある状態で指定された場合にスローされます。
+            </exception>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Model.LanguageCell.RollbackState(Nintendo.MessageStudio.Core.Message.Model.CellInnerStateType,Nintendo.MessageStudio.Core.Message.Model.ModifiedInfo,System.DateTime)">
             <summary>
@@ -48356,16 +49031,16 @@
             <summary>
             親言語のタイムスタンプの検証結果を取得します。
             </summary>
+            <remarks>
+            親の言語セルで編集完了後に、対象言語セルの内容が更新されていない場合に、
+            警告するための検証を行います。
+            </remarks>
             <param name="text">取得するテキストデータを指定します。</param>
             <param name="language">取得する言語セルの言語オブジェクトを指定します。</param>
             <returns>警告の必要がない場合は<see langword="true"/>、警告すべき場合は<see langword="false"/>が返ります。</returns>
             <exception cref="T:System.ArgumentNullException">
             引数が<see langword="null"/>のときにスローされます。
             </exception>
-            <remarks>
-            親の言語セルで編集完了後に、対象言語セルの内容が更新されていない場合に、
-            警告するための検証を行います。
-            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Util.StatusHelper.CanTransitReviewStatus(Nintendo.MessageStudio.Core.Message.Model.TextData,Nintendo.MessageStudio.Core.Project.Language,Nintendo.MessageStudio.Core.Message.Model.CellReviewStateType,Nintendo.MessageStudio.Core.Project.RoleBase)">
             <summary>
@@ -53662,6 +54337,160 @@
             辞書の種類を取得または設定します。
             </summary>
         </member>
+        <member name="P:Nintendo.MessageStudio.Core.Project.Language.SourceCompletedTimeGuid">
+            <summary>
+            翻訳したときの親言語の完了時刻をテキスト行に保存するための拡張セルデータキーを取得または設定します。
+            </summary>
+            <remarks>
+            <para>
+            テキスト行情報(<see cref="T:Nintendo.MessageStudio.Core.Message.Model.TextData"/>クラス)に含まれる拡張セルデータの
+            キーとなるGUIDと、このGUID値が一致します。
+            </para>
+            <para>
+            この情報は Ver1.2.12 にて、#1830を対処するため<see langword="internal"/>として追加されました。
+            Ver1.3.x系では後方互換性のために<see langword="null"/>のままとなります。
+            Ver1.2.x系との互換性を打ち切る場合にこのプロパティは削除することが出来ます。
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Project.LanguageGuidMap">
+            <summary>
+            言語名と、それに対するGUIDのマッピングを表します。
+            </summary>
+            <remarks>
+            <para>
+            #1830の問題に対処するために暫定的に作られたクラスです。
+            このクラスによって、プロジェクトの拡張データ領域に、言語名とGUIDの対応表を作成します。
+            すべての言語についてGUIDが割り当てられます。
+            このGUID値は、翻訳状況を記録するための拡張セルを保存するためのキーとして利用されます。
+            </para>
+            <para>
+            このクラスは<see cref="T:Nintendo.MessageStudio.Core.Plugin.IReloadableParams"/>を実装していますが、実際に値を保持しているのは
+            <see cref="T:Nintendo.MessageStudio.Core.Project.Language"/>クラスで、XMLへの読み書き部分のみをバイパスする役割を担っています。
+            </para>
+            <para>
+            このクラスはVer1.2.12で<see langword="internal"/>に追加されました。
+            Ver1.3.x系では根本的な対処がされましたが、Ver1.2.x系との後方互換性のためにこのクラスは残されています。
+            Ver1.2.x系との後方互換性を打ち切る場合、このクラスは削除することが出来ます。
+            </para>
+            </remarks>
+            <see cref="T:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin"/>
+            <see cref="T:Nintendo.MessageStudio.Core.Message.Model.ExtraCell"/>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.LanguageMapElemnentName">
+            <summary>
+            言語マップを保存するためのXML要素名です。
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.LanguageNameAttributeName">
+            <summary>
+            言語名を保存するためのXML属性名です。
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.GuidKeyAttributeName">
+            <summary>
+            GUIDキーを保存するためのXML属性名です。
+            </summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.hostProject">
+            <summary>
+            プロジェクトデータを示します。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.#ctor(Nintendo.MessageStudio.Core.Project.ProjectData)">
+            <summary>
+            オブジェクトのインスタンスを作成します。
+            </summary>
+            <param name="hostProject">プロジェクトデータを指定します。</param>
+            <exception cref="T:System.ArgumentNullException">
+            指定された<paramref name="hostProject"/>が<see langword="null"/>のときにスローされます。
+            </exception>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            指定されたXMLリーダーからデータを読み込みます。
+            </summary>
+            <param name="xmlReader">読み込み元を指定します。</param>
+            <exception cref="T:System.ArgumentNullException">
+            指定された<paramref name="xmlReader"/>が<see langword="null"/>のときスローされます。
+            </exception>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.SaveToXml(System.Xml.XmlWriter)">
+            <summary>
+            指定されたXMLライターにデータを書きだす処理です。
+            </summary>
+            <param name="xmlWriter">出力先のライターを指定します。</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMap.Clone">
+            <summary>
+            このオブジェクトの簡易コピーを返します。
+            </summary>
+            <returns>このオブジェクトから作成された簡易コピーが返ります。</returns>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin">
+            <summary>
+            言語名と、それに対するGUIDのマッピングをプロジェクトに保存するためのプラグイン実装です。
+            </summary>
+            <remarks>
+            <para>
+            #1830の問題に対処するために暫定的に作られたクラスです。
+            </para>
+            <para>
+            このクラスはVer1.2.12で<see langword="internal"/>に追加されました。
+            Ver1.3.x系では根本的な対処がされましたが、Ver1.2.x系との後方互換性のためにこのクラスは残されています。
+            Ver1.2.x系との後方互換性を打ち切る場合、このクラスは削除することが出来ます。
+            </para>
+            </remarks>
+            <see cref="T:Nintendo.MessageStudio.Core.Project.LanguageGuidMap"/>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.pluginArgs">
+            <summary>
+            プラグインの初期化引数です。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.SetupPlugin(Nintendo.MessageStudio.Core.Plugin.PluginInitArgs)">
+            <summary>
+            プラグインが作成されたときに呼び出されます。
+            </summary>
+            <param name="args">プラグインの初期化引数が渡されます。</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.TearDownPlugin">
+            <summary>
+            プラグインの終了処理を行います。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.Mediator_LanguageSettingsApplied(System.Object,Nintendo.MessageStudio.Core.Project.Event.UpdateItemsEventArgs)">
+            <summary>
+            言語情報が確定された時のイベントハンドラです。
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.UpdateLanguageGuid(Nintendo.MessageStudio.Core.Project.Language,System.Boolean)">
+            <summary>
+            言語の情報が更新されたときに、GUIDを最新の状態に追従させます。
+            </summary>
+            <remarks>
+            この処理はVer1.2.12以降のVer1.2.x系でのみ利用します。
+            Ver1.3.x系では、古いデータを引き継ぎつつも新規に追加されたデータは根本的に解決されたルーチンを使うので、
+            言語情報が追加されたときにもGUID値を割り当てる必要がありません。
+            </remarks>
+            <returns>
+            情報が更新されたときに<see langword="true"/>が返ります。
+            そうでなければ<see langword="false"/>が返ります。
+            </returns>
+            <param name="sourceLanguage">プロジェクトに登録されている大元の言語を指定します。</param>
+            <param name="bUpdateAllItems">すべてのアイテムを更新するかどうか、ユーザーが指定します。</param>
+            <exception cref="T:System.ArgumentNullException">
+            指定された<paramref name="sourceLanguage"/>が<see langword="null"/>のときスローされます。
+            </exception>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.LanguageGuidMapPlugin.CreateParameters">
+            <summary>
+            パラメータクラスを作成する処理です。
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Nintendo.MessageStudio.Core.Project.MacroExtraParamKey">
             <summary>
             この構造体は、拡張マクロテキストに対する、キーの名前と、それの説明を保持することが出来ます。
@@ -55220,6 +56049,20 @@
             パラメータのリストを取得します
             </summary>
         </member>
+        <member name="P:Nintendo.MessageStudio.Core.Project.Tag.BinaryParams">
+            <summary>
+            バイナリに出力するパラメータのリストを取得します。(#2151)
+            </summary>
+            <remarks>
+            このプロパティはビルダーからバイナリを出力する際に利用するために、
+            バイナリ出力をしないパラメータを省いたリストを返します。
+            
+            バイナリ出力しないパラメータとはIsExcludeOutputBinaryプロパティに
+            trueがセットされているパラメータです。
+            
+            1.2.x系ではinternalとして実装しています。
+            </remarks>
+        </member>
         <member name="P:Nintendo.MessageStudio.Core.Project.Tag.HasInsideText">
             <summary>
             内部テキスト情報を持つかどうかを取得 / 設定します
@@ -55513,6 +56356,11 @@
             ユーザー指定の最小値
             </summary>
         </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagParameter.isExcludeBinary">
+            <summary>
+            パラメータをバイナリ出力するかどうか
+            </summary>
+        </member>
         <member name="F:Nintendo.MessageStudio.Core.Project.TagParameter.listItems">
             <summary>
             タグパラメータのリストタイプ用のコレクション
@@ -55653,6 +56501,23 @@
             <summary>
             ユーザーが設定した最小値を取得／設定します。
             </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Project.TagParameter.IsExcludeOutputBinary">
+            <summary>
+            パラらメータがバイナリ出力対象外かどうかを取得／設定します。
+            </summary>
+            <remarks>
+            【注意】
+            このプロパティは1.2.x系ではMessageStudioのバージョンポリシー
+            （同一マイナーバージョンでのpublicなAPIの追加／削除／変更の禁止）
+            に対応するためinternalとしています。
+            従ってシリアライズ／デシリアライズはXMLスキーマの制約を受けない
+            EXtraDataにTagSettingExtraDataプラグインを経由して別途行います。
+            
+            1.3.x系では、ExtraDataではなく通常のプロパティと同じ扱いとします。
+            ただし1.2.x系のデータとの互換性確保のため、1.3.x系移行後も
+            TagSettingExtraDataプラグインからの読込みは継続します。
+            </remarks>
         </member>
         <member name="P:Nintendo.MessageStudio.Core.Project.TagParameter.Items">
             <summary>
@@ -57263,6 +58128,96 @@
         <member name="T:Nintendo.MessageStudio.Core.Project.StyleInfoCollection">
             <summary>
             言語情報とスタイル情報とのハッシュテーブルクラス
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Project.TagSettingExtraData">
+            <summary>
+            タグパラメータに関する追加情報を保存するためのプラグイン実装です。
+            </summary>
+            <remarks>
+            このクラスは1.2.xで制限されている実装を追加するための暫定的なプラグインです。
+            1.3.xではTagParameterのpublicプロパティとして実装します。
+            </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraData.CreateParameters">
+            <summary>
+            プロジェクトに対するプラグイン独自の情報を生成します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraData.SetupPlugin(Nintendo.MessageStudio.Core.Plugin.PluginInitArgs)">
+            <summary>
+            プラグインの初期化
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraData.TearDownPlugin">
+            <summary>
+            プラグインの終了処理
+            </summary>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Project.TagSettingExtraData.PluginArgs">
+            <summary>
+            プラグイン引数を取得／設定します。
+            </summary>
+        </member>
+        <member name="T:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters">
+            <summary>
+            タグパラメータの付加的な外部パラメータ
+            </summary>
+            <remarks>
+            このクラスは1.2.xで制限されている実装を追加するための暫定的パラメータの実装です。
+            1.3.xではこのクラスに実装されるプロパティはTagParameterのpublicプロパティとして実装します
+            </remarks>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.TagSettingExtraElementName">
+            <summary>タグ拡張設定のXML要素名</summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.TagGroupAttributeName">
+            <summary>タググループ名のXML属性名</summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.TagAttributeName">
+            <summary>タグ名のXML属性名</summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.TagParamAttributeName">
+            <summary>タグパラメータ名のXML属性名</summary>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.ExcludeBinaryAttributeName">
+            <summary>タグパラメータをバイナリ出力するかどうかのXML属性名</summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.#ctor(Nintendo.MessageStudio.Core.Plugin.PluginInitArgs)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="pluginArgs"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.LoadFromXml(System.Xml.XmlReader)">
+            <summary>
+            情報を読み込みます。
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.ReadExtraAttributes(System.Xml.XmlReader)">
+            <summary>
+            公開できないinternalな拡張データを読み出してプロジェクトにセットします。
+            </summary>
+            <param name="xmlReader"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.SaveToXml(System.Xml.XmlWriter)">
+            <summary>
+            情報を保存します。
+            </summary>
+            <param name="xmlWriter"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.Clone">
+            <summary>
+            クローンを生成して返します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Nintendo.MessageStudio.Core.Project.TagSettingExtraParameters.PluginArgs">
+            <summary>
+            プラグイン引数を取得／設定します。
             </summary>
         </member>
         <member name="T:Nintendo.MessageStudio.Core.Project.TagParameterListItemCollection">
