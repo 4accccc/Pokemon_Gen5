@@ -21,6 +21,8 @@ require HASHPATH + "wazano_hash.rb"	# ‹Z”Ô†
 require HASHPATH + "seikaku_hash.rb"	# «Ši
 require HASHPATH + "tokusei_hash.rb"	# “Á«
 require HASHPATH + "trtype_hash.rb"	# ƒgƒŒ[ƒi[ID
+#
+require "wbt_tokusei_data.rb"           # “Á«‚Ìƒf[ƒ^
 
 # OK/NG‚ÌƒnƒbƒVƒ…
 $ng_hash      = { "NG"=>0, "‚m‚f"=>1, "OK"=>2, "‚n‚j"=>3 }

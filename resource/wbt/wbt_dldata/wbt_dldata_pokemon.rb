@@ -100,6 +100,9 @@ class WBT_POKEMON_SINGLE
     @level       = 0;	# レベル
     @friend_rate = 0;	# なつき度
     #
+    @csv_pokename = ""  # csvでのポケモン名
+    @csv_form    = 0    # csvでのフォルム番号
+    #
     @local_debug = 0;
     # debug
     if($debug_code == 1)
@@ -170,6 +173,10 @@ class WBT_POKEMON_SINGLE
       @monsno = id;
     end
     #
+    # csv用
+#    @csv_pokename = str;
+    @csv_pokename = id;
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d: %s", $poke_str[0], @monsno, str)
     end
@@ -197,6 +204,9 @@ class WBT_POKEMON_SINGLE
       print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+1 );
       poke_exit();
     end
+    #
+    # csv用
+    @csv_form = @form_no;
     #
     if(@local_debug == 1)
       p sprintf("%s :%d", $poke_str[1], @form_no )
@@ -341,9 +351,49 @@ class WBT_POKEMON_SINGLE
       @tokusei = id;
     end
     #
+    # 特性のチェック(csv)
+    ret = chk_csv_tokusei( @csv_pokename, @csv_form, id );
+    if(ret == -1)
+      print_error_info( $current_xls_name, 6, POKE_START_COL+offset, POKE_START_ROW+6 );
+      poke_exit();
+    end
+    #
     if(@local_debug == 1)
       p sprintf("%s :%d: %s", $poke_str[5], @tokusei, str)
     end
+  end
+  
+  #------------------------
+  # csvでの特性チェック
+  #
+  # monsno番号
+  # form番号
+  # tokusei番号
+  #------------------------
+  def chk_csv_tokusei( pokename, form, tokusei )
+    size = $wbt_tokusei_tbl.size/6;
+#    p sprintf("%d",size);
+    size.times{|i|
+      mbuffer = $wbt_tokusei_tbl[6*i]
+#      p sprintf("%s, %s, %d, %s",mstr, pokename,form,tokusei);
+      if(mbuffer == 0)
+        break;
+      end
+      #
+      # 該当のポケモンがいる=>特性を探す
+      if(mbuffer == pokename)
+        # フォルム番号をチェック
+        if($wbt_tokusei_tbl[6*i+1] == form)
+          3.times{|j|
+            if($wbt_tokusei_tbl[6*i+2+j] == tokusei)
+              return( 0 );
+            end
+          }
+        end
+      end
+    }
+    #
+    return( -1 );
   end
   
   #----------------
