@@ -67,17 +67,12 @@ static const pCommDemoFunc MainSeq[] = {
 // モード別データ
 static const BGFRM_ANM_DATA ModeData[] =
 {
-	{	0, 0, 0, 0 },	
-  //【仮】ROM容量が足りなくなった為、削りました。
-  //
-  // メインシーケンスもスキップしているため、
-  // そちらも戻すこと！
-  //
+  // 呼び出し箇所
   // src/title/title_control.c | 
   //
-	//{	ARCID_GF_LOGO_MOVIE, 151, 256*192*2, 0 },					// ゲームフリークロゴ
-	//{	ARCID_CDEMO_DATA, 670, 256*170*2, 256*11*2 },			// オープニングムービー１
-	//{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0 },				// オープニングムービー２
+	{	ARCID_GF_LOGO_MOVIE, 151, 256*192*2, 0 },					// ゲームフリークロゴ
+	{	ARCID_CDEMO_DATA, 670, 256*170*2, 256*11*2 },			// オープニングムービー１
+	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0 },				// オープニングムービー２
 };
 
 

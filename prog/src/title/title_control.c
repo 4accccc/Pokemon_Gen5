@@ -81,8 +81,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #endif
     {
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
-      //*seq = 1; // ほんとうはムービーに移行するけど・・・
-      *seq = 4;   // 直でタイトルへ
+      *seq = 1; // ムービーに移行
     }
     break;
 
