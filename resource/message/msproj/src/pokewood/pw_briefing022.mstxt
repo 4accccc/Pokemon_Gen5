@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
+[Ctrl1:xcenter ]こまった　おうじさま
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]きょうも　おうさまの
+[Ctrl1:xcenter ]いいつけに　そむいて
+[Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
+[Ctrl1:xcenter ]こまった　王子様
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]今日も　王様の
+[Ctrl1:xcenter ]言いつけに　そむいて
+[Ctrl1:xcenter ]夜おそく　庭を　散歩していた
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +58,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]ふと　きがつくと
+[Ctrl1:xcenter ]にわの　おくに　あやしい
+[Ctrl1:xcenter ]とびらが　ひとつ……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +72,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]ふと　気がつくと
+[Ctrl1:xcenter ]庭の　おくに　怪しい
+[Ctrl1:xcenter ]とびらが　ひとつ……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +90,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじが
+[Ctrl1:xcenter ]とびらを　あけると
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]そこには　みたこともない
+[Ctrl1:xcenter ]ぶきみな　ふうけいが
+[Ctrl1:xcenter ]ひろがるばかり……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +106,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子が
+[Ctrl1:xcenter ]扉を　開けると
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]そこには　見たこともない
+[Ctrl1:xcenter ]ぶきみな　風景が
+[Ctrl1:xcenter ]広がるばかり……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:25:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +308,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
+[Ctrl1:xcenter ]こまった　おひめさま
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]きょうも　おうさまの
+[Ctrl1:xcenter ]いいつけに　そむいて
+[Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +325,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
+[Ctrl1:xcenter ]こまった　お姫様
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]今日も　王様の
+[Ctrl1:xcenter ]言いつけに　そむいて
+[Ctrl1:xcenter ]夜おそく　庭を　散歩していた
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +353,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]ふと　きがつくと
+[Ctrl1:xcenter ]にわの　おくに　あやしい
+[Ctrl1:xcenter ]とびらが　ひとつ……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:25:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +367,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]ふと　気がつくと
+[Ctrl1:xcenter ]庭の　おくに　怪しい
+[Ctrl1:xcenter ]とびらが　ひとつ……
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +385,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめが
+[Ctrl1:xcenter ]とびらを　あけると
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]そこには　みたこともない
+[Ctrl1:xcenter ]ぶきみな　ふうけいが
+[Ctrl1:xcenter ]ひろがるばかり……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +401,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫が
+[Ctrl1:xcenter ]扉を　開けると
+[Ctrl1:xcenter ]
+[Ctrl1:xcenter ]そこには　見たこともない
+[Ctrl1:xcenter ]ぶきみな　風景が
+[Ctrl1:xcenter ]広がるばかり……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-06T03:26:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
