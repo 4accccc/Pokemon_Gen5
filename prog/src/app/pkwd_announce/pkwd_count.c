@@ -40,7 +40,7 @@
 #include "app/pkwd_count.h"
 
 #include "pkwd_announce_gra.naix"
-#include "msg/msg_pw_movietitle.h"		// test
+#include "msg/msg_pw_movietitle.h"
 
 // メッセージ
 #include "message.naix"
@@ -426,12 +426,9 @@ static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
 // タイトルのテーブル
 //-------------------
 static const s16 pkwd_title_tbl[] = {
-//	pw_movietitle_01,			// TITLE映画の名前
-	pw_title_00,
+	pw_title_00,			// title名
 	0,
 };
-
-
 
 //=============================================================================
 /**
@@ -546,13 +543,6 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	// 参照用
 	wk->Param = pwk;
 	//
-#if 0
-	// 念のためチェック
-	if((wk->Param->title_no < 0)||(wk->Param->title_no >= PKWD_COUNT_MAX_TITLENUM)){
-		OS_Printf("title_no error :%d\n",wk->Param->title_no);
-		wk->Param->title_no = 0;
-	}
-#endif
 	//描画設定初期化(上:メイン、下:サブ)
 	wk->graphic	= PKWD_COUNT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 	//
@@ -738,7 +728,6 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	// パレットだけはセット
 	tnum = pwc_get_title_no( wk );
 	pwc_init_bg2( wk, tnum, 0 );
-//	pwc_init_bg2( wk, wk->Param->title_no, 0 );
 	
 	//---------------
 	// stringの初期化
@@ -941,7 +930,6 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 				// BGセット(BGは非表示状態)
 				tnum = pwc_get_title_no( wk );
 				pwc_init_bg2( wk, tnum, 1 );
-//				pwc_init_bg2( wk, wk->Param->title_no, 1 );
 				// 文字列表示(BG0はそのまま表示)
 				pwc_disp_title_string( wk );
 				// BG1,BG3を表示
@@ -1200,8 +1188,7 @@ static void pwc_init_obj_clwk( PKWD_COUNT_MAIN_WORK* wk, const s32 drawtype, con
 	if(buf[4] == CLWKMODE_NORMAL){			// 通常
 		clwk = &wk->wk_obj.clwk[0];
 	}
-	else{
-//	else if(buf[4] == CLWKMODE_LOGO){		// logo
+	else{									// logo
 		clwk = &wk->wk_obj.logo_clwk[0];
 	}
 	
@@ -1470,7 +1457,6 @@ static BOOL pwc_wait_timer( PKWD_COUNT_MAIN_WORK* wk )
 	// 終了を見て再開にした
 	bflg = pwc_is_anime_end( wk, CLWKMODE_NORMAL, CLWK_ROLE );
 	if(bflg == FALSE){
-//		OS_Printf("anim end\n");
 		pwc_chg_objseq( wk, CLWKMODE_NORMAL, CLWK_ROLE, SEQ_ROLE_ANIM );
 		//
 		wk->Count++;
@@ -1834,7 +1820,6 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 	
 	// タイトル(上)
 	// id(連番となっているのが前提)
-//	mesid = pkwd_title_tbl[0]+wk->Param->title_no;		// title_noは未使用の方向で検討
 	mesid = pkwd_title_tbl[0]+wk->Param->scenario_no;
 	strbuf = GFL_MSG_CreateString( wk->MsgData[0], mesid );
 	pwc_disp_string( wk, 0, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
@@ -1843,7 +1828,6 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 	//
 	// サブタイトル表示
 	mesid = pkwd_subtitle_tbl[wk->Param->scenario_no][wk->Param->sex];
-//	mesid = pkwd_subtitle_tbl[wk->Param->title_no][wk->Param->sex]+wk->Param->scenario_no;
 	if(wk->Param->message){
 		destbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
 		// wordset
@@ -1866,11 +1850,11 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	タイトル番号(テーブルを使用)
+ * @brief	(BG表示で必要な)タイトル番号を取得(テーブルを使用)
  *
  * @param	PKWD_COUNT_MAIN_WORK* 			wk
  *
- * @return
+ * @return  u8								タイトル番号
  */
 //--------------------------------------------------------------------------------------------
 static u8 pwc_get_title_no( PKWD_COUNT_MAIN_WORK* wk )

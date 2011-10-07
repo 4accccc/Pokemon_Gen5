@@ -172,6 +172,8 @@ enum{
 	//
 //	PKWD_BOOK_SCENARIO_MAX		= POKEWOOD_SENARIO_MAX,	// シナリオ最大値
 	PKWD_BOOK_SCENARIO_MAX		= 40,	// シナリオ最大値
+	//
+	PKWD_LIST_NEW_MAX			= 9,	// new登録数最大(PKWD_BOOK_LIST_MAX+2(上下))
 };
 
 //-------------
@@ -900,7 +902,6 @@ static const GFL_UI_TP_HITTBL *pwb_rect_tbl[] = {
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
 {
-#if 1		// 後日、余力があればSLIDEでタッチにも対応を検討
   { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
   { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
@@ -908,15 +909,7 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
   { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
   { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
   { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
-#else
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
-#endif
+
   { {   4, 164, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
@@ -949,7 +942,7 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
   FRAMELIST_SUB_BG_NONE,	// 下
   
   2,   // 項目フレーム表示開始Ｘ座標
-  0,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
+  0,    // 項目フレーム表示開始Ｙ座標(●)
   28,   // 項目フレーム表示Ｘサイズ
   3,    // 項目フレーム表示Ｙサイズ
   
@@ -1542,7 +1535,6 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	{
 		ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_SUB_FONT*0x20,  0x20, wk->heapID );
-//		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 	// main
@@ -3481,13 +3473,9 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		pwb_disp_fix_string( wk, STR_SUB, TMODE_TRAINER );
 		// シナリオ番号
 		tmp = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
-		// 職業名
-//		strbuf = GFL_MSG_CreateString( wk->MsgData[2], wk->TrainerID );
-//		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
+		// 職業名(上映時を表示)(初期化時にまとめて取得)
 		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, wk->NameBuffer[tmp], 0, PRINTSYS_LSB_Make(1,2,0) );
-//		GFL_STR_DeleteBuffer( strbuf );
-		// 役名
-//		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_rec_trainername_01+tmp );
+		// 役名(上映時を表示)
 		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_01+tmp );
 		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORKER, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
 		GFL_STR_DeleteBuffer( strbuf );
@@ -3877,7 +3865,6 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	}else{
 		bflg = FALSE;
 	}
-//	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, TRUE );
 	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, bflg );
 	
 //	OS_Printf("type :%d,%d\n",buf[0],buf[1]);
@@ -4913,7 +4900,6 @@ static void pwb_init_pkwd_scenario( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario
 	// シナリオ情報の取得
 	pkwd_scenario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, scenario_id, wk->heapID );
 	// ここで情報をセットしてしまう(撮影をセット、男性:0、女性:2)
-//	wk->TrainerID = pkwd_scenario->trtype[1];
 	wk->TrainerID = pkwd_scenario->trtype[2*sex];
 	//
 	for(i=0;i<4;i++){
@@ -5047,7 +5033,7 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	//
 	// ここまでで、NewFlagがセットされる
 	// 表示/非表示までをセット
-	for(i=0;i<9;i++){
+	for(i=0;i<PKWD_LIST_NEW_MAX;i++){
 		bflg = FALSE;
 		if(wk->NewFlag & (1<<i)){
 			bflg = TRUE;
@@ -5056,7 +5042,7 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	}
 	//
 	// 座標初期化
-	for(i=0;i<9;i++){
+	for(i=0;i<PKWD_LIST_NEW_MAX;i++){
 		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 		pos.x = pwb_get_empty( wk, (25+i)*2 );
 		pos.y = pwb_get_empty( wk, (25+i)*2+1 );
@@ -5082,7 +5068,7 @@ static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate )
 	s32				i;
 	GFL_CLACTPOS	pos;
 	//
-	for(i=0;i<9;i++){
+	for(i=0;i<PKWD_LIST_NEW_MAX;i++){
 		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 		pos.y -= rate;		// bgなので反転
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
