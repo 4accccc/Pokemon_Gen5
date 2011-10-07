@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-10-05T17:14:03"/>
+	<create user="ibe_mana" host="W00191" date="2011-10-06T23:21:29"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1248,14 +1248,14 @@
 		path="C:/home/swan_data3d/field/in15/chip/tex/in15_donou.tga"
 	>
 		<bitmap size="64">
-			6e63 22bb 9962 22e9 6e66 2332 4962 69e4
-			6e62 2222 9222 99e9 6e62 2623 12c3 91e6
-			6e29 2168 2222 32e6 654a 3380 3333 21e6
-			654a 3326 3333 66e6 6544 2266 3382 b3e6
-			654f 6666 3222 33e6 154f 0066 22c2 83e6
-			4eff 2694 88c8 6256 feff 21af 2882 1156
-			fe75 14d5 4aa9 695a 7e77 4f57 f4ff 1f5d
-			fe77 f477 5555 a555 5e74 5557 5555 ee55
+			0000 0000 0000 0000 2040 2202 0220 0202
+			4240 3314 2331 0425 5440 aa35 553a 0445
+			6440 bb36 663b 0446 8740 ac68 886c 0478
+			9740 ab69 996b 0479 9740 bc69 996c 0479
+			9740 cc69 996c 0479 9740 ab69 996b 0479
+			8740 ac68 886c 0478 6440 bb36 663b 0446
+			5440 aa35 553a 0445 4240 3314 2531 0425
+			2040 2202 0220 0202 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="27" name="in15_ishi"
@@ -1626,8 +1626,8 @@
 		011a 013b 053c 097d 0d9e 1599 1dff 5b3f
 	</tex_palette>
 	<tex_palette index="26" name="in15_donou_pl" color_size="16">
-		3a33 3613 3a34 3e55 31d1 2d8f 3a13 2db0
-		3e34 35f2 35d1 3a14 3e35 31af 296d 31b0
+		154b 156c 158d 196e 198e 198f 19d0 1dd0
+		1e13 2234 2612 2a75 36d8 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="27" name="in15_ishi_pl" color_size="16">
 		77bd 1085 152a 0ca5 0cc7 08a5 0885 08a6
@@ -1754,7 +1754,7 @@
 	triangle_size="0" quad_size="6"/>
 
 <ex_nns_3dme>
-	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_model_info scene_name="新規シーン" disp_pos="0.000000 60.000000"/>
 	<ex_tex_image_array size="32">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
