@@ -130,9 +130,9 @@ typedef struct {
 ///	ヒントメッセージ取得用ワーク
 //=====================================
 typedef struct{
-  INF_DUNGEON_DATA      *p_dungeon_data;
+  const INF_DUNGEON_DATA      *p_dungeon_data;
+  const INFINITYDUNGEON_SAVE  *p_save;
   u8                    talk_type;  // 会話タイプ
-  INFINITYDUNGEON_SAVE  *p_save;
 }TRHINT_WK;
 
 //=============================================================================
@@ -477,7 +477,7 @@ typedef struct {
   FLDMAPPER             *p_g3d_mapper;
   FIELD_BMODEL_MAN      *p_bmodel_man;
   MMDLSYS               *p_mmdlsys;
-  INF_DUNGEON_DATA      *p_dungeon_data;
+  const INF_DUNGEON_DATA      *p_dungeon_data;
   HEAPID                heapID;
 
   // 移動タイプ
@@ -528,8 +528,8 @@ static const u16* GetZoneIdTable( const MAP_CHAGE_EVENT_WORK *p_wk );
 static u16 GetFieldDir( u16 warp_dir );
 
 // 部屋データ
-static ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
-static ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
+static const ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
+static const ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
 
 // ダンジョン生成
 static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, const u32 seed ,int fs_x ,int fs_y);
@@ -560,7 +560,7 @@ static void SetReceptionElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk );
 // ダンジョン内トレーナー
 static int GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
 static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed );
-static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
+static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
 static u32 GetTrSeed( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u32 tr_id_pos );
 
 // フロア生成 
@@ -685,7 +685,7 @@ u32 INF_GetDungeonDataSize()
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys,INF_DUNGEON_DATA *p_dungeon_data, u16 warp_dir )
+void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys,const INF_DUNGEON_DATA *p_dungeon_data, u16 warp_dir )
 {
 	GMEVENT *p_event = NULL;
   MAP_CHAGE_EVENT_WORK *p_wk;
@@ -709,7 +709,7 @@ void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys
  *	@retval
  */
 //-----------------------------------------------------------------------------
-extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA *p_dungeon_data ,int floor_no )
+void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA *p_dungeon_data ,int floor_no )
 {
 	GMEVENT *p_event = NULL;
   MAP_CHAGE_EVENT_WORK  *p_wk;
@@ -807,7 +807,7 @@ static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys)
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 {
   MAP_CHAGE_EVENT_WORK *p_wk = wk;
-  ROOM_DATA *p_next_room;
+  const ROOM_DATA *p_next_room;
 
   switch( *seq )
   {
@@ -1035,7 +1035,7 @@ static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
+static const ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
 {
   return &p_wk->p_dungeon_data->room_data[ p_wk->next_floor ][p_wk->next_room];
 }
@@ -1049,7 +1049,7 @@ static ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
+static const ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
 {
   return &p_wk->p_dungeon_data->room_data[ p_wk->now_floor ][p_wk->now_room];
 }
@@ -1066,7 +1066,7 @@ static ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk )
 static void SetNextZoneID( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   NEXT_MAP_DATA *p_next_map_data  = &p_wk->next_map_data;
-  ROOM_DATA     *p_next_room_data;
+  const ROOM_DATA     *p_next_room_data;
   u16 warp_dir    = p_wk->warp_dir;
   u32 room_type;
   p_wk->next_room   = p_wk->now_room;
@@ -1123,7 +1123,7 @@ static void SetNextFloor( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   int i;
   NEXT_MAP_DATA *p_next_map_data  = &p_wk->next_map_data;
-  ROOM_DATA     *p_next_room_data;
+  const ROOM_DATA *p_next_room_data;
 
   // 現在の部屋位置を初期化
   p_wk->next_room = 0;
@@ -1132,7 +1132,7 @@ static void SetNextFloor( MAP_CHAGE_EVENT_WORK *p_wk )
   for( i = 0 ; i < ROOM_MAX ; i++ )
   {
     // 部屋タイプの取得
-    ROOM_DATA  *p_room_data;
+    const ROOM_DATA  *p_room_data;
     p_room_data = GetNextRoomData( p_wk );
 
     // エレベータ部屋が見つかるまでつづける
@@ -1172,7 +1172,7 @@ static void SetNextPos( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
   const GRID_DATA   *p_pos;
-  ROOM_DATA         *p_room_data;
+  const ROOM_DATA   *p_room_data;
   u32               room_type;
   
   // 部屋タイプの取得
@@ -2609,10 +2609,10 @@ static void AddDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_g
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA  *p_dungeon_data)
+void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,const INF_DUNGEON_DATA  *p_dungeon_data)
 {
   MAP_CHAGE_EVENT_WORK  *p_wk;
-  ROOM_DATA             *p_room_data;
+  const ROOM_DATA       *p_room_data;
 
   // ワーク確保
   p_wk = GFL_HEAP_AllocMemoryLo( HEAPID_FIELDMAP, sizeof( MAP_CHAGE_EVENT_WORK ) );
@@ -2669,7 +2669,7 @@ static u16 GetFieldDir( u16 warp_dir )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
+static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
 {
   int i;
   const INF_ROOM_SET_TR_PARAM *p_tr_room;
@@ -3063,7 +3063,7 @@ static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNG
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data )
+u32 INFINITY_DUNGEON_GetBossFloor( const INF_DUNGEON_DATA *p_dungeon_data )
 {
   s32 boss_room;
   s32 boss_floor;
@@ -3174,7 +3174,7 @@ static u8 GetTrainerTalkType( u16 obj_code)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data ,u16 obj_code)
+u32 INFINITY_DUNGEON_GetHintMessage( const INFINITYDUNGEON_SAVE *p_save ,const INF_DUNGEON_DATA *p_dungeon_data ,u16 obj_code)
 {
   u8    talk_type;
   u8    hint_type;
@@ -3587,7 +3587,7 @@ static u32 gethint_no_hint( const TRHINT_WK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u16 INFINITY_DUNGEON_GetTrIDByIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos )
+u16 INFINITY_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos )
 {
   return p_dungeon_data->tr_data[floor_id].tr_id[id_pos];
 }
@@ -3618,11 +3618,11 @@ static u32 GetTrSeed( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u32 t
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id )
+u32 INFINITY_DUNGEON_GetRecoverFlgPos( const INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id )
 {
   u32 i;
   u32 master_seed;
-  u16 *p_trid;
+  const u16 *p_trid;
 
   // トレーナーIDリストを取得
   p_trid = p_dungeon_data->recover_data;
@@ -3668,7 +3668,7 @@ static BOOL IsMoveElevator( const MAP_CHAGE_EVENT_WORK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data )
+u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data )
 {
   u32 member_num =0;
   int i,n;
@@ -3697,9 +3697,9 @@ u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-BOOL INFINITY_DUNGEON_GetUpPosRoomType( INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room )
+BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room )
 {
-  ROOM_DATA *p_room;
+  const ROOM_DATA *p_room;
   // 一つ上の部屋番号を取得
   s32 next_room = now_room - ROOM_MAX_X;
 
