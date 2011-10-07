@@ -581,9 +581,13 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
   bew->is_no_lose = FALSE; //敗戦処理有り
   bew->not_free_bsp = FALSE; //開放する
   
-  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
+  //エンカウントエフェクト
   bew->EncEffNo = ENCEFFID_SUBWAY;
-   
+  // BGMはトレーナー固定
+  bew->battle_param->musicDefault = SEQ_BGM_VS_TRAINER;
+  // 勝利BGM固定
+  bew->battle_param->musicWin = SEQ_BGM_WIN2;
+
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;
