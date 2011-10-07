@@ -49,7 +49,7 @@ extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,
 extern u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data );
 extern u32 INF_GetDungeonDataSize();
 extern u16 INFINITY_DUNGEON_GetTrIDByIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
-extern u8 INFINITY_DUNGEON_GetDungeonColor( INF_DUNGEON_DATA *p_wk );
+extern u8 INFINITY_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk );
 extern u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data );
 extern BOOL INFINITY_DUNGEON_GetUpPosRoomType( INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room );
 
