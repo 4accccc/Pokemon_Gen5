@@ -516,7 +516,7 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
 static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed );
 static u8 GetTrainerTalkType( u16 obj_code );
 static u8 GetTrainerHintType( u16 obj_code);
-static u8 GetMemberNum( u8 pos_type );
+static u8 GetMemberNum( const u8 pos_type );
 static u8 GetRoomType( u8 pos_type );
 static u8 GetRoomVersion( u8 pos_type );
 static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
@@ -572,7 +572,7 @@ static void push_dig_pos( INF_DIG_DATA *p_dig_data ,DIG_POS *p_dig_pos);
 static void pop_dig_pos( INF_DIG_DATA *p_dig_data );
 static void RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context );
 static BOOL CheckDigEnd( ROOM_DATA *p_room_data ,int fs_x ,int fs_y);
-static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
+static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
 static BOOL IsMoveElevator( MAP_CHAGE_EVENT_WORK *p_wk );
 
 // ヒントメッセージ
@@ -1371,7 +1371,7 @@ static const GRID_DATA* GetWarpPosTable( MAP_CHAGE_EVENT_WORK *p_wk ,int room_ty
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u8 GetMemberNum( u8 pos_type )
+static u8 GetMemberNum( const u8 pos_type )
 {
   if( pos_type != INF_TR_ROOM_POS_TYPE_NONE )
   {
@@ -1996,17 +1996,24 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
 
       if( member_num > INFINITY_DUNGEON_TRID_MAX )
       {
-        int rmv_num = member_num -= INFINITY_DUNGEON_TRID_MAX;
+        int rmv_num = member_num - INFINITY_DUNGEON_TRID_MAX;
         RemoveTrRoom( p_dungeon_data , floor_no , rmv_num , &rand_context);
       }
 
 #ifdef  PM_DEBUG
-      if( member_num == 0 )
+      // 再度人数を数える
+      member_num = 0;
+      for( i = 0; i< ROOM_MAX; i++ )
       {
-        GF_ASSERT_MSG(0,"配置人数が０人です\n");
+        u8 pos_type = p_dungeon_data->room_data[floor_no][i].tr_pos_type;
+        if( GetMemberNum(pos_type) > 0 )
+        {
+          member_num += GetMemberNum(pos_type);
+        }
       }
+      // 人数チェック
+      GF_ASSERT_MSG( member_num > 0 ,"配置人数が０人です\n");
 #endif
-      
     }
   }
 
@@ -2150,7 +2157,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context )
+static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context )
 {
   u8  pos_type;
   int cnt = 0;
