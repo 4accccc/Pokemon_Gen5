@@ -356,7 +356,7 @@ static void PutModeButtonStr( ZKNLISTMAIN_WORK * wk )
       // 全国・生息地
 		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_1, str_mode_local, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
 		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_2, str_mode_zenkoku, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
-		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 4, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 5, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
 	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_1] );
 	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_2] );
 	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_3] );
@@ -365,7 +365,7 @@ static void PutModeButtonStr( ZKNLISTMAIN_WORK * wk )
     {
       // 生息地だけ
 		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_2, str_mode_local, 0, 6, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
-		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 4, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
+		  StrPrint( wk, ZKNLISTBMP_WINIDX_MODE_BUTTON_3, str_mode_seisoku, 0, 5, FCOL_MP15WN, PRINTTOOL_MODE_LEFT );
 	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_2] );
 	    PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_MODE_BUTTON_3] );
     }

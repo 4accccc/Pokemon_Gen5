@@ -193,9 +193,9 @@ static const GFL_UI_TP_HITTBL sc_touch_hit_tbl[] =
 	{ TB_PY, TB_PY+TB_SY-1, TB_PX06, TB_PX06+TB_SX-1 },		// 11: Ｘ
 	{ TB_PY, TB_PY+TB_SY-1, TB_PX07, TB_PX07+TB_SX-1 },		// 12: 戻る
 	
-	{ 168, 191-24*3,   0,  71 },		// モードボタン1
-	{ 168, 191-24*2,   0,  71 },		// モードボタン2
-  { 168, 191-24*1,   0,  71 },		// モードボタン3
+  { 110 - 12, 110 + 12,   0,  64 },		// モード切替ボタン1
+  { 133 - 12, 133 + 12,   0,  64 },		// モード切替ボタン2
+  { 156 - 12, 156 + 12,   0,  64 },		// モード切替ボタン3
 
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -943,7 +943,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
 
     // メッセージの書き込み
     HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-        BUTTON_03_POS_X , BUTTON_03_POS_Y,
+        BUTTON_03_POS_X , BUTTON_03_POS_Y + 4,
         BUTTON_03_MSG_W,BUTTON_03_MSG_H,
         MBG_BUTTON_FONT_COL );
 
@@ -960,7 +960,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
 
       // メッセージの書き込み
       HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-          BUTTON_01_POS_X , BUTTON_01_POS_Y,
+          BUTTON_01_POS_X , BUTTON_01_POS_Y  + 4,
           BUTTON_01_MSG_W,BUTTON_01_MSG_H,
           MBG_BUTTON_FONT_COL );
 
@@ -974,7 +974,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
 
       // メッセージの書き込み
       HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-          BUTTON_02_POS_X , BUTTON_02_POS_Y,
+          BUTTON_02_POS_X , BUTTON_02_POS_Y + 5,
           BUTTON_02_MSG_W,BUTTON_02_MSG_H,
           MBG_BUTTON_FONT_COL );
 
@@ -991,7 +991,7 @@ static void DrawButtonMsg( HABITAT_LIST_WK *p_wk )
 
     // メッセージの書き込み
     HABITAT_LIST_GRA_DrawStr( PRINT_UTIL_INFO_WIN ,str ,&p_wk->gra_sys ,
-        BUTTON_02_POS_X , BUTTON_02_POS_Y,
+        BUTTON_02_POS_X , BUTTON_02_POS_Y + 5,
         BUTTON_02_MSG_W,BUTTON_02_MSG_H,
         MBG_BUTTON_FONT_COL );
 

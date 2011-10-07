@@ -125,9 +125,9 @@ enum{
   MINI_MAPX_POS_X         = 32,  // ミニマップのの表示位置X
   MINI_MAPX_POS_Y         = 64,  // ミニマップのの表示位置Y
   MODE_BUTTON_01_POS_X    = 32,  // モード切替ボタン位置X
-  MODE_BUTTON_01_POS_Y    = 108, // モード切替ボタン位置Y
+  MODE_BUTTON_01_POS_Y    = 110, // モード切替ボタン位置Y
   MODE_BUTTON_02_POS_X    = 32,  // モード切替ボタン位置X
-  MODE_BUTTON_02_POS_Y    = 132, // モード切替ボタン位置Y
+  MODE_BUTTON_02_POS_Y    = 133, // モード切替ボタン位置Y
   MODE_BUTTON_03_POS_X    = 32,  // モード切替ボタン位置X
   MODE_BUTTON_03_POS_Y    = 156, // モード切替ボタン位置Y
   SELECT_BUTTON_POS_X     = 32,  // セレクトボタン位置X
