@@ -580,6 +580,20 @@ UFOの　テストを　兼ねて
 おろかで　下等な　生物に▽
 理想が　実現　できるのか？</language>
 	</row>
+	<row id="pw_event1_react_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ひとは　ゆうしゅうよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『人は　優秀よ！</language>
+	</row>
+	<row id="pw_event1_react_enemy_3">
+		<language name="JPN" width="256">E『ほう……
+ならば　ここで　それを　しめせ……▼
+かったものが　このほしで
+いきのこればよい……</language>
+		<language name="JPN_KANJI" width="256">E『ほう……
+ならば　ここで　それを　示せ……▼
+勝った者が　この星で
+生き残ればよい……</language>
+	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おわりね……　E……
 UFOは　みんな　たおしたよ……</language>
@@ -592,9 +606,9 @@ UFOは　みんな　倒したよ……</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">E『ん……　　なに……？
-マザーシップ　が……</language>
+マザーシップが　ゆれて……</language>
 		<language name="JPN_KANJI" width="256">E『ん……　　何……？
-マザーシップ　が……</language>
+マザーシップが　ゆれて……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">E『……　……おまえが　UFOを
@@ -693,6 +707,10 @@ UFOは　みんな　倒したよ……</language>
 我々なりに　探す……</language>
 	</row>
 	<row id="pw_event2_hero_6">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅ……</language>
+	</row>
+	<row id="pw_event2_hero_7">
 		<language name="JPN" width="256">……じんるいの　みらいを　かけた
 たたかいは　おわった……▼
 マザーシップと　ともに　このほしの
@@ -818,7 +836,7 @@ UFOは　みんな　倒したよ……</language>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……　</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……　</language>
 	</row>
-	<row id="pw_event3_enemy_6">
+	<row id="pw_event3_enemy_7">
 		<language name="JPN" width="256">E『……　……ねむったか▼
 [1:00:トレーナー名:1]……　おまえは……
 この　せかいで　さいごの▽
@@ -828,7 +846,7 @@ UFOは　みんな　倒したよ……</language>
 この星で　最期の▽
 ただひとりの　人間と　なる……</language>
 	</row>
-	<row id="pw_event3_hero_7">
+	<row id="pw_event3_hero_8">
 		<language name="JPN" width="256">……じんるいの　みらいを　かけた
 たたかいは　おわった……▼
 エイリアンに　はいぼく　した

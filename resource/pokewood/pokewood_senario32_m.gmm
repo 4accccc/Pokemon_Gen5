@@ -577,11 +577,11 @@
 オレが　処分した……</language>
 	</row>
 	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">じょしゅ『エッ！！　そんなッ！
+		<language name="JPN" width="256">じょしゅ『エーッ！！　そんなッ！▼
 それでは　Ｆ−００は　せかいに
 この１たい　だけ！▼
 もう　つくれないということですかっ！</language>
-		<language name="JPN_KANJI" width="256">助手『エッ！！　そんなッ！
+		<language name="JPN_KANJI" width="256">助手『エーッ！！　そんなッ！▼
 それでは　Ｆ−００は　世界に
 この１体　だけ！▼
 もう　造れないということですかっ！</language>
@@ -617,7 +617,7 @@
 完成させた……▼
 Ｆ−００は　研究の
 集大成で　あり▽
-私の　夢と　願いの
+私の　夢と　願いの▽
 結晶　だった……</language>
 	</row>
 	<row id="pw_event4_hero_0">
