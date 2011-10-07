@@ -191,9 +191,14 @@ void GAMEBEACON_Update(void)
   {
     bsys->resort_set_request = TRUE;
   }
-  if( SendBeacon_Update_ResortData(bsys) )
+
+  if( WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
+        && !GFL_NET_WLIsChildStateScan() )
   {
-    bsys->resort_set_request = TRUE;
+    if( SendBeacon_Update_ResortData(bsys) )
+    {
+      bsys->resort_set_request = TRUE;
+    }
   }
 
   
@@ -205,7 +210,7 @@ void GAMEBEACON_Update(void)
         && GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE
         && bsys->resort_enable 
         && WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
-        && GFL_NET_IsParentMachine()
+        && !GFL_NET_WLIsChildStateScan()
       )
     {
       GAMEBEACON_Set_SendResortData( bsys );
@@ -655,7 +660,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   BOOL same_player = FALSE;
   BOOL same_data   = FALSE;
   BOOL is_search   = FALSE;
-  
+
   if((info->version_bit & (1 << (PM_VERSION - VERSION_WHITE))) == 0){
     return FALSE; //受け取れないバージョン
   }
@@ -721,7 +726,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
 
   //リゾートビーコン受け取り
-  if( same_data == FALSE )
+  if( same_data == FALSE)
   {
     if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
     {

@@ -41,8 +41,6 @@
 //ŠO•”ŒöŠJ
 #include "field/resonance_resort_data.h"
 
-#include "debug/debug_nagihashi.h"
-
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
 #define DEBUG_RESORT_RECV_PRINT_ON
