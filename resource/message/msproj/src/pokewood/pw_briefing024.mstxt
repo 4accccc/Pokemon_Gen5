@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]ちかろうの　ぬいぐるみの　じょげんで
+[Ctrl1:xcenter ]なんとか　ろうの　もんを　こわし
+[Ctrl1:xcenter ]おもてにでる　ことが　できた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ
+
+[Ctrl1:xcenter ]もんばんを　ポケットに　かくし
+[Ctrl1:xcenter ]もとのせかいを　めざして　にげる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]地下ろうの　ぬいぐるみの　助言で
+[Ctrl1:xcenter ]なんとか　ろうの　門をこわし
+[Ctrl1:xcenter ]表に出ることが　できた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子
+
+[Ctrl1:xcenter ]門番を　ポケットに　かくし
+[Ctrl1:xcenter ]もとの世界を　めざして　逃げる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +58,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
+[Ctrl1:xcenter ]おうじを　みのがすはずも　なく……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +70,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
+[Ctrl1:xcenter ]王子を　見逃すはずも　なく……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +86,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>[Ctrl1:xcenter ]さいごの　しょうぶが
+[Ctrl1:xcenter ]いま　はじまろうと　している
+
+[Ctrl1:xcenter ]あやしい　とびらで　せかいを
+[Ctrl1:xcenter ]こんらんさせる　あしきクイーン
+[Ctrl1:xcenter ]ジュジュベの　たくらみに
+[Ctrl1:xcenter ]おうじは　かつことが　できるか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +103,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>[Ctrl1:xcenter ]最後の　勝負が
+[Ctrl1:xcenter ]いま　始まろうと　している
+[Ctrl1:xcenter ]怪しい　扉で　世界を
+[Ctrl1:xcenter ]混乱させる　悪しきクイーン
+
+[Ctrl1:xcenter ]ジュジュベの　たくらみに
+[Ctrl1:xcenter ]王子は　勝つことが　出来るか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +306,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]ちかろうの　ぬいぐるみの　じょげんで
+[Ctrl1:xcenter ]なんとか　ろうの　もんを　こわし
+[Ctrl1:xcenter ]おもてにでる　ことが　できた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ
+
+[Ctrl1:xcenter ]もんばんを　ポケットに　かくし
+[Ctrl1:xcenter ]もとのせかいを　めざして　にげる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +323,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]地下ろうの　ぬいぐるみの　助言で
+[Ctrl1:xcenter ]なんとか　ろうの　門をこわし
+[Ctrl1:xcenter ]表に出ることが　できた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫
+
+[Ctrl1:xcenter ]門番を　ポケットに　かくし
+[Ctrl1:xcenter ]もとの世界を　めざして　逃げる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +351,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
+[Ctrl1:xcenter ]ひめを　みのがすはずも　なく……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +363,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
+[Ctrl1:xcenter ]姫を　見逃すはずも　なく……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +379,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>[Ctrl1:xcenter ]さいごの　しょうぶが
+[Ctrl1:xcenter ]いま　はじまろうと　している
+
+[Ctrl1:xcenter ]あやしい　とびらで　せかいを
+[Ctrl1:xcenter ]こんらんさせる　あしきクイーン
+[Ctrl1:xcenter ]ジュジュベの　たくらみに
+[Ctrl1:xcenter ]ひめは　かつことが　できるか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +396,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>[Ctrl1:xcenter ]最後の　勝負が
+[Ctrl1:xcenter ]いま　始まろうと　している
+[Ctrl1:xcenter ]怪しい　扉で　世界を
+[Ctrl1:xcenter ]混乱させる　悪しきクイーン
+
+[Ctrl1:xcenter ]ジュジュベの　たくらみに
+[Ctrl1:xcenter ]姫は　勝つことが　出来るか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-07T09:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
