@@ -27,8 +27,7 @@ enum {
 	NARC_t_download_gra_t_download_bg_u_01_NSCR = 13,
 	NARC_t_download_gra_t_download_bg_u_02_NSCR = 14,
 	NARC_t_download_gra_t_download_obj_d_NANR = 15,
-	NARC_t_download_gra_t_download_param_tblbin = 16,
-	NARC_t_download_gra_t_download_pos_tblbin = 17
+	NARC_t_download_gra_t_download_pos_tblbin = 16
 };
 
 /* NARC_T_DOWNLOAD_GRA_NAIX_ */
