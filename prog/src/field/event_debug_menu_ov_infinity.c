@@ -35,10 +35,7 @@
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat" // INF_TR_ROOM_POS_TYPE_NONE
 
 // グローバル変数
-extern int  g_debug_inf_tr_pos_type;
-extern BOOL g_debug_inf_data_change;
 extern u32  g_debug_inf_master_seed;
-extern u32  g_debug_inf_is_presentation;
 extern BOOL g_debug_inf_is_map_info;
 
 
@@ -74,7 +71,6 @@ typedef struct {
 static const DEBUG_MENU_LIST MenuList[] =
 {
   { DEBUG_STR_INFINITY_CLEAR_RANK , (void*)DEBUG_STR_INFINITY_CLEAR_RANK , GFL_OVERLAY_BLANK_ID },  // クリアエリア指定
-  { DEBUG_STR_INFINITY_AREA , (void*)DEBUG_STR_INFINITY_AREA , GFL_OVERLAY_BLANK_ID },  // クリアエリア指定
   { DEBUG_STR_INFINITY_JUMP_1 , (void*)DEBUG_STR_INFINITY_JUMP_1 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_2 , (void*)DEBUG_STR_INFINITY_JUMP_2 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_3 , (void*)DEBUG_STR_INFINITY_JUMP_3 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
@@ -87,11 +83,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_JUMP_10 , (void*)DEBUG_STR_INFINITY_JUMP_10 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_11 , (void*)DEBUG_STR_INFINITY_JUMP_11 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_12 , (void*)DEBUG_STR_INFINITY_JUMP_12 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
-  { DEBUG_STR_INFINITY_ENDLESS_CHECK , (void*)DEBUG_STR_INFINITY_ENDLESS_CHECK , GFL_OVERLAY_BLANK_ID },  // ダンジョン無限生成
-  { DEBUG_STR_INFINITY_DEBUG_MODE , (void*)DEBUG_STR_INFINITY_DEBUG_MODE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
-  { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // トレーナー位置固定
   { DEBUG_STR_INFINITY_SEED_CHANGE , (void*)DEBUG_STR_INFINITY_SEED_CHANGE , GFL_OVERLAY_BLANK_ID },  // シード
-  { DEBUG_STR_INFINITY_PRESENTATION , (void*)DEBUG_STR_INFINITY_PRESENTATION , GFL_OVERLAY_BLANK_ID },  // プレゼン
   { DEBUG_STR_INFINITY_BLACK_VERSION , (void*)DEBUG_STR_INFINITY_BLACK_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_WHITE_VERSION , (void*)DEBUG_STR_INFINITY_WHITE_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_AUTO_MAP , (void*)DEBUG_STR_INFINITY_AUTO_MAP , GFL_OVERLAY_BLANK_ID },  // ジャンプ
@@ -138,11 +130,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuInfDunImitializer = {
 //=====================================
 enum {
   STR_NUM_CLEAR_RANK,
-  STR_NUM_AREA,
-  STR_NUM_DEBUG_ON_OFF,
-  STR_NUM_TR_POS_TYPE,
   STR_NUM_SEED,
-  STR_NUM_PRESENTATION,
 };
 
 //----------------------------------------------------------------------------
@@ -218,23 +206,6 @@ static void NumInput( INFDUN_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ダンジョン無限生成テスト
- *
- *	@retval FALSE = 継続
- */
-//-----------------------------------------------------------------------------
-static BOOL DebugDungeonMake()
-{
-  DEBUG_INFINITY_DUNGEON_MakeDungeonData();
-  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_START )
-  {
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  数値入力ステート
  *
  *	@param	p_wk 
@@ -258,22 +229,9 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
           p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_wk->p_save ,wfbc_type );
         }
         break;
-      case STR_NUM_AREA:
-        p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_wk->p_save );
-        break;
-      case STR_NUM_DEBUG_ON_OFF:
-        p_wk->num = g_debug_inf_data_change;
-        break;
-      case STR_NUM_TR_POS_TYPE:
-        p_wk->num = g_debug_inf_tr_pos_type;
-        break;
       case STR_NUM_SEED:
         p_wk->num = g_debug_inf_master_seed;
         break;
-      case STR_NUM_PRESENTATION:
-        p_wk->num = g_debug_inf_is_presentation;
-        break;
-
       defautl:
         p_wk->num = 0;
         break;
@@ -303,47 +261,6 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
           DrawNum( p_wk );
         }
         break;
-      case STR_NUM_AREA:
-        {
-          NumInput(p_wk);
-          if( p_wk->num < 0 )
-          {
-            p_wk->num = 0;
-          }
-          INFINITYDUNGEON_SAVE_SetFloorID( p_wk->p_save , p_wk->num*10 );
-          DrawNum( p_wk );
-        }
-        break;
-      case STR_NUM_DEBUG_ON_OFF:
-        {
-          NumInput(p_wk);
-          if( p_wk->num > 1 )
-          {
-            p_wk->num = 0;
-          }
-          if( p_wk->num < 0 )
-          {
-            p_wk->num = 1;
-          }
-          g_debug_inf_data_change = p_wk->num;
-          DrawNum( p_wk );
-        }
-        break;
-      case STR_NUM_TR_POS_TYPE:
-        {
-          NumInput(p_wk);
-          if( p_wk->num > INF_TR_ROOM_POS_TYPE_NONE )
-          {
-            p_wk->num = 0;
-          }
-          if( p_wk->num < 0 )
-          {
-            p_wk->num = 0;
-          }
-          g_debug_inf_tr_pos_type = p_wk->num;
-          DrawNum( p_wk );
-        }
-        break;
       case STR_NUM_SEED:
         {
           NumInput(p_wk);
@@ -359,22 +276,6 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
           DrawNum( p_wk );
         }
         break;
-      case STR_NUM_PRESENTATION:
-        {
-          NumInput(p_wk);
-          if( p_wk->num > 1 )
-          {
-            p_wk->num = 0;
-          }
-          if( p_wk->num < 0 )
-          {
-            p_wk->num = 1;
-          }
-          g_debug_inf_is_presentation = p_wk->num;
-          DrawNum( p_wk );
-        }
-        break;
-
       }
       
       // 終了判定
@@ -435,48 +336,11 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
         (*seq)++;
       }
       break;
-      // フロア操作
-    case DEBUG_STR_INFINITY_AREA:
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        work->num_input_type = STR_NUM_AREA;
-        (*seq)++;
-      }
-      break;
-      // 無限生成テスト
-    case DEBUG_STR_INFINITY_ENDLESS_CHECK:
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        (*seq)=4;
-      }
-      break;
-      // 無限ダンジョンのデータ差し替え機能ON・OFF
-    case DEBUG_STR_INFINITY_DEBUG_MODE:
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        work->num_input_type = STR_NUM_DEBUG_ON_OFF;
-        (*seq)++;
-      }
-      break;
-      // 無限ダンジョン内トレーナー配置固定
-    case DEBUG_STR_INFINITY_TR_POS_TYPE:
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        work->num_input_type = STR_NUM_TR_POS_TYPE;
-        (*seq)++;
-      }
-      break;
+      // シード操作
     case DEBUG_STR_INFINITY_SEED_CHANGE:
       {
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
         work->num_input_type = STR_NUM_SEED;
-        (*seq)++;
-      }
-      break;
-    case DEBUG_STR_INFINITY_PRESENTATION:
-      {
-        FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        work->num_input_type = STR_NUM_PRESENTATION;
         (*seq)++;
       }
       break;
@@ -546,14 +410,7 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
     break;
   case 3:
     return GMEVENT_RES_FINISH;
-  case 4:
-    if( DebugDungeonMake( ) == TRUE)
-    {
-      return GMEVENT_RES_FINISH;
-    }
-    break;
   }
-
 
   return( GMEVENT_RES_CONTINUE );
 }

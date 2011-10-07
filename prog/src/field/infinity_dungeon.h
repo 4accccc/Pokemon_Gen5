@@ -53,7 +53,3 @@ extern u8 INFINITY_DUNGEON_GetDungeonColor( INF_DUNGEON_DATA *p_wk );
 extern u32 INFINITY_DUNGEON_TrainerCount( INF_DUNGEON_DATA *p_dungeon_data );
 extern BOOL INFINITY_DUNGEON_GetUpPosRoomType( INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room );
 
-#ifdef PM_DEBUG
-extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
-#endif
-
