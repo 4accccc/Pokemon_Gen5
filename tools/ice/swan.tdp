@@ -20,6 +20,8 @@ Property.Project.Load.LastPage=TLF
 Property.Project.Load.TLF.FileLoadNLFFileName=C%3a%5chome%5cswan%5cprog%5cbin%5cARM9-TS.HYB%5cRelease%5cmain.tlf
 # TWL/NITRO両対応ソフトは"NITORO互換モード"でデバッグする(1=TRUE)
 Property.Project.Load.TLF.FileLoadNLFCheckForceNTRMode=1
+# 読み込み後にTWL-CPUを実行する(1=TRUE)
+Property.Project.Load.TLF.FileLoadNLFCheckExecute=1
 # =======================
 # SRL読み込み設定
 # =======================
@@ -27,4 +29,5 @@ Property.Project.Load.TLF.FileLoadNLFCheckForceNTRMode=1
 Property.Project.Load.SRL.FileLoadSRLCheckForceNTRMode=1
 # 読み込みSRLファイル名
 Property.Project.Load.SRL.FileLoadSRLFileName=C%3a%5chome%5cswan%5cprog%5cbin%5cARM9-TS.HYB%5cRelease%5cmain.srl
-
+# 読み込み後にTWL-CPUを実行する(1=TRUE)
+Property.Project.Load.SRL.FileLoadSRLCheckExecute=1
