@@ -928,12 +928,20 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
           for( mdl_id = 0 ; mdl_id < ICA_MOVE_ID_MAX; mdl_id++ )
           {
             EXP_OBJ_ANM_CNT_PTR exobj_anm;
-            TRACE_MOVE_DATA *p_md = &p_wk->move_data[mdl_id];
-            for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
+            // ƒyƒAˆÚ“®‚ª–³‚¢Žž‚Í’âŽ~‚às‚í‚È‚¢
+            const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
+            if( (p_bev->is_pair_move == TRUE) || (mdl_id != ICA_MOVE_ID_ENEMY_PAIR) )
             {
-              exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_md->p_model->p_ex_obj,
-                  GYM_DRAGON_UNIT_IDX, p_md->p_model->modelID, i );
-              FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+              if( (p_bev->is_enemy_move == TRUE) || (mdl_id != ICA_MOVE_ID_ENEMY) )
+              {
+                TRACE_MOVE_DATA *p_md = &p_wk->move_data[mdl_id];
+                for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
+                {
+                  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_md->p_model->p_ex_obj,
+                      GYM_DRAGON_UNIT_IDX, p_md->p_model->modelID, i );
+                  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+                }
+              }
             }
           }
           PMSND_StopSE();
