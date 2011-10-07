@@ -32,6 +32,7 @@ _EVENT_DATA    ev_recover_c16
 _EVENT_DATA    ev_resort_board_room
 _EVENT_DATA    ev_resort_board_city_front
 _EVENT_DATA    ev_resort_board_city_back
+_EVENT_DATA    ev_scene_c16_parade
 _EVENT_DATA_END
 
 //バージョン取得
@@ -50,7 +51,7 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_c16
-
+{
   DEFINE_LOCAL LWK_RET
 
   // 出口位置変更
@@ -102,6 +103,27 @@ INIT_EVENT_START ev_init_c16
     _OBJ_DEL(C16_SECRETARY_04)
   ENDSWITCH
 
+  //パレード
+  IF $WK_SCENE_C16_PARADE == 1 THEN
+    DEFINE_LOCAL  LWK_OBJID
+
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 70, DIR_UP )
+    _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_01, LWK_OBJID )
+    _OBJ_POS_CHANGE( LWK_OBJID, 15, 0, 71, DIR_UP )
+    _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_02, LWK_OBJID )
+    _OBJ_POS_CHANGE( LWK_OBJID, 15, 0, 72, DIR_UP )
+    _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_03, LWK_OBJID )
+    _OBJ_POS_CHANGE( LWK_OBJID, 15, 0, 73, DIR_UP )
+    _RESORT_ADD_PEOPLE( RESORT_ADD_PEOPLE_SECRETARY_04, LWK_OBJID )
+    _OBJ_POS_CHANGE( LWK_OBJID, 15, 0, 74, DIR_UP )
+
+    //パレードモードON
+    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_PARADE_MODE, TRUE )
+
+    //紙吹雪ON
+    _RESORT_START_EFFECT( RESORT_EFFECT_CONFETTI )
+  ENDIF
+}
 INIT_EVENT_END
 
 /************************************************************/
@@ -531,3 +553,139 @@ EVENT_START ev_resort_board_city_back
   _EASY_BGWIN_MSG( msg_c16_kanban_02, TYPE_POST )
 }
 EVENT_END
+
+
+/**************************************************************/
+/*            パレード                                       */
+/**************************************************************/
+EVENT_START ev_scene_c16_parade
+{
+  DEFINE_LOCAL  LWK_OBJID_REC1
+  DEFINE_LOCAL  LWK_OBJID_REC2
+  DEFINE_LOCAL  LWK_OBJID_REC3
+  DEFINE_LOCAL  LWK_OBJID_REC4
+  DEFINE_LOCAL  LWK_RET
+  DEFINE_LOCAL  LWK_INDEX
+  DEFINE_LOCAL  LWK_OBJID_SHOP
+  DEFINE_LOCAL  LWK_TMP
+
+  _GET_OBJID( LWK_OBJID_REC1, LWK_RET, 15, 0, 71 )
+  _GET_OBJID( LWK_OBJID_REC2, LWK_RET, 15, 0, 72 )
+  _GET_OBJID( LWK_OBJID_REC3, LWK_RET, 15, 0, 73 )
+  _GET_OBJID( LWK_OBJID_REC4, LWK_RET, 15, 0, 74 )
+
+  $LWK_INDEX  = 0
+  WHILE $LWK_INDEX < 8
+
+    //騒音ON
+    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_NOISE_REQ, TRUE )
+
+    //お店まで歩く
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_parade_next_shop )
+    _OBJ_ANIME( LWK_OBJID_REC1, anm_walk_parade_next_shop )
+    _OBJ_ANIME( LWK_OBJID_REC2, anm_walk_parade_next_shop )
+    _OBJ_ANIME( LWK_OBJID_REC3, anm_walk_parade_next_shop )
+    _OBJ_ANIME( LWK_OBJID_REC4, anm_walk_parade_next_shop )
+	  _OBJ_ANIME_WAIT()
+
+    //お店があったら
+    $LWK_TMP  = $LWK_INDEX
+    $LWK_TMP  += RESORT_GET_PARAM_CHECK_RESIDENT_00
+    _RESORT_GET_DATA( LWK_TMP, LWK_RET )
+    IF $LWK_RET == TRUE THEN
+
+      //右か左を向く
+      IF $LWK_INDEX == 0 || $LWK_INDEX == 2 || $LWK_INDEX == 4 || $LWK_INDEX == 6 THEN
+	      _OBJ_ANIME( MMDL_ID_PLAYER, anm_first_dir_right )
+      ELSE
+	      _OBJ_ANIME( MMDL_ID_PLAYER, anm_first_dir_left )
+      ENDIF
+	    _OBJ_ANIME_WAIT()
+
+      //お店のOBJID取得
+      $LWK_TMP  = $LWK_INDEX
+      $LWK_TMP  += RESORT_GET_PARAM_OBJID_RESIDENT_00
+      _RESORT_GET_DATA( LWK_TMP, LWK_OBJID_SHOP )
+
+      //騒音OFF
+      _RESORT_SET_MY_DATA( RESORT_MY_PARAM_NOISE_REQ, FALSE )
+
+      //台詞
+      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 0 )
+      _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 1 )
+      _RESORT_SET_WORD( RESORT_WORD_FREE_THANKS, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 2 )
+      _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 3 )
+	    _BALLOONWIN_OBJMSG_POS( msg_c16_parade_01, LWK_OBJID_SHOP, POS_DOWN )
+	    _BALLOONWIN_CLOSE()
+
+
+      _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 0 )
+      _RESORT_SET_WORD( RESORT_WORD_MEET_YEAR, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 1 )
+      _RESORT_SET_WORD( RESORT_WORD_MEET_MONTH, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 2 )
+      _RESORT_SET_WORD( RESORT_WORD_MEET_DAY, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 3 )
+      _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 4 )
+      _RESORT_SET_WORD( RESORT_WORD_SHOP_LV, RESORT_PEOPLE_TYPE_RESIDENT, LWK_INDEX, 5 )
+	    _SYSWIN_MSG( msg_c16_parade_02, POS_DOWN )
+      _SYSWIN_CLOSE()
+
+    ENDIF
+
+    $LWK_INDEX += 1
+
+  ENDWHILE  
+  
+  //騒音ON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_NOISE_REQ, TRUE )
+
+  //出口まで歩く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_parade_end )
+  _OBJ_ANIME( LWK_OBJID_REC1, anm_walk_parade_end )
+  _OBJ_ANIME( LWK_OBJID_REC2, anm_walk_parade_end )
+  _OBJ_ANIME( LWK_OBJID_REC3, anm_walk_parade_end )
+  _OBJ_ANIME( LWK_OBJID_REC4, anm_walk_parade_end )
+	_OBJ_ANIME_WAIT()
+
+  //騒音OFF
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_NOISE_REQ, FALSE )
+
+  //自分情報
+  _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_CITY_LV, RESORT_WORD_PARAM_NONE, 0, 1 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 2 )
+	_SYSWIN_MSG( msg_c16_parade_03, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  //フェード
+  _MAP_FADE_WHITE_OUT_SLOW()
+  _MAP_FADE_END_CHECK()
+
+  _RESORT_END_EFFECT( RESORT_EFFECT_CONFETTI )
+
+  _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MODE_REMOVE, RESORT_PEOPLE_TYPE_SECRETARY, 0 )
+  _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MODE_REMOVE, RESORT_PEOPLE_TYPE_SECRETARY, 1 )
+  _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MODE_REMOVE, RESORT_PEOPLE_TYPE_SECRETARY, 2 )
+  _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MODE_REMOVE, RESORT_PEOPLE_TYPE_SECRETARY, 3 )
+
+  $WK_SCENE_C16_PARADE  = 2
+
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C16R0101, 8, 0, 8, DIR_DOWN )
+
+  _MAP_FADE_WHITE_IN_SLOW()
+  _MAP_FADE_END_CHECK()
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//パレード：つぎのお店まで歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_parade_next_shop
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//：つぎのお店まで歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_parade_end
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0

@@ -1252,6 +1252,24 @@ void RESORT_UTIL_SetWord( u16 type, u16 param, u16 idx, u16 buff_idx, RESORT_SYS
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
+  case RESORT_WORD_MEET_YEAR:
+    {
+      u32 y = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_MEET_YEAR, NULL );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    }
+    break;
+  case RESORT_WORD_MEET_MONTH:
+    {
+      u32 m = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_MEET_MONTH, NULL );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
+    break;
+  case RESORT_WORD_MEET_DAY:
+    {
+      u32 d = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_MEET_DAY, NULL );
+      WORDSET_RegisterNumber( p_wordset, buff_idx, d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
+    break;
   case RESORT_WORD_SHOP_GENRE:
     GF_ASSERT( p_data );
     {

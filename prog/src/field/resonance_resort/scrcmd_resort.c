@@ -144,7 +144,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  u16 param     = VMGetU16( p_core );
+  u16 param     = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
 
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
@@ -582,8 +582,24 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = reason;
     }
     break;
+  case RESORT_GET_PARAM_OBJID_RESIDENT_00:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_01:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_02:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_03:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_04:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_05:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_06:
+  case RESORT_GET_PARAM_OBJID_RESIDENT_07:
+    {
+      u32 index = param - RESORT_GET_PARAM_OBJID_RESIDENT_00;
+      RESORT_RESIDENT_DATA  *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people,index);
+      u16 peopleID = RESORT_RESIDENT_DATA_GetData( p_resi, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
+    }
+    break;
+
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0, "%d", param);
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -730,55 +746,59 @@ VMCMD_RESULT EvCmdResortDeletePeople( VMHANDLE *p_core, void *p_wk_adrs )
   
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_ABSTRUCT_MANAGER *p_man = RESORT_SYSTEM_GetAbstructManager(p_sys);
 
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_DATA_MANAGER *p_data_manager = RESORT_SYSTEM_GetDataManager( p_sys );
 
+  u16 mode    = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 type    = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_ABSTRUCT_DATA *p_abstruct  = NULL;
 
   switch( type )
   {
   case RESORT_DELTE_PEOPLE_MINE:
     p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
     GF_ASSERT( p_people );
+    p_abstruct  = RESORT_PEOPLE_GetAbstructData(p_people);
     break;
   case RESORT_PEOPLE_TYPE_TOURIST:
-    GF_ASSERT(0);
-    break;
   case RESORT_PEOPLE_TYPE_PROXY:
-    GF_ASSERT(0);
-    break;
   case RESORT_PEOPLE_TYPE_SECRETARY:
-    {
-      RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, idx );
-      RESORT_SECRETARY_DATA_InitInstance(p_secretary);
-    }
-    break;
   case RESORT_PEOPLE_TYPE_RESIDENT:
-    {
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
-      RESORT_RESIDENT_DATA_InitInstance( p_resident );
-    }
+    p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByPeopleIndex( p_man, type, idx );
+    p_people = RESORT_PEOPLE_SYS_GetPeopleByAbstruct( p_people_sys, p_abstruct );
     break;
   default:
     GF_ASSERT(0);
   }
 
-
+  //MMDLの削除
   if( p_people )
   {
-    RESORT_ABSTRUCT_DATA *p_abstruct  = RESORT_PEOPLE_GetAbstructData(p_people);
-
     //フィールドであるなら、群集に入っている場合があるので外す
     if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
     {
       RESORT_FIELD_DeleteCrowdPeople( p_field, p_people );
     }
     RESORT_PEOPLE_Delete( p_people_sys, p_people );
+  }
 
-    RESORT_ABSTRUCT_DATA_InitInstance( p_abstruct );
+  //データの削除
+  if( p_abstruct )
+  {
+    if( mode == RESORT_DELTE_PEOPLE_MODE_ERASE )
+    {
+      RESORT_ABSTRUCT_DATA_InitInstance(p_abstruct);
+    }
+    else
+    {
+      RESORT_ABSTRUCT_DATA_SetData(p_abstruct,RESORT_DATA_PARAM_PEOPLE_ID,0);
+      RESORT_ABSTRUCT_DATA_SetData(p_abstruct,RESORT_DATA_PARAM_PLACE_ID,RESORT_PLACEID_NONE);
+    }
   }
 
   RESORT_DATA_MANAGER_Update( p_data_manager );
@@ -2016,6 +2036,27 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MY_PARAM_CELEB_TRADE_FLAG:
     RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_CELEB_TRADE_FLAG, data );
     break;
+  case RESORT_MY_PARAM_PARADE_MODE:
+    if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+    {
+      RESORT_FIELD_SetParade( p_field );
+    }
+    else
+    {
+      GF_ASSERT(0);
+    }
+    break;
+  case RESORT_MY_PARAM_NOISE_REQ:
+    if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+    {
+      RESORT_FIELD_SetNoiseReq( p_field, data );
+    }
+    else
+    {
+      GF_ASSERT(0);
+    }
+    break;
+
   default:
     GF_ASSERT(0);
   }
@@ -2353,6 +2394,7 @@ VMCMD_RESULT EvCmdResortAddPeople( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_ABSTRUCT_MANAGER *p_man = RESORT_SYSTEM_GetAbstructManager(p_sys);
+  u16 zoneID = FIELDMAP_GetZoneID( p_field );
 
   u16 id   = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 *p_ret_wk   = SCRCMD_GetVMWork(p_core, p_wk );
@@ -2362,24 +2404,23 @@ VMCMD_RESULT EvCmdResortAddPeople( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( id )
   {
+  case RESORT_ADD_PEOPLE_SECRETARY_01:
+  case RESORT_ADD_PEOPLE_SECRETARY_02:
   case RESORT_ADD_PEOPLE_SECRETARY_03:
-    add_param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_SECRETARY, 2 );
-    add_param.placeID = RESORT_PLACEID_RECEPTION;
-    {
-      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_AddNew( p_people_sys, &add_param );
-      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
-      *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
-    }
-    break;
   case RESORT_ADD_PEOPLE_SECRETARY_04:
-    add_param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_SECRETARY, 3 );
-    add_param.placeID = RESORT_PLACEID_RECEPTION;
     {
-      RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_AddNew( p_people_sys, &add_param );
-      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
-      *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
+      int index = id - RESORT_ADD_PEOPLE_SECRETARY_01;
+      add_param.p_data  = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_SECRETARY, index );
+      add_param.placeID = RESORT_MAP_ZoneIDToPlaceID( zoneID );
+      {
+        RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_AddNew( p_people_sys, &add_param );
+        u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+        *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
+      }
+      break;
     }
-    break;
+  default:
+    GF_ASSERT(0);
   }
 
   return VMCMD_RESULT_CONTINUE;

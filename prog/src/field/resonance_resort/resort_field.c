@@ -27,6 +27,8 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/wbt_gmk.naix"
 #include "arc/resonance_resort_graphic.naix"
+#include "arc/script_message.naix"
+#include "msg/script/msg_c16.h"
 
 //SE
 #include "sound/pm_sndsys.h"
@@ -132,11 +134,14 @@ static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RES
 //=====================================
 typedef struct _RESORT_CROWD_NOISE  RESORT_CROWD_NOISE;
 
-static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, BOOL enable );
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, BOOL enable );
 static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk );
 static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap );
 static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk );
 static void RESORT_CROWD_NOISE_Start( RESORT_CROWD_NOISE *p_wk );
+
+static void RESORT_CROWD_NOISE_ForceRequest( RESORT_CROWD_NOISE *p_wk, BOOL is_visible );
+static void RESORT_CROWD_NOISE_SetParadeMode( RESORT_CROWD_NOISE *p_wk );
 //=============================================================================
 /**
  *          人物管理
@@ -166,7 +171,7 @@ static RESORT_CROWD_PEOPLE * RESORT_FIELD_PEOPLE_GetCrowdPeople( RESORT_FIELD_PE
 //=====================================
 typedef struct _RESORT_FIELD_EFFECT RESORT_FIELD_EFFECT;
 
-static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj );
+static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj, FIELD_CAMERA *p_camera );
 static void RESORT_FIELD_EFFECT_Exit( RESORT_FIELD_EFFECT *p_wk );
 static void RESORT_FIELD_EFFECT_Main( RESORT_FIELD_EFFECT *p_wk );
 
@@ -280,13 +285,14 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
   //騒音
   {
-    p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ), !is_tutorial );
+    p_wk->p_noise = RESORT_CROWD_NOISE_Init( heapID, FIELDMAP_GetFldMsgBG(p_fieldmap), RESORT_SYSTEM_GetAbstructManager( p_wk->p_sys ), RESORT_SYSTEM_GetCityData( p_wk->p_sys ), RESORT_SYSTEM_GetPeopleAllData(p_wk->p_sys), !is_tutorial );
   }
 
   //演出
   {
     FLD_EXP_OBJ_CNT_PTR p_exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-    p_wk->p_effect = RESORT_FIELD_EFFECT_Init( heapID, p_exp_obj );
+    FIELD_CAMERA *p_camera  = FIELDMAP_GetFieldCamera( p_fieldmap );
+    p_wk->p_effect = RESORT_FIELD_EFFECT_Init( heapID, p_exp_obj, p_camera );
   }
 
   RESORT_FIELD_Printf( "レゾナンスsetup\n" );
@@ -440,6 +446,31 @@ void RESORT_FIELD_StartPeople( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   RESORT_FIELD_PEOPLE_StartAdd( p_wk->p_people_sys );
   RESORT_CROWD_NOISE_Start( p_wk->p_noise );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレードモード設定
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_SetParade( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  RESORT_CROWD_NOISE_SetParadeMode( p_wk->p_noise );
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  騒音強制リクエスト
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *	@param	is_visible  TRUE表示  FALSE消す
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_SetNoiseReq( FIELDMAP_WORK *p_fieldmap, BOOL is_visible )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  RESORT_CROWD_NOISE_ForceRequest( p_wk->p_noise, is_visible );
 }
 
 //=============================================================================
@@ -2315,16 +2346,32 @@ static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p
 
 typedef enum
 {
-  RESORT_CROWD_NOISE_MSG_INTRODUCTION,
+  RESORT_CROWD_NOISE_MSG_NORMAL_START,
+  RESORT_CROWD_NOISE_MSG_INTRODUCTION = RESORT_CROWD_NOISE_MSG_NORMAL_START,
   RESORT_CROWD_NOISE_MSG_PHRASE,
   RESORT_CROWD_NOISE_MSG_THANKS,
-  RESORT_CROWD_NOISE_MSG_MAX
+  RESORT_CROWD_NOISE_MSG_NORMAL_END,
+  RESORT_CROWD_NOISE_MSG_PARADE_START,
+  RESORT_CROWD_NOISE_MSG_PLAYER_PHRASE  = RESORT_CROWD_NOISE_MSG_PARADE_START,
+  RESORT_CROWD_NOISE_MSG_PLAYER_THANKS,
+  RESORT_CROWD_NOISE_MSG_OWNER_NAME,
+  RESORT_CROWD_NOISE_MSG_BANZAI,
+  RESORT_CROWD_NOISE_MSG_PARADE_END,
+
+  RESORT_CROWD_NOISE_MSG_NORMAL_NUM = RESORT_CROWD_NOISE_MSG_NORMAL_END-RESORT_CROWD_NOISE_MSG_NORMAL_START,
+  RESORT_CROWD_NOISE_MSG_PARADE_NUM = RESORT_CROWD_NOISE_MSG_PARADE_END-RESORT_CROWD_NOISE_MSG_PARADE_START,
 }RESORT_CROWD_NOISE_MSG;
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CROWD_NOISE_MSG msg );
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg );
 static void RESORT_CROWD_NOISE_WK_Off( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
 static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk );
 static BOOL RESORT_CROWD_NOISE_WK_IsEnd( const RESORT_CROWD_NOISE_WK *cp_wk );
 static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst );
+
+typedef enum
+{
+  RESORT_CROWD_NOISE_MODE_NORMAL,
+  RESORT_CROWD_NOISE_MODE_PARADE,
+}RESORT_CROWD_NOISE_MODE;
 
 //-------------------------------------
 ///	騒音管理
@@ -2332,6 +2379,7 @@ static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst );
 #define RESORT_CROWD_NOISE_WND_DRAW_MAX (3)
 struct _RESORT_CROWD_NOISE
 {
+  BOOL  force_req;
   BOOL  enable;
   s16 wait;
   s16 wait_max;
@@ -2347,8 +2395,15 @@ struct _RESORT_CROWD_NOISE
 
   FLDMSGBG                  *p_msgbg;
   RESORT_ABSTRUCT_MANAGER   *p_abstruct;
+  RESORT_CITY_DATA          *p_city;
+  RESORT_PEOPLE_ALL_DATA    *p_people_all;
+
   RESORT_ABSTRUCT_DATA      *p_src_data;
   RESORT_CROWD_NOISE_WK wk[RESORT_CROWD_NOISE_MAX];
+
+  RESORT_CROWD_NOISE_MODE mode;
+
+  GFL_MSGDATA *p_msg;
 };
 
 static void Resort_Crowd_Noise_CheckBufferNum( RESORT_CROWD_NOISE *p_wk );
@@ -2364,13 +2419,15 @@ static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_N
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, BOOL enable )
+static RESORT_CROWD_NOISE * RESORT_CROWD_NOISE_Init( HEAPID heapID, FLDMSGBG* p_msgbg, RESORT_ABSTRUCT_MANAGER *p_abstruct, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, BOOL enable )
 {
   RESORT_CROWD_NOISE *p_wk = GFL_HEAP_AllocClearMemory( heapID,sizeof(RESORT_CROWD_NOISE) );
   p_wk->p_msgbg     = p_msgbg;
   p_wk->p_abstruct  = p_abstruct;
+  p_wk->p_city      = p_city;
+  p_wk->p_people_all  = p_people_all;
   p_wk->enable      = enable;
-
+  p_wk->p_msg       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_c16_dat, heapID );
   {
     int i;
     for( i = 0; i < RESORT_CROWD_NOISE_MAX; i++ )
@@ -2401,6 +2458,7 @@ static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk )
     }
   }
 
+  GFL_MSG_Delete( p_wk->p_msg );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -2413,12 +2471,34 @@ static void RESORT_CROWD_NOISE_Exit( RESORT_CROWD_NOISE *p_wk )
 //-----------------------------------------------------------------------------
 static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WORK* cp_fieldmap )
 {
+  BOOL is_main  = FALSE;
+  BOOL is_clear = FALSE;
+
   if( !p_wk->enable )
   {
     return;
   }
 
-  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
+  if( p_wk->mode == RESORT_CROWD_NOISE_MODE_NORMAL )
+  {
+    if( FIELDMAP_CheckDoEvent( cp_fieldmap ) == FALSE )
+    {
+      is_main   = TRUE;
+    }
+    else
+    {
+      is_clear  = TRUE;
+    }
+  }
+  else
+  {
+    if( p_wk->force_req )
+    {
+      is_main = TRUE;
+    }
+  }
+
+  if( is_main )
   {
     enum
     {
@@ -2437,8 +2517,15 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
         p_wk->wnd_idx   = 0;
         p_wk->wnd_num   = 1 + GFL_STD_MtRand( RESORT_CROWD_NOISE_WND_DRAW_MAX-1);
         p_wk->wnd_wait  = 0;
-        p_wk->wnd_wait_max  = 30;
-        p_wk->msg       = GFL_STD_MtRand( RESORT_CROWD_NOISE_MSG_MAX );
+        if( p_wk->mode == RESORT_CROWD_NOISE_MODE_NORMAL )
+        {
+          p_wk->wnd_wait_max  = 30;
+          p_wk->msg       = RESORT_CROWD_NOISE_MSG_NORMAL_START+GFL_STD_MtRand( RESORT_CROWD_NOISE_MSG_NORMAL_NUM );
+        }
+        else
+        {
+          p_wk->wnd_wait_max  = 10;
+        }
         p_wk->wait      = 0;
         p_wk->seq++;
       }
@@ -2480,7 +2567,14 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
           }
 
           p_wk->add_idx[ p_wk->wnd_idx ]  = index;
-          RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ index ], p_wk->p_msgbg, p_data, p_wk->msg );
+
+
+          if( p_wk->mode == RESORT_CROWD_NOISE_MODE_PARADE )
+          {
+            p_wk->msg       = RESORT_CROWD_NOISE_MSG_PARADE_START+GFL_STD_MtRand( RESORT_CROWD_NOISE_MSG_NORMAL_NUM );
+          } 
+
+          RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ index ], p_wk->p_msgbg, p_data, p_wk->p_city, p_wk->p_people_all, p_wk->p_msg, p_wk->msg );
           if( p_wk->wnd_idx++ >= p_wk->wnd_num )
           {
             p_wk->seq = SEQ_END;
@@ -2501,6 +2595,7 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
         if( is_end )
         {
           p_wk->seq = 0;
+          p_wk->force_req = FALSE;
         }
       }
       break;
@@ -2517,7 +2612,7 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
       }
     }
   }
-  else
+  else if( is_clear )
   {
     RESORT_CROWD_NOISE_Clear( p_wk );
   }
@@ -2549,6 +2644,45 @@ static void RESORT_CROWD_NOISE_Clear( RESORT_CROWD_NOISE *p_wk )
 static void RESORT_CROWD_NOISE_Start( RESORT_CROWD_NOISE *p_wk )
 {
   p_wk->enable = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレードモード
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_SetParadeMode( RESORT_CROWD_NOISE *p_wk )
+{
+  p_wk->mode = RESORT_CROWD_NOISE_MODE_PARADE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示
+ *
+ *	@param	RESORT_CROWD_NOISE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_CROWD_NOISE_ForceRequest( RESORT_CROWD_NOISE *p_wk, BOOL is_visible )
+{
+  if( p_wk->mode == RESORT_CROWD_NOISE_MODE_PARADE )
+  {
+    if( is_visible )
+    {
+      p_wk->seq = 0;
+      p_wk->wait  = p_wk->wait_max;
+      p_wk->force_req = TRUE;
+    }
+    else
+    {
+      RESORT_CROWD_NOISE_Clear( p_wk );
+      p_wk->force_req = FALSE;
+    }
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2931,7 +3065,7 @@ static RESORT_ABSTRUCT_DATA * Resort_Crowd_Noise_GetDrawLotsData( RESORT_CROWD_N
 static void RESORT_CROWD_NOISE_WK_Init( RESORT_CROWD_NOISE_WK *p_wk, u16 id, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_CROWD_NOISE_WK));
-  p_wk->p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, heapID );
+  p_wk->p_str = GFL_STR_CreateBuffer( 32+EOM_SIZE, heapID );
   p_wk->id    = id;
 }
 //----------------------------------------------------------------------------
@@ -3056,7 +3190,7 @@ static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst )
  *	@param	noise_msg_num 
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CROWD_NOISE_MSG msg )
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg )
 {
   TALKMSGWIN_TYPE type;
 
@@ -3093,6 +3227,36 @@ static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* 
       GFL_STR_SetStringCode( p_wk->p_str, code );
     }
     type = TALKMSGWIN_TYPE_MOYA;
+    break;
+
+  case RESORT_CROWD_NOISE_MSG_PLAYER_PHRASE:
+    {
+      RESORT_RESIDENT_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+      STRCODE code[RESORT_PHRASE_LEN+EOM_SIZE];
+      RESORT_RESIDENT_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT6_PHRASE, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_GIZA;
+    break;
+  case RESORT_CROWD_NOISE_MSG_PLAYER_THANKS:
+    {
+      RESORT_RESIDENT_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+      STRCODE code[RESORT_THANKS_LEN+EOM_SIZE];
+      RESORT_RESIDENT_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT7_THANKS, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_GIZA;
+    break;
+  case RESORT_CROWD_NOISE_MSG_OWNER_NAME:
+    {
+      STRCODE code[RESORT_MY_NAME_LEN+EOM_SIZE];
+      RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, code );
+      GFL_STR_SetStringCode( p_wk->p_str, code );
+    }
+    type = TALKMSGWIN_TYPE_GIZA;
+    break;
+  case RESORT_CROWD_NOISE_MSG_BANZAI:
+    GFL_MSG_GetString( p_msg, msg_c16_parade_00, p_wk->p_str );
     break;
   }
   
@@ -3502,6 +3666,7 @@ typedef struct
 struct _RESORT_FIELD_EFFECT
 {
   FLD_EXP_OBJ_CNT_PTR p_exp_obj;
+  FIELD_CAMERA  *p_camera;
   const RESORT_FIELD_EFFECT_FUNC  *cp_func[RESORT_FIELD_EFFECT_ID_MAX];
 };
 
@@ -3596,10 +3761,11 @@ SDK_COMPILER_ASSERT( NELEMS(sc_effect_func) == RESORT_FIELD_EFFECT_ID_MAX );
  *	@return 演出ワーク
  */
 //-----------------------------------------------------------------------------
-static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj )
+static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OBJ_CNT_PTR p_exp_obj, FIELD_CAMERA *p_camera )
 {
   RESORT_FIELD_EFFECT *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_FIELD_EFFECT) );
   p_wk->p_exp_obj = p_exp_obj;
+  p_wk->p_camera  = p_camera;
 
   FLD_EXP_OBJ_AddUnit( p_wk->p_exp_obj, &sc_util_setup, RESORT_FIELD_EFFECT_UNIT );
 
@@ -3771,6 +3937,19 @@ static BOOL Resort_Field_Effect_UpdateConfetti( RESORT_FIELD_EFFECT *p_wk )
     }
   }
 
+  {
+    VecFx32 cam_pos;
+    GFL_G3D_OBJSTATUS *p_start_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START );
+    GFL_G3D_OBJSTATUS *p_loop_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
+                            RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
+
+    GFL_G3D_CAMERA_GetPos( FIELD_CAMERA_GetCameraPtr(p_wk->p_camera), &cam_pos );
+
+    p_start_st->trans.x = cam_pos.x-FX32_CONST(121);
+    p_start_st->trans.z = cam_pos.z-FX32_CONST(297);
+    p_loop_st->trans  = p_start_st->trans;
+  }
 
 #ifdef DEBUG_EFFECT_MOVE
   if( GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )

@@ -14039,11 +14039,12 @@
  * @param[in]  idx 何番目のデータか（RESORT_DELTE_PEOPLE_MINEならみない）
  */
 //--------------------------------------------------------------
-#define _RESORT_DELETE_PEOPLE( type, idx ) \
-    _ASM_RESORT_DELETE_PEOPLE type, idx
+#define _RESORT_DELETE_PEOPLE( mode, type, idx ) \
+    _ASM_RESORT_DELETE_PEOPLE mode, type, idx
 
-  .macro _ASM_RESORT_DELETE_PEOPLE type, idx
+  .macro _ASM_RESORT_DELETE_PEOPLE mode, type, idx
   .short EV_SEQ_RESORT_DELETE_PEOPLE
+  .short  \mode
   .short  \type
   .short  \idx
   .endm
