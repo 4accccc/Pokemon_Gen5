@@ -877,9 +877,16 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     }
   }
 
-  if( param != EVENT_PROCLINK_DATA_NONE )
+  if( param == ITEM_GURASIDEANOHANA ||
+      param == ITEM_IDENSINOKUSABI  ||
+      param == ITEM_IDENSINOKUSABI_1 )
   { 
     //paramに有効なアイテムナンバーが入っていたら、大切な道具使用ショートカット
+    //
+    // アイテム番号を調べないといけない
+    // →ショートカット→バッグ→アイテム使用できた場合は
+    // 　paramにはバッグのポケット番号が入っているため。
+    //
     plistData->ret_sel  = 0;
     plistData->mode     = PL_MODE_ITEMUSE;
     plistData->item     = param;

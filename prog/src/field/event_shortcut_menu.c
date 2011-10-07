@@ -205,6 +205,7 @@ GMEVENT * EVENT_ShortCutMenu( GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap
 	p_wk->p_link->gsys				= p_wk->p_gamesys;
 	p_wk->p_link->field_wk		= p_wk->p_fieldmap;
 	p_wk->p_link->event				= p_event;
+  p_wk->p_link->data        = EVENT_PROCLINK_DATA_NONE;
 
 
 	//•¡”‚ ‚é‚Æ‚«‚Æ‚«‚¾‚Æƒƒjƒ…[‚ªŠJ‚­‚æ‚¤‚É‚·‚é
