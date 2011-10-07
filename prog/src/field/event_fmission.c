@@ -378,12 +378,16 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
+//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
+
+    GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, SEQ_ME_MISSION_START ));
     (*seq)++;
     break;
   case 1:
     if( PMSND_CheckPlayBGM() == FALSE ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
+      u32 bgm = FSND_GetFieldBGM( wk->gdata, FIELDMAP_GetZoneID( wk->fieldmap), GAMEDATA_GetSeasonID( wk->gdata ) );
+//      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
+      GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, bgm ));
       (*seq)++;
     }
     break;
@@ -517,17 +521,28 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
     (*seq)++;
     break;
   case 2:
-    //ミッションギミック削除処理
-    FES_GIMMICK_Delete( FIELDMAP_GetFesGimmickSys( wk->fieldmap ) );
-    LINK_FESTIVAL_MissionEnd( wk->fest_sys ); //ミッション終了
-    GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
+    {
+      u32 bgm;
+
+      //ミッションギミック削除処理
+      FES_GIMMICK_Delete( FIELDMAP_GetFesGimmickSys( wk->fieldmap ) );
+      bgm = LINK_FESTIVAL_MissionEnd( wk->fest_sys ); //ミッション終了
+
+      if( bgm != FES_BGM_RECOVER_NONE ){
+        GMEVENT_CallEvent( event, EVENT_FSND_PlayEventBGM( wk->gsys, bgm ));
+      }
+    }
     (*seq)++;
     break;
   case 3:
-    GMEVENT_CallEvent( event, EVENT_FieldOpen( wk->gsys ) );
+    GMEVENT_CallEvent( event, EVENT_FieldClose( wk->gsys, wk->fieldmap ) );
     (*seq)++;
     break;
   case 4:
+    GMEVENT_CallEvent( event, EVENT_FieldOpen( wk->gsys ) );
+    (*seq)++;
+    break;
+  case 5:
     FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( wk->gsys, wk->fieldmap, FIELD_FADE_WAIT ) );
     (*seq)++;

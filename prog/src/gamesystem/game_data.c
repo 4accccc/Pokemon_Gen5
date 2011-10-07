@@ -154,7 +154,7 @@ struct _GAMEDATA{
   u8    goout_effect_flag;
   u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
   u8    area_ofs; ///<エリアオフセット(今はリゾートでしか使っていない)
-  u8    dummy;
+  u8    fes_bgm_flag; ///<フェスミッションBGM再生リクエストフラグ
   void *p_resort_buff;  ///<レゾナンスリゾート用バッファ
   RESORT_WORK *p_resort_wk; //レゾナンスリゾート用常駐ワーク
 };
@@ -2281,6 +2281,30 @@ void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag )
 {
   gamedata->goout_effect_flag = flag;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスBGM再生リクエストフラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+BOOL  GAMEDATA_GetFesBGMFlag( const GAMEDATA *gamedata )
+{
+  return gamedata->fes_bgm_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスBGM再生リクエストフラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetFesBGMFlag( GAMEDATA *gamedata, BOOL flag )
+{
+  gamedata->fes_bgm_flag = flag;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定

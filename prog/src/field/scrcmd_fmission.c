@@ -72,12 +72,19 @@ VMCMD_RESULT EvCmdFMissionEndForce( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FES_GIMMICK* fes_gmk = FIELDMAP_GetFesGimmickSys( fieldmap );
   LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+  u32 bgm;
 
-  if( LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
-    if( FES_GIMMICK_Delete( fes_gmk ) ){
-      GF_ASSERT(0); //無理やりギミック削除はホントはやっちゃダメなので、チェック用アサート仕掛けておく
-    }
-    LINK_FESTIVAL_MissionEnd( fest_sys );
+  if( LINK_FESTIVAL_IsMissionEntry( fest_sys ) == FALSE ){
+    return VMCMD_RESULT_SUSPEND;  //ミッション中でなければ何もせずに帰る
+  }
+  //フェス終了処理
+  if( FES_GIMMICK_Delete( fes_gmk ) ){
+    GF_ASSERT(0); //無理やりギミック削除はホントはやっちゃダメなので、チェック用アサート仕掛けておく
+  }
+  bgm = LINK_FESTIVAL_MissionEnd( fest_sys );
+  
+  if( bgm != FES_BGM_RECOVER_NONE ){
+    SCRIPT_CallEvent( scw, EVENT_FSND_PlayEventBGM( gsys, bgm ) );
   }
   return VMCMD_RESULT_SUSPEND;
 }

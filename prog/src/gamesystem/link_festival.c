@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "system/rtc_tool.h"
 #include "field/gpower_id.h"
+#include "field/field_sound.h"
 #include "gamesystem/g_power.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_comm.h"
@@ -18,6 +19,7 @@
 #include "arc_def.h"
 #include "power.naix"
 #include "poke_tool/status_rcv.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "gamesystem/link_festival.h"
 #include "gamesystem/link_festival_local.h"
@@ -299,6 +301,9 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
 
   //フェスギミック用オーバレイをロード
   lnkfes_OverlayLoadUnload( m_src, TRUE );
+
+  //BGM変更用フラグを立てておく
+  GAMEDATA_SetFesBGMFlag( wk->gdata, TRUE );
 }
 
 //---------------------------------------------------------
@@ -316,8 +321,13 @@ void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
  * @brief リンクフェスティバル ミッション終了
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
+u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 {
+  ZONEID zone_id;
+  
+  //BGM変更用フラグをOff
+  GAMEDATA_SetFesBGMFlag( wk->gdata, FALSE );
+
   lnkfes_OverlayLoadUnload( &wk->mission, FALSE );
   
   FEST_MISSION_End( &wk->mission );
@@ -328,6 +338,13 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
   log_ClearAll( wk );
   FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
   FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
+
+  if( FSND_GetLastBGM( wk->gdata ) != SEQ_BGM_ERECTRIC_GYM_02 ){
+    return FES_BGM_RECOVER_NONE;
+  }
+  //フェスBGMだったらBGMを元に戻す
+  zone_id = PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork( wk->gdata ) );
+  return FSND_GetFieldBGM( wk->gdata, zone_id, GAMEDATA_GetSeasonID( wk->gdata ) );
 }
 
 //---------------------------------------------------------

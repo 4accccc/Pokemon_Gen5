@@ -950,6 +950,23 @@ extern BOOL GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata );
 extern void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag );
 //----------------------------------------------------------------------------
 /**
+ *	@brief  フェスBGM再生リクエストフラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+extern BOOL  GAMEDATA_GetFesBGMFlag( const GAMEDATA *gamedata );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスBGM再生リクエストフラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetFesBGMFlag( GAMEDATA *gamedata, BOOL flag );
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定
  *
  *	@param	gamedata      GAMEDATAへのポインタ

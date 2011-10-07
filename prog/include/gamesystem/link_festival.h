@@ -33,6 +33,8 @@
 
 #define LINKFEST_LIFE_LIMIT (LINKFEST_SEC2FRAME(30)) //frame単位で30秒
 
+#define FES_BGM_RECOVER_NONE  (0xFFFFFFFF)  //BGMのリカバー無しコード
+
 typedef enum{
   LINKFEST_SCORELOG_SET_FAILED,     ///<ログストア失敗
   LINKFEST_SCORELOG_SET_NEW_ENTRY,  ///<新規
@@ -216,9 +218,12 @@ extern void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル ミッション終了
+ *
+ * @retval  FES_BGM_RECOVER_NONE  BGMリカバー処理無し
+ * @retval  その他 返ったBGMNoでリカバー処理をする
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
+extern u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

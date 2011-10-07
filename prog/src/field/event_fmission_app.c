@@ -39,6 +39,7 @@ enum _EVENT_FMISSION_APP {
   _FIELD_FADE_CLOSE,
   _CALL_FMISSION_APP,
   _WAIT_FMISSION_APP,
+  _CLOSE_FMISSION_APP,
   _FIELD_OPEN,
   _FIELD_FADEIN,
   _FIELD_END,
@@ -101,15 +102,25 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-    FSND_ReleaseBGMVolume_fromApp(
-      GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(gsys) );
+    (*seq)++;
+    break;
+  case _CLOSE_FMISSION_APP:
+    {
+      u32 bgm = FES_BGM_RECOVER_NONE;
+      if( faw->mode == FMISSION_APP_MODE_RESULT ){
+        //ミッション終了処理
+        bgm = LINK_FESTIVAL_MissionEnd( GAMESYSTEM_GetLinkFestivalWork( faw->gsys ) );
+      }
+      if( bgm != FES_BGM_RECOVER_NONE ){
+        //フェスBGMだったらBGMを元に戻す
+        GMEVENT_CallEvent( event, EVENT_FSND_PlayEventBGM( faw->gsys, bgm ));
+      }
+    }
     (*seq)++;
     break;
   case _FIELD_OPEN:
-    if( faw->mode == FMISSION_APP_MODE_RESULT ){
-      //ミッション終了処理
-      LINK_FESTIVAL_MissionEnd( GAMESYSTEM_GetLinkFestivalWork( faw->gsys ) );
-    }
+    FSND_ReleaseBGMVolume_fromApp(
+      GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(gsys) );
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq)++;
     break;
