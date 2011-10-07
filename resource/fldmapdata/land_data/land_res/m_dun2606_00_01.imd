@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-10-04T21:30:01" source="m_dun2606_00_01.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-06T20:58:47" source="m_dun2606_00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-10-04T21:30:01" source="m_dun2606_00_01.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-10-06T20:58:47" source="m_dun2606_00_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -817,14 +817,14 @@
 					<pos_xz xz="0.500000 0.500000"/>
 					<tex st="-16.000000 560.000000"/>
 					<pos_xy xy="-0.250000 -1.250000"/>
-					<tex st="-256.000000 528.000000"/>
-					<pos_xz xz="-4.000000 0.000000"/>
+					<tex st="-320.000000 528.000000"/>
+					<pos_xz xz="-5.000000 0.000000"/>
 					<tex st="-224.000000 528.000000"/>
 					<pos_xy xy="-3.500000 -1.250000"/>
 					<tex st="-208.000000 512.000000"/>
 					<pos_xz xz="-3.250000 -0.250000"/>
-					<tex st="-256.000000 512.000000"/>
-					<pos_xy xy="-4.000000 -1.250000"/>
+					<tex st="-320.000000 512.000000"/>
+					<pos_xy xy="-5.000000 -1.250000"/>
 					<tex st="-224.000000 544.000000"/>
 					<pos_xz xz="-3.500000 0.250000"/>
 					<tex st="-176.000000 544.000000"/>
