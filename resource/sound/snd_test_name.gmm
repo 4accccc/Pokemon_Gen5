@@ -5309,10 +5309,6 @@
 		<language name="JPN" width="256">BGM-PW-LAND</language>
 		<language name="JPN_KANJI" width="256">BGM-PW-LAND</language>
 	</row>
-	<row id="msg_seq_bgm_pw_studio">
-		<language name="JPN" width="256">BGM-PW-STUDIO</language>
-		<language name="JPN_KANJI" width="256">BGM-PW-STUDIO</language>
-	</row>
 	<row id="msg_seq_bgm_pw_filming">
 		<language name="JPN" width="256">BGM-PW-FILMING</language>
 		<language name="JPN_KANJI" width="256">BGM-PW-FILMING</language>
@@ -5396,14 +5392,6 @@
 	<row id="msg_seq_bgm_pw_scenario_10_l">
 		<language name="JPN" width="256">BGM-PW-SCENARIO-10-L</language>
 		<language name="JPN_KANJI" width="256">BGM-PW-SCENARIO-10-L</language>
-	</row>
-	<row id="msg_seq_bgm_pw_scenario_11_f">
-		<language name="JPN" width="256">BGM-PW-SCENARIO-11-F</language>
-		<language name="JPN_KANJI" width="256">BGM-PW-SCENARIO-11-F</language>
-	</row>
-	<row id="msg_seq_bgm_pw_scenario_11_l">
-		<language name="JPN" width="256">BGM-PW-SCENARIO-11-L</language>
-		<language name="JPN_KANJI" width="256">BGM-PW-SCENARIO-11-L</language>
 	</row>
 	<row id="msg_seq_bgm_erectric_gym_01">
 		<language name="JPN" width="256">BGM-ERECTRIC-GYM-01</language>
@@ -5641,10 +5629,22 @@
 		<language name="JPN" width="256">BGM-WIN-WBT</language>
 		<language name="JPN_KANJI" width="256">BGM-WIN-WBT</language>
 	</row>
+	<row id="msg_seq_bgm_kemonomichi">
+		<language name="JPN" width="256">BGM-KEMONOMICHI</language>
+		<language name="JPN_KANJI" width="256">BGM-KEMONOMICHI</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
+          <row id="msg_seq_1298">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
+          <row id="msg_seq_1299">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
 	<row id="msg_seq_me_asa">
 		<language name="JPN" width="256">ME-ASA</language>
 		<language name="JPN_KANJI" width="256">ME-ASA</language>
