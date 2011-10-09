@@ -451,11 +451,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにごと　だ……？
-この　こおりの　せかいは……▼</Text>
+			<Text>この　こおりの　せかいは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:32:45" />
+				Time="2011-10-09T06:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -463,11 +462,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにごと　だ……？
-この氷の　世界は……▼</Text>
+			<Text>この氷の　世界は……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:32:57" />
+				Time="2011-10-09T06:46:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2133,10 +2131,10 @@
 			<Text>ふむ……！　いって　もどるまでの
 きろくこうしん　だな▼
 いいか　[Name:TrainerName ]
-いでんしのくさび　とは　これだ！</Text>
+いでんしのくさび　とは　これだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:02:11" />
+				Time="2011-10-09T06:46:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2147,10 +2145,10 @@
 			<Text>ふむ……！　行って　戻るまでの
 記録更新　だな▼
 いいか　[Name:TrainerName ]
-いでんしのくさび　とは　これだ！</Text>
+いでんしのくさび　とは　これだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:02:52" />
+				Time="2011-10-09T06:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
