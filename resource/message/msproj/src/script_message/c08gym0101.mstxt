@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかなる時も　上を　目指す！
-舞い上がる　ドラゴンの　ように！▼</Text>
+			<Text>いかなるときも　上を　めざす！
+舞いあがる　ドラゴンの　ように！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:37:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,18 +30,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘前メッセージ
-尻尾にいるトレーナー</Comment>
+			<Comment>♂：尻尾にいるトレーナー
+・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:42:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_09</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:27" />
+				Time="2011-10-09T03:23:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -52,7 +53,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -65,18 +66,15 @@
 			Language="JPN">
 			<Text>このうえには　おれより　つよい
 トレーナーが　まっているぞ▼
-みぎには　こうげきじゅうしの
-トレーナー▼
-ひだりには　ぼうぎょじゅうしの
-トレーナーが　まっている▼
+みぎは　こうげきじゅうし
+ひだりは　ぼうぎょじゅうし▼
 とちらかの　トレーナーを
-たおせば　うえに　すすめるぞ▼
-どちらと　たたかうか
-じぶんの　みちだ▽
-じぶんで　きめるんだな</Text>
+たおせば　うえに　すすめる▼
+どちらの　みちを　えらんでも
+すすむのは　おまえだぜ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T03:53:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,18 +84,15 @@
 			Language="JPN_KANJI">
 			<Text>この上には　おれより　強い
 トレーナーが　待っているぞ▼
-右には　攻撃重視の
-トレーナー▼
-左には　防御重視の
-トレーナーが　待っている▼
+右には　攻撃重視
+左には　防御重視▼
 どちらかの　トレーナーを
-倒せば　上に　進めるぞ▼
-どちらと　戦うか
-自分の　道だ▽
-自分で　決めるんだな</Text>
+倒せば　上に　進める▼
+どちらの　道を　選んでも
+進むのは　おまえだぜ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T03:53:17" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105,18 +100,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後メッセージ
-尻尾にいるトレーナー</Comment>
+			<Comment>♂：尻尾にいるトレーナー
+・戦闘後メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:43:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_09</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:31:42" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -127,7 +123,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -138,11 +134,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげきこそ　さいだいの　ぼうぎょ！
-ちからこそ　すべてさ！▼</Text>
+			<Text>こうげきこそ　すべて！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:42:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:24:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -150,11 +145,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>攻撃こそ　最大の　防御！
-力こそ　全てさ！▼</Text>
+			<Text>攻撃こそ　すべて！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:42:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:24:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -162,18 +156,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘前メッセージ
-右足にいるトレーナー</Comment>
+			<Comment>♂：右足にいるトレーナー
+・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:43:21" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_10</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -184,7 +179,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -195,20 +190,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このうえの　トレーナーは
-ふだんとは　ちがう　バトルを▽
-いどんでくるぞ▼
+			<Text>うえの　トレーナーだが▼
 みぎは　トリプルバトル
 ひだりは　ローテーションバトルだ▼
-じぶんの　とくいな　バトルを
+じぶんの　とくいな　しょうぶを
 えらぶと　いい▼
-でも　ちゅういしろよ▼
-てもちの　ポケモンが
-3びきいじょう　いないと▽
-たいせんを　うけてくれないからな</Text>
+だが　たたかえる　ポケモンが
+３びきいじょう　いないと▽
+あいてを　してくれないぜ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T03:53:27" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -216,20 +208,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この上の　トレーナーは
-普段とは　違う　バトルを▽
-挑んでくるぞ▼
+			<Text>上の　トレーナーだが▼
 右は　トリプルバトル
 左は　ローテーションバトルだ▼
-自分の　得意な　バトルを
+自分の　得意な　勝負を
 選ぶと　いい▼
-でも　注意しろよ▼
-手持ちの　ポケモンが
-3匹以上　いないと▽
-対戦を　受けてくれないからな</Text>
+だが　戦える　ポケモンが
+３匹以上　いないと▽
+相手を　してくれないぜ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T03:53:30" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -237,18 +226,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後メッセージ
-右足にいるトレーナー</Comment>
+			<Comment>♂：右足にいるトレーナー
+・戦闘後メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:45:33" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_10</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -259,7 +249,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -270,11 +260,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょこそ　さいだいの　こうげき！
-てっぺきのまもりを　おみせするわ！▼</Text>
+			<Text>ぼうぎょこそ　すべて！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:46:04" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -282,11 +271,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>防御こそ　最大の　攻撃！
-鉄壁の守りを　お見せするわ！▼</Text>
+			<Text>防御こそ　すべて！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:46:18" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,18 +282,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘前メッセージ
-左足にいるトレーナー</Comment>
+			<Comment>♀：左足にいるトレーナー
+・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:46:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANW
+ID：veteranw_07</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:32:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -316,7 +305,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -327,20 +316,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このうえの　トレーナーは
-ふだんとは　ちがう　バトルを▽
-いどんでくるわよ▼
+			<Text>うえの　トレーナーの　たたかいかたは▼
 みぎは　トリプルバトル
-ひだりは　ローテーションバトルね▼
-あなたが　どちらを　えらぶか
-たのしみね▼
-でも　ちゅういしてね▼
-てもちの　ポケモンが
-3びきいじょう　いないと▽
-たいせんを　うけてくれないわよ</Text>
+ひだりは　ローテーションバトルよ▼
+あなたの　とくいな　しょうぶを
+えらぶと　いいわ▼
+だけど　たたかえる　ポケモンが
+３びきいじょう　いないと▽
+あいてを　してくれないから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:19" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -348,20 +334,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この上の　トレーナーは
-普段とは　違う　バトルを▽
-挑んでくるわよ▼
+			<Text>上の　トレーナーの　戦い方は▼
 右は　トリプルバトル
-左は　ローテーションバトルね▼
-あなたが　どちらを　選ぶか
-楽しみね▼
-でも　注意してね▼
-手持ちの　ポケモンが
-3匹以上　いないと▽
-対戦を　受けてくれないわよ</Text>
+左は　ローテーションバトルよ▼
+あなたの　得意な　勝負を
+選ぶと　いいわ▼
+だけど　戦える　ポケモンが
+３匹以上　いないと▽
+相手を　してくれないから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -369,18 +352,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後メッセージ
-左足にいるトレーナー</Comment>
+			<Comment>♀：左足にいるトレーナー
+・戦闘後メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:48:09" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANW
+ID：veteranw_07</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:32:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -391,7 +375,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -402,13 +386,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっと！
-てもちの　ポケモンが　たりないぞ▼
-３びきいじょう　つれて
-あらためて　ちょうせんしてくれ</Text>
+			<Text>おれと　たたかうなら
+げんきな　ポケモンを▽
+３びきいじょう　つれてくるんだ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:40:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -416,13 +399,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっと！
-手持ちの　ポケモンが　足りないぞ▼
-３匹以上　連れて
-改めて　挑戦してくれ</Text>
+			<Text>おれと　戦うなら
+元気な　ポケモンを▽
+３匹以上　連れてくるんだ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:32" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -430,17 +412,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・所持ポケモンが3匹以下の場合の注意</Comment>
+			<Comment>♂：右腕トレーナー
+・所持ポケモンが3匹以下の場合の注意</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:50:36" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_11</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:33:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -451,7 +435,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -462,13 +446,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプルバトルの
-けいけんは　あるかな？▼
-さあ　きみの　せんりゃくを
-みせて　もらおう！▼</Text>
+			<Text>トリプルバトル……！▼
+３びきの　はかいりょくを
+さらに　たかめる　くみあわせだぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:51:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:45:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -476,13 +459,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプルバトルの
-経験は　あるかな？▼
-さあ　きみの　戦略を
-見せて　もらおう！▼</Text>
+			<Text>トリプルバトル……！▼
+３匹の　破壊力を
+さらに　高める　組み合わせだぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:51:53" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:48:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -490,18 +472,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘前メッセージ
-右腕トレーナー</Comment>
+			<Comment>♂：右腕トレーナー
+・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:52:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>VETERANM
+ID：veteranm_11</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:29:29" />
+				Time="2011-10-09T03:33:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -512,7 +495,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -523,12 +506,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいしものだ▼
-さあ　うえにいる　シャガさまに
-ちょうせんすると　いい</Text>
+			<Text>ジムにいる　ぜんいんに　かったのか？▼
+なら　シャガさまに　いどめ！▼
+こころの　そこから　しょうりを
+もとめて　おもうぞんぶん　あばれな！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -536,12 +520,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいしたものだ▼
-さあ　上にいる　シャガ様に
-挑戦すると　いい</Text>
+			<Text>ジムにいる　全員に　勝ったのか？▼
+なら　シャガさまに　挑め！▼
+心の底から　勝利を
+求めて　思う存分　暴れな！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:40" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T04:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -549,25 +534,32 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後メッセージ
-右腕トレーナー</Comment>
+			<Comment>♂：右腕トレーナー
+・戦闘後メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:53:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:46:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANM
+ID：veteranm_11</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:33:48" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08gym0101_veteranw_08_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっと　まちなさい！
-てもちの　ポケモンが　たりないわ▼
-３びきいじょう　つれて
-あらためて　ちょうせんして</Text>
+			<Text>わたくしに　いどむなら
+たたかえる　げんきな　ポケモンを▽
+３びきいじょう　つれてきなさい！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:39:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -575,13 +567,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　待ちなさい！
-手持ちの　ポケモンが　足りないわ▼
-３匹以上　連れて
-改めて　挑戦して</Text>
+			<Text>わたくしに　挑むなら
+戦える　元気な　ポケモンを▽
+３匹以上　連れてきなさい！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:53:47" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -589,25 +580,39 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・所持ポケモンが3匹以下の場合の注意</Comment>
+			<Comment>♀：左腕トレーナー
+・所持ポケモンが3匹以下の場合の注意</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:57:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:47:36" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANW
+ID：veteranw_08</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:34:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08gym0101_veteranw_08_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテンションバトルの
-けいけんは　あるかしら？▼
-いつもの　バトルと　おなじだと
-おもっていると▽
-いたいめを　みるわよ▼</Text>
+			<Text>ローテーションバトルでは
+３びきを　フォローしあう▽
+くみあわせが　だいじ　よね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T10:57:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -615,13 +620,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローテンションバトルの
-経験は　あるかしら？▼
-いつもの　バトルと　同じだと
-思っていると　痛い目を　見るわよ▼</Text>
+			<Text>ローテーションバトルでは
+３匹を　フォローしあう▽
+組み合わせが　大事よね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T11:09:47" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -629,12 +633,27 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘前メッセージ
-左腕トレーナー</Comment>
+			<Comment>♀：左腕トレーナー
+・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T11:10:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:47:30" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANW
+ID：veteranw_08</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:34:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08gym0101_veteranw_08_03"
@@ -642,11 +661,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたなら　シャガさまと
-いい　しょうぶが　できるかもね▼
-さあ　うえに　いきなさい</Text>
+こころふるえる　しょうぶに　なるわ▼
+さあ　いきなさい！　そして
+ひっしに　しょうりを　もとめなさい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:54:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T04:04:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -654,12 +674,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたなら　シャガ様と
-いい　勝負が　できるかもね▼
-さあ　上に　行きなさい</Text>
+			<Text>あなたなら　シャガさまと
+心震える　勝負に　なるわ▼
+さあ　行きなさい！　そして
+必死に　勝利を　求めなさい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-20T05:54:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T04:04:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -667,12 +688,27 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後メッセージ
-左腕トレーナー</Comment>
+			<Comment>♀：左腕トレーナー
+・戦闘後メッセージ</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-15T11:11:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:47:28" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANW
+ID：veteranw_08</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-09T03:34:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08gym0101_swleader7_01"
@@ -838,10 +874,14 @@
 			Language="JPN">
 			<Text>すばらしい▼
 きみと　であい
-たたかえたこと　かんしゃする▼</Text>
+たたかえたこと　かんしゃする▼
+じぶんいがいと　ちからを　あわせ
+こんなんに　いどむ！▼
+ポケモンしょうぶが　もつ　いみを
+あらためて　おもいだせたよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:18:01" />
+				Time="2011-10-09T03:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -851,10 +891,14 @@
 			Language="JPN_KANJI">
 			<Text>すばらしい▼
 君と　出会い
-戦えたこと　感謝する▼</Text>
+戦えたこと　感謝する▼
+他者と　力を　あわせ
+困難に　挑む！▼
+ポケモン勝負が　持つ　意味を
+あらためて　思い出せたよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:19:00" />
+				Time="2011-10-09T03:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
