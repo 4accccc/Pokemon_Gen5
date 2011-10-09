@@ -10032,109 +10032,39 @@
 これで　いいのかよ！？</language>
 	</row>
 
-	<row id="TRID_VETERANM_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
-	</row>
-
 	<row id="TRID_VETERANM_09_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANM_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANM_10_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">おまえたちの　いきおい……
+まさに　まいあがる　ドラゴンだぜ！</language>
+		<language name="JPN_KANJI" width="216">おまえたちの　勢い……
+まさに　舞いあがる　ドラゴンだぜ！</language>
 	</row>
 
 	<row id="TRID_VETERANM_10_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANM_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANM_11_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">その　こうげきりょく……
+まさに　かいりきむそう！</language>
+		<language name="JPN_KANJI" width="216">その　攻撃力……
+まさに　怪力無双！</language>
 	</row>
 
 	<row id="TRID_VETERANM_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANM_11_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANW_07_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">きみの　えらんだ　３びき……
+あつりょくを　かんじたぜ！</language>
+		<language name="JPN_KANJI" width="216">きみの　選んだ　３匹……
+偉容を　誇っていたな！</language>
 	</row>
 
 	<row id="TRID_VETERANW_07_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANW_07_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANW_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">その　ぼうぎょりょく……
+まさに　きょうだいむひ！</language>
+		<language name="JPN_KANJI" width="216">その　防御力……
+まさに　強大無比！</language>
 	</row>
 
 	<row id="TRID_VETERANW_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_VETERANW_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">あなたの　えらんだ　３びき……
+おたがいを　ささえあっていたわね</language>
+		<language name="JPN_KANJI" width="216">あなたの　選んだ　３びき……
+お互いを　支えあっていたわね</language>
 	</row>
 
 	<row id="TRID_RANGERM_17_TRMSG_FIGHT_START">
