@@ -1108,10 +1108,10 @@
 この　ポケモンは　かえしてやる▼
 ゲーチスさまが　これから
 なされることを　かんがえれば▽
-そいつは　もう　ようずみだ</Text>
+そいつは　もう　ようずみだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:09:01" />
+				Time="2011-10-10T06:31:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1123,10 +1123,10 @@
 この　ポケモンは　返してやる▼
 ゲーチスさまが　これから
 なされることを　考えれば▽
-そいつは　もう　用済みだ</Text>
+そいつは　もう　用済みだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:02:24" />
+				Time="2011-10-10T06:31:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1180,12 +1180,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……わるい▼
-あたまの　なかが　グチャグチャで……
+			<Text>[Name:TrainerName Idx="1" ]『……悪い▼
+頭の　中が　グチャグチャで……
 どうしていいか　わかんねーよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:13:18" />
+				Time="2011-10-10T06:31:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
