@@ -3,7 +3,7 @@
 <iva version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-06T20:22:42" source="dra_all_027.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-09T18:19:31" source="dra_all_029.mb"/>
 	<title>Visibility Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -14,7 +14,7 @@
 	frame_size="1100"
 	tool_start_frame="1"
 	tool_end_frame="1100"
-	compress_node="none" node_size="23 23"
+	compress_node="none" node_size="24 24"
 />
 
 <visibility_data>
@@ -26,7 +26,7 @@
 	</visibility>
 </visibility_data>
 
-<visibility_anm_array size="23">
+<visibility_anm_array size="24">
 	<visibility_anm index="0" data_size="1" data_head="0"/>
 	<visibility_anm index="1" data_size="1" data_head="0"/>
 	<visibility_anm index="2" data_size="1" data_head="0"/>
@@ -50,6 +50,7 @@
 	<visibility_anm index="20" data_size="1" data_head="0"/>
 	<visibility_anm index="21" data_size="1" data_head="0"/>
 	<visibility_anm index="22" data_size="1" data_head="0"/>
+	<visibility_anm index="23" data_size="1" data_head="0"/>
 </visibility_anm_array>
 
 </body>
