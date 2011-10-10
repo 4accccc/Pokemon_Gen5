@@ -1156,12 +1156,23 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロット『おお！▼
-・ねぎらい
-・船の行方▽
-・アクロマについて</Text>
+おまえたち　ぶじで　あったか
+よかったのう！！▼
+プラズマだんの　ふね　だがな
+アクロマが　きて　いいおった▼
+わたくしの　のぞむ　こたえを
+あの　トレーナーが　おしえてくれた！▼
+かんしゃの　きもちとして
+プラズマだんを　かいさん　させます▼
+それでは　ポケモンと　ともに
+ただしき　みちを！▼
+そういって　どこかに　とんでいきおった
+とりあえず　かいけつ　なのかの▼
+Nさまの
+ぶじも　かくにん　できたし……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:40:03" />
+				Time="2011-10-10T07:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1170,12 +1181,23 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロット『おお！▼
-・ねぎらい
-・船の行方▽
-・アクロマについて</Text>
+おまえたち　無事で　あったか
+よかったのう！！▼
+プラズマ団の　船だがな
+アクロマが　来て　いいおった▼
+わたくしの　望む　答えを
+あの　トレーナーが　教えてくれた！▼
+感謝の　気持ちとして
+プラズマ団を　解散させます▼
+それでは　ポケモンと　共に
+正しき　道を！▼
+そういって　どこかに　飛んでいきおった
+とりあえず　解決なのかの▼
+Nさまの
+無事も　確認できたし……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:42:12" />
+				Time="2011-10-10T07:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1200,7 +1222,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#8080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1260,10 +1282,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘後</Text>
+			<Text>……じぶんに　えらそうなことを
+いう　しかくは　ありません▼
+むかしは　じぶんも
+ポケモンを　うばっていたのですから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:41:10" />
+				Time="2011-10-10T07:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1271,10 +1296,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後</Text>
+			<Text>……自分に　偉そうなことを
+いう　資格は　ありません▼
+昔は　自分も
+ポケモンを　奪っていたのですから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:42:12" />
+				Time="2011-10-10T07:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1299,7 +1327,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1363,10 +1391,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦闘後</Text>
+			<Text>にげていった　アイツ
+なにか　わかってくれたかな……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:41:13" />
+				Time="2011-10-10T07:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1374,10 +1403,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後</Text>
+			<Text>逃げていった　アイツ
+なにか　わかってくれたかな……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:42:12" />
+				Time="2011-10-10T07:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1516,7 +1546,7 @@
 			<Text>戦闘中</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:41:15" />
+				Time="2011-10-10T07:05:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1527,7 +1557,7 @@
 			<Text>戦闘中</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T12:42:12" />
+				Time="2011-10-10T07:05:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1537,10 +1567,10 @@
 			Language="JPN">
 			<Comment>♀
 ・元プラズマ団♂その２と戦う
-・ゲーチス戦終了で削除</Comment>
+・ゲーチス線終了で削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T02:44:58" />
+				Time="2011-10-10T07:05:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
