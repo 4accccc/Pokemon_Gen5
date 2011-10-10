@@ -2186,11 +2186,14 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
       if(target){ // 特定のポケモンが倒れた
         win_flag  = PW_SVSUB_WIN;
       }
-      if(except||mydead){ // 特定のポケモン以外が倒れた
+      if(except){ // 特定のポケモン以外が倒れた
         lose_stock[0] = PW_SVSUB_LOSE_WRONG_DEAD_ENEMY;
       }
+      if(mydead){
+        lose_stock[1] = PW_SVSUB_LOSE_ALL_DEAD_MINE;
+      }
     }
-    lose_stock[1] = _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+    lose_stock[2] = _check_maxturn( mainModule, win_flag ); //規定ターンチェック
     break;
   case PW_PROV_EVERY_TURN:  // 毎ターン倒す
     {
