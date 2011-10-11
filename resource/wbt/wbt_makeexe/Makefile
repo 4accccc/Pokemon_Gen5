@@ -49,13 +49,14 @@ WBT_RB7  = wbt_dldata_rule.rb
 WBT_RB8  = wbt_dldata_util.rb
 WBT_RB9  = wbt_tokusei_data.rb
 WBT_RB10 = my_tab_out_direct_sheet.rb
+WBT_RB11 = wbt_dldata_error.rb
 #
 WBT_TOKUSEI = wbt_tokusei_conv.rb
 #
 WBT_PERSONAL = $(PROJECT_RSCDIR)\personal\personal_sw.csv
 #
 WBT_RB  = $(WBT_RB0) $(WBT_RB1) $(WBT_RB2) $(WBT_RB3) $(WBT_RB4) \
-	  $(WBT_RB5) $(WBT_RB6) $(WBT_RB7) $(WBT_RB8) $(WBT_RB9) $(WBT_RB10)
+	  $(WBT_RB5) $(WBT_RB6) $(WBT_RB7) $(WBT_RB8) $(WBT_RB9) $(WBT_RB10) $(WBT_RB11)
 
 WBT_RB20 = $(SUBTARGETNAME).rb
 

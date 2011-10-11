@@ -20,8 +20,6 @@ $current_xls_name = ""
 # うるさいかもしれないので切り替えにしておく
 $debug_chkstr = 1
 
-# ruby or exe(0:ruby、1:exe)
-#$current_mode = 0
 #
 require "version.rb"
 #
@@ -32,6 +30,8 @@ require "wbt_dldata_rule.rb"	  # レギュレーション(WBTDL_RULE)用
 require "wbt_dldata_character.rb" # キャラクタ(WBTDL_CHARACTER)用
 require "wbt_dldata_match.rb"     # 組み合わせ(WBTDL_MATCH)用
 require "wbt_dldata_config.rb"    # config(WBTDL_CONFIG)用
+
+require "wbt_dldata_error.rb"     # エラー
 
 # 出力ファイル名
 $output_str = [ "_J",	# 日本語
@@ -68,6 +68,13 @@ unless FileTest.exists?(ARGV[0])
   puts "入力(xls)ファイル #{ARGV[0]} が見つかりません"
   exit(1)
 end
+
+#----------------
+# エラーファイル
+#----------------
+$wbt_error = WBT_ERROR.new()
+str = ARGV[0].sub(/\.xls/, "_err.txt" )
+$wbt_error.open( str );
 
 #-------------------
 # エクセルファイルアクセス
@@ -162,6 +169,11 @@ ensure
   conv.close_file()
   conv.exit()
 end
+
+#----------------
+# エラーファイル
+#----------------
+$wbt_error.close()
 
 #---------------
 # 終了

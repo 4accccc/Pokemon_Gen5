@@ -148,6 +148,12 @@ $sheet_str = [ "トーナメントリスト",
                "手持ちデータ",
 ]
 
+# セルのROW
+$cell_row = ["A","B","C","D","E","F","G","H","I","J",
+             "K","L","M","N","O","P","Q","R","S","T",
+             "U","V","W","X","Y","Z",
+]
+
 #---------------------------------------------------------
 #---------------------------------------------------------
 #--------------------------------
@@ -560,6 +566,47 @@ def chk_str_limit( buffer, lnum, num, str )
   end
   #
   return( flg )
+end
+
+#------------------------------------
+# 文字の個数制限
+#
+# buffer:   バッファ
+# lnum:     行数
+# num:      文字数
+# str:      文字列
+#
+# ret:      array
+#------------------------------------
+def chk_str_limit_array( buffer, lnum, num, str )
+  # チェックの有無
+#  if( $debug_chkstr == 0 )
+#    return(0);
+#  end
+  #
+  flg = 0
+  array = chk_strinfo( buffer )
+  #
+#  p sprintf("%d :%d,%d,%d,%d :\n",array[0],array[1],array[2],array[3],array[4])
+  #
+  # 行数の制限
+  if(array[0] > lnum)
+#    p sprintf("%s : %s : (行数:%d > %d)",str, $error_str[2], array[0], lnum)
+    flg = -1
+  else
+    # 文字数の制限
+    3.times{|i|
+      if( array[1+i] > num )
+#        p sprintf("%s : %s : (文字数: %d > %d)",str, $error_str[2], array[1+i], num)
+        flg = -1;
+        break;
+      end
+    }
+  end
+  #
+  array[4] = flg;
+  return( array );
+#  return( flg )
 end
 
 #-------------------------------------------------------

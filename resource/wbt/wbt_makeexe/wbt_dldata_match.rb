@@ -70,15 +70,18 @@ class WBT_MATCH_SINGLE
     cstr = @conv.get_cell(3, MATCH_START_COL, MATCH_START_ROW+@match_id )
     ret = chkblank( cstr, $match_str[0] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
     end
     # セット
     num = hash2no( $match_hash, cstr );
     if(num == -1)
-      print_error_str( $match_str[0], cstr );
-      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_str( $match_str[0], cstr );
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_hash_error( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id,
+                                   $match_str[0], cstr );
     else
       @type = num;
     end
@@ -96,17 +99,20 @@ class WBT_MATCH_SINGLE
     cstr = @conv.get_cell(3, MATCH_START_COL+1, MATCH_START_ROW+@match_id )
     ret = chkblank( cstr, $match_str[1] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
     end
     # セット
     @pri = cstr.to_i
     # 範囲のチェック(0 - 5)
     flg = chk_num_range( @pri, 0, 5 );
     if(flg == -1)
-      print_error_num( $match_str[1], @pri, 0, 5 );
-      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_num( $match_str[1], @pri, 0, 5 );
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_range_error( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id,
+                                    $match_str[1], @pri, 0, 5 );
     end
     #
     if(@local_debug == 1)
@@ -122,8 +128,9 @@ class WBT_MATCH_SINGLE
     cstr = @conv.get_cell(3, MATCH_START_COL+2, MATCH_START_ROW+@match_id )
     ret = chkblank( cstr, $match_str[2] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
     end
     #
     num = hash2no( $skip_hash, cstr );
@@ -135,9 +142,11 @@ class WBT_MATCH_SINGLE
     # 範囲のチェック(0 - 999)
     flg = chk_num_range( @id, 0, 999 );
     if(flg == -1)
-      print_error_num( $match_str[2], @id, 0, 999 );
-      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
-      match_exit();
+#      print_error_num( $match_str[2], @id, 0, 999 );
+#      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
+#      match_exit();
+      $wbt_error.print_range_error( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id,
+                                    $match_str[2], @id, 0, 999 );
     end
     #
     if(@local_debug == 1)

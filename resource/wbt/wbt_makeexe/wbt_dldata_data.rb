@@ -18,29 +18,27 @@ DATA_UP_START_COL	= 3
 
 # 各項目
 DATA_TOURNAMENT		= 0
-DATA_YEAR		= 1
-DATA_MONTH		= 2
-DATA_DAY		= 3
-DATA_VERSION		= 4
+DATA_VERSION		= 1
 #
-DATA_LANG_JPN		= 5	# (0:JPN、1:ENG、2:FRA、3:ITA、4:GER、5:SPA、6:KOR)
-DATA_STR_JPN		= 14
-DATA_EXP00_JPN		= 23
-DATA_EXP01_JPN		= 32
+DATA_LANG_JPN		= 2	# (0:JPN、1:ENG、2:FRA、3:ITA、4:GER、5:SPA、6:KOR)
+DATA_STR_JPN		= 11
+DATA_EXP00_JPN		= 20
+DATA_EXP01_JPN		= 29
 #
 DATA_LANG_NUM		= 7
 #
 # 要整理
 $title_str = ["トーナメントID",
-                "配信開始年",
-                "配信開始月",
-                "配信開始日",
-                "カセットバージョン",
+                "配信開始年",			# 未使用
+                "配信開始月",			# 未使用
+                "配信開始日",			# 未使用
+                "対応カセットバージョン",
                 "対応言語 日本語",
                 "対応言語 英語",
                 "対応言語 フランス語",
                 "対応言語 イタリア語",
                 "対応言語 ドイツ語",
+		
                 "対応言語 スペイン語",
                 "対応言語 韓国語",
                 "トーナメント名",
@@ -68,7 +66,7 @@ class WBT_DATA
     chk_local_language();
     #
     @version       = 0;
-    @day           = [0,1,1];
+    @day           = [0,1,1];	# 年月日用
     @lang_id       = 0;
     @tournament_id = 0;
     #
@@ -142,8 +140,6 @@ class WBT_DATA
   def set_parameter()
     # トーナメントID
     chk_tournament_id();
-    # 配信開始日
-    chk_day();
     # カセットバージョン
     chk_version();
     # 対応言語
@@ -164,8 +160,9 @@ class WBT_DATA
     cstr = @conv.get_cell(0,DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
     ret = chkblank( cstr, $title_str[0] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
     end
     # セット
     @tournament_id = cstr.to_i;
@@ -173,9 +170,11 @@ class WBT_DATA
     # 範囲のチェック(1 - 65535)
     flg = chk_num_range( @tournament_id, 1, 65535 );
     if(flg == -1)
-      print_error_num( $title_str[0], @tournament_id, 1, 65535 );
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_num( $title_str[0], @tournament_id, 1, 65535 );
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_range_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW,
+				    $title_str[0], @tournament_id, 1, 65535 );
     end
     
     if(@local_debug == 1)
@@ -183,63 +182,26 @@ class WBT_DATA
     end
   end
   
-  #----------------
-  # 配信開始年月日
-  #----------------
-  def chk_day()
-    #
-    3.times{|i|
-      cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW)
-      ret = chkblank( cstr, $title_str[1+i] )
-      if(ret == -1)
-        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW );
-        data_exit();
-      end
-      # セット
-      @day[i] = cstr.to_i;
-      
-      # 範囲チェック
-      if(i == 0)
-        min = 0
-        max = 99
-      elsif(i == 1)
-        min = 1
-        max = 12
-      elsif(i == 2)
-        min = 1
-        max = 31
-      end
-      #
-      flg = chk_num_range( @day[i], min, max )
-      if(flg == -1)
-        print_error_num( $title_str[1+i], @day[i], min, max );
-        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_YEAR+i, DATA_UP_START_ROW );
-        data_exit();
-      end
-      
-      if(@local_debug == 1)
-        p sprintf("%s :%d",$title_str[1+i], @day[i])
-      end
-    }
-  end
-  
   #------------------------
   # 対応カセットバージョン
   #------------------------
   def chk_version()
     #
-    cstr = @conv.get_cell(0, DATA_UP_START_COL+4, DATA_UP_START_ROW)
+    cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW)
     ret = chkblank( cstr, $title_str[4] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW );
     end
     # セット
     num = hash2no( $version_hash, cstr );
     if(num == -1)
-      print_error_str( $title_str[4], cstr );
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+4, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_str( $title_str[4], cstr );
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_hash_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW,
+                                   $title_str[4], cstr );
     else
       @version = num;
     end
@@ -257,8 +219,9 @@ class WBT_DATA
       cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW)
       ret = chkblank( cstr, $title_str[DATA_LANG_JPN+i] )
       if(ret == -1)
-        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
-        data_exit();
+#        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
+#        data_exit();
+        $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
       end
       # セット
       num = hash2no( $ng_hash, cstr );
@@ -279,25 +242,33 @@ class WBT_DATA
   #----------------------------------
   def chk_tournament_name()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW),
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW),
                                       $title_str[12] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
     end
     #
     # 変換
-    @tournament_name = get_unicode( @conv, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW )
-    #
+    @tournament_name = get_unicode( @conv, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW )
     # 入力チェック
     flg = 0
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-    flg = chk_str_limit( @tournament_name, 1, $str_limit[flg], $title_str[12] );
-    if(flg == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+14+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#    flg = chk_str_limit( @tournament_name, 1, $str_limit[flg], $title_str[12] );
+#    if(flg == -1)
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+#    end
+    array = []
+    array = chk_str_limit_array( @tournament_name, 1, $str_limit[flg], $title_str[12] );
+    if(array[4] == -1)
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_mes_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW,
+                                 $title_str[12], array, 1, $str_limit[flg] );
     end
     #
     # セット(コードの変換注意)
@@ -311,30 +282,38 @@ class WBT_DATA
   #----------------------------------
   def chk_regulation_explain()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW),
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW),
                                       $title_str[13] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW);
     end
     
     # 変換
-    @regulation_explain = get_unicode(@conv, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW)
+    @regulation_explain = get_unicode(@conv, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW)
     #
     # 入力チェック
     flg = 0
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-    flg = chk_str_limit( @regulation_explain, 3, $str_limit[2+flg], $title_str[13] );
-    if(flg == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#    flg = chk_str_limit( @regulation_explain, 3, $str_limit[2+flg], $title_str[13] );
+#    if(flg == -1)
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+#    end
+    array = []
+    array = chk_str_limit_array( @regulation_explain, 3, $str_limit[2+flg], $title_str[13] );
+    if(array[4] == -1)
+      $wbt_error.print_mes_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW,
+                                 $title_str[13], array, 3, $str_limit[2+flg] );
     end
     #
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
-#      p sprintf("%s :%s", $title_str[13],@conv.get_cell(0, DATA_UP_START_COL+23+@local_language, DATA_UP_START_ROW))
+#      p sprintf("%s :%s", $title_str[13],
+#		@conv.get_cell(0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW))
 #    end
   end
   
@@ -343,30 +322,38 @@ class WBT_DATA
   #----------------------------------
   def chk_contents_explain()
     #
-    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW),
+    ret = chkblank( @conv.get_cell(0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW),
                                       $title_str[14] )
     if(ret == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW);
     end
     
     # 変換
-    @contents_explain = get_unicode(@conv, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW)
+    @contents_explain = get_unicode(@conv, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW)
     #
     # 入力チェック
     flg = 0
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-    flg = chk_str_limit( @contents_explain, 2, $str_limit[2+flg], $title_str[14] );
-    if(flg == -1)
-      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW );
-      data_exit();
+#    flg = chk_str_limit( @contents_explain, 2, $str_limit[2+flg], $title_str[14] );
+#    if(flg == -1)
+#      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW );
+#      data_exit();
+#    end
+    array = []
+    array = chk_str_limit_array( @contents_explain, 2, $str_limit[2+flg], $title_str[14] );
+    if(array[4] == -1)
+      $wbt_error.print_mes_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW,
+                                 $title_str[14], array, 2, $str_limit[2+flg] );
     end
     
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
-#      p sprintf("%s :%s", $title_str[14],@conv.get_cell(0, DATA_UP_START_COL+32+@local_language, DATA_UP_START_ROW))
+#      p sprintf("%s :%s", $title_str[14],
+#		@conv.get_cell(0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW))
 #    end
   end
   
