@@ -10,18 +10,6 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "pm_version.h"
-
-//-------------------------------------
-///	トレーナーデータ
-//=====================================
-typedef struct {
-  u8 start_area;
-  u8 end_area;
-  u8 version;
-  u8 set_lv;
-}INF_TR_AREA_DATA;
-
 static const INF_TR_AREA_DATA sc_tr_area_data[] = {
  { 0 ,0 ,VERSION_W2 ,INF_TRAINER_SETLV_1 ,},
  { 0 ,0 ,VERSION_W2 ,INF_TRAINER_SETLV_1 ,},
@@ -664,4 +652,3 @@ static const INF_TR_AREA_DATA sc_tr_area_data[] = {
  { 8 ,8 ,VERSION_B2 ,INF_TRAINER_SETLV_2 ,},
  { 9 ,9 ,VERSION_B2 ,INF_TRAINER_SETLV_2 ,},
 };
-#define INF_TR_AREA_DATA_MAX (640)

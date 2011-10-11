@@ -16,14 +16,12 @@
 //
 //=============================================================================
 #define INFINITY_DUNGEON_TRDATA_MAX (320)    // 無限ダンジョン内トレーナーデータMAX
-#define INFINITY_DUNGEON_TALK_PATTERN_MAX (30)    // 無限ダンジョンに登場するトレーナータイプ
 #define INFINITY_DUNGEON_TR_ROOM_MIN      (5)     // トレーナーが配置されている部屋数の際少数
 #define INFINITY_DUNGEON_BLOCK_OBJ_ID     (0xB0)     // 封鎖に使用する動作モデルID
 
 #define INF_TRAINER_SETLV_1 (100)       // 配置レベル1のトレーナーの出現率
 #define INF_TRAINER_SETLV_2 (30)        // 配置レベル2のトレーナーの出現率
 #define INF_TRAINER_SETLV_3 (10)        // 配置レベル3のトレーナーの出現率
-
 
 //-------------------------------------
 //	ダンジョン移動用定数
@@ -73,37 +71,6 @@ enum{
   RECEPTION_ELEVATOR_L,
   RECEPTION_ELEVATOR_R,
   RECEPTION_ELEVATOR_EX,
-};
-
-//-------------------------------------
-//	ヒントタイプ
-//=====================================
-enum
-{
-  INFTR_HINT_TYPE_UP,
-  INFTR_HINT_TYPE_DOWN,
-  INFTR_HINT_TYPE_BOSS_FLOOR,
-  INFTR_HINT_TYPE_BOSS_DIR,
-  INFTR_HINT_TYPE_BOSS_MONSTER,
-  INFTR_HINT_TYPE_MEDIC_DIR,
-  INFTR_HINT_TYPE_NONE,
-  INFTR_HINT_TYPE_MAX,
-};
-
-//-------------------------------------
-//	会話タイプ
-//=====================================
-enum
-{
-  INFTR_TALK_TYPE_BOY,      // 少年
-  INFTR_TALK_TYPE_GIRL,     // 少女
-  INFTR_TALK_TYPE_YOUNG_M,  // 成人男性
-  INFTR_TALK_TYPE_YOUNG_W,  // 成人女性
-  INFTR_TALK_TYPE_MIDDLE_M, // 中年男性
-  INFTR_TALK_TYPE_MIDDLE_W, // 中年女性
-  INFTR_TALK_TYPE_OLD_M,    // 老人
-  INFTR_TALK_TYPE_OLD_W,    // 老女
-  INFTR_TALK_TYPE_MAX,
 };
 
 //-------------------------------------

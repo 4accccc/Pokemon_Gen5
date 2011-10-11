@@ -90,3 +90,8 @@
 
 // 左エレベーターを使用するエリア番号最大(ゼロオリジン)
 #define INF_LEFT_ELEVATOR_AREA (4)  
+
+#define INF_TRAINER_SETLV_1 (100)       // 配置レベル1のトレーナーの出現率
+#define INF_TRAINER_SETLV_2 (30)        // 配置レベル2のトレーナーの出現率
+#define INF_TRAINER_SETLV_3 (10)        // 配置レベル3のトレーナーの出現率
+

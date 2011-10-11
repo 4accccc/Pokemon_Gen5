@@ -54,10 +54,12 @@ def put_str( value ,file )
   file.print value.to_s+" ,"
 end
 
-OUT_FILE = ARGV[0]
-CSV_FILE = ARGV[1]
+OUT_FILE        = ARGV[0]
+OUT_HEADER_FILE = ARGV[1]
+CSV_FILE        = ARGV[2]
 
 out_file = open( OUT_FILE ,"w" )
+out_header_file = open( OUT_HEADER_FILE ,"w" )
 
 # データの読み込み
 data_csv = CSV.open( CSV_FILE ,"r")
@@ -123,34 +125,9 @@ header =  <<EOS
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#define ROOM_TR_MAX (4)
-
-#define %s (0)
-#define %s (1)
-#define %s (2)
-
-//-------------------------------------
-///	部屋データ
-//=====================================
-typedef struct {
-  u16 move_type;
-  u32 g_x;
-  u32 g_y;
-}INF_ROOM_TR_DATA;
-
-//-------------------------------------
-///	配置パラメータ
-//=====================================
-typedef struct {
-  u8  version;
-  u8  member_num;
-  u32 room_type;
-  INF_ROOM_TR_DATA tr_move_data[ROOM_TR_MAX];
-}INF_ROOM_SET_TR_PARAM;
-
 static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
 EOS
-out_file.puts header % [OUT_FILE ,BW2_MULTI_DEF_WORD ,B2_ONLY_DEF_WORD ,W2_ONLY_DEF_WORD]
+out_file.puts header % [OUT_FILE]
 
 cmt = <<EOS
   { // INF_ROOM_POS_TYPE_%s
@@ -178,10 +155,27 @@ room_data_list.each { |item|
 }
 out_file.puts "};"
 
+header =  <<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  無限ダンジョン内トレーナー配置データ定義
+ *	@author	Masayuki Onoue
+ *	@date		2011.10.11
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+EOS
+out_header_file.puts header % [OUT_HEADER_FILE]
+
 room_data_list.each_with_index { |item,i|
-  out_file.puts "#define INF_ROOM_POS_TYPE_" + item.type_name + " (%d)"%i
+  out_header_file.puts "#define INF_ROOM_POS_TYPE_" + item.type_name + " (%d)"%i
 }
 
 max = room_data_list.size
-out_file.puts "#define INF_TR_ROOM_POS_TYPE_NONE (%d) // トレーナーを配置しない"%max
+out_header_file.puts "#define INF_TR_ROOM_POS_TYPE_NONE (%d) // トレーナーを配置しない"%max
+
 out_file.close
+out_header_file.close

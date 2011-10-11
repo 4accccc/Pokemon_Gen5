@@ -30,10 +30,6 @@
 #include "field/infinity_dungeon.h"
 #include "field/infinity_dungeon_local_def.h"
 
-// 配置データ
-#include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
-#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat" // INF_TR_ROOM_POS_TYPE_NONE
-
 // グローバル変数
 extern u32  g_debug_inf_master_seed;
 extern BOOL g_debug_inf_is_map_info;

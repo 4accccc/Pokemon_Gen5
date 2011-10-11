@@ -18,17 +18,20 @@ XLS_FILE = room_data.xls
 POS_CSV_FILE = tr_move_type.csv
 TUTORIAL_CSV_FILE = tutorial_data.csv
 POS_FILE = infinity_dungeon_tr_move_type.cdat
+MOVE_TYPE_FILE = infinity_dungeon_tr_move_type.h
 ROOM_CSV_FILE = room_type.csv
 ROOM_FILE = infinity_dungeon_room_pos_type.cdat
+ROOM_TYPE_HEADER_FILE = infinity_dungeon_room_pos_type.h
 ROOM_DATA_CSV_FILE = room_data.csv
 ROOM_DATA_FILE = infinity_dungeon_room_setup_data.cdat
+ROOM_DATA_HEADER_FILE = infinity_dungeon_room_setup_data.h
 TUTORIAL_FILE = infinity_dungeon_tutorial_data.cdat
 
 # トレーナー抽選データ
 TR_XLS_FILE = tr_area_data.xls
 TR_DATA_CSV_FILE = tr_area_data.csv
 TR_DATA_FILE = infinity_dungeon_tr_area_data.cdat
-
+TR_DATA_HEADER_FILE = infinity_dungeon_tr_area_data.h
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -82,16 +85,16 @@ $(TUTORIAL_FILE) : $(TUTORIAL_CSV_FILE) tutorial_data_cnv.rb
 	@ruby tutorial_data_cnv.rb $(TUTORIAL_FILE) $(TUTORIAL_CSV_FILE)
 
 $(POS_FILE):$(POS_CSV_FILE)
-	@ruby trainer_move_type_cnv.rb $(POS_FILE) $(POS_CSV_FILE)
+	@ruby trainer_move_type_cnv.rb $(POS_FILE) $(MOVE_TYPE_FILE) $(POS_CSV_FILE)
 
 $(ROOM_FILE):$(ROOM_CSV_FILE)
-	@ruby trainer_room_pos_type_cnv.rb $(ROOM_FILE) $(ROOM_CSV_FILE)
+	@ruby trainer_room_pos_type_cnv.rb $(ROOM_FILE) $(ROOM_TYPE_HEADER_FILE) $(ROOM_CSV_FILE)
 
 $(ROOM_DATA_FILE):$(ROOM_DATA_CSV_FILE)
-	@ruby room_data_cnv.rb $(ROOM_DATA_FILE) $(ROOM_DATA_CSV_FILE)
+	@ruby room_data_cnv.rb $(ROOM_DATA_FILE) $(ROOM_DATA_HEADER_FILE) $(ROOM_DATA_CSV_FILE)
 
 $(TR_DATA_FILE):$(TR_DATA_CSV_FILE) trainer_area_data_cnv.rb
-	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_CSV_FILE)
+	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_HEADER_FILE) $(TR_DATA_CSV_FILE)
 
 endif
 

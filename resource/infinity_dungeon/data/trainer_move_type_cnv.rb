@@ -31,10 +31,12 @@ def put_str( value ,file )
   file.print value.to_s+" ,"
 end
 
-OUT_FILE = ARGV[0]
-CSV_FILE = ARGV[1]
+OUT_FILE        = ARGV[0]
+OUT_HEADER_FILE = ARGV[1]
+CSV_FILE        = ARGV[2]
 
 out_file = open( OUT_FILE ,"w" )
+out_header_file = open( OUT_HEADER_FILE ,"w" )
 
 # データの読み込み
 data_csv = CSV.open( CSV_FILE ,"r")
@@ -54,19 +56,6 @@ header =  <<EOS
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-
-//-------------------------------------
-///	MMDL用パラメータ
-//=====================================
-typedef struct {
-  u16 move_code;
-  u16 ev_type;
-  u16 direction;
-  u16 param0;
-  u16 param1;
-  s32 lim_x;
-  s32 lim_z;
-}INF_MMDL_PARAM;
 
 static const INF_MMDL_PARAM sc_mmdl_param[] = {
 EOS
@@ -94,11 +83,26 @@ data_csv.each { |item|
 
 out_file.puts "};\n\n"
 
-out_file.puts "// ナンバー定義"
+header =  <<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  トレーナー移動データタイプ定義ファイル
+ *	@author	Masayuki Onoue
+ *	@date		2011.10.11
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+EOS
+out_header_file.puts header % OUT_HEADER_FILE
+
 # 定義値の出力
 def_array.each_with_index{|item,i|
-  out_file.puts item % i
+  out_header_file.puts item % i
 }
-
+out_header_file.close
 out_file.close
 

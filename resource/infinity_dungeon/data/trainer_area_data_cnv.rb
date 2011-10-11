@@ -29,11 +29,13 @@ def put_value( value ,file )
   file.print " ,"
 end
 
-OUT_FILE = ARGV[0]
-CSV_FILE = ARGV[1]
+OUT_FILE        = ARGV[0]
+OUT_HEADER_FILE = ARGV[1]
+CSV_FILE        = ARGV[2]
 
 # 書き込みファイルオープン
 out_file = open( OUT_FILE ,"w" )
+out_header_file = open( OUT_HEADER_FILE ,"w" )
 
 # データの読み込み
 data_csv = CSV.open( CSV_FILE ,"r")
@@ -53,18 +55,6 @@ header =  <<EOS
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-
-#include "pm_version.h"
-
-//-------------------------------------
-///	トレーナーデータ
-//=====================================
-typedef struct {
-  u8 start_area;
-  u8 end_area;
-  u8 version;
-  u8 set_lv;
-}INF_TR_AREA_DATA;
 
 static const INF_TR_AREA_DATA sc_tr_area_data[] = {
 EOS
@@ -134,7 +124,23 @@ data_csv.each_with_index { |item,index|
 }
 out_file.printf "};\n"
 
-out_file.printf "#define INF_TR_AREA_DATA_MAX (%d)\n"%index_max
+header =  <<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  無限ダンジョン：バージョンごとのトレーナーの出現パターン
+ *	@author	Masayuki Onoue
+ *	@date		2011.10.11
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+EOS
+out_header_file.puts header % [OUT_HEADER_FILE]
+
+out_header_file.printf "#define INF_TR_AREA_DATA_MAX (%d)\n"%index_max
 
 # 最大数チェック
 lv1_tr_cnt_w.each_with_index{|data,i|
@@ -151,4 +157,5 @@ lv1_tr_cnt_b.each_with_index{|data,i|
 }
 
 data_csv.close
+out_header_file.close
 out_file.close

@@ -1,0 +1,323 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		infinity_dungeon_tool.cdat
+ *	@brief  無限ダンジョン用定数データ定義
+ *	@author	Masayuki Onoue
+ *	@date		2011.10.11
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+//=============================================================================
+/**
+ *					データ定義
+*/
+//=============================================================================
+
+//-------------------------------------
+// ゾーンテーブル(ブラック)
+//=====================================
+static const u16 sc_black_zone_table[] = {
+  ZONE_ID_D31R0401, // エレベーター
+  ZONE_ID_D31R0601, // ボス
+  ZONE_ID_D31R0901, // フラッシュ
+  ZONE_ID_D31R0701, // 波乗り
+  ZONE_ID_D31R1201, // デフォルト
+  ZONE_ID_D31R0201, // 受付
+};
+
+//-------------------------------------
+// ゾーンテーブル(ホワイト)
+//=====================================
+static const u16 sc_white_zone_table[] = {
+  ZONE_ID_D31R0301, // エレベーター
+  ZONE_ID_D31R0501, // ボス
+  ZONE_ID_D31R0801, // かいりき
+  ZONE_ID_D31R1001, // いあいぎり
+  ZONE_ID_D31R1101, // デフォルト
+  ZONE_ID_D31R0101, // 受付
+};
+
+//-------------------------------------
+// エレベータ部屋のエレベータ位置(ブラック)
+//=====================================
+static const GRID_DATA sc_black_elevator_pos = {
+  6 , 0 , 0 ,
+};
+
+//-------------------------------------
+// エレベータ部屋のエレベータ位置(ホワイト)
+//=====================================
+static const GRID_DATA sc_white_elevator_pos = {
+  6 , 0 , 0 ,
+};
+
+//-------------------------------------
+// エレベータ部屋のエレベータ位置(受付)
+//=====================================
+static const GRID_DATA sc_reception_elevator_pos[] = {
+  7 , 0 , 2 , // 左
+  11, 0 , 2 , // 右
+};
+
+//-------------------------------------
+// マップタイプごとの移動先テーブル(ブラック)
+//=====================================
+static const GRID_DATA sc_black_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // ボス部屋
+  {
+    { 6 , 0 , 13},// 下
+    { 6 , 0 , 13},// 上
+    { 6 , 0 , 13},// 右
+    { 6 , 0 , 13},// 左
+  },
+  // 特殊部屋１
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // 特殊部屋２
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // 通常部屋
+  {
+     { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+};
+
+//-------------------------------------
+// マップタイプごとの移動先テーブル(ホワイト)
+//=====================================
+static const GRID_DATA sc_white_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // ボス部屋
+  {
+    { 6 , 0 , 13},// 下
+    { 6 , 0 , 13},// 上
+    { 6 , 0 , 13},// 右
+    { 6 , 0 , 13},// 左
+  },
+  // 特殊部屋１
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // 特殊部屋２
+  {
+    { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+  // 通常部屋
+  {
+     { 6 , 0 , 13}, // 下
+    { 6 , 0 , 1}, // 上
+    { 12 , 0 , 7}, // 右
+    { 0 , 0 , 7}, // 左
+  },
+};
+
+//-------------------------------------
+// 配置モデル配置位置(ブラック)
+//=====================================
+static const GRID_DATA sc_black_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // ボス部屋
+  {
+    { 6 , 0 , 14},// 上
+    { 6 , 0 , 14},// 下
+    { 6 , 0 , 14},// 左
+    { 6 , 0 , 14},// 右
+  },
+  // 特殊部屋１
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // 特殊部屋２
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // 通常部屋
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+};
+//-------------------------------------
+// 配置モデル配置位置(ホワイト)
+//=====================================
+static const GRID_DATA sc_white_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // ボス部屋
+  {
+    { 6 , 0 , 14},// 上
+    { 6 , 0 , 14},// 下
+    { 6 , 0 , 14},// 左
+    { 6 , 0 , 14},// 右
+  },
+  // 特殊部屋１
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // 特殊部屋２
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+  // 通常部屋
+  {
+    { 6 , 0 , 2}, // 上
+    { 6 , 0 , 13}, // 下
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
+  },
+};
+
+//-------------------------------------
+// エリアごとのエリアテーブル
+//=====================================
+static const INF_LEVEL_TABLE_PARAM sc_level_table[] = {
+  { 40 , 45 },   // エリア 1
+  { 45 , 50 },   // エリア 2
+  { 50 , 55 },   // エリア 3
+  { 55 , 60 },   // エリア 4
+  { 60 , 65 },   // エリア 5
+  { 65 , 70 },   // エリア 6
+  { 70 , 75 },   // エリア 7
+  { 75 , 80 },   // エリア 8
+  { 80 , 85 },   // エリア 9
+  { 85 , 90 },   // エリア 10
+};
+
+//-------------------------------------
+// エリアごとのエリアテーブル
+//=====================================
+static const u8 sc_pow_rnd_table[] = {
+  3*1, // エリア 1
+  3*2, // エリア 2
+  3*3, // エリア 3
+  3*4, // エリア 4
+  3*5, // エリア 5
+  3*6, // エリア 6
+  3*7, // エリア 7
+  3*8, // エリア 8
+  3*9, // エリア 9
+  31, // エリア 10
+};
+
+//-------------------------------------
+// トレーナータイプからヒントメッセージタイプに変換
+//=====================================
+static const struct 
+{
+  s32 obj_code;
+  u8  hint_type;
+  u8  talk_type;
+} sc_talk_pattern_table[INFINITY_DUNGEON_TALK_PATTERN_MAX] =
+{
+  {MIDDLEMAN1,  INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_MIDDLE_M  },
+  {MIDDLEWOMAN1,INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_MIDDLE_W  },
+  {BAKER,       INFTR_HINT_TYPE_NONE,         INFTR_TALK_TYPE_MIDDLE_W  },
+  {WOMAN3,      INFTR_HINT_TYPE_NONE,         INFTR_TALK_TYPE_YOUNG_W   },
+  {FIGHTERM,    INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_YOUNG_M   },
+  {FIGHTERW,    INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_YOUNG_W   },
+  {BADMAN,      INFTR_HINT_TYPE_BOSS_FLOOR,   INFTR_TALK_TYPE_YOUNG_M   },
+  {POLICEMAN,   INFTR_HINT_TYPE_BOSS_DIR,     INFTR_TALK_TYPE_MIDDLE_M  },
+  {MOUNTMAN,    INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_MIDDLE_M  },
+  {CLEANINGM,   INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_YOUNG_M   }, // 10
+
+  {WORKMAN,     INFTR_HINT_TYPE_BOSS_FLOOR,   INFTR_TALK_TYPE_OLD_M     },
+  {WORKMAN2,    INFTR_HINT_TYPE_BOSS_DIR,     INFTR_TALK_TYPE_YOUNG_M   },
+  {ESPM,        INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_YOUNG_M   },
+  {ESPW,        INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_GIRL      },
+  {ASSISTANTM,  INFTR_HINT_TYPE_BOSS_FLOOR,   INFTR_TALK_TYPE_YOUNG_M   },
+  {ASSISTANTW,  INFTR_HINT_TYPE_BOSS_DIR,     INFTR_TALK_TYPE_YOUNG_W   },
+  {BOY3,        INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_BOY       },
+  {GIRL3,       INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_GIRL      },
+  {WAITER,      INFTR_HINT_TYPE_BOSS_DIR,     INFTR_TALK_TYPE_YOUNG_M   },
+  {WAITRESS,    INFTR_HINT_TYPE_BOSS_FLOOR,   INFTR_TALK_TYPE_YOUNG_W   }, // 20
+
+  {BOY2,        INFTR_HINT_TYPE_NONE,         INFTR_TALK_TYPE_BOY       },
+  {GIRL2,       INFTR_HINT_TYPE_NONE,         INFTR_TALK_TYPE_GIRL      },
+  {BACKPACKERM, INFTR_HINT_TYPE_UP,           INFTR_TALK_TYPE_YOUNG_M   },
+  {BACKPACKERW, INFTR_HINT_TYPE_DOWN,         INFTR_TALK_TYPE_YOUNG_W   },
+  {BOY4,        INFTR_HINT_TYPE_MEDIC_DIR,    INFTR_TALK_TYPE_BOY       },
+  {GIRL4,       INFTR_HINT_TYPE_BOSS_MONSTER, INFTR_TALK_TYPE_GIRL      },
+  {LADY,        INFTR_HINT_TYPE_BOSS_MONSTER, INFTR_TALK_TYPE_OLD_W     },
+  {GENTLEMAN,   INFTR_HINT_TYPE_MEDIC_DIR,    INFTR_TALK_TYPE_OLD_M     },
+  {BREEDERM,    INFTR_HINT_TYPE_MEDIC_DIR,    INFTR_TALK_TYPE_YOUNG_M   },
+  {BREEDERW,    INFTR_HINT_TYPE_BOSS_MONSTER, INFTR_TALK_TYPE_YOUNG_W   }, // 30
+};
+
+//-------------------------------------
+// 各エリアのフロアサイズ
+//=====================================
+static const struct 
+{
+  int fs_x;
+  int fs_y;
+}sc_floor_size[INFINITY_DUNGEON_AREA_ID_MAX] =
+{
+  { 3 ,3 }, // エリア 1
+  { 3 ,3 }, // エリア 2
+  { 3 ,3 }, // エリア 3
+  { 3 ,3 }, // エリア 4
+  { 3 ,3 }, // エリア 5
+  { 4 ,4 }, // エリア 6
+  { 4 ,4 }, // エリア 7
+  { 4 ,4 }, // エリア 8
+  { 4 ,4 }, // エリア 9
+  { 4 ,4 }, // エリア 10
+};
+

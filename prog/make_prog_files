@@ -1337,6 +1337,7 @@ SRCS_OVERLAY_FIELD_SEATEMPLE = field/field_seatemple.c
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_INFINITY_DUNGEON_GIMMICK = field/infinity_dungeon_gimmick.c \
                                         field/infinity_dungeon.c \
+                                        field/infinity_dungeon_tool.c \
                                         field/inf_dungeon_retire_event.c \
                                         field/inf_dungeon_retire.c
 
