@@ -891,6 +891,8 @@
 				<ContentItem
 					Name="c15r0301.mstxt" />
 				<ContentItem
+					Name="c15r0401.mstxt" />
+				<ContentItem
 					Name="c16.mstxt" />
 				<ContentItem
 					Name="c16r0101.mstxt" />
@@ -1390,6 +1392,8 @@
 					Name="judge_scr.mstxt" />
 				<ContentItem
 					Name="kaseki_scr.mstxt" />
+				<ContentItem
+					Name="local_tvt_scr.mstxt" />
 				<ContentItem
 					Name="medal_ev.mstxt" />
 				<ContentItem
