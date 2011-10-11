@@ -362,10 +362,10 @@ E……　なのか……？</language>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">E『……　いかにも……▼
 おろかなる　にんげんよ……
-ごくろう　だったな……▼</language>
+ごくろう　だったな……</language>
 		<language name="JPN_KANJI" width="256">E『……　いかにも……▼
 おろかなる　人間よ……
-ご苦労　だったな……▼</language>
+ご苦労　だったな……</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　すがた……
@@ -393,9 +393,9 @@ E……　なのか……？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">E『かんたんな　ことだ……▼
-おまえを　りようするため……▼</language>
+おまえを　りようするため……</language>
 		<language name="JPN_KANJI" width="256">E『簡単な　ことだ……▼
-お前を　利用するため……▼</language>
+お前を　利用するため……</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだって……
@@ -405,11 +405,11 @@ E……　なのか……？</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">E『……すべては　このほしに
-マザーシップを　よびよせるための
-わたしの　けいかくだ……</language>
+マザーシップを　よびよせるため▽
+わたしが　しくんだ　けいかくだ……</language>
 		<language name="JPN_KANJI" width="256">E『……すべては　この星に
-マザーシップを　呼び寄せるの
-私の　計画だ……</language>
+マザーシップを　呼び寄せるため▽
+私が　仕組んだ　計画だ……</language>
 	</row>
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『じ……　じゃあ！
@@ -419,18 +419,18 @@ E……　なのか……？</language>
 	</row>
 	<row id="pw_event0_enemy_4">
 		<language name="JPN" width="256">Ｅ『……マザーシップを
-このほしに　よびよせるには
+このほしに　よびよせるには▽
 UFOに　おおくのエネルギーが▽
-ひつようと　なってくる……▼
-UFOの　テストを　かねて
+ひつようと　するのでな……▼
+UFOの　テストと　いつわり
 おまえの　ポケモンから▽
 ひつような　エネルギーを▽
 しゅうしゅう　したのだ……</language>
 		<language name="JPN_KANJI" width="256">Ｅ『……マザーシップを
-この星に　呼び寄せるには
+この星に　呼び寄せるには▽
 UFOに　多くのエネルギーが▽
 必要と　なってくる……▼
-UFOの　テストを　兼ねて
+UFOの　テストと　偽り
 お前の　ポケモンから▽
 必要な　エネルギーを▽
 収集　したのだ……</language>
@@ -506,18 +506,16 @@ UFOの　テストを　兼ねて
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……？</language>
 	</row>
 	<row id="pw_event1_enemy_4">
-		<language name="JPN" width="256">E『にんげん　と　ポケモン……▼
-この　ほしは　すでに
-にんげん　と　ポケモンで▽
+		<language name="JPN" width="256">E『にんげんと　ポケモン……▼
+それらで　このほしは　すでに
 げんかいを　こえている……▼
-よって　われわれが
+よって　われわれが　ここで
 いきるためには　それらを▽
 ほろぼさねば　ならない……</language>
-		<language name="JPN_KANJI" width="256">E『人間　と　ポケモン……▼
-この星は　すでに
-人間　と　ポケモンで▽
+		<language name="JPN_KANJI" width="256">E『人間と　ポケモン……▼
+それらで　この星は　すでに
 限界を　超えている……▼
-よって　我々が
+よって　我々が　ここで
 生きるためには　それらを▽
 滅ぼす　必要が　ある……</language>
 	</row>
@@ -528,14 +526,12 @@ UFOの　テストを　兼ねて
 この星を　侵略　するのか？</language>
 	</row>
 	<row id="pw_event1_enemy_5">
-		<language name="JPN" width="256">E『……しんりゃく　だと？
-なにを　いっている……？▼
+		<language name="JPN" width="256">E『……しんりゃく　だと？▼
 ひとや　ポケモンは　ここで　きえ
 ゆうしゅうな　われわれが▽
 ここで　いきる……▼
 それの　なにが　わるい？</language>
-		<language name="JPN_KANJI" width="256">E『……侵略　だと？
-何を　言っている……？▼
+		<language name="JPN_KANJI" width="256">E『……侵略　だと？▼
 進化の　過程で　滅びる
 生物が　存在する　ように▽
 人や　ポケモンは　ここで　消え▽
@@ -805,7 +801,7 @@ UFOは　すべて　倒した……</language>
 ……ながい　たたかいに　つかれた 
 いまの　おまえの　こころを▽
 わたしの　サイコエネルギーで▽
-のっとって　しまうのだ……</language>
+のっとって　しまうだけだ……</language>
 		<language name="JPN_KANJI" width="256">E『そうか……▼
 ……　だが　お前の　意思や
 感情など　関係ない……▼
@@ -941,18 +937,18 @@ UFOは　すべて　倒した……</language>
 この星から　滅亡した……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　ダメだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……▼
+もう　ダメだ……
 ぼくも　[1:02:ポケモンニックネーム:1]たちも▽
-みんな　うごけない……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　ダメだ……
-僕も　[1:02:ポケモンニックネーム:1]たちも▽
-みんな　動けない……</language>
+つかれて　うごけない……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……▼
+もう　ダメだ……
+ぼくも　[1:02:ポケモンニックネーム:1]たちも▽
+つかれて　うごけない……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">E『……これで　おわりだ……
-じんるいも……　ポケモンも……</language>
-		<language name="JPN_KANJI" width="256">E『……これで　終わりだ……
-人類も……　ポケモンも……</language>
+		<language name="JPN" width="256">E『これで　おわりだな……</language>
+		<language name="JPN_KANJI" width="256">E『これで　終わりだな……</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……▽
@@ -973,7 +969,7 @@ UFOは　すべて　倒した……</language>
 すべて　とらえ　ＵＦＯに　乗せて▽
 宇宙へ　追放する……▼
 我々に　替わり
-今度は　お前たちが
+今度は　お前たちが▽
 宇宙を　さ迷うのだ……</language>
 	</row>
 	<row id="pw_event5_hero_2">

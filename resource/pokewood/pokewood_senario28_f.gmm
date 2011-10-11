@@ -346,12 +346,12 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">えんぎははいゆう</language>
-		<language name="JPN_KANJI" width="256">えんぎははいゆう</language>
+		<language name="JPN" width="256">はいゆう</language>
+		<language name="JPN_KANJI" width="256">はいゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">いっぱんじん</language>
-		<language name="JPN_KANJI" width="256">いっぱんじん</language>
+		<language name="JPN" width="256">なぞのおとこ</language>
+		<language name="JPN_KANJI" width="256">なぞのおとこ</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
