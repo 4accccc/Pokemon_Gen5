@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= mori nakatsui ito_hiroto satou
+USERS	= mori nakatsui ito_hiroto sato_hitomi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -52,7 +52,7 @@ bgm_hashfile = bgm_hash.rb
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(bgm_hashfile) $(TARGETDIR)/$(targetname).narc $(targetgmm) 
+do-build: $(bgm_hashfile) $(TARGETDIR)/$(targetname).narc $(targetgmm) 
 
 subdir:
 	@$(MAKE_SUBDIR)
