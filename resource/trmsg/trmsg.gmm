@@ -10661,45 +10661,55 @@
 	</row>
 
 	<row id="TRID_BACKPACKERM_24_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">バックパッカーは　そのなのとおり
+バックパックと　ポケモンが　はいる▽
+モンスターボールだけで　たびをする！▼</language>
+		<language name="JPN_KANJI" width="216">バックパッカーは　その名のとおり
+バックパックと　ポケモンが　はいる▽
+モンスターボールだけで　旅をする！▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_24_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">バックパックに
+しょうりを　いれてみたいよ……</language>
+		<language name="JPN_KANJI" width="216">バックパックに
+勝利を　いれてみたいよ……</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_24_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">たびの　もくてきは　であい！▼
+せかいの　いろんな　ポケモンと
+ふれあうのが　いいんだよね！</language>
+		<language name="JPN_KANJI" width="216">旅の　目的は　出会い！▼
+世界の　いろんな　ポケモンと
+ふれあうのが　いいんだよね！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_18_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">あら　あなた……？
+ポケモンけんきゅうじょ　めあて？▼
+そのまえに　あそばない？▼</language>
+		<language name="JPN_KANJI" width="216">あら　あなた……？
+ポケモン研究所　目当て？▼
+その前に　遊ばない？▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_18_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
+		<language name="JPN" width="216">あそびで　かてるような
+あいてじゃ　なかったわね！</language>
+		<language name="JPN_KANJI" width="216">遊びで　勝てるような
+相手じゃ　なかったわね！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_18_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">アララギはかせの　おはなしを
+ききたくて　わざわざ　きちゃった！▼
+あのひとも　バックパッカーだったから
+たびの　はなしで　もりあがっちゃって！</language>
+		<language name="JPN_KANJI" width="216">アララギ博士の　お話を
+ききたくて　わざわざ　来ちゃった！▼
+あの人も　バックパッカーだったから
+旅の　話で　もりあがっちゃって！</language>
 	</row>
 
 	<row id="TRID_RANGERM_19_TRMSG_FIGHT_START">
