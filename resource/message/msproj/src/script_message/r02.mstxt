@@ -59,10 +59,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PIPE</Text>
+			<Text>GUITERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:23:22" />
+				Time="2011-10-11T05:54:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -86,10 +86,10 @@
 ハードロック……　これこそが
 わたしの　もとめていた　サウンド？▼
 とにかく　かんしゃ　してます
-これを　もらって　くださいな</Text>
+これを　もらって　くださいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:31:22" />
+				Time="2011-10-11T05:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -106,10 +106,10 @@
 ハードロック……　これこそが
 わたしの　求めていた　サウンド？▼
 とにかく　感謝してます
-これを　もらって　くださいな</Text>
+これを　もらって　くださいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:31:06" />
+				Time="2011-10-11T05:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -120,19 +120,19 @@
 			<Comment>♀
 ・手持ちに特性「ハードロック」がいる
 ・アイテム入手処理
-　No000「」（仮）
+　No109「めざめいし」
 ・0＝ポケモン種族名
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:29:53" />
+				Time="2011-10-11T05:55:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PIPE</Text>
+			<Text>GUITERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:23:26" />
+				Time="2011-10-11T05:54:22" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -180,10 +180,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PIPE</Text>
+			<Text>GUITERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:27:04" />
+				Time="2011-10-11T05:54:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -231,10 +231,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PIPE</Text>
+			<Text>GUITERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T12:24:34" />
+				Time="2011-10-11T05:54:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
