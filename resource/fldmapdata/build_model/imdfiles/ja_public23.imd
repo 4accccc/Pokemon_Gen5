@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-10-07T19:03:35" source="ja_public23.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-10-11T18:23:38" source="ja_public23_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-07T19:03:35" source="ja_public23.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-11T18:23:38" source="ja_public23_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -140,7 +140,7 @@
 
 <material_array size="2">
 	<material index="0" name="ja_kage"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -1999,7 +1999,7 @@
 		volume_max="6.000000 0.500000 5.500000"
 		volume_r="9.607910"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -2008,7 +2008,6 @@
 					<mtx idx="0"/>
 					<tex st="2.000000 1.625000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-3.500000 0.250000 -3.500000"/>
 					<tex st="2.000000 4.187500"/>
 					<pos_xz xz="-2.500000 -4.000000"/>

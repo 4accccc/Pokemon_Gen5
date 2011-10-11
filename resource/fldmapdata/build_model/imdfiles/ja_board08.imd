@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-09-21T11:09:13" source="ja_board08.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-10-11T14:20:16" source="ja_board08.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-09-21T11:09:13" source="ja_board08.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-11T14:20:16" source="ja_board08.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -52,38 +52,38 @@
 		path="C:/home/swan_data3d/build_model/indoor/ja_board08/tex/ja_brd8.tga"
 	>
 		<bitmap size="256">
-			8888 9888 6679 3345 5433 9766 8889 8888
-			8888 9988 4567 ccb3 3bcc 7654 8899 8888
-			8888 7998 b346 ffed deff 643b 8997 8888
-			8888 6799 ec34 cdef fedc 43ce 9976 8888
-			8888 4679 eec3 21bd db12 3cee 9764 8888
-			9888 3567 ceec 3322 2233 ceec 7643 8889
-			7988 c356 2cee 5543 3445 eec2 653c 8897
-			7988 eb45 32ce 5554 4555 ec23 54be 8897
-			6988 ed35 321c 5554 4555 c123 53de 8876
-			6788 deb4 3210 4443 3444 0123 4bed 8976
-			6798 cfc4 2100 332a a233 0012 4cfc 8975
-			5798 deb3 c000 11cd dc11 000c 3bed 8975
-			5798 ed13 ec0c 0cef fec0 c0ce 31de 8965
-			4679 ec12 ddde deed deed eddd 21ce 9764
-			4579 c0bb 0cee fec0 0cef eec0 bb0c 9753
-			3569 00dd 00bb ec00 00ce bb00 dd00 7652
-			b467 0cee b000 b00b b00b 000b eec0 764b
-			c357 ceff ec00 00ce ec00 00ce ffec 753c
-			c357 efff eedd 0cdd ddc0 ddee fffe 753c
-			c357 deff cefe ddc0 0cdd efec ffed 753c
-			c357 0dff 1cdc ec11 11ce cdc1 ffd0 753c
-			b467 0dfe 21a0 b222 222b 0a12 efd0 763b
-			2469 befd 3210 3333 3333 0123 dfeb 9642
-			3579 dfeb 3210 4444 4444 0123 befd 9753
-			4679 efd2 310c 4443 3444 c012 2dfe 9764
-			5798 feb3 1bde 3332 2333 edb1 3bef 8975
-			6798 ec35 deff 221b b122 ffed 53ce 8976
-			7988 c346 fffe ccde edcc efff 643c 8897
-			9888 3467 fedb ffff ffff bdef 7643 8889
-			9888 5679 cb23 cccc cccc 32bc 9765 8889
-			8888 6799 3455 3333 3333 5543 9976 8888
-			8888 7988 5667 5555 5555 7665 8897 8888
+			7777 7777 8877 6666 6666 7788 7777 7777
+			7777 7777 5688 4445 5444 8865 7777 7777
+			7777 8777 4456 2223 3222 6544 7778 7777
+			7777 6877 2345 ccca accc 5422 7786 7777
+			7777 5687 da23 fffe efff 32ad 7865 7777
+			7777 3568 feb2 ffff ffff 2bef 8653 7777
+			8777 2356 ffeb cdef fedc beff 6532 7778
+			8777 b245 effe 00ad da00 effe 542b 7776
+			6877 ea24 beff 2210 0122 ffeb 42ae 7786
+			5677 fd13 0bef 3221 0223 feb0 31df 7765
+			4687 fea2 00df 3221 1223 fd00 2aef 7864
+			3587 ffd1 00ae 2219 9122 ea00 1dff 7853
+			3468 ffea b00d 10bd db01 d00b aeff 8642
+			2468 fffc edde 0bef feb0 edde cfff 8542
+			1358 eded deff deed deed ffed dede 8531
+			a356 c0de 0cee fec0 0cef eec0 ed0c 643a
+			c246 0cef b0bb ec0b b0ce bb0b fec0 642c
+			c246 ceff ec00 b0ce ec0b 00ce ffec 642c
+			c246 efff fedd 0cef fec0 ddef fffe 642c
+			c246 deff effe dddd dddd effe ffed 642c
+			c246 0dff beeb eb00 00be beeb ffd0 642c
+			c246 0dff 0aa0 a111 111a 0aa0 ffd0 642c
+			a356 befe 1000 2222 2222 0001 efeb 653a
+			2458 effd 100b 2222 2222 b001 dffe 8542
+			3568 ffea 10be 2221 1222 eb01 aeff 8643
+			4587 feb2 adef 1110 0111 feda 2bef 7854
+			5687 eb23 efff cccd dccc fffe 32be 7865
+			6877 b235 fffe ffff ffff efff 532b 7786
+			8777 2356 feda ffff ffff acde 6532 7778
+			7777 4568 ca23 cccc cccc 321a 8654 7777
+			7777 5687 2345 2222 2222 5433 7866 7777
+			7777 8877 4556 4444 4444 6655 7788 7777
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -94,8 +94,8 @@
 		5bdf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="ja_brd8_pl" color_size="16">
-		6fff 67ff 5fdf 57bf 4fbf 437f 3b5f 333f
-		26ff 2b1f 535f 42be 3a5e 29dd 1d7d 151c
+		6fff 63ff 5bdf 4f9f 477f 3b5f 333f 26ff
+		2b1f 535f 42be 3a7e 323d 29dd 1d7d 151c
 	</tex_palette>
 </tex_palette_array>
 

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-10-06T21:25:51" source="ja_public21_s.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-10-11T18:21:57" source="ja_public21_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-06T21:25:51" source="ja_public21_s.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-11T18:21:57" source="ja_public21_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -32,15 +32,15 @@
 <tex_image_array size="3">
 	<tex_image index="0" name="ja_kage"
 		width="8" height="8" original_width="8" original_height="8"
-		format="a3i5"
+		format="a5i3"
 		palette_name="ja_kage_pl"
 		path="C:/home/swan_data3d/build_model/indoor/ja_public09/tex/ja_kage.tga"
 	>
 		<bitmap size="32">
-			2020 2020 2020 2020 2020 2020 2020 2020
-			6060 6060 6060 6060 6060 6060 6060 6060
-			6060 6060 6060 6060 6060 6060 6060 6060
-			6060 6060 6060 6060 6060 6060 6060 6060
+			3838 3838 3838 3838 3838 3838 3838 3838
+			6868 6868 6868 6868 6868 6868 6868 6868
+			6868 6868 6868 6868 6868 6868 6868 6868
+			6868 6868 6868 6868 6868 6868 6868 6868
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="ja_p21_1"
@@ -387,7 +387,7 @@
 
 <tex_palette_array size="3">
 	<tex_palette index="0" name="ja_kage_pl" color_size="8">
-		318c 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		18c6 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="ja_p21_1_pl" color_size="120">
 		265e 2e5a 327b 329c 329e 36bd 36fd 3a3d
@@ -414,7 +414,7 @@
 
 <material_array size="3">
 	<material index="0" name="ja_kage"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -2363,7 +2363,7 @@
 		volume_max="3.000000 0.250000 3.000000"
 		volume_r="5.006348"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -2372,7 +2372,6 @@
 					<mtx idx="0"/>
 					<tex st="2.000000 1.687500"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-1.750000 0.250000 -4.000000"/>
 					<pos_xz xz="-1.750000 3.000000"/>
 					<tex st="2.000000 6.812500"/>
