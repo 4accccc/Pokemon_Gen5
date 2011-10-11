@@ -38,6 +38,13 @@ typedef enum
   RESORT_MERGE_RESULT_DISABLE, //マージ可能かつ不許可
 }RESORT_MERGE_RESULT;
 
+typedef enum
+{
+  RESORT_ADD_RESULT_NG, //セットできなかった
+  RESORT_ADD_RESULT_OK, //セットできた
+  RESORT_ADD_RESULT_DISABLE, //セット可能かつ不許可
+}RESORT_ADD_RESULT;
+
 //=============================================================================
 /**
  *  データ初期化
@@ -373,7 +380,7 @@ extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 
 extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
-extern BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk );
+extern BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk, s64 now );
 extern u32 RESORT_RECV_DATA_GetRnd( const RESORT_RECV_DATA *cp_wk, RESORT_RND_ID id, u32 range );
 
 //-------------------------------------
@@ -432,7 +439,7 @@ extern void RESORT_PROXY_BUFF_InitInstance( RESORT_PROXY_BUFF *p_wk, u32 num );
 
 extern void RESORT_PROXY_BUFF_Clear( RESORT_PROXY_BUFF *p_wk, u32 index );
 
-extern BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy );
+extern RESORT_ADD_RESULT RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy );
 extern u32 RESORT_PROXY_BUFF_GetMax( const RESORT_PROXY_BUFF *cp_wk );
 extern u32 RESORT_PROXY_BUFF_GetCnt( const RESORT_PROXY_BUFF *cp_wk );
 extern RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index );
@@ -482,8 +489,8 @@ extern void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index );
 extern RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 extern RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
 extern RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy );
-extern BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
-extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
+extern RESORT_ADD_RESULT RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern RESORT_ADD_RESULT RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
 
 //=============================================================================
 /**

@@ -43,7 +43,7 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
-#define DEBUG_RESORT_RECV_PRINT_ON
+//#define DEBUG_RESORT_RECV_PRINT_ON
 //#define DEBUG_EXTEND_SET_GET_CHECK
 #define DEBUG_PERMISSION_CHECK
 
@@ -477,6 +477,33 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  u16単位の一致
+ *
+ *	@param	STRCODE *s1 比較１
+ *	@param	STRCODE *s2 比較２
+ *	@param	u32 size    バイトサイズ
+ *
+ *	@return ０なら同じ  それ以外なら違う
+ */
+//-----------------------------------------------------------------------------
+static int Resort_Basic1_Data_CompareU16(const u16 *s1, const u16 *s2, const u32 size)
+{
+    const u16  *p1 = (const u16 *)s1;
+    const u16  *p2 = (const u16 *)s2;
+    u32 n = size/2;
+
+    while (n-- > 0) {
+        if (*p1 != *p2)
+            return (*p1 - *p2);
+        p1++;
+        p2++;
+    }
+    return (0);
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  同じ所有者かチェック
  *
  *	@param	const RESORT_BASIC1_DATA *cp_a  比較１
@@ -487,13 +514,19 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, const RESORT_BASIC1_DATA *cp_b )
 {
+  BOOL is_name  = FALSE;
+  BOOL is_sex = FALSE;
   BOOL is_trainerID = (cp_a->trainerID == cp_b->trainerID);
-  BOOL is_name  = (GFL_STD_MemComp( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
-  BOOL is_sex   = (cp_a->sex == cp_b->sex);
+
+  //トレーナーIDが一致しないとチェックしない
+  if( is_trainerID )
+  {
+    is_name  = (Resort_Basic1_Data_CompareU16( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
+    is_sex   = (cp_a->sex == cp_b->sex);
+  }
 
   return is_trainerID && is_name && is_sex;
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  空かチェック
@@ -2088,22 +2121,13 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
  *	@return TRUE保存期間すぎた   FALSE保存期間内
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk )
+BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk, s64 now )
 {
-  s64 now;
   s64 pre;
 
   if( cp_wk->replace_lock )
   {
     return FALSE;
-  }
-
-  //現在秒を取る
-  {
-    RTCDate date;
-    RTCTime time;
-    GFL_RTC_GetDateTime( &date, &time );
-    now = RTC_ConvertDateTimeToSecond( &date, &time );
   }
 
   //会った時間を取る
@@ -2766,13 +2790,13 @@ void RESORT_PROXY_BUFF_Clear( RESORT_PROXY_BUFF *p_wk, u32 index )
  *	@retval TRUEビーコン挿し込みした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+RESORT_ADD_RESULT RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
 {
   RESORT_PROXY_DATA *p_data;
 
   if( !RESORT_PROXY_DATA_IsValid(cp_proxy) )
   {
-    return FALSE;
+    return RESORT_ADD_RESULT_DISABLE;
   }
 
   //空のデータがあったら入れる
@@ -2781,11 +2805,10 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
   {
     RESORT_PROXY_DATA_AddProxy( p_data, cp_proxy );
     RESORT_RECV_Printf( "空のデータに入れた！\n" );
-    return TRUE;
+    return RESORT_ADD_RESULT_OK;
   }
 
-  RESORT_RECV_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
-  return FALSE;
+  return RESORT_ADD_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3149,7 +3172,6 @@ RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeBeacon( RESORT_RECV_BUFF *p_wk, const 
     }
   }
 
-  RESORT_RECV_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
   return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
@@ -3229,7 +3251,7 @@ RESORT_MERGE_RESULT RESORT_RECV_BUFF_MergeProxy( RESORT_RECV_BUFF *p_wk, const R
  *	@return TRUEビーコンをセット  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+RESORT_ADD_RESULT RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -3237,7 +3259,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
   if( p_wk->is_lock )
   {
     RESORT_RECV_Printf( "リゾート　ロック中\n" );
-    return FALSE;
+    return RESORT_ADD_RESULT_DISABLE;
   }
 
   {
@@ -3258,7 +3280,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
         RESORT_RECV_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
 
         RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
-        return TRUE;
+        return RESORT_ADD_RESULT_OK;
       }
 
       //期間外のデータがあったら入れる
@@ -3275,13 +3297,12 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
         RESORT_RECV_Printf( "受信データを押し出して入れた！\n" );
 
         RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
-        return TRUE;
+        return RESORT_ADD_RESULT_OK;
       }
     }
   }
 
-  RESORT_RECV_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
-  return FALSE;
+  return RESORT_ADD_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3293,7 +3314,7 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
  *	@return TRUE受信データをセット  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+RESORT_ADD_RESULT RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -3301,7 +3322,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   if( p_wk->is_lock )
   {
     RESORT_RECV_Printf( "リゾート　ロック中\n" );
-    return FALSE;
+    return RESORT_ADD_RESULT_DISABLE;
   }
 
   //空のデータがあったら入れる
@@ -3315,11 +3336,12 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
 #endif
     RESORT_RECV_Printf( "受信データを空のデータに入れた！\n" );
-    return TRUE;
+    return RESORT_ADD_RESULT_OK;
   }
 
   //期間外のデータがあったら入れる
   p_data = Resort_Recv_Buff_GetOverReserveData( p_wk );
+
   if( p_data )
   {
     RESORT_RECV_DATA_InitInstance( p_data );
@@ -3329,10 +3351,10 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
 #endif
     RESORT_RECV_Printf( "受信データを押し出して入れた！\n" );
-    return TRUE;
+    return RESORT_ADD_RESULT_OK;
   }
 
-  return FALSE;
+  return RESORT_ADD_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3393,13 +3415,24 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
 static RESORT_RECV_DATA * Resort_Recv_Buff_GetOverReserveData( RESORT_RECV_BUFF *p_wk )
 {
   int i;
+
+  //現在秒を取る
+  RTCDate date;
+  RTCTime time;
+  s64 now;
+
+  GFL_RTC_GetDateTime( &date, &time );
+  now = RTC_ConvertDateTimeToSecond( &date, &time );
+
   for( i = 0; i < p_wk->max; i++ )
   {
     RESORT_RECV_DATA  *p_data = &p_wk->data[i];
-    if( !RESORT_RECV_DATA_IsEmpty(p_data)
-      && RESORT_RECV_DATA_OverReservePeriod(p_data) )
+    if( !RESORT_RECV_DATA_IsEmpty(p_data) )
     {
-      return p_data;
+      if( RESORT_RECV_DATA_OverReservePeriod(p_data, now) )
+      {
+        return p_data;
+      }
     }
   }
 

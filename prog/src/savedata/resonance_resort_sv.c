@@ -18,6 +18,7 @@
 //外部公開
 #include "savedata/resonance_resort_sv.h"
 
+#include "debug/debug_nagihashi.h"
 //=============================================================================
 /**
  *					レゾナンスリゾート用セーブデータ
@@ -157,16 +158,8 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
 
   typedef RESORT_MERGE_RESULT (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
   typedef RESORT_MERGE_RESULT (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
-  typedef BOOL (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
-  typedef BOOL (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
-
-  //チェック順
-  typedef enum
-  {
-    RESRT_MERGE_ORDER_PROXY_RECV,
-    RESRT_MERGE_ORDER_RECV_PROXY,
-    RESRT_MERGE_ORDER_MAX,
-  }RESRT_MERGE_ORDER;
+  typedef RESORT_ADD_RESULT (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+  typedef RESORT_ADD_RESULT (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
 
   static const struct
   {
@@ -175,35 +168,31 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
     MERGE_PROXY_BUFF  MergeProxyBuff;
     ADD_RECV_DATA     AddRecvData;
     ADD_PROXY_DATA    AddProxyData;
-    RESRT_MERGE_ORDER order;
   }sc_data_function_tbl[] =
   {
-    //ビーコンデータ  代理人→ビーコン
+    //ビーコンデータ 
     {
       (IS_VALID)RESORT_BEACON_DATA_IsValid,
       (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeBeacon,
       (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeBeacon,
       (ADD_RECV_DATA)RESORT_RECV_BUFF_AddBeacon,
       NULL,
-      RESRT_MERGE_ORDER_PROXY_RECV,
     },
-    //受信データ      代理人→ビーコン
+    //受信データ
     {
       (IS_VALID)RESORT_RECV_DATA_IsValid,
       (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeRecv,
       (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeRecv,
       (ADD_RECV_DATA)RESORT_RECV_BUFF_AddRecv,
       NULL,
-      RESRT_MERGE_ORDER_PROXY_RECV,
     },
-    //代理人データ    ビーコン→代理人
+    //代理人データ 
     {
       (IS_VALID)RESORT_PROXY_DATA_IsValid,
       (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeProxy,
       (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeProxy,
       NULL,
       (ADD_PROXY_DATA)RESORT_PROXY_BUFF_Add,
-      RESRT_MERGE_ORDER_RECV_PROXY,
     },
   };
 
@@ -213,6 +202,7 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_wk );
   RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_wk );
 
+//DEBUG_TICK_PrintStart;
   //もしチュートリアル中で、代理人ならば、２こ開けておく
   if( RESORT_CITY_DATA_GetData(cp_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL ) 
       && type == RESORT_MERGE_TYPE_PROXY 
@@ -220,15 +210,67 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
   {
     return RESORT_SETDATA_NONE;
   }
+//DEBUG_TICK_PrintEnd;
 
 
+//DEBUG_TICK_PrintStart;
   //不正ならば何もしない
   if( !sc_data_function_tbl[type].IsValid( cp_data_adrs ) )
   {
     return RESORT_SETDATA_NONE;
   }
+//DEBUG_TICK_PrintEnd;
 
-  //市民データのマージ
+//DEBUG_TICK_PrintStart;
+  {
+    int i;
+    //バッファのマージ
+    {
+      //旅行者バッファマージ
+      {
+        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs );
+        if( ret == RESORT_MERGE_RESULT_OK )
+        {
+          return RESORT_SETDATA_MERGE;
+        }
+        else if( ret == RESORT_MERGE_RESULT_DISABLE )
+        {
+          return RESORT_SETDATA_NONE;
+        }
+      }
+
+      //拡張バッファマージ
+      if( p_temp_buff )
+      {
+        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs );
+        if( ret == RESORT_MERGE_RESULT_OK )
+        {
+          return RESORT_SETDATA_MERGE;
+        }
+        else if( ret == RESORT_MERGE_RESULT_DISABLE )
+        {
+          return RESORT_SETDATA_NONE;
+        }
+      }
+
+      //代理人バッファマージ
+      {
+        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs );
+        if( ret == RESORT_MERGE_RESULT_OK )
+        {
+          return RESORT_SETDATA_MERGE;
+        }
+        else if( ret == RESORT_MERGE_RESULT_DISABLE )
+        {
+          return RESORT_SETDATA_NONE;
+        }
+      }
+    }
+  }
+//DEBUG_TICK_PrintEnd;
+
+//DEBUG_TICK_PrintStart;
+  //市民データのマージ  ※ビーコンがバッファに入った場合、先にバッファを調査した方が早くおわることがおおい
   {
     RESORT_MERGE_RESULT ret = RESORT_PEOPLE_ALL_DATA_MergeData( p_all_people, cp_data_adrs, type );
     if( ret == RESORT_MERGE_RESULT_OK )
@@ -240,80 +282,30 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
       return RESORT_SETDATA_NONE;
     }
   }
-  {
-    int i;
-    //バッファのマージ
-    //どちらのバッファを先にチェックするか順番が違う
-    RESRT_MERGE_ORDER order = sc_data_function_tbl[type].order;
-    for( i = 0; i < RESRT_MERGE_ORDER_MAX; i++ )
-    {
-      switch( order )
-      {
-      case RESRT_MERGE_ORDER_PROXY_RECV:
-        {
-          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_sv_buff, cp_data_adrs );
-          if( ret == RESORT_MERGE_RESULT_OK )
-          {
-            return RESORT_SETDATA_MERGE;
-          }
-          else if( ret == RESORT_MERGE_RESULT_DISABLE )
-          {
-            return RESORT_SETDATA_NONE;
-          }
-        }
-        if( p_temp_buff )
-        {
-          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeRecvBuff( p_temp_buff, cp_data_adrs );
-          if( ret == RESORT_MERGE_RESULT_OK )
-          {
-            return RESORT_SETDATA_MERGE;
-          }
-          else if( ret == RESORT_MERGE_RESULT_DISABLE )
-          {
-            return RESORT_SETDATA_NONE;
-          }
-        }
-        order ^=  1;
-        break;
-      case RESRT_MERGE_ORDER_RECV_PROXY:
-        {
-          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].MergeProxyBuff( p_proxy_buff, cp_data_adrs );
-          if( ret == RESORT_MERGE_RESULT_OK )
-          {
-            return RESORT_SETDATA_MERGE;
-          }
-          else if( ret == RESORT_MERGE_RESULT_DISABLE )
-          {
-            return RESORT_SETDATA_NONE;
-          }
-        }
-        order ^=  1;
-        break;
-      default:
-        GF_ASSERT(0);
-      }
-    }
-  }
+//DEBUG_TICK_PrintEnd;
 
+//DEBUG_TICK_PrintStart;
+  //バッファへのセット
   if( sc_data_function_tbl[type].AddRecvData )
   {
-    BOOL is_set = sc_data_function_tbl[type].AddRecvData( p_sv_buff, cp_data_adrs );
-    if( !is_set && p_temp_buff )
+    RESORT_ADD_RESULT add = sc_data_function_tbl[type].AddRecvData( p_sv_buff, cp_data_adrs );
+    if( (add == RESORT_ADD_RESULT_NG) && p_temp_buff )
     {
-      is_set = sc_data_function_tbl[type].AddRecvData( p_temp_buff, cp_data_adrs );
+      add = sc_data_function_tbl[type].AddRecvData( p_temp_buff, cp_data_adrs );
     }
-    if( is_set )
+    if( add == RESORT_ADD_RESULT_OK )
     {
       return RESORT_SETDATA_SET;
     }
   }
   else
   {
-    if( sc_data_function_tbl[type].AddProxyData( p_proxy_buff, cp_data_adrs ) )
+    if( sc_data_function_tbl[type].AddProxyData( p_proxy_buff, cp_data_adrs ) == RESORT_ADD_RESULT_OK )
     {
       return RESORT_SETDATA_SET;
     }
   }
+//DEBUG_TICK_PrintEnd;
 
   return RESORT_SETDATA_NONE;
 }
