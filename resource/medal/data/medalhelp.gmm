@@ -1402,10 +1402,10 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_046">
-		<language name="JPN" width="216">●●●●●●●●●●で
+		<language name="JPN" width="216">むげんダンジョンで
 たたかいに　かって！
 かって！　かちまくれ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●で
+		<language name="JPN_KANJI" width="216">無限ダンジョンで
 戦いに　勝って！
 勝って！　勝ちまくれ！</language>
 	</row>
@@ -1426,55 +1426,55 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_050">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア２から５の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア２から５の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_051">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア６から１０の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア６から１０の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_052">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア２から５の　いずれかで
 ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア２から５の　いずれかで
 ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア６から１０の　いずれかで
 ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア６から１０の　いずれかで
 ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア２から５の　いずれかを
 １００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア２から５の　いずれかを
 １００歩以内に　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_055">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 エリア６から１０の　いずれかを
 １０００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 エリア６から１０の　いずれかを
 １０００歩以内に　クリアしろ！</language>
 	</row>

@@ -1675,90 +1675,90 @@
 
 	<row id="MDL_EXP_BATTLE_046">
 		<language name="JPN" width="216">２０にんの　トレーナーを
-●●●●●●●●●●で　たおした
+むげんダンジョンで　たおした
 やや　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">２０人の　トレーナーを
-●●●●●●●●●●で　倒した
+無限ダンジョンで　倒した
 やや　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_047">
 		<language name="JPN" width="216">５０にんの　トレーナーを
-●●●●●●●●●●で　たおした
+むげんダンジョンで　たおした
 そこそこ　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">５０人の　トレーナーを
-●●●●●●●●●●で　倒した
+無限ダンジョンで　倒した
 そこそこ　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_048">
 		<language name="JPN" width="216">１００にんの　トレーナーを
-●●●●●●●●●●で　たおした
+むげんダンジョンで　たおした
 かなり　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">１００人の　トレーナーを
-●●●●●●●●●●で　倒した
+無限ダンジョンで　倒した
 かなり　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_049">
 		<language name="JPN" width="216">１０００にんの　トレーナーを
-●●●●●●●●●●で　たおした
+むげんダンジョンで　たおした
 むてきのせんしを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">１０００人の　トレーナーを
-●●●●●●●●●●で　倒した
+無限ダンジョンで　倒した
 無敵の戦士を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_050">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 やさしいエリアで　トレーナーを
 すべて　たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 易しいエリアで　トレーナーを
 すべて　倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_051">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 むずかしいエリアで　トレーナーを
 すべて　たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 難しいエリアで　トレーナーを
 すべて　倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_052">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 やさしいエリアで　ボスだけを
 たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 易しいエリアで　ボスだけを
 倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_053">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 むずかしいエリアで　ボスだけを
 たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 難しいエリアで　ボスだけを
 倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_054">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 やさしいエリアを　１００ほ　で
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 易しいエリアを　１００歩以内に
 クリアした　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_055">
-		<language name="JPN" width="216">●●●●●●●●●●の
+		<language name="JPN" width="216">むげんダンジョンの
 むずかしいエリアを　１０００ほ　で
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">●●●●●●●●●●の
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
 難しいエリアを　１０００歩以内に
 クリアした　戦果の　メダル。</language>
 	</row>
@@ -1959,110 +1959,109 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_022">
-		<language name="JPN" width="216">ジョインアベニューで　●●●にんの
+		<language name="JPN" width="216">ジョインアベニューで　１０にんの
 おきゃくさんを　あんないした
 わかてガイドの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">ジョインアベニューで　●●●人の
+		<language name="JPN_KANJI" width="216">ジョインアベニューで　１０人の
 お客さんを　案内した
 若手ガイドの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_023">
-		<language name="JPN" width="216">ジョインアベニューで　●●●にんの
+		<language name="JPN" width="216">ジョインアベニューで　２０にんの
 おきゃくさんを　あんないした
 めいぶつガイドの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">ジョインアベニューで　●●●人の
+		<language name="JPN_KANJI" width="216">ジョインアベニューで　２０人の
 お客さんを　案内した
 名物ガイドの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_024">
-		<language name="JPN" width="216">ジョインアベニューで　●●●にんの
+		<language name="JPN" width="216">ジョインアベニューで　５０にんの
 おきゃくさんを　あんないした
 じゅくれんガイドの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">ジョインアベニューで　●●●人の
+		<language name="JPN_KANJI" width="216">ジョインアベニューで　５０人の
 お客さんを　案内した
 熟練ガイドの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_025">
-		<language name="JPN" width="216">ジョインアベニューで　●●●にんの
+		<language name="JPN" width="216">ジョインアベニューで　１００にんの
 おきゃくさんを　あんないした
 むてきの　あんないにんの　メダル。</language>
-		<language name="JPN_KANJI" width="216">ジョインアベニューで　●●●人の
+		<language name="JPN_KANJI" width="216">ジョインアベニューで　１００人の
 お客さんを　案内した
 無敵の　案内人の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_026">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●けんの　おみせを　つくった
+５けんの　おみせを　つくった
 しんじんオーナーの　ための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●軒の　お店を　作った
+５軒の　お店を　作った
 新人オーナーの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_027">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●けんの　おみせを　つくった
+１０けんの　おみせを　つくった
 きえいの　オーナーのための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●軒の　お店を　作った
+１０軒の　お店を　作った
 気鋭の　オーナーのための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_028">
-		<language name="JPN" width="216">ジョインアベニューで
-●●●けんの　おみせを　つくった
+		<language name="JPN" width="216">２０けんの　おみせを　つくった
 カリスマオーナーの　ための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●軒の　お店を　作った
+２０軒の　お店を　作った
 カリスマオーナーの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_029">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●けんの　おみせを　つくった
+５０けんの　おみせを　つくった
 きゅうきょくの　オーナーの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●軒の　お店を　作った
+５０軒の　お店を　作った
 究極の　オーナーの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_030">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●かい　おみやげを　もらった
+１０かい　おみやげを　もらった
 そこそこの　にんきものの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●回　お土産を　もらった
+１０回　お土産を　もらった
 そこそこの　人気者の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_031">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●かい　おみやげを　もらった
+３０かい　おみやげを　もらった
 かなりの　にんきものの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●回　お土産を　もらった
+３０回　お土産を　もらった
 かなりの　人気者の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_032">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●かい　おみやげを　もらった
+５０かい　おみやげを　もらった
 そうとうの　にんきものの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●回　お土産を　もらった
+５０回　お土産を　もらった
 相当の　人気者の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_033">
 		<language name="JPN" width="216">ジョインアベニューで
-●●●かい　おみやげを　もらった
+１００かい　おみやげを　もらった
 さいこうの　おくりものの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
-●●●回　お土産を　もらった
+１００回　お土産を　もらった
 最高の　贈り物の　メダル。</language>
 	</row>
 
@@ -2077,182 +2076,182 @@
 
 	<row id="MDL_EXP_APPLICATION_035">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
-●●●かい　あそんだ　ささやかな
+１０かい　あそんだ　ささやかな
 あそびごころを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターで　ミニゲームを
-●●●回　遊んだ　ささやかな
+１０回　遊んだ　ささやかな
 遊び心を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_036">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
-●●●かい　あそんだ　それなりの
+３０かい　あそんだ　それなりの
 あそびごころを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターで　ミニゲームを
-●●●回　遊んだ　それなりの
+３０回　遊んだ　それなりの
 遊び心を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_037">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
-●●●かい　あそんだ　そうとうな
+５０かい　あそんだ　そうとうな
 あそびごころを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターで　ミニゲームを
-●●●回　遊んだ　相当な
+５０回　遊んだ　相当な
 遊び心を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_038">
 		<language name="JPN" width="216">ライブキャスターで　ミニゲームを
-●●●かい　あそんだ　ごくじょうの
+１００かい　あそんだ　ごくじょうの
 あそびごころを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターで　ミニゲームを
-●●●回　遊んだ　極上の
+１００回　遊んだ　極上の
 遊び心を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_039">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　●●●コ　わった
+ふうせんを　３０コ　わった
 ささやかな　はかいの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　●●●個　割った
+風船を　３０個　割った
 ささやかな　破壊の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_040">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　●●●コ　わった
+ふうせんを　１００コ　わった
 はげしい　はかいの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　●●●個　割った
+風船を　１００個　割った
 激しい　破壊の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_041">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　●●●コ　わった
+ふうせんを　５００コ　わった
 ごうかいな　はかいの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　●●●個　割った
+風船を　５００個　割った
 豪快な　破壊の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_042">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　●●●コ　わった
+ふうせんを　１０００コ　わった
 きゅうきょくの　はかいの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　●●●個　割った
+風船を　１０００個　割った
 究極の　破壊の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_043">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+ハチクマン　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+ハチクマン　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_044">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+フルメタルコップ　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+フルメタルコップ　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_045">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+しんりゃくしゃ　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+侵略者　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_046">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+だいかいじゅう　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+大怪獣　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_047">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+タイムゲート　トラベラー
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+タイムゲート　トラベラー
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_048">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+トレーナーとポケモン　その　あい
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+トレーナーとポケモン その愛
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_049">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+まほうのくにの　ふしぎな　とびら
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+魔法の国の　不思議な扉
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_050">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+ＯＬ・ザ・ジャイアント！！
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+ＯＬ・ザ・ジャイアント！！
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_051">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+きょうふ！　あくむの　あかいきり
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+恐怖！　悪夢の　赤い霧
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_052">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+わすれえぬ　きおく　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+忘れえぬ記憶　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_053">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+ゴーストハンター　ぜんシリーズ
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+ゴーストハンター　全シリーズ
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_054">
 		<language name="JPN" width="216">ポケウッドの　えいが
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　とった　メダル。</language>
+ハチクマンのぎゃくしゅう
+こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-●●●●●●●●●●●●●●●●●●
-すべてのシリーズを　撮った　メダル。</language>
+ハチクマンの逆襲
+公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_055">
