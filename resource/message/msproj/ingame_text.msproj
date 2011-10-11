@@ -5323,5 +5323,37 @@
 			</Forbidden>
 		</RestrictedRole>
 	</Roles>
-	<ExtraSettings />
+	<ExtraSettings>
+		<ExtData
+			DataHolder="89e022cc-10fb-4702-a0fa-85c8cc6b5c45" />
+		<ExtData
+			DataHolder="cfbfa3e9-35ab-450c-b034-2bb83b5cff2b">
+			<!--Extra data for Message Studio Ver1.2.12.-->
+			<!--This section will be deleted at Message Studio 1.3.x series.-->
+			<LanguageMap
+				Language="JPN"
+				ExtraCellKey="f82d6890-5372-449d-ad7f-7a5615bdb41c" />
+			<LanguageMap
+				Language="JPN_KANJI"
+				ExtraCellKey="c59203db-9313-45e0-b15b-42f4db8b9cfc" />
+			<LanguageMap
+				Language="US_English"
+				ExtraCellKey="f9a2ad66-184b-41b5-b4b0-76af5946c3f9" />
+			<LanguageMap
+				Language="EU_French"
+				ExtraCellKey="d8a9de36-6978-4b25-85a5-04ef797f21e3" />
+			<LanguageMap
+				Language="EU_Italian"
+				ExtraCellKey="ea571ecd-ee98-4f90-b0f8-13a40d32e7a3" />
+			<LanguageMap
+				Language="EU_German"
+				ExtraCellKey="e459bb59-3a39-4a9b-84ee-6845c98eb532" />
+			<LanguageMap
+				Language="EU_Spanish"
+				ExtraCellKey="28d2cd1e-8bd0-48e4-8b32-eaa7c1e8107e" />
+			<LanguageMap
+				Language="KR_Korean"
+				ExtraCellKey="2095b8ab-1df5-4ad1-8a95-3ee975524c41" />
+		</ExtData>
+	</ExtraSettings>
 </MessageStudioProject>
