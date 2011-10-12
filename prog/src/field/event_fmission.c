@@ -378,16 +378,23 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
-//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
-
-    GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, SEQ_ME_MISSION_START ));
+    
+    if( wk->succeed_f ){  //他者ミッションに参加
+      GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, SEQ_ME_MISSION_START ));
+    }else{
+      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
+    }
     (*seq)++;
     break;
   case 1:
     if( PMSND_CheckPlayBGM() == FALSE ){
       u32 bgm = FSND_GetFieldBGM( wk->gdata, FIELDMAP_GetZoneID( wk->fieldmap), GAMEDATA_GetSeasonID( wk->gdata ) );
-//      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
-      GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, bgm ));
+    
+      if( wk->succeed_f ){  //他者ミッションに参加
+        GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, bgm ));
+      }else{
+        GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
+      }
       (*seq)++;
     }
     break;
@@ -529,7 +536,7 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
       bgm = LINK_FESTIVAL_MissionEnd( wk->fest_sys ); //ミッション終了
 
       if( bgm != FES_BGM_RECOVER_NONE ){
-        GMEVENT_CallEvent( event, EVENT_FSND_PlayEventBGM( wk->gsys, bgm ));
+        GMEVENT_CallEvent( event, EVENT_FSND_ChangeBGM( wk->gsys, bgm, FSND_FADE_NORMAL, FSND_FADE_NORMAL ));
       }
     }
     (*seq)++;
@@ -548,6 +555,9 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
     (*seq)++;
     break;
   default:
+    if( FIELD_SOUND_HaveRequest( GAMEDATA_GetFieldSound( wk->gdata ) ) ) {
+      break;  //一応サウンドのリクエスト終了を待つ
+    }
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }

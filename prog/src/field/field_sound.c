@@ -1376,7 +1376,7 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
   }
   //スペシャルBGMに引っかからなければ、フェスミッション参加フラグをチェック
   if( GAMEDATA_GetFesBGMFlag( gameData) ){
-    return SEQ_BGM_ERECTRIC_GYM_02; 
+    return SEQ_BGM_PALACE2; 
   }
   // 一致なし
   return SPECIAL_BGM_NONE;
