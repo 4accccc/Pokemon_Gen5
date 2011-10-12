@@ -2772,7 +2772,8 @@ static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk 
  * @param   senario		
  * @param   turn		
  *
- * @retval  int		-1:このターンにはVFX設定が無い 0-4:指定のVFX設定
+ * @retval  int		      -1: このターンにはVFX設定が無い 
+ *                それ以外: 指定のVFX設定(上位8bit=アニメ設定, 下位8bit=戦闘背景指定）
  */
 //----------------------------------------------------------------------------------
 static int _check_pokewood_vfx( POKEWOOD_SENARIO *senario, int turn )

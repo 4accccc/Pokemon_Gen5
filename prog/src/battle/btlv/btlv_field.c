@@ -109,7 +109,7 @@ static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
  * @param[in] season  ‹GßINDEX
  * @param[in] heapID  ƒq[ƒvID
  * @param[in] pokewood ƒ|ƒPƒEƒbƒhƒtƒ‰ƒO(battle.hŽQÆ)
- * @param[in] pokewood_field ƒ|ƒPƒEƒbƒh‚Ì”wŒiŽw’è‚m‚n
+ * @param[in] pokewood_field ƒ|ƒPƒEƒbƒh‚Ì”wŒiŽw’è‚m‚n(‰ºˆÊ‚Wbit‚Éí“¬”wŒi‚m‚nCãˆÊ8bit‚ÉƒAƒjƒŽw’è, batt_bg_tbl.xlsŽQÆ)
  * @param[in] wbt_final wbtŒˆŸí‚©‚Ç‚¤‚©H
  */
 //============================================================================================
@@ -124,9 +124,14 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID,
     index = BATT_FIELD_ID_PW_REC;
   }else if(pokewood==BTL_POKEWOOD_SHOW){
     if(pokewood_field==0){
-      index = BATT_FIELD_ID_PW_SHOW_01;
+      index  = BATT_FIELD_ID_PW_SHOW_01;
+      season = 0;
     }else{
-      index = pokewood_field;
+      index  = pokewood_field & 0xff;
+      season = (pokewood_field>>8)&0xff;
+      if(season!=0){
+        season = BATT_FIELD_ANIME_1+season-1;
+      }
     }
   }
 
@@ -351,14 +356,16 @@ static void _field_anime_delete( BTLV_FIELD_WORK *bfw )
 /**
  * @brief ”wŒiƒ‚ƒfƒŠƒ“ƒO“Ç‚Ý‘Ö‚¦
  *
- * @param   bfw   
- * @param   anime   
+ * @param   bfw 
+ * @param   no  ãˆÊ8bit=ƒAƒjƒŽw’èA‰ºˆÊ8bit=í“¬”wŒiŽw’è
  */
 //=============================================================================================
 void BTLV_FIELD_ChangeModel( BTLV_FIELD_WORK *bfw, int no )
 {
-  int index  = bfw->field_index;
-  int offset = field_anime_tbl[no];
+//  int index  = bfw->field_index;
+  int index = no&0xff;
+  int anime = (no>>8)&0xff;
+  int offset = field_anime_tbl[anime];
   BOOL  ret;
   BATT_BG_TBL_BG_TABLE* bbtbt;
 
