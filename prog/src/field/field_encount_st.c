@@ -122,5 +122,5 @@ void ENCOUNT_WORK_EncountProbReset( ENCOUNT_WORK* wp, MAPATTR attr )
   wp->player.step = 0;
   wp->player.move_f = 0;
 
-  OS_FPrintf( 3, "#Enc Prob Reset\n");
+//  OS_FPrintf( 3, "#Enc Prob Reset\n");
 }
