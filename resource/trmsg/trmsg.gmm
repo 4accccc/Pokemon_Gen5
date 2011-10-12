@@ -5875,10 +5875,10 @@
 	</row>
 
 	<row id="TRID_WORKER2_19_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">プラズマだんが　いってたとおり
+		<language name="JPN" width="216">２ねんまえ……　いわれたとおりに
 ポケモンを　かいほう　したら▽
 コンビナートも　やってけないよな</language>
-		<language name="JPN_KANJI" width="216">プラズマ団が　いってたとおり
+		<language name="JPN_KANJI" width="216">２年前……　いわれたとおりに
 ポケモンを　解放したら▽
 コンビナートも　やってけないよな</language>
 	</row>
@@ -6316,7 +6316,7 @@
 
 	<row id="TRID_BADTEAM_02_TRMSG_FIGHT_AFTER_2">
 		<language name="JPN" width="216">ワルいヤツどうし　あつまって
-ポケモ　じまん　してるんだぜ！</language>
+ポケモンじまん　してるんだぜ！</language>
 		<language name="JPN_KANJI" width="216">ワルいヤツ同士　集まって
 ポケモン自慢　してるんだぜ！</language>
 	</row>
