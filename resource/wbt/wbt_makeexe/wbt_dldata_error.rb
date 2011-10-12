@@ -25,11 +25,11 @@ $err_footer = [
 
 # mes
 $err_mes = [
-  "セルが空白です",                # 空白
-  "入力値が正しくありません",      # 数値入力
-  "最大文字数を超えています",      # 文字入力
-  "入力が正しくありません",        # 入力規則
-  "特性が正しくありません",        # 特性エラー
+  "セルが空白です",                      # 空白
+  "値が正しくありません",                # 数値入力
+  "最大文字数を超えています",            # 文字入力
+  "入力が正しくありません",              # 入力規則
+  "特性の組み合わせが正しくありません",  # 特性エラー
 ]
 
 # mes2
@@ -37,6 +37,26 @@ $err_mes_index = [
   "●エラーメッセージ",
   "●場所",
   "●内容",
+  "ファイル ",
+  "シート   ",
+  "セル     ",
+  "値       ",
+  "範囲     ",
+  "( 範囲外 )",
+  "( 文字数オーバー )",
+  "( 該当なし )",
+  "( 組み合わせエラー )",
+]
+
+$em2 = [
+  "行",
+  "文字",
+]
+
+$em3 = [
+  "ポケモン名",
+  "フォルムNo",
+  "特性      ",
 ]
 
 #------------------------------------------------
@@ -78,16 +98,18 @@ class WBT_ERROR
     end
   end
   
-  #----------------------------------------
-  # 空白エラー(ファイル名、シート名、col、row)
-  #----------------------------------------
-  def print_blank_error( filename, sheetnum, col, row )
+  #--------------------------------------------------
+  # 空白エラー(ファイル名、シート名、col、row, str)
+  #--------------------------------------------------
+  def print_blank_error( filename, sheetnum, col, row, str )
     @num = @num+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
-    @errfile.printf("%s\n", $err_mes[0] )
+    @errfile.printf("%s\n\n", $err_mes[0] )
     @errfile.printf("%s\n", $err_mes_index[1] )
-    @errfile.printf("[%s] : [%s] : [ %d, %s ]\n", filename, $sheet_str[sheetnum], col, $cell_row[row-1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] ( %s )\n", $err_mes_index[5],col, $cell_row[row-1],str)
     @errfile.printf("******************************************************\n")
   end
   
@@ -98,11 +120,14 @@ class WBT_ERROR
     @num = @num+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
-    @errfile.printf("%s\n", $err_mes[1] )
+    @errfile.printf("%s\n\n", $err_mes[1] )
     @errfile.printf("%s\n", $err_mes_index[1] )
-    @errfile.printf("[%s] : [%s] : [ %d, %s ]\n", filename, $sheet_str[sheetnum], col, $cell_row[row-1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] ( %s )\n\n", $err_mes_index[5],col, $cell_row[row-1], str)
     @errfile.printf("%s\n", $err_mes_index[2] )
-    @errfile.printf("[%s] : [%d] : [ %d - %d ]\n", str, num, min, max )
+    @errfile.printf("%s: [%d] %s\n", $err_mes_index[6], num, $err_mes_index[8])
+    @errfile.printf("%s: [%d - %d]\n",$err_mes_index[7], min, max )
     @errfile.printf("******************************************************\n\n")
   end
   
@@ -113,11 +138,13 @@ class WBT_ERROR
     @num = @num+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
-    @errfile.printf("%s\n", $err_mes[3] )
+    @errfile.printf("%s\n\n", $err_mes[3] )
     @errfile.printf("%s\n", $err_mes_index[1] )
-    @errfile.printf("[%s] : [%s] : [ %d, %s ]\n", filename, $sheet_str[sheetnum], col, $cell_row[row-1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] ( %s )\n\n", $err_mes_index[5],col, $cell_row[row-1], str)
     @errfile.printf("%s\n", $err_mes_index[2] )
-    @errfile.printf("[%s] : [%s]\n", str, mstr )
+    @errfile.printf("%s: [%s] %s\n", $err_mes_index[6], mstr, $err_mes_index[10])
     @errfile.printf("******************************************************\n\n")
   end
   
@@ -132,27 +159,38 @@ class WBT_ERROR
     @num = @num+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
-    @errfile.printf("%s\n", $err_mes[2] )
+    @errfile.printf("%s\n\n", $err_mes[2] )
     @errfile.printf("%s\n", $err_mes_index[1] )
-    @errfile.printf("[%s] : [%s] : [ %d, %s ]\n", filename, $sheet_str[sheetnum], col, $cell_row[row-1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] ( %s )\n\n", $err_mes_index[5],col, $cell_row[row-1], str)
     @errfile.printf("%s\n", $err_mes_index[2] )
-    @errfile.printf("[%s] : (limit)[%d:%d,%d,%d] => (error)[%d:%d,%d,%d]\n",
-				str, line, cbuf[0], cbuf[1], cbuf[2], array[0],array[1],array[2],array[3] )
+    @errfile.printf("%s: [%d%s: %d%s, %d%s, %d%s] %s\n",
+			$err_mes_index[6], array[0], $em2[0], 
+			array[1],$em2[1],array[2],$em2[1],array[3],$em2[1],$err_mes_index[9])
+    @errfile.printf("%s: [%d%s: %d%s, %d%s, %d%s]\n",
+			$err_mes_index[7], line, $em2[0], 
+			cbuf[0],$em2[1],cbuf[1],$em2[1],cbuf[2],$em2[1])
     @errfile.printf("******************************************************\n\n")
   end
   
-  #----------------------------------------------------------------
-  # 特性エラー(ファイル名、シート名、col、row)(仮)
-  #----------------------------------------------------------------
-  def print_tokusei_error( filename, sheetnum, col, row )
+  #-----------------------------------------------------------------------
+  # 特性エラー(ファイル名、シート名、col、row、pokename、formid、tokusei)
+  #-----------------------------------------------------------------------
+  def print_tokusei_error( filename, sheetnum, col, row, pokename, formid, tokusei )
+    
     @num = @num+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
-    @errfile.printf("%s\n", $err_mes[4] )
+    @errfile.printf("%s\n\n", $err_mes[4] )
     @errfile.printf("%s\n", $err_mes_index[1] )
-    @errfile.printf("[%s] : [%s] : [ %d, %s ]\n", filename, $sheet_str[sheetnum], col, $cell_row[row-1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s]\n\n", $err_mes_index[5],col, $cell_row[row-1])
     @errfile.printf("%s\n", $err_mes_index[2] )
-#    @errfile.printf("[%s] : [%s]\n", str, mstr )
+    @errfile.printf("%s: [%s]\n", $em3[0], pokename)
+    @errfile.printf("%s: [%d]\n", $em3[1], formid)
+    @errfile.printf("%s: [%s]\n", $em3[2], tokusei)
     @errfile.printf("******************************************************\n\n")
   end
   
@@ -163,6 +201,12 @@ class WBT_ERROR
     write_fix( 1 )
     #
     @errfile.close()
+    #
+    if(@num != 0)
+      puts sprintf("*******************************\n")
+      puts sprintf("エラーが[ %d ]個あります\n",@num);
+      puts sprintf("*******************************\n")
+    end
   end
   
 end

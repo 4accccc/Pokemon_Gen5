@@ -162,7 +162,8 @@ class WBT_DATA
     if(ret == -1)
 #      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
 #      data_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_TOURNAMENT, DATA_UP_START_ROW, $title_str[0]);
+      return;
     end
     # セット
     @tournament_id = cstr.to_i;
@@ -192,7 +193,8 @@ class WBT_DATA
     if(ret == -1)
 #      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW );
 #      data_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_VERSION, DATA_UP_START_ROW, $title_str[4]);
+      return;
     end
     # セット
     num = hash2no( $version_hash, cstr );
@@ -217,11 +219,13 @@ class WBT_DATA
     #
     DATA_LANG_NUM.times{|i|
       cstr = @conv.get_cell(0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW)
-      ret = chkblank( cstr, $title_str[DATA_LANG_JPN+i] )
+      ret = chkblank( cstr, $title_str[5+i] )
       if(ret == -1)
 #        print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
 #        data_exit();
-        $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW );
+        $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_LANG_JPN+i, DATA_UP_START_ROW,
+				      $title_str[5+i]);
+        return;
       end
       # セット
       num = hash2no( $ng_hash, cstr );
@@ -229,7 +233,7 @@ class WBT_DATA
         @lang_id = 1+i;
         #
         if(@local_debug == 1)
-          p sprintf("%s :%d", $title_str[DATA_LANG_JPN+i],@lang_id)
+          p sprintf("%s :%d", $title_str[5+i],@lang_id)
         end
         #
         break;
@@ -247,7 +251,9 @@ class WBT_DATA
     if(ret == -1)
 #      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
 #      data_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_STR_JPN+@local_language, DATA_UP_START_ROW,
+				    $title_str[12]);
+      return;
     end
     #
     # 変換
@@ -287,7 +293,9 @@ class WBT_DATA
     if(ret == -1)
 #      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW );
 #      data_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW);
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP00_JPN+@local_language, DATA_UP_START_ROW,
+				    $title_str[13]);
+      return;
     end
     
     # 変換
@@ -327,7 +335,9 @@ class WBT_DATA
     if(ret == -1)
 #      print_error_info( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW );
 #      data_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW);
+      $wbt_error.print_blank_error( $current_xls_name, 0, DATA_UP_START_COL+DATA_EXP01_JPN+@local_language, DATA_UP_START_ROW,
+                                    $title_str[14]);
+      return;
     end
     
     # 変換

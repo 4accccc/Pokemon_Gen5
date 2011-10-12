@@ -305,7 +305,7 @@ end
 #-------------------------
 def chkblank( str, mstr )
   if(str == nil)
-    p sprintf("[%s] %s", mstr,$error_str[1])
+#    p sprintf("[%s] %s", mstr,$error_str[1])
     return(-1);
   end
   return(0);

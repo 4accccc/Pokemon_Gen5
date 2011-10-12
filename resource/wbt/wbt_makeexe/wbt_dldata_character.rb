@@ -189,7 +189,9 @@ class WBT_CHARACTER_SINGLE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id );
+      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id,
+                                    $trainer_str[0]);
+      return;
     end
     
     # 変換
@@ -225,7 +227,9 @@ class WBT_CHARACTER_SINGLE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id );
+      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id,
+                                    $trainer_str[2]);
+      return;
     end
     
     # 変換
@@ -261,7 +265,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language, TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language,
-				TRAINER_START_ROW+@char_id );
+				TRAINER_START_ROW+@char_id, $trainer_str[1]);
+      return;
     end
     
     # 変換
@@ -302,7 +307,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[3]);
+      return;
     end
     
     # 変換
@@ -343,7 +349,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[4]);
+      return;
     end
     
     # 変換
@@ -385,7 +392,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[5]);
+      return;
     end
     
     # 変換
@@ -427,7 +435,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[6]);
+      return;
     end
     # セット
     @msg_before_id = cstr.to_i;
@@ -458,7 +467,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[9]);
+      return;
     end
     # セット
     @msg_after_win_id = cstr.to_i;
@@ -489,7 +499,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], 
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[10]);
+      return;
     end
     # セット
     @msg_after_lose_id = cstr.to_i;
@@ -520,7 +531,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[7]);
+      return;
     end
     # セット
     @msg_win_id = cstr.to_i;
@@ -551,7 +563,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[8]);
+      return;
     end
     # セット
     @msg_lose_id = cstr.to_i;
@@ -582,7 +595,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[11]);
+      return;
     end
     # セット
     @msg_announce_id = cstr.to_i;
@@ -613,7 +627,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[12]);
+      return;
     end
     # セット
     str = cstr
@@ -646,7 +661,8 @@ class WBT_CHARACTER_SINGLE
 #        print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[15+i], TRAINER_START_ROW+@char_id );
 #        trainer_exit();
         $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[15+i],
-							    TRAINER_START_ROW+@char_id);
+							    TRAINER_START_ROW+@char_id, $trainer_str[15+i]);
+        return;
       end
       # セット
       str = cstr
@@ -672,7 +688,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[14]);
+      return;
     end
     
     # 番号を取得
@@ -775,7 +792,8 @@ class WBT_CHARACTER_SINGLE
 #      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
 #      trainer_exit();
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12],
-							  TRAINER_START_ROW+@char_id);
+							  TRAINER_START_ROW+@char_id, $trainer_str[12]);
+      return;
     end
     # セット
     str = cstr

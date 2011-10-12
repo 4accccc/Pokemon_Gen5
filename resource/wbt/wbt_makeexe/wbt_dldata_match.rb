@@ -72,7 +72,9 @@ class WBT_MATCH_SINGLE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
 #      match_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id );
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL, MATCH_START_ROW+@match_id,
+                                    $match_str[0]);
+      return;
     end
     # セット
     num = hash2no( $match_hash, cstr );
@@ -101,7 +103,9 @@ class WBT_MATCH_SINGLE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
 #      match_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id );
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+1, MATCH_START_ROW+@match_id,
+                                    $match_str[1]);
+      return;
     end
     # セット
     @pri = cstr.to_i
@@ -130,7 +134,9 @@ class WBT_MATCH_SINGLE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
 #      match_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id );
+      $wbt_error.print_blank_error( $current_xls_name, 3, MATCH_START_COL+2, MATCH_START_ROW+@match_id,
+                                    $match_str[2]);
+      return;
     end
     #
     num = hash2no( $skip_hash, cstr );

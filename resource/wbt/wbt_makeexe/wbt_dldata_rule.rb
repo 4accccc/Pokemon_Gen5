@@ -123,7 +123,9 @@ class WBT_RULE
       if(ret == -1)
 #        print_error_info( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW );
 #        rule_exit();
-        $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW );
+        $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+i, REG_UP_START_ROW,
+                                      $reg_str[i]);
+        return;
       end
       # セット
       @join_info[i] = cstr.to_i;
@@ -164,7 +166,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+3, REG_UP_START_ROW,
+                                    $reg_str[3]);
+      return;
     end
     # セット
     num = hash2no( $level_range_hash, cstr );
@@ -193,7 +197,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+4, REG_UP_START_ROW,
+                                    $reg_str[4]);
+      return;
     end
     # セット
     @level_total = cstr.to_i;
@@ -225,7 +231,9 @@ class WBT_RULE
       if(ret == -1)
 #        print_error_info( $current_xls_name, 1, REG_UP_START_COL+5+i, REG_UP_START_ROW );
 #        rule_exit();
-        $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+5+i, REG_UP_START_ROW );
+        $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+5+i, REG_UP_START_ROW,
+                                      $reg_str[5+i]);
+        return;
       end
       #
       # セット
@@ -255,7 +263,9 @@ class WBT_RULE
       if(ret == -1)
 #        print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW );
 #        rule_exit();
-        $wbt_error.print_blank_error( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW );
+        $wbt_error.print_blank_error( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW,
+                                      $reg_str[7]);
+        return;
       end
       #
       # セット
@@ -303,7 +313,9 @@ class WBT_RULE
       if(ret == -1)
 #        print_error_info( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4 );
 #        rule_exit();
-        $wbt_error.print_blank_error( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4 );
+        $wbt_error.print_blank_error( $current_xls_name, 2, RULE_UP_START_COL+i, RULE_UP_START_ROW+4,
+                                      $reg_str[8]);
+        return;
       end
       #
       # セット
@@ -349,7 +361,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+10, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+10, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+10, REG_UP_START_ROW,
+                                    $reg_str[11]);
+      return;
     end
     #
     str = cstr;
@@ -380,7 +394,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+9, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+9, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+9, REG_UP_START_ROW,
+                                    $reg_str[10]);
+      return;
     end
     # セット
     num = hash2no( $battle_rule_hash, cstr );
@@ -409,7 +425,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+11, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+11, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+11, REG_UP_START_ROW,
+                                    $reg_str[12]);
+      return;
     end
     # セット
     num = hash2no( $type_hash, cstr );
@@ -439,7 +457,9 @@ class WBT_RULE
     if(ret == -1)
 #      print_error_info( $current_xls_name, 1, REG_UP_START_COL+12, REG_UP_START_ROW );
 #      rule_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+12, REG_UP_START_ROW );
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+12, REG_UP_START_ROW,
+                                    $reg_str[13]);
+      return;
     end
     #
     num = cstr.to_i;
