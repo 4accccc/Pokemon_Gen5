@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-06-30T19:03:40"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-12T20:33:04"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -651,24 +651,24 @@
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 cccc
-			0000 0000 0000 0000 0000 0000 c0cc aaab
-			0000 0000 0000 0000 0000 c000 bcaa aaaa
-			0000 0000 0000 0000 0000 cc88 9aaa aaa9
-			0000 0000 0000 0000 0000 aaa8 aaa9 aaaa
-			0000 0000 0000 0000 0000 aaa8 aaaa aaaa
-			0000 0000 0000 0000 8870 9aa8 aaa9 aaaa
-			0000 0000 0000 0000 cc70 999b aa99 aa9a
-			0000 0000 0000 7000 cc87 99bb aa99 aa99
-			0000 0000 0000 7000 cccc 99bb 9999 aa99
-			0000 0000 0000 6000 cccc 999b 9999 a999
-			0000 0000 0000 6660 cc87 999b 9999 9999
-			0000 0000 6600 6666 cccc bbbc 999b 9999
-			0000 0000 7600 6766 cccc bccb bbbb 999b
-			0000 0000 7600 6777 bcc8 cccb bbbb bbbb
-			0000 0000 7600 7887 bcc7 cccc bbcc bbbb
-			0000 0000 7660 8888 ccc7 cccc ccbb bbcc
-			0000 6000 7766 8888 cc77 cccc cccb cccc
+			0000 0000 0000 0000 0000 0000 0000 aaaa
+			0000 0000 0000 0000 0000 0000 a0aa aaa9
+			0000 0000 0000 0000 0000 a000 9aaa aaaa
+			0000 0000 0000 0000 0000 aaaa 9aaa aaa9
+			0000 0000 0000 0000 0000 aaaa aaa9 aaaa
+			0000 0000 0000 0000 0000 aaaa aaaa aaaa
+			0000 0000 0000 0000 9bb0 9aa9 aaa9 aaaa
+			0000 0000 0000 0000 9bb0 9999 aa99 aa9a
+			0000 0000 0000 c000 bbbc 9999 aa99 aa99
+			0000 0000 0000 c000 bbcc 9999 9999 aa99
+			0000 0000 0000 c000 bccc 999b 9999 a999
+			0000 0000 0000 c870 cccc 999b 9999 9999
+			0000 0000 7700 8777 cccc bbbc 999b 9999
+			0000 0000 7700 7777 cccc bccb bbbb 999b
+			0000 0000 7700 7777 bcc8 cccb bbbb bbbb
+			0000 0000 7700 7887 bcc7 cccc bbcc bbbb
+			0000 0000 7770 8888 ccc7 cccc ccbb bbcc
+			0000 7000 7777 8888 cc77 cccc cccb cccc
 			0000 7600 8777 ccc8 7778 ccc8 cccc cccc
 			0000 7600 8777 8ccc 7888 cccc ccc7 cccc
 			0000 6000 7777 8888 8888 7cc7 cc88 cccc
@@ -850,12 +850,12 @@
 			0000 0000 4440 2223 3222 0444 0000 0000
 			0000 0000 3340 1222 2221 0433 0000 0000
 			0000 0000 2240 1122 2211 0422 0000 0000
-			0000 0000 1235 1121 1211 5321 0000 0000
-			0000 5000 1224 1111 1111 4221 0005 0000
-			0000 5000 2222 1111 1111 2222 0005 0000
-			0000 5000 1222 1111 1111 2221 0005 0000
-			0000 5500 1124 1111 1111 4211 0055 0000
-			0000 4500 1124 1111 1111 4211 0054 0000
+			0000 0000 1234 1121 1211 4321 0000 0000
+			0000 4000 1224 1111 1111 4221 0004 0000
+			0000 4000 2222 1111 1111 2222 0004 0000
+			0000 4000 1222 1111 1111 2221 0004 0000
+			0000 3400 1123 1111 1111 3211 0043 0000
+			0000 3400 1123 1111 1111 3211 0043 0000
 			0000 3400 1123 1112 2111 3211 0043 0000
 			0000 3400 2222 1112 2111 2222 0043 0000
 			0000 4000 1223 1111 1111 3221 0004 0000
@@ -2288,10 +2288,10 @@
 		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="10" disp_pos="-240.000000 360.000000"/>
 		<ex_tex_image index="11" disp_pos="-120.000000 360.000000"/>
-		<ex_tex_image index="12" disp_pos="0.000000 360.000000"/>
-		<ex_tex_image index="13" disp_pos="120.000000 360.000000"/>
-		<ex_tex_image index="14" disp_pos="240.000000 360.000000"/>
-		<ex_tex_image index="15" disp_pos="360.000000 360.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
@@ -2321,10 +2321,10 @@
 		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="10" disp_pos="-240.000000 420.000000"/>
 		<ex_tex_palette index="11" disp_pos="-120.000000 420.000000"/>
-		<ex_tex_palette index="12" disp_pos="0.000000 420.000000"/>
-		<ex_tex_palette index="13" disp_pos="120.000000 420.000000"/>
-		<ex_tex_palette index="14" disp_pos="240.000000 420.000000"/>
-		<ex_tex_palette index="15" disp_pos="360.000000 420.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
