@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-09-29T21:44:50"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-12T11:45:35"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -2285,31 +2285,31 @@
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4445 4444
-			4444 4444 4444 4444 4444 4444 444e 4444
-			5554 5555 5555 5555 5555 5555 555f 4555
-			8854 8888 2888 2222 8888 8888 888f 4588
-			8854 8888 0028 0000 8820 e888 88ef 4588
-			8854 2bbb 0000 0000 2000 ffeb efff 4588
-			8854 02bb 1000 6111 e000 ffff ffff 45ef
-			8854 002b 1110 6611 0066 ffe0 efff 4588
-			8854 000b 1111 6661 0666 fb00 beff 4588
-			8854 1002 1111 6666 1166 e200 bbef 4588
-			8854 1000 6111 6666 1116 b000 bbbf 4588
-			2854 1100 6611 6666 6111 2006 bbbf 4588
-			2854 1100 6661 1666 6611 2006 bbbf 4588
-			2854 1100 6666 1166 6661 2001 bbbe 4588
+			4444 4444 4444 4444 4444 4444 444d 4444
+			5554 5555 5555 5555 5555 5555 555e 4555
+			8854 8888 2888 2222 8888 8888 888e 4588
+			8854 8888 0028 0000 8820 d888 88de 4588
+			8854 2bbb 0000 0000 2000 eedb deee 4588
+			8854 02bb 1000 6111 d000 eeee eeee 45de
+			8854 002b 1110 6611 0066 eed0 deee 4588
+			8854 000b 1111 6661 0666 eb00 bdee 4588
+			8854 1002 1111 6666 1166 d200 bbde 4588
+			8854 1000 6111 6666 1116 b000 bbbe 4588
+			2854 1100 6611 6666 6111 2006 bbbe 4588
+			2854 1100 6661 1666 6611 2006 bbbe 4588
+			2854 1100 6666 1166 6661 2001 bbbd 4588
 			2854 6100 6666 1116 1666 2001 bbbb 4588
 			2854 6600 6666 6111 1166 2001 bbbb 4588
 			2854 6600 1666 6611 1116 2001 bbbb 4588
 			8854 6000 1166 6661 1111 b000 bbbb 4588
-			8854 6002 1116 1666 1111 b200 bebb 4588
-			e854 000b 6111 1166 0111 bb00 bfbb 4588
-			f854 002b 6610 1116 0011 bb20 efeb 4588
-			fe54 02be 6000 1111 0000 bbb2 bfbb 4588
-			ffe4 2bef 0000 0000 2000 bbbb bebb 4588
-			fe54 888e 0028 0000 8820 8888 8888 4588
-			f854 8888 2888 2222 8888 8888 8888 4588
-			e554 5555 5555 5555 5555 5555 5555 4555
+			8854 6002 1116 1666 1111 b200 bdbb 4588
+			d854 000b 6111 1166 0111 bb00 bebb 4588
+			e854 002b 6610 1116 0011 bb20 dedb 4588
+			ed54 02bd 6000 1111 0000 bbb2 bebb 4588
+			eed4 2bde 0000 0000 2000 bbbb bdbb 4588
+			ed54 888d 0028 0000 8820 8888 8888 4588
+			e854 8888 2888 2222 8888 8888 8888 4588
+			d554 5555 5555 5555 5555 5555 5555 4555
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -2318,9 +2318,9 @@
 			3333 3333 3333 3333 3333 3333 3333 3333
 			7773 7777 7777 7777 7777 7777 7777 3777
 			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
-			aa73 ffff ffff ffff ffff ffff ffff 37aa
-			aa73 ffff ffff ffff ffff ffff ffff 37aa
-			aa73 ffff ffff ffff ffff ffff ffff 37aa
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
 			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
 			7773 7777 7777 7777 7777 7777 7777 3777
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -2328,9 +2328,9 @@
 			3333 3333 3333 3333 3333 3333 3333 3333
 			9993 9999 9999 9999 9999 9999 9999 3999
 			cc93 cccc cccc cccc cccc cccc cccc 39cc
-			dc93 dddd dddd dddd dddd dddd dddd 39cd
-			dc93 dddd dddd dddd dddd dddd dddd 39cd
-			dc93 dddd dddd dddd dddd dddd dddd 39cd
+			cc93 cccc cccc cccc cccc cccc cccc 39cc
+			cc93 cccc cccc cccc cccc cccc cccc 39cc
+			cc93 cccc cccc cccc cccc cccc cccc 39cc
 			cc93 cccc cccc cccc cccc cccc cccc 39cc
 			9993 9999 9999 9999 9999 9999 9999 3999
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -2338,14 +2338,14 @@
 			3333 3333 3333 3333 3333 3333 3333 3333
 			7773 7777 7777 7777 7777 7777 7777 3777
 			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
-			fa73 ffff ffff ffff ffff ffff ffff 37af
-			fa73 ffff ffff ffff ffff ffff ffff 37af
-			fa73 ffff ffff ffff ffff ffff ffff 37af
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
+			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
 			aa73 aaaa aaaa aaaa aaaa aaaa aaaa 37aa
 			7773 7777 7777 7777 7777 7777 7777 3777
 			3333 3333 3333 3333 3333 3333 3333 3333
 			3333 3333 3333 3333 3333 3333 3333 3333
-			ffff ffff ffff ffff ffff ffff ffff ffff
+			eeee eeee eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
 	<tex_image index="56" name="c3_plant1"
@@ -5686,7 +5686,7 @@
 	</tex_palette>
 	<tex_palette index="58" name="c3_mmmm01_pl" color_size="16">
 		1a7a 2b1f 3694 39ce 41c9 522b 539f 56b5
-		5e8d 6b1e 6b5a 6f0f 735e 7bde 7f91 7fff
+		5e8d 6b1e 6b5a 6f0f 735e 7f91 7fff 7fff
 	</tex_palette>
 	<tex_palette index="59" name="c3_plant1_pl" color_size="4">
 		2d90 18ec 212e 39f3
