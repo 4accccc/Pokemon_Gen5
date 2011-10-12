@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-06-28T17:46:35" source="m_gym0501_00_00_all.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-11T22:14:27" source="m_gym0501_00_00_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-06-28T17:46:35" source="m_gym0501_00_00_all.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-10-11T22:14:27" source="m_gym0501_00_00_all.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1125,7 +1125,7 @@
 				</primitive>
 				<primitive index="4" type="triangles" vertex_size="21">
 					<tex st="16.250000 0.000000"/>
-					<clr rgb="0 19 12"/>
+					<clr rgb="0 22 0"/>
 					<pos_xyz xyz="-2.330078 -0.062988 -3.753662"/>
 					<tex st="16.562500 20.250000"/>
 					<clr rgb="14 22 18"/>
@@ -1173,7 +1173,7 @@
 					<tex st="21.125000 9.125000"/>
 					<pos_diff xyz="0.010010 -0.011230 -0.102051"/>
 					<tex st="24.250000 0.000000"/>
-					<clr rgb="0 22 12"/>
+					<clr rgb="0 27 15"/>
 					<pos_diff xyz="-0.113770 0.083740 0.053467"/>
 					<tex st="24.125000 12.250000"/>
 					<clr rgb="14 22 18"/>
@@ -1181,7 +1181,7 @@
 					<tex st="16.562500 20.250000"/>
 					<pos_diff xyz="0.104736 -0.069092 0.041260"/>
 					<tex st="16.250000 0.000000"/>
-					<clr rgb="12 31 12"/>
+					<clr rgb="21 31 21"/>
 					<pos_xyz xyz="-2.330078 -0.062988 -3.753662"/>
 				</primitive>
 			</primitive_array>
