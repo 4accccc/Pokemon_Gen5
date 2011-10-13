@@ -1,7 +1,5 @@
 src/debug/ev_bgm_list.gmm
 src/snd_test_name.gmm
-src/tokusei.gmm
-src/tokuseiinfo.gmm
 src/trmsg.gmm
 src/trname.gmm
 src/trtype.gmm

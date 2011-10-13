@@ -2145,6 +2145,10 @@
 			<ContentItem
 				Name="title.mstxt" />
 			<ContentItem
+				Name="tokusei.mstxt" />
+			<ContentItem
+				Name="tokuseiinfo.mstxt" />
+			<ContentItem
 				Name="tower_trainer.mstxt" />
 			<ContentItem
 				Name="townmap.mstxt" />

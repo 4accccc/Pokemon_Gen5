@@ -1,0 +1,5779 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="TOKUSEIINFO_000"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>―
+―</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>―
+―</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:49" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くさくて　あいてが
+ひるむ　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>臭くて　相手が
+ひるむ　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうに　でると
+あめを　ふらす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘に　でると
+雨を　降らす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっとずつ
+すばやく　なっていく。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっとずつ
+素早く　なっていく。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　こうげきが
+きゅうしょに　あたらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　攻撃が
+急所に　当たらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いちげきで
+たおされない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>一撃で　倒されない。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だれも　ばくはつが
+できなくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だれも　爆発が
+できなくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まひ　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まひ状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すなあらしで
+かいひりつが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>砂あらしで
+回避率が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さわった　あいてを
+まひさせる　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触った　相手を
+まひさせる　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんきを　うけると
+かいふくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>でんきを　受けると
+回復する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みずを　うけると
+かいふくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みずを　受けると
+回復する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メロメロ　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メロメロ　状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_013"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんきの　えいきょうが
+なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>天気の　影響が
+なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_014"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　めいちゅうりつが
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>技の　命中率が
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_015"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねむり　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねむり状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_016"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うけた　わざの　タイプに
+へんかする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受けた　技の　タイプに
+変化する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_017"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どく　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どく状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_018"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほのおを　うけると
+ほのおわざが　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほのおを　受けると
+ほのお技が　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_019"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　ついかこうかを
+うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>技の　追加効果を
+受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_020"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんらん　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>混乱状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_021"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いれかえさせる　わざや
+どうぐが　きかない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>入れ替えさせる　技や
+道具が　効かない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_022"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　こうげきを
+さげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　攻撃を
+さげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_023"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　かげをふみ
+にげられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　影をふみ
+逃げられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_024"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれた　あいてを
+キズつける。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れた　相手を
+キズつける。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_025"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうかばつぐん　しか
+あたらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>効果バツグン　しか
+当たらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_026"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じめんタイプの　わざを
+うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じめんタイプの　技を
+受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_027"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれると　どく　まひ
+ねむりに　することがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れると　どく　まひ
+ねむりに　することがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_028"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どく　まひ　やけどを
+あいてに　うつす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どく　まひ　やけどを
+相手に　うつす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_029"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてに　のうりょくを
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手に　能力を
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_030"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうが
+ひっこむと　なおる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常が
+ひっこむと　治る。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_031"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんきを　よびこんで
+とくこうを　あげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>でんきを　呼び込んで
+特攻を　あげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_032"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　ついかこうかが
+でやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>技の　追加効果が
+でやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_033"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あめのとき　すばやさが
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>雨のとき　素早さが
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_034"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はれのとき　すばやさが
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>晴れのとき　素早さが
+あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_035"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やせいの　ポケモンに
+そうぐう　しやすくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>野生の　ポケモンに
+遭遇しやすくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_036"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてと　おなじ
+とくせいに　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手と　同じ
+特性に　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_037"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶつり　こうげきの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>物理攻撃の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_038"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれた　あいてに　どくを
+おわせる　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れた　相手に　毒を
+おわせる　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_039"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひるまない。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひるまない。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_040"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こおり　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こおり状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_041"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やけど　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やけど状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_042"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はがねの　ポケモンを
+にげられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はがねの　ポケモンを
+逃げられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_043"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとの　わざを
+うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>音の　技を
+受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_044"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あめのとき　すこしずつ
+ＨＰを　かいふくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>雨のとき　少しずつ
+ＨＰを　回復する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_045"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうで　すなあらしを
+おこす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘で　砂あらしを
+おこす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_046"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　つかう　わざの
+ＰＰを　おおく　へらす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　使う　技の
+ＰＰを　多く　減らす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_047"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほのおと　こおりタイプの
+わざに　つよい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほのおと　こおりタイプの
+技に　強い。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_048"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おきるのが　はやくなる。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>起きるのが　早くなる。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_049"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれた　あいてを　やけど
+させることがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れた　相手を　やけど
+させることがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_050"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やせいの　ポケモンから
+かならず　にげられる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>野生の　ポケモンから
+必ず　逃げられる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_051"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>めいちゅうりつを
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>命中率を
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_052"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてに　こうげきを
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手に　攻撃を
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_053"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうぐを　ひろってくる
+ことが　ある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>道具を　拾ってくる
+ことが　ある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_054"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうげきが　れんぞくで
+だせない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>攻撃が　連続で
+だせない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_055"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうげきは　たかいが
+はずれやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>攻撃は　たかいが
+はずれやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_056"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれると　メロメロに
+することがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れると　メロメロに
+することがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_057"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラスかマイナスがいると
+とくこうが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラスかマイナスがいると
+特攻が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_058"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラスかマイナスがいると
+とくこうが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラスかマイナスがいると
+特攻が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_059"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんきで　ポワルンが
+へんかする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>天気で　ポワルンが
+変化する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_060"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねんちゃくして
+どうぐを　まもる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねんちゃくして
+道具を　守る。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_061"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうを
+なおす　ことがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常を
+治すことが　ある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_062"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうで
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常で
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_063"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうで
+ぼうぎょが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常で
+防御が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_064"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すいとった　あいての
+ＨＰを　へらす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>吸いとった　相手の
+ＨＰを　減らす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_065"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンチのとき　くさの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンチのとき　くさの
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_066"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンチのとき　ほのおの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンチのとき　ほのおの
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_067"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンチのとき　みずの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンチのとき　みずの
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_068"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンチのとき　むしの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンチのとき　むしの
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_069"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶつかっても
+はんどうを　うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぶつかっても
+反動を　受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_070"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうに　でると
+ひざしが　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘に　でると
+日差しが　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_071"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうで　あいてを
+にげられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘で　相手を
+逃げられなくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_072"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねむり　じょうたいに
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねむり状態に
+ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_073"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてに　のうりょくを
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手に　能力を
+さげられない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_074"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶつり　こうげきの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>物理攻撃の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_075"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　こうげきが
+きゅうしょに　あたらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　攻撃が
+急所に　当たらない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_076"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんきの　えいきょうが
+なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>天気の　影響が
+なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_077"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんらん　していると
+かいひ　しやすくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>混乱していると
+回避しやすくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_078"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんきを　うけると
+すばやさが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>でんきを　受けると
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_079"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてと　せいべつが
+おなじだと　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手と　性別が
+同じだと　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_080"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひるむ　たびに
+すばやさが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひるむ　たびに
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_081"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんきが　あられのとき　
+かいひりつが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>天気が　あられのとき　
+回避率が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_082"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみを　いつもより
+はやく　つかう。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみを　いつもより
+早く　使う。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_083"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゅうしょに　うけると
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>急所に　受けると
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_084"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうぐが　なくなると
+すばやさが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>道具が　なくなると
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_085"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほのお　わざの
+いりょくを　よわめる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほのお　技の
+威力を　弱める。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_086"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のうりょく　へんかが
+いつもより　はげしい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>能力　変化が
+いつもより　はげしい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_087"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あついと　ＨＰが　へる。
+みずで　ＨＰを　かいふく。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あついと　ＨＰが　減る。
+みずで　ＨＰを　回復。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_088"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　のうりょくを
+みて　つよさを　かえる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　能力を　みて
+強さを　変える。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_089"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パンチを　つかう　わざの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パンチを　使う　技の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_090"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どくじょうたいに　なると
+ＨＰを　かいふくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どく状態に　なると
+ＨＰを　回復する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_091"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイプが　おなじ　わざの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイプが　同じ　技の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_092"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>れんぞく　わざを
+たくさん　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>連続技を
+たくさん　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_093"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうが
+あめの　とき　なおる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常が
+雨の　とき　治る。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_094"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はれると　ＨＰが　へるが
+とくこうが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>晴れると　ＨＰが　減るが
+特攻が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_095"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうで
+すばやさが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>状態異常で
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_096"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だしたわざが　すべて
+ノーマルタイプに　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だした技が　すべて
+ノーマルタイプに　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_097"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゅうしょに　あてたとき
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>急所に　当てたとき
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_098"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうげき　いがいでは
+ダメージを　うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>攻撃　以外では
+ダメージを　受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_099"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おたがいの　わざが
+かならず　あたる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お互いの　技が
+必ず　当たる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてより　すばやくても
+こうどうが　おそくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手より　素早くても
+行動が　遅くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よわい　わざの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>弱い　技の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうたい　いじょうに
+はれのとき　ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>晴れのとき
+状態異常に　ならない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_103"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっている　どうぐを
+つかうことが　できない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>持っている　道具を
+使うことが　できない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_104"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とくせいに　かんけいなく
+あいてに　わざを　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>特性に　関係なく
+相手に　技を　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_105"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　きゅうしょに
+こうげきが　あたりやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　急所に
+攻撃が　当たりやすい。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_106"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひんしの　ときに　ふれた
+あいてに　ダメージ。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひんしの　ときに　触れた
+相手に　ダメージ。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_107"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　もつ　きけんな
+わざを　さっちする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　持つ　危険な
+技を　察知する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_108"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　もつ　わざを
+よみとることが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　持つ　技を
+読み取ることが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_109"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　のうりょくの
+へんかを　むしする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　能力の
+変化を　無視する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_110"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうかいまひとつ　のとき
+わざを　つよめる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>効果いまひとつ　のとき
+技を　強める。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_111"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうかばつぐん　のとき
+いりょくを　よわめる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>効果バツグン　のとき
+威力を　弱める。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_112"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうげきと　すばやさが
+しばらく　はんぶんになる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>攻撃と　素早さが
+しばらく　半分になる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_113"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴーストタイプに
+ノーマルわざが　あたる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴーストタイプに
+ノーマル技が　当たる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_114"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みずを　よびこんで
+とくこうを　あげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みずを　呼び込んで
+特攻を　あげる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_115"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あられのとき　HPを
+すこしずつ　かいふく。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あられのとき　ＨＰを
+少しずつ　回復。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_116"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうかばつぐん　のとき
+いりょくを　よわめる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>効果バツグン　のとき
+威力を　弱める。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_117"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうに　でると
+あられを　ふらす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘に　でると
+あられを　降らす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_118"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あまいミツを　あつめて
+くることが　ある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あまいミツを　集めて
+くることが　ある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_119"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　もちものを
+しることが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　持ち物を
+知ることが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_120"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はんどうで　ダメージを
+うけるわざが　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>反動で　ダメージを
+受ける技が　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_121"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっている　プレートで
+タイプが　かわる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>持っている　プレートで
+タイプが　変わる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_122"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はれのとき　じぶんと
+みかたが　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>晴れのとき　自分と
+味方が　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_123"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねむっている　あいての
+ＨＰを　へらす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねむっている　相手の
+ＨＰを　減らす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_124"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さわられた　あいてから
+どうぐを　ぬすむ。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触られた　相手から
+道具を　盗む。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_125"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちからが　つよくなるが
+ついかこうかが　なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>力が　強くなるが
+追加効果が　なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_126"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のうりょくの　へんかが
+ぎゃくてんする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>能力の　変化が
+逆転する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_127"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてを　きんちょうさせ
+きのみを　たべさせない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手を　緊張させ
+きのみを　食べさせない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_128"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のうりょくが　さがると
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>能力が　さがると
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_129"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＨＰが　はんぶんになると
+のうりょくが　さがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＨＰが　半分になると
+能力が　さがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_130"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうげきされると　たまに
+かなしばりにする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>攻撃されると　たまに
+かなしばりにする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_131"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みかたの　じょうたい
+いじょうを　たまに　なおす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>味方の　状態異常を
+たまに　治す。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_132"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みかたの　ダメージを
+へらすことができる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>味方の　ダメージを
+減らすことができる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_133"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶつりわざで　ぼうぎょが
+さがり　すばやさがあがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>物理技で　防御がさがり
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_134"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶんの　おもさが
+２ばいに　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分の　重さが
+２倍に　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_135"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶんの　おもさが
+はんぶんに　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分の　重さが
+半分に　なる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_136"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＨＰが　まんたんのときに
+ダメージが　すくなくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＨＰが　満タンのときに
+ダメージが　少なくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_137"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どくのとき　ぶつりの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>毒のとき　物理の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_138"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やけどのとき　とくしゅの
+いりょくが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やけどのとき　特殊の
+威力が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_139"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つかった　きのみを
+なんかいも　つくりだす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>使った　きのみを
+何回も　つくりだす。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_140"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みかたの　こうげきを
+よみとって　うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>味方の　攻撃を
+読み取って　受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_141"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のうりょくが　あがったり
+さがったりする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>能力が　あがったり
+さがったりする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_142"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんきの　えいきょうで
+ダメージを　うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>天気の　影響で
+ダメージを　受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_143"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さわるだけで　あいてを　
+どくにすることがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触るだけで　相手を　
+毒にすることがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_144"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひっこめると ＨＰが
+すこし　かいふくする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひっこめると ＨＰが
+少し　回復する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_145"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうぎょを　さげる
+こうげきを　うけない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>防御を　さげる
+攻撃を　受けない。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_146"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すなあらしで
+すばやさが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>砂あらしで
+素早さが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_147"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へんかわざを　うけにくい
+からだに　なっている。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>変化技を　受けにくい
+体に　なっている。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_148"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いちばん　さいごに
+わざをだすと　つよくなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>一番　最後に
+技をだすと　強くなる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_149"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うしろの　ポケモンに
+なりきって　でてくる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>後ろの　ポケモンに
+なりきって　でてくる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_150"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>めのまえの　ポケモンに
+へんしん　してしまう。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目の前の　ポケモンに
+変身してしまう。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_151"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいての　かべを
+すりぬけて　こうげき。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手の　かべを
+すりぬけて　攻撃。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_152"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてに　さわられると
+あいてを　ミイラにする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手に　触られると
+相手を　ミイラにする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_153"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてを　たおすと
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手を　倒すと
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_154"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あくを　うけると
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あくを　受けると
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_155"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>びびって　すばやさが
+あがる　タイプがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>びびって　素早さが
+あがる　タイプがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_156"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へんかわざを　かえす
+ことが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>変化技を　返す
+ことが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_157"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くさの　わざを　うけると
+こうげきが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くさの　技を　受けると
+攻撃が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_158"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へんかわざを　せんせいで
+だすことが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>変化技を　先制で
+だすことが　できる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_159"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すなあらしで　いりょくが
+あがる　わざがある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>砂あらしで　威力が
+あがる　技がある。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_160"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふれた　あいてを
+キズつける。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>触れた　相手を
+キズつける。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_161"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンチに　なると
+すがたが　へんかする。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンチに　なると
+姿が　変化する。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_162"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶんや　みかたの
+めいちゅうが　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分や　味方の
+命中が　あがる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_163"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とくせいに　かんけいなく
+あいてに　わざを　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>特性に　関係なく
+相手に　技を　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TOKUSEIINFO_164"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とくせいに　かんけいなく
+あいてに　わざを　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>特性に　関係なく
+相手に　技を　だせる。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T14:01:46" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T13:22:50" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

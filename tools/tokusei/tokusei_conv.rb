@@ -8,10 +8,10 @@ class PARA
   enum_const_set %w[
     NO
     NAME
-    INFO1
     INFO2
-    INFO1_KANJI
     INFO2_KANJI
+    INFO1
+    INFO1_KANJI
   ]
 end
 
