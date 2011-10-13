@@ -17,5 +17,7 @@
 #ifndef ZONE_C05R0701_EVB_H
 #define ZONE_C05R0701_EVB_H
 
+#define BG_C05R0701_VENDING_01            0
+#define BG_C05R0701_VENDING_02            1
 
 #endif //ZONE_C05R0701_EVB_H
