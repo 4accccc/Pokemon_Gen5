@@ -445,6 +445,11 @@ enum{
   ID_PARA_nickname_only,            //ニックネーム（nickname_flagの立ち下げを行わない※許可制）
   ID_PARA_nickname_raw_only,        //ニックネーム（nickname_flagの立ち下げを行わない　STRCODE配列使用 ※許可制）
   
+  //以下スワンで追加
+  ID_PARA_n_poke_flag,         // 特殊野性ポケモン(Nポケ,主ポケ)フラグ
+  ID_PARA_star_point,          // ポケウッドスターポイント
+  //以上スワンで追加
+
 #ifdef PM_DEBUG
   ID_PARA_hp_deb_exp,                   //HP努力値(デバッグ用にリミットオーバーチェックしないver)
   ID_PARA_pow_deb_exp,                  //攻撃力努力値(デバッグ用にリミットオーバーチェックしないver)
@@ -453,10 +458,6 @@ enum{
   ID_PARA_spepow_deb_exp,               //特攻努力値(デバッグ用にリミットオーバーチェックしないver)
   ID_PARA_spedef_deb_exp,               //特防努力値(デバッグ用にリミットオーバーチェックしないver)
 #endif  //PM_DEBUG
-
-  //以下スワンで追加
-  ID_PARA_n_poke_flag,         // 特殊野性ポケモン(Nポケ,主ポケ)フラグ
-  ID_PARA_star_point,          // ポケウッドスターポイント
 
   ID_PARA_end                 //パラメータを追加するときは、ここから上に追加
 };
