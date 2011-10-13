@@ -58,6 +58,16 @@ COLOR_R_ANSWER      = color_r_answer.cdat
 COLOR_G_ANSWER      = color_g_answer.cdat
 COLOR_B_ANSWER      = color_b_answer.cdat
 
+#------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM = ../../../tools/message/UpdateWithGmm.bat
+MSTXT_QUESTIONNAIRE   = src/questionnaire.mstxt
+MSTXT_ANSWER          = src/answer.mstxt
+MSTXT_HOBBY           = src/hobby.mstxt
+MSTXT_JOB             = src/job.mstxt
+MSPROJDIR	= ../../message/msproj/
+
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -71,10 +81,10 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 do-build:	subdir \
-	        $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE) \
-	        $(GMM_COPY_DIR)/$(GMM_ANSWER) \
-					$(GMM_COPY_DIR)/$(GMM_HOBBY) \
-					$(GMM_COPY_DIR)/$(GMM_JOB) \
+	        $(MSPROJDIR)$(MSTXT_QUESTIONNAIRE) \
+	        $(MSPROJDIR)$(MSTXT_ANSWER) \
+					$(MSPROJDIR)$(MSTXT_HOBBY) \
+					$(MSPROJDIR)$(MSTXT_JOB) \
 					$(DEF_COPY_DIR)/$(TOPIC_ID_DEF) \
 					$(DEF_COPY_DIR)/$(QUESTION_ID_DEF) \
 					$(DEF_COPY_DIR)/$(ANSWER_ID_DEF) \
@@ -100,21 +110,20 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	ruby $(XLSCONV) $(XLS_DATA) 4 $(HOBBY_DATA)
 	ruby $(XLSCONV) $(XLS_DATA) 5 $(JOB_DATA)
 	ruby $(CONVERTER) $(CONV_ROOT_DIR) $(ANSWER_DATA) $(QUESTION_DATA) $(TOPIC_DATA) $(HOBBY_DATA) $(JOB_DATA) $(DATA_SOURCE) $(DATA_DEBUG)
+
+$(MSPROJDIR)$(MSTXT_QUESTIONNAIRE) : $(GMM_QUESTIONNAIRE)
+	$(UPDATEWITHGMM) . $(GMM_QUESTIONNAIRE) $(MSTXT_QUESTIONNAIRE)
+
+$(MSPROJDIR)$(MSTXT_ANSWER) : $(GMM_ANSWER)
+	$(UPDATEWITHGMM) . $(GMM_ANSWER) $(MSTXT_ANSWER)
+
+$(MSPROJDIR)$(MSTXT_HOBBY) : $(GMM_HOBBY)
+	$(UPDATEWITHGMM) . $(GMM_HOBBY) $(MSTXT_HOBBY)
+
+$(MSPROJDIR)$(MSTXT_JOB) : $(GMM_JOB)
+	$(UPDATEWITHGMM) . $(GMM_JOB) $(MSTXT_JOB)
+
 endif
-
-# gmm コピー
-$(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE): $(GMM_QUESTIONNAIRE)
-	$(COPY) $(GMM_QUESTIONNAIRE) $(GMM_COPY_DIR)
-
-$(GMM_COPY_DIR)/$(GMM_ANSWER): $(GMM_ANSWER)
-	$(COPY) $(GMM_ANSWER) $(GMM_COPY_DIR)
-
-# gmm コピー
-$(GMM_COPY_DIR)/$(GMM_HOBBY): $(GMM_HOBBY)
-	$(COPY) $(GMM_HOBBY) $(GMM_COPY_DIR)
-
-$(GMM_COPY_DIR)/$(GMM_JOB): $(GMM_JOB)
-	$(COPY) $(GMM_JOB) $(GMM_COPY_DIR)
 
 # def コピー
 $(DEF_COPY_DIR)/$(TOPIC_ID_DEF): $(TOPIC_ID_DEF)
@@ -169,6 +178,3 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
-	rm -f $(GMM_COPY_DIR)/$(GMM_QUESTIONNAIRE)
-	rm -f $(GMM_COPY_DIR)/$(GMM_ANSWER)
-	rm -f $(GMM_COPY_DIR)/$(GMM_HOBBY) 

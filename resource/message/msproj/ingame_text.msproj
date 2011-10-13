@@ -1911,6 +1911,8 @@
 					Name="wifi_place_msg_world.mstxt" />
 			</Directory>
 			<ContentItem
+				Name="answer.mstxt" />
+			<ContentItem
 				Name="b_bag.mstxt" />
 			<ContentItem
 				Name="b_plist.mstxt" />
@@ -1995,6 +1997,8 @@
 			<ContentItem
 				Name="hide_ship_password.mstxt" />
 			<ContentItem
+				Name="hobby.mstxt" />
+			<ContentItem
 				Name="infinity_dungeon_btl_losemsg.mstxt" />
 			<ContentItem
 				Name="infinity_dungeon_btl_startmsg.mstxt" />
@@ -2024,6 +2028,8 @@
 				Name="itemname.mstxt" />
 			<ContentItem
 				Name="itempocket.mstxt" />
+			<ContentItem
+				Name="job.mstxt" />
 			<ContentItem
 				Name="key_system.mstxt" />
 			<ContentItem
@@ -2100,6 +2106,8 @@
 				Name="pokestatus.mstxt" />
 			<ContentItem
 				Name="print_tool.mstxt" />
+			<ContentItem
+				Name="questionnaire.mstxt" />
 			<ContentItem
 				Name="regulation.mstxt" />
 			<ContentItem

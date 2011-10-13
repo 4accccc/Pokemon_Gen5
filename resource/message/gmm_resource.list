@@ -1,9 +1,5 @@
-src/answer.gmm
 src/debug/ev_bgm_list.gmm
-src/hobby.gmm
-src/job.gmm
 src/monsname.gmm
-src/questionnaire.gmm
 src/snd_test_name.gmm
 src/tokusei.gmm
 src/tokuseiinfo.gmm
