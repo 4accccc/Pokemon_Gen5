@@ -67,12 +67,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『その　プラズマだん　だけど
+			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　だけど
 どこに　いるのか　つかめていない▽
 てわけして　さがすしか　ないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:52:38" />
+				Time="2011-10-13T08:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,12 +80,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『その　プラズマ団だけど
+			<Text>[Name:TrainerName Idx="1" ]『プラズマ団だけど
 どこに　いるのか　つかめていない▽
 手分けして　探すしか　ないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:52:54" />
+				Time="2011-10-13T08:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -488,13 +488,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シズイ『知らん！▼
-海で　くらしているとな
+海で　暮らしているとな
 そういうこと　あまり　気にならん▼
 なにしろ　海は
 どんな　川をも　受け入れるからなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T05:53:10" />
+				Time="2011-10-13T08:29:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

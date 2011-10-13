@@ -491,20 +491,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『あら　[Name:TrainerName ]たち！▼
-たまたま　テレビ　みてたら
-みんな　すっごい　しょうぶ　してて！▽
-とうぜん　グッと　きちゃうよね！▼
-……とはいえ
-あたしの　ほうが　もっともっと
-かんきゃくを　ヒートさせちゃうけど▼
-なので　つぎの　トーナメントに
-エントリー　しとくから！▼
-こんかいは　せんせんふこく
-みんな　ぶっとばしちゃうよ！▼</Text>
+			<Text>ホミカ『あんたたち！▼
+いまの　ポケモンしょうぶ
+わるくないけど　もっと　できるでしょ▼
+なので　ホミカが　エントリーして
+かんきゃく　みんなの
+りせいを　　ブッとばしちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T07:42:32" />
+				Time="2011-10-13T08:07:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -512,20 +507,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『あら　[Name:TrainerName ]たち！▼
-たまたま　テレビ　みてたら
-みんな　すっごい　勝負してて！▽
-当然　グッと　きちゃうよね！▼
-……とはいえ
-あたしの　ほうが　もっともっと
-観客を　ヒートさせちゃうけど▼
-なので　次の　トーナメントに
-エントリー　しとくから！▼
-今回は　宣戦布告
-みんな　ぶっとばしちゃうよ！▼</Text>
+			<Text>ホミカ『あんたたち！▼
+いまの　ポケモン勝負
+悪くないけど　もっと　できるでしょ▼
+なので　ホミカが　エントリーして
+観客　みんなの
+理性を　　ブッとばしちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T07:42:41" />
+				Time="2011-10-13T08:07:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
