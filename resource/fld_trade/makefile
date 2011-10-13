@@ -34,7 +34,6 @@ PM_VER_H_DIR		= ..\\..\\prog\\include\\
 
 #コピー先
 CPY_DIR	= .
-GMM_CPY_DIR = ..\\message\\src\\
 
 # バイナリデータ出力先
 BIN = ./bin
@@ -54,6 +53,15 @@ MAKE_FILE	= fld_trade_poke.xls \
 MAKE_TARGET = fld_trade_00.dat
 DAT_FILE	= $(wildcard *.dat)
 
+#------------------------------------------------------------------------------
+# gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+FLDTRADE_GMM		= fld_trade.gmm
+FLDTRADE_MSTXT	= src/fld_trade.mstxt
+GMM_CPY_DIR 		= ../message/src/
+MSPROJDIR				= ../message/msproj/
+
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
@@ -69,7 +77,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir file_cp $(TARGETDIR)/$(targetname).narc
+do-build:	subdir file_cp $(TARGETDIR)/$(targetname).narc $(MSPROJDIR)$(FLDTRADE_MSTXT)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -77,8 +85,6 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
-
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
@@ -96,7 +102,9 @@ $(targetname).narc: $(MAKE_FILE)
 	ruby $(XLS_TABOUT)/tab_out.rb -tab fld_trade_poke.xls >fld_trade_poke.txt
 	ruby fld_trade_poke.rb fld_trade_poke.txt $(BIN)
 	nnsarc -c -n $(targetname).narc -S fld_trade_list.lst
-	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
+
+$(MSPROJDIR)$(FLDTRADE_MSTXT) : $(FLDTRADE_GMM)
+	$(UPDATEWITHGMM) . $(FLDTRADE_GMM) $(FLDTRADE_MSTXT)
 
 else
 file_cp:

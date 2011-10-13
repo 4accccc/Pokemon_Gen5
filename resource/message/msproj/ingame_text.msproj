@@ -1969,6 +1969,8 @@
 			<ContentItem
 				Name="fest_mission.mstxt" />
 			<ContentItem
+				Name="fld_trade.mstxt" />
+			<ContentItem
 				Name="fldmapmenu.mstxt" />
 			<ContentItem
 				Name="fmission_app.mstxt" />
