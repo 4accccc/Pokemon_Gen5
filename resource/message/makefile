@@ -6,8 +6,9 @@ RESOURCE_LIST	= resource.list
 DEPEND_LIST	= depend.list
 TARGET_LIST	= target.list
 
-BTLSET		= src\battle\btl_set.gmm
-BTLSET_SRC	= resource\btl_set_src.gmm
+# mstxtÇ…ïœçXÇµÇΩÇÃÇ≈ÉRÉÅÉìÉg
+#BTLSET		= src\battle\btl_set.gmm
+#BTLSET_SRC	= resource\btl_set_src.gmm
 
 
 ARCHIVE_NAME_BODY	= message
@@ -59,7 +60,7 @@ CONVERT_TARGET_LANGS = JPN JPN_KANJI
 
 no-rule:
 	@#echo $(TARGETS)
-	$(MAKE)	$(BTLSET)
+	#$(MAKE)	$(BTLSET)
 	$(MAKE)	depend
 	$(MAKE)	datfiles
 	$(MAKE)	$(ARCHIVE_DATA_PATH)
@@ -71,8 +72,8 @@ no-rule:
 #=========================================================
 #	depend & target list Çê∂ê¨
 #=========================================================
-$(BTLSET): $(BTLSET_SRC)
-	perl btlset.pl $(BTLSET_SRC) $(BTLSET)
+#$(BTLSET): $(BTLSET_SRC)
+	#perl btlset.pl $(BTLSET_SRC) $(BTLSET)
 
 #=========================================================
 #	depend & target list Çê∂ê¨

@@ -12,6 +12,8 @@
 				<ContentItem
 					Name="btl_pw_std.mstxt" />
 				<ContentItem
+					Name="btl_set.mstxt" />
+				<ContentItem
 					Name="btl_std.mstxt" />
 				<ContentItem
 					Name="btl_ui.mstxt" />

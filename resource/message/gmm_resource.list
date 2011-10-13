@@ -1,6 +1,5 @@
 src/answer.gmm
 src/battle/btl_attack.gmm
-src/battle/btl_set.gmm
 src/debug/ev_bgm_list.gmm
 src/fld_trade.gmm
 src/hobby.gmm
