@@ -10,6 +10,8 @@
 			<Directory
 				Name="battle">
 				<ContentItem
+					Name="btl_attack.mstxt" />
+				<ContentItem
 					Name="btl_pw_std.mstxt" />
 				<ContentItem
 					Name="btl_set.mstxt" />
@@ -2148,6 +2150,10 @@
 				Name="union_sub_disp.mstxt" />
 			<ContentItem
 				Name="waza_oboe.mstxt" />
+			<ContentItem
+				Name="wazainfo.mstxt" />
+			<ContentItem
+				Name="wazaname.mstxt" />
 			<ContentItem
 				Name="wbt_download.mstxt" />
 			<ContentItem

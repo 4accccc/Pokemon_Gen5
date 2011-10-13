@@ -1,5 +1,4 @@
 src/answer.gmm
-src/battle/btl_attack.gmm
 src/debug/ev_bgm_list.gmm
 src/hobby.gmm
 src/job.gmm
@@ -11,8 +10,6 @@ src/tokuseiinfo.gmm
 src/trmsg.gmm
 src/trname.gmm
 src/trtype.gmm
-src/wazainfo.gmm
-src/wazaname.gmm
 src/zkn_comment_00.gmm
 src/zkn_comment_01.gmm
 src/zkn_form.gmm
