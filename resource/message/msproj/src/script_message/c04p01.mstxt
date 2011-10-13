@@ -1318,4 +1318,268 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04p01_musician_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あー　あーああっあー♪▼
+はっ　はじめての　デートで
+なにを　はなせば……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:41:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あー　あーああっあー♪▼
+はっ　初めての　デートで
+なにを　話せば……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:53:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:45:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・下記動作モデルと隣接</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:36:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUSICIAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:43:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_woman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かれったら　ゆうえんち　でも
+ギターを　ならしてばかり……▼
+ステキ！　こころから
+おんがくを　あいしているのね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:44:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>彼ったら　遊園地でも
+ギターを　鳴らしてばかり……▼
+ステキ！　心から
+音楽を　愛しているのね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:45:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・上記動作モデルと隣接</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:36:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:45:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_babyboy1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>た！　たぶんね！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:42:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:42:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>た！　たぶんね！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:42:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:42:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・TENNISW、POKE36とひとかたまり
+・タブンネのバルーン近く</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:43:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABYBOY1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:43:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_tennisw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんち　こわーい！▼
+だって　みんな
+こどもに　なっちゃうのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:52:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地　怖ーい！▼
+だって　みんな
+こどもに　なっちゃうのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:52:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:52:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・BABYBOY1、POKE36とひとかたまり
+・タブンネのバルーン近く</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:43:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TENNISW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:35:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_poke36_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てゅう♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てゅう♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:36:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE36
+ポケモン・タブンネ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:32:46" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_poke38_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐほっお！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐほっお！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:47:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:36:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE38
+ポケモン・ズルッグ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T07:32:33" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
