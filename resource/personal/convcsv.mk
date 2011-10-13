@@ -40,6 +40,14 @@ LSTDIR = ../pokegra/conv/
 POKELISTDIR = ../../tools/btl_subway/
 
 #------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM = ../../tools/message/UpdateWithGmm.bat
+MSTXTFILE = src/monsname.mstxt
+MSPROJDIR	= ../message/msproj/
+
+
+#------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS	=
@@ -57,7 +65,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(HASHDIR)$(MONSTYPEHASHFILE) $(HASHDIR)$(CHIHOUZUKANNOHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
+LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(HASHDIR)$(MONSTYPEHASHFILE) $(HASHDIR)$(CHIHOUZUKANNOHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += *.s $(HEADER) $(NUMHEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(MONSTYPEHASHFILE) $(CHIHOUZUKANNOHASHFILE) $(LSTFILE) $(POKELIST) $(NONSTOPLSTFILE) *.scr out_end
 endif
@@ -69,25 +77,26 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #パーソナルデータ生成
 
-do-build: out_end
+do-build: out_end $(MSPROJDIR)$(MSTXTFILE)
 
 out_end: personal_sw.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 
 fake:
 	ruby ../../tools/personal_conv/personal_conv.rb personal_wb_fake.csv ../message/template.gmm
+
+$(MSPROJDIR)$(MSTXTFILE) : $(GMMFILE)
+	$(UPDATEWITHGMM) . $(GMMFILE) $(MSTXTFILE)
+
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(HASHDIR)$(MONSTYPEHASHFILE) $(HASHDIR)$(CHIHOUZUKANNOHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
+do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(HASHDIR)$(MONSTYPEHASHFILE) $(HASHDIR)$(CHIHOUZUKANNOHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
 
 $(TARGETDIR)$(NUMHEADER):	$(NUMHEADER)
 	$(COPY)	$(NUMHEADER) $(TARGETDIR)
-
-$(GMMDIR)$(GMMFILE):	$(GMMFILE)
-	$(COPY)	$(GMMFILE) $(GMMDIR)
 
 $(HASHDIR)$(MONSNOHASHFILE):	$(MONSNOHASHFILE)
 	$(COPY)	$(MONSNOHASHFILE) $(HASHDIR)

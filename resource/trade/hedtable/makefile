@@ -33,7 +33,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 CONVERTDATA = *.cdat
 
 ##モンスターの名前GMM
-MONSTERGMM = ../../message/src/monsname.gmm
+MONSTERGMM = ../../personal/monsname.gmm
 
 ##あいうえお・・・検索用GMM
 THEADGMM = ../../message/src/trade_head.gmm

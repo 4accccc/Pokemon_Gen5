@@ -2069,6 +2069,8 @@
 			<ContentItem
 				Name="mictest.mstxt" />
 			<ContentItem
+				Name="monsname.mstxt" />
+			<ContentItem
 				Name="multiboot_child.mstxt" />
 			<ContentItem
 				Name="multiboot_parent.mstxt" />
