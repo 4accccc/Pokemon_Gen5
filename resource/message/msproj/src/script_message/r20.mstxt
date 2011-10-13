@@ -728,4 +728,391 @@ ID：mount_14</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_r20_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！　こっち▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:34:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！　こっち▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:02:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:41:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝160～165、GRIDZ＝660
+・主人公移動
+・GRIDX＝163、GRIDZ＝665
+・続けてswleader1_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:50:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:31:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swleader1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『ふたりとも　みて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:42:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:33:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『二人とも　みて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:02:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:33:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝164、GRIDZ＝665
+・主人公たちを向いてメッセージ表示
+・続けてswleader1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:43:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:32:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swleader1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いろの　こい　くさむらが　あるよね▼
+ここは　まれにだけど　ポケモンが
+２ひき　どうじに　とびだしてくるんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:42:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:33:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>色の　濃い　草むらが　あるよね▼
+ここは　まれにだけど　ポケモンが
+２匹同時に　飛びだしてくるんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:03:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:33:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・下＝草むらを見てメッセージ表示
+・続けてswleader1_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:43:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:32:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swleader1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう！　いろのこい　くさむらに
+はいるなら　ちゅうい　してね▼
+じゃ　ぼくは
+ヒオウギに　もどります▽
+ふたりとも　きを　つけてね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:03:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:42:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう！　色の　濃い　草むらに
+はいるなら　注意してね▼
+じゃ　ぼくは
+ヒオウギに　戻ります▽
+二人とも　気を　つけてね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:04:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:42:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公たちを向いてメッセージ表示
+・表示後、画面上に移動
+　続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:44:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:42:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『へえ
+チェレンさんって　ものしり　だな▼
+しかも　せかいせいふくを　ねらった
+さいていの　れんちゅう……▽
+プラズマだんとも　たたかったもんな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:57:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:44:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『へえ
+チェレンさんって　博識　だな▼
+しかも　世界征服を　ねらった
+最低の　連中……▽
+プラズマ団とも　戦かったもんな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:04:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:50:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝162、GRIDZ＝665</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:41:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:37:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きめた！
+チェレンさんより　つよくなる！▼
+まずは　タチワキシティの
+ポケモンジムに　ちょうせんするため▽
+あいぼうたちを　きたえる！▼
+おまえは　ポケモンずかん　だろ
+ひとに　たのまれたら　こなさないとな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:05:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:49:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>決めた！
+チェレンさんより　強くなる！▼
+まずは　タチワキシティの
+ポケモンジムに　挑戦するため▽
+相棒たちを　鍛る！▼
+おまえは　ポケモン図鑑　だよな
+人に　頼まれたら　こなさないとな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T13:05:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:50:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後　色の濃い草むらへ移動
+・移動後、主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:55:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:45:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレは　プラズマだん　よりも
+つよくならないと　ダメだんだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:54:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレは　プラズマだん　よりも
+つよくならないと　ダメだんだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:54:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:54:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・msg_c13_swleader2_02表示で削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:56:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-13T12:54:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
