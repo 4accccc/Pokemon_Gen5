@@ -50,7 +50,7 @@
 
 #ifdef  PM_DEBUG
 
- #if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto) || defined(DEBUG_ONLY_FOR_iwasawa)
+ #if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko) || defined(DEBUG_ONLY_FOR_onoue_masayuki)
   #define SCRIPT_Printf( ... )  OS_Printf( __VA_ARGS__ )
  #else
   #define SCRIPT_Printf( ... )  ((void)0)
