@@ -226,6 +226,7 @@
 #define SCR_POKEPARA_AGI              (164) ///<RO すばやさ
 #define SCR_POKEPARA_SPEPOW           (165) ///<RO とくこう
 #define SCR_POKEPARA_SPEDEF           (166) ///<RO とくぼう
+#define SCR_POKEPARA_N_POKE           (178) ///<RO Nポケかどうか
 
 //--------------------------------------------------------------
 // ポケモン捕獲場所　チェック

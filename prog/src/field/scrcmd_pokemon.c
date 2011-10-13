@@ -1380,6 +1380,8 @@ SDK_COMPILER_ASSERT( SCR_POKEPARA_AGI == ID_PARA_agi );                //素早さ
 SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEPOW == ID_PARA_spepow );               //特攻
 SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEDEF == ID_PARA_spedef );               //特防
 
+SDK_COMPILER_ASSERT( SCR_POKEPARA_N_POKE == ID_PARA_n_poke_flag ); //Nポケモンかどうか
+
 //--------------------------------------------------------------
 /**
  * @brief 手持ちポケモンのパラメータセット
@@ -1462,6 +1464,7 @@ VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
     SCR_POKEPARA_AGI,                //素早さ
     SCR_POKEPARA_SPEPOW,               //特攻
     SCR_POKEPARA_SPEDEF,               //特防
+    SCR_POKEPARA_N_POKE,            //Nポケかどうか
   };
   int i;
   for ( i = 0; i < NELEMS(id_tbl); i++ )

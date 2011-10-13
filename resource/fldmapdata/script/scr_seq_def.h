@@ -4102,6 +4102,21 @@
     
 //--------------------------------------------------------------
 /**
+ * @def _GET_MY_WAZA_MACHINE_NUM
+ * @brief   手持ちのわざマシンの数を取得する
+ * @param[out]  わざマシンの数
+ */
+//--------------------------------------------------------------
+#define _GET_MY_WAZA_MACHINE_NUM( ret_wk ) \
+    _ASM_GET_MY_WAZA_MACHINE_NUM ret_wk
+
+    .macro  _ASM_GET_MY_WAZA_MACHINE_NUM ret_wk
+    .short  EV_SEQ_GET_MY_WAZA_MACHINE_NUM
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_EFFECT_ENCOUNT_ITEM
  * @brief エフェクトエンカウントアイテムイベント　アイテムNoを取得
  * @param ret_wk    結果を受け取るワーク

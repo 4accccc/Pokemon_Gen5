@@ -1117,6 +1117,8 @@
   //　人物状態３
   DEF_CMD( EvCmdPersonState_GetState, EV_SEQ_PERSON_GET_STATE )
 
+  DEF_CMD( EvCmdGetMyWazaMachineNum,    EV_SEQ_GET_MY_WAZA_MACHINE_NUM )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

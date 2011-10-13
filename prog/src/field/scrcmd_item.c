@@ -214,6 +214,25 @@ VMCMD_RESULT EvCmdGetItemType(VMHANDLE * core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちの技マシンの数を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMyWazaMachineNum( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem( gdata );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  
+	*ret_wk = MYITEM_GetItemThisPocketNumberNoRepository( myitem, BAG_POKE_WAZA, TRUE );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //  パーツ
 //======================================================================

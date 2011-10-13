@@ -109,6 +109,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_debug_tamada
 {
+  _GET_MY_WAZA_MACHINE_NUM( SCWK_ANSWER )
+  _GET_PARTY_POKE_PARAM( SCWK_ANSWER, 0, SCR_POKEPARA_N_POKE )
   _PKWD_GET_STAR_RANK( SCWK_ANSWER )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
 //====↓ ポケウッドチュートリアルの呼び出し方====
