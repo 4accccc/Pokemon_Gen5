@@ -2015,6 +2015,10 @@
 			<ContentItem
 				Name="ircbattle.mstxt" />
 			<ContentItem
+				Name="iteminfo.mstxt" />
+			<ContentItem
+				Name="itemname.mstxt" />
+			<ContentItem
 				Name="itempocket.mstxt" />
 			<ContentItem
 				Name="key_system.mstxt" />

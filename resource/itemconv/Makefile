@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= matsuda hiro_nakamura shimoyamada genya_hosaka tetsuji_ohta ito_hiroto iwasawa
+USERS	= matsuda hiro_nakamura shimoyamada genya_hosaka tetsuji_ohta ito_hiroto iwasawa ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -19,6 +19,15 @@ targetname2 = item_battle_pocket
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+
+#------------------------------------------------------------------------------
+#※gmm -> mstxt 変換関係
+#------------------------------------------------------------------------------
+UPDATEWITHGMM = ../../tools/message/UpdateWithGmm.bat
+ITEMNAME_MSTXT = src/itemname.mstxt
+ITEMINFO_MSTXT = src/iteminfo.mstxt
+MSPROJDIR	= ../message/msproj/
+
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -51,7 +60,7 @@ HASHDIR	= $(PROJECT_ROOT)/tools/hash/
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(MSPROJDIR)$(ITEMNAME_MSTXT) $(MSPROJDIR)$(ITEMINFO_MSTXT)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -71,6 +80,13 @@ $(targetname).narc: wb_item.xls
 	$(RUBYDIR)item_conv.rb wb_item.csv ../message/template.gmm
 	itemconv.bat $(PROJECT_PROGDIR) $(PROJECT_ROOT)
 	$(NAIXCUT) $(targetname).naix
+
+$(MSPROJDIR)$(ITEMNAME_MSTXT) : itemname.gmm
+	$(UPDATEWITHGMM) . itemname.gmm $(ITEMNAME_MSTXT)
+
+$(MSPROJDIR)$(ITEMINFO_MSTXT) : iteminfo.gmm
+	$(UPDATEWITHGMM) . iteminfo.gmm $(ITEMINFO_MSTXT)
+
 endif
 
 do-build:	subdir $(TARGETDIR)/$(targetname2).narc
