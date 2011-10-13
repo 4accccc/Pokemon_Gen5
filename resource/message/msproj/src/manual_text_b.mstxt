@@ -1,0 +1,6528 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="man_txt_cate_no_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトルメニュー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトルメニュー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンターの　せつめい</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンターの　説明</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　せつめい</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　説明</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>メニューに　ついて</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メニューに　ついて</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうに　ついて</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘に　ついて</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンの　じょうほう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンの　情報</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_cate_no_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>そのた</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その他</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづきから　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>続きから　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいしょから　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最初から　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしぎな　おくりもの</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふしぎな　おくりもの</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルたいかい</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトル大会</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>デジタルせんしゅしょう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デジタル選手証</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンクせってい</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームシンク設定</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉ せってい</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉ設定</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_001_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>マイクテスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マイクテスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>パソコンで　ポケモンをいれかえる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パソコンで　ポケモンを入れ替える</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルボックス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルボックス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんこうかんの　はじめかた</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信交換の　はじめ方</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんたいせんの　はじめかた</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信対戦の　はじめ方</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>シングルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シングルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダブルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダブルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>トリプルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トリプルバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_009">
+		<LanguageCell
+			Language="JPN">
+			<Text>ローテーションバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ローテーションバトル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_010">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミラクルシューター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミラクルシューター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_011">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユニオンルーム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユニオンルーム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_012">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_013">
+		<LanguageCell
+			Language="JPN">
+			<Text>グローバルターミナル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グローバルターミナル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_002_014">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちコード</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ともだちコード</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギア (シー ギア)</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいログ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違いログ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさ とは</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査とは</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさを　うける</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査を　受ける</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさを　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査を　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさの　ほうこく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査の　報告</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＩＲ(アイアール)つうしん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＩＲ通信</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＧＡＭＥ　ＳＹＮＣ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_009">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_010">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_003_011">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルダマ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルダマ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッグ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッグ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_005_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーカード</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーカード</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_005_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンずかん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン図鑑</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンをつかまえるコツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを捕まえるコツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイプとあいしょう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイプと相性</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>「ぶつり」「とくしゅ」「へんか」</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「ぶつり」「とくしゅ」「へんか」</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひんし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひんし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>どく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>まひ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まひ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねむり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねむり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>こおり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こおり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_009">
+		<LanguageCell
+			Language="JPN">
+			<Text>やけど</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やけど</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_010">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんらん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんらん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_006_011">
+		<LanguageCell
+			Language="JPN">
+			<Text>メロメロ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メロメロ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>けいけんち</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>経験値</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_007_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんか</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>進化</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_007_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>「せいかく」と　「こせい」</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「性格」と　「個性」</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_007_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケルス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケルス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>はしる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>走る</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウジングマシン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウジングマシン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムバッジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムバッジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>べんりボタン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>便利ボタン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケシフターでポケモンをつれてくる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケシフターでポケモンを連れて来る</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_title_no_008_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケシフターでポケモンをつかまえる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケシフターでポケモンを捕まえる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんを　はじめたら
+Ｘボタンで　メニューを　ひらき
+「レポート」を　こまめに　かきましょう。
+
+レポートをかくと　ＤＳの　でんげんを
+きっても　タイトルメニューの
+「つづきから　はじめる」から
+ぼうけんの　つづきを　あそべます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T06:23:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>冒険を　はじめたら
+Ｘボタンで　メニューを　開き
+「レポート」を　こまめに　書きましょう。
+
+レポートを書くと　ＤＳの　電源を
+切っても　タイトルメニューの
+「続きから　はじめる」から
+冒険の　続きを　遊べます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>レポートを　すべてけして　もういちど
+さいしょから　ぼうけんを　はじめなおす
+ときは　タイトルがめんで
+
+うえボタン　セレクトボタン　Ｂボタン
+
+の　３つのボタンを
+どうじに　ぜんぶ　おしてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レポートを　すべて消して　もう一度
+最初から　冒険を　はじめなおすときは
+タイトル画面で
+
+上ボタン　セレクトボタン　Ｂボタン
+
+の　３つのボタンを
+同時に　全部　押してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>イベントかいじょうなどで　とくべつな
+プレゼントを　つぎの　３つの　ほうほうで
+うけとることが　できます。
+・ワイヤレスつうしんで　うけとる
+・Ｗｉ－Ｆｉつうしんで　うけとる
+・せきがいせんつうしんで　うけとる
+
+イベントごとに　ほうほうが　きめられて
+いますので　ごちゅういください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イベント会場などで　特別な
+プレゼントを　次の　３つの　方法で
+受け取ることが　できます。
+・ワイヤレス通信で　受け取る
+・Ｗｉ－Ｆｉ通信で　受け取る
+・赤外線通信で　受け取る
+
+イベントごとに　方法が
+決められていますので　ご注意ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_003_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしぎな　おくりもので　とくべつな
+ポケモンや　どうぐを　もらえる
+ふしぎなカードを　じゅしんすると
+ポケモンセンターに
+あおい　ぼうしを　かぶった
+はいたついんが　やってきます。
+
+はいたついんに　はなしかけて
+ポケモンや　どうぐを　うけとってください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふしぎな　おくりもので　特別な
+ポケモンや　道具を　もらえる
+ふしぎなカードを　受信すると
+ポケモンセンターに　青い帽子を　かぶった
+配達員が　やってきます。
+
+配達員に　話しかけて
+ポケモンや　道具を　受け取ってください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_003_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしぎなカードは　１２まいまで
+もっておくことが　できます。
+
+ふしぎなカードが　いっぱいのときに
+さらにカードを　うけとりたいときは
+「カードアルバムを　みる」から
+おくりものを　すでに　うけとったカードを
+けしてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふしぎなカードは　１２枚まで
+所有することが　できます。
+
+ふしぎなカードが　一杯のときに
+さらにカードを　受け取りたいときは
+「カードアルバムを　みる」から
+おくりものを　すでに　受け取ったカードを
+消してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉや　イベントかいじょうで
+おこなわれる　ポケモンしょうぶの
+たいかいに　さんかします。
+
+バトルたいかいについて　くわしくは
+タイトルメニューの
+「バトルたいかい」にある
+「せつめいを　きく」を
+かくにん　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉや　イベント会場で
+行われる　ポケモン勝負の
+大会に　参加します。
+
+バトル大会について　詳しくは
+タイトルメニューの
+「バトル大会」にある
+「説明を　きく」を
+確認してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_004_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユーザーとうろくの　ほうほうや
+バトルたいかいへの　さんかのしかた
+ルールのかくにんなど
+バトルたいかいについて　くわしいことは
+
+インターネットこうしきサイト
+「ポケモングローバルリンク」か
+「ポケットモンスターオフィシャルサイト」で
+かくにん　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユーザー登録の　方法や
+バトル大会への　参加のしかた
+ルールの確認など
+バトル大会について　詳しいことは
+インターネット公式サイト
+「ポケモングローバルリンク」か
+「ポケットモンスターオフィシャルサイト」で
+確認してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_004_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルたいかいには
+ゲームのなかの　パソコンにある
+「バトルボックス」に　とうろくされている
+ポケモンが　さんかします。
+
+いちど　とうろくすると　たいかいちゅうは
+バトルボックスを　へんこうできませんので
+とうろくするまえに　じっくりかんがえて
+ポケモンを　えらんで　ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトル大会には
+ゲームの中の　パソコンにある
+「バトルボックス」に　登録されている
+ポケモンが　参加します。
+
+一度　登録すると　大会中は
+バトルボックスを　変更できませんので
+登録するまえに　じっくり考えて
+ポケモンを　選んでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルたいかいへの
+とうろくが　かんりょうすると
+デジタルせんしゅしょうを
+かくにん　できるように　なります。
+
+くわしいことは
+インターネットこうしきサイト
+「ポケモングローバルリンク」で
+かくにん　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトル大会への
+登録が　完了すると
+デジタル選手証を
+確認できるように　なります。
+
+詳しいことは
+インターネット公式サイト
+「ポケモングローバルリンク」で
+確認してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンクせっていを　するには
+あらかじめ　「Ｗｉ－Ｆｉせってい」を
+すませておく　ひつようが　あります。
+
+Ｗｉ－Ｆｉせっていを　すませたあと
+ゲームシンクせっていを　えらぶと
+あなただけの　ばんごうである
+「ゲームシンクＩＤコード」が
+はっこうされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームシンク設定を　するには
+あらかじめ　「Ｗｉ－Ｆｉ設定」を
+済ませておく　必要が　あります。
+
+Ｗｉ－Ｆｉ設定を　済ませたあと
+ゲームシンク設定を　選ぶと
+あなただけの　番号である
+「ゲームシンクＩＤコード」が
+発行されます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_006_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンクＩＤコードは
+じっさいのパソコンを　つかって
+インターネットこうしきサイト
+「ポケモングローバルリンク」で
+ユーザーとうろくを　するときに
+ひつように　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームシンクＩＤコードは
+実際のパソコンを　使って
+インターネット公式サイト
+「ポケモングローバルリンク」で
+ユーザー登録を　するときに
+必要に　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_006_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　ゲームシンクＩＤコードは
+ぼうけんの　レポートを　けすと
+いっしょに　きえてしまいます。
+
+ゲームシンクＩＤコードが
+かわったばあいは　もういちど
+ポケモングローバルリンクで
+とうろくしなおす　ひつようが　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　ゲームシンクＩＤコードは
+冒険の　レポートを　消すと
+一緒に　消えてしまいます。
+
+ゲームシンクＩＤコードが
+変わった場合は　もう一度
+ポケモングローバルリンクで
+登録しなおす　必要が　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかいのＤＳほんたいで
+Ｗｉ－Ｆｉつうしんを　するための
+せっていが　できます。
+
+Ｗｉ－Ｆｉせっていをすると
+インターネットを　つうじて
+せかいじゅうの　ひとたちと
+ポケモンのこうかんや　たいせんが
+できるように　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お使いの　ＤＳ本体で
+Ｗｉ－Ｆｉ通信を　するための
+設定ができます。
+
+Ｗｉ－Ｆｉ設定をすると
+インターネットを通じて
+世界中の　人たちと
+ポケモン交換や　対戦が
+できるように　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_007_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　「バトルたいかい」や
+「ゲームシンクせってい」など
+ポケモングローバルリンクとの　れんどうを
+おこないたいばあいも　あらかじめ
+Ｗｉ－Ｆｉせっていを　しておく
+ひつようが　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　「バトル大会」や
+「ゲームシンク設定」など
+ポケモングローバルリンクとの　連動を
+行いたい場合も　あらかじめ
+Ｗｉ－Ｆｉ設定を　しておく
+必要が　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_001_008_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＳほんたいの　マイクが
+ただしく　うごいているか
+かくにんすることが　できます。
+
+マイクにむかって　こえをだしたり
+いきを　ふきかけたときに
+うえがめんの　プリンが　はんのうすれば
+マイクは　ただしく　うごいています。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＳ本体の　マイクが
+正しく　動いているか
+確認することが　できます。
+
+マイクに向かって　声をだしたり
+息を吹きかけたときに
+上画面の　プリンが　反応すれば
+マイクは　正常に　動いています。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　かいふくしたり　やくにたつ
+どうぐを　かうことが　できます。
+つかまえた　ポケモンを　いれかえたり
+アララギはかせの　ひょうかをきくための
+パソコンも　ここに　おいてあります。
+
+ともだちとの　つうしんを　つかった
+ポケモンの　こうかんや　たいせんは
+ポケモンセンター　２かいで　おこなえます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　回復したり　役に立つ
+道具を　買うことが　できます。
+捕まえた　ポケモンを　入れ替えたり
+アララギ博士の　評価をきくための
+パソコンも　ここに　置いてあります。
+
+友達との　通信を　使った
+ポケモンの　交換や　対戦は
+ポケモンセンターの　２階で　行えます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>パソコンを　つかうと
+つれている　ポケモンを　あずけたり
+あずけている　ポケモンを
+つれだすことが　できます。
+
+ポケモンを　６ひき　つれているときに
+あたらしく　つかまえた　ポケモンは
+じどうてきに　このパソコンに
+てんそうされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パソコンを　使うと　連れている
+ポケモンを　預けたり
+預けている　ポケモンを
+連れだすことが　できます。
+
+ポケモンを　６匹　連れているときに
+新しく　捕まえた　ポケモンは
+自動的に　このパソコンに　転送されます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいせんで　よくつかう　ポケモンを
+１～６ひきまで　とうろくして　おけます。
+ともだちと　たいせんするときは
+バトルボックスに　とうろくしたポケモンで
+しょうぶするか　てもちの　ポケモンで
+しょうぶするかを　えらぶことができます。
+バトルボックスに　なにも
+とうろく　していない　ばあいは
+てもちの　ポケモンで　しょうぶを　します。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>対戦で　よく使う　ポケモンを
+１～６匹まで　登録して　おけます。
+友達と　対戦するときは
+バトルボックスに　登録したポケモンで
+勝負するか　手持ちの　ポケモンで
+勝負するかを　選ぶことができます。
+バトルボックスに
+なにも　登録していない　場合は
+手持ちの　ポケモンで　勝負をします。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちに　つうしんこうかんを
+もうしこむ　ほうほうは
+つぎの　４つが　あります。
+
+・ＩＲつうしんで　はじめる
+・ユニオンルームで　はじめる
+・Ｗｉ－Ｆｉクラブで　はじめる
+・グローバルターミナルで　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>友達に　通信交換を
+申し込む　方法は
+次の　４つが　あります。
+
+・ＩＲ通信で　はじめる
+・ユニオンルームで　はじめる
+・Ｗｉ－Ｆｉクラブで　はじめる
+・グローバルターミナルで　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_004_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ＩＲつうしんで　はじめる
+
+ちかくのともだちに　つうしんこうかんを
+もうしこむときは　ＩＲつうしんをつかうと
+すぐに　はじめられて　べんりです。
+
+Ｃギアの　「ＩＲ」つうしんを　えらび
+「こうかん」を　えらんでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・ＩＲ通信で　はじめる
+
+近くの友達に　通信交換を
+申し込むときは　ＩＲ通信を使うと
+すぐに　はじめられて　便利です。
+
+Ｃ－ＧＥＡＲの
+「ＩＲ」通信を　選択後
+「Ｔｒａｄｅ」を　選んでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_004_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ユニオンルームで　はじめる
+
+たくさんのともだちと　みんなで
+あそんでいるときは　ユニオンルームに
+あつまって　こうかんを　もうしこめます。
+
+ユニオンルームは
+ポケモンセンターの　２かいに　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・ユニオンルームで　はじめる
+
+たくさんの友達と　みんなで
+遊んでいるときは　ユニオンルームに
+集まって　交換を　申し込めます。
+
+ユニオンルームは
+ポケモンセンターの　２階に　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_004_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>・Ｗｉ－Ｆｉクラブで　はじめる
+
+ともだちが　とおくに　いるときは
+Ｗｉ－Ｆｉクラブで　こうかんが　できます。
+
+Ｗｉ－Ｆｉクラブを　りようするには
+おたがいに　Ｗｉ－Ｆｉせっていと
+ともだちコードの　こうかんを
+すませておく　ひつようがあります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・Ｗｉ－Ｆｉクラブで　はじめる
+
+友達が　遠くに　いるときは
+Ｗｉ－Ｆｉクラブで　交換できます。
+
+Ｗｉ－Ｆｉクラブを　利用するには
+お互いに　Ｗｉ－Ｆｉ設定と
+ともだちコードの　交換を
+済ませておく　必要があります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_004_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>・グローバルターミナルで　はじめる
+
+グローバルターミナルを　つかうと
+せかいじゅうのひとと　ポケモンの
+こうかんが　できます。
+おたがいの　こうかんじょうけんが　あうと
+こうかんが　おこなわれます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・グローバルターミナルで　はじめる
+
+グローバルターミナルを　使うと
+世界中の人と　ポケモンの
+交換が　できます。
+お互いの　交換条件が　合うと
+交換が　行われます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちに　つうしんたいせんを
+もうしこむ　ほうほうは
+つぎの　４つが　あります。
+
+・ＩＲつうしんで　はじめる
+・ユニオンルームで　はじめる
+・Ｗｉ－Ｆｉクラブで　はじめる
+・グローバルターミナルで　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>友達に　通信対戦を
+申し込む　方法は
+次の　４つが　あります。
+
+・ＩＲ通信で　はじめる
+・ユニオンルームで　はじめる
+・Ｗｉ－Ｆｉクラブで　はじめる
+・グローバルターミナルで　はじめる</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_005_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ＩＲつうしんで　はじめる
+
+ちかくのともだちに　つうしんたいせんを
+もうしこむときは　ＩＲつうしんをつかうと
+すぐに　はじめられて　べんりです。
+Ｃギアの　「ＩＲ」つうしんを　えらび
+「たいせん」を　えらんでください。
+ルールは　かならずレベル５０フラットで
+ミラクルシューターは　「あり」です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・ＩＲ通信で　はじめる
+
+近くの友達に　通信対戦を
+申し込むときは　ＩＲ通信を使うと
+すぐに　はじめられて　便利です。
+Ｃ－ＧＥＡＲの　「ＩＲ」通信を　選択後
+「Ｂａｔｔｌｅ」を　選んでください。
+ルールは　必ずレベル５０フラットで
+ミラクルシューターは　「あり」です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_005_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ユニオンルームで　はじめる
+
+たくさんのともだちと　みんなで
+あそんでいるときは　ユニオンルームに
+あつまって　たいせんを　もうしこめます。
+
+ユニオンルームは
+ポケモンセンターの　２かいに　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・ユニオンルームで　はじめる
+
+たくさんの友達と　みんなで
+遊んでいるときは　ユニオンルームに
+集まって　対戦を　申し込めます。
+
+ユニオンルームは
+ポケモンセンターの　２階に　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_005_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>・Ｗｉ－Ｆｉクラブで　はじめる
+
+ともだちが　とおくに　いるときは
+Ｗｉ－Ｆｉクラブで　たいせんが　できます。
+
+Ｗｉ－Ｆｉクラブを　りようするには
+おたがいに　Ｗｉ－Ｆｉせっていと
+ともだちコードの　こうかんを
+すませておく　ひつようがあります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・Ｗｉ－Ｆｉクラブで　はじめる
+
+友達が　遠くに　いるときは
+Ｗｉ－Ｆｉクラブで　対戦できます。
+
+Ｗｉ－Ｆｉクラブを　利用するには
+お互いに　Ｗｉ－Ｆｉ設定と
+ともだちコードの　交換を　
+済ませておく　必要があります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_005_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>・グローバルターミナルで　はじめる
+
+せかいじゅうのひとと
+いろいろなルールで　たいせんをして
+じぶんの　うでを　みがきたいときは
+グローバルターミナルを　つかってください。
+
+グローバルターミナルは
+ポケモンセンターの　２かいに　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・グローバルターミナルで　はじめる
+
+世界中の人と
+いろいろなルールで　対戦をして
+自分の　腕を　磨きたいときは
+グローバルターミナルを　使ってください。
+
+グローバルターミナルは
+ポケモンセンターの　２階に　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　１ひきずつ　だして
+たたかう　しょうぶのことを
+シングルバトル　といいます。
+
+しょうぶの　しゅるいは　シングルバトルを
+ふくめて　ぜんぶで　４つあります。
+どのしょうぶでも　わざを　えらぶ　ときに
+Ｌボタンを　おしながら　Ａボタンを　おすと
+わざの　せつめいを　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　１匹ずつ　だして
+戦う　ポケモン勝負のことを
+シングルバトル　といいます。
+
+勝負の　種類は　シングルバトルを
+ふくめて　全部で　４つあります。
+どの勝負でも　技を　選ぶときに
+Ｌボタンを　押しながら　Ａボタンを　押すと
+技の　説明を　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　２ひきずつ　だして
+たたかう　しょうぶのことを
+ダブルバトル　といいます。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　２匹ずつ　だして
+戦う　ポケモン勝負のことを
+ダブルバトル　といいます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_008_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　３ひきずつ　だして
+たたかう　しょうぶのことを
+トリプルバトル　といいます。
+トリプルバトルでは　ポケモンの
+いる　ばしょが　あいてから　とおいと
+こうげきを　することができません。
+ただし　まんなかに　いる　ポケモンだけは
+あいての　３ひきの　どのポケモンにでも
+こうげきを　することが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　３匹ずつ　だして
+戦う　ポケモン勝負のことを
+トリプルバトル　といいます。
+トリプルバトルでは　ポケモンの
+いる場所が　相手から　遠いと
+攻撃を　することが　できません。
+ただし　真ん中にいる　ポケモンだけは
+相手の　３匹の　どのポケモンにでも
+攻撃を　することが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_008_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざのなかには　あいてからとおくても
+とどくものが　いちぶに　あるようです。
+
+また　ポケモンが　いる　ばしょは
+いれかえることが　できます。
+ひだり　か　みぎの　ポケモンの
+わざを　えらぶがめんで　「いどう」を
+えらぶと　まんなかの　ポケモンと
+ばしょを　いれかえることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>技の中には　相手から遠くても
+届くものが　一部に　あるようです。
+
+また　ポケモンが　いる場所は
+入れ替えることが　できます。
+左か　右の　ポケモンの　技を
+選ぶ　画面で　「いどう」を
+選ぶと　真ん中の　ポケモンと
+場所を　入れ替えることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_009_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ローテーションバトルは　シングルバトルが
+しんかした　あたらしい　しょうぶです。
+３ひきずつ　ポケモンを　だします。
+
+こうどうできる　ポケモンは　１かいに
+１ひきだけですが　しょうぶに　でている
+３ひきのうち　どのポケモンが　うごくかを
+じゆうに　えらぶことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ローテーションバトルは　シングルバトルが
+進化した　新しい　ポケモン勝負です。
+３匹ずつ　ポケモンを　だします。
+
+行動できる　ポケモンは　１回に
+１匹だけですが　戦闘に　でている
+３匹のうち　どのポケモンが　動くかを
+自由に　選ぶことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_009_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>うしろのポケモンを　ローテーションで
+まえに　だしたいときは
+わざを　えらぶがめんで
+ローテーションの　マークを
+えらんで　ください。
+
+わざを　えらんだ　ポケモンは
+まえに　でたあと　すぐに　こうどうします。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>後ろのポケモンを　ローテーションで
+前に　だしたいときは
+技を　選ぶ　画面で　ローテーションの
+マークを　選んでください。
+
+技を　選んだ　ポケモンは
+前にでたあと　すぐに　行動します。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_010_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミラクルシューターを　「あり」に　すると
+つうしんたいせんの　しょうぶちゅうに
+どうぐを　つかうことが　できます。
+どうぐには　それぞれ　つかうのに
+ひつような　ポイントが　きめられています。
+ポイントは　ターンがすすむと　ふえます。
+すぐに　どうぐを　つかうか
+ためて　きょうりょくな　どうぐを
+つかうかは　じゆうです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミラクルシューターを　「あり」に　すると
+通信対戦の　戦闘中に
+道具を　使うことが　できます。
+道具には　それぞれ　使うのに
+必要な　ポイントが　決められています。
+ポイントは　ターンが進むと　増えます。
+すぐに　道具を　使うか　ためて
+強力な　道具を　使うかは　自由です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_011_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユニオンルームでは　ちかくにいる　ひとと
+こうかんや　たいせんなどが　できます。
+ポケモンセンター２かいの　ひだりで
+うけつけを　してください。
+ルームに　はいったら　はなしたい　ひとの
+まえにたって　Ａボタンを　おしてください。
+
+ユニオンルームの　ひだりおくに　いる
+おねえさんから　くわしいことが　きけます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユニオンルームでは　近くにいる　人と
+ポケモン交換や　対戦などが　できます。
+ポケモンセンター２階の　左で
+受付を　してください。
+ルームに　入ったら　話したい　人の
+前で　Ａボタンを　押してください。
+
+ユニオンルームの　左奥にいる
+お姉さんから　詳しいことが　きけます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_012_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンターの　２かいにある
+ポケモン Ｗｉ－Ｆｉクラブでは
+ともだちてちょうに　とうろくしたひと
+どうしで　つうしんこうかんや　たいせん
+ボイスチャット　ライブキャスターを
+たのしむことが　できます。
+ともだちを　とうろくする　ほうほうは
+「ともだちコード」の　せつめいを
+ごらんください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンターの　２階にある
+ポケモン Ｗｉ－Ｆｉ クラブでは
+ともだちてちょうに　登録した人同士で
+通信交換や　対戦
+ボイスチャット　ライブキャスターを
+楽しむことが　できます。
+友達を　登録する　方法は
+「ともだちコード」の
+説明を　ご覧ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_012_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ルームに　はいったら
+つうしんしたい　ともだちの　まえで
+Ａボタンを　おしてください。
+つうしんしたいことを　きめて　まっている
+ともだちは　ぴょんぴょん　とんでいます。
+
+つうしんで　したいことを　きめている
+ときは　おくにある　モニターにむかって
+Ａボタンを　おしてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ルームに　入ったら
+通信したい　友達の　前で
+Ａボタンを　押してください。
+通信したいことを　決めて　待っている
+友達は　ぴょんぴょん　跳んでいます。
+
+通信で　したいことを　決めているときは
+奥にある　モニターに　向かって
+Ａボタンを　押してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_012_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボイスチャットをつかうと
+でんわのように　とおくのともだちと
+こえで　やりとりすることが　できます。
+
+ルームのなかで　Ｘボタンをおすと
+ボイスチャットを　するかしないか
+あらかじめ　きめておくことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボイスチャットを使うと
+電話のように　遠くの友達と
+声で　やりとりすることが　できます。
+
+ルームの中で　Ｘボタンを押すと
+ボイスチャットを　するかしないか
+あらかじめ　決めておくことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_013_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>グローバルターミナル　では
+とおくにいる　みしらぬひとと
+つうしんこうかんや　つうしんたいせんを
+たのしめます。
+ポケモンセンター２かいの　みぎで
+うけつけを　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グローバルターミナルでは
+遠くにいる　見知らぬ人と
+通信交換や　通信対戦を　楽しめます。
+
+ポケモンセンター２階の　右で
+受付を　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_014_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>いちど　Ｗｉ－Ｆｉコネクションに
+せつぞくを　すると　はっこうされる
+あなたこじんの　ばんごうです。
+ともだちコードを　おしえあうと
+とおくの　ともだちと
+たいせんや　こうかんが　たのしめます。
+じぶんの　ともだちコードは
+バッグの　たいせつなものの　なかにある
+「ともだちてちょう」で　かくにんできます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>一度　Ｗｉ－Ｆｉコネクションに
+接続すると　発行される
+あなた個人の　番号です。
+ともだちコードを　教えあうと　遠くの
+友達と　対戦や　交換が　楽しめます。
+
+自分の　ともだちコードは　バッグの
+大切なものの　中にある
+「ともだちてちょう」で　確認できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_002_014_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちコードを　とうろくするほうほうは
+つぎの２しゅるいが　あります。
+
+・バッグの　たいせつなもの　にある
+　ともだちてちょうで　「つかう」をえらび
+　ともだちから　おそわった　コードを
+　ちょくせつ　にゅうりょくする
+・Ｃギアの　ＩＲつうしんを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ともだちコードを　登録する方法は
+次の２種類が　あります。
+
+・バッグの　大切なもの　にある
+　ともだちてちょうで　「つかう」を選び
+　友達から　教わった　コードを
+　直接　入力する
+・Ｃ－ＧＥＡＲの　ＩＲ通信を　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアは　ちかくのひとと
+つうしんこうかんや　たいせんをしたり
+ハイリンクや　ライブキャスター
+ゲームシンクなどを　するときにつかう
+いろいろな　きのうをもった　きかいです。
+
+Ｃギアの　みぎしたに　ひょうじされた
+でんげんのマークを　タッチすると
+Ｃギアのでんげんを　オン／オフできます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲは　近くの人と
+通信交換や　対戦をしたり
+ハイリンクや　ライブキャスター
+ゲームシンクなどを　するときに使う
+いろいろな　機能をもった　デバイスです。
+
+Ｃ－ＧＥＡＲの　右下に　表示された電源の
+マークを　タッチすると　Ｃ－ＧＥＡＲの
+電源を　ＯＮ／ＯＦＦできます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_001_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアのでんげんが　はいっているとき
+ＤＳのむせんは　つねにオンになっています。
+
+ひこうきや　びょういんのなか　など
+むせんつうしんを　つかってはいけない
+ばしょでは　Ｃギアの　でんげんは
+かならず　オフに　してください。
+まもらないと　ほうりついはんになる
+ばあいが　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの電源が　入っているとき
+ＤＳの無線は　常時ＯＮになっています。
+
+飛行機や　病院の中など
+無線通信を　使ってはいけない
+場所では　Ｃ－ＧＥＡＲの　電源は
+必ず　ＯＦＦに　してください。
+守らないと　法律違反になる
+場合が　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_001_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　みぎしたに　ある
+スパナのマークを　タッチすると
+Ｃギアを　カスタマイズできます。
+スパナのマークを　タッチしたあと
+いろのついた　わくを　なんかいか
+タッチすることで　つかいやすく
+カスタマイズできます。
+？マークを　タッチすると　Ｃギアの
+ヘルプを　みることができます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　右下に　ある
+スパナのマークを　タッチすると
+Ｃ－ＧＥＡＲを　カスタマイズできます。
+スパナのマークを　タッチしたあと
+色のついた　枠を
+何回か　タッチすることで
+使いやすく　カスタマイズできます。
+？マークを　タッチすると　Ｃ－ＧＥＡＲの
+ヘルプを　みることができます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_001_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　したのほうに　ひょうじされた
+よこながのマークは　すれちがいログ　です。
+タッチすると　Ｃギアを　ちかくで
+つかっているひとが　わかります。
+そのひとの　ようすや
+プロフィールが　わかったり
+メッセージの　やりとりなどが　できます。
+また　つうしんあいてにも
+じぶんの　ようすが　しらされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　下のほうに　表示された
+横長のマークは　すれ違いログです。
+タッチすると　Ｃ－ＧＥＡＲを　近くで
+使っている人が　分かります。
+その人の　様子や
+プロフィールが　わかったり
+メッセージの　やりとりなどが　できます。
+また　通信相手にも
+自分の様子が　知らされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアをつかっている　べつのひとが
+ひょうじされているときに
+そのひとを　タッチすると
+プレイじかんや
+どこを　ぼうけんしているのか　などの
+じょうほうを　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲを使っている　別の人が
+表示されているときに　その人を
+タッチすると　プレイ時間や
+どこを冒険しているのか　などの
+情報を　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_002_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいログの
+さんかくマークを　タッチすると
+ハイルツリーから　うけとった
+デルパワーを　つかうことが　できます。
+デルパワーを　うけとるには
+つうしんあいての　ハイルツリーで　うけた
+ミッションを　せいこうさせた　あと
+じぶんの　ハイルツリーを
+かくにん　してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違いログの
+三角マークを　タッチすると
+ハイルツリーから　受け取った
+デルパワーを　使うことが　できます。
+デルパワーを　受け取るには
+通信相手の　ハイルツリーで　受けた
+ミッションを　成功させた　あと
+自分の　ハイルツリーを
+確認してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_002_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふきだしのマークを　タッチすると
+Ｃギアを　つかっている　べつのひとに
+メッセージを　おくることが　できます。
+
+おくられたあいてが
+いやなきもちに　なるようなことばや
+なまえや　でんわばんごうのような
+こじんの　たいせつなじょうほうは
+ぜったいに　おくらないでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふきだしのマークを　タッチすると
+Ｃ－ＧＥＡＲを　使っている　別の人に
+メッセージを　送ることが　できます。
+
+送られた　相手が
+いやな気持ちに　なるような言葉や
+名前や　電話番号のような
+個人の　大切な情報は
+絶対に　送らないでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_002_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>えがおのマークを　タッチすると
+おれいの　メッセージを
+おくることが　できます。
+
+えがおのマークを　タッチしたあと
+おれいを　おくるあいてを
+えらんで　ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>笑顔のマークを　タッチすると
+お礼の　メッセージを
+送ることが　できます。
+
+笑顔のマークを　タッチしたあと
+お礼を　送る
+相手を　選んでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさとは
+すれちがった　ひとが　どんな　このみや
+しゅみをもっていて
+そのにんずうが　どれくらい　いるのかを
+しらべることです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査とは　すれ違った　人が
+どんな　好みや　趣味を　持っていて
+その人数が　どれくらい　いるのかを
+調べることです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさは　ヒウンシティの
+すれちがいちょうさたいほんぶで
+ちょうさいらいを　うけることで
+はじめることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違い調査は　ヒウンシティの
+すれ違い調査隊本部で
+調査依頼を　受けることで　開始できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_004_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいちょうから　ちょうさいらいを
+うけたら　Ｃギアの　ひだりしたに
+ひょうじされている
+えんグラフを　タッチして
+ちょうさないようを　きめてください。
+
+ちょうさちゅうの　ちょうさには
+しるしが　ついています。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>隊長から　調査依頼を　受けたら
+Ｃ－ＧＥＡＲの　左下に　表示されている
+円グラフを　タッチして
+調査内容を　決めてください。
+
+調査中の　調査には
+印が　ついています。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうさないようを　きめた　あと
+Ｃギアを　オンにしておくだけで
+じゅんびは　かんりょうです。
+おなじように　Ｃギアを　オンに
+しているひとと　すれちがったときに
+じどうで　ちょうさが　おこなわれます。
+ＤＳは　とじていても
+ぼうけんを　いつもどおり　すすめていても
+ちょうさは　じどうで　おこなわれます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>調査内容を　決めた　あと
+Ｃ－ＧＥＡＲを　ＯＮにしておくだけで
+準備は　完了です。
+同じように　Ｃ－ＧＥＡＲを
+ＯＮにしている人と　すれ違ったときに
+自動で　調査が　行われます。
+ＤＳは　閉じていても
+冒険をいつもどおり　進めていても
+調査は　自動で　行われます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒウンシティにいる　たいちょうに
+ほうこくするまえに　まず
+Ｃギアの　「ちょうさを　みる」で
+ちょうさの　かくにんを　しましょう。
+ちょうさしおわったことを　かくにんしたら
+ヒウンシティの
+すれちがいちょうさたいほんぶに　いって
+たいちょうに　ちょうさけっかを
+ほうこくしてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒウンシティの隊長に　報告する前に
+まず　Ｃ－ＧＥＡＲの「調査を見る」で
+調査の　確認を　しましょう。
+調査し終わったことを　確認したら
+ヒウンシティの
+すれ違い調査隊本部に　行って
+隊長に　調査結果を　報告してください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　「ＩＲ (アイアール）」と
+かかれた　あかい　わくを　タッチすると
+ちかくのひとに　つうしんこうかんや
+たいせんを　もうしこむことが　できます。
+ともだちコードを　こうかんしたり
+つうしんあいてとの　あいしょうを
+チェックすることも　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　「ＩＲ」と　書かれた
+赤い　枠を　タッチすると
+近くの人に　通信交換や
+対戦を　申し込むことが　できます。
+ともだちコードを　交換したり
+通信相手との　相性を
+チェックすることも　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_007_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>おたがいに　おなじ　こうもくを　えらんで
+ＤＳカードどうしを　むけあい
+つうしんを　はじめます。
+つうしんが　ただしく　はじまったあとは
+ＤＳカードを　むけあう
+ひつようは　ありません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お互いに　同じ　項目を　選んで
+ＤＳカード同士を　向け合い
+通信を　はじめます。
+通信が　正しく　はじまったあとは
+ＤＳカードを　向け合う
+必要は　ありません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　「Ｗｉ－Ｆｉ（ワイファイ）」と
+かかれた　あおい　わくを　タッチすると
+ゲームシンクが　できます。
+
+ゲームシンクとは
+ボックスにいる　ポケモンを　ねむらせて
+せかいじゅうの　トレーナーの　レポートを
+おくる　しくみのこと　です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの
+「Ｗｉ－Ｆｉ」と　書かれた
+青い　枠を　タッチすると
+ゲームシンクが　できます。
+
+ゲームシンクとは
+ボックスにいる　ポケモンを　眠らせて
+世界中の　トレーナーの　レポートを
+送る　仕組みのこと　です。
+</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　「Ｗｉ－Ｆｉ」と　かかれた
+わくのなかは　むせんつうしんの
+じょうきょうによって　いろが　かわります。
+
+つかっているＤＳとの
+Ｗｉ－Ｆｉせっていが　すませてある
+むせんアクセスポイントが
+ちかくに　ある　ばあいは
+みどりいろに　ひかります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの
+「Ｗｉ－Ｆｉ」と　書かれた
+枠の中は　無線通信の
+状況によって　色が　変化します。
+使っている　ＤＳとの
+Ｗｉ－Ｆｉ設定が　すませてある
+無線アクセスポイントが
+近くにある　場合は
+緑色に　光ります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ニンテンドーゾーンなど
+みんなが　Ｗｉ－Ｆｉつうしんを　つかえる
+むせんアクセスポイントが
+ちかくに　ある　ばあいは
+あおいろに　ひかります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ニンテンドーゾーンなど
+みんなが　Ｗｉ－Ｆｉ通信を　使える
+無線アクセスポイントが
+近くにある　場合は
+青色に　光ります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉせっていが　すんでいない
+むせんアクセスポイントが
+ちかくに　ある　ばあいは
+「Ｗｉ－Ｆｉ」の　わくのなかは
+あかいろに　ひかります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉ設定が　すんでいない
+無線アクセスポイントが
+近くにある　場合は
+「Ｗｉ－Ｆｉ」の　枠の中は
+赤色に　光ります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンクで　おくられた　レポートは
+「ポケモンドリームワールド」と　よばれる
+ポケモンの　ゆめのせかいに　あつまります。
+
+ポケモンドリームワールドは
+インターネットこうしきサイト
+「ポケモングローバルリンク」のなかに
+あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームシンクで　送られた　レポートは
+「ポケモンドリームワールド」と　呼ばれる
+ポケモンの　夢の世界に　集まります。
+
+ポケモンドリームワールドは
+インターネット公式サイト
+「ポケモングローバルリンク」の
+中に　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_008_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンドリームワールドで　あそぶには
+つぎの　じゅんびが　ひつようです。
+
+・Ｗｉ－Ｆｉせってい
+・ゲームシンクせってい
+・おてもとのパソコンを　つかって
+　インターネットこうしきサイト
+　「ポケモングローバルリンク」に
+　ユーザーとうろくを　する</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンドリームワールドで　遊ぶには
+次の準備が　必要です。
+
+・Ｗｉ－Ｆｉ設定
+・ゲームシンク設定
+・お手元のパソコンを　使って
+　インターネット公式サイト
+　「ポケモングローバルリンク」に
+　ユーザー登録を　する</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの
+「ＷＩＲＥＬＥＳＳ（ワイヤレス）」と
+かかれた　きいろい　わくを　タッチすると
+イッシュちほうの　まんなかに　ある
+ハイリンクと　よばれる　ばしょに
+いどうする　ことが　できます。
+
+じぶんの　ハイリンクの　まんなかには
+ハイルツリーと　よばれる　きがあります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの
+「ＷＩＲＥＬＥＳＳ」と　書かれた
+黄色い　枠を　タッチすると
+イッシュ地方の　真ん中に　ある
+ハイリンクと　呼ばれる場所に
+移動することが　できます。
+
+自分の　ハイリンクの　真ん中には
+ハイルツリーと　呼ばれる　木があります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアを　オンにして
+あそんでいる　ひとが　ちかくにいると
+ハイリンクから　つうしんあいてに
+はしがかかり　あいての　せかいに
+いけるように　なります。
+
+※じぶんの　ハイリンクに
+　だれかが　はいっている　ばあいは
+　じぶんの　ハイリンクには　はいれません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲを　ＯＮにして　遊んでいる
+人が　近くにいると　ハイリンクから
+通信相手に　橋が架かり　相手の
+世界に　行けるように　なります。
+
+※自分の　ハイリンクに
+　だれかが　入っている　場合は
+　自分の　ハイリンクには　入れません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいてに　はしを　かけるには
+ハイリンクの　さゆうにある　はしのうえで
+しばらく　まってください。
+
+ただし　はしを　かけられるのは
+つうしんあいてが
+ハイリンクの　まわりにある　８つのまちや
+どうろに　いて　かつ　たてものの　なかに
+はいっていないときだけ　です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手に　橋を架けるには
+ハイリンクの　左右にある　橋の上で
+しばらく　待ってください。
+
+ただし　橋を　架けられるのは
+通信相手が
+ハイリンクの　周りにある　８つの街や
+道路に　いて　かつ　建物の中に
+入っていない時だけ　です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいてに　ハイリンクをつなぐ
+はしが　かかると　したがめんに
+だれと　つながったか　おしらせが　でます。
+
+はしを　わたって　あいての　せかいに
+はいりこんでみて　ください。
+
+あいての　せかいでは　じぶんのすがたは
+かわり　けしきが　はいいろに　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手に　ハイリンクをつなぐ
+橋が　架かると　下画面に　だれと
+つながったか　お知らせが　でます。
+
+橋を　渡って　相手の世界に
+入りこんでみて　ください。
+
+相手の世界では　自分の姿は変わり
+景色が　灰色に　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいての　ハイリンクにも
+ハイルツリーがあります。
+ハイルツリーにむかって　Ａボタンをおすと
+ミッションを　うけることが　できます。
+
+ミッションには　はなしをしたり
+ポケモンしょうぶをしたり
+いろいろな　しゅるいが　あります。
+また　せいげんじかんも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手の　ハイリンクにも
+ハイルツリーがあります。
+ハイルツリーに向かって　Ａボタンを押すと
+ミッションを　受けることが　できます。
+
+ミッションには
+話をしたり　ポケモン勝負をしたり
+いろいろ　種類が　あります。
+また　制限時間も　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいしょの　ミッションを　うけると
+すきな　まち　まで
+ワープ　できるように　なります。
+
+つうしんあいてに　ちかづきたい　ばあいは
+タッチスクリーンで
+ちかくの　まちを　タッチして
+ワープした　ところから
+さがして　みてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最初の　ミッションを　受けると
+好きな　街まで
+ワープ　できるように　なります。
+
+通信相手に　近づきたい　場合は
+タッチスクリーンで
+近くの　街を　タッチして
+ワープした　ところから
+探して　みてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいての
+ハイルツリーから　うけた　ミッションを
+せいこうさせると　
+じぶんの　ハイルツリーに　もどります。
+
+そのあと　じぶんの　ハイルツリーからは
+デルパワー　という　ふしぎな　ちからを
+うけとることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手の
+ハイルツリーから　受けた　ミッションを
+成功させると　
+自分の　ハイルツリーに　戻ります。
+
+そのあと　自分の　ハイルツリーからは
+デルパワー　という　不思議な　力を
+受け取ることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_009_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクで　あそんでいる　ときには
+できないことが　いくつか　あります。
+
+・レポートを　かく
+・どうぐの　「たいせつなもの」
+・ひでんわざなど　たたかっていない
+　ときでも　つかえる　わざ
+これらは　ハイリンクや　ほかのひとの
+せかい　では　つかえません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクで　遊んでいる　ときには
+できないことが　いくつか　あります。
+
+・レポートを　書く
+・道具の　「大切なもの」
+・秘伝技など　戦闘中
+　以外でも　使える　技
+これらは　ハイリンクや
+他の人の　世界では　使えません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_010_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーは　ハイリンクに　ある
+ハイルツリーから　うけとれる
+ふしぎな　ちからのこと　です。
+
+ほかのひとの　ハイリンクに　いって
+ハイルツリーから　うけた　ミッションを
+せいこうさせると　もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーは　ハイリンクに　ある
+ハイルツリーから　受け取れる
+不思議な　力のこと　です。
+
+他の人の　ハイリンクに　行って
+ハイルツリーから　受けた　ミッションを
+成功させると　もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_010_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>うけとった　デルパワーは
+ハイリンクや　ほかのひとの　せかいでは
+つかえません。
+
+デルパワーを　つかう　ときは
+ハイリンクから　でたあと
+Ｃギアの　したのほうに　ある
+「すれちがいログ」を　タッチして
+さんかくマークを　タッチして　ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受け取った　デルパワーは
+ハイリンクや　他の人の　世界では
+使えません。
+
+デルパワーを　使うときは
+ハイリンクから　でたあと
+Ｃ－ＧＥＡＲの　下のほうに　ある
+「すれ違いログ」を　タッチして
+三角マークを　タッチして　ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_010_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　デルパワーを　つかうには
+きめられた　かずの
+デルダマが　ひつようです。
+
+デルダマは　つうしんあいての
+ハイルツリーから　うける
+ミッションを　せいこうさせると
+もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　デルパワーを　使うには
+決められた　数の
+デルダマが　必要です。
+
+デルダマは　通信相手の
+ハイルツリーから　受ける
+ミッションを　成功させると
+もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_003_011_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルダマは　デルパワーを　つかうときに
+きまったかずだけ　ひつように　なります。
+
+デルダマは　つうしんあいての
+ハイルツリーから　うける
+ミッションを　せいこうさせると
+もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルダマは　デルパワーを　使うときに
+決まった数だけ　必要に　なります。
+
+デルダマは　通信相手の
+ハイルツリーから　受ける
+ミッションを　成功させると
+もらうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>■バッグの　きのう
+バッグは　もちものの　しゅるいごとに
+じどうてきに　ふりわけられます。
+
+たいせつなものポケットに　いれている
+どうぐは　なまえの　よこの　しかくい
+マークを　チェックして　とうろくすると
+バッグを　ひらかなくても　Ｙボタンで
+かんたんに　つかうことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>■バッグの　機能
+バッグは　持ち物の　種類ごとに
+自動的に　振り分けられます。
+
+大切なものポケットに　いれている
+道具は　名前の　横にある　四角マークを
+チェックして　登録しておくと
+バッグを　開かなくても　Ｙボタンで
+簡単に　使うことができます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>したがめんの　みどりいろの　マークか
+スタートボタンを　おすと　ポケットの
+どうぐを　じどうで　せいりできます。
+
+セレクトボタンを　おすと
+ポケットの　どうぐを　じゆうに
+いれかえることが　できます。
+Ｌ／Ｒボタンを　おすと
+ページを　きりかえることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>下画面の　緑色の　マークか
+スタートボタンを　押すと　ポケットの
+道具を　自動で　整理できます。
+
+セレクトボタンを　押すと
+ポケットの　道具を
+自由に　入れ替えることが　できます。
+Ｌ／Ｒボタンを　押すと　ページを
+切り替えることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>■もちものの　しゅるい
+・どうぐ
+ポケモンに　もたせると　のうりょくや
+わざの　いりょくが　アップする
+どうぐが　あります。
+もたせて　こうかのある　どうぐには
+しるしが　ついているので　
+ポケモンに　もたせて
+こうかを　たしかめて　みましょう。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>■持ち物の　種類
+・道具
+ポケモンに　持たせると　能力や
+技の　威力が　アップする
+道具が　あります。
+持たせて　効果のある　道具には
+印が　ついているので　
+ポケモンに　持たせて
+効果を　確かめて　みましょう。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうちゅうに　つかうと　そのときだけ
+のうりょくや　わざの　いりょくが
+アップする　どうぐも　あります。
+
+いっていのあいだ　こうかが　つづくものや
+ポケモンを　いれかえると
+こうかが　きれるものも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘中に　使うと　そのときだけ
+能力や　技の　威力が
+アップする　道具も　あります。
+
+一定のあいだ　効果が　続くものや
+ポケモンを　入れ替えると
+効果が　切れるものも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　つかまえるための　ボールも
+どうぐポケットに　はいっています。
+ポケモンの　しんかに　かんけいする
+どうぐも　どこかに　あるようです。
+
+メールは　すきなことばを　くみあわせて
+つくる　てがみの　ことで
+ポケモンに　もたせて　こうかんすると　
+ともだちに　とどけることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　捕まえるための　ボールも
+道具ポケットに　入っています。
+ポケモンの　進化に　関係する
+道具も　どこかに　あるようです。
+
+メールは　好きな言葉を　組み合わせて
+つくる　手紙の　ことで
+ポケモンに　持たせて　交換すると　
+友達に　届けることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>・かいふく
+ポケモンの　ＨＰや　ＰＰ
+じょうたいいじょうなどを　かいふくさせる　
+どうぐを　しまっておく　ばしょです。
+
+・わざマシン
+わざマシンや　ひでんマシンを　しまいます。
+わざマシンや　ひでんマシンは
+なんどでも　つかうことができます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・回復
+ポケモンの　ＨＰや　ＰＰ　
+状態異常などを　回復させる　
+道具を　しまっておく　場所です。
+
+・わざマシン
+わざマシンや　ひでんマシンを　しまいます。
+わざマシンや　ひでんマシンは　何度でも
+使うことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_001_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>・きのみ
+ポケモンに　つかったり　もたせておくと
+こうかのある　きのみを　しまっておく
+ばしょです。
+・たいせつなもの
+たいせつな　どうぐを
+しまっておく　ばしょです。
+べんりボタンに
+とうろくできる　ものも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・きのみ
+ポケモンに　使ったり　持たせておくと
+効果のある　きのみを
+しまっておく　場所です。
+
+・大切なもの
+大切な　道具を　しまっておく　場所です。
+便利ボタンに　登録できるものも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｘボタンメニューで
+じぶんの　なまえを　えらぶと
+いま　いくつ　ジムバッジを　もっているか
+かくにん　することが　できます。
+
+したがめんの　ひだりしたに　ある
+マークを　タッチすると
+トレーナーカードを
+みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｘボタンメニューで
+自分の　名前を　選ぶと
+今　いくつ　ジムバッジを　持っているか
+確認することが　できます。
+
+下画面の　左下に　ある
+マークを　タッチすると
+トレーナーカードを　みることができます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_002_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーカードは　プレイじかんや
+おこづかいを　かくにんできる　カードです。
+かたがきや　せいかくは　がめんを
+タッチすると　きりかわりますので
+すきなものを　えらんでください。
+したの　しろいわくを　タッチすると
+メッセージが　へんしゅう　できます。
+あいている　ところに　すきな　たんごを
+えらんで　かんせいさせて　ください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーカードは　プレイ時間や
+お小遣いを　確認できる　カードです。
+肩書きや　性格は　画面を
+タッチすると　切り替わりますので
+好きなものを　選んでください。
+下の　白い枠を　タッチすると
+メッセージが　編集できます。
+空スペースに　好きな　単語を
+選んで　完成させてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_002_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>カードの　うらには　タッチペンを　
+つかって　サインを　かくことが　できます。
+ペンの　マークや　けしゴムの　マークを
+タッチで　きりかえます。
+プラスの　マークを　タッチすると
+がめんを　かくだい　できます。
+さんかくの　マークを　タッチすると
+サインエリアを　はんぶんに　わけた
+アニメが　さいせい　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カードの　裏には　タッチペンを使って
+サインを　かくことが　できます。
+ペンの　マークや　けしゴムの　マークを
+タッチで　切り替えます。
+プラスの　マークを　タッチすると
+画面を　拡大できます。
+三角の　マークを　タッチすると
+サインエリアを　半分に　分割した
+アニメが　再生できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>であった　ポケモンを　じどうてきに
+きろくしていく　ハイテクな　ずかんです。
+
+つかまえたことが　ある　ポケモンは
+せつめいや　せいそくしている　ばしょ
+なきごえや　たかさ　おもさ
+タイプや　あしあとを
+みることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>出会った　ポケモンを　自動的に
+記録していく　ハイテクな　図鑑です。
+
+捕まえたことが　ある　ポケモンは
+説明や　生息している　場所
+鳴き声や　高さや　重さ
+タイプや　足跡を
+見ることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_005_003_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんを　すすめていくと
+ポケモンずかんに
+けんさくきのうが　ついか　されます。
+
+けんさくきのうが　ついかされたら
+「ＳＴＡＲＴ」を　おすと　ばんごう
+ごじゅうおん　いろ　かたち　などから
+あてはまる　ポケモンを
+さがすことが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>冒険を　進めていくと
+ポケモン図鑑に
+検索機能が　追加されます。
+
+検索機能が　追加されたら
+「ＳＴＡＲＴ」を　押すと
+番号　五十音　色や　形などから
+あてはまる　ポケモンを
+検索することが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいりょくを　へらしてから
+モンスターボールを　つかうと
+つかまえやすく　なります。
+
+ポケモンの　わざで
+まひさせたり　ねむらせたりすると
+さらに　つかまえやすく　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>体力を　減らしてから
+モンスターボールを　使うと
+捕まえやすく　なります。
+
+ポケモンの　技で
+まひさせたり　眠らせたりすると
+さらに　捕まえやすく　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンや　わざには　タイプがあり
+そのかずは　ぜんぶで　１７しゅるいです。
+タイプごとに　ゆうりなタイプと
+ふりなタイプが　あり
+くみあわせで　あいしょうが　きまります。
+たとえば　ほのおタイプの　わざは
+むしや　くさタイプのポケモンには
+ゆうりですが　みずや　いわタイプの
+ポケモンには　あまり　ききません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンや　技には　タイプがあり
+その数は　全部で　１７種類です。
+タイプごとに　有利なタイプと　
+不利なタイプが　あり
+組み合わせで　相性が　決まります。
+例えば　ほのおタイプの　技は
+むしや　くさタイプのポケモンには
+有利ですが　みずや　いわタイプの
+ポケモンには　あまり　効きません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_002_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>だすわざの　タイプが　そのわざを　だす
+ポケモンのタイプと　おなじばあいは
+わざのいりょくが　いつもより　あがります。
+ポケモンが　２つの　タイプを
+もっていると　それぞれの　あいしょうが
+えいきょう　しあいます。
+
+また　あいしょうに　よっては　わざの
+こうかがない　くみあわせも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だす技の　タイプが　その技を　だす
+ポケモンのタイプと　同じ場合は
+技の威力が　いつもより　あがります。
+ポケモンが　２つの
+タイプを　持っていると
+それぞれの　相性が　影響しあいます。
+
+また　相性に　よっては　技の
+効果がない　組み合わせも　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざは　「ぶつり」と　「とくしゅ」と
+「へんか」の　３つに　ぶんるいされていて
+マークに　よって
+みわけることが　できます。
+
+・ぶつりわざ
+ポケモンの　こうげきと　ぼうぎょの
+すうちに　よって　ダメージが　きまる
+わざの　しゅるいです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>技は　「物理」と　「特殊」と
+「変化」の　３つに　分類されていて　
+マークに　よって
+みわけることが　できます。
+
+・物理技
+ポケモンの　攻撃と　防御の　
+数値に　よって　ダメージが　決まる
+技の　種類です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_003_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>・とくしゅわざ
+ポケモンの　とくこうと　とくぼうの
+すうちに　よって　ダメージが　きまる
+わざの　しゅるいです。
+・へんかわざ
+あいてを　こうげきする　わざではなく
+ポケモンの　のうりょくを　あげたり
+じょうたいいじょうに　するなど　ほじょの
+こうかがある　わざの　しゅるいです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・特殊技
+ポケモンの　特攻と　特防の　
+数値に　よって　ダメージが　決まる
+技の　種類です。
+・変化技
+相手を　攻撃する　技ではなく
+ポケモンの　能力を　あげたり
+状態異常に　するなど
+補助の　効果がある　技の　種類です。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンの　ＨＰが０に　なったじょうたい。
+かいふくさせる　までは　せんとうに
+だすことが　できませんが　せんとうちゅう
+いがいで　つかえる　いちぶの　わざは
+ひんしでも　つかうことが　できます。
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・げんきのかけらを　つかう
+・げんきのかたまりを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンの　ＨＰが　０になった状態。
+回復させるまで　戦闘に　だせませんが
+戦闘中　以外で　使える　一部の　技は
+ひんしでも　使うことが　できます。
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・げんきのかけらを　使う
+・げんきのかたまりを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　どくを　あびたじょうたい。
+せんとうちゅう　じょじょに
+ＨＰが　へって　いきます。
+ボールにもどったり　せんとうがおわると
+ＨＰは　へらなく　なりますが
+しぜんには　なおりません。
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・どくけしや　モモンのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　毒を　浴びた状態。
+戦闘中　徐々に
+ＨＰが　減っていきます。
+ボールに　戻ったり　戦闘が　終わると
+ＨＰは　減らなくなりますが
+自然には　治りません。
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・どくけしや　モモンのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　まひに　なったじょうたい。
+せんとうちゅう　えらんだ　わざが
+ときどき　うまく　だせなくなり
+すばやさも　さがってしまいます。
+また　せんとうが　おわっても
+しぜんには　なおりません。
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・まひなおしや　クラボのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　まひに　なった状態。
+戦闘中　選んだ　技が
+ときどき　うまく　だせなくなり
+素早さも　下がってしまいます。
+また　戦闘が　終わっても
+自然には　治りません。
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・まひなおしや　クラボのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　ねむっている　じょうたい。
+とくていの　わざ　いがいは
+つかうことが　できなくなります。
+せんとうちゅうに　かいふく　することが
+ありますが　ねむったまま　せんとうが
+おわっても　かいふく　しません。
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・ねむけざましや　カゴのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　眠っている　状態。
+特定の　技　以外は
+使うことが　できなくなります。
+戦闘中に　回復することが　ありますが
+眠ったまま
+戦闘が　終わっても　回復しません。
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・ねむけざましや　カゴのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_008_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　こおりついた　じょうたい。
+ほとんどの　わざが　だせなくなります。
+せんとうちゅうに　かいふく　することが
+ありますが　こおったまま　せんとうが
+おわっても　かいふく　しません。
+
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・こおりなおしや　ナナシのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　凍りついた　状態。
+ほとんどの　技が　だせなくなります。
+戦闘中に　回復することが　ありますが
+凍ったまま　戦闘が
+終わっても　回復しません。
+
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・こおりなおしや　ナナシのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_009_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　やけどした　じょうたい。
+せんとうちゅう　じょじょに　ＨＰが
+へっていき　こうげきも　さがります。
+ボールにもどったり　せんとうがおわると
+ＨＰは　へらなく　なりますが
+しぜんには　なおりません。
+■なおす　おもな　ほうほう
+・ポケモンセンターで　やすませる
+・やけどなおしや　チーゴのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　やけどした　状態。
+戦闘中　徐々に　ＨＰが
+減っていき　攻撃も　下がります。　
+ボールに　戻ったり　戦闘が　終わると　
+ＨＰは　減らなくなりますが
+自然には　治りません。
+■治す　主な方法
+・ポケモンセンターで　休ませる
+・やけどなおしや　チーゴのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_010_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　こんらんした　じょうたい。
+えらんだ　わざを　ださずに　ときどき
+じぶんを　こうげきして　しまいます。
+せんとうちゅう　しばらくたつか
+せんとうがおわると　しぜんに　なおります。
+
+■なおす　おもな　ほうほう
+・せんとうちゅう　ポケモンを　いれかえる
+・キーのみを　つかう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　混乱した　状態。
+選んだ　技を　ださずに　ときどき
+自分を　攻撃して　しまいます。
+戦闘中　しばらくたつか
+戦闘が　終わると　自然に　治ります。
+
+■治す　主な方法
+・戦闘中　ポケモンを　入れ替える
+・キーのみを　使う</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_006_011_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいべつの　ちがう　ポケモンに　
+メロメロに　なった　じょうたい。
+あいての　ポケモンに　みとれて
+えらんだ　わざを
+ときどき　だせなく　なります。
+ポケモンを　いれかえるか
+あいてを　たおすと　なおります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>性別の　違う　ポケモンに
+メロメロに　なった　状態。
+相手の　ポケモンに　みとれて
+選んだ　技を
+ときどき　だせなくなります。
+ポケモンを　入れ替えるか
+相手を　倒すと　治ります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンは　たたかいに　さんかすると
+けいけんちが　もらえます。
+たくさん　けいけんを　つむと　レベルが
+あがって　どんどん　せいちょうします。
+
+あいての　ポケモンのほうが　つよいと
+もらえる　けいけんちは　おおくなります。
+あいての　ポケモンのほうが　よわいと
+もらえる　けいけんちは　すくなくなります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンは　戦いに　参加すると
+経験値が　もらえます。
+たくさん　経験を　積むと
+レベルがあがって　どんどん　成長します。
+
+相手の　ポケモンの方が　強いと
+もらえる　経験値は　多くなります。
+相手の　ポケモンの方が　弱いと
+もらえる　経験値は　少なくなります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_001_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>けいけんちは　せんとうにでた
+すべての　ポケモンで　わけあいます。
+よわいポケモンにも　わけたいときは
+よわいポケモンを　さきに　だしたあと
+つよいポケモンに　こうたいする
+テクニックも　あります。
+ほかのひとと　こうかんした　ポケモンは
+じぶんで　つかまえた　ポケモンよりも
+もらえる　けいけんちが　おおくなります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>経験値は　戦闘にでた　ポケモン
+すべてで　わけあいます。
+弱いポケモンにも　わけたいときは
+弱いポケモンを　先にだしたあと
+強いポケモンに　交代する
+テクニックも　あります。
+他の人と　交換した　ポケモンは
+自分で　捕まえた　ポケモンよりも
+もらえる　経験値が　多くなります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンは　しんかすることが　あります。
+しんかすると　すがたかたちが　かわり
+のうりょくも　アップします。
+
+レベルを　あげて　せいちょうさせたり
+しんかにひつような　どうぐを　つかったり
+ともだちと　つうしんで　こうかんしたりと
+ポケモンごとに　さまざまな
+しんかの　しかたが　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンは　進化することが　あります。
+進化すると　姿かたちが　変わり
+能力も　アップします。
+
+レベルを　あげて　成長させたり
+進化に　必要な　道具を　使ったり
+友達と　通信で　交換したりと
+ポケモンごとに　さまざまな
+進化の　しかたが　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_002_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　しんかしている　さいちゅうに
+Ｂボタンを　おすと　ポケモンが　
+おどろいて　しんかを　やめます。
+
+ポケモンに　もたせておくと　
+しんかしなくなる　どうぐも
+どこかに　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　進化している　最中に
+Ｂボタンを　押すと　ポケモンが　
+驚いて　進化を　やめます。
+
+ポケモンに　持たせておくと　
+進化しなくなる
+道具も　どこかに　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>おなじ　しゅるいの　ポケモンでも
+せいかくや　こせいは　さまざまです。
+せいちょうにも　ちがいが　でてきます。
+
+ポケモンの　つよさをみると　こうげきや
+ぼうぎょなどの　のうりょくに
+いろが　ついていることが　あります。
+あかは　その　のうりょくが　あがりやすく
+あおは　あがりにくいことを　あらわします。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>同じ種類の　ポケモンでも　性格や
+個性は　さまざまです。
+成長にも　違いが　でてきます。
+
+ポケモンの　強さをみると　攻撃や
+防御などの　能力に
+色が　ついていることが　あります。
+赤は　その能力が　上がりやすく
+青は　上がりにくいことを　あらわします。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_007_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケルスとは　ポケモンにくっつく　とても
+めずらしい　せいめいたいの　ことです。
+ポケルスが　くっついている　あいだは
+ポケモンが　よくそだつ　らしいです。
+なんにちかで　もとの　じょうたいに
+もどりますが　いちど　ポケルスが　つくと
+もう　その　ポケモンには　くっつきません。
+ほかの　ポケモンにも
+うつることが　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケルスとは　ポケモンに　くっつく
+とても　珍しい　生命体の　ことです。
+ポケルスが　くっついている　あいだは
+ポケモンが　よく育つらしいです。
+何日かで　元の　状態に　戻りますが
+一度　ポケルスが　つくと
+もう　その　ポケモンには　くっつきません。
+他の　ポケモンにも
+うつることが　あるようです。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_001_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ランニングシューズを　もらったあとは
+Ｂボタンを　おしながら　いどうすると
+はしることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ランニングシューズを　もらったあとは
+Ｂボタンを　押しながら　移動すると
+走ることが　できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_002_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウジングマシンを　つかいながら
+あるいていると　したがめんが
+はんのうすることが　あります。
+やじるしにむかって　あるいてみましょう。
+かくれた　どうぐの　まうえに　たつと
+がめんの　マークが　てんめつします。
+まうえからは　どうぐが　ひろえません。
+いっぽ　さがって　はんのうしていた
+ばしょをむいてから　Ａボタンを　おします。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウジングマシンを　使いながら
+歩いていると　下画面が
+反応することが　あります。
+矢印に　向かって　歩いてみましょう。
+隠れた　道具の　真上に　立つと
+画面の　マークが　点滅します。
+真上からは　道具が　拾えません。
+一歩　さがって　反応していた
+場所を　向いてから　Ａボタンを　押します。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＳワイヤレスつうしんや
+Ｗｉ－Ｆｉつうしんを　つかって
+ともだちと　おはなしできる　どうぐです。
+ＤＳｉや　ＤＳｉＬＬなら　カメラきのうを　
+つかって　ともだちの　かおを　みながら
+おはなしが　できます。
+ライブキャスターで　おはなしするには
+あらかじめ　ともだちコードを　とうろく
+しあっておく　ひつようが　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＳワイヤレス通信や
+Ｗｉ－Ｆｉ通信を　使って
+友達と　お話が　できる　道具です。
+ＤＳｉや　ＤＳｉＬＬなら　カメラ機能を　
+使って　友達の　顔を　みながら
+お話が　できます。
+ライブキャスターで　お話するには
+あらかじめ　ともだちコードを
+登録しあっておく　必要が　あります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>■ＤＳワイヤレスつうしんのばあい
+Ｃギアの　ワイヤレスボタンを　タッチして
+ライブキャスターを　えらびます。
+ちかくに　ともだちコードを　こうかん
+している　あいてが　みつかると
+したがめんに　なまえと　ＩＤばんごうが
+ひょうじされますので　おはなしをしたい
+あいてを　えらんで　よびだして　ください。
+３にんまで　どうじに　よびだせます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>■ＤＳワイヤレス通信の場合
+Ｃ－ＧＥＡＲの　ワイヤレスボタンを
+タッチして　ライブキャスターを　選びます。
+近くに　ともだちコードを　交換している
+相手が　みつかると
+下画面に　名前と　ＩＤ番号が
+表示されますので　お話をしたい
+相手を　選んで　呼びだしてください。
+３人まで　同時に　呼びだせます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちからの　よびだしが　あると
+Ｃギアの　ワイヤレスボタンが　ひかり
+よびだしおんが　なります。
+ライブキャスターに　ともだちの
+なまえが　ひょうじ　されますので
+タッチして　よびだしを　うけてください。
+よびだしを　うけるまえに
+ライブキャスターを　えらぶと
+よびだしを　うけることが　できません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>友達からの　呼びだしが　あると
+Ｃ－ＧＥＡＲの　ワイヤレスボタンが　光り
+呼びだし音が　なります。
+ライブキャスターに　友達の
+名前が　表示されますので
+タッチして　呼びだしを　受けてください。
+呼びだしを　受ける前に
+ライブキャスターを　選ぶと
+呼びだしを　受けることが　できません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>■Ｗｉ－Ｆｉクラブのばあい
+Ｗｉ－Ｆｉクラブの　なかにいる
+メンバーの　ひとりと
+いっしょに　おはなしできます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>■Ｗｉ－Ｆｉクラブの場合
+Ｗｉ－Ｆｉクラブの　中にいる
+メンバーの　１人と
+一緒に　お話できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>■ライブキャスターの　つかいかた
+したがめんで　そうさを　おこないます。
+まんなかの　ボタンを　
+タッチしながら　ことばを　はなすと
+つうしんで　あいてに　こえが　とどきます。
+
+ひだりの　ゲージを　そうさすると
+こえの　たかさが　かえられます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>■ライブキャスターの　使い方
+下画面で　操作を　行います。
+中央の　ボタンを　
+タッチしながら　言葉を　話すと
+通信で　相手に　声が　届きます。
+
+左の　ゲージを　操作すると
+声の　高さが　変えられます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_003_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＳｉや　ＤＳｉＬＬなら　おたがいの
+かおが　うえがめんに　ひょうじされます。
+みぎうえの　ボタンを　おすと　
+かおに　らくがきを　しあって　あそべます。
+みぎしたの　ボタンで　がめんを
+こていすることも　できます。
+カメラが　ない　ほんたいの　ばあいは
+「ＳＯＵＮＤ　ＯＮＬＹ」と
+ひょうじされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＳｉや　ＤＳｉＬＬなら　お互いの
+顔が　上画面に　表示されます。
+右上の　ボタンを　押すと　
+お互いの　顔に
+落書きを　して　遊べます。
+右下の　ボタンで　画面を
+固定することも　できます。
+カメラがない　本体の　場合は
+「ＳＯＵＮＤ　ＯＮＬＹ」と　表示されます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_004_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュちほうには　８つの　ジムが　あり
+それぞれに　ジムリーダーが　います。
+ジムバッジは　ジムリーダーに　かった
+あかしとして　もらえる　バッジです。
+
+Ｘボタンで　メニューを　ひらき
+じぶんの　なまえを　えらぶと
+ジムバッジを　いくつとったか
+かくにんできます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ地方には　８つの　ジムが　あり
+それぞれに　ジムリーダーが　います。
+ジムバッジは　ジムリーダーに　勝利した
+証として　もらえる　バッジです。
+
+Ｘボタンで　メニューを　ひらき
+自分の　名前を　選ぶと
+いくつ　ジムバッジを
+手に入れたか　確認できます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_004_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>てにいれた　バッジの　かずが　おおいと
+ひとから　もらった　ポケモンの　レベルが
+たかくても　あなたの　めいれいを　
+すなおに　きいてくれるように　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手に入れた　バッジの　数が　多いと
+人から　もらった　ポケモンの　レベルが
+高くても　あなたの　命令を　
+すなおに　きいてくれるように　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>べんりボタンは　よくつかう　きのうや
+どうぐを　つかいたいときに　すぐに
+つかうことができる　べんりなボタンです。
+
+べんりボタンに　とうろくすると
+Ｙボタンを　おして　すぐにつかえます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>便利ボタンは　よく使う　機能や
+道具を　使いたいときに　すぐに
+使うことができる　便利なボタンです。
+
+便利ボタンに　登録すると
+Ｙボタンを　押して　すぐに使えます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_005_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｘボタンを　おして　メニューを　ひらくと
+したのがめんに　しかくい　マークが
+ひょうじされている　ことが　あります。
+このマークを　タッチすると
+あかい　チェックマークが　つきます。
+
+チェックマークを　つけた
+きのうや　どうぐが
+べんりボタンに　とうろくされます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｘボタンを　押して　メニューを　開くと
+下画面に　四角の　マークが
+表示されている　ことが　あります。
+このマークを　タッチすると
+赤い　チェックマークが　つきます。
+
+チェックマークを　つけた　機能や
+道具が　便利ボタンに　登録されます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_005_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいせつなもの　ポケットに　はいっている
+どうぐの　よこにも
+しかくい　マークが　あります。
+
+タッチして　チェックしておくと　
+べんりボタンに　とうろくして　おけます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>大切なもの　ポケットに　入っている
+道具の　横にも
+四角の　マークが　あります。
+
+タッチして　チェックしておくと　
+便利ボタンに　登録しておけます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_005_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>べんりボタンには　２５こ　まで
+きのうや　どうぐを　とうろくできます。
+とうろくを　かいじょしたい　ばあいは
+しかくい　マークを　タッチして
+チェックを　はずして　ください。
+２つ　いじょう　とうろくしていると
+セレクトボタンで　べんりボタンの
+こうもくを　ならびかえられます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>便利ボタンには　２５こ　まで
+機能や　道具を　登録できます。
+登録を　解除したい　場合は
+四角の　マークを　タッチして
+チェックを　はずして　ください。
+２つ以上　登録していると
+セレクトボタンで　便利ボタンの
+項目を　並び替えられます。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_006_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスターの
+『ダイヤモンド・パール・プラチナ
+　ハートゴールド・ソウルシルバー』の
+いずれかを　もう１だいの　ＤＳほんたいに
+セットして　でんげんを　いれたあと
+ＤＳメニューがめん　の
+「ＤＳダウンロードプレイ」を　えらび
+「ポケシフター」を　えらんでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスターの
+『ダイヤモンド・パール・プラチナ
+　ハートゴールド・ソウルシルバー』の
+いずれかを　もう１台の　ＤＳ本体に
+セットして　電源を　いれたあと
+ＤＳメニュー画面　の
+「ＤＳダウンロードプレイ」を　選び
+「ポケシフター」を　選んでください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_006_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウンロードが　おわったら
+『ポケットモンスターブラック』　または
+『ポケットモンスターホワイト』に
+つれていく　ポケモンを　６ひき　きめて
+タッチペンで　みぎがわの　わくに
+スライドしてください。
+
+ポケシフターで　つれてきたポケモンを
+もとのソフトに　もどすことは　できません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウンロードが　終わったら
+『ポケットモンスターブラック』　または
+『ポケットモンスターホワイト』に
+連れていく　ポケモンを　６匹　決めて
+タッチペンで　右側の　枠に
+スライドしてください。
+
+ポケシフターで　連れてきたポケモンを
+元のソフトに　戻すことは　できません。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_007_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>タッチスクリーンを　タッチして
+モンスターボールを　てまえに　ひき
+ポケモンに　ねらいを　さだめたら
+モンスターボールを　はなしてください。
+
+くさむらや　きのかげに
+かくれている　ポケモンも　います。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タッチスクリーンを　タッチして
+モンスターボールを　手前に　引き
+ポケモンに　ねらいを　定めたら
+モンスターボールを　放してください。
+
+草むらや　木陰に
+隠れている　ポケモンも　います。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_007_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>モンスターボールが　うまく　あたると
+かくれている　ポケモンが　とびでます。
+ポケモンに　むかって
+もういちど　モンスターボールを
+とばして　あててください。
+
+きめられた　じかんないに　６ひきすべて
+つかまえて　みてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モンスターボールが　うまく　当たると
+隠れている　ポケモンが　飛びでます。
+ポケモンに　向かって
+もう一度　モンスターボールを
+飛ばして　当ててください。
+
+決められた　時間内に　６匹すべて
+捕まえて　みてください。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_007_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>たまに　ピンクいろの　けむりが
+よこぎることが　あります。
+これに　モンスターボールを　あてると
+ポケモンたちは　ねむります。
+
+ねむっているあいだ　ポケモンたちは
+うごかないので　つかまえやすく　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たまに　ピンク色の　煙が
+横切ることが　あります。
+これに　モンスターボールを　当てると
+ポケモンたちは　眠ります。
+
+眠っているあいだ　ポケモンたちは
+動かないので　捕まえやすく　なります。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-13T05:34:05" />
+		</LanguageCell>
+	</TextRow>
+</MessageStudioText>

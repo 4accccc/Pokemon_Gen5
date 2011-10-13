@@ -5,8 +5,6 @@ src/debug/ev_bgm_list.gmm
 src/fld_trade.gmm
 src/hobby.gmm
 src/job.gmm
-src/manual_text_b.gmm
-src/manual_text_w.gmm
 src/monsname.gmm
 src/questionnaire.gmm
 src/snd_test_name.gmm

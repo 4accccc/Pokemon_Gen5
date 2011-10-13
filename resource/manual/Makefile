@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= kawada_koji toyama
+USERS	= kawada_koji toyama ichiraku_katsuhiko
 
 
 #------------------------------------------------------------------------------
@@ -42,6 +42,11 @@ temp_debug_file_w    = debug_manual_data_cate_w.csv debug_manual_data_cate_ref_w
 temp_image_src_lst_b = manual_image_src_b.lst
 temp_debug_file_b    = debug_manual_data_cate_b.csv debug_manual_data_cate_ref_b.csv debug_manual_data_title_b.csv debug_manual_data_title_ref_b.csv
 
+# gmm->mstxt関係
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+TARGET_MSTXT_W  = src/manual_text_w.mstxt
+TARGET_MSTXT_B  = src/manual_text_b.mstxt
+MSPROJDIR				= ../message/msproj/
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -111,12 +116,12 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 do-build:	subdir $(TARGETDIR)/$(targetname_w).narc \
-          $(GMMDIR)/$(target_gmm_w) \
+					$(MSPROJDIR)$(TARGET_MSTXT_W) \
           $(IMAGEDIR)/$(target_image_comp_bat_w) \
           $(IMAGEDIR)/$(target_image_conv_bat_w) \
           $(IMAGEDIR)/$(target_image_lst_w) \
           $(TARGETDIR)/$(targetname_b).narc \
-          $(GMMDIR)/$(target_gmm_b) \
+					$(MSPROJDIR)$(TARGET_MSTXT_B) \
           $(IMAGEDIR)/$(target_image_comp_bat_b) \
           $(IMAGEDIR)/$(target_image_conv_bat_b) \
           $(IMAGEDIR)/$(target_image_lst_b)
@@ -136,10 +141,6 @@ $(TARGETDIR)/$(targetname_b).narc: $(targetname_b).narc
 
 
 # gmmやバッチファイル、リストのコピーだけ実行する
-$(GMMDIR)/$(target_gmm_w): $(target_gmm_w)
-	rm -f $(GMMDIR)/manual_text.gmm
-	$(COPY) $(target_gmm_w) $(GMMDIR)
-
 $(IMAGEDIR)/$(target_image_comp_bat_w): $(target_image_comp_bat_w)
 	$(COPY) $(target_image_comp_bat_w) $(IMAGEDIR)
 
@@ -149,10 +150,6 @@ $(IMAGEDIR)/$(target_image_conv_bat_w): $(target_image_conv_bat_w)
 $(IMAGEDIR)/$(target_image_lst_w): $(target_image_lst_w)
 	$(COPY) $(target_image_lst_w) $(IMAGEDIR)
 
-
-$(GMMDIR)/$(target_gmm_b): $(target_gmm_b)
-	rm -f $(GMMDIR)/manual_text.gmm
-	$(COPY) $(target_gmm_b) $(GMMDIR)
 
 $(IMAGEDIR)/$(target_image_comp_bat_b): $(target_image_comp_bat_b)
 	$(COPY) $(target_image_comp_bat_b) $(IMAGEDIR)
@@ -185,6 +182,12 @@ $(targetname_b).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects
 	nnsarc -r -l -n -i $(targetname_b) $^
 	$(NAIXCUT) $(targetname_b).naix
 
+$(MSPROJDIR)$(TARGET_MSTXT_W) : $(target_gmm_w)
+	$(UPDATEWITHGMM) . $(target_gmm_w) $(TARGET_MSTXT_W)
+
+$(MSPROJDIR)$(TARGET_MSTXT_B) : $(target_gmm_b)
+	$(UPDATEWITHGMM) . $(target_gmm_b) $(TARGET_MSTXT_B)
+
 endif
 
 
@@ -206,11 +209,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname_w).naix
 	rm -f $(targetname_b).narc
 	rm -f $(targetname_b).naix
-	rm -f $(target_gmm_w)
 	rm -f $(target_image_comp_bat_w)
 	rm -f $(target_image_conv_bat_w)
 	rm -f $(target_image_lst_w)
-	rm -f $(target_gmm_b)
 	rm -f $(target_image_comp_bat_b)
 	rm -f $(target_image_conv_bat_b)
 	rm -f $(target_image_lst_b)
@@ -227,11 +228,9 @@ endif
 	rm -f $(TARGETDIR)/$(targetname_w).naix
 	rm -f $(TARGETDIR)/$(targetname_b).narc
 	rm -f $(TARGETDIR)/$(targetname_b).naix
-	rm -f $(GMMDIR)/$(target_gmm_w)
 	rm -f $(IMAGEDIR)/$(target_image_comp_bat_w)
 	rm -f $(IMAGEDIR)/$(target_image_conv_bat_w)
 	rm -f $(IMAGEDIR)/$(target_image_lst_w)
-	rm -f $(GMMDIR)/$(target_gmm_b)
 	rm -f $(IMAGEDIR)/$(target_image_comp_bat_b)
 	rm -f $(IMAGEDIR)/$(target_image_conv_bat_b)
 	rm -f $(IMAGEDIR)/$(target_image_lst_b)

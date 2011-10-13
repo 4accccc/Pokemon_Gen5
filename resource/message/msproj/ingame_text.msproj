@@ -2027,6 +2027,10 @@
 			<ContentItem
 				Name="manual.mstxt" />
 			<ContentItem
+				Name="manual_text_b.mstxt" />
+			<ContentItem
+				Name="manual_text_w.mstxt" />
+			<ContentItem
 				Name="marine_tube.mstxt" />
 			<ContentItem
 				Name="mb_child_dataconv.mstxt" />
