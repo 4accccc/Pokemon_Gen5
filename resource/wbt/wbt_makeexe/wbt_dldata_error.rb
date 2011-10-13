@@ -30,6 +30,7 @@ $err_mes = [
   "最大文字数を超えています",            # 文字入力
   "入力が正しくありません",              # 入力規則
   "特性の組み合わせが正しくありません",  # 特性エラー
+  "努力値の合計が510を超えています",     # 努力値エラー
 ]
 
 # mes2
@@ -191,6 +192,23 @@ class WBT_ERROR
     @errfile.printf("%s: [%s]\n", $em3[0], pokename)
     @errfile.printf("%s: [%d]\n", $em3[1], formid)
     @errfile.printf("%s: [%s]\n", $em3[2], tokusei)
+    @errfile.printf("******************************************************\n\n")
+  end
+  
+  #----------------------------------------------------------------
+  # 努力値エラー(ファイル名、シート名、col、row、total)
+  #----------------------------------------------------------------
+  def print_effort_error( filename, sheetnum, col, row, total )
+    @num = @num+1
+    @errfile.printf("******************************************************\n")
+    @errfile.printf("%s\n", $err_mes_index[0] )
+    @errfile.printf("%s\n\n", $err_mes[5] )
+    @errfile.printf("%s\n", $err_mes_index[1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] - [%d, %s]\n\n", $err_mes_index[5], col, $cell_row[row-1], col, $cell_row[row-1+5])
+    @errfile.printf("%s\n", $err_mes_index[2] )
+    @errfile.printf("%s: [%d]\n", $err_mes_index[6], total)
     @errfile.printf("******************************************************\n\n")
   end
   

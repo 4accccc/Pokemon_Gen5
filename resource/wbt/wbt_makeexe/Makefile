@@ -29,7 +29,8 @@ ITEM_RB    = item_hash.rb
 WAZA_RB    = wazano_hash.rb
 SEIKAKU_RB = seikaku_hash.rb
 TOKUSEI_RB = tokusei_hash.rb
-TR_RB      = trtype_hash.rb
+#TR_RB      = trtype_hash.rb
+TR_RB      = 
 #
 HASH_RB  = $(MONSNO_RB) $(ITEM_RB) $(WAZA_RB) $(SEIKAKU_RB) $(TOKUSEI_RB) $(TR_RB)
 #
@@ -137,8 +138,8 @@ $(SEIKAKU_RB) : $(HASH_DIR)/$(SEIKAKU_RB)
 $(TOKUSEI_RB) : $(HASH_DIR)/$(TOKUSEI_RB)
 	$(COPY) $(HASH_DIR)/$(TOKUSEI_RB) .
 #
-$(TR_RB) : $(HASH_DIR)/$(TR_RB)
-	$(COPY) $(HASH_DIR)/$(TR_RB) .
+#$(TR_RB) : $(HASH_DIR)/$(TR_RB)
+#	$(COPY) $(HASH_DIR)/$(TR_RB) .
 #
 #
 #$(WBT_RB0) : $(WBT_DIR)/$(WBT_RB0)

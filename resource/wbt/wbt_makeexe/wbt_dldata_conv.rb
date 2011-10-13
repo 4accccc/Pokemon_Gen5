@@ -6,12 +6,15 @@
 # debug(0:off、1:on)
 $debug_code = 0
 
-# カレントの言語
+# カレントの言語(通し番号、データ参照で使用)
 # ($lang_tbl_hash参照のこと)
 $current_lang_id = 0
 
+# 互換用(国コード:あまり使わないはず)
+$current_lang_num = 1
+
 # debug(0:別,1:同じ)
-$debug_filename = 1;
+$debug_filename = 0;
 
 # カレントファイル名
 $current_xls_name = ""
@@ -34,13 +37,13 @@ require "wbt_dldata_config.rb"    # config(WBTDL_CONFIG)用
 require "wbt_dldata_error.rb"     # エラー
 
 # 出力ファイル名
-$output_str = [ "_J",	# 日本語
-                "_E",   # 英語
-                "_F",   # フランス語
-                "_I",   # イタリア語
-                "_G",   # ドイツ語
-                "_S",   # スペイン語
-                "_K",   # 韓国語
+$output_str = [ "_JJ",	# 日本語
+                "_EE",   # 英語
+                "_FF",   # フランス語
+                "_II",   # イタリア語
+                "_GG",   # ドイツ語
+                "_SS",   # スペイン語
+                "_KK",   # 韓国語
 ]
 
 # 言語最大数
@@ -115,6 +118,9 @@ LANG_MAX_NUM.times{|m|
   # 出力指定があるときだけセット
   if(@output[m] == 1)
     $current_lang_id = m;
+    $current_lang_num = $lang_num_tbl[m]
+#    puts sprintf("lang num :%d",$current_lang_num);
+    
     # 出力ファイル名セット
     if($debug_filename == 0)
       str = $output_str[$current_lang_id] + ".bin"

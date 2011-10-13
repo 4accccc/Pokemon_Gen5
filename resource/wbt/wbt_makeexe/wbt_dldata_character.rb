@@ -10,9 +10,6 @@ require "wbt_dldata_pokemon.rb"
 TRAINER_START_COL    = 3
 TRAINER_START_ROW    = 3
 #
-TYPE_START_COL    = 3
-TYPE_START_ROW    = 3
-#
 WBTDL_CHAR_MAX		= 4	# キャラ
 SAVELEN_TRAINER_NAME	= 14	# 名前
 WBTDL_TRAINER_TITLE_LEN	= 22	# タイトル
@@ -43,25 +40,25 @@ $trainer_str = ["トレーナー名",
 # colのテーブル(trainer_strと対にしておく)
 $tr_col = [
 	0,	# トレーナー名
-	10,	# 戦闘前フリーワード
+	15,	# 戦闘前フリーワード
 	1,	# 肩書き
-	22,	# 戦闘勝フリーワード
-	31,	# 戦闘負フリーワード
-	40,	# 決勝前口上フリーワード
-	9,	# 戦闘前メッセージID
-	18,	# 戦闘後、勝ちメッセージID
-	19,	# 戦闘後、負けメッセージID
-	21,	# 戦闘勝メッセージID
+	27,	# 戦闘勝フリーワード
+	36,	# 戦闘負フリーワード
+	45,	# 決勝前口上フリーワード
+	14,	# 戦闘前メッセージID
+	23,	# 戦闘後、勝ちメッセージID
+	24,	# 戦闘後、負けメッセージID
+	26,	# 戦闘勝メッセージID
 	
-	30,	# 戦闘負メッセージID
-	39,	# 決勝前口上ID
-	7,	# 国コード
-	3,	# AI基本		# dummy
-	2,	# トレーナータイプ
-	3,	# AI基本
-	4,	# AI威力高い
-	5,	# AIエキスパート
-	6,	# AIダブルバトルAI
+	35,	# 戦闘負メッセージID
+	44,	# 決勝前口上ID
+	7,	# 国コード		# 未使用
+	9,	# AI基本		# dummy
+	8,	# トレーナータイプ
+	9,	# AI基本
+	10,	# AI威力高い
+	11,	# AIエキスパート
+	12,	# AIダブルバトルAI
 ];
 
 #--------------------------------------------------------------
@@ -187,25 +184,19 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id),
                                       $trainer_str[0])
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id,
                                     $trainer_str[0]);
       return;
     end
-    
     # 変換
     @name = get_unicode( @conv, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id );
-    
+    #
     # 入力チェック
-#    flg = chk_str_limit( @name, 1, 14, $trainer_str[0] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @name, 1, 14, $trainer_str[0] );
     if(array[4] == -1)
+      # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id,
                                  $trainer_str[0], array, 1, 14 );
     end
@@ -222,31 +213,27 @@ class WBT_CHARACTER_SINGLE
   #----------------------------------
   def chk_trainer_title()
     #
-    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id),
+    ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[2]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[2] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id,
-                                    $trainer_str[2]);
+      # 空白エラー
+      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2]+@local_language,
+                                    TRAINER_START_ROW+@char_id, $trainer_str[2]);
       return;
     end
     
     # 変換
-    @title = get_unicode( @conv, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id );
+    @title = get_unicode( @conv, 4, TRAINER_START_COL+$tr_col[2]+@local_language, TRAINER_START_ROW+@char_id );
     
     # 入力チェック
-#    flg = chk_str_limit( @title, 1, 22, $trainer_str[2] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @title, 1, 22, $trainer_str[2] );
     if(array[4] == -1)
-      $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2], TRAINER_START_ROW+@char_id,
-                                 $trainer_str[2], array, 1, 22 );
+      # 文字入力エラー
+      $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[2]+@local_language,
+                                  TRAINER_START_ROW+@char_id, $trainer_str[2], array, 1, 22 );
     end
+    #
     # セット(コードの変換注意)
 #    if(@local_debug == 1)
 #      p sprintf("%s(%d) :%s", $trainer_str[2],@char_id, 
@@ -262,8 +249,7 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[1]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[1])
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language,
 				TRAINER_START_ROW+@char_id, $trainer_str[1]);
       return;
@@ -277,14 +263,10 @@ class WBT_CHARACTER_SINGLE
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-#    flg = chk_str_limit( @msg_before, 2, $str_limit[2+flg], $trainer_str[1] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @msg_before, 2, $str_limit[2+flg], $trainer_str[1] );
     if(array[4] == -1)
+      # 入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language,
 				 TRAINER_START_ROW+@char_id,
                                  $trainer_str[1], array, 2, $str_limit[2+flg] );
@@ -304,8 +286,7 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[3]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[3] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[3]);
       return;
@@ -319,14 +300,10 @@ class WBT_CHARACTER_SINGLE
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-#    flg = chk_str_limit( @msg_after_win, 2, $str_limit[2+flg], $trainer_str[3] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @msg_after_win, 2, $str_limit[2+flg], $trainer_str[3] );
     if(array[4] == -1)
+      # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language,
 							TRAINER_START_ROW+@char_id,
                                  $trainer_str[3], array, 2, $str_limit[2+flg] );
@@ -346,8 +323,7 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[4]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[4] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[4]);
       return;
@@ -361,14 +337,10 @@ class WBT_CHARACTER_SINGLE
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-#    flg = chk_str_limit( @msg_after_lose, 2, $str_limit[2+flg], $trainer_str[4] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @msg_after_lose, 2, $str_limit[2+flg], $trainer_str[4] );
     if(array[4] == -1)
+      # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language,
 							TRAINER_START_ROW+@char_id,
                                  $trainer_str[4], array, 2, $str_limit[2+flg] );
@@ -389,8 +361,7 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[5]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[5] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[5]);
       return;
@@ -404,14 +375,10 @@ class WBT_CHARACTER_SINGLE
     if((@local_language == 0)||(@local_language == 6))
       flg = 1
     end
-#    flg = chk_str_limit( @msg_announce, 2, $str_limit[2+flg], $trainer_str[5] );
-#    if(flg == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, TRAINER_START_ROW+@char_id );
-#      trainer_exit();
-#    end
     array = []
     array = chk_str_limit_array( @msg_announce, 2, $str_limit[2+flg], $trainer_str[5] );
     if(array[4] == -1)
+      # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language,
 							TRAINER_START_ROW+@char_id,
                                  $trainer_str[5], array, 2, $str_limit[2+flg] );
@@ -432,8 +399,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[6], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[6] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], 
 							  TRAINER_START_ROW+@char_id, $trainer_str[6]);
       return;
@@ -444,9 +410,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_before_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[6], @msg_before_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[6], TRAINER_START_ROW+@char_id,
                                     $trainer_str[6], @msg_before_id, 0, 255 );
     end
@@ -464,8 +428,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[9] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], 
 							  TRAINER_START_ROW+@char_id, $trainer_str[9]);
       return;
@@ -476,9 +439,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_after_win_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[9], @msg_after_win_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id,
                                     $trainer_str[9], @msg_after_win_id, 0, 255 );
     end
@@ -496,8 +457,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[10] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], 
 							  TRAINER_START_ROW+@char_id, $trainer_str[10]);
       return;
@@ -508,9 +468,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_after_lose_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[10], @msg_after_lose_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id,
                                     $trainer_str[10], @msg_after_lose_id, 0, 255 );
     end
@@ -528,8 +486,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[7] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7],
 							  TRAINER_START_ROW+@char_id, $trainer_str[7]);
       return;
@@ -540,9 +497,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_win_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[7], @msg_win_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id,
                                     $trainer_str[7], @msg_win_id, 0, 255 );
     end
@@ -560,8 +515,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[8] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8],
 							  TRAINER_START_ROW+@char_id, $trainer_str[8]);
       return;
@@ -572,9 +526,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_lose_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[8], @msg_lose_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id,
                                     $trainer_str[8], @msg_lose_id, 0, 255 );
     end
@@ -592,8 +544,7 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[11], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[11] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11],
 							  TRAINER_START_ROW+@char_id, $trainer_str[11]);
       return;
@@ -604,9 +555,7 @@ class WBT_CHARACTER_SINGLE
     # 範囲チェック(0 - 255)(u8)
     flg = chk_num_range( @msg_announce_id, 0, 255 )
     if(flg == -1)
-#      print_error_num( $trainer_str[11], @msg_announce_id, 0, 255 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[11], TRAINER_START_ROW+@char_id,
                                     $trainer_str[11], @msg_announce_id, 0, 255 );
     end
@@ -620,12 +569,14 @@ class WBT_CHARACTER_SINGLE
   # 国コード
   #--------------------
   def chk_lang()
+    # 仕様変更により未使用だが、互換のためセット
+    @lang_id = $current_lang_num
+=begin
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[12] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12],
 							  TRAINER_START_ROW+@char_id, $trainer_str[12]);
       return;
@@ -634,19 +585,18 @@ class WBT_CHARACTER_SINGLE
     str = cstr
     id = hash2no( $lang_hash, str );
     if(id == -1)
-      # 該当する国がない=>エラー
-#      print_error_str( $trainer_str[12], str );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 入力エラー
       $wbt_error.print_hash_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id,
                                    $trainer_str[12], str );
     else
+      # セット
       @lang_id = id;
     end
     #
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[12],@lang_id)
     end
+=end
   end
   
   #--------------------
@@ -658,8 +608,7 @@ class WBT_CHARACTER_SINGLE
       cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[15+i], TRAINER_START_ROW+@char_id )
       ret = chkblank( cstr, $trainer_str[15+i] )
       if(ret == -1)
-#        print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[15+i], TRAINER_START_ROW+@char_id );
-#        trainer_exit();
+        # 空白エラー
         $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[15+i],
 							    TRAINER_START_ROW+@char_id, $trainer_str[15+i]);
         return;
@@ -685,13 +634,23 @@ class WBT_CHARACTER_SINGLE
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[14] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14],
 							  TRAINER_START_ROW+@char_id, $trainer_str[14]);
       return;
     end
     
+    # セット
+    num = hash2no( $trainer_hash, cstr );
+    if(num == -1)
+      # 入力エラー
+      $wbt_error.print_hash_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id,
+                                   $trainer_str[14], cstr );
+    else
+      @type_id = num;
+    end
+    
+=begin
     # 番号を取得
     num = cstr.to_i
     #
@@ -702,12 +661,11 @@ class WBT_CHARACTER_SINGLE
     # 範囲制限(0-29)
     flg = chk_num_range( @type_id, 0, 29 )
     if(flg == -1)
-#      print_error_num( $trainer_str[14], @type_id, 0, 29 );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[14], TRAINER_START_ROW+@char_id,
                                     $trainer_str[14], @type_id, 0, 29 );
     end
+=end
     #
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[14],@type_id)
@@ -785,12 +743,14 @@ class WBT_CHARACTER_SINGLE
   # 国の判定
   #--------------------
   def chk_local_language()
+    # 国コード設定(全体のを使用)
+    @local_language = $current_lang_id
+=begin
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[12] )
     if(ret == -1)
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12],
 							  TRAINER_START_ROW+@char_id, $trainer_str[12]);
       return;
@@ -799,10 +759,7 @@ class WBT_CHARACTER_SINGLE
     str = cstr
     id = hash2no( $lang_tbl_hash, str );
     if(id == -1)
-      # 該当する国がない=>エラー
-#      print_error_str( $trainer_str[12], str );
-#      print_error_info( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id );
-#      trainer_exit();
+      # 入力エラー
       $wbt_error.print_hash_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[12], TRAINER_START_ROW+@char_id,
                                    $trainer_str[12], str );
     else
@@ -812,6 +769,7 @@ class WBT_CHARACTER_SINGLE
     if(@local_debug == 1)
       p sprintf("%s :%d", $trainer_str[12],@local_language)
     end
+=end
   end
   
 end
