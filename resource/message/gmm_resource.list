@@ -7,9 +7,6 @@ src/hobby.gmm
 src/job.gmm
 src/manual_text_b.gmm
 src/manual_text_w.gmm
-src/medalexplanation.gmm
-src/medalhelp.gmm
-src/medalname.gmm
 src/monsname.gmm
 src/questionnaire.gmm
 src/snd_test_name.gmm

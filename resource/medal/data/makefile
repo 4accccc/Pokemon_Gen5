@@ -6,6 +6,7 @@
 #------------------------------------------------------------------------------
 
 EXCELCONV = ../../../tools/exceltool/ExcelSeetConv.exe
+UPDATEWITHGMM = ../../../tools/message/UpdateWithGmm.bat
 MEDALLIST_CSV 		= medal_data.csv
 MEDALDATA_DEF_CSV = data_def.csv
 MEDALLIST_XLS = medal_data.xls
@@ -20,6 +21,9 @@ TMPGMM				= ../../message/template.gmm
 MEDALNAME_GMM	= medalname.gmm
 MEDALEX_GMM		= medalexplanation.gmm
 MEDALHELP_GMM = medalhelp.gmm
+MEDALNAME_MSTXT	= src/medalname.mstxt
+MEDALEX_MSTXT		= src/medalexplanation.mstxt
+MEDALHELP_MSTXT = src/medalhelp.mstxt
 RECORD_H			= record.h
 RECORD_H_PATH = ../../../prog/include/savedata/
 RECORDRBDEF		= recorddef.rb
@@ -31,7 +35,7 @@ ACHIEVEBINDATA		= achieve_data.bin
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ito_hiroto onoue_masayuki
+USERS	=	ito_hiroto onoue_masayuki ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -49,6 +53,7 @@ NAIXNAME2	= $(MEDALACHIEVEDATANARC).naix
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)
 GMMDIR	= ../../message/src/
+MSPROJDIR	= ../../message/msproj/
 INCLUDE_DIR	= ../../../prog/include/app/
 INCLUDE_TOOL_DIR	= ../../../prog/include/medal_tool/
 SRC_DIR	= ../../../prog/src/app/medal_box/
@@ -70,7 +75,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NARCNAME2) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NARCNAME2) $(TARGETDIR)/$(NAIXNAME) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += $(NARCNAME) $(NARCNAME2) $(NAIXNAME) $(DATADIR)* $(MEDAL_SORT_CDAT) $(MEDAL_ID_H) $(MEDALRECID_H) $(MEDALNAME_GMM) $(MEDALEX_GMM) $(MEDALHELP_GMM) $(RECORD_H) $(CONVERTERDIR)$(RECORDRBDEF)
 endif
@@ -79,7 +84,7 @@ endif
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-do-build: $(CONVERTERDIR)$(RECORDRBDEF) $(DATADIR)$(MEDALLIST_CSV) $(NARCNAME) $(NARCNAME2) $(ACHIEVEBINDATA)
+do-build: $(CONVERTERDIR)$(RECORDRBDEF) $(DATADIR)$(MEDALLIST_CSV) $(NARCNAME) $(NARCNAME2) $(ACHIEVEBINDATA) $(MSPROJDIR)$(MEDALNAME_MSTXT) $(MSPROJDIR)$(MEDALEX_MSTXT) $(MSPROJDIR)$(MEDALHELP_MSTXT)
 
 $(CONVERTERDIR)$(RECORDRBDEF) : $(RECORD_H_PATH)$(RECORD_H)
 	cp $(RECORD_H_PATH)$(RECORD_H) $(DATADIR)$(RECORD_H)
@@ -105,12 +110,21 @@ $(NARCNAME2) : $(ACHIEVEBINDATA)
 	nnsarc -c -l -n -i $(NARCNAME2) $(DATADIR)$(ACHIEVEBINDATA)
 	$(NAIXCUT) $(NAIXNAME2)
 
+$(MSPROJDIR)$(MEDALNAME_MSTXT) : $(MEDALNAME_GMM)
+	$(UPDATEWITHGMM) . $(MEDALNAME_GMM) $(MEDALNAME_MSTXT)
+
+$(MSPROJDIR)$(MEDALEX_MSTXT) : $(MEDALEX_GMM)
+	$(UPDATEWITHGMM) . $(MEDALEX_GMM) $(MEDALEX_MSTXT)
+
+$(MSPROJDIR)$(MEDALHELP_MSTXT) : $(MEDALHELP_GMM)
+	$(UPDATEWITHGMM) . $(MEDALHELP_GMM) $(MEDALHELP_MSTXT)
+
 endif
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NARCNAME2) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(INCLUDE_DIR)/$(MEDALRECID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT) $(TARGETDIR)/$(NAIXNAME2)
+do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NARCNAME2) $(TARGETDIR)/$(NAIXNAME) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(INCLUDE_DIR)/$(MEDALRECID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT) $(TARGETDIR)/$(NAIXNAME2)
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 
@@ -122,15 +136,6 @@ $(TARGETDIR)/$(NAIXNAME2):	$(NAIXNAME2)
 
 $(TARGETDIR)/$(NAIXNAME):	$(NAIXNAME)
 	$(COPY)	$(NAIXNAME) $(TARGETDIR)
-
-$(GMMDIR)/$(MEDALNAME_GMM):	$(MEDALNAME_GMM)
-	$(COPY)	$(MEDALNAME_GMM) $(GMMDIR)
-
-$(GMMDIR)/$(MEDALEX_GMM):	$(MEDALEX_GMM)
-	$(COPY)	$(MEDALEX_GMM) $(GMMDIR)
-
-$(GMMDIR)/$(MEDALHELP_GMM):	$(MEDALHELP_GMM)
-	$(COPY)	$(MEDALHELP_GMM) $(GMMDIR)
 
 $(INCLUDE_DIR)/$(MEDAL_ID_H):	$(MEDAL_ID_H)
 	$(COPY)	$(MEDAL_ID_H) $(INCLUDE_DIR)

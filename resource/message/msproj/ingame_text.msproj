@@ -2037,7 +2037,13 @@
 			<ContentItem
 				Name="medalcategory.mstxt" />
 			<ContentItem
+				Name="medalexplanation.mstxt" />
+			<ContentItem
+				Name="medalhelp.mstxt" />
+			<ContentItem
 				Name="medalinfo.mstxt" />
+			<ContentItem
+				Name="medalname.mstxt" />
 			<ContentItem
 				Name="medalrank.mstxt" />
 			<ContentItem
