@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-10-13T17:55:16" source="c03_n00_00_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-13T20:02:52" source="c03_n00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-10-13T17:55:16" source="c03_n00_00_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-10-13T20:02:52" source="c03_n00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -655,12 +655,16 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="out69_g1"
-		width="64" height="64" original_width="64" original_height="64"
+		width="128" height="64" original_width="128" original_height="64"
 		format="a3i5"
 		palette_name="out69_g1_pl"
 		path="C:/home/swan_data3d/field/out69/chip/tex/out69_g1.tga"
 	>
-		<bitmap size="2048">
+		<bitmap size="4096">
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			2f2f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
@@ -668,247 +672,499 @@
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f4f
-			0f0f 4f0f 6f2f 0f4f 0f4f 0f2f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 8f2f 4f8f
-			8f8f af6f cfcf 6f6f afcf 4f8f 4f4f 6f4f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 2f4f 8f8f efcf
-			cfef afcf efef efef efcf 4fef afcf efcf
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 4f0f 6f4f efef efcf
-			efef efef efef eeef eeee eeee efef efef
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f af4f efcf efef
-			afef efef eeef ebed cbcb ebeb eecd cfef
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 6f0f efaf aece eeed
-			edef ebed ebeb e9e9 e9e9 e9c9 e9e9 c9a9
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 8f4f eecf cbed ebeb
-			e9eb e9e9 e9e9 c9e9 e9e9 e9e9 e9c5 e9e9
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 2f0f af4f ed8e e9eb e9e9
-			e9e9 e9e9 e9e9 e9e9 e9e9 e8e9 e8e6 e9e9
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 4f4f af4f eb6d e9e9 e9e9
-			e9e9 e9e9 e9e9 e9e9 e8c9 e8e6 c6c6 e3e3
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 6f4f eeaf e9cd e9e9 e9e9
-			c8e8 e9e9 e5e9 e5e8 e8e8 c6c6 c6e6 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 8f8f edee e9eb e9e9 e8e5
-			e3e3 e3e3 e8e6 e6e6 e6e6 e8e8 c8e8 c8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f ee6f ebed e9e9 e9e9 e9e9
-			e0e0 c6e6 e2e2 e6e6 e8e8 c8c8 e8e8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 4f0f ad6f e9eb e9e9 a9e9 e9e9
-			e0e0 e0e0 e8e2 e8e8 e8e8 e8e8 e8a8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 6f0f abcf e9c9 e9e9 e9e9 c9e9
-			e0e0 e0e0 e2e0 e8e8 e8e8 a8e8 e8c8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f cf8f ebaf e9e9 e9e9 c9e9 e9c9
-			e0e0 e0e0 e0e0 e8e2 e8e8 c8e8 e8e8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f cf6f cbaf e9e9 c9c9 e9e9 e9e9
-			e0e0 e0e0 e0c0 e0e0 e8e8 e8a8 e8e8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f cf6f abef e9c9 e9e9 e9e9 e9e9
-			e0e6 c0e0 e0e0 c0e0 e8e0 e8e8 e8e8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f ee8e cbcd e9e9 e9e9 e9e9 e9e9
-			e0e9 e0e0 e0e0 c0c0 e0a0 c8e0 e8e8 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			4f4f 4f0f 6f2f 0f4f 0f4f 0f2f 0f0f 0f0f
 			0f0f 0f0f 2f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 2f4f ad6e ebcb e9e9 e9c9 e9e9 c9e9
-			e2e8 e0e0 e0e0 e0e0 e0e0 e0e0 c8e8 c8e8
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 2f4f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f2f cbae e5cb e9e5 a9e9 e9e9 e8c8
-			e8c6 e0e0 e0e0 e0e0 e0e0 e0c0 e080 c0e0
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 2f8f 0f8f 0f0f 0f0f 0f0f 0f0f
-			0f0f 6f0f cb8f c5e5 c5e5 c9e9 e4c9 e6e9
-			e8e8 a0e3 e0c0 e0e0 e0e0 e0e0 e0e0 e0e0
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 8f0f af6f 4f4f 0f0f 0f2f 0f0f 0f0f
-			0f0f 6f0f cb6f e5e5 c5e5 e5e5 c8e8 e8e6
-			a8e8 c0c6 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 2f0f cf4f 8f4f 6f6f 0f2f 0f0f 6f0f
-			0f0f 6f0f 8b4f e5e5 e5c5 e6c5 a6e5 e8c8
-			e8e8 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e8e6
+			0f0f 0f0f 0f0f 0f0f 0f2f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 8f2f 4f8f
+			efef afef cfcf 6f6f afcf 4f8f 4f4f 6f4f
+			4f6f 4f4f 8f4f 2faf 0f4f 2f2f 0f2f 2f2f
+			0f4f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f2f af4f 8f6f af8f 4f6f 0f2f 0f0f
-			0f0f 2f0f ad6f c5e5 e5a5 e4e6 e8e2 e8e8
-			e8e8 e0e8 c0e0 e0e0 a0e0 e0c0 e0e0 e8e8
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 4f4f afaf 4fcf afef 6f4f 6f8f 2f4f
-			6f4f 8f4f 6faf e5ab e5e5 e6e6 e8e6 e8e8
-			e8e8 e6e8 e0e0 c0c0 e0e0 e0e0 e2e0 c8a8
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 4f0f 8faf cf6f afcf cfcf cfcf 6f8f
-			8f4f 4f2f ae6f e5eb e5e5 a6e4 e8e8 c8c8
-			e8e6 e8e8 c2c2 e0c2 e080 c0e0 a2c2 e8e8
+			0f0f 0f0f 0f0f 2f0f 2f4f 6f2f 6f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 2f4f 8f8f efcf
+			cfef efef efef efef efcf 4eef afce efcf
+			cfef cfaf ef4f 4fef 4faf 2f6f 4f4f 4f2f
+			0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			8f2f afaf 8f6f efcf efaf afcf efcf afcf
-			cfaf afcf ad8e e5eb e5e5 e6e4 e8e8 e8e8
-			e6e6 e8e8 e2e6 e2e2 e0e0 c2e0 c8e6 e8c8
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			2f2f 8f2f ef8f af8f efaf efef efef efef
-			cfaf cfaf edee e5eb e5e5 e2e5 e8c8 e8e8
-			e3e6 e8e8 e8e8 c2e6 e2e2 e6e2 e8e8 c8e8
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f af2f afaf 6faf 4f2f 0f6f
+			0f0f 0f0f 0f0f 0f0f 4f0f 6f4f efef efcf
+			efef efef efef eeef eeee ebeb ebe9 eeee
+			eeee efef eeee ceee af6e cfcf 6faf 8f8f
+			2f8f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f0f af2f efef afef 6f2f 2f6f
+			6f2f 0f0f 0f0f 0f0f 0f0f af4f efcf eeef
+			aeee efee eeef ebed cbcb e9eb ebc9 cbeb
+			eecb cdee ebeb cded eded efae cfaf afcf
+			8f8f 4f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f af2f aeaf eeae afef 2faf
+			6f6f 6f2f 0f2f 0f0f 6f0f efaf aece eeee
+			eded ebed ebeb e9e9 e9eb e9c9 e9e9 c9a9
+			a9c9 e9eb c9e9 ebeb eded afee efef cfef
+			8eae 4f6f 0f4f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 2f0f efef ebce eeee efef
+			afaf af6f 6f2f 6f2f 8f4f eecf ceee ebee
+			ebeb ebeb e9e9 c9e9 e9e9 e9e9 e9c9 e9e9
+			e9e9 c5e9 e9e9 ebe9 ebeb cded eeed eeae
+			8f8e 4faf 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 2f0f efaf aeef ebcb eeee
+			efee afaf afaf af2f af4f ee8e edee e9eb
+			e9e9 e9e9 e9e9 e9e9 e9e9 e5e9 e5e5 e5e5
+			e5e5 e5e5 e9e5 e9e9 ebe9 ebeb ebeb 8dab
+			cdad ae8e 0e6f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f afaf efaf ebee abe9
+			eeeb eeae afef afef afef ee6e ebed e9eb
+			e9e9 e9e9 e9e9 e9e9 e5c9 e5e5 e6c6 e3e3
+			e3e3 c3c3 e5e5 c9e5 e9e9 e9e9 c9e9 e9e9
+			8bab cdad 4e8e 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f0f af6f af6f af6f aeaf e9cb
+			ebe9 ebeb ceee efef eeef edce ebed e9e9
+			c5e5 e5e5 e5e5 e5e5 e6e5 e6c6 e8e6 e8e8
+			e8e8 e3c6 c3c3 e5e6 e5e5 e5e5 c5e5 e5c5
+			a9e9 8beb 4eae 0f2e 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f af2f 6f2f 6faf 6faf efef cbef
+			e9e9 e9e9 ebeb eeee edee edeb e9eb e5e5
+			e3e3 e4e3 e4e5 e6e6 e6e6 e8e8 c8e8 c8e8
+			e8c8 e8c8 e6e8 e6e3 e4e6 e5e4 c3e4 e3e3
+			e5e5 6be9 4ead 4f4e 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f af2f afaf afaf af6f efaf efef
+			ebeb e9a9 e9e9 ebe9 ebeb ebeb e9eb e5e5
+			e0e2 c2e2 e4e2 e6e6 e8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 c8c8 e8e8 e6e6 e2e4 c2c2 e2c0
+			e5e5 e9e9 aead 4f6e 0f0e 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 2f0f af2f efaf afcf afef efef efef
+			eeef e9eb e9e9 e9e9 ebe9 ebeb a9eb e5e5
+			e0e2 e2e0 e2e6 e8e2 e8e8 e8e8 e8a8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e2e8 e6e2 e0e2 e2c0
+			e5e5 e9e9 aeed 8f8e 0f0e 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 2f0f 4f0f efaf eded efef efef efef
+			efef ebee e9a9 e9c9 e9c9 ebe9 e9eb c5e9
+			e0e2 e0e0 e6e2 e8e6 e8e8 a8e8 e8c8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e6e8 e2e6 e0e0 e2e0
+			e5c5 e9e9 eeed cfee cfaf 0f6f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f4f afaf ebeb edeb efef efef
+			efef efef ebeb e9e9 e9e9 e9e9 c9e9 e5c9
+			e0e2 e0e0 e2e0 e6e6 e8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e8e8 e6e6 e0e2 e0e0 e2e0
+			c5e5 e9c5 ede9 afee afef 8fcf 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f af2f ebaf ebc5 efeb efef
+			efef efcf efef e9eb e9e9 c9c9 e9e9 e9e9
+			e0e2 e0e0 e0c0 e6e2 e8e8 e8e8 e6e8 e8e8
+			e8e8 e8e6 e8e8 e8e8 e2e6 c0e0 e0e0 e2e0
+			e5e5 e5e5 cdc9 eeed afcf 6fcf 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f afaf efef e5eb ebe5 edeb
+			efcf efef efef ebef e9c9 e9e9 e9e9 e9e5
+			e0e6 c0e0 e0e0 c2e0 e8e6 e8e8 e6e8 e8e8
+			e8e8 e8e6 e8e8 e6e8 e0c2 e0e0 e0c0 e6e0
+			e5e5 e5e5 ebe9 cded efae 6fcf 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f af2f afef ebaf c5c5 cbe5
+			edeb efef eeee ebed e9e9 e9e9 e9e9 e9e9
+			e0e6 e0e0 e0e0 c0c0 e6a2 c8e8 e6e8 e8e8
+			e8e8 e8e6 e8c8 e2e6 e0e0 e0e0 e0e0 e6e0
+			e5e5 e9e9 ebe9 edeb cecd 8eee 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f0f ef0f efef efef e5eb c5e5
+			ebe5 edeb edee ebeb e9e9 e9c9 e9e9 c5e9
+			e2e6 e0e0 e0e0 e0e0 e0e0 e6e2 c2e8 e8e8
+			e8e8 e8c2 e2e6 e0e0 e0e0 e0e0 e0e0 e6e2
+			e5c5 e9e9 c9e9 ebeb ceeb 6eae 4f2f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f2f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f4f ef0f efaf efaf ebef c5e5
+			e5e5 cbe5 ebeb e5eb e9e5 a9e9 e5e9 e6c5
+			e8c6 e0e0 e0e0 e0e0 e0e0 e2c0 e282 e0e0
+			e0e0 82e2 e0e2 e0e0 e0e0 e0e0 e0e0 c6e8
+			c5e6 e9e5 e9a9 e5e9 cbe5 aecb 2f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 4f2f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f8f ef8f efef efcf efef ebeb
+			e5e5 e5e5 ebe5 c5e5 c5e5 c9e9 e5c9 e6e6
+			e8e8 a0e0 e0c0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0a0 e8e8
+			e6e6 c9e5 e9c9 e5c5 e5c5 8fcb 0f6f 0f0f
+			0f0f 0f0f 0f0f 0f0f 8f0f 8f2f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 8f0f af6f 4f4f edef efed efef efef
+			e5cb e5e5 e5e5 e5e5 c5e5 e5e5 c6e4 e8e6
+			a8e8 e0e2 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 c2c0 e8a8
+			e6e8 e4c6 e5e5 e5c5 e5e5 6fcb 0f6f 0f0f
+			0f0f 0f0f 2f0f 0f0f 4f4f 6faf 0f8f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 2f0f cf4f 8f4f efef eded efcd efef
+			ebef c5e5 e5e5 e5e5 e5c5 e4c5 a6e4 e8c8
+			e8e8 e0e6 e0e0 e0e0 e3e3 e0e0 e0e0 e6e6
+			e6e6 e0e0 e0e0 e3e3 e0e0 e0e0 e6e0 e8e8
+			c8e8 e4a6 c5e4 c5e5 e5e5 4f8b 0f6f 0f0f
+			0f6f 0f0f 2f0f 6f6f 4f8f 4fcf 0f2f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f2f af4f 8f6f ef8f eded ebeb edcd
+			efcf e5eb e5e5 c5e5 e5a5 e4e4 e8e2 e8e8
+			e8e8 e2e6 c0e0 e0e0 a3e3 e0c0 e0e0 e8e8
+			e8e8 e0e0 e0e0 e3e3 e0e0 e0c0 e6e2 e8e8
+			e8e8 e2e8 e4e4 a5e5 e5c5 6fad 0f2f 0f0f
+			0f0f 2f0f 6f4f 8faf 6f8f 4faf 2f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 4f4f afaf 4fcf efef edef ebeb ebeb
+			efef ebef e5e5 e5a5 e5e5 e6e4 e8e6 e6e8
+			e8e8 e6e8 e0e2 e0e0 e0e0 e0e0 e2e0 e8e8
+			a8e8 e0e2 e0e0 e0e0 c0e0 e2e0 e8e6 e8e8
+			e8e6 e6e8 e4e6 e5e5 abe5 af6f 4f8f 4f6f
+			4f2f 8f6f 4f6f efaf cf4f afaf 4f4f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 4f0f 8faf cf6f afcf efef ebed e5eb
+			ebeb efef e5cb e5e5 e5e5 a6e4 e8e8 c3c8
+			e8e8 e8e8 e2e2 e0c0 e080 e0e0 e2e2 e8e8
+			e8e8 c2a2 e0c0 e0e0 c0e0 c2c2 e8e8 e8e8
+			c8c3 e8e8 e4a6 e5e5 ebe5 6fae 2f4f 4f8f
+			8f6f cfcf cfcf cfaf 6fcf af8f 0f4f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			8f2f afaf 8f6f efcf efaf afcf edef e5ed
+			c5e5 ebeb cbee e5eb e5e5 e6e4 e8e8 e3e8
+			e8e8 e8e8 e2e6 e0e2 e0e0 e2e0 e8e6 e8e8
+			c8e8 e6c8 e0c2 e0e0 e2e0 e6e2 e8e8 e8e8
+			e8e3 e8e8 e4e6 e5e5 ebe5 8ead cfaf afcf
+			cfaf cfef cfaf afef cfef 6f8f afaf 2f8f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			2f2f 8f2f ef8f af8f efaf efef efef ebef
+			e5e5 c5e5 edeb e5eb e5e5 e2e5 e8c8 e2e8
+			e8e6 e8e8 e8e8 c2e6 e2e2 e6e2 e8e8 e8e8
+			e8e8 e8e8 e2e6 e2e2 e6e2 e8e8 e8e8 e6e8
+			e8e2 c8e8 e5e2 e5e5 ebe5 eeed afcf afcf
+			efef efef efef afef 8faf 8fef 2f8f 2f2f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f
 			4f4f 8f6f 8fef efcf efef efcf efef cfcf
-			cfef afef edee ebeb e5c5 e3e5 e8e8 e8e8
-			e3e6 e8e2 e8e8 e2c6 c6c6 e8e6 e8e8 a8c8
+			c5eb a5e5 e5e5 ebeb e5c5 e3e5 e8e8 e6e8
+			e3e3 e8e8 e8e8 e6c6 c6e6 e8e6 e8e8 e8e8
+			e8e8 e8e8 e6e8 c6c6 c6e6 e8e8 e8e8 e3e3
+			e8e6 e8e8 e5e3 c5e5 ebeb eeed efaf efcf
+			cfcf efef cfef efef cfef ef8f 6f8f 4f4f
+			0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f4f
 			af2f afaf efaf efcf efef cfef efef efef
-			efef cfef cdef e5eb e5e5 e4e5 e8e6 c8e8
-			e6e8 e2e3 88e3 e8e8 e8e8 c8c8 a8e8 e8c8
+			ebef c5e5 c5e5 e5e5 e5e5 e4e5 e8e6 c8e8
+			e6e8 e2e3 86e6 e8e8 e8e8 c8c8 a8e8 e8c8
+			e8e8 e8a8 e8e8 e8e8 e8e8 e686 e3e2 e8e6
+			e8c8 e6e8 e5e4 e5e5 ebe5 efcd efcf efef
+			efef efef efcf efef cfef afef afaf 2faf
+			4f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f4f
 			6f2f af8f cfaf efcf efef efef efef cfef
-			efef efef ebee c5eb e5e5 c5c5 e6e4 e8e8
-			e8e8 e6e6 e3e3 e8c2 c8e8 e8e8 e8e8 e8e8
+			efef e5eb e5e5 c5e5 e5e5 c5c5 e6e4 e8e8
+			e8e8 eae6 e3e3 e6c2 c8e8 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e8e8 c2e6 e3e3 e6ea e8e8
+			e8e8 e4e6 c5e5 e5e5 ebc5 eeeb efef efef
+			efcf efef efef efef cfef afcf 8faf 2f6f
+			4f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 2f2f
 			8f4f af6f cf8f efef cfef efaf efef efef
-			ebee ebeb ebeb c5e5 e5e5 a5e5 e3c5 e8e6
-			e8e8 c8c8 e8e8 e3c8 e8e3 a8c8 e8e8 e8e8
+			ebee ebeb e5e5 c5e5 e5e5 a5e5 e3c5 e8e6
+			e8e8 ccc6 e6ec e3ca e6e3 a8c8 e6e8 e6e6
+			e6e6 e8e6 c8e8 e3e6 eae3 ece6 c6cc e8e8
+			e6e8 e5e3 e5e5 e5e5 e5c5 ebeb ebeb eeeb
+			efef efef afef efcf efef 8fcf 6faf 4f8f
+			2f2f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 8f0f
 			6f6f cfaf efef ecef eecd ed8d cfef efef
 			e5ee e5e5 c5e5 e5e5 e5e5 e5e5 c4e5 e6c3
-			c8e6 e8e8 e8c8 e8c8 e3c3 c8e8 e8c8 e8e8
+			c8e6 ece6 e6ca eacc e3c6 c6e6 e3c3 e3e3
+			e3e3 c3e3 e6c6 e6e3 ccea eae6 e6ec e6c8
+			c3e6 e5c4 e5e5 e5e5 e5e5 e5c5 e5e5 eee5
+			efef efcf 8ded cdee efec efef afcf 6f6f
+			0f8f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 4f0f 6f6f
-			8faf efaf efcf ecec eaea eaec caca ebef
-			e5e5 e5e5 e5e5 e5e5 e5c5 e5e5 a5e5 c4e4
-			e6e4 e2e6 e8e3 a8e8 e3e8 c8e8 e8c8 e3e3
+			8faf efaf efcf ecec eaea eaec cbca ebef
+			e5e5 e5e5 e5e5 e1e5 e5c1 e5e5 a5e5 c4e4
+			e2e4 eae6 e6e6 aaec e6e6 c3e3 e3c3 e3e3
+			e3e3 c3e3 e3c3 e6e6 ecaa e6e6 e6ea e4e2
+			e4c4 e5a5 e1e1 c5e5 e5e5 e5e5 e5e5 e5e5
+			efeb caca ecea eaea ecec cfef afef af8f
+			6f6f 0f4f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 8f4f
-			cfcf cfaf cfef cacc eaec c6e6 eae3 e5e5
-			e5e5 e5e5 e5c5 e5c5 e5e5 e5e5 e5e5 a5c5
-			e4c5 e5e4 e3e5 e3e3 e8c3 e8c3 e3c8 e3e3
+			cfcf cfaf cfef cacc eaec c3e6 eae3 e5e5
+			e5e5 e5e5 e5e5 e5e5 e1e1 e5e1 e5e5 a5c5
+			e4c5 e4e4 e3e3 e6ec e6c6 e3c3 e3e3 e3e3
+			e3e3 c3e3 c3e3 e6e6 ece6 e3e3 e4e4 c5e4
+			c5a5 e5e5 e1e1 e5e1 c5e5 c5e5 e5e5 e5e5
+			e5e5 e3ea e6c6 ecea ccca efcf afcf cfcf
+			4f8f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f2f 4f0f
-			8f6f 8fef ecef ccec eacd e6ea e4e3 c5e5
-			a5e5 e5e5 c5e5 c5e5 e5e5 c5a5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e3e3 e3e3 c3e3 e3e3
+			8f6f 8fef ecef c6e6 eacd e6ea e4e3 c5e5
+			a5e5 e5e5 c5e5 e5e5 e1e5 c1a1 e5e5 e5e5
+			e5e5 e5e5 e4e4 e3e3 e3e3 e3e3 c3e3 e3e3
+			e3e3 e3c3 e3e3 e3e3 e3e3 e4e4 e5e5 e5e5
+			e5e5 e5e5 a5c5 e1e1 e5c1 e5c5 e5e5 e5a5
+			e5c5 e3e4 eae6 cdea eccc efec ef8f 6f8f
+			0f4f 2f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 8f4f
-			cf6f eeaf ccec eae6 eced e6ea e8e2 e5e4
-			e5e5 c5e5 c5e5 e5c5 e5e5 c5e5 c5a5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e3e3 c3c3 e3c3
+			cf6f eeaf ccec e3e6 eced e6ea e6e2 e5e4
+			e5e5 e5e5 c5e5 e5c5 e5e5 c1e5 c1a1 e5e1
+			e5e5 e5e5 e5e5 e5e5 e4e4 e3e3 e3e3 e3c3
+			c3e3 c3c3 e3e3 e4e4 e5e5 e5e5 e1e5 e1e1
+			e5e1 a5c5 e5c5 e1e5 c1e1 e5c1 e5c5 e5e5
+			e4e5 e2e8 eae6 edec e6ea eccc afee 6fcf
+			4f8f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 4f0f af8f
-			cfef ccef 8aec e6e6 ecce e6ea e6e6 e4e8
-			e5c5 e5e5 e5e5 e5e5 c5c5 e5e5 e5c5 c5e5
-			c5e5 c5e5 e5e5 c5c5 e5e5 e3e3 c3e3 e3e3
+			cfef ccef 8aec e3e6 edcd e6ea e6e6 e4e6
+			e5c5 e5e5 e5e5 e5e5 c5c5 e1e5 e1c1 c1e1
+			c5e1 c5e5 e5e5 e5c5 e4e5 e3e3 e3e3 e3e3
+			e3e3 e3c3 e3e3 e5e4 c5c5 e5e5 e5c5 e1c1
+			e1c1 c5e1 e5e5 c5c5 e1e5 e1e1 e5e1 c5e5
+			e8e4 e6e6 eae6 ceec e6e6 ec8a efcc efcf
+			8faf 0f4f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 2f4f 2f2f 4f6f
-			efcf ecad e6ea e3e6 ecec c6ca e8e8 c4e6
-			e5e4 e5e5 e5e5 e5e5 e5e5 c5e5 e5e5 c5e5
-			e5e5 a5e5 c5c5 e5e5 e5e5 e3e3 e3e3 e3e3
+			efcf ecad e6ea e3e6 eded c6ea e8e8 c4e6
+			e5e4 e5e5 e5e5 e5e5 e5e5 c5e5 e1e1 c1e1
+			e1e1 a1e1 c5c5 e5e5 e5e5 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e5e5 e5e5 c5c5 e5a5 e1e5
+			e1c1 e1e1 e5c1 e5e5 e5e5 e1e1 e1e1 e4e5
+			e6e4 e8e8 cae6 ecec e6e3 eae6 adec cfef
+			6f4f 2f2f 4f2f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f2f 0f8f cfaf
-			cfcf eaee e6e8 e6a6 ede3 e3ec e8e8 e2a3
-			e3e2 e1e1 c1e1 e1c1 c5e1 e5e5 e1c1 e1e1
-			e5e1 e5e5 e5e5 e5e5 e1e1 e3e1 e3e3 e3e3
+			cfcf eaee e6e6 e6e6 ede3 e3ec e8e8 e6e6
+			e3e2 e1e4 c1e1 e5c5 c5e5 e5e5 e1c1 e1e1
+			e1e1 e1e1 e5e1 e5e5 e1e1 e3e3 e3e3 e3e3
+			e3e3 e3e3 e3e3 e1e1 e5e5 e5e5 e5e5 e5e5
+			e1e1 c1e1 e1e1 e5c1 e5e5 e1c5 e1e1 e2e3
+			a3e2 e8e8 ece3 e3ed a6e6 e8e6 eee3 cfcf
+			afcf 8f0f 2f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 2f2f 8f4f afaf
-			efef ecee e8e6 e8e8 e3c2 c3ec c8e8 c8e8
-			e3e8 e3e3 e1e1 e1e1 e1e1 e1e1 a1e1 e1e1
-			e1e1 c1e1 e1e5 e1e5 e1e1 e3e1 e3e3 e8e3
+			efef e6ee e8e8 e8e8 e3c2 c3ec c8e8 e8e8
+			e3e8 e4e3 e1e1 e5e1 e5e5 e1e1 a1e1 e1e1
+			e1e1 c1e1 e1e1 e1e1 e1e1 e3e3 e8e6 e8e8
+			e8e8 e6e8 e3e3 e1e1 e5e1 e5e1 e5c5 e5e5
+			e5e5 e1a1 e1e1 e1e1 e5e1 e1e5 e3e3 e8e6
+			e8e8 e8e8 ecc3 e2e3 e8e8 e6e6 e3e3 efef
+			afaf 4f8f 2f2f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 2f0f 0f2f 2f4f 8f6f cfcf
-			edef ecae e6e3 e8e8 c3e8 e3e3 e8e8 e8e8
-			c8e8 e3e3 e1e3 e1a1 e1e1 e1e1 c1e1 e1e1
-			e1e1 e1e1 e1e1 e1e1 c1c1 e3e4 e8e8 c8e8
+			edef e6aa e8e8 e8e8 c3e8 e3e3 e8e8 e8e8
+			c6e6 e3e8 e1e4 e5a1 e5e5 e1e1 c1e1 e1e1
+			e1e1 e1e1 e1e1 e1e1 c1c1 e6e3 e8e8 e8e8
+			e8c8 e8e8 e3e6 c1c1 e1e1 e1e1 e1e1 e5e1
+			e5e5 e1c1 e1e1 e1e1 a4e1 e3e4 e3e3 e8c6
+			e8e8 e8e8 e3e3 e8c3 e8e8 e6e6 a3e6 efed
+			cfcf 6f8f 4f2f 2f0f 0f2f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 4f0f 4f0f 2f4f cfcf cfef
-			eaed eacc e2ea a8e8 e8e8 e8c3 e8c8 e8e8
-			e3e8 efe3 e3ef e7c3 e787 c1e4 e1e1 e1e1
-			e1e1 c1e1 e1e1 e1e1 e1e1 c3e4 e8c8 c8e8
+			eaed e8c8 e2e8 e8e8 e6e8 e6c6 e8c8 e6e8
+			e3e6 e8e8 e4e4 e5c1 e585 c1e1 e1e1 e1e1
+			e1e1 c1e1 e1e1 e1e1 e1e1 c6e3 e8c8 e8e8
+			e8c8 c8e8 e3c6 e1e1 e1e1 e1e1 e1c1 e1e1
+			e1e1 e1e1 e1c1 e1e1 e4e4 e6e3 e3e6 e6e6
+			e8e8 e8e8 c6e6 e8e8 e8a8 e6e2 c6e6 ede3
+			efcf cfcf 4f2f 0f4f 0f4f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 2f0f af4f cf8f efcf ed8f
-			a6ea ecea eaec e8e6 e8e8 e8e8 c8a8 e8e8
-			efe3 efef efef eaed e4e6 e4e4 c1e1 e1c1
-			e1e1 e1e1 a4e1 e1c1 e1e1 e3e4 e8c8 e8e8
+			a6ea e8e8 eae6 e8e6 e8e8 e8e8 c8e8 e6e8
+			efe3 e8e4 e4e8 e5e4 e1e5 e1e1 c1e1 e1c1
+			e1e1 e1e1 a1e1 e1c1 e1e1 e6e3 e8c8 e8e8
+			e8e8 c8e8 e3e6 e1e1 c1e1 e1a1 e1e1 e1e1
+			c1e1 e1c1 e1e1 e1e1 e4e1 e8e6 ede6 e3ed
+			e8e8 e8e8 e8e6 e8e8 e6e8 e6ea eae6 eaa3
+			8fed cfef 8fcf 4faf 0f2f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 6f0f 8f4f cf8f efcf ebef
-			c3e4 eeca ecef e8e2 e8e8 e3e8 e3e3 e3e3
-			efef cfcf e3ee e4e4 e4e4 e1e1 e7e1 ebc7
-			e7e7 a1e1 c4e4 e4e4 e1e1 e3e4 a8e8 e8e8
+			c3e4 e6c6 ecef e8e2 e6e8 e3e6 e3e3 e3e3
+			efef c4cd e4e8 e5e1 e1e5 e1e1 e7e1 ebc7
+			e7e7 e1e1 e4e4 e4e4 e1e1 e6e3 a8e8 e8e8
+			e8e8 e8a8 e3e6 e1e1 e4e4 e4c4 e1a1 e1e1
+			e7eb e1e7 e1e1 e1e1 e4e1 e8e3 ecec eded
+			e3e3 e3e3 e6e6 e8e8 e2e8 efec caee e4c3
+			efeb cfef 8fcf 4f8f 0f6f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 4f4f 8f8f cfaf cfef e1ef
-			e4e4 cce4 efef c3c3 c3e3 a1e3 e1e1 efe3
-			cfef c3cf c1e3 e1e1 c7e1 e7e7 cdeb eeee
-			ebef c7e7 e3e6 e4e6 e4e4 e3e4 e8e8 e8e8
+			e3e4 cce6 efef c3c3 c3e3 a1e3 e1e1 efe3
+			cdef c4cd c1e4 e1e1 c1e5 e7e7 cdeb eeee
+			ebef c7e7 e3e6 e3e3 e3e3 e6e3 e8e8 e8e8
+			e8e8 e8e8 e3e6 e0e3 e3e3 e6e3 e1c7 e1e1
+			eeeb ebed e7e7 e1c7 e1e1 e3e4 cce3 eccc
+			e3ed e4e1 e4a4 e3c3 c3c3 efef e4cc e4e4
+			efe1 efcf afcf 8f8f 4f4f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 4f4f afaf afef efef e7cf
-			e1e1 e4e1 efed e3ef c1e1 e1e1 e4e1 e6cc
-			c3e3 c1e3 a1e1 e7e7 edeb eeee eeef efef
-			eecf eced e6c6 e2e6 e4c8 e3e3 e8c8 c8e8
+			e1e1 e6e3 efed e3ef e1e1 e1e1 e4e1 e6cc
+			c4e3 c4e4 a1e1 e1e7 e1e5 eee7 eeef efef
+			eecf eced e6c6 e6e6 e3c6 e3e3 e8c8 c8e8
+			e8c8 c8e8 e3e3 c6e3 e6e6 c6e6 e7e7 e1e1
+			ebe1 efeb eeee ebed e7e7 e1a1 e3e1 e3e3
+			c4e6 e1e1 e1e1 e1c1 efe3 edef e1e4 e1e1
+			cfe7 efef efaf afaf 4f4f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 8f4f ef8f efef efef ebef
-			e1e7 e1e1 eae4 c6ea e1e4 e1e1 e3e1 e4e3
-			e1a1 e1e1 adc1 eeed eeaf efee afef efef
-			efef eccf e6ea e8e6 e6e6 c8e8 c3c3 e8e8
+			e1e7 e3e1 eae4 c6ea e1e4 e1e1 e3e1 e4e3
+			e1a4 e1e1 adc1 e1e7 e7e5 eded afef efef
+			efef eccf e6ea e8e6 e8e8 c6e8 c6c3 e8e8
+			e8e8 c3c6 e8c6 e8e8 e6e8 eae6 cfec e7e7
+			e1e1 eba1 eeef afee edee c1ad e1eb e1e1
+			e1e4 e1e1 e1e1 e4e1 eac6 e4ea e1e1 e7e1
+			efeb efef efef 8fef 4f8f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 4f0f 8f8f efcf efef eeef
 			e7eb e1e7 e4e1 c4e4 e4e4 e1e1 e1e1 e1c1
-			e1e1 e1e1 efef cfef efcf efaf efcf efcf
-			efcf aeef c6ec e8a8 e8e6 e8e8 e8e8 e8c8
+			e1e1 ede1 edef e7eb e785 efaf efcf efcf
+			efcf aeef e6ec e8e8 e8e8 e8e8 e8e8 e8c8
+			c8e8 e8e8 e8e8 e8e8 a8e8 ecc6 efae edef
+			e7e7 c1e1 efeb efef efcf efef ebeb e1eb
+			e1e1 e1e1 e1e1 e1e1 e4c4 e1e4 e7e1 ebe7
+			efee efef cfef 8f8f 0f4f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 2f0f 6f6f ef8f efaf efef
 			edcd c7e7 c1e1 e1e1 e1e1 e1e1 a1e1 e7c1
-			efed cfef efef 8faf 4fcf afcf efcf efcf
-			efef cfef e2cd c8e8 e8e8 c8e8 e8c8 e8e8
+			efed cfef edef ebed ebe5 afcf efcf efcf
+			efef efef e2cd c8e8 e8e8 c8e8 e8c8 e8e8
+			e8e8 c8e8 e8c8 e8e8 e8c8 cde2 efcf efef
+			eded e1e7 ebe1 efeb afef efef edcf ebeb
+			e1e1 e1e1 e1c1 e1e1 e1e1 e1c1 e7c7 cded
+			efef afef 8fef 6f6f 0f2f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 4f4f 6faf cfef afef
 			edef eded e1eb e1e1 e1e1 eba7 eeed cfcf
-			cfaf af4f cfcf 6fcf 8f8f 0f8f 4f2f 8faf
-			8fcf af6f ca8f e8c6 e8e8 e2c8 e8e8 e8e8
+			cfaf af4f cfcf eded ebe5 0f8f 4f2f 8faf
+			efcf efef eaef e8c6 e6e8 e8c8 e8e8 e8e8
+			e8e8 e8e8 c8e8 e8e6 c6e8 efca 6fef cf8f
+			efef eded e1e7 ebc1 efef cfcf efaf ebed
+			e1e1 ebeb a7eb e1e1 e1e1 ebe1 eded efed
+			efaf efcf af6f 4f4f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 4f0f af2f efef efef
 			efef eeaf eb8d a7cb ebeb edeb cfed afcf
-			4f8f 4f4f 6f8f 2f8f 2f4f 0f2f 0f6f af4f
-			6f6f 8faf cf6f e883 e8e8 e2e8 e8e3 e8a8
+			4f8f 4f4f 6f8f edef cbeb 0f2f 0f6f af4f
+			ef6f efef efef e8e3 e8e8 e8e6 e8e8 e8e8
+			a8e8 e8e8 e6e8 e8e8 e3e8 efef af8f 6f6f
+			efaf cfef eded e1e7 ebcb efef efef edef
+			e1e1 edeb ebed ebeb cba7 8deb afee efef
+			efef efef 2faf 0f4f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 4f2f cf8f efcf
 			afef efef efef efaf cfaf 8fce 8fcf 0f4f
-			2f0f 0f6f 0f2f 4f0f 0f0f 0f0f 0f0f 8f0f
-			6f6f cfaf af8f 66ca e8c8 e8e8 e6e2 e8c8
+			2f0f 0f6f 2f2f edef edcd 0f0f 0f0f 8f0f
+			6f6f efef efef e8e6 e8c8 e2e2 e8e6 e8e8
+			c8e8 e6e8 e2e2 e8e8 e6e8 8fef afcf 4f6f
+			2f8f efef efef eded e1c7 efed efef edef
+			ebc1 cfeb ce8f afcf afef efef efef efaf
+			cfef 8fcf 2f4f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 6f0f cf6f efcf
 			efcf 8fef 6f6f 8faf 8f6f 6faf 2f6f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			4f6f 6f8f 4f2f ca8f c8a6 e8e8 e8e8 e8e8
+			0f0f 0f0f 0f0f ef8f 8fed 0f0f 0f0f 0f0f
+			4f6f 6f8f efef e6ef c8e8 e2e6 e8e2 e8e8
+			e8e8 e2e8 e6e2 e8e8 efe6 2fef 8f6f 6f4f
+			0f0f 2f2f cf4f efcf eded efed 8fef edef
+			ebe1 6fef af6f 6f8f af8f 6f6f ef8f cfef
+			cfef 6fcf 0f6f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 8f4f 6faf
-			cf8f 6fef 6f4f 0f2f 4f0f 4f4f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f8f 6f2f 6c2f 86aa a8c6 e8e8 c8c8
+			ef8f 6f8f 6f4f 0f2f 4f0f 4f4f 0f0f 0f0f
+			0f0f 0f0f 2f0f ef2f 2fed 0f0f 0f0f 0f0f
+			2f0f cf8f cf8f ecef e8e6 e8e8 e8e6 e8e8
+			c8c8 e6e8 c8a8 e6e8 efec 2fef 8f0f 0f0f
+			0f0f 0f0f 4f2f 4fef efef efed 2fef cdef
+			8de1 2f4f 4f4f 0f4f 2f0f 4f6f ef6f 8fcf
+			af6f 4f8f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 4f2f 6f2f
-			2faf 0f4f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			efaf 2fef 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f ef2f 0fef 0f0f 0f0f 0f0f
+			0f0f 2f0f cfcf efef e3ed e8e6 c8e8 e8c8
+			c8e8 e8c8 86c8 ede3 efef 0f2f 0f0f 0f0f
+			0f0f 0f0f 2f0f 2f4f cf8f efef 4f4f edcf
+			ede1 8f2f 0f0f 0f0f 0f0f 0f0f 4f0f af2f
+			2f6f 2f4f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 4f0f 2f2f 864d c683 c8e8 e8c8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 2f0f 8f0f 6a2e e6a3 e8e8
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 4f0f c3ec e3e3
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 2f0f ef6f efef
-			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			ef2f 0fef 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f cf2f 2fef 0f0f 0f0f 0f0f
+			0f0f 0f0f cf8f efcf efef e3ea e6e6 e8e8
+			e8e8 a6e6 eae3 efef 8fcf 0f2f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f2f 4f2f 4f2f 2f8f cdcf
+			8de1 8f8f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f 0f0f 6f0f 6f2f cfaf
+			ef2f 2f8f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 8f0f 2fef 0f0f 0f0f 0f0f
+			0f0f 2f2f 8f0f cfcf ef8f eacf e3ea e0e3
+			e0e0 eac3 efea cfef 0fcf 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 2f4f 2f2f 2f0f ef8f
+			4fed 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			8f2f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f cf2f 2f8f 0f0f 0f0f 0f0f
+			0f0f 0f0f 2f2f 8f8f 8fcf efef efcf efef
+			efcf efef efef 8fcf 0f2f 0f2f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f ef2f
+			2fed 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			2f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 2f0f 0f8f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 2f2f 8f8f 6fef cfaf
+			efef efef 8fcf 2f2f 0f2f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 8f2f
+			2f8f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			2f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 2f0f 0f2f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f 2f4f
+			4f2f 0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 2f0f
+			0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f2f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f2f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
@@ -1706,7 +1962,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="19" tex_palette_idx="19"
-		tex_tiling="flip clamp"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -7218,9 +7474,9 @@
 	<polygon index="22" name="polygon22"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.125000 0.156250 -3.578125"
-		volume_max="1.125000 0.906250 -3.578125"
-		volume_r="3.858643"
+		volume_min="-0.250000 0.156250 -3.578125"
+		volume_max="1.250000 0.906250 -3.578125"
+		volume_r="3.896973"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -7229,15 +7485,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="-128.000000 64.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-0.125000 0.156250 -3.578125"/>
 					<tex st="0.000000 64.000000"/>
-					<pos_xy xy="1.125000 0.156250"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.250000 0.156250 -3.578125"/>
+					<tex st="128.000000 64.000000"/>
+					<pos_xy xy="1.250000 0.156250"/>
+					<tex st="128.000000 0.000000"/>
+					<pos_xy xy="1.250000 0.906250"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="1.125000 0.906250"/>
-					<tex st="-128.000000 0.000000"/>
-					<pos_xy xy="-0.125000 0.906250"/>
+					<pos_xy xy="-0.250000 0.906250"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
