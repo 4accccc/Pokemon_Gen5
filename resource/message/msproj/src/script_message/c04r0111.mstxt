@@ -997,11 +997,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだまだ　さきは　ながいけど
-がんばろう！</Text>
+			<Text>いい　かんじだね！
+このちょうしで　がんばろうよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1009,11 +1009,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだまだ　先は　長いけど
-頑張ろう！</Text>
+			<Text>いい　感じだね！
+この調子で　がんばろうよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:26:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1021,12 +1021,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 男
+			<Comment>AIマルチOBJ ♂
 ７連勝～１４連勝
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:05" />
+				Time="2011-10-14T02:30:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1048,11 +1048,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだまだ　さきは　ながいけど
-がんばろうね！</Text>
+			<Text>いい　かんじ　だよね！
+このちょうしで　がんばろうね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1060,11 +1060,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだまだ　先は　長いけど
-頑張ろうね！</Text>
+			<Text>いい　感じ　だよね！
+この調子で　がんばろうね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:26:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1072,12 +1072,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 女
+			<Comment>AIマルチOBJ ♀
 ７連勝～１４連勝
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:09" />
+				Time="2011-10-14T02:30:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1099,12 +1099,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっと　ここまで　これたね▼
-どんどん　あいてが　つよくなるけど
-まけずに　がんばろう！</Text>
+			<Text>あいても　つよくなるけど
+きみと　じぶんなら　もんだいなし！▽
+これからも　どんどん　かちすすもう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1112,12 +1112,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　ここまで　これたね▼
-どんどん　相手が　強くなるけど
-負けずに　頑張ろう！</Text>
+			<Text>相手も　強くなるけど
+君と　自分なら　問題なし！▽
+これからも　どんどん　勝ち進もう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1125,12 +1125,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 男
+			<Comment>AIマルチOBJ ♂
 ２１連勝～４２連勝
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:10" />
+				Time="2011-10-14T02:30:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1152,12 +1152,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっと　ここまで　これたね▼
-どんどん　あいてが　つよくなるけど
-まけずに　がんばろう！</Text>
+			<Text>あいても　つよくなるけど
+あたしたちなら　よゆう　だよね！▽
+たのしみつつ　かちすすもうね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1165,12 +1165,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　ここまで　これたね▼
-どんどん　相手が　強くなるけど
-負けずに　頑張ろう！</Text>
+			<Text>相手も　強くなるけど
+あたしたちなら　余裕　だよね！▽
+楽しみつつ　勝ち進もうね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1178,12 +1178,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 女
+			<Comment>AIマルチOBJ ♀
 ２１連勝～４２連勝
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:11" />
+				Time="2011-10-14T02:30:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1205,12 +1205,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ついに　ここまで　きてしまったね▼
-……もしかして　ぼくたち
-ベスト　パートナー！？</Text>
+			<Text>ありがとう！　きみの　おかげで
+ここまで　これたんだよね！▼
+これからも　ベストすぎる
+コンビネーション　みせていこう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1218,12 +1219,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ついに　ここまで　きてしまったね▼
-……もしかして　僕たち
-ベスト　パートナー！？</Text>
+			<Text>ありがとう！　きみの　おかげで
+ここまで　これたんだよね！▼
+これからも　ベストすぎる
+コンビネーション　みせていこう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1231,12 +1233,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 男
+			<Comment>AIマルチOBJ ♂
 ４９連勝～
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:12" />
+				Time="2011-10-14T02:30:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1258,12 +1260,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ついに　ここまで　きてしまったね▼
-……もしかして　わたしたち
-ベスト　パートナー！？</Text>
+			<Text>あなたの　おかげで
+ついに　ここまで　これたわね！▼
+あたしたち……
+さいこうの　ペアに　なれたかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:30:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1271,12 +1274,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ついに　ここまで　きてしまったね▼
-……もしかして　私たち
-ベスト　パートナー！？</Text>
+			<Text>あなたの　おかげで
+ついに　ここまで　これたわね！▼
+あたしたち……
+最高の　ペアに　なれたかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T02:31:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1284,12 +1288,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>AIマルチOBJ 女
+			<Comment>AIマルチOBJ ♀
 ４９連勝～
-※swanで修正予定</Comment>
+※swanで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:20:13" />
+				Time="2011-10-14T02:30:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

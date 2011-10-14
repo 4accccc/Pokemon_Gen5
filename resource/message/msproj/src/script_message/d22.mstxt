@@ -8,13 +8,11 @@
 			Language="JPN">
 			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
-きみも　じゅんび　しておかないと
-ぼくみたいに　まけちゃうかもよ？▼
-[Name:TrainerName Idx="1" ]？
-ああ　ぼくじょうに　いったけど</Text>
+ばっちり　じゅんび　しておかない
+ぼくみたいに　まけちゃうかもね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:43:50" />
+				Time="2011-10-14T02:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,13 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモン勝負を　挑まれたよ！▼
-きみも　準備しておかないと
-ぼくみたいに　負けちゃうかもよ？▼
-[Name:TrainerName Idx="1" ]？
-ああ　牧場に　行ったけど</Text>
+ばっちり　準備しておかない
+ぼくみたいに　負けちゃうかもよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:43:52" />
+				Time="2011-10-14T02:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76,13 +72,11 @@
 			Language="JPN">
 			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
-きみも　じゅんび　しておかないと
-ぼくみたいに　まけちゃうかもよ？▼
-[Name:TrainerName Idx="1" ]？
-ああ　ぼくじょうに　いったけど▼</Text>
+ばっちり　じゅんび　しておかない
+ぼくみたいに　まけちゃうかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:43:40" />
+				Time="2011-10-14T02:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92,13 +86,11 @@
 			Language="JPN_KANJI">
 			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモン勝負を　挑まれたよ！▼
-きみも　準備しておかないと
-ぼくみたいに　負けちゃうかもよ？▼
-[Name:TrainerName Idx="1" ]？
-ああ　牧場に　行ったけど▼</Text>
+ばっちり　準備しておかない
+ぼくみたいに　負けちゃうかもよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:43:34" />
+				Time="2011-10-14T02:59:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,11 +134,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデクさんって　むかしは　すごーく
-つよい　トレーナー　だったってさ！</Text>
+			<Text>ぼくも　アデクさんに
+ポケモンを　おそわろうかな▼
+アデクさんって　すごーく
+つよい　トレーナー　なんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:44:12" />
+				Time="2011-10-14T03:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -154,11 +148,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデクさんって　むかしは　すごーく
-強い　トレーナー　だったってさ！</Text>
+			<Text>ぼくも　アデクさんに
+ポケモンを　教わろうかな▼
+アデクさんって　すごーく
+強い　トレーナー　なんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:44:08" />
+				Time="2011-10-14T03:01:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,11 +195,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン　たっくさん
-サンギぼくじょう</Text>
+			<Text>ポケモンたくさん！　サンギタウンから
+ちょいと　はなれた　サンギぼくじょう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:01:01" />
+				Time="2011-10-14T03:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -211,11 +207,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　たっくさん
-サンギ牧場</Text>
+			<Text>ポケモンたくさん！　サンギタウンから
+ちょいと　離れた　サンギ牧場</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:01:11" />
+				Time="2011-10-14T03:15:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

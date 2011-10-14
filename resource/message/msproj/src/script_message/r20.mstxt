@@ -953,11 +953,11 @@ ID：mount_14</Text>
 			<Text>[Name:TrainerName Idx="1" ]『へえ
 チェレンさんって　ものしり　だな▼
 しかも　せかいせいふくを　ねらった
-さいていの　れんちゅう……▽
+あの　ひどい　れんちゅう……▽
 プラズマだんとも　たたかったもんな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:57:09" />
+				Time="2011-10-14T02:43:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -968,11 +968,11 @@ ID：mount_14</Text>
 			<Text>[Name:TrainerName Idx="1" ]『へえ
 チェレンさんって　博識　だな▼
 しかも　世界征服を　ねらった
-最低の　連中……▽
+あの　ひどい　連中……▽
 プラズマ団とも　戦かったもんな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:04:34" />
+				Time="2011-10-14T02:43:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1070,10 +1070,10 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>オレは　プラズマだん　よりも
-つよくならないと　ダメだんだよ！</Text>
+つよくならないと　ダメなんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:54:53" />
+				Time="2011-10-14T02:44:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1081,11 +1081,11 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　プラズマだん　よりも
-つよくならないと　ダメだんだよ！</Text>
+			<Text>オレは　プラズマ団　よりも
+強くならないと　ダメなんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:54:54" />
+				Time="2011-10-14T02:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
