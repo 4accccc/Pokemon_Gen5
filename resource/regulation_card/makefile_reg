@@ -50,7 +50,7 @@ regulation_card.txt: regulation_card.xls
 	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_sheet.rb -t -n 0 regulation_card.xls > regulation_card.txt
 
 regulation_card.h: regulation_card.txt regulation_card.rb makefile  $(OBJ_FILE)
-	ruby regulation_card.rb regulation_card.txt regulation_card.bin regulation_card.h ../message/src/monsname.gmm ../message/src/itemname.gmm
+	ruby regulation_card.rb regulation_card.txt regulation_card.bin regulation_card.h ../personal/monsname.gmm ../itemconv/itemname.gmm
 
 
 endif

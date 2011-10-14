@@ -62,7 +62,7 @@ regulation.txt: regulation.xls
 	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_sheet.rb -t -n 0 regulation.xls > regulation.txt
 
 $(CONVERTDATA): regulation.txt regulation.rb makefile
-	ruby regulation.rb regulation.txt regulation.bin regulation_def.h ../message/src/monsname.gmm ../message/src/itemname.gmm
+	ruby regulation.rb regulation.txt regulation.bin regulation_def.h ../personal/monsname.gmm ../itemconv/itemname.gmm
 	$(COPY) regulation_def.h ../../prog/include/poke_tool
 
 
