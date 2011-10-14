@@ -22,6 +22,6 @@
 #define  GATE_SE_LIGHT_MOVE_FRAME (0) // ゲートの光が立ち上る音
 #define  GATE_SE_SYMBOL_LIGHT_FRAME (100) // ゲート起動、シンボルマークが光るところ音
 #define  GATE_SE_COLUMNLE_DOWN_FRAME (140) // 石柱と石版がつぎつぎ沈む音
-#define  GATE_SE_OPEN_FRAME (385) // 石門が沈む音
+#define  GATE_SE_OPEN_FRAME (330) // 石門が沈む音
 #define  MONUMENT_SE_LASER_FRAME (0) // センサーが出すレーザ音の鳴らすタイミング
 #define  MONUMENT_SE_OPNE_FRAME (50) // センサーがせりあがる音の鳴らすタイミング
