@@ -303,7 +303,7 @@ EVENT_START ev_c12r0101_swmama_01
   ELSIF $WK_SCENE_C12_WHITE_MEET < 2 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_07 )
   
-  //【仮】高台でベルと会った後
+  //高台でベルと会った後
   ELSE
     //ママの回復イベントへ
     _CALL		ev_everyday

@@ -137,15 +137,15 @@ ev_leader8_btl:
   _BALLOONWIN_CLOSE()
 
   //================================================//
-  //【仮】ジムトレーナーの視線無効
-/*
+  //ジムトレーナーの視線無効
+
   _TRAINER_FLAG_SET( TRID_ELITEM_26 )
   _TRAINER_FLAG_SET( TRID_ELITEM_27 )
   _TRAINER_FLAG_SET( TRID_ELITEM_28 )
   _TRAINER_FLAG_SET( TRID_ELITEW_26 )
   _TRAINER_FLAG_SET( TRID_ELITEW_27 )
   _TRAINER_FLAG_SET( TRID_ELITEW_28 )
-*/
+
   //================================================//
   //電光掲示板フラグセット
   _FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )

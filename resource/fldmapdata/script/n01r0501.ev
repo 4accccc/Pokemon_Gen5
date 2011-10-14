@@ -59,7 +59,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_n01r0501_boss_01
     //˜A‚ê•à‚¢‚Ä‚¢‚é
-  IF FLAG_ON(FE_N01R0401_PAIR_01) THEN
+  IF FLAG_ON(SYS_FLAG_PAIR) THEN
     _CALL ev_n01r0501_pairend_01
   
   //˜A‚ê•à‚¢‚Ä‚¢‚È‚¢

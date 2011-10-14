@@ -177,7 +177,7 @@ EVENT_START ev_bg_d27r1201_pass_01
   //カードキー所持・未開放
   ELSIF $WK_SCENE_D27R1201_BARRIER_01 == 0 THEN
   
-    //【仮】デバッグ用
+    //デバッグ用
     _HIDE_SHIP_PASSWORD_ID_GET( LOCALWORK10 )
     _DEBUG_PRINT_WK( LOCALWORK10 )
     

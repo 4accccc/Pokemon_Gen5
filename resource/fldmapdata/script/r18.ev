@@ -102,7 +102,7 @@ EVENT_START   ev_r18_dpleader5_01
     //自機座標取得
     _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
 
-    //【仮】マキシを暗転中に退場
+    //マキシを暗転中に退場
     _TIME_WAIT( 15 )  //暗転前の間
 
     //暗転
@@ -121,30 +121,6 @@ EVENT_START   ev_r18_dpleader5_01
     _BLACK_IN_SLOW()
     _DISP_FADE_END_CHECK()
 
-    _TIME_WAIT( 45 )  //暗転後の間
-    //【仮】ここまで
-
-/*
-    //アニメ：マキシ退場
-    IF $LCW_POSX == 625 && $LCW_POSZ == 712 THEN
-      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_LR )
-      _TIME_WAIT( 16 )
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-      _OBJ_ANIME_WAIT()
-    ELSE
-      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_UD )
-      _TIME_WAIT( 8 )
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-      _OBJ_ANIME_WAIT()
-    ENDIF
-    _OBJ_DEL( R18_DPLEADER5_01 )
-
-    //========================================//
-    //マキシを非表示に
-    _FLAG_SET( FV_R18_DPLEADER5_01 )
-    //========================================//
-*/
-
   ENDIF
 
 EVENT_END
@@ -160,7 +136,7 @@ EVENT_START   ev_r18_item_01
   _OBJ_DEL( R18_ITEM_01 )
 
   //アイテム（かざんのおきいし）入手
-  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_MASUTAABOORU, 1 )   //【仮】アイテムは仮です
+  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_KAZANNOOKIISI, 1 ) 
 
   //========================================//
   //モンスターボール非表示

@@ -271,7 +271,7 @@ ev_t02r0401_girl4_piano_01:
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
-      //アイテム「メトロノーム」入手  【仮】入手アイテムは仮です
+      //アイテム「メトロノーム」入手 
       _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_METORONOOMU, 1 )
 
       //========================================//

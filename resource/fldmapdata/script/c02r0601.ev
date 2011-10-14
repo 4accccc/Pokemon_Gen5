@@ -262,7 +262,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
       _SYSWIN_CLOSE()
       _SE_WAIT()
 
-      //アイテム減算処理【仮】落し物アイテムは仮です
+      //アイテム減算処理
       DEFINE_LOCAL LWK_REDUCE
       _SUB_ITEM( ITEM_YOGORETAHANKATI, 1, LWK_REDUCE )
 

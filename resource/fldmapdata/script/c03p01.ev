@@ -388,8 +388,8 @@ ev_c03p01_rally_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-  ELSE    //【仮】キャンセル用？
-
+  ELSE    //キャンセル時に来る処理
+  
   ENDIF
 
 _RET

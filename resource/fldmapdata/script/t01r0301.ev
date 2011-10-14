@@ -36,16 +36,19 @@ EVENT_END
 /*  チェレンの母：話しかけ                                    */
 /**************************************************************/
 EVENT_START   ev_t01r0301_middlewoman2_01
-
+{
   _TALK_OBJ_START()
+  
+  //データコンバートチェック
+  _DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LOCALWORK15 )
 
-  //データ引継ぎを行っているか【仮】フラグは仮のもの
-  IF FLAG_ON( FE_T02_LOW_TALK_01 ) THEN
+  //データを引き継いでいるか
+  IF $LOCALWORK15 >= 1 THEN
 
     //主人公名代入
     _PLAYER_NAME( 0 )
-    //前作主人公名代入【仮】コマンド待ち
-    _PLAYER_NAME( 1 )
+    //名前代入
+    _DATACONV_SET_NAME( 1 ,DATACONV_ID_DENDOU ) 
 
     //チェレンの母：あなた　《前作主人公》に　にてる……かも▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_01 )
@@ -63,7 +66,7 @@ EVENT_START   ev_t01r0301_middlewoman2_01
     _MSGWIN_CLOSE()
 
   ENDIF
-
+}
 EVENT_END
 
 

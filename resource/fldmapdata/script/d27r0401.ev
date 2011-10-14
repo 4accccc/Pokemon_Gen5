@@ -57,7 +57,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START	ev_init_d27r0401
   
-  //【仮】アクロマ戦終了後
+  //アクロマ戦終了後
   IF $WK_SCENE_D27R0401_SWBOSS_01 == 2 THEN
     _OBJ_POS_CHANGE(D27R0401_SWBOSS_01,7,2,5,DIR_DOWN)
   ENDIF
@@ -183,8 +183,8 @@ EVENT_START   ev_d27r0401_swboss_01
       _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_02 )
       _MSGWIN_CLOSE()
 
-      //アクロマ戦  【仮】トレーナーIDは仮
-      _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+      //アクロマ戦 
+      _TRAINER_BTL_SET( TRID_SWBOSS_02, 0 )
 
       //結果チェック
       _TRAINER_LOSE_CHECK( SCWK_ANSWER )

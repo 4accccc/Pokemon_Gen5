@@ -47,17 +47,9 @@ EVENT_START   ev_d25r0501_item_01
 
   //モンスターボール非表示
   _OBJ_DEL( D25R0501_ITEM_01 )
-/*
-  //アニメ：主人公アイテム入手 【仮】アニメは仮です
-  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_itemget )
-
-  //アイテム（みかづきのはね）入手
-  _ITEM_EVENT_KEYWAIT( ITEM_MIKADUKINOHANE, 1 )
-*/
-
-  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_MASUTAABOORU, 1 )   //【仮】アイテムは仮です
-
-  //_OBJ_ANIME_WAIT()   //アニメ再生待ち
+  
+  //どうぐ入手：みかづきのはね
+  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_MIKADUKINOHANE, 1 )
 
   //女の子出現
   _OBJ_ADD( D25R0501_GIRL2_01 )

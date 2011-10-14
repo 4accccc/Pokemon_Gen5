@@ -50,10 +50,10 @@ EVENT_START   ev_c12r0401_girl2_01
 EVENT_END
 
 /**************************************************************/
-/*  チョロネコ：話しかけ                                      */
+/*  ヨーテリー：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c12r0401_poke_01
-  _EASY_TALK_POKEVOICE( MONSNO_546, msg_c12r0401_poke_01 )   //【仮】見た目チラーミィ、鳴き声チョロネコ
+  _EASY_TALK_POKEVOICE( MONSNO_546, msg_c12r0401_poke_01 ) 
 EVENT_END
 
 

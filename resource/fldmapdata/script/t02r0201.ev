@@ -34,7 +34,7 @@ EVENT_END
 /*  女の子：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_t02r0201_girl1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_girl1_01 )   //【仮】交換バトルの予定
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_girl1_01 )
 EVENT_END
 
 /**************************************************************/

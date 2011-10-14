@@ -111,7 +111,7 @@ EVENT_START   ev_r02_pipe_01
   DEFINE_LOCAL LWK_EGG_CHK            //タマゴであるか
   DEFINE_LOCAL LWK_BAG_CHK            //バッグの中身チェック
 
-  //特性「ハードロック」のポケモンを見せた後か    【仮】ぼうおんのワークで代用中
+  //特性「ハードロック」のポケモンを見せた後か
   IF $WK_OTHER_R02_HAADOROKKU == 0 THEN
 
     _TALK_OBJ_START()

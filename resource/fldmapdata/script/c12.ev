@@ -1043,7 +1043,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _PLAINWIN_MSG_DOWN( msg_c12_rivalsister_01 )
 	_MSGWIN_CLOSE()
 	
-	//【仮】アニメ：ライバル・妹登場（POSの位置が仮なため登場演出を仮とする）
+	//アニメ：ライバル・妹登場
 	_OBJ_ANIME_AUTO( C12_SWSISTER_01, 42, 758, FORCE_TYPE_NPC, 8, DIR_LR)
 	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 758, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
@@ -1441,9 +1441,9 @@ EVENT_START   ev_scene_c12_rivalsister_end_01
   _OBJ_DEL( C12_SWSISTER_01 )
 
   //========================================//
-  //ライバルと妹を非表示  【仮】デバッグ等でイベントを始めた場合、ここでフラグをセットすると停止する場合があるので一時的にコメントアウト
-  //_FLAG_SET( FV_C12_SWRIVAL )
-  //_FLAG_SET( FV_C12_SWRIVAL_SISTER )
+  //ライバルと妹を非表示 
+  _FLAG_SET( FV_C12_SWRIVAL )
+  _FLAG_SET( FV_C12_SWRIVAL_SISTER )
   //POSイベント進行
   $WK_SCENE_SPPOKE_EVENT_01 = 2
   //========================================//

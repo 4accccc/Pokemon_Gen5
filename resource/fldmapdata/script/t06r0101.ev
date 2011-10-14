@@ -334,8 +334,8 @@ ev_mugenboss_01:
     _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_03, T06R0101_CHAMPION_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
 
-    //トレーナー戦呼び出し【仮】トレーナーIDは仮
-    _TRAINER_BTL_SET( TRID_SWRIVAL_01, 0 )
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_CHAMPION_01, 0 )
 
     //結果チェック
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )

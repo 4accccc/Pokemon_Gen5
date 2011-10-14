@@ -61,7 +61,7 @@ INIT_EVENT_END
 /*  ライバルの妹：話しかけ                                    */
 /**************************************************************/
 EVENT_START   ev_c12r0202_rivalsister_01
-
+{
   //主人公名代入
   _PLAYER_NAME( 0 )
   
@@ -88,7 +88,6 @@ EVENT_START   ev_c12r0202_rivalsister_01
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
 
-    _DEBUG_PRINT_WK( 0 ) 
     
   ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
      
@@ -98,41 +97,37 @@ EVENT_START   ev_c12r0202_rivalsister_01
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
-    _DEBUG_PRINT_WK( 1 )  //【仮】デバッグ用：ワーク値の出力
-
   //クリア後
   ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 < 10 THEN
 
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
-
-    _DEBUG_PRINT_WK( 2 )  //【仮】デバッグ用：ワーク値の出力
   
   //殿堂入り10回後
   ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
     
-    _DEBUG_PRINT_WK( 3 )  //【仮】デバッグ用：ワーク値の出力
   ENDIF
-
+}
 EVENT_END
 
 /**************************************************************/
 /*  レパルダス：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c12r0202_poke32_01
-  
+{
   //殿堂入り回数を取得
   _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
   
   //殿堂入り10回超え
-  IF $LOCALWORK15 > 10 THEN
+  IF $LOCALWORK15 >= 10 THEN
     _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_02 )
   //条件未達成
   ELSE
     _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_01 )
   ENDIF
-  
+}
 EVENT_END
 
 /**************************************************************/

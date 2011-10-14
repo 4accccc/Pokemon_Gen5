@@ -293,7 +293,7 @@ EVENT_START   ev_r13_sunglasses_01
 EVENT_END
 
 
-ev_treasure:    //入手アイテム【仮】BW版のものを流用
+ev_treasure: 
 
 DEFINE_LOCAL  LWK_TREASURE
 

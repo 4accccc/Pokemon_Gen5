@@ -390,7 +390,11 @@ EVENT_START   ev_r09r0201_girl4_01
         _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_07 )
         _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
-
+        {
+        //アイテム減算処理
+        DEFINE_LOCAL LWK_REDUCE
+        _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
+        }
         //アイテム（ちからのねっこ）を取得【仮】取得アイテムは仮です
         _ITEM_EVENT_NOWAIT( ITEM_TIKARANONEKKO, 1 )
 
@@ -410,7 +414,11 @@ EVENT_START   ev_r09r0201_girl4_01
         _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_08 )
         _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
-
+        {
+        //アイテム減算処理
+        DEFINE_LOCAL LWK_REDUCE
+        _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
+        }
         //アイテム（ちからのこな）を取得【仮】取得アイテムは仮です
         _ITEM_EVENT_NOWAIT( ITEM_TIKARANOKONA, 1 )
 

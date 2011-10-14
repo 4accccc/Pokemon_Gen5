@@ -68,7 +68,7 @@ EVENT_START   ev_d32r0101_fighterm_01
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
-      //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
+      //トレーナー戦呼び出し
       _TRAINER_BTL_SET( TRID_KARATE_22, 0 ) 
 
       //結果チェック
@@ -210,6 +210,10 @@ ev_vs_d32r0101_poke50_01:
     _SYSWIN_MSG( msg_d32r0101_poke50_04, POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    
+    //アイテム減算処理
+    DEFINE_LOCAL LWK_REDUCE
+    _SUB_ITEM( ITEM_AKUROMAMASIIN, 1, LWK_REDUCE )
 
   ELSE  //いいえ
 

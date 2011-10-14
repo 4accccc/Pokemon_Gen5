@@ -108,7 +108,7 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
   _FLAG_RESET( FV_T03R0201_SWBELL_01 )
   //========================================//
   _OBJ_ADD( T03R0201_SWBELL_01 )  //ベル表示
-  _SE_PLAY( SEQ_SE_KAIDAN ) //【仮】階段SE
+  _SE_PLAY( SEQ_SE_KAIDAN ) 
   _SE_WAIT()
 
   //アニメ：ベル指定位置へ

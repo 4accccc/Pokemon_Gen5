@@ -44,22 +44,32 @@ DEFINE_LOCAL  LCW_POSZ
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_t04r0101
-
+  //ソウリュウシティイベント後はOBJの配置を変更
+  IF $WK_SCENE_T04R101_STOPPER_01 == 1 THEN
+    _OBJ_POS_CHANGE( T04R0101_STOPPER_01, 3, 0, 4, DIR_DOWN )
+  ENDIF
 INIT_EVENT_END
 
 /**************************************************************/
 /* 			受付嬢：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_t04r0101_informationw_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_01 )
+  IF $WK_SCENE_T04R101_STOPPER_01 == 0 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_01 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_02 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
-/* 			【仮】ストッパー：話しかけ			  */
+/* 			ストッパー：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_t04r0101_stopper_01
-  //ソウリュウシティジムクリアで会話分岐・バニッシュせずに位置変更
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_01 )
+  IF $WK_SCENE_T04R101_STOPPER_01 == 0 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_cleaningm_01 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_cleaningm_02 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -86,8 +96,8 @@ EVENT_START		ev_pos_t04r0101_stopper_01
     
   ENDIF
   
-  //【仮】ストッパー：メッセージ
-  _BALLOONWIN_OBJMSG_POS( msg_t04r0101_infomationw_01,T04R0101_STOPPER_01, POS_DEFAULT )
+  //ストッパー：メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_t04r0101_cleaningm_01,T04R0101_STOPPER_01, POS_DEFAULT )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   

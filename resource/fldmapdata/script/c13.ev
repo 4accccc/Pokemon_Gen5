@@ -625,16 +625,14 @@ _TALK_OBJ_START()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
 		_OBJ_ANIME_WAIT()
 		
-		//【仮】階段SE再生？
-		_SE_PLAY( SEQ_SE_KAIDAN )
-		
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_leave2 )
 		_OBJ_ANIME_WAIT()
 		
-		_SE_WAIT()
-		
+		//階段SE再生
+		_SE_PLAY( SEQ_SE_KAIDAN )
 		//ライバルのOBJ削除
 		_OBJ_DEL( C13_SWRIVAL_01 )
+		_SE_WAIT()
 		
 		//========================================/
 		

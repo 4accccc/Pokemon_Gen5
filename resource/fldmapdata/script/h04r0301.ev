@@ -182,7 +182,7 @@ ev_poke_chk:
         _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_08 )
         _MSGWIN_CLOSE()
 
-        //アイテム（ダイブボール）を取得【仮】数は前回と同じ状態のまま
+        //アイテム（ダイブボール）を取得
         _ITEM_EVENT_NOWAIT( ITEM_DAIBUBOORU, 5 )
 
         //========================================//

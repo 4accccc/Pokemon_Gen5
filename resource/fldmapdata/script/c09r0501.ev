@@ -138,15 +138,6 @@ EVENT_START ev_c09r0501_swchampion_01
     //敗戦チェック
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-/*
-      //カメラ操作（戦闘明け用）    //【仮】カメラ移動させたままだと殿堂入り部屋出現時に停止してしまうためコメントアウト中
-      _CAMERA_START()   //カメラ操作開始
-      _CAMERA_PURGE()   //カメラのバインドを解く
-
-      _CAMERA_MOVE( 3917, 0, 1089536, 1081344, 852175, 2785280, 1 )  //カメラ移動
-
-      _CAMERA_WAIT_MOVE()  //カメラ移動待ち
-*/
 
       //主人公画面中央へ
       _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 13, 40, DIR_RIGHT )
@@ -168,15 +159,7 @@ EVENT_START ev_c09r0501_swchampion_01
     //敗戦チェック
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-/*
-      //カメラ操作（戦闘明け用）    //【仮】カメラ移動させたままだと殿堂入り部屋出現時に停止してしまうためコメントアウト中
-      _CAMERA_START()   //カメラ操作開始
-      _CAMERA_PURGE()   //カメラのバインドを解く
 
-      _CAMERA_MOVE( 3917, 0, 1089536, 1081344, 852175, 2785280, 1 )  //カメラ移動
-
-      _CAMERA_WAIT_MOVE()  //カメラ移動待ち
-*/
       //主人公画面中央へ
       _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 13, 40, DIR_RIGHT )
 
@@ -226,9 +209,6 @@ EVENT_START ev_c09r0501_swchampion_01
   //========================================
 
   _TIME_WAIT( 16 )  //間
-
-  //自機にカメラを戻す
-  //_CAMERA_DEF_MOVE( 16 )
 
   //アニメ：チャンピオン移動（殿堂入り部屋へ）
   _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )

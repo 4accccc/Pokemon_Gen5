@@ -73,6 +73,9 @@ EVENT_START ev_c14r0501_lady_01
     //はい
     IF $SCWK_ANSWER == SCR_YES THEN
       
+      //歩数ワーク初期化
+      $LOCALWORK14 = 0
+      
       //LADY：話がわかる！
       _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_02,C14R0501_LADY_01, POS_DEFAULT )
       _AB_KEYWAIT_MARK() 
@@ -116,7 +119,7 @@ EVENT_START ev_c14r0501_lady_01
     ENDIF
   
   //今日までイベントを終えていない（イベント発生中・条件未達成） 
-  ELSIF $LOCALWORK14 < 50 && FLAG_ON( FH_15 ) THEN
+  ELSIF $LOCALWORK14 < 365 && FLAG_ON( FH_15 ) THEN
     _TALK_OBJ_START()
     
     DEFINE_LOCAL  LWK_WALK_ANSWER
@@ -285,31 +288,31 @@ EVENT_START ev_c14r0501_poke45_01
     
     _VOICE_PLAY( MONSNO_630, 0 )
 
-    //【仮】歩数がレベル0
-    IF $LOCALWORK14 <= 5 THEN
+    //歩数がレベル0
+    IF $LOCALWORK14 <= 99 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_08 , POS_DOWN )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
     
-    //【仮】歩数がレベル1
-    ELSIF $LOCALWORK14 <= 15 THEN
+    //歩数がレベル1
+    ELSIF $LOCALWORK14 <= 199 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_07 , POS_DOWN )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
-    //【仮】歩数がレベル2
-    ELSIF $LOCALWORK14 <= 30 THEN
+    //歩数がレベル2
+    ELSIF $LOCALWORK14 <= 299 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_06 , POS_DOWN )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
-    //【仮】歩数がレベル3
-    ELSIF $LOCALWORK14 <= 40 THEN
+    //歩数がレベル3
+    ELSIF $LOCALWORK14 <= 364 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_05 , POS_DOWN )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
-    //【仮】歩数がレベル5
+    //歩数がレベル5
     ELSE
       _SYSWIN_MSG( msg_c14r0501_poke46_04 , POS_DOWN )
       _LAST_KEYWAIT()

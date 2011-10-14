@@ -260,7 +260,6 @@ _RET
 /*  おじさん：話しかけ（アイテム入手）                        */
 /**************************************************************/
 EVENT_START   ev_t02r0302_middleman1_01
-  //【仮】アイテム変更予定（追記：変更済み？）
   _EASY_TALK_ITEM_EVENT( ITEM_MONSUTAABOORU, 10, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
 EVENT_END
 

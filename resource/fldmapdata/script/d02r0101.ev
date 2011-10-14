@@ -228,7 +228,7 @@ ev_d02r0101_pairstart_01:
       _OBJ_ANIME_WAIT()
     ENDIF
     
-    //【仮】連れ歩き開始（連れ歩きIDが仮）
+    //連れ歩き開始
     _PAIR_TRAINER_SET( D02R0101_SWLEADER1_01, PAIR_ID_D02R0101_SWLEADER1, PAIR_TYPE_ONE_ZONE, TRID_SWLEADER1_1_02, PAIR_ID_D02R0101_SWLEADER1 )
     //==================================//
     //初回会話完了フラグ

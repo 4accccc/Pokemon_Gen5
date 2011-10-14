@@ -271,7 +271,7 @@ EVENT_START   ev_pos_t03_hakase2_01
     _OBJ_ANIME( T03_HAKASE2_01, anm_walk_u )
     _OBJ_ANIME_WAIT()
     _OBJ_DEL( T03_HAKASE2_01 )
-    _SE_PLAY( SEQ_SE_KAIDAN ) //ÅyâºÅzäKíiSE
+    _SE_PLAY( SEQ_SE_KAIDAN )
     _SE_WAIT()
 
   //íãÇÃèÍçá
@@ -302,7 +302,7 @@ EVENT_START   ev_pos_t03_hakase2_01
     _OBJ_ANIME( T03_OLDWOMAN1_01, anm_walk_u )
     _OBJ_ANIME_WAIT()
     _OBJ_DEL( T03_OLDWOMAN1_01 )
-    _SE_PLAY( SEQ_SE_KAIDAN ) //ÅyâºÅzäKíiSE
+    _SE_PLAY( SEQ_SE_KAIDAN ) 
     _SE_WAIT()
 
     //========================================//
@@ -316,7 +316,7 @@ EVENT_START   ev_pos_t03_hakase2_01
     _OBJ_ANIME( T03_HAKASE2_01, anm_walk_u )
     _OBJ_ANIME_WAIT()
     _OBJ_DEL( T03_HAKASE2_01 )
-    _SE_PLAY( SEQ_SE_KAIDAN ) //ÅyâºÅzäKíiSE
+    _SE_PLAY( SEQ_SE_KAIDAN )
     _SE_WAIT()
 
   ENDIF
