@@ -5,6 +5,6 @@
 #define _D23_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D23 (1)
+#define SCRID_BG_D23_SIGN1_01 (1)
 
 #endif //_D23_DEF_H_
