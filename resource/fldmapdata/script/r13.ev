@@ -26,7 +26,7 @@ _EVENT_DATA   ev_bg_r13_sign2_01
 _EVENT_DATA   ev_bg_r13_sign3_01
 _EVENT_DATA   ev_pos_r13_poke4_01
 _EVENT_DATA   ev_r13_poke4_01
-_EVENT_DATA   ev_r13_sunglasses_01
+_EVENT_DATA   ev_r13_trainerm_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -229,7 +229,7 @@ EVENT_END
 /**************************************************************/
 /*  黒服：話しかけ（海辺のお宝イベント）                      */
 /**************************************************************/
-EVENT_START   ev_r13_sunglasses_01
+EVENT_START   ev_r13_trainerm_01
 
   _TALK_OBJ_START()
 

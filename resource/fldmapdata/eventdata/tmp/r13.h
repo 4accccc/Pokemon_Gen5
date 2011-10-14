@@ -24,7 +24,7 @@
 #define TR_ELITEM_20                      10
 #define TR_FISHING_18                     11
 #define TR_PARASOL_11                     12
-#define R13_SUNGLASSES_01                 13
+#define R13_TRAINERM_01                   13
 #define TR_RANGERW_14                     14
 #define FLD_ITEM_133                      15
 #define FLD_ITEM_134                      16
