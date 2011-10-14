@@ -112,7 +112,6 @@ EVENT_START   ev_c03r0301_trainerw_01
 
           //エリート♀：ツタージャね！
           _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_02, C03R0301_TRAINERW_01, POS_DOWN )
-          _AB_KEYWAIT_MARK()
           _MSGWIN_CLOSE()
 
           //アイテム（きせきのタネ）入手
@@ -149,7 +148,6 @@ EVENT_START   ev_c03r0301_trainerw_01
 
           //エリート♀：ミジュマルね！
           _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_03, C03R0301_TRAINERW_01, POS_DOWN )
-          _AB_KEYWAIT_MARK()
           _MSGWIN_CLOSE()
 
           //アイテム（しんぴのしずく）入手
@@ -186,7 +184,6 @@ EVENT_START   ev_c03r0301_trainerw_01
 
           //エリート♀：ポカブね！
           _BALLOONWIN_OBJMSG_POS( msg_c03r0301_trainerw_04, C03R0301_TRAINERW_01, POS_DOWN )
-          _AB_KEYWAIT_MARK()
           _MSGWIN_CLOSE()
 
           //アイテム（もくたん）入手
@@ -265,11 +262,9 @@ EVENT_START   ev_pos_c03r0301_cleaningm_01
 
   //清掃員：この　ビルで　はたらく
   _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_01, C03R0301_CLEANINGM_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
 
   //清掃員：おっと！　よければ　これを
   _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_02, C03R0301_CLEANINGM_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //アイテム（がくしゅうそうち）入手
@@ -277,18 +272,51 @@ EVENT_START   ev_pos_c03r0301_cleaningm_01
 
   //清掃員：それは　がくしゅうそうち！▼
   _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_03, C03R0301_CLEANINGM_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
 
   //清掃員：わたしは　おそうじおじさん♪
   _BALLOONWIN_OBJMSG_POS( msg_c03r0301_cleaningm_04, C03R0301_CLEANINGM_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  //カメラ操作　サポートの位置にカメラを合わせる
+  _CAMERA_MOVE( 9777,0,969632,491520,0,364544,30 )
 
   //アニメ：清掃員移動
-  _OBJ_ANIME_AUTO( C03R0301_CLEANINGM_01, 5, 8, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( C03R0301_CLEANINGM_01, 7, 2, FORCE_TYPE_NPC, 8, DIR_UD )
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_common_turn_d )
+  
+  //12フレーム待ち
+  _TIME_WAIT ( 12 )
+  
+  //エレベータ到着音
+  _SE_PLAY( SEQ_SE_FLD_87 )
+  _SE_WAIT()
+  
+  //ドア開ける
+  DEFINE_LOCAL	DOOR_ANIME_ID
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_cleeningm_to_ev )
   _OBJ_ANIME_WAIT()
+  
+  //ドア閉じる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //会長OBJ非表示
+  _OBJ_DEL( C03R0301_CLEANINGM_01 )
+  
+  //自機にカメラを戻す
+  _CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
 
   //========================================//
   //清掃員非表示
@@ -299,6 +327,32 @@ EVENT_START   ev_pos_c03r0301_cleaningm_01
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//	CLEENINGM：エレベータに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_cleeningm_to_ev
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン上                        

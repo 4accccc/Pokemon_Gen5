@@ -237,6 +237,9 @@ ev_c05r0501_poke22_get:
     //ポケモン入手処理
     _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_529, 0, 25 )
     
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    
     //手に入れた（メッセージ仮）
     _ME_PLAY( SEQ_ME_POKEGET )
     _SYSWIN_MSG(msg_c05r0501_poke_01, POS_DEFAULT)

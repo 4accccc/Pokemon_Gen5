@@ -60,9 +60,9 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _PLAYER_DIR_GET( LWK_DIR )
   
   //アニメ：主人公
-  IF $LCW_POSX == 18 && $LCW_POSZ == 8 THEN
+  IF $LCW_POSX == 18 && $LWK_DIR != DIR_LEFT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
-  ELSIF $LWK_DIR != DIR_RIGHT THEN
+  ELSIF $LCW_POSX == 12 && $LWK_DIR != DIR_RIGHT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
   ENDIF
   _OBJ_ANIME_WAIT()

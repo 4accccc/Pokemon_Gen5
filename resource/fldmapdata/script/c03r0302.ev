@@ -46,7 +46,6 @@ EVENT_START   ev_c03r0302_businessman_01
 
     //ビジネスマン：おっ！？　かいしゃけんがく？
     _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し
@@ -108,7 +107,6 @@ EVENT_START   ev_c03r0302_businessman_02
 
     //ビジネスマン：もしかして　ポケモンしゅぎょう？
     _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し

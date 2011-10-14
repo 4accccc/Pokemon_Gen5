@@ -26,6 +26,7 @@ _EVENT_DATA		ev_c03p17_workman_01
 _EVENT_DATA		ev_zone_c03p17
 _EVENT_DATA		ev_init_c03p17
 _EVENT_DATA		ev_pos_c03p17_swchampion_03
+_EVENT_DATA		ev_c03p17_badman_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -46,9 +47,9 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_c03p17
   
-  //下水道ストッパーをレゾナンスリゾート終了まで配置
+  //下水道ストッパーをジム前イベントまで配置
   IF $WK_SCENE_C03P17 < 1 THEN
-    _OBJ_POS_CHANGE( C03P17_WORKMAN_01, 11, -1, 21, DIR_LEFT )
+    _OBJ_POS_CHANGE( C03P17_WORKMAN_01, 11, -1, 21, DIR_RIGHT )
   ENDIF
 
 INIT_EVENT_END
@@ -222,16 +223,28 @@ EVENT_START		ev_c03p17_swchampion_01
 EVENT_END
 
 /**************************************************************/
+/*		badman話しかけ
+/**************************************************************/
+EVENT_START		ev_c03p17_badman_01
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_badman_01 )
+
+EVENT_END
+
+/**************************************************************/
 /*		ストッパー：workman
 /**************************************************************/
 EVENT_START		ev_c03p17_workman_01
   //下水道開始前
   IF $WK_SCENE_C03P17 < 3 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_01 )
+    _TALK_START_SE_PLAY()
+    _BALLOONWIN_OBJMSG_POS( msg_c03p17_stop_01 , C03P17_WORKMAN_01 ,POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   //下水道クリア
   ELSIF $WK_SCENE_C03P17 == 5 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_03 )
-  //下水道攻略中（表示条件確認が必要）
+  //下水道攻略中
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_02 )
   ENDIF

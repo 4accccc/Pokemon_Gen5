@@ -51,13 +51,13 @@ EVENT_START   ev_pos_c03r0303_cleaningm_01
     _OBJ_ANIME( C03R0303_CLEANINGM_01, anm_common_turn_d )
     _OBJ_ANIME_WAIT()
   ELSE
+    $LCW_POSZ -= 1
     _OBJ_ANIME_AUTO( C03R0303_CLEANINGM_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
     _OBJ_ANIME_WAIT()
   ENDIF
 
   //清掃員：おお！　きみは　エントランスで
   _BALLOONWIN_OBJMSG_POS( msg_c03r0303_cleaningm_01, C03R0303_CLEANINGM_01, POS_UR )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //自機座標取得
@@ -82,7 +82,6 @@ EVENT_START   ev_pos_c03r0303_cleaningm_01
 
   //男の子：この　バトルカンパニーが！▼
   _BALLOONWIN_OBJMSG_POS( msg_c03r0303_boy3_01, C03R0303_BOY3_01, POS_UL )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //トレーナー戦呼び出し

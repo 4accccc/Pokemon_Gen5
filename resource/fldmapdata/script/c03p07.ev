@@ -26,6 +26,11 @@ _EVENT_DATA   ev_bg_c03p07_gymsign_01
 _EVENT_DATA   ev_c03p07_sunglasses_01
 _EVENT_DATA   ev_c03p07_informationw_01
 _EVENT_DATA   ev_scene_c03p07_cgear_01
+_EVENT_DATA		ev_c03p07_veteranm_01
+_EVENT_DATA		ev_c03p07_trainerw_01
+_EVENT_DATA		ev_c03p07_businessman1_01
+_EVENT_DATA		ev_c03p07_businessman2_01
+_EVENT_DATA		ev_c03p07_ol1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -47,14 +52,14 @@ EVENT_START   ev_c03p07_sunglasses_01
     _BALLOONWIN_OBJMSG_POS( msg_c03p07_glasses_01, C03P07_SUNGLASSES_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
-    _OBJ_ADD_EX( 20, 20, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWCHAMPION, MV_DMY )
+    _OBJ_ADD_EX( 20, 56, DIR_UP, MMDL_ID_EVENTOBJ_00, SWCHAMPION, MV_DMY )
     
     //？？？：あれ？
     _PLAINWIN_MSG_UP( msg_c03p07_swchampion_01 )
     _MSGWIN_CLOSE()
     
     //アニメ：アイリス隣接
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_comming )
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 21,48, FORCE_TYPE_NOT, 8, DIR_UD )
     _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_pl_gyoe_up )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_up )
     _OBJ_ANIME_WAIT()
@@ -325,16 +330,6 @@ EVENT_START   ev_c03p07_informationw_01
       //C03イベント進行
       $WK_SCENE_C03_RALLY_01 += 1
       //========================================//
-      
-      //進行状況計算
-      DEFINE_LOCAL LWK_POINT_NUM
-      $LWK_POINT_NUM += 6
-      $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
-      
-      //主人公名代入
-      _PLAYER_NAME( 0 )
-      //訪れていない場所の数値を指定タグにセット
-      _NUMBER( 1, LWK_POINT_NUM, 1 )
 
       //戦闘後、全てのポイントをめぐっていた場合
       IF $WK_SCENE_C03_RALLY_01 == 6 THEN
@@ -344,6 +339,19 @@ EVENT_START   ev_c03p07_informationw_01
         _MSGWIN_CLOSE()
 
       ELSE
+      
+        {
+        //進行状況計算
+        DEFINE_LOCAL LWK_POINT_NUM
+        $LWK_POINT_NUM += 6
+        $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
+        
+        //主人公名代入
+        _PLAYER_NAME( 0 )
+        //訪れていない場所の数値を指定タグにセット
+        _NUMBER( 1, LWK_POINT_NUM, 1 )
+        }
+        
         //受付嬢：イベントクリア前
         _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_04 )
         _LAST_KEYWAIT()
@@ -352,6 +360,18 @@ EVENT_START   ev_c03p07_informationw_01
       ENDIF
 
     ELSE  //戦闘済み
+    
+      {
+      //進行状況計算
+      DEFINE_LOCAL LWK_POINT_NUM
+      $LWK_POINT_NUM += 6
+      $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
+      
+      //主人公名代入
+      _PLAYER_NAME( 0 )
+      //訪れていない場所の数値を指定タグにセット
+      _NUMBER( 1, LWK_POINT_NUM, 1 )
+      }
 
       //受付嬢：イベントクリア前
       _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_04 )
@@ -391,6 +411,40 @@ ev_battle_check:
   ENDIF
 _RET
 
+/**************************************************************/
+/*		VETERANM	C03P07									  */
+/**************************************************************/
+EVENT_START		ev_c03p07_veteranm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_veteranm_01 )
+EVENT_END
+
+/**************************************************************/
+/*		TRAINERW	C03P07									  */
+/**************************************************************/
+EVENT_START		ev_c03p07_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_trainerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P07		BUSINESSMAN01							  */
+/**************************************************************/
+EVENT_START		ev_c03p07_businessman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_businessman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P07		BUSINESSMAN02							  */
+/**************************************************************/
+EVENT_START		ev_c03p07_businessman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_businessman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P07		OL1										  */
+/**************************************************************/
+EVENT_START		ev_c03p07_ol1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_ol_01 )
+EVENT_END
 
 /**************************************************************/
 /*  C03P07  ジム看板                                          */
@@ -405,13 +459,6 @@ EVENT_END
 _ANIME_LABEL  anm_pl_gyoe_up
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA AC_STAY_WALK_U_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//☆アイリス隣接
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_swchampion_comming
-  _ANIME_DATA AC_WALK_D_8F,25
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

@@ -37,6 +37,19 @@ _EVENT_DATA    ev_pos_c05_plazma_sage_01
 _EVENT_DATA    ev_zone_c05
 _EVENT_DATA    ev_init_c05
 _EVENT_DATA    ev_scene_c05_swleader5_01
+_EVENT_DATA    ev_c05_woman2
+_EVENT_DATA    ev_c05_babygirl1
+_EVENT_DATA    ev_c05_backpackerw
+_EVENT_DATA    ev_c05_trainerm_02
+_EVENT_DATA    ev_c05_trainerm_01
+_EVENT_DATA    ev_c05_badman
+_EVENT_DATA    ev_c05_workman
+_EVENT_DATA    ev_c05_boy2_01
+_EVENT_DATA    ev_c05_rangerw_01
+_EVENT_DATA    ev_c05_mountain_01
+_EVENT_DATA    ev_c05_man2_01
+_EVENT_DATA    ev_bg_c05_board_06
+_EVENT_DATA    ev_c05_poke20_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -550,6 +563,13 @@ EVENT_START   ev_bg_c05_board_05
   _EASY_BGWIN_MSG( msg_c05_gymsign_01, TYPE_POST )
 EVENT_END
 
+/**************************************************************/
+/*  【仮】C05 抜け穴看板：メッセージラベルが仮                                        */
+/**************************************************************/
+EVENT_START   ev_bg_c05_board_06
+  _EASY_BGWIN_MSG( msg_c05_gymsign_01, TYPE_POST )
+EVENT_END
+
 /************************************************************/
 /*	BADRIDER                                                */
 /************************************************************/
@@ -561,8 +581,8 @@ EVENT_START	ev_c05_badrider_01
 	DEFINE_LOCAL LCW_VERSION
 	_GET_ROM_VERSION ( LCW_VERSION ) 
 	
-	//★Blackの場合ローテーションバトル
-	IF $LCW_VERSION == VERSION_BLACK THEN
+	//★Blackの場合トリプルバトル
+	IF $LCW_VERSION == VERSION_B2 THEN
 		//初回話しかけ
 		IF $WK_SCENE_C05_BTLRIDER == 0 THEN
 			{
@@ -605,7 +625,7 @@ EVENT_START	ev_c05_badrider_01
 			
 		ENDIF
 	
-	//★Blackの場合トリプルバトル
+	//★Blackの場合ローテーションバトル
 	ELSE
 		//初回話しかけ
 		IF $WK_SCENE_C05_BTLRIDER == 0 THEN
@@ -777,6 +797,91 @@ ev_c08r0201_black_battle:
 
 }
 _RET
+
+/**************************************************************/
+/*  C05 WOMAN2の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_woman2
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_woman2_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 BABYGIRL1の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_babygirl1
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_babygirl1_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 BACKPACKERWの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_backpackerw
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_backpackerw_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 TRAINERMの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_trainerm_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_trainerm_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 TRAINERM02の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_trainerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_driver_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 POKE20の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_poke20_01
+  _EASY_TALK_POKEVOICE( MONSNO_505, msg_c05_poke20_01 )
+EVENT_END
+
+/**************************************************************/
+/*  C05 BADMANの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_badman
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_badman_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 WORKMANの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_workman
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_workman_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 BOY2の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_boy2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_boy2)
+EVENT_END
+
+/**************************************************************/
+/*  C05 RANGERWの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_rangerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_rangerw_01)
+EVENT_END
+
+
+/**************************************************************/
+/*  C05 MOUNTAINの会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_mountain_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_mountain_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05 MAN2の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c05_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_man2_01)
+EVENT_END
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

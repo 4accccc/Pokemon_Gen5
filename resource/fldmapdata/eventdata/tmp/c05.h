@@ -30,6 +30,18 @@
 #define C05_SWRIVAL_01                     5
 #define C05_SWLEADER5_01                   6
 #define FLD_ITEM_70                        7
+#define C05_MAN2_01                        8
+#define C05_WOMAN2                         9
+#define C05_TRAINERM                      10
+#define C05_WORKMAN                       11
+#define C05_TRAINERM_01                   12
+#define C05_RANGERW_01                    13
+#define C05_BOY2_01                       14
+#define C05_MOUNTAIN_01                   15
+#define C05_BADMAN                        16
+#define C05_BABYGIRL1                     17
+#define C05_BACKPACKERW_01                18
+#define C05_POKE20_01                     19
 
 #endif //ZONE_C05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -64,5 +76,6 @@
 #define BG_C05_DUMMY_FES_20              25
 #define HIDE_ITEM_004                    26
 #define HIDE_ITEM_005                    27
+#define C05_BOARD_07                     28
 
 #endif //ZONE_C05_EVB_H

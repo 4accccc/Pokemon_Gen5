@@ -101,16 +101,6 @@ EVENT_START   ev_c03p10_informationw_01
       //C03イベント進行
       $WK_SCENE_C03_RALLY_01 += 1
       //========================================//
-      
-     //進行状況計算
-      DEFINE_LOCAL LWK_POINT_NUM
-      $LWK_POINT_NUM += 6
-      $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
-      
-      //主人公名代入
-      _PLAYER_NAME( 0 )
-      //訪れていない場所の数値を指定タグにセット
-      _NUMBER( 1, LWK_POINT_NUM, 1 )
 
       //戦闘後、全てのポイントをめぐっていた場合
       IF $WK_SCENE_C03_RALLY_01 == 6 THEN
@@ -120,6 +110,19 @@ EVENT_START   ev_c03p10_informationw_01
         _MSGWIN_CLOSE()
 
       ELSE
+      
+        {
+       //進行状況計算
+        DEFINE_LOCAL LWK_POINT_NUM
+        $LWK_POINT_NUM += 6
+        $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
+        
+        //主人公名代入
+        _PLAYER_NAME( 0 )
+        //訪れていない場所の数値を指定タグにセット
+        _NUMBER( 1, LWK_POINT_NUM, 1 )
+        }
+      
         //受付嬢：イベントクリア前
         _BALLOONWIN_TALKOBJ_MSG( msg_c03p10_sightseeing_04 )
         _LAST_KEYWAIT()
@@ -128,6 +131,18 @@ EVENT_START   ev_c03p10_informationw_01
       ENDIF
 
     ELSE  //戦闘済み
+
+      {
+      //進行状況計算
+      DEFINE_LOCAL LWK_POINT_NUM
+      $LWK_POINT_NUM += 6
+      $LWK_POINT_NUM -= $WK_SCENE_C03_RALLY_01
+        
+      //主人公名代入
+      _PLAYER_NAME( 0 )
+      //訪れていない場所の数値を指定タグにセット
+      _NUMBER( 1, LWK_POINT_NUM, 1 )
+      }
 
       //受付嬢：イベントクリア前
       _BALLOONWIN_TALKOBJ_MSG( msg_c03p10_sightseeing_04 )
