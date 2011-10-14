@@ -25,7 +25,15 @@ GMMDIR	= ../../resource/message/src/
 GRADIR	= ../../resource/trgra/
 GRAHEADERDIR	= ../../prog/src/system/
 
-ALL_TARGETS = $(TARGETDIR)$(NO_HEADER) $(GMMDIR)$(NAME_GMMFILE)
+#------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+NAME_MSTXTFILE 	= src/trname.mstxt
+MSPROJDIR	= ../message/msproj/
+
+
+ALL_TARGETS = $(TARGETDIR)$(NO_HEADER) $(MSPROJDIR)$(NAME_MSTXTFILE)
 LOCAL_TARGETS = $(notdir $(ALL_TARGETS))
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -64,9 +72,9 @@ do-build: $(ALL_TARGETS)
 $(TARGETDIR)$(NO_HEADER):	$(NO_HEADER)
 	$(COPY)	$(NO_HEADER) $(TARGETDIR)
 
+$(MSPROJDIR)$(NAME_MSTXTFILE) : $(NAME_GMMFILE)
+	$(UPDATEWITHGMM) . $(NAME_GMMFILE) $(NAME_MSTXTFILE)
 
-$(GMMDIR)$(NAME_GMMFILE):	$(NAME_GMMFILE)
-	$(COPY)	$(NAME_GMMFILE) $(GMMDIR)
 
 clean:
 	@rm -f $(LDIRT_CLEAN)

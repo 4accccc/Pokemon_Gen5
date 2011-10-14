@@ -2157,6 +2157,8 @@
 			<ContentItem
 				Name="trainermemo.mstxt" />
 			<ContentItem
+				Name="trname.mstxt" />
+			<ContentItem
 				Name="typename.mstxt" />
 			<ContentItem
 				Name="union_room.mstxt" />
