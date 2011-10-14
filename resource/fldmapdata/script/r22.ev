@@ -123,6 +123,8 @@ EVENT_START   ev_pos_r22_poke5_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
 
+  _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
+
   //アニメ：アクロマ主人公の前へ
   IF $LCW_POSZ == 137 || $LCW_POSZ == 138 THEN
   $LCW_POSX -= 2
@@ -186,6 +188,8 @@ EVENT_START   ev_pos_r22_poke5_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( R22_SWBOSS_01 )
+  
+  _END_EVENT_BGM()
   
   //W21アジト船表示（タラップなし）
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )

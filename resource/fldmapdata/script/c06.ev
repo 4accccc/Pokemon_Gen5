@@ -157,6 +157,8 @@ EVENT_START   ev_pos_c06_hakase_01
   _OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_guide01 )
   _OBJ_ANIME_WAIT()
 
+  _START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
+
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   //アニメ：アララギ博士隣接
@@ -259,6 +261,8 @@ EVENT_START   ev_pos_c06_hakase_01
   _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_u )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( C06_HAKASE2_01 )
+
+  _END_EVENT_BGM()
 
   //フウロ：もう！
   _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_03, C06_SWLEADER6_01, POS_DEFAULT )

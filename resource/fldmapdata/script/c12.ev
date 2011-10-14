@@ -521,8 +521,8 @@ _ANIME_LABEL	anm_swbell_meet_come02_z34
 /**************************************************************/
 EVENT_START ev_pos_c12_swbell_meet_04
 
-  //【仮】ライバル曲再生（曲が仮）
-	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+  //ライバル曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_HUE )
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
