@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c06r0301.h"
   .include  "c06r0301.h"
 
+  //@author	suginaka_katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,192 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_c06r0301_boy1_01
+_EVENT_DATA		ev_c06r0301_woman3_01
 _EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_WAZAMA_CHK
+
+/**************************************************************/
+/*		C06R0301	少年１									  */
+/**************************************************************/
+EVENT_START		ev_c06r0301_boy1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301_boy1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C06R0301	わざマシンマスター						  */
+/**************************************************************/
+EVENT_START		ev_c06r0301_woman3_01
+
+//コンプイベントが済んでいるか？
+IF FLAG_ON( FE_C06R0301_ITEMGET_06 ) THEN
+
+	//あっ！　わざマシンマスター！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_03 )
+
+//まだコンプしていない
+ELSE
+_TALK_OBJ_START()
+
+	//初会話か？
+	IF FLAG_OFF( FE_C06R0301_FIRSTTALK ) THEN
+		
+		//わたし　ポケモンの　わざには
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_01 )
+	
+		//========================================/
+
+		//初回会話フラグセット
+		_FLAG_SET( FE_C06R0301_FIRSTTALK )
+		
+		//========================================/
+	
+	ELSE
+		
+		//わざマシンを　たくさん　あつめたら
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_02 )
+	
+	ENDIF
+	
+	//わざマシン所持数をローカル変数に格納
+	_GET_MY_WAZA_MACHINE_NUM( LWK_WAZAMA_CHK )
+
+	_NUMBER( 0, LWK_WAZAMA_CHK, 2 )
+	
+	//個数を知らせる
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_04 )
+	
+	//わざマシン所持個数が10個以上かつ　ご褒美をもらっていないか？
+	IF $LWK_WAZAMA_CHK >= 10 && FLAG_OFF( FE_C06R0301_ITEMGET_01 ) THEN 
+	
+		_CALL ev_itemget
+		
+		//========================================/
+		
+		//アイテム入手フラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_01 )
+		
+		//========================================/
+
+	//わざマシン所持個数が20個以上かつ　ご褒美をもらっていないか？
+	ELSIF $LWK_WAZAMA_CHK >= 20 && FLAG_OFF( FE_C06R0301_ITEMGET_02 ) THEN 
+	
+		_CALL ev_itemget
+
+		//========================================/
+		
+		//アイテム入手フラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_02 )
+		
+		//========================================/
+
+	//わざマシン所持個数が35個以上かつ　ご褒美をもらっていないか？
+	ELSIF $LWK_WAZAMA_CHK >= 35 && FLAG_OFF( FE_C06R0301_ITEMGET_03 ) THEN 
+	
+		_CALL ev_itemget
+
+		//========================================/
+		
+		//アイテム入手フラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_03 )
+		
+		//========================================/
+
+	//わざマシン所持個数が50個以上かつ　ご褒美をもらっていないか？
+	ELSIF $LWK_WAZAMA_CHK >= 50 && FLAG_OFF( FE_C06R0301_ITEMGET_04 ) THEN 
+	
+		_CALL ev_itemget
+
+		//========================================/
+		
+		//アイテム入手フラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_04 )
+		
+		//========================================/
+
+	//わざマシン所持個数が70個以上かつ　ご褒美をもらっていないか？
+	ELSIF $LWK_WAZAMA_CHK >= 70 && FLAG_OFF( FE_C06R0301_ITEMGET_05 ) THEN 
+
+		_CALL ev_itemget
+
+		//========================================/
+		
+		//アイテム入手フラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_05 )
+		
+		//========================================/
+
+	//わざマシン所持個数が95個の場合
+	ELSIF $LWK_WAZAMA_CHK == 95 THEN 
+
+		//アイテム名をタグセット
+		_ITEM_NAME( 0, ITEM_MAKKUSUAPPU )
+
+		//いっぱい　あつめた　わざマシンを　おねえさんに
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_05 )
+		_MSGWIN_CLOSE()
+
+		//マックスアップ入手処理
+		_ITEM_EVENT_KEYWAIT( ITEM_MAKKUSUAPPU, 1 )
+
+		//まだまだ沢山のわざマシンが
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_07 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//コンプフラグセット
+		_FLAG_SET( FE_C06R0301_ITEMGET_06 )
+		
+		//========================================/
+	
+	//条件を達していない場合
+	ELSE
+	
+		DEFINE_LOCAL	LWK_RND
+		
+		//乱数取得
+		_GET_RND( LWK_RND, 5 )
+		
+		SWITCH $LWK_RND
+		CASE 0 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_08 )
+		CASE 1 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_09 )
+		CASE 2 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_10 )
+		CASE 3 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_11 )
+		CASE 4 THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_12 )
+		ENDSWITCH
+		
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+ENDIF
+
+EVENT_END
+
+ev_itemget:
+
+//アイテム名をタグセット
+_ITEM_NAME( 0, ITEM_MAKKUSUAPPU )
+
+//いっぱい　あつめた　わざマシンを　おねえさんに
+_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_05 )
+_MSGWIN_CLOSE()
+
+//マックスアップ入手処理
+_ITEM_EVENT_KEYWAIT( ITEM_MAKKUSUAPPU, 1 )
+
+//まだまだ沢山のわざマシンが
+_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_06 )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+_RET
