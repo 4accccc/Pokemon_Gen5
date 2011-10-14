@@ -2268,7 +2268,7 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
         win_flag = PW_SVSUB_WIN;
       }
       if(target==1){ // “Á’è‚Ìƒ|ƒPƒ‚ƒ“‚ð“|‚µ‚Ä‚Í‚¢‚¯‚È‚¢
-        lose_stock[0] = 1;
+        lose_stock[0] = PW_SVSUB_LOSE_DEAD_SP_ENEMY;
       }
       if(mydead){
         lose_stock[1] = PW_SVSUB_LOSE_ALL_DEAD_MINE;
