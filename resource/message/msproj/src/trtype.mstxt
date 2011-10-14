@@ -1,0 +1,7693 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="MSG_TRTYPE_HERO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HEROINE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:18:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:18:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:18:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:18:50" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_TANPAN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たんぱんこぞう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たんぱんこぞう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MINI"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミニスカート</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミニスカート</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCHOOLB"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅくがえり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゅくがえり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCHOOLG"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅくがえり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゅくがえり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_TENNIS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テニスプレイヤー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テニスプレイヤー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_FOOTBALL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フットボーラー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フットボーラー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WAITER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウエーター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウエーター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WAITRESS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウエートレス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウエートレス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER1A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER1C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER1B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_CHILDCARE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほいくし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほいくし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_KINDERGARTENW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_KINDERGARTENM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_FUTAGO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふたごちゃん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふたごちゃん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンブリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンブリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンブリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンブリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンレンジャー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンレンジャー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンレンジャー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンレンジャー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WORKER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さぎょういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さぎょういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BACKPACKERM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バックパッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バックパッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BACKPACKERW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バックパッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バックパッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_FISHING"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つりびと</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つりびと</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MUSICIAN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミュージシャン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミュージシャン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DANCER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダンサー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダンサー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_JUGGLING"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クラウン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クラウン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ARTIST"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>げいじゅつか</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>げいじゅつか</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BAKER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベーカリー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベーカリー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ESPM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サイキッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サイキッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ESPW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サイキッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サイキッカー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RIVAL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SUPPORT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HAKAIM1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BOSS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PRINCE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おぼっちゃま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おぼっちゃま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PRINCESS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おじょうさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おじょうさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PILOT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パイロット</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パイロット</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WORKER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さぎょういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さぎょういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BASKET"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バスケせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バスケせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCIENTISTW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BOSS_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_OL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＯＬ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＯＬ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリートトレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリートトレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリートトレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリートトレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_KARATE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カラテおう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カラテおう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCIENTISTM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SOCCER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サッカーせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サッカーせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER8A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER8B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HEADS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スキンヘッズ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スキンヘッズ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_CLEANING"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいそういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DAISUKIM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいすきクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいすきクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DAISUKIW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいすきクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいすきクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DOCTOR"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドクター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドクター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_NURSE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナース</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナース</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BADTEAM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッドチーム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッドチーム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BATTLEG"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルガール</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルガール</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PARASOL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パラソルおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パラソルおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BUSINESS1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビジネスマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビジネスマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BUSINESS2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビジネスマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビジネスマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_FANM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ファンクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ファンクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_FANW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ファンクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ファンクラブ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベテラントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベテラントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベテラントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベテラントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BADRIDER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうそうぞく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼうそうぞく</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BASEBALL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やきゅうせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やきゅうせんしゅ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MOUNT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やまおとこ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やまおとこ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MADAM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マダム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マダム</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GENTLE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジェントルマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジェントルマン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HAKAIW1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BIGFOUR1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BIGFOUR3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BIGFOUR2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BIGFOUR4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>してんのう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SAGE1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RAIL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てつどういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てつどういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWIMMERM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいパンやろう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かいパンやろう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWIMMERW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビキニのおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビキニのおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_POLICE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまわりさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまわりさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MAID"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メイド</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メイド</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_CHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_CYCLINGM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サイクリング</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サイクリング</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_CYCLINGW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サイクリング</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サイクリング</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BADRIDER_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バイクずき</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バイクずき</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCHOOLB_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MADAM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GENTLE_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームフリーク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームフリーク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PRINCESS_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PRINCE_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワールけ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPCHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BOSS_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_LEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCIENTISTM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MOUNT_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ESPM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ESPW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANM_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANW_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER8"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タケシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タケシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カスミ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カスミ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マチス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マチス</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリカ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリカ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カツラ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カツラ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGLEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サカキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サカキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハヤト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハヤト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツクシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツクシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アカネ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アカネ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マツバ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マツバ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シジマ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シジマ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミカン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミカン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤナギ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤナギ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER8"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イブキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イブキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSLEADER9"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アンズ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アンズ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツツジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツツジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウキ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テッセン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テッセン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アスナ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アスナ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>センリ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>センリ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナギ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナギ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSLEADER8"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ラン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ラン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アダン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アダン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWRIVAL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GUITARW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ギタリスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ギタリスト</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERM_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BREEDERW_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERM_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERM_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RANGERW_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEM_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEM_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEW_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ELITEW_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANM_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANM_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANW_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_VETERANW_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP2_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サブウェイマスター</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BCHAMP2_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒョウタ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒョウタ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナタネ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナタネ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メリッサ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メリッサ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スモモ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スモモ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マキシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マキシ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウガン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウガン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スズナ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スズナ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_DPLEADER8"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デンジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デンジ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RGCHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グリーン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グリーン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_GSCHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワタル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワタル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RSCHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダイゴ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダイゴ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ECHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミクリ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミクリ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_ADULTW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとなのおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おとなのおねえさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HERO_S"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_HEROINE_S"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WBHERO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WBHEROINE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WBHERO_S"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_WBHEROINE_S"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWBOSS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWPLAZMAM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWPLAZMAW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWSAGE1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWSAGE2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWSAGE3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_NINJA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWCHAMPION"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャンピオン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャンピオン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_VILLAIN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいじん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かいじん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWBOSS_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MOUNT_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームフリーク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲームフリーク</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWLEADER1_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWCHAMPION_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_HERO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒーロー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒーロー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_HEROINE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒーロー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒーロー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_NINJA_M"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にんじゃ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>にんじゃ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_NINJA_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にんじゃ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>にんじゃ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_SF_M"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＦたいいん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＦたいいん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_SF_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＦたいいん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＦたいいん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_STAFF_M"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_STAFF_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_BOY"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふだんぎ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふだんぎ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_GIRL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふだんぎ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふだんぎ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_PRINCE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうじさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうじさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_PRINCESS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おひめさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おひめさま</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_BATTLESHIP"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクかん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクかん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_ROBOPOLICE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカコンビ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカコンビ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_UFO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_ALIEN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エイリアン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エイリアン</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_MIST"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_CLEANING"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のろわれたおじさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>のろわれたおじさん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_KINDERGARTENW"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のろわれたえんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>のろわれたえんじ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_STATUE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こだいぞう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こだいぞう</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_GENTLE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>のろわれたしんし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>のろわれたしんし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_SHRINE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうごうしいメイド</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こうごうしいメイド</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_WITCH"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まじょ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まじょ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_DOLL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぬいぐるみ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぬいぐるみ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_MOB_M"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_MOB_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_PLAYERMOB_M"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_PLAYERMOB_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミースーツ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_MUGENBOSS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボストレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_KARATE_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_BATTLEG_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SCIENTISTW_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PILOT_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒウンマニア</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒウンマニア</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_PKWD_LADYBUG"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みらいじん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みらいじん</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-14T03:16:17" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

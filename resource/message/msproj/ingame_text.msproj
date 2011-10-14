@@ -2161,6 +2161,8 @@
 			<ContentItem
 				Name="trname.mstxt" />
 			<ContentItem
+				Name="trtype.mstxt" />
+			<ContentItem
 				Name="typename.mstxt" />
 			<ContentItem
 				Name="union_room.mstxt" />

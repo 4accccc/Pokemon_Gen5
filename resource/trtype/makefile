@@ -55,12 +55,19 @@ GRADIR	= ../../resource/trgra/
 HASHDIR	= ../../tools/hash/
 GRATBLDIR	= ../../prog/src/system/
 TRFACEDIR = ../../resource/trface/
-
 TRTOOLSDIR = $(PROJECT_ROOT)tools/trdata_conv/
+
+#------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+TYPE_MSTXTFILE = src/trtype.mstxt
+MSPROJDIR	= ../message/msproj/
+
+
 
 #生成する対象の全ファイル
 ALL_TARGETS =  $(TARGETDIR)$(TYPE_HEADER) \
-							 $(GMMDIR)$(TYPE_GMMFILE) \
 							 $(HASHDIR)$(TYPE_HASH) \
 							 $(GRADIR)$(SCRFILE_FRONT) \
 							 $(GRADIR)$(SCRFILE_BACK) \
@@ -105,7 +112,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #パーソナルデータ生成
 
-do-build: out_end
+do-build: out_end $(MSPROJDIR)$(TYPE_MSTXTFILE)
 
 out_end: trtype_list.tab
 	ruby trtype_conv.rb $< ../message/template.gmm
@@ -114,15 +121,16 @@ out_end: trtype_list.tab
 
 trtype_list.tab: trtype_list.xls
 	$(XLS2TAB) trtype_list.xls > trtype_list.tab
+
+$(MSPROJDIR)$(TYPE_MSTXTFILE) : $(TYPE_GMMFILE)
+	$(UPDATEWITHGMM) . $(TYPE_GMMFILE) $(TYPE_MSTXTFILE)
+
 endif
 
 do-build: $(ALL_TARGETS)
 
 $(TARGETDIR)$(TYPE_HEADER):	$(TYPE_HEADER)
 	$(COPY)	$(TYPE_HEADER) $(TARGETDIR)
-
-$(GMMDIR)$(TYPE_GMMFILE):	$(TYPE_GMMFILE)
-	$(COPY)	$(TYPE_GMMFILE) $(GMMDIR)
 
 $(GRADIR)$(SCRFILE_FRONT):	$(SCRFILE_FRONT)
 	$(COPY)	$(SCRFILE_FRONT) $(GRADIR)
