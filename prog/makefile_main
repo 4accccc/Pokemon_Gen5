@@ -456,9 +456,9 @@ endif
 #----------------------------------------------------------------------------
 filesize:
 ifeq ($(TARGET_PLATFORM),TWL)
-		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.tlf)
+		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.tlf) $(ROM_SPEC)
 else
-		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nlf)
+		ruby ../tools/analyze/filesize/filesize.rb $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nlf) $(ROM_SPEC)
 endif
 
 #----------------------------------------------------------------------------
