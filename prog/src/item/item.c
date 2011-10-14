@@ -534,11 +534,11 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   技マシンかどうか
+ * @brief   技マシンかどうか（秘伝マシン含む）
  *
  * @param   item  アイテム番号
  *
- * @retval  "TRUE = 技マシン"
+ * @retval  "TRUE = 技マシン or 秘伝マシン"
  * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
@@ -546,6 +546,25 @@ BOOL ITEM_CheckWazaMachine( u16 item )
 {
   if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN06 ) ||
       ( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN95 ) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief わざマシンかどうか（秘伝マシン除く）
+ *
+ * @param   item  アイテム番号
+ *
+ * @retval  "TRUE = 技マシン"
+ * @retval  "FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_CheckNormalWazaMachine( u16 item )
+{
+  if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_WAZAMASIN92 ) ||
+      ( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN95 ) )
+  {
     return TRUE;
   }
   return FALSE;

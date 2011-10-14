@@ -226,9 +226,27 @@ VMCMD_RESULT EvCmdGetMyWazaMachineNum( VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gdata );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   
-	*ret_wk = MYITEM_GetItemThisPocketNumberNoRepository( myitem, BAG_POKE_WAZA, TRUE );
+  u16 count = 0;
+  //わざマシンナンバーは連番でなく、秘伝マシンナンバー以降にも追加された。
+  //そのため、わざマシンに分類され、秘伝マシンでない道具を全検索することになる
+  {
+    u16 itemno;
+    for ( itemno = ITEM_WAZAMASIN01; itemno <= ITEM_WAZAMASIN95; itemno ++ )
+    {
+      if ( ITEM_CheckNormalWazaMachine( itemno ) )
+      {
+        if ( MYITEM_CheckItem( myitem, itemno, 1, heapID ) )
+        {
+          count ++;
+        }
+      }
+    }
+  }
+  *ret_wk = count;
+	//*ret_wk = MYITEM_GetItemThisPocketNumberNoRepository( myitem, BAG_POKE_WAZA, TRUE );
 
   return VMCMD_RESULT_CONTINUE;
 }
