@@ -119,8 +119,8 @@ def round_n( value, keta )
 end
 
 def per_str( value, max )
-  per_val = round_n( value * 100 / max, -2 )
-  return sprintf("%2.2f%", per_val )
+  per_val = round_n( value * 10000 / max, -5 )
+  return sprintf("%2.2f%", per_val / 100 )
 end
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
