@@ -1111,8 +1111,8 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_042">
-		<language name="JPN" width="216">ミドルまてんろう</language>
-		<language name="JPN_KANJI" width="216">ミドルまてんろう</language>
+		<language name="JPN" width="216">まてんろうハーフ</language>
+		<language name="JPN_KANJI" width="216">まてんろうハーフ</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_043">
@@ -1121,8 +1121,8 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_044">
-		<language name="JPN" width="216">ミドルじゅどう</language>
-		<language name="JPN_KANJI" width="216">ミドルじゅどう</language>
+		<language name="JPN" width="216">じゅどうハーフ</language>
+		<language name="JPN_KANJI" width="216">じゅどうハーフ</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_045">
@@ -1291,23 +1291,23 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_022">
-		<language name="JPN" width="216">しんじんガイド</language>
-		<language name="JPN_KANJI" width="216">しんじんガイド</language>
+		<language name="JPN" width="216">あんないルーキー</language>
+		<language name="JPN_KANJI" width="216">あんないルーキー</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_023">
-		<language name="JPN" width="216">エリートガイド</language>
-		<language name="JPN_KANJI" width="216">エリートガイド</language>
+		<language name="JPN" width="216">あんないエリート</language>
+		<language name="JPN_KANJI" width="216">あんないエリート</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_024">
-		<language name="JPN" width="216">ベテランガイド</language>
-		<language name="JPN_KANJI" width="216">ベテランガイド</language>
+		<language name="JPN" width="216">あんないベテラン</language>
+		<language name="JPN_KANJI" width="216">あんないベテラン</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_025">
-		<language name="JPN" width="216">あんないめいじん</language>
-		<language name="JPN_KANJI" width="216">あんないめいじん</language>
+		<language name="JPN" width="216">キングオブガイド</language>
+		<language name="JPN_KANJI" width="216">キングオブガイド</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_026">
@@ -1331,18 +1331,18 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_030">
-		<language name="JPN" width="216">おみやげゲッター</language>
-		<language name="JPN_KANJI" width="216">おみやげゲッター</language>
+		<language name="JPN" width="216">おみやげリーズナブル</language>
+		<language name="JPN_KANJI" width="216">おみやげリーズナブル</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_031">
-		<language name="JPN" width="216">おみやげアセプター</language>
-		<language name="JPN_KANJI" width="216">おみやげアセプター</language>
+		<language name="JPN" width="216">おみやげリッチ</language>
+		<language name="JPN_KANJI" width="216">おみやげリッチ</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_032">
-		<language name="JPN" width="216">おみやげレシーバー</language>
-		<language name="JPN_KANJI" width="216">おみやげレシーバー</language>
+		<language name="JPN" width="216">おみやげデラックス</language>
+		<language name="JPN_KANJI" width="216">おみやげデラックス</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_033">
@@ -1396,8 +1396,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_043">
-		<language name="JPN" width="216">ヒーローのきょしょう</language>
-		<language name="JPN_KANJI" width="216">ヒーローのきょしょう</language>
+		<language name="JPN" width="216">ヒーローのはながた</language>
+		<language name="JPN_KANJI" width="216">ヒーローのはながた</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_044">
@@ -1416,13 +1416,13 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_047">
-		<language name="JPN" width="216">ＳＦえいがマスター</language>
-		<language name="JPN_KANJI" width="216">ＳＦえいがマスター</language>
+		<language name="JPN" width="216">ＳＦえいがマイスター</language>
+		<language name="JPN_KANJI" width="216">ＳＦえいがマイスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_048">
-		<language name="JPN" width="216">ロマンスのきょしょう</language>
-		<language name="JPN_KANJI" width="216">ロマンスのきょしょう</language>
+		<language name="JPN" width="216">ロマンスのはながた</language>
+		<language name="JPN_KANJI" width="216">ロマンスのはながた</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_049">
@@ -1431,18 +1431,18 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_050">
-		<language name="JPN" width="216">コメディのきょしょう</language>
-		<language name="JPN_KANJI" width="216">コメディのきょしょう</language>
+		<language name="JPN" width="216">コメディのはながた</language>
+		<language name="JPN_KANJI" width="216">コメディのはながた</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_051">
-		<language name="JPN" width="216">オカルトのきょしょう</language>
-		<language name="JPN_KANJI" width="216">オカルトのきょしょう</language>
+		<language name="JPN" width="216">オカルトのはながた</language>
+		<language name="JPN_KANJI" width="216">オカルトのはながた</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_052">
-		<language name="JPN" width="216">ロボえいがマスター</language>
-		<language name="JPN_KANJI" width="216">ロボえいがマスター</language>
+		<language name="JPN" width="216">ロボえいがマイスター</language>
+		<language name="JPN_KANJI" width="216">ロボえいがマイスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_053">
@@ -1456,8 +1456,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_055">
-		<language name="JPN" width="216">マスターディレクター</language>
-		<language name="JPN_KANJI" width="216">マスターディレクター</language>
+		<language name="JPN" width="216">うれっこえいがスター</language>
+		<language name="JPN_KANJI" width="216">うれっこえいがスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_056">
@@ -1466,8 +1466,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_057">
-		<language name="JPN" width="216">めいさくディレクター</language>
-		<language name="JPN_KANJI" width="216">めいさくディレクター</language>
+		<language name="JPN" width="216">めいさくえいがスター</language>
+		<language name="JPN_KANJI" width="216">めいさくえいがスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_058">
@@ -1476,8 +1476,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_059">
-		<language name="JPN" width="216">カルトディレクター</language>
-		<language name="JPN_KANJI" width="216">カルトディレクター</language>
+		<language name="JPN" width="216">カルトえいがスター</language>
+		<language name="JPN_KANJI" width="216">カルトえいがスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_060">
@@ -1541,13 +1541,13 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_072">
-		<language name="JPN" width="216">おもいでスターター</language>
-		<language name="JPN_KANJI" width="216">おもいでスターター</language>
+		<language name="JPN" width="216">おもいでのはじまり</language>
+		<language name="JPN_KANJI" width="216">おもいでのはじまり</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_073">
-		<language name="JPN" width="216">おもいでエキスパート</language>
-		<language name="JPN_KANJI" width="216">おもいでエキスパート</language>
+		<language name="JPN" width="216">すべてのおもいで</language>
+		<language name="JPN_KANJI" width="216">すべてのおもいで</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_074">

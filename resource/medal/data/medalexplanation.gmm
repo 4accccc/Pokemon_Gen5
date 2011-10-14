@@ -2255,48 +2255,48 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_055">
-		<language name="JPN" width="216">ポケウッドで　すべての　えいがを
-さつえいした　たさくな　かんとくの
-あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケウッドで　すべての　映画を
-撮影した　多作な　監督の
-証しとなる　メダル。</language>
+		<language name="JPN" width="216">ポケウッドで　すべての　えいがに
+しゅつえんした　えいがはいゆうに
+おくられる　メダル。</language>
+		<language name="JPN_KANJI" width="216">ポケウッドで　すべての　映画に
+出演した　映画俳優に
+贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_056">
 		<language name="JPN" width="216">ポケウッドで　１０００億円いじょうの
 こうぎょうしゅうにゅうを　きろくした
-うれっこかんとくの　ための　メダル。</language>
+にんき　はいゆうの　ための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドで　１０００億円以上の
 興行収入を　記録した
-売れっ子監督の　ための　メダル。</language>
+人気俳優の　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_057">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
-グッドエンドの　ストーリーを　とった
-めいさくえいが　かんとくの　メダル。</language>
+グッドエンドの　ストーリーに　でた
+じつりょくは　はいゆうの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　すべての　映画で
-グッドエンドの　ストーリーを　撮った
-名作映画監督の　メダル。</language>
+グッドエンドの　ストーリーに　出た
+実力派俳優の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_058">
 		<language name="JPN" width="216">ポケウッドで　はじめて　ストレンジな
-ストーリーの　えいがを　とった
+ストーリーの　えいがに　でた
 きさい　たんじょう　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドで　初めて　ストレンジな
-ストーリーの　映画を　撮った
+ストーリーの　映画に　出た
 鬼才の　誕生を　記念する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_059">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
-ストレンジな　ストーリーを　とった
-カルトえいが　かんとくの　メダル。</language>
+ストレンジな　ストーリーに　でた
+カルトえいがの　めいゆうの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　すべての　映画で
-ストレンジな　ストーリーを　撮った
-カルト映画監督の　メダル。</language>
+ストレンジな　ストーリーに　出た
+カルト映画の　名優の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_060">
