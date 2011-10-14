@@ -27,6 +27,13 @@ GMMDIR	= ../message/src/
 TOOLDIR = ../../tools/trmsg/
 
 #------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+MSTXTFILE = src/trmsg.mstxt
+MSPROJDIR	= ../message/msproj/
+
+#------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS	=
@@ -42,7 +49,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2) $(GMMDIR)$(GMMFILE)
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += out_end *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2) $(GMMFILE) trmsg_tmp.txt trmsg_tmp.xls temp.gmm trmsgtbl.s
 endif
@@ -53,7 +60,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .SUFFIXES: .s .bin
 
-do-build: trmsg_tmp.txt out_end trmsgtbl.bin trmsgtbl.narc
+do-build: trmsg_tmp.txt out_end trmsgtbl.bin trmsgtbl.narc $(MSPROJDIR)$(MSTXTFILE)
 
 trmsgtbl.narc: trmsgtbl.bin
 	$(TOOLDIR)trtblmk trmsgtbl.bin trmsgtblofs.bin
@@ -76,19 +83,19 @@ trmsg_tmp.txt: wb_trainermsg.xls
 out_end: trmsg_tmp.txt
 	ruby $(TOOLDIR)trmsgconv.rb $< ../message/template.gmm
 
+$(MSPROJDIR)$(MSTXTFILE) : $(GMMFILE)
+	$(UPDATEWITHGMM) . $(GMMFILE) $(MSTXTFILE)
+
 endif
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME1)	$(TARGETDIR)/$(NARCNAME2) $(GMMDIR)$(GMMFILE)
+do-build:	$(TARGETDIR)/$(NARCNAME1)	$(TARGETDIR)/$(NARCNAME2)
 
 $(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
 	$(COPY)	$(NARCNAME1) $(TARGETDIR)
 
 $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 	$(COPY)	$(NARCNAME2) $(TARGETDIR)
-
-$(GMMDIR)$(GMMFILE):	$(GMMFILE)
-	$(COPY)	$(GMMFILE) $(GMMDIR)
 
