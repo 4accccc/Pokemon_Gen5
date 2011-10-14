@@ -2203,6 +2203,10 @@
 			<ContentItem
 				Name="zkn.mstxt" />
 			<ContentItem
+				Name="zkn_comment_00.mstxt" />
+			<ContentItem
+				Name="zkn_comment_01.mstxt" />
+			<ContentItem
 				Name="zkn_comment_e.mstxt" />
 			<ContentItem
 				Name="zkn_comment_fra.mstxt" />
@@ -2214,6 +2218,10 @@
 				Name="zkn_comment_kor.mstxt" />
 			<ContentItem
 				Name="zkn_comment_spa.mstxt" />
+			<ContentItem
+				Name="zkn_form.mstxt" />
+			<ContentItem
+				Name="zkn_height.mstxt" />
 			<ContentItem
 				Name="zkn_height_e.mstxt" />
 			<ContentItem
@@ -2239,6 +2247,8 @@
 			<ContentItem
 				Name="zkn_monsname_spa.mstxt" />
 			<ContentItem
+				Name="zkn_type.mstxt" />
+			<ContentItem
 				Name="zkn_type_e.mstxt" />
 			<ContentItem
 				Name="zkn_type_fra.mstxt" />
@@ -2250,6 +2260,8 @@
 				Name="zkn_type_kor.mstxt" />
 			<ContentItem
 				Name="zkn_type_spa.mstxt" />
+			<ContentItem
+				Name="zkn_weight.mstxt" />
 			<ContentItem
 				Name="zkn_weight_e.mstxt" />
 			<ContentItem

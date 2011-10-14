@@ -27,6 +27,19 @@ TARGETDIR = $(PROJECT_ARCDIR)
 GMMDIR    = $(PROJECT_RSCDIR)/message/src
 
 #------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+ZNK_COMMENT_00_MSTXT	= src/zkn_comment_00.mstxt
+ZNK_COMMENT_01_MSTXT	= src/zkn_comment_01.mstxt
+ZNK_HEIGHT_MSTXT	= src/zkn_height.mstxt
+ZNK_WEIGHT_MSTXT	= src/zkn_weight.mstxt
+ZNK_TYPE_MSTXT	= src/zkn_type.mstxt
+ZNK_FORM_MSTXT	= src/zkn_form.mstxt
+MSPROJDIR	= ../message/msproj/
+
+
+#------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS =
@@ -65,8 +78,13 @@ source_townmap_data = ../townmap/data/townmap_data.xls
 do-build: subdir \
           $(TARGETDIR)/$(targetname_data).narc \
           $(TARGETDIR)/$(targetname_area_w).narc \
-          $(TARGETDIR)/$(targetname_area_b).narc \
-          $(foreach eachname, $(gmmname), $(GMMDIR)/$(eachname))
+					$(TARGETDIR)/$(targetname_area_b).narc \
+					$(MSPROJDIR)$(ZNK_COMMENT_00_MSTXT) \
+					$(MSPROJDIR)$(ZNK_COMMENT_01_MSTXT) \
+					$(MSPROJDIR)$(ZNK_HEIGHT_MSTXT) \
+					$(MSPROJDIR)$(ZNK_WEIGHT_MSTXT) \
+					$(MSPROJDIR)$(ZNK_TYPE_MSTXT) \
+					$(MSPROJDIR)$(ZNK_FORM_MSTXT)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -75,24 +93,6 @@ subdir:
 $(TARGETDIR)/$(targetname_data).narc: $(targetname_data).narc
 	$(COPY) $(targetname_data).narc $(TARGETDIR)
 	$(COPY) $(targetname_data).naix $(TARGETDIR)
-
-$(GMMDIR)/zkn_height.gmm: zkn_height.gmm
-	$(COPY) zkn_height.gmm $(GMMDIR)
-
-$(GMMDIR)/zkn_weight.gmm: zkn_weight.gmm
-	$(COPY) zkn_weight.gmm $(GMMDIR)
-
-$(GMMDIR)/zkn_comment_00.gmm: zkn_comment_00.gmm
-	$(COPY) zkn_comment_00.gmm $(GMMDIR)
-
-$(GMMDIR)/zkn_comment_01.gmm: zkn_comment_01.gmm
-	$(COPY) zkn_comment_01.gmm $(GMMDIR)
-
-$(GMMDIR)/zkn_type.gmm: zkn_type.gmm
-	$(COPY) zkn_type.gmm $(GMMDIR)
-
-$(GMMDIR)/zkn_form.gmm: zkn_form.gmm
-	$(COPY) zkn_form.gmm $(GMMDIR)
 
 $(TARGETDIR)/$(targetname_area_w).narc: $(targetname_area_w).narc
 	$(COPY) $(targetname_area_w).narc $(TARGETDIR)
@@ -111,7 +111,6 @@ $(targetname_data).narc: $(sources_data)
 	perl zkn_comment_make.pl $(input_personal) $(input_zukan) wb
 	nnsarc -r -l -n -i $(targetname_data) -S zkn_data_file_list.lst
 	$(NAIXCUT) $(targetname_data).naix
-	$(COPY) $(gmmname) $(GMMDIR)
 
 $(gmmname): $(sources_data)
 	perl zkn_sort_personal_make.pl $(input_personal)
@@ -119,7 +118,6 @@ $(gmmname): $(sources_data)
 	perl zkn_comment_make.pl $(input_personal) $(input_zukan) wb
 	nnsarc -r -l -n -i $(targetname_data) -S zkn_data_file_list.lst
 	$(NAIXCUT) $(targetname_data).naix
-	$(COPY) $(gmmname) $(GMMDIR)
 
 $(targetname_area_w).narc: $(sources_area_w) $(source_townmap_data) zkn_encount_make.pl
 	perl zkn_encount_make.pl $(input_encount) $(input_monsno) w
@@ -130,6 +128,24 @@ $(targetname_area_b).narc: $(sources_area_b) $(source_townmap_data)
 	perl zkn_encount_make.pl $(input_encount) $(input_monsno) b zkn_encount_make.pl
 	nnsarc -r -l -n -i $(targetname_area_b) -S $(input_area_list_b)
 	$(NAIXCUT) $(targetname_area_b).naix
+
+$(MSPROJDIR)$(ZNK_COMMENT_00_MSTXT) : zkn_comment_00.gmm
+	$(UPDATEWITHGMM) . zkn_comment_00.gmm $(ZNK_COMMENT_00_MSTXT)
+
+$(MSPROJDIR)$(ZNK_COMMENT_01_MSTXT) : zkn_comment_01.gmm
+	$(UPDATEWITHGMM) . zkn_comment_01.gmm $(ZNK_COMMENT_01_MSTXT)
+
+$(MSPROJDIR)$(ZNK_HEIGHT_MSTXT) : zkn_height.gmm
+	$(UPDATEWITHGMM) . zkn_height.gmm $(ZNK_HEIGHT_MSTXT)
+
+$(MSPROJDIR)$(ZNK_WEIGHT_MSTXT) : zkn_weight.gmm
+	$(UPDATEWITHGMM) . zkn_weight.gmm $(ZNK_WEIGHT_MSTXT)
+
+$(MSPROJDIR)$(ZNK_TYPE_MSTXT) : zkn_type.gmm
+	$(UPDATEWITHGMM) . zkn_type.gmm $(ZNK_TYPE_MSTXT)
+
+$(MSPROJDIR)$(ZNK_FORM_MSTXT) : zkn_form.gmm
+	$(UPDATEWITHGMM) . zkn_form.gmm $(ZNK_FORM_MSTXT)
 
 endif
 
@@ -157,7 +173,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(TARGETDIR)/$(targetname_data).narc
 	rm -f $(TARGETDIR)/$(targetname_data).naix
-	rm -f $(foreach eachname, $(gmmname), $(GMMDIR)/$(eachname))
 	rm -f $(TARGETDIR)/$(targetname_area_w).narc
 	rm -f $(TARGETDIR)/$(targetname_area_w).naix
 	rm -f $(TARGETDIR)/$(targetname_area_b).narc
