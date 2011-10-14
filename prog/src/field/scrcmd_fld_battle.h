@@ -31,6 +31,11 @@ extern VMCMD_RESULT EvCmdBtlUtilPartySelect( VMHANDLE * core, void *wk );
 //--------------------------------------------------------------
 /**
  * @brief EvCmdBtlUtilPartySelect用イベント生成
+ * @param gsys
+ * @param[in]   same        TRUEのとき、重複を許可する
+ * @param[in]   regulation  チェックに使用するレギュレーション
+ * @param[out]  ret_wk      結果を返すワークへのポインタ
+ * @param[in]   heapID      使用するテンポラリヒープ指定
  */
 //--------------------------------------------------------------
 extern GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );

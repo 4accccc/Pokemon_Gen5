@@ -188,7 +188,6 @@ VMCMD_RESULT EvCmdWBTBtlUtilPartySelect( VMHANDLE * core, void *wk )
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  //åãâ Çï‘Ç∑ÉèÅ[ÉN
   
   {
-    BOOL same;
     GMEVENT* event;
     HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
     const REGULATION* regu = WBTSYS_GetRegulation( wbtsys );
@@ -196,9 +195,7 @@ VMCMD_RESULT EvCmdWBTBtlUtilPartySelect( VMHANDLE * core, void *wk )
     WBTSYS_DEBUG_PrintRegulation( regu );
 #endif
 
-    same = Regulation_GetParam( regu, REGULATION_BOTH_POKE );
-
-    event = BtlPartySelectCheck( gsys, same, regu, ret_wk, heapID );
+    event = BtlPartySelectCheck( gsys, TRUE, regu, ret_wk, heapID );
 
     if(event == NULL){
       return VMCMD_RESULT_CONTINUE;
