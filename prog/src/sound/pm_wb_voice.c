@@ -85,12 +85,7 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
 
   // ボスポケモンのVOICE設定
   if(pokeNo >= MONSNO_ufo && pokeNo <= MONSNO_KARATEOU){
-    //@TODO 110930 by iwasawa ボスポケ用ボイスバンク数が8個しかないので、ROM出しのために一度丸める 
-    int idx = pokeNo-MONSNO_ufo;
-    if( idx >= 8 ){
-      idx = 7;
-    }
-    *waveIdx = PMVOICE_POKE652 + idx;
+    *waveIdx = PMVOICE_POKE652 + pokeNo-MONSNO_ufo;
     OS_Printf("pokeNo=%d, ボスポケモンvoice = %d\n", pokeNo, *waveIdx);
     return;
   }
