@@ -157,8 +157,8 @@ EVENT_START   ev_r02_pipe_01
       _AB_KEYWAIT_MARK()
 
       //アイテム入手処理
-      //バッグ空きチェック【仮】アイテムは仮です
-      _ADD_ITEM_CHK( ITEM_MASUTAABOORU, 1, LWK_BAG_CHK )
+      //バッグ空きチェック
+      _ADD_ITEM_CHK( ITEM_MEZAMEISI, 1, LWK_BAG_CHK )
 
       //バッグがいっぱい
       IF $LWK_BAG_CHK == 0 THEN
@@ -175,8 +175,8 @@ EVENT_START   ev_r02_pipe_01
       ELSE
 
         _MSGWIN_CLOSE()
-        //アイテム「マスターボール」入手  【仮】
-        _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MASUTAABOORU, 1 )
+        //アイテム「めざめいし」入手
+        _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MEZAMEISI, 1 )
 
         //イベント進行（マップチェンジするとメッセージが変わる）
         $LOCALWORK0 = 1

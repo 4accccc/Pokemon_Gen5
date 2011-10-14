@@ -42,7 +42,7 @@ EVENT_START	ev_r18r0101_trainerw_01
 		//マップ遷移して初回会話なら回復処理
 		
 		//遠慮せず休みなよ！
-		_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_02 )
 		_MSGWIN_CLOSE()
 		
 		//暗転して手持ちポケモンを回復
@@ -60,7 +60,7 @@ EVENT_START	ev_r18r0101_trainerw_01
 	ENDIF
 	
 	//あなたのポケモン エネルギッシュ！
-	_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_02 )
+	_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
