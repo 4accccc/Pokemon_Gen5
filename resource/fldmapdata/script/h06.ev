@@ -82,6 +82,25 @@ EVENT_START   ev_h06_man3_01
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
+		DEFINE_LOCAL	LWK_INDEX
+		DEFINE_LOCAL	LWK_FRONT
+		DEFINE_LOCAL	LWK_SIDE
+
+		//レール座標の取得
+		_GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
+
+		IF $LWK_FRONT == 22 THEN
+			_OBJ_ANIME( H06_MAN3_01, anm_man3_leave1 )
+		ELSE
+			_OBJ_ANIME( H06_MAN3_01, anm_man3_leave2 )
+		ENDIF
+		
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ou )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_DEL( H06_MAN3_01 )
+
         //========================================//
         //イベント進行
         $WK_SCENE_BRIDGE_MANIA_01 = 6
@@ -121,6 +140,25 @@ EVENT_START   ev_h06_man3_01
   ENDIF
 
 EVENT_END
+
+ //--------------------------------------------------------------------
+//	●橋マニア：退場演出
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_man3_leave1
+  _ANIME_DATA	AC_STAY_WALK_R_4F,4
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,13
+  _ANIME_DATA	ACMD_END,0
+ 
+_ANIME_LABEL	anm_man3_leave2
+  _ANIME_DATA	AC_STAY_WALK_D_4F,4
+  _ANIME_DATA	AC_WALK_D_4F,13
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_ou
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*  カラテ王：話しかけ                                        */

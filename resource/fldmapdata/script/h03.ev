@@ -292,6 +292,20 @@ EVENT_START   ev_h03_man3_01
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == DIR_DOWN THEN
+			_OBJ_ANIME( H03_MAN3_01, anm_man3_leave1 )
+		ELSE
+			_OBJ_ANIME( H03_MAN3_01, anm_man3_leave2 )
+		ENDIF
+
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ou )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_DEL( H03_MAN3_01 )
+		
         //========================================//
         //イベント進行
         $WK_SCENE_BRIDGE_MANIA_01 = 3
@@ -332,4 +346,22 @@ EVENT_START   ev_h03_man3_01
 
 EVENT_END
 
+ //--------------------------------------------------------------------
+//	●橋マニア：退場演出
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_man3_leave1
+  _ANIME_DATA	AC_STAY_WALK_R_4F,4
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,8
+  _ANIME_DATA	AC_WALK_U_2F,25
+  _ANIME_DATA	ACMD_END,0
+ 
+_ANIME_LABEL	anm_man3_leave2
+  _ANIME_DATA	AC_STAY_WALK_U_4F,4
+  _ANIME_DATA	AC_WALK_U_4F,8
+  _ANIME_DATA	AC_WALK_U_2F,25
+  _ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_player_ou
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	ACMD_END,0

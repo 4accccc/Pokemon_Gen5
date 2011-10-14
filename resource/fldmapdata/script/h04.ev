@@ -620,6 +620,25 @@ EVENT_START   ev_h04_man3_01
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
+		DEFINE_LOCAL	LWK_INDEX
+		DEFINE_LOCAL	LWK_FRONT
+		DEFINE_LOCAL	LWK_SIDE
+
+		//レール座標の取得
+		_GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
+
+		IF $LWK_FRONT == 0 THEN
+			_OBJ_ANIME( H04_MAN3_01, anm_man3_leave1 )
+		ELSE
+			_OBJ_ANIME( H04_MAN3_01, anm_man3_leave2 )
+		ENDIF
+		
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ou )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_DEL( H04_MAN3_01 )
+
         //========================================//
         //イベント進行
         $WK_SCENE_BRIDGE_MANIA_01 = 4
@@ -711,4 +730,20 @@ _ANIME_LABEL  anm_stop_guide01
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+ //--------------------------------------------------------------------
+//	●橋マニア：退場演出
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_man3_leave1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,4
+  _ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,13
+  _ANIME_DATA	ACMD_END,0
+ 
+_ANIME_LABEL	anm_man3_leave2
+  _ANIME_DATA	AC_STAY_WALK_R_4F,4
+  _ANIME_DATA	AC_WALK_R_4F,13
+  _ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_player_ou
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	ACMD_END,0
