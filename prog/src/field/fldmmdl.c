@@ -4757,7 +4757,7 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 //--------------------------------------------------------------
 void MMDLSYS_SetSysOBJCodeParam( MMDLSYS *mmdlsys, int list_id)
 {
-  NOZOMU_Printf("list_id %d\n",list_id);
+  OS_Printf("list_id %d\n",list_id);
 	GFL_ARC_LoadData( mmdlsys->pMdlPrmWork, ARCID_MMDL_LIST, list_id );
   
   {
@@ -4810,7 +4810,7 @@ u16 MMDLSYS_GetSysOBJCodeParamNum( const MMDLSYS *mmdlsys)
 {
 	u16 *data = (u16*)mmdlsys->pMdlPrmWork;
   u16 num = data[0];
-  NOZOMU_Printf("OBJ_NUM %d\n",num);
+  ICHI_Printf("OBJ_NUM %d\n",num);
   return num;
 }
 
@@ -5504,6 +5504,31 @@ u32 MMDL_GetFallRockCnt( const MMDLSYS *mmdlsys )
   
   return( set_cnt );
 }
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  岩を全て落としたことにする
+ *
+ *	@param	const MMDLSYS *mmdlsys 
+ *
+ *  @note   メダルデバッグ用
+ */
+//-----------------------------------------------------------------------------
+void MMDL_ROCKPOS_SetFallAll( const MMDLSYS *mmdlsys )
+{
+  MMDL_ROCKPOS *rockpos = mmdlsys->rockpos;
+  int i;
+  
+  for( i=0; i<MMDL_ROCKPOS_MAX; i++ )
+  {
+    rockpos->gx[ i ] = 0;
+    rockpos->gy[ i ] = 0;
+    rockpos->gz[ i ] = 0;
+  }
+  
+}
+#endif
 
 //======================================================================
 //

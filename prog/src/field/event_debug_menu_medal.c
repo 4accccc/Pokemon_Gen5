@@ -45,6 +45,7 @@
 #include "net_app\wifi_country.h"
 #include "savedata\medalbox.h"
 #include "msg/debug/msg_debug_medal.h"
+#include "../../../resource/fldmapdata/script/debug_scr_def.h"  //for SCRID_DEBUG_
 
 //外部公開
 #include "event_debug_menu_ov_staff.h"
@@ -108,6 +109,8 @@ static const DEBUG_MENU_LIST MedalBoxMenuList[] =
   { DEBUG_STR_MEDALBOX_MENU_OUTSAVE , (void*)DEBUG_STR_MEDALBOX_MENU_OUTSAVE , GFL_OVERLAY_BLANK_ID },  // メダルボックスセーブデータを全出力
   { DEBUG_STR_MEDALBOX_MENU_BOXRANK , (void*)DEBUG_STR_MEDALBOX_MENU_BOXRANK , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
   { DEBUG_STR_MEDALBOX_MENU_OUTDATA , (void*)DEBUG_STR_MEDALBOX_MENU_OUTDATA , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
+  { DEBUG_STR_MEDALBOX_MENU_KAIRIKI , (void*)DEBUG_STR_MEDALBOX_MENU_KAIRIKI , GFL_OVERLAY_BLANK_ID },  // かいりき岩全落とし
+  { DEBUG_STR_MEDALBOX_MENU_WHEEL   , (void*)DEBUG_STR_MEDALBOX_MENU_WHEEL   , GFL_OVERLAY_BLANK_ID },  // かんらんしゃアイドル以外乗ったことにする
 };
 
 ///リスト メニューヘッダー
@@ -918,6 +921,20 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
       }
       return GMEVENT_RES_FINISH;
+
+    case DEBUG_STR_MEDALBOX_MENU_KAIRIKI:   // かいりきいわを全部落とす(座標は合っていない)
+      {
+        const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( work->fieldWork );
+        MMDL_ROCKPOS_SetFallAll( cp_mmdlsys );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_WHEEL:   // 観覧車アイドル以外乗った
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        SCRIPT_ChangeScript( event, SCRID_DEBUG_WHEEL_MEDAL, NULL, work->heapID );
+      }
+      return GMEVENT_RES_CONTINUE;
       
     // メダルセーブをランダム生成
     case DEBUG_STR_MEDALBOX_MENU_MAKEDATA:     

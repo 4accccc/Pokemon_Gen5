@@ -77,6 +77,7 @@ _EVENT_DATA   ev_debug_nagihashi
 _EVENT_DATA   ev_debug_onoue
 _EVENT_DATA   ev_debug_scr_map
 _EVENT_DATA   ev_debug_local_tvt
+_EVENT_DATA   ev_debug_wheel_medal
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -1635,6 +1636,37 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_matsushima
   _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+EVENT_END
+
+/**************************************************************/
+/*  観覧車をアイドル以外乗ったことにする    */
+/**************************************************************/
+EVENT_START   ev_debug_wheel_medal
+  DEFINE_LOCAL  ret_tr_id
+
+  // トレーナーフラグ全て立てる
+  _GET_WHEEL_TRAINER_TR_ID( 0, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 1, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 2, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 3, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 4, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 5, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 6, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 7, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+
+  _FLAG_SET( FE_AMUSEMENT_NPC01_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC02_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC03_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC04_TALK )
+
 EVENT_END
 
 /**************************************************************/
