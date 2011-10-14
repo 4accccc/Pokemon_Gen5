@@ -353,48 +353,46 @@
 		<language name="JPN" width="256">しんりゃくしゃ</language>
 		<language name="JPN_KANJI" width="256">しんりゃくしゃ</language>
 	</row>
+	<row id="pw_turn_enemy_3">
+		<language name="JPN" width="256">E『おお……
+ははなる　ふね　よ……</language>
+		<language name="JPN_KANJI" width="256">E『おお……
+母なる　船よ……</language>
+	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……あなたは
-E……　なのか……？</language>
+Eなのか……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……あなたは
-E……　なのか……？</language>
+Eなのか……？</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">E『……　いかにも……▼
-おろかなる　にんげんよ……
+		<language name="JPN" width="256">E『おろかなる　にんげんよ……
 ごくろう　だったな……</language>
-		<language name="JPN_KANJI" width="256">E『……　いかにも……▼
-おろかなる　人間よ……
+		<language name="JPN_KANJI" width="256">E『おろかなる　人間よ……
 ご苦労　だったな……</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　すがた……
-あなた　いったい……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その姿……
-あなた　一体……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　すがたは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その姿は……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">E『……みての　とおり　わたしは
-この　ほしの　せいぶつでは　ない▼
+		<language name="JPN" width="256">E『みての　とおり……▼
 おまえたち　にんげんに　いわせれば
 うちゅうじん……　エイリアンだ……</language>
-		<language name="JPN_KANJI" width="256">E『……見ての通り　私は
-この星の　生物では　ない▼
+		<language name="JPN_KANJI" width="256">E『みての　通り……▼
 おまえたち　人間に　言わせれば
 宇宙人……　エイリアンだ……</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……どうして？▼
-なぜ　にんげんに　ばけて
-ぼくに　ちかづいた……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……どうして？▼
-なぜ　人間に　化けて
-僕に　近づいた……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なぜ　にんげんに
+ばけて　ぼくに　ちかづいた……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なぜ　人間に
+化けて　僕に　近づいた……？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">E『かんたんな　ことだ……▼
+		<language name="JPN" width="256">E『かんたんな　ことだ……
 おまえを　りようするため……</language>
-		<language name="JPN_KANJI" width="256">E『簡単な　ことだ……▼
+		<language name="JPN_KANJI" width="256">E『簡単な　ことだ……
 お前を　利用するため……</language>
 	</row>
 	<row id="pw_event0_hero_3">
@@ -420,43 +418,73 @@ E……　なのか……？</language>
 	<row id="pw_event0_enemy_4">
 		<language name="JPN" width="256">Ｅ『……マザーシップを
 このほしに　よびよせるには▽
-UFOに　おおくのエネルギーが▽
-ひつようと　するのでな……▼
+おおくの　エネルギーを▽
+ひつようと　する……▼
 UFOの　テストと　いつわり
 おまえの　ポケモンから▽
 ひつような　エネルギーを▽
 しゅうしゅう　したのだ……</language>
 		<language name="JPN_KANJI" width="256">Ｅ『……マザーシップを
 この星に　呼び寄せるには▽
-UFOに　多くのエネルギーが▽
-必要と　なってくる……▼
+多くの　エネルギーを▽
+必要とする……▼
 UFOの　テストと　偽り
 お前の　ポケモンから▽
 必要な　エネルギーを▽
 収集　したのだ……</language>
 	</row>
 	<row id="pw_event0_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
-なんてことだ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……
-何てことだ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……</language>
 	</row>
 	<row id="pw_event0_enemy_5">
-		<language name="JPN" width="256">Ｅ『……　……　……▼
-まもなく　マザーシップが
-このほしに　おりてくる……▼
-おまえたち　にんげんには
-ほろんで　もらうおうか……</language>
-		<language name="JPN_KANJI" width="256">Ｅ『……　……　……▼
-間もなく　マザーシップが
-この星に　降りてくる……▼
-お前たち　人間には
-滅んで　もらうおうか……</language>
+		<language name="JPN" width="256">Ｅ『まもなく　マザーシップが
+このほしに　おりてくる……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『間もなく　マザーシップが
+この星に　降りてくる……</language>
+	</row>
+	<row id="pw_event0_react_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だましたのか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だましたのか……</language>
+	</row>
+	<row id="pw_event0_react_enemy_0">
+		<language name="JPN" width="256">E『それが　どうした……▼
+あきれるほどに　すなお　なのだな……
+にんげん　というものは……</language>
+		<language name="JPN_KANJI" width="256">E『それが　どうした……▼
+あきれるほどに　素直　なのだな……
+人間　というものは……</language>
+	</row>
+	<row id="pw_event0_react_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだって……</language>
+	</row>
+	<row id="pw_event0_react_enemy_1">
+		<language name="JPN" width="256">E『マザーシップは　われわれの
+ちからの　みなもと……▼
+もはや　にんげんに
+できることなど　ない……</language>
+		<language name="JPN_KANJI" width="256">E『マザーシップは　我々の
+パワーの　源……▼
+もはや　人間に
+できることなど　ない……</language>
+	</row>
+	<row id="pw_event0_react_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　おわりだ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　おわりだ……</language>
+	</row>
+	<row id="pw_event0_react_enemy_2">
+		<language name="JPN" width="256">Ｅ『あきらめろ……▼
+このほしは　われわれが
+もらいうける……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『あきらめろ……▼
+この星は　我々が
+もらいうける……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">E『……　……くる
+		<language name="JPN" width="256">E『くるぞ……
 はは　なる　マザーシップが……</language>
-		<language name="JPN_KANJI" width="256">E『……　……来る
+		<language name="JPN_KANJI" width="256">E『来るぞ……
 母なる　マザーシップが……</language>
 	</row>
 	<row id="pw_event1_hero_1">
@@ -530,7 +558,7 @@ UFOの　テストと　偽り
 ひとや　ポケモンは　ここで　きえ
 ゆうしゅうな　われわれが▽
 ここで　いきる……▼
-それの　なにが　わるい？</language>
+その　なにが　わるい？</language>
 		<language name="JPN_KANJI" width="256">E『……侵略　だと？▼
 進化の　過程で　滅びる
 生物が　存在する　ように▽
@@ -591,10 +619,8 @@ UFOの　テストと　偽り
 生き残ればよい……</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『おわりだ……　E……
-UFOは　すべて　たおした……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『終わりだ……　E……
-UFOは　すべて　倒した……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おわりだ……　E……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『終わりだ……　E……</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">E『……　……　……</language>
@@ -602,9 +628,9 @@ UFOは　すべて　倒した……</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">E『ん……　　なんだ……？
-マザーシップが　ゆれている……</language>
+そらが　ゆれている……</language>
 		<language name="JPN_KANJI" width="256">E『ん……　　何だ……？
-マザーシップが　ゆれている……</language>
+空が　ゆれている……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">E『……　……おまえが　UFOを
@@ -627,7 +653,7 @@ UFOは　すべて　倒した……</language>
 にんげんと　ポケモンが　いる……▼
 だけど　まだ　だれも　しらない
 あたらしい　せいぶつが　うまれる▽
-かのうせいも　ある……</language>
+かのうせいだって　ある……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　この星には……
 人間と　ポケモンが　いる……▼
 だけど　まだ　誰も　知らない
@@ -635,8 +661,8 @@ UFOは　すべて　倒した……</language>
 可能性だって　ある……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">E『……　……　……　……</language>
-		<language name="JPN_KANJI" width="256">E『……　……　……　……</language>
+		<language name="JPN" width="256">E『なにが　いいたい……</language>
+		<language name="JPN_KANJI" width="256">E『なにが　いいたい……</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『だから……
@@ -677,14 +703,14 @@ UFOは　すべて　倒した……</language>
 僕たちと　探さないか？</language>
 	</row>
 	<row id="pw_event2_enemy_4">
-		<language name="JPN" width="256">E『……　……ありがたいが
-その　ていあんは　ことわる……▽
-わたしも　マザーシップと
-このほしを　さらねば　ならない</language>
-		<language name="JPN_KANJI" width="256">E『……　……ありがたいが
-その　提案は　断る……▽
-私も　マザーシップと
-この星を　去らねば　ならない</language>
+		<language name="JPN" width="256">E『そうか……▼
+だが　その　ていあんは　ことわる……▼
+わたしたちも　マザーシップと　ともに
+このほしを　さらねば　ならない……</language>
+		<language name="JPN_KANJI" width="256">E『そうか……▼
+だが　その提案は　断る……▼
+私たちも　マザーシップと　ともに
+この星を　去らねば　ならない……</language>
 	</row>
 	<row id="pw_event2_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……</language>
@@ -692,15 +718,15 @@ UFOは　すべて　倒した……</language>
 	</row>
 	<row id="pw_event2_enemy_5">
 		<language name="JPN" width="256">E『……ふたたび　はじまる
-ながい　うちゅうの　たび……▽
+ながい　うちゅうの　たび……▼
 その　たびの　なかで
 おまえの　いった　ほうほうを▽
-われわれなりに　さがす……</language>
+われわれなりに　さがすか……</language>
 		<language name="JPN_KANJI" width="256">E『……再び　始まる
-長い　宇宙の　旅……▽
+長い　宇宙の　旅……▼
 その　旅路の　中で
 お前の　言った　方法を▽
-我々なりに　探す……</language>
+我々なりに　探すか……</language>
 	</row>
 	<row id="pw_event2_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ……</language>
@@ -725,6 +751,80 @@ UFOは　すべて　倒した……</language>
 星空を　眺めていた……</language>
 	</row>
 	<row id="pw_event3_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しまった……▼
+ひょっとして　いまのは
+エイリアンが　うばった▽
+しみんの　ポケモン　では……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しまった……▼
+ひょっとして　今のは
+エイリアンが　うばった▽
+市民の　ポケモン　では……</language>
+	</row>
+	<row id="pw_event3_enemy_0">
+		<language name="JPN" width="256">E『その　とおり……▼
+わたしが　あやつっている　とはいえ
+ざんこくな　ことを……</language>
+		<language name="JPN_KANJI" width="256">E『その通り……▼
+私が　操っている　とはいえ
+残酷な　ことを……</language>
+	</row>
+	<row id="pw_event3_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ち……ちがう！！
+ぼくは　そんな！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ち……違う！！
+僕は　そんな！！</language>
+	</row>
+	<row id="pw_event3_enemy_1">
+		<language name="JPN" width="256">E『……　……　……
+かんじょうを　みだしたな……▼
+その　こころの　すきまが
+うまれるのを　まっていたぞ……▼
+わたしの　サイコエネルギーで
+おまえの　こころを　しはいしてやる</language>
+		<language name="JPN_KANJI" width="256">E『……　……　……
+感情を　乱したな……▼
+その　心の　隙間が
+生まれるのを　待っていたぞ……▼
+私が　サイコエネルギーで▽
+お前の　心を　支配してやる</language>
+	</row>
+	<row id="pw_event3_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……ウウッ！！
+くそっ！！　やめろーっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……ウウッ！！
+くそっ！！　止めろーっ！！</language>
+	</row>
+	<row id="pw_event3_enemy_2">
+		<language name="JPN" width="256">E『もう　おそい……▼
+おまえの　いしきは
+わたしに　コントロールされる……▼
+われわれの　ために　はたらく
+にんぎょうに　なるのだ……</language>
+		<language name="JPN_KANJI" width="256">E『もう　遅い……▼
+お前の　意識は
+私に　コントロールされる……▼
+我々の　ために　戦う
+人形に　なるのだ……</language>
+	</row>
+	<row id="pw_event3_hero_3">
+		<language name="JPN" width="256">……じんるいの　みらいを　かけた
+たたかいは　おわった……▼
+エイリアンに　あやつられた
+[1:00:トレーナー名:1]は　つぎつぎと▽
+にんげんに　おそいかかった……▼
+ＵＦＯに　いどむものは　いなくなり
+じんるいと　ポケモンは▽
+このほしから　めつぼう　した……</language>
+		<language name="JPN_KANJI" width="256">……人類の　未来を　かけた
+戦いは　終わった……▼
+エイリアンに　操られた
+[1:00:トレーナー名:1]は　次々と▽
+人間に　おそいかかった……▼
+ＵＦＯに　挑む者は　いなくなり
+人類と　ポケモンは▽
+この星から　滅亡した……</language>
+	</row>
+	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……　なんだ？▼
 きゅうに……　からだが……
 しびれて　きたぞ……</language>
@@ -732,13 +832,13 @@ UFOは　すべて　倒した……</language>
 急に……　全身が……
 しびれて　きたぞ……</language>
 	</row>
-	<row id="pw_event3_enemy_0">
+	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">E『どうだ……　[1:00:トレーナー名:1]……
 もう　たたかうことが　できないか？</language>
 		<language name="JPN_KANJI" width="256">E『どうだ……　[1:00:トレーナー名:1]……
 もう　戦うことが　できないか？</language>
 	</row>
-	<row id="pw_event3_hero_1">
+	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうして　とつぜん……▼
 ウウッ……▼
 めのまえが　しろく　なってきた……</language>
@@ -746,17 +846,17 @@ UFOは　すべて　倒した……</language>
 ウウッ……▼
 目の前が　白く　なってきた……</language>
 	</row>
-	<row id="pw_event3_enemy_1">
+	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">E『……　[1:00:トレーナー名:1]
 ……うごくことも　つらいか？</language>
 		<language name="JPN_KANJI" width="256">E『……　[1:00:トレーナー名:1]
 ……動くことも　辛いか？</language>
 	</row>
-	<row id="pw_event3_hero_2">
+	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くそっ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くそっ……</language>
 	</row>
-	<row id="pw_event3_enemy_2">
+	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">E『[1:00:トレーナー名:1]……▼
 おまえは　にんげんの　なかでは
 とても　きちょうな　ゆうしゅうな▽
@@ -772,19 +872,19 @@ UFOは　すべて　倒した……</language>
 ポケモンの　ように　滅ぼすには▽
 おしくなった……</language>
 	</row>
-	<row id="pw_event3_hero_3">
+	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウ……▼
 なんだって……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウウ……▼
 何だって……？</language>
 	</row>
-	<row id="pw_event3_enemy_3">
+	<row id="pw_event4_enemy_3">
 		<language name="JPN" width="256">E『よって　おまえを　わたしの
 ぶかに　することに　した……</language>
 		<language name="JPN_KANJI" width="256">E『よって　お前を　私の
 ペットに　することに　した……</language>
 	</row>
-	<row id="pw_event3_hero_4">
+	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうやって……？▼
 ウウッ……▼
 ……ぼくは　……おまえの……
@@ -794,23 +894,23 @@ UFOは　すべて　倒した……</language>
 ……僕は　……お前の……
 ペットに　なんか　ならないぞ……</language>
 	</row>
-	<row id="pw_event3_enemy_4">
+	<row id="pw_event4_enemy_4">
 		<language name="JPN" width="256">E『そうか……▼
 ……　だが　おまえの　いしや
 かんじょうなど　かんけい　ない……▼
 ……ながい　たたかいに　つかれた 
-いまの　おまえの　こころを▽
+おまえの　こころを▽
 わたしの　サイコエネルギーで▽
 のっとって　しまうだけだ……</language>
 		<language name="JPN_KANJI" width="256">E『そうか……▼
 ……　だが　お前の　意思や
 感情など　関係ない……▼
 ……長い　戦いに　疲れた
-今の　お前の　心を▽
+お前の　心を▽
 私の　サイコエネルギーで▽
 支配するだけだ……</language>
 	</row>
-	<row id="pw_event3_hero_5">
+	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウッ……▼
 ……　くそっ！　……　……
 ……　……　もう……▼
@@ -820,7 +920,7 @@ UFOは　すべて　倒した……</language>
 ……　……　もう……▼
 ……　……　……</language>
 	</row>
-	<row id="pw_event3_enemy_5">
+	<row id="pw_event4_enemy_5">
 		<language name="JPN" width="256">E『さあ　そのまま　ねむれ……▼
 つぎに　めざめたとき　おまえは
 わたしの　ぶかに　なっている……</language>
@@ -828,11 +928,11 @@ UFOは　すべて　倒した……</language>
 次に　目覚めたとき　お前は
 私の　ペットに　なっている……</language>
 	</row>
-	<row id="pw_event3_hero_6">
+	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……　</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……　</language>
 	</row>
-	<row id="pw_event3_enemy_7">
+	<row id="pw_event4_enemy_7">
 		<language name="JPN" width="256">E『……　……ねむったか▼
 [1:00:トレーナー名:1]……　おまえは……
 この　せかいで　さいごの▽
@@ -842,7 +942,7 @@ UFOは　すべて　倒した……</language>
 この星で　最期の▽
 ただひとりの　人間と　なる……</language>
 	</row>
-	<row id="pw_event3_hero_8">
+	<row id="pw_event4_hero_8">
 		<language name="JPN" width="256">……じんるいの　みらいを　かけた
 たたかいは　おわった……▼
 エイリアンに　はいぼく　した
@@ -864,97 +964,23 @@ UFOは　すべて　倒した……</language>
 Ｅの　ペットと　なった▽
 [1:00:トレーナー名:1]を　残して……</language>
 	</row>
-	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『しまった……▼
-ひょっとして　いまのは
-エイリアンが　うばった▽
-しみんの　ポケモン　では……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しまった……▼
-ひょっとして　今のは
-エイリアンが　うばった▽
-市民の　ポケモン　では……</language>
-	</row>
-	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">E『……　……そうだ▼
-わたしが　あやつっている　とはいえ
-ざんこくな　ことを　するな……</language>
-		<language name="JPN_KANJI" width="256">E『……　……そうだ▼
-私が　操っている　とはいえ
-ざんこくな　ことを　するな……</language>
-	</row>
-	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ち……ちがう！！
-ぼくは　そんな！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ち……違う！！
-僕は　そんな！！</language>
-	</row>
-	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">E『……　……　……
-かんじょうを　みだしたな……▼
-その　こころの　すきま……
-わたしが　サイコエネルギーで▽
-おまえの　こころを　しはいして　やる</language>
-		<language name="JPN_KANJI" width="256">E『……　……　……
-感情を　乱したな……▼
-その　心の　すきま……
-私が　サイコエネルギーで▽
-お前の　心を　支配して　やる</language>
-	</row>
-	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……ウウッ！！
-くそっ！！　やめろーっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……ウウッ！！
-くそっ！！　止めろーっ！！</language>
-	</row>
-	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">E『……　もう　おそい……▼
-……おまえの　いしきは
-わたしに　コントロールされる……▼
-われわれの　ために　はたらく
-にんぎょうに　なるのだ……</language>
-		<language name="JPN_KANJI" width="256">E『……　もう　遅い……▼
-……お前の　意識は
-私に　コントロールされる……▼
-我々の　ために　戦う
-人形に　なるのだ……</language>
-	</row>
-	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">……じんるいの　みらいを　かけた
-たたかいは　おわった……▼
-エイリアンに　あやつられた
-[1:00:トレーナー名:1]は　つぎつぎと▽
-にんげんに　おそいかかった……▼
-ＵＦＯに　いどむものは　いなくなり
-じんるいと　ポケモンは▽
-このほしから　めつぼう　した……</language>
-		<language name="JPN_KANJI" width="256">……人類の　未来を　かけた
-戦いは　終わった……▼
-エイリアンに　操られた
-[1:00:トレーナー名:1]は　次々と▽
-人間に　おそいかかった……▼
-ＵＦＯに　挑む者は　いなくなり
-人類と　ポケモンは▽
-この星から　滅亡した……</language>
-	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……▼
 もう　ダメだ……
-ぼくも　[1:02:ポケモンニックネーム:1]たちも▽
 つかれて　うごけない……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……▼
 もう　ダメだ……
-ぼくも　[1:02:ポケモンニックネーム:1]たちも▽
-つかれて　うごけない……</language>
+疲れて　動くことも……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">E『これで　おわりだな……</language>
 		<language name="JPN_KANJI" width="256">E『これで　終わりだな……</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……▽
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……▼
 にんげんや　ポケモンを
 どうする　つもりだっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……▼
 人間や　ポケモンを
 どうする　つもりだっ！</language>
 	</row>
@@ -966,15 +992,11 @@ UFOは　すべて　倒した……</language>
 こんどは　おまえたちが▽
 うちゅうを　さまようのだ……</language>
 		<language name="JPN_KANJI" width="256">E『……人間も　ポケモンも
-すべて　とらえ　ＵＦＯに　乗せて▽
+すべて　とらえ　ＵＦＯに　乗せ▽
 宇宙へ　追放する……▼
 我々に　替わり
 今度は　お前たちが▽
 宇宙を　さ迷うのだ……</language>
-	</row>
-	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">E『そして……
@@ -985,6 +1007,10 @@ UFOは　すべて　倒した……</language>
 楽園として　生まれ変わる……</language>
 	</row>
 	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……</language>
+	</row>
+	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">……じんるいの　みらいを　かけた
 たたかいは　おわった……▼
 エイリアンに　はいぼく　した

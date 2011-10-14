@@ -354,9 +354,9 @@
 		<language name="JPN_KANJI" width="256">アシスタント</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『さあ　Ｆ−００……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『さあ　Ｆー００……
 わたしと　いっしょに　あそぼう</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さあ　Ｆ−００……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さあ　Ｆー００……
 わたしと　一緒に　遊ぼう</language>
 	</row>
 	<row id="pw_event0_enemy_0">
@@ -367,9 +367,9 @@
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうだね……
-Ｆ−００は　なにが　したい？</language>
+Ｆー００は　なにが　したい？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうだね……
-Ｆ−００は　何が　したい？</language>
+Ｆー００は　何が　したい？</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
@@ -379,12 +379,12 @@
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">じょしゅ『[1:00:トレーナー名:1]はかせ……▼
-Ｆ−００と　あそんで　ばかりで
+Ｆー００と　あそんで　ばかりで
 いいんですか？▼
 あたらしい　けんきゅうの　いらいも
 たくさん　きていますが……</language>
 		<language name="JPN_KANJI" width="256">助手『[1:00:トレーナー名:1]博士……▼
-Ｆ−００と　遊んで　ばかりで
+Ｆー００と　遊んで　ばかりで
 いいんですか？▼
 新しい　研究の　依頼も
 たくさん　来ていますが……</language>
@@ -393,21 +393,21 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほっておけば……▼
 だれにでも　できる
 けんきゅう　でしょ？▼
-それより　アタシは　Ｆ−００に
+それより　アタシは　Ｆー００に
 いろいろなことを　おしえて▽
 このこの　メモリーを　もっと▽
 じゅうじつして　あげたいの……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほっておけば……▼
 誰にでも　できる　研究だろ？▼
-それより　アタシは　Ｆ−００に
+それより　アタシは　Ｆー００に
 色々なことを　教えて▽
 コイツの　メモリーを　もっと▽
 充実して　あげたいの……</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　Ｆ−００！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　Ｆー００！▼
 ポケモンに　こうげきして！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　Ｆ−００！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　Ｆー００！▼
 ポケモンに　こうげきして！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
@@ -418,13 +418,13 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わかるでしょ？▼
 ポケモン　みたいにさ
 わざを　つかうのよ！▼
-Ｆ−００の　からだには
+Ｆー００の　からだには
 ポケモンの　わざを　つかえる▽
 システムが　ついてるんだから！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『分かるでしょ？▼
 ポケモン　みたいにさ
 わざを　つかうのよ！▼
-Ｆ−００の　身体には
+Ｆー００の　身体には
 ポケモンの　わざが　使える▽
 システムが　ついてるんだから！</language>
 	</row>
@@ -433,8 +433,8 @@
 		<language name="JPN_KANJI" width="256">Ｆー００『コウゲキ……</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆ−００？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆ−００？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆー００？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたの？　Ｆー００？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">じょしゅ『もしかして……▼
@@ -445,11 +445,11 @@
 傷つけることが　嫌なんじゃ……</language>
 	</row>
 	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いい？　Ｆ−００
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いい？　Ｆー００
 ポケモンは　バトルすることが▽
 だいすきなの▼
 しんぱい　しなくても　いいのよ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いい？　Ｆ−００
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いい？　Ｆー００
 ポケモンは　バトルすることが▽
 大好きなの▼
 心配しなくても　いいのよ</language>
@@ -678,14 +678,14 @@
 	</row>
 	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">……じょしゅが　いったように
-Ｆ−００と　わたしは▽
+Ｆー００と　わたしは▽
 なかのよい　きょうだいの　ような
 かんけいに　なっていった……▼
 だが……▼
 そんな　しあわせな　ひびも
 ながくは　つづかなった……</language>
 		<language name="JPN_KANJI" width="256">……助手が　言ったように
-Ｆ−００と　私は▽
+Ｆー００と　私は▽
 仲の良い　兄弟の　ような
 関係に　なっていった……▼
 だが……▼
@@ -716,13 +716,13 @@
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">じょしゅ『ダメです……▼
-Ｆ−００の　きのうが　かんぜんに
+Ｆー００の　きのうが　かんぜんに
 とまって　しまいました……▼
 かいろが　ショート　しています……
 いままでに　Ｆー００が　おぼえた▼
 メモリーも　すべて　きえました……</language>
 		<language name="JPN_KANJI" width="256">助手『ダメです……▼
-Ｆ−００の　機能が　完全に
+Ｆー００の　機能が　完全に
 停まって　しまいました……▼
 回路も　ショート　しています……
 今まで　Ｆー００が　学んだ▼
@@ -751,20 +751,20 @@
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">……それから　わたしは
 なにかに　とりつかれたように▽
-Ｆ−００を　しゅうり　した……▼
-Ｆ−００は　まえにも　まして
+Ｆー００を　しゅうり　した……▼
+Ｆー００は　まえにも　まして
 こうせいのうの　ロボットとして▽
 うまれかわった……▼
-だが　うまれかわった　Ｆ−００に
+だが　うまれかわった　Ｆー００に
 いぜんの　ような　こころは▽
 めばえることは　なかった……</language>
 		<language name="JPN_KANJI" width="256">……それから　私は
 何かに　取りつかれたように▽
-Ｆ−００を　修理した……▼
-Ｆ−００は　前にも　増して
+Ｆー００を　修理した……▼
+Ｆー００は　前にも　増して
 高性能の　ロボットとして▽
 生まれ変わった……▼
-だが　生まれ変わった　Ｆ−００に
+だが　生まれ変わった　Ｆー００に
 以前の　ような　心は▽
 芽生えることは　なかった……</language>
 	</row>
@@ -829,25 +829,25 @@
 このロボット　危険すぎるわ！</language>
 	</row>
 	<row id="pw_event6_hero_4">
-		<language name="JPN" width="256">はしゃぎすぎた　Ｆ−００に
+		<language name="JPN" width="256">はしゃぎすぎた　Ｆー００に
 こうげき　された　わたしは▽
 そのまま　きを　うしなった……▼
 ……めざめると　じょしゅの
-てに　よって　Ｆ−００は▽
+てに　よって　Ｆー００は▽
 はかい　されていた……▼
-わたしは　かつて　Ｆ−００だった
+わたしは　かつて　Ｆー００だった
 スクラップを　だきしめて▽
 けんきゅうしょを　さった……▼
 そして　もうにどと
 ロボットの　かいはつに ▽
 たずさわることは　なかった……</language>
-		<language name="JPN_KANJI" width="256">はしゃぎすぎた　Ｆ−００に
+		<language name="JPN_KANJI" width="256">はしゃぎすぎた　Ｆー００に
 こうげき　された　私は▽
 そのまま　気を　失った……▼
 ……目覚めると　助手の
-手に　よって　Ｆ−００は▽
+手に　よって　Ｆー００は▽
 破壊されていた……▼
-私は　かつて　Ｆ−００だった
+私は　かつて　Ｆー００だった
 スクラップを　抱きしめて▽
 研究所を　去った……▼
 そして　もう二度と
