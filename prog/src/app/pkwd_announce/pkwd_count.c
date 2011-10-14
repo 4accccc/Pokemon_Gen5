@@ -844,6 +844,7 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 			if(wk->Flag & FLG_WIPE_IN_END){
 				wk->Step = STEP_LV1;
 				pwc_chg_objseq( wk, CLWKMODE_NORMAL, CLWK_ROLE, SEQ_ROLE_ANIM );
+        PMSND_PlaySE( SEQ_SE_SW_PKWOOD_01 );  // 「ジー」SE
 			}
 			break;
 		//
@@ -884,7 +885,8 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 			pwc_chg_logo( wk, 2 );
 			pwc_init_timer( wk, TIMER_WAIT2, WAIT_LOGO_MAX );
 			wk->Step = STEP_LV2;
-			break;
+        PMSND_PlaySE( SEQ_SE_SW_PKWOOD_02 );  // 「ポケウッドスタジオ」サウンドロゴSE
+     break;
 		//
 		// ロゴ表示
 		case STEP_LV2:
