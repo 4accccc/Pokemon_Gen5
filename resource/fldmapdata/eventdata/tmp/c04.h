@@ -31,6 +31,15 @@
 #define C04_POKE33_01                      8
 #define C04_RAILMAN_01                     9
 #define C04_CLOWN_01                      10
+#define C04_FOOTBALLM_01                  11
+#define C04_CLOWN_02                      12
+#define C04_BADMAN_01                     13
+#define C04_MIDDLEMAN2_01                 14
+#define C04_BACKPACKERW_01                15
+#define C04_GIRL3_01                      16
+#define C04_POKE34_01                     17
+#define C04_BABYGIRL1_01                  18
+#define C04_MIDDLEWOMAN1_01               19
 
 #endif //ZONE_C04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

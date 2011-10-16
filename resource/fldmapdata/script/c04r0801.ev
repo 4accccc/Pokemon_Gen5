@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0801.h"
   //.include  "c04r0801.h"
+  
+  //@author	suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +23,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_c04r0801_board_01
 _EVENT_DATA		ev_c04r0801_baseballm_01
+_EVENT_DATA		ev_c04r0801_trainerw_01
 _EVENT_DATA_END
 
 
@@ -41,3 +44,9 @@ EVENT_START	ev_c04r0801_baseballm_01
 	_EASY_TALK_ITEM_EVENT( ITEM_KYOUSEIGIPUSU, 1, FE_C04R0801_ITEMGET_01, msg_c04r0801_baseballm_01, msg_c04r0801_baseballm_02, msg_c04r0801_baseballm_02)
 EVENT_END
 
+/**************************************************************/
+/*			エリートトレーナー♀							  */
+/**************************************************************/
+EVENT_START		ev_c04r0801_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_01 )
+EVENT_END	

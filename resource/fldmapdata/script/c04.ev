@@ -15,6 +15,7 @@
 
   //@author fujimura_souichirou（ライバル・バトルサブウェイ前・迷子ポケモン・ライモンラリー）
   //@author Mizuguchi_Mai //バトルサブウェイトレーナーデータ周り
+  //@author	suginaka_katsunori //一言NPC配置
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -46,6 +47,16 @@ _EVENT_DATA   ev_c04_railman_01
 _EVENT_DATA   ev_c04_poke33_01
 _EVENT_DATA   ev_pos_c04_rally_01
 _EVENT_DATA   ev_c04_clown_01
+_EVENT_DATA		ev_c04_footballm_01
+_EVENT_DATA		ev_c04_clown_02
+_EVENT_DATA		ev_c04_badman_01
+_EVENT_DATA		ev_c04_middleman2_01
+_EVENT_DATA		ev_c04_backpackerw_01
+_EVENT_DATA		ev_c04_girl3_01
+_EVENT_DATA		ev_c04_poke34_01
+_EVENT_DATA		ev_c04_babygirl1_01
+_EVENT_DATA		ev_c04_middlewoman1_01
+
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -183,6 +194,70 @@ EVENT_END
 EVENT_START   ev_bg_c04_board_08
   _EASY_BGWIN_MSG( msg_c04_sign8_01, TYPE_POST )
 EVENT_END
+
+/**************************************************************/
+/*		C04		FOOTBALLM									  */
+/**************************************************************/
+EVENT_START		ev_c04_footballm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_footballm_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		crown									  */
+/**************************************************************/
+EVENT_START		ev_c04_clown_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_clown_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		badman									  */
+/**************************************************************/
+EVENT_START		ev_c04_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		middleman2									  */
+/**************************************************************/
+EVENT_START		ev_c04_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		backpackerw									  */
+/**************************************************************/
+EVENT_START		ev_c04_backpackerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_backpackerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		girl3									  */
+/**************************************************************/
+EVENT_START		ev_c04_girl3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_girl3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  バオップ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c04_poke34_01
+	_EASY_TALK_POKEVOICE( MONSNO_595, msg_c04_poke34_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		babygirl1									  */
+/**************************************************************/
+EVENT_START		ev_c04_babygirl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_babygirl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04		middlewoman1								  */
+/**************************************************************/
+EVENT_START		ev_c04_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_middlewoman1_02 )
+EVENT_END
+
 
 /**************************************************************/
 /*  POS：ライバルイベント（プラズマ団戦）                     */
