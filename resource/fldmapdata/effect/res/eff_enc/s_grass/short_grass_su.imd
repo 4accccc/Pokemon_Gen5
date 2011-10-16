@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-27T15:59:26" source="short_grass_su.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-16T16:47:52" source="short_grass_su.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-03-27T15:59:26" source="short_grass_su.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-10-16T16:47:52" source="short_grass_su.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="1"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.000000 1.250000 -2.250000" whd="4.000000 1.250000 3.750000"/>
+<box_test pos_scale="2" xyz="-2.250000 1.250000 -2.250000" whd="4.000000 1.250000 3.750000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="ee_kusa_su"
@@ -35,25 +35,25 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ee_kusa_su_pl"
-		path="C:/home/wb_data3d/effect_encount/short_grass/tex/ee_kusa_su.tga"
+		path="C:/home/swan_data3d/effect_encount/short_grass/tex/ee_kusa_su.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 1110 0000 0000 1110 8781 0111 0000
-			8c71 2821 1721 0000 9811 3238 7cb2 0001
-			2100 2325 1297 0001 1200 2223 0132 0000
-			6920 5225 0287 0000 6ac2 8263 2ac9 0000
-			3ca2 2662 3983 0000 1863 1761 3831 0000
-			0183 1cc1 3300 0000 0011 1643 0000 0000
-			0000 3430 0000 0000 0000 3300 0000 0000
+			0000 0000 0000 0000 5000 0055 5500 0005
+			3500 0586 6850 0004 4240 4798 4895 0002
+			2400 4954 2966 0000 8834 4544 2463 0000
+			9963 2446 0244 0000 3440 2243 4534 0000
+			2000 2444 2963 0000 9200 1439 5894 0002
+			8820 0146 3641 0002 6620 0014 3410 0002
+			1410 0001 4100 0001 0110 0000 1000 0001
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="ee_kusa_su_pl" color_size="16">
-		7c1f 2965 3627 2dc6 3648 3eaa 3eca 42eb
-		3248 3aca 3b0b 3b0d 3b2d 7fff 7fff 7fff
+		7c1f 1d81 21c2 2e85 2624 2e66 2ee6 32e8
+		2f07 372a 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -92,9 +92,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 2.500000 -4.500000"
-		volume_max="4.000000 5.000000 3.000000"
-		volume_r="7.826172"
+		volume_min="-4.500000 2.500000 -4.500000"
+		volume_max="3.500000 5.000000 3.000000"
+		volume_r="8.093262"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -105,13 +105,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.949219 0.316406"/>
-					<pos_s xyz="-4.000000 2.500000 3.000000"/>
+					<pos_s xyz="-4.500000 2.500000 3.000000"/>
 					<tex st="15.000000 16.000000"/>
-					<pos_xy xy="4.000000 2.500000"/>
+					<pos_xy xy="3.500000 2.500000"/>
 					<tex st="15.000000 1.000000"/>
 					<pos_yz yz="5.000000 -4.500000"/>
 					<tex st="0.000000 1.000000"/>
-					<pos_xy xy="-4.000000 5.000000"/>
+					<pos_xy xy="-4.500000 5.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -133,9 +133,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 2.500000 -4.500000"
-		volume_max="4.000000 5.000000 3.000000"
-		volume_r="7.826172"
+		volume_min="-4.500000 2.500000 -4.500000"
+		volume_max="3.500000 5.000000 3.000000"
+		volume_r="8.093262"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
