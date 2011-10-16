@@ -13,6 +13,7 @@
   .include  "d26r0101.h"
 
   //@author fujimura_souichirou（Ｎイベント）
+  //@author	suginaka_katsunori
 
 //------------------------------注意--------------------------------//
 // シーンワークをプログラム側で参照しています。
@@ -419,7 +420,7 @@ EVENT_START   ev_pos_d26r0101_boss_01
   //Ｎ：これが　ボクの　トモダチ（バージョンでセリフが異なる）
   _BALLOONWIN_OBJMSG_WB( msg_d26r0101_boss_05w, msg_d26r0101_boss_05b, D26R0101_BOSS_01, POS_DEFAULT )
 
-  //手持ちにＮポケモンがいる場合は特殊セリフ【仮】分岐条件は仮です
+  //手持ちにＮポケモンがいる場合は特殊セリフ
   _CALL ev_n_poke_call_01
 
   //Ｎ：これを　もっていきたまえ！▼
@@ -454,7 +455,7 @@ EVENT_START   ev_pos_d26r0101_boss_01
 EVENT_END
 
 
-//Ｎポケモン所持チェック【仮】分岐条件は仮です
+//Ｎポケモン所持チェック
 ev_n_poke_call_01:
 
 //手持ちにＮポケモンが要るか用変数定義
@@ -463,38 +464,43 @@ DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
 DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
 DEFINE_LOCAL LWK_N_POKE       //Ｎポケモンの有無
 
-  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
 
-  //手持ちのポケモンの中にＮポケモンがいるか確認（繰り返し処理）
-  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+//手持ちのポケモンの中にＮポケモンがいるか確認（繰り返し処理）
+WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
-    //指定POSのポケモンのNOを取得
-    _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
-
-    //チェックしたポケモンはフシギダネか
-    IF $LWK_RET_MONSNO == 1 THEN
-      //条件を満たしていたら「１」
-      $LWK_N_POKE = 1
-      //条件を満たしたポケモンの名前をフシギダネに
-      _MONS_NAME( 0, MONSNO_001 )
-
-    ENDIF
+	//Ｎポケモンかどうかチェック
+	_GET_PARTY_POKE_PARAM( LWK_N_POKE, LWK_COUNT_NUM, SCR_POKEPARA_N_POKE )
+	
+	//Ｎポケだった場合
+	IF $LWK_N_POKE == TRUE THEN
+	
+		//指定POSのポケモンのNOを取得
+		_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+	
+		_MONS_NAME( 0, LWK_RET_MONSNO )
+	
+		//========================================/
+		
+		$LWK_N_POKE = 1
+		
+		//========================================/
+	
+	ENDIF
 
     //カウント
     $LWK_COUNT_NUM += 1
 
   ENDWHILE
 
-  //手持ちに条件を満たしたポケモンがいた場合
-  IF $LWK_N_POKE == 1 THEN
+//手持ちに条件を満たしたポケモンがいた場合
+IF $LWK_N_POKE == 1 THEN
 
-    //Ｎ：キミは……▼
-    _BALLOONWIN_OBJMSG_POS( msg_d26r0101_boss_06, D26R0101_BOSS_01, POS_DEFAULT )
+	//Ｎ：キミは……▼
+	_BALLOONWIN_OBJMSG_POS( msg_d26r0101_boss_06, D26R0101_BOSS_01, POS_DEFAULT )
 
-  ELSE
-
-  ENDIF
+ENDIF
 
 _RET
 
