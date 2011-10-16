@@ -25,6 +25,7 @@ _EVENT_DATA    ev_zone_c13gym0101
 _EVENT_DATA    ev_init_c13gym0101
 _EVENT_DATA    ev_pos_c13gym0101_guide    // ガイドPOSイベント
 _EVENT_DATA    ev_c13gym0101_danpei_01    // ガイドスクリプトイベント
+_EVENT_DATA		ev_bg_c13gym0101_statue_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -107,6 +108,9 @@ EVENT_START   ev_pos_c13gym0101_guide
       ENDSWITCH
     }
 
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
     //アイテム入手フラグで分岐
 		IF FLAG_OFF( FE_C13GYM_ITEM ) THEN
       // おいしいみず入手イベント
@@ -185,6 +189,12 @@ _ANIME_LABEL	anm_dir_d_2
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	STAY_L
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*				サングラスのスクリプトイベント				*/
@@ -217,3 +227,29 @@ EVENT_START	ev_c13gym0101_danpei_01
 
 EVENT_END
 
+/************************************************************/
+/*							石像							*/
+/************************************************************/
+EVENT_START		ev_bg_c13gym0101_statue_01
+_TALK_START_SE_PLAY()
+
+//主人公名取得
+_PLAYER_NAME( 0 )
+//ライバルの名前格納
+_RIVAL_NAME( 1 )
+
+//バッジフラグ取得
+_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+//ジムバッジフラグによって分岐
+IF $SCWK_TEMP0 == 0 THEN
+	//バッジ入手前なら
+	_PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_01 )
+ELSE
+	//バッジ入手後
+    _PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_02  )
+ENDIF
+
+_LAST_KEYWAIT()
+_PLAINWIN_CLOSE()
+
+EVENT_END

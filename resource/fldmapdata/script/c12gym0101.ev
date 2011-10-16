@@ -26,6 +26,7 @@ _EVENT_DATA    ev_c12gym0101_woman2_01
 _EVENT_DATA    ev_c12gym0101_boy3_01
 _EVENT_DATA    ev_bg_c12gym0101_board_01
 _EVENT_DATA    ev_c12gym0101_girl3_01
+_EVENT_DATA		ev_bg_c12gym0101_statue_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -53,6 +54,32 @@ EVENT_START ev_c12gym0101_girl3_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0101_girl3_01 )
 EVENT_END
 
+/************************************************************/
+/*							石像							*/
+/************************************************************/
+EVENT_START	ev_bg_c12gym0101_statue_01
+_TALK_START_SE_PLAY()
+
+//主人公名取得
+_PLAYER_NAME( 0 )
+//ライバルの名前格納
+_RIVAL_NAME( 1 )
+
+//バッジフラグ取得
+_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+//ジムバッジフラグによって分岐
+IF $SCWK_TEMP0 == 0 THEN
+	//バッジ入手前なら
+	_PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_01 )
+ELSE
+	//バッジ入手後
+    _PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_02  )
+ENDIF
+
+_LAST_KEYWAIT()
+_PLAINWIN_CLOSE()
+
+EVENT_END
 
 /**************************************************************/
 /*  黒板                         */

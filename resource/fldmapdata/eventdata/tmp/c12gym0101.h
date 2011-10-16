@@ -30,5 +30,7 @@
 #define BG_C12GYM0101_BOARD_07            6
 #define BG_C12GYM0101_BOARD_08            7
 #define BG_C12GYM0101_BOARD_09            8
+#define BG_C12GYM0101_STATUE_01           9
+#define BG_C12GYM0101_STATUE_02          10
 
 #endif //ZONE_C12GYM0101_EVB_H
