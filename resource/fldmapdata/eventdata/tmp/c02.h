@@ -21,6 +21,13 @@
 #define ZONE_C02_EVC_H
 
 #define C02_SPPOKE1_01                     0
+#define C02_ACCORDION_01                   1
+#define C02_MAN2_01                        2
+#define C02_WOMAN2_01                      3
+#define C02_MIDDLEWOMAN2_01                4
+#define C02_BACKPACKERW_01                 5
+#define C02_GIRL3A_01                      6
+#define C02_GIRL3B_01                      7
 
 #endif //ZONE_C02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
