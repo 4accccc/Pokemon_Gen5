@@ -102,7 +102,7 @@ static void CheckPPFlagCheck( MEDALREC_DATA *p_recdata, const POKEMON_PARAM *p_p
 static BOOL CheckTypeComplete( u8 type_id ,MEDALREC_DATA *p_recdata, GAMEDATA* p_gamedata, HEAPID heapID );
 static BOOL cmp_target( u32 cnt ,u32 target );
 static BOOL CheckeMedalData( MEDALREC_DATA *p_recdata, GAMEDATA* p_gamedata, HEAPID heapID );
-static s32 EventFlagCheck( const s32 *p_table ,EVENTWORK *p_event_wk );
+static s32 EventFlagCheck( const s32 *p_table ,EVENTWORK *p_event_wk ,s32 table_cnt );
 
 // 判定関数群
 static BOOL MDLREC_CHECK_CompNormal( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
@@ -1205,7 +1205,7 @@ static BOOL MDLREC_CHECK_AnimalTrailCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p
     MDL_FLAG_ANIMALTRAIL_20,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
-  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
   target_cnt = NELEMS(flag_tbl);
   ONOUE_Printf("獣道チェック数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
@@ -1236,7 +1236,7 @@ static BOOL MDLREC_CHECK_BoardCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
     MDL_FLAG_BOARD_R19_03,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
-  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
   target_cnt = NELEMS(flag_tbl);
   ONOUE_Printf("お得な掲示板チェック数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
@@ -1259,7 +1259,7 @@ static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
     MDL_FLAG_TRAIN_NEW,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
-  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
   target_cnt = NELEMS(flag_tbl);
   ONOUE_Printf("列車説明チェック数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
@@ -1286,7 +1286,7 @@ static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_game
     SYS_FLAG_ARRIVE_H05,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
-  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
   target_cnt = NELEMS(flag_tbl);
   ONOUE_Printf("橋チェック数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
@@ -1328,7 +1328,7 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
     SYS_FLAG_ARRIVE_T01,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
-  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk);
+  s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
   target_cnt = NELEMS(flag_tbl) + 1;  // WF or BC
 
   // WF or BC はどちらかチェック
@@ -1453,17 +1453,17 @@ static BOOL MDLREC_CHECK_HabitatGetLookCheck( MEDALREC_DATA* p_recdata, GAMEDATA
 /**
  *	@brief  テーブルに登録されているイベントフラグをチェック
  *
- *	@param	*p_table 
+ *	@param	s32 *p_table 
  *	@param	*p_event_wk 
+ *	@param	table_cnt 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static s32 EventFlagCheck( const s32 *p_table ,EVENTWORK *p_event_wk )
+static s32 EventFlagCheck( const s32 *p_table ,EVENTWORK *p_event_wk ,s32 table_cnt )
 {
   int i;
   u32 check_cnt = 0;
-  s32 table_cnt = NELEMS(p_table);
   for( i = 0;  i < table_cnt ; i++ )
   {
     BOOL is_set = EVENTWORK_CheckEventFlag( p_event_wk ,p_table[i]);
