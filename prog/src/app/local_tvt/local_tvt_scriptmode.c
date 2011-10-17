@@ -131,7 +131,7 @@ static void LOCAL_TVT_ScriptMain( LOCAL_TVT_SCRIPT *work );
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 scriptID, LOCAL_TVT_CHARA_SYS *chara_sys )
+LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMESYS_WORK *gamesystem, GAMEDATA *gamedata, u16 scriptID, LOCAL_TVT_CHARA_SYS *chara_sys )
 {
   LOCAL_TVT_SCRIPT* work  = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_SCRIPT) );
   work->scriptID  = scriptID;
@@ -156,7 +156,7 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 
     MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(gamedata);
     u32 sex = MyStatus_GetMySex(p_mystatus);
 
-    LOCAL_TVT_CALLDATA *p_data  = LOCAL_TVT_CALLDATA_Init( gamedata, heapID );
+    LOCAL_TVT_CALLDATA *p_data  = LOCAL_TVT_CALLDATA_Init( gamesystem, gamedata, heapID );
 
     LOCAL_TVT_CHARA_PARAM chara_param[LOCAL_TVT_MEMBER_MAX];
     GFL_STD_MemClear( chara_param, sizeof(LOCAL_TVT_CHARA_PARAM)*LOCAL_TVT_MEMBER_MAX );
@@ -396,6 +396,7 @@ static void LOCAL_TVT_ScriptMain( LOCAL_TVT_SCRIPT *work )
   {
     //最初のコマンドの初期化を呼ぶ
     work->isFirstCommand = FALSE;
+    NAGI_Printf( "%d\n",comNo );
     commandTable[ comNo ].initFunc(work);
   }
   {
@@ -407,6 +408,7 @@ static void LOCAL_TVT_ScriptMain( LOCAL_TVT_SCRIPT *work )
       nextComNo = work->scriptData[work->scriptIdx].comNo;
       if( nextComNo != LCL_FINISH )
       {
+        NAGI_Printf( "%d\n",nextComNo );
         commandTable[ nextComNo ].initFunc(work);
       }
       else

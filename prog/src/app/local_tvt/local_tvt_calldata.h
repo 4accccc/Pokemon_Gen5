@@ -35,7 +35,7 @@ typedef struct _LOCAL_TVT_CALLDATA LOCAL_TVT_CALLDATA;
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMEDATA *p_gamedata, HEAPID heapID );
+extern LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMESYS_WORK *p_game_sys, GAMEDATA *p_gamedata, HEAPID heapID );
 extern void LOCAL_TVT_CALLDATA_Exit( LOCAL_TVT_CALLDATA *p_wk );
 
 extern LOCAL_TVT_BACK LOCAL_TVT_CALLDATA_GetBack( const LOCAL_TVT_CALLDATA *cp_wk, u16 person );

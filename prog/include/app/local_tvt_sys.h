@@ -55,6 +55,7 @@ typedef struct
   LOCAL_TVT_COLOR color;    //色
   u16             scriptId; //スクリプト制御モード時につかうスクリプト番号
   GAMEDATA        *gameData;//ゲームデータ
+  GAMESYS_WORK    *gameSys;  //pm_weatherのために取得
 }LOCAL_TVT_INIT_WORK;
 
 

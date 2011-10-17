@@ -2372,6 +2372,7 @@ static void * FMenuCallProc_LiveCaster(PROCLINK_WORK* wk, u32 param,EVENT_PROCLI
   tvt_param->mode     = LOCAL_TVT_MODE_APP;
   tvt_param->scriptId = 4;
   tvt_param->gameData = GAMESYSTEM_GetGameData(wk->param->gsys);
+  tvt_param->gameSys  = wk->param->gsys;
 
   return tvt_param;
 }

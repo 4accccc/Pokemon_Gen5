@@ -99,6 +99,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
   work = GFL_PROC_AllocWork( proc, sizeof(LOCAL_TVT_WORK), HEAPID_LOCAL_TVT );
   if( pwk == NULL )
   {
+    GF_ASSERT(0);
     ZONEDATA_Open( GFL_HEAPID_APP );
     initWork = GFL_HEAP_AllocMemory( HEAPID_LOCAL_TVT , sizeof( LOCAL_TVT_INIT_WORK ));
     initWork->gameData = GAMEDATA_Create( GFL_HEAPID_APP );
@@ -283,7 +284,7 @@ static void Local_Tvt_SetMode( LOCAL_TVT_WORK *work, LOCAL_TVT_MODE mode )
 //-----------------------------------------------------------------------------
 static void Local_Tvt_ScriptMode_Init( LOCAL_TVT_WORK *work )
 {
-  work->script_wk = LOCAL_TVT_SCRIPT_Init( work->heapId, work->initWork->gameData, work->initWork->scriptId, work->chara_sys );
+  work->script_wk = LOCAL_TVT_SCRIPT_Init( work->heapId, work->initWork->gameSys, work->initWork->gameData, work->initWork->scriptId, work->chara_sys );
 }
 //----------------------------------------------------------------------------
 /**
@@ -324,6 +325,7 @@ static void Local_Tvt_CallMode_InitSend( LOCAL_TVT_WORK *work )
   param.p_message   = work->message;
   param.p_clunit    = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
   param.mode        = LOCAL_TVT_CALL_MODE_SEND;
+  param.p_game_sys  = work->initWork->gameSys;
 
   work->call_wk = LOCAL_TVT_CALL_Init( &param, work->heapId );
 }

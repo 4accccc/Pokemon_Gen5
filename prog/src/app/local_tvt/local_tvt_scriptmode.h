@@ -28,6 +28,6 @@ typedef struct _LOCAL_TVT_SCRIPT  LOCAL_TVT_SCRIPT;
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMEDATA *gamedata, u16 scriptID, LOCAL_TVT_CHARA_SYS *chara_sys );
+extern LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMESYS_WORK *gamesystem, GAMEDATA *gamedata, u16 scriptID, LOCAL_TVT_CHARA_SYS *chara_sys );
 extern void LOCAL_TVT_SCRIPT_Term( LOCAL_TVT_SCRIPT *work );
 extern BOOL LOCAL_TVT_SCRIPT_Main( LOCAL_TVT_SCRIPT *work );

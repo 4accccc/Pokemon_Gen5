@@ -127,7 +127,7 @@ LOCAL_TVT_CALL * LOCAL_TVT_CALL_Init( const LOCAL_TVT_CALL_PARAM *cp_param, HEAP
   p_wk->call_se_cnt = CALL_CNT_DEFAULT_MAX;
 
   //呼び出しデータ作成
-  p_wk->p_data  = LOCAL_TVT_CALLDATA_Init( p_wk->param.p_gamedata, heapID );
+  p_wk->p_data  = LOCAL_TVT_CALLDATA_Init( p_wk->param.p_game_sys, p_wk->param.p_gamedata, heapID );
 
   //シーケンス管理
   p_wk->p_seq = LOCAL_TVT_SEQ_Init( p_wk, NULL, heapID );
@@ -311,6 +311,7 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
 
     PLAYER_WORK *p_player = GAMEDATA_GetMyPlayerWork( p_wk->param.p_gamedata );
     u16 zoneID    = PLAYERWORK_getZoneID(p_player);
+    NAGI_Printf( "zoneID%d\n", zoneID );
     param[1].bgType       = LOCAL_TVT_CALLDATA_GetBackByZoneID( p_wk->p_data, zoneID );
     param[1].weatherType  = LOCAL_TVT_CALLDATA_GetWeatherByZoneID( p_wk->p_data, zoneID );
   }

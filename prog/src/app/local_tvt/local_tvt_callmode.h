@@ -33,6 +33,7 @@ typedef struct _LOCAL_TVT_CALL LOCAL_TVT_CALL;
 //èâä˙âªç\ë¢ëÃ
 typedef struct
 {
+  GAMESYS_WORK        *p_game_sys;
   GAMEDATA            *p_gamedata;
   LOCAL_TVT_CHARA_SYS *p_chara_sys;
   LOCAL_TVT_MESSAGE   *p_message;

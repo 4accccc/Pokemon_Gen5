@@ -17,6 +17,7 @@
 #include "battle/battle_bg_def.h"
 #include "gamesystem/game_data.h"
 #include "savedata/misc.h"
+#include "gamesystem/pm_weather.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -75,7 +76,7 @@ struct _LOCAL_TVT_CALLDATA
 {
   GAMEDATA            *p_gamedata;
   LOCAL_TVT_BINARY    *p_data;
-  CALENDER            *p_calender;
+  GAMESYS_WORK        *p_game_sys;
   PERSON_STATE        *p_person_state;
 };
 
@@ -96,11 +97,11 @@ static const LOCAL_TVT_BINARY * Local_Tvt_Calldata_GetData( const LOCAL_TVT_CALL
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMEDATA *p_gamedata, HEAPID heapID )
+LOCAL_TVT_CALLDATA * LOCAL_TVT_CALLDATA_Init( GAMESYS_WORK *p_game_sys, GAMEDATA *p_gamedata, HEAPID heapID )
 {
   LOCAL_TVT_CALLDATA  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LOCAL_TVT_CALLDATA ) );
   p_wk->p_gamedata  = p_gamedata;
-  p_wk->p_calender  = GAMEDATA_GetCalender( p_gamedata );
+  p_wk->p_game_sys  = p_game_sys;
   p_wk->p_person_state  = PERSON_STATE_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
   p_wk->p_data      = GFL_ARC_UTIL_Load( ARCID_LOCAL_TVT_CALLDATA, NARC_local_tvt_call_local_tvt_call_dat, FALSE, heapID );
 
@@ -162,7 +163,10 @@ LOCAL_TVT_BACK LOCAL_TVT_CALLDATA_GetBack( const LOCAL_TVT_CALLDATA *cp_wk, u16 
 LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeather( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 {
   const LOCAL_TVT_BINARY *cp_data = Local_Tvt_Calldata_GetData( cp_wk, person );
-  return LOCAL_TVT_CALLDATA_GetWeatherByZoneID( cp_wk, cp_data->zoneid );
+
+  u16 zoneID = ZONEDATA_ControlZoneID( cp_data->zoneid );
+
+  return LOCAL_TVT_CALLDATA_GetWeatherByZoneID( cp_wk, zoneID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -375,7 +379,7 @@ LOCAL_TVT_BACK LOCAL_TVT_CALLDATA_GetBackByZoneID( const LOCAL_TVT_CALLDATA *cp_
 //-----------------------------------------------------------------------------
 LOCAL_TVT_WEATHER LOCAL_TVT_CALLDATA_GetWeatherByZoneID( const LOCAL_TVT_CALLDATA *cp_wk, ZONEID zoneID )
 {
-  WEATHER_NO  weather = CALENDER_GetWeather_today( cp_wk->p_calender, zoneID );
+  WEATHER_NO  weather = PM_WEATHER_GetZoneWeatherNo( cp_wk->p_game_sys, zoneID );
 
   switch( weather )
   {
