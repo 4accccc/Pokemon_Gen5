@@ -316,7 +316,9 @@ u8 INF_TOOL_GetTrainerHintType( u16 obj_code)
     }
   }
   
+#ifndef VS_PROJECT
   GF_ASSERT_MSG(0,"ヒントタイプの登録されていない表示コードです\n");
+#endif
   return 0;
 }
 
@@ -340,7 +342,9 @@ u8 INF_TOOL_GetTrainerTalkType( u16 obj_code)
     }
   }
 
+#ifndef VS_PROJECT
   GF_ASSERT_MSG(0,"会話パターンの登録されていない表示コードです\n");
+#endif
   return 0;
 }
 

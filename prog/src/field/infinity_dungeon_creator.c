@@ -229,6 +229,8 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
           if( (x < fs_x) && (y < fs_y ) )
           {
             BOOL is_set_trainer  = FALSE;
+            u32 sum_num = 0;
+            u32 rnd_num = GFL_STD_Rand( &rand_context ,100 ) + 1; // 抽選値を決定（1~100）
             for( k = 0 ; k < sc_room_setup->member_num; k++ )
             {
               const INF_ROOM_DATA *p_rs_data = &sc_room_setup->room_setup_data[k];
@@ -240,8 +242,8 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
                   (dungeon_color == VERSION_W2) && (room_version == INF_W2_ONLY_DUNGEON) || // ホワイト専用
                   (room_version == INF_MULTI_DUNGEON) )
               {
-                // 確率での抽選
-                if( GFL_STD_Rand( &rand_context ,100 ) < p_rs_data->probability)
+                sum_num += p_rs_data->probability;
+                if( rnd_num <= sum_num )
                 {
                   p_dungeon_data->room_data[i][j].tr_pos_type = p_rs_data->tr_pos_type;
                   p_dungeon_data->room_data[i][j].room_type = INF_TOOL_GetRoomType(p_rs_data->tr_pos_type);
@@ -271,7 +273,9 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
           p_dungeon_data->room_data[i][room_id].room_type = INF_TOOL_GetRoomType(INF_ROOM_POS_TYPE_EX_1);
           no_tr_room_index++;
           // 未配置部屋数以上は配置できない
+#ifndef VS_PROJECT
           GF_ASSERT( no_tr_room_index <= no_tr_room_cnt  );
+#endif
         }
       }
     }
