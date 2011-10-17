@@ -1327,4 +1327,290 @@
 				Time="2011-09-14T12:17:54" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマンコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:52:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマンコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:52:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フルメタルコップコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フルメタルコップコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんりゃくしゃコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:53:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しんりゃくしゃコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいかいじゅうコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:53:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいかいじゅうコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイムトラベルコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:54:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイムトラベルコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>愛コンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:54:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>愛コンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ラビリンスコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:55:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ラビリンスコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＯＬコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:55:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＯＬコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきりコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:55:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あかいきりコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きおくコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きおくコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_SERIES11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴーストハンターコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴーストハンターコンプ直前</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-13T08:56:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

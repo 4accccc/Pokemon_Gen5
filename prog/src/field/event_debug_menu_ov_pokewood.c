@@ -119,6 +119,17 @@ static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series01_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series02_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series03_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series04_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series05_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series06_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series07_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series08_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series09_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series10_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk);
 
 
 //-----------------------------------------------------------------------------
@@ -200,6 +211,17 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN39, (void*)debugMenu_OpenScenario39, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN40, (void*)debugMenu_OpenScenario40, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN_GRAPHIC, (void*)debugMenu_OpenScenario_for_Graphic, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES01,        (void*)debugMenu_series01_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES02,        (void*)debugMenu_series02_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES03,        (void*)debugMenu_series03_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES04,        (void*)debugMenu_series04_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES05,        (void*)debugMenu_series05_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES06,        (void*)debugMenu_series06_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES07,        (void*)debugMenu_series07_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES08,        (void*)debugMenu_series08_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES09,        (void*)debugMenu_series09_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES10,        (void*)debugMenu_series10_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_SERIES11,        (void*)debugMenu_series11_ready, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -590,7 +612,7 @@ static BOOL debugMenuCallProc_PokewoodEndroll( POKEWOOD_FUNC_WORK * wk )
 	PKWD_BRIEFING_PARAM  *param = PKWD_BRIEFING_PARAM_Create( HEAPID_PROC, wk->gmSys, 0 );
 
   param->audienceNum = 10;
-  param->scenario_no = 1;
+  param->scenario_no = 14;
 
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_ENDROLL_EVENT_Call, (void *)param );
@@ -611,6 +633,20 @@ static void _open_flag( POKEWOOD_FUNC_WORK *wk, int no )
   POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
   
   POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, no );
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_ANNOUNCED, no );
+
+}
+
+static void _set_scenario_done( POKEWOOD_FUNC_WORK *wk, int no )
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
+  
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, no ); //シナリオオープン
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_PLAYED, no );
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_THEATERGO, no );
+  POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_ANNOUNCED, no );
+  
 }
 
 //----------------------------------------------------------------------------
@@ -823,5 +859,90 @@ static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk)
   _open_flag( wk, 37 );
   _open_flag( wk, 38 );
   _open_flag( wk, 39 );
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+// メダル用シリーズコンプ直前状態を作る
+//----------------------------------------------------------------------------------
+static BOOL debugMenu_series01_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 0 );
+  _set_scenario_done( wk, 1 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series02_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 3 );
+  _set_scenario_done( wk, 4 );
+  _set_scenario_done( wk, 5 );
+  return FALSE;
+}
+static BOOL debugMenu_series03_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 7 );
+  _set_scenario_done( wk, 8 );
+  _set_scenario_done( wk, 9 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series04_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 11 );
+  _set_scenario_done( wk, 12 );
+  _set_scenario_done( wk, 13 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series05_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 15 );
+  _set_scenario_done( wk, 16 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series06_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 18 );
+  _set_scenario_done( wk, 19 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series07_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 21 );
+  _set_scenario_done( wk, 22 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series08_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 24 );
+  _set_scenario_done( wk, 25 );
+  _set_scenario_done( wk, 26 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series09_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 28 );
+  _set_scenario_done( wk, 29 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series10_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 31 );
+  _set_scenario_done( wk, 32 );
+  _set_scenario_done( wk, 33 );
+  return FALSE;
+}
+
+static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk)
+{
+  _set_scenario_done( wk, 35 );
+  _set_scenario_done( wk, 36 );
+  _set_scenario_done( wk, 37 );
   return FALSE;
 }

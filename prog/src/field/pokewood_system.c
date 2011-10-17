@@ -316,22 +316,24 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
 
 
 #define PW_SERIES_END       (0xff)
-#define PW_SERIES_MEDAL_MAX ( 10 )
+#define PW_SERIES_MEDAL_MAX ( 11 )
 
 //=================================================
 // ポケウッド連続シナリオ定義
 //=================================================
 static const u8 series_tbl[][5]={
-  {  0,  1,  2,  PW_SERIES_END },      // シリーズ1
-  {  4,  5,  6,  7, PW_SERIES_END },   // シリーズ2
-  {  8,  9, 10, 11, PW_SERIES_END },   // シリーズ3
-  { 12, 13, 14, 15, PW_SERIES_END },   // シリーズ4
-  { 16, 17, 18, 19, PW_SERIES_END },   // シリーズ5
-  { 20, 21, 22, 23, PW_SERIES_END },   // シリーズ6
-  { 26, 27, 28, 29, PW_SERIES_END },   // シリーズ7
-  { 30, 31, 32, 33, PW_SERIES_END },   // シリーズ8
-  { 34, 35, 36, 37, PW_SERIES_END },   // シリーズ9
-  { 38, 39, 40, PW_SERIES_END },       // シリーズ10
+  {  0,  1,  2,     PW_SERIES_END },   // シリーズ1
+  {  3,  4,  5,  6, PW_SERIES_END },   // シリーズ2
+  {  7,  8,  9, 10, PW_SERIES_END },   // シリーズ3
+  { 11, 12, 13, 14, PW_SERIES_END },   // シリーズ4
+  { 15, 16, 17,     PW_SERIES_END },   // シリーズ5
+  { 18, 19, 20,     PW_SERIES_END },   // シリーズ6
+  { 21, 22, 23,     PW_SERIES_END },   // シリーズ7
+  { 24, 25, 26, 27, PW_SERIES_END },   // シリーズ8
+  { 28, 29, 30,     PW_SERIES_END },   // シリーズ9
+  { 31, 32, 33, 34, PW_SERIES_END },   // シリーズ10
+  { 35, 36, 37, 38, PW_SERIES_END },   // シリーズ11
+//  { 39,             PW_SERIES_END },   // シリーズ12
 };
 
 /*
