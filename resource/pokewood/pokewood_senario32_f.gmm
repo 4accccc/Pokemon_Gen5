@@ -589,12 +589,8 @@
 もう　造れないということですかっ！</language>
 	</row>
 	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうよ……▼
-Ｆー００は　アタシが　かいはつした
-アタシだけの　ロボットだもの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうよ……▼
-Ｆー００は　アタシが　開発した
-アタシだけの　ロボットだもの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そういうこと……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そういうこと……</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">じょしゅ『そんな……▼
@@ -607,6 +603,14 @@
 どうすれば　いいんですか……</language>
 	</row>
 	<row id="pw_event3_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だれにも　わたさない▼
+Ｆー００は　アタシが　かいはつした
+アタシだけの　ロボットだもの……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だれにも　渡さない▼
+Ｆー００は　アタシが　開発した
+アタシだけの　ロボットだもの……</language>
+	</row>
+	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">……こうして　わたしは
 せかいはつの　ともだちロボット▽
 Ｆー００を　かんせい　させた……▼
@@ -631,10 +635,10 @@
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">じょしゅ『[1:00:トレーナー名:1]はかせ！
 なにを　してるんですかッ！▼
-Ｆー００が　こわすなんてッ！</language>
+Ｆー００を　こわすなんてッ！</language>
 		<language name="JPN_KANJI" width="256">助手『[1:00:トレーナー名:1]博士！
 何を　してるんですかッ！▼
-Ｆー００が　壊すなんてッ！</language>
+Ｆー００を　壊すなんてッ！</language>
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
@@ -751,50 +755,46 @@
 どうするんですかッ！！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
-		<language name="JPN" width="256">じょしゅ『はやく　さがしにいかないと！</language>
-		<language name="JPN_KANJI" width="256">助手『早く　探しにいかないと！</language>
+		<language name="JPN" width="256">じょしゅ『さあ！　はかせっ！
+はやく　さがしにいかないと！</language>
+		<language name="JPN_KANJI" width="256">助手『さあ！　博士っ！
+早く　探しにいかないと！</language>
 	</row>
 	<row id="pw_event5_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">……わたしは　ひっしで
+		<language name="JPN" width="256">……わたしたちは　ひっしで
 Ｆー００を　おいかけた……▼
 そして　そのさきで　みたのは
-あばれまわる　Ｆー００　だった……▼
-Ｆー００は　たのしそうに
-ビルや　くるま……▽
-おおきな　はし　までも▽
-こわして　しまった……▼
+あばれまわる　Ｆー００だった……▼
+たのしそうに　ビルや　くるまを
+こわす　Ｆー００……▼
 やがて　けいかんが　あらわれ
 Ｆー００は　こわされた……▼
 ……わたしは　Ｆー００の
-せきにんを　とることになり
+せきにんを　とることになり▽
 けいさつに　つかまった……▼
-あれから　２０ねん……
-いまも　けいむしょの　なか……▼
+あれから　２０ねん……▼
 わたしは　あんな　ロボットを
 つくって　しまったことを▽
-こうかい　している……</language>
+とても　こうかい　している……</language>
 		<language name="JPN_KANJI" width="256">……私は　必死で
 Ｆー００を　追いかけた……▼
-そして　その先で　見たものは
+そして　その先で　見たのは
 暴れまわる　Ｆー００だった……▼
-Ｆー００は　楽しそうに
-ビルや　車……▽
-巨大な橋　までも▽
-壊してしまった……▼
+楽しそうに　ビルや　車を
+壊す　Ｆー００……▼
 やがて　警官が　現れ
 Ｆー００は　壊された……▼
 ……私は　Ｆー００の
-責任を　取ることになり
+責任を　取ることになり▽
 警察に　つかまった……▼
-あれから　２０年……
-今も　刑務所の　中……▼
+あれから　２０年……▼
 私は　あんな　ロボットを
 造って　しまったことを▽
-後悔　している……</language>
+とても　後悔　している……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">Ｆー００『イタイ……</language>

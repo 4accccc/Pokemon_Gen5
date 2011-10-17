@@ -662,11 +662,15 @@ UFOを　こうげき　してみろ……</language>
 人類の　逆転を　かけた▽
 作戦が　決行　される……</language>
 	</row>
+	<row id="pw_event3_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
+	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">Ｅ『おい　[1:00:トレーナー名:1]……
+		<language name="JPN" width="256">Ｅ『どうした　[1:00:トレーナー名:1]……
 テストは　まだ　おわっていない▼
 さっさと　たつんだ……</language>
-		<language name="JPN_KANJI" width="256">Ｅ『おい　[1:00:トレーナー名:1]……
+		<language name="JPN_KANJI" width="256">Ｅ『どうした　[1:00:トレーナー名:1]……
 テストは　まだ　終わっていない▼
 さっさと　立つんだ……</language>
 	</row>
@@ -721,6 +725,10 @@ UFOを　こうげき　してみろ……</language>
 孤独な　彼を　よそに▽
 人類と　ＵＦＯの　決戦が▽
 始めるので　あった……</language>
+	</row>
+	<row id="pw_event4_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">Ｅ『どうした……

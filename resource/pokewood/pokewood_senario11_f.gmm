@@ -444,8 +444,8 @@ UFOの　テストと　偽り
 この星に　降りてくる……</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『だましたのね……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だましたのね……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だましたのね！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だましたのね！！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">E『それが　どうした……▼
@@ -474,11 +474,11 @@ UFOの　テストと　偽り
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　おわりね……</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
-		<language name="JPN" width="256">Ｅ『あきらめろ……▼
-このほしは　われわれが
-もらいうける……</language>
-		<language name="JPN_KANJI" width="256">Ｅ『あきらめろ……▼
-この星は　我々が
+		<language name="JPN" width="256">Ｅ『そうだ……　あきらめろ……▼
+このほしは　われわれ
+エイリアンが　もらいうける……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『そうだ……　諦めろ……▼
+この星は　我々　エイリアンが
 もらいうける……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
@@ -649,12 +649,14 @@ UFOの　テストと　偽り
 さ迷うことに　なる……</language>
 	</row>
 	<row id="pw_event2_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　このほしには……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……▼
+このほしには　たくさんの
 にんげんと　ポケモンが　いる……▼
 だけど　まだ　だれも　しらない
 あたらしい　せいぶつが　うまれる▽
 かのうせいだって　ある……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　この星には……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……▼
+この星には　たくさんの
 人間と　ポケモンが　いる……▼
 だけど　まだ　誰も　知らない
 新しい　生命が　生まれる▽
@@ -790,9 +792,9 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……ウウッ！！
-もうっ！！　やめてーっ！！</language>
+ヤダよっ！！　やめてーっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……ウウッ！！
-もうっ！！　止めてーっ！！</language>
+ヤダよっ！！　止めてーっ！！</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">E『もう　おそい……▼
@@ -873,9 +875,9 @@ UFOの　テストと　偽り
 おしくなった……</language>
 	</row>
 	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウ……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウ……
 なんですって……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウウ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウウ……
 何ですって……？</language>
 	</row>
 	<row id="pw_event4_enemy_3">
@@ -887,26 +889,26 @@ UFOの　テストと　偽り
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうやって……？▼
 ウウッ……▼
-……わたしは　……あなたの……
+わたしは……　あなたの……
 ぶかに　なんか　ならない……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうやって……？▼
 ウウッ……▼
-……僕は　……あなたの……
+私は……　あなたの……
 ペットに　なんか　ならない……</language>
 	</row>
 	<row id="pw_event4_enemy_4">
-		<language name="JPN" width="256">E『そうか……▼
-……　だが　おまえの　いしや
+		<language name="JPN" width="256">E『だろうな……▼
+……だが　おまえの　いしや
 かんじょうなど　かんけい　ない……▼
-……ながい　たたかいに　つかれた 
-おまえの　こころを▽
+いままでの　ながい　たたかいに
+つかれた 　おまえの　こころを▽
 わたしの　サイコエネルギーで▽
 のっとって　しまうだけだ……</language>
-		<language name="JPN_KANJI" width="256">E『そうか……▼
-……　だが　お前の　意思や
+		<language name="JPN_KANJI" width="256">E『だろうな……▼
+……だが　お前の　意思や
 感情など　関係ない……▼
-……長い　戦いに　疲れた
-お前の　心を▽
+今までの　長い　戦いに
+疲れた　お前の　心を▽
 私の　サイコエネルギーで▽
 支配するだけだ……</language>
 	</row>
