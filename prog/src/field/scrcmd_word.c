@@ -650,3 +650,20 @@ VMCMD_RESULT EvCmdTokuseiName( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：性格名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdSeikakuName( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 seikaku_id = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterSeikaku( wordset, idx, seikaku_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+

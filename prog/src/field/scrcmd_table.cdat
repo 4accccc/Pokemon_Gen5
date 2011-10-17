@@ -1014,7 +1014,7 @@
   //新規WORDSET関連
   DEF_CMD( EvCmdMedalCategoryName,    EV_SEQ_MEDAL_CATEGORY_NAME )
   DEF_CMD( EvCmdTokuseiName,          EV_SEQ_TOKUSEI_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdSeikakuName,          EV_SEQ_SEIKAKU_NAME )
   NO_CMD()
 
   NO_CMD()
@@ -1118,6 +1118,10 @@
   DEF_CMD( EvCmdPersonState_GetState, EV_SEQ_PERSON_GET_STATE )
 
   DEF_CMD( EvCmdGetMyWazaMachineNum,    EV_SEQ_GET_MY_WAZA_MACHINE_NUM )
+
+  //  WBT用常駐
+  DEF_CMD( EvCmdWBTGetTrainerFlag,    EV_SEQ_WBT_GET_TRAINER_FLAG )
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

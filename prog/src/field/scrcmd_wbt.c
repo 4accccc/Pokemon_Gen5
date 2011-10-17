@@ -435,23 +435,6 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 }
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：対戦済みフラグを取得する
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGetTrainerFlag( VMHANDLE * core, void * wk )
-{
-  SCRCMD_WORK * work = wk;
-  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
-  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-  u16 flag_id  = SCRCMD_GetVMWorkValue( core, wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = WBTSAVE_GetFlag( wbtsave, flag_id );
-  TAMADA_Printf("EvCmdWBTGetTrainerFlag(%d) = %d\n", flag_id, *ret_wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief スクリプトコマンド：手持ち最大数を取得
  */
 //--------------------------------------------------------------
