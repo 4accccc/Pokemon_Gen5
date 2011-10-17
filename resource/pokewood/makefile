@@ -15,9 +15,10 @@ USERS	= mori nakatsui ito_hiroto sato_hitomi
 targetname  = pokewood
 
 EXCEL_CONV    = ..\..\tools\exceltool\excelcommaconv.exe
+UPDATEWITHGMM = ../../tools/message/UpdateWithGmm.bat
 SENARIO_CONV  = ruby senario_conv.rb
 BGM_HASH_CONV = ruby make_bgmhash.rb
-
+MSPROJDIR     = ../message/msproj/
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -44,7 +45,9 @@ lbins = $(subst .txt,.bin,$(ltexts))
 # リソースが吐き出すファイルを自動でつくる(.xls -> _m.gmm _f.gmm)
 gmmfiles = $(subst .xls,_f.gmm,$(lsources))
 gmmfiles += $(subst .xls,_m.gmm,$(lsources))
-targetgmm = $(subst poke,$(MESSAGEDIR)/poke,$(gmmfiles))
+targetgmm   = $(subst poke,$(MESSAGEDIR)/poke,$(gmmfiles))
+mstxtfiles  = $(subst .gmm,.mstxt, $(gmmfiles))
+targetmstxt = $(subst poke,src/pokewood/poke, $(mstxtfiles))
 bgm_hashfile = bgm_hash.rb
 
 .PHONY:	do-build clean subdir
@@ -52,7 +55,7 @@ bgm_hashfile = bgm_hash.rb
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build: $(bgm_hashfile) $(TARGETDIR)/$(targetname).narc $(targetgmm) 
+do-build: $(bgm_hashfile) $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -60,7 +63,7 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES:  .bin .xls 
+.SUFFIXES:  .bin .xls
 
 $(bgm_hashfile): ../sound/swan_sound_data.sadl
 	$(BGM_HASH_CONV) $(bgm_hashfile)
@@ -68,6 +71,7 @@ $(bgm_hashfile): ../sound/swan_sound_data.sadl
 %_f.gmm %_m.gmm %.bin :%.xls
 	$(EXCEL_CONV) $<
 	$(SENARIO_CONV) $(subst .xls,.txt,$<)
+	ruby pw_gmm2mstxt.rb $(subst .xls,_f.gmm, $<) $(subst .xls,_m.gmm, $<)
 
 $(targetname).narc: $(lsources) $(lbins) $(ltexts) 
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
@@ -80,8 +84,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 #gmmのコピーだけ実行する
-$(targetgmm): $(gmmfiles)
-	$(COPY) *.gmm $(MESSAGEDIR)
+#$(targetgmm): $(gmmfiles)
+#	$(COPY) *.gmm $(MESSAGEDIR)
 
 #------------------------------------------------------------------------------
 #	make clean ルール
