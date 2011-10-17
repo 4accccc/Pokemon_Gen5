@@ -96,10 +96,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEWOMAN1</Text>
+			<Text>MIDDLEWOMAN1
+→WOMAN3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:53:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -124,10 +125,10 @@
 			<Text>やけどに　なった　ポケモンは
 ＨＰは　へっていくし▼
 こうげきりょくも　さがっちゃうしで
-てんやわんや　ですからね</Text>
+てんやわんや　ですもんね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T10:40:57" />
+				Time="2011-10-14T08:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -138,10 +139,10 @@
 			<Text>やけどに　なった　ポケモンは
 ＨＰは　減っていくし▼
 攻撃力も　さがっちゃうしで
-てんやわんや　ですからね</Text>
+てんやわんや　ですもんね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T10:41:01" />
+				Time="2011-10-14T08:55:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -157,10 +158,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEWOMAN1</Text>
+			<Text>MIDDLEWOMAN1
+→WOMAN3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:53:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -176,5 +178,169 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13r0201_woman3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:50:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3
+保育士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:50:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13r0201_babyboy1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:50:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABYBOY1
+男の子</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:49:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13r0201_babygirl1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:50:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABYGIRL1
+女の子</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:49:45" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13r0201_babygirl1b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:56:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:50:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABYGIRL1
+女の子</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-14T08:49:45" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

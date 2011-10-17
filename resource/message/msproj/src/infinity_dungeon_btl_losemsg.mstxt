@@ -388,11 +388,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>う～ん……ちょっぴり
+			<Text>う～ん……　ちょっぴり
 こどもたちには　きけんかしらね？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-08T06:27:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T06:45:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -400,11 +400,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>う～ん……ちょっぴり
+			<Text>う～ん……　ちょっぴり
 子供たちには　危険かしらね？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-08T06:27:51" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T06:45:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

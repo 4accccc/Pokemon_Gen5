@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　ちょうせんしてくれて
+			<Text>また　ちょうせん　してくれて
 うれしいわ▼
 さあ　あれから　どれだけ
 せいちょうしたか　みせてもらうわよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T05:44:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,14 +23,14 @@
 			<Text>また　挑戦してくれて
 うれしいわ▼
 さあ　あれから　どれだけ
-成長したか　見せてもらうわよ！▼</Text>
+成長したか　みせてもらうわよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T05:44:17" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:02:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -60,13 +60,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アドバイス　……
+			<Text>アドバイス……
 は　もう　いらないね▼
 キミが　どれだけ　
 つよくなったか　ためしてあげよう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T09:53:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,13 +74,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アドバイス　……
+			<Text>アドバイス……
 は　もう　いらないね▼
 キミが　どれだけ
 強くなったか　試してあげよう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T09:53:17" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -131,8 +131,8 @@
 今回は　一味　違うわ！▼
 さあ　勝負！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T12:13:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:03:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -166,15 +166,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのじゅどうを　たのしんで
-いるかい？▼
+			<Text>しろのじゅどうを
+たのしんで　いるかい？▼
 あれから　キミが　どこまで
 いけたのか　きょうみが　あるね▼
 さあ　せいちょうした
 キミの　ちからを　みせて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:24:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -186,14 +186,14 @@
 あれから　キミが　どこまで
 行けたのか　興味が　あるね▼
 さあ　成長した　キミの　ちからを
-見せて　もらおう！▼</Text>
+みせて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:23:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -227,10 +227,10 @@
 キミと　こうして　たたかえるのが
 うれしいわ▼
 こんどは　わたしが
-キミに　ちょうせんするわね▼</Text>
+キミに　ちょうせん　するわね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:36:25" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,12 +462,12 @@
 			Language="JPN_KANJI">
 			<Text>あなたも　戦い続けて　いるのね▼
 わたしも　まだ　強さの　意味は
-見つけられないわ▼
+みつけられないわ▼
 さあ　あなたの　目指す　強さを
-わたしに　見せてみなさい！▼</Text>
+わたしに　みせてみなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T06:56:30" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T03:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -570,16 +570,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>最強とは　何か？
-その　答えは　見つかったかい？▼
-その答えを　見つけるまで
+その　答えは　みつかったかい？▼
+その答えを　みつけるまで
 戦い続けると　しよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-25T07:37:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:00:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -613,14 +613,14 @@
 			<Text>また　挑戦してくれて
 うれしいよ▼
 さあ　あれから　どれだけ
-成長したか　見せてもらうよ！▼</Text>
+成長したか　みせてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-09T05:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -650,13 +650,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アドバイス　……
+			<Text>アドバイス……
 は　もう　いらないわね▼
 キミが　どれだけ　
 つよくなったか　ためしてあげるわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T09:53:51" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -664,13 +664,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アドバイス　……
+			<Text>アドバイス……
 は　もう　いらないわね▼
 キミが　どれだけ
 強くなったか　試してあげるわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T09:54:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -775,14 +775,14 @@
 あれから　キミが　どこまで
 行けたのか　知りたいわね▼
 さあ　成長した　キミの　力を
-見せて　もらうわ！▼</Text>
+みせて　もらうわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-25T04:26:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1053,16 +1053,16 @@
 			Language="JPN_KANJI">
 			<Text>キミも　戦い続けて　いるんだな▼
 わたしも　まだ　強さの　意味は
-見つけられないで　いるよ▼
+みつけられないで　いるよ▼
 さあ　キミの　目指す　強さを
-わたしに　見せてもらおう！▼</Text>
+わたしに　みせてもらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-25T06:59:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1148,11 +1148,11 @@
 			Language="JPN">
 			<Text>さいきょうとは　なにか？
 その　こたえは　みつけられたかしら？▼
-そのこたえを　みつけるまで
+その　こたえを　みつけるまで
 たたかいつづけましょう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:38:42" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -1161,16 +1161,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>最強とは　何か？
-その　答えは　見つけられたかしら？▼
-その答えを　見つけるまで
+その　答えは　みつけられたかしら？▼
+その答えを　みつけるまで
 戦い続けましょう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-25T07:39:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:04:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1251,16 +1251,15 @@
 たどりつけたようだね▼
 アドバイスは　やくに
 たったなかったかな？▼
-さあ　エリア2を　クリアして
-しょしんしゃ　そつぎょうを▽
-めざすんだ！▼</Text>
+さあ　エリア２を　クリアして
+しょしんしゃ　そつぎょうを　めざせ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T11:02:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1269,10 +1268,10 @@
 アドバイスは　役に
 立たなかったかな？▼
 さあ　エリア2を　クリアして
-初心者　卒業を　目指すんだ！▼</Text>
+初心者　卒業を　目指せ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T11:03:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1306,16 +1305,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた　……
+			<Text>いたたた……
 さいきんの　こどもは　ようしゃないわね▼
 それにしても　あれだけの　そしつを
 もっているこは　はじめて　みたわ▼
-あのこは　すえ　おそろしいわね　……▼
+あのこは　すえ　おそろしいわね……▼
 さあ　つぎは　キミの　ばんよ
 ぜんりょくで　ぶつかって　きなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T10:52:43" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1323,20 +1322,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた　……
+			<Text>痛たたた……
 最近の　子供は　容赦ないわね▼
 それにしても　あれだけの　素質を
-持っている子は　はじめて　見たわ▼
-あの子は　末恐ろしいわね　……▼
+持っている子は　はじめて　みたわ▼
+あの子は　末恐ろしいわね……▼
 さあ　次は　キミの　番よ
 全力で　ぶつかって　来なさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T10:52:43" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1450,7 +1449,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今日は　挑戦者が
-沢山　来るわね▼
+たくさん　来るわね▼
 さっきの　少年も　強かったけど
 キミは　どうかしら？▼
 わたしは　強い　トレーナーと
@@ -1458,8 +1457,8 @@
 さあ　キミの　実力を
 試させて　もらうわよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T08:18:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1498,13 +1497,13 @@
 ここから　さきは　かるいきもちで
 ちょうせんする　ばしょじゃ　ないぞ▼
 こどもは　エリア5で　あそんでな▼
-……　ほんきで　つぎの　エリアを
+……ほんきで　つぎの　エリアを
 めざしているのか？▼
 いいだろう　あいてを　してやる
 さあ　かかってきな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T08:54:09" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1517,13 +1516,13 @@
 ここから　先は　軽い気持ちで
 挑戦する　場所じゃ　ないぞ▼
 子供は　エリア5で　遊んでな▼
-……　本気で　次の　エリアを
+……本気で　次の　エリアを
 目指しているのか？▼
 いいだろう　相手を　してやる
 さあ　かかってきな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T08:54:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1689,14 +1688,14 @@
 			<Text>あなたは　たたかうのは　すきかしら？▼
 くるひも　くるひも　たたかったけど
 つよさって　なんなのかしら？▼
-……　ごめんなさい▼
+……ごめんなさい▼
 トレーナーが　こんなことを　
 かんがえてしまったら　おしまいね▼
 さあ　あなたの　つよさを
 わたしに　みせてみなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T09:39:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1707,18 +1706,18 @@
 			<Text>あなたは　戦うのは　好きかしら？▼
 来る日も　来る日も　戦ったけど
 強さって　何なのかしら？▼
-……　ごめんなさい▼
+……ごめんなさい▼
 トレーナーが　こんなことを
 考えてしまったら　おしまいね▼
 さあ　あなたの　強さを
-わたしに　見せてみなさい！▼</Text>
+わたしに　みせてみなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T09:39:20" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:04:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1923,7 +1922,7 @@
 たどりつけたようね▼
 アドバイスは　やくに
 たったなかったかしら？▼
-さあ　エリア2を　クリアして
+さあ　エリア２を　クリアして
 しょしんしゃ　そつぎょうを▽
 めざしなさい！▼</Text>
 			<TextModifiedBy
@@ -1931,8 +1930,8 @@
 				Time="2011-08-09T11:11:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1978,16 +1977,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた　……
+			<Text>いたたた……
 さいきんの　こどもは　ようしゃないな▼
 それにしても　あれだけの　そしつを
 もっているこは　はじめて　みたよ▼
-あのこは　すえ　おそろしいな　……▼
+あのこは　すえ　おそろしいな……▼
 さあ　つぎは　キミの　ばんだ
 ぜんりょくで　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T10:52:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1995,20 +1994,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた　……
+			<Text>痛たたた……
 最近の　子供は　容赦ないな▼
 それにしても　あれだけの　素質を
-持っている子は　はじめて　見たよ▼
-あの子は　末恐ろしいな　……▼
+持っている子は　はじめて　みたよ▼
+あの子は　末恐ろしいな……▼
 さあ　次は　キミの　番だ
 全力で　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T10:52:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2065,14 +2064,14 @@
 キミも　このビルの　最上階が
 気になるでしょう？▼
 それじゃ　キミが　どこまで　行けるか
-その　実力を　見せてもらうね！▼</Text>
+その　実力を　みせてもらうね！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-24T07:55:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2121,7 +2120,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今日は　挑戦者が
-沢山　来る日だな▼
+たくさん　来る日だな▼
 さっきの　少年も　強かったが
 キミは　どうかな？▼
 強い　トレーナーと　戦うのが
@@ -2129,8 +2128,8 @@
 さあ　キミの　実力を
 試させて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T08:10:15" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:05:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2236,12 +2235,12 @@
 ここは　おれのように　たたかいを
 もとめる　トレーナーには▽
 てんごくさ！▼
-さあ　おまえは　どんな　ポケモンを
-つかうんだ？▼
+さあ　おまえは
+どんな　ポケモンを　つかうんだ？▼
 おれを　たのしませてくれよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T09:09:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2256,12 +2255,12 @@
 もっと　強くなるんだ▼
 ここは　おれのように　戦いを
 求める　トレーナーには　天国さ！▼
-さあ　おまえは　どんな　ポケモンを
-使うんだ？▼
+さあ　おまえは
+どんな　ポケモンを　使うんだ？▼
 おれを　楽しませてくれよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T09:10:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2364,15 +2363,15 @@
 			<Text>キミは　たたかいは　すきかい？▼
 わたしは　くるひも　くるひも
 たたかって　きたが　つよさの　こたえが▽
-いまだに　みつからなくてね　……▼
+いまだに　みつからなくてね……▼
 おっと　すまない▼
 トレーナーが　こんなことを　
 かんがえてしまったら　おしまいだな▼
 さあ　キミの　めざす　つよさを
 わたしに　みせてもらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T10:19:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2383,19 +2382,19 @@
 			<Text>キミは　戦いは　好きかい？▼
 わたしは　来る日も　来る日も
 戦って　来たが　強さの　答えが▽
-いまだに　見つからなくてね　……▼
+いまだに　みつからなくてね……▼
 おっと　すまない▼
 トレーナーが　こんなことを　
 考えてしまったら　おしまいだな▼
 さあ　キミの　目指す　強さを
-わたしに　見せてもらおう！▼</Text>
+わたしに　みせてもらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-24T10:01:49" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2986,15 +2985,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　たたかいで　あなたの
-めざすものに▽
+			<Text>この　たたかいで
+あなたの　めざす　ものに▽
 すこしは　ちかづけたかしら？▼
 こたえが　みつかるまで
 なんどでも　あいてを　するわ▼
 また　たたかいましょう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:18:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:06:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3002,15 +3001,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　戦いで　あなたの
-目指すものに▽
+			<Text>この　戦いで
+あなたの　目指す　ものに▽
 少しは　近づけたかしら？▼
-答えが　見つかるまで
+答えが　みつかるまで
 何度でも　相手を　するわ▼
 また　戦いましょう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:19:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3114,14 +3113,14 @@
 キミは　まちがいなく　しろのじゅどう
 さいきょうの　トレーナーだ▼
 だが　イッシュさいきょうか
-どうかは　わからない　……▼
-まだみぬ　きょうしゃは　いくらでも
-いるからな▼
+どうかは　わからない……▼
+まだみぬ　きょうしゃは
+いくらでも　いるからな▼
 さいきょうを　めざし
-しょうじんするんだな▼</Text>
+しょうじん　するんだな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:46:40" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -3133,18 +3132,18 @@
 キミは　間違いなく
 白の樹洞　最強の　トレーナーだ▼
 だが　イッシュ最強か
-どうかは　わからない　……▼
-まだ見ぬ　強者は　いくらでも
-いるからな▼
+どうかは　わからない……▼
+まだみぬ　強者は
+いくらでも　いるからな▼
 最強を　目指し
 精進するんだな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:46:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:01:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3226,12 +3225,12 @@
 			Language="JPN">
 			<Text>つよくなったわね
 しょしんしゃの　ころが　なつかしいわ▼
-それとも　わたしが　よわくなったのかな▼
-わたしも　まけずに　ここで　しゅぎょうが
-ひつようね▼</Text>
+それとも　わたし　よわくなったのかな▼
+わたしも　まけずに
+ここでの　しゅぎょうが　ひつようね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T09:59:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3241,12 +3240,12 @@
 			Language="JPN_KANJI">
 			<Text>強くなったね
 初心者の　ころが　懐かしいわ▼
-それとも　わたしが　弱くなったのかな▼
-わたしも　負けずに　ここで　修行が
-必要ね▼</Text>
+それとも　わたし　弱くなったのかな▼
+わたしも　負けずに
+ここでの　修行が　必要ね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T10:02:32" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:07:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3341,8 +3340,8 @@
 いつか　さいじょうかいに
 とうたつしたら　おしえてね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:31:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:07:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3561,15 +3560,14 @@
 			<Text>はい　ごくろうさま▼
 あら？
 まだ　たたかいたりないかしら？▼
-どんよくですこと　……▼
+ごうよく　ですこと……▼
 それぐらいの　きもちが　ないと
-このさきは　つらいのかも▽
-しれないわね▼
+このさきは　つらいのかもね▼
 まあ　きがむいたら　おいでなさい
 おあいてしますわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:38:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3580,15 +3578,14 @@
 			<Text>はい　ご苦労様▼
 あら？
 まだ　戦い足りないのかしら？▼
-貪欲ですこと　……▼
+強欲　ですこと……▼
 それぐらいの　気持ちが　ないと
-この先は　つらいのかも▽
-知れないわね▼
+この先は　つらいのかもね▼
 まあ　気が向いたら　おいでなさい
 お相手しますわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:38:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3641,7 +3638,7 @@
 			<Text>この　戦いで　キミの
 目指すものに　少しは
 近づけたかい？▼
-答えが　見つかるまで
+答えが　みつかるまで
 何度でも　相手を　するよ▼
 また　戦おう▼</Text>
 			<TextModifiedBy
@@ -3649,8 +3646,8 @@
 				Time="2011-08-25T09:41:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3751,14 +3748,14 @@
 くろのまてんろう　さいきょうの▽
 トレーナーだわ▼
 だけど　イッシュさいきょうか
-どうかは　わからない　……▼
-まだみぬ　きょうしゃは　いくらでも
-いるわ▼
+どうかは　わからない……▼
+まだみぬ　きょうしゃは
+いくらでも　いるわ▼
 さいきょうを　めざし
-しょうじんしなさい▼</Text>
+しょうじん　しなさい▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:46:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -3770,17 +3767,17 @@
 あたなは　間違いなく
 黒の摩天楼　最強の　トレーナーだわ▼
 だけど　イッシュ最強か
-どうかは　わからない　……▼
-まだ見ぬ　強者は　いくらでも
-いるわ▼
+どうかは　わからない……▼
+まだみぬ　強者は
+いくらでも　いるわ▼
 最強を　目指し　精進しなさい▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T09:46:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:04:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3802,11 +3799,11 @@
 みせてもらったよ▼
 キミなら　つぎの　エリアも
 クリアできるだろう▼
-キミの　かつやくを　たのしみに
-しているよ▼</Text>
+キミの　かつやくを
+たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3816,14 +3813,14 @@
 			Language="JPN_KANJI">
 			<Text>驚いたよ　想像以上だ▼
 キミの　ポケモンの　力
-見せてもらったよ▼
+みせてもらったよ▼
 キミなら　次の　エリアも
 クリアできるだろう▼
-キミの　活躍を　楽しみに
-しているよ▼</Text>
+キミの　活躍を
+楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3859,9 +3856,9 @@
 			Language="JPN">
 			<Text>おめでとう
 これで　しょしんしゃ　そつぎょうね▼
-エリア2　クリアの　きねんに
-エリア3の　ヒントを　すこしあげるわ▼
-エリア3からは　エリアないの
+エリア２　クリアの　きねんに
+エリア３の　ヒントを　すこしあげるわ▼
+エリア３からは　エリアないの
 かいそうが　ふえるの▼
 いまいる　かいで　ボストレーナーを
 みつけられないときは▽
@@ -3875,8 +3872,8 @@
 				Time="2011-08-14T07:38:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3887,7 +3884,7 @@
 エリア3からは　エリア内の
 階層が　増えるの▼
 今いる　階で　ボストレーナーを
-見つけられないときは▽
+みつけられないときは▽
 別の　階層を　探しなさい▼
 別の　階層には　
 エレベーターで　移動してね▼
@@ -3898,8 +3895,8 @@
 				Time="2011-08-14T07:39:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3929,16 +3926,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた　……▼
+			<Text>いたたた……▼
 ほんとうに　さいきんの　こどもは
 ようしゃないんだな▼
 キミの　つよさも　よくわかったよ
-これで　エリア3も　クリアだ▼
+これで　エリア３も　クリアだ▼
 キミが　どこまで　いけるのか
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:26:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3946,16 +3943,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた　……▼
+			<Text>痛たたた……▼
 本当に　最近の　子供は
 容赦ないんだな▼
 キミの　強さも　よくわかったよ
-これで　エリア3も　クリアだ▼
+これで　エリア３も　クリアだ▼
 キミが　どこまで　行けるのか
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:26:54" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4048,14 +4045,14 @@
 			<Text>さっきの　しょうねんと　どうとう
 いや　それいじょうの　つよさだな▼
 キミが　ここで　たたかいつづければ
-あのしょうねんと　たたかうひが▽
+あのしょうねんと　たたかう　ひが▽
 くるかもしれないな▼
-キミたちの　たたかい　……
+キミたちの　たたかい……
 みてみたいものだ▼
 では　また　たたかおう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4068,12 +4065,12 @@
 キミが　ここで　戦い続ければ
 あの少年と　戦う日が▽
 来るかもしれないな▼
-キミたちの　戦い　……
-見てみたいものだ▼
+キミたちの　戦い……
+みてみたいものだ▼
 では　また　戦おう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T07:48:16" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4293,7 +4290,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばらしいつよさだ▼
+			<Text>すばらしい　つよさだ▼
 キミは　わたしの　さがす　つよさを
 もっているのかも　しれないな▼
 いぜん　たたかった　しょうねんも
@@ -4301,8 +4298,8 @@
 いつかおしえてくれ
 キミたちが　みつけた　つよさを▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:41:21" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4310,16 +4307,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>素晴らしい強さだ▼
+			<Text>素晴らしい　強さだ▼
 キミは　わたしの　探す　強さを
 持っているのかも　知れないな▼
 以前　戦った　少年も
 同じ　強さを　感じたよ▼
 いつか教えてくれ
-キミたちが　見つけた　強さを▼</Text>
+キミたちが　みつけた　強さを▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:41:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4447,7 +4444,7 @@
 トレーナーは　はじめてよ▼
 わたしの　生涯
 最高の　戦いだったわ▼
-最強への　答えは　見えたかしら？▼
+最強への　答えは　みえたかしら？▼
 あなたなら　いつか　最強への
 道が　開けるかも　知れないわね▼</Text>
 			<TextModifiedBy
@@ -4455,8 +4452,8 @@
 				Time="2011-08-25T08:17:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:03:42" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4478,11 +4475,11 @@
 みせてもらったわ▼
 キミなら　つぎの　エリアも
 クリアできるわ▼
-キミの　かつやくを　たのしみに
-しているわよ▼</Text>
+キミの　かつやくを
+たのしみに　しているわよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T05:38:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4492,18 +4489,18 @@
 			Language="JPN_KANJI">
 			<Text>驚いたわ　予想以上よ▼
 キミの　ポケモンの　力
-見せてもらったわ▼
+みせてもらったわ▼
 キミなら　次の　エリアも
 クリアできるわ▼
-キミの　活躍を　楽しみに
-しているわよ▼</Text>
+キミの　活躍を
+楽しみに　しているわよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T05:39:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:09:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4535,9 +4532,9 @@
 			Language="JPN">
 			<Text>おめでとう
 これで　しょしんしゃ　そつぎょうだな▼
-エリア2　クリアの　きねんに
-エリア3の　ヒントを　すこしおしえよう▼
-エリア3からは　エリアないの
+エリア２　クリアの　きねんに
+エリア３の　ヒントを　すこしおしえよう▼
+エリア３からは　エリアないの
 かいそうが　ふえるぞ▼
 いまいる　かいで　ボストレーナーを
 みつけられないときは▽
@@ -4551,8 +4548,8 @@
 				Time="2011-08-14T07:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4563,7 +4560,7 @@
 エリア3からは　エリア内の
 階層が　増えるぞ▼
 今いる　階で　ボストレーナーを
-見つけられないときは▽
+みつけられないときは▽
 別の　階層を　探すんだ▼
 別の　階層には　
 エレベーターで　移動するんだぞ▼
@@ -4574,8 +4571,8 @@
 				Time="2011-08-14T07:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -4609,7 +4606,7 @@
 ほんとうに　さいきんの　こどもは
 ようしゃないわね▼
 キミの　つよさも　よくわかったわ
-これで　エリア3も　クリアよ▼
+これで　エリア３も　クリアよ▼
 キミが　どこまで　いけるのか
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
@@ -4617,8 +4614,8 @@
 				Time="2011-08-14T07:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4992,14 +4989,14 @@
 以前　戦った　少年も
 同じ　強さを　感じたわ▼
 いつか　教えて　欲しいわね
-キミたちが　見つけた　強さを▼</Text>
+キミたちが　みつけた　強さを▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-25T10:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5123,7 +5120,7 @@
 トレーナーは　はじめてだ▼
 わたしの　生涯
 最高の　戦いだったよ▼
-最強への　答えは　見えたかい？▼
+最強への　答えは　みえたかい？▼
 キミなら　いつか　最強への
 道が　開けるかも　知れないな▼</Text>
 			<TextModifiedBy
@@ -5131,8 +5128,8 @@
 				Time="2011-08-25T08:49:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:05:26" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5161,15 +5158,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　疲れているようだ
+			<Text>ポケモンが　つかれているようだ
 回復して　あげようか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5308,15 +5305,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？　ポケモンが　お疲れね
+			<Text>あら？　ポケモンが　おつかれね
 回復して　あげましょうか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5618,7 +5615,7 @@
 同じく　施設　挑戦中の▽
 トレーナーの方が　いらっしゃいます▼
 ほかの　トレーナーの方は
-[Name:TrainerName Idx="0" ]様を　見かけましたら▽
+[Name:TrainerName Idx="0" ]様を　みかけましたら▽
 対戦を　挑んできます▼
 立ちふさがる　トレーナーを　倒し
 エリアクリアを　目指して　ください▼</Text>
@@ -5627,8 +5624,8 @@
 				Time="2011-08-01T10:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:23:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5646,25 +5643,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリアクリアには　エリアの
-どこかにいる　ボストレーナーを▽
-たおすことで▼
-つぎのエリアに　ちょうせんすることが
-できます▼
+			<Text>エリアクリアには
+エリアの　どこかにいる▽
+ボストレーナーを　たおすことで▼
+つぎの　エリアに
+ちょうせん　することが　できます▼
 エリアにいる　トレーナーと
 たいせんして　うでを　みがくもよし▼
 ボストレーナーを　さがしだし
 エリアクリアを　めざすもよし▼
 じぶんの　つよさの　げんかいに　
-ちょうせんしてみては▽
+ちょうせん　してみては▽
 いかがでしょうか？▼
 なお　しせつないでは　
 バッグにある　どうぐの　しようを▽
 きんししております▼
 あらかじめ　ごりょうしょうください▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:13:42" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -5717,14 +5714,14 @@
 しょうしょう　じつりょくが　たりません▼
 エリア[Digit:2digits Idx="2" ]には
 レベル[Digit:2digits Idx="3" ]いじょうの　ポケモンで▽
-ちょうせんしてください▼</Text>
+ちょうせん　してください▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:01:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:46:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T09:59:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5765,17 +5762,17 @@
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
 タマゴを　おもちの　ばあい
 エリア[Digit:2digits Idx="1" ]に▽
-ちょうせんすることは　できません▼
-もうしわけありませんが
+ちょうせん　することは　できません▼
+もうしわけ　ありませんが
 タマゴを　おあずけに　なってから▽
-ちょうせんしてください▼</Text>
+ちょうせん　してください▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T04:49:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T09:59:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5853,23 +5850,23 @@
 きねんに　こちらの　しょうひんを
 どうぞ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:58:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:01:30" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]様！▼
 エリア[Digit:2digits Idx="1" ]の　クリア
 おめでとうございます！▼
-記念に　こちらの　商品を
+記念に　こちらの　賞品を
 どうぞ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:59:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -5897,22 +5894,22 @@
 ひきつづき　ちょうせんを
 おまちして　おります▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:59:15" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:02:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>合せて　エリア[Digit:2digits ]への
+			<Text>あわせて　エリア[Digit:2digits ]への
 挑戦が　可能と　なりました▼
 引き続き　挑戦を
 お待ちして　おります▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:59:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:47:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6001,16 +5998,16 @@
 			<Text>こちらの　エレベーターには
 お気づきでしたか？▼
 この　エレベーターに　乗ることで
-エリア6以降の　挑戦が▽
+エリア６以降の　挑戦が▽
 可能となります▼
-ただし！　エリア6以降は
+ただし！　エリア６以降は
 我々の　管理外の　エリアのため▼
 どんな　トレーナーが　いるのか
 把握していない　状態です▼
 危険は　ないと　思うのですが　……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:54:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:47:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6045,14 +6042,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とにかく　エリア6いこうの　
+			<Text>とにかく　エリア６以降の　
 挑戦を　お考えなら▼
 ポケモンを　十分に　
 育ててからの▽
 挑戦を　お勧めします▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:36:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6073,14 +6070,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さま！▼
-……　まさか　すべての　エリアを？▼
+……まさか　すべての　エリアを？▼
 おどろきました
 おめでとうございます！▼
 エリアせいはを　たたえ
 こちらの　きねんひんを　さしあげます▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:58:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6089,14 +6086,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]様！▼
-……　まさか　全ての　エリアを？▼
+……まさか　全ての　エリアを？▼
 驚きました
 おめでとうございます！▼
 エリア制覇を　称え
 こちらの　記念品を　差し上げます▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:58:57" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:48:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6330,7 +6327,7 @@
 施設を　挑戦中の▽
 トレーナーが　いる▼
 他の　トレーナーは　お前を
-見かけたら　対戦を　挑んでくるぞ▼
+みかけたら　対戦を　挑んでくるぞ▼
 立ちふさがる　トレーナーを　倒し
 エリア突破を　目指すんだ▼</Text>
 			<TextModifiedBy
@@ -6338,8 +6335,8 @@
 				Time="2011-08-01T10:54:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6355,26 +6352,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリアクリアには　エリアの　
-どこかにいる　ボストレーナーを▽
-たおすことで▼
-つぎのエリアに　ちょうせんすることが
-できるぜ▼
+			<Text>エリアクリアには
+エリアの　　どこかに　いる▽
+ボストレーナーを　たおすことで▼
+つぎの　エリアに
+ちょうせん　することが　できるぜ▼
 エリアにいる　トレーナーと　
 たいせんして　うでを　みがくもよし▼
 ボストレーナーを　さがしだし
 エリアクリアを　めざすもよし▼
 じぶんの　つよさの　げんかいに　
-ちょうせんしてみな▼
+ちょうせん　してみな▼
 よのなかには　つよいやつは
-たくさんいるからな▼
+たくさん　いるからな▼
 そうそう　しせつないでは
 バッグの　どうぐは▽
 つかえないからな▼
 おぼえておけよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:55:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6382,11 +6379,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリアクリアには　エリアの
-どこかにいる　ボストレーナーを▽
-倒すことで▼
-次のエリアに　挑戦することが
-できるぜ▼
+			<Text>エリアクリアには
+エリアの　どこかにいる▽
+ボストレーナーを　倒すことで▼
+次の　エリアに
+挑戦することが　できるぜ▼
 エリアにいる　トレーナーと　
 対戦して　腕を　磨くもよし▼
 ボストレーナーを　探しだし
@@ -6394,14 +6391,13 @@
 自分の　強さの　限界に　　
 挑戦してみな▼
 世の中には　強いやつは　
-沢山いるからな▼
+たくさん　いるからな▼
 そうそう　施設内では
-バッグの　どうぐは▽
-使えないからな▼
-覚えておけよ▼</Text>
+バッグの　道具は▽
+使えないからな！　覚えておけよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:56:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:13:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6424,18 +6420,18 @@
 			<Text>[Name:TrainerName Idx="0" ]！▼
 ちょっとまて！　つれている
 [Name:PokemonNickname Idx="1" ]じゃ▼
-エリア[Digit:2digits Idx="2" ]に　ちょうせんするには
-じつりょくぶそくだな▼
+エリア[Digit:2digits Idx="2" ]に　ちょうせん　するには
+じつりょくぶそく　だな▼
 エリア[Digit:2digits Idx="2" ]には
 レベル[Digit:2digits Idx="3" ]いじょうの　ポケモンで▽
-ちょうせんしてくれ▼</Text>
+ちょうせん　してくれ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:43:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
+				Time="2011-08-22T12:43:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6475,29 +6471,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
 タマゴを　もっているときは
-エリア[Digit:2digits Idx="1" ]に　ちょうせんすることは▽
-できないぞ▼
-わるいが　タマゴを　あずけてから
-ちょうせんしてくれ▼</Text>
+エリア[Digit:2digits Idx="1" ]に
+ちょうせんは　できないぞ▼
+わいが　タマゴを　あすけてから
+ちょうせん　してくれ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:17:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:14:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]！▼
 タマゴを　持っているときは
-エリア[Digit:2digits Idx="1" ]に　挑戦することは▽
-できないぞ▼
+エリア[Digit:2digits Idx="1" ]に
+挑戦は　できないぞ▼
 悪いが　タマゴを　預けてから
 挑戦してくれ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:17:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:14:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6559,12 +6555,12 @@
 クリアの　きねんだ
 もっていきな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T11:45:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6597,26 +6593,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それと　エリア[Digit:2digits ]への
-ちょうせんが　できるように　なったぞ▼
-つぎの　エリアも　ちょうせんして
-くれよな▼</Text>
+			<Text>それと　エリア[Digit:2digits ]へ
+ちょうせん　できるように　なったぞ▼
+つぎの　エリアも　
+ちょうせん　してくれよな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T11:46:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それと　エリア[Digit:2digits ]への
-挑戦が　できるように　なったぞ▼
-次の　エリアも　挑戦して　くれよな▼</Text>
+			<Text>それと　エリア[Digit:2digits ]へ
+挑戦　できるように　なったぞ▼
+次の　エリアも　
+挑戦してくれよな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T11:46:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:11:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6639,13 +6636,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]▼
-じつは　このしせつには
+じつは　この　しせつには
 いっぱんには　こうかいしていない▽
 とくべつな　エリアが　あるんだ▼
 それが　エリア６いこうの　エリアだ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:03:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:17:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6689,11 +6686,11 @@
 ただし！　エリア６いこうは
 おれたちの　かんりがいの　エリアだ▼
 すまんが　どんな　トレーナーが　いるのか
-よくわからないんだ▼
-きけんは　ないと　おもうがな　……▼</Text>
+よく　わからないんだ▼
+きけんは　ないと　おもうがな……▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:03:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6708,11 +6705,11 @@
 ただし！　エリア６以降は
 おれたちの　管理外の　エリアだ▼
 すまんが　どんな　トレーナーが　いるのか
-よくわからないんだ▼
-危険は　ないと　思うがな　…▼</Text>
+よく　わからないんだ▼
+危険は　ないと　思うがな…▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:04:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:17:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6777,14 +6774,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
-……　まさか　すべての　エリアを？▼
+……まさか　すべての　エリアを？▼
 こいつは　おどろいだぜ
-たいしたやつだ　おまえは！▼
+たいした　やつだ　おまえは！▼
 エリアせいはの　きねんだ
 こいつを　もっていきな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:59:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:17:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6793,14 +6790,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]！▼
-……　まさか　全ての　エリアを？▼
+……まさか　すべての　エリアを？▼
 こいつは　驚いたぜ
-大した奴だ　お前は▼
+大した　奴だ　お前は▼
 エリア制覇の　記念だ
 こいつを　持っていきな！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:59:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:17:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6824,10 +6821,10 @@
 			Language="JPN">
 			<Text>これで　まんぞくするなよ？▼
 さいきょうの　トレーナーを　めざし
-しょうじんしろよ！▼</Text>
+しょうじん　しろよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:59:31" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7050,12 +7047,12 @@
 			Language="JPN">
 			<Text>[Digit:2digits ]かい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T04:00:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -7100,12 +7097,12 @@
 			Language="JPN">
 			<Text>ちか[Digit:2digits ]かい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:43:02" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:18:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -7283,12 +7280,12 @@
 			Language="JPN">
 			<Text>エリア[Digit:2digits ]</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T04:00:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:18:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:47:36" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -7351,7 +7348,7 @@
 			Language="JPN">
 			<Text>ん？　キミは
 あたらしい　ちょうせんしゃかい？▼
-ふむふむ　……▼
+ふむふむ……▼
 まずは　なにを　すればいいか
 わからないって　かおを　しているね▼
 よし！
@@ -7361,15 +7358,16 @@
 あることは　しってるね？▼
 ボストレーナーを　やみくもに
 さがすのも　いいけど▼
-まずは　ほかの　トレーナーと
-たたかってごらん▼
-かれらは　このばしょを　よくしっている▼
-ボストレーナーの　ばしょも
-しっているはずだよ▼
+まずは　ほかの
+トレーナーと　たたかってごらん▼
+かれらは　この　ばしょを
+よく　しっている▼
+ボストレーナーの
+ばしょも　しっているはずだよ▼
 それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:17:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:19:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7379,7 +7377,7 @@
 			Language="JPN_KANJI">
 			<Text>ん？　キミは
 新しい　挑戦者かい？▼
-ふむふむ　……▼
+ふむふむ……▼
 まずは　なにを　すればいいか
 わからないって　顔を　しているね▼
 よし！
@@ -7387,17 +7385,18 @@
 エリアを　クリアするには
 ボストレーナーを　倒す必要が▽
 あることは　知ってるね？▼
-ボストレーナーを　闇雲に
+ボストレーナーを　がむしゃらに
 探すのも　いいけど▼
-まずは　他の　トレーナーと
-戦ってごらん▼
-かれらは　この場所を　よく知っている▼
+まずは
+他の　トレーナーと　戦ってごらん▼
+かれらは
+この　場所を　よく知っている▼
 ボストレーナーの　場所も
 知っているはずだよ▼
 それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:17:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7452,15 +7451,16 @@
 			Language="JPN_KANJI">
 			<Text>あら？　キミが
 うわさの　挑戦者ね▼
-なかなか　見所が　あるって
-聞いているわよ▼
+なかなか　みどころが　あるって
+きいているわよ▼
 わたしも　初心者の
 キミに　アドバイス　してあげる▼
 ここに　エレベーターが　あるわね？▼
 もし　キミが　これ以上の
 挑戦は　危険だと　思ったら▽
 エレベーターで　受付に　戻りなさい▼
-ここでの　勝負は　真剣勝負！▼
+ここでの　勝負は
+真剣勝負！▼
 負けたら　お金を　取られるわ▼
 一流の　トレーナーは
 引き際も　心得て　いるものよ▼
@@ -7469,12 +7469,12 @@
 キミが　どこまで　がんばれるか
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:23:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T08:27:36" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7499,19 +7499,19 @@
 わたしは　この　しせつを
 しらべているんだ▼
 キミは　ぎもんに　おもわないかい？▼
-2ねんまえには　こんな　たてものは
+２ねんまえには　こんな　たてものは
 なかっただろう？▼
 いったい　なんの　もくてきで
-この　たてものを　つくったのか　……▼
+この　たてものを　つくったのか……▼
 ほんとうに　ここは　なぞだらけだよ▼
 それじゃ　またあおう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:54:04" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:41" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -7524,12 +7524,12 @@
 2年前には　こんな　建物は
 なかっただろう？▼
 いったい　何の　目的で
-この　建物を　作ったのか　……▼
+この　建物を　作ったのか……▼
 本当に　ここは　謎だらけだよ▼
 それじゃ　また会おう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7587,22 +7587,22 @@ NPC：ASSISTANTM
 その　目的なんだが
 まだ　はっきりは　わからないんだ▼
 うわさでは　トレーナーの　戦いを
-どこかで　見て　楽しんでいるとか▼
+どこかで　みて　楽しんでいるとか▼
 チャンピオンを　越える
 最強の　トレーナーを▽
 探しているとか▼
 いろいろな　うわさが　あるんだが
 どれも　確証が　なくてね▼
 調べれば　調べるほど
-面白い　場所だよ　ここは▼
+おもしろい　場所だよ　ここは▼
 それじゃ　また会おう▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:28:16" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:20:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T08:27:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7678,7 +7678,7 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あら？　あなたは
 あたらしい　ちょうせんしゃね？▼
-あらら　……▼
+あらら……▼
 ここで　なにを　すればいいか
 わからないって　かおを　してるわね▼
 いいわ！▼
@@ -7689,16 +7689,16 @@ NPC：MUGENBOSS（バンジロウ）
 あるのは　しってるわね？▼
 ボストレーナーを　がんばって
 さがしても　いいんだけど▼
-まずは　ほかの　トレーナーと
-たたかってみて▼
+まずは　ほかの
+トレーナーと　たたかってみて▼
 ここにいる　ひとなら　このばしょを
 よく　しっているわ▼
-ボストレーナーの　ばしょも
-しっているはずよ▼
-それじゃ　がんばてね▼</Text>
+ボストレーナーの
+ばしょも　しっているはずよ▼
+それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T08:22:41" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:21:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7708,7 +7708,7 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>あら？　あなたは
 新しい　挑戦者ね？▼
-あらら　……▼
+あらら……▼
 ここで　なにを　すればいいか
 わからないって　顔を　してるわね▼
 いいわ！▼
@@ -7719,16 +7719,16 @@ NPC：MUGENBOSS（バンジロウ）
 あるのは　知ってるわね？▼
 ボストレーナーを　がんばって
 探しても　いいんだけど▼
-まずは　ほかの　トレーナーと
-戦ってみて▼
+まずは　他の
+トレーナーと　戦ってみて▼
 ここいる　人なら　この場所を
 よく　知っているわ▼
-ボストレーナーの　場所も
-知っているはずよ▼
-それじゃ　がんばてね▼</Text>
+ボストレーナーの
+場所も　知っているはずよ▼
+それじゃ　がんばってね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T08:23:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7757,10 +7757,10 @@ NPC：MUGENBOSS（バンジロウ）
 でも　まだまだ　しょしんしゃの　キミに
 いいことを　おしえて　あげよう▼
 ここに　エレベーターが　あるだろう？▼
-もし　キミが　これいじょうの
-ちょうせんは　きけんだと　おもったら▼
-エレベーターで　うけつけに
-もどると　いい▼
+もし　キミが　これいじょうは
+きけんだと　おもったら▼
+エレベーターで
+うけつけに　もどると　いい▼
 ここでの　しょうぶは
 しんけんしょうぶだ▼
 エリアの　ちょうせんは
@@ -7770,8 +7770,8 @@ NPC：MUGENBOSS（バンジロウ）
 それじゃ　キミと　たたかえるのを
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-28T02:22:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7781,14 +7781,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ん？　キミが　
 うわさの　挑戦者かい？▼
-見かけに　よらず　強いらしいね▼
+みかけに　よらず　強いらしいね▼
 でも　まだまだ　初心者の　キミに
 いいことを　教えて　あげよう▼
 ここに　エレベーターが　あるだろう？▼
-もし　キミが　これ以上の
-挑戦は　危険だと　思ったら▼
-エレベーターで　受付に
-戻ると　いい▼
+もし　キミが　これ以上は
+危険だと　思ったら▼
+エレベーターで
+受付に　戻ると　いい▼
 ここでの　勝負は
 真剣勝負だ▼
 エリアの　挑戦は
@@ -7798,12 +7798,12 @@ NPC：MUGENBOSS（バンジロウ）
 それじゃ　キミと　戦えるのを
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-28T02:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:31" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7830,7 +7830,7 @@ NPC：MUGENBOSS（バンジロウ）
 それにしても　なんのために
 このばしょを▽
 ていきょうして　いるんだろうな▼
-2ねんまえには　こんなばしょは
+２ねんまえには　こんなばしょは
 なかっただろう？▼
 ふしぎだよな▼
 まあ　おれは　しゅぎょうが
@@ -7841,8 +7841,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:32:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:10:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -7913,7 +7913,7 @@ NPC：FIGHTERM
 			Language="JPN_KANJI">
 			<Text>おっと　また会えたな
 探索は　進んでいるか？▼
-そうそう　面白い話を
+そうそう　おもしろい話を
 聞いたから　教えてやるよ▼
 うわさなんだが　この場所は
 まだまだ　探索が　終って▽
@@ -7932,8 +7932,8 @@ NPC：FIGHTERM
 				Time="2011-08-09T01:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T08:27:40" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:22:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8036,7 +8036,7 @@ NPC：MUGENBOSS（バンジロウ）
 ここでは　どうぐが
 使えないからね▼
 ポケモンも　キミも　
-そろそろ　疲れて▽
+そろそろ　つかれて▽
 来たんじゃないかな？▼
 そんなときは　ナースや
 ドクターを　探してごらん▼
@@ -8050,8 +8050,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-09T01:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:18" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8109,7 +8109,7 @@ Xメニューを　みてみて▼
 元気な　ポケモンも　いない！▼
 今　すぐ　ここから　出たい！▼
 そんなときって　あるわよね？▼
-Xメニューを　見てみて▼
+Ｘメニューを　みてみて▼
 普段とは　違う　ボタンが
 あるでしょう？▼
 これが　リタイアボタンよ▼
@@ -8121,12 +8121,12 @@ Xメニューを　見てみて▼
 それじゃ　キミが　わたしの　ところに
 来るのを　楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-24T10:06:36" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:33" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8174,7 +8174,7 @@ Xメニューを　見てみて▼
 そうそう　ここでは　どうぐが
 使えないのは　知ってる？▼
 ポケモンも　あなたも
-そろそろ　疲れて▽
+そろそろ　つかれて▽
 来たんじゃ　ないかしら？▼
 そんなときは　ナースや
 ドクターを　探してみて▼
@@ -8188,8 +8188,8 @@ Xメニューを　見てみて▼
 				Time="2011-08-09T01:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-07T07:33:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8218,8 +8218,8 @@ Xメニューを　見てみて▼
 			<Text>がんばっているようだね▼
 キミなら　ここまで　くると
 おもっていたよ▼
-それじゃ　もうひとつ　ヒントを
-あげよう▼
+それじゃ
+もうひとつ　ヒントを　あげよう▼
 みちに　まよった！▼
 げんきな　ポケモンも　いない！▼
 いま　すぐ　ここから　でたい！▼
@@ -8237,8 +8237,8 @@ Xメニューを　みてごらん▼
 それじゃ　ボクは　ちょうせんしゃを
 またせて　もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-24T10:06:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8249,14 +8249,14 @@ Xメニューを　みてごらん▼
 			<Text>がんばっているようだね▼
 キミなら　ここまで　来ると
 思っていたよ▼
-それじゃ　もうひとつ　ヒントを
-あげよう▼
+それじゃ
+もうひとつ　ヒントを　あげよう▼
 道に　迷った！▼
 元気な　ポケモンも　いない！▼
 今　すぐ　ここから　出たい！▼
 今まで　そんなことに
 ならなかったかい？▼
-Xメニューを　見てごらん▼
+Xメニューを　みてごらん▼
 普段とは　違う　ボタンが
 あるだろう？▼
 これが　リタイアボタンだ▼
@@ -8268,8 +8268,8 @@ Xメニューを　見てごらん▼
 それじゃ　ボクは　挑戦者を
 待たせて　もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-24T10:06:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8406,14 +8406,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>え？　ボストレーナーなら
-上の階で　見たよ</Text>
+上の階で　みたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:28:53" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8441,14 +8441,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーなら
-上の階で　見たわよ</Text>
+上の階で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:01:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8476,14 +8476,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-さっき　上の階で　見かけたよ</Text>
+さっき　上の階で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:02:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8603,11 +8603,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？　ひみつじゃぞ
-うえのかいじゃ</Text>
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
+うえの　かいじゃ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T09:44:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8615,11 +8616,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？　秘密じゃぞ
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 上の階じゃ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T09:44:27" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8686,14 +8688,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>え？　ボストレーナーなら
-下の階で　見たよ</Text>
+下の階で　みたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8721,14 +8723,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーなら
-下の階で　見たわ</Text>
+下の階で　みたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:42" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8756,14 +8758,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-さっき　下の階で　見かけたよ</Text>
+さっき　下の階で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:08:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:42" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -8883,11 +8885,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ　したのかいじゃ</Text>
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
+したのかい　じゃ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:09:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:23:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8895,11 +8898,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ　下の階じゃ</Text>
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
+下の階じゃ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:09:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:23:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9164,10 +9168,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-はて　どこかで　みたような　……</Text>
+はて　どこかで　みたような……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T09:44:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9176,14 +9180,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-はて　どこかで　見たような　……</Text>
+はて　どこかで　みたような……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T09:44:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:57" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9198,11 +9202,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
-まえに　みましたわ　どこだったかしら</Text>
+			<Text>ボストレーナー？▼
+まえに　みましたわ▼
+どこだったかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:09:54" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9210,15 +9215,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？　どこかで　見たわよ
-どこだったかしら　……</Text>
+			<Text>ボストレーナー？▼
+前に　みましたわ▼
+どこだったかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T09:44:47" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:15" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9240,20 +9246,20 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:54" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーが　見つからないの？
+			<Text>ボストレーナーが　みつからないの？
 [Digit:3digits Idx="0" ]階にいたよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:57" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9276,20 +9282,20 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーが　いないの？
-[Digit:3digits Idx="0" ]階で　見たわよ</Text>
+[Digit:3digits Idx="0" ]階で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9312,8 +9318,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9348,20 +9354,20 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-[Digit:3digits Idx="0" ]階で　見かけたわよ</Text>
+[Digit:3digits Idx="0" ]階で　みかけたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9384,8 +9390,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9420,8 +9426,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9456,20 +9462,20 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーじゃと？
-ああ　[Digit:3digits Idx="0" ]階で　見かけたぞ</Text>
+ああ　[Digit:3digits Idx="0" ]階で　みかけたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9492,8 +9498,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-08-14T08:15:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:36:21" />
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -9618,14 +9624,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-上の方で　見かけたよ</Text>
+上の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:55" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9660,14 +9666,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　探しているの？
-上の方で　見たわよ</Text>
+上の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:55" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9702,14 +9708,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　上の方で　見たぞ</Text>
+それなら　上の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:55" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9830,14 +9836,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-上の方で　見ましたわ</Text>
+上の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:30:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9956,14 +9962,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-下の方で　見かけたよ</Text>
+下の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9998,14 +10004,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　探しているの？
-下の方で　見たわよ</Text>
+下の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10040,14 +10046,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　下の方で　見たぞ</Text>
+それなら　下の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:57" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10111,12 +10117,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 したのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:22:49" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10124,12 +10130,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼　
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 下の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:31:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10168,14 +10174,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-下の方で　見ましたわ</Text>
+下の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:57" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10294,14 +10300,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-右の方で　見かけたよ</Text>
+右の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10336,14 +10342,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　探しているの？
-右の方で　見たわよ</Text>
+右の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:31:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10378,14 +10384,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　右の方で　見たぞ</Text>
+それなら　右の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:32:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10449,12 +10455,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 みぎのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:23:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10462,12 +10468,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 右の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:32:16" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10506,14 +10512,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-右の方で　見ましたわ</Text>
+右の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:32:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10632,14 +10638,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-左の方で　見かけたよ</Text>
+左の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:32:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10674,14 +10680,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　探しているの？
-左の方で　見たわよ</Text>
+左の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:32:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10716,14 +10722,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　左の方で　見たぞ</Text>
+それなら　左の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10787,12 +10793,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 ひだりのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:24:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10800,12 +10806,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 左の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:33:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10844,14 +10850,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-左の方で　見ましたわ</Text>
+左の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10970,14 +10976,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-右上の方で　見かけたよ</Text>
+右上の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11012,14 +11018,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　さがしているの？
-右上の方で　見たわよ</Text>
+右上の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:33:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11054,14 +11060,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　右上の方で　見たぞ</Text>
+それなら　右上の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11126,12 +11132,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？　
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 みぎうえのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:25:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11139,12 +11145,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 右上の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:33:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11183,14 +11189,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-右上の方で　見ましたわ</Text>
+右上の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:02" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11309,14 +11315,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-右下の方で　見かけたよ</Text>
+右下の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:02" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11351,14 +11357,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　さがしているの？
-右下の方で　見たわよ</Text>
+右下の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11393,14 +11399,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　右下の方で　見たぞ</Text>
+それなら　右下の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11465,12 +11471,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 みぎしたのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:26:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11478,12 +11484,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 右下の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:34:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:25:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11522,14 +11528,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-右下の方で　見ましたわ</Text>
+右下の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11648,14 +11654,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-左上の方で　見かけたよ</Text>
+左上の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:04" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11690,14 +11696,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　さがしているの？
-左上の方で　見たわよ</Text>
+左上の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:04" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11732,14 +11738,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　左上の方で　見たぞ</Text>
+それなら　左上の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:04" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11804,12 +11810,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーじゃと？
-ひみつじゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+ひみつじゃぞ
 ひだりうえのほうに　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:27:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11817,12 +11823,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーじゃと？
-秘密じゃぞ▼
+			<Text>ボストレーナーじゃと？▼
+秘密じゃぞ
 左上の方に　おるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:35:41" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -11861,14 +11867,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-左上の方で　見ましたわ</Text>
+左上の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:35:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -11987,14 +11993,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-左下の方で　見かけたよ</Text>
+左下の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:06" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12029,14 +12035,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーを　さがしているの？
-左下の方で　見たわよ</Text>
+左下の方で　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:36:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:06" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12071,14 +12077,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーかい？
-それなら　左下の方で　見たぞ</Text>
+それなら　左下の方で　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:36:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:06" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12200,14 +12206,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーですって？
-左下の方で　見ましたわ</Text>
+左下の方で　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:20:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12230,11 +12236,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>いいことを　おしえてあげるよ▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-そだててたよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　そだててたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:46:30" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12243,11 +12249,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えてあげるよ▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-育ててたよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　育ててたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:46:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12268,11 +12274,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>いいことを　おしえてあげる▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-つかってくるわよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　つかってくるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:47:05" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12281,11 +12287,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えてあげる▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-使ってくるわよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　使ってくるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:47:16" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12306,11 +12312,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　うわさなんだけど▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-もってるらしいよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　つれているらしいよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:22:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12319,11 +12325,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これは　うわさだけど▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-持っているらしいよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　連れているらしいよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:22:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12382,11 +12388,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>さっき　たたかったんだけど▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-だしてくるよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　だしてくるよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:49:33" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12395,11 +12401,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さっき　戦ったんだけど▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-だしてくるよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　だしてくるよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:50:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12420,11 +12426,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　ひみつなんだけど▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-だしてきたわよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　だしてきたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:51:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12471,11 +12477,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ひとつ　助言してやろう▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-使ってくるぞ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　使ってくるぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:58:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12496,11 +12502,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>すこし　ヒントを　あげましょう▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-つかってくるわよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　つかってくるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:00:56" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12509,11 +12515,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少し　ヒントを　あげましょう▼
-ボストレーナーは　[Name:PokemonName Idx="1" ]を
-使ってくるわよ</Text>
+ボストレーナーは
+[Name:PokemonName Idx="1" ]を　使ってくるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:01:21" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -12533,12 +12539,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え　かいふくしたいの？▼
+			<Text>え　かいふく　したいの？▼
 それなら　うえのほうに
 おいしゃさんが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:10:26" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12548,10 +12554,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　上の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:11:08" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12577,12 +12583,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え　かいふくしたいの？▼
+			<Text>え　かいふく　したいの？▼
 それなら　うえのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:11:18" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12592,10 +12598,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　上の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:11:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12622,11 +12628,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 うえのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:22:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12634,16 +12640,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-上の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+上の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:22:49" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:09" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12666,11 +12672,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 うえのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:23:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12678,16 +12684,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-上の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+上の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12710,10 +12716,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　うえのほうで　みたぞ</Text>
+ドクターなら　うえのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:26:22" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12721,15 +12727,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　上の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　上の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:26:15" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12752,11 +12758,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 うえのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:27:41" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12765,15 +12771,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 上の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:27:31" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12796,11 +12802,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-うえのほうに　いしゃが　いるから
+うえのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:28:48" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12809,15 +12815,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-上の方に　医者が　いるから
-見てもらって来い</Text>
+上の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:29:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:27:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12841,10 +12847,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 うえのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:30:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12852,16 +12858,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
+			<Text>あらあら　おつかれね▼
 上の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:30:34" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:06:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -12885,10 +12891,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　したのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12898,10 +12904,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　下の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:30:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12929,10 +12935,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　したのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12942,10 +12948,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　下の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:30:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12972,11 +12978,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 したのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -12984,16 +12990,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-下の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+下の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13016,11 +13022,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 したのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13028,16 +13034,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-下の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+下の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:33:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13060,10 +13066,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　したのほうで　みたぞ</Text>
+ドクターなら　したのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13071,15 +13077,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　下の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　下の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13102,11 +13108,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 したのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13115,15 +13121,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 下の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13146,11 +13152,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-したのほうに　いしゃが　いるから
+したのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13159,15 +13165,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-下の方に　医者が　いるから
-見てもらって来い</Text>
+下の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13191,10 +13197,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 したのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13202,12 +13208,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-下の方に　行って御覧なさい
+			<Text>あらあら　おつかれね▼
+下の方に　行ってごらんなさい
 お医者様が　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:04:35" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13235,10 +13241,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13248,10 +13254,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　右の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13279,10 +13285,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13292,10 +13298,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　右の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13322,11 +13328,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 みぎのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:29:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13334,16 +13340,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
+			<Text>つかれてる？▼
 お医者さんなら
-右の方で　見かけたよ</Text>
+右の方で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-23T02:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:43" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13366,11 +13372,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 みぎのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13378,16 +13384,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-右の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+右の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:43" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13410,10 +13416,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　みぎのほうで　みたぞ</Text>
+ドクターなら　みぎのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13421,15 +13427,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　右の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　右の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13452,11 +13458,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 みぎのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13465,15 +13471,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 右の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13496,11 +13502,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-みぎのほうに　いしゃが　いるから
+みぎのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13509,15 +13515,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-右の方に　医者が　いるから
-見てもらって来い</Text>
+右の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13541,10 +13547,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 みぎのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13552,16 +13558,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-右の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+			<Text>あらあら　おつかれね▼
+右の方に　行ってごらんなさい
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:06:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:34:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:07:45" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13585,10 +13591,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13629,10 +13635,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13672,11 +13678,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 ひだりのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13684,16 +13690,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-左の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+左の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:58" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13716,11 +13722,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 ひだりのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13728,16 +13734,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-左の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+左の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13760,10 +13766,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　ひだりのほうで　みたぞ</Text>
+ドクターなら　ひだりのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13771,15 +13777,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　左の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　左の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13802,11 +13808,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 ひだりのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13815,15 +13821,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 左の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13846,11 +13852,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-ひだりのほうに　いしゃが　いるから
+ひだりのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13859,15 +13865,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-左の方に　医者が　いるから
-見てもらって来い</Text>
+左の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13891,10 +13897,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 ひだりのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13902,16 +13908,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
+			<Text>あらあら　おつかれね▼
 左の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13935,10 +13941,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎうえのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13948,10 +13954,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　右上の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13979,10 +13985,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎうえのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13992,10 +13998,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　右上の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14022,11 +14028,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 みぎうえのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14034,16 +14040,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-右上の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+右上の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:19" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14066,11 +14072,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 みぎうえのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14078,16 +14084,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-右上の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+右上の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:44:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:20" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14110,10 +14116,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　みぎうえのほうで　みたぞ</Text>
+ドクターなら　みぎうえのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14121,15 +14127,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　右上の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　右上の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:21" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14152,11 +14158,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 みぎうえのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14165,15 +14171,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 右上の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:21" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14196,11 +14202,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-みぎうえのほうに　いしゃが　いるから
+みぎうえのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14209,15 +14215,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-右上の方に　医者が　いるから
-見てもらって来い</Text>
+右上の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:23" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14241,10 +14247,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 みぎうえのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14252,16 +14258,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-右上の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+			<Text>あらあら　おつかれね▼
+右上の方に　行ってごらんなさい
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:09:28" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:24" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14285,10 +14291,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎしたのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14298,10 +14304,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　右下の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14329,10 +14335,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　みぎしたのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14342,10 +14348,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　右下の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14372,11 +14378,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 みぎしたのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14384,16 +14390,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-右下の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+右下の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:49" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14416,11 +14422,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 みぎしたのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14428,16 +14434,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-右下の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+右下の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14460,10 +14466,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　みぎしたのほうで　みたぞ</Text>
+ドクターなら　みぎしたのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14471,15 +14477,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　右下の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　右下の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:50" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14502,11 +14508,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 みぎしたのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14515,15 +14521,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 右下の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:51" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14546,11 +14552,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-みぎしたのほうに　いしゃが　いるから
+みぎしたのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14559,15 +14565,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-右下の方に　医者が　いるから
-見てもらって来い</Text>
+右下の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14591,10 +14597,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 みぎしたのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:38:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14602,16 +14608,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-右下の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+			<Text>あらあら　おつかれね▼
+右下の方に　行ってごらんなさい
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:10:52" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:11:53" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14635,10 +14641,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりうえのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14648,10 +14654,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　左上の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14679,10 +14685,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりうえのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14692,10 +14698,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　左上の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14722,11 +14728,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 ひだりうえのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14734,16 +14740,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-左上の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+左上の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:38" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14766,11 +14772,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 ひだりうえのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14778,16 +14784,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-左上の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+左上の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14810,10 +14816,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　ひだりうえのほうで　みたぞ</Text>
+ドクターなら　ひだりうえのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14821,15 +14827,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　左上の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　左上の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14852,11 +14858,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 ひだりうえのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14865,15 +14871,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 左上の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:39" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14896,11 +14902,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>なんじゃ？　へばったのか？▼
-ひだりうえのほうに　いしゃが　いるから
+ひだりうえのほうに　ドクターが　いるから
 みてもらってこい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14909,15 +14915,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-左上の方に　医者が　いるから
-見てもらって来い</Text>
+左上の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:40" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14941,10 +14947,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 ひだりうえのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14952,16 +14958,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-左上の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+			<Text>あらあら　おつかれね▼
+左上の方に　行ってごらんなさい
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:14:41" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14985,10 +14991,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりしたのほうに
-おいしゃさんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14998,10 +15004,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？▼
 それなら　左下の方に
-お医者さんが　いたよ</Text>
+ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15029,10 +15035,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>え　かいふくしたいの？▼
 それなら　ひだりしたのほうに
-おいしゃさんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15042,10 +15048,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>え　回復したいの？
 それなら　左下の方に
-お医者さんが　いたわよ</Text>
+ドクターが　いたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15072,11 +15078,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれてる？▼
-おいしゃさんなら
+ドクターなら
 ひだりしたのほうで　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15084,16 +15090,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れてる？▼
-お医者さんなら
-左下の方で　見かけたよ</Text>
+			<Text>つかれてる？▼
+ドクターなら
+左下の方で　みかけたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:59" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15116,11 +15122,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさま▼
-おいしゃさんなら
+ドクターなら
 ひだりしたのほうで　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15128,16 +15134,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れ様▼
-お医者さんなら
-左下の方で　見かけたわよ</Text>
+			<Text>おつかれさま▼
+ドクターなら
+左下の方で　みかけたわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:41:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:16:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:36:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15160,10 +15166,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>つかれているようだな
-いしゃなら　ひだりしたのほうで　みたぞ</Text>
+ドクターなら　ひだりしたのほうで　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15171,15 +15177,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疲れているようだな
-医者なら　左下の方で　見たぞ</Text>
+			<Text>つかれているようだな
+ドクターなら　左下の方で　みたぞ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:16:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15202,11 +15208,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘトヘトみたいね？▼
-おいしゃさんに　みてもらいなさい
+ドクターに　みてもらいなさい
 ひだりしたのほうに　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15215,15 +15221,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘトヘトみたいね？▼
-お医者さんに　見てもらいなさい
+ドクターに　みてもらいなさい
 左下の方に　いるみたいだから</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:16:00" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15259,15 +15265,15 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんじゃ？　へばったのか？▼
-左下の方に　医者が　いるから
-見てもらって来い</Text>
+左下の方に　ドクターが　いるから
+みてもらって来い</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:41:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:16:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15291,10 +15297,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>あらあら　おつかれね▼
 ひだりしたのほうに　いってごらんなさい
-おいしゃさまが　いるわよ</Text>
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:39:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15302,16 +15308,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらあら　お疲れね▼
-左下の方に　行って御覧なさい
-お医者様が　いるわよ</Text>
+			<Text>あらあら　おつかれね▼
+左下の方に　行ってごらんなさい
+ドクターが　いるわよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:15:10" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:41:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-23T02:16:03" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:12:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15544,10 +15550,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-はて　どこかで　みたような　……</Text>
+はて　どこかで　みたような……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15556,14 +15562,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-はて　どこかで　見たような　……</Text>
+はて　どこかで　みたような……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:13:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15579,10 +15585,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-まえに　みましたわ　どこだったかしら</Text>
+どこかで　みたわよ▽
+どこだったかしら……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15590,15 +15597,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？　どこかで　見たわよ
-どこだったかしら　……</Text>
+			<Text>ボストレーナー？
+どこかで　みたわよ▽
+どこだったかしら……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T05:01:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15823,11 +15831,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　いたたた　……
+			<Text>あ　いたたた……
 すこしは　てかげんせんか！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:19:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:13:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -15835,11 +15843,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　痛たた　……
+			<Text>あ　痛たた……
 少しは　手加減せんか！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:19:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-17T04:13:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
