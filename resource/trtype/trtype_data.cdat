@@ -725,7 +725,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.179 ADULTW♀おとなのおねえさん
 		141,PTL_SEX_FEMALE,
-		SEQ_BGM_EYE_01
+		SEQ_BGM_EYE_DANCER
 	},
 	{ // No.180 HERO_S♂ポケモントレーナー
 		142,PTL_SEX_MALE,
@@ -938,6 +938,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	{ // No.232 PKWD_LADYBUG♂みらいじん
 		186,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
+	},
+	{ // No.233 JUGGLING_1♂クラウン
+		 32,PTL_SEX_MALE,
+		SEQ_BGM_EYE_CLOWN
 	},
 };
 

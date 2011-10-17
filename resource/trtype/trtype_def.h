@@ -243,4 +243,5 @@
 #define	TRTYPE_SCIENTISTW_1    ( 230 )    //SCIENTISTW_1♀ポケモントレーナー
 #define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂ヒウンマニア
 #define	TRTYPE_PKWD_LADYBUG    ( 232 )    //PKWD_LADYBUG♂みらいじん
-#define	TRTYPE_MAX	( 233 )
+#define	TRTYPE_JUGGLING_1    ( 233 )    //JUGGLING_1♂クラウン
+#define	TRTYPE_MAX	( 234 )

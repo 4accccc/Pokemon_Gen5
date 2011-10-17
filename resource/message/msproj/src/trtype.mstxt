@@ -7690,4 +7690,29 @@
 				Time="2011-10-14T03:16:17" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_JUGGLING_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>クラウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-17T08:25:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-17T08:25:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クラウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-17T08:25:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-17T08:25:04" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

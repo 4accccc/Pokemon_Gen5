@@ -1610,6 +1610,11 @@
 		<language name="JPN_KANJI" width="216">みらいじん</language>
 	</row>
 
+	<row id="MSG_TRTYPE_JUGGLING_1">
+		<language name="JPN" width="216">クラウン</language>
+		<language name="JPN_KANJI" width="216">クラウン</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

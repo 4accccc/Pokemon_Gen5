@@ -783,7 +783,11 @@
 #define	TRID_BATTLEG_25   ( 770 ) 
 #define	TRID_BCHAMP_1_01   ( 771 ) 
 #define	TRID_BCHAMP2_1_01   ( 772 ) 
-#define TRID_MAX  ( 773 )
+#define	TRID_JUGGLING_1_01   ( 773 ) 
+#define	TRID_JUGGLING_1_02   ( 774 ) 
+#define	TRID_JUGGLING_1_03   ( 775 ) 
+#define	TRID_JUGGLING_1_04   ( 776 ) 
+#define TRID_MAX  ( 777 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
