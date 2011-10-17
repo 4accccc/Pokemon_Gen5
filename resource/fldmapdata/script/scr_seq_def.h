@@ -2582,6 +2582,22 @@
   .short \tokusei_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 性格名を指定したタグにセット
+ * @param idx         セットするタグナンバー
+ * @param seikaku_id  性格名の指定
+ */
+//--------------------------------------------------------------
+#define _SEIKAKU_NAME( idx, seikaku_id ) \
+    _ASM_SEIKAKU_NAME idx, seikaku_id
+
+  .macro _ASM_SEIKAKU_NAME idx, seikaku_id
+  .short EV_SEQ_SEIKAKU_NAME
+  .byte  \idx
+  .short \seikaku_id
+  .endm
+
 //======================================================================
 //  視線トレーナー関連
 //======================================================================
