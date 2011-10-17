@@ -264,7 +264,7 @@ _GET_PARTY_POKE_PARAM( LWK_SEIKAKU, LWK_FRONT, SCR_POKEPARA_SEIKAKU )
 //éÂêlåˆÇÃñºëOäiî[
 _PLAYER_NAME(0)
 _TEMOTI_MONS_NAME( 1, LWK_FRONT )
-
+_SEIKAKU_NAME( 2, LWK_SEIKAKU )
 
 //Ç†ÇÁÅH
 _BALLOONWIN_TALKOBJ_MSG( msg_c12pc0101_woman1_01 )
@@ -277,7 +277,7 @@ _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
-/*		C12PC0101	WOMAN1									  */
+/*		C12PC0101	MIDDLEMAN2								  */
 /**************************************************************/
 EVENT_START		ev_c12pc0101_middleman2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12pc0101_middleman2_02 )
