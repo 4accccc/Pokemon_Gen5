@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-09-08T12:56:13" source="c15_studio_01_on.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-10-14T19:57:27" source="c15_studio_01_on.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -23,15 +23,19 @@
 	tolerance_tex_translate="0.010000"
 />
 
-<tex_scale_data size="2">
-	0.500000 1.000000
+<tex_scale_data size="3">
+	2.000000 1.000000 0.500000
 </tex_scale_data>
 
 <tex_rotate_data size="1">
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="41">
+<tex_translate_data size="81">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.250000 0.250000 0.250000 0.250000 0.250000 0.250000 0.250000 0.250000 0.250000 0.250000
+	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.250000 0.250000 0.250000 0.250000
+	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.250000 0.250000 0.250000 0.250000
 	0.500000 0.500000 0.500000 0.500000 0.500000 0.750000 0.750000 0.750000 0.750000 0.750000
 	1.000000 1.000000 1.000000 1.000000 1.000000 1.250000 1.250000 1.250000 1.250000 1.250000
@@ -40,19 +44,19 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="c15_studio_9">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="1"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="c15_studio_a">
+	<tex_srt_anm index="0" material_name="c15_studio_5_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="1"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="40" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="c15_studio_a_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="2"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="1"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="41"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
