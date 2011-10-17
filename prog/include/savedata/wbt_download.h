@@ -125,7 +125,7 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  WBTDL_MSG_LEN = 36 * 2 + 1,
+  WBTDL_MSG_LEN = (36+1)*2,					// (36*2+1) -> (36+1)*2
 
   WBTDL_TOURNAMENT_NAME_LEN = 36 + 1,		// (20+1) -> (36+1)
 
@@ -147,7 +147,7 @@ enum {
 typedef struct {
   WBTDL_POKEMON pokemon[ TEMOTI_POKEMAX ];
 
-  STRCODE name[ SAVELEN_TRAINER_NAME ];
+  STRCODE name[ BUFLEN_PERSON_NAME ];		///< 14 -> 14+2
   STRCODE title[ WBTDL_TRAINER_TITLE_LEN ];
   STRCODE msg_before[ WBTDL_MSG_LEN ];   ///<‘Îí‘OMSG
   STRCODE msg_after_win[ WBTDL_MSG_LEN ];      ///<‘ŠŽè‚Ì•‰‚¯MSG

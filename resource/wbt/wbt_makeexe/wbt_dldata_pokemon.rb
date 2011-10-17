@@ -298,11 +298,11 @@ class WBT_POKEMON_SINGLE
     #
     # 入力チェック
     array = []
-    array = chk_str_limit_array( @nick_name, 1, 11, $poke_str[13] );
+    array = chk_str_limit_array( @nick_name, 1, 10, $poke_str[13] );
     if(array[4] == -1)
       # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+4,
-                                 $poke_str[13], array, 1, 11 );
+                                 $poke_str[13], array, 1, 10 );
     end
     #
 #    if(@local_debug == 1)

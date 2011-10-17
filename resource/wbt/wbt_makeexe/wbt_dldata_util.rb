@@ -20,7 +20,6 @@ require HASHPATH + "item_hash.rb"	# アイテム番号
 require HASHPATH + "wazano_hash.rb"	# 技番号
 require HASHPATH + "seikaku_hash.rb"	# 性格
 require HASHPATH + "tokusei_hash.rb"	# 特性
-#require HASHPATH + "trtype_hash.rb"	# トレーナーID
 #
 require "wbt_tokusei_data.rb"           # 特性のデータ
 
@@ -175,7 +174,8 @@ $codes = {
 };
 
 # 文字数制限(1行用、複数行用(改行分加算))
-$str_limit = [36, 18, 36+1, 18+1]
+#$str_limit = [36, 18, 36+1, 18+1]
+$str_limit = [36, 18, 36, 18]
 
 # シート名
 $sheet_str = [ "トーナメントリスト",
@@ -618,16 +618,20 @@ end
 # ret:      array
 #------------------------------------
 def chk_str_limit_array( buffer, lnum, num, str )
-  # チェックの有無
-#  if( $debug_chkstr == 0 )
-#    return(0);
-#  end
-  #
   flg = 0
   array = chk_strinfo( buffer )
   #
-#  p sprintf("%d :%d,%d,%d,%d :\n",array[0],array[1],array[2],array[3],array[4])
+#  p sprintf("mae :%d :%d,%d,%d,%d :\n",array[0],array[1],array[2],array[3],array[4])
   #
+  # 複数行ある場合
+  # 最後の行以外は改行分を減らす
+  if(array[0] > 1)
+    (array[0]-1).times{|i|
+      array[1+i] = array[1+i]-1
+    }
+  end
+#  p sprintf("ato :%d :%d,%d,%d,%d :\n",array[0],array[1],array[2],array[3],array[4])
+  
   # 行数の制限
   if(array[0] > lnum)
 #    p sprintf("%s : %s : (行数:%d > %d)",str, $error_str[2], array[0], lnum)
@@ -642,10 +646,9 @@ def chk_str_limit_array( buffer, lnum, num, str )
       end
     }
   end
-  #
+  # 成功失敗
   array[4] = flg;
   return( array );
-#  return( flg )
 end
 
 #-------------------------------------------------------

@@ -66,7 +66,9 @@ $current_mode = $exe_mode
 
 #BLOCK_SIZE = 0x120c	# 4620byte
 #BLOCK_SIZE = 0x122c	# 4652byte
-BLOCK_SIZE = 0x11e4	# 4580byte
+#BLOCK_SIZE = 0x11e4	# 4580byte
+#BLOCK_SIZE = 0x1204	# 4612byte
+BLOCK_SIZE = 0x1214	# 4628byte
 
 # 使用方法メッセージ
 $usage_str = [
