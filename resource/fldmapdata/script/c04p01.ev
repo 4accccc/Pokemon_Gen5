@@ -13,6 +13,7 @@
   .include  "c04p01.h"
 
   //@author fujimura_souichirou(ライモンラリー)
+  //@author	suginaka_katsunori //ライブキャスターイベント・NPC配置・ジムイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +25,16 @@
 _EVENT_DATA   ev_bg_c04p01_sign_01
 _EVENT_DATA   ev_zone_c04p01
 _EVENT_DATA   ev_c04p01_clown_01
+_EVENT_DATA		ev_c04p01_clown_02
+_EVENT_DATA		ev_c04p01_middlewoman2_01
+_EVENT_DATA		ev_c04p01_girl1_01
+_EVENT_DATA		ev_pos_c04p01_idol_livecaster
+_EVENT_DATA		ev_c04p01_musician_01
+_EVENT_DATA		ev_c04p01_woman2_01
+_EVENT_DATA		ev_c04p01_babyboy1_01
+_EVENT_DATA		ev_c04p01_tennisw_01
+_EVENT_DATA		ev_c04p01_poke36_01
+_EVENT_DATA		ev_c04p01_poke38_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -150,4 +161,72 @@ EVENT_START   ev_c04p01_clown_01
 
 EVENT_END
 
+/**************************************************************/
+/*		C04P01	CLOWN										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_clown_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_clown1_01 )
+EVENT_END
 
+/**************************************************************/
+/*		C04P01	MIDDLEWOMAN2								  */
+/**************************************************************/
+EVENT_START		ev_c04p01_middlewoman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_middlewoman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	GIRL1										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_girl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	MUSICIAN										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_musician_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_musician_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	WOMAN2										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_woman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	babyboy1_01									  */
+/**************************************************************/
+EVENT_START		ev_c04p01_babyboy1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_babyboy1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	tennisw										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_tennisw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_tennisw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	poke36										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_poke36_01
+	_EASY_TALK_POKEVOICE( MONSNO_599, msg_c04p01_poke36_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	poke38										  */
+/**************************************************************/
+EVENT_START		ev_c04p01_poke38_01
+	_EASY_TALK_POKEVOICE( MONSNO_637, msg_c04p01_poke38_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	ライブキャスターPOSイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_c04p01_idol_livecaster
+
+EVENT_END
