@@ -227,9 +227,10 @@ SHOP_COL_TYPE          = 2         #列：種類
 SHOP_COL_LV            = 3         #列：お店レベル
 SHOP_COL_NEXTEXP       = 4         #列：次の経験値
 SHOP_COL_NAME          = 5         #列：お店名
-SHOP_COL_3DMD_L        = 6         #列：外観左
-SHOP_COL_3DMD_R        = 7         #列：外観右
-SHOP_COL_LIST_START    = 8         #列：リスト先頭
+SHOP_COL_GRADE         = 6         #列：段階
+SHOP_COL_3DMD_L        = 7         #列：外観左
+SHOP_COL_3DMD_R        = 8         #列：外観右
+SHOP_COL_LIST_START    = 9         #列：リスト先頭
 SHOP_COL_LIST_END      = SHOP_COL_LIST_START + 16
 def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
@@ -255,6 +256,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     lv      = csv.get( row, SHOP_COL_LV )
     nextexp = csv.get( row, SHOP_COL_NEXTEXP )
     name    = csv.get( row, SHOP_COL_NAME )
+    grade   = csv.get( row, SHOP_COL_GRADE );
     l3dmd   = csv.get( row, SHOP_COL_3DMD_L );
     r3dmd  = csv.get( row, SHOP_COL_3DMD_R );
 
@@ -278,6 +280,8 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     rescue HeaderSearchError
       exit(1)
     end
+
+    data.write_u16( grade )
 
     begin
       data.write_u16( patchdata.search( "LAND_DATA_PATCH_#{l3dmd}", "#{row}行ファイル" ) )

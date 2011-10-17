@@ -597,7 +597,24 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
     }
     break;
+	case RESORT_GET_PARAM_GRADE_RESIDENT_00:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_01:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_02:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_03:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_04:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_05:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_06:
+	case RESORT_GET_PARAM_GRADE_RESIDENT_07:
+    {
+      u32 index = param - RESORT_GET_PARAM_GRADE_RESIDENT_00;
+      RESORT_RESIDENT_DATA  *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people,index);
+      RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution( p_resi );
+      u16 shopID = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, shopID );
 
+      *p_ret_wk = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_GRADE );
+    }
+    break;
   default:
     GF_ASSERT_MSG(0, "%d", param);
   }

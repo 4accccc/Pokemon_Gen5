@@ -469,6 +469,12 @@ $SCWK_TEMP2 = 0
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_03, 2 )
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_04, 3 )
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 4 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 5 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 6 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 7 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 8 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 9 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 10 )
   
   _BMPMENU_START()
   

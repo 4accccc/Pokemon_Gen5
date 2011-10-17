@@ -36,6 +36,8 @@
 #include "game_beacon_local.h"
 #include "debug/debug_flg.h"
 
+#include "debug/debug_nagihashi.h"
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -201,8 +203,6 @@ void GAMEBEACON_Update(void)
     }
   }
 
-  
-
   if( bsys->resort_set_request == TRUE )
   {
     if( bsys->gamedata != NULL
@@ -213,7 +213,9 @@ void GAMEBEACON_Update(void)
         && !GFL_NET_WLIsChildStateScan()
       )
     {
+//DEBUG_TICK_PrintStart;
       GAMEBEACON_Set_SendResortData( bsys );
+//DEBUG_TICK_PrintEnd;
     }
     bsys->resort_set_request = FALSE;
   }
@@ -724,13 +726,13 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       }
     }
   }
-
-  //リゾートビーコン受け取り
   if( same_data == FALSE)
   {
     if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
     {
+//DEBUG_TICK_PrintStart;
       BeaconInfo_RecvResortData( bsys, info, RESORT_COMM_TYPE_BEACON );
+//DEBUG_TICK_PrintEnd;
     }
     else if( GAMEBEACON_Check_FestMission(info) )
     {
@@ -1075,6 +1077,8 @@ static void BeaconInfo_RecvResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON
 {
   if( GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE )
   {
+    RESORT_SETDATA ret;
+
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
 
@@ -1083,10 +1087,10 @@ static void BeaconInfo_RecvResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON
 
     RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info, comm_type );
 
-    RESONANCE_RESORT_SV_SetData( p_resort, bsys->gamedata, p_beacon, RESORT_MERGE_TYPE_BEACON );
+    ret = RESONANCE_RESORT_SV_SetData( p_resort, bsys->gamedata, p_beacon, RESORT_MERGE_TYPE_BEACON );
 
     RESORT_BEACON_DATA_Exit( p_beacon );
-
+    OS_TFPrintf(2,"ret=%d\n",ret );
   }
 }
 

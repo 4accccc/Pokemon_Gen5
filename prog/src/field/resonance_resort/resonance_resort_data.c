@@ -2311,6 +2311,9 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
     //その他のソフトでは基本情報のみ
     p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
   }
+
+
+  OS_TFPrintf(2,"extend=%d\n",p_wk->extend_type );
 }
 
 //----------------------------------------------------------------------------
@@ -4206,19 +4209,21 @@ RESORT_MERGE_RESULT RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
-    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) 
-      &&  sc_data_function_tbl[type].Resident_IsSameOwner(p_resident,cp_data_adrs) )
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
     {
-      if( p_wk->merge_lock )
+      if( sc_data_function_tbl[type].Resident_IsSameOwner(p_resident,cp_data_adrs) )
       {
-        return RESORT_MERGE_RESULT_DISABLE;
-      }
-      else
-      {
-        RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].Resident_MergeData(p_resident,cp_data_adrs);
-        if( ret == RESORT_MERGE_RESULT_OK || ret == RESORT_MERGE_RESULT_DISABLE )
+        if( p_wk->merge_lock )
         {
-          return ret;
+          return RESORT_MERGE_RESULT_DISABLE;
+        }
+        else
+        {
+          RESORT_MERGE_RESULT ret = sc_data_function_tbl[type].Resident_MergeData(p_resident,cp_data_adrs);
+          if( ret == RESORT_MERGE_RESULT_OK || ret == RESORT_MERGE_RESULT_DISABLE )
+          {
+            return ret;
+          }
         }
       }
     }

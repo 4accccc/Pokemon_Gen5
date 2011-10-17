@@ -403,6 +403,7 @@ VMCMD_RESULT EvCmdCallTVTDemo( VMHANDLE *core, void *wk )
   param->color    = color;
   param->scriptId = demo_id;
   param->gameData = SCRCMD_WORK_GetGameData( work );
+  param->gameSys  = gsys;
 
   event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap,
 		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,
@@ -437,6 +438,7 @@ VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
   param->mode     = LOCAL_TVT_MODE_APP_SECRET_CALL;
   param->color    = color;
   param->gameData = SCRCMD_WORK_GetGameData( work );
+  param->gameSys  = gsys;
 
   event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap,
 		                               FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, param,

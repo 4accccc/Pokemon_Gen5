@@ -81,3 +81,250 @@
  *
  */
 #define RESORT_CONST_FEVER_EXIST_COEFFEICENT    (2)
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/*
+ *  Ç®ìXÇåöÇƒÇΩÇ∆Ç´ÇÃÉJÉÅÉâ
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//Ç®ìXÇP
+#define RESORT_BCAM_SHOP1_PITCH   (2981)
+#define RESORT_BCAM_SHOP1_YAW     (49536)
+#define RESORT_BCAM_SHOP1_DIST    (757760)
+#define RESORT_BCAM_SHOP1_X       (1409024)
+#define RESORT_BCAM_SHOP1_Y       (184320)
+#define RESORT_BCAM_SHOP1_Z       (4161536)
+//Ç®ìXÇQ
+#define RESORT_BCAM_SHOP2_PITCH   (4389)
+#define RESORT_BCAM_SHOP2_YAW     (16512)
+#define RESORT_BCAM_SHOP2_DIST    (659456)
+#define RESORT_BCAM_SHOP2_X       (622592)
+#define RESORT_BCAM_SHOP2_Y       (135168)
+#define RESORT_BCAM_SHOP2_Z       (3706880)
+//Ç®ìXÇR
+#define RESORT_BCAM_SHOP3_PITCH   (4645)
+#define RESORT_BCAM_SHOP3_YAW     (49024)
+#define RESORT_BCAM_SHOP3_DIST    (528384)
+#define RESORT_BCAM_SHOP3_X       (1409024)
+#define RESORT_BCAM_SHOP3_Y       (65536)
+#define RESORT_BCAM_SHOP3_Z       (3244032)
+//Ç®ìXÇS
+#define RESORT_BCAM_SHOP4_PITCH   (2469)
+#define RESORT_BCAM_SHOP4_YAW     (16640)
+#define RESORT_BCAM_SHOP4_DIST    (626688)
+#define RESORT_BCAM_SHOP4_X       (303104)
+#define RESORT_BCAM_SHOP4_Y       (114688)
+#define RESORT_BCAM_SHOP4_Z       (2793472)
+//Ç®ìXÇT
+#define RESORT_BCAM_SHOP5_PITCH   (2597)
+#define RESORT_BCAM_SHOP5_YAW     (49152)
+#define RESORT_BCAM_SHOP5_DIST    (692224)
+#define RESORT_BCAM_SHOP5_X       (1351680)
+#define RESORT_BCAM_SHOP5_Y       (135168)
+#define RESORT_BCAM_SHOP5_Z       (2326528)
+//Ç®ìXÇU
+#define RESORT_BCAM_SHOP6_PITCH   (3493)
+#define RESORT_BCAM_SHOP6_YAW     (16512)
+#define RESORT_BCAM_SHOP6_DIST    (593920)
+#define RESORT_BCAM_SHOP6_X       (622592)
+#define RESORT_BCAM_SHOP6_Y       (110592)
+#define RESORT_BCAM_SHOP6_Z       (1871872)
+//Ç®ìXÇV
+#define RESORT_BCAM_SHOP7_PITCH   (933)
+#define RESORT_BCAM_SHOP7_YAW     (49024)
+#define RESORT_BCAM_SHOP7_DIST    (724992)
+#define RESORT_BCAM_SHOP7_X       (1409024)
+#define RESORT_BCAM_SHOP7_Y       (196608)
+#define RESORT_BCAM_SHOP7_Z       (1409024)
+//Ç®ìXÇW
+#define RESORT_BCAM_SHOP8_PITCH   (5925)
+#define RESORT_BCAM_SHOP8_YAW     (16384)
+#define RESORT_BCAM_SHOP8_DIST    (299008)
+#define RESORT_BCAM_SHOP8_X       (610304)
+#define RESORT_BCAM_SHOP8_Y       (61440)
+#define RESORT_BCAM_SHOP8_Z       (942080)
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/*
+ *  Ç®ìXÇ…àƒì‡Ç∑ÇÈÇ∆Ç´ÇÃÉJÉÅÉâ
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//Ç®ìXÇP  íiäKÇP
+#define RESORT_SCAM1_SHOP1_PITCH   (1957)
+#define RESORT_SCAM1_SHOP1_YAW     (55808)
+#define RESORT_SCAM1_SHOP1_DIST    (495616)
+#define RESORT_SCAM1_SHOP1_X       (1355776)
+#define RESORT_SCAM1_SHOP1_Y       (294912)
+#define RESORT_SCAM1_SHOP1_Z       (4280320)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP1_PITCH   (1957)
+#define RESORT_SCAM2_SHOP1_YAW     (55808)
+#define RESORT_SCAM2_SHOP1_DIST    (495616)
+#define RESORT_SCAM2_SHOP1_X       (1355776)
+#define RESORT_SCAM2_SHOP1_Y       (294912)
+#define RESORT_SCAM2_SHOP1_Z       (4280320)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP1_PITCH   (1957)
+#define RESORT_SCAM3_SHOP1_YAW     (55808)
+#define RESORT_SCAM3_SHOP1_DIST    (495616)
+#define RESORT_SCAM3_SHOP1_X       (1355776)
+#define RESORT_SCAM3_SHOP1_Y       (294912)
+#define RESORT_SCAM3_SHOP1_Z       (4280320)
+//Ç®ìXÇQ  íiäKÇP
+#define RESORT_SCAM1_SHOP2_PITCH   (1829)
+#define RESORT_SCAM1_SHOP2_YAW     (9088)
+#define RESORT_SCAM1_SHOP2_DIST    (397312)
+#define RESORT_SCAM1_SHOP2_X       (618496)
+#define RESORT_SCAM1_SHOP2_Y       (241664)
+#define RESORT_SCAM1_SHOP2_Z       (3923968)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP2_PITCH   (1829)
+#define RESORT_SCAM2_SHOP2_YAW     (9088)
+#define RESORT_SCAM2_SHOP2_DIST    (397312)
+#define RESORT_SCAM2_SHOP2_X       (618496)
+#define RESORT_SCAM2_SHOP2_Y       (241664)
+#define RESORT_SCAM2_SHOP2_Z       (3923968)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP2_PITCH   (1829)
+#define RESORT_SCAM3_SHOP2_YAW     (9088)
+#define RESORT_SCAM3_SHOP2_DIST    (397312)
+#define RESORT_SCAM3_SHOP2_X       (618496)
+#define RESORT_SCAM3_SHOP2_Y       (241664)
+#define RESORT_SCAM3_SHOP2_Z       (3923968)
+//Ç®ìXÇR  íiäKÇP
+#define RESORT_SCAM1_SHOP3_PITCH   (1701)
+#define RESORT_SCAM1_SHOP3_YAW     (54272)
+#define RESORT_SCAM1_SHOP3_DIST    (495616)
+#define RESORT_SCAM1_SHOP3_X       (1454080)
+#define RESORT_SCAM1_SHOP3_Y       (249856)
+#define RESORT_SCAM1_SHOP3_Z       (3411968)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP3_PITCH   (1701)
+#define RESORT_SCAM2_SHOP3_YAW     (54272)
+#define RESORT_SCAM2_SHOP3_DIST    (495616)
+#define RESORT_SCAM2_SHOP3_X       (1454080)
+#define RESORT_SCAM2_SHOP3_Y       (249856)
+#define RESORT_SCAM2_SHOP3_Z       (3411968)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP3_PITCH   (1701)
+#define RESORT_SCAM3_SHOP3_YAW     (54272)
+#define RESORT_SCAM3_SHOP3_DIST    (495616)
+#define RESORT_SCAM3_SHOP3_X       (1454080)
+#define RESORT_SCAM3_SHOP3_Y       (249856)
+#define RESORT_SCAM3_SHOP3_Z       (3411968)
+//Ç®ìXÇS  íiäKÇP
+#define RESORT_SCAM1_SHOP4_PITCH   (805)
+#define RESORT_SCAM1_SHOP4_YAW     (10624)
+#define RESORT_SCAM1_SHOP4_DIST    (561152)
+#define RESORT_SCAM1_SHOP4_X       (622592)
+#define RESORT_SCAM1_SHOP4_Y       (253952)
+#define RESORT_SCAM1_SHOP4_Z       (2785280)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP4_PITCH   (805)
+#define RESORT_SCAM2_SHOP4_YAW     (10624)
+#define RESORT_SCAM2_SHOP4_DIST    (561152)
+#define RESORT_SCAM2_SHOP4_X       (622592)
+#define RESORT_SCAM2_SHOP4_Y       (253952)
+#define RESORT_SCAM2_SHOP4_Z       (2785280)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP4_PITCH   (805)
+#define RESORT_SCAM3_SHOP4_YAW     (10624)
+#define RESORT_SCAM3_SHOP4_DIST    (561152)
+#define RESORT_SCAM3_SHOP4_X       (622592)
+#define RESORT_SCAM3_SHOP4_Y       (253952)
+#define RESORT_SCAM3_SHOP4_Z       (2785280)
+//Ç®ìXÇT  íiäKÇP
+#define RESORT_SCAM1_SHOP5_PITCH   (1829)
+#define RESORT_SCAM1_SHOP5_YAW     (54912)
+#define RESORT_SCAM1_SHOP5_DIST    (430080)
+#define RESORT_SCAM1_SHOP5_X       (1409024)
+#define RESORT_SCAM1_SHOP5_Y       (208896)
+#define RESORT_SCAM1_SHOP5_Z       (2461696)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP5_PITCH   (1829)
+#define RESORT_SCAM2_SHOP5_YAW     (54912)
+#define RESORT_SCAM2_SHOP5_DIST    (430080)
+#define RESORT_SCAM2_SHOP5_X       (1409024)
+#define RESORT_SCAM2_SHOP5_Y       (208896)
+#define RESORT_SCAM2_SHOP5_Z       (2461696)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP5_PITCH   (1829)
+#define RESORT_SCAM3_SHOP5_YAW     (54912)
+#define RESORT_SCAM3_SHOP5_DIST    (430080)
+#define RESORT_SCAM3_SHOP5_X       (1409024)
+#define RESORT_SCAM3_SHOP5_Y       (208896)
+#define RESORT_SCAM3_SHOP5_Z       (2461696)
+//Ç®ìXÇU  íiäKÇP
+#define RESORT_SCAM1_SHOP6_PITCH   (2085)
+#define RESORT_SCAM1_SHOP6_YAW     (10880)
+#define RESORT_SCAM1_SHOP6_DIST    (593920)
+#define RESORT_SCAM1_SHOP6_X       (614400)
+#define RESORT_SCAM1_SHOP6_Y       (282624)
+#define RESORT_SCAM1_SHOP6_Z       (1961984)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP6_PITCH   (2085)
+#define RESORT_SCAM2_SHOP6_YAW     (10880)
+#define RESORT_SCAM2_SHOP6_DIST    (593920)
+#define RESORT_SCAM2_SHOP6_X       (614400)
+#define RESORT_SCAM2_SHOP6_Y       (282624)
+#define RESORT_SCAM2_SHOP6_Z       (1961984)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP6_PITCH   (2085)
+#define RESORT_SCAM3_SHOP6_YAW     (10880)
+#define RESORT_SCAM3_SHOP6_DIST    (593920)
+#define RESORT_SCAM3_SHOP6_X       (614400)
+#define RESORT_SCAM3_SHOP6_Y       (282624)
+#define RESORT_SCAM3_SHOP6_Z       (1961984)
+//Ç®ìXÇV  íiäKÇP
+#define RESORT_SCAM1_SHOP7_PITCH   (1317)
+#define RESORT_SCAM1_SHOP7_YAW     (54016)
+#define RESORT_SCAM1_SHOP7_DIST    (364544)
+#define RESORT_SCAM1_SHOP7_X       (1015808)
+#define RESORT_SCAM1_SHOP7_Y       (253952)
+#define RESORT_SCAM1_SHOP7_Z       (1605632)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP7_PITCH   (1317)
+#define RESORT_SCAM2_SHOP7_YAW     (54016)
+#define RESORT_SCAM2_SHOP7_DIST    (364544)
+#define RESORT_SCAM2_SHOP7_X       (1015808)
+#define RESORT_SCAM2_SHOP7_Y       (253952)
+#define RESORT_SCAM2_SHOP7_Z       (1605632)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP7_PITCH   (1317)
+#define RESORT_SCAM3_SHOP7_YAW     (54016)
+#define RESORT_SCAM3_SHOP7_DIST    (364544)
+#define RESORT_SCAM3_SHOP7_X       (1015808)
+#define RESORT_SCAM3_SHOP7_Y       (253952)
+#define RESORT_SCAM3_SHOP7_Z       (1605632)
+//Ç®ìXÇW  íiäKÇP
+#define RESORT_SCAM1_SHOP8_PITCH   (2085)
+#define RESORT_SCAM1_SHOP8_YAW     (9600)
+#define RESORT_SCAM1_SHOP8_DIST    (626688)
+#define RESORT_SCAM1_SHOP8_X       (745472)
+#define RESORT_SCAM1_SHOP8_Y       (323584)
+#define RESORT_SCAM1_SHOP8_Z       (1085440)
+//        íiäKÇQ
+#define RESORT_SCAM2_SHOP8_PITCH   (2085)
+#define RESORT_SCAM2_SHOP8_YAW     (9600)
+#define RESORT_SCAM2_SHOP8_DIST    (626688)
+#define RESORT_SCAM2_SHOP8_X       (745472)
+#define RESORT_SCAM2_SHOP8_Y       (323584)
+#define RESORT_SCAM2_SHOP8_Z       (1085440)
+//        íiäKÇR
+#define RESORT_SCAM3_SHOP8_PITCH   (2085)
+#define RESORT_SCAM3_SHOP8_YAW     (9600)
+#define RESORT_SCAM3_SHOP8_DIST    (626688)
+#define RESORT_SCAM3_SHOP8_X       (745472)
+#define RESORT_SCAM3_SHOP8_Y       (323584)
+#define RESORT_SCAM3_SHOP8_Z       (1085440)
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/*
+ *  äXÇ…åoå±ílÇ™ì¸ÇÈÇ∆Ç´ÇÃÉJÉÅÉâ
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+#define RESORT_CAM_CITY_PITCH   (1957)
+#define RESORT_CAM_CITY_YAW     (0)
+#define RESORT_CAM_CITY_DIST    (888832)
+#define RESORT_CAM_CITY_X       (1015808)
+#define RESORT_CAM_CITY_Y       (208896)
+#define RESORT_CAM_CITY_Z       (2392064)
