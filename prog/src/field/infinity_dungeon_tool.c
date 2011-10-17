@@ -315,7 +315,8 @@ u8 INF_TOOL_GetTrainerHintType( u16 obj_code)
       return sc_talk_pattern_table[i].hint_type;
     }
   }
-
+  
+  GF_ASSERT_MSG(0,"ヒントタイプの登録されていない表示コードです\n");
   return 0;
 }
 
@@ -339,6 +340,7 @@ u8 INF_TOOL_GetTrainerTalkType( u16 obj_code)
     }
   }
 
+  GF_ASSERT_MSG(0,"会話パターンの登録されていない表示コードです\n");
   return 0;
 }
 

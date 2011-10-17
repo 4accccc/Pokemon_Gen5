@@ -1756,9 +1756,6 @@ u32 INFINITY_DUNGEON_GetHintMessage( const INFINITYDUNGEON_SAVE *p_save ,const I
   // OBJコードから会話パターンを選択
   talk_type = INF_TOOL_GetTrainerTalkType( obj_code );
   hint_type = INF_TOOL_GetTrainerHintType( obj_code );
-  
-  GF_ASSERT_MSG(talk_type,"ヒントタイプの登録されていない表示コードです\n");
-  GF_ASSERT_MSG(hint_type,"会話パターンの登録されていない表示コードです\n");
 
   // ヒント取得ワークにパラメータを設定する
   {
