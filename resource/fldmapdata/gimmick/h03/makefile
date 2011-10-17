@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro fujiwara_maiko kageyama_shota ichinose satou
+USERS	= obata_toshihiro fujiwara_maiko kageyama_shota ichinose satou sato_hitomi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
