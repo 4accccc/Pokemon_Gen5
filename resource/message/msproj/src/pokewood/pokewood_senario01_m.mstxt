@@ -1,0 +1,1550 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="pw_trname_rec"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スター</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スター</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_trname_show"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいじん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かいじん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ゆうえんち……
+それは　ひとときの　ゆめ……▼
+すなわち　ひとびとの
+りそうの　かたち……▼
+……りそうなど　いらぬわ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『遊園地……
+それは　ひと時の　夢……▼
+すなわち　人々の　理想の形……
+▼
+……理想など　破壊してくれる……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファファファ！
+おわりだ！　[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファファファ！
+おわりだ！　[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ゆけ！　わが　ポケモン！
+このゆうえんちで　あばれるのだ！▼
+すべてを　はかい　してやれっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ゆけ！　我が　ポケモン！
+この遊園地で　暴れるのだ！▼
+すべてを　破壊　しつくせっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『やめるんだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『止めるんだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ヌ……　なにものだ！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ヌ……　何者だ！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『しんじつと　りそうの　ししゃ
+[Name:PokemonNickname Idx="0" ]キッド　すいさん！▼
+ハチクマン！
+おまえの　あくぎょう▽
+ゆるすわけには　いかない！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『真実と　理想の　使者
+[Name:PokemonNickname Idx="0" ]キッド　参上！▼
+ハチクマン！
+お前の　悪行▽
+許すわけには　いかない！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんちのきゃく『わー！　なんだ！
+ヒーローショーでも　やってるのか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地の客『わー！何だ！
+ヒーローショーでも　やってるのか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『わがはいの　ポケモンを
+たったの　いちげき　だと……▽
+やるな！　[Name:PokemonNickname Idx="0" ]キッド！▼
+だが　しかし！　だが　しかし！▼
+わがはいの　おうぎで
+きさまを　ひざまづかせて　やろう！▼
+さあ！　かくごは　よいか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『わがはいの　ポケモンを
+たったの　いちげきで……▽
+やるな！　[Name:PokemonNickname Idx="0" ]キッド！▼
+だが　しかし！　だが　しかし！▼
+わがはいの　奥義で
+貴様を　ひざまづかせて　やろう！▼
+さあ！　覚悟は　よいか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『のぞむところだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『のぞむところだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『いいだろう！▼
+わがはいの　あくの　おうぎ
+くらうが　よいわーっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『いいだろう！▼
+わがはいの　悪の　奥義
+くらうが　よいわーっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ひぃ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ひぃ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファー　ファファファ！
+なさけないぞ！　[Name:PokemonNickname Idx="0" ]キッド！▼
+きさまのような　やつに　わがはいの
+おうぎを　つかうまでも　ない！▼
+この　わざでも　くらうが　いい！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファー　ファファファ！
+情けないぞ！　[Name:PokemonNickname Idx="0" ]キッド！▼
+貴様のような　やつに　わがはいの
+奥義を　つかうまでも　ない！▼
+この　技でも　くらうが　いい！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファー　ファファファ！
+おはなしに　ならぬわっ！▽
+それでも　ヒーローか？▼
+きさまの　ような　こぞうとは
+たたかう　きにも　ならん！▼
+もうよい！　さらばだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファー　ファファファ！
+お話に　ならぬわっ！▽
+それでも　ヒーローか？▼
+貴様の　ような　小僧とは
+戦う　気にも　ならん！▼
+もうよい！　さらばだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『あれ……
+ぼく　こんな　はずじゃ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『あれ……
+ぼく　こんな　はずじゃ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なぞの　かいじん　ハチクマンに
+あいてにも　されなかった▽
+[Name:PokemonNickname Idx="0" ]キッド……▼
+とくに　かつやくも　ない　かれが
+だれ　なのか　しりたいものが▽
+いるはずも　ない……▼
+ともかく……▼
+ありがとう！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぞの　怪人　ハチクマンに
+相手にも　されなかった▽
+[Name:PokemonNickname Idx="0" ]キッド……▼
+特に　かつやくも　ない　彼が
+誰　なのか　知りたい者が▽
+いるはずも　ない……▼
+ともかく……▼
+ありがとう！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『グムムム……▼
+わがはいの　おうぎを
+ものともせず　しかも▽
+いちげきで　しずめるとは……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『グムムム……▼
+わがはいの　奥義を
+ものともせず　しかも▽
+いちげきで　しずめるとは……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハチクマン！
+ここは　みんなの　りそうの▽
+つまった　ゆうえんちだ！▼
+おとなしく　たちされ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハチクマン！
+ここは　みんなの　理想の▽
+つまった　遊園地だ！▼
+おとなしく　立ち去れ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『よいだろう……
+きょうの　ところは　ひいてやる▼
+だが……　[Name:PokemonNickname Idx="0" ]キッドが
+りそうと　しんじつの　ししゃ　なら▽
+げんじつと　げんそうの　かいじんが▽
+この　ハチクマン　よ……▼
+おぼえて　おくがいい……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『よいだろう……
+今日の　ところは　引いてやる▼
+だが……　[Name:PokemonNickname Idx="0" ]キッドが
+理想と　真実の　使者　なら▽
+現実と　幻想の　怪人が▽
+この　ハチクマン　よ……▼
+覚えて　おくがいい……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんちの　きゃく『わー！
+みてみて！　かっこいい！▽
+[Name:PokemonNickname Idx="0" ]キッド　だって！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地の　客『わー！
+見て見て！　かっこいい！▽
+[Name:PokemonNickname Idx="0" ]キッド　だって！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『……
+かいじん　ハチクマン……▽
+いったい　なにもの　なんだ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『……
+怪人　ハチクマン……▽
+いったい　何者　なんだ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname Idx="0" ]キッド！▼
+しかし
+ハチクマンは　ふてきな▽
+ことばを　のこし　きえた……▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+ゆけゆけ！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+たたかえ！
+[Name:PokemonNickname Idx="0" ]キッド！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぞの　怪人　ハチクマンを
+こらしめ　遊園地の　危機を▽
+救った　[Name:PokemonNickname Idx="0" ]キッド！▼
+しかし
+ハチクマンは　不敵な▽
+言葉　残し　消えた……▼
+イッシュの　理想と　真実を
+守るため！▼
+行け行け！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+戦え！
+[Name:PokemonNickname Idx="0" ]キッド！
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファー　ファファファ！
+おろかなり！　[Name:PokemonNickname Idx="0" ]キッド！▼
+わがはいを　たおす　さいだいの
+チャンスを　のがしおって！！▼
+まわりを　みてみるが　よいわっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファー　ファファファ！
+おろかなり！　[Name:PokemonNickname Idx="0" ]キッド！▼
+わがはいを　倒す　最大の
+チャンスを　逃しおって！！▼
+周りを　見てみるが　よいわっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんちの　きゃく『ねえねえ！
+ちょっと　みてよ！　ステキねえ！▽
+かいじん　ハチクマン　ですって！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地の　客『ねえねえ！
+ちょっと　見てよ！　ステキねえ！▽
+怪人　ハチクマン　ですって！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファファファ！！
+ひとびとの　ちゅうもくは▽
+わがはいに　あつまっておる！▼
+きさまの　ような　ヒーローより
+よの　なかは　かいじんを▽
+のぞんで　おるのだっ！　</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファファファ！！
+大衆の　注目は▽
+わがはいに　集まって　おる！▼
+貴様の　ような　ヒーローより
+世の中は　怪人を▽
+望んで　おるのだっ！　</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『そんな……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『そんな……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なぞのかいじん　ハチクマンの
+にんきの　まえに▽
+[Name:PokemonNickname Idx="0" ]キッドは▽
+ちから　つきた……▼
+しょうぶ……▼
+その　いっしゅんの　せんたくが
+かれの　ヒーローとしての▽
+うんめいを　きめたのだ……▼
+ざんねん！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぞの怪人　ハチクマンの
+人気の　前に▽
+[Name:PokemonNickname Idx="0" ]キッドは▽
+力　尽きた……▼
+勝負……▼
+その　一瞬の　選択が
+彼の　ヒーローとしての▽
+運命を　決めたのだ……▼
+残念！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『グムムム……▼
+こんな　よわきな　こぞうに
+わがはいが　やぶれるとは……▼
+この　くつじょく……
+いずれ　はらしてやるぞ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『グムムム……▼
+こんな　弱気な　小僧に
+わがはいが　敗れるとは……▼
+この　くつじょく……
+いずれ　晴らしてやるぞ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハ　ハチクマン！
+ヒ　ヒーローは　つよく　かっこよく
+まけないって　きまってるんだ！▼
+さ　さあ！
+いますぐ　ここから　たちさってよ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハ　ハチクマン！
+ヒ　ヒーローは　強く　かっこよく
+負けないって　決まってるんだ！▼
+さ　さあ！
+今すぐ　ここから　立ち去ってよ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname Idx="0" ]キッド！▼
+しかし　かれには　よわむしという
+ヒーローとして　ちめいてきな▽
+じゃくてんが　あった！▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+たたかえ！　
+[Name:PokemonNickname Idx="0" ]キッド！▼
+びびるな！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぞの　怪人　ハチクマンを
+こらしめ　遊園地の　危機を▽
+救った　[Name:PokemonNickname Idx="0" ]キッド！▼
+しかし　彼には　弱虫という
+ヒーローとして　致命的な▽
+弱点が　あった！▼
+イッシュの　理想と　真実を
+守るため！▼
+戦え！　
+[Name:PokemonNickname Idx="0" ]キッド！▼
+ビビるな！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファー　ファファファ！
+おしまいだ！　[Name:PokemonNickname Idx="0" ]キッド！▼
+わがはいの　おうぎを
+つかうまでも　なかったわ！▼
+さあ！　そこで　おとなしく
+ゆうえんちが　はかいされる▽
+こうけいを　ながめておれ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファー　ファファファ！
+おしまいだ！　[Name:PokemonNickname Idx="0" ]キッド！▼
+わがはいの　奥義を
+使うまでも　なかったわ！▼
+さあ！　そこで　大人しく
+遊園地が　破壊される　様を▽
+眺めておれ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『うう……
+やっぱり　ぼくに　ヒーロー▽
+なんて　むりだよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『うう……
+やっぱり　僕に　ヒーロー▽
+なんて　無理だよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいじんハチクマンの　まえに
+[Name:PokemonNickname Idx="0" ]キッドは▽
+おしくも　ちから　つきた……▼
+……しかし▼
+おびえながらも　ひっしに
+たたかった　かれの　ゆうしを▽
+わすれるものは　いないだろう▼
+ありがとう！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>怪人ハチクマンの　前に
+[Name:PokemonNickname Idx="0" ]キッドは▽
+おしくも　力　尽きた……▼
+……しかし▼
+おびえながらも　必死に
+戦った　彼の　勇姿を▽
+忘れる者は　いないだろう▼
+ありがとう！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらば！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『あ……
+ワザが　当たらなかった……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『あ……
+ワザが　当たらなかった……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン『ファー　ファファファ！
+ダメージも　あたえられない▽
+とは　それでも　ヒーローか！▽
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さあ！　そこで　大人しく
+ゆうえんちが　はかいされる▽
+さまを　ながめておれ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン『ファー　ファファファ！
+ダメージも　あたえられない▽
+とは　それでも　ヒーローか！▽
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さあ！　そこで　大人しく
+遊園地が　破壊される　様を▽
+眺めておれ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『くっ……
+なさけない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『くっ……
+なさけない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいじんハチクマンに
+こうげき　できなかった▽
+[Name:PokemonNickname Idx="0" ]キッド……▼
+ヒーローとして　あるまじき　ミスを
+おかした　かれは▽
+ちからつきて　しまった……▼
+なさけないぞ！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらばだ！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>怪人ハチクマンに
+こうげき　できなかった▽
+[Name:PokemonNickname Idx="0" ]キッド……▼
+ヒーローとして　あるまじき　ミスを
+おかした　彼は▽
+力尽きて　しまった……▼
+情けないぞ！
+[Name:PokemonNickname Idx="0" ]キッド！▼
+さらばだ！
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:17" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

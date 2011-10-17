@@ -1,0 +1,2480 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="pw_trname_rec"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はいゆう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はいゆう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_trname_show"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらくおとこ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらくおとこ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『あわわ……▼
+こりゃ　いったい　なんだべっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『あわわ……▼
+こりゃ　いったい　なんだべっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なによ？　コイツっ！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『何よ？　コイツっ！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしん『どうした？　[Name:TrainerName Idx="1" ]！
+なにか　あったのかっ！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信『どうした？　[Name:TrainerName Idx="1" ]！
+何か　あったのかっ！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『パトロールちゅうに
+とつぜん　ひめいが　きこえたため▽
+そのばしょまで　きたのですが……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『パトロール中に
+突然　悲鳴が　聞こえたため▽
+その場所まで　来たのですが……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしん『それで！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信『それで！？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ちょうきょだいな
+バンギラスが　あばれて……▼
+いや……▼
+……これは　ふつうの
+バンギラスでは　ありません……▼
+ぜんしんが……
+からだの　ぜんしんが▽
+きんぞくで　おおわれて　いますっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『超巨大な
+バンギラスが　暴れて……▼
+いや……▼
+……これは　普通の
+バンギラスでは　ありません……▼
+全身が……
+体の　全身が▽
+金属で　おおわれて　いますっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしん『……きんぞく　だと！▼
+よし！　いまから　そいつを
+メカ・バンギラス　りゃくして▽
+Ｍ・Ｖと　こしょう　する！▼
+いいか！　[Name:TrainerName Idx="1" ]！
+そこは　まちが　ちかい！▼
+Ｍ・Ｖが　あばれれば　まちに
+おおきな　ひがいが　はっせいする！▼
+なんとしても　Ｍ・Ｖを　まちに
+ちかづけては　ならない！▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信『……金属だと！▼
+よし！　今から　そいつを
+メカ・バンギラス　略して▽
+Ｍ・Ｖと　呼称する！▼
+いいか！　[Name:TrainerName Idx="1" ]！
+そこからは　住宅地が　近い！▼
+Ｍ・Ｖが　暴れれば　市民に
+大きな　被害が　発生する！▼
+何としても　Ｍ・Ｖを　街に
+近づけては　ならない！▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ラジャー！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ラジャー！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガッ！！　グゴガーッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガッ！！　グゴガーッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『わわ……▼
+おーい！　おっかさーん！！
+オイラ　もう　ダメだべー！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『わわ……▼
+おーい！　おっかさーん！！
+オイラ　もう　ダメだべー！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
+あの作業員が　じゃまで
+うまくポケモンが　つかえない……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
+あの人が　作業員で
+うまくポケモンが　使えない……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしん『きこえるか！　[Name:TrainerName Idx="1" ]！
+しみんが　いる　なかで　Ｍ・Ｖと▽
+たたかうのは　きけんだっ！▼
+まず　かれを　にがすことを
+ゆうせん　するんだっ！▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信『聞こえるか！　[Name:TrainerName Idx="1" ]！
+市民が　いる　中で　Ｍ・Ｖと▽
+戦うのは　危険だっ！▼
+まず　彼を　逃がすことを
+優先するんだっ！▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ラジャー！！▼
+さて……
+どうにかして　あのひとを▽
+ここから　にがさないと……▼
+まずは　Ｍ・Ｖの　ちゅういを
+ひいて　じかんを　かせぐか……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ラジャー！！▼
+さて……
+どうにかして　あの人を▽
+ここから　逃がさないと……▼
+まずは　Ｍ・Ｖの　注意を
+ひいて　時間を　かせぐか……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『こっちよ！　Ｍ・Ｖ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『こっちよ！　Ｍ・Ｖ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『やっぱり　こわいな……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『やっぱり　怖いな……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『この　てつクズっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『この　鉄クズっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『わたしは　ここよっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『わたしは　ここよっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_react_enemy_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グ……　グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グ……　グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ほら！　あなたっ！！
+あいつに　スキが　できましたっ！▽
+いまのうちに　にげてっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ほら！　あなたっ！！
+あいつに　スキが　できましたっ！▽
+今のうちに　逃げてっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event2_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『ああ！！　わかったべっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『ああ！！　分かったべっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『よし……▼
+これで　おもいきり　Ｍ・Ｖ
+たたかうことが　できるわ……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『よし……▼
+これで　思い切り　Ｍ・Ｖ
+戦うことが　できるわ……▼</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……どうやら
+あいても　ほんき　みたいね……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……どうやら
+相手も　本気みたいね……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『スクラップに　してやる！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『スクラップに　してやる！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『しんちょうに　いくか……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『しんちょうに　いくか……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『かかってこい！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『かかってこい！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『こわい……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『こわい……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_enemy_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴゴ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
+なんて　かたいからだ　なの……
+[Name:PokemonNickname Idx="1" ]の　こうげきも▽
+まるで　はが　たたないし……▼
+アハハ……　もうダメ……
+ここで　わたし　おしまいよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『くっ……▼
+何て　かたい体　なの……
+[Name:PokemonNickname Idx="1" ]の　こうげきも▽
+まるで　歯が　立たないし……▼
+アハハ……　もうダメ……
+ここで　私　お終いよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『おい！　[Name:TrainerName Idx="1" ]！▼
+きさま　なにを　しているっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『おい！　[Name:TrainerName Idx="1" ]！▼
+貴様　何を　しているっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なに……▼
+なんで　Ｍ・Ｖから
+たいちょうの　こえが……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『何……▼
+何で　Ｍ・Ｖから
+隊長の　声が……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『これは　きさまを　ためす
+くんれん　だったのだ！▼
+このＭ・Ｖも　イッシュぼうえいたいが
+かいはつした　くんれんロボだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『これは　貴様を　試す
+訓練　だったのだ！▼
+このＭ・Ｖも　イッシュ防衛隊が
+かいはつした　訓練ロボだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『え……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『え……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『イッシュの　ききだと　いうのに
+たたかうことを　あきらめたな！！▼
+それでも　きさまは
+イッシュぼうえいたい　か！▼
+さっさと　ほんぶに　もどってこい！
+きさまの　たるんだ　こんじょうを▽
+ゼロから　きたえなおして　やる！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『イッシュの　危機だと　いうのに
+戦うことを　あきらめたな！！▼
+それでも　貴様は
+イッシュ防衛隊　か！▼
+さっさと　本部に　戻ってこい！
+きさまの　たるんだ　根性を▽
+ゼロから　きたえ直して　やる！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……　……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……　……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『いいか！　[Name:TrainerName Idx="1" ]！▼
+ないたり　わらったり
+できなくなるまで　トレーニングだ！▽
+いまから　かくごして　おけっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『いいか！　[Name:TrainerName Idx="1" ]！▼
+泣いたり　笑ったり
+出来なくなるまで　トレーニングだ！▽
+今から　覚悟して　おけっ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ハ……　ハハハ……
+もう　わたし　おしまいだ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ハ……　ハハハ……
+もう　私　お終いだ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ハアッ　ハアッ……▼
+もうっ……　からだ　うごかない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ハアッ　ハアッ……▼
+もうっ……　体が　動かない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ『グゴガーンッ！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ハアッ　ハアッ……
+ダメ……　にげられない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ハアッ　ハアッ……
+ダメ……　逃げられない……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『おーい！！　アンタ！！
+だいじょうぶかー！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『おーい！！　アンタ！！
+大丈夫かー！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あれ……　アンタ……
+なんで……　かえってきたのよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あれ……　アンタ……
+何で……　帰ってきたのよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『さっきは　ちーっとばっかし
+ビビっちまったけどよ！▼
+もー　だいじょうぶ　だって！
+こんどは　オラが　アンタを▽
+たすけて　やるかんなーっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『さっきは　ちーっとばかし
+ビビっちまったけどよ！▼
+もー　大丈夫　だって！
+こんどは　オラが　アンタを▽
+助けて　やるかんなーっ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ダメ……
+しろうとが　かなう　あいてじゃ……▼
+ハアッ　ハアッ……▼
+わたしのことは　いいから……
+はやく　にげてよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ダメ……
+素人が　かなう　相手じゃ……▼
+ハアッ　ハアッ……▼
+私のことは　いいから……
+早く　逃げてよ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『よーし　いくべっ！！
+あんな　こどもが　がんばったんだ！▼
+いい　おとなの　オラに　だって
+やれねえことは　ねえっ！！▼
+そらのうえの　おっかさん……
+むすこの　いきざま　みててくれよお！　</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『よーし　行くべっ！！
+あんな　子供が　がんばったんだ！▼
+いい　大人の　オラに　だって
+やれねえことは　ねえっ！！▼
+空の上の　おっかさん……
+息子の　生き様　見ててくれよ！　</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちからつきた　[Name:TrainerName Idx="1" ]の　まえに
+せまる　きかいじゅう　Ｍ・Ｖ……▼
+ぜったいぜつめいの　ピンチに
+にげたはずの　あの　おとこが▽
+かえってきた……▼
+……おとこは　トラックに　のりこみ
+Ｍ・Ｖに　つっこんでいく……▼
+……おおきな　ばくはつと
+ふきあがる　けむり……▼
+……やがて　けむりが　はれると
+そこには　うごかなくなった▽
+Ｍ・Ｖの　すがたが　あった……▼
+[Name:TrainerName Idx="1" ]は　ふらつく　あしで
+おとこを　さがしつづけたが▽
+そのすがたは　みつからなかった……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>力尽きた　[Name:TrainerName Idx="1" ]の　前に
+迫る　機械獣　Ｍ・Ｖ……▼
+絶体絶命の　ピンチに
+逃げたはずの　あの男が▽
+帰ってきた……▼
+……男は　トラックに　乗り込むと
+Ｍ・Ｖに　突っ込んでいく……▼
+……大きな　爆発と
+ふきあがる　煙……▼
+……やがて　煙が　晴れると
+そこには　動かなくなった▽
+Ｍ・Ｖの　姿が　あった……▼
+[Name:TrainerName Idx="1" ]は　ふらつく足で
+男を　さがし続けたが▽
+その姿は　見つからなかった……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『やった……
+なんとか　Ｍ・Ｖを　たおしたわ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『やった……
+何とか　Ｍ・Ｖを　倒したわ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『やー！　たすかっただよー！
+あんな　でっけえ　バケモンを▽
+やっつけるなんて！▼
+いやー　アンタ　すげーな！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『やー！　助かっただよー！
+あんな　でっけえ　バケモンを▽
+やっつけるなんて！▼
+いやー　アンタ　すげーな！！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あなたは……
+だいじょうぶ　だったんですか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あなたは……
+大丈夫　だったんですか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『へへへ……
+からだが　しほんの　さぎょういんを▽
+なめてもらっちゃ　こまるべ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『へへへ……
+体が　資本の　作業員を▽
+なめてもらっちゃ　困るべ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……では
+きかせて　ください……▼
+そもそも　あのＭ・Ｖは
+あなたの　ポケモンですか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……では
+聞かせて　ください……▼
+そもそも　あのＭ・Ｖは
+あなたの　ポケモンですか？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『オイオイ　ちがうよ！
+んな　バケモン　オラんじゃねえよ！▼
+ありゃよ　ボールがよ　ハーバーの
+みちに　おちてたんだ！▼
+……んだから　つい　ひろってよ
+ちょこっと　なげてみたらよ！▽
+あんな　バケモンが　でてきたんだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『オイオイ　違うよ！
+んな　バケモン　オラんじゃねえよ！▼
+ありゃよ　ボールがよ
+ハーバーの道に　落ちてたんだ！▼
+……んだから　つい　拾ってよ
+ちょこっと　投げてみたらよ！▽
+あんな　バケモンが　出てきたんだ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なるほど……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なるほど……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとこ『でも　ちょっと　ヘンなのはよ
+その　みち　ってのはよ▽
+あの　はとばの　なかでも▽
+かんけいしゃ　せんようの▽
+つうろ　なんだよなあ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>男『でも　ちょっと　ヘンなのはよ
+その　道　ってのはよ▽
+あのハーバーの　なかでも▽
+関係者　専用の▽
+通路　なんだよなあ……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『わかりました……
+ありがとうございます……▼
+（Ｍ・Ｖ……▼
+あれは　ポケモン　じゃない……
+はかいの　ための　へいき……▼
+いったい　だれが　あんな
+きけんな　ものを　つくったの……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『分かりました……
+ありがとうございます……▼
+（Ｍ・Ｖ……▼
+あれは　ポケモン　じゃない……
+破壊の　ための　兵器……▼
+一体　だれが　あんな
+危険な　ものを　造ったの……</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:18" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

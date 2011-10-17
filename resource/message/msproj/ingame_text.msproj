@@ -312,6 +312,168 @@
 			<Directory
 				Name="pokewood">
 				<ContentItem
+					Name="pokewood_name.mstxt" />
+				<ContentItem
+					Name="pokewood_senario01_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario01_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario02_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario02_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario03_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario03_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario04_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario04_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario05_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario05_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario06_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario06_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario07_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario07_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario08_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario08_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario09_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario09_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario10_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario10_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario11_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario11_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario12_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario12_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario13_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario13_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario14_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario14_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario15_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario15_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario16_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario16_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario17_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario17_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario18_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario18_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario19_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario19_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario20_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario20_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario21_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario21_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario22_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario22_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario23_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario23_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario24_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario24_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario25_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario25_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario26_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario26_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario27_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario27_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario28_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario28_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario29_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario29_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario30_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario30_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario31_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario31_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario32_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario32_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario33_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario33_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario34_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario34_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario35_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario35_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario36_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario36_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario37_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario37_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario38_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario38_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario39_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario39_m.mstxt" />
+				<ContentItem
+					Name="pokewood_senario40_f.mstxt" />
+				<ContentItem
+					Name="pokewood_senario40_m.mstxt" />
+				<ContentItem
 					Name="pw_briefing001.mstxt" />
 				<ContentItem
 					Name="pw_briefing002.mstxt" />

@@ -1,0 +1,4989 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="pw_rec_trainername_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブタロウ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブタロウ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アイ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アイ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビバリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビバリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビバリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビバリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マサヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マサヒコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マサチカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マサチカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピーター</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピーター</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブヘイ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブヘイ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ペネロペ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ペネロペ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダニー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブエ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲンズブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲンズブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バーグマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バーグマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲンズブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲンズブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バーグマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バーグマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ニコルソン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ニコルソン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アビゲイル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アビゲイル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モブジロウ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モブジロウ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_rec_trainername_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-17T06:36:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-17T06:36:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクかん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクかん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セツコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セツコ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｅ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｅ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エイリアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エイリアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホフマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホフマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリザワ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリザワ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ストレンジ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ストレンジ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ななしさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぬいぐるみ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぬいぐるみ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジュジュベ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジュジュベ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロドリゲス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロドリゲス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あかいきり</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マニュエル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マニュエル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シモン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シモン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マニュエル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マニュエル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シモン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シモン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カダス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カダス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セラエノ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セラエノ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーカム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーカム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カダス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カダス</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映時の名前</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_652"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_ufoの
+上映時のニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_653"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_HATIKUMANの
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_654"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_mvの
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_655"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｖ２</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｖ２</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_656"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんそうき</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てんそうき</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_657"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_657の
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_658"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_659"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいぶつ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かいぶつ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_660"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆ－００</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆ－００</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_661"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あくりょう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あくりょう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_662"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろいかべ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しろいかべ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_663"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろいかべ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろいかべ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_KUROIKABEの
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_664"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_665"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_666"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_667"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_668"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_669"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_670"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_671"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_672"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_673"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_674"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_675"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_676"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_677"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_678"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_679"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セット</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セットの名前
+セットはそのまま使いたいという話なので
+使わないかも</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_680"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_ufo2の
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_681"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_DAIol2の
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_682"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆ－００</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆ－００</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド用ボスポケモン
+MONSNO_ff002の
+上映時ニックネーム</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_683"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>からておう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>からておう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>"ポケウッド用ボスポケモン
+MONSNO_KARATEOUの
+上映時ニックネーム"</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
