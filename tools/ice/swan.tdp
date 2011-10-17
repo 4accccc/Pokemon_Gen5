@@ -31,3 +31,12 @@ Property.Project.Load.SRL.FileLoadSRLCheckForceNTRMode=1
 Property.Project.Load.SRL.FileLoadSRLFileName=C%3a%5chome%5cswan%5cprog%5cbin%5cARM9-TS.HYB%5cRelease%5cmain.srl
 # 読み込み後にTWL-CPUを実行する(1=TRUE)
 Property.Project.Load.SRL.FileLoadSRLCheckExecute=1
+# =======================
+# ICE読み込み設定(サウンドプレイヤー読み込み時に使用)
+# =======================
+# コマンドウィンドウをアクティブにする（0=FALSE）
+Property.Project.Load.FileLoadICEFileName.FileLoadICEActivateCmd=0
+# サウンドプレイヤー用ICEを使用する
+Property.Project.Load.FileLoadICEFileName=C%3a%5chome%5cswan%5ctools%5cice%5csound_player.ice
+
+
