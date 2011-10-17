@@ -79,10 +79,18 @@ data_cnt.times{|index|
 
   animal_trail_data_list[index] = ANIMAL_TRAIL_DATA.new
   animal_trail_data_list[index] = animal_trail_data_list[index]
-  # 確率テーブル取得(テーブルの最後は100%固定なので取得しない)
   (TABLE_PROBABILITY-1).times{|i|
     animal_trail_data_list[index].probability[i] = data[PROBABILITY_ROW+i][PROBABILITY_LINE]
   }
+
+  # 100% チェック
+  prob_sum = 0;
+  animal_trail_data_list[index].probability.each{|prob|
+    prob_sum += prob.to_i
+  }
+  if prob_sum > 100 then
+      raise "シート%d:抽選データの合計確率が100%%を超えています"%(index+1)
+  end
 
   # アイテムテーブル1
   ITEM_RANK_CNT.times{|rank|
