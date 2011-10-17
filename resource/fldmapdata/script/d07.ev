@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA ev_bg_d07_board_01
+_EVENT_DATA		ev_bg_d07_board_01
+_EVENT_DATA		ev_d07_bigfour3_01
+_EVENT_DATA		ev_pos_d07_bigfour3_ev
 _EVENT_DATA_END
 
 
@@ -35,3 +37,267 @@ _EVENT_DATA_END
 EVENT_START  ev_bg_d07_board_01
 	_EASY_BGWIN_MSG(msg_d07_sign1_01 , TYPE_POST)
 EVENT_END
+
+/**************************************************************/
+/*		D07		BIGFOUR3									  */
+/**************************************************************/
+EVENT_START		ev_d07_bigfour3_01
+
+//ゲームクリア前なら
+IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+
+	//おまえは……　なかなか
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07_bigfour_01 )
+
+//ゲームクリア後なら
+ELSE
+
+	_TALK_OBJ_START()
+	
+	//主人公向き取得
+	_PLAYER_DIR_GET( SCWK_ANSWER )
+	
+	//プレイヤー名格納
+	_PLAYER_NAME(0)
+	
+	//きみは……
+	_BALLOONWIN_TALKOBJ_MSG( msg_d07_bigfour_02 )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_walk_d16 )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//そうだな……
+	_BALLOONWIN_TALKOBJ_MSG( msg_d07_bigfour_03 )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	SWITCH $SCWK_ANSWER
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( D07_BIGFOUR3_01, anm_come_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( D07_BIGFOUR3_01, anm_come_l )
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
+
+	//では　ポケモンリーグにて
+	_BALLOONWIN_TALKOBJ_MSG( msg_d07_bigfour_04 )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	SWITCH $SCWK_ANSWER
+	CASE DIR_LEFT THEN
+		_OBJ_HIGH_JUMP( D07_BIGFOUR3_01, 143, 0, 206 )
+	CASE DIR_RIGHT THEN
+		_OBJ_HIGH_JUMP( D07_BIGFOUR3_01, 141, 0, 206 )
+	ENDSWITCH
+
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_leave )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( D07_BIGFOUR3_01 )
+
+	//========================================/
+	
+	//レンブのバニシュフラグセット
+	
+	
+	//ＰＯＳイベント終了
+	$LOCALWORK1 = 1
+	
+	//========================================/
+
+ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		D07		BIGFOUR3	POS								  */
+/**************************************************************/
+EVENT_START		ev_pos_d07_bigfour3_ev
+
+//ゲームクリア前なら
+IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+
+	//レンブ：ギョエ
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//レンブ・主人公：向かい合う
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_stay_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	//おまえは……　なかなか
+	_BALLOONWIN_OBJMSG_POS( msg_d07_bigfour_01 , D07_BIGFOUR3_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	//主人公後退する
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+//ゲームクリア後なら
+ELSE
+
+	//レンブ：ギョエ
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//レンブ・主人公：向かい合う
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_stay_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤー名格納
+	_PLAYER_NAME(0)
+	
+	//きみは……
+	_BALLOONWIN_OBJMSG_POS( msg_d07_bigfour_02 , D07_BIGFOUR3_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_bigfour3_walk )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//そうだな……
+	_BALLOONWIN_OBJMSG_POS( msg_d07_bigfour_03 , D07_BIGFOUR3_01, POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//では　ポケモンリーグにて
+	_BALLOONWIN_OBJMSG_POS( msg_d07_bigfour_04 , D07_BIGFOUR3_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_dir_d )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_HIGH_JUMP( D07_BIGFOUR3_01, 143, 0, 206 )
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_leave )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( D07_BIGFOUR3_01 )
+
+	//========================================/
+	
+	//レンブのバニシュフラグセット
+	
+	
+	//ＰＯＳイベント終了
+	$LOCALWORK1 = 1
+	
+	//========================================/
+
+ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	★レンブ：専用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_come_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_come_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leave
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_bigfour3_walk
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_d16
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
