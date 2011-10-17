@@ -33,7 +33,7 @@ NAME_MSTXTFILE 	= src/trname.mstxt
 MSPROJDIR	= ../message/msproj/
 
 
-ALL_TARGETS = $(TARGETDIR)$(NO_HEADER) $(MSPROJDIR)$(NAME_MSTXTFILE)
+ALL_TARGETS = $(TARGETDIR)$(NO_HEADER) 
 LOCAL_TARGETS = $(notdir $(ALL_TARGETS))
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -67,7 +67,7 @@ out_end: trainer_wb.csv
 	ruby breeder_list.rb trno_def.h > breeder_id_list.cdat
 endif
 
-do-build: $(ALL_TARGETS)
+do-build: $(ALL_TARGETS) $(MSPROJDIR)$(NAME_MSTXTFILE)
 
 $(TARGETDIR)$(NO_HEADER):	$(NO_HEADER)
 	$(COPY)	$(NO_HEADER) $(TARGETDIR)
