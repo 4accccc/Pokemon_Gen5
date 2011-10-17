@@ -42,14 +42,16 @@ void ANIMAL_TRAIL_SelectRandomTable( ETC_SAVE_WORK *p_save ,u8 trail_id )
   AT_OBJ_TYPE obj_type;
   u8 main_table_index = TABLE_TABLE_CNT-1;
   u8 data_table_index = GFUser_GetPublicRand( DATA_TABLE_LEN );
-
   u32 count = GPOWER_Calc_AnimalTrailPokeTryCount( DEFAULT_LOTTERY_COUNT );
+
   for( n = 0; n < count ;n++ )
   {
+    u8 rnd_num = GFUser_GetPublicRand( 100 )+1;
+    u8 prob_sum = 0;
     for( i = 0; i < (TABLE_TABLE_CNT-1) ;i++ )
     {
-      u8 table_probability = sc_table_probability[trail_id][i];
-      if( GFUser_GetPublicRand( 100 ) < table_probability )
+      prob_sum += sc_table_probability[trail_id][i];
+      if( rnd_num <= prob_sum )
       {
         main_table_index = i;
         break;
