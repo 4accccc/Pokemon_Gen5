@@ -523,7 +523,7 @@
 #define FV_C03R0101_MEMBER_E               541 /* 0x021d 調査隊一般隊員E */
 #define FV_C03R0101_MEMBER_F               542 /* 0x021e 調査隊一般隊員F */
 #define FV_C03R0101_MEMBER_G               543 /* 0x021f 調査隊一般隊員G */
-		/* not used   544(0x0220) */
+#define FV_R06R0201_STOPPER_01             544 /* 0x0220 フキヨセの洞穴：ストッパー */
 #define FV_POKE_JUDGE_01                   545 /* 0x0221 ジャッジ（ポケモンの個体値を調べてくれる人） */
 #define FV_STADIUM_TRAINER_01              546 /* 0x0222 ビッグスタジアム／リトルコートの選手トレーナー１人目 */
 #define FV_STADIUM_TRAINER_02              547 /* 0x0223 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
