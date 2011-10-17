@@ -11,23 +11,45 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+// VSでコンパイルする時に設定する
+//#define VS_PROJECT
+
+#ifndef VS_PROJECT
+#include <gflib.h>
+#else
+#include "C:/home\pokemon_tool/inf_dungeon_test/inf_dungeon_test/inf_debug_gflib_override.h"
+#endif
+
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_setup_data.h" // for INF_AREA_ROOM_SET_MAX
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_area_data.h" // for INF_TR_AREA_DATA_MAX
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.h" // for INF_TR_ROOM_POS_TYPE_NONE
 #include "arc/fieldmap/fldmmdl_objcode.h"   // for OBJCODE
 #include "infinity_dungeon_warp_dir.h"      // for WARP_DIR_*
 #include "fieldmap/zone_id.h"               // for ZONE_ID_*
+#include "infinity_dungeon_def.h"           // for INFINITY_DUNGEON_TRID_MAX
+#include "pm_version.h"
 
 //=============================================================================
 //
 //					定数宣言
 //
 //=============================================================================
+
+// 部屋に出現するトレーナーの最大値
 #define ROOM_TR_MAX (4)
-#define INF_MULTI_DUNGEON (0)
-#define INF_B2_ONLY_DUNGEON (1)
-#define INF_W2_ONLY_DUNGEON (2)
-#define INFINITY_DUNGEON_TALK_PATTERN_MAX (30)    // 無限ダンジョンに登場するトレーナータイプ
+
+// トレーナー出現タイプ
+#define INF_MULTI_DUNGEON (0)   // 両方
+#define INF_B2_ONLY_DUNGEON (1) // 黒のみ
+#define INF_W2_ONLY_DUNGEON (2) // 白のみ
+
+// 無限ダンジョンに登場するトレーナータイプ
+#define INFINITY_DUNGEON_TALK_PATTERN_MAX (30)
+
+// 部屋サイズ定義
+#define ROOM_MAX_X            (4)                       // 部屋X最大数
+#define ROOM_MAX_Y            (4)                       // 部屋Y最大数
+#define ROOM_MAX              (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
 
 //-------------------------------------
 //	ヒントタイプ
@@ -141,6 +163,46 @@ typedef struct {
   u16 level_min;
 }INF_LEVEL_TABLE_PARAM;
 
+//-------------------------------------
+///	ルームデータ
+//=====================================
+typedef struct{
+  u8  tr_pos_type;
+  u8 room_type;
+  BOOL can_move[4];
+  u8  room_id;
+}ROOM_DATA;
+
+//-------------------------------------
+///	ダンジョン内トレーナーデータ
+//=====================================
+typedef struct{
+  u16 tr_id[INFINITY_DUNGEON_TRID_MAX]; // 全トレーナーランダム配列
+}DUNGEON_TRAINER;
+
+//-------------------------------------
+///	無限ダンジョン用シード
+//=====================================
+typedef struct 
+{
+  s32 master_seed;
+  s32 tr_data_seed;
+  s32 dungeon_data_seed;
+  u16 tr_seed[INFINITYDUNGEON_FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; // トレーナーシード
+}INF_DUNGEON_SEED;
+
+//-------------------------------------
+///	無限ダンジョンデータ
+//=====================================
+typedef struct {
+  INF_DUNGEON_SEED  seed;
+  ROOM_DATA         room_data[INFINITYDUNGEON_FLOOR_MAX][ROOM_MAX];
+  DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];
+  u16               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
+  u16               recover_room_id[INFINITYDUNGEON_FLOOR_MAX];
+  u8                version;
+}INF_DUNGEON_DATA;
+
 //=============================================================================
 //
 //					プロトタイプ宣言
@@ -163,4 +225,6 @@ extern const INF_LEVEL_TABLE_PARAM* INF_TOOL_GetLevelData( u16 area_no );
 extern u8 INF_TOOL_GetPowRnd( u16 area_no );
 extern u8 INF_TOOL_GetTrainerHintType( u16 obj_code);
 extern u8 INF_TOOL_GetTrainerTalkType( u16 obj_code);
+extern void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context );
+extern void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed );
 

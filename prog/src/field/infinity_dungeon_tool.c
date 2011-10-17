@@ -13,7 +13,6 @@
 #include "infinity_dungeon_def.h"
 #include "infinity_dungeon_tool.h"
 #include "field/field_dir.h"
-#include "pm_version.h"
 
 //=============================================================================
 /**
@@ -341,5 +340,66 @@ u8 INF_TOOL_GetTrainerTalkType( u16 obj_code)
   }
 
   return 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配列内のデータをランダムにならびかえる
+ *
+ *	@param	*p_array 
+ *	@param	size 
+ *	@param	context 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context )
+{
+  int i;
+  u32 tmp;
+  for( i = 0; i < size ;i++ )
+  {
+    u32 rnd = GFL_STD_Rand( rand_context,size);
+    tmp = p_array[rnd];
+    p_array[rnd] = p_array[i];
+    p_array[i] = tmp;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン用シードを生成する
+ *
+ *	@param	*p_seed 
+ *	@param	master_seed 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
+{
+  int i,n;
+  GFL_STD_RandContext rand_context;
+
+  // シード生成用シード
+  p_seed->master_seed = master_seed;
+
+  // 乱数を作成
+  GFL_STD_RandInit( &rand_context, p_seed->master_seed );
+
+  // 子シードを生成
+  p_seed->tr_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
+  p_seed->dungeon_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
+
+  // トレーナーシード
+  for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX ;i++ )
+  {
+    for( n = 0; n < INFINITY_DUNGEON_TRID_MAX ;n++ )
+    {
+      p_seed->tr_seed[i][n] = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
+    }
+  }
+
 }
 
