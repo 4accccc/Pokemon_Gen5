@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-09-14T21:31:09" source="out11_local_tex_sp.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-17T18:05:10" source="out11_local_tex_sp.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-09-14T21:31:09" source="out11_local_tex_sp.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-10-17T18:05:10" source="out11_local_tex_sp.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="4"
@@ -1102,70 +1102,70 @@
 		path="C:/home/swan_data3d/field/out11/chip/tex_spring/sp_o11m.tga"
 	>
 		<bitmap size="512">
-			e4e4 e3e3 e3e3 e3e0 e3e3 e3e0 e1e3 e0e3
-			e0e1 e4e3 e0e3 e3e3 e0e3 e3e3 e3e4 e4e4
-			e4e4 e3e3 e3e3 e3e0 e3e3 e3e0 e1e3 e0e3
-			e0e1 e4e3 e0e3 e3e3 e0e3 e3e3 e3e4 e4e4
-			e3e4 e3e0 e3e3 e3e1 e1e0 e3e3 e1e0 e5e0
-			e1e5 e3e3 e1e0 e0e0 e1e3 e4e3 e0e3 e4e3
-			e3e4 e3e0 e3e3 e3e1 e1e0 e3e3 e1e0 e5e0
-			e1e5 e3e3 e1e0 e0e0 e1e3 e4e3 e0e3 e4e3
-			e3e4 e0e1 e0e3 e1e1 e1e5 e1e0 e5e1 82e5
-			e182 e1e0 e5e5 e5e5 e1e1 e3e0 e1e0 e3e3
-			e3e4 e0e1 e0e3 e1e1 e1e6 e1e0 e5e1 82e5
-			e182 e1e0 e5e5 e5e5 e1e1 e3e0 e1e0 e3e3
-			e0e3 e1e1 e1e3 e5e5 e582 e5e1 8282 8282
-			e582 e5e1 8282 8282 e5e5 e3e1 e1e1 e4e0
-			e0e3 e1e1 e1e3 e5e5 8282 e6e1 8282 8282
-			e582 e6e1 8282 8282 e5e5 e3e1 e1e1 e4e0
-			e1e3 e5e5 e5e1 82e5 8282 8282 8d82 8d8d
-			8282 8282 8b82 828b 8282 e1e5 e5e5 e0e1
-			e1e3 e5e5 e582 8282 8282 8282 8882 8d87
-			8282 8282 8a82 828a 8282 e1e5 e5e5 e0e1
-			e5e5 82e5 8282 8282 8d8b 8b8b 8d8d 8d8d
-			8c8d 8c8d 8b8c 888b 8288 8282 8282 e182
-			e5e5 8282 8282 8282 8788 8888 8788 8a87
-			878a 8a87 8a8a 898a 8289 8282 e582 e1e5
-			8282 8282 898b 8b89 8b8d 8d8d 8d8d 8d8c
-			8d8d 8d8d 8c8c 8d8d 8d8a 8c8d 8988 8282
-			8282 8d82 8d8d 8787 8887 8888 8787 8787
-			8787 8a8a 878a 8787 8987 8989 8282 8282
-			8c8c 8b8b 8989 8d8d 8d8b 8d8d 898d 8a8a
-			8a8a 8b8d 8d8d 8d8a 8d8d 8b8c 898b 8989
-			8888 8d8d 888d 8888 8889 8787 8887 8788
-			8a8a 8a8a 8787 8787 8987 8d89 8b8c 8c8c
-			8c8c 898b 898d 8b8b 8d8d 8d8d 8a8a 8a8a
-			8a8a 8d8d 8a8d 8d8a 8b8d 898b 8c89 8c8c
-			8d8d 8d8d 8988 8889 8788 8787 8888 8a87
-			8a8a 8a8a 8787 8787 8d89 898d 8c8b 8d8c
-			8c8c 8989 898b 8d89 8d8d 8a8d 8a8a 8a8a
-			8d8d 8a8a 8d8a 8c8d 8b8b 8889 8d8c 8d8d
-			8d8d 8b8c 8989 8c88 8787 888c 8a88 8a8a
-			8a8a 8989 8787 8987 8a8a 8c89 8c8b 8c8d
-			8989 8989 8d89 8d8d 8d8d 8a89 8a8a 8a8a
-			8a8a 8d8a 8d8a 8b8c 888b 8d88 8d8d 8d8d
-			8c8c 8b8c 8c8c 8989 8b8c 8c8c 8a8a 8a8a
-			8a8a 8687 8788 8a89 8a8a 898a 8d8d 8d8d
-			8d89 8b89 8d8d 8d8d 898c 8a8a 8a8a 8a8d
-			8a8a 8e8e 8d8e 8c8c 8c8d 8a8d 8d8d 8d8c
-			8c8c 8c8c 898c 8c89 8c8b 8a8a 8a8a 8a8a
-			8689 8787 8788 8a8a 8a8a 8d89 898d 898c
-			898b 8d8d 8d8b 898c 8989 8a8a 8d8a 8d8d
-			8e8d 8d8e 8d8d 8c8d 8d8d 8d8a 8c8d 8c8c
-			8c8c 898c 8a89 8d8d 8d8c 8a8a 8a89 868a
-			8787 8788 8a87 8a8a 8a8a 8d8a 8c8c 8d8c
-			8d89 8d8d 8c8d 8989 8a8a 8a8a 8a8a 8d8d
-			8d8e 8a8e 8d8d 8d8d 8d8a 8d8d 8c8b 8c8c
-			8c8c 8a89 8a8a 8a8d 8a8d 8a8a 8a8a 8786
-			8888 8787 8a8a 8a8a 8a8a 8d8a 8c8c 898b
-			8d8d 8d8d 898c 8989 8d89 8d8d 8a8d 8d8a
-			8e8d 8d8d 8d8d 8a8a 8d8d 8d8d 8d8d 8d8c
-			8d8d 8a8a 8a8a 8e8d 8a8e 8a8a 898a 8889
-			8889 8a87 8a8a 8a8a 8a8a 8c8d 898c 8d89
-			8d8d 8c8d 898c 8989 8c8c 8d8d 8a8a 8e8a
-			8d8d 8d8d 8a8a 8a8a 8d8d 8e8a 8a8a 8d8a
-			8d8d 8d8d 8d8a 8d8a 8a8a 898a 8986 8c8c
-			8788 8a8a 8a8e 8a8a 8a8a 8c8d 8989 8d8d
+			eeee eded eded edec eded edec ebed eced
+			eceb eeed eced eded eced eded edee eeee
+			eeee eded eded edec eded edec ebed eced
+			eceb eeed eced eded eced eded edee eeee
+			edee edec eded edeb ebec eded ebec e8ec
+			ebe8 eded ebec ecec ebed eeed eced eeed
+			edee edec eded edeb ebec eded ebec e8ec
+			ebe8 eded ebec ecec ebed eeed eced eeed
+			edee eceb eced ebeb ebe8 ebec e8eb 85e8
+			eb85 ebec e8e8 e8e8 ebeb edec ebec eded
+			edee eceb eced ebeb ebe7 ebec e8eb 85e8
+			eb85 ebec e8e8 e8e8 ebeb edec ebec eded
+			eced ebeb ebed e8e8 e885 e8eb 8585 8585
+			e885 e8eb 8585 8585 e8e8 edeb ebeb eeec
+			eced ebeb ebed e8e8 8585 e7eb 8585 8585
+			e885 e7eb 8585 8585 e8e8 edeb ebeb eeec
+			ebed e8e8 e8eb 85e8 8585 8585 8385 8383
+			8585 8585 8085 8580 8585 ebe8 e8e8 eceb
+			ebed e8e8 e885 8585 8585 8585 8285 8386
+			8585 8585 8a85 858a 8585 ebe8 e8e8 eceb
+			e8e8 85e8 8585 8585 8380 8080 8383 8383
+			8183 8183 8081 8280 8582 8585 8585 eb85
+			e8e8 8585 8585 8585 8682 8282 8682 8a86
+			868a 8a86 8a8a 848a 8584 8585 e885 ebe8
+			8585 8585 8480 8084 8083 8383 8383 8381
+			8383 8383 8181 8383 838a 8183 8482 8585
+			8585 8385 8383 8686 8286 8282 8686 8686
+			8686 8a8a 868a 8686 8486 8484 8585 8585
+			8181 8080 8484 8383 8380 8383 8483 8a8a
+			8a8a 8083 8383 838a 8383 8081 8480 8484
+			8282 8383 8283 8282 8284 8686 8286 8682
+			8a8a 8a8a 8686 8686 8486 8384 8081 8181
+			8181 8480 8483 8080 8383 8383 8a8a 8a8a
+			8a8a 8383 8a83 838a 8083 8480 8184 8181
+			8383 8383 8482 8284 8682 8686 8282 8a86
+			8a8a 8a8a 8686 8686 8384 8483 8180 8381
+			8181 8484 8480 8384 8383 8a83 8a8a 8a8a
+			8383 8a8a 838a 8183 8080 8284 8381 8383
+			8383 8081 8484 8182 8686 8281 8a82 8a8a
+			8a8a 8484 8686 8486 8a8a 8184 8180 8183
+			8484 8484 8384 8383 8383 8a84 8a8a 8a8a
+			8a8a 838a 838a 8081 8280 8382 8383 8383
+			8181 8081 8181 8484 8081 8181 8a8a 8a8a
+			8a8a 8786 8682 8a84 8a8a 848a 8383 8383
+			8384 8084 8383 8383 8481 8a8a 8a8a 8a83
+			8a8a 8989 8389 8181 8183 8a83 8383 8381
+			8181 8181 8481 8184 8180 8a8a 8a8a 8a8a
+			8784 8686 8682 8a8a 8a8a 8384 8483 8481
+			8480 8383 8380 8481 8484 8a8a 838a 8383
+			8983 8389 8383 8183 8383 838a 8183 8181
+			8181 8481 8a84 8383 8381 8a8a 8a84 878a
+			8686 8682 8a86 8a8a 8a8a 838a 8181 8381
+			8384 8383 8183 8484 8a8a 8a8a 8a8a 8383
+			8389 8a89 8383 8383 838a 8383 8180 8181
+			8181 8a84 8a8a 8a83 8a83 8a8a 8a8a 8687
+			8282 8686 8a8a 8a8a 8a8a 838a 8181 8480
+			8383 8383 8481 8484 8384 8383 8a83 838a
+			8983 8383 8383 8a8a 8383 8383 8383 8381
+			8383 8a8a 8a8a 8983 8a89 8a8a 848a 8284
+			8284 8a86 8a8a 8a8a 8a8a 8183 8481 8384
+			8383 8183 8481 8484 8181 8383 8a8a 898a
+			8383 8383 8a8a 8a8a 8383 898a 8a8a 838a
+			8383 8383 838a 838a 8a8a 848a 8487 8181
+			8682 8a8a 8a89 8a8a 8a8a 8183 8484 8383
 		</bitmap>
 	</tex_image>
 	<tex_image index="18" name="sp_o11m2"
@@ -1175,22 +1175,22 @@
 		path="C:/home/swan_data3d/field/out11/chip/tex_spring/sp_o11m2.tga"
 	>
 		<bitmap size="128">
-			e4e4 e5e4 e4e5 e5e5 e4e8 e4e4 e7e7 e7e7
-			e4e4 e5e5 e6e4 e7e5 e4e4 e5e5 e6e5 e6e5
-			e4e4 e5e5 e5e6 e5e7 e7e5 e3e5 e5e5 e0e3
-			e8e5 e5e4 e6e5 e5e8 e5e5 e3e5 e5e5 e1e3
-			e5e6 e5e5 e7e6 e5e9 e5e7 e0e5 e7e5 e1e0
-			e5e5 e7e5 e8e8 e7e9 e7e5 e1e0 e5e0 eae1
-			e5e4 e9e7 e9e8 e5e7 e5e5 eae0 ea62 6262
-			e7e6 e9e8 e7e7 e5e5 e0e5 82ea 8282 8b82
-			e9e5 e5e5 e7e5 e3e5 e0e3 8262 8b8b 8b8b
-			e5e4 e6e7 e5e5 e3e5 eae0 8b82 8b8b 8b8b
-			e5e8 e5e5 e5e5 e0e0 82ea 8b82 8c8b 8e8b
-			e5e8 e5e5 e0e5 62ea 8282 8b8b 8c8c 8e8e
-			e6e5 e3e5 e0e3 82ea 8b8b 8c8b 8e8e 8e8e
-			e7e6 e7e5 e5e7 82ea 8c8b 8e8c 8e8e 8d8c
-			e8e7 e5e5 eae5 8262 8e8b 8e8e 8c8c 8e8d
-			e5e8 e5e5 eae1 8b82 8e8b 8c8e 8d8c 8d8d
+			e8e8 e9e8 e8e9 e9e9 e8ec e8e8 ebeb ebeb
+			e8e8 e9e9 eae8 ebe9 e8e8 e9e9 eae9 eae9
+			e8e8 e9e9 e9ea e9eb ebe9 e8e9 e9e9 e7e8
+			ece9 e9e8 eae9 e9ec e9e9 e8e9 e9e9 e6e8
+			e9ea e9e9 ebea e9ed e9eb e7e9 ebe9 e6e7
+			e9e9 ebe9 ecec ebed ebe9 e6e7 e9e7 e4e6
+			e9e8 edeb edec e9eb e9e9 e4e7 e462 6262
+			ebea edec ebeb e9e9 e7e9 82e4 8282 8082
+			ede9 e9e9 ebe9 e8e9 e7e8 8262 8080 8080
+			e9e8 eaeb e9e9 e8e9 e4e7 8082 8080 8080
+			e9ec e9e9 e9e9 e7e7 82e4 8082 8380 8580
+			e9ec e9e9 e7e9 62e4 8282 8080 8383 8585
+			eae9 e8e9 e7e8 82e4 8080 8380 8585 8585
+			ebea ebe9 e9eb 82e4 8380 8583 8585 8183
+			eceb e9e9 e4e9 8262 8580 8585 8383 8581
+			e9ec e9e9 e4e6 8082 8580 8385 8183 8181
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="sp_o11m4"
@@ -1503,8 +1503,8 @@
 		7c1f 0a26 0e67 0ec8
 	</tex_palette>
 	<tex_palette index="17" name="sp_o11m2_pl" color_size="16">
-		370d 3aaa 3dc2 4370 4371 4792 4793 47b4
-		4bb5 4bd6 4e44 5664 5684 5a85 5aa5 7fff
+		5664 5a85 3dc2 5684 4e44 5aa5 3aaa 370d
+		4372 4793 4794 47b6 4bb7 4bd8 7fff 7fff
 	</tex_palette>
 	<tex_palette index="18" name="sp_o11m4_pl" color_size="16">
 		3182 35a2 39a2 3dc2 41e3 4e44 5684 5a84
@@ -1515,8 +1515,8 @@
 		4a23 41e3 5ea5 5aa5 35a2 5684 5aa5 5ac5
 	</tex_palette>
 	<tex_palette index="20" name="sp_o11m_pl" color_size="16">
-		370d 3aaa 3dc2 4370 47b3 4e44 5264 5684
-		5a84 5a85 5aa5 5e84 5e85 5ea5 5ec5 7fff
+		5e84 5e85 5a84 5ea5 5a85 3dc2 5684 5264
+		4e44 5ec5 5aa5 3aaa 370d 4372 47b4 7fff
 	</tex_palette>
 	<tex_palette index="21" name="stake2_pl" color_size="16">
 		7fff 7bb5 7ff9 52b3 2e13 3e97 1d4c 46b8

@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-09-15T16:14:37" source="out11_local_tex_su.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-17T18:05:45" source="out11_local_tex_su.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-09-15T16:14:37" source="out11_local_tex_su.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-10-17T18:05:45" source="out11_local_tex_su.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="4"
@@ -1089,70 +1089,70 @@
 		path="C:/home/swan_data3d/field/out11/chip/tex_summer/sp_o11m.tga"
 	>
 		<bitmap size="512">
-			f2f3 f2ed f2f2 ede8 edf2 edf2 e5ed e7ec
-			e7e5 f2ec e7ec f2f2 e7f2 f2f2 edf2 f3f3
-			f2f3 f2ed f2f2 ede8 edf2 edf2 e5ed e7ec
-			e7e5 f2ec e7ec f2f2 e7f2 f2f2 edf2 f3f3
-			edf2 f2e8 edf2 ede5 e5ed eded e5e8 e1e4
-			e5e1 ecec e5e7 e7e7 e5f2 ecf2 f2ec f3f2
-			edf2 f2e8 edf2 ede5 e5ed eded e5e8 e1e4
-			e5e1 ecec e5e7 e7e7 e5f2 ecf2 f2ec f3f2
-			edf2 e8e5 e8ed e5e5 e4e1 e4e8 e1e4 60e2
-			e460 e4e7 e1e1 e1e1 e5e4 ece7 e5e7 f2f2
-			edf2 e8e5 e8ed e5e5 e4e1 e4e8 e1e4 60e2
-			e460 e4e7 e1e1 e1e1 e5e4 ece7 e5e7 f2f2
-			e8ec e5e5 e4ec e1e1 e260 e2e4 6060 6060
-			e260 e2e4 6060 6060 e1e2 ece5 e5e5 e8e7
-			e8ec e5e5 e4ec e1e1 6060 e3e4 6060 6060
-			e260 e3e4 6060 6060 e1e2 ece5 e5e5 e8e7
-			e5ec e1e1 e2e4 60e2 6060 6060 7060 7070
-			6060 6060 6e60 606e 6060 e4e2 e1e1 e8e4
-			e5ec e1e1 e264 6060 6060 6060 6960 7066
-			6060 6060 6b60 606b 6060 e4e2 e1e1 e8e4
-			e2e4 60e2 6060 6060 706e 6e6e 7070 7070
-			6f70 6f70 6e6f 696e 6069 6060 6060 e460
-			e2e4 6060 6060 6060 6669 6969 6669 6b66
-			666b 6b66 6b6b 6a6b 606a 6060 e260 e4e2
-			6060 6060 6a6e 6e6a 6e70 7070 7070 706f
-			7070 7070 6f6f 7070 706b 6f70 6a69 6060
-			6060 7060 7070 6666 6966 6969 6666 6666
-			6666 6b6b 666b 6666 6a66 6a6a 6060 6060
-			6f6f 6e6e 6a6a 7070 706e 7070 6a70 6b6b
-			6b6b 6e70 7070 706b 7070 6e6f 6a6e 6a6a
-			6969 7070 6970 6969 696a 6666 6966 6669
-			6b6b 6b6b 6666 6666 6a66 706a 6e6f 6f6f
-			6f6f 6a6e 6a70 6e6e 7070 7070 6b6b 6b6b
-			6b6b 7070 6b70 706b 6e70 6a6e 6f6a 6f6f
-			7070 7070 6a69 696a 6669 6666 6969 6b66
-			6b6b 6b6b 6666 6666 706a 6a70 6f6e 706f
-			6f6f 6a6a 6a6e 706a 7070 6b70 6b6b 6b6b
-			7070 6b6b 706b 6f70 6e6e 696a 706f 7070
-			7070 6e6f 6a6a 6f69 6666 696f 6b69 6b6b
-			6b6b 6a6a 6666 6a66 6b6b 6f6a 6f6e 6f70
-			6a6a 6a6a 706a 7070 7070 6b6a 6b6b 6b6b
-			6b6b 706b 706b 6e6f 696e 7069 7070 7070
-			6f6f 6e6f 6f6f 6a6a 6e6f 6f6f 6b6b 6b6b
-			6b6b 6366 6669 6b6a 6b6b 6a6b 7070 7070
-			706a 6e6a 7070 7070 6a6f 6b6b 6b6b 6b70
-			6b6b 7171 7071 6f6f 6f70 6b70 7070 706f
-			6f6f 6f6f 6a6f 6f6a 6f6e 6b6b 6b6b 6b6b
-			636a 6666 6669 6b6b 6b6b 706a 6a70 6a6f
-			6a6e 7070 706e 6a6f 6a6a 6b6b 706b 7070
-			7170 7071 7070 6f70 7070 706b 6f70 6f6f
-			6f6f 6a6f 6b6a 7070 706f 6b6b 6b6a 636b
-			6666 6669 6b66 6b6b 6b6b 706b 6f6f 706f
-			706a 7070 6f70 6a6a 6b6b 6b6b 6b6b 7070
-			7071 6b71 7070 7070 706b 7070 6f6e 6f6f
-			6f6f 6b6a 6b6b 6b70 6b70 6b6b 6b6b 6663
-			6969 6666 6b6b 6b6b 6b6b 706b 6f6f 6a6e
-			7070 7070 6a6f 6a6a 706a 7070 6b70 706b
-			7170 7070 7070 6b6b 7070 7070 7070 706f
-			7070 6b6b 6b6b 7170 6b71 6b6b 6a6b 696a
-			696a 6b66 6b6b 6b6b 6b6b 6f70 6a6f 706a
-			7070 6f70 6a6f 6a6a 6f6f 7070 6b6b 716b
-			7070 7070 6b6b 6b6b 7070 716b 6b6b 706b
-			7070 7070 706b 706b 6b6b 6a6b 6a63 6f6f
-			6669 6b6b 6b71 6b6b 6b6b 6f70 6a6a 7070
+			eded edef eded efee efed efed ecef ecef
+			ecec edef ecef eded eced eded efed eded
+			eded edef eded efee efed efed ecef ecef
+			ecec edef ecef eded eced eded efed eded
+			efed edee efed efec ecef efef ecee ebeb
+			eceb efef ecec ecec eced efed edef eded
+			efed edee efed efec ecef efef ecee ebeb
+			eceb efef ecec ecec eced efed edef eded
+			efed eeec eeef ecec ebeb ebee ebeb 65e8
+			eb65 ebec ebeb ebeb eceb efec ecec eded
+			efed eeec eeef ecec ebeb ebee ebeb 65e8
+			eb65 ebec ebeb ebeb eceb efec ecec eded
+			eeef ecec ebef ebeb e865 e8eb 6565 6565
+			e865 e8eb 6565 6565 ebe8 efec ecec eeec
+			eeef ecec ebef ebeb 6565 e7eb 6565 6565
+			e865 e7eb 6565 6565 ebe8 efec ecec eeec
+			ecef ebeb e8eb 65e8 6565 6565 6365 6363
+			6565 6565 6065 6560 6565 ebe8 ebeb eeeb
+			ecef ebeb e86b 6565 6565 6565 6265 6366
+			6565 6565 6a65 656a 6565 ebe8 ebeb eeeb
+			e8eb 65e8 6565 6565 6360 6060 6363 6363
+			6163 6163 6061 6260 6562 6565 6565 eb65
+			e8eb 6565 6565 6565 6662 6262 6662 6a66
+			666a 6a66 6a6a 646a 6564 6565 e865 ebe8
+			6565 6565 6460 6064 6063 6363 6363 6361
+			6363 6363 6161 6363 636a 6163 6462 6565
+			6565 6365 6363 6666 6266 6262 6666 6666
+			6666 6a6a 666a 6666 6466 6464 6565 6565
+			6161 6060 6464 6363 6360 6363 6463 6a6a
+			6a6a 6063 6363 636a 6363 6061 6460 6464
+			6262 6363 6263 6262 6264 6666 6266 6662
+			6a6a 6a6a 6666 6666 6466 6364 6061 6161
+			6161 6460 6463 6060 6363 6363 6a6a 6a6a
+			6a6a 6363 6a63 636a 6063 6460 6164 6161
+			6363 6363 6462 6264 6662 6666 6262 6a66
+			6a6a 6a6a 6666 6666 6364 6463 6160 6361
+			6161 6464 6460 6364 6363 6a63 6a6a 6a6a
+			6363 6a6a 636a 6163 6060 6264 6361 6363
+			6363 6061 6464 6162 6666 6261 6a62 6a6a
+			6a6a 6464 6666 6466 6a6a 6164 6160 6163
+			6464 6464 6364 6363 6363 6a64 6a6a 6a6a
+			6a6a 636a 636a 6061 6260 6362 6363 6363
+			6161 6061 6161 6464 6061 6161 6a6a 6a6a
+			6a6a 6766 6662 6a64 6a6a 646a 6363 6363
+			6364 6064 6363 6363 6461 6a6a 6a6a 6a63
+			6a6a 6969 6369 6161 6163 6a63 6363 6361
+			6161 6161 6461 6164 6160 6a6a 6a6a 6a6a
+			6764 6666 6662 6a6a 6a6a 6364 6463 6461
+			6460 6363 6360 6461 6464 6a6a 636a 6363
+			6963 6369 6363 6163 6363 636a 6163 6161
+			6161 6461 6a64 6363 6361 6a6a 6a64 676a
+			6666 6662 6a66 6a6a 6a6a 636a 6161 6361
+			6364 6363 6163 6464 6a6a 6a6a 6a6a 6363
+			6369 6a69 6363 6363 636a 6363 6160 6161
+			6161 6a64 6a6a 6a63 6a63 6a6a 6a6a 6667
+			6262 6666 6a6a 6a6a 6a6a 636a 6161 6460
+			6363 6363 6461 6464 6364 6363 6a63 636a
+			6963 6363 6363 6a6a 6363 6363 6363 6361
+			6363 6a6a 6a6a 6963 6a69 6a6a 646a 6264
+			6264 6a66 6a6a 6a6a 6a6a 6163 6461 6364
+			6363 6163 6461 6464 6161 6363 6a6a 696a
+			6363 6363 6a6a 6a6a 6363 696a 6a6a 636a
+			6363 6363 636a 636a 6a6a 646a 6467 6161
+			6662 6a6a 6a69 6a6a 6a6a 6163 6464 6363
 		</bitmap>
 	</tex_image>
 	<tex_image index="17" name="sp_o11m2"
@@ -1162,22 +1162,22 @@
 		path="C:/home/swan_data3d/field/out11/chip/tex_summer/sp_o11m2.tga"
 	>
 		<bitmap size="128">
-			ebeb ebeb ebeb ebeb edec eeeb edeb eded
-			ebeb eceb ebec edeb edec ebeb edec eded
-			eceb eced ebec edec ebed e9eb eded e9e9
-			edec eded edeb eced ebeb ecec eded e1e9
-			eded ebed ecec ebeb eceb e9ed eee9 e1e3
-			eded ecec ebec ebeb e9ed e3e1 e3e9 e2e1
-			eded eced ebec edec e9ed e2e1 e260 6060
-			eded ecec edeb e9ed e9ed 60e2 6060 6460
-			eded ebec e9eb e9e9 e1e3 6060 6464 6464
-			eaed ebeb edeb e9ed e2e1 6460 6464 6464
-			ebeb ebeb eded e1e1 60e2 6460 6564 6864
-			eceb eceb e3ed 60e2 6060 6464 6565 6868
-			eced e6eb e3e6 60e2 6464 6564 6868 6868
-			ebec eeeb e3ee 60e2 6564 6865 6868 6765
-			eceb eded e2e3 6060 6864 6868 6565 6867
-			eeec e9e9 e2e1 6460 6864 6568 6765 6767
+			e9e9 e9e9 e9e9 e9e9 e8eb eae9 e8e9 e8e8
+			e9e9 ebe9 e9eb e8e9 e8eb e9e9 e8eb e8e8
+			ebe9 ebe8 e9eb e8eb e9e8 eee9 e8e8 eeee
+			e8eb e8e8 e8e9 ebe8 e9e9 ebeb e8e8 e7ee
+			e8e8 e9e8 ebeb e9e9 ebe9 eee8 eaee e7e6
+			e8e8 ebeb e9eb e9e9 eee8 e6e7 e6ee e4e7
+			e8e8 ebe8 e9eb e8eb eee8 e4e7 e462 6262
+			e8e8 ebeb e8e9 eee8 eee8 62e4 6262 6062
+			e8e8 e9eb eee9 eeee e7e6 6262 6060 6060
+			ede8 e9e9 e8e9 eee8 e4e7 6062 6060 6060
+			e9e9 e9e9 e8e8 e7e7 62e4 6062 6360 6560
+			ebe9 ebe9 e6e8 62e4 6262 6060 6363 6565
+			ebe8 ece9 e6ec 62e4 6060 6360 6565 6565
+			e9eb eae9 e6ea 62e4 6360 6563 6565 6163
+			ebe9 e8e8 e4e6 6262 6560 6565 6363 6561
+			eaeb eeee e4e7 6062 6560 6365 6163 6161
 		</bitmap>
 	</tex_image>
 	<tex_image index="18" name="sp_o11m4"
@@ -1487,8 +1487,8 @@
 		7c1f 0a26 0e67 0ec8
 	</tex_palette>
 	<tex_palette index="16" name="sp_o11m2_pl" color_size="16">
-		3dc2 4a6c 4e44 52ad 5664 5684 56ed 5a85
-		5aa5 5b2d 5b2e 5f0d 5f2e 630d 632e 7fff
+		5664 5a85 3dc2 5684 4e44 5aa5 52ce 4a8d
+		5f70 5b70 5f91 5b91 5350 5791 5390 7fff
 	</tex_palette>
 	<tex_palette index="17" name="sp_o11m4_pl" color_size="16">
 		3940 3d61 3d81 4181 45a1 49c1 5622 5684
@@ -1498,10 +1498,9 @@
 		3940 3d61 4181 49c1 51e1 5684 5a84 5a85
 		5aa5 5ac5 5e84 5e85 5ea5 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="19" name="sp_o11m_pl" color_size="24">
-		3dc2 4a6c 4e44 5264 52ad 52ed 5684 56ed
-		570d 5a84 5a85 5aa5 5b2d 5b4e 5e84 5e85
-		5ea5 5ec5 632e 634e 7fff 7fff 7fff 7fff
+	<tex_palette index="19" name="sp_o11m_pl" color_size="16">
+		5e84 5e85 5a84 5ea5 5a85 3dc2 5684 5264
+		4e44 5ec5 5aa5 4e8c 4f0d 578f 4b4e 4fae
 	</tex_palette>
 	<tex_palette index="20" name="stake2_pl" color_size="16">
 		7fff 7bb5 7ff9 52b3 2e13 3e97 1d4c 46b8
