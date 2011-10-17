@@ -11,6 +11,11 @@
 
 #define H04R0201_BAKER_01                  0
 #define H04R0201_MAN3_01                   1
+#define H04R0201_POKE19_01                 2
+#define H04R0201_WOMAN1_01                 3
+#define H04R0201_POKE17_01                 4
+#define H04R0201_GIRL2_01                  5
+#define H04R0201_POKE20_01                 6
 
 #endif //ZONE_H04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -18,6 +18,8 @@
 #define C12PC0101_PCWOMAN                  6
 #define C12PC0101_DELIVERY                 7
 #define C12PC0101_SWBELL_01                8
+#define C12PC0101_WOMAN1_01                9
+#define C12PC0101_MIDDLEMAN2_01           10
 
 #endif //ZONE_C12PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -13,6 +13,7 @@
   .include  "h04r0201.h"
 
   //@author fujimura_souichirou
+  //@author	suginaka_katsunori//パン屋イベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,17 +22,206 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h04r0201_baker_01
-_EVENT_DATA    ev_h04r0201_man3_01
+_EVENT_DATA		ev_h04r0201_baker_01
+_EVENT_DATA		ev_h04r0201_man3_01
+_EVENT_DATA		ev_h04r0201_girl2_01
+_EVENT_DATA		ev_h04r0201_woman1_01
+_EVENT_DATA		ev_h04r0201_poke17_01
+_EVENT_DATA		ev_h04r0201_poke19_01
+_EVENT_DATA		ev_h04r0201_poke20_01
 _EVENT_DATA_END
 
+//FE_H04R0201_FIRSTTALK		初回会話フラグ
+//FE_H04R0201_ITEMGET		イベント後フラグ
+
+//ポケモンチェック変数一覧
+DEFINE_LOCAL LWK_PARTY_NUM          //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM          //WHILE文のカウンタ
+DEFINE_LOCAL LWK_POKE_TOKUSEI       //ポケモンの特性
+DEFINE_LOCAL LWK_POKE_TOKUSEI_CLEAR //条件の特性を持つポケモン
+DEFINE_LOCAL LWK_EGG_CHK            //タマゴであるか
+DEFINE_LOCAL LWK_BAG_CHK            //バッグの中身チェック
+DEFINE_LOCAL LWK_MONSNAME			//ポケモンの名前格納
 
 /**************************************************************/
 /*  パン屋：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_h04r0201_baker_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_man3_02 )
+
+//イベント後の場合
+IF FLAG_ON( FE_H04R0201_ITEMGET ) THEN
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_09 )
+
+//イベント前の場合
+ELSE
+	_TALK_OBJ_START()
+
+	//トレーナーと対戦後かチェック【仮】トレーナーID未発行のため仮当て
+	_TRAINER_FLAG_CHECK( TRID_BAKER_05, SCWK_ANSWER )
+
+	//対戦前の場合
+	IF $SCWK_ANSWER == FALSE THEN
+
+		//初回会話の場合
+		IF FLAG_OFF( FE_H04R0201_FIRSTTALK )  THEN
+	
+			//あら？　はじめましてさん　ね
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_01 )
+		
+			//========================================/
+			
+			//初回会話済み
+			_FLAG_SET(FE_H04R0201_FIRSTTALK)
+			
+			//========================================/
+	
+		ELSE
+		
+			//さあ　なにも　いわずに　しょうぶよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_04 )
+	
+		ENDIF
+
+		_YES_NO_WIN( SCWK_ANSWER )
+	
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//そうでなくちゃ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_02 )
+			_MSGWIN_CLOSE()
+		
+			////対戦へ【仮】トレーナーID未発行のため仮当て
+			_TRAINER_BTL_SET( TRID_BAKER_05, 0 )
+					
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				_TRAINER_FLAG_SET( TRID_BAKER_05 )
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+	
+			//まあ　なんて　トレーナー！
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_05 )
+			
+			//そんな　すてきな
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_06 )
+			_AB_KEYWAIT_MARK()
+
+			_CALL	ev_mitu
+
+			//みつあつめ持ちがいる？
+			IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+				//この　～～～～が　みつあつめを
+				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_07 )
+				_MSGWIN_CLOSE()
+	
+				//ラムの実入手
+				_ITEM_EVENT_KEYWAIT( ITEM_RAMUNOMI, 3 )
+
+				//========================================/
+		
+				//イベント終了フラグセット
+				_FLAG_SET(FE_H04R0201_ITEMGET)
+		
+				//========================================/
+
+			//いない
+			ELSE
+
+				_MSGWIN_CLOSE()
+
+			ENDIF
+
+		//いいえの場合
+		ELSE
+	
+			//あらら……　まっ　いいのよ
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+		ENDIF
+
+	//対戦後の場合・みつあつめ
+	ELSE
+	
+		_CALL	ev_mitu
+	
+		//みつあつめ持ちがいる？
+		IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+			//この　～～～～が　みつあつめを
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_08 )
+			_MSGWIN_CLOSE()
+	
+			//ラムの実入手
+			_ITEM_EVENT_KEYWAIT( ITEM_RAMUNOMI, 3 )
+
+			//========================================/
+	
+			//イベント終了フラグセット
+			_FLAG_SET(FE_H04R0201_ITEMGET)
+	
+			//========================================/
+
+		//いない
+		ELSE
+
+			//そんな　すてきな
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_06 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
+		ENDIF
+	
+	ENDIF
+
+ENDIF
+
 EVENT_END
+
+ev_mitu:
+
+//手持ちのポケモンの数を確認（全てのポケモン）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+//手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+	//指定POSのポケモンの特性を取得
+	_GET_PARTY_POKE_PARAM( LWK_POKE_TOKUSEI, LWK_COUNT_NUM, SCR_POKEPARA_TOKUSEI )
+
+	//指定POSのポケモンはタマゴか
+	_CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
+
+	//指定POSのポケモンの特性は”みつあつめ”か（なおかつタマゴではないか）
+	IF $LWK_POKE_TOKUSEI == TOKUSYU_MITUATUME && $LWK_EGG_CHK == FALSE && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+
+		//条件を満たしたポケモンの名前を取得して保存する
+		_GET_PARTY_POKE_MONSNO( LWK_MONSNAME, LWK_COUNT_NUM )
+		//条件を満たしたポケモンの名前格納
+		_MONS_NAME( 0, LWK_MONSNAME )
+		
+		//========================================/
+		
+		//条件を満たしたポケモンがいた（値セット）
+		$LWK_POKE_TOKUSEI_CLEAR = 1
+
+		//========================================/
+
+	ENDIF
+
+	//カウント
+	$LWK_COUNT_NUM += 1
+
+ENDWHILE
+
+_RET
 
 /**************************************************************/
 /*  男性：話しかけ                                            */
@@ -40,4 +230,38 @@ EVENT_START   ev_h04r0201_man3_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_man3_01 )
 EVENT_END
 
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_h04r0201_woman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_woman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  少女：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_h04r0201_girl2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_girl2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  チラーミィ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_h04r0201_poke19_01
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_h04r0201_poke19_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ミネズミ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_h04r0201_poke17_01
+	_EASY_TALK_POKEVOICE( MONSNO_537, msg_h04r0201_poke17_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ミネズミ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_h04r0201_poke20_01
+	_EASY_TALK_POKEVOICE( MONSNO_505, msg_h04r0201_poke20_01 )
+EVENT_END
 

@@ -13,6 +13,7 @@
   .include  "c12pc0101.h"
   
   //@author Mizuguchi_Mai（案内イベント・ショップ等配置担当）
+  //@author	suginaka_katsunori	//性格NPC・
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +25,8 @@
 _EVENT_DATA    ev_c12pc0101_shop
 _EVENT_DATA    ev_c12pc0101_fix_shop
 _EVENT_DATA    ev_reserve_c12pc0101_pcguide_01
+_EVENT_DATA		ev_c12pc0101_woman1_01
+_EVENT_DATA		ev_c12pc0101_middleman2_01
 _EVENT_DATA_END
 
 //=============================================================
@@ -242,3 +245,40 @@ _ANIME_LABEL	anm_staystep_r
 _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*		C12PC0101	WOMAN1									  */
+/**************************************************************/
+EVENT_START		ev_c12pc0101_woman1_01
+_TALK_OBJ_START()
+
+DEFINE_LOCAL	LWK_FRONT
+DEFINE_LOCAL	LWK_SEIKAKU
+
+//手持ちの先頭ポケモン位置取得
+_GET_PARTY_FRONT_POKEMON( LWK_FRONT, POKECOUNT_MODE_NOT_EGG )
+
+//先頭ポケモンの名前と性格取得
+_GET_PARTY_POKE_PARAM( LWK_SEIKAKU, LWK_FRONT, SCR_POKEPARA_SEIKAKU )
+
+//主人公の名前格納
+_PLAYER_NAME(0)
+_TEMOTI_MONS_NAME( 1, LWK_FRONT )
+
+
+//あら？
+_BALLOONWIN_TALKOBJ_MSG( msg_c12pc0101_woman1_01 )
+
+//せいかくは
+_BALLOONWIN_TALKOBJ_MSG( msg_c12pc0101_woman1_02 )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*		C12PC0101	WOMAN1									  */
+/**************************************************************/
+EVENT_START		ev_c12pc0101_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12pc0101_middleman2_02 )
+EVENT_END
