@@ -89,6 +89,15 @@ room_data_list.each { |item|
   if mem_max < item.member_num then
     mem_max = item.member_num
   end
+
+  # 100%超えチェック
+  sub = 0
+  item.room_data.each{ |rd|
+    sub += rd.probability.to_i
+  }
+  if sub > 100 then
+    raise "エリア%d：フロアの出現率が100%%を超えています\n"%[item.area_no]
+  end
 }
 
 header =  <<EOS
