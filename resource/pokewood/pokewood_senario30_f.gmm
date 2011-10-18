@@ -367,14 +367,6 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（はたして
 勝ち目は　あるの……？</language>
 	</row>
-	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">ひとがた『ゴギャス！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ゴギャス！</language>
-	</row>
-	<row id="pw_turn_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハァ　ハァ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハァ　ハァ</language>
-	</row>
 	<row id="pw_turn_enemy_3">
 		<language name="JPN" width="256">ひとがた『ガグググ！</language>
 		<language name="JPN_KANJI" width="256">ひとがた『ガグググ！</language>
@@ -383,29 +375,45 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウ……　しぶとい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウウ……　しぶとい</language>
 	</row>
-	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">ひとがた『ギラァ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギラァ！</language>
-	</row>
 	<row id="pw_turn_enemy_5">
 		<language name="JPN" width="256">ひとがた『ガロローン！</language>
 		<language name="JPN_KANJI" width="256">ひとがた『ガロローン！</language>
-	</row>
-	<row id="pw_turn_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　すこしよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　少しよ……</language>
 	</row>
 	<row id="pw_turn_enemy_6">
 		<language name="JPN" width="256">ひとがた『ギョラララ！</language>
 		<language name="JPN_KANJI" width="256">ひとがた『ギョラララ！</language>
 	</row>
 	<row id="pw_turn_hero_7">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（ここを　しのげば
-さっきの　おとこのひとを▽
-たすけに　いけるわ……！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（ここを　しのげば
-さっきの　男の人を▽
-助けに　行けるわ……！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まけないわ……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『負けないわ……！</language>
+	</row>
+	<row id="pw_turn_enemy_8">
+		<language name="JPN" width="256">ひとがた『ギルゥン！</language>
+		<language name="JPN_KANJI" width="256">ひとがた『ギルゥン！</language>
+	</row>
+	<row id="pw_turn_hero_9">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハァ　ハァ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハァ　ハァ</language>
+	</row>
+	<row id="pw_turn_enemy_10">
+		<language name="JPN" width="256">ひとがた『ギラァ！</language>
+		<language name="JPN_KANJI" width="256">ひとがた『ギラァ！</language>
+	</row>
+	<row id="pw_turn_hero_11">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……！</language>
+	</row>
+	<row id="pw_turn_enemy_13">
+		<language name="JPN" width="256">ひとがた『ゴギャス！</language>
+		<language name="JPN_KANJI" width="256">ひとがた『ゴギャス！</language>
+	</row>
+	<row id="pw_turn_hero_15">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あ……う……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あ……う……</language>
+	</row>
+	<row id="pw_turn_enemy_15">
+		<language name="JPN" width="256">？？？『オ……ワ……リ……</language>
+		<language name="JPN_KANJI" width="256">？？？『オ……ワ……リ……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">ひとがた『ギャギョッ！</language>
@@ -604,14 +612,12 @@
 ウ……フ……</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふう……
-ひとがたたちが　ひきかえしていくわ▼
-ひとまずは　あんしん……
-あっ！　さっきの　おとこのひとは？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ふう……
-ひとがたたちが　引き返していくわ▼
-ひとまずは　安心……
-あっ！　さっきの　男の人は？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし！
+ひとがたたちを　やっつけたわ！▼
+……さっきの　おとこのひとは？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！
+ひとがたたちを　やっつけたわ！▼
+……さっきの　男の人は？</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">おとこのひと『ああ！　ありがとう
@@ -638,7 +644,7 @@
 じゃあね！　ありがとうね！</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">ひとがたの　しゅうげきに　たえ
+		<language name="JPN" width="256">ひとがたを　げきたいし
 ぶじ　ひとだすけに　せいこうした▽
 [1:00:トレーナー名:1]▼
 ぜつぼうてきな　じょうきょうで
@@ -646,7 +652,7 @@
 かのじょを　まつ　ものとは……？▼
 いまだ　きりは　はれないが
 よあけは　ちかい……</language>
-		<language name="JPN_KANJI" width="256">ひとがたの　襲撃に　耐え
+		<language name="JPN_KANJI" width="256">ひとがたを　撃退し
 無事　人命救助に　成功した▽
 [1:00:トレーナー名:1]▼
 絶望的な　情況で
@@ -733,16 +739,16 @@
 もう　二度と　ない……</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たおしたわ……！
-バケモノ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『倒したわ……！
-バケモノ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『バケモノどもが
+にげていく……　わ……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『バケモノどもが
+逃げていく……　わ……！</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">ひとがた『ギゲ……
-グ……</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギゲ……
-グ……</language>
+		<language name="JPN" width="256">ひとがた『ギゲェ！
+グエエオウ！</language>
+		<language name="JPN_KANJI" width="256">ひとがた『ギゲェ！
+グエエオウ！</language>
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのー……
@@ -763,19 +769,13 @@
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ええ　だいじょうぶです
 いたみは　ありませんし▽
-こんなもの　すぐに▽
-もとどおりに　なりますよ▼
-なにせ　わたし……
-すでに　にんげんを　こえた▽
-そんざい……　ですから……▼
+こんなもの　スグに▽
+もとどおりニ　なりますよ……▼
 フフフ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ええ　大丈夫です
 痛みは　ありませんし▽
-こんなもの　すぐに▽
-元通りに　なりますよ▼
-なにせ　わたし……
-すでに　人間を　超えた▽
-存在……　ですから……▼
+こんなもの　スグに▽
+元通りニ　なりますよ……▼
 フフフ……</language>
 	</row>
 	<row id="pw_event6_enemy_2">
@@ -783,10 +783,10 @@
 		<language name="JPN_KANJI" width="256">男の人『……ッ！？</language>
 	</row>
 	<row id="pw_event6_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あかいきり……
-なるほど　そういうことね……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あかいきり……
-なるほど　そういうことね……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『アカいキり……
+なるホど　ソういうことネ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アカいキり……
+なるホど　ソういうことネ……</language>
 	</row>
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">？？？『……▼
@@ -795,6 +795,22 @@
 オモシロイ……</language>
 	</row>
 	<row id="pw_event6_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『とコロで……
+アナた　とってモ……▼
+……ああ　そンなこトヨり
+オなかガ　へっタワぁ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『とコロで……
+アナた　とってモ……▼
+……ああ　そンなこトヨり
+オなかガ　へっタワぁ……</language>
+	</row>
+	<row id="pw_event6_enemy_4">
+		<language name="JPN" width="256">おとこのひと『や　やめろ！
+ウワァーッ！</language>
+		<language name="JPN_KANJI" width="256">男の人『や　やめろ！
+ウワァーッ！</language>
+	</row>
+	<row id="pw_event6_hero_5">
 		<language name="JPN" width="256">きょうふが　きょうきを　よび
 せかいは　かわっていく……▼
 そして　いま

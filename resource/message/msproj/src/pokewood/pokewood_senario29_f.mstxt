@@ -103,64 +103,56 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_hero_2"
-		Style="Large">
+		Label="pw_turn_hero_1">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]（すごい　ちからだけど
 うごきは　たんちょうね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]（すごい　力だけど
 動きは　単調ね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pw_turn_enemy_2"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとがた『キシャア！</Text>
+			<Text>ひとがた『グルグラグロロ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとがた『キシャア！</Text>
+			<Text>ひとがた『グルグラグロロ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -187,74 +179,6 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハァ　ハァ……</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_turn_enemy_3"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひとがた『グルグラグロロ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ひとがた『グルグラグロロ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_turn_hero_4"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]（あと　すこし……
-ここさえ　たえれば……</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]（あと　少し……
-ここさえ　耐えれば……</Text>
 			<TextModifiedBy
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
@@ -303,6 +227,156 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]（まけない……！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]（負けない……！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_6">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた『キシャア！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた『キシャア！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_hero_7">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_8">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた『ギキキキ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた『ギキキキ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_hero_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あ……う……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あ……う……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『オ……ワ……リ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『オ……ワ……リ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event0_hero_0"
@@ -1412,7 +1486,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バケモノの　こうげきに　たえ
+			<Text>なんとか　バケモノを　おいはらい
 やどやを　あとにした　[Name:TrainerName Idx="1" ]▼
 あかいきりを　きっかけに
 おかしく　なってしまった▽
@@ -1422,16 +1496,16 @@
 いまだ　きりは　ふかく
 よあけには　まだ　はやい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T02:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T02:34:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バケモノの　攻撃に　耐え
+			<Text>なんとか　バケモノを　追い払い
 宿屋を　後にした　[Name:TrainerName Idx="1" ]▼
 赤い霧を　きっかけに
 おかしく　なってしまった▽
@@ -1441,12 +1515,12 @@
 いまだ　霧は　深く
 夜明けには　まだ　早い……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T02:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T02:34:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1586,86 +1660,29 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event6_hero_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なに……？　この 
-ぜんしんに　みなぎる　ちから……▼
-……そうだわ　あのとき　すでに
-アレに　ひっかかれて……▼
-わたしも　アレと　おなじ
-ひと　ならざる　そんざいに……？▼
-……フフフ
-これよ！　この　ちから　こそ▽
-わたしが　もとめていた　もの！▼
-いたみも　つかれも　ない！
-きゅうきょくの　からだ　よ！▼
-フフフ！　ハハハ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なに……？　この 
-全身に　みなぎる　力……▼
-……そうだわ　あのとき　すでに
-アレに　ひっかかれて……▼
-わたしも　アレと　同じ
-人　ならざる　存在に……？▼
-……フフフ
-これよ！　この　力　こそ▽
-わたしが　求めていた　もの！▼
-痛みも　疲れも　ない！
-究極の　身体　よ！▼
-フフフ！　ハハハ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="pw_event6_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……▼
-オモシロイ……</Text>
+			<Text>ひとがた『ギギャーン！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……▼
-オモシロイ……</Text>
+			<Text>ひとがた『ギギャーン！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1680,41 +1697,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とつぜん　いみふめいの　ひとりごとを
-つぶやきだした　[Name:TrainerName Idx="1" ]▼
-あまりの　きょうふに
-しょうきを　うしなったのか？▼
-それとも　[Name:TrainerName Idx="1" ]の　いうとおり
-ひと　ならざる　そんざいに▽
-なって　しまったのか……▼
-しんじつは　あかいきりの
-おく　ふかくに……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きゃぁッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>突然　意味不明の　独り言を
-つぶやきだした　[Name:TrainerName Idx="1" ]▼
-あまりの　恐怖に
-正気を　失ったのか？▼
-それとも　[Name:TrainerName Idx="1" ]の　いう通り
-人　ならざる　存在に▽
-なって　しまったのか……▼
-真実は　赤い霧の
-奥深くに……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きゃぁッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1723,5 +1724,183 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた『グパ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた『グパ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた『キキキ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた『キキキ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あ……
+あれ……？▼
+なんだか　あたマが……
+ふラフら……シテ……▽
+き……▼
+キキ……
+ギ……▼
+グギャア……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あ……
+あれ……？▼
+なんだか　あたマが……
+ふラフら……シテ……▽
+き……▼
+キキ……
+ギ……▼
+グギャア……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『……▼
+オモシロイ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『……▼
+オモシロイ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>とつぜん　いみふめいの　ひとりごとを
+つぶやきだした　[Name:TrainerName Idx="1" ]▼
+あまりの　きょうふに
+しょうきを　うしなったのか？▽
+それとも……▼
+しんじつは　あかいきりの
+おく　ふかく……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>突然　意味不明の　独り言を
+つぶやきだした　[Name:TrainerName Idx="1" ]▼
+あまりの　恐怖に
+正気を　失ったのか？▽
+それとも……▼
+真実は　赤い霧の
+奥深く……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-18T01:42:55" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
