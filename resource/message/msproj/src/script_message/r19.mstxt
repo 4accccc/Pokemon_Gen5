@@ -1294,11 +1294,11 @@
 			<Text>ポケモンずかんを　うめることは
 きみの　せかいを　ひろげてくれる▼
 だから　いろんな　ばしょに　いって
-いろんな　ポケモンに　であってね！▽
+いろんな　ポケモンに　であってね！▼
 じゃあねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:33:42" />
+				Time="2011-10-18T05:22:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1309,11 +1309,11 @@
 			<Text>ポケモン図鑑を　埋めることは
 きみの　世界を　ひろげてくれる▼
 だから　いろんな　場所に　いって
-いろんな　ポケモンに　出会ってね！▽
+いろんな　ポケモンに　出会ってね！▼
 じゃあねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:33:34" />
+				Time="2011-10-18T05:22:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1344,6 +1344,54 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_girl2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのね！　くさむらの　なかの
+ポケモンを　さがしているの！▼
+そう！　ポケモンに　あいたくなきゃ
+くさむらを　さければ　いいのよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:51:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:46:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのね！　草むらの　中の
+ポケモンを　探しているの！▼
+そう！　ポケモンに　会いたくなきゃ
+草むらを　さければ　いいのよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:51:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:46:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝78、GRIDZ＝697
+　その場キョロキョロ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:50:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T05:51:23" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r19_sign1_01"

@@ -363,7 +363,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -421,7 +421,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -486,7 +486,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -545,7 +545,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -604,7 +604,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -668,7 +668,7 @@ ID：mount_14</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -760,10 +760,11 @@ ID：mount_14</Text>
 　GRIDX＝160～165、GRIDZ＝660
 ・主人公移動
 ・GRIDX＝163、GRIDZ＝665
-・続けてswleader1_01</Comment>
+・続けてswleader1_01
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:50:35" />
+				Time="2011-10-18T05:24:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -981,10 +982,11 @@ ID：mount_14</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX＝162、GRIDZ＝665</Comment>
+・GRIDX＝162、GRIDZ＝665
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:41:57" />
+				Time="2011-10-18T05:24:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

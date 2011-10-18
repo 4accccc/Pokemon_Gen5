@@ -2229,6 +2229,94 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c13_woman2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　メダル
+とても　きれいでしょ！▽
+もっともっと　あつめるんだから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:16:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:13:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　メダル
+とても　きれいでしょ！▽
+もっともっと　集めるんだから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:16:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:15:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:13:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:16:45" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいつ　なんて　いってたっけ……？▼
+フェスミッションに　さんか　するなら
+Ｃギアを　ようチェック！　だっけ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:13:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:10:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あいつ　なんて　いってたっけ……？▼
+フェスミッションに　参加するなら
+Ｃギアを　要チェック！　だっけ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:16:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:10:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:13:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T06:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c13_sign1_01"
 		Style="Large">
 		<LanguageCell
