@@ -11,7 +11,7 @@
 #define ZONE_R23_EVC_H
 
 #define TR_RANGERW_21                      0
-#define TR_RANGERM_21                      1
+#define TR_MOUNT_18                        1
 #define TR_ELITEM_32                       2
 #define TR_ELITEW_32                       3
 #define TR_KARATE_20                       4
@@ -44,7 +44,7 @@
 #define TR_BATTLEG_18                     31
 #define R23_TREE_06                       32
 #define FLD_ITEM_197                      33
-#define TR_MOUNT_18                       34
+#define TR_RANGERM_21                     34
 
 #endif //ZONE_R23_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r23.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
