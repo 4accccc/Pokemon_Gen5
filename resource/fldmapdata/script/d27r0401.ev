@@ -88,6 +88,9 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
+  
   //主人公ワープ
   _OBJ_POS_CHANGE(MMDL_ID_PLAYER,7,0,10,DIR_UP)
 
@@ -145,6 +148,9 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   //アクロマ：ごぶうんを
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_09 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
 
   //========================================//
   //D27R0401 SCENE_CHANGE無効

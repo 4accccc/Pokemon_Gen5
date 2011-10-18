@@ -395,7 +395,7 @@ EVENT_START   ev_r09r0201_girl4_01
         DEFINE_LOCAL LWK_REDUCE
         _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
         }
-        //アイテム（ちからのねっこ）を取得【仮】取得アイテムは仮です
+        //アイテム（ちからのねっこ）を取得
         _ITEM_EVENT_NOWAIT( ITEM_TIKARANONEKKO, 1 )
 
         //========================================//
@@ -419,7 +419,7 @@ EVENT_START   ev_r09r0201_girl4_01
         DEFINE_LOCAL LWK_REDUCE
         _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
         }
-        //アイテム（ちからのこな）を取得【仮】取得アイテムは仮です
+        //アイテム（ちからのこな）を取得
         _ITEM_EVENT_NOWAIT( ITEM_TIKARANOKONA, 1 )
 
         //========================================//

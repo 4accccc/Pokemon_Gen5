@@ -48,8 +48,8 @@ EVENT_START   ev_pos_d09r1401_swrival_01
   _SE_PLAY( SEQ_SE_KAIDAN )  //階段SE再生
   _SE_WAIT()  //SE待ち
 
-  //【仮】ライバル曲再生（曲が仮）
-  _START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+  //ライバル曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_HUE )
 
   //ライバル：まてよ！▼
   _PLAINWIN_MSG_DOWN( msg_d09r1401_swrival_01 )

@@ -10,6 +10,9 @@
 #define ZONE_R07R0201_EVC_H
 
 #define R07R0201_MOUNTAIN_01               0
+#define R07R0201_TRAINERW_01               1
+#define R07R0201_POKE_01                   2
+#define R07R0201_POKE_02                   3
 
 #endif //ZONE_R07R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

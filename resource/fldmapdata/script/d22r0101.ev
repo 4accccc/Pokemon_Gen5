@@ -93,8 +93,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
     _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_pokeserch01_rival_to_pl_x46 )
   ENDIF
   
-  //【仮】ライバル曲再生（曲が仮）
-	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
+  //ライバル曲再生
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_HUE )
 	
   _OBJ_ANIME_WAIT()
   

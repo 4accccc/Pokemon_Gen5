@@ -175,6 +175,9 @@ EVENT_START	ev_pos_d27r1001_swsage7_01
   
   $LCW_POSZ += 2
   
+  //イベント曲再生
+  _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  
   //アニメ：ヴィオ登場
   _OBJ_ANIME_AUTO( D27R1001_SWSAGE7_01 , LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_LR)
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )

@@ -600,6 +600,9 @@ ev_d27r0101_first_end:
   //七賢人動作OBJ生成
   _OBJ_ADD( D27R0101_SWSAGE7_01 )
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  
   //アニメ：ヴィオ1歩前へ
   _OBJ_ANIME_AUTO( D27R0101_SWSAGE7_01 , 18, 16, FORCE_TYPE_NPC, 16, DIR_UD)
   _OBJ_ANIME_WAIT()
@@ -638,6 +641,9 @@ ev_d27r0101_first_end:
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_03 , D27R0101_SWSAGE7_01 ,POS_DEFAULT )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
   
   //ダークトリニティOBJ生成
   //アニメ：ダークトリニティ登場

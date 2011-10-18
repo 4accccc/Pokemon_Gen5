@@ -35,5 +35,6 @@
 #define HIDE_ITEM_043                     6
 #define HIDE_ITEM_044                     7
 #define HIDE_ITEM_045                     8
+#define BG_D02_BOARD_01                   9
 
 #endif //ZONE_D02_EVB_H

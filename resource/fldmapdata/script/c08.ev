@@ -409,6 +409,9 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   _PLAINWIN_MSG_DOWN( msg_c08_sage7_01 )
   _MSGWIN_CLOSE()
   
+  //イベント曲再生
+    _START_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  
   //ヴィオ配置変更
   _OBJ_POS_CHANGE( C08_SWPLAZMAM_01, 419, 0, 169, DIR_UP )
   _OBJ_POS_CHANGE( C08_SWSAGE7_01, 419, 0, 170, DIR_UP )
@@ -463,6 +466,9 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 419, 172, FORCE_TYPE_ALL, 8, DIR_UD)
   _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 173, FORCE_TYPE_ALL, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
   
   //ヴィオ動作OBJ削除
   _OBJ_DEL( C08_SWSAGE7_01 )
@@ -791,6 +797,9 @@ EVENT_START   ev_pos_c08_ninja_01
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
+  
   //フィールド上にチェレン配置
   _OBJ_ADD_EX( 446, LCW_POSZ, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
   
@@ -832,6 +841,9 @@ EVENT_START   ev_pos_c08_ninja_01
   //アニメ：チェレン退場
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 446, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_UD)
   _OBJ_ANIME_WAIT()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
   
   //チェレン動作OBJ削除
   _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
@@ -917,6 +929,9 @@ EVENT_START   ev_c08_swsage7_01
     _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
     
     _TALK_OBJ_START()
+    
+    //イベント曲再生
+    _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
     
     //ヴィオ：やれやれ
     _BALLOONWIN_OBJMSG( msg_c08_sage7_05 , C08_SWSAGE7_01 )

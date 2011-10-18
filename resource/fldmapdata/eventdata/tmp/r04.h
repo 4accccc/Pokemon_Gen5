@@ -45,6 +45,9 @@
 #define FLD_ITEM_48                       27
 #define FLD_ITEM_49                       28
 #define FLD_ITEM_53                       29
+#define R04_MAN2_01                       30
+#define R04_MOUNTAIN_01                   31
+#define R04_WOMAN2_01                     32
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

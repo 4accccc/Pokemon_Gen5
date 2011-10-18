@@ -18,6 +18,7 @@
 #define TR_MOUNT_31                        4
 #define FLD_ITEM_79                        5
 #define FLD_ITEM_80                        6
+#define R06R0201_VETERANM_01               7
 
 #endif //ZONE_R06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

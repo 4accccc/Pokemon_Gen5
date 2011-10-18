@@ -22,6 +22,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_r06r0201
+_EVENT_DATA    ev_r06r0201_veteranm_01
+_EVENT_DATA_END
 
 /************************************************************/
 /*		ZONE_CHANGE											*/
@@ -42,3 +44,10 @@ INIT_EVENT_START   ev_zone_r06r0201
 	_FLAG_RESET( FV_D29R0301_WORKMAN2_03 )
   
 INIT_EVENT_END
+
+/**************************************************************/
+/*  MAID：話しかけ                         */
+/**************************************************************/
+EVENT_START ev_r06r0201_veteranm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0201_veteranm_01 )
+EVENT_END

@@ -24,6 +24,8 @@
 _EVENT_DATA   ev_init_r07r0101
 _EVENT_DATA   ev_r07r0101_hakase2_01
 _EVENT_DATA   ev_r07r0101_waitress_01
+_EVENT_DATA   ev_r07r0101_maid_01
+_EVENT_DATA   ev_r07r0101_policeman_01
 _EVENT_DATA_END
 
 //主人公の座標、方向取得変数
@@ -191,6 +193,21 @@ EVENT_START   ev_r07r0101_waitress_01
   ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*  MAID：話しかけ                         */
+/**************************************************************/
+EVENT_START ev_r07r0101_maid_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_maid_01 )
+EVENT_END
+
+/**************************************************************/
+/*  POLICEMAN：話しかけ                         */
+/**************************************************************/
+EVENT_START ev_r07r0101_policeman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_policeman_01 )
+EVENT_END
+
 
 ev_battle_check:
   //敗戦チェック

@@ -15,5 +15,8 @@
 #define SCRID_R04_SWBOSS_01 (8)
 #define SCRID_R04_POKE630_01 (9)
 #define SCRID_ZONE_R04 (10)
+#define SCRID_R04_MAN2_01 (11)
+#define SCRID_R04_MOUNTAIN_01 (12)
+#define SCRID_R04_WOMAN2_01 (13)
 
 #endif //_R04_DEF_H_

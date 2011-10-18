@@ -10,6 +10,8 @@
 #define ZONE_T06R0301_EVC_H
 
 #define T06R0301_POKE_01                   0
+#define T06R0301_MIDDLEWOMAN2_01           1
+#define T06R0301_MIDDLEMAN2_01             2
 
 #endif //ZONE_T06R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

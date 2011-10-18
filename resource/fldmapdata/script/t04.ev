@@ -272,8 +272,8 @@ EVENT_START   ev_pos_t04_swrival_01
    //フィールド上にライバル配置
   _OBJ_ADD_EX( LCW_POSX, 307, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
-  //【仮】ライバル曲再生（曲が仮）
-  _START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+  //ライバル曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_HUE )
   
   //ライバル：待てよ！
   _PLAINWIN_MSG_DOWN( msg_t04_swrival_01 )

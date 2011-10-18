@@ -33,6 +33,9 @@ _EVENT_DATA   ev_bg_r04w_sign3_01
 _EVENT_DATA   ev_bg_r04w_sign4_01
 _EVENT_DATA   ev_bg_r04w_sign4_02
 _EVENT_DATA   ev_r04w_poke628_01
+_EVENT_DATA		ev_r04w_man2_01
+_EVENT_DATA   ev_r04w_mountain_01
+_EVENT_DATA   ev_r04w_woman2_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -328,6 +331,27 @@ ev_vs_r04w_swboss:
   //==================================//
 
 _RET
+
+/**************************************************************/
+/*	R04W		MAN2								  */
+/**************************************************************/
+EVENT_START  ev_r04w_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04w_man2_01 )
+EVENT_END
+
+/**************************************************************/
+/*	R04W		MOUNTAIN								  */
+/**************************************************************/
+EVENT_START  ev_r04w_mountain_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04w_mountain_01 )
+EVENT_END
+
+/**************************************************************/
+/*	R04W		WOMAN2								  */
+/**************************************************************/
+EVENT_START  ev_r04w_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04w_woman2_01 )
+EVENT_END
 
 /**************************************************************/
 /*  ìπòHåfé¶î¬                                                */

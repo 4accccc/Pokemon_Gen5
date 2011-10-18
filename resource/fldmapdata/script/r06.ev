@@ -45,6 +45,9 @@ EVENT_START   ev_pos_r06_swleader1_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
+  
   //アニメ：チェレン接近
   SWITCH $LCW_POSZ
   CASE 371 THEN
@@ -88,6 +91,9 @@ EVENT_START   ev_pos_r06_swleader1_01
   //アニメ：主人公も退場
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_to_up2 )
 	_OBJ_ANIME_WAIT()
+	
+	//イベント曲終了
+  _END_EVENT_BGM()
   
   //========================================//
   //R06季節研究所誘導POS無効

@@ -22,6 +22,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t06r0301_poke_01
+_EVENT_DATA    ev_t06r0301_middlewoman2_01
+_EVENT_DATA    ev_t06r0301_middleman2_01
 _EVENT_DATA_END
 
 
@@ -30,6 +32,36 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_t06r0301:
 //  _END
+
+/**************************************************************/
+/*  MIDDLEMAN2：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t06r0301_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0301_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  MIDDLEWOPMAN2：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t06r0301_middlewoman2_01
+{
+
+  //手持ち変数定義
+  DEFINE_LOCAL LWK_PARTY_NUM
+  
+  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+  
+  //手持ち3匹以下
+  IF $LWK_PARTY_NUM < 3 THEN
+   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0301_middlewoman2_01 )
+  //手持ち3匹以上
+  ELSE
+   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0301_middlewoman2_02 )
+  ENDIF
+  
+}
+EVENT_END
 
 /**************************************************************/
 /*  ヨーテリー：話しかけ                                      */
