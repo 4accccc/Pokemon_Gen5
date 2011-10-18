@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-10-14T18:23:43" source="m_dun3301_00_00.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-18T11:46:36" source="m_dun3301_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-10-14T18:23:43" source="m_dun3301_00_00.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-10-18T11:46:36" source="m_dun3301_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2014,13 +2014,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="14" name="m_d33kiwa1"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -2038,13 +2038,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="15" name="m_d33kiwa2"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -2062,13 +2062,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="16" name="m_d33kiwa3"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -2086,13 +2086,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="17" name="m_d33kiwa4"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -2110,13 +2110,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="18" name="m_d33yuka"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4690,7 +4690,7 @@
 		volume_max="4.000000 0.000000 1.750000"
 		volume_r="4.271973"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -4699,7 +4699,6 @@
 					<mtx idx="0"/>
 					<tex st="208.000000 16.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.250000 0.000000 -0.750000"/>
 					<tex st="192.000000 16.000000"/>
 					<pos_xy xy="3.000000 0.000000"/>
@@ -5378,14 +5377,12 @@
 					<tex st="64.000000 97.250000"/>
 					<pos_xy xy="0.250000 0.000000"/>
 					<tex st="208.000000 16.000000"/>
-					<nrm xyz="0.000000 0.000000 0.000000"/>
 					<pos_xz xz="3.250000 -0.500000"/>
 					<tex st="224.000000 16.000000"/>
 					<pos_xy xy="3.250000 0.000000"/>
 					<tex st="224.000000 8.000000"/>
 					<pos_xz xz="3.500000 -0.750000"/>
 					<tex st="208.000000 8.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="3.250000 0.000000"/>
 					<tex st="224.000000 0.000000"/>
 					<pos_xz xz="3.500000 -1.000000"/>
@@ -5398,14 +5395,12 @@
 					<tex st="129.000000 32.500000"/>
 					<pos_xz xz="3.000000 -0.500000"/>
 					<tex st="-192.000000 160.000000"/>
-					<nrm xyz="0.000000 0.000000 0.000000"/>
 					<pos_xz xz="-3.000000 1.500000"/>
 					<tex st="-176.000000 152.000000"/>
 					<pos_xz xz="-2.750000 1.250000"/>
 					<tex st="-192.000000 152.000000"/>
 					<pos_xz xz="-3.000000 1.500000"/>
 					<tex st="-192.000000 149.312500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xz xz="-3.000000 1.250000"/>
 					<tex st="-176.000000 144.000000"/>
 					<pos_xz xz="-2.750000 1.000000"/>
@@ -5428,7 +5423,7 @@
 		volume_max="4.000000 0.000000 2.500000"
 		volume_r="4.069824"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -5437,7 +5432,6 @@
 					<mtx idx="0"/>
 					<tex st="63.687500 16.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.750000 0.000000 0.750000"/>
 					<tex st="48.000000 16.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
@@ -5920,7 +5914,7 @@
 		volume_max="4.000000 0.000000 2.750000"
 		volume_r="4.472168"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -5929,7 +5923,6 @@
 					<mtx idx="0"/>
 					<tex st="32.000000 31.125000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.750000 0.000000 0.750000"/>
 					<tex st="32.000000 16.000000"/>
 					<pos_xy xy="2.000000 0.000000"/>
@@ -6028,7 +6021,7 @@
 		volume_max="4.000000 0.000000 2.250000"
 		volume_r="4.365967"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -6037,7 +6030,6 @@
 					<mtx idx="0"/>
 					<tex st="-96.000000 48.000000"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-2.250000 0.000000 1.250000"/>
 					<tex st="-64.000000 48.000000"/>
 					<pos_xy xy="-2.000000 0.000000"/>
@@ -12882,7 +12874,7 @@
 		volume_max="4.000000 -0.750000 3.766113"
 		volume_r="7.052979"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -12891,7 +12883,6 @@
 					<mtx idx="0"/>
 					<tex st="-303.312500 96.687500"/>
 					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="-4.420898 -0.750000 3.766113"/>
 					<tex st="186.562500 96.687500"/>
 					<pos_xy xy="4.000000 -0.750000"/>
