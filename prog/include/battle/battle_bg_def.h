@@ -37,6 +37,7 @@ typedef enum {
   BATTLE_BG_TYPE_RYUURASEN7,      ///< リュウラセンの塔7F
   BATTLE_BG_TYPE_WCS,             ///< WCS大会専用(ゾーンデータ非依存で直接指定する)
   BATTLE_BG_TYPE_WBT,             ///< WBT専用
+  BATTLE_BG_TYPE_KYUREMU,         ///< キュレム専用
    
   BATTLE_BG_TYPE_MAX,
 }BtlBgType;
