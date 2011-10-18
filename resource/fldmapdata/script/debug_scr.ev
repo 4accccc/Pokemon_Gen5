@@ -1689,8 +1689,8 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_6,   6 ) // わざおしえショップ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_7,   7 ) // アジト船パスワード入力(ゾーン限定)
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
-	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // ラティオス・ラティアスイベント用(ゾーン限定)
-	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナー
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // キュレム戦
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナーリセット
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1740,11 +1740,25 @@ EVENT_START   ev_debug_ichiraku
   CASE 8 THEN
     _GLOBAL_CALL  SCRID_TV
   CASE 9 THEN
-		_FLAG_RESET( FV_D01R0101_RATI2_01 )
-    _OBJ_POS_CHANGE( D01R0101_RATI2_01, 19, 0, 26 , DIR_LEFT )
-    _OBJ_TRANS( D01R0101_RATI2_01, 12, 0, 26, 90 )
-    //_OBJ_POS_CHANGE( D01R0101_RATI2_01, 13, 5, 20 , DIR_RIGHT )
-    //_OBJ_TRANS( D01R0101_RATI2_01, 26, 5, 15, 80 )
+    // キュレム戦
+    DEFINE_LOCAL  LWK_BATTLE_FLAG
+    
+    // 専用背景、伝説系、レアなし、捕獲不可
+    $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_IMMORTAL
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NOT_BALL
+
+    // 野生戦
+    _WILD_BTL_SET_EX( MONSNO_653, 50, LWK_BATTLE_FLAG )
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+      _WILD_WIN()
+    ELSE
+      _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+
   CASE 10 THEN
     // 観覧車トレーナー
 		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
