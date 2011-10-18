@@ -4044,7 +4044,14 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
       u8 cost_sum = shooterCost_GetSum( wk );
       u8 fFirstPokemon = (wk->procPokeIdx == wk->firstPokeIdx );
       u8 fBallTargetHide = checkBallTargetHide( wk );
-      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum, fFirstPokemon, fBallTargetHide );
+      BOOL bBallNotUse = FALSE;
+      if( BTL_MAIN_GetSetupStatusFlag( wk->mainModule, BTL_STATUS_FLAG_NOT_BALL ) )
+      {
+        bBallNotUse = TRUE;
+      }
+      OS_Printf("BTL_STATUS_FLAG_NOT_BALL %d \n", bBallNotUse );
+
+      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum, fFirstPokemon, fBallTargetHide, bBallNotUse );
       (*seq)++;
     }
     break;

@@ -176,6 +176,7 @@ typedef enum {
   BTL_STATUS_FLAG_N_POKE = 0x2000,        ///<ＮポケモンとのエンカウントならTRUE
   BTL_STATUS_FLAG_EFF_ENC = 0x4000,       ///<エフェクトエンカウントならTRUE
   BTL_STATUS_FLAG_MUSHROOM_ENC = 0x8000,  ///<タマゲタケシンボルエンカウントならTRUE
+  BTL_STATUS_FLAG_NOT_BALL = 0x10000,     ///<ボールが使用出来ない。(捕獲不能な野生戦など)
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
@@ -338,7 +339,7 @@ typedef struct {
   // 各種ステータスフラグ
   SHOOTER_ITEM_BIT_WORK  shooterBitWork;  ///< シューター使用制限パラメータ
   u8          badgeCount;       ///< プレイヤー取得済みバッジ数
-  u16         btl_status_flag;  ///< 各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
+  u32         btl_status_flag;  ///< 各種ステータスフラグ(定義値 BTL_STATUS_FLAG型)
   u16         commNetIDBit;     ///< 通信対戦時のNetIDBitフラグ
 
   // デバッグ系

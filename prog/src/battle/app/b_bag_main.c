@@ -795,6 +795,13 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
 		}
+		// 使用不可
+		if( dat->ball_use == BBAG_BALLUSE_NOT_USE ){
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m19, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
 	}
 
 	// 逃げるアイテム使用チェック

@@ -149,6 +149,7 @@
 #define SCR_WILD_BTL_FLAG_IMMORTAL  (0x0100)  //シン・ム戦闘専用(捕まえるまで何度でも復活するので終了演出が特殊)
 #define SCR_WILD_BTL_FLAG_TRAIL     (0x0200)  //けものみち専用（お盆と背景が固定される）
 #define SCR_WILD_BTL_FLAG_MUSHROOM_ENC  (0x0400)  //タマゲタケシンボルエンカウント専用（フェスパラメータとして使用）
+#define SCR_WILD_BTL_FLAG_NOT_BALL  (0x0800)  //ボール使用不可(捕獲不能な野生戦)
 
 
 ///野生ポケモン戦　再戦コードチェック
