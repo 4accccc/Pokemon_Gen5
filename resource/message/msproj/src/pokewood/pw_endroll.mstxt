@@ -2640,10 +2640,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>にげまどうしみん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:39" />
+				Time="2011-10-16T08:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -2651,10 +2651,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>逃げ惑う市民</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:39" />
+				Time="2011-10-16T08:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -2673,10 +2673,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:39" />
+				Time="2011-10-16T08:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -2684,10 +2684,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:39" />
+				Time="2011-10-16T08:30:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3140,10 +3140,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>にげまどうしみん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:44" />
+				Time="2011-10-16T08:29:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3151,10 +3151,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>逃げ惑う市民</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:44" />
+				Time="2011-10-16T08:29:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3173,10 +3173,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:44" />
+				Time="2011-10-16T08:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3184,10 +3184,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:46:44" />
+				Time="2011-10-16T08:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3505,10 +3505,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>UFOのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T11:59:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3516,10 +3516,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>UFOのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T12:00:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:17:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3540,10 +3540,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎの　なかま</Text>
+			<Text>ぼうえいたいポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T06:34:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3551,10 +3551,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>正義の　仲間</Text>
+			<Text>防衛隊ポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T06:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3574,10 +3574,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:34:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3585,10 +3585,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3607,10 +3607,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:34:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3618,10 +3618,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3640,10 +3640,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>にげまどうしみん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:29:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3651,10 +3651,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>逃げ惑う市民</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:29:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3673,10 +3673,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:30:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3684,10 +3684,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3706,10 +3706,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>ねらわれたろうじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:30:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3717,10 +3717,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>ねらわれた老人</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T08:30:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3739,10 +3739,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>メグミ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T06:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3750,10 +3750,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>メグミ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:47:33" />
+				Time="2011-10-16T06:37:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4005,10 +4005,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>Eの　はつめい</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T11:59:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4016,10 +4016,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>Eの　発明</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T12:00:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4040,10 +4040,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎの　なかま</Text>
+			<Text>ぼうえいたいポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4051,10 +4051,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>正義の　仲間</Text>
+			<Text>防衛隊ポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4074,10 +4074,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4085,10 +4085,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4107,10 +4107,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4118,10 +4118,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4140,10 +4140,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4151,10 +4151,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4173,10 +4173,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4184,10 +4184,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:00" />
+				Time="2011-10-16T06:33:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4505,10 +4505,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>UFOのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T11:59:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4516,10 +4516,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>UFOのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T12:00:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:16:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4540,10 +4540,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎの　なかま</Text>
+			<Text>ぼうえいたいポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T06:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4551,10 +4551,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>正義の　仲間</Text>
+			<Text>防衛隊ポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T06:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4574,10 +4574,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4585,10 +4585,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4607,10 +4607,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4618,10 +4618,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T06:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4640,10 +4640,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>にげまどうしみん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T08:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4651,10 +4651,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>逃げ惑う市民</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T08:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4673,10 +4673,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T08:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -4684,10 +4684,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:11" />
+				Time="2011-10-16T08:32:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5005,10 +5005,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>Eのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T11:59:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5016,10 +5016,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンぐんだん</Text>
+			<Text>Eのしもべ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T12:00:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5040,10 +5040,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎの　なかま</Text>
+			<Text>ぼうえいたいポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5051,10 +5051,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>正義の　仲間</Text>
+			<Text>防衛隊ポケモン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5074,10 +5074,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5085,10 +5085,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5107,10 +5107,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>ぼうえいたいクルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5118,10 +5118,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>防衛隊クルー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-17T08:38:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T08:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5140,10 +5140,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>にげまどうしみん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:32:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5151,10 +5151,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげまどう　市民</Text>
+			<Text>逃げ惑う市民</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5173,10 +5173,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5184,10 +5184,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:48:29" />
+				Time="2011-10-16T08:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6005,10 +6005,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きかいの　かいぶつ</Text>
+			<Text>きかいのかいぶつ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:49:01" />
+				Time="2011-10-16T08:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14551,10 +14551,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>たびの　あいぼう</Text>
+			<Text>たびのあいぼう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:44:52" />
+				Time="2011-10-16T08:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14562,10 +14562,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅の　相棒</Text>
+			<Text>旅の相棒</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:51:13" />
+				Time="2011-10-16T08:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14651,10 +14651,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おそわれる　むらびと</Text>
+			<Text>おそわれるむらびと</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:45:44" />
+				Time="2011-10-16T08:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14662,10 +14662,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>襲われる　村人</Text>
+			<Text>襲われる村人</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:49:45" />
+				Time="2011-10-16T08:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15051,10 +15051,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>たびの　あいぼう</Text>
+			<Text>たびのあいぼう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:48:36" />
+				Time="2011-10-16T08:34:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15062,10 +15062,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅の　相棒</Text>
+			<Text>旅の相棒</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:51:30" />
+				Time="2011-10-16T08:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15151,10 +15151,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつの　あし</Text>
+			<Text>かいぶつのあし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:50:29" />
+				Time="2011-10-16T08:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15162,10 +15162,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪物の　足</Text>
+			<Text>怪物の足</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:51:40" />
+				Time="2011-10-16T08:34:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15184,10 +15184,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>げきだんアキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:50:15" />
+				Time="2011-10-16T08:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15195,10 +15195,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>劇団アキト</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:51:30" />
+				Time="2011-10-16T08:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16017,10 +16017,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きかいの　かいぶつ　２</Text>
+			<Text>きせきのはつめい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16028,11 +16028,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>機械獣　Ver.2.0
-</Text>
+			<Text>奇跡の発明</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16053,10 +16052,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえい　ポケモン</Text>
+			<Text>はかせのパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16064,10 +16063,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛　ポケモン</Text>
+			<Text>博士のパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16087,10 +16086,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>しょうねんはつめいか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16098,10 +16097,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>少年発明家</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16120,10 +16119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>はつめいしょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16131,10 +16130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>発明少女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16153,10 +16152,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16164,10 +16163,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16186,10 +16185,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16197,10 +16196,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16219,10 +16218,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16230,10 +16229,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>逃げ惑う　市民</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16252,10 +16251,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16263,10 +16262,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:16" />
+				Time="2011-10-16T05:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16518,10 +16517,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きかいの　かいぶつ　２</Text>
+			<Text>きせきのはつめい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16529,11 +16528,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>機械獣　Ver.2.0
-</Text>
+			<Text>奇跡の発明</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16554,10 +16552,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえい　ポケモン</Text>
+			<Text>はかせのパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16565,10 +16563,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛　ポケモン</Text>
+			<Text>博士のパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16588,10 +16586,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>しょうねんはつめいか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16599,10 +16597,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>少年発明家</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16621,10 +16619,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>はつめいしょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16632,10 +16630,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>発明少女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16654,10 +16652,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16665,10 +16663,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16687,10 +16685,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:57:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16698,10 +16696,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16720,10 +16718,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16731,10 +16729,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>逃げ惑う　市民</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16753,10 +16751,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -16764,10 +16762,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:23" />
+				Time="2011-10-16T05:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17019,10 +17017,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きかいの　かいぶつ　２</Text>
+			<Text>きせきのはつめい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17030,11 +17028,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>機械獣　Ver.2.0
-</Text>
+			<Text>奇跡の発明</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17055,10 +17052,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえい　ポケモン</Text>
+			<Text>はかせのパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17066,10 +17063,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛　ポケモン</Text>
+			<Text>博士のパートナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17089,10 +17086,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>しょうねんはつめいか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17100,10 +17097,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>少年発明家</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17122,10 +17119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　クルー</Text>
+			<Text>はつめいしょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17133,10 +17130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　クルー</Text>
+			<Text>発明少女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17155,10 +17152,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュぼうえいたい　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17166,10 +17163,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ防衛隊　キャップ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17188,10 +17185,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17199,10 +17196,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノブ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17221,10 +17218,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にげまどう　しみん</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17232,10 +17229,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>逃げ惑う　市民</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17254,10 +17251,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17265,10 +17262,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:06:32" />
+				Time="2011-10-16T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

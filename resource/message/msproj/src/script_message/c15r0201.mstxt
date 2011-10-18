@@ -120,12 +120,12 @@
 			Language="JPN">
 			<Comment>♂policeman
 
-（X2,Z26）に配置
+（X2,Z6）に配置
 
-全作品を撮影するまで</Comment>
+銅像イベント前</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T09:30:19" />
+				Time="2011-10-09T07:45:04" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -172,13 +172,13 @@
 			<Comment>♂policeman
 
 
-（X2,Z26）に配置
+（X2,Z27）に配置
 
-全作品を撮影した後のメッセージ
+銅像イベント後
 終了後、移動し入室可能</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T09:30:15" />
+				Time="2011-10-09T07:45:09" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -811,13 +811,15 @@ msg_c15r0301_middleman2_01</Comment>
 せいこう　させる　じょうけんや▽
 きょうえんしゃに　ついての▽
 じょうほうが　かかれているよ！▼
+さつえいちゅうにも　みられるから
+こまったときは　ようチェックさ！▼
 チャレンジできる　だいほんは
 キミが　つくった　えいがの　ないようや▽
 こうぎょうせいせきの　けっか　などで▽
 すこしずつ　ふえていくよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:18:48" />
+				Time="2011-10-16T11:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -833,14 +835,16 @@ msg_c15r0301_middleman2_01</Comment>
 成功　させる　条件や▽
 共演者に　ついての▽
 情報が　書かれてるよ！▼
+撮影中にも　見られるから
+困ったときは　要チェックさ！▼
 台本は　キミが　つくった
-チャレンジできる　台本は
+チャレンジできる　台本は▽
 キミが　つくった　映画の　内容や▽
 興行成績の　結果　などで▽
 少しずつ　増えていくよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:18:52" />
+				Time="2011-10-16T11:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

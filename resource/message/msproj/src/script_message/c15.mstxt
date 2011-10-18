@@ -645,12 +645,12 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀PWMOJI
+			<Comment>♂PWMOJI
 
 （X12,Y16）辺りに配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:23:24" />
+				Time="2011-10-18T10:00:28" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -725,12 +725,12 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀PWMOJI
+			<Comment>♂PWMOJI
 
 （X17,Y37）辺りに配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:35:14" />
+				Time="2011-10-18T10:00:34" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1475,5 +1475,955 @@ msg_c15_oldman1_01_04
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_man1_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボクね　ナツメって　この
+だいファン　なわけ▼
+だけど　さいきんは　[Name:TrainerName ]って
+やくしゃさんが　きになっちゃっててね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:50:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T07:47:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボクね　ナツメって　子の
+大ファン　なわけ▼
+だけど　最近は　[Name:TrainerName ]って
+役者さんが　気になっちゃっててね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:51:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T07:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀MAN1
+
+主人公スターランク１から出現。（X20,ｚ28）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:57:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_woman3_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいきん　[Name:TrainerName ]って　やくしゃの
+えいがが　わだい　らしいわね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:07:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T07:52:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最近　[Name:TrainerName ]って　役者の
+映画が　話題　らしいわね</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:07:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T07:55:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀WOMAN3
+主人公スターランク１から出現。（X28,ｚ39）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:08:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_pwmoji_04_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>Come sta？
+ポケウッドには　もう　なれたかい？▼
+ここには　いろんなくにの　スタッフが
+いるから　しげきに　なるだろ！▼
+じゃあ　さつえいで　あおうぜ！
+Buona giornata！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:01:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:55:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Come sta？
+ポケウッドには　もう　慣れたかい？▼
+ここには　色んな国の　スタッフが
+いるから　刺激に　なるだろ！▼
+じゃあ　撮影で　あおうぜ！
+Buona giornata！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:00:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂PWMOJI（イタリア語キャラ）
+
+主人公スターランク1から出現。（X16,ｚ26）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:34:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_babygirl2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたちも　てんさいこやくと
+よばれた　にんきもの！▼
+きょうえんしたら　まけないんだから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:05:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:05:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたちも　てんさいこやくと
+よばれた　にんきもの！▼
+きょうえんしたら　まけないんだから！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:08:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:08:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀BABYGIRL
+
+主人公スターランク２から出現。（X11,ｚ35）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:09:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_pwmoji_05_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>Grüß Gott▼
+キミが　ポケウッドに　でるようになって
+ぼくら　スーツアクターも　いそがしくて！▽
+Bis  bald.</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:22:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:16:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Grüß Gott▼
+キミが　ポケウッドに　でるようになって
+ぼくら　スーツアクターも　いそがしくて！▽
+Bis  bald.</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:22:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:22:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂PWMOJI（ドイツ語キャラ）
+
+主人公スターランク２から出現。（X13,ｚ26）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:34:46" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_babyboy1_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ！　[Name:TrainerName ]　だっ！
+ファンなんだ！　サインして　おくれよー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:27:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:25:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ！　[Name:TrainerName ]　だっ！
+ファンなんだ！　サインして　おくれよー！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:27:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:25:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BABYBOY
+
+主人公スターランク３から出現。（X33,ｚ32）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:27:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_adultw_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　[Name:TrainerName ]……▼
+こんどは　いつ　わたしが　かんとくする
+えいがに　しゅつえんして　くれるの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:56:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:29:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　[Name:TrainerName ]……▼
+今度は　いつ　私の　監督する
+映画に　出演して　くれるの？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:56:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:31:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂ADULTW（英語キャラ）
+
+主人公スターランク４から出現。（X33,ｚ32）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T12:03:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_veteranm_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>¡Hola! ¿Qué tal ?
+アンタも　ゆうめいに　なったな！▼
+くにじゃ　トップスターの　オレも
+イッシュじゃ　アンタに　かなわないぜ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:52:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>¡Hola! ¿Qué tal ?
+アンタも　有名に　なったな！▼
+国じゃ　トップスターの　オレも
+イッシュじゃ　アンタに　かなわないぜ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:52:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T10:34:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂VETERANM（スペイン語キャラ）
+
+主人公スターランク４から出現。（X37,ｚ42）辺りに配置</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T12:02:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイヘイ！　[Name:TrainerName ]！！
+きょうは　ポケウッドの　スペシャルな▽
+セレモニーが　あるんだぜ！▼
+ウッドウさんも　まってるんだ！
+いっしょに　きてくれないかっ！！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイヘイ！　[Name:TrainerName ]！！
+今日は　ポケウッドの　スペシャルな▽
+セレモニーが　あるんだぜ！▼
+ウッドウさんも　いるからさ
+一緒に　来てくれないかっ！！
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●銅像建立イベント　※すべての作品でＧＯＯＤＥＮＤクリアすると開始
+
+条件を満した後シアターからC15に出るとＸ４５Ｙ２１辺りにいる
+
+
+♂sunglasses
+
+終了後つれあるき開始
+
+暫く移動後→msg_pw__end_02</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]　おめでとう！▼
+きょうは　あなたと　ポケウッドの
+きねん　すべき　いちにち　ね！▼
+あなたとの　おしばいは
+わたしの　たからものよ！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]　おめでとう！▼
+今日は　あなたと　ポケウッドの
+記念　すべき　一日ね！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀maid
+
+連れ歩き途中に話しかけられる。x47z30辺りに配置。
+イベント専用NPC（イベント終了後消える）
+
+移動再開し暫くして→msg_pw__end_03</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:37:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ！　[Name:TrainerName ]！▼
+キミと　きょうえん　できたこと
+じつに　こうえいに　おもってるよ！▼
+え？　ボクのこと　おぼえてない？
+ヒドいな！　ＵＦＯを▽
+えんじてるのは　ボクなんだぜ！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあ！　[Name:TrainerName ]！▼
+キミと　共演できたこと
+実に　光栄に　思ってるよ！▼
+え？　ボクのこと　覚えてない？
+ヒドいな！　ＵＦＯを▽
+演じてるのは　ボクなんだぜ！　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂pwmoji
+
+連れ歩き途中に話しかけられる。x36z23辺りに配置。
+イベント専用NPC（イベント終了後消える）
+
+移動再開し暫くして→msg_pw__end_04</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:37:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　じゃないスか！
+かんどうっス！　おめでとうございまっス！▼
+オレ……　オレ　[Name:TrainerName ]さんの
+ファン　やってきて　ほんと　よかったっス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　じゃないスか！
+感動っス！　おめでとうございまっス！▼
+オレ……　オレ　[Name:TrainerName ]さんの
+ファン　やってきて　本当　良かったっス！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂BACKPACKERM
+
+連れ歩き途中に話しかけられる。x36z23辺りに配置。
+イベント専用NPC（イベント終了後消える）
+
+移動再開し暫くして→msg_pw__end_05</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:37:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたとの　きょうえん……▼
+おもしろかったし　なかなか
+いい　けいけんに　なったわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたとの　共演……▼
+面白かったし　なかなか
+いい　経験に　なったわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀RGLEADER5（背面がないので注意）
+
+連れ歩き途中に話しかけられる。x28z21辺りに配置。
+イベント専用NPC（イベント終了後消える）
+
+移動再開し暫くして→msg_pw__end_06</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:54:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>キミと　いっしょに　えいがを
+つくれたのは　わたしの　ほこり　なの！▼
+おめでと！　[Name:TrainerName ]！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミと　一緒に　映画を
+創れたのは　私の　誇り　なの！▼
+おめでと！　[Name:TrainerName ]！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ＯＬ
+
+連れ歩き途中に話しかけられる。x33z18辺りに配置。
+
+イベント専用NPC（イベント終了後消える）NPC
+
+移動再開し暫くして→msg_pw__end_07</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:39:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ステキネ！　[Name:TrainerName ]！
+ミー　モ　アナタノ　エイガノ▽
+ディレクター　デキテ　ヨカッタワ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>素敵ネ！　[Name:TrainerName ]！
+ミー　モ　アナタノ　映画ノ▽
+ディレクター　デキテ　良カッタワ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW
+
+連れ歩き途中に話しかけられる。x33z15辺りに配置。
+
+イベント専用NPC（イベント終了後消える）NPC
+
+移動再開し暫くして→msg_pw__end_09</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T11:55:21" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘイ！　ボス！　おつれしました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘイ！　ボス！　お連れしました！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+Ｘ３１Ｙ１３辺りで停止し左（Ｘ３0Ｙ１３）に移動
+
+
+暫く移動後→msg_pw__end_10</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>うむ……▼
+[Name:TrainerName ]ちゃん……
+きょうは　きねんすべき　ひ　なんだ……▼
+この　だいざ……
+そして　うえにたつ　どうぞうが　みてよ……▼
+……ボクはね　ここを　つくったとき
+ひとつの　ねがいと　ちかいを　たてたんだ▼
+このポケウッドが　せかいじゅうを
+かんどうさせる　エンターテイメントの▽
+でんどうと　なるひ　まで……▼
+そして　そんな　ポケウッドに　ふさわしい
+しんの　スターが　あらわれるまで▽
+この　だいざの　うえには
+なにも　たてずに　おこうと……▼
+……だが　みてよ▼
+ここには　すでに　どうぞうが　ある……
+つまり　ぼくの　ねがいは　かなったのさ……▼
+[Name:TrainerName ]ちゃん……
+キミの　おかげでね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うむ……▼
+[Name:TrainerName ]ちゃん……
+今日は　記念すべき日　なんだ……▼
+この　台座……
+そして　上に建つ　銅像が　みてよ……▼
+……ボクはね　ここを　つくったとき
+一つの　願いと　誓いを　立てたんだ▼
+このポケウッドが　世界中を
+感動させる　エンターテイメントの▽
+殿堂と　なる日　まで……▼
+そして　そんな　ポケウッドに　相応しい
+真の　スターが　誕生するまで▽
+この台座の　上には
+何も　建てずに　おこうと……▼
+……　……だが　みてよ▼
+ここには　すでに　銅像が　ある……
+つまり　僕の　願いは　叶ったのさ……▼
+[Name:TrainerName ]ちゃん……
+キミの　おかげでね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　ポケウッド関係者（pwowner）
+
+Ｘ３１Ｙ１0辺りに配置
+
+初期配置は後ろ向きで、振り向いてからメッセージ開始
+
+終了後→msg_pw__end_11</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>フッ……▼
+きみの　えんぎは
+きょうえんしゃを　ふるわせる……▼
+きみの　えんぎが
+かんきゃくを　みりょうする……▼
+すばらしい……
+いや……▽
+さいこうの　やくしゃさ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フッ……▼
+君の　演技は　スタッフや
+共演者を　奮わせる……▼
+君の　演技が
+観客を　魅了する……▼
+素晴らしい……
+いや……▽
+最高の　役者さ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂LEADER7
+
+
+Ｘ30Ｙ１0辺りに配置
+
+終了後→msg_pw__end_12</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]ちゃん！！
+キミこそ　ポケウッドの▽
+しんの　スターだっ！！！▼
+ぎんまくという　よぞらを　ながれる
+シューティングスター　だよっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]ちゃん！！
+キミこそ　ポケウッドの▽
+真の　スターだっ！！！▼
+銀幕という　夜空を　流れる
+シューティングスター　だよっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　ポケウッド関係者（pwowner）
+
+終了後→ファンファーレSE
+
+終了後→msg_pw__end_13</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ということで
+[Name:TrainerName ]ちゃんに▽
+ボクから　ささやかな　プレゼントだよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ということで
+[Name:TrainerName ]ちゃんに▽
+ボクから　ささやかな　プレゼントだよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　ポケウッド関係者（pwowner）
+
+終了後→msg_pw__end_14</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>イエッサー！　ボス！▼
+さあ！　[Name:TrainerName ]！
+カモン！　カモン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イエッサー！　ボス！▼
+さあ！　[Name:TrainerName ]！
+カモン！　カモン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+終了後→C15R0401にマップ遷移しmsg_pw__end_15</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_end_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　ウッドウさんが
+みとめた　やくしゃだけが　つかえる▽
+ウルトラデラックスな　ドレッシングルーム！▼
+いまから　ここは　[Name:TrainerName ]だけが
+じゆうに　つかうことを　ゆるされたぜ！▼
+じゃあな！　[Name:TrainerName ]！
+また　アンタの　えいがを　みられるのを▽
+たのしみに　してるぜっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　ウッドウさんが
+認めた　役者だけが　使える▽
+ウルトラデラックスな　ドレッシングルーム！▼
+今から　ここは　[Name:TrainerName ]だけが
+自由に　使うことを　許されたぜ！▼
+じゃあな！　[Name:TrainerName ]！
+また　アンタの　映画を　観られるのを▽
+楽しみに　してるぜっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+メッセージ終了後退室し銅像イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>

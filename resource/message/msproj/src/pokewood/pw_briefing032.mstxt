@@ -49,12 +49,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]かれは　こども　ながら
-[Ctrl1:xcenter ]てんさいてきな　ずのうを　もち
 [Ctrl1:xcenter ]おとなたちに　まじって　ロボットの
 [Ctrl1:xcenter ]かいはつを　おこなっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:50:26" />
+				Time="2011-10-16T06:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -63,12 +62,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]彼は　子供　ながら
-[Ctrl1:xcenter ]天才的な　頭脳を　持ち
 [Ctrl1:xcenter ]大人たちに　混じって　ロボットの
 [Ctrl1:xcenter ]開発を　行なっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:50:34" />
+				Time="2011-10-16T06:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -334,12 +332,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]かのじょは　こども　ながら
-[Ctrl1:xcenter ]てんさいてきな　ずのうを　もち
 [Ctrl1:xcenter ]おとなたちに　まじって　ロボットの
 [Ctrl1:xcenter ]かいはつを　おこなっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:51:46" />
+				Time="2011-10-16T06:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -348,12 +345,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]彼女は　子供　ながら
-[Ctrl1:xcenter ]天才的な　頭脳を　持ち
 [Ctrl1:xcenter ]大人たちに　混じって　ロボットの
 [Ctrl1:xcenter ]開発を　行なっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:51:37" />
+				Time="2011-10-16T06:02:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

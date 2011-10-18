@@ -2445,10 +2445,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>コレデ　サツエイ　フィニッシュ！
-ミンナ　ゴクロウサマ　デス！▼</Text>
+ミンナ　ゴクロウサマ　ナノネ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T05:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2457,10 +2457,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コレデ　撮影　フィニッシュ！
-ミンナ　ゴ苦労様　デス！▼</Text>
+ミンナ　ゴ苦労様　ナノネ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-09T05:59:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

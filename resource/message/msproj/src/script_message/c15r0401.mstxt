@@ -1,3 +1,171 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c15r0401_adlutw_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さすがは　トップスター……
+たんせいな　おかおだち……▼
+[Name:TrainerName ]さまの　めもとは
+どんな　アイシャドウよりも▽
+シャイニー　ございますわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:45:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:41:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>流石は　トップスター……
+端正な　お顔だち……▼
+[Name:TrainerName ]様の　目元は
+どんな　アイシャドウよりも▽
+シャイニーで　ございますわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:45:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:41:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:44:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_adlutw_01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>やはり　トップスター……
+たんせいな　おかおだち……▼
+[Name:TrainerName ]さまの　くちびるは
+どんな　ルージュよりも▽
+グロッシー　ございますわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:45:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:47:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やはり　トップスター……
+端正な　お顔立ち……▼
+[Name:TrainerName ]様の　唇は
+どんな　ルージュよりも▽
+グロッシー　ございますわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:46:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:47:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:44:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_policeman_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレハ　　ボディガード……
+ユー　ノ　ケイビハ　バッチリ　ダゼ……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:50:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:49:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレハ　　ボディガード……
+ユー　ノ　警備ハ　バッチリ　ダゼ……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:47:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T11:50:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂POLICEMAN</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:47:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_middleman2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さまは　ごじぶんの
+ポケモンを　えいがに
+しゅつえん　させまして？▼
+ポケモンだって　やくしゃ……▼
+よい　さくひんに　しゅつえん　なされば
+きっと　スターの　かがやきを▽
+てに　いれますわよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T02:11:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T01:59:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さまは　ご自分の
+ポケモンを　映画に
+出演　させまして？▼
+ポケモンだって　役者……▼
+よい　作品に　出演なされば
+きっと　スターの　輝きを▽
+手に　いれますわよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T02:11:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T02:08:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MIDDLEMAN2</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T02:09:27" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>

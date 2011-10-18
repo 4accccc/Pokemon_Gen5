@@ -61,18 +61,14 @@
 			<Text>[Ctrl1:xcenter ]じんるいの　めいうんを　かけた
 [Ctrl1:xcenter ]デコイさくせん……
 
+
 [Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]と
 [Ctrl1:xcenter ]ＵＦＯけんきゅうか　Ｅの
 [Ctrl1:xcenter ]かつやくに　より　さくせんは
-[Ctrl1:xcenter ]せいこうへと　むかっていた……
-
-[Ctrl1:xcenter ]しかし……
-
-[Ctrl1:xcenter ]さくせんの　せいこう　とともに
-[Ctrl1:xcenter ]Ｅの　ようすに　いへんが……</Text>
+[Ctrl1:xcenter ]せいこうへと　むかっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:45:07" />
+				Time="2011-10-16T09:17:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -83,18 +79,14 @@
 			<Text>[Ctrl1:xcenter ]人類の　命運を　かけた
 [Ctrl1:xcenter ]デコイ作戦……
 
+
 [Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]と
 [Ctrl1:xcenter ]ＵＦＯ研究家　Ｅの
 [Ctrl1:xcenter ]活やくに　より　作戦は
-[Ctrl1:xcenter ]成功へと　向かっていた……
-
-[Ctrl1:xcenter ]しかし……
-
-[Ctrl1:xcenter ]作戦の　成功　とともに
-[Ctrl1:xcenter ]Ｅの　様子に　異変が……</Text>
+[Ctrl1:xcenter ]成功へと　向かっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:45:26" />
+				Time="2011-10-16T09:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -106,16 +98,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ひとを　おそう　ＵＦＯの　なぞ……
-
-[Ctrl1:xcenter ]ひらいする　マザーシップ……
-
-[Ctrl1:xcenter ]Ｅの　しんの　しょうたい……
-
-[Ctrl1:xcenter ]はたして　じんるいの　みらいは……</Text>
+			<Text>[Ctrl1:xcenter ]しかし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:41:59" />
+				Time="2011-10-16T09:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -123,16 +109,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]人を　おそう　ＵＦＯの　なぞ……
-
-[Ctrl1:xcenter ]飛来する　マザーシップ……
-
-[Ctrl1:xcenter ]Ｅの　真の　正体……
-
-[Ctrl1:xcenter ]果たして　人類の　未来は……</Text>
+			<Text>[Ctrl1:xcenter ]しかし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:24:07" />
+				Time="2011-10-16T09:17:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -144,10 +124,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]さくせんの　せいこう　とともに
+[Ctrl1:xcenter ]Ｅの　ようすに　いへんが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:16:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -155,10 +136,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]作戦の　成功　とともに
+[Ctrl1:xcenter ]Ｅの　様子に　異変が……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -170,10 +152,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ひとを　おそう　ＵＦＯの　なぞ……
+[Ctrl1:xcenter ]ひらいする　マザーシップ……
+[Ctrl1:xcenter ]Ｅの　しんの　しょうたい……
+
+[Ctrl1:xcenter ]はたして　じんるいの　みらいは……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:16:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -181,10 +167,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]人を　襲う　ＵＦＯの　なぞ……
+[Ctrl1:xcenter ]飛来する　マザーシップ……
+[Ctrl1:xcenter ]Ｅの　真の　正体……
+
+[Ctrl1:xcenter ]果たして　人類の　未来は……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -276,8 +266,8 @@
 			Language="JPN">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -374,18 +364,14 @@
 			<Text>[Ctrl1:xcenter ]じんるいの　めいうんを　かけた
 [Ctrl1:xcenter ]デコイさくせん……
 
+
 [Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]と
 [Ctrl1:xcenter ]ＵＦＯけんきゅうか　Ｅの
 [Ctrl1:xcenter ]かつやくに　より　さくせんは
-[Ctrl1:xcenter ]せいこうへと　むかっていた……
-
-[Ctrl1:xcenter ]しかし……
-
-[Ctrl1:xcenter ]さくせんの　せいこう　とともに
-[Ctrl1:xcenter ]Ｅの　ようすに　いへんが……</Text>
+[Ctrl1:xcenter ]せいこうへと　むかっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:53:44" />
+				Time="2011-10-16T09:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -396,18 +382,14 @@
 			<Text>[Ctrl1:xcenter ]人類の　命運を　かけた
 [Ctrl1:xcenter ]デコイ作戦……
 
+
 [Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]と
 [Ctrl1:xcenter ]ＵＦＯ研究家　Ｅの
 [Ctrl1:xcenter ]活やくに　より　作戦は
-[Ctrl1:xcenter ]成功へと　向かっていた……
-
-[Ctrl1:xcenter ]しかし……
-
-[Ctrl1:xcenter ]作戦の　成功　とともに
-[Ctrl1:xcenter ]Ｅの　様子に　異変が……</Text>
+[Ctrl1:xcenter ]成功へと　向かっていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:53:51" />
+				Time="2011-10-16T09:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -419,16 +401,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ひとを　おそう　ＵＦＯの　なぞ……
-
-[Ctrl1:xcenter ]ひらいする　マザーシップ……
-
-[Ctrl1:xcenter ]Ｅの　しんの　しょうたい……
-
-[Ctrl1:xcenter ]はたして　じんるいの　みらいは……</Text>
+			<Text>[Ctrl1:xcenter ]しかし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:43:39" />
+				Time="2011-10-16T09:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -436,16 +412,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]人を　おそう　ＵＦＯの　なぞ……
-
-[Ctrl1:xcenter ]飛来する　マザーシップ……
-
-[Ctrl1:xcenter ]Ｅの　真の　正体……
-
-[Ctrl1:xcenter ]果たして　人類の　未来は……</Text>
+			<Text>[Ctrl1:xcenter ]しかし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:24:18" />
+				Time="2011-10-16T09:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -457,10 +427,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]さくせんの　せいこう　とともに
+[Ctrl1:xcenter ]Ｅの　ようすに　いへんが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -468,10 +439,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]作戦の　成功　とともに
+[Ctrl1:xcenter ]Ｅの　様子に　異変が……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -483,10 +455,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ひとを　おそう　ＵＦＯの　なぞ……
+[Ctrl1:xcenter ]ひらいする　マザーシップ……
+[Ctrl1:xcenter ]Ｅの　しんの　しょうたい……
+
+[Ctrl1:xcenter ]はたして　じんるいの　みらいは……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -494,10 +470,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]人を　襲う　ＵＦＯの　なぞ……
+[Ctrl1:xcenter ]飛来する　マザーシップ……
+[Ctrl1:xcenter ]Ｅの　真の　正体……
+
+[Ctrl1:xcenter ]果たして　人類の　未来は……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-16T09:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
