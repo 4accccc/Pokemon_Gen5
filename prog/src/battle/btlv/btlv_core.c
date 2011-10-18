@@ -715,7 +715,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     //下画面演出終了待ち
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
     {
-      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0, TRUE, FALSE, FALSE );
+      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0, TRUE, FALSE );
       (*seq)++;
     }
     break;
@@ -1312,7 +1312,7 @@ void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx )
  * @param   energy
  */
 //=============================================================================================
-void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon, u8 fBallTargetHide, BOOL bBallNotUse )
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon, u8 fBallTargetHide )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -1362,7 +1362,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
         }
 
         // 捕獲不能の野生戦
-        if( bBallNotUse == TRUE )
+        if( BTL_MAIN_GetSetupStatusFlag( wk->mainModule, BTL_STATUS_FLAG_NOT_BALL ) )
         {
           ballUseMode = BBAG_BALLUSE_NOT_USE;
           break;
