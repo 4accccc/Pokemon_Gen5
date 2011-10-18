@@ -590,6 +590,9 @@ ev_first_gameclear:
 
   //D05:WBTロビー・NPC
   _FLAG_RESET(FV_D05R0101_TRAINERW_01)
+  
+  //R06R0201：ストッパー非表示
+  _FLAG_SET( FV_R06R0201_STOPPER_01 )
 
 _RET
 
