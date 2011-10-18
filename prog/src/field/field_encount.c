@@ -346,8 +346,11 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   if( flags & SCR_WILD_BTL_FLAG_MUSHROOM_ENC ){
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_MUSHROOM_ENC );
   }
-  //ボール使用不能(捕獲不能な野生戦)
-  if( flags & SCR_WILD_BTL_FLAG_NOT_BALL ){
+  // キュレム戦専用
+  if( flags & SCR_WILD_BTL_FLAG_KYUREMU ){
+    //戦闘背景・お盆変化
+    bp->fieldSituation.bgType = BATTLE_BG_TYPE_KYUREMU;  // キュレム専用
+    //ボール使用不能(捕獲不能な野生戦)
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_NOT_BALL );
   }
   //エンカウントイベント生成

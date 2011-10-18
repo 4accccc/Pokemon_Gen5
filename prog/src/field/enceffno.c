@@ -23,6 +23,7 @@
 /**
  * 野生戦エフェクト抽選（釣りを除く）
  * @param inMonsNo        モンスターナンバー
+ * @param inFormNo        フォルムナンバー
  * @param inEncType       エンカウントタイプ　encount_data.h参照
  * @param inDoubleBattle  ダブルバトルならTRUE
  * @param fieldmap    フィールドマップポインタ
@@ -31,7 +32,7 @@
  * @retval none        
  */
 //--------------------------------------------------------------
-void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, BOOL inDoubleBattle, 
+void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, const int inFormNo, ENCOUNT_TYPE inEncType, BOOL inDoubleBattle, 
     FIELDMAP_WORK *fieldmap,int *outEffNo, u16 *outBgmNo )
 {
   u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
@@ -52,8 +53,19 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     *outBgmNo = SEQ_BGM_VS_MU;
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
-  case MONSNO_653:  //ライ MONSNO_RAI
-    *outBgmNo = SEQ_BGM_VS_RAI;
+  case MONSNO_653:  //キュレム MONSNO_KYUREMU
+    if( inFormNo == FORMNO_653_WHITE )  // キュラム FORMNO_KYUREMU_WHITE
+    {
+      *outBgmNo = SEQ_BGM_VS_KYURAMU;
+    }
+    else if( inFormNo == FORMNO_653_BLACK ) // キュロム FORMNO_KYUREMU_BLACK
+    {
+      *outBgmNo = SEQ_BGM_VS_KYUROMU;
+    }
+    else
+    {
+      *outBgmNo = SEQ_BGM_VS_RAI;
+    }
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
   case MONSNO_644:  //ドラー MONSNO_DORAA

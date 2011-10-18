@@ -219,9 +219,10 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
         POKEPARTY* enemy = BATTLE_PARAM_GetPokePartyPointer( wbew->bp, BTL_CLIENT_ENEMY1 );
         POKEMON_PARAM *pp = PokeParty_GetMemberPointer(enemy, 0);
         int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+        int formno = PP_Get( pp, ID_PARA_form_no, NULL );
         FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
         //エンカウントエフェクトとＢＧＭを取得してセット
-        ENCEFFNO_GetWildEncEffNoBgmNo( monsno, wbew->EncType, ( wbew->bp->rule == BTL_RULE_DOUBLE),
+        ENCEFFNO_GetWildEncEffNoBgmNo( monsno, formno, wbew->EncType, ( wbew->bp->rule == BTL_RULE_DOUBLE),
             fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
       }
 
@@ -690,7 +691,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE;
   //エンカウントエフェクトとＢＧＭをセット
-  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_TYORONEKO, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_TYORONEKO, 0, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
   //捕獲でもは野生弱エンカウントエフェクト固定
   bew->EncEffNo = ENCEFFID_WILD_NORMAL;
 
