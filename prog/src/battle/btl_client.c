@@ -10721,6 +10721,44 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
   }
 }
 
+// ŠÏ‹qƒŠƒAƒNƒVƒ‡ƒ“‚Ì‚È‚ç‚Ñ‚É‘Î‰ž‚µ‚½‚r‚d‚Ìƒe[ƒuƒ‹
+// [0]=­‚È‚¢ŠÏ‹q‚Ì‚Æ‚«A[1]=‘½‚¢ŠÏ‹q‚Ì‚Æ‚«
+static const u32 audience_se_tbl[][2]={
+  { 0,0, }, // –³”½‰ž
+  { SEQ_SE_SW_PKWOOD_AUD_03, SEQ_SE_SW_PKWOOD_AUD_03 }, //Šì‚Ñ
+  { SEQ_SE_SW_PKWOOD_AUD_07, SEQ_SE_SW_PKWOOD_AUD_08 }, //‹ƒ‚«
+  { SEQ_SE_SW_PKWOOD_AUD_09, SEQ_SE_SW_PKWOOD_AUD_10 }, //ƒhƒLƒhƒL
+  { SEQ_SE_SW_PKWOOD_AUD_11, SEQ_SE_SW_PKWOOD_AUD_12 }, //Î‚¢
+  { SEQ_SE_SW_PKWOOD_AUD_01, SEQ_SE_SW_PKWOOD_AUD_02 }, //H
+  { SEQ_SE_SW_PKWOOD_AUD_05, SEQ_SE_SW_PKWOOD_AUD_06 }, //Q‚é
+  { SEQ_SE_SW_PKWOOD_AUD_13, SEQ_SE_SW_PKWOOD_AUD_14 }, //‹Á‚«
+  { SEQ_SE_SW_PKWOOD_AUD_15, SEQ_SE_SW_PKWOOD_AUD_16 }, //”Žè
+};
+
+//‚±‚Ìl”ˆÈ‰º‚È‚ç­‚È–Ú‚Ì‚r‚d‚ð’´‚¦‚Ä‚½‚ç‘å‚«‚¢‚r‚d‚ð
+#define SE_SWITCH_AUDIENCE_NUM  ( 12 )    
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ŠÏ‹q‚ÌƒŠƒAƒNƒVƒ‡ƒ“‚É‘Î‰ž‚µ‚ÄSE‚ð–Â‚ç‚·
+ *
+ * @param   psw		POKEWOOD_SEQ_WORK
+ * @param   type	ŠÏ‹q‚ÌƒŠƒAƒNƒVƒ‡ƒ“ƒ^ƒCƒv( 100s–Ú‚ ‚½‚è‚Éenum’è‹`)
+ */
+//----------------------------------------------------------------------------------
+static void _playSE_audience_reaction( POKEWOOD_SEQ_WORK *psw, int type )
+{
+  if( psw->Audience.account<SE_SWITCH_AUDIENCE_NUM ){
+    if(audience_se_tbl[type][0]!=0){
+      PMSND_PlaySE( audience_se_tbl[type][0] );
+    }
+  }else{
+    if(audience_se_tbl[type][1]!=0){
+      PMSND_PlaySE( audience_se_tbl[type][1] );
+    }
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -10733,14 +10771,19 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
 //----------------------------------------------------------------------------------
 static void _set_audience_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int type )
 {
-  int i;
+  int i,flag=0;
   for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
     if((psw->Audience.on_off>>i)&1){
       BTLV_CORE_SetAudienceCondition( viewCore, TRUE, i, type );
       psw->Audience.timer[i] = GFUser_GetPublicRand( 300 )+400;
+      flag++;
     }
   }
 
+  // ŠÏ‹q‚ª‚¢‚½‚çSE‚ð–Â‚ç‚·
+  if(flag){
+    _playSE_audience_reaction( psw, type );
+  }
 }
 
 
