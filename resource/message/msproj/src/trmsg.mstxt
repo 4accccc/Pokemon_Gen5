@@ -20691,20 +20691,19 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_10_TRMSG_FIGHT_START"
-		Style="Large">
+		Label="TRID_JUGGLING_1_01_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうだい？　この　ポケモンジム▼
 なんというか　ちょっと　ありえない
 あやしげな　みりょく　たっぷりだろ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -20712,59 +20711,43 @@
 なんというか　ちょっと　ありえない
 怪しげな　魅力　たっぷりだろ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_10_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_JUGGLING_1_01_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンジムに　まけずおとらず
 きみも　みりょく　たっぷり　だな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンジムに　負けず劣らず
 きみも　魅力たっぷり　だな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_10_TRMSG_FIGHT_AFTER"
-		Style="Large">
+		Label="TRID_JUGGLING_1_01_TRMSG_FIGHT_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>マユから　いとが　どっちに
@@ -20772,12 +20755,12 @@
 いとが　つながっている　さき……
 それこそが　すすむ　ほうこうなのさ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -20786,71 +20769,55 @@
 糸が　つながっている　先……
 それこそが　進む　方向なのさ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_11_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_JUGGLING_1_02_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>……そうなんだよ
 マユに　くるまれ　ねていたんだよ　</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……そうなんだよ
 繭に　くるまれ　寝ていたんだよ　</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_12_TRMSG_FIGHT_START"
-		Style="Large">
+		Label="TRID_JUGGLING_1_03_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
 			<Text>いきどまり……▼
 と　みせかけて
 とおせんぼ　やー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -20858,71 +20825,55 @@
 と　みせかけて
 とおせんぼ　やー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_12_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_JUGGLING_1_03_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>ありゃりゃりゃ
 あんさん　つよすぎやない？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありゃりゃりゃ
 あんさん　強すぎやない？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_12_TRMSG_FIGHT_AFTER"
-		Style="Large">
+		Label="TRID_JUGGLING_1_03_TRMSG_FIGHT_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここだけの　ヒミツ……▼
 マユに　はいる　むきによって
 どこに　すすむのか　ちがうんよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -20930,24 +20881,16 @@
 繭に　入る　向きによって
 どこに　進むのか　違うんよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_13_TRMSG_FIGHT_START"
-		Style="Large">
+		Label="TRID_JUGGLING_1_04_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
 			<Text>あと　いっぽで！
@@ -20955,12 +20898,12 @@
 だーけーどー　そのまえに
 ミーが　たちはだかっちゃうのよー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -20969,59 +20912,43 @@
 だーけーどー　その前に
 ミーが　立ちはだかっちゃうのよー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_13_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_JUGGLING_1_04_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>その　たたかいかた……
 アーティさんぐらい　げいじゅつてき！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　戦い方……
 アーティさんぐらい　芸術的！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_JUGGLING_13_TRMSG_FIGHT_AFTER"
-		Style="Large">
+		Label="TRID_JUGGLING_1_04_TRMSG_FIGHT_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティさんは　マユに　くるまる
@@ -21030,12 +20957,12 @@
 ……そのせいで　ミーたち
 いっつも　まよっちゃうんだけどね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -21045,20 +20972,13 @@
 ……そのせいで　ミーたち
 いっつも　迷っちゃうんだけどね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-18T10:59:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_PILOT_04_TRMSG_FIGHT_START"
