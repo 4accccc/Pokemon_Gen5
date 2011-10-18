@@ -547,7 +547,7 @@
 #define FV_MUSICAL_FUN_10                  565 /* 0x0235 ミュージカルホール：出待ちのファン１０人目 */
 #define FV_STADIUM_SPORTSMAN               566 /* 0x0236 ビッグスタジアム／リトルコートエントランス：選手とファン */
 #define FV_D08R0901_PACKAGE_POKE           567 /* 0x0237 リュウラセンの塔（屋上）：パッケージポケモン */
-		/* not used   568(0x0238) */
+#define FV_D07_BIGFOUR3_01                 568 /* 0x0238 ネジ山フィールド：レンブ */
 		/* not used   569(0x0239) */
 		/* not used   570(0x023a) */
 		/* not used   571(0x023b) */
