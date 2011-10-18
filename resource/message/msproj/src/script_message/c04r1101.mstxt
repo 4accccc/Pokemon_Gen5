@@ -573,4 +573,60 @@ princess_10</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_glasses_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ジェットコースターは
+まず　コースターに　のる！▼
+つぎに　プラットフォーム……
+あしばですね！　そこで▽
+ポイントを　きりかえる▼
+ときとして　たおした　あいての
+コースターにも　のってすすむ！▽
+そうやって　おくを　めざすっす！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:09:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:07:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ジェットコースターは
+まず　コースターに　乗る！▼
+次に　プラットフォーム……
+足場ですね！　そこで▽
+ポイントを　きりかえる▼
+ときとして　倒した　相手の
+コースターにも　乗って進む！▽
+そうやって　奥を　目指すっす！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:10:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:07:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・前作と同じ場所に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:10:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:07:59" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

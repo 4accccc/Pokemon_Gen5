@@ -171,7 +171,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -230,7 +230,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1581,5 +1581,56 @@
 				User="matsumiya:W00224"
 				Time="2011-10-13T07:32:33" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04p01_sign1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライモンシティ
+いなずまきらめく　かがやきのまち</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:07:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:04:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライモンシティ
+稲妻きらめく　輝きの街</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:04:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:04:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類
+・ジェットコースター
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:04:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：施設</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-18T07:19:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
