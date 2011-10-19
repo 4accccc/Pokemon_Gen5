@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c15.h"
   .include  "c15.h"
+  .include  "c15r0401_def.h"
   .include  "pokewood_scr_def.h"
   
   //@author Mizuguchi_Mai
@@ -25,6 +26,7 @@
 _EVENT_DATA    ev_zone_c15
 _EVENT_DATA    ev_init_c15
 _EVENT_DATA    ev_scene_c15_tutorial_01
+_EVENT_DATA    ev_scene_c15_bonus_event_01
 _EVENT_DATA    ev_c15_oldman1_01
 _EVENT_DATA    ev_c15_oldman1_02
 _EVENT_DATA    ev_c15_poke30_01
@@ -56,6 +58,11 @@ DEFINE_LOCAL  LCW_POSZ
 INIT_EVENT_START   ev_zone_c15
   
 //
+  // ごほうびイベントチェック
+  IF $WK_SCENE_C15_BONUS_EVENT_01 == 1 THEN
+    _FLAG_RESET( FV_C15_BONUS_EVENT_01 )  //NPC：表示
+    _FLAG_RESET( FV_C15_BRONZE_01 )       //銅像：表示
+  ENDIF
   
 INIT_EVENT_END
 
@@ -68,6 +75,13 @@ INIT_EVENT_START ev_init_c15
   IF $WK_SCENE_C15_TUTORIAL_01 == 1 THEN
     _OBJ_POS_CHANGE( C15_SUNGLASSES_01, 31, 0, 56, DIR_DOWN )
   ENDIF
+
+  // ごほうびイベントチェック
+  IF $WK_SCENE_C15_BONUS_EVENT_01 == 1 THEN
+    //　サングラス移動
+    _OBJ_POS_CHANGE( C15_SUNGLASSES_01, 45, 2, 21, DIR_UP )
+  ENDIF
+  
 
 INIT_EVENT_END
 
@@ -269,6 +283,267 @@ _ANIME_LABEL	anm_sunglasses_lr_look
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*			SCENE_CHANGE：ごほうびイベント					  */
+/**************************************************************/
+EVENT_START   ev_scene_c15_bonus_event_01
+{
+
+  //アニメ：サングラス「！」
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //タグ０にプレイヤー名
+  _PLAYER_NAME( 0 )
+
+  //サングラスの前に移動
+  {
+    DEFINE_LOCAL  LWK_HERO_X
+    DEFINE_LOCAL  LWK_HERO_Z
+    //自機の位置取得
+    _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+
+    SWITCH $LWK_HERO_X
+    CASE 44 THEN  // 下1歩 右1歩
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_01_a )
+    CASE 45 THEN  // 下1歩
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+    CASE 46 THEN  // 下1歩 左1歩
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_01_b )
+    ENDSWITCH
+    _OBJ_ANIME_WAIT()
+  }
+
+  //サングラス：ヘイヘイ！　～！！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_01,C15_SUNGLASSES_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  //♀MAIDの前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_02_s )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_02_p )
+  _OBJ_ANIME_WAIT()
+
+  //♀MAID話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_02, C15_BONUS_MAID_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  //♂PWMOJIの前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_03 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_03 )
+  _OBJ_ANIME_WAIT()
+  
+  //♂PWMOJI話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_03, C15_BONUS_PWMOJI_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  // ♂BACKPACKERMの前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_04 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_04 )
+  _OBJ_ANIME_WAIT()
+
+  //♂BACKPACKERM 話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_04, C15_BONUS_BACKPACKERM_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  // ♀RGLEADER5の前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_05_s )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_05_p )
+  _OBJ_ANIME_WAIT()
+
+  //♀RGLEADER5 話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_05, C15_BONUS_RGLEADER5_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  //♀OLの前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_06 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_06 )
+  _OBJ_ANIME_WAIT()
+
+  //♀OL 話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_06, C15_BONUS_OL_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  // ♀ADULTW の前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_07 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_07 )
+  _OBJ_ANIME_WAIT()
+
+  //♀ADULTW 話しかけ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_07, C15_BONUS_ADULTW_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //=================================================
+  // ♂PWOWNERの前に移動
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_08 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_08 )
+  _OBJ_ANIME_WAIT()
+
+  //サングラス：ヘイ！ボス！おつれしました
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_08,C15_SUNGLASSES_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  // 横にどける
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_09 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+
+  //=================================================
+  // PWOWNERこちらを向く
+  _OBJ_ANIME( C15_BONUS_PWOWNER_01, anm_dir_d )
+  _OBJ_ANIME( C15_BONUS_LEADER7_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+
+  //オーナー：うむ・・・ ○○ちゃん　きょうは　きねんすべき　ひ　なんだ・・・
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_09, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //ハチク：フッ・・・　きみの　えんぎは　きょうえんしゃを　ふるわせる・・・
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_10, C15_BONUS_LEADER7_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //オーナー：○○ちゃん！！　キミこそ　ポケウッドのしんの　スターだ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _ME_PLAY( SEQ_ME_HYOUKA6 )             //ファンファーレ
+  _ME_WAIT()
+
+  //オーナー：とういことで　○○ちゃんに　ボクから　ささやかな　プレゼントだよ
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_12, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //サングラス：横向く
+  _OBJ_ANIME( C15_SUNGLASSES_01, anm_dir_r )
+  _OBJ_ANIME_WAIT()
+  //サングラス：イエッサー！ボス！　さぁ　○○！　カモン！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_13,C15_SUNGLASSES_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+
+  //楽屋に飛ぶ
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C15R0401_SUNGLASSES_01 )
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C15R0401, 11, 16, DIR_RIGHT )
+
+  //==================================//
+  // 楽屋前のガードマンどかす
+  _FLAG_SET( FE_C15R0401_GUARDMAN )
+  // NPC非表示
+  _FLAG_SET( FV_C15_BONUS_EVENT_01 )
+  //==================================//
+}
+EVENT_END
+
+
+//--------------------------------------------------------------
+//	サングラスの前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_01_a
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA AC_WALK_R_8F, 1
+	_ANIME_DATA	AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+_ANIME_LABEL  anm_bonus_event_01_b
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA AC_WALK_L_8F, 1
+	_ANIME_DATA	AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♀MAID前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_02_s
+  _ANIME_DATA AC_WALK_D_8F, 6
+  _ANIME_DATA AC_WALK_L_8F, 1
+	_ANIME_DATA	AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+_ANIME_LABEL  anm_bonus_event_02_p
+  _ANIME_DATA AC_WALK_D_8F, 7
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♂PWMOJI前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_03
+  _ANIME_DATA AC_WALK_L_8F, 4
+	_ANIME_DATA	AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♂BACKPACKERM前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_04
+  _ANIME_DATA AC_WALK_L_8F, 5
+	_ANIME_DATA	AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♀RGLEADER5前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_05_s
+  _ANIME_DATA AC_WALK_U_8F, 3
+  _ANIME_DATA AC_WALK_L_8F, 4
+  _ANIME_DATA AC_WALK_U_8F, 5
+	_ANIME_DATA	AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
+_ANIME_LABEL  anm_bonus_event_05_p
+  _ANIME_DATA AC_WALK_L_8F, 1
+  _ANIME_DATA AC_WALK_U_8F, 3
+  _ANIME_DATA AC_WALK_L_8F, 4
+  _ANIME_DATA AC_WALK_U_8F, 4
+	_ANIME_DATA	AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♀OL前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_06
+  _ANIME_DATA AC_WALK_U_8F, 2
+	_ANIME_DATA	AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♀ADULTW前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_07
+  _ANIME_DATA AC_WALK_U_8F, 3
+	_ANIME_DATA	AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	♂PWOWNER前に移動
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_08
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------
+//	サングラス横にどける
+//--------------------------------------------------------------
+_ANIME_LABEL  anm_bonus_event_09
+  _ANIME_DATA AC_WALK_L_8F, 1
+	_ANIME_DATA	AC_DIR_U, 1
+  _ANIME_DATA ACMD_END, 0
+
 
 /**************************************************************/
 /*			一言メッセージ					  */

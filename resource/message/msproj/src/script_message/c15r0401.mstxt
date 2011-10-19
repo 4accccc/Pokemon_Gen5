@@ -168,4 +168,52 @@
 				Time="2011-10-18T02:09:27" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_end_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　ウッドウさんが
+みとめた　やくしゃだけが　つかえる▽
+ウルトラデラックスな　ドレッシングルーム！▼
+いまから　ここは　[Name:TrainerName ]だけが
+じゆうに　つかうことを　ゆるされたぜ！▼
+じゃあな！　[Name:TrainerName ]！
+また　アンタの　えいがを　みられるのを▽
+たのしみに　してるぜっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　ウッドウさんが
+認めた　役者だけが　使える▽
+ウルトラデラックスな　ドレッシングルーム！▼
+今から　ここは　[Name:TrainerName ]だけが
+自由に　使うことを　許されたぜ！▼
+じゃあな！　[Name:TrainerName ]！
+また　アンタの　映画を　観られるのを▽
+楽しみに　してるぜっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T08:35:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂sunglasses
+
+メッセージ終了後退室し銅像イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-18T09:49:37" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

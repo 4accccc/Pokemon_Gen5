@@ -830,11 +830,26 @@ VMCMD_RESULT EvCmdPokewoodGetDirectorType( VMHANDLE *core, void * wk )
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ポケウッド 全シナリオGOODEND達成したかどうか
+ */
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodCheckAllSuccess( VMHANDLE *core, void * wk )
 {
+  POKEWOOD_SAVEDATA * pkwdsave = getPKWDSaveData( wk );
+
   u16 * ret_wk  = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = FALSE;  //仮
+
+  // 全ての映画で成功ENDにしたかチェック
+  if(POKEWOOD_SAVEDATA_GetFlagTotal(pkwdsave, PWSV_TYPE_SENARIO_SUCCESS)==POKEWOOD_BOXOFFICE_DATA_MAX)
+  {
+    *ret_wk = TRUE;  //
+  }
+  else
+  {
+    *ret_wk = FALSE;  //
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 //-----------------------------------------------------------------------------

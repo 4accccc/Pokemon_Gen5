@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C15R0201_PWMOJI_01 (1)
+#define SCRID_C15R0201_POLICEMAN_01 (2)
 
 #endif //_C15R0201_DEF_H_

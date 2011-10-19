@@ -15667,11 +15667,11 @@
  * @param[out] ret_wk  TRUEÇÃÇ∆Ç´èåèíBê¨
  */
 //--------------------------------------------------------------
-#define _PKWD_GET_ALL_SUCCESS( ret_wk ) \
-      _ASM_PKWD_GET_ALL_SUCCESS ret_wk
+#define _PKWD_CHECK_ALL_SUCCESS( ret_wk ) \
+      _ASM_PKWD_CHECK_ALL_SUCCESS ret_wk
 
-    .macro  _ASM_PKWD_GET_ALL_SUCCESS ret_wk
-    .short  EV_SEQ_PKWD_GET_ALL_SUCCESS
+    .macro  _ASM_PKWD_CHECK_ALL_SUCCESS ret_wk
+    .short  EV_SEQ_PKWD_CHECK_ALL_SUCCESS
     .short  \ret_wk
     .endm
 

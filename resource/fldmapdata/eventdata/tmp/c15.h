@@ -31,6 +31,15 @@
 #define C15_MIDDLEMAN1_02                 17
 #define C15_SUNGLASSES_02                 18
 #define C15_MIDDLEWOMAN1_02               19
+#define C15_BONUS_MAID_01                 20
+#define C15_BONUS_PWMOJI_01               21
+#define C15_BONUS_ADULTW_01               22
+#define C15_BONUS_OL_01                   23
+#define C15_BONUS_RGLEADER5_01            24
+#define C15_BONUS_BACKPACKERM_01          25
+#define C15_BONUS_PWOWNER_01              26
+#define C15_BONUS_LEADER7_01              27
+#define DUMMY_OBJ                         28
 
 #endif //ZONE_C15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

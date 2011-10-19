@@ -343,6 +343,9 @@ init_flags:
   //C04P01：アイドル
   _FLAG_SET( FV_C04P01_IDOL_01 )
 
+  //C15:ポケウッド
+  _FLAG_SET( FV_C15_BRONZE_01 )
+  _FLAG_SET( FV_C15_BONUS_EVENT_01 )
 }
 _RET
 
