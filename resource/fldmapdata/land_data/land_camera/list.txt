@@ -405,3 +405,5 @@
 "oldbwgym0202.bin"
 "oldchurch01.bin"
 "buill08.bin"
+"oldtheater.bin"
+"olddun0601.bin"
