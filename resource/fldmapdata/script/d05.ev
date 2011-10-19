@@ -51,7 +51,7 @@ DEFINE_LOCAL  LCW_POSZ
 INIT_EVENT_START   ev_zone_d05
   
   //プラズマフリゲートイベント進行中以外は接続を移動させる
-  IF $WK_SCENE_D05 != 3 THEN
+  IF $WK_SCENE_D05 < 2 || $WK_SCENE_D05 > 3 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 202, 0, 492 )
   ENDIF
   
@@ -339,9 +339,6 @@ EVENT_START		ev_scene_d05_swplazma_01
   _OBJ_DEL( D05_SWRIVAL_01 )
   _OBJ_DEL( D05_SWLEADER1_01 )
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-  
-  //プラズマフリゲート接続位置変更
-  _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 199, -1, 493 )
   
   //========================================//
   //D05R0101 WBTチュートリアル優勝時→WBT通常状態に
