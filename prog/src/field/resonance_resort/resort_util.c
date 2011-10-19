@@ -84,6 +84,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
   RESORT_BINARY_CITY *p_city = RESORT_SYSTEM_GetBinaryCity(p_sys);
   RESORT_BINARY_PRESET *p_set = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
 
 
   u32 type  = 0;
@@ -92,6 +93,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   
   if( p_abstruct )
   {
+    sex = RESORT_ABSTRUCT_DATA_GetData(p_abstruct,RESORT_DATA_PARAM_SEX,NULL);
     people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct);
     type = RESORT_ABSTRUCT_DATA_GetData(p_abstruct, RESORT_DATA_PARAM_TYPE,NULL);
   }
@@ -508,6 +510,36 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return resort_board_00 + shop_kind;
     }
     break;
+  case RESORT_RESIDENT_RANK_MSGID:
+    GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
+    {
+      //ÇPà Ç™ï°êîÇ†Ç¡ÇΩèÍçáÇÕÉâÉìÉ_ÉÄÇ≈åæÇ§
+      int i;
+      u32 rank[8];
+      u32 msgID;
+      u32 rnd;
+      u32 cnt = 0;
+      RESORT_RESIDENT_DATA *p_resident = RESORT_ABSTRUCT_DATA_GetDataAdrs(p_abstruct);
+      for( i = 0; i < 8; i++ )
+      {
+        if( RESORT_UTIL_CalcRankingNum( p_people_all, p_resident, i ) == 0 )
+        {
+          rank[cnt] = i;
+          cnt++;
+        }
+      }
+
+      if( cnt == 0 )
+      {
+        return 0;
+      }
+      else
+      {
+        rnd = GFL_STD_MtRand(cnt);
+        msgID = SexGetMsgID( sex, resort_resident_ranking_00_m, resort_resident_ranking_00_f );
+        return msgID + rank[rnd];
+      }
+    }
   }
 
   GF_ASSERT(0);
@@ -1946,7 +1978,7 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
     }
   }
 
-  if( rnkdata[cnt].value == 0 )
+  if( rnkdata[i].value == 0 )
   {
     return 8;
   }

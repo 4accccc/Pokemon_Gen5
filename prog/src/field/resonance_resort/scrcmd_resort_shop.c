@@ -1315,7 +1315,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       *wk->ret_service_param   = wk->cp_select->param1;
       *wk->ret_service_param2   = wk->cp_select->param2;
       *wk->ret_service_idx = wk->cp_select->id;
-      *wk->ret_price = wk->cp_select->price;
+      *wk->ret_price = wk->cp_select->price/10;
     }
     else
     {
@@ -1639,8 +1639,9 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   {
     const RESORT_BINARY_SERVICE_DATA *cp_data = RESORT_BINARY_SHOP_DATA_GetList( wk->p_shop, wk->cp_shop_data, i );
 
-    u16 price = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PRICE );
+    u32 price = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_PRICE );
     BOOL dendou = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_DENDOU );
+    price *= 10;  //ƒRƒ“ƒo[ƒ^‚Å‚P^‚P‚O‚É‚µ‚Ä‚¢‚é
 
     if( dendou && !wk->is_dendou )
     {

@@ -148,7 +148,7 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h 
         exit(1)
       end
     end
-    data.write_u16( money )
+    data.write_u16( money.to_i/10 )
     data.write_u16( h_define[kind] )
 
     case kind 

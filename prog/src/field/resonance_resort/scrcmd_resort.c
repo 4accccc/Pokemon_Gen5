@@ -1135,15 +1135,19 @@ VMCMD_RESULT EvCmdResortEndService( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
+  WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
 
-  u16 place = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u32 place = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 flag  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   //èZñØÇÃÇ›â¬î\
   PEOPLE_TYPE_ASSERT( p_people, RESORT_PEOPLE_TYPE_RESIDENT );
 
   //Ç®ã‡Ç™Ç÷ÇÈ
-  MISC_SubGold( GAMEDATA_GetMiscWork(p_gamedata), place );
+  MISC_SubGold( GAMEDATA_GetMiscWork(p_gamedata), place*10 );
+
+  //Ç®ã‡ìoò^
+  WORDSET_RegisterNumber( p_wordset, 1, place*10, 6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
   //ÉtÉâÉOÇóßÇƒÇÈ
   {

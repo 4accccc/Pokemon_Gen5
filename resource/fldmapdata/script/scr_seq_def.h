@@ -12750,7 +12750,7 @@
  *      SCR_PERSON_SECRET_DATE_NONE     (0)   ///<デートがない
  *      SCR_PERSON_SECRET_DATE_FIRST    (1)   ///<初回デート
  *      SCR_PERSON_SECRET_DATE_REGULAR  (2)   ///<定期デートがない
- *      SCR_PERSON_SECRET_DATE_GIVE     (3)   ///<落し物受け渡しがない
+ *      SCR_PERSON_SECRET_DATE_GIVE     (3)   ///<落し物受け渡し
  */
 //--------------------------------------------------------------
 #define _PERSON_STATE_CHECK_SECRET_DATE( ret_wk ) \

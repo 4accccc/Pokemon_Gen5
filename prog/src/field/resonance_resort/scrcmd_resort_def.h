@@ -204,6 +204,7 @@
 #define RESORT_RESIDENT_CHANGE_NG_MSGID       (85)  //転職NGこのままやります
 #define RESORT_RESIDENT_LV_MSGID              (86)  //お店LV
 #define RESORT_RESIDENT_FEVER_MSGID           (87)  //フィーバー
+#define RESORT_RESIDENT_RANK_MSGID           (88)  //ランキング１番！
   //秘書
 #define RESORT_SECRETARY_GREET_MSGID          (100) //挨拶
 #define RESORT_SECRETARY_BYE_MSGID            (101) //またね

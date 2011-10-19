@@ -3256,12 +3256,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
-ありがとうございました！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T08:09:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3269,12 +3268,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
-ありがとうございました！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T08:09:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3309,12 +3307,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
-ありがとうございました！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T08:09:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3322,12 +3319,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！▼
-ありがとうございました！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T08:09:18" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4273,6 +4269,843 @@ BW♀
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_00_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+つうしんこうかんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:29:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+つうしんこうかんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:29:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_01_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ニックネームをつけたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:29:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ニックネームをつけたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_02_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ひとをよんだかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:29:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ひとをよんだかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:29:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_03_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+かいものでつかったかねが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+かいものでつかったかねが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_04_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+すれちがったにんずうが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+すれちがったにんずうが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_05_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+つうしんたいせんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+つうしんたいせんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_06_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ポケモンをつかまえたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+ポケモンをつかまえたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:30:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_07_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+タマゴをかえしたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+タマゴをかえしたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_08_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+メダルをもっているかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+ぼく　このまちで
+メダルをもっているかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-15T06:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>0：観光客名
+1：観光客フリーワード</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_00_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+つうしんこうかんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+つうしんこうかんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_01_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ニックネームをつけたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ニックネームをつけたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-18T14:07:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_02_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ひとをよんだかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ひとをよんだかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:15" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_03_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+かいものでつかったかねが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+かいものでつかったかねが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:15" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_04_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+すれちがったにんずうが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+すれちがったにんずうが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:16" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_05_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+つうしんたいせんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+つうしんたいせんが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:16" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_06_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ポケモンをつかまえたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+ポケモンをつかまえたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:16" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_07_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+タマゴをかえしたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+タマゴをかえしたかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="resort_resident_ranking_08_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+メダルをもっているかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……きいてきいて！▼
+わたし　このまちで
+メダルをもっているかずが▽
+１ばん　おおいんだ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:31:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:32:18" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="resort_resident_recommend_00_f"
