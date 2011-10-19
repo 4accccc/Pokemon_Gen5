@@ -12,6 +12,8 @@
   .include  "msg_c04r1101.h"
   .include  "c04r1101.h"
 
+  //@author suginaka_katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -33,6 +35,7 @@ _EVENT_DATA   ev_prg_c04r1101_capsule_out
 _EVENT_DATA   ev_prg_c04r1101_tr_disp_on
 _EVENT_DATA		ev_init_c04r1101			//対戦後のコースタートレーナーをどかす
 _EVENT_DATA		ev_recover_c04r1101		//環境ＳＥ初期化（セーブ復帰用）
+_EVENT_DATA		ev_c04r1101_adultw_01
 _EVENT_DATA_END
 
 
@@ -444,5 +447,30 @@ EVENT_START	ev_c04r1101_trainer_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1101_princess1_04 )
 EVENT_END
 
+/**************************************************************/
+/*		adultw		C04R1101								  */
+/**************************************************************/
+EVENT_START		ev_c04r1101_adultw_01
 
+//初回会話済の場合
+IF FLAG_ON( FE_C04R1101_FIRSTTALK) THEN
 
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_adultw_02 )
+
+ELSE
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_adultw_01 )
+
+	//========================================/
+	
+	//初回会話セット
+	_FLAG_SET(FE_C04R1101_FIRSTTALK)
+	
+	//C04P01のダンペイ削除
+	_FLAG_SET(FV_C04P01_GLASSES_01)
+	
+	//========================================/
+
+ENDIF
+
+EVENT_END

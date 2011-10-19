@@ -340,6 +340,9 @@ init_flags:
   //C02R0101：シタンのファン
   _FLAG_SET( FV_C02R0101_FUN_01 )
 
+  //C04P01：アイドル
+  _FLAG_SET( FV_C04P01_IDOL_01 )
+
 }
 _RET
 

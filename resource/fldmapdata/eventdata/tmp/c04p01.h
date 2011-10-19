@@ -23,6 +23,9 @@
 #define C04P01_TENNISW_01                  9
 #define C04P01_POKE36_01                  10
 #define C04P01_POKE38_01                  11
+#define C04P01_TVT_EV_01                  12
+#define C04P01_IDOL_01                    13
+#define C04P01_GLASSES_01                 14
 
 #endif //ZONE_C04P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -43,5 +46,6 @@
 #define BG_C04P01_DUMMY_FES_11           11
 #define BG_C04P01_DUMMY_FES_12           12
 #define HIDE_ITEM_003                    13
+#define BG_C04P01_SIGN_02                14
 
 #endif //ZONE_C04P01_EVB_H
