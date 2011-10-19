@@ -345,6 +345,7 @@ static void Local_Tvt_CallMode_InitReceive( LOCAL_TVT_WORK *work )
   param.p_message   = work->message;
   param.p_clunit    = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
   param.mode        = LOCAL_TVT_CALL_MODE_RECEIVE;
+  param.p_game_sys  = work->initWork->gameSys;
 
   work->call_wk = LOCAL_TVT_CALL_Init( &param, work->heapId );
 }
