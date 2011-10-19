@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-05-26T21:04:29" source="m_hotel01_00_00.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-10-19T17:39:15" source="m_hotel01_00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-05-26T21:04:29" source="m_hotel01_00_00.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-10-19T17:39:15" source="m_hotel01_00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -902,7 +902,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="16"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -926,7 +926,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="15"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1118,7 +1118,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="15"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1142,7 +1142,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="16"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1166,7 +1166,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="15"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1238,7 +1238,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="15"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1278,7 +1278,7 @@
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
 					<tex st="-48.375000 30.312500"/>
-					<clr rgb="19 21 20"/>
+					<clr rgb="18 19 18"/>
 					<pos_s xyz="-3.484375 0.031250 -3.562500"/>
 					<tex st="-48.375000 42.000000"/>
 					<pos_xz xz="-3.484375 -3.418945"/>
@@ -4016,7 +4016,7 @@
 					<tex st="0.000000 19.187500"/>
 					<pos_xz xz="-2.500000 -1.870117"/>
 					<tex st="64.000000 42.250000"/>
-					<clr rgb="25 27 26"/>
+					<clr rgb="26 28 27"/>
 					<pos_xz xz="-1.750000 -1.408936"/>
 					<tex st="0.000000 42.250000"/>
 					<pos_xy xy="-2.500000 0.000000"/>
@@ -4365,7 +4365,6 @@
 					<tex st="31.875000 -320.000000"/>
 					<pos_xz xz="-3.781250 -2.125000"/>
 					<tex st="31.875000 -192.062500"/>
-					<clr rgb="17 17 17"/>
 					<pos_xy xy="-3.781250 0.313232"/>
 					<tex st="223.937500 -192.062500"/>
 					<pos_xz xz="-3.781250 -3.687500"/>
@@ -7562,7 +7561,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface48" kind="mesh"
+	<node index="0" name="polySurface52" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
