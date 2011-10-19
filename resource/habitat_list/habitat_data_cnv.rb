@@ -25,7 +25,7 @@ DATA_FNAME = ARGV[2]
 
 SYS_FLAG_INDEX    = 1
 ZONE_GROUP_INDEX  = 2
-COMMENT_INDEX     = 3
+COMMENT_INDEX     = 4
 
 out_file = open(OUT_FNAME,"w")
 out_h_file = open(OUT_H_FNAME,"w")

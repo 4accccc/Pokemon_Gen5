@@ -17,6 +17,12 @@ require File.dirname(__FILE__) + '/../encount/enc_hash_data.rb'
 require File.dirname(__FILE__) + '/../fldmapdata/zonetable/zonegroup_hash/zone_group_hash.rb'
 require File.dirname(__FILE__) + '/../personal/monsno_hash.rb'
 load    File.dirname(__FILE__) + '/../personal/chihou_zukanno_hash.rb'
+require "csv"
+
+SYS_FLAG_INDEX      = 1
+ZONE_GROUP_INDEX    = 2
+BEFORE_CLEAR_INDEX  = 3
+COMMENT_INDEX       = 4
 
 # 季節名
 $season_name = ["四季なし","春","夏","秋","冬"]
@@ -171,16 +177,25 @@ end
 
 # 全国ポケモンが登録されているゾーンを調べる
 def check_zenkoku_mons( mons_array ,zone_group ,file , version)
-  if_fined = FALSE
-  mons_array.each_key{|key|
-    if $chihou_zukanno_hash[key] == $NO_CHIHOU_ID then
-      if if_fined == FALSE then
-        if_fined = TRUE
-        file.print "\n%s(%s),"%[zone_group,version]
+  unless $before_clear_zone_id_table.index("ZONE_ID_"+zone_group) == nil then
+    if_fined = FALSE
+    mons_array.each_key{|key|
+      if $chihou_zukanno_hash[key] == $NO_CHIHOU_ID then
+        mons_array[key].is_appear.each{|is_appear|
+          if (( is_appear[GTYPE_GROUND] == TRUE ) ||
+              ( is_appear[GTYPE_WATER] == TRUE ) ) then
+            if if_fined == FALSE then
+              if_fined = TRUE
+              file.print "\n%s(%s),"%[zone_group,version]
+            end
+            file.print "%s,"%[$monsname[key]]
+            raise "クリア前ゾーン%s(%s)に全国ポケモンが生息しています"%[zone_group,version]
+            break
+          end
+        }
       end
-      file.print "%s,"%[$monsname[key]]
-    end
-  }
+    }
+  end
 end
 
 #=================================================
@@ -195,6 +210,7 @@ FNAME_DATA_INDEX      = ARGV[1].to_s
 ARC_FILE_LIST_W_NAME  = ARGV[2].to_s
 ARC_FILE_LIST_B_NAME  = ARGV[3].to_s
 FORM_FNAME_MARSHALL   = ARGV[4].to_s
+DATA_FNAME            = ARGV[5].to_s
 open(FNAME_MARSHALL,"rb"){|file|
   str =  file.read
   encount_data = Marshal.load(str)
@@ -202,6 +218,17 @@ open(FNAME_MARSHALL,"rb"){|file|
 open(FORM_FNAME_MARSHALL,"rb"){|file|
   str =  file.read
   form_hash = Marshal.load(str)
+}
+data_file = CSV.open(DATA_FNAME,"r")
+
+# クリア前マップテーブルを作成する
+$before_clear_zone_id_table = Array.new
+
+data_file.each{|line|
+  if line[0].include?("#END") then break end
+  unless line[BEFORE_CLEAR_INDEX].include?("○") then
+    $before_clear_zone_id_table << line[ZONE_GROUP_INDEX]
+  end
 }
 
 # ゾーングループごとの格納先
@@ -363,6 +390,7 @@ zone_group_data.each_key{|zone_group|
 }
 file.puts "}"
 
+data_file.close
 file.close
 list_file_w.close
 list_file_b.close
