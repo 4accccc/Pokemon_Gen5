@@ -18,12 +18,15 @@ EXCEL_CONV    = ..\..\tools\exceltool\excelcommaconv.exe
 UPDATEWITHGMM = ../../tools/message/UpdateWithGmm.bat
 SENARIO_CONV  = ruby senario_conv.rb
 BGM_HASH_CONV = ruby make_bgmhash.rb
-MSPROJDIR     = ../message/msproj/
+BRIEFING_CONV = ruby briefing_conv.rb
+BRIEFING_MODEL_CDAT = pkwd_briefing_model.cdat
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)
+TARGETDIR  = $(PROJECT_ARCDIR)
 MESSAGEDIR = ../message/src/pokewood/
+MSPROJDIR  = ../message/msproj/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -76,13 +79,13 @@ $(bgm_hashfile): ../sound/swan_sound_data.sadl
 $(targetname).narc: $(lsources) $(lbins) $(ltexts) 
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
 	$(NAIXCUT) $(targetname).naix
+	$(BRIEFING_CONV) $(BRIEFING_MODEL_CDAT)
 endif
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc 
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
-
 #gmmのコピーだけ実行する
 #$(targetgmm): $(gmmfiles)
 #	$(COPY) *.gmm $(MESSAGEDIR)

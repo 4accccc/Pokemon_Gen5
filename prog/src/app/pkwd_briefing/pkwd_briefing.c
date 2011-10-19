@@ -1737,8 +1737,8 @@ enum{
 
 };
 
-// ポケウッド０１～ポケウッド１０を読み込むための実データテーブル
-#include "pkwd_briefing_model.cdat"
+// ポケウッド01～ポケウッド40を読み込むための実データテーブル
+#include "../../../../resource/pokewood/pkwd_briefing_model.cdat"
 
 
 static const VecFx32 sc_CAMERA_PER_POS    = { 0,0,FX32_CONST( 0 ) };  //位置
