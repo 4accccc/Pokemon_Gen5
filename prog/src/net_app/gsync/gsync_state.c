@@ -1768,7 +1768,30 @@ static void _createAccount2(G_SYNC_WORK* pWork)
 
 static void _createAccount(G_SYNC_WORK* pWork)
 {
+#ifdef BUGFIX_GFBTS2030_20101025
 
+  if(GFL_NET_IsInit()){
+    if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATEUPLOAD, pWork->pNHTTPRap)){
+      u32 size;
+      u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+      NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
+
+      // add ichiraku waitAnime•\Ž¦
+      GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_wait_time);
+      ICHI_Printf("---Wait Time Anime êŠ:_createAccount----\n");
+
+      if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)==NHTTP_ERROR_NONE){
+        _CHANGE_STATE(_createAccount2);
+      }
+    }
+  }
+  else{
+    if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+      _CHANGE_STATE(_createAccount2);
+    }
+  }
+
+#else //BUGFIX_GFBTS2030_20101025
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNT_CREATE, pWork->pNHTTPRap)){
       u32 proid = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pWork->pGameData) );
@@ -1796,6 +1819,7 @@ static void _createAccount(G_SYNC_WORK* pWork)
       _CHANGE_STATE(_createAccount2);
     }
   }
+#endif //BUGFIX_GFBTS2030_20101025
 }
 
 

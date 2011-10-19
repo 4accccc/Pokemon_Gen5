@@ -9,10 +9,12 @@
 //============================================================================================
 #pragma once
 
+//#define DREAM_WORK_SERVER_FOOTMARK_ON
+
 #include "savedata/dreamworld_data.h"
 
-#define DREAM_WORLD_SERVER_POKMEONLIST_MAX (1024)  //寝るポケモンのリスト最大
-
+#define DREAM_WORLD_SERVER_POKMEONLIST_MAX (1024)   //寝るポケモンのリスト最大
+#define DREAM_WORLD_FOOTMARK_MAX          (12)      //足あとマットのデータ最大件数
 
 typedef enum{
   DREAM_WORLD_SERVER_ERROR_NONE,        // 正常です
@@ -52,6 +54,21 @@ typedef struct {
 }DREAM_WORLD_SERVER_STATUS_DATA;
 
 
+/// あしあとデータ
+typedef struct
+{
+  STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
+  u32 id;               ///< 20 PlayerID
+  u32 profileID;        ///< 24 GameSyncID
+  u8 nation;            ///< 国 
+  u8 area;              ///< 地域 26
+  u8 region_code;       ///< PM_LANG   27
+  u8 rom_code;          ///< PM_VERSION   28
+  u8 sex;               ///< 性別 30
+  u16 pokemon;          ///< 足あとマットを踏んだポケモン
+  u8  padding;          ///
+}DREAM_WORKD_FOOTMARK_DATA;
+
 
 /// アカウント作成構造体
 struct DREAM_WORLD_SERVER_CREATE_DATA{
@@ -75,6 +92,7 @@ typedef struct {
 }DREAM_WORLD_SERVER_DOWNLOADPOKE_DATA;
 
 
+
 /// ダウンロードデータ構造体
 typedef struct {
   u32 uploadCount;     ///< アップロード回数
@@ -89,6 +107,9 @@ typedef struct {
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
+#ifdef DREAM_WORK_SERVER_FOOTMARK_ON
+  DREAM_WORKD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
+#endif //DREAM_WORK_SERVER_FOOTMARK_ON
   u16 CRC;  /// このデータのCRC-16/CCITT
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
 
@@ -116,6 +137,9 @@ typedef struct {
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
   u8 findPokemonAct;  ///< であったポケモンの動き
   u8 dummy;
+#ifdef DREAM_WORK_SERVER_FOOTMARK_ON
+  DREAM_WORKD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
+#endif //DREAM_WORK_SERVER_FOOTMARK_ON
   u16 CRC;  /// このデータのCRC-16/CCITT
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
 
