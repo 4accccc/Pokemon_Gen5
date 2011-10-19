@@ -11,7 +11,7 @@ TRAINER_START_COL    = 3
 TRAINER_START_ROW    = 3
 #
 WBTDL_CHAR_MAX		= 4	# キャラ
-SAVELEN_TRAINER_NAME	= 16	# 名前(14で制限)
+SAVELEN_TRAINER_NAME	= 16	# 名前(10で制限)
 WBTDL_TRAINER_TITLE_LEN	= 22	# タイトル(20で制限)
 #WBTDL_MSG_LEN		= 73	# メッセージ
 WBTDL_MSG_LEN		= 74	# メッセージ(36,36で制限)
@@ -195,11 +195,11 @@ class WBT_CHARACTER_SINGLE
     #
     # 入力チェック
     array = []
-    array = chk_str_limit_array( @name, 1, 14, $trainer_str[0] );
+    array = chk_str_limit_array( @name, 1, 10, $trainer_str[0] );
     if(array[4] == -1)
       # 文字入力エラー
       $wbt_error.print_mes_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+@char_id,
-                                 $trainer_str[0], array, 1, 14 );
+                                 $trainer_str[0], array, 1, 10 );
     end
     
     # セット(コードの変換注意)

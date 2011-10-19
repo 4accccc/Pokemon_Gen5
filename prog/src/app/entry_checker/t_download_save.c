@@ -187,15 +187,22 @@ void TdSave_exit_data( T_DOWNLOAD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 s32 TdSave_init_list_data( T_DOWNLOAD_MAIN_WORK* wk )
 {
+	u16				tid;
 	s32				i;
 	s32				cnt;
 	
 	// 何個あるかをチェックする
 	// =>連番にはなっているはず
 	// (本当はそれなりのチェックがあるはず)
+	//
 	cnt = 0;
 	for(i=0;i<WBTDL_TOTAL_NUM;i++){
-		cnt++;
+		// 0埋めしているので、トーナメントIDで判定しておく
+		// => サーバが決まったら再度確認
+		tid = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[i] );
+		if(tid > 0){
+			cnt++;
+		}
 	}
 	return( cnt );
 }

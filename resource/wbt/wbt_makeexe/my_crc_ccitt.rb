@@ -64,6 +64,9 @@ $debug_mode = 0;
 # ruby or exe(0:ruby、1:exe)
 $current_mode = $exe_mode
 
+# paddingの有無(0:off、1:on)
+$pad_mode = 1
+
 #BLOCK_SIZE = 0x120c	# 4620byte
 #BLOCK_SIZE = 0x122c	# 4652byte
 #BLOCK_SIZE = 0x11e4	# 4580byte
@@ -171,6 +174,21 @@ begin
   }
   #
   fpr.close
+  #
+  #---------------
+  # paddingの有無
+  #---------------
+  if($pad_mode == 1)
+    pnum = 12-num
+#    p pnum
+    pnum.times{|i|
+      dat = 0       # 0埋め
+      BLOCK_SIZE.times{|j|
+        fpw.write([dat].pack("c"))
+      }
+    }
+  end
+  
 #  fpw.write([crcReg].pack("s"))
 #  fpw.write([crcReg].pack("i"))
   fpw.close
