@@ -309,6 +309,7 @@
 #define WK_SCENE_R05_SWBELL_01           16697 /* 0x4139 5番道路：ベルかくれあなイベントPOS制御ワーク */
 #define WK_SCENE_C16_PARADE              16698 /* 0x413a ジョインアベニュー：パレード用イベント制御ワーク */
 #define WK_SCENE_D07                     16699 /* 0x413b ネジ山フィールド：ストッパーイベント制御ワーク */
+#define WK_SCENE_C15_BONUS_EVENT_01      16700 /* 0x413c ポケウッド：ごほうびイベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

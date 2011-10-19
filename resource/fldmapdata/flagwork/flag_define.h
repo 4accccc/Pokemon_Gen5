@@ -471,6 +471,7 @@
 #define FE_C06R0301_ITEMGET_06             455 /* 0x01c7 フキヨセシティ：わざマシンコレクター　所持数95個以上　アイテム入手フラグ */
 #define FE_H04R0201_FIRSTTALK              456 /* 0x01c8 ビレッジブリッジ：パン屋さん　初回会話フラグ */
 #define FE_H04R0201_ITEMGET                457 /* 0x01c9 ビレッジブリッジ：パン屋さん　アイテム入手フラグ */
+#define FE_C15R0401_GUARDMAN               458 /* 0x01ca ポケウッド：楽屋前のガードマン　どけるフラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -873,6 +874,8 @@
 #define FV_D05R0101_TRAINERW_01            891 /* 0x037b WBTロビー：クリア後に出現するエリートトレーナー♀ */
 #define FV_C02R0101_FUN_01                 892 /* 0x037c シッポウ倉庫：シタンのファン */
 #define FV_C08_PEOPLE_01                   893 /* 0x037d ソウリュウシティ：NPC */
+#define FV_C15_BRONZE_01                   894 /* 0x037e ポケウッド：銅像 */
+#define FV_C15_BONUS_EVENT_01              895 /* 0x037f ポケウッド：ごほうびイベント中のNPC */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
