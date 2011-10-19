@@ -1002,10 +1002,11 @@
 #define TR_GRASS (0x2007) //8199(7,total 984) 盛り草
 #define TR_GROUND (0x2008) //8200(8,total 985) 盛り土
 #define CUBE (0x2009) //8201(9,total 986) キューブ
-#define OBJCODEEND_MDL (0x200a) //8202(total 987) モデルコード終端
-#define OBJCODECOUNT_MDL (0xa) //10 モデルコード数
+#define BRONZE (0x200a) //8202(10,total 987) 銅像
+#define OBJCODEEND_MDL (0x200b) //8203(total 988) モデルコード終端
+#define OBJCODECOUNT_MDL (0xb) //11 モデルコード数
 
-#define OBJCODETOTAL (0x3db) //987 コード総数
+#define OBJCODETOTAL (0x3dc) //988 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
