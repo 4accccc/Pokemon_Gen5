@@ -7941,10 +7941,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クール</Text>
+			<Text>★スター・オレンジ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:25:39" />
+				Time="2011-10-18T02:38:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7952,10 +7952,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クール</Text>
+			<Text>★スター・オレンジ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:25:45" />
+				Time="2011-10-18T02:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7981,10 +7981,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ビューティ</Text>
+			<Text>◆オーロラ・パープル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:25:52" />
+				Time="2011-10-18T02:38:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7992,10 +7992,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ビューティ</Text>
+			<Text>◆オーロラ・パープル</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:25:56" />
+				Time="2011-10-18T02:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8021,10 +8021,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュート</Text>
+			<Text>☁クラウド・ライトブルー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:26:25" />
+				Time="2011-10-18T09:53:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8032,10 +8032,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュート</Text>
+			<Text>☁クラウド・ライトブルー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:26:30" />
+				Time="2011-10-18T09:53:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8061,10 +8061,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴージャス</Text>
+			<Text>■ストーン・グリーン</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:26:08" />
+				Time="2011-10-18T02:39:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8072,10 +8072,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴージャス</Text>
+			<Text>■ストーン・グリーン</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:26:12" />
+				Time="2011-10-18T02:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -49193,11 +49193,11 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-グローバルバトルトーナメントに▽
+ポケモンワールドトーナメントに▽
 ちょうせん　していました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				Time="2011-10-07T03:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49207,11 +49207,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-グローバルバトルトーナメントに▽
+ポケモンワールドトーナメントに▽
 挑戦していました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:56:10" />
+				User="shimoyamada:W00184"
+				Time="2011-10-07T03:49:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -51331,11 +51331,11 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-グローバルバトルトーナメントに▽
+ポケモンワールドトーナメントに▽
 ちょうせん　していました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				Time="2011-10-07T03:49:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -51345,11 +51345,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-グローバルバトルトーナメントに▽
+ポケモンワールドトーナメントに▽
 挑戦していました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				User="shimoyamada:W00184"
+				Time="2011-10-07T03:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
