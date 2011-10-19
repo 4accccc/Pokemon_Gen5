@@ -1865,4 +1865,96 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d05_workman1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そこの　ほらあなは
+こだいのぬけみち！▼
+さいきん　みつかったんだが
+なんと　リゾートデザートの▽
+こだいのしろに　つながってるぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:34:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そこの　洞穴は
+古代の抜け道！▼
+最近　みつかったんだが
+なんと　リゾートデザートの▽
+古代の城に　つながってるぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:35:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝219、GRIDZ＝431</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:33:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:34:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05_backpackerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの　くろい　ふねから
+ポケモンの　なきごえが　きこえたの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:36:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:35:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの　黒い船から
+ポケモンの　鳴き声が　きこえたの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:36:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝189、GRIDZ＝489辺り</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:34:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T06:34:31" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

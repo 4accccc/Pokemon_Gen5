@@ -12,11 +12,11 @@
 あとちょっと　じゅんびが……▼
 おや　ホドモエの　ジムバッジは
 まだ　もっていない？▼
-それでしたら　まずは　ポケモンジムに
-いかれることを　おすすめします</Text>
+でしたら　まずは　ポケモンジムに
+いどまれては　どうでしょうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:53:53" />
+				Time="2011-10-19T02:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,11 +30,11 @@
 あとちょっと　準備が……▼
 おや　ホドモエの　ジムバッジは
 まだ　持っていない？▼
-それでしたら　まずは　ポケモンジムに
-行かれることを　おすすめします</Text>
+でしたら　まずは　ポケモンジムに
+挑まれては　どうでしょうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:54:06" />
+				Time="2011-10-19T02:57:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,11 +68,11 @@
 あとちょっと　じゅんびが……▼
 おや　ホドモエの　ジムバッジは
 まだ　もっていない？▼
-それでしたら　まずは　ポケモンジムに
-いかれることを　おすすめします▼</Text>
+でしたら　まずは　ポケモンジムに
+いどまれては　どうでしょうか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:53:57" />
+				Time="2011-10-19T02:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -86,11 +86,11 @@
 あとちょっと　準備が……▼
 おや　ホドモエの　ジムバッジは
 まだ　持っていない？▼
-それでしたら　まずは　ポケモンジムに
-行かれることを　おすすめします▼</Text>
+でしたら　まずは　ポケモンジムに
+挑まれては　どうでしょうか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:54:02" />
+				Time="2011-10-19T02:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,6 +111,96 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-22T02:09:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_infomationw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝1、GRIDZ＝9</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:53:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+受付嬢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:48:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_trainew_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T03:02:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝8、GRIDZ＝11</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:56:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:56:15" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

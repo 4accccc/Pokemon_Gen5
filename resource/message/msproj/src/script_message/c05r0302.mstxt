@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　こない　ひとを
-ずっと　まちつづけるのです</Text>
+			<Text>だれかと　しりあうことで
+よろこびも　かなしみも　うまれます▼
+さいしょは　おもしろい　ダジャレも
+いつかは……　いえ　なんでもないです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T05:50:35" />
+				Time="2011-10-19T02:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　来ない　人を
-ずっと　待ち続けるのです</Text>
+			<Text>だれかと　知り合うことで
+喜びも　悲しみも　生まれます▼
+最初は　おもしろい　ダジャレも
+いつかは……　いえ　なんでもないです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T08:19:57" />
+				Time="2011-10-19T02:44:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,11 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanで新規作成
-・仮メッセージ</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T05:55:05" />
+				Time="2011-10-19T02:12:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -91,11 +94,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanで新規作成
-・仮メッセージ</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T05:55:06" />
+				Time="2011-10-19T02:12:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -111,5 +113,60 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0302_oldman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わしは　プラズマだんに　さとされ
+いとしの　ポケモンと　わかれた▼
+それいらい　きままな
+ホテルぐらしを　つづけておる▼
+……しょうじき　さみしいが
+わしが　しんだとき▼
+のこされ　かなしむ　ポケモンが
+いないのは　いいことだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:40:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:27:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わしは　プラズマ団に　諭され
+いとしの　ポケモンと　別れた▼
+それ以来　気ままな
+ホテル暮らしを　続けておる▼
+……正直　寂しいが
+わしが　死んだとき▼
+残され　悲しむ　ポケモンが
+いないのは　いいことだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:40:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:34:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:34:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T02:34:41" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
