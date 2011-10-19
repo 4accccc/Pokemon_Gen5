@@ -89,5 +89,7 @@
 "texset/indoor089.nsbtx"
 "texset/indoor090.nsbtx"
 "texset/indoor091.nsbtx"
+"texset/indoor092.nsbtx"
+"texset/indoor093.nsbtx"
 
 

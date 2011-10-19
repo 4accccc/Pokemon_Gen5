@@ -218,4 +218,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/mado_in07ft1.nsbmd \
 	$(RESDIR)/mado_in07wh1.nsbmd \
 	$(RESDIR)/mado_in07wh2.nsbmd \
+	$(RESDIR)/sd06_obj_01.nsbmd \
 

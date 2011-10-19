@@ -217,3 +217,4 @@
 "nsbmdfiles/mado_in07ft1.nsbmd"
 "nsbmdfiles/mado_in07wh1.nsbmd"
 "nsbmdfiles/mado_in07wh2.nsbmd"
+"nsbmdfiles/sd06_obj_01.nsbmd"
