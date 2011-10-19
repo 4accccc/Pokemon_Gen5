@@ -1000,11 +1000,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　くみあわせが　きまれば
-おもしろい　はず　だけど……▼</Text>
+			<Text>すきな　ポケモンで
+かつのが　すきなんだよねー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:17:23" />
+				Time="2011-10-19T05:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1012,10 +1012,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　はじめるよー！▼</Text>
+			<Text>好きな　ポケモンで
+勝つのが　好きなんだよねー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:12:11" />
+				Time="2011-10-19T05:09:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1198,192 +1199,6 @@
 				User="matsumiya:W00224"
 				Time="2011-06-25T05:23:12" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03r0402_05_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ぼく　サウンドデザイナー！▼
-おんがくが　かわる　すてきな
-しかけを　たくさん　いれたでー！▽
-きみ　いくつ　きがついた？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ぼく　サウンドデザイナー！▼
-音楽が　変わる　すてきな
-しかけを　たくさん　いれたでー！▽
-きみ　いくつ　気がついた？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・クリア前
-※swanでメッセージ調整など</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-25T05:21:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERM</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03r0402_05_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ちゃんと　サウンド
-きいてくれてる　きみだけに▽
-とくべつ　だいサービス！▼
-こんな　ドラマチックな
-おんがくは　どない？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ちゃんと　サウンド
-聴いてくれてる　きみだけに▽
-特別　大サービス！▼
-こんな　ドラマチックな
-音楽は　どない？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・クリア後</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERM</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03r0402_05_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>びっくり　した？▼
-まあ　きみくらい
-つよい　トレーナーさん　なら▽
-ロケットだんも　ひとひねり　やね</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>びっくり　した？▼
-まあ　きみくらい
-強い　トレーナーさん　なら▽
-ロケット団も　ひとひねり　やね</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・クリア後＋曲変更後</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERM</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c03r0402_woman2_01"
