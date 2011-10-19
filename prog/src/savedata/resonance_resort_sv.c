@@ -37,6 +37,10 @@ struct _RESONANCE_RESORT_SV
 
 SDK_COMPILER_ASSERT( sizeof(RESONANCE_RESORT_SV) < 5800 );
 
+
+static RESORT_SETDATA Resonance_Resort_Sv_SetData_01( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type );
+static RESORT_SETDATA Resonance_Resort_Sv_SetData_02( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type );
+
 //-------------------------------------
 ///	外部公開
 //=====================================
@@ -153,49 +157,117 @@ RESORT_CITY_DATA * RESONANCE_RESORT_SV_GetCityData( RESONANCE_RESORT_SV *p_wk )
 //-----------------------------------------------------------------------------
 RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
 {
+  RESORT_SETDATA ret = Resonance_Resort_Sv_SetData_01( p_wk, p_gamedata, cp_data_adrs, type );
 
-  typedef BOOL (*IS_VALID)(  const void *cp_data_adrs );
-
-  typedef RESORT_MERGE_RESULT (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
-  typedef RESORT_MERGE_RESULT (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
-  typedef RESORT_ADD_RESULT (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
-  typedef RESORT_ADD_RESULT (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
-
-  static const struct
+  if( ret == RESORT_SETDATA_NEXT )
   {
-    IS_VALID          IsValid;
-    MERGE_RECV_BUFF   MergeRecvBuff;
-    MERGE_PROXY_BUFF  MergeProxyBuff;
-    ADD_RECV_DATA     AddRecvData;
-    ADD_PROXY_DATA    AddProxyData;
-  }sc_data_function_tbl[] =
-  {
-    //ビーコンデータ 
-    {
-      (IS_VALID)RESORT_BEACON_DATA_IsValid,
-      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeBeacon,
-      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeBeacon,
-      (ADD_RECV_DATA)RESORT_RECV_BUFF_AddBeacon,
-      NULL,
-    },
-    //受信データ
-    {
-      (IS_VALID)RESORT_RECV_DATA_IsValid,
-      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeRecv,
-      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeRecv,
-      (ADD_RECV_DATA)RESORT_RECV_BUFF_AddRecv,
-      NULL,
-    },
-    //代理人データ 
-    {
-      (IS_VALID)RESORT_PROXY_DATA_IsValid,
-      (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeProxy,
-      (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeProxy,
-      NULL,
-      (ADD_PROXY_DATA)RESORT_PROXY_BUFF_Add,
-    },
-  };
+    ret = Resonance_Resort_Sv_SetData_02( p_wk, p_gamedata, cp_data_adrs, type );
+  }
 
+  return ret;
+}
+
+static int s_merge_seq  = 0;
+//----------------------------------------------------------------------------
+/**
+ *	@brief  分割セット処理開始
+ *
+ *	@param	RESONANCE_RESORT_SV *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESONANCE_RESORT_SV_SetDataStart( RESONANCE_RESORT_SV *p_wk )
+{
+  s_merge_seq  = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  分割セット処理メイン
+ *
+ *	@param	RESONANCE_RESORT_SV *p_wk
+ *	@param	*p_gamedata
+ *	@param	void *cp_data_adrs
+ *	@param	type
+ *	@param	*p_ret 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+BOOL RESONANCE_RESORT_SV_SetDataMain( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type, RESORT_SETDATA *p_ret )
+{
+  RESORT_SETDATA ret;
+  switch( s_merge_seq )
+  {
+  case 0:
+    ret = Resonance_Resort_Sv_SetData_01( p_wk, p_gamedata, cp_data_adrs, type );
+    if( ret == RESORT_SETDATA_NEXT )
+    {
+      s_merge_seq++;
+    }
+    else
+    {
+      *p_ret = ret;
+      return TRUE;
+    }
+    break;
+  case 1:
+    ret = Resonance_Resort_Sv_SetData_02( p_wk, p_gamedata, cp_data_adrs, type );
+    *p_ret = ret;
+    return TRUE; 
+
+  default:
+    GF_ASSERT(0);
+  }
+
+
+  return FALSE;
+}
+
+
+
+typedef BOOL (*IS_VALID)(  const void *cp_data_adrs );
+
+typedef RESORT_MERGE_RESULT (*MERGE_RECV_BUFF)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+typedef RESORT_MERGE_RESULT (*MERGE_PROXY_BUFF)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
+typedef RESORT_ADD_RESULT (*ADD_RECV_DATA)( RESORT_RECV_BUFF *p_wk, const void *cp_data_adrs );
+typedef RESORT_ADD_RESULT (*ADD_PROXY_DATA)( RESORT_PROXY_BUFF *p_wk, const void *cp_data_adrs );
+
+static const struct
+{
+  IS_VALID          IsValid;
+  MERGE_RECV_BUFF   MergeRecvBuff;
+  MERGE_PROXY_BUFF  MergeProxyBuff;
+  ADD_RECV_DATA     AddRecvData;
+  ADD_PROXY_DATA    AddProxyData;
+}sc_data_function_tbl[] =
+{
+  //ビーコンデータ 
+  {
+    (IS_VALID)RESORT_BEACON_DATA_IsValid,
+    (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeBeacon,
+    (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeBeacon,
+    (ADD_RECV_DATA)RESORT_RECV_BUFF_AddBeacon,
+    NULL,
+  },
+  //受信データ
+  {
+    (IS_VALID)RESORT_RECV_DATA_IsValid,
+    (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeRecv,
+    (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeRecv,
+    (ADD_RECV_DATA)RESORT_RECV_BUFF_AddRecv,
+    NULL,
+  },
+  //代理人データ 
+  {
+    (IS_VALID)RESORT_PROXY_DATA_IsValid,
+    (MERGE_RECV_BUFF)RESORT_RECV_BUFF_MergeProxy,
+    (MERGE_PROXY_BUFF)RESORT_PROXY_BUFF_MergeProxy,
+    NULL,
+    (ADD_PROXY_DATA)RESORT_PROXY_BUFF_Add,
+  },
+};
+
+static RESORT_SETDATA Resonance_Resort_Sv_SetData_01( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
+{
   RESORT_RECV_BUFF *p_sv_buff   =  RESONANCE_RESORT_SV_GetDataBuff( p_wk );
   RESORT_RECV_BUFF *p_temp_buff =  *(RESORT_RECV_BUFF **)GAMEDATA_GetResortBuffer( p_gamedata );
   RESORT_PROXY_BUFF *p_proxy_buff  =  RESONANCE_RESORT_SV_GetProxyBuff( p_wk );
@@ -268,6 +340,18 @@ RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA 
     }
   }
 //DEBUG_TICK_PrintEnd;
+
+  return RESORT_SETDATA_NEXT;
+}
+
+static RESORT_SETDATA Resonance_Resort_Sv_SetData_02( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type )
+{
+  RESORT_RECV_BUFF *p_sv_buff   =  RESONANCE_RESORT_SV_GetDataBuff( p_wk );
+  RESORT_RECV_BUFF *p_temp_buff =  *(RESORT_RECV_BUFF **)GAMEDATA_GetResortBuffer( p_gamedata );
+  RESORT_PROXY_BUFF *p_proxy_buff  =  RESONANCE_RESORT_SV_GetProxyBuff( p_wk );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_wk );
+  RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_wk );
+
 
 //DEBUG_TICK_PrintStart;
   //市民データのマージ  ※ビーコンがバッファに入った場合、先にバッファを調査した方が早くおわることがおおい

@@ -57,12 +57,14 @@ typedef struct{
   u8 resort_set_request;              ///<リゾート用データセットリクエスト
 
   u8  cgear_info_flags;               ///<調査隊の調査依頼を達成していることをCギアに通知(GAMEBEACON_CGEAR_INFO_FLAG)
+  u8 resort_recv_request;             ///<リゾート用データ受信リクエスト
 
   GAMEBEACON_TYPE  beacon_type;       ///<typeがGAMEBEACON_TYPE_COMMONの時BWと互換性のあるビーコンを送信する
                                       ///<swanとbwではアンケートに互換性がないため、ビーコン送受信の1ターンごとに
                                       ///<swan専用ビーコンとbw互換のビーコンを交互に切り替えて発信する。
   
   STRBUF* sbuf_person_name;           ///<トレーナー名を格納可能なバッファ。フェスログ生成時に使用
+  void  *p_resort_beacon_adrs;             ///<リゾート用ビーコンバッファアドレス
 #ifdef PM_DEBUG
   BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
 #endif

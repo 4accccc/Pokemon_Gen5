@@ -46,5 +46,10 @@ typedef enum
   RESORT_SETDATA_NONE,  //何もしなかった
   RESORT_SETDATA_MERGE, //マージした
   RESORT_SETDATA_SET,   //セットした
+
+  RESORT_SETDATA_NEXT,   //ソース中で使用。帰ってこない
 }RESORT_SETDATA;
 extern RESORT_SETDATA RESONANCE_RESORT_SV_SetData( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type );
+
+extern void RESONANCE_RESORT_SV_SetDataStart( RESONANCE_RESORT_SV *p_wk );
+extern BOOL RESONANCE_RESORT_SV_SetDataMain( RESONANCE_RESORT_SV *p_wk, GAMEDATA *p_gamedata, const void *cp_data_adrs, RESORT_MERGE_TYPE type, RESORT_SETDATA *p_ret );
