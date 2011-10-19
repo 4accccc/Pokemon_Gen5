@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-07-22T16:04:17" source="bg_pc_01.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-19T16:58:29" source="bg_pc_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-07-22T16:04:17" source="bg_pc_01.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-10-19T16:58:29" source="bg_pc_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-3.562500 0.125000 -3.312500" whd="6.812500 4.875000 6.562500"/>
+<box_test pos_scale="4" xyz="-3.562500 0.187500 -3.312500" whd="6.812500 4.812500 6.562500"/>
 
 <tex_image_array size="4">
 	<tex_image index="0" name="bg_pc01_kab"
@@ -353,7 +353,7 @@
 </tex_palette_array>
 
 <material_array size="4">
-	<material index="0" name="bg_pc01_kab_1"
+	<material index="0" name="bg_pc01_kab"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -377,7 +377,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="bg_pc01_yan_1"
+	<material index="1" name="bg_pc01_yan"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -401,7 +401,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="h_kage_2"
+	<material index="2" name="h_kage"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -425,7 +425,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="h_mado_2"
+	<material index="3" name="h_mado"
 		light0="off" light1="on" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -936,9 +936,9 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="26" polygon_size="7"
 		triangle_size="2" quad_size="5"
-		volume_min="-3.562500 0.125000 -3.312500"
-		volume_max="3.250000 0.125000 3.250000"
-		volume_r="4.866211"
+		volume_min="-3.562500 0.187500 -3.312500"
+		volume_max="3.250000 0.187500 3.250000"
+		volume_r="4.868164"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -949,7 +949,7 @@
 					<mtx idx="0"/>
 					<tex st="6.437500 7.125000"/>
 					<nrm xyz="-0.025391 0.998047 0.000000"/>
-					<pos_s xyz="2.250000 0.125000 -2.312500"/>
+					<pos_s xyz="2.250000 0.187500 -2.312500"/>
 					<tex st="10.000000 7.125000"/>
 					<pos_xz xz="2.250000 2.250000"/>
 					<tex st="10.562500 0.937500"/>
@@ -959,17 +959,17 @@
 					<tex st="19.062500 0.937500"/>
 					<pos_xz xz="2.375000 -3.312500"/>
 					<tex st="14.750000 0.937500"/>
-					<pos_xy xy="-3.562500 0.125000"/>
+					<pos_xy xy="-3.562500 0.187500"/>
 					<tex st="15.562500 7.125000"/>
 					<pos_xz xz="-2.562500 -2.312500"/>
 					<tex st="19.062500 7.125000"/>
-					<pos_xy xy="2.250000 0.125000"/>
+					<pos_xy xy="2.250000 0.187500"/>
 					<tex st="6.000000 7.125000"/>
 					<pos_xz xz="-2.562500 2.250000"/>
 					<tex st="6.375000 0.937500"/>
 					<pos_xz xz="-2.687500 3.250000"/>
 					<tex st="2.062500 0.937500"/>
-					<pos_xy xy="3.250000 0.125000"/>
+					<pos_xy xy="3.250000 0.187500"/>
 					<tex st="2.500000 7.125000"/>
 					<pos_xz xz="2.250000 2.250000"/>
 					<tex st="2.875000 3.625000"/>
@@ -977,7 +977,7 @@
 					<tex st="2.875000 6.312500"/>
 					<pos_xz xz="-2.562500 2.250000"/>
 					<tex st="5.562500 6.312500"/>
-					<pos_xy xy="2.250000 0.125000"/>
+					<pos_xy xy="2.250000 0.187500"/>
 					<tex st="5.562500 3.625000"/>
 					<pos_xz xz="2.250000 -2.312500"/>
 					<tex st="-2.187500 0.937500"/>
@@ -1205,7 +1205,7 @@
 		display_size="5"
 		vertex_size="278" polygon_size="77"
 		triangle_size="4" quad_size="73"
-		volume_min="-3.562500 0.125000 -3.312500"
+		volume_min="-3.562500 0.187500 -3.312500"
 		volume_max="3.250000 5.000000 3.250000"
 		volume_r="5.435059"
 	>
