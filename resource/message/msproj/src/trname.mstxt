@@ -20730,25 +20730,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ケイタ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ケイタ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -25608,6 +25608,331 @@
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
 				Time="2011-10-17T08:31:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="mini_26">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolb_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolg_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="espw_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="espm_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="scientistw_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="scientistm_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T04:02:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="tanpan_33">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="tanpan_34">
+		<LanguageCell
+			Language="JPN">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolb_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ケンサク</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ケンサク</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolg_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>サチ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サチ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolb_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>ケンサク</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ケンサク</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="schoolg_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>サチ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サチ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-19T10:17:35" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

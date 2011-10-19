@@ -787,7 +787,20 @@
 #define	TRID_JUGGLING_1_02   ( 774 ) 
 #define	TRID_JUGGLING_1_03   ( 775 ) 
 #define	TRID_JUGGLING_1_04   ( 776 ) 
-#define TRID_MAX  ( 777 )
+#define	TRID_MINI_26   ( 777 ) 
+#define	TRID_SCHOOLB_16   ( 778 ) 
+#define	TRID_SCHOOLG_14   ( 779 ) 
+#define	TRID_ESPW_15   ( 780 ) 
+#define	TRID_ESPM_16   ( 781 ) 
+#define	TRID_SCIENTISTW_15   ( 782 ) 
+#define	TRID_SCIENTISTM_18   ( 783 ) 
+#define	TRID_TANPAN_33   ( 784 ) 
+#define	TRID_TANPAN_34   ( 785 ) 
+#define	TRID_SCHOOLB_17   ( 786 ) 
+#define	TRID_SCHOOLG_15   ( 787 ) 
+#define	TRID_SCHOOLB_18   ( 788 ) 
+#define	TRID_SCHOOLG_16   ( 789 ) 
+#define TRID_MAX  ( 790 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
