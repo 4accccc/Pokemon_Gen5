@@ -472,6 +472,7 @@
 #define FE_H04R0201_FIRSTTALK              456 /* 0x01c8 ビレッジブリッジ：パン屋さん　初回会話フラグ */
 #define FE_H04R0201_ITEMGET                457 /* 0x01c9 ビレッジブリッジ：パン屋さん　アイテム入手フラグ */
 #define FE_C15R0401_GUARDMAN               458 /* 0x01ca ポケウッド：楽屋前のガードマン　どけるフラグ */
+#define FE_C04R1101_FIRSTTALK              459 /* 0x01cb ライモンシティ：おとなのおねえさん　初回会話フラグ */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -549,10 +550,10 @@
 #define FV_STADIUM_SPORTSMAN               566 /* 0x0236 ビッグスタジアム／リトルコートエントランス：選手とファン */
 #define FV_D08R0901_PACKAGE_POKE           567 /* 0x0237 リュウラセンの塔（屋上）：パッケージポケモン */
 #define FV_D07_BIGFOUR3_01                 568 /* 0x0238 ネジ山フィールド：レンブ */
-		/* not used   569(0x0239) */
-		/* not used   570(0x023a) */
-		/* not used   571(0x023b) */
-		/* not used   572(0x023c) */
+#define FV_C04P01_GLASSES_01               569 /* 0x0239 ライモン遊園地：ダンペイ */
+#define FV_C04P01_IDOL_01                  570 /* 0x023a ライモン遊園地：アイドル */
+#define FV_C04P01_ITEM_01                  571 /* 0x023b ライモン遊園地：アイテム */
+#define FV_C04R1101_ADULTW_01              572 /* 0x023c 旧電気ジム：おとなのお姉さん */
 		/* not used   573(0x023d) */
 		/* not used   574(0x023e) */
 		/* not used   575(0x023f) */
