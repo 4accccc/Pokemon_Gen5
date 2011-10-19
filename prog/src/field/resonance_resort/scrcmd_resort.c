@@ -2144,7 +2144,7 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
 
   default:
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",param);
   }
 
   return VMCMD_RESULT_CONTINUE;

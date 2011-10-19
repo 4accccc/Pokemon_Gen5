@@ -63,6 +63,7 @@ DEFINE_LOCAL LWK_GRADE
 DEFINE_LOCAL LWK_FUNCTION_RETURN
 DEFINE_LOCAL LWK_TUTORIAL_MODE
 
+DEFINE_LOCAL LWK_CAMERA_INDEX
 DEFINE_LOCAL LWK_COME_SHOP_RET
 DEFINE_LOCAL LWK_EXP
 DEFINE_LOCAL LWK_SPOT_RESULT
@@ -281,6 +282,7 @@ sub_tourist_invitation:
 	_FIELD_OPEN()
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
+  $LWK_CAMERA_INDEX = $LWK_INDEX
   _CALL sub_shopbuild_camera
   _CALL sub_crowdpeople_visible_off
 	_MAP_FADE_BLACK_IN_SLOW()
@@ -588,6 +590,7 @@ sub_come_shop:
   DEFINE_LOCAL LWK_LV
 
   //カメラ切り替え
+  $LWK_CAMERA_INDEX = $LWK_LIST_RET_IDX
   _CALL sub_setspot_camera
   _CALL sub_crowdpeople_visible_off
   _BLACK_IN()
@@ -671,7 +674,7 @@ sub_come_shop:
 
         _RESORT_RESET_MMDL( LWK_LIST_RET_IDX )
 
-        $LWK_INDEX = $LWK_LIST_RET_IDX
+        $LWK_CAMERA_INDEX = $LWK_LIST_RET_IDX
         _CALL sub_shopbuild_camera
         _CALL sub_crowdpeople_visible_off
         _MAP_FADE_WHITE_IN_SLOW()
@@ -788,9 +791,9 @@ sub_setspot_camera:
 {
   DEFINE_LOCAL LWK_TMP
 
-  $LWK_TMP  = $LWK_LIST_RET_IDX
+  $LWK_TMP  = $LWK_CAMERA_INDEX
   $LWK_TMP  += RESORT_GET_PARAM_GRADE_RESIDENT_00
-  _RESORT_GET_MY_DATA( LWK_TMP, LWK_GRADE )
+  _RESORT_GET_DATA( LWK_TMP, LWK_GRADE )
 
   _CALL sub_setspot_camera_core
 }
@@ -801,7 +804,7 @@ _RET
 //==============================================================
 sub_setspot_camera_core:
 {
-  SWITCH $LWK_LIST_RET_IDX
+  SWITCH $LWK_CAMERA_INDEX
   CASE 0 THEN
     SWITCH $LWK_GRADE
     CASE 0 THEN
@@ -1130,6 +1133,8 @@ sub_resident_merge:
 	  _FIELD_OPEN()
 	  _CAMERA_START()		//カメラ操作開始
 	  _CAMERA_PURGE()		//カメラのバインドを解く
+
+    $LWK_CAMERA_INDEX = $LWK_INDEX
     _CALL sub_shopbuild_camera
     _CALL sub_crowdpeople_visible_off
 	  _MAP_FADE_BLACK_IN_SLOW()
@@ -1160,7 +1165,7 @@ _RET
 //==============================================================
 sub_shopbuild_camera:
 {
-  SWITCH $LWK_INDEX
+  SWITCH $LWK_CAMERA_INDEX
   CASE 0 THEN
 	  _CAMERA_MOVE( RESORT_BCAM_SHOP1_PITCH,RESORT_BCAM_SHOP1_YAW,RESORT_BCAM_SHOP1_DIST,RESORT_BCAM_SHOP1_X,RESORT_BCAM_SHOP1_Y,RESORT_BCAM_SHOP1_Z,1 )
   CASE 1 THEN
@@ -1216,14 +1221,13 @@ sub_resident_lot:
 
   IF $LWK_DAY_FLAG == FALSE THEN
 
-    //カメラ用インデックス取得
-    _RESORT_GET_DATA( RESORT_GET_PARAM_INDEX, LWK_INDEX )
-
 	  _BALLOONWIN_CLOSE()
 	  _BLACK_OUT()
 	  _DISP_FADE_END_CHECK()
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
+
+    _RESORT_GET_DATA( RESORT_GET_PARAM_INDEX, LWK_CAMERA_INDEX )
     _CALL sub_shopbuild_camera
     _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE )
     _BLACK_IN()
@@ -1634,6 +1638,7 @@ sub_resident_service_effect:
 	//カメラ切り替え
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
+  _RESORT_GET_DATA( RESORT_GET_PARAM_INDEX, LWK_CAMERA_INDEX )
   _CALL sub_setspot_camera
   _CALL sub_crowdpeople_visible_off
 
@@ -3105,12 +3110,13 @@ EVENT_START ev_reserve_resort_debug
     _CALL sub_debug_num_menu
     
     IF $LWK_MENU_RET != EV_WIN_B_CANCEL THEN
-      $LWK_INDEX = $LWK_MENU_RET
+      $LWK_CAMERA_INDEX = $LWK_MENU_RET
 
 	    _BLACK_OUT()
 	    _DISP_FADE_END_CHECK()
 		  _CAMERA_START()		//カメラ操作開始
 		  _CAMERA_PURGE()		//カメラのバインドを解く
+
       _CALL sub_shopbuild_camera
       _CALL sub_crowdpeople_visible_off
       _BLACK_IN()
@@ -3126,7 +3132,7 @@ EVENT_START ev_reserve_resort_debug
     _CALL sub_debug_grade_menu
 
     IF $LWK_MENU_RET != EV_WIN_B_CANCEL && $LWK_GRADE != EV_WIN_B_CANCEL THEN
-      $LWK_LIST_RET_IDX = $LWK_MENU_RET
+      $LWK_CAMERA_INDEX = $LWK_INDEX
 
 	    _BLACK_OUT()
 	    _DISP_FADE_END_CHECK()
