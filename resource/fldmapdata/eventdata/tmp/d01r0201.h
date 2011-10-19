@@ -14,6 +14,10 @@
 #define FLD_ITEM_298                       0
 #define FLD_ITEM_299                       1
 #define FLD_ITEM_297                       2
+#define TR_SCIENTISTW_15                   3
+#define TR_SCIENTISTM_18                   4
+#define TR_ESPW_15                         5
+#define TR_ESPM_16                         6
 
 #endif //ZONE_D01R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

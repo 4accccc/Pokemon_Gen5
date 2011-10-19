@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/21 14:36:12
+#save date:2011/10/19 20:48:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d01r0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d01r0201.wms
 #hold event type:
 1
 #hold event number:
-3
+7
 #event number: 0
 #type
 1
@@ -103,6 +103,130 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 136 0 88
+#event number: 3
+#type
+1
+#ID name
+TR_SCIENTISTW_15
+#OBJ CODE Number
+ASSISTANTW
+#MOVE CODE Number
+MV_RTDR         
+#EVENT TYPE Number
+EV_TYPE_TRAINER_ESCAPE
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTW_15
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 56
+#event number: 4
+#type
+1
+#ID name
+TR_SCIENTISTM_18
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RTDR         
+#EVENT TYPE Number
+EV_TYPE_TRAINER_ESCAPE
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCIENTISTM_18
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 -136
+#event number: 5
+#type
+1
+#ID name
+TR_ESPW_15
+#OBJ CODE Number
+ESPW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ESPW_15
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 -136
+#event number: 6
+#type
+1
+#ID name
+TR_ESPM_16
+#OBJ CODE Number
+ESPM
+#MOVE CODE Number
+MV_RTUL         
+#EVENT TYPE Number
+EV_TYPE_TRAINER_ESCAPE
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ESPM_16
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+8
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
