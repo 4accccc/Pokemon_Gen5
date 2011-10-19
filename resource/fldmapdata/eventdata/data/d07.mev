@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/17 18:47:09
+#save date:2011/10/18 19:29:25
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d07.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D07_BIGFOUR3_01
 #Event Script Name
 SCRID_D07_BIGFOUR3_01
 #Direction Type Number
@@ -82,7 +82,7 @@ SCRID_POS_D07_BIGFOUR3_EV
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK1
+WK_SCENE_D07
 #Event Trigger Work Value
 0
 #Pos Type
