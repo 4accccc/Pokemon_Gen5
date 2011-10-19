@@ -46,6 +46,16 @@ $output_str = [ "_JJ",	# 日本語
                 "_KK",   # 韓国語
 ]
 
+# 出力ファイル名(win)
+$output_str_win = [ "Japanese", # 日本語
+                "English", 	# 英語
+                "French",	# フランス語
+                "Italian",	# イタリア語
+                "German",	# ドイツ語
+                "Spanish",	# スペイン語
+                "Korean",	# 韓国語
+]
+
 # 言語最大数
 LANG_MAX_NUM = 7
 
@@ -119,7 +129,7 @@ LANG_MAX_NUM.times{|m|
   if(@output[m] == 1)
     $current_lang_id = m;
     $current_lang_num = $lang_num_tbl[m]
-#    puts sprintf("lang num :%d",$current_lang_num);
+    puts sprintf("---- %s ----",$output_str_win[$current_lang_id]);
     
     # 出力ファイル名セット
     if($debug_filename == 0)
@@ -142,7 +152,7 @@ LANG_MAX_NUM.times{|m|
         filename = getAbsolutePath( @data[12*m+i] );
         # ファイルの有無チェック
         unless FileTest.exists?( filename )
-          p sprintf("ファイル %s が見つかりません",@data[12*m+i]);
+          puts sprintf("ファイル %s が見つかりません",@data[12*m+i]);
           exit(1)
         end
         conv.open_file( filename );
@@ -161,9 +171,11 @@ LANG_MAX_NUM.times{|m|
         #
         conv.close_file();
         #
-        p sprintf("list(%02d): %s",i,@data[12*m+i])
+        puts sprintf("%02d : %s",(i+1),@data[12*m+i])
       }
-      p sprintf("end :%s",outfilename)
+#      p sprintf("end :%s",outfilename)
+      puts "end"
+      puts
     }
   end
 }
@@ -184,7 +196,9 @@ $wbt_error.close()
 #---------------
 # 終了
 #---------------
-p sprintf("end")
+#p sprintf("end")
+puts "conv end"
+puts
 
 #-------------------------------------------------------
 #-------------------------------------------------------

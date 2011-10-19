@@ -194,8 +194,11 @@ begin
   fpw.close
 end
 
-p sprintf("%s -> %s",ARGV[0], ARGV[1])
-p sprintf("end")
+#p sprintf("%s -> %s",ARGV[0], ARGV[1])
+#p sprintf("end")
+puts sprintf("%s -> %s",ARGV[0], ARGV[1])
+puts sprintf("end")
+puts
 
 end      # $chk_mode(0)
 
@@ -230,8 +233,11 @@ begin
   fpw.close
 end
 
-p sprintf("%s -> %s",ARGV[0], ARGV[1])
-p sprintf("end 2")
+#p sprintf("%s -> %s",ARGV[0], ARGV[1])
+#p sprintf("end 2")
+puts sprintf("%s -> %s",ARGV[0], ARGV[1])
+puts sprintf("end 2")
+puts
 
 end       # chk_mode(1)
 
