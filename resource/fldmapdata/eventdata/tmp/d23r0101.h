@@ -9,9 +9,9 @@
 #ifndef ZONE_D23R0101_EVC_H
 #define ZONE_D23R0101_EVC_H
 
-#define TR_WORKER2_19                      0
-#define TR_WORKER2_20                      1
-#define TR_WORKER2_18                      2
+#define TR_TANPAN_33                       0
+#define TR_MINI_26                         1
+#define TR_TANPAN_34                       2
 #define D23R0101_MIDDLEMAN2_01             3
 #define D23R0101_WORKMAN2_01               4
 #define D23R0101_WORKMAN2_02               5
