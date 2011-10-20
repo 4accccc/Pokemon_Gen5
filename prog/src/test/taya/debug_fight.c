@@ -839,6 +839,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 {
   DEBUG_BTL_WORK* wk;
 
+  OS_Printf("DEBUG_BTL_SAVEDATA = %04x\n", sizeof(DEBUG_BTL_SAVEDATA) );
   // ポケパラ、セーブ領域サイズが想定を越えたらASSERTで止める
   GF_ASSERT_MSG( sizeof(DEBUG_BTL_SAVEDATA) <= SAVEAREA_SIZE, "SaveAreaSize=%d bytes", sizeof(DEBUG_BTL_SAVEDATA) );
   {

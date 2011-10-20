@@ -304,16 +304,52 @@ extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv);
 
 
 
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void _print_ex_save(DEBUGSAVEADDR_WORK* pWork)
+{
+  OS_TPrintf("SAVE_NORMAL               %08x(%08x)\n",  0, SAVESIZE_NORMAL );
+  OS_TPrintf("SAVE_MIRROR               %08x(%08x)\n",  MIRROR_SAVE_ADDRESS, SAVESIZE_NORMAL );
+  OS_TPrintf("EXTRA_SAVE_START_ADDRESS  %08x(%08x)\n",  EXTRA_SAVE_START_ADDRESS, EXTRA_MM_SAVE_SIZE );
+  OS_PutString("\n");
+
+  OS_TPrintf("EXTRA_MM_REC_MINE         %08x(%08x)\n", EXTRA_MM_REC_MINE, SAVESIZE_EXTRA_BATTLE_REC);
+  OS_TPrintf("EXTRA_MM_CGEAR            %08x(%08x)\n", EXTRA_MM_CGEAR, SAVESIZE_EXTRA_CGEAR_PICTURE);
+  OS_TPrintf("EXTRA_MM_BATTLE_EXAMINAT  %08x(%08x)\n", EXTRA_MM_BATTLE_EXAMINATION,
+      SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+  OS_TPrintf("EXTRA_MM_STREAMING        %08x(%08x)\n", EXTRA_MM_STREAMING, SAVESIZE_EXTRA_STREAMING);
+  OS_TPrintf("EXTRA_MM_DENDOU           %08x(%08x)\n", EXTRA_MM_DENDOU, SAVESIZE_EXTRA_DENDOU );
+  OS_TPrintf("EXTRA_MM_DENDOU_MIRROR    %08x(%08x)\n", EXTRA_MM_DENDOU_MIRROR, SAVESIZE_EXTRA_DENDOU );
+  OS_TPrintf("EXTRA_MM_POKEWOOD_00      %08x(%08x)\n", EXTRA_MM_POKEWOOD_00, SAVESIZE_EXTRA_POKEWOOD);
+  OS_TPrintf("EXTRA_MM_WBT_00           %08x(%08x)\n", EXTRA_MM_WBT_00, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_WBT_01           %08x(%08x)\n", EXTRA_MM_WBT_01, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_WBT_02           %08x(%08x)\n", EXTRA_MM_WBT_02, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_3DS              %08x(%08x)\n", EXTRA_MM_3DS, SAVESIZE_EXTRA_3DS );
+  OS_TPrintf("EXTRA_MM_SAVE_END         %08x(%08x)\n", EXTRA_MM_SAVE_END, EXTRA_MM_SAVE_SIZE );
+  OS_PutString("\n");
+
+  OS_TPrintf("OUTSIDE_MM_MYSTERY        %08x(%08x)\n", OUTSIDE_MM_MYSTERY, SAVESIZE_OUTSIDE_MYSTERY );
+  OS_TPrintf("OUTSIDE_MM_MYSTERY_MIRROR %08x(%08x)\n", OUTSIDE_MM_MYSTERY_MIRROR, SAVESIZE_OUTSIDE_MYSTERY );
+  OS_TPrintf("OUTSIDE_MM_PERMANENT      %08x(%08x)\n", OUTSIDE_MM_PERMANENT, SAVESIZE_OUTSIDE_PERMANENT);
+  OS_PutString("\n");
+
+  OS_TPrintf("DEBUG_FIGHT_SAVE          %08x(%08x)\n", DEBUG_FIGHT_SAVE, 0 );
+  
+  _CHANGE_STATE(NULL);
+}
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
 {
   {
     int i;
     u32 size;
     u8* pAddr;
-    u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
+    u8 const * topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
     //zukandummydata(pWork);
-    cgeardummydata(pWork);
+    //cgeardummydata(pWork);
     
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
@@ -590,10 +626,15 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     
     {//手持ちポケモン
       POKEPARTY* Party = SaveData_GetTemotiPokemon(pWork->pSaveData);
-      for(i = 0 ; i < PokeParty_GetPokeCount( Party ) ; i++){
-        pAddr = (u8*)PokeParty_GetMemberPointer( Party, i );
+      POKEPARTY* dmyParty = PokeParty_AllocPartyWork(pWork->heapID);
+      POKEMON_PARAM * dmyPoke = PP_Create( MONSNO_ROTOMU, 1, 0, pWork->heapID );
+      for(i = 0 ; i < TEMOTI_POKEMAX ; i++){
+        PokeParty_Add( dmyParty, dmyPoke );
+        pAddr = (u8*)((u32)Party + (u32)PokeParty_GetMemberPointer( dmyParty, i ) - (u32)dmyParty);
         OS_TPrintf("\"%s%d\",\"0x%x\",\"%d\"\n","PARTY_POKEMON",i, (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
       }
+      GFL_HEAP_FreeMemory(dmyPoke);
+      GFL_HEAP_FreeMemory(dmyParty);
     }
 
     {//ボックスポケモン
@@ -681,7 +722,7 @@ static GFL_PROC_RESULT DebugSaveAddrProc_Init( GFL_PROC * proc, int * seq, void 
 		DEBUGSAVEADDR_WORK* pWork = GFL_PROC_AllocWork( proc, sizeof(DEBUGSAVEADDR_WORK), HEAPID_PROC );
 
 
-    pWork->pGameData = GAMEDATA_Create( GFL_HEAPID_APP );
+    pWork->pGameData = GAMEDATA_Create( HEAPID_PROC );
     pWork->pSaveData = SaveControl_GetPointer();  //デバッグ
 		pWork->heapID = HEAPID_PROC;
 
@@ -761,6 +802,7 @@ static GFL_PROC_RESULT DebugSaveAddrProc_Init( GFL_PROC * proc, int * seq, void 
 
 		
 		_CHANGE_STATE(_keyWait);
+		//_CHANGE_STATE(_print_ex_save);
 	}
   return GFL_PROC_RES_FINISH;
 }
@@ -787,6 +829,12 @@ static GFL_PROC_RESULT DebugSaveAddrProc_End( GFL_PROC * proc, int * seq, void *
 	GFL_FONT_Delete(pWork->fontHandle);
 
 	WORDSET_Delete( pWork->WordSet );
+
+  GFL_BMPWIN_Delete(pWork->win );
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
+
+  GAMEDATA_Delete(pWork->pGameData);
 
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_PROC);  //テスト
