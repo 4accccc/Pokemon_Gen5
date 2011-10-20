@@ -4311,6 +4311,8 @@ static BOOL zonedata_IsSepiaMap( u16 zone_id )
   if ( zone_id == ZONE_ID_OLDC08R0101 ) return TRUE;
   if ( zone_id == ZONE_ID_OLDC02GYM0202 ) return TRUE;
   if ( zone_id == ZONE_ID_OLDC05R0501 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDC04R0201 ) return TRUE;
+  if ( zone_id == ZONE_ID_OLDD06R0101 ) return TRUE;
   return FALSE;
 }
 
