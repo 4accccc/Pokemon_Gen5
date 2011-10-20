@@ -40,8 +40,9 @@ def make_arcfile_dict
 end
 
 #----------------------------------------------------------------------------
+# rsfファイルからロムのサイズを取得する
 #----------------------------------------------------------------------------
-def read_rsf( path )
+def read_romsize( path )
   size = 0
   File.open(path){|file|
     file.each{|line|
@@ -125,7 +126,7 @@ end
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 DICT_ARCFILE = make_arcfile_dict()
-max_size = read_rsf( ARGV[1] )
+max_size = read_romsize( ARGV[1] )
 
 File.open(ARGV[0]){|file|
   datas = reader( file )
