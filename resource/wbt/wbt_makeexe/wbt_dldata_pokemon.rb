@@ -106,6 +106,8 @@ class WBT_POKEMON_SINGLE
     @csv_pokename_id = 0  # csvでのポケモン名
     @csv_form    = 0      # csvでのフォルム番号
     #
+    @err_flg     = 0    # エラーフラグ(特性で使用)
+    #
     @local_debug = 0;
     # debug
     if($debug_code == 1)
@@ -164,6 +166,8 @@ class WBT_POKEMON_SINGLE
       # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW,
                                     $poke_str[0]);
+      # エラーになった
+      @err_flg |= 1;
       return;
     end
     # セット
@@ -174,6 +178,8 @@ class WBT_POKEMON_SINGLE
       # 入力エラー
       $wbt_error.print_hash_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW,
                                    $poke_str[0], str );
+      # エラーになった
+      @err_flg |= 1;
     else
       @monsno = id;
     end
@@ -199,6 +205,8 @@ class WBT_POKEMON_SINGLE
       # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+1,
                                     $poke_str[1]);
+      # エラーになった
+      @err_flg |= 2;
       return;
     end
     # セット
@@ -210,6 +218,8 @@ class WBT_POKEMON_SINGLE
       # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+1,
                                     $poke_str[1], @form_no, 0, 255 );
+      # エラーになった
+      @err_flg |= 2;
     end
     #
     # csv用(特性の判定で使用)
@@ -353,6 +363,8 @@ class WBT_POKEMON_SINGLE
       # 空白エラー
       $wbt_error.print_blank_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+6,
                                     $poke_str[5]);
+      # エラーになった
+      @err_flg |= 4;
       return;
     end
     # セット
@@ -362,16 +374,21 @@ class WBT_POKEMON_SINGLE
       # 入力エラー
       $wbt_error.print_hash_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+6,
                                    $poke_str[5], str );
+      # エラーになった
+      @err_flg |= 4;
     else
       @tokusei = id;
     end
     #
     # 特性のチェック(csv)
-    ret = chk_csv_tokusei( @csv_pokename_id, @csv_form, id );
-    if(ret == -1)
-      # 特性エラー
-      $wbt_error.print_tokusei_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+6,
+    # ただし、すでにエラーになっている時は処理しない
+    if(@err_flg == 0)
+      ret = chk_csv_tokusei( @csv_pokename_id, @csv_form, id );
+      if(ret == -1)
+        # 特性エラー
+        $wbt_error.print_tokusei_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+6,
                                       @csv_pokename, @csv_form, str );
+      end
     end
     #
     if(@local_debug == 1)

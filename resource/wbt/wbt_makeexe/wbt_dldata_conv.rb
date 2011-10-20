@@ -131,6 +131,9 @@ LANG_MAX_NUM.times{|m|
     $current_lang_num = $lang_num_tbl[m]
     puts sprintf("---- %s ----",$output_str_win[$current_lang_id]);
     
+    # エラー情報初期化
+    $wbt_error.reset_sub_error();
+    
     # 出力ファイル名セット
     if($debug_filename == 0)
       str = $output_str[$current_lang_id] + ".bin"
@@ -176,6 +179,12 @@ LANG_MAX_NUM.times{|m|
 #      p sprintf("end :%s",outfilename)
       puts "end"
       puts
+      #
+      # エラーがあった場合は出力しない
+      if($wbt_error.chk_sub_error() == -1)
+#         puts outfilename
+        File.delete( outfilename );
+      end
     }
   end
 }

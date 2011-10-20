@@ -71,6 +71,7 @@ class WBT_ERROR
   #----------
   def initialize()
     @num = 0
+    @subnum = 0
   end
   
   #----------
@@ -104,6 +105,7 @@ class WBT_ERROR
   #--------------------------------------------------
   def print_blank_error( filename, sheetnum, col, row, str )
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[0] )
@@ -119,6 +121,7 @@ class WBT_ERROR
   #----------------------------------------------------------------
   def print_range_error( filename, sheetnum, col, row, str, num, min, max )
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[1] )
@@ -137,6 +140,7 @@ class WBT_ERROR
   #----------------------------------------------------------------
   def print_hash_error( filename, sheetnum, col, row, str, mstr )
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[3] )
@@ -158,6 +162,7 @@ class WBT_ERROR
       cbuf[i] = cnum;
     }
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[2] )
@@ -181,6 +186,7 @@ class WBT_ERROR
   def print_tokusei_error( filename, sheetnum, col, row, pokename, formid, tokusei )
     
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[4] )
@@ -200,6 +206,7 @@ class WBT_ERROR
   #----------------------------------------------------------------
   def print_effort_error( filename, sheetnum, col, row, total )
     @num = @num+1
+    @subnum = @subnum+1
     @errfile.printf("******************************************************\n")
     @errfile.printf("%s\n", $err_mes_index[0] )
     @errfile.printf("%s\n\n", $err_mes[5] )
@@ -227,5 +234,23 @@ class WBT_ERROR
     end
   end
   
+  #----------
+  # 終了処理
+  #----------
+  def reset_sub_error()
+    @subnum = 0
+  end
+  
+  #----------
+  # 終了処理
+  #----------
+  def chk_sub_error()
+    flg = 0
+    if(@subnum > 0)
+      flg = -1
+    end
+    # エラーの数をチェック
+    return( flg )
+  end
 end
 
