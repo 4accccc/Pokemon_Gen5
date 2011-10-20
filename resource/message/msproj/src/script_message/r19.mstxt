@@ -423,14 +423,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・pos（local 27、21～25）を踏むと
+・・posイベント
+　GRIDX＝91、GRIDZ＝693～697で
 　メッセージ表示
 ・表示後、カメラがアデク中心に移動
-　続けてchampion_02
-※専用BGMは、いらないです</Comment>
+　続けてchampion_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:36:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1392,6 +1392,358 @@
 				User="matsumiya:W00224"
 				Time="2011-10-18T05:51:23" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:23:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:23:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダルボックス入手後
+・posイベント
+　GRIDX＝91、GRIDZ＝693～697で
+　メッセージ表示
+・表示後、カメラがアデク中心に移動し
+　飛び降りるアニメ
+・続けてchampion_11
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:46:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:31:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すまぬ！　だいじなことを
+つたえるのを　わすれておった！▼
+まずは　これを　うけとるのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:19:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:37:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すまぬ！　大事なことを
+伝えるのを　忘れておった！▼
+まずは　これを　受け取るのだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No155「オレンのみ」×５</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:38:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま　わたしたのは
+オレンのみ　という　きのみだ！▼
+ポケモンに　あたえると
+たいりょくを　かいふく　するぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:56:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:39:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いま　渡したのは
+オレンのみ　という　きのみだ！▼
+ポケモンに　与えると
+体力を　回復するぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後、自動で表示
+・続けてchampion_13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:23:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さらに！　ポケモンに
+きのみを　もたせておくとだな▼
+たたかいの　さなか
+たいりょくが　へったとき　ポケモンが▽
+じぶんで　たべて　げんきになるのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:56:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:56:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さらに！　ポケモンに
+きのみを　持たせておくとだな▼
+戦いの　さなか
+体力が　減ったとき　ポケモンが▽
+自分で　食べて　元気になるのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:45:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下をむいてメッセージ表示
+・続けてchampion_14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:23:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さてと……▼
+ヒオウギに　やってきた
+あたらしい　ジムリーダーは　とても▽
+つよい　ポケモントレーナーだ！▼
+だけど　あんじることは　ない！▼
+ともに　たたかう　ポケモンは
+なにが　できるのか▼
+そして　トレーナーである
+おまえは　なにを　すべきか▽
+かんがえれば　かならず　かてる！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:12:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:16:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さてと……▼
+ヒオウギに　やってきた
+新しい　ジムリーダーは　とても▽
+強い　ポケモントレーナーだ！▼
+だけど　案じることは　ない！▼
+ともに　戦う　ポケモンは
+なにが　できるのか▼
+そして　トレーナーである
+おまえは　なにを　すべきか▽
+考えれば　必ず　勝てる！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:12:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:25:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・なぜか髪揺れアニメのあと
+　続けてメッセージ表示
+・続けてchampion_15
+　一度ウインドウは閉じておく</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:45:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:32:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r19_champion_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうして　どんどん
+つよい　トレーナー　……そうだな
+かくちの　ジムリーダーに　いどめ▼
+たくましくなるごとに
+おまえたちの　せかいは　ひろがるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:44:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうして　どんどん
+強い　トレーナー　……そうだな▽
+各地の　ジムリーダーに　挑め▼
+たくましくなるごとに
+おまえたちの　世界は　広がるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:46:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T09:45:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面右へ移動
+・画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:57:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T08:57:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r19_sign1_01"

@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエも　ぼくじょうで
-ポケモンを　きたえるのか？▼
-それなら　オレと　しょうぶしたほうが
-はやく　つよく　なれるだろ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なんだ
+オマエも　ぼくじょうに　きたのか▼
+よし！　どれだけ　つよくなったか
+オレが　みてやる！　かかってきな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T08:11:26" />
+				Time="2011-10-19T10:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエも　牧場で
-ポケモンを　鍛えるのか？▼
-それなら　オレと　勝負したほうが
-はやく　強く　なれるだろ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なんだ
+オマエも　ぼくじょうに　きたのか▼
+よし！　どれだけ　つよくなったか
+オレが　みてやる！　かかってきな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T08:11:30" />
+				Time="2011-10-19T10:22:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -286,12 +286,12 @@
 			Language="JPN">
 			<Comment>♂
 ・画面上から移動してくる
-　breederwも一緒に
+　breederw、poke31も一緒に
 ・続けてswrival_05
 </Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:24:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -438,12 +438,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おくさん『あれだけ　あばれたら
-ポケモンの　たいりょく　へったでしょ？▽
-これを　あげるわ▼</Text>
+			<Text>おくさん『ポケモンしょうぶの　あとは
+げんきに　かいふく！　でしょ▽
+これを　あげるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -451,12 +451,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おくさん『あれだけ　あばれたら
-ポケモンの　体力　減ったでしょ？▽
-これを　あげるわ▼</Text>
+			<Text>おくさん『ポケモンしょうぶの　あとは
+げんきに　かいふく！　でしょ▽
+これを　あげるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -467,10 +467,10 @@
 			<Comment>♀
 ・アイテム入手処理
 　No033「モーモーミルク」
-・続けてbreederw_02</Comment>
+・続けてbreederw_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -496,15 +496,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d22r0101_breederw_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたにも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたにも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ライバルの前に移動してメッセージ表示
+・続けてbreederm_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:14:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERW
+・嫁</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:12:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d22r0101_breederw_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　モーモーミルクを　ポケモンに
-のませたら　げんきいっぱい　よ！</Text>
+			<Text>ポケモンセンターが　とおいとき
+キズぐすりが　あると　たすかるもんね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:19:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -512,11 +562,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　モーモーミルクを　ポケモンに
-飲ませたら　元気一杯　よ！</Text>
+			<Text>ポケモンセンターが　とおいとき
+キズぐすりが　あると　たすかるもんね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:00:58" />
+				Time="2011-10-19T10:19:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -560,13 +610,14 @@
 			Language="JPN">
 			<Text>オーナー『ところで　きみたち
 このあたりで　ぼくの▽
-ヨーテリーを　みなかったー？▼
+ハーデリアを　みなかったー？▼
 どこへ　いったか　みあたらないんだよ▼
-こんなことは　はじめて　だから
+いつも　２ひき　いっしょ　なのに
+こんなことは　はじめて　だから▽
 ちょっと　しんぱい　なんだなー▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:02:03" />
+				Time="2011-10-19T10:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -576,13 +627,14 @@
 			Language="JPN_KANJI">
 			<Text>オーナー『ところで　きみたち
 この辺りで　ぼくの▽
-ヨーテリーを　みなかったー？▼
+ハーデリアを　みなかったー？▼
 どこへ　行ったか　みあたらないんだよ▼
+いつも　２匹　一緒なのに
 こんなことは　はじめて　だから
 ちょっと　心配なんだなー▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:02:09" />
+				Time="2011-10-19T10:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -754,12 +806,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おくさん『あなたの　ポケモンが
-キズついたら　あたしに　いってね▽
-げんきに　してあげるから！</Text>
+			<Text>おくさん『そうねえ……▼
+ねえ　あなたの
+ポケモンが　キズついたら　いってね▽
+あたしが　げんきに　してあげるから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -767,12 +820,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おくさん『あなたの　ポケモンが
-キズついたら　あたしに　いってね▽
-元気に　してあげるから！</Text>
+			<Text>おくさん『そうねえ……▼
+ねえ　あなたの
+ポケモンが　キズついたら　いってね▽
+あたしが　元気に　してあげるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:02:06" />
+				Time="2011-10-19T12:22:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -814,11 +868,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨーテリー
+			<Text>ハーデリア
 どこへ　いったんだ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:15:30" />
+				Time="2011-10-19T10:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -826,11 +880,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨーテリー
+			<Text>ハーデリア
 どこへ　行ったんだ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:15:37" />
+				Time="2011-10-19T10:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -866,11 +920,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『むこうには　いなかった▼
+			<Text>[Name:TrainerName Idx="1" ]『ハーデリア……
 もっと　おくに　まよいこんだのか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:19:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -878,11 +932,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『向こうには　いなかった▼
+			<Text>[Name:TrainerName Idx="1" ]『ハーデリア……
 もっと　奥に　迷いこんだのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:32:24" />
+				Time="2011-10-19T11:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,13 +946,14 @@
 			Language="JPN">
 			<Comment>♂
 ・迷子探し中その２
-・pos（local 21～23、3）をj踏むと
+・posイベント
+　GRIDX＝21～23、GRIDZ＝35　を踏むと
 　画面下から登場し隣接してメッセージ
 ・メッセージ表示後、上方向に移動
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:20:16" />
+				Time="2011-10-19T11:23:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -985,10 +1040,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まだ　みつからないのかよ
-しんぱい　だな……　ヨーテリー</Text>
+しんぱい　だな……　ハーデリア</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:18:02" />
+				Time="2011-10-19T10:32:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -997,10 +1052,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだ　みつからないのかよ
-心配だな……　ヨーテリー</Text>
+心配だな……　ハーデリア</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:32:59" />
+				Time="2011-10-19T10:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1035,10 +1090,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……くううん▼</Text>
+			<Text>……きゃうん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1046,10 +1101,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……くううん▼</Text>
+			<Text>……きゃうん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1068,10 +1123,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモン
-ヨーテリー</Text>
+ハーデリア←ヨーテリー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:15:52" />
+				Time="2011-10-19T10:39:08" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1258,43 +1313,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨーテリー『……きゃうーん▼</Text>
+			<Text>ハーデリア『……きゃうーん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨーテリー『……きゃうーん▼</Text>
+			<Text>ハーデリア『……きゃうーん▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
 ・pos（local 21、22）を調べると
 　主人公を押しのけ、pos（local 20、22））に出現
-・続けてswrival_12</Comment>
+・続けてsswplazmam2_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:53:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモン
-ヨーテリー</Text>
+ハーデリア←ヨーテリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:10" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1340,12 +1395,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後
-　ライバル移動、画面外に消えると
-　続けてpoke_03</Comment>
+・画面外からメッセージ表示後
+　続けてsswplazmam2_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:27:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1370,46 +1424,285 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d22r0101_swplazmam2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレは　なくこも　だまる
+プラズマだんの　メンバー！▼
+おまえ……
+プラズマだんを　しっているか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレは　なくこも　だまる
+プラズマだんの　メンバー！▼
+おまえ……
+プラズマだんを　しっているか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面下をむいて！マーク表示後
+　メッセージ表示
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_swplazmam2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうとも！　２ねんまえ
+ポケモンを　かいほうするため▼
+イッシュを　しはい　しようとしていた
+せいぎの　しゅうだん　だ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうとも！　２ねんまえ
+ポケモンを　かいほうするため▼
+イッシュを　しはい　しようとしていた
+せいぎの　しゅうだん　だ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・続けてswplazmam2_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_swplazmam2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんだと！？　２ねんまえ
+ポケモンを　かいほうするため▼
+イッシュを　しはい　しようとしていた
+せいぎの　しゅうだん　だぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんだと！？　２ねんまえ
+ポケモンを　かいほうするため▼
+イッシュを　しはい　しようとしていた
+せいぎの　しゅうだん　だぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・続けてswplazmam2_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_swplazmam2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあいい▼
+おろかものに　おれたちのことは
+りかい　できないのだ▼
+それにしても……▼
+ハーデリアを　おいかけていたら
+こんなところに　まよいこむし……▽
+こどもとはいえ　ジャマされるし……▼
+しかたない！
+ここは　ひとまず　たいさんする！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあいい▼
+おろかものに　おれたちのことは
+りかい　できないのだ▼
+それにしても……▼
+ハーデリアを　おいかけていたら
+こんなところに　まよいこむし……▽
+こどもとはいえ　ジャマされるし……▼
+しかたない！
+ここは　ひとまず　たいさんする！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、倍速移動で
+　画面下に（道なりに移動させなくてOK）
+・続けてpoke_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:28:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d22r0101_poke_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨーテリー『ぎゃうっ！　ばう！▼</Text>
+			<Text>ハーデリア『ぎゃうっ！　ばう！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨーテリー『ぎゃうっ！　ばう！▼</Text>
+			<Text>ハーデリア『ぎゃうっ！　ばう！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:39:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・プラズマ団が消えたあと
 ・主人公の周囲を動いてメッセージ表示
 ・続けてbreederm_05</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:28:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモン
-ヨーテリー</Text>
+ハーデリア←ヨーテリー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:15:53" />
+				Time="2011-10-19T10:39:11" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1424,7 +1717,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーナー『おー！　ヨーテリー！▼
+			<Text>オーナー『おー！　ハーデリア！▼
 ひとりで　こんな　おくまで
 きちゃって　なにが　あったんだい？▼
 なには　ともあれ
@@ -1434,12 +1727,12 @@
 				Time="2011-05-20T09:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:42:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーナー『おー！　ヨーテリー！▼
+			<Text>オーナー『おー！　ハーデリア！▼
 ひとりで　こんな　奥まで
 来ちゃって　なにが　あったんだい？▼
 なにはともあれ
@@ -1449,8 +1742,8 @@
 				Time="2011-06-02T06:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:42:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1554,13 +1847,13 @@
 			Language="JPN">
 			<Text>オーナー『……ふむう
 かれは　なにか　あったのかなー？▼
-ポケモンと　はなれることは
-いけないことと　おもっているような……▼
-って　かんがえても　わからないねー
-さあ　わたしたちも　かえろう▼</Text>
+ポケモンが　いなくなることを
+おびえているような……▼
+さあ　ハーデリア
+みんなが　まってるよ！　かえろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-12T06:45:02" />
+				Time="2011-10-19T12:30:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1570,13 +1863,13 @@
 			Language="JPN_KANJI">
 			<Text>オーナー『……ふむう
 彼は　なにか　あったのかなー？▼
-ポケモンと　離れることを
-絶対に　認めないというか……▼
-って　考えても　わからないねー
-さあ　わたしたちも　帰ろう▼</Text>
+ポケモンが　いなくなることを
+おびえているような……▼
+さあ　ハーデリア
+みんなが　待ってるよ！　帰ろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-12T06:45:22" />
+				Time="2011-10-19T12:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1585,10 +1878,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、画面暗転</Comment>
+・メッセージ表示後、画面暗転
+・オーナーだけ消去</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:29:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1649,12 +1943,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・イベント開始時点の座標に復帰
-　ライバルの位置にヨーテリー
+・breederm_06表示後に話しかけたとき
+　ハーデリア×２匹も配置
 ・続けてbreederm_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:42:49" />
+				Time="2011-10-19T12:32:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1684,12 +1978,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーナー『それにしても……▼
-なぜ　ポケモンは　われわれの
-そばに　いてくるのかなー？</Text>
+			<Text>オーナー『この　ぼくじょうは
+もともと　ポケモンを　まもるため▼
+さくを　つくったのが
+はじまり　なんだよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:07:23" />
+				Time="2011-10-19T12:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1697,12 +1992,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーナー『それにしても……▼
-なぜ　ポケモンは　われわれの
-そばに　いてくるのかなー？</Text>
+			<Text>オーナー『この　牧場は
+もともと　ポケモンを　守るため▼
+柵を　つくったのが
+はじまり　なんだよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:07:16" />
+				Time="2011-10-19T12:32:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1744,27 +2040,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーナー『たしかに　ヨーテリーが
-かってに　いなくなるのは　へんだねー</Text>
+			<Text>オーナー『たしかに　ハーデリアが
+かってに　いなくなるのは　へんだねー▼
+いつも　２ひきで　あそんだり
+ぼくじょうの　しごとを　しているのに</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:42:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーナー『たしかに　ヨーテリーが
-勝手に　いなくなるのは　変だねー</Text>
+			<Text>オーナー『たしかに　ハーデリアが
+勝手に　いなくなるのは　変だねー▼
+いつも　２匹で　遊んだり
+牧場の　仕事を　しているのに</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:07:31" />
+				Time="2011-10-19T11:15:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:42:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1925,12 +2225,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとうね▼
-あなたと　あなたの　ポケモンに
-たすけてもらったわ！</Text>
+			<Text>あなたと　あなたの　ポケモンが
+ハーデリアを　みつけてくれたのね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1938,12 +2237,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとうね▼
-あなたと　あなたの　ポケモンに
-助けてもらったわ！</Text>
+			<Text>あなたと　あなたの　ポケモンが
+ハーデリアを　みつけてくれたのね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:07:39" />
+				Time="2011-10-19T12:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1980,5 +2278,388 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_poke31_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばううう……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:25:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばううう……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・イベントクリア前
+※迷子にはなってない個体</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ハーデリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_poke31_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばう！　ばうっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばう！　ばうっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・イベントクリア前
+※迷子にはなってない個体</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ハーデリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:26:22" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_poke_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばうっ！！　ばう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:34:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:33:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばうっ！！　ばう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:34:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:33:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・イベントクリア前
+※迷子だった個体</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:33:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン
+ハーデリア←ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:33:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>めええェ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めええェ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:46" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むにむに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むにむに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>めえめえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>めえめえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むふっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むふっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその５</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:52" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_tpoke6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>んめええ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:44:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>んめええ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:45:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>メリープその６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T10:43:54" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

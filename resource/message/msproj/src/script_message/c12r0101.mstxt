@@ -9,8 +9,8 @@
 			<Text>[Name:TrainerName Idx="0" ]！
 ただいまー！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T02:51:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,13 +31,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・最初はママにカメラをあわせる
+　GRIDX＝5、GRIDZ＝8に移動
+　右向きでメッセージ表示後
+　カメラは主人公に移動
+　カメラ移動後、主人公操作可能に
 ・主人公初期配置（12.5）下向き
-・pos（local　8.10）を踏むと室外から登場
-・続けてswmama_02
+・posイベント
+　GRIDX＝10、GRIDZ＝8を
+　踏むとswmama_02
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:22:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -60,13 +66,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ博士って　知ってるでしょ
-ポケモン研究で　有名な▼
-ママの　ふるい　友達なんだけどね
-彼女に　お願いされたのよ</Text>
+			<Text>アララギはかせって　しってる？
+ポケモンけんきゅうで　ゆうめいな▼
+ママの　ふるい　ともだち　なんだけど
+ひさしぶりに　おはなし　してたの▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:39:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,13 +80,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ博士って　知ってるでしょ
+			<Text>アララギ博士って　知ってる？
 ポケモン研究で　有名な▼
-ママの　ふるい　友達なんだけどね
-彼女に　お願いされたのよ</Text>
+ママの　ふるい　友達なんだけど
+ひさしぶりに　お話　してたの▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:40:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -116,12 +122,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>と　そのまえに▼
-[Name:TrainerName Idx="0" ]！　あなた　じぶんの
-パートナーとなる　ポケモン　ほしい？</Text>
+			<Text>とつぜん　だけど
+[Name:TrainerName Idx="0" ]！▼
+じぶんの　パートナーとなる
+ポケモンは　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -129,12 +136,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>と　その前に▼
-[Name:TrainerName Idx="0" ]！　あなた　自分の
-パートナーとなる　ポケモン　ほしい？</Text>
+			<Text>突然だけど
+[Name:TrainerName Idx="0" ]！▼
+自分の　パートナーとなる
+ポケモンは　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:41:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -171,11 +179,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もういちど　きくけれど　じぶんの
-パートナーとなる　ポケモン　ほしい？</Text>
+			<Text>もういちど　きくけれど▼
+じぶんの　パートナーとなる
+ポケモンは　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:43:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,11 +192,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう一度　きくけれど　自分の
-パートナーとなる　ポケモン　ほしい？</Text>
+			<Text>もう一度　きくけれど▼
+自分の　パートナーとなる
+ポケモンは　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:43:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -226,10 +236,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ええー！！
-ちょっと　おどろき……！▼</Text>
+おどろき……！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -238,10 +248,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ええー！！
-ちょっと　おどろき……！▼</Text>
+おどろき……！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:43:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,18 +288,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほしいよね！　よかった！▼
-あのね　アララギはかせの
-じょしゅを　している　おんなのこが▽
-こっちに　くるんだって！▼
-なまえは　ベル
-おおきな　ぼうしが　めじるし▼
-だけど　はじめての　まちで
-まよっているかも　しれないし▽
-あなた　さがしてあげてね！</Text>
+			<Text>よし！　だい１ステップ　クリア！▼
+じゃあ
+ポケモンずかんって　しってる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -297,18 +301,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほしいよね！　よかった！▼
-あのね　アララギ博士の
-助手を　している　女の子が▽
-こっちに　来るんだって！▼
-名前は　ベル
-おおきな　帽子が　目印▼
-だけど　はじめての　街で
-迷っているかも　しれないし▽
-あなた　探してあげてね！</Text>
+			<Text>よし！　第１ステップ　クリア！▼
+じゃあ
+ポケモン図鑑って　知ってる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:45:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -318,10 +316,12 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択
-</Comment>
+・はい/いいえの選択肢表示
+　はい　→swmama_08
+　いいえ→swmama_09</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:46:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -337,6 +337,444 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さすが！▼
+であった　ポケモンを　じどうで
+きろくしていく　すごい　ずかんね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:48:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:46:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さすが！▼
+であった　ポケモンを　自動で
+記録していく　すごい　図鑑ね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T04:02:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:48:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けてswmama_10</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:46:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そっか……▼
+であった　ポケモンを　じどうで
+きろくしていく　すごい　ずかんよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:12:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:48:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そっか……▼
+であった　ポケモンを　自動で
+記録していく　すごい　図鑑▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T04:02:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:48:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・続けてswmama_10</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:46:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またまた　しつもんです！▼
+あなた
+ポケモンずかんも　ほしくない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:52:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:49:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>またまた　質問です！▼
+あなた
+ポケモン図鑑も　ほしくない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T04:02:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:49:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえの選択肢表示
+　はい　→swmama_11
+　いいえ→swmama_12</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よし！　だい２ステップ　クリア！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:54:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よし！　第２ステップ　クリア！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T04:02:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:53:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+　その場回転後、続けて
+　swmama_13　か
+　swmama_14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:35:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ママが　ききたいのは
+まえむきな　いけん　よ！▼
+だって　ポケモンずかんを　もつことは
+せかいを　たびするって　ことよ！▼
+というわけで　もういちど▼
+あなた
+ポケモンずかんも　ほしくない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:53:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:51:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ママが　ききたいのは
+前向きな　意見　よ！▼
+だって　ポケモン図鑑を　持つことは
+世界を　旅するって　ことよ！▼
+というわけで　もういちど▼
+あなた
+ポケモン図鑑も　ほしくない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T04:04:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:53:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・はい/いいえの選択肢表示
+　はい　→swmama_11
+　いいえ→swmama_12</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:53:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！　あなたの
+やるべきことが　きまったわ！▼
+この　まちに
+ベルと　いう　おんなのこが　きます▼
+アララギはかせの　じょしゅで
+おおきなぼうしが　めじるし　だって！▼
+そう！　あなたは　ベルという
+おんなのこを　さがすのよ！▼
+そして　パートナーとなる　ポケモンと
+ポケモンずかんを　うけとるのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:48:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:20:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！　あなたの
+やるべきことが　決まったわ！▼
+この街に
+ベルと　いう　女の子が　来ます▼
+アララギ博士の　助手で
+大きな帽子が　目印だって！▼
+そう！　あなたは　ベルという
+女の子を　探すのよ！▼
+そして　パートナーとなる　ポケモンと
+ポケモン図鑑を　受け取るのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:21:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ママと会話するまでに
+　ライブキャスターを使用しているとき
+・会話後、主人公操作可能に
+　このあとのママとの会話は
+　swmama_07
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:36:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！　あなたの
+やるべきことが　きまったわ！▼
+この　まちに
+ベルと　いう　おんなのこが　きます▼
+アララギはかせの　じょしゅで
+おおきなぼうしが　めじるし　だって！▼
+そう！　あなたは　ベルという
+おんなのこを　さがすのよ！▼
+そして　パートナーとなる　ポケモンと
+ポケモンずかんを　うけとるのです！▼
+あっ　なにか　あれば
+ライブキャスターを　つかってね▼
+ライブキャスターは
+バッグの　なかに　はいっているでしょ▼
+バッグの　あけかたは　わかる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:49:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:22:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！　あなたの
+やるべきことが　決まったわ！▼
+この街に
+ベルと　いう　女の子が　来ます▼
+アララギ博士の　助手で
+大きな帽子が　目印だって！▼
+そう！　あなたは　ベルという
+女の子を　探すのよ！▼
+そして　パートナーとなる　ポケモンと
+ポケモン図鑑を　受け取るのです！▼
+あっ　なにか　あれば
+ライブキャスターを　使ってね▼
+ライブキャスターは
+バッグの　中に　はいっているでしょ▼
+バッグの　開け方は　わかる？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:27:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ママと会話するまでに
+　ライブキャスターを使用していないとき
+・はい/いいえの選択肢表示
+　はい　→swmama_07
+　いいえ→swmama_15
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:36:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swmama_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーになる　あなたに
+「たんけんの　こころえ」に　かかれた▽
+この　ことばを　おくるわ！▼
+「トレーナーに　とって　だいじなのは
+　Ｘボタン！」　よ！▼
+じゃあ　ベルちゃんを
+さがして　あげてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:37:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:29:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーになる　あなたに
+「探検の心得」に　書かれた▽
+この言葉を　贈るわ！▼
+「トレーナーに　とって　大事なのは
+　Ｘボタン！」　よ！▼
+じゃあ　ベルちゃんを
+探して　あげてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:37:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:32:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ後、主人公、操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T05:33:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWMAMA
+スワン主人公ママ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T03:50:29" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -988,13 +1426,13 @@
 			Language="JPN">
 			<Text>ふうん
 なんだか　みちがえちゃうわね！▼
-いろいろ　みて　かんがえた……
-そんな　かんじ！▼
+いろいろ　みて　かんがえ
+おとなに　なった……　そんな　かんじ！▼
 っと　そろそろ
 おきゃくさまが　いらっしゃるのよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:31:51" />
+				Time="2011-10-20T05:38:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1004,13 +1442,13 @@
 			Language="JPN_KANJI">
 			<Text>ふうん
 なんだか　みちがえちゃうわね！▼
-いろいろ　みて　かんがえた……
-そんな　かんじ！▼
+いろいろ　みて　考えて
+大人に　なった……　そんな　感じ！▼
 っと　そろそろ
-おきゃくさまが　いらっしゃるのよ▼</Text>
+お客さまが　いらっしゃるのよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:36" />
+				Time="2011-10-20T05:38:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1092,11 +1530,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ママ『そうですけれど▼
-おひさしぶりですね
+おひさしぶり　ですね
 アララギはかせ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:32:37" />
+				Time="2011-10-20T05:38:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1105,11 +1543,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママ『そうですけれど▼
-おひさしぶりですね
-アララギはかせ！▼</Text>
+おひさしぶり　ですね
+アララギ博士！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:36" />
+				Time="2011-10-20T05:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1151,13 +1589,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『そんなに　たつかい？
-……おもいだせないねえ▼
-っと　そいつは　わたしが　きた
-もくてきとは　かんけい　ないからね▼</Text>
+			<Text>アララギ『そんなに　経つかい？
+……思い出せないねえ▼
+っと　そいつは　わたしが　来た
+目的とは　関係ないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:36" />
+				Time="2011-10-20T05:38:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1207,12 +1645,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]！▼
-でんどういりを　きねんして
-おまえさんの　ポケモンずかんを▽
+殿堂入りを　記念して
+おまえさんの　ポケモン図鑑を▽
 パワーアップ！　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:36" />
+				Time="2011-10-20T05:39:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1307,13 +1745,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『どこが　パワーアップしたか
-おしえるから　きいてくれるかい？▼
+教えるから　きいてくれるかい？▼
 といっても　すごく　シンプル！▼
 あらゆる　ポケモンを
-きろく　できるように　したんだよ▼</Text>
+記録できるように　したんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:38" />
+				Time="2011-10-20T05:39:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1361,10 +1799,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママ『へえ！　すごいですね
-さすが　おやこで　ポケモンはかせ！▼</Text>
+さすが　父娘で　ポケモン博士！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:38" />
+				Time="2011-10-20T05:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1412,7 +1850,7 @@
 わたしは　おいとま　するかね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:38" />
+				Time="2011-10-20T05:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1465,17 +1903,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまえさん！　せかいには　まだまだ
+			<Text>おまえさん！　世界には　まだまだ
 おおくの　ポケモンが　いる▼
 それらの　ポケモンは
-ときとして　たべるために　おそったり▼
-かとおもえば　たすけあったり　して
-おたがいの　ばしょを　まもっている▼
-ずかんを　みながら　そんなことを
-かんがえてもらえると　うれしいね▼</Text>
+ときとして　食べるために　襲ったり▼
+かと思えば　助けあったり　して
+お互いの　場所を　守っている▼
+図鑑を　みながら　そんなことを
+考えてもらえると　うれしいね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:38" />
+				Time="2011-10-20T05:40:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1579,21 +2017,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　すごいつりざおを　つかえば
-みずのなかの　ポケモンも▽
+			<Text>その　すごいつりざおを　使えば
+水中の　ポケモンも▽
 つりあげることが　できるのよ！▼
 すごいつりざおの
-せつめいしょを　よむわね▼
-まず　すいめんに　むかって
-すごいつりざおを　つかいます！▼
-つぎに　きもちを　しゅうちゅう！▼
+説明書を　読むわね▼
+まず　水面に　向かって
+すごいつりざおを　使います！▼
+次に　気持ちを　集中！▼
 ポケモンが　くいついたら
 「！」と　でるので　そのときに▽
 すばやく　つりざおを　ひきましょう！▼
 ですって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:38" />
+				Time="2011-10-20T05:41:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1625,11 +2063,11 @@
 あなたと　ポケモンの　じかん▼
 だから　じぶんで　きめて
 じぶんが　したいことを　しなさいな▼
-ママも　ひとりの　じかんを
+ママも　じぶんの　じかんを
 ママの　すきなように　たのしむから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:11" />
+				Time="2011-10-20T05:42:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1638,14 +2076,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なにをしても　それは　すべて
-あなたと　ポケモンの　じかん▼
-だから　じぶんで　きめて
-じぶんが　したいことを　しなさいな▼
-ママも　ひとりの　じかんを
-ママの　すきなように　たのしむから！</Text>
+あなたと　ポケモンの　時間▼
+だから　自分で　決めて
+自分が　したいことを　しなさいな▼
+ママも　自分の　時間を
+ママの　好きなように　楽しむから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:40" />
+				Time="2011-10-20T05:42:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
