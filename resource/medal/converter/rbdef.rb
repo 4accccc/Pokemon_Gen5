@@ -68,7 +68,7 @@ EOS
 MDLREC_CMT_END = <<-EOS
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³Ž‹
-typedef  int MedalID;
+typedef  u16 MedalID;
 #endif __ASM_NO_DEF_
 
 EOS

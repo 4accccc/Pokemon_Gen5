@@ -910,7 +910,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
     		field/field_palace_sys.c \
         field/field_goout_effect.c \
         field/field_goout_effect_data.c\
-        field/medal_check.c \
         field/resonance_resort/resort_mapcreate.c \
         field/animal_trail.c \
         field/scrcmd_animal_trail.c \
@@ -1084,6 +1083,14 @@ SRCS_OVERLAY_SCRCMD_BGATE  =  field/scrcmd_bgate.c \
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_HIDE_SHIP  =  field/scrcmd_hide_ship.c \
                             field/scrcmd_hide_ship_table.c
+
+# スクリプトコマンド並列化  ポケモンセンター
+#===> GROUP_OVERLAY_DEBUGMENU
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_POKECEN  =  field/scrcmd_pokecen.c \
+                                field/scrcmd_pokecen_table.c \
+                                field/medal_check_pokecen.c
+                                
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE

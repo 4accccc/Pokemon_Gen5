@@ -20,7 +20,6 @@ _EVENT_DATA   ev_init_medal_oyaji
 _EVENT_DATA   ev_recover_medal_oyaji
 _EVENT_DATA   ev_scene_medal_oyaji_intro
 _EVENT_DATA   ev_medal_oyaji_pc
-_EVENT_DATA   ev_medal_office
 _EVENT_DATA_END
 
 
@@ -503,46 +502,6 @@ sub_medaloyaji_gettitle:
   _SYSWIN_MSG( msg_mdloyj_titleget_sys, POS_DEFAULT )
   _SYSWIN_CLOSE()
   _RET
-
-/********************************************************************/
-//    メダル事務局（仮）
-//    ※実際にはちゃんとイベントを作成するが現状は話しかけただけで遷移
-/********************************************************************/
-EVENT_START ev_medal_office
-  _TALK_OBJ_START()
-
-  SWITCH $WK_SCENE_MEDAL_EVENT
-  CASE MEDALEV_SEQ_START  THEN
-    _CALL sub_medaloyaji_intro
-    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
-
-  CASE MEDALEV_SEQ_1ST_PRIZE_OK THEN
-
-    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prize_1st )
-    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮
-    _ME_WAIT()
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
-    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_PRIZE_AFTER
-
-  CASE MEDALEV_SEQ_COMP_PRIZE_OK THEN
-
-    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prize_max )
-    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮
-    _ME_WAIT()
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-
-    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_COMP_PRIZE_AFTER
-
-  DEFAULT
-    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-  ENDSWITCH
-
-EVENT_END
 
 //--------------------------------------------------------------------
 //	☆共通処理：下に1歩歩く

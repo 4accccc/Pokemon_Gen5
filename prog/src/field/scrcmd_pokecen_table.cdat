@@ -1,0 +1,26 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		scrcmd_pokecen_table.cdat
+ *	@brief  ポケモンセンターコマンド定義
+ *	@author	Masayuki Onoue
+ *	@date		2011.10.20
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( pokecen )
+
+  DEF_CMD( EvCmdUpdateMedalInfo, EV_SEQ_UPDATE_MEDAL_INFO )
+  DEF_CMD( EvCmdGetLastAchieveMedalID, EV_SEQ_GET_LAST_ACHIEVE_MEDAL_ID )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+ 
+  END_CMD
+  //スクリプトコマンドテーブル終了
+

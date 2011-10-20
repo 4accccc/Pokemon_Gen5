@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		medal_check.c
+ *	@file		medal_check_pokecen.c
  *	@brief  メダル達成関数
  *	@author	Masayuki Onoue
  *	@date		2011.02.07
@@ -19,7 +19,7 @@
 #include "arc_def.h"          // for ARCID_MEDALDATA
 #include "savedata\medalbox.h"
 #include "app/mdlrec_id.h" // for MDLRECID_START etc
-#include "field/medal_check.h"
+#include "field/medal_check_pokecen.h"
 #include "script_def.h" // SCR_MEDALCATEGORY_～
 
 #include "fldmmdl.h"  // for MMDL_GetFallRockCnt
@@ -1106,6 +1106,7 @@ static BOOL MDLREC_CHECK_n_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata,
   {
     is_achieve = p_recdata->is_get_n_poke;
   }
+  GF_ASSERT( target_cnt == 1 );
   return is_achieve;
 }
 // 色違いポケモンチェック
@@ -1118,6 +1119,7 @@ static BOOL MDLREC_CHECK_rare_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gameda
   {
     is_achieve = p_recdata->is_get_rare;
   }
+  GF_ASSERT( target_cnt == 1 );
   return is_achieve;
 }
 // ポケルスポケモンチェック
@@ -1130,6 +1132,7 @@ static BOOL MDLREC_CHECK_pokerus_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gam
   {
     is_achieve = p_recdata->is_get_pokerus;
   }
+  GF_ASSERT( target_cnt == 1 );
   return is_achieve;
 }
 
@@ -1206,9 +1209,10 @@ static BOOL MDLREC_CHECK_AnimalTrailCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  target_cnt = NELEMS(flag_tbl);
-  ONOUE_Printf("獣道チェック数:%d/%u\n",check_cnt,target_cnt);
-  return cmp_target( check_cnt , target_cnt );
+  u32 target_cnt_tbl = NELEMS(flag_tbl);
+  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
+  ONOUE_Printf("獣道チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
+  return cmp_target( check_cnt , target_cnt_tbl );
 }
 
 // おとくな掲示板
@@ -1237,9 +1241,10 @@ static BOOL MDLREC_CHECK_BoardCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  target_cnt = NELEMS(flag_tbl);
-  ONOUE_Printf("お得な掲示板チェック数:%d/%u\n",check_cnt,target_cnt);
-  return cmp_target( check_cnt , target_cnt );
+  u32 target_cnt_tbl = NELEMS(flag_tbl);
+  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
+  ONOUE_Printf("お得な掲示板チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
+  return cmp_target( check_cnt , target_cnt_tbl );
 }
 
 // 列車説明
@@ -1260,9 +1265,10 @@ static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  target_cnt = NELEMS(flag_tbl);
-  ONOUE_Printf("列車説明チェック数:%d/%u\n",check_cnt,target_cnt);
-  return cmp_target( check_cnt , target_cnt );
+  u32 target_cnt_tbl = NELEMS(flag_tbl);
+  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
+  ONOUE_Printf("列車説明チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
+  return cmp_target( check_cnt , target_cnt_tbl );
 }
 
 //----------------------------------------------------------------------------
@@ -1287,9 +1293,10 @@ static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_game
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  target_cnt = NELEMS(flag_tbl);
-  ONOUE_Printf("橋チェック数:%d/%u\n",check_cnt,target_cnt);
-  return cmp_target( check_cnt , target_cnt );
+  u32 target_cnt_tbl = NELEMS(flag_tbl);
+  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
+  ONOUE_Printf("橋チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
+  return cmp_target( check_cnt , target_cnt_tbl );
 }
 
 //----------------------------------------------------------------------------
@@ -1311,15 +1318,20 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
     SYS_FLAG_ARRIVE_C12,
     SYS_FLAG_ARRIVE_T06,
     SYS_FLAG_ARRIVE_C13,
+    SYS_FLAG_ARRIVE_C15,
     SYS_FLAG_ARRIVE_C03,
+    SYS_FLAG_ARRIVE_C11,
+    SYS_FLAG_ARRIVE_C16,
     SYS_FLAG_ARRIVE_C04,
     SYS_FLAG_ARRIVE_C05,
+    SYS_FLAG_ARRIVE_D05R0101,
     SYS_FLAG_ARRIVE_C06,
     SYS_FLAG_ARRIVE_T07,
     SYS_FLAG_ARRIVE_T04,
     SYS_FLAG_ARRIVE_T03,
     SYS_FLAG_ARRIVE_C08,
     SYS_FLAG_ARRIVE_C14,
+    SYS_FLAG_ARRIVE_D26R0101,
     SYS_FLAG_ARRIVE_C09,
     SYS_FLAG_ARRIVE_C07,
     SYS_FLAG_ARRIVE_C02,
@@ -1329,7 +1341,8 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  target_cnt = NELEMS(flag_tbl) + 1;  // WF or BC
+  u32 target_cnt_tbl = NELEMS(flag_tbl) + 1;  // WF or BC
+  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
 
   // WF or BC はどちらかチェック
   if( EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D31R0201 ) || 
@@ -1338,8 +1351,8 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
     check_cnt++;
   }
 
-  ONOUE_Printf("全到達チェック数:%d/%u\n",check_cnt,target_cnt);
-  return cmp_target( check_cnt , target_cnt );
+  ONOUE_Printf("全到達チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
+  return cmp_target( check_cnt , target_cnt_tbl );
 }
 
 //----------------------------------------------------------------------------
@@ -1474,4 +1487,6 @@ static s32 EventFlagCheck( const s32 *p_table ,EVENTWORK *p_event_wk ,s32 table_
   }
   return check_cnt;
 }
+
+
 

@@ -9,6 +9,7 @@
 #ifndef ZONE_D26PC0101_EVC_H
 #define ZONE_D26PC0101_EVC_H
 
+#define D26PC0101_MEDALOYAJI               0
 
 #endif //ZONE_D26PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -32,6 +32,7 @@
 #include "scrcmd_pokewood_table.h"
 #include "scrcmd_bgate_table.h"
 #include "scrcmd_hide_ship_table.h"
+#include "scrcmd_pokecen_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -58,6 +59,7 @@ FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
 FS_EXTERN_OVERLAY( scrcmd_pokewood );
 FS_EXTERN_OVERLAY( scrcmd_bgate );
 FS_EXTERN_OVERLAY( scrcmd_hide_ship );
+FS_EXTERN_OVERLAY( scrcmd_pokecen );
 
 //=============================================================================
 /**
@@ -91,8 +93,8 @@ static const ZONEID UseZoneIDTbl_un[] =
   ZONE_ID_C11R0101,
   ZONE_ID_C11R0201,
   ZONE_ID_C03P14,     //国連行き船で使用
-  ZONE_ID_C13PC0101,   //性格を設定
-  ZONE_ID_C03R0101,    //趣味を設定
+  ZONE_ID_C13PC0101,  //性格を設定
+  ZONE_ID_C03R0101,   //趣味を設定
   ZONE_ID_C03PC0101,  //国コードをセットしているかどうか
 };
 
@@ -208,6 +210,32 @@ static const ZONEID UseZoneIDTbl_hide_ship[] =
   ZONE_ID_D27R2001,   // パスワードID取得に使用
   ZONE_ID_D27R2101,   // パスワードID取得に使用
   ZONE_ID_D27R2201,   // パスワードID取得に使用
+};
+//-------------------------------------
+///	ポケモンセンター
+//=====================================
+static const ZONEID UseZoneIDTbl_pokecen[] = 
+{
+  ZONE_ID_BC10PCR0101,
+  ZONE_ID_C01PC0101,
+  ZONE_ID_C02PC0101,
+  ZONE_ID_C03PC0101,
+  ZONE_ID_C04PC0101,
+  ZONE_ID_C05PC0101,
+  ZONE_ID_C06PC0101,
+  ZONE_ID_C07PC0101,
+  ZONE_ID_C08PC0101,
+  ZONE_ID_T02PC0101,
+  ZONE_ID_T03PC0101,
+  ZONE_ID_T04PC0101,
+  ZONE_ID_WC10PCR0101,
+  ZONE_ID_C12PC0101,
+  ZONE_ID_T06PC0101,
+  ZONE_ID_C13PC0101,
+  ZONE_ID_T07PC0101,
+  ZONE_ID_C14PC0101,
+  ZONE_ID_D26PC0101,
+  ZONE_ID_C09R0701,
 };
 
 //=============================================================================
@@ -336,6 +364,14 @@ static const struct
     UseZoneIDTbl_hide_ship,
     NELEMS(UseZoneIDTbl_hide_ship),
     FS_OVERLAY_ID( scrcmd_hide_ship ),
+    GFL_OVERLAY_BLANK_ID,
+  },
+  //POKECEN
+  {
+    ScriptCmdTbl_pokecen,
+    UseZoneIDTbl_pokecen,
+    NELEMS(UseZoneIDTbl_pokecen),
+    FS_OVERLAY_ID( scrcmd_pokecen ),
     GFL_OVERLAY_BLANK_ID,
   },
 };

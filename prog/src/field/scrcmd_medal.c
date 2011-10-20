@@ -36,8 +36,6 @@
 #include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  //for FLDCIID_
 
-#include "field/medal_check.h"
-
 //スクリプト参照の値とプログラム中のenum定義の値に差がでた場合Assertとなる
 SDK_COMPILER_ASSERT( SCR_MEDALRANK_IRON == MEDALBOX_RANK_IRON );
 SDK_COMPILER_ASSERT( SCR_MEDALRANK_COPPER == MEDALBOX_RANK_COPPER );
@@ -48,10 +46,7 @@ SDK_COMPILER_ASSERT( SCR_MEDALRANK_BW == MEDALBOX_RANK_BW );
 //======================================================================
 //======================================================================
 
-static int getLastAchieveMedal( SCRCMD_WORK * work );
 static u32 countMedals( SCRCMD_WORK * work, u32 match_state );
-static void updateHintMedals( SCRCMD_WORK * work );
-static void updateTitleMedal( SCRCMD_WORK * work );
 static u32 countRestHintMedal( SCRCMD_WORK * work );
 static MMDL * searchMedalOyajiOBJ( FIELDMAP_WORK * fieldWork );
 static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata );
@@ -104,69 +99,6 @@ VMCMD_RESULT EvCmdGetMedalCount( VMHANDLE * core, void *wk )
 
   }
   TAMADA_Printf("EvCmdGetMedalCount:%d:%d\n", idx, *ret_wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：メダル状態更新いろいろ
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
-{
-  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
-  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  MEDALBOX *       medalbox   = SaveData_GetMedalBox( save );
-  HEAPID           heapID     = SCRCMD_WORK_GetHeapID( work );
-
- 	u16 idx = VMGetU16( core );
-  switch ( idx )
-  {
-  case SCR_MEDALUPDATE_INFO://メダル状態の更新（レコードやセーブデータなどを参照）
-    MEDAL_AchiveCheck( gameData ,save , heapID );
-    break;
-  case SCR_MEDALUPDATE_TITLE://タイトルメダルの更新（達成→取得）
-    updateTitleMedal( work );
-    break;
-  case SCR_MEDALUPDATE_HINT://ヒントメダルの更新（達成→取得）
-    updateHintMedals( work );
-    break;
-  case SCR_MEDALUPDATE_RANK://ランクの更新
-    MEDALBOX_RankUpMedalBox( medalbox );
-    break;
-  case SCR_MEDALUPDATE_INIT://メダルの初期化（ヒントメダルの初期設定など）
-    MEDAL_InitHintMedal( save, heapID );
-    break;
-  default:
-    GF_ASSERT( 0 );
-  }
-  TAMADA_Printf("EvCmdUpdateMedalInfo:%d\n", idx );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief 最新の達成メダルのIDを取得する
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetLastAchieveMedalID( VMHANDLE * core, void * wk )
-{
-  u16 * ret_result  = SCRCMD_GetVMWork( core, wk );
-  u16 * ret_medalid = SCRCMD_GetVMWork( core, wk );
-  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
-  int id;
-
-  id = getLastAchieveMedal( work );
-  if ( id < 0 )
-  {
-    *ret_result = FALSE;
-    *ret_medalid = 0;
-  } else {
-    *ret_result = TRUE;
-    *ret_medalid = id;
-  }
-  TAMADA_Printf("EvCmdGetLastAchieveMedalID:%d\n", id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -306,33 +238,6 @@ VMCMD_RESULT EvCmdGetMedalCutInID( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//======================================================================
-//======================================================================
-//--------------------------------------------------------------
-/**
- * @brief 最新の達成メダルのIDを取得する
- * @retval  -1  達成メダルが存在しない
- * @retval  それ以外  達成メダルのID
- */
-//--------------------------------------------------------------
-static int getLastAchieveMedal( SCRCMD_WORK * work )
-{
-  u32 id;
-  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  const MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
-
-  for ( id = 0; id < MDLID_MAX; id ++ )
-  {
-    u8 medal_status = MEDALBOX_GetMedalState( medalbox, id );
-    if ( medal_status == MEDAL_STATE_TITLE_ACHIVE )
-    {
-      return id;
-    }
-  }
-  return -1;
-}
-
 //--------------------------------------------------------------
 /**
  * @brief 最新の達成メダルのIDを取得する
@@ -358,57 +263,6 @@ static u32 countMedals( SCRCMD_WORK * work, u32 match_state )
   return count;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief 最新の達成メダルのIDを取得する
- * @retval  -1  達成メダルが存在しない
- * @retval  それ以外  達成メダルのID
- */
-//--------------------------------------------------------------
-static void updateHintMedals( SCRCMD_WORK * work )
-{
-  u32 id;
-  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
-
-  RTCDate date;
-
-  GFL_RTC_GetDate( &date );
-  for ( id = 0; id < MDLID_MAX; id ++ )
-  {
-    u8 medal_status = MEDALBOX_GetMedalState( medalbox, id );
-    if ( medal_status == MEDAL_STATE_HINT_ACHIVE )
-    {
-      MEDALBOX_SetHintMedalGetFlg( medalbox, id, date.year, date.month, date.day );
-    }
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * @brief 最新の達成メダルのIDを取得する
- * @retval  -1  達成メダルが存在しない
- * @retval  それ以外  達成メダルのID
- */
-//--------------------------------------------------------------
-static void updateTitleMedal( SCRCMD_WORK * work )
-{
-  u32 id;
-  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
-
-  RTCDate date;
-
-  GFL_RTC_GetDate( &date );
-  id = getLastAchieveMedal( work );
-  if ( id >= 0 )
-  {
-    MEDALBOX_SetTitleMedalGetFlg( medalbox, id, date.year, date.month, date.day );
-    GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medalbox,FALSE));
-  }
-}
 //--------------------------------------------------------------
 /**
  * @brief 獲得可能な残りのヒントメダルを数える

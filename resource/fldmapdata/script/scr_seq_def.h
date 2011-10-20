@@ -29,6 +29,7 @@
   .include "../../../prog/src/field/scrcmd_pokewood_table.cdat"
   .include "../../../prog/src/field/scrcmd_bgate_table.cdat"
   .include "../../../prog/src/field/scrcmd_hide_ship_table.cdat"
+  .include "../../../prog/src/field/scrcmd_pokecen_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -12888,6 +12889,8 @@
 //--------------------------------------------------------------
 /**
  * @brief メダルの取得処理
+ * @param[in] medal_id  設定するメダルのID（prog/include/app/mdlid_def.h参照）
+ * @param[in] mode      TRUEでタイトルメダル、FALSEでヒントメダル取得
  */
 //--------------------------------------------------------------
 #define _GET_MEDAL( medal_id, mode ) \
