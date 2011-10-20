@@ -31,6 +31,7 @@ $err_mes = [
   "入力が正しくありません",              # 入力規則
   "特性の組み合わせが正しくありません",  # 特性エラー
   "努力値の合計が510を超えています",     # 努力値エラー
+  "技の入力が正しくありません",          # 技
 ]
 
 # mes2
@@ -47,6 +48,8 @@ $err_mes_index = [
   "( 文字数オーバー )",
   "( 該当なし )",
   "( 組み合わせエラー )",
+  "( 設定エラー )",
+  "( 重複エラー )",
 ]
 
 $em2 = [
@@ -216,6 +219,24 @@ class WBT_ERROR
     @errfile.printf("%s: [%d, %s] - [%d, %s]\n\n", $err_mes_index[5], col, $cell_row[row-1], col, $cell_row[row-1+5])
     @errfile.printf("%s\n", $err_mes_index[2] )
     @errfile.printf("%s: [%d]\n", $err_mes_index[6], total)
+    @errfile.printf("******************************************************\n\n")
+  end
+  
+  #----------------------------------------------------------------
+  # 技エラー(ファイル名、シート名、col、row、str、mstr, mode)
+  #----------------------------------------------------------------
+  def print_skill_error( filename, sheetnum, col, row, str, mstr, mode )
+    @num = @num+1
+    @subnum = @subnum+1
+    @errfile.printf("******************************************************\n")
+    @errfile.printf("%s\n", $err_mes_index[0] )
+    @errfile.printf("%s\n\n", $err_mes[6] )
+    @errfile.printf("%s\n", $err_mes_index[1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: [%d, %s] ( %s )\n\n", $err_mes_index[5],col, $cell_row[row-1], str)
+    @errfile.printf("%s\n", $err_mes_index[2] )
+    @errfile.printf("%s: [%s] %s\n", $err_mes_index[6], mstr, $err_mes_index[12+mode])
     @errfile.printf("******************************************************\n\n")
   end
   

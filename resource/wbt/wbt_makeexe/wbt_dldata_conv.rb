@@ -46,6 +46,16 @@ $output_str = [ "_JJ",	# 日本語
                 "_KK",   # 韓国語
 ]
 
+# 最終ファイル名(決めうち)
+$output_last_str = [ "_J",	# 日本語
+                "_E",   # 英語
+                "_F",   # フランス語
+                "_I",   # イタリア語
+                "_G",   # ドイツ語
+                "_S",   # スペイン語
+                "_K",   # 韓国語
+]
+
 # 出力ファイル名(win)
 $output_str_win = [ "Japanese", # 日本語
                 "English", 	# 英語
@@ -137,10 +147,20 @@ LANG_MAX_NUM.times{|m|
     # 出力ファイル名セット
     if($debug_filename == 0)
       str = $output_str[$current_lang_id] + ".bin"
+      mstr = $output_last_str[$current_lang_id] + ".bin"
     else
       str = ".bin"
+      mstr = ".bin"
     end
     outfilename = ARGV[0].sub(/\.xls/, str )
+    #
+    # 最終ファイルがあれば削除する
+    lastfilename = ARGV[0].sub(/\.xls/, mstr )
+    if FileTest.exists?(lastfilename)
+        File.delete( lastfilename );
+    end
+    #
+    #
     File.open( outfilename,"w"){|file|
       file.binmode
       

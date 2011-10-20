@@ -584,14 +584,33 @@ class WBT_POKEMON_SINGLE
     #
     offset = 2*@poke_id+17*@trainer_id
     #
+    flg = 0
     PTL_WAZA_MAX.times{|i|
       cstr = @conv.get_cell(5, POKE_START_COL+offset, POKE_START_ROW+16+i )
       ret = chkblank_no_print( cstr );
       # 空白の場合は「なし」で処理
       if(ret == -1)
-        break;
+#        break;
 #        poke_exit();
+        flg = 1;
+        if(i == 0)
+          # 空白エラー(1つ目は必ずいれること)
+          $wbt_error.print_blank_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+16+i,
+                                      $poke_str[27+i]);
+          break;
+        else
+          next;
+        end
+      else
+        # すでにエラーで入力がある(間隔のある設定)
+        if(flg == 1)
+          # 入力エラー
+          $wbt_error.print_skill_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+16+i,
+                                   $poke_str[27+i], cstr, 0 );
+          next;
+        end
       end
+      #
       # セット
       str = cstr
       id = hash2no( $wazano_hash, str );
@@ -600,9 +619,17 @@ class WBT_POKEMON_SINGLE
         $wbt_error.print_hash_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+16+i,
                                    $poke_str[27+i], str );
       else
+        i.times{|j|
+          if(@waza_id[j] == id)
+            # 重複エラー
+            $wbt_error.print_skill_error( $current_xls_name, 5, POKE_START_COL+offset, POKE_START_ROW+16+i,
+                                   $poke_str[27+i], cstr, 1);
+            break;
+          end
+        }
+        
         @waza_id[i] = id;
       end
-      #
     }
     if(@local_debug == 1)
       p sprintf("%s :(%d,%d,%d,%d)", $poke_str[10], @waza_id[0],@waza_id[1],@waza_id[2],@waza_id[3] )
