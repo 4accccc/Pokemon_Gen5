@@ -20,5 +20,6 @@
 #ifndef ZONE_PALACE01_EVB_H
 #define ZONE_PALACE01_EVB_H
 
+#define BG_PALACE01_TREE_01               0
 
 #endif //ZONE_PALACE01_EVB_H

@@ -158,6 +158,7 @@ extern const u16 PalaceZoneIDTbl_PlayerUpdate[];
 //  
 //
 //==============================================================================
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
 //--------------------------------------------------------------
 // フィールド通信システム更新
 //  @param  FIELDMAP_WORK フィールドワーク
@@ -257,6 +258,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   
   _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
 }
+#endif  //undef(DISABLE_INTRUDE)
 
 //==================================================================
 /**
@@ -1320,6 +1322,7 @@ static BOOL _PlayerPosCheck_PalaceCenter(const VecFx32 *player_pos)
   return FALSE;   //
 }
 
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
 //--------------------------------------------------------------
 /**
  * パレス通信自動起動ON/OFF処理
@@ -1438,6 +1441,7 @@ static void _InvasionCommBoot(GAMESYS_WORK *gsys)
 
   OS_TPrintf("パレス通信起動：親\n");
 }
+#endif  //undef(DISABLE_INTRUDE)
 
 //==================================================================
 /**

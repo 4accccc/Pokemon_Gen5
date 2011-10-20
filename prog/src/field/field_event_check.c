@@ -456,6 +456,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
   //POSイベント：方向指定ありチェック：侵入
   {
     event = checkPosEvent_IntrudeDirection( &req, gsys, fieldWork );
@@ -463,6 +464,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
+#endif
   
   //戦闘移行チェック
   { //ノーマルエンカウントイベント起動チェック
@@ -497,6 +499,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 //☆☆☆会話チェック
 
   SET_CHECK("ev_check:game_comm");
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
   ///通信用会話処理
   {
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -557,6 +560,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       }
     }
   }
+#endif  //undef(DISABLE_INTRUDE)  //swanで進入を削除
 
   SET_CHECK("ev_check:talk event");
   //フィールド話し掛けチェック
@@ -1711,6 +1715,7 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
   return event;
 }
 
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
 //--------------------------------------------------------------
 /**
  * @brief POSイベントチェック：キーの先読み
@@ -1747,6 +1752,7 @@ static GMEVENT * checkPosEvent_IntrudeDirection( EV_REQUEST * req, GAMESYS_WORK 
 
   return Intrude_CheckPushEvent(gsys, fieldWork, req->field_player, req->now_pos, req->player_dir, next_dir);
 }
+#endif  //undef(DISABLE_INTRUDE)  //swanで進入を削除
 
 //--------------------------------------------------------------
 /**

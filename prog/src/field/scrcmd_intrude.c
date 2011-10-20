@@ -68,12 +68,14 @@ typedef struct{
 //==================================================================
 VMCMD_RESULT EvCmdIntrudePalaceMmdlSetting( VMHANDLE *core, void *wk )
 {
+#ifndef  DISABLE_INTRUDE // swanÇ≈êiì¸ÇçÌèú
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
   IntrudeField_PalaceMMdlAllAdd(fieldWork);
+#endif
   
   return VMCMD_RESULT_CONTINUE;
 }
@@ -90,6 +92,7 @@ VMCMD_RESULT EvCmdIntrudePalaceMmdlSetting( VMHANDLE *core, void *wk )
 //==================================================================
 VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
 {
+#ifndef  DISABLE_INTRUDE // swanÇ≈êiì¸ÇçÌèú
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -110,6 +113,7 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
   }
   
   MONOLITH_AddConnectAllMap(fieldWork);
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }

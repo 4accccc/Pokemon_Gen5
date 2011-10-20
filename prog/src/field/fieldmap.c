@@ -1234,7 +1234,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
   }
   else{
+#ifndef  DISABLE_INTRUDE // swan‚Åi“ü‚ðíœ
     IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
+#endif  //undef(DISABLE_INTRUDE) // swan‚Åi“ü‚ðíœ
   }
   SET_CHECK("update_top:subscreen");
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);

@@ -199,8 +199,13 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ グリッド移動   パレス
 		{
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
+#ifdef  DISABLE_INTRUDE // swanで進入を削除
+      2,2,
+      FLDMAPPER_MODE_SCROLL_NONE,
+#else
       3,2,
       FLDMAPPER_MODE_SCROLL_XZ_LOOP, 
+#endif
       ARCID_FLDMAP_LANDDATA,
 
 			1,  1, 1,		//dummy map matrix data
