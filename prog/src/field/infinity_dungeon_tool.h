@@ -12,7 +12,10 @@
 #pragma once
 
 // VSでコンパイルする時に設定する
-//#define VS_PROJECT
+#ifdef _WIN32
+// VSでコンパイルする時に設定する
+#define VS_PROJECT
+#endif
 
 #ifndef VS_PROJECT
 #include <gflib.h>

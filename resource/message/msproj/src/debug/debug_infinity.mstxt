@@ -574,4 +574,30 @@
 				Time="2011-10-03T02:40:43" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_INFINITY_TRDATA_CHECK"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーデータチェック</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-19T07:04:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-19T07:04:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーデータチェック</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-19T07:04:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-10-19T07:04:23" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

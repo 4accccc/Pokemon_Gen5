@@ -113,9 +113,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
       int room_index;
       int max = GetElevatorSetArray(p_room_data,index_array,fs_x,fs_y);
 
-      #ifndef VS_PROJECT
-        GF_ASSERT_MSG((max > 0),"エレベータを置く場所がありません\n");
-      #endif
+      GF_ASSERT_MSG((max > 0),"エレベータを置く場所がありません\n");
       room_index = GFL_STD_Rand( &rand_context ,max);
       p_room_data[index_array[room_index]].room_type    = ROOM_TYPE_ELEVATOR;
       p_room_data[index_array[room_index]].tr_pos_type  = INF_TR_ROOM_POS_TYPE_NONE;
@@ -273,9 +271,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
           p_dungeon_data->room_data[i][room_id].room_type = INF_TOOL_GetRoomType(INF_ROOM_POS_TYPE_EX_1);
           no_tr_room_index++;
           // 未配置部屋数以上は配置できない
-#ifndef VS_PROJECT
           GF_ASSERT( no_tr_room_index <= no_tr_room_cnt  );
-#endif
         }
       }
     }
@@ -396,9 +392,7 @@ static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,i
     }
   }
 
-  #ifndef VS_PROJECT
     GF_ASSERT_MSG(0,"トレーナーが配置されている部屋がありません\n");
-  #endif
 }
 
 //----------------------------------------------------------------------------

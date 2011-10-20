@@ -59,6 +59,14 @@ typedef struct {
 
 //=============================================================================
 /**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+
+static void GetInfTrDataCheck( void );
+
+//=============================================================================
+/**
  *					定数宣言
 */
 //=============================================================================
@@ -83,6 +91,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_BLACK_VERSION , (void*)DEBUG_STR_INFINITY_BLACK_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_WHITE_VERSION , (void*)DEBUG_STR_INFINITY_WHITE_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_AUTO_MAP , (void*)DEBUG_STR_INFINITY_AUTO_MAP , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_TRDATA_CHECK , (void*)DEBUG_STR_INFINITY_TRDATA_CHECK , GFL_OVERLAY_BLANK_ID },  // トレーナーデータチェック
 };
 
 ///リスト メニューヘッダー
@@ -380,6 +389,13 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
       }
       return GMEVENT_RES_FINISH;
 
+    case DEBUG_STR_INFINITY_TRDATA_CHECK:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        GetInfTrDataCheck();
+      }
+      return GMEVENT_RES_FINISH;
+
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_2: JumpZone(work,ZONE_ID_D31R0101); (*seq)=3; break;
@@ -445,3 +461,239 @@ BOOL debugMenuCallProc_InfinityDungeon(DEBUG_MENU_EVENT_WORK *wk )
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンに出現するトレーナーデータチェック
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+
+// トレーナーデータ参照用
+#include "savedata/bsubway_savedata.h"
+#include "battle/bsubway_battle_data.h"
+#include "fld_btl_inst_tool.h"
+
+// アイテムID
+#include "item/itemsym.h"
+
+#include "infinity_dungeon_tool.h"
+
+static void GetInfTrDataCheck( void )
+{
+  BSUBWAY_PARTNER_DATA tr_data;
+  BSUBWAY_TRAINER_ROM_DATA  *trd;
+  u16 tr_id = 0;
+
+  // 使用可能アイテムテーブル
+  const u32 c_item_table[]=
+  {
+    ITEM_DUMMY_DATA,          // ダミーデータ
+    ITEM_HONOONOZYUERU,				// ほのおのジュエル
+    ITEM_MIZUNOZYUERU,				// みずのジュエル
+    ITEM_DENKINOZYUERU,				// でんきのジュエル
+    ITEM_KUSANOZYUERU,				// くさのジュエル
+    ITEM_KOORINOZYUERU,				// こおりのジュエル
+    ITEM_KAKUTOUZYUERU,				// かくとうジュエル
+    ITEM_DOKUNOZYUERU,				// どくのジュエル
+    ITEM_ZIMENNOZYUERU,				// じめんのジュエル
+    ITEM_HIKOUNOZYUERU,				// ひこうのジュエル
+    ITEM_ESUPAAZYUERU,				// エスパージュエル
+    ITEM_MUSINOZYUERU,				// むしのジュエル
+    ITEM_IWANOZYUERU,				  // いわのジュエル
+    ITEM_GOOSUTOZYUERU,				// ゴーストジュエル
+    ITEM_DORAGONZYUERU,				// ドラゴンジュエル
+    ITEM_AKUNOZYUERU,				  // あくのジュエル
+    ITEM_HAGANENOZYUERU,			// はがねのジュエル
+    ITEM_NOOMARUZYUERU,				// ノーマルジュエル
+
+    ITEM_KURABONOMI,				// クラボのみ
+    ITEM_KAGONOMI,				  // カゴのみ
+    ITEM_MOMONNOMI,				  // モモンのみ
+    ITEM_TIIGONOMI,				  // チーゴのみ
+    ITEM_NANASINOMI,				// ナナシのみ
+    ITEM_HIMERINOMI,				// ヒメリのみ
+    ITEM_ORENNOMI,				  // オレンのみ
+    ITEM_KIINOMI,				    // キーのみ
+    ITEM_RAMUNOMI,				  // ラムのみ
+    ITEM_OBONNOMI,				  // オボンのみ
+    ITEM_FIRANOMI,				  // フィラのみ
+    ITEM_UINOMI,				    // ウイのみ
+    ITEM_MAGONOMI,				  // マゴのみ
+    ITEM_BANZINOMI,				  // バンジのみ
+    ITEM_IANOMI,				    // イアのみ
+    ITEM_ZURINOMI,				  // ズリのみ
+    ITEM_BURIINOMI,				  // ブリーのみ
+    ITEM_NANANOMI,				  // ナナのみ
+    ITEM_SESINANOMI,				// セシナのみ
+    ITEM_PAIRUNOMI,				  // パイルのみ
+    ITEM_ZAROKUNOMI,				// ザロクのみ
+    ITEM_NEKOBUNOMI,				// ネコブのみ
+    ITEM_TAPORUNOMI,				// タポルのみ
+    ITEM_ROMENOMI,				  // ロメのみ
+    ITEM_UBUNOMI,				    // ウブのみ
+    ITEM_MATOMANOMI,				// マトマのみ
+    ITEM_MOKOSINOMI,				// モコシのみ
+    ITEM_GOSUNOMI,				  // ゴスのみ
+    ITEM_RABUTANOMI,				// ラブタのみ
+    ITEM_NOMERUNOMI,				// ノメルのみ
+    ITEM_NOWAKINOMI,				// ノワキのみ
+    ITEM_SIIYANOMI,				  // シーヤのみ
+    ITEM_KAISUNOMI,				  // カイスのみ
+    ITEM_DORINOMI,				  // ドリのみ
+    ITEM_BERIBUNOMI,				// ベリブのみ
+    ITEM_OKKANOMI,				  // オッカのみ
+    ITEM_ITOKENOMI,				  // イトケのみ
+    ITEM_SOKUNONOMI,				// ソクノのみ
+    ITEM_RINDONOMI,				  // リンドのみ
+    ITEM_YATHENOMI,				  // ヤチェのみ
+    ITEM_YOPUNOMI,				  // ヨプのみ
+    ITEM_BIAANOMI,				  // ビアーのみ
+    ITEM_SYUKANOMI,				  // シュカのみ
+    ITEM_BAKOUNOMI,				  // バコウのみ
+    ITEM_UTANNOMI,				  // ウタンのみ
+    ITEM_TANGANOMI,				  // タンガのみ
+    ITEM_YOROGINOMI,				// ヨロギのみ
+    ITEM_KASIBUNOMI,				// カシブのみ
+    ITEM_HABANNOMI,				  // ハバンのみ
+    ITEM_NAMONOMI,				  // ナモのみ
+    ITEM_RIRIBANOMI,				// リリバのみ
+    ITEM_HOZUNOMI,				  // ホズのみ
+    ITEM_TIIRANOMI,				  // チイラのみ
+    ITEM_RYUGANOMI,				  // リュガのみ
+    ITEM_KAMURANOMI,				// カムラのみ
+    ITEM_YATAPINOMI,				// ヤタピのみ
+    ITEM_ZUANOMI,				    // ズアのみ
+    ITEM_SANNOMI,				    // サンのみ
+    ITEM_SUTAANOMI,				  // スターのみ
+    ITEM_NAZONOMI,				  // ナゾのみ
+    ITEM_MIKURUNOMI,				// ミクルのみ
+    ITEM_IBANNOMI,				  // イバンのみ
+    ITEM_ZYAPONOMI,				  // ジャポのみ
+    ITEM_RENBUNOMI,				  // レンブのみ
+  };
+
+  OS_Printf("TRIDは1オリジンで表示します(バトルサブウェイデータメーカーでの表示にあわせている)\n");
+
+  // 回復トレーナー以外をチェックする
+  for( tr_id = 0; tr_id < INF_TR_AREA_DATA_MAX  ; tr_id++ )
+  {
+    s32 i;
+    u32 poke_index;
+    BSUBWAY_POKEMON_ROM_DATA  prd_d;
+    const INF_TR_AREA_DATA* sc_tr_data = INF_TOOL_GetTrainerParam(tr_id);
+
+    //トレーナーデータセット
+    trd = FBI_TOOL_AllocTrainerRomData(&tr_data ,ARCID_INFINITY_DUGENON_TR ,
+        tr_id,NARC_message_infinity_trname_dat ,HEAPID_FIELDMAP);
+
+    // 手持ちになる可能性のあるポケモンを全てチェック
+    for( poke_index = 0; poke_index < trd->use_poke_cnt ; poke_index ++ )
+    {
+      BOOL item_find = FALSE;
+      GFL_ARC_LoadData( &prd_d,ARCID_INFINITY_DUGENON_PD,
+          trd->use_poke_table[poke_index] );
+
+      // 持ち物チェック
+      for( i = 0 ; i < NELEMS( c_item_table ) ; i++ )
+      {
+        if( prd_d.item_no == c_item_table[i] )
+        {
+          item_find = TRUE;
+          break;
+        }
+      }
+      if( item_find == FALSE )
+      {
+        GF_ASSERT_MSG(0,"TRID:%d 使用を想定していないアイテムを装備したポケモンを所持しています\n",tr_id+1);
+      }
+
+      // 努力値チェック
+      {
+        /**
+         *  ステータスIndex
+         */
+        enum {
+          _HP = 0,
+          _POW,
+          _DEF,
+          _AGI,
+          _SPOW,
+          _SDEF,
+          _PARAM_MAX,
+        };
+        ///< パーソナル贈与努力値ID
+        u8  param_id_tbl[_PARAM_MAX] =
+        {
+          POKEPER_ID_pains_hp,
+          POKEPER_ID_pains_pow,
+          POKEPER_ID_pains_def,
+          POKEPER_ID_pains_agi,
+          POKEPER_ID_pains_spepow,
+          POKEPER_ID_pains_spedef,
+        };
+        u8  exp[ _PARAM_MAX ];
+        u8 exp_cnt = 0;
+
+        // 基本努力値をパーソナルから取得
+        for(i=0; i<_PARAM_MAX; ++i){
+          exp[ i ] = POKETOOL_GetPersonalParam( prd_d.mons_no, prd_d.form_no, param_id_tbl[i] );
+        }
+
+        // 複数の努力値チェック
+        for(i=0; i<_PARAM_MAX; ++i){
+          if( exp[ i ] > 0 )
+          {
+            exp_cnt++;
+          }
+          if( exp_cnt > 1 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d \n複数の努力値が混ざっています\n",tr_id+1);
+          }
+        }
+
+        if( sc_tr_data->version == VERSION_W2 )
+        {
+          if( exp[_SPOW] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特攻の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+          if( exp[_SDEF] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特防の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+          if( exp[_AGI] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n素早さの努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+        }
+        else if( sc_tr_data->version == VERSION_B2 )
+        {
+          if( exp[_POW] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n攻撃の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+          if( exp[_DEF] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n防御の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+          if( exp[_HP] > 0 )
+          {
+            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\nHPの努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+          }
+        }
+        else
+        {
+          GF_ASSERT(0);
+        }
+      }
+
+    }
+
+    GFL_HEAP_FreeMemory( trd );
+  }
+
+  OS_Printf("チェック完了\n");
+}
