@@ -1684,9 +1684,9 @@ static const u8 rank_tbl[]={ 1,1,1,2,3 };
 //----------------------------------------------------------------------------------
 static int _get_director_msg( BTL_CLIENT *wk )
 {
-  int result,rank=0;
   const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+  int result=0, rank = rank_tbl[bsp->player_star_rank];
   
   switch(wk->pokewoodSeqWork.Estimate.director_msg){
   case 1: case 2: case 3:   //選択肢後メッセージ
@@ -1694,8 +1694,6 @@ static int _get_director_msg( BTL_CLIENT *wk )
     wk->pokewoodSeqWork.Estimate.director_msg = 0; // クリア
     break;
   default:     // ランダムメッセージ
-    rank = bsp->player_star_rank;
-
     // ターン超過していたら超過メッセージ
     if(wk->clientTurnCount > senario->best_turn){
       result = pw_director_0_delay + PW_DIRECTOR_1RANK_MSG_MAX*rank;
@@ -1704,6 +1702,8 @@ static int _get_director_msg( BTL_CLIENT *wk )
       result = GFUser_GetPublicRand(PW_DIRECTOR_RAND_MSG_MAX) + PW_DIRECTOR_1RANK_MSG_MAX*rank;
     }
   }
+  
+  GF_ASSERT(result);
   return result;
 }
 
