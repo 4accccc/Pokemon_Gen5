@@ -138,12 +138,12 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]のいもうと『？？？？？さん▼
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『[Name:TrainerName ]さん▼
 ……ポケモンを　もらったら
 ぜったいに　たいせつに　してあげてね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:18:10" />
+				Time="2011-10-20T10:10:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -151,12 +151,12 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]の妹『？？？？？さん▼
+			<Text>[Name:TrainerName Idx="1" ]の妹『[Name:TrainerName ]さん▼
 ……ポケモンを　もらったら
 ぜったいに　たいせつに　してあげてね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:10:55" />
+				Time="2011-10-20T10:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -166,10 +166,11 @@ GIRL2</Text>
 			Language="JPN">
 			<Comment>♀
 ・続けて
+・0＝主人公名前
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:18:59" />
+				Time="2011-10-20T10:11:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3603,6 +3604,8 @@ GIRL2</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12_swrival_23" />
+	<TextRow
 		Label="msg_c12_white_15"
 		Style="Large">
 		<LanguageCell
@@ -4737,12 +4740,10 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それにしても　チェレンったら……▼
-ジムリーダーに　なって　はじめての
-しょうぶで　きんちょう　したのかな？▼</Text>
+			<Text>それにしても　チェレンったら……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4750,12 +4751,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それにしても　チェレンったら……▼
-ジムリーダーに　なって　初めての
-勝負で　緊張したのかな？▼</Text>
+			<Text>それにしても　チェレンったら……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4766,10 +4765,10 @@ GIRL2</Text>
 			<Comment>♀
 ・ジムを向いてから
 　主人公と向き合いメッセージ
-・続けて</Comment>
+・続けてswleader1_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:13:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4822,11 +4821,11 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
-・続けて</Comment>
+・チェレン登場
+・続けてwhite_24</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:13:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4880,10 +4879,10 @@ GIRL2</Text>
 			Language="JPN">
 			<Comment>♀
 ・その場でジャンプなど驚き表現
-・続けて</Comment>
+・続けてwhite_25</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:13:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4913,11 +4912,10 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『チェレン
-どうしたの？</Text>
+			<Text>ベル『どっ　どうしたの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:09:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4925,11 +4923,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『チェレン
-どうしたの？</Text>
+			<Text>ベル『どっ　どうしたの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:09:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4938,11 +4935,11 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・
-・続けて</Comment>
+・上をむいてメッセージ表示
+・続けてswleader1_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:13:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5000,10 +4997,10 @@ GIRL2</Text>
 			Language="JPN">
 			<Comment>♂
 ・
-・続けて</Comment>
+・続けてswleader1_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:13:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5248,7 +5245,7 @@ TVトランシーバー</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5283,10 +5280,12 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・メッセージ表示後、ライブキャスター画面へ</Comment>
+			<Comment>・メッセージ表示後、ライブキャスター画面へ
+・tvt_event_06.mstxt
+・フィールドに復帰したらwhite_28</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:26:01" />
+				Time="2011-10-20T11:54:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5298,7 +5297,7 @@ TVトランシーバー</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5309,11 +5308,17 @@ TVトランシーバー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『ね！　さっそく　かけてみてよ！
-アララギはかせの　かお　みたいの▼</Text>
+			<Text>ベル『ね　[Name:TrainerName ]！
+アララギはかせ　かっこいいでしょ！▼
+ライブキャスターで　はなせば
+ポケモンずかんの　かんせいぐあいを▽
+ひょうか　してくれたり▼
+ポケモンの　しんかに　ついて
+いろいろ　おしえてくれるよ！▼
+もちろん　あたしたちも！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:00:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5321,11 +5326,17 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ね！　さっそく　かけてみてよ！
-アララギ博士の　顔　みたいの▼</Text>
+			<Text>ベル『ね　[Name:TrainerName ]！
+アララギ博士　かっこいいでしょ！▼
+ライブキャスターで　話せば
+ポケモン図鑑の▽
+完成具合を　評価してくれたり▼
+ポケモンの　しんかに　ついて
+いろいろ　おしえてくれるよ！▼
+もちろん　あたしたちも！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5334,12 +5345,12 @@ TVトランシーバー</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・移動した場合、メッセージ後に戻す
-・操作説明アプリが必要か？
-　捕獲デモのように下画面を押していく</Comment>
+・ライブキャスター画面から復帰したら
+　自動で表示
+・続けてwhite_29</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:00:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5369,13 +5380,13 @@ TVトランシーバー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あなたの　ポケモンが
+			<Text>あなたの　ポケモンが
 どれだけ　なついている　とか▼
 どれだけ　がんばってるか
-あたしが　おしえてあげるね！！</Text>
+あたしが　おしえてあげるね！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:31:26" />
+				Time="2011-10-20T11:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5383,13 +5394,13 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あなたの　ポケモンが
+			<Text>あなたの　ポケモンが
 どれだけ　なついている　とか▼
 どれだけ　がんばってるか
-あたしが　教えてあげるね！！</Text>
+あたしが　教えてあげるね！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:31:32" />
+				Time="2011-10-20T11:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5399,11 +5410,10 @@ TVトランシーバー</Text>
 			Language="JPN">
 			<Comment>♀
 ・ライブキャスター使用後
-・19番道路でポケガイダンス開始まで
-　繰り返し</Comment>
+・続けてswleader1_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:43:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5436,10 +5446,10 @@ TVトランシーバー</Text>
 			<Text>チェレン『そうだね▼
 ぼくは　ポケモンの　とくせいや
 タイプの　あいしょうに　ついて▽
-しっていることを　おしえてあげるよ</Text>
+しっていることを　おしえてあげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:30:50" />
+				Time="2011-10-20T11:44:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5450,10 +5460,10 @@ TVトランシーバー</Text>
 			<Text>チェレン『そうだね▼
 ぼくは　ポケモンの　特性や
 タイプの　相性に　ついて▽
-知っていることを　教えてあげるよ</Text>
+知っていることを　教えてあげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T09:31:52" />
+				Time="2011-10-20T11:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5463,11 +5473,10 @@ TVトランシーバー</Text>
 			Language="JPN">
 			<Comment>♂
 ・ライブキャスター使用後
-・19番道路でポケガイダンス開始まで
-　繰り返し</Comment>
+・続けてswrival_24</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:40:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5487,6 +5496,668 @@ TVトランシーバー</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ジムリーダーだな！
+さっそくだけど　ちょうせん　するぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:00:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:00:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ジムリーダーだな！
+さっそくだけど　挑戦するぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:45:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:06:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面上から登場しメッセージ表示
+・続けてswleader1_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:06:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:04:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swleader1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『きみも
+てごわそうな　トレーナーだね▼
+りょうかい！
+では　ポケモンジムに　おいでよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:02:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:01:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『きみも
+手強そうな　トレーナーだね▼
+了解！
+では　ポケモンジムに　おいでよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:45:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:06:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、ジム方面へ移動
+・続けてswrival_25</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:40:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:04:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ！
+ぜったいに　かつからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:06:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:05:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ！
+絶対に　勝つからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:46:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:06:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、ジム方面へ倍速で移動
+・画面外に消えると、white_33</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:07:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:03:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ジムリーダーって
+そうぞういじょうに　たいへん　だねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:20:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:04:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ジムリーダーって
+想像以上に　大変だねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:21:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:08:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ジム方面を見ながらメッセージ表示
+・続けてwhite_34</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:21:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+ベル『それじゃあ
+Ｃギアを　つかえるように　するね！▼
+Ｃギアは　せきがいせんや
+むせん　Ｗｉ－Ｆｉなど▽
+つうしんに　かんけいする　デバイス！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:21:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:14:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+ベル『それじゃあ
+Ｃ－ＧＥＡＲを▽
+使えるように　するね！▼
+Ｃ－ＧＥＡＲは　赤外線や
+無線　Ｗｉ－Ｆｉなど▽
+通信に　関係する　デバイス！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:21:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:14:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・gear_01
+※仮メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:21:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:14:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_gear_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+[System:Color name="1" ]Ｃギア[/System:Color]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+[System:Color name="1" ]Ｃギア[/System:Color]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+ＭＥ再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:22:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_gear_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　でんげんを　いれて
+つうしんを　はじめますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　電源を入れて
+通信を　始めますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:15:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・はい/いいえの選択肢表示
+・はい　→Ｃギアをアクティブで起動
+　いいえ→Ｃギアをパッシブで起動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:22:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_gear_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:22:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_gear_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:22:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_gear_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　きのうが
+せいげんされますが　よろしいですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　機能が
+制限されますが　よろしいですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・いいえを選択したときの再確認</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいの　せっていにより
+むせんつうしんが　つかえません▼
+むせんつうしんを　つかうには
+ほんたいせっていの　むせんつうしんを▽
+オンにしてください　（５０６９９）▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体の　設定により
+無線通信が　使えません▼
+無線通信を　使うには
+本体設定の　無線通信を▽
+ＯＮにしてください　（５０６９９）▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:16:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・『はい』を選択したが
+　本体設定で無線通信をOFFにしているとき
+　（TWL限定）
+・続けてwhite_36</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:22:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｃギア関連</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほら！　Ｃギアが　きどうして
+がめんが　あらわれたでしょ！▼
+その　がめんの　みぎしたに　ある
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:19:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほら！　Ｃ－ＧＥＡＲが　起動して
+画面が　あらわれたでしょ！▼
+その　画面の　右下に　ある
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:19:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+※１９番道路でのせいそくちリスト
+　追加イベントまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:23:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｃギアの　でんげんを　いれるなら
+がめん　みぎしたの▽
+でんげんマークを　タッチするんだよ！▼
+そして　でんげんを　いれたあとは
+がめんの　みぎしたに　ある▽
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめるよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:20:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　電源を　入れるなら
+画面　右下の▽
+電源マークを　タッチするんだよ！▼
+そして　電源を　入れたあとは
+画面　右下に　表示される▽
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:20:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+※１９番道路でのせいそくちリスト
+　追加イベントまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:23:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

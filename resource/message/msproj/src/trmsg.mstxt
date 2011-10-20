@@ -23576,31 +23576,85 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="TRID_SCHOOLB_17_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっと　アデクさんから
+いろいろ　おそわらないと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もっと　アデクさんから
+いろいろ　教わらないと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLB_18_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっと　アデクさんから
+いろいろ　おそわらないと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もっと　アデクさんから
+いろいろ　教わらないと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="TRID_SCHOOLG_09_TRMSG_FIGHT_LOSE"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えー！？　オレンのみを
-もたせていたのに　まけるなんて！</Text>
+			<Text>えー！？　この　あいしょうで
+あたしが　まけちゃうの！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えー！？　オレンのみを
-持たせていたのに　負けるなんて！</Text>
+			<Text>えー！？　この相性で
+あたしが　負けちゃうの！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -23609,6 +23663,60 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T02:39:29" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLG_15_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>えー！？　この　あいしょうで
+あたしが　まけちゃうの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えー！？　この相性で
+あたしが　負けちゃうの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLG_16_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>えー！？　この　あいしょうで
+あたしが　まけちゃうの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えー！？　この相性で
+あたしが　負けちゃうの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_TANPAN_19_TRMSG_FIGHT_LOSE"
@@ -24918,6 +25026,249 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T02:39:30" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_26_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_26_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_26_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_33_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_33_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_33_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_34_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_34_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_34_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_ADULTW_01_TRMSG_FIGHT_START"
@@ -74972,27 +75323,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオさまの　となりで
+			<Text>ヴィオさまの　おそばで
 なんたる　しったい　だ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオさまの　隣で
+			<Text>ヴィオさまの　おそばで
 なんたる　失態だ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:39:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -75001,5 +75352,572 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T02:39:30" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_10_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_10_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_10_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLB_16_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLB_16_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLB_16_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLG_14_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLG_14_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCHOOLG_14_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPM_16_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPM_16_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPM_16_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPW_15_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPW_15_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ESPW_15_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTM_18_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTM_18_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTM_18_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTW_15_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまえ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘前
+仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTW_15_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SCIENTISTW_15_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうご
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘後
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T11:35:48" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

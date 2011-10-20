@@ -2,29 +2,20 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_transceiver_r07_01"
+		Label="msg_transceiver_c12_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]▼
-ママです
-そっちは　どう？▼
-へえ　７ばんどうろ　なの！？
-ずいぶん　とおくまで　いったのね▼
-ねえ
-あなたの　ポケモンは　げんき？▼
-だって　あなただけじゃ
-そんな　とおくまで　いけないでしょ▼
-いつも　いっしょに　いてくれる
-ポケモンの　おかげなんだから▽
-だいじに　してあげてね！▼
-なーんて　マジメに　かたっちゃった！
-それじゃあ　げんきで　いなさいね！▼
-いじょう　せんぱいトレーナーの
-ママ　からでした！▼</Text>
+			<Text>ハーイ！　[Name:TrainerName ]！！
+わたしが　アララギよ▼
+ベルから　きいたわ！
+ポケモンずかんを　うけとってくれて▽
+ほんとうに　ありがとう！▼
+あなたの　おかげで　わたしたちと
+ポケモンは　さらに　なかよくなれるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,25 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]▼
-ママです
-そっちは　どう？▼
-へえ　７番道路なの！？
-ずいぶん　遠くまで　行ったのね▼
-ねえ
-あなたの　ポケモンは　元気？▼
-だって　あなただけじゃ
-そんな　遠くまで　行けないでしょ▼
-いつも　一緒に　いてくれる
-ポケモンの　おかげなんだから▽
-大事に　してあげてね！▼
-なーんて　マジメに　語っちゃった！
-それじゃあ　元気で　いなさいね！▼
-以上　先輩トレーナーの
-ママから　でした！▼</Text>
+			<Text>ハーイ！　[Name:TrainerName ]！！
+わたしが　アララギよ▼
+ベルから　きいたわ！
+ポケモン図鑑を　受け取ってくれて▽
+本当に　ありがとう！▼
+あなたの　おかげで　わたしたちと
+ポケモンは　さらに　仲良くなれるわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:24:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,19 +40,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>■　r07：７番道路イベント用メッセージ
-・ママの口ぱくアニメーション再生
-・続けて</Comment>
+			<Comment>■　c12：ヒオウギ用メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>主人公ママ</Text>
+			<Text>アララギ博士（娘）</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -79,5 +59,318 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギはかせ
+こっちは　おもしろいですよ！▼
+２ねんまえは　かくにん　できなかった
+ポケモンが　たくさん　いますね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ博士
+こっちは　おもしろいですよ！▼
+２年前は　確認できなかった
+ポケモンが　たくさん　いますね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:24:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル
+とおくまで　おつかい　ありがとうね▼
+そして　チェレン
+ジムリーダーは　どうかしら？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル
+遠くまで　おつかい　ありがとうね▼
+そして　チェレン
+ジムリーダーは　どうかしら？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:24:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギはかせ　おひさしぶりです！
+あいかわらず　おげんきそうで▼
+ジムリーダー　ですか？▼
+むずかしいですね
+いつもの　パートナーなら……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ博士　おひさしぶりです！
+あいかわらず　お元気そうで▼
+ジムリーダー　ですか？▼
+難しいですね
+いつもの　パートナーなら……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:38:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まっ　チェレンたら……▼
+ギリギリの　しょうぶを　することで
+ちょうせんしゃと　ポケモンの▽
+きずなを　ふかめさせる▽
+ジムリーダーに　なるんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:39:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まっ　チェレンたら……▼
+ギリギリの　勝負を　することで
+挑戦者と　ポケモンの▽
+きずなを　深めさせる▽
+ジムリーダーに　なるんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:39:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいじょうぶ　ですよお！▼
+チェレンは　しんまいジムリーダー
+あたしは　ポケモンはかせの　タマゴ▼
+[Name:TrainerName ]は　まだ
+トレーナーに　なりたて　だけど▽
+いつも　ポケモンが　いてくれますから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:39:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>大丈夫ですよお！▼
+チェレンは　新米ジムリーダー
+あたしは　ポケモン博士の　タマゴ▼
+[Name:TrainerName ]は　まだ
+トレーナーに　なりたて　だけど▽
+いつも　ポケモンが　いてくれますから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_transceiver_c12_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよ　ベル！▼
+わたしたちの　せかいは
+ポケモンとの　せかい　なの！▼
+みんな！　そのことを
+いつも　かんがえて　そのうえで▼
+じぶんの　やりたいこと　できることを
+ポケモンと　おいもとめてね！▼
+とくに　[Name:TrainerName ]！
+ポケモンずかんも　だいじ　だけど▼
+まずは　ポケモンとの　たびを
+こころゆくまで　たのしんでね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:40:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよ　ベル！▼
+わたしたちの　世界は
+ポケモンとの　世界なの！▼
+みんな！　そのことを
+いつも　考えて　そのうえで▼
+自分の　やりたいこと　できることを
+ポケモンと　追い求めてね！▼
+とくに　[Name:TrainerName ]！
+ポケモン図鑑も　大事だけど▼
+まずは　ポケモンとの　旅を
+こころゆくまで　楽しんでね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T11:40:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・TVトランシーバー終了処理
+・フィールドに復帰する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:52:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

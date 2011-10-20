@@ -733,10 +733,10 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！　こっち▼</Text>
+			<Text>[Name:TrainerName ]！　あっちだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:02:51" />
+				Time="2011-10-20T12:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -744,10 +744,10 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！　こっち▼</Text>
+			<Text>[Name:TrainerName ]！　あっちだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:02:52" />
+				Time="2011-10-20T12:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

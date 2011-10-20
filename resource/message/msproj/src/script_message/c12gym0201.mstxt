@@ -520,13 +520,13 @@
 ポケモンに　ふるいたてるの　わざを▽
 おぼえさせることが　できる▼
 そして　たたかっているときに
-「ふるいたてる」を　つかうと▽
+ふるいたてるを　つかうと▽
 こうげきと　とくこうが　あがるよ！▼
 ちなみに　わざマシンは
 なんどでも　つかえるからね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T10:02:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -538,13 +538,13 @@
 ポケモンに　ふるいたてるの　技を▽
 覚えさせることが　できる▼
 そして　戦っているときに
-「ふるいたてる」を　使うと▽
+ふるいたてるを　使うと▽
 攻撃と　特攻が　あがるよ！▼
 ちなみに　わざマシンは
 何度でも　使えるからね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T08:52:33" />
+				Time="2011-10-20T10:02:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -731,11 +731,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・pos（local 21、19）左向き
+・GRIDX＝17、GRIDZ＝18、左向き
 ・戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:30:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -877,12 +877,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっぱり　きみのように
-たびをして　きたえた　ほうが▽
-つよくなれるのかな？</Text>
+			<Text>ぼくも　たびをして
+ポケモンを　きたえようかな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:37:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -890,12 +889,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっぱり　きみのように
-旅をして　鍛えた　ほうが▽
-強くなれるのかな？</Text>
+			<Text>ぼくも　旅をして
+ポケモンを　鍛えようかな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -938,12 +936,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　ジムの　トレーナーに
-なりたてだけど　チェレンさんから▽
+			<Text>たったいま　チェレンさんから
 まなんだことを　おしえてあげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -951,12 +948,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　ジムの　トレーナーに
-なりたてだけど　チェレンさんから▽
+			<Text>たったいま　チェレンさんから
 学んだことを　教えてあげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:36:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -965,11 +961,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・pos（local 9、9）右向き
+・GRIDX＝13、GRIDZ＝19、右向き
 ・戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-20T12:31:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
