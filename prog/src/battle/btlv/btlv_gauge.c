@@ -268,7 +268,8 @@ struct _BTLV_GAUGE_WORK
   u32             mode_switch_req         :1;
 
   u32             clwk_load               :1;
-  u32                                     :8;
+  u32             pokewood                :2;
+  u32                                     :6;
 
   u32             now_bgm_no;
 
@@ -352,6 +353,10 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, int pokewood, HEAPID he
     bgw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_GAUGE_DamageEffect, bgdew, 0 );
   }
 
+  // ポケウッドの撮影・上映状態を保存
+  bgw->pokewood = pokewood;
+
+  // ポケウッドの上映以外ならゲージ初期化
   if( pokewood != BTL_POKEWOOD_SHOW )
   {
     BTLV_GAUGE_LoadResorce( bgw );
@@ -483,8 +488,8 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 			}
     }
   }
-  //ピンチBGM再生チェック
-  if( bgw->pinch_bgm_no_check == 0 )
+  //ピンチBGM再生チェック( ポケウッドではピンチ曲を鳴らさない）
+  if( bgw->pinch_bgm_no_check == 0 && bgw->pokewood==BTL_POKEWOOD_NONE)
   { 
     pinch_bgm_check( bgw );
   }
