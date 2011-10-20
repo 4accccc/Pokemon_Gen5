@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-09-23T14:25:03" source="white12_17.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-10-19T11:23:13" source="white12_17.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-09-23T14:25:03" source="white12_17.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-10-19T11:23:13" source="white12_17.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -272,17 +272,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="out63_michi3_pl"
-		path="C:/home/swan_data3d/field/out63/chip/tex/ntr/out63_michi3.bmp"
+		path="C:/home/swan_data3d/field/out63/chip/tex/out63_michi3.tga"
 	>
 		<bitmap size="64">
-			cddd 7777 8888 aaa8 eeee 77cc 4444 8884
-			eeee 17cc 1111 5441 7cdd 1177 1111 5311
-			2177 2222 1222 5511 1337 2222 2222 6531
-			1377 2222 2222 6531 337b 2221 2222 6531
-			377b 2333 1222 5331 977b 3337 3111 3333
-			79bb 7779 1137 1111 bbbb 7777 1177 0000
-			bbbb 799b 3779 0011 bbbb 999b 7799 0013
-			bccc 99bc 7999 0137 cbcc 9bcb 7999 1337
+			d444 8888 0000 1110 6666 88dd 2222 0002
+			6666 58dd 5555 b225 8d44 5588 5555 ba55
+			3588 3333 5333 bb55 5aa8 3333 3333 9ba5
+			5a88 3333 3333 9ba5 aa8e 3335 3333 9ba5
+			a88e 3aaa 5333 baa5 c88e aaa8 a555 aaaa
+			8cee 888c 55a8 5555 eeee 8888 5588 7777
+			eeee 8cce a88c 7755 eeee ccce 88cc 775a
+			eddd cced 8ccc 75a8 dedd cede 8ccc 5aa8
 		</bitmap>
 	</tex_image>
 	<tex_image index="12" name="out63_michi4"
@@ -817,8 +817,8 @@
 		2a77 21d1 1d6d 2614 25f3 21b0 7fff 7fff
 	</tex_palette>
 	<tex_palette index="11" name="out63_michi3_pl" color_size="16">
-		1d6d 1d8e 216c 21b0 21d0 25f3 2614 29d0
-		2a33 31f1 3696 3def 4210 4274 4eb6 7fff
+		2a33 3696 21d0 216c 4274 1d8e 4eb6 1d6d
+		29d0 2614 21b0 25f3 31f1 4210 3def 7fff
 	</tex_palette>
 	<tex_palette index="12" name="out63_michi4_pl" color_size="8">
 		1d8e 21d1 1d6d 29d0 21b0 31f1 4631 4210

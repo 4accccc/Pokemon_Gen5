@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-09-29T12:58:15" source="out06_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-10-19T16:39:31" source="out06_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-09-29T12:58:15" source="out06_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-10-19T16:39:31" source="out06_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -39,20 +39,20 @@
 		<bitmap size="128">
 			ffff fdfd fefd fefd fdfd fdfd fefe fefe
 			ffff ffff fdff fdff fdff fffd ffff ffff
-			fcfc fcfc ffff fffd fffd fcff fcfc fcfc
-			fcfc fcfc fcfc fffc fffc fcfc fcfc fcfc
-			fcfe fcfe fcfc fcfc fcfc fefe fefe fefe
-			fefe fefc fefe fefe fdfd fffd fffd fefe
-			fefd fefe fdfe fdfd fdfd fdff fdff fdfd
-			fdfd fdfd fdfd fdfd fffd feff fdff fdfd
-			fdfd fdfd fdfd ffff ffff ffff ffff ffff
-			fdfd fdfd fffe ffff ffff ffff ffff ffff
-			feff fefe feff fbfb fbfb fffb ffff fbff
-			ffff ffff fbfb fafb faf9 f9f9 f9fb fffb
-			fbfb fbfb fbfb f9fa f9fa f9fa fbf9 fbfb
-			fb7b fb7b f9fb faf9 faf8 f9f8 f9f9 7bfa
-			7a02 7bfb fafb f8fa f8fa f8f8 f8fa 027a
-			0000 0202 f87a f8f8 f8f8 f8f8 0278 0000
+			f9f9 f9f9 ffff fffd fffd f9ff f9f9 f9f9
+			f9f9 f9f9 f9f9 fff9 fff9 f9f9 f9f9 f9f9
+			f9fe f9ff f9f9 f9f9 f9f9 ffff fefe fefe
+			fefe fff9 f9ff f9f9 feff fefd fffd fefe
+			fefd fefe fffe fffd fefe fdfe fdfe fdfd
+			fdfd fdfd fdfd fdff fdfd fefd fdfd fdfd
+			fdfd fdfd fdfd fdfd fefe ffff feff fdfd
+			fdfd fdfd fffd ffff ffff ffff ffff feff
+			feff fefe fbff fbfb fbfb fffb ffff fbff
+			ffff ffff fbfb fcfb fcfa fafa fafb fffb
+			fbfb fbfb fbfb fafc fafc fafc fbfa fbfb
+			fbc3 fbfb fafb fcfa fcf8 faf8 fafa c3fc
+			7c04 fbc3 fcfb f8fc f8fc f8f8 78c4 04c4
+			0000 7c04 f8c4 f8f8 78f8 00c0 0400 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="ga_s1_0"
@@ -63,10 +63,10 @@
 		path="C:/home/swan_data3d/field/out06/chip/tex/ga_s1_0.tga"
 	>
 		<bitmap size="32">
-			2002 5054 4442 0024 4202 5244 4442 0022
-			4202 5344 4422 0522 4022 3444 2225 5552
-			2221 5444 2225 1155 2211 5522 5223 1125
-			1111 3222 5223 1112 1111 2221 2233 1112
+			4444 6065 5554 0045 5440 6452 5554 0044
+			2660 6255 5544 0644 2444 2222 4446 6664
+			2445 2222 4446 3566 4423 2222 6442 3346
+			2331 2224 6442 1354 3311 4443 4422 1134
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="ga_s_futa"
@@ -77,14 +77,14 @@
 		path="C:/home/swan_data3d/field/out06/chip/tex/ga_s_futa.tga"
 	>
 		<bitmap size="64">
-			4111 2114 3333 2333 4102 2244 3333 3333
-			1122 3244 3333 3333 1122 2221 3332 3333
-			1112 3331 3222 2333 2111 3332 3233 2223
-			3211 3333 2233 1112 3321 3333 2113 1222
-			3321 3333 2111 1122 3311 4333 2114 1122
-			2221 4442 1411 1111 2222 4442 4411 1114
-			2222 1442 4441 4444 4222 2211 2441 1423
-			4441 2221 3321 1133 4411 1221 3321 1133
+			4222 3224 1111 3111 4203 3344 1111 1111
+			2233 1344 1111 1111 2233 3332 1113 1111
+			2223 1112 1333 3111 3222 1113 1311 3331
+			1322 1111 3311 2223 1132 1111 3221 2333
+			1132 1111 3222 2233 1122 4111 3224 2233
+			3332 4443 2422 2222 3333 4443 4422 2224
+			3333 2443 4442 4444 4333 3322 3442 2431
+			4442 3332 1332 2211 4422 2332 1132 2211
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gake1_s0"
@@ -644,35 +644,35 @@
 		path="C:/home/swan_data3d/field/out06/chip/tex/yamaga_s01.tga"
 	>
 		<bitmap size="128">
-			4444 5544 6655 4446 4444 5444 6645 4446
-			4444 5444 4444 4466 4444 5544 4446 4466
-			4444 5544 6446 4666 4444 5564 6465 6666
-			4444 5564 6655 6666 4446 5566 6655 6666
-			4666 5556 6555 6666 6333 5556 6555 6666
-			3333 5553 6555 3666 3333 5553 6555 6366
-			3333 3553 6533 3366 3333 3300 6613 0036
-			2000 3322 3111 2203 2222 3122 1111 2220
-			2222 0122 1110 2220 2222 0122 1110 2220
-			2222 0122 1110 2220 2222 0122 0030 2210
-			1222 3001 3333 2103 3300 3333 3333 0333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 0333 3300 3330 3333 0000 0000
-			3300 0033 0000 0000 0000 0000 0002 1110
+			0000 4457 5544 0075 0000 4477 5574 0075
+			7000 4770 7777 0055 0700 4570 7775 0755
+			0770 4470 5775 7755 0777 4457 5754 7555
+			7775 4457 5544 5555 7755 4455 5544 5555
+			5555 4445 5444 5555 5666 4445 5444 6665
+			6666 4455 5544 6666 6666 4456 5544 6666
+			6666 5666 6565 6666 1166 6611 6666 0006
+			1111 2322 6661 2221 2222 3232 1112 2222
+			2223 2333 3333 2223 3333 3333 3333 3333
+			3333 3333 3333 3333 3233 2222 1222 3311
+			1222 1111 1111 1111 1111 1111 6611 1111
+			1111 1616 6666 1666 6666 6161 6666 6666
+			6666 1616 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6060 6666 6666 6666
+			0606 6666 0666 6600 6060 6666 0000 0000
+			0600 0066 0000 0000 0000 0000 0002 1110
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="25">
 	<tex_palette index="0" name="ga_s01a_pl" color_size="8">
-		3b1c 3b1b 3afc 3ada 36ba 3277 3698 36b9
+		3b1c 36da 3efb 36db 3afc 3277 2e78 3299
 	</tex_palette>
 	<tex_palette index="1" name="ga_s1_0_pl" color_size="8">
-		29d0 2e56 25f3 2a14 2e14 29d2 7fff 7fff
+		29d0 3277 2a14 2e36 29f3 2e14 29d2 7fff
 	</tex_palette>
 	<tex_palette index="2" name="ga_s_futa_pl" color_size="8">
-		29f2 29d1 2e14 3236 258f 7fff 7fff 7fff
+		29f2 3256 29d1 2e14 258f 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gake1_s0_pl" color_size="16">
 		2213 2256 2634 2e76 2e99 3ab9 433d 435e
@@ -746,7 +746,7 @@
 		42fd 42fe 431e 433f 435e 437e 437f 7fff
 	</tex_palette>
 	<tex_palette index="24" name="yamaga_s01_pl" color_size="8">
-		3277 3698 36b9 2a36 2e56 25f3 2a14 7fff
+		3277 2e78 3299 36ba 25f3 2a14 2a36 2e36
 	</tex_palette>
 </tex_palette_array>
 
