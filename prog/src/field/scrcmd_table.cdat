@@ -1123,6 +1123,18 @@
   DEF_CMD( EvCmdWBTGetTrainerFlag,    EV_SEQ_WBT_GET_TRAINER_FLAG )
   NO_CMD()
 
+  //国連関連
+  DEF_CMD( EvCmdUn_GetCountryNum, EV_SEQ_UN_GET_COUNTRY_NUM )
+  DEF_CMD( EvCmdUn_SetTalkFlg, EV_SEQ_UN_SET_TALK_FLG )
+  DEF_CMD( EvCmdUn_CheckTalkFlg, EV_SEQ_UN_CHK_TALK_FLG )
+  DEF_CMD( EvCmdUn_SetPlayerNature, EV_SEQ_UN_SET_MY_NATURE )
+  DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
+  DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
+  DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
+  DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
+  DEF_CMD( EvCmdUn_GetPlayerFavorite, EV_SEQ_UN_GET_MY_FAVORITE )
+  NO_CMD()
+  
   END_CMD
   //スクリプトコマンドテーブル終了
 

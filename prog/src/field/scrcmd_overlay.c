@@ -21,7 +21,6 @@
 
 //スクリプトオーバーレイ定義
 #include "scrcmd_bsubway_table.h"
-#include "scrcmd_un_table.h"
 #include "scrcmd_pl_boat_table.h"
 #include "scrcmd_fourkings_table.h"
 #include "scrcmd_palpark_table.h"
@@ -45,7 +44,6 @@
 ///	オーバーレイエクスターン
 //=====================================
 FS_EXTERN_OVERLAY( scrcmd_bsubway );
-FS_EXTERN_OVERLAY( scrcmd_un );
 FS_EXTERN_OVERLAY( scrcmd_pl_boat );
 FS_EXTERN_OVERLAY( scrcmd_fourkings );
 FS_EXTERN_OVERLAY( scrcmd_palpark );
@@ -82,20 +80,6 @@ static const ZONEID UseZoneIDTbl_bsubway[] =
   ZONE_ID_C04R0109,
   ZONE_ID_C04R0110,
   ZONE_ID_C04R0111,
-};
-
-//-------------------------------------
-///	国連を読込むゾーンID
-//=====================================
-static const ZONEID UseZoneIDTbl_un[] =
-{
-  ZONE_ID_C11,
-  ZONE_ID_C11R0101,
-  ZONE_ID_C11R0201,
-  ZONE_ID_C03P14,     //国連行き船で使用
-  ZONE_ID_C13PC0101,  //性格を設定
-  ZONE_ID_C03R0101,   //趣味を設定
-  ZONE_ID_C03PC0101,  //国コードをセットしているかどうか
 };
 
 //-------------------------------------
@@ -268,14 +252,6 @@ static const struct
     UseZoneIDTbl_bsubway,
     NELEMS( UseZoneIDTbl_bsubway ),
     FS_OVERLAY_ID( scrcmd_bsubway ),
-    GFL_OVERLAY_BLANK_ID,
-  },
-  //UN
-  {
-    ScriptCmdTbl_un,
-    UseZoneIDTbl_un,
-    NELEMS( UseZoneIDTbl_un ),
-    FS_OVERLAY_ID( scrcmd_un ),
     GFL_OVERLAY_BLANK_ID,
   },
   //PL_BOAT

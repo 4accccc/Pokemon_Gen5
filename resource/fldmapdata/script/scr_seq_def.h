@@ -18,7 +18,6 @@
 //スクリプト定義テーブル
   .include "../../../prog/src/field/scrcmd_table.cdat"
   .include "../../../prog/src/field/scrcmd_bsubway_table.cdat"
-  .include "../../../prog/src/field/scrcmd_un_table.cdat"
   .include "../../../prog/src/field/scrcmd_pl_boat_table.cdat"
   .include "../../../prog/src/field/scrcmd_fourkings_table.cdat"
   .include "../../../prog/src/field/scrcmd_palpark_table.cdat"

@@ -119,6 +119,7 @@
 #include "scrcmd_habitat_info.h"
 #include "scrcmd_infinity_dungeon_field.h"
 #include "scrcmd_wbt.h"
+#include "scrcmd_un.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

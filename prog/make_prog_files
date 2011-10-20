@@ -919,7 +919,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/wbt_system_st.c \
         field/scrcmd_habitat_info.c \
         field/scrcmd_infinity_dungeon_field.c \
-        field/scrcmd_wbt_st.c
+        field/scrcmd_wbt_st.c \
+        field/scrcmd_un.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP
@@ -989,12 +990,6 @@ SRCS_OVERLAY_DEBUGMENU_ANIMAL_TRAIL  = field/event_debug_menu_ov_animal_trail.c
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_BSUBWAY  = field/scrcmd_bsubway.c \
                                field/scrcmd_bsubway_table.c
-
-# スクリプトコマンド並列化  国連
-#===> GROUP_OVERLAY_DEBUGMENU
-#GROUP_OVERLAY_SCRCMD
-SRCS_OVERLAY_SCRCMD_UN  = field/scrcmd_un.c \
-                          field/scrcmd_un_table.c
 
 # スクリプトコマンド並列化  遊覧船
 #===> GROUP_OVERLAY_DEBUGMENU
