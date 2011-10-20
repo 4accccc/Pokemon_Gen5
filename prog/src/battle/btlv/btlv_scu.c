@@ -334,7 +334,7 @@ static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
 static  u16 _get_msgwin_clear_color( BTLV_SCU *wk, u16 clear_color );
-
+static void _msg_win_clear( BTLV_SCU *wk );
 
 
 BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
@@ -1096,6 +1096,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     break;
   case 10:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
+      _msg_win_clear(wk);   // MSGWINクリア
       (*seq)++;
     }
     break;
@@ -2961,6 +2962,7 @@ static BOOL subproc_WazaEffect( int* seq, void* wk_adrs )
   case 1:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
       BTLV_WAZAEFFECT_PARAM* param = Scu_GetProcWork( wk, sizeof(BTLV_WAZAEFFECT_PARAM) );
+      _msg_win_clear(wk);   // MSGWINクリア
       BTLV_EFFECT_AddWazaEffect( param );
       (*seq)++;
     }
@@ -3740,6 +3742,7 @@ static void taskMsgWinHide( GFL_TCBL* tcbl, void* wk_adrs )
     break;
   case 1:
     if( msgWinVisible_Update( &wk->parentWork->msgwinVisibleWork ) ){
+      _msg_win_clear( wk->parentWork );
       (*(wk->pTaskCounter))--;
       GFL_TCBL_Delete( tcbl );
     }
@@ -4647,3 +4650,16 @@ static u16 _get_msgwin_clear_color( BTLV_SCU *wk, u16 clear_color )
   return clear_color;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	メッセージウインドウクリア（次のウインドウ呼び出しまでBMPWINの残骸が残るのを防ぐ)
+ *
+ * @param   wk	BTLV_SCU
+ */
+//----------------------------------------------------------------------------------
+static void _msg_win_clear( BTLV_SCU *wk )
+{
+  u16 clear_colno = _get_msgwin_clear_color( wk, COLIDX_MSGWIN_CLEAR ); 
+  GFL_BMP_Clear( wk->bmp, clear_colno );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+}
