@@ -2070,6 +2070,12 @@ d10r0501_def.h: d10r0501.ev
 h04r0801_def.h: h04r0801.ev
 	$(EV_DEF) h04r0801.ev $(SCR_OFFS_ID_H)
 
+oldc04r0201_def.h: oldc04r0201.ev
+	$(EV_DEF) oldc04r0201.ev $(SCR_OFFS_ID_H)
+
+oldd06r0101_def.h: oldd06r0101.ev
+	$(EV_DEF) oldd06r0101.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
