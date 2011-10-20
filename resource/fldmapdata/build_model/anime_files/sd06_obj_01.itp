@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-20T15:19:39" source="sd06_obj_01_s.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="96"
+	tool_start_frame="1"
+	tool_end_frame="96"
+	compress_material="on" material_size="12 12"
+/>
+
+<tex_pattern_list_data image_size="12" palette_size="12">
+	<image_name index="0" name="biri02.1"/>
+	<image_name index="1" name="biri02.2"/>
+	<image_name index="2" name="biri02.3"/>
+	<image_name index="3" name="biri02.4"/>
+	<image_name index="4" name="biri02.5"/>
+	<image_name index="5" name="biri02.6"/>
+	<image_name index="6" name="biri03.1"/>
+	<image_name index="7" name="biri03.2"/>
+	<image_name index="8" name="biri03.3"/>
+	<image_name index="9" name="biri03.4"/>
+	<image_name index="10" name="biri03.5"/>
+	<image_name index="11" name="biri03.6"/>
+	<palette_name index="0" name="biri02.1_pl"/>
+	<palette_name index="1" name="biri02.2_pl"/>
+	<palette_name index="2" name="biri02.3_pl"/>
+	<palette_name index="3" name="biri02.4_pl"/>
+	<palette_name index="4" name="biri02.5_pl"/>
+	<palette_name index="5" name="biri02.6_pl"/>
+	<palette_name index="6" name="biri03.1_pl"/>
+	<palette_name index="7" name="biri03.2_pl"/>
+	<palette_name index="8" name="biri03.3_pl"/>
+	<palette_name index="9" name="biri03.4_pl"/>
+	<palette_name index="10" name="biri03.5_pl"/>
+	<palette_name index="11" name="biri03.6_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="61">
+		0 17 19 21 24 27 28 45 47 49
+		52 54 56 73 75 77 79 82 84 0
+		2 3 5 8 10 15 16 17 19 22
+		24 28 30 31 33 36 38 42 44 45
+		47 50 52 56 58 59 61 64 66 70
+		72 73 75 78 80 84 86 87 89 92
+		94
+	</frame_idx>
+	<image_idx size="61">
+		6 7 8 9 10 11 6 7 8 9
+		10 11 6 7 8 9 10 11 6 0
+		1 2 3 4 5 0 1 2 3 4
+		5 0 1 2 3 4 5 0 1 2
+		3 4 5 0 1 2 3 4 5 0
+		1 2 3 4 5 0 1 2 3 4
+		5
+	</image_idx>
+	<palette_idx size="61">
+		6 7 8 9 10 11 6 7 8 9
+		10 11 6 7 8 9 10 11 6 0
+		1 2 3 4 5 0 1 2 3 4
+		5 0 1 2 3 4 5 0 1 2
+		3 4 5 0 1 2 3 4 5 0
+		1 2 3 4 5 0 1 2 3 4
+		5
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="biri03_1" data_size="19" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="biri02_1" data_size="42" data_head="19"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
