@@ -377,12 +377,12 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _MSGWIN_CLOSE()
 
   //=================================================
-  // ♀ADULTW の前に移動
+  //♂GENTLEMAN の前に移動
   _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_07 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_07 )
   _OBJ_ANIME_WAIT()
 
-  //♀ADULTW 話しかけ
+  //♂GENTLEMAN 話しかけ
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_07, C15_BONUS_ADULTW_01, POS_DOWN )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
@@ -522,7 +522,7 @@ _ANIME_LABEL  anm_bonus_event_06
   _ANIME_DATA ACMD_END, 0
 
 //--------------------------------------------------------------
-//	♀ADULTW前に移動
+//	♂GENTLEMAN前に移動
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_07
   _ANIME_DATA AC_WALK_U_8F, 3
