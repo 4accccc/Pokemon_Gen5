@@ -2292,10 +2292,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【仮】ボールは　つかえません！</Text>
+			<Text>ゲーチスの　つくった　そうちのせいで
+ボールは　つかえない！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-18T01:41:06" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2303,10 +2304,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【仮】ボールは　使えません！</Text>
+			<Text>ゲーチスの　つくった　装置のせいで
+ボールは　使えない！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-18T01:41:13" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
