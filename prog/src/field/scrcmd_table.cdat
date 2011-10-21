@@ -1107,7 +1107,7 @@
   NO_CMD()
 
   //生息地リスト常駐
-  DEF_CMD( EvCmdCheckZonePokeGetComplete, EV_SEQ_ZONE_POKE_ALL_GET )
+  DEF_CMD( EvCmdCheckZonePokeGetComplete, EV_SEQ_ZONE_POKE_CMP_CHECK )
   DEF_CMD( EvCmdSetZukanHabitatFlag     , EV_SEQ_SET_ZUKAN_HABITAT_FLAG)
   
   //無限ダンジョン常駐

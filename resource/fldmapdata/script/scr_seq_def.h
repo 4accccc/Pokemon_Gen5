@@ -15994,6 +15994,7 @@
  *
  * @param zone_group_id    ゾーンID
  * @param ground_id        地形タイプ
+ * @param is_get           TRUEの時は捕獲コンプリート、FALSEの時は見たコンプリート
  * @param ret_wk           コンプリート時にTRUEが帰ってくる
  *
  *  @note 地形タイプ
@@ -16002,13 +16003,14 @@
  *  SCR_HABITAT_TYPE_FISHING    (2)   ///<釣り
  */
 //--------------------------------------------------------------
-#define _SC_GET_ZONE_POKE_ALL_GET( zone_group_id ,ground_id ,ret_wk ) \
-    _ASM_SC_GET_ZONE_POKE_ALL_GET zone_group_id ,ground_id ,ret_wk
+#define _SC_GET_ZONE_POKE_CMP_CHECK( zone_group_id ,ground_id ,is_get ,ret_wk ) \
+    _ASM_SC_GET_ZONE_POKE_CMP_CHECK zone_group_id ,ground_id ,is_get ,ret_wk
 
-    .macro  _ASM_SC_GET_ZONE_POKE_ALL_GET zone_group_id ,ground_id ,ret_wk
-    .short  EV_SEQ_ZONE_POKE_ALL_GET
+    .macro  _ASM_SC_GET_ZONE_POKE_CMP_CHECK zone_group_id ,ground_id ,is_get ,ret_wk
+    .short  EV_SEQ_ZONE_POKE_CMP_CHECK
     .short  \zone_group_id
     .short  \ground_id
+    .short  \is_get
     .short  \ret_wk
     .endm
 

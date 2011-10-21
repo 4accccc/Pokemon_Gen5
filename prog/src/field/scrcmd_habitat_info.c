@@ -38,7 +38,7 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-static u16 GetCompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save,u8 ground_id );
+static u16 CompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save,u8 ground_id ,BOOL is_get );
 
 //----------------------------------------------------------------------------
 /**
@@ -53,7 +53,7 @@ static u16 GetCompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p
 VMCMD_RESULT EvCmdCheckZonePokeGetComplete( VMHANDLE *core, void *wk )
 {
   s32 i;
-  BOOL is_get = FALSE;
+  BOOL is_comp = FALSE;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   ARC_HABITAT_ZONE_DATA arc_data;
@@ -63,9 +63,10 @@ VMCMD_RESULT EvCmdCheckZonePokeGetComplete( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *field = GAMESYSTEM_GetFieldMapWork(gamesys);
   const HEAPID heapID = FIELDMAP_GetHeapID( field );
 
-  u16 zone_group_id  = SCRCMD_GetVMWorkValue( core, work );
-  u16 ground_id      = SCRCMD_GetVMWorkValue( core, work );
-  u16 *p_ret_wk	    = SCRCMD_GetVMWork( core, work );
+  u16 zone_group_id   = SCRCMD_GetVMWorkValue( core, work );
+  u16 ground_id       = SCRCMD_GetVMWorkValue( core, work );
+  u16 is_get_check    = SCRCMD_GetVMWorkValue( core, work );
+  u16 *p_ret_wk	      = SCRCMD_GetVMWork( core, work );
  
   // アーカイブハンドル取得
   ARCHANDLE	*p_handle	= 
@@ -82,14 +83,14 @@ VMCMD_RESULT EvCmdCheckZonePokeGetComplete( VMHANDLE *core, void *wk )
     {
       // アーカイブデータ取得
       GFL_ARC_LoadDataByHandle(p_handle, sc_habitat->arc_idx , &arc_data);
-      (*p_ret_wk) = GetCompleteFlag( &arc_data ,zkn_sv ,ground_id );
-      is_get = TRUE;
+      (*p_ret_wk) = CompleteFlag( &arc_data ,zkn_sv ,ground_id ,is_get_check );
+      is_comp = TRUE;
     }
   }
 
   GFL_ARC_CloseDataHandle( p_handle );
   
-  GF_ASSERT(is_get==TRUE);
+  GF_ASSERT(is_comp==TRUE);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -105,7 +106,7 @@ VMCMD_RESULT EvCmdCheckZonePokeGetComplete( VMHANDLE *core, void *wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u16 GetCompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save,u8 ground_id )
+static u16 CompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save,u8 ground_id ,BOOL is_get )
 {  
   s32 n;
   BOOL flg;
@@ -127,7 +128,14 @@ static u16 GetCompleteFlag( ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p
     // その地形に出現する場合は、捕獲状況をチェックする
     if( is_land_appear[ground_id] >= 1 )
     {
-      flg=ZUKANSAVE_GetPokeGetFlag(p_save,p_arc_data->mons_data[n].monsno);
+      if( is_get == TRUE )
+      {
+        flg=ZUKANSAVE_GetPokeGetFlag(p_save,p_arc_data->mons_data[n].monsno);
+      }
+      else
+      {
+        flg=ZUKANSAVE_GetPokeSeeFlag(p_save,p_arc_data->mons_data[n].monsno);
+      }
       if(!flg)
       {
         return FALSE;
