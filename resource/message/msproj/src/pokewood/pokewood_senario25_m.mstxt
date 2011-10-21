@@ -186,14 +186,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『うっさいな……
-こっちは　いそがしいのに……</Text>
+こっちは　忙しいのに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:06:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -253,14 +253,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ああ！　もう　うるさい！</Text>
+			<Text>モニカ『ああ！　もう　うるさーいっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:06:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -310,33 +310,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]1『いいじゃないか……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいじゃないか……▼
 これは　とっても　めずらしい
-モンスターボール　なんだよ▼
-ごくひの　ルートで　やっと　てに
-いれた　しさくひん　なんだよ……</Text>
+モンスターボール　なんだから▼
+ごくひの　ルートで　てに　いれた
+とくべつなボール……▼
+なんでも　むかしの　もちぬしの
+のろいが　こめられた▽
+おそろしいボール　なんだって……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]1『いいじゃないか……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいじゃないか……▼
 これは　とっても　珍しい
-モンスターボール　なんだよ▼
-極秘の　ルートで　やっと　手に
-いれた　試作品　なんだよ……</Text>
+モンスターボール　なんだから▼
+極秘の　ルートで　手に　いれた
+特別なボール……▼
+なんでも　昔の　持ち主の
+呪いは　込められた
+恐ろしいボール　なんだって……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -351,35 +357,41 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『そんなの　かんけいない！▼
-わたしばっかり　はたらかせて
-[Name:TrainerName Idx="1" ]1は　なにも　しないで▽
+			<Text>モニカ『ちょっと　ちょっと！
+なんで　そんな　ヘンなもの▽
+かって　きちゃうのよっ！？▼
+そもそも　わたしばっかりに
+はたらかせて　[Name:TrainerName Idx="1" ]は▽
+なーんにも　してないのに▽
 ショッピング　だなんてっ！▼
 もう　きょうと　いう　きょうは
 ゆるさない！　かくごしてっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『そんなの　関係ない！▼
-私ばっかりに　働かせて
-[Name:TrainerName Idx="1" ]1は　なにも　しないで▽
+			<Text>モニカ『ちょっと　ちょっと！
+なんで　そんな　ヘンなもの▽
+買って　きちゃうのよっ！？▼
+そもそも　私ばっかりに
+働かせて　[Name:TrainerName Idx="1" ]は▽
+なーんにも　してないのに▽
 ショッピング　だなんてっ！▼
-もう　今日という　今日は
+もう　今日と　いう　今日は
 許さない！　覚悟してっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -394,27 +406,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]1『ちょっと　モニカ……
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　モニカ……
 そんなに　おこらないでくれよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]1『ちょっと　モニカ……
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　モニカ……
 そんなに　怒らないでくれよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -430,30 +442,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『しらないっ！！▼
-わたしは　[Name:TrainerName Idx="1" ]1の
+わたしは　[Name:TrainerName Idx="1" ]の
 ママ　じゃないし　ぎんこうでも▽
 ないんだからねっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『知らないっ！！▼
-わたしは　[Name:TrainerName Idx="1" ]1の
+わたしは　[Name:TrainerName Idx="1" ]の
 ママ　じゃないし　銀行でも▽
 ないんだからねっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:23:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1115,16 +1127,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ちょっと　なにっ！？▼
-なんで　ボールが　かってに
-ひらいてるのよ！！</Text>
+			<Text>モニカ『……文句が　あるのなら
+他の　ガラクタも　ぜんぶ▽
+処分したって　いいんだけど？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1178,33 +1190,31 @@
 			Language="JPN">
 			<Text>モニカ『ちょっと　なに　コレ！？▼
 なんで　モンスターボールが
-かってに　ひらいてるの！！▽
-ポケモンなんて　いないじゃない！？▼
+かってに　ひらいてるの！！▼
 ちょっと　[Name:TrainerName Idx="1" ]！
 ヘンな　イタズラは　やめてよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちょっと　なに　コレ！？▼
 なんで　モンスターボールが
-勝手に　開いてるの！！▽
-ポケモンなんて　いないじゃない！？▼
+勝手に　開いてるの！！▼
 ちょっと　[Name:TrainerName Idx="1" ]！
 ヘンな　イタズラは　やめてよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1458,35 +1468,49 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
-ふたりの　ささいな　けんかの
-そのさなか　モニカは▽
+			<Text>めずらしいものに　めがない　ボクは
+いつものように　めずらしいと▽
+ひょうばんの　ボールを▽
+かってしまった……▼
+そして　いつものように
+そんなボクを　しかる　モニカ……▼
+それは　いつもと　おなじ
+ケンカの　はずだったのに……▼
+かのじょは　とつぜん　ひらいた
 モンスターボールの　なかに▽
 すいこまれて　しまった……▼
-はたして　かのじょの　うんめいは？</Text>
+ああ……
+ボクは　いったい　どうすれば……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
-二人の　ささいな　ケンカの
-その最中　モニカは▽
+			<Text>珍しいものに　目がない　ボクは
+いつものように　珍しいと▽
+評判の　ボールを▽
+買ってしまった……▼
+そして　いつものように
+そんなボクを　しかる　モニカ……▼
+それは　いつもと　同じ
+ケンカの　はずだったのに……▼
+彼女は　突然　開いた
 モンスターボールの　中に▽
 吸い込まれて　しまった……▼
-果たして　彼女の　運命は？</Text>
+ああ……
+ボクは　一体　どうすれば……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1514,14 +1538,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『はは……
-ボク　かっちゃった……</Text>
+ボク　勝っちゃった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1648,16 +1672,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『しかたないよ……▼
+			<Text>[Name:TrainerName Idx="1" ]『仕方ないよ……▼
 ボクの　ほうが
-ポケモンは　うまいんだし……</Text>
+ポケモンは　上手いんだし……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1688,15 +1712,15 @@
 			Language="JPN_KANJI">
 			<Text>モニカ『ウッ　ウワーン！！▼
 なんなのよ！！　もうー！！
-なんで　わたしが　こんな　めに▽
+なんで　私が　こんな目に▽
 あわないと　いけないのよー！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1759,14 +1783,14 @@
 			Language="JPN_KANJI">
 			<Text>モニカ『ウワーン！！▼
 もう　[Name:TrainerName Idx="1" ]　なんか　キライ！！
-わたし　ここから　でていくっ！！</Text>
+私　ここから　出て行くっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1794,14 +1818,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんなっ！！
-ちょっと　まってくれよ　モニカ！！</Text>
+ちょっと　待ってくれよ　モニカ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1816,37 +1840,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
-ささいな　けんかが　げんいんで
-モニカは　いえを　とびだした……▼
-いそいで　あとをおう　[Name:TrainerName Idx="1" ]……
-しかし　かのじょは　みつからなかった▼
-こうして　ふたりの　なかは
-おわりを　つげたのだった……</Text>
+			<Text>きっかけは　いつもと　おなじ
+ささいな　ケンカ……▼
+だけど　モニカは　おこって
+いえを　とびだして　しまった……▼
+いそいで　あとを　おいかけたけど
+モニカは　どこにも　いなかった……▼
+ボクたちは　もう
+ダメなのかも　しれない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
-ささいな　けんかが　げんいんで
-モニカは　いえを　とびだした……▼
-いそいで　あとをおう　[Name:TrainerName Idx="1" ]……
-しかし　かのじょは　みつからなかった▼
-こうして　ふたりの　なかは
-おわりを　つげたのだった……</Text>
+			<Text>きっかけは　いつもと　同じ
+ささいな　ケンカ……▼
+だけど　モニカは　怒って
+家を　飛び出して　しまった……▼
+急いで　後を　追いかけたけど
+モニカは　どこにも　いなかった……▼
+ボクたちは　もう
+ダメなのかも　しれない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1861,27 +1887,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『もう！！　なんなの！？
+			<Text>モニカ『もう！！　なんなの！？
 なんで　まけないのよっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『もう！！　なんなの！？
-なんで　まけないのよっ！！</Text>
+			<Text>モニカ『もう！！　なんなの！？
+なんで　負けないのよっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1896,25 +1922,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そんな　むちゃくちゃな……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな　ムチャクチャな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そんな　むちゃくちゃな……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな　ムチャクチャな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1929,31 +1955,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『そもそも　[Name:TrainerName Idx="1" ]が
+			<Text>モニカ『そもそも　[Name:TrainerName Idx="1" ]が
 こんな　モンスターボールを▽
 かってくるのが　わるいんでしょ！▼
 ちょっと　それ　かしなさいよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『そもそも　[Name:TrainerName Idx="1" ]が
+			<Text>モニカ『そもそも　[Name:TrainerName Idx="1" ]が
 こんな　モンスターボールを▽
-かってくるのが　わるいんでしょ！▼
+買ってくるのが　悪いんでしょ！▼
 ちょっと　それ　かしなさいよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2003,25 +2029,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『こんなもの……</Text>
+			<Text>モニカ『こんなもの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『こんなもの……</Text>
+			<Text>モニカ『こんなもの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2036,29 +2062,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ダメだよ！　アキコ！
-それは　しさくひん　なんだ！！▽
-つかっちゃ　あぶないっ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ダメだよ！　モニカ！
+それ　たかいんだからっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ダメだよ！　アキコ！
-それは　しさくひん　なんだ！！▽
-つかっちゃ　あぶないっ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ダメだよ！　モニカ！
+それ　高いんだからっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2073,27 +2097,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『つかうわけないでしょ！！
+			<Text>モニカ『つかうわけないでしょ！！
 こんなもの　こわして　やるわ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『つかうわけないでしょ！！
-こんなもの　こわして　やるわ！！</Text>
+			<Text>モニカ『使うわけないでしょ！！
+こんなもの　壊して　やるわ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2121,14 +2145,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ちょっと！！
-たのむよ！　やめてくれよ！！</Text>
+頼むよ！　止めてくれよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2143,27 +2167,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『あれ！？　なによ　これ！！
-かってに　ボールが　ひらいてく！！</Text>
+			<Text>モニカ『キャッ！？　なに　これ！！
+なんで　かってに　ボールが
+ひらいていくのよっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『あれ！？　なによ　これ！！
-かってに　ボールが　ひらいてく！！</Text>
+			<Text>モニカ『キャッ！？　なに　これ！！
+なんで　勝手に　ボールが
+開いていくのよっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2191,14 +2217,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ちょっと！　なにしてるの！
-ボールを　ひらいちゃ　ダメだよ！！</Text>
+ボールを　開いちゃ　ダメだよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2213,27 +2239,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『しらないよ！
-ボールが　かってに！！</Text>
+			<Text>モニカ『知らないわよっ！
+ボールが　勝手に！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『しらないよ！
-ボールが　かってに！！</Text>
+			<Text>モニカ『知らないわよっ！
+ボールが　勝手に！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2261,14 +2287,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『うう……　なんだっ！？
-ボールに　すいこまれるっ！？　</Text>
+ボールに　吸い込まれるっ！？　</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T03:35:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2283,60 +2309,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『キャッ！！　わたしも
-ボールに　ひきよせられる……</Text>
+			<Text>モニカ『キャッー！！
+ボールに　ひきよせられるっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『キャッ！！　わたしも
-ボールに　ひきよせられる……</Text>
+			<Text>モニカ『キャッー！！
+ボールに　ひきよせられるっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_7"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ウワーーッ！！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ウワーーッ！！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2351,25 +2344,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキコ『キャーーッ！！</Text>
+			<Text>モニカ『キャーーッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキコ『キャーーッ！！</Text>
+			<Text>モニカ『キャーーッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2384,39 +2377,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]と　アキコ……▼
-ささいな　けんかが　げんいんで
-ふたりは　ボールの　なかに▽
-すいこまれて　しまった……▼
-あれはてた　へやの　なかに
-ころがる　ボール……▼
-そのごの　ふたりが　どうなったか
-しるものは　だれも　いない……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ウワーーッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]と　アキコ……▼
-ささいな　けんかが　げんいんで
-ふたりは　ボールの　なかに▽
-すいこまれて　しまった……▼
-あれはてた　へやの　なかに
-ころがる　ボール……▼
-そのごの　ふたりが　どうなったか
-しるものは　だれも　いない……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ウワーーッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2425,5 +2404,44 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_9">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
+ささいな　ケンカが　げんいんで
+ふたりは　ボールの　なかに▽
+すいこまれて　しまった……▼
+あれはてた　へやの　なかに
+ころがる　ボール……▼
+そのごの　ふたりが　どうなったか
+しるものは　だれも　いない……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]と　モニカ……▼
+ささいな　ケンカが　原因で
+二人は　ボールの　中に▽
+吸い込まれて　しまった……▼
+荒れ果てた　部屋の　中に
+転がる　ボール……▼
+その後の　二人が　どうなったか
+知る者は　だれも　いない……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:59:28" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

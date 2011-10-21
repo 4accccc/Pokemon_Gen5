@@ -364,7 +364,7 @@
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">？？？『わたしは　ロドリゲス……▼
 せんじつ　キミに　モンスターボールを
-ゆずったものだ……▼
+ゆずった　ものだ……▼
 すこし　じかんを　いただけないか？</language>
 		<language name="JPN_KANJI" width="256">？？？『私は　ロドリゲス……▼
 先日　キミに　モンスターボールを
@@ -402,12 +402,12 @@
 ちょっとした　てちがいが　あってね
 もちろん　タダでとは　いわないさ▼
 キミの　のぞむ　きんがくを
-しはらわせて　いただくよ</language>
+しはらわせて　いただくよ……</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『……▼
 ちょっとした　手違いが　あってね
 もちろん　タダでとは　いわないさ▼
-キミの　のぞむ　金額を
-支払わせて　頂くよ</language>
+キミの　望む　金額を
+支払わせて　頂くよ……</language>
 	</row>
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『いや　ちょっと……
@@ -432,11 +432,11 @@
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ロドリゲス『すまん……▼
-どうしても　あのボールが
-ひつよう　なんだ……</language>
+どうしても　あのボールは
+かえして　もらわなければ　ならない……</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『すまん……▼
-どうしても　あのボールが
-必要　なんだ……</language>
+どうしても　あのボールは
+返して　もらわなければ　ならない……</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『でも……
@@ -473,12 +473,10 @@
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ロドリゲス『かってに　だと……▼
 これは　マズい……▼
-わるいが　やはり　ボールは
-かえして　もらおう……</language>
+こうなったら　ちからづくでも……</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『勝手に　だと……▼
 これは　マズい……▼
-悪いが　やはり　ボールは
-かえして　もらおう……</language>
+こうなったら　ちからづくでも……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ボクじゃないんです！</language>
@@ -641,8 +639,7 @@
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">ロドリゲス『フッ……
 なかなか　やるじゃないか……▼
-プロの　エージェントである
-この　わたしを　あいてに▽
+この　わたしを　あいてに
 おそれず　いどみつづけるとは……▼
 しかし……▼
 キミに　とっては　ただの
@@ -651,8 +648,7 @@
 なぜ　そこまで　するんだね？</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『フッ……
 なかなか　やるじゃないか……▼
-プロの　エージェントである
-この　私を　相手に▽
+この　私を　相手に
 恐れず　挑み続けるとは……▼
 しかし……▼
 キミに　とっては　ただの
@@ -709,13 +705,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え……</language>
 	</row>
 	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256">ロドリゲス『……うえには　わたしから
-ほうこく　しておこう……▼
-ボールは　なくなっていた　とな▼
+		<language name="JPN" width="256">ロドリゲス『そのボールは
+あきらめよう……▼
 キミは　たいせつな　ポケモンと
 いっしょに　くらすが　いいさ……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『……上には　私から
-報告　しておこう……▼
+		<language name="JPN_KANJI" width="256">ロドリゲス『そのボールは
+あきらめよう……▼
 ボールは　なくなっていた　とな▼
 キミは　大切な　ポケモンと
 一緒に　暮らすが　いいさ……</language>

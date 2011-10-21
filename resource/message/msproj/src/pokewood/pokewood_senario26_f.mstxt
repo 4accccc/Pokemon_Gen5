@@ -440,28 +440,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロドリゲス『すまん……▼
-どうしても　あのボールが
-ひつよう　なんだ……</Text>
+どうしても　あのボールは
+かえして　もらわなければ　ならない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『すまん……▼
-どうしても　あのボールが
-必要　なんだ……</Text>
+どうしても　あのボールは
+返して　もらわなければ　ならない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -655,29 +655,27 @@
 			Language="JPN">
 			<Text>ロドリゲス『かってに　だと……▼
 これは　マズい……▼
-わるいが　やはり　ボールは
-かえして　もらおう……</Text>
+こうなったら　ちからづくでも……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『勝手に　だと……▼
 これは　マズい……▼
-悪いが　やはり　ボールは
-かえして　もらおう……</Text>
+こうなったら　ちからづくでも……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -874,30 +872,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ハアッ……　ハアッ……▼
-もう　いいでしょう……▼
+もう　いいでしょ！！▼
 ボールは　わたせません……▼
-いますぐ　かえってください……</Text>
+いますぐ　かえって！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハアッ……　ハアッ……▼
-もう　いいでしょう……▼
+もう　いいでしょ！！▼
 ボールは　渡せません……▼
-今すぐ　帰ってください……</Text>
+今すぐ　帰って！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1036,12 +1034,12 @@
 世間に　知られるわけには▽
 いかんのだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1061,19 +1059,19 @@
 いしきを　うしなった……▼
 ……きが　つくと
 おとこの　すがたは　すでになく▽
-モンスターボールも　きえていた▼
+モンスターボールも　なくなっていた▼
 そのかわり　テーブルの　うえには
 みたこともない　あつさの
 さつたば　が……▼
 ボールの　なかの　おねえちゃん……
 どうなっちゃうんだろう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1082,19 +1080,19 @@
 意識を　失った……▼
 ……気が　つくと
 男の　姿は　すでになく▽
-モンスターボールも　きえていた▼
+モンスターボールも　なくなっていた▼
 その代わり　テーブルの　上には
 見たこともない　厚さの
 札束が……▼
 ボールの中の　お姉ちゃん……
 どうなっちゃうんだろう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T11:42:30" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1403,8 +1401,7 @@
 			Language="JPN">
 			<Text>ロドリゲス『フッ……
 なかなか　やるじゃないか……▼
-プロの　エージェントである
-この　わたしを　あいてに▽
+この　わたしを　あいてに
 おそれず　いどみつづけるとは……▼
 しかし……▼
 キミに　とっては　ただの
@@ -1412,19 +1409,18 @@
 かねも　しはらうと　いうのに
 なぜ　そこまで　するんだね？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『フッ……
 なかなか　やるじゃないか……▼
-プロの　エージェントである
-この　私を　相手に▽
+この　私を　相手に
 恐れず　挑み続けるとは……▼
 しかし……▼
 キミに　とっては　ただの
@@ -1432,12 +1428,12 @@
 金も　支払うと　いうのに
 なぜ　そこまで　するんだね？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1647,33 +1643,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『……うえには　わたしから
-ほうこく　しておこう……▼
+			<Text>ロドリゲス『そのボールは
+あきらめよう……▼
 ボールは　なくなっていた　とな▼
 キミは　たいせつな　ポケモンと
 いっしょに　くらすが　いいさ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『……上には　私から
-報告　しておこう……▼
+			<Text>ロドリゲス『そのボールは
+あきらめよう……▼
 ボールは　なくなっていた　とな▼
 キミは　大切な　ポケモンと
 一緒に　暮らすが　いいさ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -427,13 +427,13 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
 あら……　あなたは……▼
-[Name:TrainerName ]でしょ？
+[Name:TrainerName ]　でしょ？
 さいきん　ウチの　スタジオでも▽
 あなたの　なまえを　よくきくわ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:18" />
+				Time="2011-10-21T05:52:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -578,11 +578,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！　あんた　しんじんだろ？▼
+いいえいがを　つくるためには
+まずは　さつえいちゅうの▽
+だいほん　かくにんは　おこたるな！▼
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:47:27" />
+				Time="2011-10-21T05:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -591,11 +594,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よお！　あんた　新人だろ？▼
+いい映画を　つくるためには
+まずは　撮影中の▽
+台本　確認は　おこたるな！▼
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:47:39" />
+				Time="2011-10-21T05:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -737,11 +743,11 @@ msg_c15r0301_middleman2_01</Comment>
 
 
 
-（XY）に配置
+（X12Y3）に配置
 ※チュートリアル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:54:32" />
+				Time="2011-10-21T06:03:40" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

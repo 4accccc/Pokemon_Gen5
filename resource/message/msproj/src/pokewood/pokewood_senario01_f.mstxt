@@ -606,15 +606,14 @@
 ありがとう！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 さらば！
-[Name:PokemonNickname Idx="0" ]ガール！
-</Text>
+[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:08:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -628,15 +627,14 @@
 ありがとう！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 さらば！
-[Name:PokemonNickname Idx="0" ]ガール！
-</Text>
+[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-20T10:08:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1507,43 +1505,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいじんハチクマンに
+			<Text>あくのかいじん　ハチクマンに
 こうげき　できなかった▽
 [Name:PokemonNickname Idx="0" ]ガール……▼
 ヒロインとして　あるまじき　ミスを
-おかした　かのじょは▽
+おかした　かのじょは　きもちが▽
 ちからつきて　しまった……▼
 なさけないぞ！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 さらばだ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T04:07:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T04:07:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪人ハチクマンに
+			<Text>悪の怪人　ハチクマンに
 こうげき　できなかった▽
 [Name:PokemonNickname Idx="0" ]ガール……▼
 ヒロインとして　あるまじき　ミスを
-おかした　彼は▽
+犯した　彼女は　気持ちが▽
 力尽きて　しまった……▼
 情けないぞ！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 さらばだ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T04:07:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-21T04:07:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

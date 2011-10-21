@@ -371,7 +371,7 @@
 		<language name="JPN" width="256">モニカ『うっさいな……
 こっちは　いそがしいのに……</language>
 		<language name="JPN_KANJI" width="256">モニカ『うっさいな……
-こっちは　いそがしいのに……</language>
+こっちは　忙しいのに……</language>
 	</row>
 	<row id="pw_turn_hero_5">
 		<language name="JPN" width="256">インターフォン『ピンポーン！！</language>
@@ -380,7 +380,7 @@
 	<row id="pw_turn_enemy_5">
 		<language name="JPN" width="256">モニカ『ああ！　もう　うるさい！
 うるさいうるさい　うるさーいっ！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ああ！　もう　うるさい！</language>
+		<language name="JPN_KANJI" width="256">モニカ『ああ！　もう　うるさーいっ！！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">モニカ『いいかげんに　してよ！
@@ -389,44 +389,56 @@
 また　そんなガラクタ　買ってきて！</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]1『いいじゃないか……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいじゃないか……▼
 これは　とっても　めずらしい
-モンスターボール　なんだよ▼
-ごくひの　ルートで　やっと　てに
-いれた　しさくひん　なんだよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]1『いいじゃないか……▼
+モンスターボール　なんだから▼
+ごくひの　ルートで　てに　いれた
+とくべつなボール……▼
+なんでも　むかしの　もちぬしの
+のろいが　こめられた▽
+おそろしいボール　なんだって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいじゃないか……▼
 これは　とっても　珍しい
-モンスターボール　なんだよ▼
-極秘の　ルートで　やっと　手に
-いれた　試作品　なんだよ……</language>
+モンスターボール　なんだから▼
+極秘の　ルートで　手に　いれた
+特別なボール……▼
+なんでも　昔の　持ち主の
+呪いは　込められた
+恐ろしいボール　なんだって……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">モニカ『そんなの　かんけいない！▼
-わたしばっかり　はたらかせて
-[1:00:トレーナー名:1]1は　なにも　しないで▽
+		<language name="JPN" width="256">モニカ『ちょっと　ちょっと！
+なんで　そんな　ヘンなもの▽
+かって　きちゃうのよっ！？▼
+そもそも　わたしばっかりに
+はたらかせて　[1:00:トレーナー名:1]は▽
+なーんにも　してないのに▽
 ショッピング　だなんてっ！▼
 もう　きょうと　いう　きょうは
 ゆるさない！　かくごしてっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『そんなの　関係ない！▼
-私ばっかりに　働かせて
-[1:00:トレーナー名:1]1は　なにも　しないで▽
+		<language name="JPN_KANJI" width="256">モニカ『ちょっと　ちょっと！
+なんで　そんな　ヘンなもの▽
+買って　きちゃうのよっ！？▼
+そもそも　私ばっかりに
+働かせて　[1:00:トレーナー名:1]は▽
+なーんにも　してないのに▽
 ショッピング　だなんてっ！▼
-もう　今日という　今日は
+もう　今日と　いう　今日は
 許さない！　覚悟してっ！！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]1『ちょっと　モニカ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと　モニカ……
 そんなに　おこらないでくれよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]1『ちょっと　モニカ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと　モニカ……
 そんなに　怒らないでくれよ……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">モニカ『しらないっ！！▼
-わたしは　[1:00:トレーナー名:1]1の
+わたしは　[1:00:トレーナー名:1]の
 ママ　じゃないし　ぎんこうでも▽
 ないんだからねっ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『知らないっ！！▼
-わたしは　[1:00:トレーナー名:1]1の
+わたしは　[1:00:トレーナー名:1]の
 ママ　じゃないし　銀行でも▽
 ないんだからねっ！</language>
 	</row>
@@ -546,9 +558,9 @@
 		<language name="JPN" width="256">モニカ『……もんくが　あるのなら
 ほかの　ガラクタも　ぜんぶ▽
 しょぶん　したって　いいんだけど？</language>
-		<language name="JPN_KANJI" width="256">モニカ『ちょっと　なにっ！？▼
-なんで　ボールが　かってに
-ひらいてるのよ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『……文句が　あるのなら
+他の　ガラクタも　ぜんぶ▽
+処分したって　いいんだけど？</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたない……
@@ -561,14 +573,12 @@
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">モニカ『ちょっと　なに　コレ！？▼
 なんで　モンスターボールが
-かってに　ひらいてるの！！▽
-ポケモンなんて　いないじゃない！？▼
+かってに　ひらいてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
 ヘンな　イタズラは　やめてよ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちょっと　なに　コレ！？▼
 なんで　モンスターボールが
-勝手に　開いてるの！！▽
-ポケモンなんて　いないじゃない！？▼
+勝手に　開いてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
 ヘンな　イタズラは　やめてよ！</language>
 	</row>
@@ -609,24 +619,38 @@
 吸い込まれた……</language>
 	</row>
 	<row id="pw_event3_hero_9">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]と　モニカ……▼
-ふたりの　ささいな　けんかの
-そのさなか　モニカは▽
+		<language name="JPN" width="256">めずらしいものに　めがない　ボクは
+いつものように　めずらしいと▽
+ひょうばんの　ボールを▽
+かってしまった……▼
+そして　いつものように
+そんなボクを　しかる　モニカ……▼
+それは　いつもと　おなじ
+ケンカの　はずだったのに……▼
+かのじょは　とつぜん　ひらいた
 モンスターボールの　なかに▽
 すいこまれて　しまった……▼
-はたして　かのじょの　うんめいは？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]と　モニカ……▼
-二人の　ささいな　ケンカの
-その最中　モニカは▽
+ああ……
+ボクは　いったい　どうすれば……</language>
+		<language name="JPN_KANJI" width="256">珍しいものに　目がない　ボクは
+いつものように　珍しいと▽
+評判の　ボールを▽
+買ってしまった……▼
+そして　いつものように
+そんなボクを　しかる　モニカ……▼
+それは　いつもと　同じ
+ケンカの　はずだったのに……▼
+彼女は　突然　開いた
 モンスターボールの　中に▽
 吸い込まれて　しまった……▼
-果たして　彼女の　運命は？</language>
+ああ……
+ボクは　一体　どうすれば……</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はは……
 ボク　かっちゃった……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はは……
-ボク　かっちゃった……</language>
+ボク　勝っちゃった……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">モニカ『……　……</language>
@@ -644,9 +668,9 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
 ボクの　ほうが
 ポケモンは　うまいんだし……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないよ……▼
 ボクの　ほうが
-ポケモンは　うまいんだし……</language>
+ポケモンは　上手いんだし……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">モニカ『ウッ　ウワーン！！▼
@@ -655,7 +679,7 @@
 あわないと　いけないのよー！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ウッ　ウワーン！！▼
 なんなのよ！！　もうー！！
-なんで　わたしが　こんな　めに▽
+なんで　私が　こんな目に▽
 あわないと　いけないのよー！！</language>
 	</row>
 	<row id="pw_event4_hero_3">
@@ -668,48 +692,50 @@
 わたし　ここから　でていくっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ウワーン！！▼
 もう　[1:00:トレーナー名:1]　なんか　キライ！！
-わたし　ここから　でていくっ！！</language>
+私　ここから　出て行くっ！！</language>
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！
 ちょっと　まってくれよ　モニカ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなっ！！
-ちょっと　まってくれよ　モニカ！！</language>
+ちょっと　待ってくれよ　モニカ！！</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]と　モニカ……▼
-ささいな　けんかが　げんいんで
-モニカは　いえを　とびだした……▼
-いそいで　あとをおう　[1:00:トレーナー名:1]……
-しかし　かのじょは　みつからなかった▼
-こうして　ふたりの　なかは
-おわりを　つげたのだった……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]と　モニカ……▼
-ささいな　けんかが　げんいんで
-モニカは　いえを　とびだした……▼
-いそいで　あとをおう　[1:00:トレーナー名:1]……
-しかし　かのじょは　みつからなかった▼
-こうして　ふたりの　なかは
-おわりを　つげたのだった……</language>
+		<language name="JPN" width="256">きっかけは　いつもと　おなじ
+ささいな　ケンカ……▼
+だけど　モニカは　おこって
+いえを　とびだして　しまった……▼
+いそいで　あとを　おいかけたけど
+モニカは　どこにも　いなかった……▼
+ボクたちは　もう
+ダメなのかも　しれない……</language>
+		<language name="JPN_KANJI" width="256">きっかけは　いつもと　同じ
+ささいな　ケンカ……▼
+だけど　モニカは　怒って
+家を　飛び出して　しまった……▼
+急いで　後を　追いかけたけど
+モニカは　どこにも　いなかった……▼
+ボクたちは　もう
+ダメなのかも　しれない……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">アキコ『もう！！　なんなの！？
+		<language name="JPN" width="256">モニカ『もう！！　なんなの！？
 なんで　まけないのよっ！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『もう！！　なんなの！？
-なんで　まけないのよっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『もう！！　なんなの！？
+なんで　負けないのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　むちゃくちゃな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　むちゃくちゃな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　ムチャクチャな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　ムチャクチャな……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">アキコ『そもそも　[1:00:トレーナー名:1]が
+		<language name="JPN" width="256">モニカ『そもそも　[1:00:トレーナー名:1]が
 こんな　モンスターボールを▽
 かってくるのが　わるいんでしょ！▼
 ちょっと　それ　かしなさいよ！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『そもそも　[1:00:トレーナー名:1]が
+		<language name="JPN_KANJI" width="256">モニカ『そもそも　[1:00:トレーナー名:1]が
 こんな　モンスターボールを▽
-かってくるのが　わるいんでしょ！▼
+買ってくるのが　悪いんでしょ！▼
 ちょっと　それ　かしなさいよ！！</language>
 	</row>
 	<row id="pw_event5_hero_2">
@@ -719,84 +745,84 @@
 なに　するんだよ！！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
-		<language name="JPN" width="256">アキコ『こんなもの……</language>
-		<language name="JPN_KANJI" width="256">アキコ『こんなもの……</language>
+		<language name="JPN" width="256">モニカ『こんなもの……</language>
+		<language name="JPN_KANJI" width="256">モニカ『こんなもの……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメだよ！　アキコ！
-それは　しさくひん　なんだ！！▽
-つかっちゃ　あぶないっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメだよ！　アキコ！
-それは　しさくひん　なんだ！！▽
-つかっちゃ　あぶないっ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメだよ！　モニカ！
+それ　たかいんだからっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメだよ！　モニカ！
+それ　高いんだからっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
-		<language name="JPN" width="256">アキコ『つかうわけないでしょ！！
+		<language name="JPN" width="256">モニカ『つかうわけないでしょ！！
 こんなもの　こわして　やるわ！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『つかうわけないでしょ！！
-こんなもの　こわして　やるわ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『使うわけないでしょ！！
+こんなもの　壊して　やるわ！！</language>
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！！
 たのむよ！　やめてくれよ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！！
-たのむよ！　やめてくれよ！！</language>
+頼むよ！　止めてくれよ！！</language>
 	</row>
 	<row id="pw_event5_enemy_4">
-		<language name="JPN" width="256">アキコ『あれ！？　なによ　これ！！
-かってに　ボールが　ひらいてく！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『あれ！？　なによ　これ！！
-かってに　ボールが　ひらいてく！！</language>
+		<language name="JPN" width="256">モニカ『キャッ！？　なに　これ！！
+なんで　かってに　ボールが
+ひらいていくのよっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『キャッ！？　なに　これ！！
+なんで　勝手に　ボールが
+開いていくのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　なにしてるの！
 ボールを　ひらいちゃ　ダメだよ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！　なにしてるの！
-ボールを　ひらいちゃ　ダメだよ！！</language>
+ボールを　開いちゃ　ダメだよ！！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
-		<language name="JPN" width="256">アキコ『しらないよ！
-ボールが　かってに！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『しらないよ！
-ボールが　かってに！！</language>
+		<language name="JPN" width="256">モニカ『知らないわよっ！
+ボールが　勝手に！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『知らないわよっ！
+ボールが　勝手に！！</language>
 	</row>
 	<row id="pw_event5_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……　なんだっ！？
 ボールに　すいこまれるっ！？　</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……　なんだっ！？
-ボールに　すいこまれるっ！？　</language>
+ボールに　吸い込まれるっ！？　</language>
 	</row>
 	<row id="pw_event5_enemy_6">
-		<language name="JPN" width="256">アキコ『キャッ！！　わたしも
-ボールに　ひきよせられる……</language>
-		<language name="JPN_KANJI" width="256">アキコ『キャッ！！　わたしも
-ボールに　ひきよせられる……</language>
+		<language name="JPN" width="256">モニカ『キャッー！！
+ボールに　ひきよせられるっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『キャッー！！
+ボールに　ひきよせられるっ！！</language>
 	</row>
-	<row id="pw_event5_hero_7">
+	<row id="pw_event5_enemy_7">
+		<language name="JPN" width="256">モニカ『キャーーッ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『キャーーッ！！</language>
+	</row>
+	<row id="pw_event5_hero_8">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウワーーッ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウワーーッ！！</language>
 	</row>
-	<row id="pw_event5_enemy_7">
-		<language name="JPN" width="256">アキコ『キャーーッ！！</language>
-		<language name="JPN_KANJI" width="256">アキコ『キャーーッ！！</language>
-	</row>
-	<row id="pw_event5_hero_8">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]と　アキコ……▼
-ささいな　けんかが　げんいんで
+	<row id="pw_event5_hero_9">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]と　モニカ……▼
+ささいな　ケンカが　げんいんで
 ふたりは　ボールの　なかに▽
 すいこまれて　しまった……▼
 あれはてた　へやの　なかに
 ころがる　ボール……▼
 そのごの　ふたりが　どうなったか
 しるものは　だれも　いない……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]と　アキコ……▼
-ささいな　けんかが　げんいんで
-ふたりは　ボールの　なかに▽
-すいこまれて　しまった……▼
-あれはてた　へやの　なかに
-ころがる　ボール……▼
-そのごの　ふたりが　どうなったか
-しるものは　だれも　いない……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]と　モニカ……▼
+ささいな　ケンカが　原因で
+二人は　ボールの　中に▽
+吸い込まれて　しまった……▼
+荒れ果てた　部屋の　中に
+転がる　ボール……▼
+その後の　二人が　どうなったか
+知る者は　だれも　いない……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

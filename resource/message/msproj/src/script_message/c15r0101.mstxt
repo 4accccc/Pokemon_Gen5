@@ -35,10 +35,11 @@
 			Language="JPN">
 			<Comment>♂pwmoji
 
+ｘ12ｚ5辺りに配置
 撮影バトル時に入室した際は消す</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:17:43" />
+				Time="2011-10-21T05:59:18" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -82,10 +83,11 @@
 			Language="JPN">
 			<Comment>♀man3
 
+ｘ9ｚ16辺りに上向きに配置
 撮影バトル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:27:57" />
+				Time="2011-10-21T05:59:23" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -124,10 +126,11 @@
 			Language="JPN">
 			<Comment>♀middlewoman1
 
+ｘ21ｚ16辺りに配置
 撮影バトル時に入室した際は消す</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:43:31" />
+				Time="2011-10-21T05:59:49" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -164,10 +167,11 @@
 			Language="JPN">
 			<Comment>♂middeman2
 
+ｘ7ｚ9辺りに配置
 撮影バトル時に入室した際は消す</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:53:49" />
+				Time="2011-10-21T06:00:21" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -202,10 +206,11 @@
 			Language="JPN">
 			<Comment>♂middeman1
 
+ｘ8ｚ9辺りに右向き配置
 撮影バトル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:53:58" />
+				Time="2011-10-21T06:01:17" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -246,10 +251,11 @@
 			Language="JPN">
 			<Comment>♂middeman1
 
+ｘ7ｚ15辺りに上向き配置
 撮影バトル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:04:54" />
+				Time="2011-10-21T06:01:36" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -288,10 +294,11 @@
 			Language="JPN">
 			<Comment>♀woman2
 
+ｘ23ｚ8辺りに上向き配置
 撮影バトル時にもいる</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T08:25:37" />
+				Time="2011-10-21T06:02:13" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>

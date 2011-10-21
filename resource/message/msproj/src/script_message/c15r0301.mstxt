@@ -29,10 +29,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂CLEANINGM</Comment>
+			<Comment>♂CLEANINGM
+
+（x19z13）辺りに配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T06:59:53" />
+				Time="2011-10-21T06:11:38" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -65,10 +67,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀GIRL2</Comment>
+			<Comment>♀GIRL2
+
+（x24z10）辺りに配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:01:40" />
+				Time="2011-10-21T06:08:57" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -557,11 +561,11 @@ pwfun_02_02～pwfun_02_04の
 		Label="pwfun_03_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>スゲー！　[Name:TrainerName ]さんだ！
+			<Text>スッゲー！　[Name:TrainerName ]さんだ！
 ボク　あなたの　ファンなんです！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T09:52:45" />
+				Time="2011-10-21T06:10:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -569,11 +573,11 @@ pwfun_02_02～pwfun_02_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スゲー！　[Name:TrainerName ]さんだ！
+			<Text>スッゲー！　[Name:TrainerName ]さんだ！
 ボク　あなたの　ファンなんです！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:19:58" />
+				Time="2011-10-21T06:10:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

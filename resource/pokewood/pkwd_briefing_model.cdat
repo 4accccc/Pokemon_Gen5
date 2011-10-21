@@ -531,11 +531,11 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl2,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl2),   //オブジェクト数
   },
-  { // シナリオ28 ( 波止場 )
-    g3Dutil_resTbl3,           //データテーブル
-    NELEMS(g3Dutil_resTbl3),   //データ数
-    g3Dutil_objTbl3,           //オブジェクト設定テーブル
-    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  { // シナリオ28 ( 砂浜ー１ )
+    g3Dutil_resTbl5,           //データテーブル
+    NELEMS(g3Dutil_resTbl5),   //データ数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
   },
   { // シナリオ29 ( 一般家屋室内 )
     g3Dutil_resTbl13,           //データテーブル

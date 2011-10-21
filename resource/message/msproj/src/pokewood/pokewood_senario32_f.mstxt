@@ -1322,29 +1322,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そうよ……▼
-Ｆー００は　アタシが　かいはつした
-アタシだけの　ロボットだもの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そういうこと……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そうよ……▼
-Ｆー００は　アタシが　開発した
-アタシだけの　ロボットだもの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そういうこと……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1398,6 +1394,42 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『だれにも　わたさない▼
+Ｆー００は　アタシが　かいはつした
+アタシだけの　ロボットだもの……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『だれにも　渡さない▼
+Ｆー００は　アタシが　開発した
+アタシだけの　ロボットだもの……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:19" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_hero_6">
+		<LanguageCell
+			Language="JPN">
 			<Text>……こうして　わたしは
 せかいはつの　ともだちロボット▽
 Ｆー００を　かんせい　させた……▼
@@ -1406,12 +1438,12 @@
 わたしの　ゆめと　ねがいの▽
 けっしょう　だった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1423,20 +1455,13 @@
 私の　夢と　願いの▽
 結晶　だった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_hero_0"
@@ -1480,27 +1505,27 @@
 			Language="JPN">
 			<Text>じょしゅ『[Name:TrainerName Idx="1" ]はかせ！
 なにを　してるんですかッ！▼
-Ｆー００が　こわすなんてッ！</Text>
+Ｆー００を　こわすなんてッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『[Name:TrainerName Idx="1" ]博士！
 何を　してるんですかッ！▼
-Ｆー００が　壊すなんてッ！</Text>
+Ｆー００を　壊すなんてッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1977,25 +2002,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『はやく　さがしにいかないと！</Text>
+			<Text>じょしゅ『さあ！　はかせっ！
+はやく　さがしにいかないと！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『早く　探しにいかないと！</Text>
+			<Text>助手『さあ！　博士っ！
+早く　探しにいかないと！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2043,59 +2070,53 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……わたしは　ひっしで
+			<Text>……わたしたちは　ひっしで
 Ｆー００を　おいかけた……▼
 そして　そのさきで　みたのは
-あばれまわる　Ｆー００　だった……▼
-Ｆー００は　たのしそうに
-ビルや　くるま……▽
-おおきな　はし　までも▽
-こわして　しまった……▼
+あばれまわる　Ｆー００だった……▼
+たのしそうに　ビルや　くるまを
+こわす　Ｆー００……▼
 やがて　けいかんが　あらわれ
 Ｆー００は　こわされた……▼
 ……わたしは　Ｆー００の
-せきにんを　とることになり
+せきにんを　とることになり▽
 けいさつに　つかまった……▼
-あれから　２０ねん……
-いまも　けいむしょの　なか……▼
+あれから　２０ねん……▼
 わたしは　あんな　ロボットを
 つくって　しまったことを▽
-こうかい　している……</Text>
+とても　こうかい　している……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……私は　必死で
 Ｆー００を　追いかけた……▼
-そして　その先で　見たものは
+そして　その先で　見たのは
 暴れまわる　Ｆー００だった……▼
-Ｆー００は　楽しそうに
-ビルや　車……▽
-巨大な橋　までも▽
-壊してしまった……▼
+楽しそうに　ビルや　車を
+壊す　Ｆー００……▼
 やがて　警官が　現れ
 Ｆー００は　壊された……▼
 ……私は　Ｆー００の
-責任を　取ることになり
+責任を　取ることになり▽
 警察に　つかまった……▼
-あれから　２０年……
-今も　刑務所の　中……▼
+あれから　２０年……▼
 私は　あんな　ロボットを
 造って　しまったことを▽
-後悔　している……</Text>
+とても　後悔　している……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:28:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

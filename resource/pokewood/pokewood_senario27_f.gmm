@@ -359,23 +359,31 @@
 		<language name="JPN_KANJI" width="256">ロドリゲス『まさか……
 こんなことに　なるとは……</language>
 	</row>
-	<row id="pw_event0_hero_0">
+	<row id="pw_event0_enemy_0">
+		<language name="JPN" width="256">ロドリゲス『これは……</language>
+		<language name="JPN_KANJI" width="256">ロドリゲス『これは……</language>
+	</row>
+	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！！
 いったい　どういうこと！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！！
 いったい　どういうこと！！</language>
 	</row>
-	<row id="pw_event0_enemy_0">
+	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ロドリゲス『それは　こっちのセリフだ！▼
-キミは　あのボールの　なかに
-にんげんを　いれたのか！？
-</language>
+キミは　このボールの　なかに
+にんげんを　いれたのか！？▼
+このボールは　のろわれたボール！！▼
+ひとや　ポケモンに　わざわいを　なす
+とてつもなく　きけんな　しろものだ！</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『それは　こっちのセリフだ！▼
-キミは　あのボールの　なかに
-にんげんを　いれたのか！？
-</language>
+キミは　このボールの　なかに
+にんげんを　いれたのか！？▼
+このボールは　のろわれたボール！！▼
+ひとや　ポケモンに　わざわいを　なす
+とてつもなく　きけんな　しろものだ！</language>
 	</row>
-	<row id="pw_event0_hero_1">
+	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのボールが
 かってに　ひらいたんだもん！▽
 アタシ　なにも　してないっ！！▼
@@ -387,19 +395,17 @@
 それより　早く　お姉ちゃんを
 ボールの中に　閉まってよ！</language>
 	</row>
-	<row id="pw_event0_enemy_1">
+	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ロドリゲス『やっているさ！！
-だが　ボールが　コンロールできない！
-</language>
+だが　ボールが　コンロールできない！</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『やっているさ！！
-だが　ボールが　コンロールできない！
-</language>
+だが　ボールが　コンロールできない！</language>
 	</row>
-	<row id="pw_event0_hero_2">
+	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなっ！！</language>
 	</row>
-	<row id="pw_event0_enemy_2">
+	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">ロドリゲス『まずは　パニックに
 おちいっている　かのじょを▽
 とめなければ　きけんだ！！▼
@@ -461,13 +467,11 @@
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメだ……▼
-かんぜんに　こんらんしてる……
-まずは　どうにかして▽
-ボクに　きがついてもらわないと</language>
+どうにかして　アタシに
+きがついて　もらわないと……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメだ……▼
-かんぜんに　こんらんしてる……
-まずは　どうにかして▽
-ボクに　きがついてもらわないと</language>
+どうにかして　アタシに
+気がついて　もらわないと……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">モニカ『イヤーッ！！
@@ -549,12 +553,28 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『モニカ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『モニカ！！</language>
 	</row>
+	<row id="pw_event3_enemy_3">
+		<language name="JPN" width="256">ロドリゲス『まさか
+こんなことに　なるとはな……</language>
+		<language name="JPN_KANJI" width="256">ロドリゲス『まさか
+こんなことに　なるとはな……</language>
+	</row>
 	<row id="pw_event3_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ロドリゲスさん！
+いったい　どうしたら　いいんですか！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ロドリゲスさん！
+いったい　どうしたら　いいんですか！</language>
+	</row>
+	<row id="pw_event3_enemy_4">
+		<language name="JPN" width="256">ロドリゲス『……</language>
+		<language name="JPN_KANJI" width="256">ロドリゲス『……</language>
+	</row>
+	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">……ボールから　とびだす
 おねえちゃん……▼
 そのからだは　どういうわけだか
-ビルよりも　きょだいに　なっていた▼
-あばれる　おねえちゃんを
+ビルよりも　きょだいに　なっていた……▼
+どうにか　あばれる　おねえちゃんを
 とめることは　できたけど▽
 おおきな　からだは　そのまんま▼
 ああ……　アタシは　いったい
@@ -563,7 +583,7 @@
 お姉ちゃん……▼
 その身体は　どういうわけだか
 ビルよりも　巨大に　なっていた▼
-暴れる　お姉ちゃんを
+どうにか　暴れる　お姉ちゃんを
 止めることは　できたけど▽
 大きな　身体は　そのまんま▼
 ああ……　アタシは　いったい
@@ -599,11 +619,11 @@
 		<language name="JPN" width="256">ロドリゲス『なにっ！！
 まだ　おきあがってくるのかっ！？▼
 こいつは　マズいぞ！！
-おい！　はやく　にげなさい！！</language>
+おい！　はやく　にげるんだ！！</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『なにっ！！
 まだ　起き上がってくるのかっ！？▼
 こいつは　マズいぞ！！
-おい！　早く　逃げなさい！！</language>
+おい！　早く　逃げるんだ！！</language>
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウギャー！！</language>

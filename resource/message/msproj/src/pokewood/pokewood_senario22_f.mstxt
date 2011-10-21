@@ -1401,6 +1401,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event8_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう　つかれた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:27:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:27:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう　疲れた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:27:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-19T05:27:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event8_enemy_0"
 		Style="Large">
 		<LanguageCell
