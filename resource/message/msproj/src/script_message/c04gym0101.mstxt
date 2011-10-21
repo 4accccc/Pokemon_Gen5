@@ -440,6 +440,104 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04gym0101_leader_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:24:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:24:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・退場演出用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:24:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER4
+ジムリーダー・カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:23:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04gym0101_leader_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:25:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・退場演出終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:24:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER4
+ジムリーダー・カミツレ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:23:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04gym0101_leader_end_01"
 		Style="Large">
 		<LanguageCell

@@ -1486,6 +1486,41 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c01_memory_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもいでリンクの　ラベル
+かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:12:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:11:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おもいでリンクの　ラベル
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:12:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:12:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンクようメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:12:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01_sign1_01"
 		Style="Large">
 		<LanguageCell

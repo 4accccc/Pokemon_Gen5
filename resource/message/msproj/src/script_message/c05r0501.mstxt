@@ -2164,6 +2164,41 @@ Nの　気持ちは　わかりません▼
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c05r0501_memory_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもいでリンクの　ラベル
+かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:13:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:13:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おもいでリンクの　ラベル
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:13:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:13:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンクようメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:13:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0501_poke_01"
 		Style="Large">
 		<LanguageCell

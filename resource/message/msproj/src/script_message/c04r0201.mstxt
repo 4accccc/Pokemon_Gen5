@@ -2904,16 +2904,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふーむ！　やはり　あなたには
-かつて　ミュージカルを　さわがせた▽
+かつて　ミュージカルを　騒がせた▽
 とある　スーパースターと▽
-よく　にた　オーラを　かんじます！▼
+よく　似た　オーラを　感じます！▼
 そこで　わたしから　プレゼント！▼
 これは　かつての　スーパースターが
-つかっていた　ものと▽
-おなじ　グッズの　つめあわせです▼</Text>
+使っていた　ものと▽
+同じ　グッズの　つめあわせです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T07:49:44" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2956,12 +2956,12 @@
 			Language="JPN_KANJI">
 			<Text>あなたなら　きっと
 それらの　グッズを▽
-つかいこなせる　ことでしょう！▼
+使いこなせる　ことでしょう！▼
 では　ぜひぜひ　ミュージカルに
-さんか　してくださいませ！</Text>
+参加してくださいませ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T07:49:46" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3049,13 +3049,13 @@
 			Language="JPN_KANJI">
 			<Text>……おやおや？▼
 スーパースターの
-つかっていた　グッズと▼
-おなじグッズを　すでに
-すべて　おもちの　ようですね▼
+使っていた　グッズと▼
+同じ　グッズを　すでに
+すべて　お持ちの　ようですね▼
 さすが　です！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-02T05:27:37" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:20:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3097,14 +3097,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むかし　ステキな　ミュージカルを
+			<Text>昔　ステキな　ミュージカルを
 みせてくれる　トレーナー　が　いて▽
-わたし　ずいぶん　むちゅうだったの▼
+わたし　ずいぶん　夢中だったの▼
 また　あんな　スーパースターが
-あらわれない　かしら……</Text>
+現われない　かしら……</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-02T05:28:07" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:20:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3148,14 +3148,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あら！　あなた……▼
-わたしが　むかし　だいファンだった
-[Name:TrainerName ]さん　に▽
-なんだか　にてる　かも……？▼
-でもまだ　[Name:TrainerName ]さん　の
-カリスマせい　には　およんでないわね</Text>
+わたしが　昔　大ファンだった
+[Name:TrainerName ]さんに▽
+なんだか　似てるかも……？▼
+でもまだ　[Name:TrainerName ]さんの
+カリスマ性には　およんでないわね</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-02T05:28:51" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3184,14 +3184,14 @@
 			Language="JPN">
 			<Text>あら！！！　あなた……▼
 わたしが　むかし　だいファンだった
-[Name:TrainerName ]さん　に▼
+[Name:TrainerName ]さんに▼
 まけず　おとらず　ステキな
 ミュージカルを　する　かたね！！▼
-すっかり　ファンになっちゃった
+すっかり　ファンに　なっちゃった
 ステキな　ぶたいを　ありがとう</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-02T05:29:16" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3200,15 +3200,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あら！！！　あなた……▼
-わたしが　むかし　だいファンだった
-[Name:TrainerName ]さん　に▼
-まけず　おとらず　ステキな
-ミュージカルを　する　かたね！！▼
-すっかり　ファンになっちゃった
-ステキな　ぶたいを　ありがとう</Text>
+わたしが　昔　大ファンだった
+[Name:TrainerName ]さんに▼
+負けず劣らず　ステキな
+ミュージカルを　する　方ね！！▼
+すっかり　ファンに　なっちゃった！
+ステキな　舞台を　ありがとう</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-02T05:29:19" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3221,6 +3221,48 @@
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-08-01T07:49:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_memory_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもいでリンクの　ラベル
+かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:17:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:17:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おもいでリンクの　ラベル
+仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:17:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:17:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンクようメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:17:30" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
