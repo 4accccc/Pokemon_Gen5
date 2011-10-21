@@ -33,6 +33,7 @@
 #include "gmk_tmp_wk.h"
 #include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 #include "infinity_dungeon_creator.h"
+#include "infinity_dungeon_field.h"
 
 #ifdef PM_DEBUG
 
@@ -419,16 +420,6 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
       }
 
-      // 無限ダンジョン関連の岩データ位置をリセットする
-      {
-        MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_field_work );
-        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_01 );
-        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_02 );
-        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_03 );
-        MMDLSYS_ROCKPOS_ResetFallParam( mmdlsys ,ZONE_ID_D31R0801 ,D31R0801_ROOCK_04 );
-      }
-      
-
       (*seq)++;
       break;
     }
@@ -440,7 +431,14 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 
         // マップ移動
         NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
+
+        // 無限ダンジョン関連の岩データ位置をリセットする
+        INF_DUNGEON_FIELD_ResetPushRock( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
+
+        // 次ゾーンを設定
         SetNextZoneData( p_wk );
+
+        // マップチェンジ
         GMEVENT_CallEvent(event,
             EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work, p_next_map_data->zone_id, &p_next_map_data->warp_pos,GetFieldDir( p_wk->warp_dir ) ));
         (*seq)++;

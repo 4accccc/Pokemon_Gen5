@@ -25,6 +25,8 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "infinity_dungeon_field.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -133,7 +135,6 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
     }
   }
 
-
 /* PLATINUM
 	if (fsys->scope_mode_flag == TRUE) {
 		//望遠鏡モードの場合は更新処理を行わない
@@ -199,6 +200,23 @@ void FIELD_FLAGCONT_INIT_FlySky(GAMEDATA * gdata, u16 zone_id)
   //エフェクトエンカウント　歩数カウンタークリア他
   ENCOUNT_WORK_SpMapJumpUpdate( gdata );
   
+  // 無限ダンジョン
+  {
+    // 岩リセット
+    MMDLSYS *fmmdlsys;
+    fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    INF_DUNGEON_FIELD_ResetPushRock( fmmdlsys );
+  }
+ 
+  // 歩数カウンタ終了
+  {
+    SITUATION         *p_situation;
+    SAVE_CONTROL_WORK *p_saveData;
+    p_saveData  = GAMEDATA_GetSaveControlWork( gdata );
+    p_situation = SaveData_GetSituation( p_saveData );
+    Situation_ScWalkCoutStop( p_situation );
+  }
+ 
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -216,6 +234,24 @@ void FIELD_FLAGCONT_INIT_Teleport(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
   ENCOUNT_WORK_SpMapJumpUpdate( gdata );
+   
+  // 無限ダンジョン
+  {
+    // 岩リセット
+    MMDLSYS *fmmdlsys;
+    fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    INF_DUNGEON_FIELD_ResetPushRock( fmmdlsys );
+  }
+  
+  // 歩数カウンタ終了
+  {
+    SITUATION         *p_situation;
+    SAVE_CONTROL_WORK *p_saveData;
+    p_saveData  = GAMEDATA_GetSaveControlWork( gdata );
+    p_situation = SaveData_GetSituation( p_saveData );
+    Situation_ScWalkCoutStop( p_situation );
+  }
+
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -234,6 +270,24 @@ void FIELD_FLAGCONT_INIT_Escape(GAMEDATA * gdata, u16 zone_id)
 {
   //エフェクトエンカウント　歩数カウンタークリア他
   ENCOUNT_WORK_SpMapJumpUpdate( gdata );
+
+  // 無限ダンジョン
+  {
+    // 岩リセット
+    MMDLSYS *fmmdlsys;
+    fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    INF_DUNGEON_FIELD_ResetPushRock( fmmdlsys );
+  }
+
+  // 歩数カウンタ終了
+  {
+    SITUATION         *p_situation;
+    SAVE_CONTROL_WORK *p_saveData;
+    p_saveData  = GAMEDATA_GetSaveControlWork( gdata );
+    p_situation = SaveData_GetSituation( p_saveData );
+    Situation_ScWalkCoutStop( p_situation );
+  }
+
 /*  PLATINUM
 	//サファリフラグクリア
 	SysFlag_SafariReset( SaveData_GetEventWork(fsys->savedata) );
@@ -259,6 +313,23 @@ void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 	SysFlag_PairReset( ev );
 	SysWork_PairTrainerIDSet( ev, 0 );
 //*/
+  
+  // 無限ダンジョン
+  {
+    // 岩リセット
+    MMDLSYS *fmmdlsys;
+    fmmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    INF_DUNGEON_FIELD_ResetPushRock( fmmdlsys );
+  }
+   
+  // 歩数カウンタ終了
+  {
+    SITUATION         *p_situation;
+    SAVE_CONTROL_WORK *p_saveData;
+    p_saveData  = GAMEDATA_GetSaveControlWork( gdata );
+    p_situation = SaveData_GetSituation( p_saveData );
+    Situation_ScWalkCoutStop( p_situation );
+  }
 }
 
 
@@ -290,4 +361,5 @@ void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata, u16 zone_id)
 void FIELD_FLAGCONT_INIT_FieldIn(GAMEDATA * gdata, u16 zone_id)
 {
 }
+
 

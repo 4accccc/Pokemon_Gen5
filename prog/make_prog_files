@@ -450,6 +450,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/fldmmdl_move.c \
 				field/fldmmdl_railsetup.c \
         field/field_flagcontrol.c \
+        field/infinity_dungeon_field.c \
         field/itemuse_event.c \
         field/script_hideitem.c \
         field/calender.c \
