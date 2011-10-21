@@ -764,6 +764,8 @@ typedef struct
 
   ENTRANCE_EVDATA entranceEventData; ///<出入り口イベント用のワーク
 
+  BOOL is_goout_no_setup;
+
 } MAPCHANGE_WORK;
 
 typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
@@ -1039,7 +1041,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       FIELDMAP_WORK* p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
 
       //外出表現表示
-      FIELD_GOOUT_EFFECT_Setup( FIELDMAP_GetGooutEffect( p_fld ) );
+      if( !work->is_goout_no_setup )
+      {
+        FIELD_GOOUT_EFFECT_Setup( FIELDMAP_GetGooutEffect( p_fld ) );
+      }
 
       //エフェクトエンカウントワーク更新
       ENCOUNT_WORK_MapJumpUpdate( gameData, p_fld );
@@ -1050,13 +1055,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_FINISH:
-#if 0
-    {
-      FIELDMAP_WORK *p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
-      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( p_fld );
-      FIELD_GOOUT_EFFECT_Start( p_goout );
-    }
-#endif
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1947,6 +1945,7 @@ GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
   work->exit_type          = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = seasonUpdateEnable;
+  work->is_goout_no_setup  = TRUE;
 
   return event;
 }

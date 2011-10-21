@@ -65,11 +65,12 @@ typedef struct _FIELD_GOOUT_DATA  FIELD_GOOUT_DATA;
 extern FIELD_GOOUT_DATA *FIELD_GOOUT_DATA_Init( HEAPID heapID );
 extern void FIELD_GOOUT_DATA_Exit( FIELD_GOOUT_DATA *p_wk );
 
-extern ZONEID FIELD_GOOUT_DATA_GetZoneID( const FIELD_GOOUT_DATA *cp_wk, u32 index );
 extern GOOUT_COMBI_ID FIELD_GOOUT_DATA_GetCombiID( const FIELD_GOOUT_DATA *cp_wk, u32 index, u8 season, FIELD_GOOUT_TIMEZONE timezone );
 extern u32 FIELD_GOOUT_DATA_GetIndexMax( const FIELD_GOOUT_DATA *cp_wk );
-extern GOOUT_COMBI_ID FIELD_GOOUT_DATA_GetCombiIDByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID zoneID, u8 season, FIELD_GOOUT_TIMEZONE timezone );
+extern GOOUT_COMBI_ID FIELD_GOOUT_DATA_GetCombiIDByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID dst_zoneID, ZONEID src_zoneID, u8 season, FIELD_GOOUT_TIMEZONE timezone );
 
 extern GOOUT_EFFECT_ID FIELD_GOOUT_DATA_GetEffectID( const FIELD_GOOUT_DATA *cp_wk, GOOUT_COMBI_ID combiID, u32 index );
 extern u8 FIELD_GOOUT_DATA_GetEffectNum( const FIELD_GOOUT_DATA *cp_wk, GOOUT_COMBI_ID combiID );
 extern ARCDATID FIELD_GOOUT_DATA_GetResource( const FIELD_GOOUT_DATA *cp_wk, GOOUT_EFFECT_ID effectID, FIELD_GOOUT_RESOURCE res );
+
+extern u32 FIELD_GOOUT_DATA_GetIndexByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID dst_zoneID, ZONEID src_zoneID );

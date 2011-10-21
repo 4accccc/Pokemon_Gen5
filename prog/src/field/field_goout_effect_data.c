@@ -26,7 +26,8 @@
 //=============================================================================
 typedef struct
 {
-  u32 zoneID;
+  u16 dst_zoneID;
+  u16 src_zoneID;
   u16 combiID[PMSEASON_TOTAL][FIELD_GOOUT_TIMEZONE_MAX];
 }FIELD_GOOUT_BINARY;
 struct _FIELD_GOOUT_DATA
@@ -41,7 +42,6 @@ struct _FIELD_GOOUT_DATA
 */
 //=============================================================================
 static const FIELD_GOOUT_BINARY * Field_Goout_GetBinary( const FIELD_GOOUT_DATA *cp_wk, u32 index );
-static const FIELD_GOOUT_BINARY * Field_Goout_GetBinaryByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID zoneID );
 
 //----------------------------------------------------------------------------
 /**
@@ -97,21 +97,6 @@ void FIELD_GOOUT_DATA_Exit( FIELD_GOOUT_DATA *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ゾーンIDを取得
- *
- *	@param	const FIELD_GOOUT_DATA *cp_wk ワーク
- *	@param	index   インデックス
- *
- *	@return ゾーンID
- */
-//-----------------------------------------------------------------------------
-ZONEID FIELD_GOOUT_DATA_GetZoneID( const FIELD_GOOUT_DATA *cp_wk, u32 index )
-{
-  const FIELD_GOOUT_BINARY * cp_binary = Field_Goout_GetBinary( cp_wk, index );
-  return cp_binary->zoneID;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  演出組み合わせIDを取得
  *
  *	@param	const FIELD_GOOUT_DATA *cp_wk
@@ -155,18 +140,19 @@ u32 FIELD_GOOUT_DATA_GetIndexMax( const FIELD_GOOUT_DATA *cp_wk )
  *	@return 組み合わせID
  */
 //-----------------------------------------------------------------------------
-GOOUT_COMBI_ID FIELD_GOOUT_DATA_GetCombiIDByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID zoneID, u8 season, FIELD_GOOUT_TIMEZONE timezone )
+GOOUT_COMBI_ID FIELD_GOOUT_DATA_GetCombiIDByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID dst_zoneID, ZONEID src_zoneID, u8 season, FIELD_GOOUT_TIMEZONE timezone )
 {
-  const FIELD_GOOUT_BINARY *cp_binary = Field_Goout_GetBinaryByZoneID( cp_wk, zoneID );
+  u32 index = FIELD_GOOUT_DATA_GetIndexByZoneID( cp_wk, dst_zoneID, src_zoneID );
   GF_ASSERT( season < PMSEASON_TOTAL );
   GF_ASSERT( timezone < FIELD_GOOUT_TIMEZONE_MAX );
   
-  if( cp_binary == NULL )
+  if( index == FIELD_GOOUT_DATA_GetIndexMax( cp_wk ) )
   {
     return GOOUT_COMBI_NONE;
   }
   else
   {
+    const FIELD_GOOUT_BINARY *cp_binary = Field_Goout_GetBinary( cp_wk, index );
     return cp_binary->combiID[season][timezone];
   }
 }
@@ -263,20 +249,21 @@ static const FIELD_GOOUT_BINARY * Field_Goout_GetBinary( const FIELD_GOOUT_DATA 
  *	@param	const FIELD_GOOUT_DATA *cp_wk ワーク
  *	@param	zoneID  ゾーンID
  *
- *	@return バイナリデータ  ない場合はNULL
+ *	@return バイナリデータ  ない場合はMax値
  */
 //-----------------------------------------------------------------------------
-static const FIELD_GOOUT_BINARY * Field_Goout_GetBinaryByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID zoneID )
+u32 FIELD_GOOUT_DATA_GetIndexByZoneID( const FIELD_GOOUT_DATA *cp_wk, ZONEID dst_zoneID, ZONEID src_zoneID )
 {
   int i;
   for( i = 0; i < FIELD_GOOUT_DATA_GetIndexMax(cp_wk); i++ )
   {
     const FIELD_GOOUT_BINARY *cp_binary = Field_Goout_GetBinary( cp_wk, i );
-    if( cp_binary->zoneID == zoneID )
+    if( cp_binary->dst_zoneID == dst_zoneID
+        && cp_binary->src_zoneID == src_zoneID )
     {
-      return cp_binary;
+      break;
     }
   }
 
-  return NULL;
+  return i;
 }

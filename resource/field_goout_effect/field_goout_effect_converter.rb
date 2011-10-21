@@ -295,23 +295,31 @@ EFF_SEAZON_NUM  = 4
 EFF_SEAZON_IN   = 3
 
 ROW_START       = 2   #行開始位置
-COL_START       = 0   #列開始位置
-COL_ZONEID      = COL_START   #列：ZONEID
-COL_EFF_START   = 1   #列：エフェクト開始
+COL_START       = 1   #列開始位置
+COL_ZONEID_DST  = COL_START   #列：ZONEID
+COL_ZONEID_SRC  = 2   #列：ZONEID
+COL_EFF_START   = 3   #列：エフェクト開始
 COL_EFF_END     = EFF_SEAZON_NUM * EFF_SEAZON_IN + COL_EFF_START  #列：エフェクト終了
 
-def convertData( csv, data, zone, effect, combi )
+def convertData( csv, data, zone, effect, combi, header )
 
   #データチェック用naix
   zonedata = HeaderDataArray.new
   zonedata.load( zone )
 
+  cnt = 0
   #先に定義名をコンバート
   for i in ROW_START..csv.row_length-1
     #ゾーンな
-    value   = csv.get( i, COL_ZONEID )
+    value   = csv.get( i, COL_ZONEID_DST )
     begin
-      zoneid = zonedata.search( "ZONE_ID_#{value}", "dataの#{i}列0行" )
+      src_zoneid = zonedata.search( "ZONE_ID_#{value}", "dataの#{i}列0行" )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    value   = csv.get( i, COL_ZONEID_SRC )
+    begin
+      dst_zoneid = zonedata.search( "ZONE_ID_#{value}", "dataの#{i}列0行" )
     rescue HeaderSearchError
       exit(1)
     end
@@ -328,12 +336,18 @@ def convertData( csv, data, zone, effect, combi )
     end
 
     #dataへの書き込み
-    data.write_u32( zoneid )
+    data.write_u16( src_zoneid )
+    data.write_u16( dst_zoneid )
     effdata.each do |item|
       data.write_u16( item )
     end
 
+    cnt += 1
   end #for
+
+  #headerにヘッダを書きこむ
+  header.write( "//データ数\n" )
+  header.write( "#define FIELD_GOOUT_DATA_MAX  (#{cnt})\n" )
 end
 
 
@@ -505,7 +519,7 @@ begin
   convertEffect( defCsv, cdat, header, effect, combi, ARGV[3]  )
   convertCombination( defCsv, cdat, header, effect, combi )
   convertConst( defCsv, header )
-  convertData( dataCsv, data, ARGV[2], effect, combi )
+  convertData( dataCsv, data, ARGV[2], effect, combi, header )
 
   #dat書き込み
   data.genelate( "#{ARGV[4]}.dat" )

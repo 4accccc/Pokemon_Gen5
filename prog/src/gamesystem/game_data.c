@@ -64,6 +64,7 @@
 #include "field/wbt.h"  //WBTSYS
 #include "field/pokewood.h"
 #include "fieldmap/zone_id.h"
+#include "field/field_goout_data.h"
 
 //============================================================================================
 //============================================================================================
@@ -150,7 +151,7 @@ struct _GAMEDATA{
   u32 scriptCommandOverlayID; ///<フィールドスクリプトコマンド用オーバーレイID
 
   u32   ltvt_secret_call_zoneID;  ///<隠しキャラに電話できる場所のゾーンIDのの
-  u32   goout_effect_room_count;    ///<室外演出部屋内カウンタ
+  u32   goout_effect_id;    ///<室外演出エフェクトID
   u8    goout_effect_flag;
   u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
   u8    area_ofs; ///<エリアオフセット(今はリゾートでしか使っていない)
@@ -312,6 +313,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   // 最初に表示されるメダルをなしに設定
   gd->top_medal_id = MDLID_MAX;
+
+  // 室外演出エフェクトIDをなしに設定
+  gd->goout_effect_id = FIELD_GOOUT_DATA_MAX;
 
   // ライブキャスター隠しキャラ用ゾーンIDを設定
   GAMEDATA_SetLiveCasterSecretCallZoneID( gd );
@@ -2233,28 +2237,28 @@ u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出で使用する部屋内カウントを取得
+ *	@brief  室外演出で使用する室外表現エフェクトIDを取得
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
- *	@return 部屋内カウンタ
+ *	@return 室外表現組み合わせID
  */
 //-----------------------------------------------------------------------------
-u32  GAMEDATA_GetGooutEffectRoomCount( const GAMEDATA *gamedata )
+u32  GAMEDATA_GetGooutEffectEffectID( const GAMEDATA *gamedata )
 {
-  return gamedata->goout_effect_room_count;
+  return gamedata->goout_effect_id;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出で使用する部屋内カウントを設定
+ *	@brief  室外演出で使用する室外表現エフェクトIDを設定
  *
  *	@param	GAMEDATA *gamedata  ゲームデータ
  *	@param	count 部屋内カウント
  */
 //-----------------------------------------------------------------------------
-void GAMEDATA_SetGooutEffectRoomCount( GAMEDATA *gamedata, u32 count )
+void GAMEDATA_SetGooutEffectEffectID( GAMEDATA *gamedata, u32 id )
 {
-  gamedata->goout_effect_room_count = count;
+  gamedata->goout_effect_id = id;
 }
 //----------------------------------------------------------------------------
 /**

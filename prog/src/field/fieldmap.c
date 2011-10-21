@@ -970,6 +970,14 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // 天気晴れ
     {
       u32 weather_id = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
+  
+#ifdef PM_DEBUG
+      if( DEBUG_FLG_GetFlg( DEBUG_FLG_WeatherForceSunny ) )
+      {
+        weather_id = WEATHER_NO_SUNNY;
+      }
+#endif
+      
       FIELD_WEATHER_Set(
           fieldWork->weather_sys, weather_id, HEAPID_WEATHER );
 
@@ -983,7 +991,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
 
     //外出エフェクト
-    fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( fieldWork->gamedata, fieldWork->ExpObjCntPtr, FIELDMAP_GetZoneID( fieldWork ), GAMEDATA_GetSeasonID(fieldWork->gamedata), FIELDMAP_GetSeasonTimeZone( fieldWork ), fieldWork->heapID );
+    fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( gsys, fieldWork->gamedata, fieldWork->ExpObjCntPtr, GAMEDATA_GetSeasonID(fieldWork->gamedata), FIELDMAP_GetSeasonTimeZone( fieldWork ), fieldWork->heapID );
     
     SET_CHECK("setup: gimmick setup");  //デバッグ：処理負荷計測
     //フィールドギミックセットアップ

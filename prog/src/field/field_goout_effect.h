@@ -12,7 +12,7 @@
 #include "fld_exp_obj.h"
 #include "field_camera.h"
 #include "gamesystem/playerwork.h"
-
+#include "gamesystem/gamesystem_def.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -31,7 +31,7 @@ typedef struct _FIELD_GOOUT_EFFECT FIELD_GOOUT_EFFECT;
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMEDATA *p_gamedata, FLD_EXP_OBJ_CNT_PTR p_ex_obj, ZONEID zoneID, u8 season, u32 timezone, HEAPID heapID );
+extern FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA *p_gamedata, FLD_EXP_OBJ_CNT_PTR p_ex_obj, u8 season, u32 timezone, HEAPID heapID );
 extern void FIELD_GOOUT_EFFECT_Exit( FIELD_GOOUT_EFFECT *p_wk );
 extern void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_camera );
 

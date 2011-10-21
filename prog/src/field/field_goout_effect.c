@@ -19,6 +19,7 @@
 
 #include "debug/debugwin_sys.h"
 #include "field_goout_effect_data.h"
+#include "gamesystem/pm_weather.h"
 
 
 #ifdef PM_DEBUG
@@ -49,6 +50,7 @@ struct _FIELD_GOOUT_EFFECT
   BOOL is_enable;
   s32 seq;
   FIELD_GOOUT_DATA *p_data;
+  GAMESYS_WORK *p_gamesys;
   GOOUT_EFFECT_ID effectID;
   GAMEDATA *p_gamedata;
 };
@@ -59,7 +61,7 @@ struct _FIELD_GOOUT_EFFECT
 */
 //=============================================================================
 static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL_G3D_CAMERA* cp_camera );
-static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID );
+static BOOL Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID );
 
 
 static BOOL Field_Goout_Effect_IsOutZone( const GAMEDATA *cp_gamedata, ZONEID zoneID );
@@ -99,40 +101,52 @@ static int  GOOUT_DEBUG_GetCameraDistance( void );
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMEDATA *p_gamedata, FLD_EXP_OBJ_CNT_PTR p_ex_obj, ZONEID zoneID, u8 season, u32 timezone, HEAPID heapID )
+FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA *p_gamedata, FLD_EXP_OBJ_CNT_PTR p_ex_obj, u8 season, u32 timezone, HEAPID heapID )
 {
   FIELD_GOOUT_EFFECT  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_GOOUT_EFFECT) );
+  p_wk->p_gamesys   = p_gamesys;
   p_wk->p_data      = FIELD_GOOUT_DATA_Init( heapID );
   p_wk->p_ex_obj    = p_ex_obj;
   p_wk->p_gamedata  = p_gamedata;
 
   //リソース読込み
   {
-    FIELD_GOOUT_TIMEZONE goout_tz = Field_Goout_Effect_GetTimeZone( timezone );
-    GOOUT_COMBI_ID combiID  = FIELD_GOOUT_DATA_GetCombiIDByZoneID( p_wk->p_data, zoneID, season, goout_tz );
-    u8  max =  FIELD_GOOUT_DATA_GetEffectNum( p_wk->p_data, combiID );
-    if( max == 0 )
-    {
-      p_wk->effectID = GOOUT_EFF_NULL;
-    }
-    else
-    {
-      p_wk->effectID  = FIELD_GOOUT_DATA_GetEffectID( p_wk->p_data, combiID, GFUser_GetPublicRand(max) );
-    }
 
-    NAGI_Printf( "室外表現：組み合わせ=%d 演出=%d\n　ゾーンID=%d 季節=%d 時刻=%d\n", combiID, p_wk->effectID, zoneID, season, timezone );
+    u32 index = GAMEDATA_GetGooutEffectEffectID( p_wk->p_gamedata );
+
+    p_wk->effectID = GOOUT_EFF_NULL;
+
+    if( index < FIELD_GOOUT_DATA_MAX )
+    {
+      FIELD_GOOUT_TIMEZONE goout_tz = Field_Goout_Effect_GetTimeZone( timezone );
+      GOOUT_COMBI_ID combiID  = FIELD_GOOUT_DATA_GetCombiID( p_wk->p_data, index, season, goout_tz );
+      u8  max =  FIELD_GOOUT_DATA_GetEffectNum( p_wk->p_data, combiID );
+      if( max != 0 )
+      {
+        p_wk->effectID  = FIELD_GOOUT_DATA_GetEffectID( p_wk->p_data, combiID, GFUser_GetPublicRand(max) );
+      }
+      NAGI_Printf( "室外表現：組み合わせ=%d 演出=%d\n　index=%d 季節=%d 時刻=%d\n", combiID, p_wk->effectID, index, season, timezone );
+    }
 
     if( p_wk->effectID != GOOUT_EFF_NULL )
     {
-      Field_Goout_Effect_LoadResource( p_wk->p_ex_obj, p_wk->p_data, p_wk->effectID );
+      if( Field_Goout_Effect_LoadResource( p_wk->p_ex_obj, p_wk->p_data, p_wk->effectID ) )
+      {
+        p_wk->is_enable = TRUE;
+      }
+      else
+      {
+        p_wk->effectID = GOOUT_EFF_NULL;
+        p_wk->is_enable = FALSE;
+      }
+    }
+    else
+    {
+      p_wk->is_enable = FALSE;
     }
   }
 
-  //使用チェック
-  {
-    p_wk->is_enable = GAMEDATA_GetGooutEffectFlag( p_wk->p_gamedata );
-    NAGI_Printf( "室外表現許可=%d\n", p_wk->is_enable );
-  }
+  NAGI_Printf( "室外表現許可=%d\n", p_wk->is_enable );
 
   //デバッグ開始
   GOOUT_DEBUG_Init( p_wk, p_gamedata, heapID );
@@ -181,20 +195,6 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
 #ifdef PM_DEBUG
   GOOUT_DEBUG_Main();
 #endif
-
-  //室内カウント
-  {
-    ZONEID  zoneID  = PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork(p_wk->p_gamedata) );
-    if( !Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID ) )
-    {
-      u32 count = GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata );
-      if( count != 0xffffffff )
-      {
-        count+=2; //1/30なので
-      }
-      GAMEDATA_SetGooutEffectRoomCount( p_wk->p_gamedata, count );
-    }
-  }
 
   //演出なしならなにもしない
   if( p_wk->effectID == GOOUT_EFF_NULL )
@@ -351,24 +351,56 @@ void FIELD_GOOUT_EFFECT_Cancel( FIELD_GOOUT_EFFECT *p_wk )
 //-----------------------------------------------------------------------------
 void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID )
 {
-  BOOL is_enable  = FALSE;
-  if( Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID) )
+  BOOL is_enable  = TRUE;
+  u32 index = FIELD_GOOUT_DATA_GetIndexMax( p_wk->p_data );
+
+  //天気が晴れ以外はやらない
   {
-    NAGI_Printf( "ゾーンID%d プレID%d\n", zoneID, preID );
-    if( !Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, preID) )
+    u8 weather = PM_WEATHER_GetZoneWeatherNo( p_wk->p_gamesys, zoneID );
+
+    if( weather != WEATHER_NO_SUNNY && weather != WEATHER_NO_NONE )
     {
-      //もし規定時間以上かつ外ならば、外出表現開始してもOK
-      if( FIELD_GOOUT_ROOM_COUNT_MAX*60 < GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata ) )
+      OS_TPrintf("天気晴れ以外\n");
+      is_enable = FALSE;
+    }
+  }
+
+  //フォグも全部やらない
+  {
+    if( reg_G3X_DISP3DCNT & REG_G3X_DISP3DCNT_FME_MASK )
+    {
+      OS_TPrintf("フォグ使ってます\n");
+      is_enable = FALSE;
+    }
+  }
+
+  //室外じゃないとやらない
+  {
+    BOOL is_ok  = FALSE;
+    if( Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID) )
+    {
+      NAGI_Printf( "ゾーンID%d プレID%d\n", zoneID, preID );
+      //if( !Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, preID) )
       {
-        is_enable = TRUE;
+        is_ok = TRUE;
       }
     }
 
-    //もし外ならカウンタリセット
-    GAMEDATA_SetGooutEffectRoomCount( p_wk->p_gamedata, 0 );
+    if( !is_ok )
+    {
+      is_enable = FALSE;
+    }
   }
 
-  GAMEDATA_SetGooutEffectFlag( p_wk->p_gamedata, is_enable );
+
+  //データインデックスを取得
+  index = FIELD_GOOUT_DATA_GetIndexByZoneID( p_wk->p_data, zoneID, preID );
+  if( !is_enable )
+  {
+    index = FIELD_GOOUT_DATA_GetIndexMax( p_wk->p_data );
+  }
+
+  GAMEDATA_SetGooutEffectEffectID( p_wk->p_gamedata, index );
 }
 //----------------------------------------------------------------------------
 /**
@@ -408,7 +440,7 @@ static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL
  *	@param  GOOUT_EFFECT_ID effectID      エフェクトID
  */
 //-----------------------------------------------------------------------------
-static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID )
+static BOOL Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID )
 {
   GFL_G3D_UTIL_SETUP  setup = {0};
   GFL_G3D_UTIL_RES    res_tbl[FIELD_GOOUT_RESOURCE_MAX] = {0};
@@ -538,8 +570,6 @@ static void Goout_Debug_Draw_CameraDistance( void* p_wk_adrs, DEBUGWIN_ITEM* p_i
 
 static void Goout_Debug_Update_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void Goout_Debug_Update_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void Goout_Debug_Draw_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 
 //----------------------------------------------------------------------------
 /**
@@ -571,12 +601,7 @@ static void GOOUT_DEBUG_Init( FIELD_GOOUT_EFFECT *p_wk, GAMEDATA *p_gamedata, HE
                                 NULL, 
                                 DEBUGWIN_GOTOU_EFFECT,
                                 heapID );
-  //室内カウンタ
-  DEBUGWIN_AddItemToGroupEx( Goout_Debug_Update_RoomCount, 
-                                Goout_Debug_Draw_RoomCount,
-                                p_gamedata,
-                                DEBUGWIN_GOTOU_EFFECT,
-                                heapID );
+ 
 
 }
 //----------------------------------------------------------------------------
@@ -762,37 +787,5 @@ static void Goout_Debug_Update_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   DEBUGWIN_ITEM_SetNameV( p_item , "えんしゅつ[%d]", g_debug_use_obj_id );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  室内カウンタ 更新
- *
- *	@param	void* p_wk_adrs ワーク
- *	@param	p_item          アイテム
- */
-//-----------------------------------------------------------------------------
-static void Goout_Debug_Update_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  GAMEDATA *p_gamedata  = p_wk_adrs;
-  int cnt = GAMEDATA_GetGooutEffectRoomCount( p_gamedata );
-  if( DebugWin_Util_ChangeValue( &cnt, 0, 0xFFFFFFFF/2 ) )
-  {
-    GAMEDATA_SetGooutEffectRoomCount( p_gamedata, cnt );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  室内カウンタ 描画
- *
- *	@param	void* p_wk_adrs ワーク
- *	@param	p_item          アイテム
- */
-//-----------------------------------------------------------------------------
-static void Goout_Debug_Draw_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  GAMEDATA *p_gamedata  = p_wk_adrs;
-  u32 cnt = GAMEDATA_GetGooutEffectRoomCount( p_gamedata );
-  DEBUGWIN_ITEM_SetNameV( p_item , "へやカウンタ[%d]", cnt  );
 }
 #endif //DEBUGMENU_GOOUT_EFFECT

@@ -912,23 +912,23 @@ extern void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata );
 extern u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata );
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出で使用する部屋内カウントを取得
+ *	@brief  室外演出で使用する室外表現エフェクトIDを取得
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
- *	@return 部屋内カウンタ
+ *	@return 室外表現組み合わせID
  */
 //-----------------------------------------------------------------------------
-extern u32  GAMEDATA_GetGooutEffectRoomCount( const GAMEDATA *gamedata );
+extern u32 GAMEDATA_GetGooutEffectEffectID( const GAMEDATA *gamedata );
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出で使用する部屋内カウントを設定
+ *	@brief  室外演出で使用する室外表現エフェクトIDを設定
  *
  *	@param	GAMEDATA *gamedata  ゲームデータ
  *	@param	count 部屋内カウント
  */
 //-----------------------------------------------------------------------------
-extern void GAMEDATA_SetGooutEffectRoomCount( GAMEDATA *gamedata, u32 count );
+extern void GAMEDATA_SetGooutEffectEffectID( GAMEDATA *gamedata, u32 id );
 //----------------------------------------------------------------------------
 /**
  *	@brief  室外演出フラグを取得

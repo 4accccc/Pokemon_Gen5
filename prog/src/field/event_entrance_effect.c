@@ -329,7 +329,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // 外出エフェクト再生
   case SEQ_GOOUT_EFFECT_START:
-    //FIELD_GOOUT_EFFECT_Start( p_goout );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     break;
