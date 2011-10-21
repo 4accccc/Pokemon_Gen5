@@ -1015,10 +1015,10 @@ ID：mount_14</Text>
 ポケモンジムに　ちょうせんするため▽
 あいぼうたちを　きたえる！▼
 おまえは　ポケモンずかん　だろ
-ひとに　たのまれたら　こなさないとな！▼</Text>
+ひとの　たのみごと　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:05:38" />
+				Time="2011-10-21T12:13:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1030,12 +1030,12 @@ ID：mount_14</Text>
 チェレンさんより　強くなる！▼
 まずは　タチワキシティの
 ポケモンジムに　挑戦するため▽
-相棒たちを　鍛る！▼
+相棒たちを　鍛える！▼
 おまえは　ポケモン図鑑　だよな
-人に　頼まれたら　こなさないとな！▼</Text>
+人の　頼み事　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:05:30" />
+				Time="2011-10-21T12:13:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1108,6 +1108,167 @@ ID：mount_14</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-13T12:54:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swplazmaw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しつこい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:40:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:39:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しつこい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:50:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:50:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・タチワキでのプラズマ団イベント後
+　ここに出現
+・GRIDX＝155、GRIDZ＝667辺り
+　その場でキョロキョロ
+・会話後、トレーナー戦闘（予定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:48:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:39:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swplazmaw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よく　かんがえたら▼
+こっちに　にげたって
+なかまは　いないのよ！▽
+うみの　あるところに　いかないと▼
+ということで……▼
+もういちど　にげてみせるわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T12:00:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よく　考えたら▼
+こっちに　逃げたって
+仲間は　いないのよ！▽
+海の　あるところに　いかないと▼
+ということで……▼
+もういちど　逃げてみせるわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T12:00:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:50:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・戦闘後、自動で表示
+・表示後、c13方面に倍速移動
+・続けてswrival_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:51:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:39:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
+どうやら　アイツら　ふねで
+いどう　しているらしいな……▼
+うーん
+ヒウンシティを　さがすか……▼
+オマエも　きがむいたら　こいよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T12:04:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:40:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
+どうやら　アイツら　船で
+移動している　らしいな……▼
+うーん
+ヒウンシティを　さがすか……▼
+オマエも　気がむいたら　来いよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T12:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:53:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面上から出現
+　イメージとしてはt06辺にいた
+・表示後、c13へ移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:52:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:39:26" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

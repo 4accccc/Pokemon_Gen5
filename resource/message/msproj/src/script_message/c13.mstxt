@@ -1274,11 +1274,10 @@
 			Language="JPN">
 			<Text>プラズマだん『まさか！　こんな
 こどもたちに　ふかくを　とるとは……▼
-クッ……　ヒウンシティに　もどり
-たいせいを　たてなおすぞ！▼</Text>
+クッ……　にげるぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:15:57" />
+				Time="2011-10-21T11:30:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1288,11 +1287,10 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『まさか！　こんな
 こどもたちに　不覚を　とるとは……▼
-クッ……　ヒウンシティに　戻り
-体勢を　たてなおすぞ！▼</Text>
+クッ……　逃げるぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:16:00" />
+				Time="2011-10-21T11:30:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1302,13 +1300,11 @@
 			Language="JPN">
 			<Comment>♂
 ・戦闘後、フィールドでのメッセージ
-・メッセージ表示後、ネオプラズマ団
-　全員画面右に移動する
-・船のSE？（要検討）
+・メッセージ表示後、全員、r20方面に倍速移動
 ・続けてswrival_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:30:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1338,11 +1334,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あいつら！　にげるための
-ふねを　ようい　してたのか▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+おうじょうぎわが　わるすぎるだろ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1350,11 +1346,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あいつら！
-逃走用の　船を　用意してたのか▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+往生際が　悪すぎるだろ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1397,14 +1393,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『あたしの　オヤジなら
-ヒウンまで　つれていってくれるけど▼
-あたしは　まちを　みてまわるから▼
-あいつら　なにか　してたら
-すっごく　ふゆかい　だし……▼</Text>
+			<Text>ホミカ『てわけして　さがすよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:39:45" />
+				Time="2011-10-21T11:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1412,14 +1404,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『あたしの　オヤジなら
-ヒウンまで　連れていってくれるけど▼
-あたしは　街を　みてまわるから▼
-あいつら　なにか　してたら
-すっごく　不愉快だし……▼</Text>
+			<Text>ホミカ『てわけして　探すよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:40:01" />
+				Time="2011-10-21T11:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1428,11 +1416,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ後、画面左へ
+・メッセージ後、倍速移動で画面左へ
 ・続けてswleader2_06</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:25:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1464,11 +1452,11 @@
 			Language="JPN">
 			<Text>……まけていたら　たいせつな
 ポケモンを　とられてた▼
-あんたたち　アリガト
-これは　ほんの　きもち！▼</Text>
+あんたたち　アリガト▼
+これ　つかいなよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:36:18" />
+				Time="2011-10-21T11:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1478,11 +1466,11 @@
 			Language="JPN_KANJI">
 			<Text>……負けていたら　大切な
 ポケモンを　とられてた▼
-あんたたち　アリガトね
-これは　ほんの　気持ち！▼</Text>
+あんたたち　アリガト▼
+これ　使いなよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:36:26" />
+				Time="2011-10-21T11:26:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1494,11 +1482,11 @@
 ・振り返りメッセージ表示
 　アイテム入手処理
 　No420「ひでんマシン０１」（いあいぎり）
-・表示後、c13gym0101方面に移動していく
-・続けて</Comment>
+・表示後、r20方面へ倍速移動
+・続けてswrival_05</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:28:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1565,11 +1553,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・表示後、c13r0401へ
+・表示後、r20方面へ倍速移動
+※r20にプラズマ団員配置
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-10-21T11:28:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
