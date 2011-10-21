@@ -835,7 +835,10 @@ DEP_TEXSET_IMD_OUTDOOR018 = \
 	$(SRCDIR)/o_parasol_02.imd \
 	$(SRCDIR)/h6_gate_01.imd \
 	$(SRCDIR)/c03_ship_03_02.imd \
-	$(SRCDIR)/c03_ship_03_04.imd
+	$(SRCDIR)/c03_ship_03_04.imd \
+	$(SRCDIR)/st_house02.imd \
+	$(SRCDIR)/st_house03.imd \
+	$(SRCDIR)/s_parasol_01.imd
 
 texset/outdoor018.imd: $(DEP_TEXSET_IMD_OUTDOOR018) texset/tmp/outdoor018.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor018.list
