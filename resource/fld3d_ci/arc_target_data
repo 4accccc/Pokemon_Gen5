@@ -70,22 +70,53 @@ ARC_TARGET_DATA = \
 	fly_in1.nsbma \
 	fly_in1.nsbtp \
 	rival.spa \
-	shiten_a.nsbmd \
-	shiten_b.nsbmd \
+	rival_ci_a.nsbmd \
+	rival_ci_b.nsbmd \
+	rival_ci_a.nsbca \
+	rival_ci_a.nsbma \
+	rival_ci_a.nsbva \
+	rival_ci_b.nsbca \
+	rival_ci_b.nsbma \
+	rival_ci_b.nsbta \
+	gym_lead01_a.nsbmd \
+	gym_lead01_b.nsbmd \
+	gym_lead02_a.nsbmd \
+	gym_lead02_b.nsbmd \
+	gym_lead03_a.nsbmd \
+	gym_lead03_b.nsbmd \
+	gym_lead04_a.nsbmd \
+	gym_lead04_b.nsbmd \
+	gym_lead05_a.nsbmd \
+	gym_lead05_b.nsbmd \
+	gym_lead06_a.nsbmd \
+	gym_lead06_b.nsbmd \
+	gym_lead07_a.nsbmd \
+	gym_lead07_b.nsbmd \
+	gym_lead08_a.nsbmd \
+	gym_lead08_b.nsbmd \
+	shiten_goth_a.nsbmd \
+	shiten_goth_b.nsbmd \
 	shiten_a.nsbca \
 	shiten_a.nsbma \
 	shiten_a.nsbva \
 	shiten_b.nsbca \
 	shiten_b.nsbta \
 	shiten_b.nsbva \
-	rival_ci_a.nsbmd \
-	rival_ci_b.nsbmd \
-	rival_ci_a.nsbca \
-	rival_ci_a.nsbma \
-	rival_ci_a.nsbta \
-	rival_ci_b.nsbca \
-	rival_ci_b.nsbma \
-	rival_ci_b.nsbta \
+	shiten_evil_a.nsbmd \
+	shiten_evil_b.nsbmd \
+	shiten_fight_a.nsbmd \
+	shiten_fight_b.nsbmd \
+	shiten_esp_a.nsbmd \
+	shiten_esp_b.nsbmd \
+	champ.spa \
+	champ_a.nsbmd \
+	champ_b.nsbmd \
+	champ_a.nsbca \
+	champ_a.nsbma \
+	champ_a.nsbta \
+	champ_b.nsbca \
+	champ_b.nsbma \
+	champ_b.nsbta \
 	plasma_ci01a.nsbmd \
 	plasma_ci01b.nsbmd \
 	plasma_ci01a.nsbca \
@@ -217,4 +248,6 @@ ARC_TARGET_DATA = \
 	get2_629.nsbmd \
 	get1_medal.nsbmd \
 	fes_ci.nsbmd \
-	fes_ci.nsbca
+	fes_ci.nsbca \
+	shiten_a.nsbmd \
+	shiten_b.nsbmd
