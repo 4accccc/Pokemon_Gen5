@@ -26,8 +26,8 @@ enum {
 
 //swan拡張：ワーク領域を1ページ（256バイト）増加。
 SDK_COMPILER_ASSERT( EVENT_WORK_AREA_MAX < 320 + 128 );
-SDK_COMPILER_ASSERT( FLAGS_TOTAL_MAX % 8 == 0 );
-SDK_COMPILER_ASSERT( EVENT_FLAG_AREA_MAX <= 364 );
+//SDK_COMPILER_ASSERT( FLAGS_TOTAL_MAX % 8 == 0 );
+SDK_COMPILER_ASSERT( EVENT_FLAG_AREA_MAX <= 364 + 20 );
 
 //------------------------------------------------------------------
 /**
