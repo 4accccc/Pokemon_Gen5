@@ -25,7 +25,7 @@ $field_hash    = {
   "—V‰€’n‚`"=>"field02a", "—V‰€’n‚`[‚P"=>"field02a","—V‰€’n‚`[‚Q"=>"field02b","—V‰€’n‚`[‚R"=>"field02c","—V‰€’n‚`[‚S"=>"field02d","—V‰€’n‚`[‚T"=>"field02e",
   "“s‰ïEŽG“¥"=>"field03a", "“s‰ïEŽG“¥[‚P"=>"field03a", "“s‰ïEŽG“¥[‚Q"=>"field03b", "“s‰ïEŽG“¥[‚R"=>"field03c", "“s‰ïEŽG“¥[‚S"=>"field03d", "“s‰ïEŽG“¥[‚T"=>"field03d", 
   "–¢—ˆ“sŽs"=>"field04a", "–¢—ˆ“sŽs[‚P"=>"field04a", "–¢—ˆ“sŽs[‚Q"=>"field04b", 
-  "»•l"=>"field05a", "»•l[‚P"=>"field05a","»•l[‚Q"=>"field05b",
+  "»•l"=>"field05a", "»•l[‚P"=>"field05a","»•l[‚Q"=>"field05b","»•l[‚R"=>"field05c","»•l[‚S"=>"field05d",
   "”gŽ~ê"=>"field06a", "”gŽ~ê[‚P"=>"field06a", "”gŽ~ê[‚Q"=>"field06b", "”gŽ~ê[‚R"=>"field06c", "”gŽ~ê[‚S"=>"field06d", 
   "–‚–@‚Ì¢ŠE"=>"field08a", "–‚–@‚Ì¢ŠE[‚P"=>"field08a",  "–‚–@‚Ì¢ŠE[‚Q"=>"field08b",  "–‚–@‚Ì¢ŠE[‚R"=>"field08c",  "–‚–@‚Ì¢ŠE[‚S"=>"field08d", 
   "•æ’n"=>"field09a", "•æ’n[‚P"=>"field09a",  "•æ’n[‚Q"=>"field09b",  "•æ’n[‚R"=>"field09c",  "•æ’n[‚S"=>((3<<8)|29),  "•æ’n[‚T"=>"field09d", 
