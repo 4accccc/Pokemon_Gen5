@@ -10,10 +10,12 @@ require "wbt_dldata_pokemon.rb"
 TRAINER_START_COL    = 3
 TRAINER_START_ROW    = 3
 #
+TR_MATCH_START_COL  = 3
+TR_MATCH_START_ROW  = 3
+#
 WBTDL_CHAR_MAX		= 4	# キャラ
 SAVELEN_TRAINER_NAME	= 16	# 名前(10で制限)
 WBTDL_TRAINER_TITLE_LEN	= 22	# タイトル(20で制限)
-#WBTDL_MSG_LEN		= 73	# メッセージ
 WBTDL_MSG_LEN		= 74	# メッセージ(36,36で制限)
 #
 $trainer_str = ["トレーナー名",
@@ -74,6 +76,8 @@ class WBT_CHARACTER_SINGLE
   def initialize( num )
     @char_id = num;
     @pokemon = WBT_POKEMON.new( num )
+    #
+    @tr_max = 4;
   end
   
   #--------------------------------
@@ -136,7 +140,10 @@ class WBT_CHARACTER_SINGLE
       @local_debug = 1;
     end
     #
-    set_parameter();
+    # 最大数をセット
+    if(@char_id < @tr_max)
+      set_parameter();
+    end
   end
   
   #----------------
@@ -773,6 +780,12 @@ class WBT_CHARACTER_SINGLE
 =end
   end
   
+  #----------------------------
+  # データセットの個数をセット
+  #----------------------------
+  def set_tr_max( num )
+    @tr_max = num
+  end
 end
 
 #--------------------------------------------------------------
@@ -789,6 +802,7 @@ class WBT_CHARACTER
     WBTDL_CHAR_MAX.times{|i|
       @character[i] = WBT_CHARACTER_SINGLE.new( i )
     }
+    @dataset_num = 4;
   end
   
   #----------------------------------
@@ -797,7 +811,26 @@ class WBT_CHARACTER
   def set_data( conv )
     @conv = conv;
     #
+    #------------------------
+    # データ設定数をセット
+    #------------------------
+    # 設定数
+    chk_dataset_num( conv )
+    # ここでのトレーナー数
+    tnum = chk_tr_num( conv )
+    #
+    if(@dataset_num > 4)
+      # データ設定エラー
+       $wbt_error.print_dataset_error( $current_xls_name, 3, @dataset_num )
+    else
+#     p @dataset_num, tnum
+      if(@dataset_num > tnum)
+        $wbt_error.print_tr_error( $current_xls_name, 4, tnum, @dataset_num );
+      end
+    end
+    #
     WBTDL_CHAR_MAX.times{|i|
+      @character[i].set_tr_max( tnum )
       @character[i].set_data( conv )
     }
     #
@@ -819,5 +852,46 @@ class WBT_CHARACTER
     }
     return array
   end
+  
+  #----------------------------------------
+  # トレーナー管理のデータ設定数のチェック
+  #----------------------------------------
+  def chk_dataset_num( conv )
+    tnum = 0
+    7.times{|i|
+      cstr = @conv.get_cell(3, TR_MATCH_START_COL, TR_MATCH_START_ROW+i )
+      ret = chkblank_no_print( cstr )
+      if(ret != -1)
+        # データ設定を見つける
+        num = hash2no( $match_hash, cstr );
+        if(num == 2)
+          tnum = tnum+1
+        end
+      end
+    }
+    # ここまでで、データ設定数が求まる
+    @dataset_num = tnum
+#    p @dataset_num
+  end
+  
+  #----------------------------------------
+  # トレーナー数を求める
+  #----------------------------------------
+  def chk_tr_num( conv )
+    tnum = 0
+    4.times{|i|
+      cstr = conv.get_cell(4, TRAINER_START_COL+$tr_col[0], TRAINER_START_ROW+i)
+      ret = chkblank_no_print( cstr )
+      if(ret != -1)
+        tnum = tnum+1
+      else
+        # 空白があったら即終了
+        break;
+      end
+    }
+    # ここまででトレーナー数が求まる
+    return tnum
+  end
+  
 end
 

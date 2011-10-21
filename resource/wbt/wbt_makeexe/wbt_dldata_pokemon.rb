@@ -9,6 +9,9 @@
 POKE_START_COL		= 5
 POKE_START_ROW		= 2
 #
+P_TRAINER_START_COL    = 3
+P_TRAINER_START_ROW    = 3
+#
 TEMOTI_POKEMAX		= 6     	# 手持ちポケモン
 NICKNAME_LEN		= 10+1		# ニックネーム
 PTL_WAZA_MAX		= 4		# 技
@@ -65,6 +68,9 @@ class WBT_POKEMON_SINGLE
     @poke_id     = num;
     # 対応するトレーナーの番号
     @trainer_id	 = trnum;
+    #
+    @poke_max = 6
+    @tr_max   = 4
   end
   
   #--------------------------------
@@ -114,7 +120,13 @@ class WBT_POKEMON_SINGLE
       @local_debug = 1;
     end
     #
-    set_parameter();
+    # ポケモン最大数チェック
+    if(@poke_id < @poke_max)
+      # トレーナー最大数チェック
+      if(@trainer_id < @tr_max)
+        set_parameter();
+      end
+    end
   end
   
   #----------------
@@ -791,6 +803,32 @@ class WBT_POKEMON_SINGLE
     @conv.close_file();
     exit(1)
   end
+  
+  #----------------
+  # 最大数セット
+  #----------------
+  def set_pokemax( num )
+    @poke_max = num
+  end
+  
+  #----------------
+  # 最大数のチェック
+  #----------------
+  def chk_pokemax( conv )
+    # 空白か調べる
+    offset = 2*@poke_id+17*@trainer_id
+    cstr = conv.get_cell(5, POKE_START_COL+offset, POKE_START_ROW )
+    ret = chkblank( cstr, $poke_str[0] )
+    return( ret );
+  end
+  
+  #----------------
+  # トレーナー最大数セット
+  #----------------
+  def set_tr_max( num )
+    @tr_max = num
+  end
+
 end
 
 #------------------------------------------------
@@ -815,7 +853,37 @@ class WBT_POKEMON
   def set_data( conv )
     @conv = conv;
     #
+    #------------------------
+    # トレーナー数を調べる
+    #------------------------
+    tnum = chk_tr_num( conv )
+    
+    #--------------------------------------
+    # ポケモン数を調べる
+    # レギュレーションの下限チェックを行う
+    #--------------------------------------
+    num = 0
     TEMOTI_POKEMAX.times{|i|
+      if( @pokemon[i].chk_pokemax( conv ) != -1 )
+        num = num+1
+      else
+        # 空白を見つけたら即終了
+        break
+      end
+    }
+    # トレーナー数以上のデータは、
+    # 空白でもかまわない
+    if(tnum > @trainer_id)
+      # 最小チェック
+      if($min_poke_num > num)
+        $wbt_error.print_poke_error( $current_xls_name, 5, @trainer_id, num, $min_poke_num )
+      end
+    end
+#    p num
+    #
+    TEMOTI_POKEMAX.times{|i|
+      @pokemon[i].set_pokemax( num )
+      @pokemon[i].set_tr_max( tnum )
       @pokemon[i].set_data( conv )
     }
     #
@@ -837,5 +905,25 @@ class WBT_POKEMON
     }
     return array
   end
+  
+  #----------------------------------------
+  # トレーナー数を求める
+  #----------------------------------------
+  def chk_tr_num( conv )
+    tnum = 0
+    4.times{|i|
+      cstr = conv.get_cell(4, P_TRAINER_START_COL, P_TRAINER_START_ROW+i)
+      ret = chkblank_no_print( cstr )
+      if(ret != -1)
+        tnum = tnum+1
+      else
+        # 空白があったら即終了
+        break;
+      end
+    }
+    # ここまででトレーナー数が求まる
+    return tnum
+  end
+  
 end
 

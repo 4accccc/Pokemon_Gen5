@@ -4,6 +4,7 @@ rem ----------------------------
 rem batのあるディレクトリを基準
 rem ----------------------------
 SET BATCH_HOME=%~dp0
+SET OUT_HOME=%~dp1
 
 rem ------------------------
 rem 単独実行時エラー
@@ -14,7 +15,11 @@ if "%1" == "" goto NOT_EXIST
 rem ------------------------
 rem 正しくドラッグされた場合
 rem ------------------------
+cd %OUT_HOME%
 %BATCH_HOME%\wbt_dldata_conv.exe %1
+rem cd %OUT_HOME%
+rem dir /w
+rem %BATCH_HOME%\wbt_dldata_conv.exe %OUT_HOME%%~nx1
 
 
 rem --------------

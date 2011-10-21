@@ -32,6 +32,9 @@ $err_mes = [
   "特性の組み合わせが正しくありません",  # 特性エラー
   "努力値の合計が510を超えています",     # 努力値エラー
   "技の入力が正しくありません",          # 技
+  "ポケモンの数が足りません",            # ポケモン数
+  "トレーナーの数が足りません",          # トレーナー数
+  "データ設定数が4を超えています",       # データ設定エラー
 ]
 
 # mes2
@@ -50,6 +53,13 @@ $err_mes_index = [
   "( 組み合わせエラー )",
   "( 設定エラー )",
   "( 重複エラー )",
+  "トレーナー",
+  "人目",
+  "参加ポケモン数下限",
+  "以上",
+  "トレーナー管理のデータ設定数",
+  "体",
+  "人",
 ]
 
 $em2 = [
@@ -238,6 +248,60 @@ class WBT_ERROR
     @errfile.printf("%s\n", $err_mes_index[2] )
     @errfile.printf("%s: [%s] %s\n", $err_mes_index[6], mstr, $err_mes_index[12+mode])
     @errfile.printf("******************************************************\n\n")
+  end
+  
+  #----------------------------------------------------------------
+  # ポケモン数エラー(ファイル名、シート名、trnum、pnum, minnum)
+  #----------------------------------------------------------------
+  def print_poke_error( filename, sheetnum, trnum, pnum, minnum )
+    @num = @num+1
+    @subnum = @subnum+1
+    @errfile.printf("******************************************************\n")
+    @errfile.printf("%s\n", $err_mes_index[0] )
+    @errfile.printf("%s\n\n", $err_mes[7] )
+    @errfile.printf("%s\n", $err_mes_index[1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: (%s %d%s)\n\n", $err_mes_index[5],$err_mes_index[14],(trnum+1),$err_mes_index[15])
+    @errfile.printf("%s\n", $err_mes_index[2] )
+    @errfile.printf("%s: [%d%s] %s\n", $err_mes_index[6], pnum, $err_mes_index[19],$err_mes_index[8])
+    @errfile.printf("%s: [%s %d%s%s]\n", $err_mes_index[7], $err_mes_index[16],minnum,$err_mes_index[19],$err_mes_index[17])
+    @errfile.printf("******************************************************\n\n")
+  end
+  
+  #----------------------------------------------------------------
+  # トレーナー数エラー(ファイル名、シート名、trnum、minnum)
+  #----------------------------------------------------------------
+  def print_tr_error( filename, sheetnum, trnum, minnum )
+    @num = @num+1
+    @subnum = @subnum+1
+    @errfile.printf("******************************************************\n")
+    @errfile.printf("%s\n", $err_mes_index[0] )
+    @errfile.printf("%s\n\n", $err_mes[8] )
+    @errfile.printf("%s\n", $err_mes_index[1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+    @errfile.printf("%s: (%s %d%s)\n\n", $err_mes_index[5],$err_mes_index[14],(trnum+1),$err_mes_index[15])
+    @errfile.printf("%s\n", $err_mes_index[2] )
+    @errfile.printf("%s: [%d%s] %s\n", $err_mes_index[6], trnum, $err_mes_index[20],$err_mes_index[8])
+    @errfile.printf("%s: [%s %d%s]\n", $err_mes_index[7], $err_mes_index[18],minnum,$err_mes_index[17])
+    @errfile.printf("******************************************************\n\n")
+  end
+  
+  #--------------------------------------------------
+  # データ設定エラー(ファイル名、シート名、num)
+  #--------------------------------------------------
+  def print_dataset_error( filename, sheetnum, num)
+    @num = @num+1
+    @subnum = @subnum+1
+    @errfile.printf("******************************************************\n")
+    @errfile.printf("%s\n", $err_mes_index[0] )
+    @errfile.printf("%s\n\n", $err_mes[9] )
+    @errfile.printf("%s\n", $err_mes_index[1] )
+    @errfile.printf("%s: [%s]\n", $err_mes_index[3],filename)
+    @errfile.printf("%s: [%s]\n", $err_mes_index[4],$sheet_str[sheetnum])
+#    @errfile.printf("%s: [%d, %s] ( %s )\n", $err_mes_index[5],col, $cell_row[row-1],str)
+    @errfile.printf("******************************************************\n")
   end
   
   #----------
