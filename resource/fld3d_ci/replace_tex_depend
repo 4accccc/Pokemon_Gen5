@@ -98,13 +98,6 @@ cnv_tmp\enc_bigfour01_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour01_0_0_16_16.NCGR
 cnv_tmp\enc_bigfour01.NCLR : replace_tex/VSdemo_Face/enc_bigfour01.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
-cnv_tmp\enc_bigfour01_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour01.ncg
-	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
-	mv  cnv_tmp\enc_bigfour01.NCGR cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
-
-cnv_tmp\enc_bigfour01_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
-	ntrcomp -l 2 cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
-
 cnv_tmp\enc_bigfour02_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour02.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
 	mv  cnv_tmp\enc_bigfour02.NCGR cnv_tmp\enc_bigfour02_0_0_16_16.NCGR
@@ -114,13 +107,6 @@ cnv_tmp\enc_bigfour02_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour02_0_0_16_16.NCGR
 
 cnv_tmp\enc_bigfour02.NCLR : replace_tex/VSdemo_Face/enc_bigfour02.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
-
-cnv_tmp\enc_bigfour02_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour02.ncg
-	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
-	mv  cnv_tmp\enc_bigfour02.NCGR cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
-
-cnv_tmp\enc_bigfour02_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
-	ntrcomp -l 2 cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
 
 cnv_tmp\enc_bigfour03_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour03.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
@@ -132,13 +118,6 @@ cnv_tmp\enc_bigfour03_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour03_0_0_16_16.NCGR
 cnv_tmp\enc_bigfour03.NCLR : replace_tex/VSdemo_Face/enc_bigfour03.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
-cnv_tmp\enc_bigfour03_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour03.ncg
-	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
-	mv  cnv_tmp\enc_bigfour03.NCGR cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
-
-cnv_tmp\enc_bigfour03_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
-	ntrcomp -l 2 cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
-
 cnv_tmp\enc_bigfour04_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour04.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
 	mv  cnv_tmp\enc_bigfour04.NCGR cnv_tmp\enc_bigfour04_0_0_16_16.NCGR
@@ -148,13 +127,6 @@ cnv_tmp\enc_bigfour04_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour04_0_0_16_16.NCGR
 
 cnv_tmp\enc_bigfour04.NCLR : replace_tex/VSdemo_Face/enc_bigfour04.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
-
-cnv_tmp\enc_bigfour04_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour04.ncg
-	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
-	mv  cnv_tmp\enc_bigfour04.NCGR cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
-
-cnv_tmp\enc_bigfour04_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
-	ntrcomp -l 2 cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
 
 cnv_tmp\enc_champ_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_champ.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16

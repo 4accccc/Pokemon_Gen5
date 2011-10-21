@@ -261,8 +261,8 @@ enum {
 	NARC_fld3d_ci_get1_medal_nsbmd = 247,
 	NARC_fld3d_ci_fes_ci_nsbmd = 248,
 	NARC_fld3d_ci_fes_ci_nsbca = 249,
-	NARC_fld3d_ci_shiten_a_nsbmd = 250,
-	NARC_fld3d_ci_shiten_b_nsbmd = 251
+	NARC_fld3d_ci_mugen_banjiro_a_nsbmd = 250,
+	NARC_fld3d_ci_mugen_banjiro_b_nsbmd = 251
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
