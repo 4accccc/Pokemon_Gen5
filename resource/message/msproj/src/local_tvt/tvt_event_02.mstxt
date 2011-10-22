@@ -32,14 +32,14 @@
 わたしは　○○……▼
 いえ……　◎◎◎◎◎って　いいます▼
 あなたは？▼
-はい　●●●●●さん　ですね▼
+はい　[Name:TrainerName ]さん　ですね▼
 しごとが　おちついたら
 うけとりに　いきますので▽
 しばらくの　あいだ▽
 よろしく　おねがいします▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:59:16" />
+				Time="2011-10-22T09:31:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,14 +73,14 @@
 わたしは　○○……▼
 いえ……　◎◎◎◎◎って　いいます▼
 あなたは？▼
-はい　●●●●●さん　ですね▼
+はい　[Name:TrainerName ]さん　ですね▼
 しごとが　おちついたら
 うけとりに　いきますので▽
 しばらくの　あいだ▽
 よろしく　おねがいします▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:59:23" />
+				Time="2011-10-22T09:31:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -121,12 +121,12 @@
 こちらの　じょうきょうが▽
 わからないと　しんぱい　でしょうから▼
 ていき　てきに
-●●●●●さんの　ライブキャスターへ▽
+[Name:TrainerName ]さんの　ライブキャスターへ▽
 れんらく　させて　いただきますね▼
 それでは　しつれいします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T07:27:28" />
+				User="nishino:W00221"
+				Time="2011-10-22T09:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -139,12 +139,12 @@
 こちらの　じょうきょうが▽
 わからないと　しんぱい　でしょうから▼
 ていき　てきに
-●●●●●さんの　ライブキャスターへ▽
+[Name:TrainerName ]さんの　ライブキャスターへ▽
 れんらく　させて　いただきますね▼
 それでは　しつれいします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T07:27:30" />
+				User="nishino:W00221"
+				Time="2011-10-22T09:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

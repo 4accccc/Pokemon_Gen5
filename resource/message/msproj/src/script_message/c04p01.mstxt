@@ -627,11 +627,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は　？？？？？に
+			<Text>[Name:TrainerName Idx="0" ]は　◎◎◎◎◎に
 おとしものを　てわたした！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T08:52:08" />
+				User="nishino:W00221"
+				Time="2011-10-22T10:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -639,11 +639,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]はは　？？？？？に
+			<Text>[Name:TrainerName Idx="0" ]はは　◎◎◎◎◎に
 おとしものを　手渡した！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T08:52:20" />
+				User="nishino:W00221"
+				Time="2011-10-22T10:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -758,11 +758,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？が　ライブキャスターに
-さいとうろく　された▼</Text>
+			<Text>◎◎◎◎◎を　ライブキャスターに
+とうろく　しなおした▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:49:21" />
+				Time="2011-10-22T10:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -770,11 +770,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？が　ライブキャスターに
-再登録　された▼</Text>
+			<Text>◎◎◎◎◎を　ライブキャスターに
+登録　しなおした▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:49:53" />
+				Time="2011-10-22T10:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -986,11 +986,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は　？？？？？に
+			<Text>[Name:TrainerName Idx="0" ]は　◎◎◎◎◎に
 おとしものを　てわたした！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				User="nishino:W00221"
+				Time="2011-10-22T10:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -998,11 +998,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]はは　？？？？？に
+			<Text>[Name:TrainerName Idx="0" ]はは　◎◎◎◎◎に
 おとしものを　手渡した！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T08:54:36" />
+				User="nishino:W00221"
+				Time="2011-10-22T10:12:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1117,11 +1117,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？が　ライブキャスターに
-さいとうろく　された▼</Text>
+			<Text>◎◎◎◎◎を　ライブキャスターに
+とうろく　しなおした▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:50:10" />
+				Time="2011-10-22T10:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1129,11 +1129,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？が　ライブキャスターに
-再登録　された▼</Text>
+			<Text>◎◎◎◎◎を　ライブキャスターに
+登録　しなおした▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-10-20T07:50:20" />
+				Time="2011-10-22T10:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
