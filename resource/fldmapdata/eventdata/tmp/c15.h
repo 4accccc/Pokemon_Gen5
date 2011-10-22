@@ -40,6 +40,11 @@
 #define C15_BONUS_PWOWNER_01              26
 #define C15_BONUS_LEADER7_01              27
 #define DUMMY_OBJ                         28
+#define C15_MAN1_03                       29
+#define C15_WOMAN3_01                     30
+#define C15_PWMOJI_04                     31
+#define C15_BABYGIRL2_01                  32
+#define C15_ADULTW_02                     33
 
 #endif //ZONE_C15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

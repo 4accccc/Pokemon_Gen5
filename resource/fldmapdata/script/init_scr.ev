@@ -134,8 +134,6 @@ init_flags:
 	_FLAG_SET( FV_C05_SWLEADER5_01 )
 	//C05：ライバルを非表示に
 	_FLAG_SET( FV_C05_SWRIVAL_01 )
-	//C05：SAGE6を非表示に
-  _FLAG_SET( FV_C05_SAGE6_01 )
   
   //D05
   
@@ -532,6 +530,10 @@ ev_first_gameclear:
   
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+  
+  //C05ストッパー解除
+  _FLAG_SET( FV_C05_STOPPER_01 )
+  $WK_SCENE_C05_STOPPER_01 = 1
   
   //C08復興
   _FLAG_RESET( FE_C08_PLAZMA_COME )

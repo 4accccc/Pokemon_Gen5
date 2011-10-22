@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c15r0101.h"
-  //.include  "c15r0101.h"
+  .include  "c15r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,61 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c15r0101
+_EVENT_DATA    ev_c15r0101_pwmoji_01
+_EVENT_DATA    ev_c15r0101_man3_01
+_EVENT_DATA    ev_c15r0101_middlewoman1_01
+_EVENT_DATA    ev_c15r0101_middleman1_01
+_EVENT_DATA    ev_c15r0101_middleman1_02
+_EVENT_DATA    ev_c15r0101_middleman2_01
+_EVENT_DATA    ev_c15r0101_woman2_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  PWMOJI：話しかけ             */
 /**************************************************************/
-//ev_zone_c15r0101:
-//  _END
+EVENT_START   ev_c15r0101_pwmoji_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_pwmoji_01_01 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  MAN3：話しかけ             */
 /**************************************************************/
-ev_c15r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c15r0101_man3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_man3_01_01 )
+EVENT_END
 
+/**************************************************************/
+/*  MIDDLEWOMAN1：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0101_middlewoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_middlewoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  MIDDLEMAN1_01：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0101_middleman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_middeman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  MIDDLEMAN1_02：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0101_middleman1_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_middeman1_02 )
+EVENT_END
+
+/**************************************************************/
+/*  MIDDLEMAN2：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0101_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_middeman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  WOMAN2：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0101_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0101_woman2_01 )
+EVENT_END

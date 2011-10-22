@@ -96,7 +96,7 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
   
   //========================================//
   //C05 SCENE_CHANGE有効
-   $WK_SCENE_C05 = 3
+   $WK_SCENE_C05 = 4
   //C05ヤーコン表示
   _FLAG_RESET(FV_C05_SWLEADER5_01)
   //========================================//

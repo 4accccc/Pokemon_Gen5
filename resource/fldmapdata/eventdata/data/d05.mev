@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/06 12:31:24
+#save date:2011/10/20 16:33:39
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d05.wms
 #hold event type:
 1
 #hold event number:
-17
+18
 #event number: 0
 #type
 1
@@ -537,6 +537,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 104 0 72
+#event number: 17
+#type
+1
+#ID name
+D05_BACKPACKERW_01
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D05_BACKPACKERW_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 -8 -520
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

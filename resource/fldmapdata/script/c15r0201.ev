@@ -13,6 +13,7 @@
   .include  "c15r0201.h"
 
   //@author fujimura_souichirou（ポケウッド説明ＮＰＣ）
+  //@author Mizuguchi_Mai（一言メッセージ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +24,11 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_c15r0201_pwmoji_01
 _EVENT_DATA   ev_c15r0201_policeman_01
+_EVENT_DATA   ev_c15r0201_woman2_01
+_EVENT_DATA   ev_c15r0201_poke44_01
+_EVENT_DATA   ev_c15r0201_ol_01
+_EVENT_DATA   ev_c15r0201_middleman1_01
+_EVENT_DATA   ev_c15r0201_man3_01
 _EVENT_DATA_END
 
 
@@ -125,3 +131,75 @@ EVENT_START   ev_c15r0201_policeman_01
 
 EVENT_END
 
+/**************************************************************/
+/*  WOMAN2：話しかけ                      */
+/**************************************************************/
+EVENT_START   ev_c15r0201_woman2_01
+
+  _TALK_START_SE_PLAY()
+
+  //WOMAN2：ポケウッドの　さつえいって
+  _BALLOONWIN_OBJMSG_POS( msg_c15r0201_woman2_01, C15R0201_WOMAN2_01, POS_UR )
+  _MSGWIN_CLOSE()
+
+  //BOY4：いちど　レンタル
+  _BALLOONWIN_OBJMSG_POS( msg_c15r0201_boy4_01, C15R0201_BOY4_01, POS_DL )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  POKE44：話しかけ                      */
+/**************************************************************/
+EVENT_START   ev_c15r0201_poke44_01
+  _EASY_TALK_POKEVOICE( MONSNO_589, msg_c15r0201_poke44_01 )
+EVENT_END
+
+/**************************************************************/
+/*  OL：話しかけ                     */
+/**************************************************************/
+EVENT_START   ev_c15r0201_ol_01
+  {
+  //主人公名格納
+  _PLAYER_NAME( 0 )
+  
+  //【仮】スターランク取得
+  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //メッセージ代入変数定義
+  DEFINE_LOCAL LCWK_MSGID
+  
+  $LCWK_MSGID = msg_c15r0201_ol_01
+  $LCWK_MSGID += $LOCALWORK15
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  }
+EVENT_END
+
+/**************************************************************/
+/*  MIDDLEMAN1：話しかけ                      */
+/**************************************************************/
+EVENT_START   ev_c15r0201_middleman1_01
+  {
+  
+  //主人公名格納
+  _PLAYER_NAME( 0 )
+  
+  //【仮】スターランク取得
+  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //メッセージ代入変数定義
+  DEFINE_LOCAL LCWK_MSGID
+  
+  $LCWK_MSGID = msg_c15r0201_middleman1_01
+  $LCWK_MSGID += $LOCALWORK15
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+  }
+EVENT_END
+
+/**************************************************************/
+/*  MAN3：話しかけ             */
+/**************************************************************/
+EVENT_START   ev_c15r0201_man3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0201_man3_01_01 )
+EVENT_END

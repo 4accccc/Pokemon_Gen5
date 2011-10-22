@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05r0701_stopper_01
 _EVENT_DATA    ev_pos_c05r0701_stopper_01
+_EVENT_DATA    ev_c05r0701_trainerw_01
+_EVENT_DATA    ev_c05r0701_informationw_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -105,6 +107,20 @@ _ANIME_LABEL	anm_stopper_lookpleyer_r
   _ANIME_DATA	AC_STAY_WALK_R_8F,1
   _ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* 			INFORMATIONW：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_c05r0701_trainerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0701_trainew_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			TRAINERW：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_c05r0701_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0701_infomationw_01 )
+EVENT_END
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

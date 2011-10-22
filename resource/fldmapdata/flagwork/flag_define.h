@@ -572,10 +572,10 @@
 #define FV_T04R0301_SWLEADER4_01           588 /* 0x024c サザナミタウン別荘：カミツレ */
 #define FV_T04R0301_SWLEADER2_01           589 /* 0x024d サザナミタウン別荘：ホミカ */
 #define FV_D07_STONE_01                    590 /* 0x024e ネジ山：季節対応・冬季岩ストッパー */
-		/* not used   591(0x024f) */
-		/* not used   592(0x0250) */
-		/* not used   593(0x0251) */
-		/* not used   594(0x0252) */
+#define FV_C15_PEAPLE_LANK_01              591 /* 0x024f ポケウッド：ランク1表示のNPC */
+#define FV_C15_PEAPLE_LANK_02              592 /* 0x0250 ポケウッド：ランク2表示のNPC */
+#define FV_C15_PEAPLE_LANK_03              593 /* 0x0251 ポケウッド：ランク3表示のNPC */
+#define FV_C15_PEAPLE_LANK_04              594 /* 0x0252 ポケウッド：ランク4表示のNPC */
 		/* not used   595(0x0253) */
 		/* not used   596(0x0254) */
 		/* not used   597(0x0255) */
@@ -599,7 +599,7 @@
 #define FV_C05_SAGE6_01                    615 /* 0x0267 ホドモエシティ：七賢人たち */
 #define FV_C05_SWRIVAL_01                  616 /* 0x0268 ホドモエシティ：ライバル */
 #define FV_C05_SWLEADER5_01                617 /* 0x0269 ホドモエシティ：ヤーコン */
-		/* not used   618(0x026a) */
+#define FV_C05_STOPPER_01                  618 /* 0x026a ホドモエシティ：抜け道ストッパー */
 #define FV_C05_STOPPER_02                  619 /* 0x026b ホドモエシティ：ジムストッパー */
 #define FV_C13GYM0102_SUNGLASSES           620 /* 0x026c ポケウッド：サングラス */
 #define FV_C13GYM0102_SWLEADER2            621 /* 0x026d C12GYM0102：ホミカ */

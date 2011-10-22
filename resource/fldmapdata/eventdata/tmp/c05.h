@@ -42,6 +42,7 @@
 #define C05_BABYGIRL1                     17
 #define C05_BACKPACKERW_01                18
 #define C05_POKE20_01                     19
+#define C05_STOPPER_01                    20
 
 #endif //ZONE_C05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

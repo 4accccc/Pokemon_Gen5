@@ -78,14 +78,14 @@
 		/* not used 16450(0x4042) */
 #define WK_SYS_PAIR_ID                   16451 /* 0x4043 連れ歩きペアID */
 #define WK_SYS_HIDE_SHIP_PLACE           16452 /* 0x4044 アジト船の位置をタウンマップに通知するためのワーク SCR_HIDE_SHIP_PLACE_C05 (0) ///&lt; ホドモエ SCR_HIDE_SHIP_PLACE_W21 (1) ///&lt; ２１番水道 SCR_HIDE_SHIP_PLACE_D10 (2) ///&lt; ジャイアントホール SCR_HIDE_SHIP_PLACE_W17 (3) ///&lt; P2ラボにいるとき */
-		/* not used 16453(0x4045) */
-		/* not used 16454(0x4046) */
-		/* not used 16455(0x4047) */
-		/* not used 16456(0x4048) */
-		/* not used 16457(0x4049) */
-		/* not used 16458(0x404a) */
-		/* not used 16459(0x404b) */
-		/* not used 16460(0x404c) */
+#define WK_SYS_LINK_EVENT_01             16453 /* 0x4045 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_02             16454 /* 0x4046 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_03             16455 /* 0x4047 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_04             16456 /* 0x4048 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_05             16457 /* 0x4049 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_06             16458 /* 0x404a リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_07             16459 /* 0x404b リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_08             16460 /* 0x404c リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
 		/* not used 16461(0x404d) */
 		/* not used 16462(0x404e) */
 		/* not used 16463(0x404f) */
@@ -310,6 +310,7 @@
 #define WK_SCENE_C16_PARADE              16698 /* 0x413a ジョインアベニュー：パレード用イベント制御ワーク */
 #define WK_SCENE_D07                     16699 /* 0x413b ネジ山フィールド：ストッパーイベント制御ワーク */
 #define WK_SCENE_C15_BONUS_EVENT_01      16700 /* 0x413c ポケウッド：ごほうびイベント制御ワーク */
+#define WK_SCENE_C15R0401                16701 /* 0x413d ポケウッド：初回入室時イベント */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

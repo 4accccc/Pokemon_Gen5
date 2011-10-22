@@ -23,6 +23,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_c05r0302_businessman_01
 _EVENT_DATA   ev_c05r0302_fighterw_01
+_EVENT_DATA   ev_c05r0302_oldman1_01
 _EVENT_DATA_END
 
 
@@ -46,4 +47,9 @@ EVENT_START   ev_c05r0302_fighterw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0302_fighterw_01 )
 EVENT_END
 
-
+/**************************************************************/
+/*  oldman1ÅFòbÇµÇ©ÇØ                                    */
+/**************************************************************/
+EVENT_START   ev_c05r0302_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0302_oldman1_01 )
+EVENT_END

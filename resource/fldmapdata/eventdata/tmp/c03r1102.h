@@ -19,5 +19,11 @@
 
 #define BGID_C03R1102_ELEVATOR            0
 #define BGID_C03R1102_ELEVATOR_FRONT      1
+#define BG_C03R1102_STATUE_01             2
+#define BG_C03R1102_STATUE_02             3
+#define BG_C03R1102_GRAPH_01              4
+#define BG_C03R1102_GRAPH_02              5
+#define BG_C03R1102_GRAPH_03              6
+#define BG_C03R1102_FRAME_01              7
 
 #endif //ZONE_C03R1102_EVB_H

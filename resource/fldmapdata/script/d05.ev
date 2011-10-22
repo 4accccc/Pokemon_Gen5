@@ -38,6 +38,7 @@ _EVENT_DATA    ev_d05_veteranw_01
 _EVENT_DATA    ev_d05_fighterw_01
 _EVENT_DATA    ev_d05_tennisw_01
 _EVENT_DATA    ev_d05_man1_01
+_EVENT_DATA    ev_d05_backpackerw_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -560,6 +561,14 @@ EVENT_END
 EVENT_START		ev_d05_tennisw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_tennisw_01 )
 EVENT_END
+
+/**************************************************************/
+/* 			backpackerwÅFòbÇµÇ©ÇØ			  */
+/**************************************************************/
+EVENT_START		ev_d05_backpackerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_backpackerw_01 )
+EVENT_END
+
 
 /**************************************************************/
 /*  d05_man1_01:ÇﬂÇ¥ÇœîªíË*/

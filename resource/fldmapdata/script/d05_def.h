@@ -19,5 +19,6 @@
 #define SCRID_D05_FIGHTERW_01 (12)
 #define SCRID_D05_TENNISW_01 (13)
 #define SCRID_D05_MAN1_01 (14)
+#define SCRID_D05_BACKPACKERW_01 (15)
 
 #endif //_D05_DEF_H_

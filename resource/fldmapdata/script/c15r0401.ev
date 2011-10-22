@@ -21,6 +21,10 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_init_c15r0401
 _EVENT_DATA    ev_reserve_c15r0401_sunglasses_01
+_EVENT_DATA    ev_c15r0401_adaltw_01
+_EVENT_DATA    ev_c15r0401_adaltw_02
+_EVENT_DATA    ev_c15r0401_middleman2_01
+_EVENT_DATA    ev_c15r0401_policeman_01
 _EVENT_DATA_END
 
 
@@ -69,3 +73,34 @@ _ANIME_LABEL  anm_exit
   _ANIME_DATA AC_WALK_R_8F, 7
   _ANIME_DATA ACMD_END, 0
 
+/**************************************************************/
+/*			adaltw1：一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_c15r0401_adaltw_01
+  _PLAYER_NAME( 0 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0401_adlutw_01_01 )
+EVENT_END
+
+/**************************************************************/
+/*			adaltw2：一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_c15r0401_adaltw_02
+  _PLAYER_NAME( 0 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0401_adlutw_01_02 )
+EVENT_END
+
+/**************************************************************/
+/*			middleman2：一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_c15r0401_middleman2_01
+  _PLAYER_NAME( 0 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0401_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*			policeman：一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_c15r0401_policeman_01
+  _PLAYER_NAME( 0 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0401_policeman_01 )
+EVENT_END

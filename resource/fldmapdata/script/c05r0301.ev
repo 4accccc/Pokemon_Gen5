@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_c05r0301_informationw_01
 _EVENT_DATA   ev_c05r0301_girl4_01
+_EVENT_DATA   ev_c05r0301_gentleman_01
 _EVENT_DATA_END
 
 
@@ -29,6 +30,13 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c05r0301_informationw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0301_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  GENTLEMANÅFòbÇµÇ©ÇØ                                          */
+/**************************************************************/
+EVENT_START   ev_c05r0301_gentleman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0301_gentleman_01 )
 EVENT_END
 
 /**************************************************************/
