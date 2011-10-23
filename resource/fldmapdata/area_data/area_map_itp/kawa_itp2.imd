@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-12-24T04:45:27" source="kawa_itp2.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-23T21:50:44" source="kawa_itp2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-12-24T04:45:27" source="kawa_itp2.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-10-23T21:50:44" source="kawa_itp2.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,22 +20,22 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="1 1"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.000000 -0.500000 -4.000000" whd="0.375000 0.000000 5.000000"/>
+<box_test pos_scale="4" xyz="-1.000000 -0.500000 -4.000000" whd="1.264648 0.000000 5.000000"/>
 
-<tex_image_array size="4">
+<tex_image_array size="8">
 	<tex_image index="0" name="kawa_fuchi.1"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kawa_fuchi.1_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex_spring/kawa_fuchi.1.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/kawa_fuchi.1.tga"
 	>
 		<bitmap size="32">
 			4334 5554 4555 4334 3333 4444 4444 3333
@@ -49,7 +49,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kawa_fuchi.2_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex_spring/kawa_fuchi.2.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/kawa_fuchi.2.tga"
 	>
 		<bitmap size="32">
 			4334 5554 4555 4334 3333 4444 4444 3333
@@ -63,7 +63,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kawa_fuchi.3_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex_spring/kawa_fuchi.3.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/kawa_fuchi.3.tga"
 	>
 		<bitmap size="32">
 			4334 5554 4555 4334 3333 4444 4444 3333
@@ -77,7 +77,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kawa_fuchi.4_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex_spring/kawa_fuchi.4.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/kawa_fuchi.4.tga"
 	>
 		<bitmap size="32">
 			4334 5554 4555 4334 3333 4444 4444 3333
@@ -86,9 +86,65 @@
 			1000 2221 1222 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="4" name="taki_sakai.1"
+		width="16" height="8" original_width="16" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="taki_sakai.1_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex_spring/taki_sakai.1.tga"
+	>
+		<bitmap size="32">
+			a55a ccca bccc 688b 2555 999a bbbb 0666
+			2555 4331 6777 0066 2255 4331 7777 0007
+			1222 4331 7774 0007 1100 3333 7744 0007
+			0000 3333 7444 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="taki_sakai.2"
+		width="16" height="8" original_width="16" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="taki_sakai.2_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex_spring/taki_sakai.2.tga"
+	>
+		<bitmap size="32">
+			9559 bbb9 abbb 666a 2555 8889 aaaa 0666
+			2555 4331 7677 0067 2211 4331 7774 0007
+			1110 3311 7744 0007 0000 3331 7744 0007
+			0000 3330 7443 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="taki_sakai.3"
+		width="16" height="8" original_width="16" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="taki_sakai.3_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex_spring/taki_sakai.3.tga"
+	>
+		<bitmap size="32">
+			a55a ccca bccc 688b 2555 999a bbbb 0666
+			2555 4331 7667 0067 2255 4331 7777 0006
+			1222 4311 7774 0007 1100 3331 7774 0000
+			0000 3333 0744 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="taki_sakai.4"
+		width="16" height="8" original_width="16" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="taki_sakai.4_pl"
+		path="C:/home/swan_data3d/field/out00/chip/tex_spring/taki_sakai.4.tga"
+	>
+		<bitmap size="32">
+			a55a ccca bccc 888b 2555 999a bbbb 0866
+			2255 4331 6667 0066 2255 4331 7777 0007
+			1222 4331 7774 0007 1100 3333 7774 0007
+			3000 3333 0744 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="4">
+<tex_palette_array size="8">
 	<tex_palette index="0" name="kawa_fuchi.1_pl" color_size="8">
 		7fff 39c3 3183 2964 218a 1dd0 7fff 7fff
 	</tex_palette>
@@ -101,9 +157,25 @@
 	<tex_palette index="3" name="kawa_fuchi.4_pl" color_size="8">
 		7fff 39c3 3183 2964 218a 1dd0 7fff 7fff
 	</tex_palette>
+	<tex_palette index="4" name="taki_sakai.1_pl" color_size="16">
+		7fff 39c3 3183 4224 4a66 2964 6755 52ed
+		77db 366e 218a 4293 1dd0 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="taki_sakai.2_pl" color_size="16">
+		7fff 39c3 3183 4224 4a66 2964 6755 52ed
+		366e 218a 4293 1dd0 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="taki_sakai.3_pl" color_size="16">
+		7fff 39c3 3183 4224 4a66 2964 6755 52ed
+		77db 366e 218a 4293 1dd0 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="taki_sakai.4_pl" color_size="16">
+		7fff 39c3 3183 4224 4a66 2964 6755 52ed
+		77db 366e 218a 4293 1dd0 7fff 7fff 7fff
+	</tex_palette>
 </tex_palette_array>
 
-<material_array size="1">
+<material_array size="2">
 	<material index="0" name="kawa_fuchi_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -128,13 +200,38 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="1" name="taki_sakai_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="repeat clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
-<matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
 </matrix_array>
 
-<polygon_array size="1">
+<polygon_array size="2">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -162,14 +259,75 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 -1.000000 -8.000000"
+		volume_max="-1.250000 -1.000000 2.000000"
+		volume_r="8.306641"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 8.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-1.250000 -1.000000 -8.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 -1.000000"/>
+					<tex st="-48.000000 0.000000"/>
+					<pos_xz xz="-2.000000 2.000000"/>
+					<tex st="-48.000000 8.000000"/>
+					<pos_xy xy="-1.250000 -1.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+<node_array size="3">
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
-		child="-1"
+		child="1"
 		brother_next="-1"
 		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="kawa_itp3" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="14.234863 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 -1.000000 -8.000000"
+		volume_max="-1.250000 -1.000000 2.000000"
+		volume_r="8.306641"
+	>
+		<display index="0" material="1" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="polySurface1" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -183,12 +341,12 @@
 		volume_max="-1.250000 -1.000000 2.000000"
 		volume_r="8.306641"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="1" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="4" polygon_size="1"
-	triangle_size="0" quad_size="1"/>
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
 
 </body>
 
