@@ -1,0 +1,4228 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="WBT_TRNAME_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホミカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホミカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シズイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シズイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポッド</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポッド</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アロエ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アロエ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グリーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グリーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワタル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワタル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダイゴ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダイゴ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミクリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミクリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シロナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シロナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タケシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タケシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カスミ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カスミ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マチス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マチス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナツメ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カツラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カツラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サカキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サカキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハヤト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハヤト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツクシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツクシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アカネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アカネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マツバ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マツバ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シジマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シジマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミカン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミカン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤナギ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤナギ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イブキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イブキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アンズ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アンズ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツツジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツツジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テッセン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テッセン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アスナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アスナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>センリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>センリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナギ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナギ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_43"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ラン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ラン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_44"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アダン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アダン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_45"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒョウタ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒョウタ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_46"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナタネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナタネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_47"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メリッサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メリッサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_48"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スモモ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スモモ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マキシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マキシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウガン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウガン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_51"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スズナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スズナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デンジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デンジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_53"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウヤ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウヤ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_54"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トウコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トウコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_55"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:06:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:06:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:06:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:06:13" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_56"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:05:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:05:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:05:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T06:05:34" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_57"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_58"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボツリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボツリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_59"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イエジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イエジ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_60"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カルト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カルト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_61"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウォルター</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウォルター</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンスケ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンスケ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リュウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リュウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_64"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サッチャー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サッチャー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_65"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィトー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィトー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_66"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イルサーネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イルサーネ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_67"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボニー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボニー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_68"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エクス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エクス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_69"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マキナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マキナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_70"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カストロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カストロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_71"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツグミ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツグミ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_72"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アラシヤマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アラシヤマ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_73"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジェーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジェーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_74"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シュウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シュウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_75"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エクレア</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エクレア</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_76"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ルリオ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ルリオ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_77"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソプラノ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソプラノ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_78"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウイチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_79"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サイセイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サイセイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_80"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キョウカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キョウカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_81"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウノ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウノ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_82"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナナカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナナカ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_83"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウルシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウルシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_84"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マサーシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マサーシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_85"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドンタ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドンタ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_86"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤマナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤマナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_87"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マシロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マシロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_88"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テラチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テラチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_89"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユーゼン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユーゼン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_90"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カブラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カブラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_91"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ノレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ノレン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_92"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ツバサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ツバサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_93"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>インディ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>インディ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_94"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハクイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハクイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_95"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チヒロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チヒロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_96"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤスヒロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤスヒロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_97"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミノール</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミノール</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_98"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワカナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワカナ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_99"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヘシコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヘシコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリカラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリカラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カズキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カズキ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チョップ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チョップ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_103"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テドリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テドリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_104"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヨウヘイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヨウヘイ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_105"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サムット</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サムット</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_106"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スダポーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スダポーン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_107"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パナラット</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パナラット</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_108"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョーキチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョーキチ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_109"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フクジロウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フクジロウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_110"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハマッコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハマッコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_111"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マキコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マキコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_112"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボブヒコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボブヒコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_113"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボブマサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボブマサ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_114"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ノッコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ノッコ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_115"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カオリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カオリ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_116"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_117"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドル</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_118"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウォン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウォン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_119"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユーロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユーロ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_120"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セッシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セッシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_121"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カンシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カンシ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_122"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ケリー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ケリー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_123"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アリス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アリス</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_124"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ショー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ショー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_125"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チカラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チカラ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_126"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRNAME_127"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ルーク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ルーク</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

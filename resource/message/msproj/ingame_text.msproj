@@ -2351,6 +2351,10 @@
 			<ContentItem
 				Name="wbt_trmsg_dl.mstxt" />
 			<ContentItem
+				Name="wbt_trname.mstxt" />
+			<ContentItem
+				Name="wbt_trtitle.mstxt" />
+			<ContentItem
 				Name="wbt_wincount.mstxt" />
 			<ContentItem
 				Name="wifi_bsubway.mstxt" />

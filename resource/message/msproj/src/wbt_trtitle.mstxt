@@ -1,0 +1,4228 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="WBT_TRTITLE_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_43"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_44"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_45"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_46"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_47"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_48"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_51"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_53"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_54"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_55"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_56"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_57"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_58"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_59"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_60"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_61"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_64"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_65"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_66"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_67"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_68"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_69"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_70"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_71"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_72"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_73"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_74"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_75"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_76"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_77"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_78"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_79"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_80"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_81"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_82"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_83"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_84"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_85"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_86"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_87"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_88"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_89"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_90"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_91"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_92"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_93"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_94"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_95"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_96"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_97"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_98"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_99"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_103"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_104"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_105"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_106"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_107"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_108"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_109"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_110"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_111"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_112"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_113"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_114"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_115"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_116"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_117"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_118"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_119"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_120"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_121"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_122"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_123"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_124"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_125"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_126"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="WBT_TRTITLE_127"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-10-24T03:58:17" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

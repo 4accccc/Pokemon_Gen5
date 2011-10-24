@@ -5,6 +5,7 @@
 #	@author		tamada GAMEFREAK inc.
 #	@date			2011.03.09
 #
+#	2011.10.24	mstxtの対応
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
@@ -19,11 +20,16 @@ arctarget = wbt_trlist
 trdata_bin		= wbt_trainer.bin
 trname_gmm = wbt_trname.gmm
 trtitle_gmm = wbt_trtitle.gmm
+trname_mstxt = src/$(trname_gmm:.gmm=.mstxt)
+trtitle_mstxt = src/$(trtitle_gmm:.gmm=.mstxt)
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)wbt
 GMMDIR	= $(PROJECT_RSCDIR)message/src
+
+MSPROJDIR	= $(PROJECT_RSCDIR)message/msproj/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -36,6 +42,9 @@ include	$(PROJECT_RSCDIR)\macro_define
 ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 CONV			= wbt_trainer.rb
+#mstxt対応のため追加
+UPDATEWITHGMM 	= $(PROJECT_ROOT)tools/message/UpdateWithGmm.bat
+
 #------------------------------------------------------------------------------
 #データ
 #------------------------------------------------------------------------------
@@ -74,9 +83,7 @@ LDIRT_CLEAN = $(TARGETDIR)/$(arctarget).narc $(TARGETDIR)/$(arctarget).naix
 
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
-LDIRT_CLEAN += *.dat *.bin $(arctarget).narc $(arctarget).naix arc_result.txt
-LDIRT_CLEAN += $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm)
-LDIRT_CLEAN += $(trname_gmm) $(trtitle_gmm)
+LDIRT_CLEAN += *.dat *.bin $(arctarget).narc $(arctarget).naix arc_result.txt $(DATATXT)
 LDIRT_CLEAN += $(MSGCDAT)
 endif
 
@@ -115,7 +122,7 @@ $(trdata_bin): $(DATATXT) $(WBT_DEPENDS) $(CONV)
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(arctarget).narc $(GMMDIR)/$(trname_gmm) $(GMMDIR)/$(trtitle_gmm) $(MSGCDAT)
+do-build:	subdir $(TARGETDIR)/$(arctarget).narc $(MSPROJDIR)$(trname_mstxt) $(MSPROJDIR)$(trtitle_mstxt) $(MSGCDAT)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -136,14 +143,17 @@ $(arctarget).narc: $(trdata_bin)
 $(DATATXT):	$(DATAFILE)
 	$(XLS2TAB) -c $(DATAFILE) > $(DATATXT)
 
-$(GMMDIR)/$(trname_gmm):	$(trname_gmm)
-	$(COPY) $(trname_gmm) $(GMMDIR)
+$(MSPROJDIR)$(trtitle_mstxt): $(trtitle_gmm)
+		$(UPDATEWITHGMM) . $(trtitle_gmm) $(trtitle_mstxt)
 
-$(GMMDIR)/$(trtitle_gmm):	$(trtitle_gmm)
-	$(COPY)	$(trtitle_gmm) $(GMMDIR)
+$(MSPROJDIR)$(trname_mstxt): $(trname_gmm)
+		$(UPDATEWITHGMM) . $(trname_gmm) $(trname_mstxt)
 
-$(trname_gmm) $(trtitle_gmm) :	$(DATATXT) $(CONV)
-	ruby $(CONV) gmm $(DATATXT) $(GMMDIR)/../template.gmm
+$(trtitle_gmm):	$(DATATXT) $(CONV)
+	ruby $(CONV) title_gmm $(DATATXT) $(GMMDIR)/../template.gmm
+
+$(trname_gmm):	$(DATATXT) $(CONV)
+	ruby $(CONV) name_gmm $(DATATXT) $(GMMDIR)/../template.gmm
 
 $(MSGCDAT):	$(DATATXT) $(CONV)
 	ruby $(CONV) msgid $(DATATXT) > $(MSGCDAT)

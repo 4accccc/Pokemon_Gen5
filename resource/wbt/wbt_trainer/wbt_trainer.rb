@@ -302,6 +302,10 @@ trdata_list = read_trdata_list( ARGV[1] )
 case ARGV[0]
 when "list" then
   puts put_trdata_source( trdata_list )
+when "name_gmm" then
+  make_trname_gmm( trdata_list, ARGV[2] )
+when "title_gmm" then
+  make_trtitle_gmm( trdata_list, ARGV[2] )
 when "gmm" then
   make_trname_gmm( trdata_list, ARGV[2] )
   make_trtitle_gmm( trdata_list, ARGV[2] )
