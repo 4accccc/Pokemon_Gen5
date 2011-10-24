@@ -65,13 +65,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 
 #ここにあるsdatより swan_sound_playerの方が新しい場合に実行
 $(TARGETFILENAME): ../../../swan_doc/swan_sound_player/swan_sound_data.sdat
-	cp ../personal/swan_sound_pv_bnk.lst $(SOUNDPLAYERDIR)/tools
-	cp ../personal/swan_sound_pv_wav.lst $(SOUNDPLAYERDIR)/tools
 	$(MAKE) -C $(SOUNDPLAYERDIR) -f Makefile
 	cp $(SOUNDPLAYERDIR)/$(MFILE1) ./
 	cp $(SOUNDPLAYERDIR)/$(MFILE2) ./
 	cp $(SOUNDPLAYERDIR)/$(MFILE3) ./
-
+#	本当は$(TARGETFILENAME)の直下にあった
+#	cp ../personal/swan_sound_pv_bnk.lst $(SOUNDPLAYERDIR)/tools
+#	cp ../personal/swan_sound_pv_wav.lst $(SOUNDPLAYERDIR)/tools
+	
 
 $(TFILE1): $(SOUNDPLAYERDIR)/$(TFILE1)
 	cp $(SOUNDPLAYERDIR)/swan_sound_palpark.sadl ./
