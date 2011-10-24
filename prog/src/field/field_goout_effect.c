@@ -61,7 +61,7 @@ struct _FIELD_GOOUT_EFFECT
 */
 //=============================================================================
 static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL_G3D_CAMERA* cp_camera );
-static BOOL Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID );
+static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID );
 
 
 static BOOL Field_Goout_Effect_IsOutZone( const GAMEDATA *cp_gamedata, ZONEID zoneID );
@@ -109,9 +109,21 @@ FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA 
   p_wk->p_ex_obj    = p_ex_obj;
   p_wk->p_gamedata  = p_gamedata;
 
-  //リソース読込み
+  NAGI_Printf( "after rest %d\n", GFL_HEAP_GetHeapFreeSize( heapID ) );
+
+  //もし一万バイト残っていなかったら室内室内を諦める
+  if( GFL_HEAP_GetHeapFreeSize( heapID ) < 10000 )
+  {
+    p_wk->effectID = GOOUT_EFF_NULL;
+    p_wk->is_enable = FALSE;
+    OS_Printf( "▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼\n" );
+    OS_Printf( "室外表現：ヒープ足りない %d\n", GFL_HEAP_GetHeapFreeSize( heapID ) );
+    OS_Printf( "▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲\n" );
+  }
+  else
   {
 
+    //リソース読込み
     u32 index = GAMEDATA_GetGooutEffectEffectID( p_wk->p_gamedata );
 
     p_wk->effectID = GOOUT_EFF_NULL;
@@ -130,15 +142,8 @@ FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA 
 
     if( p_wk->effectID != GOOUT_EFF_NULL )
     {
-      if( Field_Goout_Effect_LoadResource( p_wk->p_ex_obj, p_wk->p_data, p_wk->effectID ) )
-      {
-        p_wk->is_enable = TRUE;
-      }
-      else
-      {
-        p_wk->effectID = GOOUT_EFF_NULL;
-        p_wk->is_enable = FALSE;
-      }
+      Field_Goout_Effect_LoadResource( p_wk->p_ex_obj, p_wk->p_data, p_wk->effectID );
+      p_wk->is_enable = TRUE;
     }
     else
     {
@@ -151,6 +156,7 @@ FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA 
   //デバッグ開始
   GOOUT_DEBUG_Init( p_wk, p_gamedata, heapID );
 
+  NAGI_Printf( "before rest %d\n", GFL_HEAP_GetHeapFreeSize( heapID ) );
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -440,7 +446,7 @@ static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL
  *	@param  GOOUT_EFFECT_ID effectID      エフェクトID
  */
 //-----------------------------------------------------------------------------
-static BOOL Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID )
+static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID )
 {
   GFL_G3D_UTIL_SETUP  setup = {0};
   GFL_G3D_UTIL_RES    res_tbl[FIELD_GOOUT_RESOURCE_MAX] = {0};
