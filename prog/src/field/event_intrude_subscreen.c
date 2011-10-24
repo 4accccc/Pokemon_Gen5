@@ -27,6 +27,36 @@
 #include "fld_vreq.h"
 
 
+#ifdef DISABLE_INTRUDE //swanで侵入を削除
+//==================================================================
+/**
+ * 侵入によるワープイベント起動
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   partner     TRUE:協力者(表フィールドからパレスへ行く時のみ使用)
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 zone_id, BOOL partner)
+{
+  GMEVENT * event;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  VecFx32 pos;
+  
+  GF_ASSERT( zone_id == ZONE_ID_PALACE01 ); //swanではハイリンク島以外に移動しない
+  GF_ASSERT( partner == FALSE );            //swanには侵入はないので協力者もいない
+
+  if(IntrudeField_GetPalaceTownZoneID(zone_id, &pos) == FALSE){
+    return NULL;
+  }
+  event = EVENT_ChangeMapFldToPalace( gsys, zone_id, &pos, partner );
+  return event;
+}
+
+
+#else
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -188,3 +218,4 @@ static GMEVENT_RESULT EventChangeSubScreen_to_CGear( GMEVENT* event, int* seq, v
   }
   return GMEVENT_RES_CONTINUE;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除

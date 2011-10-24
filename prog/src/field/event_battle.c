@@ -51,7 +51,9 @@
 #include "battle/battle.h"
 #include "savedata/record.h"
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 #include "event_mission_help_after.h"
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 #include "debug/debug_flg.h"
 
@@ -280,6 +282,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     break;
 
   case 2:
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
     //侵入相手がたすけてくれたメッセージイベント
     {
       COMM_PLAYER_SUPPORT *cps = GAMEDATA_GetCommPlayerSupportPtr(gamedata);
@@ -287,6 +290,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
         GMEVENT_CallEvent(event, EVENT_Intrude_BattleHelpAfterEvent( gsys, HEAPID_PROC ));
       }
     }
+#endif  //swanで侵入を削除
     (*seq)++;
     break;
   

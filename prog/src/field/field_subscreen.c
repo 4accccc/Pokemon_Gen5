@@ -31,7 +31,9 @@
 
 #include "test/camera_adjust_view.h"
 #include "net_app/union/union_subdisp.h"
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 #include "field/intrude_subdisp.h"
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 #include "field/beacon_view.h"
 #include "field/fmission_view.h"
 #include "field/zonedata.h"
@@ -82,7 +84,9 @@ struct _FIELD_SUBSCREEN_WORK {
     C_GEAR_WORK* cgearWork;
     NO_GEAR_WORK* nogearWork;
     UNION_SUBDISP_PTR unisubWork;
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
     INTRUDE_SUBDISP_PTR intsubWork;
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
     BEACON_VIEW_PTR beaconViewWork;
     FMISSION_VIEW_PTR fmissionViewWork;
     DOWSING_WORK* dowsingWork;
@@ -141,11 +145,13 @@ static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static GMEVENT* evcheck_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 
 static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCREEN_MODE prevMode);
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -232,6 +238,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     NULL ,
   },
   { // N“ü
+#ifdef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
+    FIELD_SUBSCREEN_INTRUDE,      //FIELD_SUBSCREEN_NOGEAR,       
+    init_nogear_subscreen,
+    update_nogear_subscreen,
+    NULL ,
+    NULL ,
+    exit_nogear_subscreen,
+    actioncallback_nogear_subscreen,
+#else
     FIELD_SUBSCREEN_INTRUDE,      
     init_intrude_subscreen,
     update_intrude_subscreen,
@@ -239,6 +254,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     evcheck_intrude_subscreen,
     exit_intrude_subscreen,
     NULL ,
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
   },
   { // ‚·‚êˆá‚¢Œ‹‰Ê‰æ–Ê
     FIELD_SUBSCREEN_BEACON_VIEW,  
@@ -1360,6 +1376,7 @@ static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //=============================================================================
 //=============================================================================
 
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 //----------------------------------------------------------------------------
 /**
  *  @brief  N“ü‰º‰æ–Ê‚Ì‰Šú‰»
@@ -1410,6 +1427,7 @@ static GMEVENT* evcheck_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEv
 {
   return INTRUDE_SUBDISP_EventCheck(pWork->intsubWork, bEvReqOK, pWork );
 }
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 
 //=============================================================================
 //=============================================================================

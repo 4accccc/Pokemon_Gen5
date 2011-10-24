@@ -37,8 +37,10 @@
 #include "rail_editor.h"
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
 #include "event_comm_common.h"
 #include "event_comm_result.h"
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ðíœ
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
 #include "event_intrude_subscreen.h"
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
@@ -608,6 +610,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       }
     }
 
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
     { //‰B‚³‚êƒAƒCƒeƒ€ƒ`ƒFƒbƒN
       INTRUDE_SAVE_WORK * intsave;
       s16 gx,gy,gz;
@@ -622,6 +625,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return EVENT_IntrudeSecretItem( gsys, req.heapID, result );
       }
     }
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ðíœ
 
     { //ƒ_ƒCƒrƒ“ƒOƒ`ƒFƒbƒN
       u16 dummy;
@@ -2429,9 +2433,11 @@ static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * field
     exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   }
 
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
   if(CONNECTDATA_GetExitType( cnct ) == EXIT_TYPE_INTRUDE){
     return EVENT_ChangeMapByConnectIntrude(req->gsys, fieldWork, cnct, exit_ofs);
   }
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ðíœ
   return EVENT_ChangeMapByConnect(req->gsys, fieldWork, cnct, exit_ofs);
 }
 

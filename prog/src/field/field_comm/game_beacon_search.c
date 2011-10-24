@@ -326,6 +326,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   if(target != NULL){ //対象が見つかった
 #endif
     switch(target->gsid){
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
     case WB_NET_PALACE2_SERVICEID:     //侵入(パレス)
 //    case WB_NET_FIELDMOVE_SERVICEID:
       //蓋が開いている && パレス接続禁止フラグが立っていない && 表フィールド、なら繋ぎに行く
@@ -354,6 +355,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
       GFL_STD_MemClear(&gbs->target_info, sizeof(GBS_TARGET_INFO)); //ターゲット情報クリア
       GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
       break;
+#endif  //swanで侵入を削除
     default:
       //フィールドから繋ぐgsidでは無い為、無視
       target->gsid = 0;
@@ -617,6 +619,7 @@ void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs)
   OS_TPrintf("常時通信のエラーウェイト設定\n");
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //--------------------------------------------------------------
 /**
  * GameComm終了コールバック：侵入通信を起動
@@ -660,4 +663,5 @@ static void GameBeacon_ExitCallback_toInvasion(void *pWork, BOOL exit_pileup)
   }
   OS_TPrintf("CommBoot起動は出来ない\n");
 }
+#endif  //swanで侵入を削除
 

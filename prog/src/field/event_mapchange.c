@@ -1116,6 +1116,7 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //--------------------------------------------------------------
 /**
  * 侵入用のEVENT_MapChange
@@ -1207,6 +1208,7 @@ static GMEVENT_RESULT EVENT_MapChangeIntrude( GMEVENT* event, int* seq, void* wk
   }
   return GMEVENT_RES_CONTINUE;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 #ifdef  PM_DEBUG
 //------------------------------------------------------------------
@@ -1364,6 +1366,7 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep( GMEVENT* event, int* seq, void* wk
   return GMEVENT_RES_CONTINUE;
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //------------------------------------------------------------------
 /**
  * @brief パレス間ワープ(裏から裏)によるマップチェンジ
@@ -1422,6 +1425,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
   }
   return GMEVENT_RES_CONTINUE;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 //------------------------------------------------------------------
 /**
@@ -2500,6 +2504,7 @@ GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   return event;
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //==================================================================
 /**
  * 侵入用のEVENT_ChangeMapByConnect
@@ -2526,6 +2531,7 @@ GMEVENT* EVENT_ChangeMapByConnectIntrude( GAMESYS_WORK* gameSystem, FIELDMAP_WOR
 
   return event;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -2621,6 +2627,7 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   return event;
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成 (パレス間ワープ(裏から裏))
@@ -2671,6 +2678,7 @@ GMEVENT * EVENT_ChangeMapPalace_to_Palace( GAMESYS_WORK* gameSystem, u16 zoneID,
   
   return event;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 
 

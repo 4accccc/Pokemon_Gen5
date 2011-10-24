@@ -28,8 +28,10 @@
 #include "field/field_g3d_mapper.h"
 #include "intrude_main.h"
 #include "intrude_mission.h"
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 #include "field/intrude_secret_item.h"
 #include "field/event_mission_secretitem_ex.h"
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 #include "gamesystem/link_festival.h"
 #include "field/event_fmission.h"
@@ -1762,6 +1764,7 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   }
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //--------------------------------------------------------------
 /**
  * 隠しアイテムミッションが発動している時に目的地に到達したかチェック
@@ -1800,6 +1803,7 @@ GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS
   
   return NULL;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 //==================================================================
 /**

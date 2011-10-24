@@ -143,9 +143,11 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->link.data      = EVENT_PROCLINK_DATA_NONE;
 
   switch(FIELD_SUBSCREEN_GetMode(subscreen)){
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
   case FIELD_SUBSCREEN_INTRUDE:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_INTRUDE;
     break;
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
   case FIELD_SUBSCREEN_BEACON_VIEW:
     mwk->return_subscreen_mode = FIELD_SUBSCREEN_BEACON_VIEW;
     break;

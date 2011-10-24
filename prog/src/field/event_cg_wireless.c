@@ -98,11 +98,13 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     }
     switch(dbw->selectType){
     case CG_WIRELESS_RETURNMODE_PALACE:
+#ifndef DISABLE_INTRUDE //swanÇ≈êNì¸ÇçÌèú
       if(Intrude_Check_CommConnect(pComm)){ //êNì¸í êMÇ™ê≥èÌÇ…åqÇ™Ç¡ÇƒÇ¢ÇÈÇ©í≤Ç◊ÇÈ
         if(dbw->hilinkStateNo == INTRUDE_CONNECT_MISSION_TARGET){
           GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
         }
       }
+#endif  // DISABLE_INTRUDE //swanÇ≈êNì¸ÇçÌèú
       (*seq) = _FIELD_FADEOUT;
       break;
     case  CG_WIRELESS_RETURNMODE_TV:

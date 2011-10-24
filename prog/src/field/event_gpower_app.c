@@ -183,11 +183,13 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
       }
       else if( gaw->param.ret_mode == GPOWER_APP_RET_HILINK )
       {
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
         gaw->hilink_state = Intrude_GetIntrudeStatus( GAMESYSTEM_GetGameCommSysPtr(gsys) );
      
         if( gaw->hilink_state == INTRUDE_CONNECT_MISSION_TARGET){
           GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
         }
+#endif  // DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
       }
       fade_event = EVENT_FieldFadeIn_Black(gsys, fwork, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
