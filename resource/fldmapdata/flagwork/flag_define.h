@@ -109,7 +109,7 @@
 #define FH_AREA_END                         99 /* 0x0063  */
 
 
-/* flags "event_flag.xls" 100 ～ 499 */
+/* flags "event_flag.xls" 100 ～ 599 */
 
 #define FE_AREA_START                      100 /* 0x0064  */
 
@@ -474,935 +474,789 @@
 #define FE_C15R0401_GUARDMAN               458 /* 0x01ca ポケウッド：楽屋前のガードマン　どけるフラグ */
 #define FE_C04R1101_FIRSTTALK              459 /* 0x01cb ライモンシティ：おとなのおねえさん　初回会話フラグ */
 
-#define FE_AREA_END                        499 /* 0x01f3  */
+#define FE_AREA_END                        599 /* 0x0257  */
 
 
-/* flags "vanish_flag.xls" 500 ～ 999 */
+/* flags "vanish_flag.xls" 600 ～ 1099 */
 
-#define FV_AREA_START                      500 /* 0x01f4  */
+#define FV_AREA_START                      600 /* 0x0258  */
 
-#define FV_BC10R0401_B                     500 /* 0x01f4 ブラックシティ：移住人口BのOBJ */
-#define FV_BC10R0401_C                     501 /* 0x01f5 ブラックシティ：移住人口CのOBJ */
-#define FV_BC10R0401_D                     502 /* 0x01f6 ブラックシティ：移住人口DのOBJ */
-#define FV_BC10R0401_E                     503 /* 0x01f7 ブラックシティ：移住人口EのOBJ */
-#define FV_C04R0111_PARTNER                504 /* 0x01f8 バトルサブウェイ、ホーム：パートナー */
-#define FV_C04R0111_NPC                    505 /* 0x01f9 バトルサブウェイ、ホーム：NPC */
-#define FV_C08R0101_LEADER8A_01            506 /* 0x01fa ソウリュウシティR0101：シャガ */
-#define FV_R03_SODATEYA_01                 507 /* 0x01fb ３番道路の育て屋じいさん */
-#define FV_UN_GTSFRIEND_00                 508 /* 0x01fc 国連(内部）：GTSで交換した相手１ */
-#define FV_UN_GTSFRIEND_01                 509 /* 0x01fd 国連(内部）：GTSで交換した相手２ */
-#define FV_UN_GTSFRIEND_02                 510 /* 0x01fe 国連(内部）：GTSで交換した相手３ */
-#define FV_UN_GTSFRIEND_03                 511 /* 0x01ff 国連(内部）：GTSで交換した相手４ */
-#define FV_UN_GTSFRIEND_04                 512 /* 0x0200 国連(内部）：GTSで交換した相手５ */
-#define FV_BSUBWAY_RECEIPT_PARTNER         513 /* 0x0201 バトルサブウェイ、受付：パートナー */
-#define FV_POSTMAN                         514 /* 0x0202 不思議な贈り物配達員 */
-#define FV_C06_MONSTERBALL                 515 /* 0x0203 フキヨセ滑走路のモンスターボール（なみのり入手イベント） */
-#define FV_D03R0101_DARUMA_01              516 /* 0x0204 砂漠のゴリダルマ(瞑想モード)その１ */
-#define FV_D03R0101_DARUMA_02              517 /* 0x0205 砂漠のゴリダルマ(瞑想モード)その２ */
-#define FV_D03R0101_DARUMA_03              518 /* 0x0206 砂漠のゴリダルマ(瞑想モード)その３ */
-#define FV_D03R0101_DARUMA_04              519 /* 0x0207 砂漠のゴリダルマ(瞑想モード)その４ */
-#define FV_D03R0101_DARUMA_05              520 /* 0x0208 砂漠のゴリダルマ(瞑想モード)その５ */
-#define FV_C06_GIRLBOY_01                  521 /* 0x0209 フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
-#define FV_MUSICAL_FUN_01                  522 /* 0x020a ミュージカルホール：出待ちのファン１人目 */
-#define FV_MUSICAL_FUN_02                  523 /* 0x020b ミュージカルホール：出待ちのファン２人目 */
-#define FV_MUSICAL_FUN_03                  524 /* 0x020c ミュージカルホール：出待ちのファン３人目 */
-#define FV_MUSICAL_FUN_04                  525 /* 0x020d ミュージカルホール：出待ちのファン４人目 */
-#define FV_MUSICAL_FUN_05                  526 /* 0x020e ミュージカルホール：出待ちのファン５人目 */
-#define FV_T01R0102_AWARD_01               527 /* 0x020f 自宅２F：イッシュ図鑑完成の表彰状（データコンバート） */
-#define FV_T01R0102_AWARD_02               528 /* 0x0210 自宅２F：全国図鑑完成の表彰状（データコンバート） */
-#define FV_T01R0102_TROPHY_01              529 /* 0x0211 自宅２F：バトルサブウェイのトロフィ１（データコンバート） */
-#define FV_T01R0102_TROPHY_02              530 /* 0x0212 自宅２F：バトルサブウェイのトロフィ２（データコンバート） */
-#define FV_T01R0102_TROPHY_03              531 /* 0x0213 自宅２F：バトルサブウェイのトロフィ３（データコンバート） */
-#define FV_R08R0101_POKE4                  532 /* 0x0214 セッカ湿原：ダルタニスイベントのアトス */
-#define FV_R08R0101_POKE5                  533 /* 0x0215 セッカ湿原：ダルタニスイベントのポルトス */
-#define FV_R08R0101_POKE6                  534 /* 0x0216 セッカ湿原：ダルタニスイベントのアラミス */
-#define FV_R08R0101_POKE11                 535 /* 0x0217 セッカ湿原：ダルタニスイベントのダルタニス */
-#define FV_R08R0101_OLDMAN1                536 /* 0x0218 セッカ湿原：事情通の老人 */
-#define FV_C03R0101_MEMBER_A               537 /* 0x0219 調査隊一般隊員A */
-#define FV_C03R0101_MEMBER_B               538 /* 0x021a 調査隊一般隊員B */
-#define FV_C03R0101_MEMBER_C               539 /* 0x021b 調査隊一般隊員C */
-#define FV_C03R0101_MEMBER_D               540 /* 0x021c 調査隊一般隊員D */
-#define FV_C03R0101_MEMBER_E               541 /* 0x021d 調査隊一般隊員E */
-#define FV_C03R0101_MEMBER_F               542 /* 0x021e 調査隊一般隊員F */
-#define FV_C03R0101_MEMBER_G               543 /* 0x021f 調査隊一般隊員G */
-#define FV_R06R0201_STOPPER_01             544 /* 0x0220 フキヨセの洞穴：ストッパー */
-#define FV_POKE_JUDGE_01                   545 /* 0x0221 ジャッジ（ポケモンの個体値を調べてくれる人） */
-#define FV_STADIUM_TRAINER_01              546 /* 0x0222 ビッグスタジアム／リトルコートの選手トレーナー１人目 */
-#define FV_STADIUM_TRAINER_02              547 /* 0x0223 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
-#define FV_STADIUM_TRAINER_03              548 /* 0x0224 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
-#define FV_STADIUM_FAN_01                  549 /* 0x0225 ビッグスタジアム／リトルコートのファンクラブトレーナー１人目 */
-#define FV_STADIUM_FAN_02                  550 /* 0x0226 ビッグスタジアム／リトルコートのファンクラブトレーナー２人目 */
-#define FV_STADIUM_RANDOM_01               551 /* 0x0227 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_STADIUM_RANDOM_02               552 /* 0x0228 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_STADIUM_RANDOM_03               553 /* 0x0229 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_PDW_POSTMAN                     554 /* 0x022a PDWのアイテム配達員 */
-#define FV_STADIUM_PLAYING                 555 /* 0x022b ビッグスタジアム／リトルコート：試合中に表示されるＮＰＣ ・エントランスの警備員 ・スタンドの観客 */
-#define FV_D13R0101_ASSISTANTM_01          556 /* 0x022c P2ラボ：配布インセクタイベントの研究員 */
-		/* not used   557(0x022d) */
-		/* not used   558(0x022e) */
-#define FV_R14R0201_GIRL1                  559 /* 0x022f ツチノカミイベント：きょうだい */
-#define FV_R14R0201_LEG                    560 /* 0x0230 ツチノカミイベント：ツチノカミ */
-#define FV_MUSICAL_FUN_06                  561 /* 0x0231 ミュージカルホール：出待ちのファン６人目 */
-#define FV_MUSICAL_FUN_07                  562 /* 0x0232 ミュージカルホール：出待ちのファン７人目 */
-#define FV_MUSICAL_FUN_08                  563 /* 0x0233 ミュージカルホール：出待ちのファン８人目 */
-#define FV_MUSICAL_FUN_09                  564 /* 0x0234 ミュージカルホール：出待ちのファン９人目 */
-#define FV_MUSICAL_FUN_10                  565 /* 0x0235 ミュージカルホール：出待ちのファン１０人目 */
-#define FV_STADIUM_SPORTSMAN               566 /* 0x0236 ビッグスタジアム／リトルコートエントランス：選手とファン */
-#define FV_D08R0901_PACKAGE_POKE           567 /* 0x0237 リュウラセンの塔（屋上）：パッケージポケモン */
-#define FV_D07_BIGFOUR3_01                 568 /* 0x0238 ネジ山フィールド：レンブ */
-#define FV_C04P01_GLASSES_01               569 /* 0x0239 ライモン遊園地：ダンペイ */
-#define FV_C04P01_IDOL_01                  570 /* 0x023a ライモン遊園地：アイドル */
-#define FV_C04P01_ITEM_01                  571 /* 0x023b ライモン遊園地：アイテム */
-#define FV_C04R1101_ADULTW_01              572 /* 0x023c 旧電気ジム：おとなのお姉さん */
-		/* not used   573(0x023d) */
-		/* not used   574(0x023e) */
-		/* not used   575(0x023f) */
-		/* not used   576(0x0240) */
-		/* not used   577(0x0241) */
-#define FV_T04_SUMMER                      578 /* 0x0242 サザナミタウン：夏だけ町民 */
-#define FV_D04R2301_POKE13                 579 /* 0x0243 古代の城：ドラー */
-#define FV_T05_RAILFAN                     580 /* 0x0244 カナワタウン：電車前の人々（鉄道ファン） */
-#define FV_T05_WEEKEND                     581 /* 0x0245 カナワタウン：電車前の人々 */
-#define FV_D07R0101_WORKMAN2_02            582 /* 0x0246 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
-#define FV_T04R0301_SHIRONA_01             583 /* 0x0247 サザナミタウン別荘：シロナ */
-#define FV_T04R0301_BIGFOUR4_01            584 /* 0x0248 サザナミタウン別荘：カトレア */
-#define FV_T04R0301_BIGFOUR1_01            585 /* 0x0249 サザナミタウン別荘：シキミ */
-#define FV_T04R0301_LEDY_01                586 /* 0x024a サザナミタウン別荘：使用人 */
-#define FV_T04R0301_SWLEADER6_01           587 /* 0x024b サザナミタウン別荘：フウロ */
-#define FV_T04R0301_SWLEADER4_01           588 /* 0x024c サザナミタウン別荘：カミツレ */
-#define FV_T04R0301_SWLEADER2_01           589 /* 0x024d サザナミタウン別荘：ホミカ */
-#define FV_D07_STONE_01                    590 /* 0x024e ネジ山：季節対応・冬季岩ストッパー */
-#define FV_C15_PEAPLE_LANK_01              591 /* 0x024f ポケウッド：ランク1表示のNPC */
-#define FV_C15_PEAPLE_LANK_02              592 /* 0x0250 ポケウッド：ランク2表示のNPC */
-#define FV_C15_PEAPLE_LANK_03              593 /* 0x0251 ポケウッド：ランク3表示のNPC */
-#define FV_C15_PEAPLE_LANK_04              594 /* 0x0252 ポケウッド：ランク4表示のNPC */
-		/* not used   595(0x0253) */
-		/* not used   596(0x0254) */
-		/* not used   597(0x0255) */
-		/* not used   598(0x0256) */
-		/* not used   599(0x0257) */
-		/* not used   600(0x0258) */
-		/* not used   601(0x0259) */
-		/* not used   602(0x025a) */
-		/* not used   603(0x025b) */
-		/* not used   604(0x025c) */
-		/* not used   605(0x025d) */
-#define FV_C05_HAKAIM_01                   606 /* 0x025e ホドモエシティ：旧プラズマ団 */
-#define FV_C05_SWPLAZMAM_01                607 /* 0x025f ホドモエシティ：ネオプラズマ団 */
-#define FV_C05R0701_STOPPER_01             608 /* 0x0260 WBT方面ゲート：ストッパー */
-		/* not used   609(0x0261) */
-#define FV_D05_SWBOSS_01                   610 /* 0x0262 WBT前：アクロマ */
-#define FV_D05_SWRIVAL_01                  611 /* 0x0263 WBT前：ライバル */
-#define FV_D05_SWLEADER1_01                612 /* 0x0264 WBT前：チェレン */
-#define FV_D05_SWLEADER5_01                613 /* 0x0265 WBT前：ヤーコン */
-#define FV_C05R0501_POKE22_01              614 /* 0x0266 C05R0501：ゾロア */
-#define FV_C05_SAGE6_01                    615 /* 0x0267 ホドモエシティ：七賢人たち */
-#define FV_C05_SWRIVAL_01                  616 /* 0x0268 ホドモエシティ：ライバル */
-#define FV_C05_SWLEADER5_01                617 /* 0x0269 ホドモエシティ：ヤーコン */
-#define FV_C05_STOPPER_01                  618 /* 0x026a ホドモエシティ：抜け道ストッパー */
-#define FV_C05_STOPPER_02                  619 /* 0x026b ホドモエシティ：ジムストッパー */
-#define FV_C13GYM0102_SUNGLASSES           620 /* 0x026c ポケウッド：サングラス */
-#define FV_C13GYM0102_SWLEADER2            621 /* 0x026d C12GYM0102：ホミカ */
-#define FV_C13R0401_SWRIVAL                622 /* 0x026e C13：船舶所のライバル */
-#define FV_C13R0401_PILOT                  623 /* 0x026f C13：船舶所の船長 */
-#define FV_C13_SWPLAZMA                    624 /* 0x0270 C13：ネオプラズマ団イベント用 */
-#define FV_C13_SUNGLASSES                  625 /* 0x0271 C13：ポケウッド用 */
-#define FV_C13_SWLEADER2_MEET              626 /* 0x0272 C13：ホミカとホミカ父用 */
-#define FV_D22R0101_BREEDER_01             627 /* 0x0273 牧場：ブリーダー */
-#define FV_D22R0101_POKEMON_01             628 /* 0x0274 牧場：ヨーテリー */
-#define FV_D22R0101_SWRIVAL_01             629 /* 0x0275 牧場：ライバル */
-#define FV_T06_SUNGLASSES_01               630 /* 0x0276 サンギタウン：メダルおやじ */
-#define FV_T06_CHAMPION_01                 631 /* 0x0277 サンギタウン：アデク */
-#define FV_C12PC0101_SWBELL                632 /* 0x0278 ヒオウギシティPC：ベル */
-#define FV_C12R0101_TRORHY1_01             633 /* 0x0279 ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
-#define FV_C12R0101_TRORHY2_01             634 /* 0x027a ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
-#define FV_C12R0101_TRORHY3_01             635 /* 0x027b ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
-#define FV_C12R0101_PRIZE1_01              636 /* 0x027c ヒオウギシティ自宅：表彰状（地方） */
-#define FV_C12R0101_PRIZE2_01              637 /* 0x027d ヒオウギシティ自宅：表彰状（全国） */
-#define FV_R19_CHAMPION_01                 638 /* 0x027e 19ばんどうろ：アデク */
-#define FV_C12R0101_SWBELL                 639 /* 0x027f ヒオウギシティ自宅・ベル */
-#define FV_C12R0101_SWMAMA                 640 /* 0x0280 ヒオウギシティ自宅・ママ */
-#define FV_C12_SWANLEADER1                 641 /* 0x0281 ヒオウギシティ・チェレン */
-#define FV_C12_SWBELL                      642 /* 0x0282 ヒオウギシティ・ベル */
-#define FV_C12_SWMAMA                      643 /* 0x0283 ヒオウギシティ・ママ */
-#define FV_C12_SWRIVAL_SISTER              644 /* 0x0284 ヒオウギシティ・ライバル妹 */
-#define FV_C12_SWRIVAL                     645 /* 0x0285 ヒオウギシティ・ライバル */
-#define FV_PC_MEDALOYAJI                   646 /* 0x0286 ポケセンのメダルおやじ */
-#define FV_D06R0101_PAIR                   647 /* 0x0287 電気穴の洞窟連れ歩き */
-#define FV_C03P15_SWRIVAL_01               648 /* 0x0288 ヒウンシティ：船着場ライバル */
-#define FV_H01R0201_STOPPER_01             649 /* 0x0289 スカイアローブリッジ：ストッパー */
-		/* not used   650(0x028a) */
-#define FV_C03_SWCHAMPION_01               651 /* 0x028b ヒウンシティ外周：アイリス */
-#define FV_C03P07_SUNGLASSES_01            652 /* 0x028c ヒウンシティジム前：ダンペイ */
-#define FV_C03P17_SWCHAMPION_01            653 /* 0x028d ヒウンシティ下水道前：アイリス */
-#define FV_C03P17_SWRIVAL_01               654 /* 0x028e ヒウンシティ下水道前：ライバル */
-#define FV_D11R0101_SWRIVAL_01             655 /* 0x028f ヒウンシティ下水道：ライバルとプラズマ団 */
-#define FV_C03P01_SWBOSS_01                656 /* 0x0290 ヒウンシティセントラルエリア：アクロマ */
-#define FV_R04_BIGROCK_01                  657 /* 0x0291 4番道路：イワパレス擬態大きな岩 */
-#define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
-		/* not used   659(0x0293) */
-#define FV_R05_STOP                        660 /* 0x0294 5番道路：チャールズ、ストッパー */
-#define FV_C04_SWRIVAL_01                  661 /* 0x0295 ライモンシティ：ライバル */
-#define FV_C04_SWPLASMAM_01                662 /* 0x0296 ライモンシティ：プラズマ団 */
-#define FV_C13GYM0102_SWLEADER2ISS         663 /* 0x0297 C12GYM0102：ホミカISS */
-#define FV_C04_SWHEROINE_01                664 /* 0x0298 ライモンシティ：異性主人公 */
-#define FV_C06_SWLEADER6_01                665 /* 0x0299 フキヨセシティ：フウロと博士 */
-#define FV_R07R0101_HAKASE2_01             666 /* 0x029a タワーオブヘブン：アララギ博士（娘） */
-#define FV_C06R0201_SWLEADER6_01           667 /* 0x029b フキヨセシティ：カーゴサービス・フウロ */
-#define FV_C06R0201_HAKASE2_01             668 /* 0x029c フキヨセシティ：カーゴサービス・アララギ娘 */
-#define FV_C06R0201_SWBELL_01              669 /* 0x029d フキヨセシティ：カーゴサービス・ベル */
-#define FV_C03P09_PEOPLE_01                670 /* 0x029e ヒウンアイス：繁盛時の行列 */
-#define FV_C03P09_PEOPLE_02                671 /* 0x029f ヒウンアイス：繁盛時の行列（主人公の後ろにつく人々） */
-#define FV_R06_SWLEADER1_01                672 /* 0x02a0 6番道路：チェレン */
-#define FV_R06_SAGE6_01                    673 /* 0x02a1 6番道路：七賢人ロット（SAGE6） */
-#define FV_R06_OLDMAN1_01                  674 /* 0x02a2 6番道路：事情通の老人 */
-#define FV_R06R0101_SWLEADER1_01           675 /* 0x02a3 6番道路季節研究所：チェレン */
-#define FV_T07_HAKASE2_01                  676 /* 0x02a4 ヤマジタウン：アララギ娘 */
-#define FV_T07_SWBELL_01                   677 /* 0x02a5 ヤマジタウン：ベル */
-#define FV_T03_HAKASE2_01                  678 /* 0x02a6 カゴメタウン：アララギ娘 */
-#define FV_T03_SWBELL_01                   679 /* 0x02a7 カゴメタウン：ベル */
-#define FV_T03_OLDWOMAN1_01                680 /* 0x02a8 カゴメタウン：おばあさん */
-#define FV_T03R0201_HAKASE2_01             681 /* 0x02a9 カゴメタウン：アララギ娘 */
-#define FV_T03R0201_SWBELL_01              682 /* 0x02aa カゴメタウン：ベル */
-#define FV_T03R0201_OLDWOMAN1_01           683 /* 0x02ab カゴメタウン：おばあさん */
-#define FV_T03_SWEIVAL_01                  684 /* 0x02ac カゴメタウン：ライバル */
-#define FV_T03_SWPLASMAM_01                685 /* 0x02ad カゴメタウン：七賢者ヴィオとプラズマ団 */
-#define FV_T03_MORNING_PEOPLE_01           686 /* 0x02ae カゴメタウン：カゴメタウン民家の住人を朝&#xff5e;昼 */
-#define FV_T03_NIGHT_PEOPLE_01             687 /* 0x02af カゴメタウン：カゴメタウンの住人を夜間 */
-#define FV_D06R0101_SWBELL_01              688 /* 0x02b0 電気石の洞穴：ベル */
-#define FV_D06R0101_BOSS_01                689 /* 0x02b1 電気石の洞穴：N */
-#define FV_D06R0201_SWBELL_01              690 /* 0x02b2 電気石の洞穴：ベル */
-#define FV_R08_FISING_01                   691 /* 0x02b3 8番道路：ツリーズ */
-#define FV_H04R0301_FISING_01              692 /* 0x02b4 ビレッジブリッジ：ツリーズ */
-#define FV_C08_SWCHAMPION_01               693 /* 0x02b5 ソウリュウシティ：アイリス */
-#define FV_C08_SWLEADER7_01                694 /* 0x02b6 ソウリュウシティ：シャガ */
-#define FV_C08_SWSAGE7_01                  695 /* 0x02b7 ソウリュウシティ：ヴィオ（SAGE7） */
-#define FV_C08_SWPLAZMA_01                 696 /* 0x02b8 ソウリュウシティ：プラズマ団とヴィオ（SAGE7） */
-#define FV_C08_NINJA_01                    697 /* 0x02b9 ソウリュウシティ：ダークトリニティ（戦闘するやつ） */
-#define FV_C08_NINJA_02                    698 /* 0x02ba ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
-#define FV_C08GYM0101_SWLEADER7_01         699 /* 0x02bb ソウリュウジム：シャガ */
-#define FV_C08R0101_SWLEADER7_01           700 /* 0x02bc ソウリュウ民家1：シャガ */
-#define FV_R11_POKE6_01                    701 /* 0x02bd 11番道路：ビリジオン */
-#define FV_R13_POKE4_01                    702 /* 0x02be 13番道路：コバルオン */
-#define FV_C12R0202_RIVALSISTER_01         703 /* 0x02bf ヒオウギシティ：ライバル宅2Fの妹 */
-#define FV_C14_SWRIVAL_01                  704 /* 0x02c0 セイガイハシティ：ライバル */
-#define FV_C14_SWLEADER8_01                705 /* 0x02c1 セイガイハシティ：ジムリーダー */
-#define FV_C14_GIRL4_01                    706 /* 0x02c2 セイガイハシティ：おいかけっこカップル（女） */
-#define FV_C14_BOY4_01                     707 /* 0x02c3 セイガイハシティ：おいかけっこカップル（男・クリア前） */
-#define FV_C14_BOY4_02                     708 /* 0x02c4 セイガイハシティ：おいかけっこカップル（男・クリア後） */
-#define FV_H01R0201_STOP_01                709 /* 0x02c5 スカイアローブリッジ：ストッパー */
-#define FV_R22_POKE5_01                    710 /* 0x02c6 22番道路：テラキオン */
-#define FV_R22_SWBOSS_01                   711 /* 0x02c7 22番道路：アクロマ */
-#define FV_D02R0201_POKE6_01               712 /* 0x02c8 思索の原：ビリジオン */
-#define FV_D02R0201_RANGERM_01             713 /* 0x02c9 思索の原：レンジャー */
-#define FV_C03R0601_SWBELL_01              714 /* 0x02ca ヒウンシティゲート：ベル */
-#define FV_C01_POKE44_01                   715 /* 0x02cb サンヨウシティ：マッギョ */
-#define FV_R06R0101_POKE_SPRING_01         716 /* 0x02cc 季節研究所：シキジカ（春） */
-#define FV_R06R0101_POKE_SUMMER_01         717 /* 0x02cd 季節研究所：シキジカ（夏） */
-#define FV_R06R0101_POKE_AUTUMN_01         718 /* 0x02ce 季節研究所：シキジカ（秋） */
-#define FV_R06R0101_POKE_WINTER_01         719 /* 0x02cf 季節研究所：シキジカ（冬） */
-#define FV_C14R0301_MAN3_01                720 /* 0x02d0 セイガイハシティ：ペンションオーナー */
-#define FV_C14R0301_GIRL4_01               721 /* 0x02d1 セイガイハシティ：新婚カップル妻 */
-#define FV_C14R0301_BOY4_01                722 /* 0x02d2 セイガイハシティ：新婚カップル夫 */
-#define FV_R07R0101_WAITRESS_01            723 /* 0x02d3 タワーオブヘブン：死亡遊戯 */
-#define FV_R07R0102_WOMAN3_01              724 /* 0x02d4 タワーオブヘブン：死亡遊戯 */
-#define FV_R07R0103_OL_01                  725 /* 0x02d5 タワーオブヘブン：死亡遊戯 */
-#define FV_R07R0104_MAID_01                726 /* 0x02d6 タワーオブヘブン：死亡遊戯 */
-#define FV_R07R0102_GIRL3_01               727 /* 0x02d7 タワーオブヘブン：ヒトモシガール */
-#define FV_C06PC0101_GIRL3_01              728 /* 0x02d8 フキヨセシティPC：ヒトモシガール */
-#define FV_D27R0101_SWLEADER1_01           729 /* 0x02d9 プラズマフリゲート甲板：チェレン */
-#define FV_D27R0101_SWRIVAL_01             730 /* 0x02da プラズマフリゲート甲板：ライバル */
-#define FV_D27R0101_SWPLAZMA_01            731 /* 0x02db プラズマフリゲート甲板：プラズマ団員（一回目） */
-#define FV_D27R0101_SWPLAZMA_02            732 /* 0x02dc プラズマフリゲート甲板：プラズマ団員（二回目） */
-#define FV_D27R0101_SWSAGE7_01             733 /* 0x02dd プラズマフリゲート甲板：ヴィオ */
-#define FV_D27R0101_NINJA_01               734 /* 0x02de プラズマフリゲート甲板：ダークトリニティ */
-#define FV_D27R0201_SWRIVAL_01             735 /* 0x02df プラズマフリゲート船首楼B：ライバル */
-#define FV_D27R1201_SWRIVAL_01             736 /* 0x02e0 プラズマフリゲート船首楼W：ライバル */
-#define FV_D27R0701_SWPLAZMAM_01           737 /* 0x02e1 プラズマフリゲート船内一階層：元プラズマ団員 */
-#define FV_D27R0501_SWSAGE7_01             738 /* 0x02e2 プラズマフリゲート船主砲：ヴィオ */
-#define FV_D27R0501_NINJA_01               739 /* 0x02e3 プラズマフリゲート船主砲：ダークトリニティ */
-#define FV_D27R1001_STOPPER_01             740 /* 0x02e4 プラズマフリゲート船内二階層B：ストッパー */
-#define FV_D27R1301_STOPPER_01             741 /* 0x02e5 プラズマフリゲート船内二階層W：ストッパー */
-#define FV_D27R1001_SWSAGE7_01             742 /* 0x02e6 プラズマフリゲート船内二階層B：ヴィオ */
-#define FV_D27R1301_SWSAGE7_01             743 /* 0x02e7 プラズマフリゲート船内二階層W：ヴィオ */
-#define FV_D27R1001_SWPLAZMAM_01           744 /* 0x02e8 プラズマフリゲート船内二階層B：元プラズマ団員 */
-#define FV_D27R1301_SWPLAZMAM_01           745 /* 0x02e9 プラズマフリゲート船内二階層W：元プラズマ団員 */
-#define FV_D27R0401_SWBOSS_01              746 /* 0x02ea プラズマフリゲート操舵室：アクロマ */
-#define FV_D27R0601_SWSAGE1_01             747 /* 0x02eb プラズマフリゲート隠し部屋：ゲーチス */
-#define FV_D27R0601_NINJA_01               748 /* 0x02ec プラズマフリゲート隠し部屋：ダークトリニティ */
-#define FV_R18_DPLEADER5_01                749 /* 0x02ed 18番道路：マキシ */
-#define FV_D31R0601_MUGENBOSS_01           750 /* 0x02ee 無限ダンジョンB：ボス */
-#define FV_D31R0501_MUGENBOSS_01           751 /* 0x02ef 無限ダンジョンW：ボス */
-#define FV_C03R0301_CLEANINGM_01           752 /* 0x02f0 バトルカンパニー：1F清掃員 */
-#define FV_D01R0101_RATI2_01               753 /* 0x02f1 夢の跡地：ラティアス・ラティオス */
-#define FV_D27R0601_SWRIVAL_01             754 /* 0x02f2 プラズマフリゲート隠し部屋：ライバル */
-#define FV_W21_SWRIVAL_01                  755 /* 0x02f3 21番水路：ライバル */
-#define FV_W21_SWLEADER8_01                756 /* 0x02f4 21番水路：シズイ */
-#define FV_W21_SWLEADER1_01                757 /* 0x02f5 21番水路：チェレン */
-#define FV_H01_BRIDGE_MANIA_01             758 /* 0x02f6 スカイアローブリッジ：橋マニア */
-#define FV_H02_BRIDGE_MANIA_01             759 /* 0x02f7 ホドモエの跳ね橋：橋マニア */
-#define FV_H03_BRIDGE_MANIA_01             760 /* 0x02f8 シリンダーブリッジ：橋マニア */
-#define FV_H04_BRIDGE_MANIA_01             761 /* 0x02f9 ビレッジブリッジ：橋マニア */
-#define FV_H05_BRIDGE_MANIA_01             762 /* 0x02fa ワンダーブリッジ：橋マニア */
-#define FV_H06_BRIDGE_MANIA_01             763 /* 0x02fb マリンチューブ：橋マニア */
-#define FV_C04_RAILMAN_01                  764 /* 0x02fc ライモンシティ：鉄道員 */
-#define FV_C04_POKE33_01                   765 /* 0x02fd ライモンシティ：ヤナップ */
-#define FV_T05_POKE33_01                   766 /* 0x02fe カナワタウン：ヤナップ */
-#define FV_D32R0101_FIGHTERM_01            767 /* 0x02ff D32：がんじょうストッパー */
-#define FV_D32R0101_POKE50_01              768 /* 0x0300 D32：イワパレス */
-		/* not used   769(0x0301) */
-		/* not used   770(0x0302) */
-#define FV_WBT_LOBBY_LEADER1               771 /* 0x0303 WBTロビー：優勝後ロビーにいる対戦者 */
-#define FV_WBT_LOBBY_LEADER2               772 /* 0x0304 WBTロビー：優勝後ロビーにいる対戦者 */
-#define FV_WBT_LOBBY_LEADER3               773 /* 0x0305 WBTロビー：優勝後ロビーにいる対戦者 */
-#define FV_D26R0501_ROCK_B                 774 /* 0x0306 チャンピオンロード：ブラックのかいりき岩 */
-#define FV_D26R0501_ROCK_W                 775 /* 0x0307 チャンピオンロード：ホワイトのかいりき岩 */
-#define FV_D10R0101_SWPLAZMAM_01           776 /* 0x0308 ジャイアントホールエントランス：見張り（１） */
-#define FV_D10R0101_SWPLAZMAM_02           777 /* 0x0309 ジャイアントホールエントランス：見張り（２） */
-#define FV_D10R0101_SWPLAZMAM_03           778 /* 0x030a ジャイアントホールエントランス：元プラズマ団員 */
-#define FV_D10R0101_SWPLAZMAM_04           779 /* 0x030b ジャイアントホールエントランス：見張り（３） */
-#define FV_D10R0101_SWRIVAL_01             780 /* 0x030c ジャイアントホールエントランス：ライバル */
-#define FV_D10R0301_SWPLAZMAM_01           781 /* 0x030d ジャイアントホール広場：プラズマ団員 */
-#define FV_D10R0301_SWPLAZMAM_02           782 /* 0x030e ジャイアントホール広場：プラズマ団員（後から来た人々） */
-#define FV_D10R0301_SAGE6_01               783 /* 0x030f ジャイアントホール広場：ロット */
-#define FV_D10R0301_SWRIVAL_01             784 /* 0x0310 ジャイアントホール広場：ライバル */
-#define FV_D10R0401_SWSAGE1_01             785 /* 0x0311 ジャイアントホール最深部：ゲーチス */
-#define FV_D10R0401_BOSS_01                786 /* 0x0312 ジャイアントホール最深部：N */
-#define FV_D10R0401_POKE_01                787 /* 0x0313 ジャイアントホール最深部：キュレム */
-#define FV_D10R0401_POKE_02                788 /* 0x0314 ジャイアントホール最深部：Nのレシラム・ゼクロム */
-#define FV_D10R0401_POKE_03                789 /* 0x0315 ジャイアントホール最深部：キュラム・キュロム */
-#define FV_D05R0101_SWBOSS_01              790 /* 0x0316 WBT屋内：アクロマ */
-#define FV_D05R0101_SWRIVAL_01             791 /* 0x0317 WBT屋内：ライバル */
-#define FV_D05R0101_SWLEADER1_01           792 /* 0x0318 WBT屋内：チェレン */
-#define FV_D05R0101_SWLEADER5_01           793 /* 0x0319 WBT屋内：ヤーコン */
-#define FV_D05R0101_SWLEADER2_01           794 /* 0x031a WBT屋内：ホミカ */
-#define FV_C04R1101_TR_01                  795 /* 0x031b 旧電気ジム：コースターに乗っているトレーナー１人目 */
-#define FV_C04R1101_TR_02                  796 /* 0x031c 旧電気ジム：コースターに乗っているトレーナー２人目 */
-#define FV_H05_POKE488                     797 /* 0x031d ワンダーブリッジ：クレセリア */
-#define FV_D25_GIRL2_01                    798 /* 0x031e ストレンジャーハウス：幽霊少女 */
-#define FV_D25R0501_ITEM_01                799 /* 0x031f ストレンジャーハウス：どうぐ（モンスターボール） */
-#define FV_D24_POKE485                     800 /* 0x0320 リバースマウンテン：ヒードラン */
-#define FV_D26R0101_BOSS                   801 /* 0x0321 チャンピオンロード：Ｎ */
-#define FV_R04_POKE_567_633_01             802 /* 0x0322 4番道路：バルジーナ（ウォーグル） */
-#define FV_D20_POKE_536_01                 803 /* 0x0323 サザナミ湾：ブルンゲル */
-#define FV_R14R0101_MAN3_01                804 /* 0x0324 14番道路：ストッパー */
-#define FV_C03P07_MACOMO_01                805 /* 0x0325 ヒウンシティ・チャレンジストリート：マコモ */
-#define FV_C03R1103_MACOMO_01              806 /* 0x0326 ヒウンシティ・便利ビル3F：マコモ */
-#define FV_C07GYM0101_LEADDER7_01          807 /* 0x0327 セッカシティジム跡地：ハチク */
-#define FV_D02R0101_SWLEADER1_01           808 /* 0x0328 ヤグルマの森：チェレン・七賢人 */
-#define FV_D27R1001_R1301_POKE10_01        809 /* 0x0329 プラズマフリゲート：研究施設キュレム */
-#define FV_R20_RANGER_01                   810 /* 0x032a 20番道路：季節表示トレーナー */
-#define FV_N01R0401_BOSS_01                811 /* 0x032b N城入り口：N */
-#define FV_N01R0502_BOSS_01                812 /* 0x032c Ｎ城謁見の間：N */
-#define FV_N01R0502_NPOKE_01               813 /* 0x032d Ｎ城謁見の間：レシラム・ゼクロム */
-#define FV_PKWD_STAFF01                    814 /* 0x032e ポケウッド撮影所：監督、共演者 */
-#define FV_PKWD_STAFF02                    815 /* 0x032f ポケウッド撮影所：撮影スタッフ */
-#define FV_D33R0101_SPPOKE_01              816 /* 0x0330 心の空洞：ユクシー・エムリット・アグノム */
-#define FV_D33R0101_HAKASE2_01             817 /* 0x0331 心の空洞：アララギ娘 */
-#define FV_C02_SPPOKE1_01                  818 /* 0x0332 シッポウシティ：ユクシー */
-#define FV_R07R0105_SPPOKE2_01             819 /* 0x0333 タワーオブヘブン：エムリット */
-#define FV_R23_SPPOKE3_01                  820 /* 0x0334 チャンピオンロード：アグノム */
-#define FV_D29R0401_POKE1_01               821 /* 0x0335 ヤーコンロード：レジアイス */
-#define FV_D29R0401_POKE2_01               822 /* 0x0336 ヤーコンロード：レジロック */
-#define FV_D29R0401_POKE3_01               823 /* 0x0337 ヤーコンロード：レジスチル */
-#define FV_D07R0601_POKE4_01               824 /* 0x0338 ネジ山：レジギガス */
-#define FV_C07_NINJA_01                    825 /* 0x0339 セッカシティ：ダークトリニティ01 */
-#define FV_C07_NINJA_02                    826 /* 0x033a セッカシティ：ダークトリニティ02 */
-#define FV_C07_NINJA_03                    827 /* 0x033b セッカシティ：ダークトリニティ03 */
-#define FV_D04R2301_POKE13_01              828 /* 0x033c 古代の城：ウルガモス */
-#define FV_FLDMONS_01                      829 /* 0x033d タマゲタケ（フィールドアイテム型）１匹目 */
-#define FV_FLDMONS_02                      830 /* 0x033e タマゲタケ（フィールドアイテム型）２匹目 */
-#define FV_FLDMONS_03                      831 /* 0x033f タマゲタケ（フィールドアイテム型）３匹目 */
-#define FV_FLDMONS_04                      832 /* 0x0340 タマゲタケ（フィールドアイテム型）４匹目 */
-#define FV_FLDMONS_05                      833 /* 0x0341 タマゲタケ（フィールドアイテム型）５匹目 */
-#define FV_FLDMONS_06                      834 /* 0x0342 タマゲタケ（フィールドアイテム型）６匹目 */
-#define FV_FLDMONS_07                      835 /* 0x0343 タマゲタケ（フィールドアイテム型）７匹目 */
-#define FV_FLDMONS_08                      836 /* 0x0344 タマゲタケ（フィールドアイテム型）８匹目 */
-#define FV_FLDMONS_09                      837 /* 0x0345 タマゲタケ（フィールドアイテム型）９匹目 */
-#define FV_FLDMONS_10                      838 /* 0x0346 タマゲタケ（フィールドアイテム型）１０匹目 */
-#define FV_FLDMONS_11                      839 /* 0x0347 タマゲタケ（フィールドアイテム型）１１匹目 */
-#define FV_FLDMONS_12                      840 /* 0x0348 タマゲタケ（フィールドアイテム型）１２匹目 */
-#define FV_N01R0501_BOSS_01                841 /* 0x0349 Ｎ城謁見の間フロア：N */
-#define FV_C01GYM0101_SARU_01              842 /* 0x034a サンヨウシティ：サルショー */
-#define FV_R18_ITEM_01                     843 /* 0x034b 18版道路：どうぐ（モンスターボール） */
-#define FV_T04_SWRIVAL_01                  844 /* 0x034c サザナミタウン：ライバル */
-#define FV_C03R0502_POKE38_01              845 /* 0x034d ヒウンシティ：ズルッグ */
-#define FV_D35R0101_POKE_01                846 /* 0x034e 自然保護区：黒オノノクス */
-#define FV_T04R101_STOPPER_01              847 /* 0x034f サザナミタウンゲート：ストッパー */
-#define FV_D29R0101_WORKMAN2_01            848 /* 0x0350 ヤーコンロード：トロッコ用 */
-#define FV_D29R0101_WORKMAN2_02            849 /* 0x0351 ヤーコンロード：トロッコ用 */
-#define FV_D29R0101_WORKMAN2_03            850 /* 0x0352 ヤーコンロード：トロッコ用 */
-#define FV_D29R0201_WORKMAN2_01            851 /* 0x0353 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_01            852 /* 0x0354 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_01A           853 /* 0x0355 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_02            854 /* 0x0356 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_02A           855 /* 0x0357 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_03            856 /* 0x0358 ヤーコンロード：トロッコ用 */
-#define FV_D29R0301_WORKMAN2_04            857 /* 0x0359 ヤーコンロード：トロッコ用 */
-#define FV_D29R0101_STOP                   858 /* 0x035a ヤーコンロード：ストッパー */
-#define FV_D24_PAIR_START_BELL_01          859 /* 0x035b リバースマウンテン：連れ歩きベル */
-#define FV_D24_PAIR_END_BELL_01            860 /* 0x035c リバースマウンテン：連れ歩きベル */
-#define FV_C15_SUNGLASSES_01               861 /* 0x035d ポケウッド：チュートリアル用キャラクター */
-#define FV_D06R0101_WORKMAN2_01            862 /* 0x035e 電気石の洞穴：ストッパー */
-#define FV_PKWD_STAFF_TUTORIAL01           863 /* 0x035f ポケウッド：チュートリアル用 */
-#define FV_PKWD_STAFF_TUTORIAL02           864 /* 0x0360 ポケウッド：チュートリアル用 */
-#define FV_C12R0202_POKE32_01              865 /* 0x0361 ヒオウギシティ・ライバル宅：レパルダス */
-#define FV_D26_POKE23_01                   866 /* 0x0362 チャンピオンロード：ゾロアーク */
-#define FV_R16R0201_BACKPACKERM_01         867 /* 0x0363 迷いの森：バックパッカー（ゾロアーク） */
-#define FV_D10R0501_SWSAGE1_02             868 /* 0x0364 ジャイアントホール：杖なしゲーチス */
-#define FV_D10R0501_WAND_01                869 /* 0x0365 ジャイアントホール：杖 */
-#define FV_BC10_TRAINER_01                 870 /* 0x0366 ブラックシティ：住人01 */
-#define FV_BC10_TRAINER_02                 871 /* 0x0367 ブラックシティ：住人02 */
-#define FV_WC10_TRAINER_01                 872 /* 0x0368 ホワイトフォレスト：住人01 */
-#define FV_WC10_TRAINER_02                 873 /* 0x0369 ホワイトフォレスト：住人02 */
-#define FV_C05R0501_SWRIVAL_01             874 /* 0x036a ホドモエシティ：ポケモンハウスのライバル */
-#define FV_D27R0101_STOPPER_01             875 /* 0x036b プラズマフリゲート：ストッパー */
-#define FV_D27_BEFORE_PWPLAZMA_01          876 /* 0x036c プラズマフリゲート：船員（クリア前） */
-#define FV_D27_AFTER_PWPLAZMA_01           877 /* 0x036d プラズマフリゲート：船員（クリア後） */
-#define FV_R05_SWLEADER1_01                878 /* 0x036e 5番道路：チェレン */
-#define FV_T04_SAGE7_01                    879 /* 0x036f サザナミタウン：ヴィオ */
-#define FV_C15R0301_BONUS_0                880 /* 0x0370 ポケウッド：ファン（スターランク0） */
-#define FV_C15R0301_BONUS_1                881 /* 0x0371 ポケウッド：ファン（スターランク1） */
-#define FV_C15R0301_BONUS_2                882 /* 0x0372 ポケウッド：ファン（スターランク2） */
-#define FV_C15R0301_BONUS_3                883 /* 0x0373 ポケウッド：ファン（スターランク3） */
-#define FV_C15R0301_BONUS_4                884 /* 0x0374 ポケウッド：ファン（スターランク4） */
-#define FV_C14_KAODASI_01                  885 /* 0x0375 セイガイハシティ：顔出し看板イベントのカメラマン */
-		/* not used   886(0x0376) */
-		/* not used   887(0x0377) */
-		/* not used   888(0x0378) */
-		/* not used   889(0x0379) */
-		/* not used   890(0x037a) */
-#define FV_D05R0101_TRAINERW_01            891 /* 0x037b WBTロビー：クリア後に出現するエリートトレーナー♀ */
-#define FV_C02R0101_FUN_01                 892 /* 0x037c シッポウ倉庫：シタンのファン */
-#define FV_C08_PEOPLE_01                   893 /* 0x037d ソウリュウシティ：NPC */
-#define FV_C15_BRONZE_01                   894 /* 0x037e ポケウッド：銅像 */
-#define FV_C15_BONUS_EVENT_01              895 /* 0x037f ポケウッド：ごほうびイベント中のNPC */
+#define FV_BC10R0401_B                     600 /* 0x0258 ブラックシティ：移住人口BのOBJ */
+#define FV_BC10R0401_C                     601 /* 0x0259 ブラックシティ：移住人口CのOBJ */
+#define FV_BC10R0401_D                     602 /* 0x025a ブラックシティ：移住人口DのOBJ */
+#define FV_BC10R0401_E                     603 /* 0x025b ブラックシティ：移住人口EのOBJ */
+#define FV_C04R0111_PARTNER                604 /* 0x025c バトルサブウェイ、ホーム：パートナー */
+#define FV_C04R0111_NPC                    605 /* 0x025d バトルサブウェイ、ホーム：NPC */
+#define FV_C08R0101_LEADER8A_01            606 /* 0x025e ソウリュウシティR0101：シャガ */
+#define FV_R03_SODATEYA_01                 607 /* 0x025f ３番道路の育て屋じいさん */
+#define FV_UN_GTSFRIEND_00                 608 /* 0x0260 国連(内部）：GTSで交換した相手１ */
+#define FV_UN_GTSFRIEND_01                 609 /* 0x0261 国連(内部）：GTSで交換した相手２ */
+#define FV_UN_GTSFRIEND_02                 610 /* 0x0262 国連(内部）：GTSで交換した相手３ */
+#define FV_UN_GTSFRIEND_03                 611 /* 0x0263 国連(内部）：GTSで交換した相手４ */
+#define FV_UN_GTSFRIEND_04                 612 /* 0x0264 国連(内部）：GTSで交換した相手５ */
+#define FV_BSUBWAY_RECEIPT_PARTNER         613 /* 0x0265 バトルサブウェイ、受付：パートナー */
+#define FV_POSTMAN                         614 /* 0x0266 不思議な贈り物配達員 */
+#define FV_C06_MONSTERBALL                 615 /* 0x0267 フキヨセ滑走路のモンスターボール（なみのり入手イベント） */
+#define FV_D03R0101_DARUMA_01              616 /* 0x0268 砂漠のゴリダルマ(瞑想モード)その１ */
+#define FV_D03R0101_DARUMA_02              617 /* 0x0269 砂漠のゴリダルマ(瞑想モード)その２ */
+#define FV_D03R0101_DARUMA_03              618 /* 0x026a 砂漠のゴリダルマ(瞑想モード)その３ */
+#define FV_D03R0101_DARUMA_04              619 /* 0x026b 砂漠のゴリダルマ(瞑想モード)その４ */
+#define FV_D03R0101_DARUMA_05              620 /* 0x026c 砂漠のゴリダルマ(瞑想モード)その５ */
+#define FV_C06_GIRLBOY_01                  621 /* 0x026d フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
+#define FV_MUSICAL_FUN_01                  622 /* 0x026e ミュージカルホール：出待ちのファン１人目 */
+#define FV_MUSICAL_FUN_02                  623 /* 0x026f ミュージカルホール：出待ちのファン２人目 */
+#define FV_MUSICAL_FUN_03                  624 /* 0x0270 ミュージカルホール：出待ちのファン３人目 */
+#define FV_MUSICAL_FUN_04                  625 /* 0x0271 ミュージカルホール：出待ちのファン４人目 */
+#define FV_MUSICAL_FUN_05                  626 /* 0x0272 ミュージカルホール：出待ちのファン５人目 */
+#define FV_T01R0102_AWARD_01               627 /* 0x0273 自宅２F：イッシュ図鑑完成の表彰状（データコンバート） */
+#define FV_T01R0102_AWARD_02               628 /* 0x0274 自宅２F：全国図鑑完成の表彰状（データコンバート） */
+#define FV_T01R0102_TROPHY_01              629 /* 0x0275 自宅２F：バトルサブウェイのトロフィ１（データコンバート） */
+#define FV_T01R0102_TROPHY_02              630 /* 0x0276 自宅２F：バトルサブウェイのトロフィ２（データコンバート） */
+#define FV_T01R0102_TROPHY_03              631 /* 0x0277 自宅２F：バトルサブウェイのトロフィ３（データコンバート） */
+#define FV_R08R0101_POKE4                  632 /* 0x0278 セッカ湿原：ダルタニスイベントのアトス */
+#define FV_R08R0101_POKE5                  633 /* 0x0279 セッカ湿原：ダルタニスイベントのポルトス */
+#define FV_R08R0101_POKE6                  634 /* 0x027a セッカ湿原：ダルタニスイベントのアラミス */
+#define FV_R08R0101_POKE11                 635 /* 0x027b セッカ湿原：ダルタニスイベントのダルタニス */
+#define FV_R08R0101_OLDMAN1                636 /* 0x027c セッカ湿原：事情通の老人 */
+#define FV_C03R0101_MEMBER_A               637 /* 0x027d 調査隊一般隊員A */
+#define FV_C03R0101_MEMBER_B               638 /* 0x027e 調査隊一般隊員B */
+#define FV_C03R0101_MEMBER_C               639 /* 0x027f 調査隊一般隊員C */
+#define FV_C03R0101_MEMBER_D               640 /* 0x0280 調査隊一般隊員D */
+#define FV_C03R0101_MEMBER_E               641 /* 0x0281 調査隊一般隊員E */
+#define FV_C03R0101_MEMBER_F               642 /* 0x0282 調査隊一般隊員F */
+#define FV_C03R0101_MEMBER_G               643 /* 0x0283 調査隊一般隊員G */
+#define FV_R06R0201_STOPPER_01             644 /* 0x0284 フキヨセの洞穴：ストッパー */
+#define FV_POKE_JUDGE_01                   645 /* 0x0285 ジャッジ（ポケモンの個体値を調べてくれる人） */
+#define FV_STADIUM_TRAINER_01              646 /* 0x0286 ビッグスタジアム／リトルコートの選手トレーナー１人目 */
+#define FV_STADIUM_TRAINER_02              647 /* 0x0287 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
+#define FV_STADIUM_TRAINER_03              648 /* 0x0288 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
+#define FV_STADIUM_FAN_01                  649 /* 0x0289 ビッグスタジアム／リトルコートのファンクラブトレーナー１人目 */
+#define FV_STADIUM_FAN_02                  650 /* 0x028a ビッグスタジアム／リトルコートのファンクラブトレーナー２人目 */
+#define FV_STADIUM_RANDOM_01               651 /* 0x028b ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_02               652 /* 0x028c ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_03               653 /* 0x028d ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_PDW_POSTMAN                     654 /* 0x028e PDWのアイテム配達員 */
+#define FV_STADIUM_PLAYING                 655 /* 0x028f ビッグスタジアム／リトルコート：試合中に表示されるＮＰＣ ・エントランスの警備員 ・スタンドの観客 */
+#define FV_D13R0101_ASSISTANTM_01          656 /* 0x0290 P2ラボ：配布インセクタイベントの研究員 */
+		/* not used   657(0x0291) */
+		/* not used   658(0x0292) */
+#define FV_R14R0201_GIRL1                  659 /* 0x0293 ツチノカミイベント：きょうだい */
+#define FV_R14R0201_LEG                    660 /* 0x0294 ツチノカミイベント：ツチノカミ */
+#define FV_MUSICAL_FUN_06                  661 /* 0x0295 ミュージカルホール：出待ちのファン６人目 */
+#define FV_MUSICAL_FUN_07                  662 /* 0x0296 ミュージカルホール：出待ちのファン７人目 */
+#define FV_MUSICAL_FUN_08                  663 /* 0x0297 ミュージカルホール：出待ちのファン８人目 */
+#define FV_MUSICAL_FUN_09                  664 /* 0x0298 ミュージカルホール：出待ちのファン９人目 */
+#define FV_MUSICAL_FUN_10                  665 /* 0x0299 ミュージカルホール：出待ちのファン１０人目 */
+#define FV_STADIUM_SPORTSMAN               666 /* 0x029a ビッグスタジアム／リトルコートエントランス：選手とファン */
+#define FV_D08R0901_PACKAGE_POKE           667 /* 0x029b リュウラセンの塔（屋上）：パッケージポケモン */
+#define FV_D07_BIGFOUR3_01                 668 /* 0x029c ネジ山フィールド：レンブ */
+#define FV_C04P01_GLASSES_01               669 /* 0x029d ライモン遊園地：ダンペイ */
+#define FV_C04P01_IDOL_01                  670 /* 0x029e ライモン遊園地：アイドル */
+#define FV_C04P01_ITEM_01                  671 /* 0x029f ライモン遊園地：アイテム */
+#define FV_C04R1101_ADULTW_01              672 /* 0x02a0 旧電気ジム：おとなのお姉さん */
+		/* not used   673(0x02a1) */
+		/* not used   674(0x02a2) */
+		/* not used   675(0x02a3) */
+		/* not used   676(0x02a4) */
+		/* not used   677(0x02a5) */
+#define FV_T04_SUMMER                      678 /* 0x02a6 サザナミタウン：夏だけ町民 */
+#define FV_D04R2301_POKE13                 679 /* 0x02a7 古代の城：ドラー */
+#define FV_T05_RAILFAN                     680 /* 0x02a8 カナワタウン：電車前の人々（鉄道ファン） */
+#define FV_T05_WEEKEND                     681 /* 0x02a9 カナワタウン：電車前の人々 */
+#define FV_D07R0101_WORKMAN2_02            682 /* 0x02aa ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
+#define FV_T04R0301_SHIRONA_01             683 /* 0x02ab サザナミタウン別荘：シロナ */
+#define FV_T04R0301_BIGFOUR4_01            684 /* 0x02ac サザナミタウン別荘：カトレア */
+#define FV_T04R0301_BIGFOUR1_01            685 /* 0x02ad サザナミタウン別荘：シキミ */
+#define FV_T04R0301_LEDY_01                686 /* 0x02ae サザナミタウン別荘：使用人 */
+#define FV_T04R0301_SWLEADER6_01           687 /* 0x02af サザナミタウン別荘：フウロ */
+#define FV_T04R0301_SWLEADER4_01           688 /* 0x02b0 サザナミタウン別荘：カミツレ */
+#define FV_T04R0301_SWLEADER2_01           689 /* 0x02b1 サザナミタウン別荘：ホミカ */
+#define FV_D07_STONE_01                    690 /* 0x02b2 ネジ山：季節対応・冬季岩ストッパー */
+#define FV_C15_PEAPLE_LANK_01              691 /* 0x02b3 ポケウッド：ランク1表示のNPC */
+#define FV_C15_PEAPLE_LANK_02              692 /* 0x02b4 ポケウッド：ランク2表示のNPC */
+#define FV_C15_PEAPLE_LANK_03              693 /* 0x02b5 ポケウッド：ランク3表示のNPC */
+#define FV_C15_PEAPLE_LANK_04              694 /* 0x02b6 ポケウッド：ランク4表示のNPC */
+		/* not used   695(0x02b7) */
+		/* not used   696(0x02b8) */
+		/* not used   697(0x02b9) */
+		/* not used   698(0x02ba) */
+		/* not used   699(0x02bb) */
+		/* not used   700(0x02bc) */
+		/* not used   701(0x02bd) */
+		/* not used   702(0x02be) */
+		/* not used   703(0x02bf) */
+		/* not used   704(0x02c0) */
+		/* not used   705(0x02c1) */
+#define FV_C05_HAKAIM_01                   706 /* 0x02c2 ホドモエシティ：旧プラズマ団 */
+#define FV_C05_SWPLAZMAM_01                707 /* 0x02c3 ホドモエシティ：ネオプラズマ団 */
+#define FV_C05R0701_STOPPER_01             708 /* 0x02c4 WBT方面ゲート：ストッパー */
+		/* not used   709(0x02c5) */
+#define FV_D05_SWBOSS_01                   710 /* 0x02c6 WBT前：アクロマ */
+#define FV_D05_SWRIVAL_01                  711 /* 0x02c7 WBT前：ライバル */
+#define FV_D05_SWLEADER1_01                712 /* 0x02c8 WBT前：チェレン */
+#define FV_D05_SWLEADER5_01                713 /* 0x02c9 WBT前：ヤーコン */
+#define FV_C05R0501_POKE22_01              714 /* 0x02ca C05R0501：ゾロア */
+#define FV_C05_SAGE6_01                    715 /* 0x02cb ホドモエシティ：七賢人たち */
+#define FV_C05_SWRIVAL_01                  716 /* 0x02cc ホドモエシティ：ライバル */
+#define FV_C05_SWLEADER5_01                717 /* 0x02cd ホドモエシティ：ヤーコン */
+#define FV_C05_STOPPER_01                  718 /* 0x02ce ホドモエシティ：抜け道ストッパー */
+#define FV_C05_STOPPER_02                  719 /* 0x02cf ホドモエシティ：ジムストッパー */
+#define FV_C13GYM0102_SUNGLASSES           720 /* 0x02d0 ポケウッド：サングラス */
+#define FV_C13GYM0102_SWLEADER2            721 /* 0x02d1 C12GYM0102：ホミカ */
+#define FV_C13R0401_SWRIVAL                722 /* 0x02d2 C13：船舶所のライバル */
+#define FV_C13R0401_PILOT                  723 /* 0x02d3 C13：船舶所の船長 */
+#define FV_C13_SWPLAZMA                    724 /* 0x02d4 C13：ネオプラズマ団イベント用 */
+#define FV_C13_SUNGLASSES                  725 /* 0x02d5 C13：ポケウッド用 */
+#define FV_C13_SWLEADER2_MEET              726 /* 0x02d6 C13：ホミカとホミカ父用 */
+#define FV_D22R0101_BREEDER_01             727 /* 0x02d7 牧場：ブリーダー */
+#define FV_D22R0101_POKEMON_01             728 /* 0x02d8 牧場：ヨーテリー */
+#define FV_D22R0101_SWRIVAL_01             729 /* 0x02d9 牧場：ライバル */
+#define FV_T06_SUNGLASSES_01               730 /* 0x02da サンギタウン：メダルおやじ */
+#define FV_T06_CHAMPION_01                 731 /* 0x02db サンギタウン：アデク */
+#define FV_C12PC0101_SWBELL                732 /* 0x02dc ヒオウギシティPC：ベル */
+#define FV_C12R0101_TRORHY1_01             733 /* 0x02dd ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
+#define FV_C12R0101_TRORHY2_01             734 /* 0x02de ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
+#define FV_C12R0101_TRORHY3_01             735 /* 0x02df ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
+#define FV_C12R0101_PRIZE1_01              736 /* 0x02e0 ヒオウギシティ自宅：表彰状（地方） */
+#define FV_C12R0101_PRIZE2_01              737 /* 0x02e1 ヒオウギシティ自宅：表彰状（全国） */
+#define FV_R19_CHAMPION_01                 738 /* 0x02e2 19ばんどうろ：アデク */
+#define FV_C12R0101_SWBELL                 739 /* 0x02e3 ヒオウギシティ自宅・ベル */
+#define FV_C12R0101_SWMAMA                 740 /* 0x02e4 ヒオウギシティ自宅・ママ */
+#define FV_C12_SWANLEADER1                 741 /* 0x02e5 ヒオウギシティ・チェレン */
+#define FV_C12_SWBELL                      742 /* 0x02e6 ヒオウギシティ・ベル */
+#define FV_C12_SWMAMA                      743 /* 0x02e7 ヒオウギシティ・ママ */
+#define FV_C12_SWRIVAL_SISTER              744 /* 0x02e8 ヒオウギシティ・ライバル妹 */
+#define FV_C12_SWRIVAL                     745 /* 0x02e9 ヒオウギシティ・ライバル */
+#define FV_PC_MEDALOYAJI                   746 /* 0x02ea ポケセンのメダルおやじ */
+#define FV_D06R0101_PAIR                   747 /* 0x02eb 電気穴の洞窟連れ歩き */
+#define FV_C03P15_SWRIVAL_01               748 /* 0x02ec ヒウンシティ：船着場ライバル */
+#define FV_H01R0201_STOPPER_01             749 /* 0x02ed スカイアローブリッジ：ストッパー */
+		/* not used   750(0x02ee) */
+#define FV_C03_SWCHAMPION_01               751 /* 0x02ef ヒウンシティ外周：アイリス */
+#define FV_C03P07_SUNGLASSES_01            752 /* 0x02f0 ヒウンシティジム前：ダンペイ */
+#define FV_C03P17_SWCHAMPION_01            753 /* 0x02f1 ヒウンシティ下水道前：アイリス */
+#define FV_C03P17_SWRIVAL_01               754 /* 0x02f2 ヒウンシティ下水道前：ライバル */
+#define FV_D11R0101_SWRIVAL_01             755 /* 0x02f3 ヒウンシティ下水道：ライバルとプラズマ団 */
+#define FV_C03P01_SWBOSS_01                756 /* 0x02f4 ヒウンシティセントラルエリア：アクロマ */
+#define FV_R04_BIGROCK_01                  757 /* 0x02f5 4番道路：イワパレス擬態大きな岩 */
+#define FV_R04_SWBOSS_01                   758 /* 0x02f6 4番道路：アクロマ */
+		/* not used   759(0x02f7) */
+#define FV_R05_STOP                        760 /* 0x02f8 5番道路：チャールズ、ストッパー */
+#define FV_C04_SWRIVAL_01                  761 /* 0x02f9 ライモンシティ：ライバル */
+#define FV_C04_SWPLASMAM_01                762 /* 0x02fa ライモンシティ：プラズマ団 */
+#define FV_C13GYM0102_SWLEADER2ISS         763 /* 0x02fb C12GYM0102：ホミカISS */
+#define FV_C04_SWHEROINE_01                764 /* 0x02fc ライモンシティ：異性主人公 */
+#define FV_C06_SWLEADER6_01                765 /* 0x02fd フキヨセシティ：フウロと博士 */
+#define FV_R07R0101_HAKASE2_01             766 /* 0x02fe タワーオブヘブン：アララギ博士（娘） */
+#define FV_C06R0201_SWLEADER6_01           767 /* 0x02ff フキヨセシティ：カーゴサービス・フウロ */
+#define FV_C06R0201_HAKASE2_01             768 /* 0x0300 フキヨセシティ：カーゴサービス・アララギ娘 */
+#define FV_C06R0201_SWBELL_01              769 /* 0x0301 フキヨセシティ：カーゴサービス・ベル */
+#define FV_C03P09_PEOPLE_01                770 /* 0x0302 ヒウンアイス：繁盛時の行列 */
+#define FV_C03P09_PEOPLE_02                771 /* 0x0303 ヒウンアイス：繁盛時の行列（主人公の後ろにつく人々） */
+#define FV_R06_SWLEADER1_01                772 /* 0x0304 6番道路：チェレン */
+#define FV_R06_SAGE6_01                    773 /* 0x0305 6番道路：七賢人ロット（SAGE6） */
+#define FV_R06_OLDMAN1_01                  774 /* 0x0306 6番道路：事情通の老人 */
+#define FV_R06R0101_SWLEADER1_01           775 /* 0x0307 6番道路季節研究所：チェレン */
+#define FV_T07_HAKASE2_01                  776 /* 0x0308 ヤマジタウン：アララギ娘 */
+#define FV_T07_SWBELL_01                   777 /* 0x0309 ヤマジタウン：ベル */
+#define FV_T03_HAKASE2_01                  778 /* 0x030a カゴメタウン：アララギ娘 */
+#define FV_T03_SWBELL_01                   779 /* 0x030b カゴメタウン：ベル */
+#define FV_T03_OLDWOMAN1_01                780 /* 0x030c カゴメタウン：おばあさん */
+#define FV_T03R0201_HAKASE2_01             781 /* 0x030d カゴメタウン：アララギ娘 */
+#define FV_T03R0201_SWBELL_01              782 /* 0x030e カゴメタウン：ベル */
+#define FV_T03R0201_OLDWOMAN1_01           783 /* 0x030f カゴメタウン：おばあさん */
+#define FV_T03_SWEIVAL_01                  784 /* 0x0310 カゴメタウン：ライバル */
+#define FV_T03_SWPLASMAM_01                785 /* 0x0311 カゴメタウン：七賢者ヴィオとプラズマ団 */
+#define FV_T03_MORNING_PEOPLE_01           786 /* 0x0312 カゴメタウン：カゴメタウン民家の住人を朝&#xff5e;昼 */
+#define FV_T03_NIGHT_PEOPLE_01             787 /* 0x0313 カゴメタウン：カゴメタウンの住人を夜間 */
+#define FV_D06R0101_SWBELL_01              788 /* 0x0314 電気石の洞穴：ベル */
+#define FV_D06R0101_BOSS_01                789 /* 0x0315 電気石の洞穴：N */
+#define FV_D06R0201_SWBELL_01              790 /* 0x0316 電気石の洞穴：ベル */
+#define FV_R08_FISING_01                   791 /* 0x0317 8番道路：ツリーズ */
+#define FV_H04R0301_FISING_01              792 /* 0x0318 ビレッジブリッジ：ツリーズ */
+#define FV_C08_SWCHAMPION_01               793 /* 0x0319 ソウリュウシティ：アイリス */
+#define FV_C08_SWLEADER7_01                794 /* 0x031a ソウリュウシティ：シャガ */
+#define FV_C08_SWSAGE7_01                  795 /* 0x031b ソウリュウシティ：ヴィオ（SAGE7） */
+#define FV_C08_SWPLAZMA_01                 796 /* 0x031c ソウリュウシティ：プラズマ団とヴィオ（SAGE7） */
+#define FV_C08_NINJA_01                    797 /* 0x031d ソウリュウシティ：ダークトリニティ（戦闘するやつ） */
+#define FV_C08_NINJA_02                    798 /* 0x031e ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
+#define FV_C08GYM0101_SWLEADER7_01         799 /* 0x031f ソウリュウジム：シャガ */
+#define FV_C08R0101_SWLEADER7_01           800 /* 0x0320 ソウリュウ民家1：シャガ */
+#define FV_R11_POKE6_01                    801 /* 0x0321 11番道路：ビリジオン */
+#define FV_R13_POKE4_01                    802 /* 0x0322 13番道路：コバルオン */
+#define FV_C12R0202_RIVALSISTER_01         803 /* 0x0323 ヒオウギシティ：ライバル宅2Fの妹 */
+#define FV_C14_SWRIVAL_01                  804 /* 0x0324 セイガイハシティ：ライバル */
+#define FV_C14_SWLEADER8_01                805 /* 0x0325 セイガイハシティ：ジムリーダー */
+#define FV_C14_GIRL4_01                    806 /* 0x0326 セイガイハシティ：おいかけっこカップル（女） */
+#define FV_C14_BOY4_01                     807 /* 0x0327 セイガイハシティ：おいかけっこカップル（男・クリア前） */
+#define FV_C14_BOY4_02                     808 /* 0x0328 セイガイハシティ：おいかけっこカップル（男・クリア後） */
+#define FV_H01R0201_STOP_01                809 /* 0x0329 スカイアローブリッジ：ストッパー */
+#define FV_R22_POKE5_01                    810 /* 0x032a 22番道路：テラキオン */
+#define FV_R22_SWBOSS_01                   811 /* 0x032b 22番道路：アクロマ */
+#define FV_D02R0201_POKE6_01               812 /* 0x032c 思索の原：ビリジオン */
+#define FV_D02R0201_RANGERM_01             813 /* 0x032d 思索の原：レンジャー */
+#define FV_C03R0601_SWBELL_01              814 /* 0x032e ヒウンシティゲート：ベル */
+#define FV_C01_POKE44_01                   815 /* 0x032f サンヨウシティ：マッギョ */
+#define FV_R06R0101_POKE_SPRING_01         816 /* 0x0330 季節研究所：シキジカ（春） */
+#define FV_R06R0101_POKE_SUMMER_01         817 /* 0x0331 季節研究所：シキジカ（夏） */
+#define FV_R06R0101_POKE_AUTUMN_01         818 /* 0x0332 季節研究所：シキジカ（秋） */
+#define FV_R06R0101_POKE_WINTER_01         819 /* 0x0333 季節研究所：シキジカ（冬） */
+#define FV_C14R0301_MAN3_01                820 /* 0x0334 セイガイハシティ：ペンションオーナー */
+#define FV_C14R0301_GIRL4_01               821 /* 0x0335 セイガイハシティ：新婚カップル妻 */
+#define FV_C14R0301_BOY4_01                822 /* 0x0336 セイガイハシティ：新婚カップル夫 */
+#define FV_R07R0101_WAITRESS_01            823 /* 0x0337 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0102_WOMAN3_01              824 /* 0x0338 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0103_OL_01                  825 /* 0x0339 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0104_MAID_01                826 /* 0x033a タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0102_GIRL3_01               827 /* 0x033b タワーオブヘブン：ヒトモシガール */
+#define FV_C06PC0101_GIRL3_01              828 /* 0x033c フキヨセシティPC：ヒトモシガール */
+#define FV_D27R0101_SWLEADER1_01           829 /* 0x033d プラズマフリゲート甲板：チェレン */
+#define FV_D27R0101_SWRIVAL_01             830 /* 0x033e プラズマフリゲート甲板：ライバル */
+#define FV_D27R0101_SWPLAZMA_01            831 /* 0x033f プラズマフリゲート甲板：プラズマ団員（一回目） */
+#define FV_D27R0101_SWPLAZMA_02            832 /* 0x0340 プラズマフリゲート甲板：プラズマ団員（二回目） */
+#define FV_D27R0101_SWSAGE7_01             833 /* 0x0341 プラズマフリゲート甲板：ヴィオ */
+#define FV_D27R0101_NINJA_01               834 /* 0x0342 プラズマフリゲート甲板：ダークトリニティ */
+#define FV_D27R0201_SWRIVAL_01             835 /* 0x0343 プラズマフリゲート船首楼B：ライバル */
+#define FV_D27R1201_SWRIVAL_01             836 /* 0x0344 プラズマフリゲート船首楼W：ライバル */
+#define FV_D27R0701_SWPLAZMAM_01           837 /* 0x0345 プラズマフリゲート船内一階層：元プラズマ団員 */
+#define FV_D27R0501_SWSAGE7_01             838 /* 0x0346 プラズマフリゲート船主砲：ヴィオ */
+#define FV_D27R0501_NINJA_01               839 /* 0x0347 プラズマフリゲート船主砲：ダークトリニティ */
+#define FV_D27R1001_STOPPER_01             840 /* 0x0348 プラズマフリゲート船内二階層B：ストッパー */
+#define FV_D27R1301_STOPPER_01             841 /* 0x0349 プラズマフリゲート船内二階層W：ストッパー */
+#define FV_D27R1001_SWSAGE7_01             842 /* 0x034a プラズマフリゲート船内二階層B：ヴィオ */
+#define FV_D27R1301_SWSAGE7_01             843 /* 0x034b プラズマフリゲート船内二階層W：ヴィオ */
+#define FV_D27R1001_SWPLAZMAM_01           844 /* 0x034c プラズマフリゲート船内二階層B：元プラズマ団員 */
+#define FV_D27R1301_SWPLAZMAM_01           845 /* 0x034d プラズマフリゲート船内二階層W：元プラズマ団員 */
+#define FV_D27R0401_SWBOSS_01              846 /* 0x034e プラズマフリゲート操舵室：アクロマ */
+#define FV_D27R0601_SWSAGE1_01             847 /* 0x034f プラズマフリゲート隠し部屋：ゲーチス */
+#define FV_D27R0601_NINJA_01               848 /* 0x0350 プラズマフリゲート隠し部屋：ダークトリニティ */
+#define FV_R18_DPLEADER5_01                849 /* 0x0351 18番道路：マキシ */
+#define FV_D31R0601_MUGENBOSS_01           850 /* 0x0352 無限ダンジョンB：ボス */
+#define FV_D31R0501_MUGENBOSS_01           851 /* 0x0353 無限ダンジョンW：ボス */
+#define FV_C03R0301_CLEANINGM_01           852 /* 0x0354 バトルカンパニー：1F清掃員 */
+#define FV_D01R0101_RATI2_01               853 /* 0x0355 夢の跡地：ラティアス・ラティオス */
+#define FV_D27R0601_SWRIVAL_01             854 /* 0x0356 プラズマフリゲート隠し部屋：ライバル */
+#define FV_W21_SWRIVAL_01                  855 /* 0x0357 21番水路：ライバル */
+#define FV_W21_SWLEADER8_01                856 /* 0x0358 21番水路：シズイ */
+#define FV_W21_SWLEADER1_01                857 /* 0x0359 21番水路：チェレン */
+#define FV_H01_BRIDGE_MANIA_01             858 /* 0x035a スカイアローブリッジ：橋マニア */
+#define FV_H02_BRIDGE_MANIA_01             859 /* 0x035b ホドモエの跳ね橋：橋マニア */
+#define FV_H03_BRIDGE_MANIA_01             860 /* 0x035c シリンダーブリッジ：橋マニア */
+#define FV_H04_BRIDGE_MANIA_01             861 /* 0x035d ビレッジブリッジ：橋マニア */
+#define FV_H05_BRIDGE_MANIA_01             862 /* 0x035e ワンダーブリッジ：橋マニア */
+#define FV_H06_BRIDGE_MANIA_01             863 /* 0x035f マリンチューブ：橋マニア */
+#define FV_C04_RAILMAN_01                  864 /* 0x0360 ライモンシティ：鉄道員 */
+#define FV_C04_POKE33_01                   865 /* 0x0361 ライモンシティ：ヤナップ */
+#define FV_T05_POKE33_01                   866 /* 0x0362 カナワタウン：ヤナップ */
+#define FV_D32R0101_FIGHTERM_01            867 /* 0x0363 D32：がんじょうストッパー */
+#define FV_D32R0101_POKE50_01              868 /* 0x0364 D32：イワパレス */
+		/* not used   869(0x0365) */
+		/* not used   870(0x0366) */
+#define FV_WBT_LOBBY_LEADER1               871 /* 0x0367 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_WBT_LOBBY_LEADER2               872 /* 0x0368 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_WBT_LOBBY_LEADER3               873 /* 0x0369 WBTロビー：優勝後ロビーにいる対戦者 */
+#define FV_D26R0501_ROCK_B                 874 /* 0x036a チャンピオンロード：ブラックのかいりき岩 */
+#define FV_D26R0501_ROCK_W                 875 /* 0x036b チャンピオンロード：ホワイトのかいりき岩 */
+#define FV_D10R0101_SWPLAZMAM_01           876 /* 0x036c ジャイアントホールエントランス：見張り（１） */
+#define FV_D10R0101_SWPLAZMAM_02           877 /* 0x036d ジャイアントホールエントランス：見張り（２） */
+#define FV_D10R0101_SWPLAZMAM_03           878 /* 0x036e ジャイアントホールエントランス：元プラズマ団員 */
+#define FV_D10R0101_SWPLAZMAM_04           879 /* 0x036f ジャイアントホールエントランス：見張り（３） */
+#define FV_D10R0101_SWRIVAL_01             880 /* 0x0370 ジャイアントホールエントランス：ライバル */
+#define FV_D10R0301_SWPLAZMAM_01           881 /* 0x0371 ジャイアントホール広場：プラズマ団員 */
+#define FV_D10R0301_SWPLAZMAM_02           882 /* 0x0372 ジャイアントホール広場：プラズマ団員（後から来た人々） */
+#define FV_D10R0301_SAGE6_01               883 /* 0x0373 ジャイアントホール広場：ロット */
+#define FV_D10R0301_SWRIVAL_01             884 /* 0x0374 ジャイアントホール広場：ライバル */
+#define FV_D10R0401_SWSAGE1_01             885 /* 0x0375 ジャイアントホール最深部：ゲーチス */
+#define FV_D10R0401_BOSS_01                886 /* 0x0376 ジャイアントホール最深部：N */
+#define FV_D10R0401_POKE_01                887 /* 0x0377 ジャイアントホール最深部：キュレム */
+#define FV_D10R0401_POKE_02                888 /* 0x0378 ジャイアントホール最深部：Nのレシラム・ゼクロム */
+#define FV_D10R0401_POKE_03                889 /* 0x0379 ジャイアントホール最深部：キュラム・キュロム */
+#define FV_D05R0101_SWBOSS_01              890 /* 0x037a WBT屋内：アクロマ */
+#define FV_D05R0101_SWRIVAL_01             891 /* 0x037b WBT屋内：ライバル */
+#define FV_D05R0101_SWLEADER1_01           892 /* 0x037c WBT屋内：チェレン */
+#define FV_D05R0101_SWLEADER5_01           893 /* 0x037d WBT屋内：ヤーコン */
+#define FV_D05R0101_SWLEADER2_01           894 /* 0x037e WBT屋内：ホミカ */
+#define FV_C04R1101_TR_01                  895 /* 0x037f 旧電気ジム：コースターに乗っているトレーナー１人目 */
+#define FV_C04R1101_TR_02                  896 /* 0x0380 旧電気ジム：コースターに乗っているトレーナー２人目 */
+#define FV_H05_POKE488                     897 /* 0x0381 ワンダーブリッジ：クレセリア */
+#define FV_D25_GIRL2_01                    898 /* 0x0382 ストレンジャーハウス：幽霊少女 */
+#define FV_D25R0501_ITEM_01                899 /* 0x0383 ストレンジャーハウス：どうぐ（モンスターボール） */
+#define FV_D24_POKE485                     900 /* 0x0384 リバースマウンテン：ヒードラン */
+#define FV_D26R0101_BOSS                   901 /* 0x0385 チャンピオンロード：Ｎ */
+#define FV_R04_POKE_567_633_01             902 /* 0x0386 4番道路：バルジーナ（ウォーグル） */
+#define FV_D20_POKE_536_01                 903 /* 0x0387 サザナミ湾：ブルンゲル */
+#define FV_R14R0101_MAN3_01                904 /* 0x0388 14番道路：ストッパー */
+#define FV_C03P07_MACOMO_01                905 /* 0x0389 ヒウンシティ・チャレンジストリート：マコモ */
+#define FV_C03R1103_MACOMO_01              906 /* 0x038a ヒウンシティ・便利ビル3F：マコモ */
+#define FV_C07GYM0101_LEADDER7_01          907 /* 0x038b セッカシティジム跡地：ハチク */
+#define FV_D02R0101_SWLEADER1_01           908 /* 0x038c ヤグルマの森：チェレン・七賢人 */
+#define FV_D27R1001_R1301_POKE10_01        909 /* 0x038d プラズマフリゲート：研究施設キュレム */
+#define FV_R20_RANGER_01                   910 /* 0x038e 20番道路：季節表示トレーナー */
+#define FV_N01R0401_BOSS_01                911 /* 0x038f N城入り口：N */
+#define FV_N01R0502_BOSS_01                912 /* 0x0390 Ｎ城謁見の間：N */
+#define FV_N01R0502_NPOKE_01               913 /* 0x0391 Ｎ城謁見の間：レシラム・ゼクロム */
+#define FV_PKWD_STAFF01                    914 /* 0x0392 ポケウッド撮影所：監督、共演者 */
+#define FV_PKWD_STAFF02                    915 /* 0x0393 ポケウッド撮影所：撮影スタッフ */
+#define FV_D33R0101_SPPOKE_01              916 /* 0x0394 心の空洞：ユクシー・エムリット・アグノム */
+#define FV_D33R0101_HAKASE2_01             917 /* 0x0395 心の空洞：アララギ娘 */
+#define FV_C02_SPPOKE1_01                  918 /* 0x0396 シッポウシティ：ユクシー */
+#define FV_R07R0105_SPPOKE2_01             919 /* 0x0397 タワーオブヘブン：エムリット */
+#define FV_R23_SPPOKE3_01                  920 /* 0x0398 チャンピオンロード：アグノム */
+#define FV_D29R0401_POKE1_01               921 /* 0x0399 ヤーコンロード：レジアイス */
+#define FV_D29R0401_POKE2_01               922 /* 0x039a ヤーコンロード：レジロック */
+#define FV_D29R0401_POKE3_01               923 /* 0x039b ヤーコンロード：レジスチル */
+#define FV_D07R0601_POKE4_01               924 /* 0x039c ネジ山：レジギガス */
+#define FV_C07_NINJA_01                    925 /* 0x039d セッカシティ：ダークトリニティ01 */
+#define FV_C07_NINJA_02                    926 /* 0x039e セッカシティ：ダークトリニティ02 */
+#define FV_C07_NINJA_03                    927 /* 0x039f セッカシティ：ダークトリニティ03 */
+#define FV_D04R2301_POKE13_01              928 /* 0x03a0 古代の城：ウルガモス */
+#define FV_FLDMONS_01                      929 /* 0x03a1 タマゲタケ（フィールドアイテム型）１匹目 */
+#define FV_FLDMONS_02                      930 /* 0x03a2 タマゲタケ（フィールドアイテム型）２匹目 */
+#define FV_FLDMONS_03                      931 /* 0x03a3 タマゲタケ（フィールドアイテム型）３匹目 */
+#define FV_FLDMONS_04                      932 /* 0x03a4 タマゲタケ（フィールドアイテム型）４匹目 */
+#define FV_FLDMONS_05                      933 /* 0x03a5 タマゲタケ（フィールドアイテム型）５匹目 */
+#define FV_FLDMONS_06                      934 /* 0x03a6 タマゲタケ（フィールドアイテム型）６匹目 */
+#define FV_FLDMONS_07                      935 /* 0x03a7 タマゲタケ（フィールドアイテム型）７匹目 */
+#define FV_FLDMONS_08                      936 /* 0x03a8 タマゲタケ（フィールドアイテム型）８匹目 */
+#define FV_FLDMONS_09                      937 /* 0x03a9 タマゲタケ（フィールドアイテム型）９匹目 */
+#define FV_FLDMONS_10                      938 /* 0x03aa タマゲタケ（フィールドアイテム型）１０匹目 */
+#define FV_FLDMONS_11                      939 /* 0x03ab タマゲタケ（フィールドアイテム型）１１匹目 */
+#define FV_FLDMONS_12                      940 /* 0x03ac タマゲタケ（フィールドアイテム型）１２匹目 */
+#define FV_N01R0501_BOSS_01                941 /* 0x03ad Ｎ城謁見の間フロア：N */
+#define FV_C01GYM0101_SARU_01              942 /* 0x03ae サンヨウシティ：サルショー */
+#define FV_R18_ITEM_01                     943 /* 0x03af 18版道路：どうぐ（モンスターボール） */
+#define FV_T04_SWRIVAL_01                  944 /* 0x03b0 サザナミタウン：ライバル */
+#define FV_C03R0502_POKE38_01              945 /* 0x03b1 ヒウンシティ：ズルッグ */
+#define FV_D35R0101_POKE_01                946 /* 0x03b2 自然保護区：黒オノノクス */
+#define FV_T04R101_STOPPER_01              947 /* 0x03b3 サザナミタウンゲート：ストッパー */
+#define FV_D29R0101_WORKMAN2_01            948 /* 0x03b4 ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_WORKMAN2_02            949 /* 0x03b5 ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_WORKMAN2_03            950 /* 0x03b6 ヤーコンロード：トロッコ用 */
+#define FV_D29R0201_WORKMAN2_01            951 /* 0x03b7 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_01            952 /* 0x03b8 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_01A           953 /* 0x03b9 ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_02            954 /* 0x03ba ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_02A           955 /* 0x03bb ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_03            956 /* 0x03bc ヤーコンロード：トロッコ用 */
+#define FV_D29R0301_WORKMAN2_04            957 /* 0x03bd ヤーコンロード：トロッコ用 */
+#define FV_D29R0101_STOP                   958 /* 0x03be ヤーコンロード：ストッパー */
+#define FV_D24_PAIR_START_BELL_01          959 /* 0x03bf リバースマウンテン：連れ歩きベル */
+#define FV_D24_PAIR_END_BELL_01            960 /* 0x03c0 リバースマウンテン：連れ歩きベル */
+#define FV_C15_SUNGLASSES_01               961 /* 0x03c1 ポケウッド：チュートリアル用キャラクター */
+#define FV_D06R0101_WORKMAN2_01            962 /* 0x03c2 電気石の洞穴：ストッパー */
+#define FV_PKWD_STAFF_TUTORIAL01           963 /* 0x03c3 ポケウッド：チュートリアル用 */
+#define FV_PKWD_STAFF_TUTORIAL02           964 /* 0x03c4 ポケウッド：チュートリアル用 */
+#define FV_C12R0202_POKE32_01              965 /* 0x03c5 ヒオウギシティ・ライバル宅：レパルダス */
+#define FV_D26_POKE23_01                   966 /* 0x03c6 チャンピオンロード：ゾロアーク */
+#define FV_R16R0201_BACKPACKERM_01         967 /* 0x03c7 迷いの森：バックパッカー（ゾロアーク） */
+#define FV_D10R0501_SWSAGE1_02             968 /* 0x03c8 ジャイアントホール：杖なしゲーチス */
+#define FV_D10R0501_WAND_01                969 /* 0x03c9 ジャイアントホール：杖 */
+#define FV_BC10_TRAINER_01                 970 /* 0x03ca ブラックシティ：住人01 */
+#define FV_BC10_TRAINER_02                 971 /* 0x03cb ブラックシティ：住人02 */
+#define FV_WC10_TRAINER_01                 972 /* 0x03cc ホワイトフォレスト：住人01 */
+#define FV_WC10_TRAINER_02                 973 /* 0x03cd ホワイトフォレスト：住人02 */
+#define FV_C05R0501_SWRIVAL_01             974 /* 0x03ce ホドモエシティ：ポケモンハウスのライバル */
+#define FV_D27R0101_STOPPER_01             975 /* 0x03cf プラズマフリゲート：ストッパー */
+#define FV_D27_BEFORE_PWPLAZMA_01          976 /* 0x03d0 プラズマフリゲート：船員（クリア前） */
+#define FV_D27_AFTER_PWPLAZMA_01           977 /* 0x03d1 プラズマフリゲート：船員（クリア後） */
+#define FV_R05_SWLEADER1_01                978 /* 0x03d2 5番道路：チェレン */
+#define FV_T04_SAGE7_01                    979 /* 0x03d3 サザナミタウン：ヴィオ */
+#define FV_C15R0301_BONUS_0                980 /* 0x03d4 ポケウッド：ファン（スターランク0） */
+#define FV_C15R0301_BONUS_1                981 /* 0x03d5 ポケウッド：ファン（スターランク1） */
+#define FV_C15R0301_BONUS_2                982 /* 0x03d6 ポケウッド：ファン（スターランク2） */
+#define FV_C15R0301_BONUS_3                983 /* 0x03d7 ポケウッド：ファン（スターランク3） */
+#define FV_C15R0301_BONUS_4                984 /* 0x03d8 ポケウッド：ファン（スターランク4） */
+#define FV_C14_KAODASI_01                  985 /* 0x03d9 セイガイハシティ：顔出し看板イベントのカメラマン */
+		/* not used   986(0x03da) */
+		/* not used   987(0x03db) */
+		/* not used   988(0x03dc) */
+		/* not used   989(0x03dd) */
+		/* not used   990(0x03de) */
+#define FV_D05R0101_TRAINERW_01            991 /* 0x03df WBTロビー：クリア後に出現するエリートトレーナー♀ */
+#define FV_C02R0101_FUN_01                 992 /* 0x03e0 シッポウ倉庫：シタンのファン */
+#define FV_C08_PEOPLE_01                   993 /* 0x03e1 ソウリュウシティ：NPC */
+#define FV_C15_BRONZE_01                   994 /* 0x03e2 ポケウッド：銅像 */
+#define FV_C15_BONUS_EVENT_01              995 /* 0x03e3 ポケウッド：ごほうびイベント中のNPC */
 
-#define FV_AREA_END                        999 /* 0x03e7  */
-
-
-/* flags "" 1000 ～ 1137 */
-
-#define KEEP_AREA_AREA_START              1000 /* 0x03e8  */
-
-#define KEEP_AREA_000                     1000 /* 0x03e8 領域確保による自動生成 */
-#define KEEP_AREA_001                     1001 /* 0x03e9 領域確保による自動生成 */
-#define KEEP_AREA_002                     1002 /* 0x03ea 領域確保による自動生成 */
-#define KEEP_AREA_003                     1003 /* 0x03eb 領域確保による自動生成 */
-#define KEEP_AREA_004                     1004 /* 0x03ec 領域確保による自動生成 */
-#define KEEP_AREA_005                     1005 /* 0x03ed 領域確保による自動生成 */
-#define KEEP_AREA_006                     1006 /* 0x03ee 領域確保による自動生成 */
-#define KEEP_AREA_007                     1007 /* 0x03ef 領域確保による自動生成 */
-#define KEEP_AREA_008                     1008 /* 0x03f0 領域確保による自動生成 */
-#define KEEP_AREA_009                     1009 /* 0x03f1 領域確保による自動生成 */
-#define KEEP_AREA_010                     1010 /* 0x03f2 領域確保による自動生成 */
-#define KEEP_AREA_011                     1011 /* 0x03f3 領域確保による自動生成 */
-#define KEEP_AREA_012                     1012 /* 0x03f4 領域確保による自動生成 */
-#define KEEP_AREA_013                     1013 /* 0x03f5 領域確保による自動生成 */
-#define KEEP_AREA_014                     1014 /* 0x03f6 領域確保による自動生成 */
-#define KEEP_AREA_015                     1015 /* 0x03f7 領域確保による自動生成 */
-#define KEEP_AREA_016                     1016 /* 0x03f8 領域確保による自動生成 */
-#define KEEP_AREA_017                     1017 /* 0x03f9 領域確保による自動生成 */
-#define KEEP_AREA_018                     1018 /* 0x03fa 領域確保による自動生成 */
-#define KEEP_AREA_019                     1019 /* 0x03fb 領域確保による自動生成 */
-#define KEEP_AREA_020                     1020 /* 0x03fc 領域確保による自動生成 */
-#define KEEP_AREA_021                     1021 /* 0x03fd 領域確保による自動生成 */
-#define KEEP_AREA_022                     1022 /* 0x03fe 領域確保による自動生成 */
-#define KEEP_AREA_023                     1023 /* 0x03ff 領域確保による自動生成 */
-#define KEEP_AREA_024                     1024 /* 0x0400 領域確保による自動生成 */
-#define KEEP_AREA_025                     1025 /* 0x0401 領域確保による自動生成 */
-#define KEEP_AREA_026                     1026 /* 0x0402 領域確保による自動生成 */
-#define KEEP_AREA_027                     1027 /* 0x0403 領域確保による自動生成 */
-#define KEEP_AREA_028                     1028 /* 0x0404 領域確保による自動生成 */
-#define KEEP_AREA_029                     1029 /* 0x0405 領域確保による自動生成 */
-#define KEEP_AREA_030                     1030 /* 0x0406 領域確保による自動生成 */
-#define KEEP_AREA_031                     1031 /* 0x0407 領域確保による自動生成 */
-#define KEEP_AREA_032                     1032 /* 0x0408 領域確保による自動生成 */
-#define KEEP_AREA_033                     1033 /* 0x0409 領域確保による自動生成 */
-#define KEEP_AREA_034                     1034 /* 0x040a 領域確保による自動生成 */
-#define KEEP_AREA_035                     1035 /* 0x040b 領域確保による自動生成 */
-#define KEEP_AREA_036                     1036 /* 0x040c 領域確保による自動生成 */
-#define KEEP_AREA_037                     1037 /* 0x040d 領域確保による自動生成 */
-#define KEEP_AREA_038                     1038 /* 0x040e 領域確保による自動生成 */
-#define KEEP_AREA_039                     1039 /* 0x040f 領域確保による自動生成 */
-#define KEEP_AREA_040                     1040 /* 0x0410 領域確保による自動生成 */
-#define KEEP_AREA_041                     1041 /* 0x0411 領域確保による自動生成 */
-#define KEEP_AREA_042                     1042 /* 0x0412 領域確保による自動生成 */
-#define KEEP_AREA_043                     1043 /* 0x0413 領域確保による自動生成 */
-#define KEEP_AREA_044                     1044 /* 0x0414 領域確保による自動生成 */
-#define KEEP_AREA_045                     1045 /* 0x0415 領域確保による自動生成 */
-#define KEEP_AREA_046                     1046 /* 0x0416 領域確保による自動生成 */
-#define KEEP_AREA_047                     1047 /* 0x0417 領域確保による自動生成 */
-#define KEEP_AREA_048                     1048 /* 0x0418 領域確保による自動生成 */
-#define KEEP_AREA_049                     1049 /* 0x0419 領域確保による自動生成 */
-#define KEEP_AREA_050                     1050 /* 0x041a 領域確保による自動生成 */
-#define KEEP_AREA_051                     1051 /* 0x041b 領域確保による自動生成 */
-#define KEEP_AREA_052                     1052 /* 0x041c 領域確保による自動生成 */
-#define KEEP_AREA_053                     1053 /* 0x041d 領域確保による自動生成 */
-#define KEEP_AREA_054                     1054 /* 0x041e 領域確保による自動生成 */
-#define KEEP_AREA_055                     1055 /* 0x041f 領域確保による自動生成 */
-#define KEEP_AREA_056                     1056 /* 0x0420 領域確保による自動生成 */
-#define KEEP_AREA_057                     1057 /* 0x0421 領域確保による自動生成 */
-#define KEEP_AREA_058                     1058 /* 0x0422 領域確保による自動生成 */
-#define KEEP_AREA_059                     1059 /* 0x0423 領域確保による自動生成 */
-#define KEEP_AREA_060                     1060 /* 0x0424 領域確保による自動生成 */
-#define KEEP_AREA_061                     1061 /* 0x0425 領域確保による自動生成 */
-#define KEEP_AREA_062                     1062 /* 0x0426 領域確保による自動生成 */
-#define KEEP_AREA_063                     1063 /* 0x0427 領域確保による自動生成 */
-#define KEEP_AREA_064                     1064 /* 0x0428 領域確保による自動生成 */
-#define KEEP_AREA_065                     1065 /* 0x0429 領域確保による自動生成 */
-#define KEEP_AREA_066                     1066 /* 0x042a 領域確保による自動生成 */
-#define KEEP_AREA_067                     1067 /* 0x042b 領域確保による自動生成 */
-#define KEEP_AREA_068                     1068 /* 0x042c 領域確保による自動生成 */
-#define KEEP_AREA_069                     1069 /* 0x042d 領域確保による自動生成 */
-#define KEEP_AREA_070                     1070 /* 0x042e 領域確保による自動生成 */
-#define KEEP_AREA_071                     1071 /* 0x042f 領域確保による自動生成 */
-#define KEEP_AREA_072                     1072 /* 0x0430 領域確保による自動生成 */
-#define KEEP_AREA_073                     1073 /* 0x0431 領域確保による自動生成 */
-#define KEEP_AREA_074                     1074 /* 0x0432 領域確保による自動生成 */
-#define KEEP_AREA_075                     1075 /* 0x0433 領域確保による自動生成 */
-#define KEEP_AREA_076                     1076 /* 0x0434 領域確保による自動生成 */
-#define KEEP_AREA_077                     1077 /* 0x0435 領域確保による自動生成 */
-#define KEEP_AREA_078                     1078 /* 0x0436 領域確保による自動生成 */
-#define KEEP_AREA_079                     1079 /* 0x0437 領域確保による自動生成 */
-#define KEEP_AREA_080                     1080 /* 0x0438 領域確保による自動生成 */
-#define KEEP_AREA_081                     1081 /* 0x0439 領域確保による自動生成 */
-#define KEEP_AREA_082                     1082 /* 0x043a 領域確保による自動生成 */
-#define KEEP_AREA_083                     1083 /* 0x043b 領域確保による自動生成 */
-#define KEEP_AREA_084                     1084 /* 0x043c 領域確保による自動生成 */
-#define KEEP_AREA_085                     1085 /* 0x043d 領域確保による自動生成 */
-#define KEEP_AREA_086                     1086 /* 0x043e 領域確保による自動生成 */
-#define KEEP_AREA_087                     1087 /* 0x043f 領域確保による自動生成 */
-#define KEEP_AREA_088                     1088 /* 0x0440 領域確保による自動生成 */
-#define KEEP_AREA_089                     1089 /* 0x0441 領域確保による自動生成 */
-#define KEEP_AREA_090                     1090 /* 0x0442 領域確保による自動生成 */
-#define KEEP_AREA_091                     1091 /* 0x0443 領域確保による自動生成 */
-#define KEEP_AREA_092                     1092 /* 0x0444 領域確保による自動生成 */
-#define KEEP_AREA_093                     1093 /* 0x0445 領域確保による自動生成 */
-#define KEEP_AREA_094                     1094 /* 0x0446 領域確保による自動生成 */
-#define KEEP_AREA_095                     1095 /* 0x0447 領域確保による自動生成 */
-#define KEEP_AREA_096                     1096 /* 0x0448 領域確保による自動生成 */
-#define KEEP_AREA_097                     1097 /* 0x0449 領域確保による自動生成 */
-#define KEEP_AREA_098                     1098 /* 0x044a 領域確保による自動生成 */
-#define KEEP_AREA_099                     1099 /* 0x044b 領域確保による自動生成 */
-#define KEEP_AREA_100                     1100 /* 0x044c 領域確保による自動生成 */
-#define KEEP_AREA_101                     1101 /* 0x044d 領域確保による自動生成 */
-#define KEEP_AREA_102                     1102 /* 0x044e 領域確保による自動生成 */
-#define KEEP_AREA_103                     1103 /* 0x044f 領域確保による自動生成 */
-#define KEEP_AREA_104                     1104 /* 0x0450 領域確保による自動生成 */
-#define KEEP_AREA_105                     1105 /* 0x0451 領域確保による自動生成 */
-#define KEEP_AREA_106                     1106 /* 0x0452 領域確保による自動生成 */
-#define KEEP_AREA_107                     1107 /* 0x0453 領域確保による自動生成 */
-#define KEEP_AREA_108                     1108 /* 0x0454 領域確保による自動生成 */
-#define KEEP_AREA_109                     1109 /* 0x0455 領域確保による自動生成 */
-#define KEEP_AREA_110                     1110 /* 0x0456 領域確保による自動生成 */
-#define KEEP_AREA_111                     1111 /* 0x0457 領域確保による自動生成 */
-#define KEEP_AREA_112                     1112 /* 0x0458 領域確保による自動生成 */
-#define KEEP_AREA_113                     1113 /* 0x0459 領域確保による自動生成 */
-#define KEEP_AREA_114                     1114 /* 0x045a 領域確保による自動生成 */
-#define KEEP_AREA_115                     1115 /* 0x045b 領域確保による自動生成 */
-#define KEEP_AREA_116                     1116 /* 0x045c 領域確保による自動生成 */
-#define KEEP_AREA_117                     1117 /* 0x045d 領域確保による自動生成 */
-#define KEEP_AREA_118                     1118 /* 0x045e 領域確保による自動生成 */
-#define KEEP_AREA_119                     1119 /* 0x045f 領域確保による自動生成 */
-#define KEEP_AREA_120                     1120 /* 0x0460 領域確保による自動生成 */
-#define KEEP_AREA_121                     1121 /* 0x0461 領域確保による自動生成 */
-#define KEEP_AREA_122                     1122 /* 0x0462 領域確保による自動生成 */
-#define KEEP_AREA_123                     1123 /* 0x0463 領域確保による自動生成 */
-#define KEEP_AREA_124                     1124 /* 0x0464 領域確保による自動生成 */
-#define KEEP_AREA_125                     1125 /* 0x0465 領域確保による自動生成 */
-#define KEEP_AREA_126                     1126 /* 0x0466 領域確保による自動生成 */
-#define KEEP_AREA_127                     1127 /* 0x0467 領域確保による自動生成 */
-#define KEEP_AREA_128                     1128 /* 0x0468 領域確保による自動生成 */
-#define KEEP_AREA_129                     1129 /* 0x0469 領域確保による自動生成 */
-#define KEEP_AREA_130                     1130 /* 0x046a 領域確保による自動生成 */
-#define KEEP_AREA_131                     1131 /* 0x046b 領域確保による自動生成 */
-#define KEEP_AREA_132                     1132 /* 0x046c 領域確保による自動生成 */
-#define KEEP_AREA_133                     1133 /* 0x046d 領域確保による自動生成 */
-#define KEEP_AREA_134                     1134 /* 0x046e 領域確保による自動生成 */
-#define KEEP_AREA_135                     1135 /* 0x046f 領域確保による自動生成 */
-#define KEEP_AREA_136                     1136 /* 0x0470 領域確保による自動生成 */
-#define KEEP_AREA_137                     1137 /* 0x0471 領域確保による自動生成 */
-
-#define KEEP_AREA_AREA_END                1137 /* 0x0471  */
+#define FV_AREA_END                       1099 /* 0x044b  */
 
 
-/* flags "item_flag.xls" 1138 ～ 1507 */
+/* flags "item_flag.xls" 1100 ～ 1499 */
 
-#define FV_FLD_ITEM_AREA_START            1138 /* 0x0472  */
+#define FV_FLD_ITEM_AREA_START            1100 /* 0x044c  */
 
-#define FV_FLD_ITEM_0                     1138 /* 0x0472  */
-#define FV_FLD_ITEM_1                     1139 /* 0x0473  */
-#define FV_FLD_ITEM_2                     1140 /* 0x0474  */
-#define FV_FLD_ITEM_3                     1141 /* 0x0475  */
-#define FV_FLD_ITEM_4                     1142 /* 0x0476  */
-#define FV_FLD_ITEM_5                     1143 /* 0x0477  */
-#define FV_FLD_ITEM_6                     1144 /* 0x0478  */
-#define FV_FLD_ITEM_7                     1145 /* 0x0479  */
-#define FV_FLD_ITEM_8                     1146 /* 0x047a  */
-#define FV_FLD_ITEM_9                     1147 /* 0x047b  */
-#define FV_FLD_ITEM_10                    1148 /* 0x047c  */
-#define FV_FLD_ITEM_11                    1149 /* 0x047d  */
-#define FV_FLD_ITEM_12                    1150 /* 0x047e  */
-#define FV_FLD_ITEM_13                    1151 /* 0x047f  */
-#define FV_FLD_ITEM_14                    1152 /* 0x0480  */
-#define FV_FLD_ITEM_15                    1153 /* 0x0481  */
-#define FV_FLD_ITEM_16                    1154 /* 0x0482  */
-#define FV_FLD_ITEM_17                    1155 /* 0x0483  */
-#define FV_FLD_ITEM_18                    1156 /* 0x0484  */
-#define FV_FLD_ITEM_19                    1157 /* 0x0485  */
-#define FV_FLD_ITEM_20                    1158 /* 0x0486  */
-#define FV_FLD_ITEM_21                    1159 /* 0x0487  */
-#define FV_FLD_ITEM_22                    1160 /* 0x0488  */
-#define FV_FLD_ITEM_23                    1161 /* 0x0489  */
-#define FV_FLD_ITEM_24                    1162 /* 0x048a  */
-#define FV_FLD_ITEM_25                    1163 /* 0x048b  */
-#define FV_FLD_ITEM_26                    1164 /* 0x048c  */
-#define FV_FLD_ITEM_27                    1165 /* 0x048d  */
-#define FV_FLD_ITEM_28                    1166 /* 0x048e  */
-#define FV_FLD_ITEM_29                    1167 /* 0x048f  */
-#define FV_FLD_ITEM_30                    1168 /* 0x0490  */
-#define FV_FLD_ITEM_31                    1169 /* 0x0491  */
-#define FV_FLD_ITEM_32                    1170 /* 0x0492  */
-#define FV_FLD_ITEM_33                    1171 /* 0x0493  */
-#define FV_FLD_ITEM_34                    1172 /* 0x0494  */
-#define FV_FLD_ITEM_35                    1173 /* 0x0495  */
-#define FV_FLD_ITEM_36                    1174 /* 0x0496  */
-#define FV_FLD_ITEM_37                    1175 /* 0x0497  */
-#define FV_FLD_ITEM_38                    1176 /* 0x0498  */
-#define FV_FLD_ITEM_39                    1177 /* 0x0499  */
-#define FV_FLD_ITEM_40                    1178 /* 0x049a  */
-#define FV_FLD_ITEM_41                    1179 /* 0x049b  */
-#define FV_FLD_ITEM_42                    1180 /* 0x049c  */
-#define FV_FLD_ITEM_43                    1181 /* 0x049d  */
-#define FV_FLD_ITEM_44                    1182 /* 0x049e  */
-#define FV_FLD_ITEM_45                    1183 /* 0x049f  */
-#define FV_FLD_ITEM_46                    1184 /* 0x04a0  */
-#define FV_FLD_ITEM_47                    1185 /* 0x04a1  */
-#define FV_FLD_ITEM_48                    1186 /* 0x04a2  */
-#define FV_FLD_ITEM_49                    1187 /* 0x04a3  */
-#define FV_FLD_ITEM_50                    1188 /* 0x04a4  */
-#define FV_FLD_ITEM_51                    1189 /* 0x04a5  */
-#define FV_FLD_ITEM_52                    1190 /* 0x04a6  */
-#define FV_FLD_ITEM_53                    1191 /* 0x04a7  */
-#define FV_FLD_ITEM_54                    1192 /* 0x04a8  */
-#define FV_FLD_ITEM_55                    1193 /* 0x04a9  */
-#define FV_FLD_ITEM_56                    1194 /* 0x04aa  */
-#define FV_FLD_ITEM_57                    1195 /* 0x04ab  */
-#define FV_FLD_ITEM_58                    1196 /* 0x04ac  */
-#define FV_FLD_ITEM_59                    1197 /* 0x04ad  */
-#define FV_FLD_ITEM_60                    1198 /* 0x04ae  */
-#define FV_FLD_ITEM_61                    1199 /* 0x04af  */
-#define FV_FLD_ITEM_62                    1200 /* 0x04b0  */
-#define FV_FLD_ITEM_63                    1201 /* 0x04b1  */
-#define FV_FLD_ITEM_64                    1202 /* 0x04b2  */
-#define FV_FLD_ITEM_65                    1203 /* 0x04b3  */
-#define FV_FLD_ITEM_66                    1204 /* 0x04b4  */
-#define FV_FLD_ITEM_67                    1205 /* 0x04b5  */
-#define FV_FLD_ITEM_68                    1206 /* 0x04b6  */
-#define FV_FLD_ITEM_69                    1207 /* 0x04b7  */
-#define FV_FLD_ITEM_70                    1208 /* 0x04b8  */
-#define FV_FLD_ITEM_71                    1209 /* 0x04b9  */
-#define FV_FLD_ITEM_72                    1210 /* 0x04ba  */
-#define FV_FLD_ITEM_73                    1211 /* 0x04bb  */
-#define FV_FLD_ITEM_74                    1212 /* 0x04bc  */
-#define FV_FLD_ITEM_75                    1213 /* 0x04bd  */
-#define FV_FLD_ITEM_76                    1214 /* 0x04be  */
-#define FV_FLD_ITEM_77                    1215 /* 0x04bf  */
-#define FV_FLD_ITEM_78                    1216 /* 0x04c0  */
-#define FV_FLD_ITEM_79                    1217 /* 0x04c1  */
-#define FV_FLD_ITEM_80                    1218 /* 0x04c2  */
-#define FV_FLD_ITEM_81                    1219 /* 0x04c3  */
-#define FV_FLD_ITEM_82                    1220 /* 0x04c4  */
-#define FV_FLD_ITEM_83                    1221 /* 0x04c5  */
-#define FV_FLD_ITEM_84                    1222 /* 0x04c6  */
-#define FV_FLD_ITEM_85                    1223 /* 0x04c7  */
-#define FV_FLD_ITEM_86                    1224 /* 0x04c8  */
-#define FV_FLD_ITEM_87                    1225 /* 0x04c9  */
-#define FV_FLD_ITEM_88                    1226 /* 0x04ca  */
-#define FV_FLD_ITEM_89                    1227 /* 0x04cb  */
-#define FV_FLD_ITEM_90                    1228 /* 0x04cc  */
-#define FV_FLD_ITEM_91                    1229 /* 0x04cd  */
-#define FV_FLD_ITEM_92                    1230 /* 0x04ce  */
-#define FV_FLD_ITEM_93                    1231 /* 0x04cf  */
-#define FV_FLD_ITEM_94                    1232 /* 0x04d0  */
-#define FV_FLD_ITEM_95                    1233 /* 0x04d1  */
-#define FV_FLD_ITEM_96                    1234 /* 0x04d2  */
-#define FV_FLD_ITEM_97                    1235 /* 0x04d3  */
-#define FV_FLD_ITEM_98                    1236 /* 0x04d4  */
-#define FV_FLD_ITEM_99                    1237 /* 0x04d5  */
-#define FV_FLD_ITEM_100                   1238 /* 0x04d6  */
-#define FV_FLD_ITEM_101                   1239 /* 0x04d7  */
-#define FV_FLD_ITEM_102                   1240 /* 0x04d8  */
-#define FV_FLD_ITEM_103                   1241 /* 0x04d9  */
-#define FV_FLD_ITEM_104                   1242 /* 0x04da  */
-#define FV_FLD_ITEM_105                   1243 /* 0x04db  */
-#define FV_FLD_ITEM_106                   1244 /* 0x04dc  */
-#define FV_FLD_ITEM_107                   1245 /* 0x04dd  */
-#define FV_FLD_ITEM_108                   1246 /* 0x04de  */
-#define FV_FLD_ITEM_109                   1247 /* 0x04df  */
-#define FV_FLD_ITEM_110                   1248 /* 0x04e0  */
-#define FV_FLD_ITEM_111                   1249 /* 0x04e1  */
-#define FV_FLD_ITEM_112                   1250 /* 0x04e2  */
-#define FV_FLD_ITEM_113                   1251 /* 0x04e3  */
-#define FV_FLD_ITEM_114                   1252 /* 0x04e4  */
-#define FV_FLD_ITEM_115                   1253 /* 0x04e5  */
-#define FV_FLD_ITEM_116                   1254 /* 0x04e6  */
-#define FV_FLD_ITEM_117                   1255 /* 0x04e7  */
-#define FV_FLD_ITEM_118                   1256 /* 0x04e8  */
-#define FV_FLD_ITEM_119                   1257 /* 0x04e9  */
-#define FV_FLD_ITEM_120                   1258 /* 0x04ea  */
-#define FV_FLD_ITEM_121                   1259 /* 0x04eb  */
-#define FV_FLD_ITEM_122                   1260 /* 0x04ec  */
-#define FV_FLD_ITEM_123                   1261 /* 0x04ed  */
-#define FV_FLD_ITEM_124                   1262 /* 0x04ee  */
-#define FV_FLD_ITEM_125                   1263 /* 0x04ef  */
-#define FV_FLD_ITEM_126                   1264 /* 0x04f0  */
-#define FV_FLD_ITEM_127                   1265 /* 0x04f1  */
-#define FV_FLD_ITEM_128                   1266 /* 0x04f2  */
-#define FV_FLD_ITEM_129                   1267 /* 0x04f3  */
-#define FV_FLD_ITEM_130                   1268 /* 0x04f4  */
-#define FV_FLD_ITEM_131                   1269 /* 0x04f5  */
-#define FV_FLD_ITEM_132                   1270 /* 0x04f6  */
-#define FV_FLD_ITEM_133                   1271 /* 0x04f7  */
-#define FV_FLD_ITEM_134                   1272 /* 0x04f8  */
-#define FV_FLD_ITEM_135                   1273 /* 0x04f9  */
-#define FV_FLD_ITEM_136                   1274 /* 0x04fa  */
-#define FV_FLD_ITEM_137                   1275 /* 0x04fb  */
-#define FV_FLD_ITEM_138                   1276 /* 0x04fc  */
-#define FV_FLD_ITEM_139                   1277 /* 0x04fd  */
-#define FV_FLD_ITEM_140                   1278 /* 0x04fe  */
-#define FV_FLD_ITEM_141                   1279 /* 0x04ff  */
-#define FV_FLD_ITEM_142                   1280 /* 0x0500  */
-#define FV_FLD_ITEM_143                   1281 /* 0x0501  */
-#define FV_FLD_ITEM_144                   1282 /* 0x0502  */
-#define FV_FLD_ITEM_145                   1283 /* 0x0503  */
-#define FV_FLD_ITEM_146                   1284 /* 0x0504  */
-#define FV_FLD_ITEM_147                   1285 /* 0x0505  */
-#define FV_FLD_ITEM_148                   1286 /* 0x0506  */
-#define FV_FLD_ITEM_149                   1287 /* 0x0507  */
-#define FV_FLD_ITEM_150                   1288 /* 0x0508  */
-#define FV_FLD_ITEM_151                   1289 /* 0x0509  */
-#define FV_FLD_ITEM_152                   1290 /* 0x050a  */
-#define FV_FLD_ITEM_153                   1291 /* 0x050b  */
-#define FV_FLD_ITEM_154                   1292 /* 0x050c  */
-#define FV_FLD_ITEM_155                   1293 /* 0x050d  */
-#define FV_FLD_ITEM_156                   1294 /* 0x050e  */
-#define FV_FLD_ITEM_157                   1295 /* 0x050f  */
-#define FV_FLD_ITEM_158                   1296 /* 0x0510  */
-#define FV_FLD_ITEM_159                   1297 /* 0x0511  */
-#define FV_FLD_ITEM_160                   1298 /* 0x0512  */
-#define FV_FLD_ITEM_161                   1299 /* 0x0513  */
-#define FV_FLD_ITEM_162                   1300 /* 0x0514  */
-#define FV_FLD_ITEM_163                   1301 /* 0x0515  */
-#define FV_FLD_ITEM_164                   1302 /* 0x0516  */
-#define FV_FLD_ITEM_165                   1303 /* 0x0517  */
-#define FV_FLD_ITEM_166                   1304 /* 0x0518  */
-#define FV_FLD_ITEM_167                   1305 /* 0x0519  */
-#define FV_FLD_ITEM_168                   1306 /* 0x051a  */
-#define FV_FLD_ITEM_169                   1307 /* 0x051b  */
-#define FV_FLD_ITEM_170                   1308 /* 0x051c  */
-#define FV_FLD_ITEM_171                   1309 /* 0x051d  */
-#define FV_FLD_ITEM_172                   1310 /* 0x051e  */
-#define FV_FLD_ITEM_173                   1311 /* 0x051f  */
-#define FV_FLD_ITEM_174                   1312 /* 0x0520  */
-#define FV_FLD_ITEM_175                   1313 /* 0x0521  */
-#define FV_FLD_ITEM_176                   1314 /* 0x0522  */
-#define FV_FLD_ITEM_177                   1315 /* 0x0523  */
-#define FV_FLD_ITEM_178                   1316 /* 0x0524  */
-#define FV_FLD_ITEM_179                   1317 /* 0x0525  */
-#define FV_FLD_ITEM_180                   1318 /* 0x0526  */
-#define FV_FLD_ITEM_181                   1319 /* 0x0527  */
-#define FV_FLD_ITEM_182                   1320 /* 0x0528  */
-#define FV_FLD_ITEM_183                   1321 /* 0x0529  */
-#define FV_FLD_ITEM_184                   1322 /* 0x052a  */
-#define FV_FLD_ITEM_185                   1323 /* 0x052b  */
-#define FV_FLD_ITEM_186                   1324 /* 0x052c  */
-#define FV_FLD_ITEM_187                   1325 /* 0x052d  */
-#define FV_FLD_ITEM_188                   1326 /* 0x052e  */
-#define FV_FLD_ITEM_189                   1327 /* 0x052f  */
-#define FV_FLD_ITEM_190                   1328 /* 0x0530  */
-#define FV_FLD_ITEM_191                   1329 /* 0x0531  */
-#define FV_FLD_ITEM_192                   1330 /* 0x0532  */
-#define FV_FLD_ITEM_193                   1331 /* 0x0533  */
-#define FV_FLD_ITEM_194                   1332 /* 0x0534  */
-#define FV_FLD_ITEM_195                   1333 /* 0x0535  */
-#define FV_FLD_ITEM_196                   1334 /* 0x0536  */
-#define FV_FLD_ITEM_197                   1335 /* 0x0537  */
-#define FV_FLD_ITEM_198                   1336 /* 0x0538  */
-#define FV_FLD_ITEM_199                   1337 /* 0x0539  */
-#define FV_FLD_ITEM_200                   1338 /* 0x053a  */
-#define FV_FLD_ITEM_201                   1339 /* 0x053b  */
-#define FV_FLD_ITEM_202                   1340 /* 0x053c  */
-#define FV_FLD_ITEM_203                   1341 /* 0x053d  */
-#define FV_FLD_ITEM_204                   1342 /* 0x053e  */
-#define FV_FLD_ITEM_205                   1343 /* 0x053f  */
-#define FV_FLD_ITEM_206                   1344 /* 0x0540  */
-#define FV_FLD_ITEM_207                   1345 /* 0x0541  */
-#define FV_FLD_ITEM_208                   1346 /* 0x0542  */
-#define FV_FLD_ITEM_209                   1347 /* 0x0543  */
-#define FV_FLD_ITEM_210                   1348 /* 0x0544  */
-#define FV_FLD_ITEM_211                   1349 /* 0x0545  */
-#define FV_FLD_ITEM_212                   1350 /* 0x0546  */
-#define FV_FLD_ITEM_213                   1351 /* 0x0547  */
-#define FV_FLD_ITEM_214                   1352 /* 0x0548  */
-#define FV_FLD_ITEM_215                   1353 /* 0x0549  */
-#define FV_FLD_ITEM_216                   1354 /* 0x054a  */
-#define FV_FLD_ITEM_217                   1355 /* 0x054b  */
-#define FV_FLD_ITEM_218                   1356 /* 0x054c  */
-#define FV_FLD_ITEM_219                   1357 /* 0x054d  */
-#define FV_FLD_ITEM_220                   1358 /* 0x054e  */
-#define FV_FLD_ITEM_221                   1359 /* 0x054f  */
-#define FV_FLD_ITEM_222                   1360 /* 0x0550  */
-#define FV_FLD_ITEM_223                   1361 /* 0x0551  */
-#define FV_FLD_ITEM_224                   1362 /* 0x0552  */
-#define FV_FLD_ITEM_225                   1363 /* 0x0553  */
-#define FV_FLD_ITEM_226                   1364 /* 0x0554  */
-#define FV_FLD_ITEM_227                   1365 /* 0x0555  */
-#define FV_FLD_ITEM_228                   1366 /* 0x0556  */
-#define FV_FLD_ITEM_229                   1367 /* 0x0557  */
-#define FV_FLD_ITEM_230                   1368 /* 0x0558  */
-#define FV_FLD_ITEM_231                   1369 /* 0x0559  */
-#define FV_FLD_ITEM_232                   1370 /* 0x055a  */
-#define FV_FLD_ITEM_233                   1371 /* 0x055b  */
-#define FV_FLD_ITEM_234                   1372 /* 0x055c  */
-#define FV_FLD_ITEM_235                   1373 /* 0x055d  */
-#define FV_FLD_ITEM_236                   1374 /* 0x055e  */
-#define FV_FLD_ITEM_237                   1375 /* 0x055f  */
-#define FV_FLD_ITEM_238                   1376 /* 0x0560  */
-#define FV_FLD_ITEM_239                   1377 /* 0x0561  */
-#define FV_FLD_ITEM_240                   1378 /* 0x0562  */
-#define FV_FLD_ITEM_241                   1379 /* 0x0563  */
-#define FV_FLD_ITEM_242                   1380 /* 0x0564  */
-#define FV_FLD_ITEM_243                   1381 /* 0x0565  */
-#define FV_FLD_ITEM_244                   1382 /* 0x0566  */
-#define FV_FLD_ITEM_245                   1383 /* 0x0567  */
-#define FV_FLD_ITEM_246                   1384 /* 0x0568  */
-#define FV_FLD_ITEM_247                   1385 /* 0x0569  */
-#define FV_FLD_ITEM_248                   1386 /* 0x056a  */
-#define FV_FLD_ITEM_249                   1387 /* 0x056b  */
-#define FV_FLD_ITEM_250                   1388 /* 0x056c  */
-#define FV_FLD_ITEM_251                   1389 /* 0x056d  */
-#define FV_FLD_ITEM_252                   1390 /* 0x056e  */
-#define FV_FLD_ITEM_253                   1391 /* 0x056f  */
-#define FV_FLD_ITEM_254                   1392 /* 0x0570  */
-#define FV_FLD_ITEM_255                   1393 /* 0x0571  */
-#define FV_FLD_ITEM_256                   1394 /* 0x0572  */
-#define FV_FLD_ITEM_257                   1395 /* 0x0573  */
-#define FV_FLD_ITEM_258                   1396 /* 0x0574  */
-#define FV_FLD_ITEM_259                   1397 /* 0x0575  */
-#define FV_FLD_ITEM_260                   1398 /* 0x0576  */
-#define FV_FLD_ITEM_261                   1399 /* 0x0577  */
-#define FV_FLD_ITEM_262                   1400 /* 0x0578  */
-#define FV_FLD_ITEM_263                   1401 /* 0x0579  */
-#define FV_FLD_ITEM_264                   1402 /* 0x057a  */
-#define FV_FLD_ITEM_265                   1403 /* 0x057b  */
-#define FV_FLD_ITEM_266                   1404 /* 0x057c  */
-#define FV_FLD_ITEM_267                   1405 /* 0x057d  */
-#define FV_FLD_ITEM_268                   1406 /* 0x057e  */
-#define FV_FLD_ITEM_269                   1407 /* 0x057f  */
-#define FV_FLD_ITEM_270                   1408 /* 0x0580  */
-#define FV_FLD_ITEM_271                   1409 /* 0x0581  */
-#define FV_FLD_ITEM_272                   1410 /* 0x0582  */
-#define FV_FLD_ITEM_273                   1411 /* 0x0583  */
-#define FV_FLD_ITEM_274                   1412 /* 0x0584  */
-#define FV_FLD_ITEM_275                   1413 /* 0x0585  */
-#define FV_FLD_ITEM_276                   1414 /* 0x0586  */
-#define FV_FLD_ITEM_277                   1415 /* 0x0587  */
-#define FV_FLD_ITEM_278                   1416 /* 0x0588  */
-#define FV_FLD_ITEM_279                   1417 /* 0x0589  */
-#define FV_FLD_ITEM_280                   1418 /* 0x058a  */
-#define FV_FLD_ITEM_281                   1419 /* 0x058b  */
-#define FV_FLD_ITEM_282                   1420 /* 0x058c  */
-#define FV_FLD_ITEM_283                   1421 /* 0x058d  */
-#define FV_FLD_ITEM_284                   1422 /* 0x058e  */
-#define FV_FLD_ITEM_285                   1423 /* 0x058f  */
-#define FV_FLD_ITEM_286                   1424 /* 0x0590  */
-#define FV_FLD_ITEM_287                   1425 /* 0x0591  */
-#define FV_FLD_ITEM_288                   1426 /* 0x0592  */
-#define FV_FLD_ITEM_289                   1427 /* 0x0593  */
-#define FV_FLD_ITEM_290                   1428 /* 0x0594  */
-#define FV_FLD_ITEM_291                   1429 /* 0x0595  */
-#define FV_FLD_ITEM_292                   1430 /* 0x0596  */
-#define FV_FLD_ITEM_293                   1431 /* 0x0597  */
-#define FV_FLD_ITEM_294                   1432 /* 0x0598  */
-#define FV_FLD_ITEM_295                   1433 /* 0x0599  */
-#define FV_FLD_ITEM_296                   1434 /* 0x059a  */
-#define FV_FLD_ITEM_297                   1435 /* 0x059b  */
-#define FV_FLD_ITEM_298                   1436 /* 0x059c  */
-#define FV_FLD_ITEM_299                   1437 /* 0x059d  */
-#define FV_FLD_ITEM_300                   1438 /* 0x059e  */
-#define FV_FLD_ITEM_301                   1439 /* 0x059f  */
-#define FV_FLD_ITEM_302                   1440 /* 0x05a0  */
-#define FV_FLD_ITEM_303                   1441 /* 0x05a1  */
-#define FV_FLD_ITEM_304                   1442 /* 0x05a2  */
-#define FV_FLD_ITEM_305                   1443 /* 0x05a3  */
-#define FV_FLD_ITEM_306                   1444 /* 0x05a4  */
-#define FV_FLD_ITEM_307                   1445 /* 0x05a5  */
-#define FV_FLD_ITEM_308                   1446 /* 0x05a6  */
-#define FV_FLD_ITEM_309                   1447 /* 0x05a7  */
-#define FV_FLD_ITEM_310                   1448 /* 0x05a8  */
-#define FV_FLD_ITEM_311                   1449 /* 0x05a9  */
-#define FV_FLD_ITEM_312                   1450 /* 0x05aa  */
-#define FV_FLD_ITEM_313                   1451 /* 0x05ab  */
-#define FV_FLD_ITEM_314                   1452 /* 0x05ac  */
-#define FV_FLD_ITEM_315                   1453 /* 0x05ad  */
-#define FV_FLD_ITEM_316                   1454 /* 0x05ae  */
-#define FV_FLD_ITEM_317                   1455 /* 0x05af  */
-#define FV_FLD_ITEM_318                   1456 /* 0x05b0  */
-#define FV_FLD_ITEM_319                   1457 /* 0x05b1  */
-#define FV_FLD_ITEM_320                   1458 /* 0x05b2  */
-#define FV_FLD_ITEM_321                   1459 /* 0x05b3  */
-#define FV_FLD_ITEM_322                   1460 /* 0x05b4  */
-#define FV_FLD_ITEM_323                   1461 /* 0x05b5  */
-#define FV_FLD_ITEM_324                   1462 /* 0x05b6  */
-#define FV_FLD_ITEM_325                   1463 /* 0x05b7  */
-#define FV_FLD_ITEM_326                   1464 /* 0x05b8  */
-#define FV_FLD_ITEM_327                   1465 /* 0x05b9  */
-#define FV_FLD_ITEM_328                   1466 /* 0x05ba  */
-#define FV_FLD_ITEM_329                   1467 /* 0x05bb  */
-#define FV_FLD_ITEM_330                   1468 /* 0x05bc  */
-#define FV_FLD_ITEM_331                   1469 /* 0x05bd  */
-#define FV_FLD_ITEM_332                   1470 /* 0x05be  */
-#define FV_FLD_ITEM_333                   1471 /* 0x05bf  */
-#define FV_FLD_ITEM_334                   1472 /* 0x05c0  */
-#define FV_FLD_ITEM_335                   1473 /* 0x05c1  */
-#define FV_FLD_ITEM_336                   1474 /* 0x05c2  */
-#define FV_FLD_ITEM_337                   1475 /* 0x05c3  */
-#define FV_FLD_ITEM_338                   1476 /* 0x05c4  */
-#define FV_FLD_ITEM_339                   1477 /* 0x05c5  */
-#define FV_FLD_ITEM_340                   1478 /* 0x05c6  */
-#define FV_FLD_ITEM_341                   1479 /* 0x05c7  */
-#define FV_FLD_ITEM_342                   1480 /* 0x05c8  */
-#define FV_FLD_ITEM_343                   1481 /* 0x05c9  */
-#define FV_FLD_ITEM_344                   1482 /* 0x05ca  */
-#define FV_FLD_ITEM_345                   1483 /* 0x05cb  */
-#define FV_FLD_ITEM_346                   1484 /* 0x05cc  */
-#define FV_FLD_ITEM_347                   1485 /* 0x05cd  */
-#define FV_FLD_ITEM_348                   1486 /* 0x05ce  */
-#define FV_FLD_ITEM_349                   1487 /* 0x05cf  */
-#define FV_FLD_ITEM_350                   1488 /* 0x05d0  */
-#define FV_FLD_ITEM_351                   1489 /* 0x05d1  */
-#define FV_FLD_ITEM_352                   1490 /* 0x05d2  */
-#define FV_FLD_ITEM_353                   1491 /* 0x05d3  */
-#define FV_FLD_ITEM_354                   1492 /* 0x05d4  */
-#define FV_FLD_ITEM_355                   1493 /* 0x05d5  */
-#define FV_FLD_ITEM_356                   1494 /* 0x05d6  */
-#define FV_FLD_ITEM_357                   1495 /* 0x05d7  */
-#define FV_FLD_ITEM_358                   1496 /* 0x05d8  */
-#define FV_FLD_ITEM_359                   1497 /* 0x05d9  */
-#define FV_FLD_ITEM_360                   1498 /* 0x05da  */
-#define FV_FLD_ITEM_361                   1499 /* 0x05db  */
-#define FV_FLD_ITEM_362                   1500 /* 0x05dc  */
-#define FV_FLD_ITEM_363                   1501 /* 0x05dd  */
-#define FV_FLD_ITEM_364                   1502 /* 0x05de  */
-#define FV_FLD_ITEM_365                   1503 /* 0x05df  */
-#define FV_FLD_ITEM_366                   1504 /* 0x05e0  */
-#define FV_FLD_ITEM_367                   1505 /* 0x05e1  */
-#define FV_FLD_ITEM_368                   1506 /* 0x05e2  */
-#define FV_FLD_ITEM_369                   1507 /* 0x05e3  */
+#define FV_FLD_ITEM_0                     1100 /* 0x044c  */
+#define FV_FLD_ITEM_1                     1101 /* 0x044d  */
+#define FV_FLD_ITEM_2                     1102 /* 0x044e  */
+#define FV_FLD_ITEM_3                     1103 /* 0x044f  */
+#define FV_FLD_ITEM_4                     1104 /* 0x0450  */
+#define FV_FLD_ITEM_5                     1105 /* 0x0451  */
+#define FV_FLD_ITEM_6                     1106 /* 0x0452  */
+#define FV_FLD_ITEM_7                     1107 /* 0x0453  */
+#define FV_FLD_ITEM_8                     1108 /* 0x0454  */
+#define FV_FLD_ITEM_9                     1109 /* 0x0455  */
+#define FV_FLD_ITEM_10                    1110 /* 0x0456  */
+#define FV_FLD_ITEM_11                    1111 /* 0x0457  */
+#define FV_FLD_ITEM_12                    1112 /* 0x0458  */
+#define FV_FLD_ITEM_13                    1113 /* 0x0459  */
+#define FV_FLD_ITEM_14                    1114 /* 0x045a  */
+#define FV_FLD_ITEM_15                    1115 /* 0x045b  */
+#define FV_FLD_ITEM_16                    1116 /* 0x045c  */
+#define FV_FLD_ITEM_17                    1117 /* 0x045d  */
+#define FV_FLD_ITEM_18                    1118 /* 0x045e  */
+#define FV_FLD_ITEM_19                    1119 /* 0x045f  */
+#define FV_FLD_ITEM_20                    1120 /* 0x0460  */
+#define FV_FLD_ITEM_21                    1121 /* 0x0461  */
+#define FV_FLD_ITEM_22                    1122 /* 0x0462  */
+#define FV_FLD_ITEM_23                    1123 /* 0x0463  */
+#define FV_FLD_ITEM_24                    1124 /* 0x0464  */
+#define FV_FLD_ITEM_25                    1125 /* 0x0465  */
+#define FV_FLD_ITEM_26                    1126 /* 0x0466  */
+#define FV_FLD_ITEM_27                    1127 /* 0x0467  */
+#define FV_FLD_ITEM_28                    1128 /* 0x0468  */
+#define FV_FLD_ITEM_29                    1129 /* 0x0469  */
+#define FV_FLD_ITEM_30                    1130 /* 0x046a  */
+#define FV_FLD_ITEM_31                    1131 /* 0x046b  */
+#define FV_FLD_ITEM_32                    1132 /* 0x046c  */
+#define FV_FLD_ITEM_33                    1133 /* 0x046d  */
+#define FV_FLD_ITEM_34                    1134 /* 0x046e  */
+#define FV_FLD_ITEM_35                    1135 /* 0x046f  */
+#define FV_FLD_ITEM_36                    1136 /* 0x0470  */
+#define FV_FLD_ITEM_37                    1137 /* 0x0471  */
+#define FV_FLD_ITEM_38                    1138 /* 0x0472  */
+#define FV_FLD_ITEM_39                    1139 /* 0x0473  */
+#define FV_FLD_ITEM_40                    1140 /* 0x0474  */
+#define FV_FLD_ITEM_41                    1141 /* 0x0475  */
+#define FV_FLD_ITEM_42                    1142 /* 0x0476  */
+#define FV_FLD_ITEM_43                    1143 /* 0x0477  */
+#define FV_FLD_ITEM_44                    1144 /* 0x0478  */
+#define FV_FLD_ITEM_45                    1145 /* 0x0479  */
+#define FV_FLD_ITEM_46                    1146 /* 0x047a  */
+#define FV_FLD_ITEM_47                    1147 /* 0x047b  */
+#define FV_FLD_ITEM_48                    1148 /* 0x047c  */
+#define FV_FLD_ITEM_49                    1149 /* 0x047d  */
+#define FV_FLD_ITEM_50                    1150 /* 0x047e  */
+#define FV_FLD_ITEM_51                    1151 /* 0x047f  */
+#define FV_FLD_ITEM_52                    1152 /* 0x0480  */
+#define FV_FLD_ITEM_53                    1153 /* 0x0481  */
+#define FV_FLD_ITEM_54                    1154 /* 0x0482  */
+#define FV_FLD_ITEM_55                    1155 /* 0x0483  */
+#define FV_FLD_ITEM_56                    1156 /* 0x0484  */
+#define FV_FLD_ITEM_57                    1157 /* 0x0485  */
+#define FV_FLD_ITEM_58                    1158 /* 0x0486  */
+#define FV_FLD_ITEM_59                    1159 /* 0x0487  */
+#define FV_FLD_ITEM_60                    1160 /* 0x0488  */
+#define FV_FLD_ITEM_61                    1161 /* 0x0489  */
+#define FV_FLD_ITEM_62                    1162 /* 0x048a  */
+#define FV_FLD_ITEM_63                    1163 /* 0x048b  */
+#define FV_FLD_ITEM_64                    1164 /* 0x048c  */
+#define FV_FLD_ITEM_65                    1165 /* 0x048d  */
+#define FV_FLD_ITEM_66                    1166 /* 0x048e  */
+#define FV_FLD_ITEM_67                    1167 /* 0x048f  */
+#define FV_FLD_ITEM_68                    1168 /* 0x0490  */
+#define FV_FLD_ITEM_69                    1169 /* 0x0491  */
+#define FV_FLD_ITEM_70                    1170 /* 0x0492  */
+#define FV_FLD_ITEM_71                    1171 /* 0x0493  */
+#define FV_FLD_ITEM_72                    1172 /* 0x0494  */
+#define FV_FLD_ITEM_73                    1173 /* 0x0495  */
+#define FV_FLD_ITEM_74                    1174 /* 0x0496  */
+#define FV_FLD_ITEM_75                    1175 /* 0x0497  */
+#define FV_FLD_ITEM_76                    1176 /* 0x0498  */
+#define FV_FLD_ITEM_77                    1177 /* 0x0499  */
+#define FV_FLD_ITEM_78                    1178 /* 0x049a  */
+#define FV_FLD_ITEM_79                    1179 /* 0x049b  */
+#define FV_FLD_ITEM_80                    1180 /* 0x049c  */
+#define FV_FLD_ITEM_81                    1181 /* 0x049d  */
+#define FV_FLD_ITEM_82                    1182 /* 0x049e  */
+#define FV_FLD_ITEM_83                    1183 /* 0x049f  */
+#define FV_FLD_ITEM_84                    1184 /* 0x04a0  */
+#define FV_FLD_ITEM_85                    1185 /* 0x04a1  */
+#define FV_FLD_ITEM_86                    1186 /* 0x04a2  */
+#define FV_FLD_ITEM_87                    1187 /* 0x04a3  */
+#define FV_FLD_ITEM_88                    1188 /* 0x04a4  */
+#define FV_FLD_ITEM_89                    1189 /* 0x04a5  */
+#define FV_FLD_ITEM_90                    1190 /* 0x04a6  */
+#define FV_FLD_ITEM_91                    1191 /* 0x04a7  */
+#define FV_FLD_ITEM_92                    1192 /* 0x04a8  */
+#define FV_FLD_ITEM_93                    1193 /* 0x04a9  */
+#define FV_FLD_ITEM_94                    1194 /* 0x04aa  */
+#define FV_FLD_ITEM_95                    1195 /* 0x04ab  */
+#define FV_FLD_ITEM_96                    1196 /* 0x04ac  */
+#define FV_FLD_ITEM_97                    1197 /* 0x04ad  */
+#define FV_FLD_ITEM_98                    1198 /* 0x04ae  */
+#define FV_FLD_ITEM_99                    1199 /* 0x04af  */
+#define FV_FLD_ITEM_100                   1200 /* 0x04b0  */
+#define FV_FLD_ITEM_101                   1201 /* 0x04b1  */
+#define FV_FLD_ITEM_102                   1202 /* 0x04b2  */
+#define FV_FLD_ITEM_103                   1203 /* 0x04b3  */
+#define FV_FLD_ITEM_104                   1204 /* 0x04b4  */
+#define FV_FLD_ITEM_105                   1205 /* 0x04b5  */
+#define FV_FLD_ITEM_106                   1206 /* 0x04b6  */
+#define FV_FLD_ITEM_107                   1207 /* 0x04b7  */
+#define FV_FLD_ITEM_108                   1208 /* 0x04b8  */
+#define FV_FLD_ITEM_109                   1209 /* 0x04b9  */
+#define FV_FLD_ITEM_110                   1210 /* 0x04ba  */
+#define FV_FLD_ITEM_111                   1211 /* 0x04bb  */
+#define FV_FLD_ITEM_112                   1212 /* 0x04bc  */
+#define FV_FLD_ITEM_113                   1213 /* 0x04bd  */
+#define FV_FLD_ITEM_114                   1214 /* 0x04be  */
+#define FV_FLD_ITEM_115                   1215 /* 0x04bf  */
+#define FV_FLD_ITEM_116                   1216 /* 0x04c0  */
+#define FV_FLD_ITEM_117                   1217 /* 0x04c1  */
+#define FV_FLD_ITEM_118                   1218 /* 0x04c2  */
+#define FV_FLD_ITEM_119                   1219 /* 0x04c3  */
+#define FV_FLD_ITEM_120                   1220 /* 0x04c4  */
+#define FV_FLD_ITEM_121                   1221 /* 0x04c5  */
+#define FV_FLD_ITEM_122                   1222 /* 0x04c6  */
+#define FV_FLD_ITEM_123                   1223 /* 0x04c7  */
+#define FV_FLD_ITEM_124                   1224 /* 0x04c8  */
+#define FV_FLD_ITEM_125                   1225 /* 0x04c9  */
+#define FV_FLD_ITEM_126                   1226 /* 0x04ca  */
+#define FV_FLD_ITEM_127                   1227 /* 0x04cb  */
+#define FV_FLD_ITEM_128                   1228 /* 0x04cc  */
+#define FV_FLD_ITEM_129                   1229 /* 0x04cd  */
+#define FV_FLD_ITEM_130                   1230 /* 0x04ce  */
+#define FV_FLD_ITEM_131                   1231 /* 0x04cf  */
+#define FV_FLD_ITEM_132                   1232 /* 0x04d0  */
+#define FV_FLD_ITEM_133                   1233 /* 0x04d1  */
+#define FV_FLD_ITEM_134                   1234 /* 0x04d2  */
+#define FV_FLD_ITEM_135                   1235 /* 0x04d3  */
+#define FV_FLD_ITEM_136                   1236 /* 0x04d4  */
+#define FV_FLD_ITEM_137                   1237 /* 0x04d5  */
+#define FV_FLD_ITEM_138                   1238 /* 0x04d6  */
+#define FV_FLD_ITEM_139                   1239 /* 0x04d7  */
+#define FV_FLD_ITEM_140                   1240 /* 0x04d8  */
+#define FV_FLD_ITEM_141                   1241 /* 0x04d9  */
+#define FV_FLD_ITEM_142                   1242 /* 0x04da  */
+#define FV_FLD_ITEM_143                   1243 /* 0x04db  */
+#define FV_FLD_ITEM_144                   1244 /* 0x04dc  */
+#define FV_FLD_ITEM_145                   1245 /* 0x04dd  */
+#define FV_FLD_ITEM_146                   1246 /* 0x04de  */
+#define FV_FLD_ITEM_147                   1247 /* 0x04df  */
+#define FV_FLD_ITEM_148                   1248 /* 0x04e0  */
+#define FV_FLD_ITEM_149                   1249 /* 0x04e1  */
+#define FV_FLD_ITEM_150                   1250 /* 0x04e2  */
+#define FV_FLD_ITEM_151                   1251 /* 0x04e3  */
+#define FV_FLD_ITEM_152                   1252 /* 0x04e4  */
+#define FV_FLD_ITEM_153                   1253 /* 0x04e5  */
+#define FV_FLD_ITEM_154                   1254 /* 0x04e6  */
+#define FV_FLD_ITEM_155                   1255 /* 0x04e7  */
+#define FV_FLD_ITEM_156                   1256 /* 0x04e8  */
+#define FV_FLD_ITEM_157                   1257 /* 0x04e9  */
+#define FV_FLD_ITEM_158                   1258 /* 0x04ea  */
+#define FV_FLD_ITEM_159                   1259 /* 0x04eb  */
+#define FV_FLD_ITEM_160                   1260 /* 0x04ec  */
+#define FV_FLD_ITEM_161                   1261 /* 0x04ed  */
+#define FV_FLD_ITEM_162                   1262 /* 0x04ee  */
+#define FV_FLD_ITEM_163                   1263 /* 0x04ef  */
+#define FV_FLD_ITEM_164                   1264 /* 0x04f0  */
+#define FV_FLD_ITEM_165                   1265 /* 0x04f1  */
+#define FV_FLD_ITEM_166                   1266 /* 0x04f2  */
+#define FV_FLD_ITEM_167                   1267 /* 0x04f3  */
+#define FV_FLD_ITEM_168                   1268 /* 0x04f4  */
+#define FV_FLD_ITEM_169                   1269 /* 0x04f5  */
+#define FV_FLD_ITEM_170                   1270 /* 0x04f6  */
+#define FV_FLD_ITEM_171                   1271 /* 0x04f7  */
+#define FV_FLD_ITEM_172                   1272 /* 0x04f8  */
+#define FV_FLD_ITEM_173                   1273 /* 0x04f9  */
+#define FV_FLD_ITEM_174                   1274 /* 0x04fa  */
+#define FV_FLD_ITEM_175                   1275 /* 0x04fb  */
+#define FV_FLD_ITEM_176                   1276 /* 0x04fc  */
+#define FV_FLD_ITEM_177                   1277 /* 0x04fd  */
+#define FV_FLD_ITEM_178                   1278 /* 0x04fe  */
+#define FV_FLD_ITEM_179                   1279 /* 0x04ff  */
+#define FV_FLD_ITEM_180                   1280 /* 0x0500  */
+#define FV_FLD_ITEM_181                   1281 /* 0x0501  */
+#define FV_FLD_ITEM_182                   1282 /* 0x0502  */
+#define FV_FLD_ITEM_183                   1283 /* 0x0503  */
+#define FV_FLD_ITEM_184                   1284 /* 0x0504  */
+#define FV_FLD_ITEM_185                   1285 /* 0x0505  */
+#define FV_FLD_ITEM_186                   1286 /* 0x0506  */
+#define FV_FLD_ITEM_187                   1287 /* 0x0507  */
+#define FV_FLD_ITEM_188                   1288 /* 0x0508  */
+#define FV_FLD_ITEM_189                   1289 /* 0x0509  */
+#define FV_FLD_ITEM_190                   1290 /* 0x050a  */
+#define FV_FLD_ITEM_191                   1291 /* 0x050b  */
+#define FV_FLD_ITEM_192                   1292 /* 0x050c  */
+#define FV_FLD_ITEM_193                   1293 /* 0x050d  */
+#define FV_FLD_ITEM_194                   1294 /* 0x050e  */
+#define FV_FLD_ITEM_195                   1295 /* 0x050f  */
+#define FV_FLD_ITEM_196                   1296 /* 0x0510  */
+#define FV_FLD_ITEM_197                   1297 /* 0x0511  */
+#define FV_FLD_ITEM_198                   1298 /* 0x0512  */
+#define FV_FLD_ITEM_199                   1299 /* 0x0513  */
+#define FV_FLD_ITEM_200                   1300 /* 0x0514  */
+#define FV_FLD_ITEM_201                   1301 /* 0x0515  */
+#define FV_FLD_ITEM_202                   1302 /* 0x0516  */
+#define FV_FLD_ITEM_203                   1303 /* 0x0517  */
+#define FV_FLD_ITEM_204                   1304 /* 0x0518  */
+#define FV_FLD_ITEM_205                   1305 /* 0x0519  */
+#define FV_FLD_ITEM_206                   1306 /* 0x051a  */
+#define FV_FLD_ITEM_207                   1307 /* 0x051b  */
+#define FV_FLD_ITEM_208                   1308 /* 0x051c  */
+#define FV_FLD_ITEM_209                   1309 /* 0x051d  */
+#define FV_FLD_ITEM_210                   1310 /* 0x051e  */
+#define FV_FLD_ITEM_211                   1311 /* 0x051f  */
+#define FV_FLD_ITEM_212                   1312 /* 0x0520  */
+#define FV_FLD_ITEM_213                   1313 /* 0x0521  */
+#define FV_FLD_ITEM_214                   1314 /* 0x0522  */
+#define FV_FLD_ITEM_215                   1315 /* 0x0523  */
+#define FV_FLD_ITEM_216                   1316 /* 0x0524  */
+#define FV_FLD_ITEM_217                   1317 /* 0x0525  */
+#define FV_FLD_ITEM_218                   1318 /* 0x0526  */
+#define FV_FLD_ITEM_219                   1319 /* 0x0527  */
+#define FV_FLD_ITEM_220                   1320 /* 0x0528  */
+#define FV_FLD_ITEM_221                   1321 /* 0x0529  */
+#define FV_FLD_ITEM_222                   1322 /* 0x052a  */
+#define FV_FLD_ITEM_223                   1323 /* 0x052b  */
+#define FV_FLD_ITEM_224                   1324 /* 0x052c  */
+#define FV_FLD_ITEM_225                   1325 /* 0x052d  */
+#define FV_FLD_ITEM_226                   1326 /* 0x052e  */
+#define FV_FLD_ITEM_227                   1327 /* 0x052f  */
+#define FV_FLD_ITEM_228                   1328 /* 0x0530  */
+#define FV_FLD_ITEM_229                   1329 /* 0x0531  */
+#define FV_FLD_ITEM_230                   1330 /* 0x0532  */
+#define FV_FLD_ITEM_231                   1331 /* 0x0533  */
+#define FV_FLD_ITEM_232                   1332 /* 0x0534  */
+#define FV_FLD_ITEM_233                   1333 /* 0x0535  */
+#define FV_FLD_ITEM_234                   1334 /* 0x0536  */
+#define FV_FLD_ITEM_235                   1335 /* 0x0537  */
+#define FV_FLD_ITEM_236                   1336 /* 0x0538  */
+#define FV_FLD_ITEM_237                   1337 /* 0x0539  */
+#define FV_FLD_ITEM_238                   1338 /* 0x053a  */
+#define FV_FLD_ITEM_239                   1339 /* 0x053b  */
+#define FV_FLD_ITEM_240                   1340 /* 0x053c  */
+#define FV_FLD_ITEM_241                   1341 /* 0x053d  */
+#define FV_FLD_ITEM_242                   1342 /* 0x053e  */
+#define FV_FLD_ITEM_243                   1343 /* 0x053f  */
+#define FV_FLD_ITEM_244                   1344 /* 0x0540  */
+#define FV_FLD_ITEM_245                   1345 /* 0x0541  */
+#define FV_FLD_ITEM_246                   1346 /* 0x0542  */
+#define FV_FLD_ITEM_247                   1347 /* 0x0543  */
+#define FV_FLD_ITEM_248                   1348 /* 0x0544  */
+#define FV_FLD_ITEM_249                   1349 /* 0x0545  */
+#define FV_FLD_ITEM_250                   1350 /* 0x0546  */
+#define FV_FLD_ITEM_251                   1351 /* 0x0547  */
+#define FV_FLD_ITEM_252                   1352 /* 0x0548  */
+#define FV_FLD_ITEM_253                   1353 /* 0x0549  */
+#define FV_FLD_ITEM_254                   1354 /* 0x054a  */
+#define FV_FLD_ITEM_255                   1355 /* 0x054b  */
+#define FV_FLD_ITEM_256                   1356 /* 0x054c  */
+#define FV_FLD_ITEM_257                   1357 /* 0x054d  */
+#define FV_FLD_ITEM_258                   1358 /* 0x054e  */
+#define FV_FLD_ITEM_259                   1359 /* 0x054f  */
+#define FV_FLD_ITEM_260                   1360 /* 0x0550  */
+#define FV_FLD_ITEM_261                   1361 /* 0x0551  */
+#define FV_FLD_ITEM_262                   1362 /* 0x0552  */
+#define FV_FLD_ITEM_263                   1363 /* 0x0553  */
+#define FV_FLD_ITEM_264                   1364 /* 0x0554  */
+#define FV_FLD_ITEM_265                   1365 /* 0x0555  */
+#define FV_FLD_ITEM_266                   1366 /* 0x0556  */
+#define FV_FLD_ITEM_267                   1367 /* 0x0557  */
+#define FV_FLD_ITEM_268                   1368 /* 0x0558  */
+#define FV_FLD_ITEM_269                   1369 /* 0x0559  */
+#define FV_FLD_ITEM_270                   1370 /* 0x055a  */
+#define FV_FLD_ITEM_271                   1371 /* 0x055b  */
+#define FV_FLD_ITEM_272                   1372 /* 0x055c  */
+#define FV_FLD_ITEM_273                   1373 /* 0x055d  */
+#define FV_FLD_ITEM_274                   1374 /* 0x055e  */
+#define FV_FLD_ITEM_275                   1375 /* 0x055f  */
+#define FV_FLD_ITEM_276                   1376 /* 0x0560  */
+#define FV_FLD_ITEM_277                   1377 /* 0x0561  */
+#define FV_FLD_ITEM_278                   1378 /* 0x0562  */
+#define FV_FLD_ITEM_279                   1379 /* 0x0563  */
+#define FV_FLD_ITEM_280                   1380 /* 0x0564  */
+#define FV_FLD_ITEM_281                   1381 /* 0x0565  */
+#define FV_FLD_ITEM_282                   1382 /* 0x0566  */
+#define FV_FLD_ITEM_283                   1383 /* 0x0567  */
+#define FV_FLD_ITEM_284                   1384 /* 0x0568  */
+#define FV_FLD_ITEM_285                   1385 /* 0x0569  */
+#define FV_FLD_ITEM_286                   1386 /* 0x056a  */
+#define FV_FLD_ITEM_287                   1387 /* 0x056b  */
+#define FV_FLD_ITEM_288                   1388 /* 0x056c  */
+#define FV_FLD_ITEM_289                   1389 /* 0x056d  */
+#define FV_FLD_ITEM_290                   1390 /* 0x056e  */
+#define FV_FLD_ITEM_291                   1391 /* 0x056f  */
+#define FV_FLD_ITEM_292                   1392 /* 0x0570  */
+#define FV_FLD_ITEM_293                   1393 /* 0x0571  */
+#define FV_FLD_ITEM_294                   1394 /* 0x0572  */
+#define FV_FLD_ITEM_295                   1395 /* 0x0573  */
+#define FV_FLD_ITEM_296                   1396 /* 0x0574  */
+#define FV_FLD_ITEM_297                   1397 /* 0x0575  */
+#define FV_FLD_ITEM_298                   1398 /* 0x0576  */
+#define FV_FLD_ITEM_299                   1399 /* 0x0577  */
+#define FV_FLD_ITEM_300                   1400 /* 0x0578  */
+#define FV_FLD_ITEM_301                   1401 /* 0x0579  */
+#define FV_FLD_ITEM_302                   1402 /* 0x057a  */
+#define FV_FLD_ITEM_303                   1403 /* 0x057b  */
+#define FV_FLD_ITEM_304                   1404 /* 0x057c  */
+#define FV_FLD_ITEM_305                   1405 /* 0x057d  */
+#define FV_FLD_ITEM_306                   1406 /* 0x057e  */
+#define FV_FLD_ITEM_307                   1407 /* 0x057f  */
+#define FV_FLD_ITEM_308                   1408 /* 0x0580  */
+#define FV_FLD_ITEM_309                   1409 /* 0x0581  */
+#define FV_FLD_ITEM_310                   1410 /* 0x0582  */
+#define FV_FLD_ITEM_311                   1411 /* 0x0583  */
+#define FV_FLD_ITEM_312                   1412 /* 0x0584  */
+#define FV_FLD_ITEM_313                   1413 /* 0x0585  */
+#define FV_FLD_ITEM_314                   1414 /* 0x0586  */
+#define FV_FLD_ITEM_315                   1415 /* 0x0587  */
+#define FV_FLD_ITEM_316                   1416 /* 0x0588  */
+#define FV_FLD_ITEM_317                   1417 /* 0x0589  */
+#define FV_FLD_ITEM_318                   1418 /* 0x058a  */
+#define FV_FLD_ITEM_319                   1419 /* 0x058b  */
+#define FV_FLD_ITEM_320                   1420 /* 0x058c  */
+#define FV_FLD_ITEM_321                   1421 /* 0x058d  */
+#define FV_FLD_ITEM_322                   1422 /* 0x058e  */
+#define FV_FLD_ITEM_323                   1423 /* 0x058f  */
+#define FV_FLD_ITEM_324                   1424 /* 0x0590  */
+#define FV_FLD_ITEM_325                   1425 /* 0x0591  */
+#define FV_FLD_ITEM_326                   1426 /* 0x0592  */
+#define FV_FLD_ITEM_327                   1427 /* 0x0593  */
+#define FV_FLD_ITEM_328                   1428 /* 0x0594  */
+#define FV_FLD_ITEM_329                   1429 /* 0x0595  */
+#define FV_FLD_ITEM_330                   1430 /* 0x0596  */
+#define FV_FLD_ITEM_331                   1431 /* 0x0597  */
+#define FV_FLD_ITEM_332                   1432 /* 0x0598  */
+#define FV_FLD_ITEM_333                   1433 /* 0x0599  */
+#define FV_FLD_ITEM_334                   1434 /* 0x059a  */
+#define FV_FLD_ITEM_335                   1435 /* 0x059b  */
+#define FV_FLD_ITEM_336                   1436 /* 0x059c  */
+#define FV_FLD_ITEM_337                   1437 /* 0x059d  */
+#define FV_FLD_ITEM_338                   1438 /* 0x059e  */
+#define FV_FLD_ITEM_339                   1439 /* 0x059f  */
+#define FV_FLD_ITEM_340                   1440 /* 0x05a0  */
+#define FV_FLD_ITEM_341                   1441 /* 0x05a1  */
+#define FV_FLD_ITEM_342                   1442 /* 0x05a2  */
+#define FV_FLD_ITEM_343                   1443 /* 0x05a3  */
+#define FV_FLD_ITEM_344                   1444 /* 0x05a4  */
+#define FV_FLD_ITEM_345                   1445 /* 0x05a5  */
+#define FV_FLD_ITEM_346                   1446 /* 0x05a6  */
+#define FV_FLD_ITEM_347                   1447 /* 0x05a7  */
+#define FV_FLD_ITEM_348                   1448 /* 0x05a8  */
+#define FV_FLD_ITEM_349                   1449 /* 0x05a9  */
+#define FV_FLD_ITEM_350                   1450 /* 0x05aa  */
+#define FV_FLD_ITEM_351                   1451 /* 0x05ab  */
+#define FV_FLD_ITEM_352                   1452 /* 0x05ac  */
+#define FV_FLD_ITEM_353                   1453 /* 0x05ad  */
+#define FV_FLD_ITEM_354                   1454 /* 0x05ae  */
+#define FV_FLD_ITEM_355                   1455 /* 0x05af  */
+#define FV_FLD_ITEM_356                   1456 /* 0x05b0  */
+#define FV_FLD_ITEM_357                   1457 /* 0x05b1  */
+#define FV_FLD_ITEM_358                   1458 /* 0x05b2  */
+#define FV_FLD_ITEM_359                   1459 /* 0x05b3  */
+#define FV_FLD_ITEM_360                   1460 /* 0x05b4  */
+#define FV_FLD_ITEM_361                   1461 /* 0x05b5  */
+#define FV_FLD_ITEM_362                   1462 /* 0x05b6  */
+#define FV_FLD_ITEM_363                   1463 /* 0x05b7  */
+#define FV_FLD_ITEM_364                   1464 /* 0x05b8  */
+#define FV_FLD_ITEM_365                   1465 /* 0x05b9  */
+#define FV_FLD_ITEM_366                   1466 /* 0x05ba  */
+#define FV_FLD_ITEM_367                   1467 /* 0x05bb  */
+#define FV_FLD_ITEM_368                   1468 /* 0x05bc  */
+#define FV_FLD_ITEM_369                   1469 /* 0x05bd  */
 
-#define FV_FLD_ITEM_AREA_END              1507 /* 0x05e3  */
+#define FV_FLD_ITEM_AREA_END              1499 /* 0x05db  */
 
 
 /* flags "" 1520 ～ 2319 */
