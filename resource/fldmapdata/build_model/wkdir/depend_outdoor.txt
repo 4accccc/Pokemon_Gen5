@@ -458,4 +458,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/st_house02.nsbmd \
 	$(RESDIR)/st_house03.nsbmd \
 	$(RESDIR)/s_parasol_01.nsbmd \
+	$(RESDIR)/mcottage_01.nsbmd \
 

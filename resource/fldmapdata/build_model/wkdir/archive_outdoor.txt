@@ -457,3 +457,4 @@
 "nsbmdfiles/st_house02.nsbmd"
 "nsbmdfiles/st_house03.nsbmd"
 "nsbmdfiles/s_parasol_01.nsbmd"
+"nsbmdfiles/mcottage_01.nsbmd"
