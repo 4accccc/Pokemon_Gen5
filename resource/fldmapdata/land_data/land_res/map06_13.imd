@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-15T12:00:00" source="map06_13.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-10-24T13:24:07" source="map06_13.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-15T12:00:00" source="map06_13.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-10-24T13:24:07" source="map06_13.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.312500 -2.000000" whd="4.000000 0.828125 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.312500 -2.000000" whd="4.000000 0.828125 3.750000"/>
 
 <tex_image_array size="30">
 	<tex_image index="0" name="gake01a"
@@ -621,38 +621,38 @@
 		path="C:/home/swan_data3d/field/out09/chip/tex/out9_michi6.tga"
 	>
 		<bitmap size="256">
-			6663 6666 6666 2356 8865 8888 8888 6788
-			6565 5555 5555 2235 7655 7777 8777 6888
-			5655 5555 5555 2325 7665 7777 7777 6887
-			5565 5555 5555 2333 6665 7777 7777 6877
-			5555 5555 3555 2333 6665 7776 7777 6877
-			5555 5555 3355 2333 6665 7766 7777 6877
-			5555 5555 3335 2333 6665 7666 7777 6877
-			5555 5555 3333 2333 6665 6666 7777 6877
-			5555 3555 3333 2333 6665 6666 7776 6877
-			5555 3355 3333 2333 6665 6666 7766 6877
-			5555 3335 3333 2333 6665 6666 7666 6877
-			5555 3333 3333 2333 6665 6666 6666 6877
-			2555 3333 3333 2333 6665 6666 6666 6876
-			3233 3333 3333 2333 6665 6666 6666 6765
-			3223 3333 3333 2333 6665 6666 6666 6656
-			2222 2222 2222 2222 5555 5555 5555 5555
-			4410 4444 4444 2244 6655 6666 6666 2355
-			2101 2222 2222 2444 6665 5555 5555 2235
-			2101 2222 2222 2442 5665 5555 5555 2325
-			1011 2222 2222 2422 5565 5555 5555 2333
-			1111 2221 2222 2422 5565 5555 3555 2333
-			1111 2211 2222 2422 5565 5555 3355 2333
-			1111 2111 2222 2422 5565 5555 3335 2333
-			1111 1111 2222 2422 5565 5555 3333 2333
-			1111 1111 2221 2422 5565 3555 3333 2333
-			1111 1111 2211 2422 5565 3355 3333 2333
-			1111 1111 2111 2422 5565 3335 3333 2353
-			1111 1111 1111 2422 5565 3333 3333 2353
-			1121 1111 1111 2421 2355 3333 3333 2353
-			1121 1111 1111 2210 3233 3333 3333 2353
-			2211 1222 1111 2101 3223 3333 5353 2335
-			0000 0000 0000 0000 2222 2222 2222 2222
+			2224 2222 2222 1472 5527 5555 5555 2355
+			2727 7777 7777 1147 3277 3333 5333 2555
+			7277 7777 7777 1417 3227 3333 3333 2553
+			7727 7777 7777 1444 2227 3333 3333 2533
+			7777 7777 4777 1444 2227 3332 3333 2533
+			7777 7777 4477 1444 2227 3322 3333 2533
+			7777 7777 4447 1444 2227 3222 3333 2533
+			7777 7777 4444 1444 2227 2222 3333 2533
+			7777 4777 4444 1444 2227 2222 3332 2533
+			7777 4477 4444 1444 2227 2222 3322 2533
+			7777 4447 4444 1444 2227 2222 3222 2533
+			7777 4444 4444 1444 2227 2222 2222 2533
+			1777 4444 4444 1444 2227 2222 2222 2532
+			4144 4444 4444 1444 2227 2222 2222 2327
+			4114 4444 4444 1444 2227 2222 2222 2272
+			1111 1111 1111 1111 7777 7777 7777 7777
+			8806 8888 8888 1188 2277 2222 2222 1477
+			1060 1111 1111 1888 2227 7777 7777 1147
+			1060 1111 1111 1881 7227 7777 7777 1417
+			0600 1111 1111 1811 7727 7777 7777 1444
+			0000 1110 1111 1811 7727 7777 4777 1444
+			0000 1100 1111 1811 7727 7777 4477 1444
+			0000 1000 1111 1811 7727 7777 4447 1444
+			0000 0000 1111 1811 7727 7777 4444 1444
+			0000 0000 1110 1811 7727 4777 4444 1444
+			0000 0000 1100 1811 7727 4477 4444 1444
+			0000 0000 1000 1811 7727 4447 4444 1474
+			0000 0000 0000 1811 7727 4444 4444 1474
+			0010 0000 0000 1810 1477 4444 4444 1474
+			0010 0000 0000 1106 4144 4444 4444 1474
+			1100 0111 0000 1060 4114 4444 7474 1447
+			6666 6666 6666 6666 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
 	<tex_image index="21" name="out9_michi7"
@@ -916,7 +916,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="sea_mizu1_pl"
-		path="C:/home/swan_data3d/field/out00/chip/tex_spring/sea_mizu1.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/sea_mizu1.tga"
 	>
 		<bitmap size="256">
 			7777 7777 8827 4338 3344 8883 8888 7843
@@ -1021,8 +1021,8 @@
 		3a32 4253 7fff 7fff
 	</tex_palette>
 	<tex_palette index="19" name="out9_michi6_pl" color_size="16">
-		35f0 3a11 3e32 4253 4653 4674 4a95 4eb6
-		52d7 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		3a11 3e32 4a95 4eb6 4253 52d7 35f0 4674
+		4653 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="20" name="out9_michi7_pl" color_size="8">
 		3e32 4a95 4253 52d7 4674 56f8 7fff 7fff
@@ -1135,7 +1135,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="kage_out_1"
+	<material index="3" name="kage_out"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1810,10 +1810,10 @@
 	<material index="31" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1831,13 +1831,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="32" name="sea_mizu2"
+	<material index="32" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1927,7 +1927,7 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.000000 -0.625000 -4.000000"
-		volume_max="4.000000 -0.625000 4.000000"
+		volume_max="4.000000 -0.625000 2.000000"
 		volume_r="5.691162"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -1937,10 +1937,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="384.000000 -96.000000"/>
+					<tex st="384.000000 -32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 -0.625000 4.000000"/>
-					<tex st="128.000000 -96.000000"/>
+					<pos_s xyz="-4.000000 -0.625000 2.000000"/>
+					<tex st="128.000000 -32.000000"/>
 					<pos_xy xy="4.000000 -0.625000"/>
 					<tex st="128.000000 160.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
@@ -1954,7 +1954,7 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.000000 -0.421875 -4.000000"
-		volume_max="4.000000 -0.421875 4.000000"
+		volume_max="4.000000 -0.421875 2.000000"
 		volume_r="5.672607"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -1969,9 +1969,9 @@
 					<pos_s xyz="4.000000 -0.421875 -4.000000"/>
 					<tex st="128.000000 -96.000000"/>
 					<pos_xy xy="-4.000000 -0.421875"/>
-					<tex st="128.000000 160.000000"/>
-					<pos_xz xz="-4.000000 4.000000"/>
-					<tex st="384.000000 160.000000"/>
+					<tex st="128.000000 96.000000"/>
+					<pos_xz xz="-4.000000 2.000000"/>
+					<tex st="384.000000 96.000000"/>
 					<pos_xy xy="4.000000 -0.421875"/>
 				</primitive>
 			</primitive_array>
@@ -7269,7 +7269,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1039" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -7284,7 +7284,7 @@
 		vertex_size="2011" polygon_size="683"
 		triangle_size="177" quad_size="506"
 		volume_min="-4.000000 -0.625000 -4.000000"
-		volume_max="4.000000 1.031250 4.000000"
+		volume_max="4.000000 1.031250 3.500000"
 		volume_r="5.691162"
 	>
 		<display index="0" material="0" polygon="16" priority="0"/>
@@ -7319,8 +7319,8 @@
 		<display index="29" material="28" polygon="23" priority="0"/>
 		<display index="30" material="29" polygon="17" priority="0"/>
 		<display index="31" material="30" polygon="4" priority="0"/>
-		<display index="32" material="31" polygon="2" priority="0"/>
-		<display index="33" material="32" polygon="1" priority="0"/>
+		<display index="32" material="31" polygon="1" priority="0"/>
+		<display index="33" material="32" polygon="2" priority="0"/>
 	</node>
 </node_array>
 

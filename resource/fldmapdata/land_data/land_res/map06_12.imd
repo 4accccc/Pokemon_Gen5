@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-29T23:48:38" source="map06_12.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-10-24T13:23:03" source="map06_12.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-29T23:48:38" source="map06_12.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-10-24T13:23:03" source="map06_12.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1224,7 +1224,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="sea_mizu1_pl"
-		path="C:/home/swan_data3d/field/out00/chip/tex_spring/sea_mizu1.tga"
+		path="C:/home/swan_data3d/field/out00/chip/tex/sea_mizu1.tga"
 	>
 		<bitmap size="256">
 			7777 7777 8827 4338 3344 8883 8888 7843
@@ -2123,10 +2123,10 @@
 	<material index="30" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2144,13 +2144,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="31" name="sea_mizu2"
+	<material index="31" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -5326,7 +5326,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1045" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -5374,8 +5374,8 @@
 		<display index="27" material="27" polygon="11" priority="0"/>
 		<display index="28" material="28" polygon="7" priority="0"/>
 		<display index="29" material="29" polygon="8" priority="0"/>
-		<display index="30" material="30" polygon="2" priority="0"/>
-		<display index="31" material="31" polygon="1" priority="0"/>
+		<display index="30" material="30" polygon="1" priority="0"/>
+		<display index="31" material="31" polygon="2" priority="0"/>
 		<display index="32" material="32" polygon="13" priority="0"/>
 		<display index="33" material="33" polygon="14" priority="0"/>
 	</node>

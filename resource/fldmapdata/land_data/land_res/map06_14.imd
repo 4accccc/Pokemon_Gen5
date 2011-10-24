@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-10-12T21:36:57" source="map06_14.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-10-24T14:02:03" source="map06_14.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-10-12T21:36:57" source="map06_14.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-10-24T14:02:03" source="map06_14.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.312500 -2.000000" whd="4.000000 0.924072 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.312500 -3.000000" whd="5.000000 0.924072 5.000000"/>
 
 <tex_image_array size="40">
 	<tex_image index="0" name="c3_sanbashi"
@@ -901,31 +901,31 @@
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			de00 56aa 5555 5555 5555 edaa 0000 0000
-			de00 56aa 5555 5555 5555 edaa 0000 0000
-			bd00 4599 44bb 4444 54bb db99 0000 0000
-			bd00 4599 bb9b bb33 54b9 db99 0000 0000
-			bd00 4599 99b4 99bb 544b db99 0000 0000
-			d000 599b b434 9999 434b b995 000d 0000
-			d000 599b 4234 b99b 4324 b995 000d 0000
-			d000 599b b434 9999 434b b995 000d 0000
-			d000 599b 9b44 9bb9 44b9 b995 000d 0000
+			e000 6aad 5555 5555 5555 daa5 000e 0000
+			e000 6aad 5555 5555 5555 daa5 000e 0000
+			d000 599b 4bb4 4444 4bb4 b995 000d 0000
 			d000 599b b9b4 b33b 4b9b b995 000d 0000
-			d000 599b 3bb4 3333 4bb3 b995 000d 0000
-			d000 599b 3334 3443 4333 b995 000d 0000
-			0000 99bd 3345 bb43 3334 9954 00db 0000
-			0000 99bd 3345 99b4 334b 9954 00db 0000
+			d000 599b 9b44 9bb9 44b9 b995 000d 0000
 			0000 99bd 4345 999b 34b9 9954 00db 0000
-			0000 99bd b445 bb99 4b99 9954 00db 0000
-			0000 99bd 9b45 ddb9 b99b 995b 00db 0000
-			0000 99bd 99b5 00db 99bd 99b9 00db 0000
-			0000 9bd0 99b9 00db bdd0 9999 0db9 0000
-			0000 9bd0 b999 000d d000 999b 0db9 0000
-			0000 9bd0 db99 0000 0000 99bd 0db9 0000
-			0000 bd00 db99 0000 0000 bdd0 db99 0000
+			0000 99bd 2345 99b4 324b 9954 00db 0000
+			0000 99bd 4345 999b 34b9 9954 00db 0000
+			0000 9bd0 4459 b99b b99b 9544 0db9 0000
+			0000 9bd0 b459 3bb9 9bb3 954b 0db9 0000
+			0000 9bd0 b459 333b b333 954b 0db9 0000
+			0000 9bd0 3459 4333 3334 9543 0db9 0000
+			0000 bd00 4599 4333 34bb 5433 db99 0000
+			0000 bd00 4599 b433 4b99 5433 db99 0000
+			0000 bd00 4599 9b43 b999 5434 db99 0000
+			0000 bd00 4599 99b4 99bb 544b db99 0000
+			0000 bd00 b599 b99b 9bdd 54b9 db99 0000
+			0000 bd00 9b99 db99 bd00 5b99 db99 0000
+			0000 bd00 9999 ddb9 d000 999b db9a 0000
+			0000 bd00 9999 00db 0000 99bd db99 0000
+			0000 bd00 b999 000d 0000 9bd0 db99 0000
+			0000 bd00 db99 000d 0000 bd00 db99 0000
 			0000 bd00 0dbb 0000 0000 d000 dbbb 0000
 			0000 dd00 00dd 0000 0000 0000 dddd 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -943,31 +943,31 @@
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			e800 71cc 7777 7777 1777 8ecc 0000 0000
+			e800 6aad 5555 5555 5555 daa5 000e 0000
 			e000 6aad 5555 5555 5555 daa5 000e 0000
-			e000 6aad 5555 5555 5555 daa5 000e 0000
-			d000 599b 4bb4 4444 4bb4 b995 000d 0000
-			d000 599b b9b4 b33b 4b9b b995 000d 0000
-			d000 599b 9b44 9bb9 44b9 b995 000d 0000
-			0000 99bd 4345 999b 34b9 9954 00db 0000
-			0000 99bd 2345 99b4 324b 9954 00db 0000
-			0000 99bd 4345 999b 34b9 9954 00db 0000
-			0000 9bd0 4459 b99b b99b 9544 0db9 0000
-			0000 9bd0 b459 3bb9 9bb3 954b 0db9 0000
-			0000 bd00 4599 33bb b333 545b db99 0000
-			0000 bd00 4599 3333 3344 5433 db99 0000
-			0000 d000 599b 3334 4bb4 4333 b995 000d
-			0000 d000 599b 4334 b99b 4334 b995 000d
-			0000 d000 599b b434 9999 434b b995 000d
+			0000 99bd bb45 4444 bb44 9954 00db 0000
+			0000 99bd 9b45 33bb b9bb 9954 00db 0000
+			0000 99bd b445 bb99 4b99 9954 00db 0000
+			0000 9bd0 3459 99b4 4b99 9543 0db9 0000
+			0000 9bd0 3459 9b42 24b9 9543 0db9 0000
+			0000 bd00 4599 99b4 99bb 544b db99 0000
+			0000 bd00 4599 bb9b bb33 54b9 db99 0000
+			0000 d000 599b 3bb4 3333 45bb b995 000d
+			0000 d000 599b 3334 3443 4333 b995 000d
+			0000 0000 99bd 3345 bb43 3334 9954 00db
+			0000 0000 99bd 3345 99b4 334b 9954 00db
+			0000 0000 99bd 4345 999b 34b9 9954 00db
 			0000 0000 99bd b445 bb99 4b99 9954 00db
-			0000 0000 99bd 9b45 ddb9 b99b 9954 00db
-			0000 0000 99bd 99b5 00db 99bd 995b 00db
-			0000 0000 99bd b99b 000d 9bd0 99b9 00db
+			0000 0000 9bd0 b459 db99 99bd 954b 0db9
+			0000 0000 9bd0 9b59 0db9 9bd0 95b9 0db9
+			0000 0000 9bd0 99b9 00db bd00 9b99 0db9
 			0000 0000 9bd0 b999 000d d000 999b 0db9
 			0000 0000 9bd0 db99 0000 0000 99bd 0db9
 			0000 0000 9bd0 0db9 0000 0000 9bd0 0db9
 			0000 0000 bbd0 00db 0000 0000 bd00 0dbb
 			0000 0000 ddd0 000d 0000 0000 d000 0ddd
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -984,32 +984,32 @@
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
 			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			e800 71cc 7777 7777 1777 8ecc 0000 0000
-			de00 56aa 5555 5555 5555 edaa 0000 0000
-			de00 56aa 5555 5555 5555 edaa 0000 0000
-			bd00 4599 44bb b444 544b db99 0000 0000
-			9bd0 b459 3bb9 9bb3 954b 0db9 0000 0000
-			9bd0 4459 b99b b99b 9544 0db9 0000 0000
-			9bd0 3459 99b4 4b99 9543 0db9 0000 0000
-			9bd0 3459 9b42 24b9 9543 0db9 0000 0000
-			9bd0 3459 99b4 4b99 9543 0db9 0000 0000
-			9bd0 4459 b99b b99b 9544 0db9 0000 0000
-			9bd0 b459 3bb9 9bb3 954b 0db9 0000 0000
-			9bd0 b459 333b b333 954b 0db9 0000 0000
-			9bd0 3459 4333 3334 9543 0db9 0000 0000
-			9bd0 3459 b433 334b 9543 0db9 0000 0000
-			9bd0 3459 9b43 34b9 9543 0db9 0000 0000
-			9bd0 3459 99b4 4b99 9543 0db9 0000 0000
+			ce80 771c 7777 7777 c177 08ec 0000 0000
+			ce80 771c 7777 7777 c177 08ec 0000 0000
+			ade0 556a 5555 5555 a555 0eda 0000 0000
+			ade0 556a 5555 5555 a555 0eda 0000 0000
+			9bd0 b459 444b bb44 9544 0db9 0000 0000
+			99bd 9b45 33bb b9bb 9954 00db 0000 0000
 			99bd b445 bb99 4b99 9954 00db 0000 0000
-			99bd 9b45 ddb9 b99b 9954 00db 0000 0000
-			99bd 99b5 00db 99bd 995b 00db 0000 0000
-			99bd b99b 000d 9bd0 99b9 00db 0000 0000
-			99bd db99 0000 bd00 9999 00db 0000 0000
-			99bd 0db9 0000 d000 999b 00db 0000 0000
-			99bd 00db 0000 0000 99bd 00db 0000 0000
-			bbbd 000d 0000 0000 bbd0 00db 0000 0000
-			dddd 0000 0000 0000 dd00 00dd 0000 0000
+			99bd 4345 999b 34b9 9954 00db 0000 0000
+			99bd 2345 99b4 324b 9954 00db 0000 0000
+			99bd 4345 999b 34b9 9954 00db 0000 0000
+			99bd b445 bb99 4b99 9954 00db 0000 0000
+			99bd 9b45 33bb b9bb 9954 00db 0000 0000
+			99bd bb45 3333 bb33 9954 00db 0000 0000
+			99bd 3345 4433 3333 9954 00db 0000 0000
+			99bd 3345 bb43 3334 9954 00db 0000 0000
+			99bd 3345 99b4 334b 9954 00db 0000 0000
+			99bd 4345 999b 34b9 9954 00db 0000 0000
+			9bd0 4459 b99b b99b 9544 0db9 0000 0000
+			9bd0 b459 db99 99bd 954b 0db9 0000 0000
+			9bd0 9b59 0db9 9bd0 95b9 0db9 0000 0000
+			9bd0 99b9 00db bd00 9b99 0db9 0000 0000
+			9bd0 b999 000d d000 999b 0db9 0000 0000
+			9bd0 db99 0000 0000 99bd 0db9 0000 0000
+			9bd0 0db9 0000 0000 9bd0 0db9 0000 0000
+			bbd0 00db 0000 0000 bd00 0dbb 0000 0000
+			ddd0 000d 0000 0000 d000 0ddd 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2969,55 +2969,79 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="2" name="polygon2"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -0.625000 -4.000000"
-		volume_max="4.000000 -0.625000 4.000000"
-		volume_r="5.691162"
+		vertex_size="9" polygon_size="3"
+		triangle_size="1" quad_size="2"
+		volume_min="-4.000000 -0.625000 -6.000000"
+		volume_max="6.000000 -0.625000 4.000000"
+		volume_r="8.508301"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="384.000000 -352.000000"/>
+					<tex st="384.000000 -32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 -0.625000 4.000000"/>
+					<pos_s xyz="-4.000000 -0.625000 -6.000000"/>
+					<tex st="384.000000 -352.000000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="128.000000 -32.000000"/>
+					<pos_xz xz="4.000000 -6.000000"/>
 					<tex st="128.000000 -352.000000"/>
-					<pos_xy xy="4.000000 -0.625000"/>
-					<tex st="128.000000 -96.000000"/>
-					<pos_xz xz="4.000000 -4.000000"/>
-					<tex st="384.000000 -96.000000"/>
-					<pos_xy xy="-4.000000 -0.625000"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="64.000000 -96.000000"/>
+					<pos_xz xz="6.000000 -4.000000"/>
+					<tex st="64.000000 -352.000000"/>
+					<pos_xz xz="6.000000 4.000000"/>
+				</primitive>
+				<primitive index="1" type="triangles" vertex_size="3">
+					<tex st="128.000000 -32.000000"/>
+					<pos_xz xz="4.000000 -6.000000"/>
+					<tex st="64.000000 -96.000000"/>
+					<pos_xz xz="6.000000 -4.000000"/>
+					<tex st="64.000000 -32.000000"/>
+					<pos_xz xz="6.000000 -6.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 	<polygon index="3" name="polygon3"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -0.421875 -4.000000"
-		volume_max="4.000000 -0.421875 4.000000"
-		volume_r="5.672607"
+		vertex_size="9" polygon_size="3"
+		triangle_size="1" quad_size="2"
+		volume_min="-4.000000 -0.421875 -6.000000"
+		volume_max="6.000000 -0.421875 4.000000"
+		volume_r="8.495850"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="384.000000 -352.000000"/>
+					<tex st="128.000000 -416.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="4.000000 -0.421875 -4.000000"/>
-					<tex st="128.000000 -352.000000"/>
-					<pos_xy xy="-4.000000 -0.421875"/>
+					<pos_s xyz="-4.000000 -0.421875 -6.000000"/>
 					<tex st="128.000000 -96.000000"/>
 					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="384.000000 -416.000000"/>
+					<pos_xz xz="4.000000 -6.000000"/>
 					<tex st="384.000000 -96.000000"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="448.000000 -352.000000"/>
+					<pos_xz xz="6.000000 -4.000000"/>
+					<tex st="448.000000 -96.000000"/>
+					<pos_xz xz="6.000000 4.000000"/>
+				</primitive>
+				<primitive index="1" type="triangles" vertex_size="3">
+					<tex st="448.000000 -416.000000"/>
+					<pos_xz xz="6.000000 -6.000000"/>
+					<tex st="384.000000 -416.000000"/>
 					<pos_xy xy="4.000000 -0.421875"/>
+					<tex st="448.000000 -352.000000"/>
+					<pos_xz xz="6.000000 -4.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -10397,7 +10421,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1045" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -10409,11 +10433,11 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="40"
-		vertex_size="3133" polygon_size="961"
-		triangle_size="177" quad_size="784"
-		volume_min="-4.000000 -0.625000 -4.000000"
-		volume_max="4.000000 1.223633 4.000000"
-		volume_r="5.691162"
+		vertex_size="3143" polygon_size="965"
+		triangle_size="179" quad_size="786"
+		volume_min="-4.000000 -0.625000 -6.000000"
+		volume_max="6.000000 1.223633 4.000000"
+		volume_r="8.508301"
 	>
 		<display index="0" material="0" polygon="20" priority="0"/>
 		<display index="1" material="1" polygon="35" priority="0"/>
@@ -10458,8 +10482,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="3133" polygon_size="961"
-	triangle_size="177" quad_size="784"/>
+<output_info vertex_size="3143" polygon_size="965"
+	triangle_size="179" quad_size="786"/>
 
 </body>
 
