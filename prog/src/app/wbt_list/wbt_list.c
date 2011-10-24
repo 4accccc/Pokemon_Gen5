@@ -67,18 +67,6 @@
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-// debug表示が必要なときはセット
-#define _DEBUG_LOCAL_
-//#undef  _DEBUG_LOCAL_
-
-// Bボタン戻りがある場合(debug)
-#define _DEBUG_INPUT_
-#undef  _DEBUG_INPUT_
-
-// SOUND
-#define _DEBUG_SOUND_
-#undef  _DEBUG_SOUND_
-
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -716,7 +704,6 @@ static void wbt_calc_random( WBTLIST_MAIN_WORK* wk );
 
 // 以下(debug)
 static void wbt_debug_param( WBTLIST_MAIN_WORK* wk );
-static void wbt_debug( WBTLIST_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -881,21 +868,14 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 			}
 			break;
 		case 1:
-			if(!(wk->DebugFlag & FLG_DBG_INPUT)){
-				// 終了判定
-				if(wk->Step == STEP_END){
-					//--------
-					// Que待ち
-					//--------
-					bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
-					if(bflg == TRUE){
-						OS_Printf("que end(wbt_list)\n");
-						(*seq) ++;
-					}
-				}
-			}else{
-				if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-				{
+			// 終了判定
+			if(wk->Step == STEP_END){
+				//--------
+				// Que待ち
+				//--------
+				bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+				if(bflg == TRUE){
+					OS_Printf("que end(wbt_list)\n");
 					(*seq) ++;
 				}
 			}
@@ -1164,17 +1144,6 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_KEY );
 	// メッセージ送りマーク用(キー入力のみ、とした)
 	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, FALSE, wk->heapID );
-	//
-	//
-	// DebugFlagの判定
-#ifdef PM_DEBUG
-
-	// 入力debug
-#ifdef _DEBUG_INPUT_
-	wk->DebugFlag |= FLG_DBG_INPUT;
-#endif		// _DEBUG_INPUT
-
-#endif		// PM_DEBUG
 }
 
 //-----------------------------------------------------------------------------
@@ -1190,9 +1159,6 @@ static void wbt_main( WBTLIST_MAIN_WORK* wk )
 {
 	// 上画面
 	wbt_up( wk );
-	//
-	// debug
-	wbt_debug( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1526,9 +1492,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 	//
 	// debug
 	if(step != wk->Step){
-#ifdef _DEBUG_LOCAL_
 //		OS_Printf("step :%d\n",wk->Step);
-#endif
 	}
 }
 
@@ -2033,15 +1997,11 @@ static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 po
 static void wbt_init_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum, const s16 sx, const s16 ex, const s16 frame )
 {
 	if(wnum >= MWORK_MAX){
-#ifdef _DEBUG_LOCAL_
 		OS_Printf("wnum ERROR:%d\n",wnum);
-#endif
 		return;
 	}
 	if(frame == 0){
-#ifdef _DEBUG_LOCAL_
 		OS_Printf("frame ERROR:%d\n",frame);
-#endif
 		return;
 	}
 	//
@@ -2897,7 +2857,6 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 		wk->ParamWork[offset].t_2nd = wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2+1].winpos;
 	}
 	
-#ifdef _DEBUG_LOCAL_
 	// 表示
 	for(i=0;i<PARAM_WORK_MAX;i++){
 		OS_Printf("bomb,win,flag,linework,pattern,mesid,1st,2nd:(%d),%d,%d,%x,%d,%d,%d,%d,%d\n",
@@ -2911,7 +2870,6 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 			wk->ParamWork[i].t_1st,
 			wk->ParamWork[i].t_2nd );
 	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -3111,8 +3069,6 @@ static void wbt_calc_random( WBTLIST_MAIN_WORK* wk )
 static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 {
 #ifdef PM_DEBUG
-	
-#ifdef _DEBUG_LOCAL_
 	s16			i;
 	
 	OS_Printf( "stage :%d\n",wk->Param->stage );
@@ -3131,77 +3087,6 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 		OS_Printf("2nd :upsidewin,msgtype (%d):%d,%d\n",
 					i,wk->Param->second_stage[i].upside_win,wk->Param->second_stage[i].msg_type);
 	}
-#endif		// _DEBUG_LOCAL_
-
 #endif		// PM_DEBUG
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  デバッグ
- *
- *	@param	WBTLIST_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wbt_debug( WBTLIST_MAIN_WORK* wk )
-{
-#ifdef PM_DEBUG
-	s32		i;
-	s32		tmp=0;
-	
-	// debug input
-	if(wk->DebugFlag & FLG_DBG_INPUT){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-			wk->Step = STEP_INIT;
-			// 表示回数
-			wk->DispCount = 0;
-			//
-			wbt_init_param( wk );
-			OS_Printf("debug init \n");
-		}
-	}
-	// debug mode(color)
-	if(wk->DebugFlag & FLG_DBG_MODE){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-			// 色変更
-			if(wk->DebugFlag & FLG_DBG_COLOR){
-				wk->DebugFlag &= ~FLG_DBG_COLOR;
-				tmp = 0;
-			}else{
-				wk->DebugFlag |= FLG_DBG_COLOR;
-				tmp = 1;
-			}
-			for(i=0;i<8;i++){
-				wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, tmp );
-			}
-		}
-	}
-#ifdef _DEBUG_SOUND_
-	// sound
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){		// マイナス
-		wk->DebugSound--;
-		if(wk->DebugSound < SEQ_SE_SW_WBT_01){
-			wk->DebugSound = SEQ_SE_SW_WBT_01;
-		}
-		OS_Printf("se :%d\n",wk->DebugSound);
-	}
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){	// プラス
-		wk->DebugSound++;
-		if(wk->DebugSound >= SEQ_SE_SW_WBT_07){
-			wk->DebugSound = SEQ_SE_SW_WBT_07;
-		}
-		OS_Printf("se :%d\n",wk->DebugSound);
-	}
-	// X
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		PMSND_PlaySE( wk->DebugSound );
-	}
-	
-#endif		// _DEBUG_SOUND_
-
-#endif		// PM_DEBUG
-
 }
 
