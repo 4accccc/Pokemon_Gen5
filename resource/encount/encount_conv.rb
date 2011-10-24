@@ -48,6 +48,8 @@ $groud_type_id_ex = [GROUND_TYPE_NONE,GROUND_TYPE_CAVE,GROUND_TYPE_BRIDGE]
 $ground_type_id = [GTYPE_GROUND,GTYPE_GROUND,
       GTYPE_GROUND,GTYPE_WATER,GTYPE_WATER,GTYPE_FISHING,GTYPE_FISHING]
 
+$ground_type_name = ["草地","水辺","釣り"]
+
 #エンカウントテーブル
 class CEncTable
   MONSNO_BIT_NUM = 11
@@ -292,7 +294,11 @@ class CMapData
   def get_table_data
     return @table
   end
-  
+
+  # エンカウント率テーブルデータ取得
+  def get_prob_data
+    return @enc_prob
+  end  
   # 地形タイプ取得
   def get_ground_type
     return @ground_type
@@ -464,12 +470,14 @@ class CEncountData
       black = n.get_black_mapdata
       white_table = white.get_table_data
       black_table = black.get_table_data
+      white_prob_table = white.get_prob_data
+      black_prob_table = black.get_prob_data
       white_data = nil
       black_data = nil
       
       # ゾーンハッシュを生成
       unless zone_hash.key?(zone_name) then
-        zone_hash[zone_name] = CEncHashData.new
+        zone_hash[zone_name] = CEncHashData.new(zone_name)
 
         unless season == SEASON_NONE then
           zone_hash[zone_name].set_season_enable()
@@ -513,15 +521,20 @@ class CEncountData
       white_data = zone_hash[zone_name].white_data
       black_data = zone_hash[zone_name].black_data
 
+      # 確率
+      white_prob = zone_hash[zone_name].white_prob
+      black_prob = zone_hash[zone_name].black_prob
+
       # ホワイトデータを登録
-      set_mons_data( white_table , white_data ,season)
+      set_mons_data( white_table ,white_data ,season ,white_prob )
 
       # ブラックデータ登録
       if black_enable == true then
-        set_mons_data( black_table , black_data ,season )
+        set_mons_data( black_table ,black_data ,season ,black_prob )
       else
-        set_mons_data( white_table , black_data ,season )
+        set_mons_data( white_table ,black_data ,season ,black_prob )
       end
+
     end
     
     File.open(path+f_name,"wb"){ |file|
@@ -565,8 +578,17 @@ class CEncountData
   end
 
   # ハッシュデータ登録
-  def set_mons_data( table , dest ,season )
+  def set_mons_data( table, dest ,season ,prob )
  
+    index = [0,0,0,0,0,0,0]
+    prob_table = {
+      IDX_GROUND_L=>[20,20,10,10,10,10,5,5,4,4,1,1],
+      IDX_GROUND_H=>[20,20,10,10,10,10,5,5,4,4,1,1],
+      IDX_GROUND_SP=>[20,20,10,10,10,10,5,5,4,4,1,1],
+      IDX_WATER=>[60,30,5,4,1],
+      IDX_WATER_SP=>[60,30,5,4,1],
+      IDX_FISHING=>[40,40,15,4,1],
+      IDX_FISHING_SP=>[40,40,15,4,1]}
     # データ登録
     IDX_MAX.times{|i|
       ml = table[i].get_mons_list
@@ -574,17 +596,36 @@ class CEncountData
 
       # モンスターが存在しない場合は出力しない
       if ml.size <= 0 then next end
+
       for pl in ml do
         if dest[type_id] == nil then raise "エラー" end
+
         # 季節ごとのハッシュ登録先が存在するか調べる(存在しないときは作成)
         unless dest[type_id].key?(season) then
           dest[type_id][season] = Array.new
         end
         dest[type_id][season] << pl.monsno
+
+          # リスト生成
+          unless prob[type_id].key?(season) then
+            prob[type_id][season] = Hash.new
+          end
+          if prob[type_id][season][i] == nil then
+            prob[type_id][season][i] = Hash.new
+          end
+
+          # モンスターデータ
+          if prob[type_id][season][i].key?(pl.monsno) then
+            prob[type_id][season][i][pl.monsno].add_prob( prob_table[i][index[i]] )
+          else
+            prob[type_id][season][i][pl.monsno] = CProbData.new( prob_table[i][index[i]] )
+          end
+          index[i] += 1
       end
 
       # データをユニークにする
       dest[type_id][season].uniq!
+
     }
   end
 

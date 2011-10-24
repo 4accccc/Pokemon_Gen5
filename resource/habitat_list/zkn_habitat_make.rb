@@ -50,6 +50,50 @@ class CMonsterData
 
 end
 
+# ポケモンデータの出力
+def OutPuPokeInfo( poke_data , prob ,zone_cnt ,season_appear,pi_f )
+  GTYPE_MAX.times{|g_type|
+    pi_f.puts " 四季 :%s"%[season_appear[g_type]]
+    pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
+    unless poke_data[g_type] == nil then
+      poke_data[g_type].each_key{|season|
+        pi_f.print "%s(%2d種類):"%[$season_name[season],poke_data[g_type][season].size]
+        if poke_data[g_type][season].size > 20 then
+          raise "20種類以上使用されています"
+        end
+        poke_data[g_type][season].each{|mons_data|
+          is_star = false
+          pi_f.print "\n%10s("%[$monsname[mons_data]]
+          IDX_MAX.times{|table_id|
+            prob_data = prob[g_type][season][table_id]
+            unless prob_data == nil then
+              unless prob_data[mons_data.to_i] == nil then
+                p = (prob_data[mons_data].sum_prob/zone_cnt.to_f).ceil.to_i
+                pi_f.print "%3d%%,"%[p]
+
+                if ((p <= 5) && ( p > 0)) then
+                  is_star = true
+                end
+              else
+                pi_f.print "  0%,"
+              end
+            else
+              pi_f.print "  0%,"
+            end
+          }
+          pi_f.print ")"
+          if is_star == true then
+            pi_f.print "★"
+          end
+          
+        }
+        pi_f.print "\n"
+      }
+    end
+  }
+  pi_f.print "\n"
+end
+
 # 出力用モンスターデータ配列を作成する
 def set_mons_array_data( group_data ,mons_array ,mons_data )
   if group_data.season_enable == false then
@@ -247,7 +291,7 @@ encount_data.each_key{|zone_id|
     zone_group_data[zone_group] = Marshal.load(Marshal.dump(encount_data[zone_id]))
   else
     # マージ処理を行う
-    zone_group_data[zone_group] << encount_data[zone_id]
+    zone_group_data[zone_group].combine_data(encount_data[zone_id] ,zone_id )
   end
 }
 
@@ -279,10 +323,13 @@ form_hash.each_key{|zone_id|
 #=begin
 
 pi_f = open($ZONE_POKE_INFO_FILE_NAME,"w")
+
+# 説明文記述
+pi_f.puts "出現率は左から、通常1、通常2、特殊、水上、特殊水上、釣り、特殊釣りの順です。"
+
 # マージしたデータを格納する
 zone_group_data.each_key{|zone_group|
   data = zone_group_data[zone_group]
-
   pi_f.puts "=============================================================="
   pi_f.puts "【 %s(ホワイト) 】"%[zone_group]
   pi_f.puts " 黒有 :%s"%[data.black_enable]
@@ -290,46 +337,16 @@ zone_group_data.each_key{|zone_group|
   pi_f.puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
-  GTYPE_MAX.times{|g_type|
-    pi_f.puts " 四季 :%s"%[data.ground_season_w[g_type]]
-    pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
-    unless data.white_data[g_type] == nil then
-      data.white_data[g_type].each_key{|season|
-        pi_f.print "%s(%2d種類):"%[$season_name[season],data.white_data[g_type][season].size]
-        if data.white_data[g_type][season].size > 20 then
-          raise "20種類以上使用されています"
-        end
-        data.white_data[g_type][season].each{|mons_data|
-          pi_f.print "%s,"%[$monsname[mons_data]]
-        }
-        pi_f.print "\n"
-      }
-    end
-  }
-  pi_f.print "\n"
-  
+  OutPuPokeInfo( data.white_data ,data.white_prob ,data.GetZoneCnt ,data.ground_season_w ,pi_f )
+
   pi_f.puts "--------------------------------------------------------------"
 
   # ブラック
   pi_f.puts "【 %s(ブラック) 】"%[zone_group]
-  GTYPE_MAX.times{|g_type|
-    pi_f.puts " 四季 :%s"%[data.ground_season_b[g_type]]
-    pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
-    unless data.black_data[g_type] == nil then
-      data.black_data[g_type].each_key{|season|
-        pi_f.print "%s(%2d種類):"%[$season_name[season],data.black_data[g_type][season].size]
-        data.black_data[g_type][season].each{|mons_data|
-          pi_f.print "%s,"%[$monsname[mons_data]]
-        }
-        pi_f.print "\n"
-        if data.black_data[g_type][season].size > 20 then
-          raise "20種類以上使用されています"
-        end
-      }
-    end
-  }
 
-  pi_f.print "\n"
+  # ブラック
+  OutPuPokeInfo( data.black_data ,data.black_prob ,data.GetZoneCnt ,data.ground_season_b ,pi_f )
+
 }
 pi_f.close
 
