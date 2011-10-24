@@ -12,6 +12,9 @@ POKE_START_ROW		= 2
 P_TRAINER_START_COL    = 3
 P_TRAINER_START_ROW    = 3
 #
+#REG_UP_START_COL	= 4
+#REG_UP_START_ROW	= 3
+#
 TEMOTI_POKEMAX		= 6     	# 手持ちポケモン
 NICKNAME_LEN		= 10+1		# ニックネーム
 PTL_WAZA_MAX		= 4		# 技
@@ -858,6 +861,12 @@ class WBT_POKEMON
     #------------------------
     tnum = chk_tr_num( conv )
     
+    #------------------------
+    # ポケモン数の下限を調べる
+    #------------------------
+    unum = chk_poke_unum( conv )
+#    p unum
+    
     #--------------------------------------
     # ポケモン数を調べる
     # レギュレーションの下限チェックを行う
@@ -875,8 +884,8 @@ class WBT_POKEMON
     # 空白でもかまわない
     if(tnum > @trainer_id)
       # 最小チェック
-      if($min_poke_num > num)
-        $wbt_error.print_poke_error( $current_xls_name, 5, @trainer_id, num, $min_poke_num )
+      if(unum > num)
+        $wbt_error.print_poke_error( $current_xls_name, 5, @trainer_id, num, unum )
       end
     end
 #    p num
@@ -923,6 +932,22 @@ class WBT_POKEMON
     }
     # ここまででトレーナー数が求まる
     return tnum
+  end
+  
+  #----------------------------------------
+  # 参加ポケモンの下限を求める
+  # (REG_UP_START_COL、REG_UP_START_ROWは、
+  # wbt_dldata_rule.rbで定義)
+  #----------------------------------------
+  def chk_poke_unum( conv )
+    num = 0
+    cstr = conv.get_cell(1, REG_UP_START_COL, REG_UP_START_ROW)
+    ret = chkblank_no_print( cstr )
+    if(ret != -1)
+      num = cstr.to_i
+    end
+    # 参加ポケモン数下限
+    return num
   end
   
 end

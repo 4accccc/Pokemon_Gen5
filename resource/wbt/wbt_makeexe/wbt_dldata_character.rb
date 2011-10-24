@@ -125,8 +125,8 @@ class WBT_CHARACTER_SINGLE
     #
     @type_id              = 0;
     @msg_before_id        = 0;
-    @msg_after_win_id     = 0;
-    @msg_after_lose_id    = 0;
+    @msg_btl_win_id       = 0;
+    @msg_btl_lose_id      = 0;
     @msg_win_id           = 0;
     @msg_lose_id          = 0;
     @msg_announce_id      = 0;
@@ -162,6 +162,16 @@ class WBT_CHARACTER_SINGLE
      # 国コード
      chk_lang();
      
+     
+     # 戦闘前メッセージID
+     chk_before_mes_id();
+     # 戦闘勝ちメッセージID
+     chk_btl_win_mes_id();
+     # 戦闘負けメッセージID
+     chk_btl_lose_mes_id();
+     # 決勝前口上メッセージID
+     chk_announce_mes_id();
+     
      # 戦闘前メッセージ
      chk_msg_before();
      # 戦闘勝ちメッセージ
@@ -170,18 +180,12 @@ class WBT_CHARACTER_SINGLE
      chk_msg_lose();
      # 決勝前メッセージ
      chk_msg_announce();
-     # 戦闘前メッセージID
-     chk_before_mes_id();
+     
+     
      # 戦闘後、勝ちメッセージID
-     chk_after_win_mes_id();
+     chk_btl_after_win_mes_id();
      # 戦闘後、負けメッセージID
-     chk_after_lose_mes_id();
-     # 戦闘勝ちメッセージID
-     chk_win_mes_id();
-     # 戦闘負けメッセージID
-     chk_lose_mes_id();
-     # 決勝前口上メッセージID
-     chk_announce_mes_id();
+     chk_btl_after_lose_mes_id();
   end
   
   #----------------------------------
@@ -257,9 +261,13 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[1]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[1])
     if(ret == -1)
-      # 空白エラー
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language,
-				TRAINER_START_ROW+@char_id, $trainer_str[1]);
+#      p @msg_before_id
+      # メッセージIDが0以外の場合は空白でもよい
+      if(@msg_before_id == 0)
+        # 空白エラー
+        $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[1]+@local_language,
+                                      TRAINER_START_ROW+@char_id, $trainer_str[1]);
+      end
       return;
     end
     
@@ -294,9 +302,13 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[3]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[3] )
     if(ret == -1)
-      # 空白エラー
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, 
+#      p @msg_btl_win_id
+      # メッセージIDが0以外の場合は空白でもよい
+      if(@msg_btl_win_id == 0)
+        # 空白エラー
+        $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[3]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[3]);
+      end
       return;
     end
     
@@ -331,9 +343,13 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[4]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[4] )
     if(ret == -1)
-      # 空白エラー
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, 
+#      p @msg_btl_lose_id
+      # メッセージIDが0以外の場合は空白でもよい
+      if(@msg_btl_lose_id == 0)
+        # 空白エラー
+        $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[4]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[4]);
+      end
       return;
     end
     
@@ -369,9 +385,13 @@ class WBT_CHARACTER_SINGLE
     ret = chkblank( @conv.get_cell(4, TRAINER_START_COL+$tr_col[5]+@local_language, TRAINER_START_ROW+@char_id),
                                       $trainer_str[5] )
     if(ret == -1)
-      # 空白エラー
-      $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, 
+#      p @msg_announce_id
+      # メッセージIDが0以外の場合は空白でもよい
+      if(@msg_announce_id == 0)
+        # 空白エラー
+        $wbt_error.print_blank_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[5]+@local_language, 
 							  TRAINER_START_ROW+@char_id, $trainer_str[5]);
+      end
       return;
     end
     
@@ -431,7 +451,7 @@ class WBT_CHARACTER_SINGLE
   #--------------------------
   # 戦闘勝ちメッセージID(新)
   #--------------------------
-  def chk_after_win_mes_id()
+  def chk_btl_win_mes_id()
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[9] )
@@ -442,25 +462,25 @@ class WBT_CHARACTER_SINGLE
       return;
     end
     # セット
-    @msg_after_win_id = cstr.to_i;
+    @msg_btl_win_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
-    flg = chk_num_range( @msg_after_win_id, 0, 255 )
+    flg = chk_num_range( @msg_btl_win_id, 0, 255 )
     if(flg == -1)
       # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[9], TRAINER_START_ROW+@char_id,
-                                    $trainer_str[9], @msg_after_win_id, 0, 255 );
+                                    $trainer_str[9], @msg_btl_win_id, 0, 255 );
     end
     #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[9],@msg_after_win_id)
+      p sprintf("%s :%d", $trainer_str[9],@msg_btl_win_id)
     end
   end
   
   #------------------------------
   # 戦闘負けメッセージID(新)
   #------------------------------
-  def chk_after_lose_mes_id()
+  def chk_btl_lose_mes_id()
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[10] )
@@ -471,25 +491,25 @@ class WBT_CHARACTER_SINGLE
       return;
     end
     # セット
-    @msg_after_lose_id = cstr.to_i;
+    @msg_btl_lose_id = cstr.to_i;
     #
     # 範囲チェック(0 - 255)(u8)
-    flg = chk_num_range( @msg_after_lose_id, 0, 255 )
+    flg = chk_num_range( @msg_btl_lose_id, 0, 255 )
     if(flg == -1)
       # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[10], TRAINER_START_ROW+@char_id,
-                                    $trainer_str[10], @msg_after_lose_id, 0, 255 );
+                                    $trainer_str[10], @msg_btl_lose_id, 0, 255 );
     end
     #
     if(@local_debug == 1)
-      p sprintf("%s :%d", $trainer_str[10],@msg_after_lose_id)
+      p sprintf("%s :%d", $trainer_str[10],@msg_btl_lose_id)
     end
   end
   
   #-------------------------------
   # 戦闘後、勝ちメッセージID(新)
   #-------------------------------
-  def chk_win_mes_id()
+  def chk_btl_after_win_mes_id()
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[7] )
@@ -518,7 +538,7 @@ class WBT_CHARACTER_SINGLE
   #------------------------------
   # 戦闘後、負けメッセージID(新)
   #------------------------------
-  def chk_lose_mes_id()
+  def chk_btl_after_lose_mes_id()
     #
     cstr = @conv.get_cell(4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id )
     ret = chkblank( cstr, $trainer_str[8] )
@@ -720,8 +740,8 @@ class WBT_CHARACTER_SINGLE
     # パラメータの処理
     array << @type_id;
     array << @msg_before_id;
-    array << @msg_after_win_id;
-    array << @msg_after_lose_id;
+    array << @msg_btl_win_id;
+    array << @msg_btl_lose_id;
     array << @msg_win_id;
     array << @msg_lose_id;
     array << @msg_announce_id;
@@ -802,7 +822,6 @@ class WBT_CHARACTER
     WBTDL_CHAR_MAX.times{|i|
       @character[i] = WBT_CHARACTER_SINGLE.new( i )
     }
-    @dataset_num = 4;
   end
   
   #----------------------------------
@@ -815,17 +834,16 @@ class WBT_CHARACTER
     # データ設定数をセット
     #------------------------
     # 設定数
-    chk_dataset_num( conv )
+    dnum = chk_dataset_num( conv )
     # ここでのトレーナー数
     tnum = chk_tr_num( conv )
     #
-    if(@dataset_num > 4)
+    if(dnum > 4)
       # データ設定エラー
-       $wbt_error.print_dataset_error( $current_xls_name, 3, @dataset_num )
+      $wbt_error.print_dataset_error( $current_xls_name, 3, dnum )
     else
-#     p @dataset_num, tnum
-      if(@dataset_num > tnum)
-        $wbt_error.print_tr_error( $current_xls_name, 4, tnum, @dataset_num );
+      if(dnum > tnum)
+        $wbt_error.print_tr_error( $current_xls_name, 4, tnum, dnum );
       end
     end
     #
@@ -859,7 +877,7 @@ class WBT_CHARACTER
   def chk_dataset_num( conv )
     tnum = 0
     7.times{|i|
-      cstr = @conv.get_cell(3, TR_MATCH_START_COL, TR_MATCH_START_ROW+i )
+      cstr = conv.get_cell(3, TR_MATCH_START_COL, TR_MATCH_START_ROW+i )
       ret = chkblank_no_print( cstr )
       if(ret != -1)
         # データ設定を見つける
@@ -870,7 +888,7 @@ class WBT_CHARACTER
       end
     }
     # ここまでで、データ設定数が求まる
-    @dataset_num = tnum
+    return( tnum )
 #    p @dataset_num
   end
   
