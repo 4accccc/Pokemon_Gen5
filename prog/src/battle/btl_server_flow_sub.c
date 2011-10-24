@@ -2299,7 +2299,7 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
       BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
       int e_dead  = _get_dead_poke( e_party );
       
-      // 自分が全滅しない
+      // 自分が全滅
       if(mydead){
         lose_stock[0] = PW_SVSUB_LOSE_ALL_DEAD_MINE;
       }
@@ -2322,7 +2322,7 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
       }
       // 相手が全滅したら敗北
       if(e_all){
-        lose_stock[0] = PW_SVSUB_LOSE_ALL_DEAD_MINE;
+        lose_stock[0] = PW_SVSUB_LOSE_ALL_DEAD_ENEMY;
       }
       //規定ターンチェック(実行できなかったら敗北)
       if(_check_maxturn( mainModule, win_flag )){
