@@ -358,6 +358,8 @@ typedef enum
   LCL_FINISH,
   LCL_DISP_MESSAGE,
   LCL_WAIT,
+  LCL_SE_PLAY,
+  LCL_SE_WAIT,
 
   LCL_MAX,
 }LTVT_COMMAND_LIST;
@@ -376,14 +378,18 @@ static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_SCRIPT *work );
 static const BOOL LTVT_SCRIPT_DispMessageMain( LOCAL_TVT_SCRIPT *work );
 static void LTVT_SCRIPT_WaitInit( LOCAL_TVT_SCRIPT *work );
 static const BOOL LTVT_SCRIPT_WaitMain( LOCAL_TVT_SCRIPT *work );
-
-
+static void LTVT_SCRIPT_SePlayInit( LOCAL_TVT_SCRIPT *work );
+static const BOOL LTVT_SCRIPT_SePlayMain( LOCAL_TVT_SCRIPT *work );
+static void LTVT_SCRIPT_SeWaitInit( LOCAL_TVT_SCRIPT *work );
+static const BOOL LTVT_SCRIPT_SeWaitMain( LOCAL_TVT_SCRIPT *work );
 
 static const LTVT_SCRIPT_COMMAND_TABLE commandTable[LCL_MAX] = 
 {
   { NULL , NULL },  //終了コマンド
   { LTVT_SCRIPT_DispMessageInit , LTVT_SCRIPT_DispMessageMain },
   { LTVT_SCRIPT_WaitInit , LTVT_SCRIPT_WaitMain },
+  { LTVT_SCRIPT_SePlayInit, LTVT_SCRIPT_SePlayMain },
+  { LTVT_SCRIPT_SeWaitInit, LTVT_SCRIPT_SeWaitMain },
 };
 
 //--------------------------------------------------------------
@@ -470,4 +476,35 @@ static const BOOL LTVT_SCRIPT_WaitMain( LOCAL_TVT_SCRIPT *work )
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+//  コマンド：SE再生
+//--------------------------------------------------------------
+static void LTVT_SCRIPT_SePlayInit( LOCAL_TVT_SCRIPT *work )
+{
+  const u8 comNo = work->scriptData[work->scriptIdx].comNo;
+  const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
+  const u8 option = work->scriptData[work->scriptIdx].option;
+  ARI_TPrintf("CommandInit SePlay[%d][%d]\n",charaNo,option);
+}
+static const BOOL LTVT_SCRIPT_SePlayMain( LOCAL_TVT_SCRIPT *work )
+{
+  const u8 option = work->scriptData[work->scriptIdx].option;
+  PMSND_PlaySE( option );
+  return TRUE;
+}
+//--------------------------------------------------------------
+//  コマンド：SE待ち
+//--------------------------------------------------------------
+static void LTVT_SCRIPT_SeWaitInit( LOCAL_TVT_SCRIPT *work )
+{
+  const u8 comNo = work->scriptData[work->scriptIdx].comNo;
+  const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
+  const u8 option = work->scriptData[work->scriptIdx].option;
+  ARI_TPrintf("CommandInit SeWait[%d][%d]\n",charaNo,option);
+}
+static const BOOL LTVT_SCRIPT_SeWaitMain( LOCAL_TVT_SCRIPT *work )
+{
+  return !PMSND_CheckPlaySE();
 }
