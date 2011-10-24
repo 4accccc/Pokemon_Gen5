@@ -145,7 +145,6 @@ static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
 static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
-static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_HabitatGetLookCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 
 // 判定用関数テーブル読み込み
@@ -1241,10 +1240,8 @@ static BOOL MDLREC_CHECK_BoardCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  u32 target_cnt_tbl = NELEMS(flag_tbl);
-  GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
-  ONOUE_Printf("お得な掲示板チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
-  return cmp_target( check_cnt , target_cnt_tbl );
+  ONOUE_Printf("お得な掲示板チェック数:%d/%u\n",check_cnt,target_cnt);
+  return cmp_target( check_cnt , target_cnt );
 }
 
 // 列車説明
@@ -1383,44 +1380,6 @@ static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA
     }
   }
   return cmp_target( sum , target_cnt );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  生息地捕獲チェック
- *
- *	@param	p_recdata
- *	@param	p_gamedata
- *	@param	target_cnt 
- *	@param	heapID 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL MDLREC_CHECK_HabitatGetCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
-{
-  s32 i;
-  u32 cnt = 0;
-  u8 ground_id;
-  HABITATLIST_STATUS list_status;
-  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
-  HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svc );
-
-  // 生息地リストデータ数チェック
-  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i ++ )
-  {
-    for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id ++ )
-    {
-      list_status = HABITATLIST_SAVE_GetZoneStatus( p_habitat_sv,i,ground_id );
-
-      // 見ただけカウント
-      if( list_status == HABITAT_ZONE_STATUS_GET )
-      {
-        cnt++;
-      }
-    }
-  }
-  return cmp_target( cnt , target_cnt );
 }
 
 //----------------------------------------------------------------------------

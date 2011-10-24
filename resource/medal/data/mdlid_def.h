@@ -269,6 +269,6 @@
 #define MDLID_MAX	(255)	// メダル最大数
 
 #ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
-typedef  int MedalID;
+typedef  u16 MedalID;
 #endif __ASM_NO_DEF_
 
