@@ -1174,13 +1174,6 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	wk->DebugFlag |= FLG_DBG_INPUT;
 #endif		// _DEBUG_INPUT
 
-	// ‚±‚±‚Å(FLG_DBG_MODE)‚Ì”»’è
-	if(wk->Param->debug_value != 0){
-		wk->DebugFlag |= FLG_DBG_MODE;		// test
-		if(wk->DebugFlag & FLG_DBG_MODE){
-			wk->DebugFlag |= FLG_DBG_COLOR;
-		}
-	}
 #endif		// PM_DEBUG
 }
 

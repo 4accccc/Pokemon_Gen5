@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -961,4 +963,6 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
 
   return GMEVENT_RES_CONTINUE;
 }
+
+#endif  //  PM_DEBUG
 

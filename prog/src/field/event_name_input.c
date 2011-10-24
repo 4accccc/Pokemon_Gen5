@@ -381,14 +381,14 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort( GMEVENT* event, int* seq, voi
         RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, (u32)cp_strcode );
         break;
       case RESORT_NAMEIN_TYPE_AUTHER_PHASE:
-        DEBUG_RESORT_DATA_SetPermission( TRUE );
+        //DEBUG_RESORT_DATA_SetPermission( TRUE );
         RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode);
-        DEBUG_RESORT_DATA_SetPermission( FALSE );
+        //DEBUG_RESORT_DATA_SetPermission( FALSE );
         break;
       case RESORT_NAMEIN_TYPE_AUTHER_THANKS:
-        DEBUG_RESORT_DATA_SetPermission( TRUE );
+        //DEBUG_RESORT_DATA_SetPermission( TRUE );
         RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT7_THANKS, (u32)cp_strcode);
-        DEBUG_RESORT_DATA_SetPermission( FALSE );
+        //DEBUG_RESORT_DATA_SetPermission( FALSE );
         break;
       default:
         GF_ASSERT(0);

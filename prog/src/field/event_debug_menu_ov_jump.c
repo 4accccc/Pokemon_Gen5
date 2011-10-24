@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -511,3 +513,6 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
   OS_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
   OS_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
 }
+
+#endif  //  PM_DEBUG
+

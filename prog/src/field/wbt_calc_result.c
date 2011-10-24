@@ -106,7 +106,9 @@ u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys )
   }
   if ( i == WBT_TRAINER_NUM )
   {
+#ifdef PM_DEBUG
     WBTSYS_DEBUG_dumpTrainer( wbtsys );
+#endif
     OS_Printf(" 自分データが見つかりません！\n" );
     GF_ASSERT( 0 );
   }
@@ -268,7 +270,9 @@ void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context )
     WBTTRAINER * tr_a = &wbtsys->wbt_trainer[ i * 2 + 0 ];
     WBTTRAINER * tr_b = &wbtsys->wbt_trainer[ i * 2 + 1 ];
     calcWBTResult( result, context, tr_a, tr_b );
+#ifdef PM_DEBUG
     DEBUG_DumpWBTResult( result, tr_a, tr_b );
+#endif
   }
 
   //2回戦結果生成
@@ -288,7 +292,9 @@ void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context )
       }
     }
     calcWBTResult( result, context, tr[0], tr[1] );
+#ifdef PM_DEBUG
     DEBUG_DumpWBTResult( result, tr[0], tr[1] );
+#endif
   }
 }
 

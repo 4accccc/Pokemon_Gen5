@@ -8,6 +8,7 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
 
 #include <gflib.h>
 
@@ -697,3 +698,6 @@ static void GetInfTrDataCheck( void )
 
   OS_Printf("チェック完了\n");
 }
+
+#endif  //  PM_DEBUG
+

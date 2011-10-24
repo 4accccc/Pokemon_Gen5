@@ -627,7 +627,7 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
 #ifdef PM_DEBUG
     pWk->arrow_wait = BmpMenuList_GetYesNoWait();
 #else
-    pWK->arrow_wait = BMPMENU_ARROW_WAIT_MAX;
+    pWk->arrow_wait = BMPMENU_ARROW_WAIT_MAX;
 #endif
     // フレームレートに対応してウェイトを調整する
     if(GFL_UI_GetFrameRate()==GFL_UI_FRAMERATE_30){

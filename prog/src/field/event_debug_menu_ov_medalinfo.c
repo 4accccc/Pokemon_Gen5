@@ -8,6 +8,7 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
 
 #include "app/medal_info.h"
 
@@ -245,4 +246,6 @@ BOOL debugMenuCallProc_MedalInfo(DEBUG_MENU_EVENT_WORK *wk )
 
   return TRUE;
 }
+
+#endif  //  PM_DEBUG
 

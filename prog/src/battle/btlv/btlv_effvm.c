@@ -3461,7 +3461,9 @@ static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
   }
 #endif
 
+#ifdef PM_DEBUG
   if( bevw->debug_flag != TRUE )
+#endif
   {
     ICHI_Printf("-----------arc‚©‚ç“Ç‚Ýž‚Ý------------\n");
     p_arc = GFL_ARC_UTIL_Load( ARCID_BATT_BG_PLANM, datID, FALSE, GFL_HEAP_LOWID(bevw->heapID) );
@@ -3507,7 +3509,9 @@ static VMCMD_RESULT VMEC_BG_PAL_ANM( VMHANDLE *vmh, void *context_work )
     }
 
     // arc load“Ç‚Ýž‚Ý‚¾‚Æ‰ð•ú‚·‚é
+#ifdef PM_DEBUG
     if( bevw->debug_flag != TRUE )
+#endif
     {
       GFL_HEAP_FreeMemory( p_arc );
     }
@@ -8330,7 +8334,9 @@ static  void  TCB_EFFVM_BG_PLANM( GFL_TCB* tcb, void* work )
       }
 #endif
 
+#ifdef PM_DEBUG
       if( p_beps->bevw->debug_flag != TRUE )
+#endif
       {
         NNSG2dPaletteData *palData;
         void  *arc_data;

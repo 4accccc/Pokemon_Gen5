@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -451,3 +453,6 @@ BOOL debugMenu_Resort( DEBUG_MENU_EVENT_WORK * wk )
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
+
+#endif  //  PM_DEBUG
+

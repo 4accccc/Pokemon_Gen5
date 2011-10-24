@@ -8,6 +8,8 @@
  *
  */
 //=============================================================================
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -946,3 +948,6 @@ static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk)
   _set_scenario_done( wk, 37 );
   return FALSE;
 }
+
+#endif  //  PM_DEBUG
+

@@ -38,6 +38,8 @@
 //=====================================
 #ifdef PM_DEBUG
 #define SCRCMD_OV_Printf(...) NAGI_Printf(__VA_ARGS__)
+#else
+#define SCRCMD_OV_Printf(...) ((void)0)
 #endif //PM_DEBUG
 
 //-------------------------------------

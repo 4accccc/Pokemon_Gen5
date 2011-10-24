@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -339,9 +341,7 @@ static void DampCameraInfo(FIELD_CAMERA * cam)
   FIELD_CAMERA_GetTargetPos( cam, &target );
 
   OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
-#ifdef DEBUG_ONLY_FOR_saitou
   OS_Printf("%d,%d,%d,%d\n", fovy, shift.x, shift.y, shift.z );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1590,4 +1590,5 @@ static GMEVENT_RESULT debugCutin(
   return( GMEVENT_RES_CONTINUE );
 }
 
+#endif  //  PM_DEBUG
 

@@ -36,9 +36,10 @@
 
 #ifdef STRING_LENGTH_CHECK
 extern BOOL PlaceNameLong;  //地名表示長い番の参照先
-extern BOOL PlaceNameShakeFlag;  //動きの揺れ追加
 extern BOOL  PlaceNameVersionFlag;    //0がブラック１がホワイト
 #endif //STRING_LENGTH_CHECK
+
+static const BOOL PlaceNameShakeFlag = TRUE;  //動きの揺れ追加
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //    地名表示上部オブジェクト

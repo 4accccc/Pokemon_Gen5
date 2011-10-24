@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
@@ -618,3 +620,6 @@ static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk 
 
   return TRUE;
 }
+
+#endif  //  PM_DEBUG
+

@@ -36,7 +36,7 @@ extern void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_P
 extern void WBTLIST_PARAM_Setup_Debug(
     GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
     WBTCUP wbtcup, WBTRULE rule,
-    WBTSTAGE stage, const u16 * trid_table, int debug_value );
+    WBTSTAGE stage, const u16 * trid_table );
 #endif
 
 //------------------------------------------------------------------

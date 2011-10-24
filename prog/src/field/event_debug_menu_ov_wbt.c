@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //システム
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -115,7 +117,6 @@ struct DEBUG_WBT_WORK{
 	u32			Flag;							// フラグ
 	u16			Trbuffer[WBT_TRAINER_NUM];		// セットするバッファ
 	s32			Index;							// インデックス(0-8)
-	s32			DebugNum;						// デバッグ
 	s32			DebugMode;						// モード(0:トレーナー、1:debug)
 	WORDSET		*wordset;						// WordSet
 	GFL_MSGDATA	*msgman;						// メッセージマネージャー
@@ -286,7 +287,6 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
 		work->Flag 	= 0;
 		work->Index = 0;
 		work->Step	= 0;
-		work->DebugNum	= 0;
 		work->DebugMode = 0;
 		// 値をセット
 		for(i=0;i<WBT_TRAINER_NUM;i++){
@@ -761,7 +761,7 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
   WBTLIST_PARAM_Setup_Debug(
       p_wk->gmSys, wbtlist_param,
-      WBTCUP_HODOMOE, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+      WBTCUP_HODOMOE, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer );
   wbtlist_param->call_fade_flag = TRUE; //呼び出し前後でフィールドフェード実行
   new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)wbtlist_param );
@@ -955,22 +955,7 @@ static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk )
 		bflg = TRUE;
 //		OS_Printf("end\n");
 	}
-	// 左(減らす)
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		wk->DebugNum--;
-		if(wk->DebugNum < 0){
-			wk->DebugNum = (DEBUG_MODE_MAX-1);
-		}
-		flg = 1;
-	}
-	// 右(増やす)
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		wk->DebugNum++;
-		if(wk->DebugNum > (DEBUG_MODE_MAX-1)){
-			wk->DebugNum = 0;
-		}
-		flg = 1;
-	}
+	
 	// 更新
 	if(wk->Flag & FLG_WIN_UPDATE){
 		flg = 1;
@@ -1196,9 +1181,6 @@ static void dispInfo_debug( DEBUG_WBT_WORK * wk )
 	// クリア
 	clearNumWin( wk );
 	//
-	// index
-	printNumWin( wk, wk->DebugNum, 2, dwbt_info_tbl[0], dwbt_info_tbl[1], 0 );
-	//
 	// 更新
 	updateNumWin( wk );
 }
@@ -1291,10 +1273,5 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 	return TRUE;
 }
 
-
-
-
-
-
-
+#endif  //  PM_DEBUG
 

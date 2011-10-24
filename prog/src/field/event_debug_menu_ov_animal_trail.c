@@ -8,6 +8,7 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
 
 #include <gflib.h>
 
@@ -447,4 +448,6 @@ static void NumInput( ANIMAL_TRAIL_WORK* p_wk )
   }
 
 }
+
+#endif  //  PM_DEBUG
 

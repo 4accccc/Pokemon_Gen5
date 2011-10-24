@@ -920,7 +920,9 @@ static BOOL	DrawGround( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
         FIELD_DEBUG_AddDrawLandNum();
 #endif
         //’nŒ`•`‰æ
+#ifdef  PM_DEBUG
         if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableMapDraw) == FALSE )
+#endif
         {
           GFL_G3D_Draw( g3Dmap->NNSrnd );
         }

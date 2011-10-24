@@ -73,7 +73,6 @@ WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
   }
   //Ÿ”sŒ‹‰Êî•ñ‚Ì‰Šú‰»
 
-  wbtlist_param->debug_value = 0;
   wbtlist_param->call_fade_flag = FALSE;
   TAMADA_Printf("WBTLIST_PARAM:Create:%08x\n", wbtlist_param );
   return wbtlist_param;
@@ -153,7 +152,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
 void WBTLIST_PARAM_Setup_Debug(
     GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
     WBTCUP wbtcup, WBTRULE wbtrule,
-    WBTSTAGE stage, const u16 * trid_table, int debug_value )
+    WBTSTAGE stage, const u16 * trid_table )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   WBTSYS * wbtsys;
@@ -165,7 +164,6 @@ void WBTLIST_PARAM_Setup_Debug(
   WBTSYS_SetStage( wbtsys, stage );
 
   WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
-  wbtlist_param->debug_value = debug_value;
 
   WBTSYS_Delete( wbtsys );
 }

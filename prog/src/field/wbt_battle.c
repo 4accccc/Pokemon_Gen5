@@ -488,7 +488,9 @@ static void setDLPokemon( POKEMON_PARAM * pp, const WBTDL_POKEMON * dl_poke, HEA
   u32 speabi2 = POKETOOL_GetPersonalParam( dl_poke->monsno, dl_poke->form_no, POKEPER_ID_speabi2 );
   u32 speabi3 = POKETOOL_GetPersonalParam( dl_poke->monsno, dl_poke->form_no, POKEPER_ID_speabi3 );
 
+#ifdef PM_DEBUG
   DEBUG_WBTDL_POKEMON_dump( dl_poke );
+#endif
   
   //“Á«Š„‚èo‚µ
   if ( tokusei == speabi1 )
@@ -1231,7 +1233,9 @@ void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf )
     u16 preset_id = 1;
     const STRCODE * freeword = NULL;
     const WBTDL_CHARACTER * dl_char = WBTDL_DATA_GetCharacter( &wbtsys->wbtdl_data, dl_tr_id );
+#ifdef PM_DEBUG
     DEBUG_WBTDL_CHARACTER_dump( dl_char );
+#endif
     switch ( type )
     {
     case WBT_TRMSG_1ST_FIGHT_START:

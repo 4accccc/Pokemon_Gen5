@@ -117,21 +117,21 @@ white_rom_protect:
 
 master_rom:
 	$(MAKE) white_rom
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRAJ.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRDJ.srl
 	$(MAKE) black_rom
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRBJ.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IREJ.srl
 
 master:
 	$(MAKE) white
-	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRAJ_r.srl
+	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRDJ_r.srl
 	$(MAKE) black
-	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRBJ_r.srl
+	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IREJ_r.srl
 
 master_rom_protect:
 	$(MAKE) white_rom_protect
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRAJ_p.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRDJ_p.srl
 	$(MAKE) black_rom_protect
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRBJ_p.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IREJ_p.srl
 
 
 # cleanÇµÇΩèÍçáÇ…Ç∑Ç◊Çƒè¡Ç¶ÇÈÇÊÇ§Ç…ãLèqÇµÇƒÇ≠ÇæÇ≥Ç¢

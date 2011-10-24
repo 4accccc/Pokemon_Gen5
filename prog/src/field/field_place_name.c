@@ -51,7 +51,7 @@
 //デバッグではグローバル、製品版では定数にする
 #ifdef PM_DEBUG
 #define DEBUG_GROBAL  /* nothing */ 
-#elif
+#else
 #define DEBUG_GROBAL  static const 
 #endif
 

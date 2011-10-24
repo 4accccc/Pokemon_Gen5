@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //システム
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -35,6 +37,8 @@
 #include "../../../resource/fldmapdata/script/pasokon_def.h"  //SCRID_PC
 #include "savedata/shortcut.h"
 #include "event_gtsnego.h"
+#include "waza_tool/wazano_def.h" // for WAZANO_xxxx
+#include "event_poke_status.h" // for EVENT_CreatePokeSelectWazaOboe
 
 //デバッグ
 #include "event_debug_menu.h"
@@ -790,6 +794,22 @@ static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk
 }
 
 
+//-----------------------------------------------------------------------------
+/// private
+//-----------------------------------------------------------------------------
+typedef struct {
+  HEAPID        heap_id;
+  GAMESYS_WORK  *gsys;
+  FIELDMAP_WORK *p_fieldmap;
+
+  u16     retDecide;
+  u16     retPos;
+} DEBUG_POKELIST_WORK;
+
+// ポケリスト呼び出し
+static GMEVENT_RESULT debugPokeList( GMEVENT *event, int *seq, void *wk );
+static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit );
+
 static void ichi_coutry_chekNG(u32 country_code, u32 local_code, u32 language)
 {
     BOOL ret;
@@ -811,6 +831,19 @@ BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *wk )
   MYSTATUS *mystatus = GAMEDATA_GetMyStatus( wk->gdata );
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( wk->gdata );
   MYSTATUS *s_mystatus = SaveData_GetMyStatus( save );
+
+  // 技教えイベント
+  {
+    DEBUG_POKELIST_WORK *work;
+    GMEVENT_Change( event, debugPokeList, sizeof(DEBUG_POKELIST_WORK) );
+    
+    work = GMEVENT_GetEventWork( event );
+    GFL_STD_MemClear( work, sizeof(DEBUG_POKELIST_WORK) );
+
+    work->heap_id = heapID;
+    work->gsys = gsys;
+    work->p_fieldmap = fieldMap;
+  }
 
   // BUGFIX_COUNTRY_NGCHECK_20100806
   // 自分でデータをいろいろ送って関数の単体テストをする
@@ -840,14 +873,167 @@ BOOL debugMenuCallProc_DebugTest_Ichi( DEBUG_MENU_EVENT_WORK *wk )
     ichi_coutry_chekNG( 227, 0, LANG_ENGLISH );
     ichi_coutry_chekNG( 228, 0, LANG_ENGLISH );
   }
+
+  // 技教えチェック
   {
-    GMEVENT * mapchange_event;
-    mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
-    GMEVENT_ChangeEvent( event, mapchange_event );
+    int i;
+
+    ICHI_Printf("ふしぎだね\n");
+    ICHI_Printf("赤\n");
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 1, 0, i, 0 ));
+    ICHI_Printf("\n青\n");
+    // 青
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 1, 0, i, 1 ));
+    ICHI_Printf("\n黄\n");
+    // 黄
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 1, 0, i, 2 ));
+    ICHI_Printf("\n緑\n");
+    // 緑
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 1, 0, i, 3 ));
+
+    ICHI_Printf("つたーじゃ\n");
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 495, 0, i, 0 ));
+    ICHI_Printf("\n青\n");
+    // 青
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 495, 0, i, 1 ));
+    ICHI_Printf("\n黄\n");
+    // 黄
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 495, 0, i, 2 ));
+    ICHI_Printf("\n緑\n");
+    // 緑
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 495, 0, i, 3 ));
+
+    ICHI_Printf("ぽかぶ\n");
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 498, 0, i, 0 ));
+    ICHI_Printf("\n青\n");
+    // 青
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 498, 0, i, 1 ));
+    ICHI_Printf("\n黄\n");
+    // 黄
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 498, 0, i, 2 ));
+    ICHI_Printf("\n緑\n");
+    // 緑
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 498, 0, i, 3 ));
+
+    ICHI_Printf("みじゅまる\n");
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 501, 0, i, 0 ));
+    ICHI_Printf("\n青\n");
+    // 青
+    for( i=0; i<15; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 501, 0, i, 1 ));
+    ICHI_Printf("\n黄\n");
+    // 黄
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 501, 0, i, 2 ));
+    ICHI_Printf("\n緑\n");
+    // 緑
+    for( i=0; i<10; i++ )
+      ICHI_Printf( "%d_",POKETOOL_CheckWazaOshieSW( 501, 0, i, 3 ));
   }
+  
+  
   return( TRUE );
 
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグポケリスト呼び出し
+ *
+ *	@param	GMEVENT *event  イベント
+ *	@param	*seq    シーケンス
+ *	@param	*wk     ワーク
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugPokeList( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_POKELIST_WORK *work = wk;
+
+  switch( *seq ){
+  case 0:
+    {
+      GMEVENT *call_event;
+      EVENT_POKESEL_PARAM_WOBOE prm;
+      prm.retDecide = &work->retDecide;
+      prm.retPos    = &work->retPos;
+      //prm.learnBit  = 0x33; // 適当、本当はチェックが必要
+      checkSkillTeach( work->gsys, &prm.learnBit );
+      prm.wazano    = WAZANO_GIHUTOPASU;
+      call_event = GMEVENT_CreateOverlayEventCall( work->gsys,
+          FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelectWazaOboe, (void*)&prm );
+      GMEVENT_CallEvent( event, call_event );
+    }
+    (*seq)++;
+    break;
+  case 1:
+    OS_Printf("retDecide %d\t", work->retDecide);
+    OS_Printf("retPos %d\n", work->retPos);
+
+    {
+      u8 bit;
+      checkSkillTeach( work->gsys, &bit );
+      if( bit & (1<<work->retPos))
+      {
+        OS_Printf("選択したポケモンは覚えれる\n");
+      }else{
+        OS_Printf("選択したポケモンは覚えられない\n");
+      }
+    }
+
+    (*seq)++;
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ちに技教えが可能か判定
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	*oboeBit    ビット単位でどのポケモンに教えられるか？を返す
+ */
+//-----------------------------------------------------------------------------
+static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit )
+{
+  GAMEDATA *    gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
+  int           max = PokeParty_GetPokeCount( party );
+
+  int pos;
+  int i;
+
+  *oboeBit = 0;
+  
+  for ( pos = 0; pos < max; pos++ )
+  {
+    int waza_no = 0;
+    int color = 0;
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+    if( PP_CheckWazaOshieSW( pp, waza_no, color) == TRUE )
+    {
+      *oboeBit |= ( 1 << pos );
+    }
+  }
+  OS_Printf("覚えビット %x\n", *oboeBit);
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  尾上用テスト
@@ -888,4 +1074,6 @@ BOOL debugMenuCallProc_DebugTest_Onoue( DEBUG_MENU_EVENT_WORK *wk )
   return( TRUE );
 
 }
+
+#endif  //  PM_DEBUG
 

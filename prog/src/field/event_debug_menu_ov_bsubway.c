@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#ifdef  PM_DEBUG
+
 //ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -1394,3 +1396,6 @@ BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
 
   return( TRUE );
 }
+
+#endif  //  PM_DEBUG
+
