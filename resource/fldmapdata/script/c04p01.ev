@@ -35,7 +35,6 @@ _EVENT_DATA		ev_c04p01_babyboy1_01
 _EVENT_DATA		ev_c04p01_tennisw_01
 _EVENT_DATA		ev_c04p01_poke36_01
 _EVENT_DATA		ev_c04p01_poke38_01
-_EVENT_DATA		ev_c04p01_idol_01
 _EVENT_DATA		ev_c04p01_tvt_ev_01
 _EVENT_DATA		ev_c04p01_glasses_01
 _EVENT_DATA_END
@@ -63,20 +62,6 @@ INIT_EVENT_START  ev_zone_c04p01
     // LCC隠しキャラとのデートがあるかチェック
     _PERSON_STATE_CHECK_SECRET_DATE( lwk_date )
 
-	//観覧車前イベント起動用
-	IF $lwk_date == SCR_PERSON_SECRET_DATE_GIVE THEN
-	
-		_FLAG_RESET(FV_C04P01_IDOL_01)
-	
-		_GET_MY_SEX( SCWK_ANSWER )
-		IF $SCWK_ANSWER == PM_MALE THEN
-			$OBJCHRWORK10 = SWIDOLW
-		ELSE
-			$OBJCHRWORK10 = SWIDOLM
-		ENDIF
-	
-	ENDIF
-	
     //曜日を取得
     _GET_WEEK( SCWK_ANSWER )
     SWITCH $SCWK_ANSWER
@@ -91,7 +76,8 @@ INIT_EVENT_START  ev_zone_c04p01
     ENDSWITCH
 
     // LCC隠しキャラとデート有りなら
-    IF $lwk_date != 0 && $lwk_date != SCR_PERSON_SECRET_DATE_GIVE THEN
+    //  111024追加 落し物イベントでも観覧車で処理する
+    IF $lwk_date != 0 THEN
       _GET_MY_SEX( SCWK_ANSWER )
       IF $SCWK_ANSWER == PM_MALE THEN
         $OBJCHRWORK0 = SWIDOLW
@@ -266,119 +252,6 @@ EVENT_START		ev_c04p01_tvt_ev_01
 
 
 EVENT_END
-
-/**************************************************************/
-/*		C04P01	IDOL										  */
-/**************************************************************/
-EVENT_START		ev_c04p01_idol_01
-
-	_TALK_OBJ_START()
-	
-	//プレイヤー名を格納する
-	_PLAYER_NAME(0)
-	
-	_OBJ_ANIME( C04P01_IDOL_01, anm_gyoe )
-	_OBJ_ANIME_WAIT()
-	
-	//わっ　わたし　ちがい　ますから！
-	_BALLOONWIN_OBJMSG_MF( msg_c04p01_swidolw_02_01, msg_c04p01_swidolm_02_01, C04P01_IDOL_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
-	
-	_GET_MY_SEX(LWK_SEX)
-	
-	//～～は　？？？？？に
-	_SE_PLAY(SEQ_SE_ARDEMO_01)
-
-	SWITCH $LWK_SEX
-	CASE PM_MALE THEN
-		_SYSWIN_MSG( msg_c04p01_swidolw_02_02, POS_DOWN )
-	CASE PM_FEMALE THEN
-		_SYSWIN_MSG( msg_c04p01_swidolm_02_02, POS_DOWN )
-	ENDSWITCH
-	_SYSWIN_CLOSE()
-	_SE_WAIT()
-	
-	//アイテムを減らす
-	SWITCH $LWK_SEX
-	CASE PM_MALE THEN
-		_SUB_ITEM( ITEM_WASUREMONO_1,1,SCWK_ANSWER )
-	CASE PM_FEMALE THEN
-		_SUB_ITEM( ITEM_WASUREMONO,1,SCWK_ANSWER )
-	ENDSWITCH
-
-	//ありがとう
-	_BALLOONWIN_OBJMSG_MF( msg_c04p01_swidolw_02_03, msg_c04p01_swidolm_02_03, C04P01_IDOL_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
-
-	SWITCH $LWK_SEX
-	CASE PM_MALE THEN
-		_SYSWIN_MSG( msg_c04p01_swidolw_02_04, POS_DOWN )
-	CASE PM_FEMALE THEN
-		_SYSWIN_MSG( msg_c04p01_swidolm_02_04, POS_DOWN )
-	ENDSWITCH
-	_SYSWIN_CLOSE()
-
-	//ありがとう
-	_BALLOONWIN_OBJMSG_MF( msg_c04p01_swidolw_02_05, msg_c04p01_swidolm_02_05, C04P01_IDOL_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
-
-	_PLAYER_DIR_GET( SCWK_ANSWER )
-
-	SWITCH $SCWK_ANSWER
-	CASE DIR_UP THEN
-		_OBJ_ANIME( C04P01_IDOL_01, anm_idol_leave2 )
-	DEFAULT
-		_OBJ_ANIME( C04P01_IDOL_01, anm_idol_leave1 )
-	ENDSWITCH
-	_TIME_WAIT( 20 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_DEL( C04P01_IDOL_01 )
-	
-	_PERSON_STATE_SET_SECRET_DATE_END()
-	
-	//========================================/
-	
-	_FLAG_SET(FV_C04P01_IDOL_01)
-	
-	//========================================/
-
-EVENT_END
-
-//--------------------------------------------------------------------
-//☆共通処理：方向転換
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_dir_u
-  _ANIME_DATA AC_DIR_U,1
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_dir_d
-  _ANIME_DATA AC_DIR_D,1
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_dir_l
-  _ANIME_DATA AC_DIR_L,1
-  _ANIME_DATA ACMD_END,0
-
-_ANIME_LABEL  anm_dir_r
-  _ANIME_DATA AC_DIR_R,1
-  _ANIME_DATA ACMD_END,0
- 
-_ANIME_LABEL	anm_idol_leave1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,8
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_idol_leave2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,8
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*		C04P01	CLOWN										  */

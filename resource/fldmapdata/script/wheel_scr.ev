@@ -46,15 +46,28 @@ EVENT_START   ev_wheel_ride
   SWITCH $WK_OTHER_AMUSEMENT_PARTNER
   CASE SCR_AMUSEMENT_PARTNER_LCC THEN
 
-    _GET_MY_SEX( SCWK_ANSWER )
-    $lwk_npc_id = 4
-    $lwk_npc_id += $SCWK_ANSWER
+    DEFINE_LOCAL lwk_date
+    // LCC隠しキャラとのデートがあるかチェック
+    _PERSON_STATE_CHECK_SECRET_DATE( lwk_date )
 
-    // LCC隠しキャラのフラグは固定
-    $lwk_flag_id = FE_AMUSEMENT_LCC_TALK
+    IF $lwk_date == SCR_PERSON_SECRET_DATE_GIVE THEN
+      // 落し物イベント
+      _CALL sub_idol_talk
 
-    // 会話
-    _CALL sub_wheel_talk_swan
+    ELSE
+      // 通常の観覧車イベント
+      _GET_MY_SEX( SCWK_ANSWER )
+      $lwk_npc_id = 4
+      $lwk_npc_id += $SCWK_ANSWER
+
+      // LCC隠しキャラのフラグは固定
+      $lwk_flag_id = FE_AMUSEMENT_LCC_TALK
+
+      // 会話
+      _CALL sub_wheel_talk_swan
+
+    ENDIF
+
 
     // LCC隠しキャラとデート終了
     _PERSON_STATE_SET_SECRET_DATE_END()
@@ -177,6 +190,12 @@ sub_wheel_talk_swan:
 
   // 画面外へ移動
   _OBJ_ANIME_AUTO( SCWK_TARGET_OBJID, 45, 15, FORCE_TYPE_NOT, 8, DIR_UD )
+  // LCC隠しキャラなら
+  IF $WK_OTHER_AMUSEMENT_PARTNER == SCR_AMUSEMENT_PARTNER_LCC THEN
+    // 少したったら左向く
+    _TIME_WAIT( 20 )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  ENDIF
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( SCWK_TARGET_OBJID )
   
@@ -486,4 +505,109 @@ medal_get:
 
 }
 _RET
+
+/**************************************************************/
+/*		落し物イベント										  */
+/**************************************************************/
+sub_idol_talk:
+{
+	DEFINE_LOCAL	LWK_SEX
+
+  _TALK_OBJ_START()
+	
+	//プレイヤー名を格納する
+	_PLAYER_NAME(0)
+	
+	_OBJ_ANIME( SCWK_TARGET_OBJID, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//わっ　わたし　ちがい　ますから！
+	_BALLOONWIN_OBJMSG_MF( msg_wheel_swidol_w_08_01, msg_wheel_swidol_m_08_01, SCWK_TARGET_OBJID, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_GET_MY_SEX(LWK_SEX)
+	
+	//～～は　？？？？？に
+	_SE_PLAY(SEQ_SE_ARDEMO_01)
+
+	SWITCH $LWK_SEX
+	CASE PM_MALE THEN
+		_SYSWIN_MSG( msg_wheel_swidol_w_08_02, POS_DOWN )
+	CASE PM_FEMALE THEN
+		_SYSWIN_MSG( msg_wheel_swidol_m_08_02, POS_DOWN )
+	ENDSWITCH
+	_SYSWIN_CLOSE()
+	_SE_WAIT()
+	
+	//アイテムを減らす
+	SWITCH $LWK_SEX
+	CASE PM_MALE THEN
+		_SUB_ITEM( ITEM_WASUREMONO_1,1,SCWK_ANSWER )
+	CASE PM_FEMALE THEN
+		_SUB_ITEM( ITEM_WASUREMONO,1,SCWK_ANSWER )
+	ENDSWITCH
+
+	//ありがとう
+	_BALLOONWIN_OBJMSG_MF( msg_wheel_swidol_w_08_03, msg_wheel_swidol_m_08_03, SCWK_TARGET_OBJID, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_SEX
+	CASE PM_MALE THEN
+		_SYSWIN_MSG( msg_wheel_swidol_w_08_04, POS_DOWN )
+	CASE PM_FEMALE THEN
+		_SYSWIN_MSG( msg_wheel_swidol_m_08_04, POS_DOWN )
+	ENDSWITCH
+  //ライブキャスター登録SE再生
+  _SE_PLAY( SEQ_SE_SW_LC_NO )
+  _SE_WAIT()
+	_SYSWIN_CLOSE()
+
+
+	//ありがとう
+	_BALLOONWIN_OBJMSG_MF( msg_wheel_swidol_w_08_05, msg_wheel_swidol_m_08_05, SCWK_TARGET_OBJID, POS_DEFAULT )
+  _LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+
+  _PLAYER_DIR_GET( SCWK_ANSWER )
+
+  // 画面外へ移動
+	SWITCH $SCWK_ANSWER
+	CASE DIR_RIGHT THEN
+    _OBJ_ANIME_AUTO( SCWK_TARGET_OBJID, 45, 16, FORCE_TYPE_NOT, 8, DIR_UD )
+	DEFAULT
+    _OBJ_ANIME_AUTO( SCWK_TARGET_OBJID, 45, 15, FORCE_TYPE_NOT, 8, DIR_UD )
+	ENDSWITCH
+
+  // 少したったら左向く
+  _TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( SCWK_TARGET_OBJID )
+}
+_RET
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+ 
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
