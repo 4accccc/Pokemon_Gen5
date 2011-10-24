@@ -14,6 +14,7 @@
 
 // インクルード
 #include <gflib.h>
+#include <calctool.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
 
@@ -41,8 +42,6 @@
 // サウンド
 #include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
-
-// オーバーレイ
 
 
 //=============================================================================
@@ -1074,6 +1073,12 @@ static GFL_PROC_RESULT Psel_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void*
   // シーケンス
   work->sub_seq = 0;
 
+#ifndef PM_DEBUG
+  OS_Printf("==カメラ画角操作==================================\n");
+  OS_Printf("L+↑ で 画角上げる\n");
+  OS_Printf("L+↓ で 画角下げる\n");
+  OS_Printf("==================================================\n");
+#endif
   return GFL_PROC_RES_FINISH;
 }
 
@@ -1168,6 +1173,51 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
     Psel_ThreeDraw( work );
     PSEL_GRAPHIC_3D_EndDraw( work->graphic );
   }
+
+  // DEBUG
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+
+    static fx32 fovy = 40;
+    GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
+    BOOL ret = FALSE;
+
+    //GFL_G3D_CAMERA_GetfovySin( camera, &fovy );
+    //GFL_G3D_CAMERA_GetfovyCos( camera, &fovyCos );
+
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      fovy += 1;
+      ret = TRUE;
+    }
+    else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      fovy -= 1;
+      ret = TRUE;
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+    }
+
+    if( ret )
+    {
+      GFL_G3D_CAMERA_SetfovyCos( camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      GFL_G3D_CAMERA_SetfovySin( camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
+      //GFL_G3D_CAMERA_Switching( camera );
+
+      OS_Printf("==カメラ画角操作==================================\n");
+      OS_Printf("L+↑ で 画角上げる\n");
+      OS_Printf("L+↓ で 画角下げる\n");
+      OS_Printf("==================================================\n");
+      OS_Printf("カメラ画角\n");
+      OS_Printf(" fovy = %d \n", fovy);
+    }
+  }
+#endif
+
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -3377,7 +3427,8 @@ static int Psel_Load( PSEL_WORK* work, int* seq )
   // APP_TASKMENU
   Psel_AppTaskmenuResInit( work );
 
-  return SEQ_S01_INIT;
+  //return SEQ_S01_INIT;
+  return SEQ_S02_INIT;
 }
 
 static int Psel_S01Init    ( PSEL_WORK* work, int* seq )
