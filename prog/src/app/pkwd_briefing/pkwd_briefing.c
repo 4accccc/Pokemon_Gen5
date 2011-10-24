@@ -132,6 +132,7 @@ enum{
 enum{
   SEQ_INIT = 0,   ///<
   SEQ_SETUP,      ///<
+  SEQ_BMP_TRANS,  ///<
   SEQ_FADEIN,     ///<
   SEQ_MAIN,       ///<
   SEQ_VOICE_PLAY, ///<
@@ -196,6 +197,14 @@ enum{
 
   ENDROLL_STR_MAX,
 };
+
+//  エンドロール関係定義
+#define ENDROLL_SCROLL_ENDLINE  ((tw->CG2d.line_count*8+128))
+#define ENDROLL_START ( -192 )
+#define ENDROLL_TURN1 (    0 )
+#define ENDROLL_TURN2 (  256 )
+#define ENDROLL_TURN3 (  512 )
+#define ENDROLL_TURN4 (  768 )
 
 #ifdef PM_DEBUG
 #endif
@@ -371,6 +380,8 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
 static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, MYSTATUS *mystatus, HEAPID heapID);
 static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
+static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll );
+static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
 
 static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
 
@@ -545,7 +556,6 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     // FADEIN設定
     GFL_FADE_SetMasterBrightReq
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
-    tw->totalWait = 0;
     tw->seq = SEQ_FADEIN;
     tw->bef_vcnt  = OS_GetVBlankCount();
     break;
@@ -571,6 +581,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     PRINTSYS_QUE_Main( tw->CG2d.printQue );
     PRINT_UTIL_Trans( &tw->CG2d.printUtil[0], tw->CG2d.printQue );
     PRINT_UTIL_Trans( &tw->CG2d.printUtil[1], tw->CG2d.printQue );
+
     break;
   case SEQ_VOICE_PLAY:
     if(PMVOICE_CheckPlay(tw->voiceIndex)==FALSE){
@@ -721,18 +732,50 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     //情報ステータスバー初期化
     INFOWIN_Init( FRAME_INFOWIN, INFOWIN_PAL_NO, tw->param->gameData , tw->heapID );
     GFL_NET_ReloadIconTopOrBottom( FALSE, tw->heapID );
-
-    // FADEIN設定
-    GFL_FADE_SetMasterBrightReq
-      (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
-    tw->totalWait = 0;
-    tw->seq = SEQ_FADEIN;
+    tw->seq = SEQ_BMP_TRANS;
     tw->bef_vcnt  = OS_GetVBlankCount();
+
+    tw->CG2d.scroll = ENDROLL_START;
+    _endroll_screen_onoff( &tw->CG2d );
+    G2_SetBG1Offset( 0, tw->CG2d.scroll );
+    G2_SetBG2Offset( 0, tw->CG2d.scroll+16 );
+    if((tw->CG2d.now_page&1)==0){
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16 );
+    }else{
+      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
+      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
+      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 16 );
+    }
+
+
+    break;
+  case SEQ_BMP_TRANS:
+    if(PRINTSYS_QUE_Main( tw->CG2d.printQue )==TRUE){
+      // FADEIN設定
+      GFL_FADE_SetMasterBrightReq
+        (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
+      tw->seq = SEQ_FADEIN;
+    }
+    {
+      int i;
+      for(i=0;i<tw->CG2d.bmpwin_num;i++){
+        PRINT_UTIL_Trans( &tw->CG2d.printUtil[i], tw->CG2d.printQue );
+      }
+    }
     break;
 
   case SEQ_FADEIN:
     if(GFL_FADE_CheckFade() == FALSE){ tw->seq = SEQ_MAIN; }
     MainFunc(tw);
+    PRINTSYS_QUE_Main( tw->CG2d.printQue );
+    {
+      int i;
+      for(i=0;i<tw->CG2d.bmpwin_num;i++){
+        PRINT_UTIL_Trans( &tw->CG2d.printUtil[i], tw->CG2d.printQue );
+      }
+    }
     break;
 
   case SEQ_MAIN:
@@ -927,8 +970,8 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
 //----------------------------------------------------------------------------------
 static void VintrFunc(GFL_TCB *tcb, void *work)
 {
-  SYS_CONTROL* CSys = work;
-  
+  PKWD_BRIEFING_WORK *tw = work;
+
   GFL_CLACT_SYS_VBlankFunc();
 
   // BG転送  
@@ -2465,17 +2508,6 @@ static void debug_btlv_audience( AUDIENCE_CONTROL *AOam )
 //  エンドロール関係
 //=============================================================================================
 
-
-static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
-static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll );
-
-#define ENDROLL_SCROLL_ENDLINE  ((tw->CG2d.line_count*8+128))
-#define ENDROLL_START ( -192 )
-#define ENDROLL_TURN1 (    0 )
-#define ENDROLL_TURN2 (  256 )
-#define ENDROLL_TURN3 (  512 )
-#define ENDROLL_TURN4 (  768 )
-
 //----------------------------------------------------------------------------------
 /**
  * @brief	あらすじ表示半透明処理
@@ -2488,19 +2520,6 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
   switch(tw->blend_seq){
   // 開始
   case BLEND_SEQ_START:
-    if((tw->CG2d.now_page&1)==0){
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16 );
-    }else{
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 16 );
-    }
-    tw->CG2d.scroll = ENDROLL_START;
-    _endroll_screen_onoff( &tw->CG2d );
-    G2_SetBG1Offset( 0, tw->CG2d.scroll );
-    G2_SetBG2Offset( 0, tw->CG2d.scroll+16 );
     tw->blend_seq = BLEND_SEQ_BLACK_BACK_WAIT;
     break;
   // 
