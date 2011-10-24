@@ -582,8 +582,8 @@
 ヘンな　イタズラは　やめてよ！</language>
 	</row>
 	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだ……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだ……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに　いってんの……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なに　いってんの……？</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">モニカ『ちっ　ちょっと！！▼

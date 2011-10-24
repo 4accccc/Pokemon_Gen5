@@ -429,9 +429,9 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">%MYNAME『Ｆー００……
-いったい　どうしたの？</language>
+いったい　どうしたっていうの……？</language>
 		<language name="JPN_KANJI" width="256">%MYNAME『Ｆー００……
-一体　どうしたの？</language>
+一体　どうしたっていうの……？</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">Ｆー００『%MYNAME……▼
