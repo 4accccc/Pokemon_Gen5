@@ -346,12 +346,437 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">えんぎははいゆう</language>
-		<language name="JPN_KANJI" width="256">えんぎははいゆう</language>
+		<language name="JPN" width="256">スター</language>
+		<language name="JPN_KANJI" width="256">スター</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">いっぱんじん</language>
-		<language name="JPN_KANJI" width="256">いっぱんじん</language>
+		<language name="JPN" width="256">こくさいコップ</language>
+		<language name="JPN_KANJI" width="256">こくさいコップ</language>
+	</row>
+	<row id="pw_turn_enemy_1">
+		<language name="JPN" width="256">メカポリス『コードネーム
+メカポリスから　ほんぶへ▼
+おうえんを　ようせいします
+ばしょは……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『コードネーム
+メカポリスから　本部へ▼
+応援を　要請します
+場所は……</language>
+	</row>
+	<row id="pw_turn_enemy_2">
+		<language name="JPN" width="256">つうしん『ほんぶから　メカポリスへ
+おうえん　ようせい　しょうにん▼
+きどうたいが
+げんばに　きゅうこうちゅうだ！</language>
+		<language name="JPN_KANJI" width="256">通信『本部から　メカポリスへ
+応援要請　承認▽
+機動隊が　現場に　急行中だ！</language>
+	</row>
+	<row id="pw_turn_hero_5">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『けいかんたい……
+もはや　これまでね……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『警官隊……
+もはや　これまでね……</language>
+	</row>
+	<row id="pw_event0_enemy_0">
+		<language name="JPN" width="256">メカポリス『ついに　おいつめたぞ
+[1:02:ポケモンニックネーム:0]クノイチ！▽
+ゲットダウン！　とうこうせよ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ついに　追いつめたぞ
+[1:02:ポケモンニックネーム:0]クノイチ！▽
+ゲットダウン！　投降せよ！</language>
+	</row>
+	<row id="pw_event0_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ここまでか……▼
+ねえ　メカポリス！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ここまでか……▼
+おい　メカポリス！</language>
+	</row>
+	<row id="pw_event0_enemy_1">
+		<language name="JPN" width="256">メカポリス『……なんだ？
+[1:02:ポケモンニックネーム:0]クノイチ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『……なんだ？
+[1:02:ポケモンニックネーム:0]クノイチ！</language>
+	</row>
+	<row id="pw_event0_react_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『しょうぶよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『勝負よ！</language>
+	</row>
+	<row id="pw_event0_react_enemy_0">
+		<language name="JPN" width="256">メカポリス『それでこそ
+わが　しゅくてき　[1:02:ポケモンニックネーム:0]クノイチ▼
+いくぞ！
+スタートアップ！　せんとう　かいし！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『それでこそ
+わが　宿敵　[1:02:ポケモンニックネーム:0]クノイチ▼
+いくぞ！
+スタートアップ！　戦闘　開始！</language>
+	</row>
+	<row id="pw_event0_react_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『みのがして！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『見逃して！</language>
+	</row>
+	<row id="pw_event0_react_enemy_1">
+		<language name="JPN" width="256">メカポリス『たとえ　あくとうでも
+たすけを　もとめられれば▽
+てを　さしのべる……▼
+それも　また
+せいぎ　なのかも　しれないな……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『たとえ　悪党でも
+助けを　求められれば▽
+手を　差し伸べる……▼
+それも　また
+正義　なのかも　しれないな……</language>
+	</row>
+	<row id="pw_event1_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『まけないわよ
+メカポリス！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『負けないわよ
+メカポリス！</language>
+	</row>
+	<row id="pw_event1_enemy_0">
+		<language name="JPN" width="256">メカポリス『かかってこい！
+フォーリアル！　しんけんしょうぶだ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『かかってこい！▼
+フォーリアル！　真剣勝負だ！</language>
+	</row>
+	<row id="pw_event1_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
+こんなに　たのしい　しょうぶ▽
+ひさしぶりね……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
+こんなに　楽しい　勝負▽
+久しぶりね……！</language>
+	</row>
+	<row id="pw_event1_enemy_1">
+		<language name="JPN" width="256">メカポリス『わたしは　いままで
+はんざいしゃ　すべてに▽
+あくとうの　レッテルを　はって▽
+にんげんあつかい　していなかった▼
+しかし　かれらも　にんげん
+たしかに　つみは　ゆるせないが▽
+むやみに　ばつを　あたえては▽
+せいぎも　あくと　かわらない……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『私は　今まで
+犯罪者　すべてに▽
+悪党の　レッテルを　はって▽
+人間扱い　していなかった▼
+しかし　彼らも　人間
+確かに　罪は　許せないが▽
+むやみに　罰を　与えては▽
+正義も　悪と　変わらない……</language>
+	</row>
+	<row id="pw_event1_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……
+メカポリス……？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……
+メカポリス……？</language>
+	</row>
+	<row id="pw_event1_enemy_2">
+		<language name="JPN" width="256">メカポリス『わたしが　しんじるべき
+ほんとうの　せいぎ……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『私が　信じるべき
+本当の　正義……</language>
+	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス
+まさか……　てかげんを？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス
+まさか……　手加減を？</language>
+	</row>
+	<row id="pw_event2_enemy_0">
+		<language name="JPN" width="256">メカポリス『どうだろうな……？</language>
+		<language name="JPN_KANJI" width="256">メカポリス『どうだろうな……？</language>
+	</row>
+	<row id="pw_event2_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『バカな！
+アナタは　こくさいコップで▽
+アタシは　どろぼう……▽
+てきどうし　なのよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『バカな！
+アナタは　国際コップで▽
+アタシは　泥棒……▽
+敵同士　なのよ！</language>
+	</row>
+	<row id="pw_event2_enemy_1">
+		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]クノイチ
+わたしは　キミとの　たたかいで▽
+じぶんの　せいぎに▽
+ぎもんを　いだいてしまった……▼
+わたしは　ひみつけいじ　しっかくだ
+そんな　わたしが　さいごに▽
+キミに　してやれる　ことは……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『[1:02:ポケモンニックネーム:0]クノイチ
+私は　キミとの　戦いで▽
+自分の　正義に▽
+疑問を　抱いてしまった……▼
+私は　秘密刑事　失格だ
+そんな　私が　最後に▽
+キミに　してやれる　ことは……</language>
+	</row>
+	<row id="pw_event2_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ふざけないで！
+アタシの　ライバル　メカポリスは▽
+そんな　ヤワな　おとこじゃないわ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ふざけないで！
+アタシの　ライバル　メカポリスは▽
+そんな　ヤワな　男じゃないわ！</language>
+	</row>
+	<row id="pw_event2_enemy_2">
+		<language name="JPN" width="256">メカポリス『まもるべき
+せいぎを　みうしなった……▼
+もう　なにもかも
+どうでも　いいんだよ……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『守るべき
+正義を　見失なった……▼
+もう　なにもかも
+どうでも　いいんだよ……</language>
+	</row>
+	<row id="pw_event3_enemy_0">
+		<language name="JPN" width="256">メカポリス『ひとつの　せいぎに
+とらわれていた　わたしを▽
+めざめさせてくれたのは　キミだ▽
+[1:02:ポケモンニックネーム:0]クノイチ……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ひとつの　正義に
+囚われていた　私を▽
+目覚めさせてくれたのは　キミだ▽
+[1:02:ポケモンニックネーム:0]クノイチ……</language>
+	</row>
+	<row id="pw_event3_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ちょっと……
+いきなり　なにを……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ちょっと……
+いきなり　何を……</language>
+	</row>
+	<row id="pw_event3_enemy_1">
+		<language name="JPN" width="256">メカポリス『だが　キミは　どろぼう
+ゆるすわけには　いかない……▼
+しかし　もし　キミが
+つみを　つぐなうのならば▽
+わたしたちは……　ともに</language>
+		<language name="JPN_KANJI" width="256">メカポリス『だが　キミは　泥棒
+許すわけには　いかない……▼
+しかし　もし　キミが
+罪を　つぐなうのならば▽
+私達は……　ともに</language>
+	</row>
+	<row id="pw_event3_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『それいじょうは
+いわないで……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『それ以上は
+いわないで……</language>
+	</row>
+	<row id="pw_event4_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『まって……
+どうでも　いいって　なによ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『待って……
+どうでも　いいって　何よ……</language>
+	</row>
+	<row id="pw_event4_enemy_0">
+		<language name="JPN" width="256">メカポリス『せいぎ　あく……
+そんなものは　まやかしだ▼
+わたしは　こくさいコップの
+マニュアルどおりに▽
+はたらいていたに　すぎない</language>
+		<language name="JPN_KANJI" width="256">メカポリス『正義　悪……
+そんなものは　まやかしだ▼
+わたしは　国際コップの
+マニュアル通りに▽
+働いていたに　すぎない</language>
+	</row>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オマエ……
+かわったのね……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『アナタ……
+変わったのね……</language>
+	</row>
+	<row id="pw_event4_enemy_1">
+		<language name="JPN" width="256">メカポリス『かわってなど　いない
+おれは　ずっと　こくさいポリスの▽
+あやつりにんぎょう……▽
+ただの　マシンだったのさ</language>
+		<language name="JPN_KANJI" width="256">メカポリス『変わってなど　いない
+おれは　ずっと　国際ポリスの▽
+操り人形……▽
+ただの　マシンだったのさ</language>
+	</row>
+	<row id="pw_event5_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……
+まけたわ　メカポリス……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……
+負けたわ　メカポリス……</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">メカポリス『ミッションコンプリート
+にんむ　かんりょう……▼
+さあ　[1:02:ポケモンニックネーム:0]クノイチ
+つみを　つぐなうんだ▽
+そして　うまれかわれ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ミッションコンプリート
+任務　完了……▼
+さあ　[1:02:ポケモンニックネーム:0]クノイチ
+罪を　つぐなうんだ▽
+そして　生まれ変われ！</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……▼
+……
+ありがとう……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……▼
+……
+ありがとう……</language>
+	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">こうして　いくどとなく
+だつごく　とうそうを　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+メカポリスの　てにより▽
+ぶじ　けいむしょへ　ぶちこまれた▼
+これを　さいごに
+[1:02:ポケモンニックネーム:0]クノイチは▽
+だっそうを　しなくなったという……</language>
+		<language name="JPN_KANJI" width="256">こうして　幾度となく
+脱獄　逃走を　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+メカポリスの　手により▽
+無事　刑務所へ　ぶちこまれた▼
+これを　最後に
+[1:02:ポケモンニックネーム:0]クノイチは▽
+脱走を　しなくなったという……</language>
+	</row>
+	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">そして　すうねんご……▼
+しみんを　はんざいから　まもる
+ひみつけいじ　メカポリス▼
+その　かたわらには
+[1:02:ポケモンニックネーム:0]を　つかう▽
+あいぼうが　いるという……▼
+おおらかであれ　メカポリス！
+つみを　にくんで　ひとを　にくまず！</language>
+		<language name="JPN_KANJI" width="256">そして　数年後……▼
+市民を　犯罪から　守る
+秘密刑事　メカポリス▼
+その　かたわらには
+[1:02:ポケモンニックネーム:0]を　使う▽
+相棒が　いるという……▼
+寛容であれ　メカポリス！
+罪を　憎んで　人を　憎まず！</language>
+	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">メカポリス『まけだ　まけ
+オールオーバー　おしまいだ▽
+どこへでも　にげるがいい……！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『負けだ　負け
+オールオーバー　おしまいだ▽
+どこへでも　逃げるがいい……！</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
+みそこなったわ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
+見損なったわ！</language>
+	</row>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">メカポリス『どうせ　からだは
+きかいじかけ……▽
+こころなど　とっくに……▼
+……
+あれ……　なぜだ▽
+なぜ　なみだが……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『どうせ　身体は
+機械仕掛け……▽
+心など　とっくに……▼
+……
+あれ……　なぜだ▽
+なぜ　涙が……</language>
+	</row>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">こうして　いくどとなく
+だつごく　とうそうを　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+またしても　メカポリスの▽
+ついせきを　まぬがれた▼
+ほどなくして　メカポリスは
+こくさいコップを　じしょくし▼
+[1:02:ポケモンニックネーム:0]クノイチは
+盗みを　やめた▼
+これで　いいのか　メカポリス！？
+じぶんの　むねに　きいてみろ！</language>
+		<language name="JPN_KANJI" width="256">こうして　幾度となく
+脱獄　逃走を　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+またしても　メカポリスの▽
+追跡を　免れた▼
+ほどなくして　メカポリスは
+国際コップを　辞職し▼
+[1:02:ポケモンニックネーム:0]クノイチは
+盗みを　やめた▼
+これで　良いのか　メカポリス！？
+自分の　胸に　聞いてみろ！</language>
+	</row>
+	<row id="pw_event7_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ちょろい！
+ちょろいわ　こくさいコップ！▼
+ひみつけいじが　なんにん
+たばになって　やってきても▽
+アタシは　つかまらないよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ちょろい！
+ちょろいわ　国際コップ！▼
+秘密刑事が　何人
+束になって　やってきても▽
+アタシは　捕まらないよ！</language>
+	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">きどうたいいん『ワイワイ　ガヤガヤ</language>
+		<language name="JPN_KANJI" width="256">機動隊員『ワイワイ　ガヤガヤ</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『さらば！
+こくさいコップの　しょくん！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『さらば！
+国際コップの　諸君！</language>
+	</row>
+	<row id="pw_event7_enemy_2">
+		<language name="JPN" width="256">きどうたいいん『おー　すごい！
+とんだぞ！　どうやったんだ？</language>
+		<language name="JPN_KANJI" width="256">機動隊員『おー　すごい！
+飛んだぞ！　どうやったんだ？</language>
+	</row>
+	<row id="pw_event7_enemy_3">
+		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]クノイチ
+まてー！　またんかー！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『[1:02:ポケモンニックネーム:0]クノイチ
+待てー！　待たんかー！</language>
+	</row>
+	<row id="pw_event7_hero_4">
+		<language name="JPN" width="256">こうして　いくどとなく
+だつごく　とうそうを　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+またしても　メカポリスの▽
+ついせきを　まぬがれた</language>
+		<language name="JPN_KANJI" width="256">こうして　幾度となく
+脱獄　逃走を　くりかえした▽
+[1:02:ポケモンニックネーム:0]クノイチは▽
+またしても　メカポリスの▽
+追跡を　免れた</language>
+	</row>
+	<row id="pw_event7_hero_5">
+		<language name="JPN" width="256">そして　５０ねんご……▼
+ふけこんだ　[1:02:ポケモンニックネーム:0]クノイチと
+スクラップすんぜんの　メカポリスは▽
+いまだに　おわれては　にげ▽
+にげられては　おいかけ　を▽
+くりかえしていた……▼
+いいから　やすめ　メカポリス！
+だれか　かれらを　とめてやれ！</language>
+		<language name="JPN_KANJI" width="256">そして　５０年後……▼
+老けこんだ　[1:02:ポケモンニックネーム:0]クノイチと
+スクラップ寸前の　メカポリスは▽
+いまだに　追われては　逃げ▽
+逃げられては　追いかけ　を▽
+くりかえしていた……▼
+いいから　休め　メカポリス！
+だれか　彼らを　止めてやれ！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

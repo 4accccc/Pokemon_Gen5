@@ -346,252 +346,367 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
+		<language name="JPN" width="256">じょゆう</language>
+		<language name="JPN_KANJI" width="256">じょゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
+		<language name="JPN" width="256">メカポリスのいもうと</language>
+		<language name="JPN_KANJI" width="256">メカポリスのいもうと</language>
 	</row>
 	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ずいぶんと
+かわいらしい　ポケモンじゃないか</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ずいぶんと
+可愛らしい　ポケモンじゃないか</language>
 	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
-		<language name="JPN_KANJI" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
-	</row>
-	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
-		<language name="JPN_KANJI" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
+		<language name="JPN" width="256">ポリアンナ『まけない……！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『負けない……！</language>
 	</row>
 	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
-		<language name="JPN_KANJI" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
+		<language name="JPN" width="256">ポリアンナ『たえて　クルミル！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『耐えて　クルミル！</language>
 	</row>
 	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
-		<language name="JPN_KANJI" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
+		<language name="JPN" width="256">ポリアンナ『いまだ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『今だ！</language>
+	</row>
+	<row id="pw_turn_hero_3">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ……
+やるじゃねえか</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ……
+やるじゃねえか</language>
+	</row>
+	<row id="pw_turn_enemy_3">
+		<language name="JPN" width="256">ポリアンナ『てかげんは　なしだよ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『手加減は　なしだよ！</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
-		<language name="JPN_KANJI" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ！
+こいつも　ポケモンを……！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ！
+こいつも　ポケモンを……！？</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
-		<language name="JPN_KANJI" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
+		<language name="JPN" width="256">ポリアンナ『あんたね！
+にいさんが　いっていた▽
+コソどろの　[1:02:ポケモンニックネーム:0]ニンジャって</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『あんたね！
+兄さんが　いっていた▽
+コソ泥の　[1:02:ポケモンニックネーム:0]ニンジャって</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">だれ？</language>
-		<language name="JPN_KANJI" width="256">だれ？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『だったら
+なんだってんだよ！▼
+オマエは　いまから　オレの
+ひとじちに　なるんだぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『だったら
+なんだってんだよ！▼
+オマエは　今から　オレの
+人質に　なるんだぜ！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
-		<language name="JPN_KANJI" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
+		<language name="JPN" width="256">ポリアンナ『いっておくけど
+わたし　けっこう　つよいんだよ？▽
+にいさんと　とっくん　してるんだから</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『いっておくけど
+私　結構　強いんだよ？▽
+兄さんと　特訓してるんだから</language>
+	</row>
+	<row id="pw_event0_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+こどもの　あそびじゃ　ないんだぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+子供の　遊びじゃ　ないんだぜ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
-		<language name="JPN_KANJI" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
+		<language name="JPN" width="256">ポリアンナ『あんたを　やっつけて
+にいさんに　わたしの▽
+カッコイイところ▽
+みせてやるんだから！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『あんたを　やっつけて
+兄さんに　私の▽
+カッコイイところ▽
+みせてやるんだから！</language>
 	</row>
-	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
-	</row>
-	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
-	</row>
-	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">わかりました</language>
-		<language name="JPN_KANJI" width="256">わかりました</language>
-	</row>
-	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
+	<row id="pw_event1_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『へえ……
+いがいと　やるんだな▽
+まあ　いがいと　だけどな</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『へえ……
+意外と　やるんだな▽
+まあ　意外と　だけどな</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
-		<language name="JPN_KANJI" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
+		<language name="JPN" width="256">ポリアンナ『にいさんに
+おそわった　たたかいかたで▽
+あんたを　やっつけてやるわ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『兄さんに
+教わった　戦い方で▽
+あんたを　やっつけてやるわ！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">たしかに…</language>
-		<language name="JPN_KANJI" width="256">たしかに…</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フーン……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フーン……</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
-		<language name="JPN_KANJI" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
+		<language name="JPN" width="256">ポリアンナ『バカにしないで！▼
+あれっ？　でも……
+どうするんだっけ？</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『バカにしないで！▼
+あれっ？　でも……
+どうするんだっけ？</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">いままでも　あったよ</language>
-		<language name="JPN_KANJI" width="256">いままでも　あったよ</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『かかってきな！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『かかってきな！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
-		<language name="JPN_KANJI" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
+		<language name="JPN" width="256">ポリアンナ『とっくんの　せいか
+みせてやるわ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『特訓の　成果
+みせてやるわ！</language>
+	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+ちょうしに　のるなよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+調子に　乗るなよ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
+		<language name="JPN" width="256">ポリアンナ『あんたこそ！▼
+にいさんが　いってたわ
+せいぎは　かならず　かつって！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『あんたこそ！▼
+兄さんが　いってたわ
+正義は　必ず　勝つって！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ちがうな……
+あとえ　あくにんでも▽
+かっちまえば　せいぎに　なる▽
+それが　げんじつさ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『違うな……
+あとえ　悪人でも▽
+勝っちまえば　正義になる▽
+それが　現実さ！</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
-	</row>
-	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
+		<language name="JPN" width="256">ポリアンナ『そんなの　ウソよ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『そんなの　ウソよ！</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それはどうかな？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それはどうかな？</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
+		<language name="JPN" width="256">ポリアンナ『にいさんは
+ただしいんだ！▽
+わたしが　しょうめい　してみせる！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『兄さんは
+正しいんだ！▽
+私が　証明　してみせる！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
+		<language name="JPN" width="256">ポリアンナ『な　なんなの
+いみ　わかんない！▼
+ウソだよね　にいさん……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『な　なんなの
+意味　分かんない！▼
+ウソだよね　兄さん……</language>
 	</row>
-	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
-	</row>
-	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+	<row id="pw_event3_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
+こんな　おんなのこ　ひとりに……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
+こんな　女の子　ひとりに……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
+		<language name="JPN" width="256">ポリアンナ『せいぎは　かつ！
+やっぱり　にいさんは▽
+ただしかったんだ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『正義は　勝つ！
+やっぱり　兄さんは　正しかったんだ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
-		<language name="JPN_KANJI" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
-	</row>
-	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
-	</row>
-	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">だめだ…</language>
-		<language name="JPN_KANJI" width="256">だめだ…</language>
+		<language name="JPN" width="256">ポリアンナを　ひとじちにしようとした
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+ぎゃくに　ポリアンナに　とらわれ▽
+こくさいコップに　ひきわたされた▼
+このよに　せいぎが　あるかぎり
+けっして　あくは　さかえない！▼
+しじん　たいほだ　ポリアンナ！
+たてよ　たたかえ　いっぱん　しみん！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナを　人質にしようとした
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+逆に　ポリアンナに　捕らわれ▽
+国際コップに　引き渡された▼
+この世に　正義が　あるかぎり
+決して　悪は　栄えない！▼
+私人逮捕だ　ポリアンナ！
+立てよ　戦え　一般市民！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
-		<language name="JPN_KANJI" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
+		<language name="JPN" width="256">ポリアンナ『ああっ！　そんな……
+ただしいことを　していても▽
+かてないなんて　ひどいわ……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『ああっ！　そんな……
+正しいことを　していても▽
+勝てないなんて　ひどいわ……</language>
 	</row>
-	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">たおせた…</language>
-		<language name="JPN_KANJI" width="256">たおせた…</language>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『そうさ
+しょうじきものが　バカをみる▽
+そんな　よのなか　だからこそ▽
+オレは　あくに　てを　そめるのさ</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『そうさ
+正直者が　バカをみる▽
+そんな　世の中だからこそ▽
+オレは　悪に　手を染めるのさ</language>
+	</row>
+	<row id="pw_event4_enemy_2">
+		<language name="JPN" width="256">ポリアンナ『やだ……　カッコイイ
+いけないのに……　こんなの▽
+この　きもち　おさえられないっ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『やだ……　カッコイイ
+いけないのに……　こんなの▽
+この　気持ち　抑えられないっ！</language>
+	</row>
+	<row id="pw_event4_hero_3">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャに　やぶれた
+ポリアンナは　あろうことか▽
+あくに　たいして　あこがれを▽
+いだいてしまった！▼
+どうする　こまった　メカポリス！
+なにかと　むずかしい　としごろだぞ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャに　敗れた
+ポリアンナは　あろうことか▽
+悪に　対して　あこがれを▽
+抱いてしまった！▼
+どうする　困った　メカポリス！
+何かと　難しい　年ごろだぞ！</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">ポリアンナ『ダ　ダメ……
+こんな　ことじゃ▽
+にいさんに　きらわれちゃう……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『ダ　ダメ……
+こんな　ことじゃ▽
+兄さんに　嫌われちゃう……</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『きらわれる？▼
+きょうだい　だろ？
+そんなことで　きらわれるのか？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『嫌われる？▼
+兄妹だろ？
+そんなことで　嫌われるのか？</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">ポリアンナ『にいさんの　せいぎが
+わたしの　せいぎなんだ！▼
+あんたに　かてない　わたしは
+にいさんに　とって　あく……！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『兄さんの　正義が
+私の　正義なんだ！▼
+あんたに　勝てない　私は
+兄さんに　とって　悪……！</language>
+	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ……
+かわいそうに▼
+やっぱり　せいぎなんて
+ロクなものじゃ　ない……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『チッ……
+可哀想に▼
+やっぱり　正義なんて
+ロクなものじゃ　ない……</language>
+	</row>
+	<row id="pw_event5_enemy_3">
+		<language name="JPN" width="256">ポリアンナ『ごめんなさい……
+ごめんなさい……▽
+ごめんなさい……▽
+……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『ごめんなさい……
+ごめんなさい……▽
+ごめんなさい……▽
+……</language>
+	</row>
+	<row id="pw_event5_hero_4">
+		<language name="JPN" width="256">りそうの　せいぎを　もとめるあまり
+しっぱいを　おそれ▽
+きょうふに　とらわれた　ポリアンナ▼
+メカポリスの　とっくんは
+わかい　かのじょには▽
+きびしすぎたのかも　しれない……▼
+かぞくを　だいじに　メカポリス！
+まじめすぎるのも　かんがえものだ！</language>
+		<language name="JPN_KANJI" width="256">理想の　正義を　求めるあまり
+失敗を　恐れ▽
+恐怖に　囚われた　ポリアンナ▼
+メカポリスの　特訓は
+若い　彼女には▽
+厳しすぎたのかも　しれない……▼
+家族を　大事に　メカポリス！
+真面目すぎるのも　考えものだ！</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
-		<language name="JPN_KANJI" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
+		<language name="JPN" width="256">ポリアンナ『そんな……
+にいさんと　とっくんしたのに▽
+まけるなんて　ウソでしょ……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『そんな……
+兄さんと　特訓したのに▽
+負けるなんて　ウソでしょ……</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ！
+オマエを　エサに▽
+メカポリスを　おびきだし　やっつける！▼
+オマエたちのいう　せいぎが
+こわれる　ところを　みせてやるぜ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ！
+オマエを　エサに▽
+メカポリスを　おびきだし　やっつける！▼
+オマエ達のいう　正義が
+壊れる所を　みせてやるぜ……</language>
+	</row>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">ポリアンナ『やめて！　はなして！
+にいさん！　たすけてー！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『やめて！　放して！
+兄さん！　助けてー！</language>
+	</row>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">こうして　まんまと　ポリアンナを
+ひとじちにした　[1:02:ポケモンニックネーム:0]ニンジャは▽
+メカポリスを　おいつめ　たおした</language>
+		<language name="JPN_KANJI" width="256">こうして　まんまと　ポリアンナを
+人質にした　[1:02:ポケモンニックネーム:0]ニンジャは▽
+メカポリスを　追い詰め　倒した</language>
+	</row>
+	<row id="pw_event6_hero_4">
+		<language name="JPN" width="256">しかし　すうねんご……▼
+[1:02:ポケモンニックネーム:0]ニンジャへの
+リベンジに　もえる　ポリアンナは▽
+こくさいコップの　ひみつけいじ▽
+きょうか　かいぞう　おんなデカ▽
+メカポリスウーマンとして▽
+うまれかわったのであった！▼
+ほうふくせよ　メカポリスウーマン！
+１００ばいがえしだ　こくさいコップ！</language>
+		<language name="JPN_KANJI" width="256">しかし　数年後……▼
+[1:02:ポケモンニックネーム:0]ニンジャへの
+リベンジに　燃える　ポリアンナは▽
+国際コップの　秘密刑事▽
+強化改造　女デカ▽
+メカポリスウーマンとして▽
+生まれ変わったのであった！▼
+報復せよ　メカポリスウーマン！
+１００倍返しだ　国際コップ！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

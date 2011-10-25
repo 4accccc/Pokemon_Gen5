@@ -6,25 +6,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんぱい</Text>
+			<Text>じょゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんぱい</Text>
+			<Text>じょゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -39,25 +39,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんぱい</Text>
+			<Text>メカポリスのいもうと</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんぱい</Text>
+			<Text>メカポリスのいもうと</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68,216 +68,185 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_hero_0"
-		Style="Large">
+		Label="pw_turn_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ずいぶんと
+かわいらしい　ポケモンじゃないか</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ずいぶんと
+可愛らしい　ポケモンじゃないか</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_enemy_0"
-		Style="Large">
+		Label="pw_turn_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</Text>
+			<Text>ポリアンナ『まけない……！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</Text>
+			<Text>ポリアンナ『負けない……！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_hero_1"
-		Style="Large">
+		Label="pw_turn_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんたくすると　なにが
-おきるんだろう？▼</Text>
+			<Text>ポリアンナ『たえて　クルミル！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんたくすると　なにが
-おきるんだろう？▼</Text>
+			<Text>ポリアンナ『耐えて　クルミル！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_enemy_1"
-		Style="Large">
+		Label="pw_turn_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</Text>
+			<Text>ポリアンナ『いまだ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</Text>
+			<Text>ポリアンナ『今だ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_enemy_2"
-		Style="Large">
+		Label="pw_turn_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ……
+やるじゃねえか</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ……
+やるじゃねえか</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『てかげんは　なしだよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『手加減は　なしだよ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event0_hero_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ！
+こいつも　ポケモンを……！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ！
+こいつも　ポケモンを……！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -292,29 +261,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</Text>
+			<Text>ポリアンナ『あんたね！
+にいさんが　いっていた▽
+コソどろの　[Name:PokemonNickname Idx="0" ]ニンジャって</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</Text>
+			<Text>ポリアンナ『あんたね！
+兄さんが　いっていた▽
+コソ泥の　[Name:PokemonNickname Idx="0" ]ニンジャって</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -329,25 +298,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だれ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『だったら
+なんだってんだよ！▼
+オマエは　いまから　オレの
+ひとじちに　なるんだぜ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だれ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『だったら
+なんだってんだよ！▼
+オマエは　今から　オレの
+人質に　なるんだぜ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -362,29 +337,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</Text>
+			<Text>ポリアンナ『いっておくけど
+わたし　けっこう　つよいんだよ？▽
+にいさんと　とっくん　してるんだから</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</Text>
+			<Text>ポリアンナ『いっておくけど
+私　結構　強いんだよ？▽
+兄さんと　特訓してるんだから</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -393,31 +368,64 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:17" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+こどもの　あそびじゃ　ないんだぜ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+子供の　遊びじゃ　ないんだぜ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-21T12:23:08" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event0_enemy_2"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まずは　シナリオボタンを　おしてみるのよ！</Text>
+			<Text>ポリアンナ『あんたを　やっつけて
+にいさんに　わたしの▽
+カッコイイところ▽
+みせてやるんだから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　シナリオボタンを　おしてみるのよ！</Text>
+			<Text>ポリアンナ『あんたを　やっつけて
+兄さんに　私の▽
+カッコイイところ▽
+みせてやるんだから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -428,163 +436,62 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event0_react_hero_0"
-		Style="Large">
+		Label="pw_event1_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『へえ……
+いがいと　やるんだな▽
+まあ　いがいと　だけどな</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『へえ……
+意外と　やるんだな▽
+まあ　意外と　だけどな</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event0_react_enemy_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>あら　すなおじゃない</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あら　すなおじゃない</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event0_react_hero_1"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>わかりました</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>わかりました</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event0_react_enemy_1"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>あら　すなおじゃない</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あら　すなおじゃない</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</Text>
+			<Text>ポリアンナ『にいさんに
+おそわった　たたかいかたで▽
+あんたを　やっつけてやるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</Text>
+			<Text>ポリアンナ『兄さんに
+教わった　戦い方で▽
+あんたを　やっつけてやるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -599,25 +506,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしかに…</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『フーン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしかに…</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『フーン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -632,29 +539,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</Text>
+			<Text>ポリアンナ『バカにしないで！▼
+あれっ？　でも……
+どうするんだっけ？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</Text>
+			<Text>ポリアンナ『バカにしないで！▼
+あれっ？　でも……
+どうするんだっけ？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -669,25 +576,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いままでも　あったよ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『かかってきな！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いままでも　あったよ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『かかってきな！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -702,29 +609,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</Text>
+			<Text>ポリアンナ『とっくんの　せいか
+みせてやるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</Text>
+			<Text>ポリアンナ『特訓の　成果
+みせてやるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -735,31 +640,60 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event2_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+ちょうしに　のるなよ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+調子に　乗るなよ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event2_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　わたしは　いちども
-こうげきを　していないわね？▼</Text>
+			<Text>ポリアンナ『あんたこそ！▼
+にいさんが　いってたわ
+せいぎは　かならず　かつって！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　わたしは　いちども
-こうげきを　していないわね？▼</Text>
+			<Text>ポリアンナ『あんたこそ！▼
+兄さんが　いってたわ
+正義は　必ず　勝つって！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -774,25 +708,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしかに…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ちがうな……
+あとえ　あくにんでも▽
+かっちまえば　せいぎに　なる▽
+それが　げんじつさ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしかに…▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『違うな……
+あとえ　悪人でも▽
+勝っちまえば　正義になる▽
+それが　現実さ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -807,62 +747,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　せんたくで
-わたしは　こうげきするわ！▼</Text>
+			<Text>ポリアンナ『そんなの　ウソよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　せんたくで
-わたしは　こうげきするわ！▼</Text>
+			<Text>ポリアンナ『そんなの　ウソよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event2_enemy_2"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ　どのわざを
-だしてもらいたい？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ　どのわざを
-だしてもらいたい？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -877,25 +780,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひのこだっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『それはどうかな？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひのこだっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『それはどうかな？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -910,27 +813,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひのこね？　あなたのポケモンは
-たえられるかしら？▼</Text>
+			<Text>ポリアンナ『にいさんは
+ただしいんだ！▽
+わたしが　しょうめい　してみせる！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひのこね？　あなたのポケモンは
-たえられるかしら？▼</Text>
+			<Text>ポリアンナ『兄さんは
+正しいんだ！▽
+私が　証明　してみせる！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -945,25 +850,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みずでっぽうだっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みずでっぽうだっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -978,27 +883,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そのわざなら
-たえられるわね…</Text>
+			<Text>ポリアンナ『な　なんなの
+いみ　わかんない！▼
+ウソだよね　にいさん……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そのわざなら
-たえられるわね…</Text>
+			<Text>ポリアンナ『な　なんなの
+意味　分かんない！▼
+ウソだよね　兄さん……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1009,381 +916,127 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event3_enemy_0"
-		Style="Large">
+		Label="pw_event3_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
+こんな　おんなのこ　ひとりに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
+こんな　女の子　ひとりに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event3_hero_1"
-		Style="Large">
+		Label="pw_event3_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしかに…▼</Text>
+			<Text>ポリアンナ『せいぎは　かつ！
+やっぱり　にいさんは▽
+ただしかったんだ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしかに…▼</Text>
+			<Text>ポリアンナ『正義は　勝つ！
+やっぱり　兄さんは　正しかったんだ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event3_enemy_1"
-		Style="Large">
+		Label="pw_event3_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</Text>
+			<Text>ポリアンナを　ひとじちにしようとした
+[Name:PokemonNickname Idx="0" ]ニンジャは▽
+ぎゃくに　ポリアンナに　とらわれ▽
+こくさいコップに　ひきわたされた▼
+このよに　せいぎが　あるかぎり
+けっして　あくは　さかえない！▼
+しじん　たいほだ　ポリアンナ！
+たてよ　たたかえ　いっぱん　しみん！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</Text>
+			<Text>ポリアンナを　人質にしようとした
+[Name:PokemonNickname Idx="0" ]ニンジャは▽
+逆に　ポリアンナに　捕らわれ▽
+国際コップに　引き渡された▼
+この世に　正義が　あるかぎり
+決して　悪は　栄えない！▼
+私人逮捕だ　ポリアンナ！
+立てよ　戦え　一般市民！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_hero_2"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_enemy_3"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ　どのわざを
-だしてもらいたい？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ　どのわざを
-だしてもらいたい？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_react_hero_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひのこだっ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ひのこだっ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_react_enemy_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひのこね？　あなたのポケモンは
-たえられるかしら？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ひのこね？　あなたのポケモンは
-たえられるかしら？▼</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_react_hero_1"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>みずでっぽうだっ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>みずでっぽうだっ！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event3_react_enemy_1"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そのわざなら
-たえられるわね…</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そのわざなら
-たえられるわね…</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event4_hero_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>だめだ…</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だめだ…</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</Text>
+			<Text>ポリアンナ『ああっ！　そんな……
+ただしいことを　していても▽
+かてないなんて　ひどいわ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</Text>
+			<Text>ポリアンナ『ああっ！　そんな……
+正しいことを　していても▽
+勝てないなんて　ひどいわ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1394,70 +1047,318 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event6_hero_0"
-		Style="Large">
+		Label="pw_event4_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>たおせた…</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『そうさ
+しょうじきものが　バカをみる▽
+そんな　よのなか　だからこそ▽
+オレは　あくに　てを　そめるのさ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たおせた…</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『そうさ
+正直者が　バカをみる▽
+そんな　世の中だからこそ▽
+オレは　悪に　手を染めるのさ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『やだ……　カッコイイ
+いけないのに……　こんなの▽
+この　きもち　おさえられないっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『やだ……　カッコイイ
+いけないのに……　こんなの▽
+この　気持ち　抑えられないっ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャに　やぶれた
+ポリアンナは　あろうことか▽
+あくに　たいして　あこがれを▽
+いだいてしまった！▼
+どうする　こまった　メカポリス！
+なにかと　むずかしい　としごろだぞ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャに　敗れた
+ポリアンナは　あろうことか▽
+悪に　対して　あこがれを▽
+抱いてしまった！▼
+どうする　困った　メカポリス！
+何かと　難しい　年ごろだぞ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『ダ　ダメ……
+こんな　ことじゃ▽
+にいさんに　きらわれちゃう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『ダ　ダメ……
+こんな　ことじゃ▽
+兄さんに　嫌われちゃう……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『きらわれる？▼
+きょうだい　だろ？
+そんなことで　きらわれるのか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『嫌われる？▼
+兄妹だろ？
+そんなことで　嫌われるのか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『にいさんの　せいぎが
+わたしの　せいぎなんだ！▼
+あんたに　かてない　わたしは
+にいさんに　とって　あく……！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『兄さんの　正義が
+私の　正義なんだ！▼
+あんたに　勝てない　私は
+兄さんに　とって　悪……！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ……
+かわいそうに▼
+やっぱり　せいぎなんて
+ロクなものじゃ　ない……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『チッ……
+可哀想に▼
+やっぱり　正義なんて
+ロクなものじゃ　ない……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『ごめんなさい……
+ごめんなさい……▽
+ごめんなさい……▽
+……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『ごめんなさい……
+ごめんなさい……▽
+ごめんなさい……▽
+……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>りそうの　せいぎを　もとめるあまり
+しっぱいを　おそれ▽
+きょうふに　とらわれた　ポリアンナ▼
+メカポリスの　とっくんは
+わかい　かのじょには▽
+きびしすぎたのかも　しれない……▼
+かぞくを　だいじに　メカポリス！
+まじめすぎるのも　かんがえものだ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>理想の　正義を　求めるあまり
+失敗を　恐れ▽
+恐怖に　囚われた　ポリアンナ▼
+メカポリスの　特訓は
+若い　彼女には▽
+厳しすぎたのかも　しれない……▼
+家族を　大事に　メカポリス！
+真面目すぎるのも　考えものだ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</Text>
+			<Text>ポリアンナ『そんな……
+にいさんと　とっくんしたのに▽
+まけるなんて　ウソでしょ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</Text>
+			<Text>ポリアンナ『そんな……
+兄さんと　特訓したのに▽
+負けるなんて　ウソでしょ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T10:43:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1466,5 +1367,135 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:17" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
+オマエを　エサに▽
+メカポリスを　おびきだし　やっつける！▼
+オマエたちのいう　せいぎが
+こわれる　ところを　みせてやるぜ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
+オマエを　エサに▽
+メカポリスを　おびきだし　やっつける！▼
+オマエ達のいう　正義が
+壊れる所を　みせてやるぜ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-24T09:42:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『やめて！　はなして！
+にいさん！　たすけてー！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『やめて！　放して！
+兄さん！　助けてー！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうして　まんまと　ポリアンナを
+ひとじちにした　[Name:PokemonNickname Idx="0" ]ニンジャは▽
+メカポリスを　おいつめ　たおした</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こうして　まんまと　ポリアンナを
+人質にした　[Name:PokemonNickname Idx="0" ]ニンジャは▽
+メカポリスを　追い詰め　倒した</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>しかし　すうねんご……▼
+[Name:PokemonNickname Idx="0" ]ニンジャへの
+リベンジに　もえる　ポリアンナは▽
+こくさいコップの　ひみつけいじ▽
+きょうか　かいぞう　おんなデカ▽
+メカポリスウーマンとして▽
+うまれかわったのであった！▼
+ほうふくせよ　メカポリスウーマン！
+１００ばいがえしだ　こくさいコップ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しかし　数年後……▼
+[Name:PokemonNickname Idx="0" ]ニンジャへの
+リベンジに　燃える　ポリアンナは▽
+国際コップの　秘密刑事▽
+強化改造　女デカ▽
+メカポリスウーマンとして▽
+生まれ変わったのであった！▼
+報復せよ　メカポリスウーマン！
+１００倍返しだ　国際コップ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-25T02:02:41" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

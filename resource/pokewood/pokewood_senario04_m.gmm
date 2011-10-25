@@ -346,252 +346,471 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
+		<language name="JPN" width="256">スター</language>
+		<language name="JPN_KANJI" width="256">スター</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">せんぱい</language>
-		<language name="JPN_KANJI" width="256">せんぱい</language>
-	</row>
-	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに　どんなことが　できるのか
-まだ　ぼくは　ぜんぜん　しらないな…▼</language>
+		<language name="JPN" width="256">こくさいコップ</language>
+		<language name="JPN_KANJI" width="256">こくさいコップ</language>
 	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
-		<language name="JPN_KANJI" width="256">きょう　しんじん　はいゆうが
-やってくると　オーナーに　いわれたのよ▼
-わたしは　あなたに　ポケウッドを
-おしえる　せんぱいって　わけ！▼</language>
+		<language name="JPN" width="256">メカポリス『コードネーム　メカポリス
+スタートアップ！　きどうする！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『コードネーム　メカポリス
+スタートアップ！　起動する！</language>
 	</row>
 	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
-		<language name="JPN_KANJI" width="256">せんたくすると　なにが
-おきるんだろう？▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス……
+きかいの　からだに　かいぞうされた▽
+こくさいコップの　ひみつけいじ！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス……
+機械の　身体に　改造された▽
+国際コップの　秘密刑事！？</language>
 	</row>
 	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
-		<language name="JPN_KANJI" width="256">いま　うしろのはいけいが
-かわったのを　みた？▼
-せんたくしで　はいけいを
-かえることが　できるのよ▼</language>
+		<language name="JPN" width="256">メカポリス『キミのような　あくとうに
+ダイナミックエンジンは　わたさん！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『キミのような　悪党に
+ダイナミックエンジンは　渡さん！</language>
+	</row>
+	<row id="pw_turn_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ウワッ！
+あたり　かまわず……▽
+なんて　こうげきだ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ウワッ！
+辺り　構わず……　なんて　攻撃だ！</language>
 	</row>
 	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
-		<language name="JPN_KANJI" width="256">いまから　あなたの　えらんだとおりに
-わざを　だしてみせるわ！▼</language>
-	</row>
-	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
-		<language name="JPN_KANJI" width="256">ここが　ポケウッドか…▼
-これから　ぼくの　はいゆうじんせいが
-はじまるんだな…▼</language>
+		<language name="JPN" width="256">メカポリス『ショーダウン！
+けっちゃくの　ときだ</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ショーダウン！
+決着の　時だ</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
-		<language name="JPN_KANJI" width="256">ホホホ！！　スタジオに　きただけで
-はいゆうきどり！？▼
-あまい！　あまいわ！</language>
+		<language name="JPN" width="256">メカポリス『しんにゅうしゃ　はっけん
+せいたいデータ　しょうごうちゅう……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『侵入者　発見
+生体データ　照合中……</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">だれ？</language>
-		<language name="JPN_KANJI" width="256">だれ？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『あれは……
+けいびロボット？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『あれは……
+警備ロボット？</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
-		<language name="JPN_KANJI" width="256">まずは　わたしが　ポケウッドで
-なにを　するのか▽
-おしえてあげるわ</language>
+		<language name="JPN" width="256">メカポリス『しょうごう　かんりょう▼
+れんぞく　ごうとうはん
+[1:02:ポケモンニックネーム:0]ニンジャ▽
+ゲットダウン！　とうこうせよ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『照合　完了▼
+連続強盗犯　[1:02:ポケモンニックネーム:0]ニンジャ
+ゲットダウン！　投降せよ！</language>
 	</row>
-	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
-		<language name="JPN_KANJI" width="256">まずは　シナリオボタンを　おしてみるのよ！</language>
-	</row>
-	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
-	</row>
-	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
-	</row>
-	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">わかりました</language>
-		<language name="JPN_KANJI" width="256">わかりました</language>
-	</row>
-	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">あら　すなおじゃない</language>
-		<language name="JPN_KANJI" width="256">あら　すなおじゃない</language>
+	<row id="pw_event0_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……！
+にんげんの　けいかんだ！▼
+ぜんしんを　メカで
+きょうかして　いるのか！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……！
+人間の　警官だ！▼
+全身を　メカで
+強化して　いるのか！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
-		<language name="JPN_KANJI" width="256">ふつうの　せんとうと　いちばん
-ちがうのは　このセリフせんたくよ！</language>
+		<language name="JPN" width="256">メカポリス『ていこう　したな……
+てきたい　こうどうと　みなす！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『抵抗　したな……
+敵対行動と　みなす！</language>
+	</row>
+	<row id="pw_event1_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+だから　なんだと　いうんだ！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+だから　何だと　いうんだ！？</language>
+	</row>
+	<row id="pw_event1_enemy_1">
+		<language name="JPN" width="256">メカポリス『はんざいは　ゆるさない
+じつりょく　こうしで　せいあつする！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『犯罪は　許さない
+実力行使で　制圧する！</language>
+	</row>
+	<row id="pw_event1_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オレは
+せいきの　おおどろぼう▽
+[1:02:ポケモンニックネーム:0]ニンジャ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オレは
+世紀の　大泥棒▽
+[1:02:ポケモンニックネーム:0]ニンジャ！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">たしかに…</language>
-		<language name="JPN_KANJI" width="256">たしかに…</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『やられはしない！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『やられはしない！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
-		<language name="JPN_KANJI" width="256">そうでしょ！？　▼
-このせんたくしで　わたしの
-ポケモンの　こうどうが　かわるのよ▼</language>
+		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャに
+こうしょうの　よちなし！▼
+オールアウト！　そうこうげき！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャに
+交渉の　余地なし！▼
+オールアウト！　総攻撃！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">いままでも　あったよ</language>
-		<language name="JPN_KANJI" width="256">いままでも　あったよ</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『じしゅ　します</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『自首します</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
-		<language name="JPN_KANJI" width="256">うそ　おっしゃい！▼
-じゃあ　どこにはいっていたのか
-いってみなさいよ！▼</language>
+		<language name="JPN" width="256">メカポリス『なにっ！？
+そうていがいの　はんのう……▼
+ウッ……　システムエラーか！？</language>
+		<language name="JPN_KANJI" width="256">メカポリス『なにっ！？
+想定外の　反応……▼
+ウッ……　システムエラーか！？</language>
+	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オレの
+ポケモンに　かなうかな！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オレの
+ポケモンに　敵うかな！？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">まだ　わたしは　いちども
-こうげきを　していないわね？▼</language>
+		<language name="JPN" width="256">メカポリス『シャットアップ　だまれ
+せいぎは　あくに　まけはしない！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『シャットアップ　黙れ
+正義は　悪に　負けはしない！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ（ヘッ！　オレは
+しょうめんから　ぶつかるほど▽
+おひとよしじゃ　ないぜ▼
+スキをみて　にげだしてやる</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ（ヘッ！　オレは
+正面から　ぶつかるほど▽
+お人好しじゃ　ないぜ▼
+スキをみて　逃げ出してやる</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくで
-わたしは　こうげきするわ！▼</language>
+		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャ！▼
+かならず　けいむしょに　ぶちこんで
+つみを　つぐなわせてやる！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャ！▼
+必ず　刑務所に　ぶちこんで
+罪を　償わせてやる！</language>
 	</row>
-	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
+	<row id="pw_event2_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『やってみな！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『やってみな！</language>
 	</row>
-	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
-	</row>
-	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-	</row>
-	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
-	</row>
-	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
+	<row id="pw_event3_hero_0">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『まて！
+どろぼう　からは▽
+もう　あしを　あらうよ！▼
+だから　みのがしてくれ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『待て！
+泥棒からは▽
+もう　足を　洗うよ！▼
+だから　見逃がしてくれ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
-		<language name="JPN_KANJI" width="256">ふう…　いままでに　せんたくしなんて
-なかったでしょ！？▼
-うそはだめよ　うそは▼
-ところで　まだわたしは　いちども
-こうげきを　していないわね？▼</language>
+		<language name="JPN" width="256">メカポリス『ムムム……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ムムム……</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">たしかに…▼</language>
-		<language name="JPN_KANJI" width="256">たしかに…▼</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ（ヘッ！
+せいぎの　みかたサン▽
+ゆだんしてるぜ！▼
+スキを　ついて
+やっつけてやる！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ（ヘッ！
+正義の味方サン▽
+油断してるぜ！▼
+スキを　ついて
+やっつけてやる！</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せんたくしで
-わたしは　こうげきするわ！▼</language>
+		<language name="JPN" width="256">メカポリス『トゥーバッド　ざんねん
+キミの　こきゅうや　しんぱくすうの▽
+データから　いまの　はつげんが▽
+ウソであることが　はんめいした▼
+ばつは　おもいぞ……！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『トゥーバッド　残念
+キミの　呼吸や　心拍数の▽
+データから　今の　発言が▽
+ウソであることが　判明した▼
+罰は　重いぞ……！</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
-		<language name="JPN_KANJI" width="256">せんたくしは　てきのこうどうと
-ぶたいを　きめる　きっかけに　なるぞ！</language>
-	</row>
-	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-		<language name="JPN_KANJI" width="256">さあ　どのわざを
-だしてもらいたい？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_0">
-		<language name="JPN" width="256">ひのこだっ！</language>
-		<language name="JPN_KANJI" width="256">ひのこだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-		<language name="JPN_KANJI" width="256">ひのこね？　あなたのポケモンは
-たえられるかしら？▼</language>
-	</row>
-	<row id="pw_event3_react_hero_1">
-		<language name="JPN" width="256">みずでっぽうだっ！</language>
-		<language name="JPN_KANJI" width="256">みずでっぽうだっ！</language>
-	</row>
-	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">そのわざなら
-たえられるわね…</language>
-		<language name="JPN_KANJI" width="256">そのわざなら
-たえられるわね…</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『！！</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">だめだ…</language>
-		<language name="JPN_KANJI" width="256">だめだ…</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
+つ　つよい……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
+つ　強い……！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
-		<language name="JPN_KANJI" width="256">せんたくを　まちがったわね…
-じぶんが　ゆうりに　なるように▼
-せんたくしを　えらぶ　ひつようがあるわ…</language>
+		<language name="JPN" width="256">メカポリス『ミッションコンプリート！
+にんむ　かんりょう！▼
+[1:02:ポケモンニックネーム:0]ニンジャよ　きみは
+わたしに　まけたのではない▼
+ほうりつと　せいぎのまえに
+はいぼく　したのだ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ミッションコンプリート！
+任務　完了！▼
+[1:02:ポケモンニックネーム:0]ニンジャよ　キミは
+私に　負けたのではない▼
+法律と　正義の前に　敗北したのだ！</language>
+	</row>
+	<row id="pw_event4_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『くそーっ！
+あと　もうすこし　だったのに……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『くそーっ！
+あと　もう少し　だったのに……</language>
+	</row>
+	<row id="pw_event4_hero_2">
+		<language name="JPN" width="256">じしょう　せいきの　おおどろぼう
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+メカポリスの　てにより▽
+ぶじ　けいむしょへ　ぶちこまれた▼
+このよに　せいぎが　あるかぎり
+けっして　あくは　さかえない！▼
+せいあつせよ　メカポリス！
+なさけは　むよう　こくさいコップ！</language>
+		<language name="JPN_KANJI" width="256">自称　世紀の　大泥棒
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+メカポリスの　手により▽
+無事　刑務所へ　ぶちこまれた▼
+この世に　正義が　あるかぎり
+決して　悪は　栄えない！▼
+制圧せよ　メカポリス！
+情けは　無用　国際コップ！</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">メカポリス『ウッ！
+わたしと　したことが……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ウッ！
+私と　したことが……</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+ひみつけいじだか▽
+なんだか　しらんが▽
+どうってこと　ないな！▼
+この　ダイナミックエンジンは
+オレのものだ！　あばよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+秘密刑事だか▽
+なんだか　知らんが▽
+どうってこと　ないな！▼
+この　ダイナミックエンジンは
+オレのものだ！　あばよ！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">メカポリス『ストップ！　まてっ！
+[1:02:ポケモンニックネーム:0]ニンジャ！▼
+クッ！　レーダーを
+ごさどうさせる　スモークか！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ストップ！　待てっ！
+[1:02:ポケモンニックネーム:0]ニンジャ！▼
+クッ！　レーダーを
+誤作動させる　スモークか！</language>
+	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス！
+オレを　にがしたことを▽
+いっしょう　こうかい　するがいい！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス！
+オレを　逃がしたことを▽
+一生　後悔するがいい！</language>
+	</row>
+	<row id="pw_event5_enemy_2">
+		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャ……！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『[1:02:ポケモンニックネーム:0]ニンジャ……！</language>
+	</row>
+	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">じしょう　せいきの　おおどろぼう
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+ふてきな　すてぜりふと　ともに▽
+よるの　とばりに　きえた</language>
+		<language name="JPN_KANJI" width="256">自称　世紀の　大泥棒
+[1:02:ポケモンニックネーム:0]ニンジャは▽
+不敵な　捨て台詞と　ともに▽
+夜の　とばりに　消えた</language>
+	</row>
+	<row id="pw_event5_hero_4">
+		<language name="JPN" width="256">そして　すうねんご……▼
+ダイナミックエンジンを　あくようし
+おおがねもちに　なった▽
+[1:02:ポケモンニックネーム:0]ニンジャは▼
+こくさいコップさえ　てが　だせない
+かげの　おおものと　なった……▼
+くやしかろう　メカポリス！
+おかねの　ちからは　おそろしい！</language>
+		<language name="JPN_KANJI" width="256">そして　数年後……▼
+ダイナミックエンジンを　悪用し
+大金持ちに　なった▽
+[1:02:ポケモンニックネーム:0]ニンジャは▼
+国際コップさえ　手が出せない
+影の　大物と　なった……▼
+悔しかろう　メカポリス！
+お金の　力は　恐ろしい！</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">たおせた…</language>
-		<language name="JPN_KANJI" width="256">たおせた…</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なんだ！？
+この　おとは？　サイレン！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なんだ！？
+この　音は？　サイレン！？</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
-		<language name="JPN_KANJI" width="256">うまく　たおせたわね
-そうよ！　これがポケウッドよ！▼
-あなたが　これからスターに　なれるかは
-この　さつえいに　かかっているのよ！▼
-</language>
+		<language name="JPN" width="256">メカポリス『ま　まずいぞ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ま　まずいぞ！</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス！
+どういうことなんだ？　こたえろ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『メカポリス！
+どういうことなんだ？　答えろ！</language>
+	</row>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">メカポリス『この　けんきゅうじょは
+しんにゅうしゃを　はっけんしてから▽
+いっていの　じかんが　たつと▽
+うごくものを　なんでも▽
+むさべつに　こうげきする▽
+デストロイセキュリティシステムが▽
+さどう　するのだ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『この　研究所は
+侵入者を　発見してから▽
+一定の　時間が　経つと▽
+動くものを　なんでも▽
+無差別に　攻撃する▽
+デストロイセキュリティシステムが▽
+作動するのだ！</language>
+	</row>
+	<row id="pw_event6_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なんだと！？
+デストロ……　えっ？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なんだと！？
+デストロ……　えっ？</language>
+	</row>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">メカポリス『デストロイ
+セキュリティシステム！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『デストロイ
+セキュリティシステム！</language>
+	</row>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それが……
+ウワッ！　なんだこれ！？▽
+レーザー？　あつっ　あつい！▼
+やめて！　たすけて！
+おまわりさーん！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それが……
+ウワッ！　なんだこれ！？▽
+レーザー？　あつっ　熱い！▼
+やめて！　助けて！
+おまわりさーん！</language>
+	</row>
+	<row id="pw_event6_enemy_3">
+		<language name="JPN" width="256">メカポリス『うおおっ！　やめろ！
+わたしは　こくさいコップの……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『うおおっ！　やめろ！
+私は　国際コップの……</language>
+	</row>
+	<row id="pw_event6_hero_4">
+		<language name="JPN" width="256">かくして……▼
+デストロイセキュリティシステムの
+かつやくに　よって▽
+ダイナミックエンジンは▽
+じしょう　せいきの　おおどろぼう▽
+[1:02:ポケモンニックネーム:0]ニンジャの▽
+まのてを　のがれた▼
+すごいぞ！
+デストロイセキュリティシステム！▼
+がんばれ！
+デストロイセキュリティシステム！</language>
+		<language name="JPN_KANJI" width="256">かくして……▼
+デストロイセキュリティシステムの
+活躍に　よって▽
+ダイナミックエンジンは▽
+自称　世紀の　大泥棒▽
+[1:02:ポケモンニックネーム:0]ニンジャの▽
+魔の手を　逃れた▼
+すごいぞ！
+デストロイセキュリティシステム！▼
+がんばれ！
+デストロイセキュリティシステム！</language>
+	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">メカポリス『ウッ！
+わたしと　したことが……▽
+こんな　ひきょうものに……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ウッ！
+私と　したことが……▽
+こんな　ひきょうものに……</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+ほうりつ？　せいぎ？▽
+しったことかよ！▼
+どんなてを　つかっても
+オレは　かって　にげきる！▼
+それが　オレの　せいぎだ！▼
+もんくが　あるなら
+つかまえて　みやがれ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+法律？　正義？▽
+知ったことかよ！▼
+どんな手を　使っても
+オレは　勝って　逃げ切る！▼
+それが　オレの　正義だ！▼
+文句が　あるなら
+捕まえて　みやがれ！</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">メカポリス『ストップ！　まてっ！
+[1:02:ポケモンニックネーム:0]ニンジャ！▼
+ハッ！　これは……ばくだん！？</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ストップ！　待てっ！
+[1:02:ポケモンニックネーム:0]ニンジャ！▼
+ハッ！　これは……爆弾！？</language>
+	</row>
+	<row id="pw_event7_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘッ！▼
+ダイナミックエンジンごと
+ふきとびやがれ！　メカポリス！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘッ！▼
+ダイナミックエンジンごと
+吹き飛びやがれ！　メカポリス！</language>
+	</row>
+	<row id="pw_event7_enemy_2">
+		<language name="JPN" width="256">メカポリス『おのれ！
+ゆるさんぞ　[1:02:ポケモンニックネーム:0]ニン……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『おのれ！
+許さんぞ　[1:02:ポケモンニックネーム:0]ニン……</language>
+	</row>
+	<row id="pw_event7_hero_3">
+		<language name="JPN" width="256">ばくはつと　ともに　すがたを　けした
+じしょう　せいきの　おおどろぼう▽
+[1:02:ポケモンニックネーム:0]ニンジャ▼
+ごうきんせいの　コートのおかげで
+ぶじだった　メカポリスでは　あったが▽
+あくにんを　のがした　くやしさに▽
+ひとり　よぞらを　みあげ▽
+なみだを　ぬぐった……▼
+くじけるな　メカポリス！
+じんせいとは　そういうものだ！</language>
+		<language name="JPN_KANJI" width="256">爆発と　ともに　姿を　消した
+自称　世紀の　大泥棒▽
+[1:02:ポケモンニックネーム:0]ニンジャ▼
+合金製の　コートのおかげで
+無事だった　メカポリスでは　あったが▽
+悪人を　逃した　悔しさに▽
+ひとり　夜空を　見上げ▽
+涙を　ぬぐった……▼
+くじけるな　メカポリス！
+人生とは　そういうものだ！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
