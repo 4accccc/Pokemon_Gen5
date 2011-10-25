@@ -536,6 +536,9 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
       }
     }
 
+    //隠しキャラ用ゾーンIDを再設定
+    GAMEDATA_SetLiveCasterSecretCallZoneID( p_wk->p_gamedata );
+
     //終了
     LOCAL_TVT_PERSON_End( p_person );
     return TRUE;

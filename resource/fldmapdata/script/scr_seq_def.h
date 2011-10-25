@@ -12728,6 +12728,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ライブキャスター電話OK設定  隠しキャラ
+ */
+//--------------------------------------------------------------
+#define _PERSON_TVT_CALL_SET_SECRET() \
+    _ASM_PERSON_TVTL_CALL_SET_SECRET
+
+  .macro _ASM_PERSON_TVTL_CALL_SET_SECRET
+  .short EV_SEQ_PERSON_TVT_CALL_SET
+  .short \LOCAL_TVT_PERSON_SECRET
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief ライブキャスター隠しキャラから電話がくるかチェック
  * @param ret_wk  TRUEのとき隠しキャラからの電話がまだくる
  *

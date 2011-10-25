@@ -227,6 +227,9 @@ EVENT_START		ev_c04p01_tvt_ev_01
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
 
+  //‰B‚µƒLƒƒƒ‰‚É“d˜b‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	_PERSON_TVT_CALL_SET_SECRET()
+
 	//========================================/
 	
 	_FLAG_SET(FV_C04P01_ITEM_01)
