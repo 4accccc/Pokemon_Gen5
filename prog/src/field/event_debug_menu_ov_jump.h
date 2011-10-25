@@ -11,6 +11,8 @@
 #pragma once
 
 #include "event_debug_local.h"
+
+FS_EXTERN_OVERLAY( debugmenu_jump );
 //=============================================================================
 /**
  *					ŠO•”ŒöŠJ
@@ -23,3 +25,5 @@ extern BOOL debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 extern BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk );
+
+extern GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, void* wk );

@@ -245,6 +245,7 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 #include "field/event_debug_btl_all_poke_check.h" // for EVENT_DEBUG_BtlAllPokeCheck
 #include "field/event_debug_btl_all_waza_cam_check.h" // for EVENT_DEBUG_BtlAllWazaCamCheck
 #include "field/event_debug_btl_poke_change.h" // for EVENT_DEBUG_BtlPokeChange
+#include "field/event_debug_menu_ov_jump.h" // for debugMenuCallProc_AllMapCheck
 
 #include "savedata/config.h"
 
@@ -272,15 +273,17 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     //>>引数からテストモード切り替え
     
     // 全マップチェック
-#if 0
+#if 1
 /*    デバグメニューをオーバーレイ化したので、
  *    ひとまずコメントアウトしています。
  *    下記関数を使うためにはオーバーレイを読み込む必要があります
  */
     if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
     {
-      new_event = EVENT_DEBUG_AllMapCheck( gsys, FALSE );
+      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+          FS_OVERLAY_ID( debugmenu_jump ), EVENT_DEBUG_AllMapCheck, NULL );
       GAMESYSTEM_SetEvent( gsys, new_event );
+      OS_Printf("デバッグ：全マップチェック開始\n");
     }
     // 全接続チェック
     else

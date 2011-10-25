@@ -67,7 +67,6 @@ extern u32 DbgVramUseMaxZone;
  *					プロトタイプ
 */
 //=============================================================================
-static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag );
 static void DbgRestDataUpdate(const u32 inZone);
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 
@@ -82,7 +81,7 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk )
 {
   GMEVENT * new_event;
-  new_event = EVENT_DEBUG_AllMapCheck( p_wk->gmSys, FALSE );
+  new_event = EVENT_DEBUG_AllMapCheck( p_wk->gmSys, NULL );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
   return TRUE;
 }
@@ -458,13 +457,13 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag )
+GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, void* wk )
 {
   GMEVENT * new_event;
   ALL_MAP_CHECK_WORK * amcw;
   new_event = GMEVENT_Create( gsys, NULL, allMapCheckEvent, sizeof(ALL_MAP_CHECK_WORK) );
   amcw = GMEVENT_GetEventWork( new_event );
-  amcw->up_to_flag = up_to_flag;
+  amcw->up_to_flag = FALSE;
   amcw->gsys = gsys;
   return new_event;
 }

@@ -52,7 +52,7 @@ REM ================================
 REM ブート
 REM ================================
 REM 実行開始
-loadrun.TWL -t %TIMEOUT_DISP% -s %SERIAL_NO% -a %ABORT_STRING% %PATH_MAIN_SRL%
+loadrun.TWL -t %TIMEOUT_DISP% -s %SERIAL_NO% -a %ABORT_STRING% --nitro %PATH_MAIN_SRL%
 echo ErrorLevel = %ERRORLEVEL%
 
 REM デバイスが見つからなかった
