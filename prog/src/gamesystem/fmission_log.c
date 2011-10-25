@@ -245,7 +245,7 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   }
 #endif
   //–¼‘O(info->name‚ÍEOM”²‚«)
-  GFL_STD_MemCopy16( info->name, power.name, PERSON_NAME_SIZE);
+  GFL_STD_MemCopy16( info->name, power.name, PERSON_NAME_SIZE*sizeof(STRCODE));
   power.gpower_id = id;
 
   tbl->power[tbl->entry_num++] = power;
@@ -320,7 +320,7 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
   LINK_FESTIVAL_GetMissionArcCommonData( fest_sys, info->action.fmission.m_id, &entry.mission.arc );
  
   //–¼‘O(info->name‚ÍEOM”²‚«)
-  GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE);
+  GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE*sizeof(STRCODE));
 
   if( ret == ENTRY_NEW ){
     if( tbl->entry_num == FMISSION_ENTRY_TBL_MAX ){
@@ -424,7 +424,7 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   p_log->score = score;
 
   //–¼‘O(info->name‚ÍEOM”²‚«)
-  GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE);
+  GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE*sizeof(STRCODE));
 
 #if 0
   if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_FREEWORD ){

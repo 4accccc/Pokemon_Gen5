@@ -237,17 +237,11 @@ void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk, u16* q_num, u16* q
 
   //出題数を決める
   {
-    int score = sys_wk->fmwk->beacon.my_score;  //現在のマイスコア
-    if( score <= NPC_MEMORY_QUIZ_QUESTION_MAX ){
-      twk->q_num = score;
-      if( twk->q_num < NPC_MEMORY_QUIZ_QUESTION_MIN ){
-        twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MIN;
-      }
-    }else{
-      twk->q_num = (score/10);
-      if( twk->q_num > NPC_MEMORY_QUIZ_QUESTION_MAX ){
-        twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MAX;
-      }
+    twk->q_num = sys_wk->fmwk->beacon.my_score;  //現在のマイスコア
+    if( twk->q_num < NPC_MEMORY_QUIZ_QUESTION_MIN ){
+      twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MIN;
+    }else if( twk->q_num > NPC_MEMORY_QUIZ_QUESTION_MAX ){
+      twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MAX;
     }
   }
 
