@@ -260,84 +260,101 @@ static void HudsonMain( GAMESYS_WORK* gsys )
   }
 #endif
 
-  if( debugcnt < 180 )
+  if( debugcnt > 780 )
   {
-    debugcnt++;
+    return;
   }
-  else if( debugcnt == 180 )
+
+  switch( debugcnt )
   {
-    GMEVENT * new_event;
-    
+  default:
     debugcnt++;
+    break;
+  case 180:
+    {
+      // すれ違い画面に切り替え
+      FIELDMAP_WORK * fwork = GAMESYSTEM_GetFieldMapWork(gsys);
+      FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
+      FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_BEACON_VIEW );
+      OS_Printf("デバッグ：すれ違いログ画面\n");
+      debugcnt++;
+    }
+    break;
+  case 780:
+    {
+      GMEVENT * new_event;
 
-    //>>引数からテストモード切り替え
-    
-    // 全マップチェック
+      debugcnt++;
+
+      //>>引数からテストモード切り替え
+
+      // 全マップチェック
 #if 1
-/*    デバグメニューをオーバーレイ化したので、
- *    ひとまずコメントアウトしています。
- *    下記関数を使うためにはオーバーレイを読み込む必要があります
- */
-    if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debugmenu_jump ), EVENT_DEBUG_AllMapCheck, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-      OS_Printf("デバッグ：全マップチェック開始\n");
-    }
-    // 全接続チェック
-    else
-#endif
-    if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-    }
-    // 全技チェック
-    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
-    {
-#if 0      
+      /*    デバグメニューをオーバーレイ化したので、
+       *    ひとまずコメントアウトしています。
+       *    下記関数を使うためにはオーバーレイを読み込む必要があります
+       */
+      if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
       {
-        // 技エフェクトOFF
-        GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-        SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-        CONFIG* cfg = SaveData_GetConfig( sv ); 
-        CONFIG_SetWazaEffectMode( cfg, WAZAEFF_MODE_OFF );
+        new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+            FS_OVERLAY_ID( debugmenu_jump ), EVENT_DEBUG_AllMapCheck, NULL );
+        GAMESYSTEM_SetEvent( gsys, new_event );
+        OS_Printf("デバッグ：全マップチェック開始\n");
       }
+      // 全接続チェック
+      else
 #endif
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_all_waza_check ), EVENT_DEBUG_BtlAllWazaCheck, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
+        if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
+        {
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+      // 全技チェック
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+        {
+#if 0      
+          {
+            // 技エフェクトOFF
+            GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+            SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+            CONFIG* cfg = SaveData_GetConfig( sv ); 
+            CONFIG_SetWazaEffectMode( cfg, WAZAEFF_MODE_OFF );
+          }
+#endif
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_all_waza_check ), EVENT_DEBUG_BtlAllWazaCheck, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+      // 全技チェック2(トリプルバトル)
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
+        {
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_all_waza_check2 ), EVENT_DEBUG_BtlAllWazaCheck2, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+      // 全ポケモンチェック
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
+        {
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_all_poke_check ), EVENT_DEBUG_BtlAllPokeCheck, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+      // 全技カメラチェック
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
+        {
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_all_waza_cam_check ), EVENT_DEBUG_BtlAllWazaCamCheck, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
+        {
+          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+              FS_OVERLAY_ID( debug_poke_change ), EVENT_DEBUG_BtlPokeChange, NULL );
+          GAMESYSTEM_SetEvent( gsys, new_event );
+        }
     }
-    // 全技チェック2(トリプルバトル)
-    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_all_waza_check2 ), EVENT_DEBUG_BtlAllWazaCheck2, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-    }
-    // 全ポケモンチェック
-    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_all_poke_check ), EVENT_DEBUG_BtlAllPokeCheck, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-    }
-    // 全技カメラチェック
-    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_all_waza_cam_check ), EVENT_DEBUG_BtlAllWazaCamCheck, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-    }
-    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
-    {
-      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-          FS_OVERLAY_ID( debug_poke_change ), EVENT_DEBUG_BtlPokeChange, NULL );
-      GAMESYSTEM_SetEvent( gsys, new_event );
-    }
-
+    break;
   }
 
 }
