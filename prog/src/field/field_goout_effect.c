@@ -20,7 +20,8 @@
 #include "debug/debugwin_sys.h"
 #include "field_goout_effect_data.h"
 #include "gamesystem/pm_weather.h"
-
+#include "debug/debug_flg.h"
+#include "field_zonefog.h"
 
 #ifdef PM_DEBUG
 #define DEBUGMENU_GOOUT_EFFECT
@@ -112,7 +113,7 @@ FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMESYS_WORK* p_gamesys, GAMEDATA 
   NAGI_Printf( "after rest %d\n", GFL_HEAP_GetHeapFreeSize( heapID ) );
 
   //もし一万バイト残っていなかったら室内室内を諦める
-  if( GFL_HEAP_GetHeapFreeSize( heapID ) < 10000 )
+  if( GFL_HEAP_GetHeapFreeSize( heapID ) < 15000 )
   {
     p_wk->effectID = GOOUT_EFF_NULL;
     p_wk->is_enable = FALSE;
@@ -371,9 +372,16 @@ void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONE
     }
   }
 
+#ifdef PM_DEBUG
+  if( DEBUG_FLG_GetFlg( DEBUG_FLG_WeatherForceSunny ) )
+  {
+    is_enable = TRUE;
+  }
+#endif
+
   //フォグも全部やらない
   {
-    if( reg_G3X_DISP3DCNT & REG_G3X_DISP3DCNT_FME_MASK )
+    if( ZONEDATA_GetFog(zoneID) != FIELD_ZONEFOGLIGHT_DATA_NONE )
     {
       OS_TPrintf("フォグ使ってます\n");
       is_enable = FALSE;
