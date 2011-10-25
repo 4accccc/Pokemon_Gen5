@@ -99,8 +99,8 @@ EVENT_START		ev_pos_local_tvt
 	//DŠ´“xŽæ“¾
 	_PERSON_STATE_GET_SECRET( LWK_STATE )
 	
-	//DŠ´“x‚ª‚XˆÈã‚È‚ç‚Î
-	IF $LWK_STATE >= 9 THEN
+	//DŠ´“x‚ª‚P‚OˆÈã‚È‚ç‚Î
+	IF $LWK_STATE >= 10 THEN
 	
 		//========================================/
 
