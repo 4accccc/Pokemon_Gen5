@@ -9,7 +9,7 @@
 
 #if PM_VERSION == VERSION_W2
 
- #define GENERATE_ENC_POKE_MAX	( 17 )
+ #define GENERATE_ENC_POKE_MAX	( 19 )
 
 #else
 
