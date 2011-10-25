@@ -595,11 +595,8 @@ SRCS_OVERLAY_NOTWIFI_FES_GIMMICK_NPC = field/fes_gimmick_npc_nw.c
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
 #===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
-SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
-        field/field_comm/intrude_comm_command.c \
-        field/field_comm/intrude_main.c \
+SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_mission.c \
-        field/field_comm/intrude_battle.c \
         field/field_comm/intrude_symbol.c
 
 #ユニオンシステムでほぼ常駐に置かなければいけないもの(侵入の常駐物と並列化)
@@ -649,14 +646,8 @@ SRCS_OVERLAY_WIFI_BREAK = system/wifi_info_break.c
 # フィールドマップ上でのみ使用する侵入関連のソース
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
-        field/symbol_pokemon.c \
-				field/event_intrude.c \
-				field/event_intrude_subscreen.c \
-        field/scrcmd_intrude.c \
-        field/field_comm/intrude_message.c \
-        field/field_comm/intrude_mission_field.c \
-        field/scrcmd_intrude_field.c
+SRCS_OVERLAY_FIELD_INTRUDE = field/symbol_pokemon.c \
+        field/event_fmission_field.c
 
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE
@@ -866,7 +857,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_pokeid_search.c \
         savedata/intrude_save_field.c \
         field/intrude_secret_item.c \
-        field/event_intrude_secret_item.c \
         field/united_nations.c \
         field/fldeff_btrain.c \
         field/fldeff_hide.c \
@@ -2226,10 +2216,6 @@ SRCS_OVERLAY_DEBUG_MENU_MMDL_LIST = field/event_debug_menu_mmdl_list.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_WFBC_CHECK = field/debug_wfbc.c
 
-#DEBUG_MENU_INTRUDE
-#===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_DEBUG_MENU_INTRUDE = field/event_debug_menu_intrude.c \
-                                  field/event_debug_numinput_mission.c
 #DEBUG_MENU_WIFINOTE
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_WIFINOTE  = field/event_debug_menu_wifinote.c

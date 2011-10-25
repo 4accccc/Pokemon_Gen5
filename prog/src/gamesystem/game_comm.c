@@ -155,6 +155,15 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
   },
   //GAME_COMM_NO_INVASION
   {
+#ifdef  DISABLE_INTRUDE //swan‚Å‚ÍN“ü‚Ííœ
+    NULL,       //init
+    NULL,       //init_wait
+    NULL,       //update
+    NULL,       //exit
+    NULL,       //exit_wait
+    NULL,       //field_create
+    NULL,       //field_delete
+#else
     IntrudeComm_InitCommSystem,       //init
     IntrudeComm_InitCommSystemWait,   //init_wait
     IntrudeComm_UpdateSystem,         //update
@@ -162,6 +171,7 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
     IntrudeComm_TermCommSystemWait,   //exit_wait
     IntrudeComm_FieldCreate,          //field_create
     IntrudeComm_FieldDelete,          //field_delete
+#endif  //swan‚Å‚ÍN“ü‚Ííœ
   },
   //GAME_COMM_NO_UNION
   {
@@ -391,6 +401,8 @@ void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 //==================================================================
 void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *parent_work)
 {
+  //swan‚Å‚ÍN“ü‚Ì‹N“®‚Í‹ÖŽ~‚·‚é
+  GF_ASSERT(gcsp->game_comm_no != GAME_COMM_NO_INVASION );
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL);
   
   gcsp->game_comm_no = game_comm_no;

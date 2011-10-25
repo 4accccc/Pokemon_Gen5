@@ -2899,6 +2899,13 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
     u16 hero_code;
     u16 zone_id = fieldWork->location.zone_id;
     
+#ifdef  DISABLE_INTRUDE // swanで進入を削除
+    { //swanでは侵入がないため、自機リソースは常に自分のものを登録する
+      //syachiでは侵入中の「自機」は相手、自分は変装中というシチュエーションが存在した
+      const MYSTATUS *myst = GAMEDATA_GetMyStatus( gdata );
+      sex = MyStatus_GetMySex( myst );
+    }
+#else
     if( ZONEDATA_IsUnionRoom(zone_id) == FALSE &&
         ZONEDATA_IsColosseum(zone_id) == FALSE ){
       GAME_COMM_SYS_PTR game_comm =
@@ -2908,6 +2915,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
       const MYSTATUS *myst = GAMEDATA_GetMyStatus( gdata );
       sex = MyStatus_GetMySex( myst );
     }
+#endif  //undef(DISABLE_INTRUDE)
     
     hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
         sex, PLAYER_DRAW_FORM_NORMAL );

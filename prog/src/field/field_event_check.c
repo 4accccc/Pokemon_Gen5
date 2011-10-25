@@ -26,7 +26,6 @@
 
 #include "system/wipe.h"      //WIPE_SYS_EndCheck
 #include "event_mapchange.h"
-#include "field_comm/intrude_field.h"
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle
 #include "event_beacon_detail.h"         //EVENT_BeaconDetail
@@ -37,12 +36,13 @@
 #include "rail_editor.h"
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
+#include "field_comm/intrude_field.h"
 #ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 #include "event_comm_common.h"
 #include "event_comm_result.h"
+#include "event_intrude_subscreen.h"
 #endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
-#include "event_intrude_subscreen.h"
 #include "event_subscreen.h"      //EVENT_ChangeSubScreen
 #include "event_shortcut_menu.h"  //EVENT_ShortCutMenu
 #include "event_research_radar.h"  //EVENT_ResearchRadar
@@ -84,8 +84,10 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "waza_tool/wazano_def.h"
+#ifndef DISABLE_INTRUDE //swan‚ÅN“ü‚ğíœ
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_mission.h"
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
 
 #include "savedata/encount_sv.h"
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
@@ -104,17 +106,21 @@
 
 #include "field_status_local.h" //FIELD_STATUS_GetReservedScript
 
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
 #include "event_intrude.h"
 #include "event_symbol.h"
 #include "field_comm/intrude_work.h"
 
 #include "scrcmd_intrude.h"
+#endif  //undef(DISABLE_INTRUDE)
 
 #include "savedata/situation.h"
 #include "gamesystem/g_power.h" //GPOWER_Calc_Hatch
 
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
 #include "savedata/intrude_save_field.h"  //ISC_SAVE_CheckItem
 #include "event_intrude_secret_item.h"    //
+#endif  //undef(DISABLE_INTRUDE)
 #include "field_diving_data.h"  //DIVINGSPOT_Check
 #include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
 #include "poke_tool/tokusyu_def.h" //TOKUSYU_xxxx

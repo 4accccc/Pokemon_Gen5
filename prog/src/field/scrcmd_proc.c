@@ -443,6 +443,22 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   
   parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
 
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ðíœ
+  { //swan‚Å‚ÍN“ü‚ªíœ‚³‚ê‚é‚Ì‚ÅA‰¼‚ÅMONOLITH_STATUS‚ðÝ’è
+    MONOLITH_STATUS * monost = &parent->monolith_status;
+
+    INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+    
+    GFL_STD_MemClear(monost, sizeof(MONOLITH_STATUS));
+    monost->clear_mission_count = ISC_SAVE_GetMissionClearCount(intsave); //‰¼
+    monost->palace_sojourn_time = ISC_SAVE_GetPalaceSojournTime(intsave); //‰¼
+    ISC_SAVE_GetDistributionGPower_Array(
+      intsave, monost->gpower_distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
+    monost->occ = TRUE;
+    palace_area = 0;
+    parent->list_occ = FALSE;
+  }
+#else
   if(intcomm != NULL 
       && intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
       && MISSION_MissionList_CheckOcc(
@@ -461,6 +477,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
     palace_area = 0;
     parent->list_occ = FALSE;
   }
+#endif  //undef(DISABLE_INTRUDE)
 
   parent->gsys = gsys;
   parent->palace_area = palace_area;

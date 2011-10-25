@@ -415,6 +415,7 @@ BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk )
   return FALSE;
 }
 
+#ifndef DISABLE_INTRUDE
 //--------------------------------------------------------------
 /**
  * デバッグメニュー　ハイリンク
@@ -427,6 +428,7 @@ BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk )
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
+#endif  //DISABLE_INTRUDE
 
 //--------------------------------------------------------------
 /**

@@ -179,7 +179,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm, FS_OVERLAY_ID(debugmenu_net) },  //ライブ通信デバッグ
   { DEBUG_FIELD_LINK_FESTIVAL, debugMenu_LinkFestival, FS_OVERLAY_ID(debugmenu_net) },  //リンクフェスティバルデバッグ
   //{ DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset, FS_OVERLAY_ID(debugmenu_net) },  //ミッションリスト再作成
+#ifndef DISABLE_INTRUDE
   { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude, FS_OVERLAY_ID(debugmenu_net) },      //ハイリンク
+#endif
   { DEBUG_FIELD_WIFINOTE_01,  debugMenu_WriteWifiNote, FS_OVERLAY_ID(debugmenu_net) },  //友達手帳書き込み
   { DEBUG_FIELD_RESORT, debugMenu_Resort, FS_OVERLAY_ID(debugmenu_net) }, //レゾナンスリゾート
 

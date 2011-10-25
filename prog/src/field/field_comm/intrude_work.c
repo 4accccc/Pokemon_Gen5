@@ -96,6 +96,8 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
   return intcomm;
 }
 
+#ifndef  DISABLE_INTRUDE //swanで侵入を削除
+//intrude_subdisp.c侵入下画面からしか使用されない
 //==================================================================
 /**
  * ワープするプレイヤー相手を設定
@@ -171,7 +173,10 @@ int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm)
   }
   return intcomm->warp_town_tblno;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
+#ifndef  DISABLE_INTRUDE //swanで侵入を削除
+//event_mission_battle.cだけで使用されている
 //==================================================================
 /**
  * ミッションバトル用の相手指定のタイミングコマンドが受信できているか確認します
@@ -193,6 +198,7 @@ BOOL Intrude_GetMissionBattleTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_bi
   }
   return FALSE;
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 //==================================================================
 /**
@@ -230,6 +236,10 @@ OCCUPY_INFO * Intrude_GetOccupyInfo(GAMEDATA *gamedata, int palace_area)
 //==================================================================
 MYSTATUS * Intrude_GetMyStatus(GAMEDATA *gamedata, int net_id)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：自分のMyStatusを返す
+  return GAMEDATA_GetMyStatus(gamedata);
+#else
   MYSTATUS *myst;
   
   if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
@@ -240,6 +250,7 @@ MYSTATUS * Intrude_GetMyStatus(GAMEDATA *gamedata, int net_id)
   }
   
   return myst;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -315,6 +326,9 @@ WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm)
 //==================================================================
 u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  return  GET_VERSION();
+#else
   GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
   const MYSTATUS *myst;
   u8 palace_area;
@@ -326,6 +340,7 @@ u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
   palace_area = GAMEDATA_GetIntrudePalaceArea(gamedata);
   myst = Intrude_GetMyStatus(gamedata, palace_area);
   return MyStatus_GetRomCode( myst );
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -340,6 +355,9 @@ u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
 u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
 {
   GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  return GAMEDATA_GetSeasonID(gamedata);
+#else
   u8 palace_area;
   
   if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
@@ -351,6 +369,7 @@ u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
     return GAMEDATA_GetSeasonID(gamedata);
   }
   return GAMEDATA_GetIntrudeSeasonID(gamedata, palace_area);
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -364,6 +383,7 @@ u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
  * @retval  BOOL		    TRUE：自分のパレス　FALSE:自分ではない人のパレス
  */
 //==================================================================
+#ifndef  DISABLE_INTRUDE //swanで侵入を削除
 BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata, u16 dir)
 {
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
@@ -392,6 +412,7 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
   }
   return FALSE;
 }
+#endif
 
 //==================================================================
 /**
@@ -435,6 +456,10 @@ u8 Intrude_GetIntrudeRomVersion(u8 pm_version, u32 trainer_id)
 //==================================================================
 GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：グレースケールにする必要がない
+  return GRAYSCALE_TYPE_NULL;
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   u8 invasion_netid, pm_version;
   const MYSTATUS *myst;
@@ -461,6 +486,7 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
     GF_ASSERT(0);
   }
   return GRAYSCALE_TYPE_NEXT;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -475,6 +501,10 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
 //==================================================================
 BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：誰ともつながらない
+  return FALSE;
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
@@ -484,6 +514,7 @@ BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
     return TRUE;
   }
   return FALSE;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -497,6 +528,10 @@ BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 BOOL Intrude_CheckZonePalaceConnect(u16 zone_id)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：つながらない
+  return FALSE;
+#else
   int i;
   
   for(i = 0; i < NELEMS(PalaceZoneIDTbl); i++){
@@ -505,6 +540,7 @@ BOOL Intrude_CheckZonePalaceConnect(u16 zone_id)
     }
   }
   return FALSE;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //--------------------------------------------------------------
@@ -546,10 +582,15 @@ BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata)
 //==================================================================
 BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：誰ともつながらないので表示の必要はない
+  return FALSE;
+#else
   if(intcomm->mission_start_timeout_warning && MISSION_RecvCheck(&intcomm->mission) == FALSE){
     return TRUE;
   }
   return FALSE;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -563,6 +604,10 @@ BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm)
 //==================================================================
 LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：つながらない
+  return LIVE_COMM_NULL;
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
@@ -575,6 +620,7 @@ LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm)
     return LIVE_COMM_INTRUDE;
   }
   return LIVE_COMM_INTRUDE_OUT;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -586,11 +632,15 @@ LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //何もしない：そもそもこの状態を見ない
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm != NULL){
     intcomm->live_comm_status = TRUE;
   }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -604,6 +654,10 @@ void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：接続されていない状態だけ
+  return  INTRUDE_CONNECT_NULL;
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
   if(intcomm == NULL){
@@ -620,6 +674,7 @@ INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm)
     return INTRUDE_CONNECT_MISSION_PARTNER;
   }
   return INTRUDE_CONNECT_INTRUDE;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -633,6 +688,10 @@ INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：ミッション参加人数は常に0人
+  return 0;
+#else
   NetID net_id;
   int entry_num = 0;
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
@@ -655,6 +714,7 @@ int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm)
     return 1;
   }
   return entry_num;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -669,6 +729,10 @@ int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：常に名前代入は失敗する
+  return FALSE;
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   NetID target_netid;
   MYSTATUS *target_myst;
@@ -682,6 +746,7 @@ BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf)
   target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, target_netid);
   MyStatus_CopyNameString( target_myst, dest_buf );
   return TRUE;
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -696,6 +761,10 @@ BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf)
 //==================================================================
 BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //swanに侵入はない：終了処理も実行されない
+  return FALSE;
+#else
   INTRUDE_COMM_SYS_PTR intcomm;
   
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
@@ -715,6 +784,7 @@ BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm)
     return FALSE;  //終了処理は既に完了している
   }
   return TRUE;  //終了処理実行中
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -728,8 +798,12 @@ BOOL Intrude_CheckNetIsExit(GAME_COMM_SYS_PTR game_comm)
 //==================================================================
 void Intrude_ResetStopCommPlayerUpdateMapFlag(GAME_COMM_SYS_PTR game_comm)
 {
+#ifdef  DISABLE_INTRUDE //swanで侵入を削除
+  //何もしない
+#else
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm != NULL){
     intcomm->stop_comm_player_status = STOP_COMM_PLAYER_STATUS_NO_CHECK;
   }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }

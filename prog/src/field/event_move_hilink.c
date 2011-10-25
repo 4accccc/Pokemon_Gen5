@@ -24,19 +24,27 @@
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
 
+#ifndef  DISABLE_INTRUDE // swanで侵入を削除
 #include "./event_cg_wireless.h"
 #include "./event_intrude_subscreen.h"
+#endif  //undef(DISABLE_INTRUDE)
 
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APP参照
 
+#ifndef  DISABLE_INTRUDE // swanで侵入を削除
 #include "net_app/cg_wireless_menu.h"
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
+#endif  //undef(DISABLE_INTRUDE)
 #include "arc/fieldmap/zone_id.h"
+#ifndef  DISABLE_INTRUDE // swanで侵入を削除
 #include "event_intrude.h"
 #include "scrcmd_intrude.h"
+#endif  //undef(DISABLE_INTRUDE)
+#include "event_mapchange.h"  //EVENT_ChangeMapFldToPalace
 
+#include "field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "event_move_hilink.h"
 
@@ -59,6 +67,32 @@ static GMEVENT_RESULT event_MoveHilinkMain(GMEVENT * event, int *  seq, void * w
     {
       GMEVENT* intrude_event;
      
+#ifdef  DISABLE_INTRUDE
+      //swanでは侵入を削除したのでINTRUDE_CONNECT_NULL以外はAssert
+      GF_ASSERT( wk->state == INTRUDE_CONNECT_NULL );
+      //パレスへワープする前に誰とも繋がっていないことが保障されるように
+      //通信の終了リクエスト＆終了待ちをする
+      if(GameCommSys_CheckSystemWaiting(pComm) == FALSE)
+      {
+        if(GameCommSys_BootCheck(pComm) != GAME_COMM_NO_NULL)
+        {
+          GameCommSys_ExitReq(pComm);
+        }
+        else
+        { //何も通信が起動していないのを待ってイベントコールし、シーケンスを進める
+          ///パレスへワープしてきたときの出現座標
+          static const VecFx32 PalaceWarpPos = {
+            PALACE_MAP_LEN/2 - 1*FX32_ONE,
+            32*FX32_ONE,
+            488 * FX32_ONE,
+          };
+          intrude_event = EVENT_ChangeMapFldToPalace(
+              gsys, ZONE_ID_PALACE01, &PalaceWarpPos, FALSE );
+          GMEVENT_CallEvent(event,intrude_event);
+          (*seq)++;
+        }
+      }
+#else
       if( wk->state == INTRUDE_CONNECT_NULL){ //最初の一人としてパレスへワープ
         //パレスへワープする前に誰とも繋がっていないことが保障されるように通信の終了リクエスト＆終了待ちをする
         if(GameCommSys_CheckSystemWaiting(pComm) == FALSE){
@@ -83,6 +117,7 @@ static GMEVENT_RESULT event_MoveHilinkMain(GMEVENT * event, int *  seq, void * w
         }
         (*seq)++;
       }
+#endif
     }
     break;
   case 1: 

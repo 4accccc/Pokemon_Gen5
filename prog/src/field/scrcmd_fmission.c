@@ -26,6 +26,9 @@
 #include "scrcmd_intrude.h"
 
 #include "field_comm\intrude_types.h"
+#ifdef  DISABLE_INTRUDE // swanで侵入を削除
+#include "field/field_comm/intrude_field.h"
+#else
 #include "field_comm\intrude_main.h"
 #include "field_comm\intrude_comm_command.h"
 #include "field/field_comm/intrude_monolith.h"
@@ -34,6 +37,7 @@
 #include "field/field_comm/intrude_field.h"
 #include "field\field_comm\intrude_work.h"
 #include "field/field_comm/intrude_mission_field.h"
+#endif  //undef(DISABLE_INTRUDE)
 
 #include "gamesystem/link_festival.h"
 
@@ -41,8 +45,10 @@
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_msg.h"
 
+#ifndef  DISABLE_INTRUDE // swanで侵入を削除
 #include "event_intrude.h"
 #include "event_intrude_subscreen.h"
+#endif  //undef(DISABLE_INTRUDE)
 #include "fieldmap/zone_id.h"
 #include "field/zonedata.h"
 #include "item/itemsym.h"
@@ -51,6 +57,8 @@
 #include "fes_gimmick.h"
 #include "fes_gimmick_local.h"
 #include "fes_gimmick_def.h"
+
+#include "event_mapchange.h"
 
 //==================================================================
 /**
@@ -331,6 +339,149 @@ VMCMD_RESULT EvCmdFMissionNpcMemoryQuizParamGetAnswerPoke( VMHANDLE *core, void 
   }
   *ret_a_poke = FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( fes_gmk, a_idx );
 
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==============================================================================
+//  
+//  以下はscrcmd_intrude_field.cから引っ越したコマンド
+//
+//==============================================================================
+//==================================================================
+/**
+ * ミッションエントリーしているかを取得
+ *
+ * @param   core		仮想マシン制御構造体へのポインタ
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ *
+ * TRUE:エントリーしている　FALSE:エントリーしていない
+ */
+//==================================================================
+VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
+
+  if ( FEST_MISSION_IsEntry( LINK_FESTIVAL_GetMissionWork(fest_sys) ) )
+  {
+    *ret_wk = SCR_PALACE_MISSION_ENTRY_FEST;
+  }
+  else
+  {
+    *ret_wk = SCR_PALACE_MISSION_ENTRY_NONE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//==================================================================
+/**
+ * Gパワーを何か装備しているか取得
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ *
+ * TRUE:何か装備している
+ * FALSE:何も装備していない
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  GPOWER_ID gpower_id;
+  
+  gpower_id = ISC_SAVE_GetGPowerID(intsave,0);
+  if(gpower_id != GPOWER_ID_NULL){
+    *ret_wk = TRUE;
+  }
+  else{
+    *ret_wk = FALSE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//==================================================================
+/**
+ * フェスミッション開始時に表フィールドにマップチェンジさせる
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeMapChangeFMissionStart( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  SCRIPT_CallEvent( scw, EVENT_IntrudeChangeMapFMissionStart(gsys) );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション開始カウントダウン ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitFMissionCountDown(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  return (LINK_FESTIVAL_MissionReadyTimerGet(GAMESYSTEM_GetLinkFestivalWork(gsys)) == 0 );
+}
+
+//==================================================================
+/**
+ * フェスミッション開始前のカウントダウン開始～カウントダウン終了まで待つ
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionCountDown( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+	u16 timer_sec	= SCRCMD_GetVMWorkValue( core, work );
+  
+  LINK_FESTIVAL_MissionReadyTimerSet( GAMESYSTEM_GetLinkFestivalWork(gsys), timer_sec );
+  
+  VMCMD_SetWait( core, EvWaitFMissionCountDown );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * @brief スクリプトコマンド：パレスから戻る
+ * @date  2011.10.25
+ *
+ * swan追加。swanでは侵入はなく、パレスから戻るのはワープポイントのみ。
+ */
+//==================================================================
+VMCMD_RESULT EvCmdReturnFromHilink( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_CallEvent( scw, EVENT_ChangeMapFromPalace( gsys ) );
   return VMCMD_RESULT_SUSPEND;
 }
 

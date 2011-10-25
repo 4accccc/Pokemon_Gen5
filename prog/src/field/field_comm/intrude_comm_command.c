@@ -213,7 +213,12 @@ static u8 * _RecvHugeBuffer_MissionResult(int netID, void* pWork, int size)
 //--------------------------------------------------------------
 static BOOL _OtherPlayerExistence(void)
 {
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
+  //swan‚É‚ÍN“ü‚ª‚È‚¢F’N‚à‚¢‚È‚¢
+  return FALSE;
+#else
   return Intrude_OtherPlayerExistence();
+#endif  //undef(DISABLE_INTRUDE)
 }
 
 //==============================================================================
