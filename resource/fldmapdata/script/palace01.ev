@@ -33,6 +33,7 @@ _EVENT_DATA    ev_palace01_girl4_03			//パレス４姉妹
 _EVENT_DATA    ev_palace01_girl4_04			//パレス４姉妹
 _EVENT_DATA    ev_palace01_oldman_mission_first_clear
 _EVENT_DATA    ev_palace01_oldman_mission_first_fail
+_EVENT_DATA    ev_palace01_warp_point
 _EVENT_DATA_END
 
 
@@ -50,11 +51,11 @@ DEFINE_LOCAL  area_oldman_objid   //パレスエリア毎の爺さんのOBJID
 /**************************************************************/
 INIT_EVENT_START	ev_init_palace01
   //連結マップセッティング
-  _INTRUDE_CONNECT_MAP_SETTING()
-  _INTRUDE_PALACE_MMDL_SETTING()
+  //_INTRUDE_CONNECT_MAP_SETTING()
+  //_INTRUDE_PALACE_MMDL_SETTING()
   
   //パレスIN時の強制変装イベント
-  _GET_DISGUISE_CODE( LOCALWORK0 )
+  //_GET_DISGUISE_CODE( LOCALWORK0 )
 INIT_EVENT_END
 
 /**************************************************************/
@@ -80,29 +81,18 @@ EVENT_END
 /*  モノリス                                              */
 /**************************************************************/
 EVENT_START ev_palace01_monolith
-  _CALL sub_monolith_main
+  _TALK_START_SE_PLAY()
+  //_CALL sub_monolith_main
+  _CALL sub_monolith_swan_main
 EVENT_END
 
 //--------------------------------------------------------------
 ///モノリス　メイン
 //--------------------------------------------------------------
-sub_monolith_main:
+sub_monolith_swan_main:
 {
-  _GET_PALACE_AREA_OFFSET( SCWK_ANSWER )
-
-  IF ($SCWK_ANSWER == 0) && FLAG_OFF( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
-    //まだチュートリアルミッションをクリアしていないので「他人のパレスへ行け！」を表示
-    _CALL sub_monolith_tutorial_first
-    _RET 
-  ENDIF
-  
-  //↓通常のモノリス処理
-  
-  //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
-  _INTRUDE_MISSION_CHOICE_LIST_REQ( SCWK_ANSWER )
-  IF $SCWK_ANSWER == FALSE THEN
-    _RET
-  ENDIF
+  _SYSWIN_MSG( plc_mono_01, POS_DOWN )
+  _SYSWIN_CLOSE()
   
   //モノリス呼び出し
   _MAP_FADE_BLACK_OUT()
@@ -121,7 +111,7 @@ sub_monolith_main:
   SWITCH $SCWK_ANSWER
   CASE SCR_PALACE_MISSION_ENTRY_NORMAL THEN
     //通常パレスミッション
-    _CALL sub_monolith_normal_mission_entry
+    //_CALL sub_monolith_normal_mission_entry
     _RET
   CASE SCR_PALACE_MISSION_ENTRY_FEST THEN
     //フェスミッション
@@ -134,66 +124,6 @@ sub_monolith_main:
 }
 _RET
 
-//--------------------------------------------------------------
-///モノリス　チュートリアル
-//--------------------------------------------------------------
-sub_monolith_tutorial_first:
-{
-  //まだミッションをクリアしていないので「他人のパレスへ行け！」を表示
-  _TALK_START_SE_PLAY()
-
-  //パレスじじい：主人公を見る
-  _OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
-  _OBJ_ANIME_WAIT()
-  	
-  //主人公：じじいを見る
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-  _OBJ_ANIME_WAIT()
-  	
-  //「まず他人のパレスへ行け」
-  _BALLOONWIN_OBJMSG( plc_help_01, PALACE01_OLDMAN1_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-}
-_RET
-
-//--------------------------------------------------------------
-///モノリス　1stチュートリアルミッション受領後
-//--------------------------------------------------------------
-sub_monolith_normal_mission_entry_first:
-{
-  _FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
-        	
-  _CALL sub_get_area_oldman_objid
-
-  //パレスじじい：主人公を見る
-  _OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-  _OBJ_ANIME_WAIT()
-        	
-  //主人公：じじいを見る
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-  _OBJ_ANIME_WAIT()
-        	
-  //「ミッションを開始したな！ワープが出来るぞ！」
-  _BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-}
-_RET
-
-//--------------------------------------------------------------
-///モノリス　ハイリンクミッション受領後
-//--------------------------------------------------------------
-sub_monolith_normal_mission_entry:
-{
-  //初めて受注したミッションならチュートリアルメッセージ表示
-  IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
-    _CALL sub_monolith_normal_mission_entry_first
-  ENDIF
-  //ミッション開始待ち
-  _MISSION_START_WAIT_EVENT()
-}
-_RET
 
 //--------------------------------------------------------------
 ///モノリス　フェスミッション受領後
@@ -707,18 +637,43 @@ EVENT_END
 //==============================================================
 sub_get_area_oldman_objid:
 {
-  DEFINE_LOCAL area_offset
-  
-  _GET_PALACE_AREA_OFFSET( area_offset )
-  IF $area_offset == 0 THEN
+    //swanには侵入先の爺さんはいない。自分のところのみ。
     $area_oldman_objid = PALACE01_OLDMAN1_01
-  ELSIF $area_offset == 1 THEN
-    $area_oldman_objid = OBJID_PALACE_OLDMAN1
-  ELSE
-    $area_oldman_objid = OBJID_PALACE_OLDMAN2
-  ENDIF
+//  DEFINE_LOCAL area_offset
+  
+//  _GET_PALACE_AREA_OFFSET( area_offset )
+//  IF $area_offset == 0 THEN
+//    $area_oldman_objid = PALACE01_OLDMAN1_01
+//  ELSIF $area_offset == 1 THEN
+//    $area_oldman_objid = OBJID_PALACE_OLDMAN1
+//  ELSE
+//    $area_oldman_objid = OBJID_PALACE_OLDMAN2
+//  ENDIF
 }
 _RET
 
+
+
+/**************************************************************/
+/**************************************************************/
+EVENT_START    ev_palace01_warp_point
+  _SYSWIN_MSG( plc_warp_point_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _RETURN_FROM_HILINK()
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_stepback )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_stepback
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
 
 
