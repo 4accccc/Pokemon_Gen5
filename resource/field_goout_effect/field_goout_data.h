@@ -33,4 +33,4 @@
 //íËêî
 #define FIELD_GOOUT_ROOM_COUNT_MAX  (0)
 //ÉfÅ[É^êî
-#define FIELD_GOOUT_DATA_MAX  (64)
+#define FIELD_GOOUT_DATA_MAX  (66)
