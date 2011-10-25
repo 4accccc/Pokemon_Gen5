@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-23T21:50:44" source="kawa_itp2.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-25T20:48:37" source="kawa_itp2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-10-23T21:50:44" source="kawa_itp2.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-10-25T20:48:37" source="kawa_itp2.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -108,7 +108,7 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_spring/taki_sakai.2.tga"
 	>
 		<bitmap size="32">
-			9559 bbb9 abbb 666a 2555 8889 aaaa 0666
+			a55a ccca bccc 866b 2555 999a bbbb 0666
 			2555 4331 7677 0067 2211 4331 7774 0007
 			1110 3311 7744 0007 0000 3331 7744 0007
 			0000 3330 7443 0000 0000 0000 0000 0000
@@ -163,7 +163,7 @@
 	</tex_palette>
 	<tex_palette index="5" name="taki_sakai.2_pl" color_size="16">
 		7fff 39c3 3183 4224 4a66 2964 6755 52ed
-		366e 218a 4293 1dd0 7fff 7fff 7fff 7fff
+		77db 366e 218a 4293 1dd0 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="taki_sakai.3_pl" color_size="16">
 		7fff 39c3 3183 4224 4a66 2964 6755 52ed
