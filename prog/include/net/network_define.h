@@ -387,7 +387,9 @@ typedef enum{
 #endif //BUGFIX_BTS7931_20100726
 
 
-#define GAMESYNC_CGEAR_DOWNLOAD "CGEAR_J"
+//CGEARはSWANで専用のものとなり、属性２の値をシャチとスワンで共通化するため
+//属性１をスワン専用に変える
+#define GAMESYNC_CGEAR_DOWNLOAD "CGEAR2_J"
 #define GAMESYNC_MUS_DOWNLOAD "MUSICAL_J"
 #define GAMESYNC_ZUK_DOWNLOAD "ZUKAN_J"
 
