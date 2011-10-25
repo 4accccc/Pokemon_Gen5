@@ -376,7 +376,7 @@ static void SetBookMark( TR_CARD_WORK *wk);
 //
 // 誘導マーク
 static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg );
-static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode );
+static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode, const s32 edit );
 //
 // メダル
 static void tc_init_medal( TR_CARD_WORK * wk );
@@ -509,8 +509,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   //拡縮面をリセット
   ResetAffinePlane();
 
-  //カードの初期状態表示
-  CardDataDraw(wk);
   //
   // 追加
   wk->Flag = 0;
@@ -520,6 +518,11 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   tc_init_medal( wk );
   // パレットチェンジ用
   tc_init_chgpal( wk );
+
+  //カードの初期状態表示
+  CardDataDraw(wk);
+  tc_chk_mark_visible( wk, wk->is_back, wk->tcp->edit_possible );
+
   //
   wk->vblankFunc = GFUser_VIntr_CreateTCB(VBlankFunc, wk , 1);  // VBlankセット
   wk->vblankTcblSys = GFL_TCBL_Init( wk->heapId , wk->heapId , 3 , 0 );
@@ -1324,7 +1327,7 @@ static void CardDataDraw(TR_CARD_WORK* wk)
   TRCBmp_TransTrWinInfo(wk,wk->win);
   //
   // カードの誘導マーク表示/非表示
-  tc_chk_mark_visible( wk, 0 );
+  tc_chk_mark_visible( wk, 0, wk->tcp->edit_possible );
 }
 
 
@@ -1508,7 +1511,7 @@ static BOOL CardRev( TR_CARD_WORK *wk )
       PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, FALSE );
     }
     // カードの誘導マーク
-    tc_chk_mark_visible( wk, 2 );
+    tc_chk_mark_visible( wk, 2, wk->tcp->edit_possible );
     wk->sub_seq++;
     break;
   case 1:
@@ -1566,7 +1569,7 @@ static BOOL CardRev( TR_CARD_WORK *wk )
         PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, TRUE );
       }
       // カードの誘導マーク
-      tc_chk_mark_visible( wk, wk->is_back );
+      tc_chk_mark_visible( wk, wk->is_back, wk->tcp->edit_possible );
     }
     break;
   }
@@ -1667,7 +1670,7 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     wk->sub_seq = 1;
     //
     // カードの誘導マーク
-    tc_chk_mark_visible( wk, 2 );
+    tc_chk_mark_visible( wk, 2, wk->tcp->edit_possible );
     break;
   case CARDSCALE_WIDE_CALC:
     wk->CardScaleX+=0x100;
@@ -1705,7 +1708,7 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
     _blend_win_set(-1);
     // カードの誘導マーク
-    tc_chk_mark_visible( wk, 1 );
+    tc_chk_mark_visible( wk, 1, wk->tcp->edit_possible );
     return TRUE;
     break;
 
@@ -3359,6 +3362,27 @@ static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg )
 	SetSActVisible( &wk->ObjWork, num, bflg );
 }
 
+//--------------------------------------------
+// カード表･裏表示用のテーブル
+//--------------------------------------------
+static const u8 face_back_obj[][3][6]={
+  // 編集不可の時のOBJのON/OFFテーブル
+  // ACTS_MARK_00,ACTS_MARK_01, ACTS_MARK_02, ACTS_MARK_10, ACTS_MARK_11, ACTS_MARK_MEDALの順
+  { 
+    { FALSE, FALSE, FALSE, FALSE, FALSE,     0, },  // 表
+    { FALSE, FALSE, FALSE,  TRUE,  TRUE, FALSE, },  // 裏
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, },  // 途中
+  },
+  // 編集可の時のOBJのON/OFFテーブル
+  {   
+    {  TRUE,  TRUE,  TRUE, FALSE, FALSE,     0, },  // 表
+    { FALSE, FALSE, FALSE,  TRUE,  TRUE, FALSE, },  // 裏
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, },  // 途中
+  },
+};
+#define TRCARD_BTN_OBJ_NUM            ( 5 )
+#define TRCARD_BTN_OBJ_AND_MEDAL_NUM  ( 6 )
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 誘導マークの表示(まとめ:要整理)
@@ -3369,39 +3393,32 @@ static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg )
  * @retval
  */
 //----------------------------------------------------------------------------------
-static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode )
+static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode, const s32 edit )
 {
 	BOOL	bflg=FALSE;
+	int i;
 	
 	// 表
 	if(mode == 0){
-		tc_set_visible( wk, ACTS_MARK_00, TRUE );	// 表用
-		tc_set_visible( wk, ACTS_MARK_01, TRUE );
-		tc_set_visible( wk, ACTS_MARK_02, TRUE );
-		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
-		tc_set_visible( wk, ACTS_MARK_11, FALSE );
+    for(i=0;i<TRCARD_BTN_OBJ_NUM;i++){
+  		tc_set_visible( wk, ACTS_MARK_00+i, face_back_obj[edit][mode][i] );
+    }
 		// メダル表示
 		if(wk->Flag & FLG_DISP_MEDAL){
 			tc_set_visible( wk, ACTS_MARK_MEDAL, TRUE ); // メダル
 		}
 		bflg = TRUE;
 	}else if(mode == 1){
-		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
-		tc_set_visible( wk, ACTS_MARK_01, FALSE );
-		tc_set_visible( wk, ACTS_MARK_02, FALSE );
-		tc_set_visible( wk, ACTS_MARK_10, TRUE );	// 裏用
-		tc_set_visible( wk, ACTS_MARK_11, TRUE );
-		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル
+    for(i=0;i<TRCARD_BTN_OBJ_AND_MEDAL_NUM;i++){
+  		tc_set_visible( wk, ACTS_MARK_00+i, face_back_obj[edit][mode][i] );
+    }
 		// タッチ処理初期化
 		tc_chg_arrow( wk, 3 );
 		bflg = TRUE;
 	}else{
-		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
-		tc_set_visible( wk, ACTS_MARK_01, FALSE );
-		tc_set_visible( wk, ACTS_MARK_02, FALSE );
-		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
-		tc_set_visible( wk, ACTS_MARK_11, FALSE );
-		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル
+    for(i=0;i<TRCARD_BTN_OBJ_AND_MEDAL_NUM;i++){
+  		tc_set_visible( wk, ACTS_MARK_00+i, face_back_obj[edit][mode][i] );
+    }
 	}
 	// パレットアニメ
 	tc_set_chgpal( wk, bflg );
