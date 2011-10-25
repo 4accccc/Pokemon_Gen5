@@ -429,7 +429,7 @@ static void Wbt_Download_Net_Seq_Wifi( WBTDLNET_SEQ_WORK *p_seqwk, int *p_seq, v
       param.cp_attribute_02   = "";
       param.cp_attribute_03   = "";
       param.GetDownloadIndexCallback = Wbt_Download_Net_GetDownloadIndexCallback;
-      param.file_size = 0x10; //TODO filesize
+      param.file_size = 55536;
 
       OS_TPrintf( "Wi-Fiサーチリクエスト\n" );
       if( COMMON_DOWNLOAD_RequestState( p_wk->p_common_download, COMMON_DOWNLOAD_REQ_WIFI_ND_START_SEARCH_DOWNLOAD, &param ) )

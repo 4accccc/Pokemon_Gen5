@@ -675,9 +675,11 @@ static void *TDownload_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   p_param->data     = p_wk->p_buffer;
   p_param->status   = T_DOWNLOAD_STATUS_SELECT;
 
-  //TODO
 #ifdef DEBUG_WBT_DOWNLOAD_CREATE_DATA
-  Debug_CreateWbtDlData( p_wk->p_buffer );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    Debug_CreateWbtDlData( p_wk->p_buffer );
+  }
 #endif
 
   return p_param;
