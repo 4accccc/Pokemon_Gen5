@@ -497,13 +497,18 @@ static void _event_MissionStartWait_Destructor(EVENT_MISSION_START_WAIT *emsw)
 //--------------------------------------------------------------
 GMEVENT * EVENT_Intrude_MissionStartWait_Warp(GAMESYS_WORK * gsys)
 {
+#ifdef  DISABLE_INTRUDE // swanで進入を削除
+  return NULL;
+#else
   GMEVENT *event;
   
   event = GMEVENT_Create( gsys, NULL, _event_MissionStartWaitWarp, 0 );
   
   return event;
+#endif  //undef(DISABLE_INTRUDE)
 }
 
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
 //--------------------------------------------------------------
 /**
  * イベント処理関数：ミッションエントリー後、開始まで待機
@@ -567,6 +572,7 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
 
   return GMEVENT_RES_CONTINUE;
 }
+#endif  //undef(DISABLE_INTRUDE)
 
 
 //==============================================================================
