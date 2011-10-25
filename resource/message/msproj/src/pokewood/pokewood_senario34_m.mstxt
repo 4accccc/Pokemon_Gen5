@@ -188,15 +188,15 @@
 だから　このＦー００は　わたしが
 いただくことに　したんだっ！▼
 せっけいデータが　ないのならば
-コイツを　うって　けんきゅうしょを
+コイツを　うって　けんきゅうしょを▽
 すくうのだっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -208,16 +208,16 @@
 研究所が　潰れるよ……▼
 だから　このＦー００は　私が
 いただくことに　したんだっ！▼
-せっけいデータが　ないのならば
-コイツを　売って　研究所を
+設計データが　ないのならば
+コイツを　売って　研究所を▽
 救うのだっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -339,35 +339,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『いっただろう……▼
+			<Text>じょしゅ『フン……▼
 いつもいつも　わたしを
 バカしてくれた　バツだ！▼
-Ｆー００！！▼
+さあ！　Ｆー００！！▼
 ちょっと　[Name:TrainerName Idx="1" ]を
 いためつけて　やれっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『言っただろう……▼
+			<Text>助手『フン……▼
 いつもいつも　私を
 バカしてくれた　バツだ！▼
-Ｆー００！！▼
+さあ！　Ｆー００！！▼
 ちょっと　[Name:TrainerName Idx="1" ]を
 痛めつけて　やれっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -382,27 +382,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！
+			<Text>[Name:TrainerName Idx="1" ]『そんな！　Ｆー００！
 ぼくの　ことが　わからないのっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！
+			<Text>[Name:TrainerName Idx="1" ]『そんな！　Ｆー００！
 僕の　ことが　わからないのっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -645,29 +645,29 @@
 			Language="JPN">
 			<Text>じょしゅ『ほんとうの　ことでも
 ひとは　きずつくんだよ！▼
-Ｆー００！！
+やってしまえ！　Ｆー００！！
 [Name:TrainerName Idx="1" ]を　こらしめろっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『本当の　ことでも
 人は　傷つくんだよ！▼
-Ｆー００！！
+やってしまえ！　Ｆー００！！
 [Name:TrainerName Idx="1" ]を　こらしめろっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -682,25 +682,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『うるさいっ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ひがみ　か……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『うるさいっ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ひがみ　か……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -715,31 +715,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『くそーっ！
+			<Text>じょしゅ『しつれいなっ！！
 おとなを　バカに　するなよっ！▼
-Ｆー００！！
+Ｆー００！！　やるんだっ！！
 [Name:TrainerName Idx="1" ]に　おしおきだっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『くそーっ！
+			<Text>助手『しつれいなっ！！
 大人を　バカに　するなよっ！▼
-Ｆー００！！
+Ｆー００！！　やるんだっ！！
 [Name:TrainerName Idx="1" ]に　おしおきだっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1137,27 +1137,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！！▼
+			<Text>Ｆー００『ギゴググゴゴゴゴーッ！！
 ……　……　……　……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！！▼
+			<Text>Ｆー００『ギゴググゴゴゴゴーッ！！
 ……　……　……　……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1238,25 +1238,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『しっかりしてよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だいじょうぶ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『しっかりしてよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『大丈夫！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1907,27 +1907,27 @@ CPUの　動作を▽
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ぼくの　なまえを……▼
+			<Text>[Name:TrainerName Idx="1" ]『ぼくの　なまえを……
 そんな……　まさか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『僕の　名前を……▼
+			<Text>[Name:TrainerName Idx="1" ]『僕の　名前を……
 そんな……　まさか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:11:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2039,8 +2039,63 @@ CPUの　動作を▽
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event4_hero_4"
-		Style="Large">
+		Label="pw_event4_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょしゅ『そんな……　まさか……▼
+こんな……　こんな　ひかがくてきな
+ことが　おこって　たまるかッ！！▼
+もう　わたしは　やってられんっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>助手『そんな……　まさか……▼
+こんな……　こんな　非科学的な
+ことが　起こって　たまるかッ！！▼
+もう　私は　やってられんっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event4_hero_6">
 		<LanguageCell
 			Language="JPN">
 			<Text>……プログラムを　かきかえられ
@@ -2051,12 +2106,12 @@ CPUの　動作を▽
 わたしと　Ｆー００に　えいえんの
 わかれが　まっていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2068,45 +2123,46 @@ CPUの　動作を▽
 私と　Ｆー００に　永遠の
 別れが　待っていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T09:21:46" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event5_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<Text>じょしゅ『いいか！　[Name:TrainerName Idx="1" ]！！
+おまえが　わるいんだからな！！▼
+わたしは　Ｆー００を　うって
+この　けんきゅうしょを▽
+たてなおすんだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<Text>助手『いいか！　[Name:TrainerName Idx="1" ]！！
+お前が　悪いんだからな！！▼
+私は　Ｆー００を　売って
+この　研究所を▽
+立て直すんだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2121,31 +2177,27 @@ CPUの　動作を▽
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『げんかいか……
-Ｆー００が　とまらない……▼
-からだに　たまった　ねつで▽
-エンジンが　ばくはつ　してしまう……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ちくしょう……
+Ｆー００を……　かえせ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『限界か……
-Ｆー００が　止まらない……▼
-身体に　溜まった　熱で▽
-エンジンが　爆発　してしまう……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『待て……
+Ｆー００を……　返せ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T08:49:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2159,25 +2211,25 @@ CPUの　動作を▽
 		Label="pw_event5_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<Text>じょしゅ『あばよ！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<Text>助手『あばよ！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2185,31 +2237,35 @@ CPUの　動作を▽
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……
-くるしいよな……▼
-ゴメン……
-ぼくは　ずっと　そばに　いるから……</Text>
+			<Text>……じょしゅに　うらぎられ
+Ｆー００も　うしなった　わたしは▽
+けんきゅうしょを　さった……▼
+そして　もう　にどと
+ロボットの　けんきゅうに▽
+たずさわることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……
-苦しいよな……▼
-ゴメン……
-ぼくは　ずっと　側に　いるから……</Text>
+			<Text>……助手に　裏切られ
+Ｆー００も　失った　私は▽
+研究所を　去った……▼
+そして　もう二度と
+ロボットの　研究に ▽
+携わることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T09:49:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2218,263 +2274,6 @@ CPUの　動作を▽
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_enemy_2">
-		<LanguageCell
-			Language="JPN">
-			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_3">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おい！！　Ｆー００！！ 
-なにを　するつもりだっ！！  </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『おい！！　Ｆー００！！ 
-なにを　するつもりだっ！！  </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_enemy_3">
-		<LanguageCell
-			Language="JPN">
-			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_4">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『はなせ！　Ｆー００！！ 
-ぼくも　いっしょに　いる！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『離せ！　Ｆー００！！ 
-僕も　一緒に　いる！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_enemy_4">
-		<LanguageCell
-			Language="JPN">
-			<Text>Ｆー００『ギゴグ……
-ギギギギギギギギギギギギッ！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴグ……
-ギギギギギギギギギギギギッ！！</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_5">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おい！　はなせ！
-はなしてくれ！　Ｆー００！！ </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『おい！　離せ！
-離してくれ！　Ｆー００！！ </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_enemy_5">
-		<LanguageCell
-			Language="JPN">
-			<Text>じょしゅ『ハハハ……
-どうして　こんなことに　なった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>助手『ハハハ……
-どうして　こんなことに　なった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_7">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event5_hero_8">
-		<LanguageCell
-			Language="JPN">
-			<Text>……Ｆー００は　ぼくを　つかむと
-けんきゅうしょの　まどを　やぶり
-そとへ　ほうりなげた……▼
-そのちょくご
-げんかいに　たっしていた▽
-Ｆー００は　ばくはつ……▼
-けんきゅうしょも　ふきとんだ……▼
-かろうじて　いちめいを
-とりとめた　わたし……▼
-Ｆー００の　とった　こうどうは
-ぼうそうゆえの　ぐうぜん　なのか……▽
-はたして……　</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……Ｆー００は　僕を　掴むと
-研究所の　窓を　破り
-外へ　放り投げた……▼
-その直後
-限界に　達していた▽
-Ｆー００は　爆発……▼
-研究所も　吹き飛んだ……▼
-辛うじて　一命を
-取り留めた　私……▼
-Ｆー００の　取った　行動は
-暴走ゆえの　偶然　なのか……▽
-果たして……　</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_0"
@@ -2991,125 +2790,372 @@ CPUの　動作を▽
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event7_hero_0">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ちくしょう……
-Ｆー００を……　かえせ……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待て……
-Ｆー００を……　返せ……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
 		Label="pw_event7_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『[Name:TrainerName Idx="1" ]！！
-おまえが　わるいんだからな！！▼
-わたしは　Ｆー００を　うって
-この　けんきゅうしょを▽
-たてなおすんだっ！！</Text>
+			<Text>Ｆー００『ギゴググゴッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『[Name:TrainerName Idx="1" ]！！
-お前が　悪いんだからな！！▼
-私は　Ｆー００を　売って
-この　研究所を▽
-立て直すんだっ！！</Text>
+			<Text>Ｆー００『ギゴググゴッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００を……
-ともだちを……　かえせ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『げんかいか……
+Ｆー００が　とまらない……▼
+からだに　たまった　ねつで▽
+エンジンが　ばくはつ　してしまう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『Ｆー００を……
-友達を……　かえせ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『限界か……
+Ｆー００が　止まらない……▼
+身体に　溜まった　熱で▽
+エンジンが　爆発　してしまう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆー００『ギゴググゴッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>……じょしゅに　うらぎられ
-Ｆー００も　うしなった　わたしは▽
-けんきゅうしょを　さった……▼
-そして　もう　にどと
-ロボットの　けんきゅうに▽
-たずさわることは　なかった……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……
+くるしいよな……▼
+ゴメン……
+ぼくは　ずっと　そばに　いるから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……助手に　裏切られ
-Ｆー００も　失った　私は▽
-研究所を　去った……▼
-そして　もう二度と
-ロボットの　研究に ▽
-携わることは　なかった……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……
+苦しいよな……▼
+ゴメン……
+ぼくは　ずっと　側に　いるから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:51" />
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『おい！！　Ｆー００！！ 
+なにを　するつもりだっ！！  </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『おい！！　Ｆー００！！ 
+なにを　するつもりだっ！！  </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆー００『ギゴググゴゴゴゴゴッ！！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『はなせ！　Ｆー００！！ 
+ぼくも　いっしょに　いる！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『離せ！　Ｆー００！！ 
+僕も　一緒に　いる！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｆー００『ギゴグ……
+ギギギギギギギギギギギギッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｆー００『ギゴグ……
+ギギギギギギギギギギギギッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『おい！　はなせ！
+はなしてくれ！　Ｆー００！！ </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『おい！　離せ！
+離してくれ！　Ｆー００！！ </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょしゅ『ハハハ……
+どうして　こんなことに　なった……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>助手『ハハハ……
+どうして　こんなことに　なった……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_7">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_8">
+		<LanguageCell
+			Language="JPN">
+			<Text>……Ｆー００は　ぼくを　つかむと
+けんきゅうしょの　まどを　やぶり
+そとへ　ほうりなげた……▼
+そのちょくご
+げんかいに　たっしていた▽
+Ｆー００は　ばくはつ……▼
+けんきゅうしょも　ふきとんだ……▼
+かろうじて　いちめいを
+とりとめた　わたし……▼
+Ｆー００の　とった　こうどうは
+ぼうそうゆえの　ぐうぜん　なのか……▽
+はたして……　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……Ｆー００は　僕を　掴むと
+研究所の　窓を　破り
+外へ　放り投げた……▼
+その直後
+限界に　達していた▽
+Ｆー００は　爆発……▼
+研究所も　吹き飛んだ……▼
+辛うじて　一命を
+取り留めた　私……▼
+Ｆー００の　取った　行動は
+暴走ゆえの　偶然　なのか……▽
+果たして……　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:22:48" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

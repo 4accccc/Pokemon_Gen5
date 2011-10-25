@@ -582,26 +582,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>%MYNAME『Ｆー００……
-いったい　どうしたの？</Text>
+いったい　どうしたっていうの……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:56:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>%MYNAME『Ｆー００……
-一体　どうしたの？</Text>
+一体　どうしたっていうの……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-22T07:56:28" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
