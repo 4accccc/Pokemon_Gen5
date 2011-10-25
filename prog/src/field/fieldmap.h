@@ -185,6 +185,7 @@ extern FIELD_CROWD_PEOPLE * FIELDMAP_GetCrowdPeopleSys( const FIELDMAP_WORK * fi
 extern FIELD_GOOUT_EFFECT * FIELDMAP_GetGooutEffect( const FIELDMAP_WORK * fieldWork );
 extern const FLD_G3DPAL * FIELDMAP_GetFldG3DPal( const FIELDMAP_WORK * fieldmap );
 extern fx32 FIELDMAP_GetBbdActYOffs( const FIELDMAP_WORK * fieldmap );
+extern u32 FIELDMAP_GetFog( FIELDMAP_WORK *fieldWork, u16 zone_id );
 #ifdef PM_DEBUG
 extern void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork );
 #endif  //PM_DEBUG

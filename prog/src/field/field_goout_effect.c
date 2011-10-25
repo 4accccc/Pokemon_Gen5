@@ -356,7 +356,7 @@ void FIELD_GOOUT_EFFECT_Cancel( FIELD_GOOUT_EFFECT *p_wk )
  *	@param	zoneID  ゾーンID
  */
 //-----------------------------------------------------------------------------
-void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID )
+void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID, u32 fog )
 {
   BOOL is_enable  = TRUE;
   u32 index = FIELD_GOOUT_DATA_GetIndexMax( p_wk->p_data );
@@ -381,7 +381,7 @@ void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONE
 
   //フォグも全部やらない
   {
-    if( ZONEDATA_GetFog(zoneID) != FIELD_ZONEFOGLIGHT_DATA_NONE )
+    if( fog != FIELD_ZONEFOGLIGHT_DATA_NONE )
     {
       OS_TPrintf("フォグ使ってます\n");
       is_enable = FALSE;

@@ -38,4 +38,4 @@ extern void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMER
 extern void FIELD_GOOUT_EFFECT_Setup( FIELD_GOOUT_EFFECT *p_wk );
 extern void FIELD_GOOUT_EFFECT_Start( FIELD_GOOUT_EFFECT *p_wk );
 extern void FIELD_GOOUT_EFFECT_Cancel( FIELD_GOOUT_EFFECT *p_wk );
-extern void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID );
+extern void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID, ZONEID preID, u32 fog );
