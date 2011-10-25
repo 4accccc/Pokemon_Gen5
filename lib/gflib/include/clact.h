@@ -831,6 +831,38 @@ extern void GFL_CLACT_UNIT_Delete( GFL_CLUNIT* p_unit );
 extern void GFL_CLACT_UNIT_SetDrawEnable( GFL_CLUNIT* p_unit, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
+ *  @brief  セルアクターユニットにセルが非描画の際はオートアニメをスキップするフラグを設定
+ *
+ *  @param  p_unit    セルアクターユニット
+ *  @param  on_off    オートアニメスキップON-OFF
+ *
+ *  TRUE  スキップ 
+ *  FALSE スキップしない
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_UNIT_SetAutoAnmOptimizeFlag( GFL_CLUNIT* p_unit, BOOL on_off );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  セルアクターユニット内すべてのセルを単一パラメータで描画するフラグを設定
+ *
+ *  @param  p_unit    セルアクターユニット
+ *  @param  on_off    フラグON-OFF
+ *
+ *  TRUE  パラメータ固定
+ *  FALSE 通常モード
+ *
+ *  イメージプロクシ
+ *  パレットプロクシ/パレットNo/パレットオフセットモード
+ *  アフィン設定/モザイク/オブジェモード/BG-Priority
+ *
+ *  がユニット内ですべて固定になります。利用注意！
+ */
+//-----------------------------------------------------------------------------
+extern void GFL_CLACT_UNIT_SetLockRenderParam( GFL_CLUNIT* p_unit, BOOL on_off );
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	セルアクターユニットの描画フラグを取得
  *
  *	@param	cp_unit		セルアクターユニット
