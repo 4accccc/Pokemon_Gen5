@@ -44,6 +44,7 @@
 #include "fieldmap/zone_id.h"
 #include "field/zonedata.h"
 
+#include "event_mapchange.h"  //EVENT_ChangeMapFromPalace
 
 //==============================================================================
 //  構造体定義
@@ -357,14 +358,17 @@ VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk )
 //==================================================================
 VMCMD_RESULT EvCmdIntrudeMissionStartWait( VMHANDLE *core, void *wk )
 {
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   
   SCRIPT_CallEvent( scw, EVENT_Intrude_MissionStartWait(gsys) );
+#endif  //undef(DISABLE_INTRUDE)
   return VMCMD_RESULT_SUSPEND;
 }
 
+#ifndef  DISABLE_INTRUDE // swanで進入を削除
 //--------------------------------------------------------------
 /**
  * イベント：ミッションエントリー後、開始まで待機
@@ -476,6 +480,7 @@ static void _event_MissionStartWait_Destructor(EVENT_MISSION_START_WAIT *emsw)
 {
   IntrudeEventPrint_ExitFieldMsg(&emsw->iem);
 }
+#endif  //undef(DISABLE_INTRUDE)
 
 
 //==============================================================================
@@ -696,4 +701,20 @@ VMCMD_RESULT EvCmdFMissionCountDown( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//==================================================================
+/**
+ * @brief スクリプトコマンド：パレスから戻る
+ * @date  2011.10.25
+ *
+ * swan追加。swanでは侵入はなく、パレスから戻るのはワープポイントのみ。
+ */
+//==================================================================
+VMCMD_RESULT EvCmdReturnFromHilink( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_CallEvent( scw, EVENT_ChangeMapFromPalace( gsys ) );
+  return VMCMD_RESULT_SUSPEND;
+}
 

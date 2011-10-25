@@ -987,7 +987,7 @@
 
   //マップ遷移（SWAN追加版）
   DEF_CMD( EvCmdMapChangeDefaultPos, EV_SEQ_MAP_CHANGE_DEFAULT_POS )
-  NO_CMD()
+  DEF_CMD( EvCmdReturnFromHilink,    EV_SEQ_RETURN_FROM_HILINK )
   NO_CMD()
   NO_CMD()
 
