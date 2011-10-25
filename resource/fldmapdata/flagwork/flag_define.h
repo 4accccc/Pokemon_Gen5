@@ -473,6 +473,7 @@
 #define FE_H04R0201_ITEMGET                457 /* 0x01c9 ビレッジブリッジ：パン屋さん　アイテム入手フラグ */
 #define FE_C15R0401_GUARDMAN               458 /* 0x01ca ポケウッド：楽屋前のガードマン　どけるフラグ */
 #define FE_C04R1101_FIRSTTALK              459 /* 0x01cb ライモンシティ：おとなのおねえさん　初回会話フラグ */
+#define FE_INF_AREA6_ARRIVAL               460 /* 0x01cc 無限ダンジョンエリア６到着フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
