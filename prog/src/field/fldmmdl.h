@@ -43,6 +43,12 @@
 #define DEBUG_MMDL	  //定義でデバッグ機能有効
 #endif
 
+//#define DEBUG_MMDL_HIT_CHECK_TICK //動作モデル同士の当たり判定tick数チェック
+
+#ifdef DEBUG_MMDL_HIT_CHECK_TICK
+extern u32 deb_mmdl_hit_check;
+#endif  //DEBUG_MMDL_HIT_CHECK_TICK
+
 //----
 #ifdef DEBUG_MMDL
 //----
@@ -1075,12 +1081,6 @@ extern u32 MMDL_HitCheckMove( const MMDL *mmdl,
 extern u32 MMDL_HitCheckMoveCurrent(
 	const MMDL * fmmdl, s16 x, s16 y, s16 z, u16 dir );
 extern u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir );
-extern void MMDL_CreateHitCheckRect(
-    const MMDL *mmdl, s16 x, s16 z, MMDL_RECT *rect );
-extern BOOL MMDL_HitCheckRect(
-    const MMDL_RECT *rect0, const MMDL_RECT *rect1 );
-extern BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
-    s16 x0, s16 y0, s16 z0, BOOL old_hit, BOOL jiki_f );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x0, s16 z0, BOOL old_hit );

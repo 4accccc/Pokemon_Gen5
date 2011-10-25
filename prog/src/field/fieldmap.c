@@ -1188,6 +1188,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   OSTick debug_fieldmap_end_tick;
 #endif
 
+#ifdef DEBUG_MMDL_HIT_CHECK_TICK
+  deb_mmdl_hit_check = 0;
+#endif  //DEBUG_MMDL_HIT_CHECK_TICK
+
   INIT_CHECK();
 
 
@@ -1325,6 +1329,11 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
 #endif
 
+#ifdef DEBUG_MMDL_HIT_CHECK_TICK
+  if( deb_mmdl_hit_check > 0 ){
+    OS_TFPrintf(1, "%d\n", deb_mmdl_hit_check);
+  }
+#endif  //DEBUG_MMDL_HIT_CHECK_TICK
   return MAINSEQ_RESULT_CONTINUE;
 }
 
