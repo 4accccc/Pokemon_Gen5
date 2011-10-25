@@ -1073,12 +1073,6 @@ static GFL_PROC_RESULT Psel_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void*
   // シーケンス
   work->sub_seq = 0;
 
-#ifndef PM_DEBUG
-  OS_Printf("==カメラ画角操作==================================\n");
-  OS_Printf("L+↑ で 画角上げる\n");
-  OS_Printf("L+↓ で 画角下げる\n");
-  OS_Printf("==================================================\n");
-#endif
   return GFL_PROC_RES_FINISH;
 }
 
@@ -1536,10 +1530,13 @@ static void Psel_ThreeS02Main( PSEL_WORK* work )
   }
 
   // カメラアニメ
+  //@todo カメラアニメが決まっていないため最初のみのとこで回す
+#if 0
   {
     ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
+#endif
 
   // フレーム
   work->three_frame++;
@@ -3845,9 +3842,13 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   case S02_MAIN_SEQ_BOX_OPEN_STOP_WAIT:
     {
       Psel_ThreeS02Main( work );
-      if( work->three_frame == TIMETABLE_S02_BOX_STOP )  // ～ボックスが開くまで
+      //if( work->three_frame == TIMETABLE_S02_BOX_STOP )  // ～ボックスが開くまで
       {
-        *seq = S02_MAIN_SEQ_EXPLAIN_INIT;
+        if( ICA_ANIME_IncAnimeFrameNoLoop( work->three_ica_anime, THREE_ADD ) )
+        {
+          *seq = S02_MAIN_SEQ_EXPLAIN_INIT;
+        }
+        ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
       }
     }
     break;
