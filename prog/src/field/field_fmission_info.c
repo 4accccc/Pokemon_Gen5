@@ -312,6 +312,8 @@ static void _sub_ActorSysCreate( FIELD_FMISSION_INFO* wk, ARCHANDLE *handle )
     
     wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heapID );
     GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );
+    GFL_CLACT_UNIT_SetAutoAnmOptimizeFlag( wk->cellUnit, TRUE );
+    GFL_CLACT_UNIT_SetLockRenderParam( wk->cellUnit, TRUE );
   }
   //リソース読み込み
   {
@@ -459,6 +461,7 @@ static void panel_Hide( FIELD_FMISSION_INFO* wk )
 {
   panel_VisibleSet( wk, FALSE );
   wk->visible_f = FALSE;
+  GFL_CLACT_UNIT_SetDrawEnable( wk->cellUnit, FALSE );
   wk->score_up_ct = 0;  //0リセット
 }
 
@@ -616,6 +619,7 @@ static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
   panel_TotalScoreUpdate( wk );
 
   wk->visible_f = TRUE;
+  GFL_CLACT_UNIT_SetDrawEnable( wk->cellUnit, TRUE );
 }
 
 //--------------------------------------------------------------

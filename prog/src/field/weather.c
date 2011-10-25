@@ -372,6 +372,8 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 
     // Ý’è
     GFL_CLACT_UNIT_SetUserRend( p_sys->p_unit, p_sys->p_rend );
+    GFL_CLACT_UNIT_SetAutoAnmOptimizeFlag( p_sys->p_unit, TRUE );
+    GFL_CLACT_UNIT_SetLockRenderParam( p_sys->p_unit, TRUE );
   }
 	
 

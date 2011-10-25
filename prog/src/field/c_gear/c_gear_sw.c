@@ -3511,6 +3511,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   // ユーザーレンダラー設定
   pWork->userRend = GFL_CLACT_USERREND_Create( sc_REND_SURFACE_INIT, CGEAR_REND_MAX, pWork->heapID );
   GFL_CLACT_UNIT_SetUserRend( pWork->cellUnit, pWork->userRend );
+  GFL_CLACT_UNIT_SetAutoAnmOptimizeFlag( pWork->cellUnit, TRUE );
   
   _gearArcCreate(pWork, pWork->sex, pWork->design_no, TRUE);  //ARC読み込み BG&OBJ
   _gearObjResCreate(pWork, pWork->sex);
