@@ -2176,7 +2176,8 @@ const G3DMAPOBJST * FIELD_BMODEL_GetG3DMAPOBJST( const FIELD_BMODEL * bmodel )
 static void FIELD_BMODEL_Draw( const FIELD_BMODEL * bmodel )
 {
   if ( bmodel == NULL ) return;
-  GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
+  GFL_G3D_DRAW_DrawObjectCullingON( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
+//  GFL_G3D_DRAW_DrawObject( bmodel->objHdl.g3Dobj, &bmodel->g3dObjStatus );
 }
 
 //------------------------------------------------------------------
