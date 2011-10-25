@@ -78,7 +78,7 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_SHINMU_C,  ///<ゼクレシキュレムアニメ　上昇
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWLEADER4,  ///<スワンカミツレ　フリップ無しアニメ＋芝居1パターン
   MMDL_BLACT_ANMTBLNO_NONFLIP_BIGFOUR3,  ///<スワンレンブ　フリップ無しアニメ＋芝居1パターン
-  MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS,  ///<アクロマ　フリップ無しアニメ＋芝居1パターン
+  MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS,  ///<アクロマ　フリップ無しアニメ＋芝居2パターン
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL,  ///<スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1,  ///<スワンゲーチス　フリップ無しアニメ＋芝居1パターン
   MMDL_BLACT_ANMTBLNO_MAX,  ///<最大

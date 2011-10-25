@@ -1104,9 +1104,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swbell.ncg ./mmdl_res ./mmdl_dmy/t4x4x15.imd 4 4 15
 
 #swboss.imd
-./mmdl_res/swboss.imd: ./mmdl_nchara/swboss.ncg ./mmdl_nchara/swboss.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swboss.csv
+./mmdl_res/swboss.imd: ./mmdl_nchara/swboss.ncg ./mmdl_nchara/swboss.ncl ./mmdl_dmy/t4x4x19.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swboss.csv
 	@echo convert ncg_imd swboss
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swboss.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swboss.ncg ./mmdl_res ./mmdl_dmy/t4x4x19.imd 4 4 19
 
 #swmama.imd
 ./mmdl_res/swmama.imd: ./mmdl_nchara/swmama.ncg ./mmdl_nchara/swmama.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
