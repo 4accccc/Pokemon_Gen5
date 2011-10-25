@@ -550,9 +550,9 @@ enum
 };
 static const VecFx32 three_mb_trans[MB_MAX] =
 {
-  { FX_F32_TO_FX32(-12.5f), FX_F32_TO_FX32(29.0f), FX_F32_TO_FX32( 3.6f) },
-  { FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(29.0f), FX_F32_TO_FX32(-7.0f) },
-  { FX_F32_TO_FX32( 12.5f), FX_F32_TO_FX32(29.0f), FX_F32_TO_FX32( 3.6f) },
+  { FX_F32_TO_FX32(-4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
+  { FX_F32_TO_FX32( 0.0f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
+  { FX_F32_TO_FX32( 4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
 };
 
 // 3D全体
@@ -1172,7 +1172,7 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 
-    static fx32 fovy = 40;
+    static fx32 fovy = 170;
     GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
     BOOL ret = FALSE;
 
@@ -1208,6 +1208,11 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
       OS_Printf("==================================================\n");
       OS_Printf("カメラ画角\n");
       OS_Printf(" fovy = %d \n", fovy);
+    }
+    {
+      fx32 tmp;
+      GFL_G3D_CAMERA_GetfovySin( camera, &tmp );
+      OS_Printf(" tmp = %d \n", tmp);
     }
   }
 #endif
@@ -1486,6 +1491,13 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
         work->heap_id, ARCID_PSEL, NARC_psel_psel_s02_cam_bin, THREE_ICA_ANIME_INTERVAL );
     
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+
+  }
+  // 画角設定
+  {
+    GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
+    GFL_G3D_CAMERA_SetfovyCos( camera, FX_SinIdx( 170/2 * PERSPWAY_COEFFICIENT ) );
+    GFL_G3D_CAMERA_SetfovySin( camera, FX_CosIdx( 170/2 * PERSPWAY_COEFFICIENT ) );
   }
 
   // フレーム
