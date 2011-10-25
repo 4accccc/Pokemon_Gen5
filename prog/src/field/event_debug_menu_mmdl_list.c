@@ -391,7 +391,8 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_BIGFOUR3_STANDUP;
                 break;
               case MMDL_BLACT_ANMTBLNO_NONFLIP_SWBOSS:
-                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWBOSS_ACT0;
+                ac_act_u = ac_act_d = AC_SWBOSS_POINT_FINGER_D;
+                ac_act_l = ac_act_r = AC_SWBOSS_POINT_FINGER_L;
                 break;
               case MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWRIVAL_ACT0;

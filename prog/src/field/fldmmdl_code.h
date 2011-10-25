@@ -638,7 +638,8 @@
 #define AC_SWRIVAL_ACT0 (AC_ACT0_STOP)     ///<スワンライバル(ヒュウ)専用 アニメ
 #define AC_SWBELL_HAT (AC_ACT0_STOP)       ///<スワンベル専用 帽子アニメ
 #define AC_BIGFOUR3_STANDUP (AC_ACT0_STOP) ///<スワンレンブ専用 立ち上がるアニメ
-#define AC_SWBOSS_ACT0 (AC_ACT0_STOP)      ///<アクロマ専用 アニメ
+#define AC_SWBOSS_POINT_FINGER_D (AC_ACT0_STOP)      ///<アクロマ専用 指を指す正面始動 アニメ
+#define AC_SWBOSS_POINT_FINGER_L (AC_ACT1_STOP)      ///<アクロマ専用 指を指す左向き始動 アニメ
 #define AC_SWSAGE1_STICK (AC_ACT0_STOP)     ///<スワンゲーチス専用 杖で床を打つアニメ
 #define AC_OLD_NINJA_APPEAR (AC_NINJA_ACT0)   ///<セピア忍者専用 現れるアニメ
 #define AC_OLD_NINJA_DISAPPER (AC_NINJA_ACT1)   ///<セピア忍者専用 消えるアニメ

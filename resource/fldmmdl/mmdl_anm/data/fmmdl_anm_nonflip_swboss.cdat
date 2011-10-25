@@ -20,6 +20,17 @@ static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWBoss_Act0[] = {
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 
+//============================================
+// é≈ãèÇP
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWBoss_Act1[] = {
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
 static const GFL_BBDACT_ANM * const DATA_BlActNonFlip_SWBossTbl[DRAW_ANMNO_NONFLIP_SWBOSS_MAX] = 
 {
   DATA_BlActNonFlip_StopU,
@@ -63,5 +74,6 @@ static const GFL_BBDACT_ANM * const DATA_BlActNonFlip_SWBossTbl[DRAW_ANMNO_NONFL
   DATA_BlActNonFlip_WalkL12F,
   DATA_BlActNonFlip_WalkR12F,
   DATA_BlActNonFlip_SWBoss_Act0,
+  DATA_BlActNonFlip_SWBoss_Act1,
 };
 
