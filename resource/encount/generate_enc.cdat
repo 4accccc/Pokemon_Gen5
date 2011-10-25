@@ -38,6 +38,7 @@ static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
  { ZONE_ID_D01R0101, 97,0, 40,55 },	//スリーパー
  { ZONE_ID_R06, 311,0, 40,55 },	//プラスル
  { ZONE_ID_R03, 313,0, 40,55 },	//バルビート
+ { ZONE_ID_R09, 317,0, 40,55 },	//マルノーム
  { ZONE_ID_D03R0101, 450,0, 40,55 },	//カバルドン
  { ZONE_ID_R05, 63,0, 40,55 },	//ケーシィ
  { ZONE_ID_R07, 162,0, 40,55 },	//オオタチ
@@ -49,6 +50,7 @@ static const GENERATE_ENCOUNT DATA_GenerateEncount[] = {
  { ZONE_ID_R15, 22,0, 40,55 },	//オニドリル
  { ZONE_ID_R16, 204,0, 40,55 },	//クヌギダマ
  { ZONE_ID_R18, 187,0, 40,55 },	//ハネッコ
+ { ZONE_ID_D24, 332,0, 40,55 },	//ノクタス
  { ZONE_ID_R20, 185,0, 40,55 },	//ウソッキー
  { ZONE_ID_R22, 168,0, 40,55 },	//アリアドス
 };

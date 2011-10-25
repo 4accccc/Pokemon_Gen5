@@ -13,7 +13,7 @@
 
 #else
 
- #define GENERATE_ENC_POKE_MAX	( 17 )
+ #define GENERATE_ENC_POKE_MAX	( 19 )
 
 #endif
 
