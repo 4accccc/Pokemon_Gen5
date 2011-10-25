@@ -320,7 +320,7 @@ static void Graphic_3d_SetUp( void )
 	G3X_AntiAlias( TRUE );									//	アンチエイリアス
 	G3X_AlphaTest( FALSE, 0 );							//	アルファテスト　　オフ
 	G3X_AlphaBlend( TRUE );									//	アルファブレンド　オン
-	G3X_EdgeMarking( FALSE );								//	エッジマーキング
+	G3X_EdgeMarking( TRUE );								//	エッジマーキング
 	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );	//フォグ
 
 	// クリアカラーの設定
