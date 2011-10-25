@@ -5840,6 +5840,43 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="msg_info_b_recovery_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうせんの　まえに
+ポケモンを　かいふくしましょう</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:42:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:40:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>挑戦の　前に
+ポケモンを　回復しましょう</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:42:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:40:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付
+受付：INFORMATIONW
+回復処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:41:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_info_clear_b_01_00"
 		Style="Large">
 		<LanguageCell
@@ -6546,6 +6583,43 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="msg_info_w_recovery_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうせんの　まえに
+ポケモンを　かいふくしてやろう</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:44:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:40:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>挑戦の　前に
+ポケモンを　回復してやろう</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:44:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:40:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付
+受付：INFORMATIONW
+回復処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:44:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_info_clear_w_01_00"
 		Style="Large">
 		<LanguageCell
@@ -6729,7 +6803,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とにかく　エリア6いこうの　
+			<Text>とにかく　エリア６いこうの　
 ちょうせんを　かんがえているなら▼
 ポケモンを　じゅうぶんに　
 そだててから　ちょうせんするんだな▼
@@ -6737,7 +6811,7 @@
 いたいめを　みるぞ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:05:49" />
+				Time="2011-10-19T10:52:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6745,7 +6819,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とにかく　エリア6以降の　
+			<Text>とにかく　エリア６以降の　
 挑戦を　考えているなら▼
 ポケモンを　十分に　育ててから
 挑戦するんだな▼
@@ -6753,7 +6827,7 @@
 痛い目を　みるぞ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-01T11:05:43" />
+				Time="2011-10-19T10:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7621,6 +7695,90 @@ NPC：ASSISTANTM
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>キミも　このエリア５まで
+たどりついたようだね▼
+あれから　さらに　しらべて
+しんじじつが　わかったよ▼
+ここは　さいきょうと　いわれた
+あるトレーナーに　たいこうするため▼
+トレーナーを　そだてる
+しせつだったようだ▼
+たが　このばしょを　けんせつした
+そしきが　かいめつ▼
+いまの　ざいだんが　このばしょを
+かいとり　いっぱんの　トレーナーに▽
+かいほうしたらしい▼
+それからというもの　いつのまにか
+つわものを　もとめる　トレーナーが▽
+あつまるばしょに　なったようだ▼
+さいきょうとは　なんなのか▼
+いまでも　その　こたえを　さがして
+たたかう　トレーナーも　いるのだろう▼
+さて　ここでの　ちょうさも　おわったし
+つぎの　ちょうさとして　うわさの▽
+ホワイトフォレストに　いってみるよ▼
+キミの　もとめる　つよさが
+ここで　てに　いれられることを▽
+ねがっているよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:45:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミも　このエリア５まで
+たどり着いたようだね▼
+あれから　さらに　調べて
+真実が　わかったよ▼
+ここは　最強と　いわれた
+あるトレーナーに　対抗するため▼
+トレーナーを　育てる
+施設だったようだ▼
+たが　この場所を　建設した
+組織が　壊滅▼
+今の　財団が　この場所を
+買い取り　一般の　トレーナーに▽
+開放したらしい▼
+それからというもの　いつのまにか
+つわものを　求める　トレーナーが▽
+集まる場所に　なったようだ▼
+最強とは　なんなのか▼
+今でも　その　答えを　探して
+戦う　トレーナーも　いるのだろう▼
+さて　ここでの　調査も　終ったし
+次の　調査として　うわさの▽
+ホワイトフォレストに　行ってみるよ▼
+キミの　求める　強さが　ここで
+手に　いれられることを　願っているよ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:46:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼　エリア5
+NPC：ASSISTANTM
+
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:45:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_b_01_06_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>お！　ここまで　きたか！▼
 ポケモンと　おまえ！▼
 ちからを　あわせてるんだな！▼
@@ -7661,14 +7819,14 @@ NPC：ASSISTANTM
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>黒の摩天楼　エリア5
+			<Comment>黒の摩天楼　エリア6
 NPC：MUGENBOSS（バンジロウ）
 
 イベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:06:50" />
+				Time="2011-10-25T01:48:37" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -7952,6 +8110,89 @@ NPC：FIGHTERM
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>キミも　このエリア５まで
+たどりついたようだな▼
+もっと　おもしろい　はなしを
+きいたから　おしえてやるよ▼
+ここは　さいきょうと　いわれた
+あるトレーナーと　ほごだんたいが▼
+きょうりょくして　たんさくを
+すすめていた　ばしょだったらしい▼
+その　トレーナーが　エリア５までの
+あんぜんを　かくほした　のちに▼
+ほごだんたいが　このばしょを
+いっぱんの　トレーナーに▽
+かいほうしたんだとさ▼
+そのトレーナーも　たんさくと
+どうじに　しゅぎょうを　していた▽
+らしい▼
+さらなるたかみを　めざすため
+どりょくを　おこたらない▽
+ひとだったようだな▼
+さて　ここでの　しょうぎょうは
+ここまでだ▼
+おれは　うわさの　ブラックシティに
+いってみるよ▼
+つよさは　いちにちでは　みにつかない
+おたがいに　がんばろうぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:47:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キミも　このエリア５まで
+たどり着いたようだな▼
+もっと　おもしろい　話を
+聞いたから　教えてやるよ▼
+ここは　最強と　いわれた
+あるトレーナーと　保護団体が▼
+協力して　探索を
+進めていた　場所だったらしい▼
+その　トレーナーが　エリア５までの
+安全を　確保した　後に▼
+保護団体が　この場所を
+一般の　トレーナーに▽
+開放したんだとさ▼
+そのトレーナーも　探索と　同時に
+修行を　していた　らしい▼
+さらなる高みを　目指すため
+努力を　怠らない▽
+人だったようだな▼
+さて　ここでの　修行は　ここまでだ▼
+おれは　うわさの　ブラックシティに
+行ってみるよ▼
+強さは　一日では　身につかない
+お互いに　がんばろうぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:48:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-07T07:32:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞　エリア5
+NPC：FIGHTERM
+
+イベント会話
+（エレベーターから出た瞬間）</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-10-25T01:47:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_event_w_01_06_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>お！　ここまで　きたか！▼
 ポケモンと　おまえ！▼
 ちからを　あわせてるんだな！▼
@@ -7992,14 +8233,14 @@ NPC：FIGHTERM
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>白の樹洞　エリア5
+			<Comment>白の樹洞　エリア6
 NPC：MUGENBOSS（バンジロウ）
 
 イベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:06:58" />
+				Time="2011-10-25T01:47:52" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
