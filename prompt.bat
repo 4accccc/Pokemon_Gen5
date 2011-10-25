@@ -9,8 +9,13 @@ SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
 SET WBLIBDIR=C:\home\pokemon_wb\lib
 SET TAGFILE=c:\home\pokemon_wb\tags
 
+REM ##################################################
+REM	※ 64ビットPC上の32ビットアプリケーションはC:\x86Programsにインストールされています
+REM ##################################################
+REM 32ビット動作(デフォルト)
 SET PROGRAM_FILES=C:\Program Files
-IF %PROCESSOR_ARCHITECTURE%==AMD64 SET PROGRAM_FILES=C:\x86Programs
+REM 64ビット動作用
+IF EXIST C:\x86Programs SET PROGRAM_FILES=C:\x86Programs
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
@@ -82,10 +87,10 @@ doskey gopr = cd %PROJECT_PROGDIR:/=\%
 doskey gors = cd %PROJECT_RSCDIR:/=\%
 doskey ms = make ./bin/ARM9-TS/Release/main.srl
 
-REM ##################################################
-REM		ユーザー個別設定の呼び出し
-REM ##################################################
-if exist "tools\personal\%USERNAME%_prompt.bat" call tools\personal\%USERNAME%_prompt.bat
+
+
+
+
 
 REM 別のバッチファイルから呼び出して
 REM 環境変数やパス指定だけを有効にして
@@ -95,6 +100,10 @@ REM hoge.batを実行します
 if %1.==. GOTO START
 if %1==cmd ( call %2 %3 %4 %5 & GOTO END )
 :START
+REM ##################################################
+REM		ユーザー個別設定の呼び出し
+REM ##################################################
+if exist "tools\personal\%USERNAME%_prompt.bat" call tools\personal\%USERNAME%_prompt.bat
 cmd /F:ON
 :END
 
