@@ -2094,17 +2094,14 @@ static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL off_flag )
   if(off_flag){
     evy = 8;
     _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_OFF );
-//    _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_OFF );
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 1, CLWK_PLTTOFFS_MODE_OAM_COLOR );  //暗色パレットに変更
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], FALSE );
   }else{
     evy = 0;
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
-//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
     }else{
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
-//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
     }
     GFL_CLACT_WK_SetPlttOffs( pWork->cellCursor[ACT_CONNECT], 0, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_CONNECT], TRUE );
@@ -2675,6 +2672,7 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+0], TRUE );
     _gearObjSetAnmSeq( pWork->cellCursor[act+1], id+ANM_OFS_PANEL_RING );
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_RING );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], FALSE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], TRUE );
     break;
@@ -2683,6 +2681,7 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+0], TRUE );
     _gearObjSetAnmSeq( pWork->cellCursor[act+1], id+ANM_OFS_PANEL_LOOP );
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_RING );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], TRUE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], TRUE );
     break;
@@ -2690,6 +2689,7 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+0], FALSE );
     _gearObjSetAnmSeq( pWork->cellCursor[act+1], id+ANM_OFS_PANEL_LOOP );
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_DRUG );
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], TRUE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], FALSE );
     break;
@@ -2830,10 +2830,13 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     _gearObjSetAnmSeq( pWork->cellCursor[ACT_BATTERY], ACTANM_BATT3 );
   }
   GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[ACT_PANEL_EFF], TRUE ); //SRTアニメ反映
+
+#if 0
   for(i=0;i < CGEAR_PANEL_MAX ;i++)
   {
     GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[ACT_IR_RING+(i*ACT_PANEL_SET_NUM)], TRUE ); //SRTアニメ反映
   }
+#endif
   _timeAnimation(pWork);
 }
 
@@ -4979,13 +4982,11 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
   if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_RADAR ) ){
     if( !pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR_INFO );
-//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I_INFO );
       pWork->info_flag[INFO_FLAG_RADAR] = TRUE;
     }
   }else{
     if( pWork->info_flag[INFO_FLAG_RADAR] ){
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR], ACTANM_S_RADAR );
-//      _gearObjSetAnmSeq( pWork->cellCursor[ACT_S_RADAR_I], ACTANM_S_RADAR_I );
       pWork->info_flag[INFO_FLAG_RADAR] = FALSE;
     }
   }
