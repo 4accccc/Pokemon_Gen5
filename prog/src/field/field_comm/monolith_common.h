@@ -163,6 +163,7 @@ typedef struct{
 //  u8 padding;
   u8 fmission_id;
   u8 fmission_level;
+  u8 gpower_no[4];           ///<パワー画面：選択中の3つ(1つはpad)
 }MONOLITH_COMMON_WORK;
 
 ///キャンセルアイコン制御構造体

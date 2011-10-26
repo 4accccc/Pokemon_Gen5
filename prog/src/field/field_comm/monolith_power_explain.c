@@ -64,6 +64,10 @@ static void _Write_Title(MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
 
+//
+static void mpe_init_data(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
+static s32  mpe_chk_have_number( MONOLITH_APP_PARENT *appwk, const GPOWER_ID id );
+
 
 //==============================================================================
 //  データ
@@ -103,6 +107,9 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Init(GFL_PROC * proc, int * seq,
     pew = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_POWEREXPLAIN_WORK), HEAPID_MONOLITH);
     GFL_STD_MemClear(pew, sizeof(MONOLITH_POWEREXPLAIN_WORK));
     pew->print_select_gpower_id = GPOWER_ID_NULL;
+    
+    // 初期化
+//    mpe_init_data( appwk, appwk->setup, pew );
     
     //BG
     _Setup_BGFrameSetting();
@@ -350,28 +357,32 @@ static void _Write_Title(MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 //--------------------------------------------------------------
 static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 {
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
-  GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(intsave,0);
-  STRBUF *str_name, *str_explain;
-  u16 msgid_title;
+  STRBUF *str_name;
+  s16 i;
+  s16 flg=0;
   
+  // クリア
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pew->bmpwin[BMPWIN_EQP]), 0x0000);
-  
-  if(gpower_id == GPOWER_ID_NULL){
+  //
+  // 所持をチェック
+  for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+    if(appwk->common->gpower_no[i] != GPOWER_ID_NULL){
+      str_name = GFL_MSG_CreateString(setup->mm_power, setup->powerdata[appwk->common->gpower_no[i]].msg_id_title);
+      PRINT_UTIL_Print(&pew->print_util[BMPWIN_EQP], setup->printQue, 
+        0, 16*i, str_name, setup->font_handle);
+      GFL_STR_DeleteBuffer(str_name);
+      str_name = 0;
+      flg = 1;
+    }
+  }
+  // 何も表示していない場合
+  if(flg == 0){
     str_name = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_001);
-  }
-  else{
-    str_name = GFL_MSG_CreateString(setup->mm_power, setup->powerdata[gpower_id].msg_id_title);
-    str_explain = GFL_MSG_CreateString(
-      setup->mm_power_explain, setup->powerdata[gpower_id].msg_id_explain);
     PRINT_UTIL_Print(&pew->print_util[BMPWIN_EQP], setup->printQue, 
-      0, 16, str_explain, setup->font_handle);
-    GFL_STR_DeleteBuffer(str_explain);
+      0, 0, str_name, setup->font_handle);
+    GFL_STR_DeleteBuffer(str_name);
+    str_name = 0;
   }
-  PRINT_UTIL_Print(&pew->print_util[BMPWIN_EQP], setup->printQue, 
-    0, 0, str_name, setup->font_handle);
-  GFL_STR_DeleteBuffer(str_name);
 }
 
 //--------------------------------------------------------------
@@ -386,11 +397,22 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 {
   GPOWER_ID gpower_id = appwk->common->power_select_no;
+  s32 num;
+  s32 flg=0;
   
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pew->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
   
   if(gpower_id != GPOWER_ID_NULL){
+    // すでにあるかチェック
+    num = mpe_chk_have_number( appwk, gpower_id );
+    if(num != -1){
+      flg = 1;
+    }
     if(appwk->common->power_mono_use == MONO_USE_POWER_OK){
+      flg = 1;
+    }
+    // 通常表示
+    if(flg == 1){
       STRBUF *str_explain, *str_point, *str_expand;
       
       WORDSET_RegisterNumber(setup->wordset, 0, setup->powerdata[gpower_id].point, 4, 
@@ -407,7 +429,7 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
         0, 4, str_explain, setup->font_handle);
       PRINT_UTIL_Print(&pew->print_util[BMPWIN_EXPLAIN], setup->printQue, 
         112, 4+16*3, str_expand, setup->font_handle);
-      
+
       GFL_STR_DeleteBuffer(str_explain);
       GFL_STR_DeleteBuffer(str_point);
       GFL_STR_DeleteBuffer(str_expand);
@@ -445,5 +467,52 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
   else{ //PrintUtilが実行されないため、クリアしたキャラを転送しておく
     GFL_BMPWIN_TransVramCharacter( pew->bmpwin[BMPWIN_EXPLAIN] );
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 初期化
+ *
+ * @param   appwk		
+ * @param   setup		
+ * @param   pew		
+ */
+//--------------------------------------------------------------
+static void mpe_init_data(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
+{
+#if 0
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  s32 i;
+  
+  // 初期データセット
+  for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+    pew->gpower_id[i] = ISC_SAVE_GetGPowerID( intsave, i );
+  }
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * GPOWERをすでに持っているか
+ *
+ * @param   MONOLITH_POWEREXPLAIN_WORK 	*pew
+ * @param   const GPOWER_ID				id
+ *
+ * @retval  s32		(-1:なし、0-2:持っている場所)
+ */
+//--------------------------------------------------------------
+static s32 mpe_chk_have_number( MONOLITH_APP_PARENT *appwk, const GPOWER_ID id )
+{
+  s32 i;
+  
+  // チェック
+  for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+    if( appwk->common->gpower_no[i] == id ){
+      return( i );
+    }
+  }
+  // なかった
+  return( -1 );
 }
 
