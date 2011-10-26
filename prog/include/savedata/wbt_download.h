@@ -270,7 +270,16 @@ static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 w
 //------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_CheckVersion( const WBTDL_DATA * wbtdl_data )
 {
+#if 1  // 仮対応
+  BOOL bflg=FALSE;
+  //
+  if((GET_VERSION() == VERSION_W2)||(GET_VERSION() == VERSION_B2)){
+    bflg = TRUE;
+  }
+  return( bflg );
+#else
   return wbtdl_data->cassette_version == PM_VERSION;
+#endif
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -293,6 +302,10 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckVersion( const WBTDL_TOTAL_DATA *cp_dat
   for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
   {
     const WBTDL_DATA *cp_wbtdl = &cp_data->data[i];
+    // idが0の場合はデータなしと判定
+    if(cp_wbtdl->tournament_id == 0){
+      continue;
+    }
     check &= WBTDL_DATA_CheckVersion( cp_wbtdl );
   }
 
@@ -307,6 +320,10 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
   for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
   {
     const WBTDL_DATA *cp_wbtdl = &cp_data->data[i];
+    // idが0の場合はデータなしと判定
+    if(cp_wbtdl->tournament_id == 0){
+      continue;
+    }
     check &= WBTDL_DATA_CheckLang( cp_wbtdl );
   }
 
