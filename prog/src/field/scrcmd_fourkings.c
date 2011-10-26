@@ -121,18 +121,6 @@ VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  四天王部屋サウンドシステム　設定
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk )
-{
-  //
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  四天王各部屋のレールOFF
  *
  *	@param	FIELDMAP_WORK *p_fieldmap
@@ -214,6 +202,23 @@ VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk )
 }
 
 //==== エスパー =====
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Esp_Init( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*   work     = wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND*   fsnd     = GAMEDATA_GetFieldSound( gdata );
+
+  // 環境音SEを再生するだけ
+  FSND_PlayEnvSE( fsnd, SEQ_SE_SW_CATTLEYA_03 );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  階段演出

@@ -359,7 +359,13 @@ void FOURKINGS_ESP_Setup(FIELDMAP_WORK *p_fieldmap)
 //--------------------------------------------------------------
 void FOURKINGS_ESP_End(FIELDMAP_WORK *p_fieldmap)
 {
+  GAMESYS_WORK  *p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA      *p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+	FIELD_SOUND   *p_sound = GAMEDATA_GetFieldSound( p_gdata ); // ÉTÉEÉìÉhèÓïÒ
   FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
+
+  // ä¬ã´âπí‚é~
+  FSND_StopEnvSE( p_sound, SEQ_SE_SW_CATTLEYA_03 );
 
   // EXPOBJîjä¸
   EXPOBJ_ObjDell( p_wk );

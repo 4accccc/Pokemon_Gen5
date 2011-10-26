@@ -17,13 +17,13 @@
   // 四天王関連
   DEF_CMD( EvCmdFourKings_RailOff, EV_SEQ_FOURKINGS_RAIL_OFF )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
-  DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
 
   // 悪
   DEF_CMD( EvCmdFourKings_Evil_Fire, EV_SEQ_FOURKINGS_EVIL_FIRE )
   DEF_CMD( EvCmdFourKings_Evil_Claw, EV_SEQ_FOURKINGS_EVIL_CLAW )
 
   // エスパー
+  DEF_CMD( EvCmdFourKings_Esp_Init, EV_SEQ_FOURKINGS_ESP_INIT )
   DEF_CMD( EvCmdFourKings_Esp_Stairs, EV_SEQ_FOURKINGS_ESP_STAIRS )
   DEF_CMD( EvCmdFourKings_Esp_Flower, EV_SEQ_FOURKINGS_ESP_FLOWER )
   DEF_CMD( EvCmdFourKings_Esp_Cube, EV_SEQ_FOURKINGS_ESP_CUBE )

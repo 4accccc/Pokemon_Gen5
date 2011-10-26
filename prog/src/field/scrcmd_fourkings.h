@@ -41,13 +41,13 @@ extern "C"{
 // 共通
 extern VMCMD_RESULT EvCmdFourKings_RailOff( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk );
 
 // 悪
 extern VMCMD_RESULT EvCmdFourKings_Evil_Fire( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk );
 
 // エスパー
+extern VMCMD_RESULT EvCmdFourKings_Esp_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Esp_Stairs( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Esp_Flower( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Esp_Cube( VMHANDLE *core, void *wk );

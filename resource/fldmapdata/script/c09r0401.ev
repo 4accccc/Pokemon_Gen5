@@ -58,11 +58,10 @@ INIT_EVENT_END
 /*  FIELD_INIT_LABEL                                        */
 /************************************************************/
 INIT_EVENT_START  ev_init_c09r0401
-/*
-  //エスパー　音開始
-  //一番上で呼んでください
-  _FOURKINGS_SET_SOUND_SYSTEM( 4 )
-*/
+
+  // 環境音再生
+  _FOURKINGS_ESP_INIT()
+
   //頂上のPOSを踏んでいない時の処理
   //カトレアを花の場所まで移動
   IF $LOCALWORK1 == 0 THEN
@@ -83,11 +82,10 @@ INIT_EVENT_END
 /*  FIELD_RECOVER_LABEL                                     */
 /************************************************************/
 INIT_EVENT_START  ev_recover_c09r0401
-/*
-  //エスパー　音開始
-  //一番上で呼んでください
-  _FOURKINGS_SET_SOUND_SYSTEM( 4 )
-*/
+
+  // 環境音再生
+  _FOURKINGS_ESP_INIT()
+
   //主人公が頂上にいるときの処理
   IF $LOCALWORK1 == 1 THEN
     //レールOFF

@@ -9949,21 +9949,6 @@
   .short  \fourking_id
   .endm
 
-//--------------------------------------------------------------
-/**
- * @def _FOURKINGS_SET_SOUND_SYSTEM
- * @brief 四天王　部屋　音システム設定
- * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
- * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
- */
-//--------------------------------------------------------------
-#define _FOURKINGS_SET_SOUND_SYSTEM( fourking_id ) _ASM_FOURKINGS_SET_SOUND_SYSTEM fourking_id
-
-  .macro  _ASM_FOURKINGS_SET_SOUND_SYSTEM fourking_id
-  .short  EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM
-  .short  \fourking_id
-  .endm
-
 // 悪部屋
 //--------------------------------------------------------------
 /**
@@ -9996,6 +9981,19 @@
   .endm
 
 // エスパー部屋
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_ESP_INIT
+ * @brief 四天王  エスパー  初期化
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_ESP_INIT() _ASM_FOURKINGS_ESP_INIT
+
+  .macro  _ASM_FOURKINGS_ESP_INIT
+  .short  EV_SEQ_FOURKINGS_ESP_INIT
+  .endm
+
 //--------------------------------------------------------------
 /**
  * @def _FOURKINGS_ESP_STAIRS
