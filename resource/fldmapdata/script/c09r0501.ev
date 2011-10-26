@@ -195,6 +195,7 @@ EVENT_START ev_c09r0501_swchampion_01
   //  はしご用のステップが出てくる 312F ～ 350F
 
   _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_02 )    // 星座板の４つの石が回る音
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_06 )    // 
 
   _TIME_WAIT( 130 )
   _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_03 )    // ドラゴンの石像が沈む音
