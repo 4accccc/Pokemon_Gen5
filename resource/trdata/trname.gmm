@@ -1236,23 +1236,23 @@
 	</row>
 
 	<row id="juggling_10">
-		<language name="JPN" width="216">キハチ</language>
-		<language name="JPN_KANJI" width="216">キハチ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="juggling_11">
-		<language name="JPN" width="216">ジャック</language>
-		<language name="JPN_KANJI" width="216">ジャック</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="juggling_12">
-		<language name="JPN" width="216">ケリー</language>
-		<language name="JPN_KANJI" width="216">ケリー</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="juggling_13">
-		<language name="JPN" width="216">アキオ</language>
-		<language name="JPN_KANJI" width="216">アキオ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="pilot_04">
@@ -4331,8 +4331,8 @@
 	</row>
 
 	<row id="mini_26">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">タカコ</language>
+		<language name="JPN_KANJI" width="216">タカコ</language>
 	</row>
 
 	<row id="schoolb_16">
@@ -4366,13 +4366,13 @@
 	</row>
 
 	<row id="tanpan_33">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">マサヒロ</language>
+		<language name="JPN_KANJI" width="216">マサヒロ</language>
 	</row>
 
 	<row id="tanpan_34">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">クニユキ</language>
+		<language name="JPN_KANJI" width="216">クニユキ</language>
 	</row>
 
 	<row id="schoolb_17">

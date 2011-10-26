@@ -5220,25 +5220,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キハチ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キハチ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5253,25 +5253,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジャック</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジャック</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5286,25 +5286,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ケリー</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ケリー</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5319,25 +5319,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキオ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキオ</Text>
+			<Text>●</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -25614,25 +25614,25 @@
 		Label="mini_26">
 		<LanguageCell
 			Language="JPN">
-			<Text>●</Text>
+			<Text>タカコ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T04:02:26" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T04:02:26" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>●</Text>
+			<Text>タカコ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T04:02:26" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T04:02:26" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -25789,50 +25789,50 @@
 		Label="tanpan_33">
 		<LanguageCell
 			Language="JPN">
-			<Text>●</Text>
+			<Text>マサヒロ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>●</Text>
+			<Text>マサヒロ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="tanpan_34">
 		<LanguageCell
 			Language="JPN">
-			<Text>●</Text>
+			<Text>クニユキ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>●</Text>
+			<Text>クニユキ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-19T10:17:35" />
+				Time="2011-10-26T03:26:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
