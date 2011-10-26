@@ -1,3 +1,8 @@
+# @brief  トレーナー手持ちポケモンの覚えている技が正しいかチェックした結果を出力する
+# @file   waza_check_for_trainer_poke.rb
+# @author Masayuki Onoue
+# @date   2011.10.26
+
 require "personal_accessor.rb"
 require "trdata_parser.rb"
 require "oshiewaza_hash.rb"
@@ -20,6 +25,12 @@ end
 # 技チェック
 out_data = Array.new
 out_file = File::open( "../result_trainer.txt", "w" )
+out_file.puts( "！==========================================================!")
+out_file.puts( "！このファイルはwaza_check_for_trainer_poke.rbが作成したファイルです" )
+out_file.puts( "！トレーナー手持ちポケモンが覚えれない技を覚えていないかチェックしています" )
+out_file.puts( "！レベル、技教え、技マシン技、教え技、タマゴ技、進化が対象です" )
+out_file.puts( "！==========================================================!")
+
 trainer_list.each do |trainer|
   out_data = ""
 
@@ -30,7 +41,7 @@ trainer_list.each do |trainer|
       unless ((personal_accessor.check_waza_learning( poke.fullname, poke.level, waza )) ||
         ( is_oshiewaza( waza ) == true && oshiewaza_list.include?( waza ) == true )) then
         if is_out == false then
-          # トレーナー名首都力
+          # トレーナー名
           if out_data == "" then
             out_data << "\r\n#{trainer.type} #{trainer.name}\r\n"
           end

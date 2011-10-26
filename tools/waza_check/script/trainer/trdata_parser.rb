@@ -143,7 +143,7 @@ def GetTrainerList( filename )
 
   # 簡易エラーチェック
   if $is_raise == true then
-    raise
+    raise "フォルム設定に誤りがあります\n"
   end
 
   return trainer_list

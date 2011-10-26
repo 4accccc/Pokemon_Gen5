@@ -25,5 +25,9 @@ end
 
 # 出力
 out_file = File::open( "../result_wazamachine.txt", "w" )
+out_file.puts( "！==========================================================!")
+out_file.puts( "！このファイルはwazamachine_check.rbが作成したファイルです" )
+out_file.puts( "！レベルアップで覚えるのに同技の技マシンが使えない不整合をチェックして出力しています" )
+out_file.puts( "！==========================================================!")
 out_file.puts( out_data )
 out_file.close 

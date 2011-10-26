@@ -34,6 +34,10 @@ end
 
 # 出力
 out_file = File::open( "../result_wazaoshie.txt", "w" )
+out_file.puts( "！==========================================================!")
+out_file.puts( "！このファイルはwazaoshie_check.rbが作成したファイルです" )
+out_file.puts( "！レベルアップで覚えるのに技教えで教えられない不整合をチェックして出力しています" )
+out_file.puts( "！==========================================================!")
 out_file.puts( out_data )
 out_file.close 
 

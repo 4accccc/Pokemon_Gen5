@@ -53,6 +53,12 @@ end
 
 output_filename = "../result_kowaza.txt"
 output_file = File.open( output_filename, "w" )
+
+output_file.puts( "！==========================================================!")
+output_file.puts( "！このファイルはeggwaza_check_main.rbが作成したファイルです" )
+output_file.puts( "！小技をチェックした結果を出力しています。" )
+output_file.puts( "！==========================================================!")
+
 $mons_fullname_list.each do |mons_name| 
   result = all_result[ mons_name ]
   output_file.puts( result )
