@@ -253,7 +253,7 @@ static void HudsonMain( GAMESYS_WORK* gsys )
 {
   static int debugcnt = 0;
   
-#if 0
+#if 1
   if( OS_GetArgc() < 2 )
   {
     return;
