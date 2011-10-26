@@ -38,6 +38,11 @@
 
 #include "debug/debug_nagihashi.h"
 
+#ifdef PM_DEBUG
+//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#endif
+
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -108,6 +113,34 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
 //==============================================================================
 #include "cross_comm.cdat"
 
+//------------------------------------------------------------------
+//  処理時間AVERAGE
+//------------------------------------------------------------------
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+u8 DEBUG_MAIN_UPDATE_TYPE = 0;  ///<FIELDMAP TOP TAIL フレームチェック用
+
+
+OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
+
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;      // AVERAGE
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0; // カウンタ
+static int DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount =0;    // 16000Over
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max =0;    // 16000Over
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME  ( 120 )
+
+#define DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY  ( PAD_BUTTON_R )
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
+
+#ifndef DEBUG_TIME_Printf
+#define DEBUG_TIME_Printf(...) OS_TFPrintf(3,__VA_ARGS__)
+#endif
+
+#endif
 
 //==============================================================================
 //
@@ -178,6 +211,9 @@ void GAMEBEACON_Update(void)
   if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
   }
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+//  DEBUG_MAIN_TIME_AVERAGE_StartFunc();
+#endif
 
   if(bsys->gamedata != NULL){//プレイ時間が規定数を超えていれば送信
     PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( bsys->gamedata );
@@ -245,6 +281,9 @@ void GAMEBEACON_Update(void)
       }
     }
   }
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+//  DEBUG_MAIN_TIME_AVERAGE_EndFunc();
+#endif
 }
 
 //==================================================================
@@ -744,6 +783,11 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       }
     }
   }
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+  DEBUG_MAIN_TIME_AVERAGE_StartFunc();
+#endif
+  //リゾートビーコン受け取り
   if( same_data == FALSE)
   {
     if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
@@ -773,6 +817,9 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       }
     }
   }
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+  DEBUG_MAIN_TIME_AVERAGE_EndFunc();
+#endif
 
   //ログに同じデータがあるので受信しない
   //  間にリゾートの処理を挟むため、直接returnする形式から変更
@@ -2391,6 +2438,56 @@ void DEBUG_RecvBeaconBufferClear(void)
   GameBeaconSys->end_log = -1;
   GameBeaconSys->update_log = 0;
 }
+
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
+{
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
+}
+
+static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
+{
+  OSTick now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
+
+  now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now = now_time;
+
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  if( now_time > 16000 ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+    DEBUG_TIME_Printf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
+    DEBUG_TIME_Printf( " over tick %ld", now_time );
+    DEBUG_TIME_Printf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
+  }
+  if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+
+    DEBUG_TIME_Printf( " ave tick %d", 
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
+    DEBUG_TIME_Printf( " Over 120::%d",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
+    DEBUG_TIME_Printf( " Max %d\n",
+        DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount = 0;
+    DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
+  }
+
+  if( 1 || DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
+    DEBUG_TIME_Printf( " update[%d] tick %ld\n", DEBUG_MAIN_UPDATE_TYPE, now_time );
+  }
+
+}
+
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 #endif  //PM_DEBUG
 

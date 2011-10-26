@@ -1524,10 +1524,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はっせいパワー　？</Text>
+			<Text>むこう　１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1535,10 +1535,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はっせいパワー　？</Text>
+			<Text>むこう　１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:47:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1572,10 +1572,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はいふパワー　？</Text>
+			<Text>むこう　２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:47:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1583,10 +1583,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はいふパワー　？</Text>
+			<Text>むこう　２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:47:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1619,10 +1619,10 @@
 		Label="plc_power_49">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんさくパワー　＋</Text>
+			<Text>むこう　ID NULL</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:01" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1630,10 +1630,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんさくパワー　＋</Text>
+			<Text>むこう　ID NULL</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:14" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1641,14 +1641,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>スワン追加</Comment>
+			<Comment>有効なIDだが効果は未実装
+GPOWER_ID_NULLに相当
+</Comment>
 			<CommentModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:53:33" />
+				Time="2011-10-26T03:08:16" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1658,10 +1660,10 @@
 		Label="plc_power_50">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんさくパワー　＋＋</Text>
+			<Text>たんさくパワー　＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:06" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1669,10 +1671,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんさくパワー　＋＋</Text>
+			<Text>たんさくパワー　＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:14" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1697,10 +1699,10 @@
 		Label="plc_power_51">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんさくパワー　＋＋＋</Text>
+			<Text>たんさくパワー　＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:10" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1708,10 +1710,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんさくパワー　＋＋＋</Text>
+			<Text>たんさくパワー　＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:14" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1736,10 +1738,10 @@
 		Label="plc_power_52">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあなパワー　＋</Text>
+			<Text>たんさくパワー　＋＋＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:52:13" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1747,10 +1749,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなパワー　＋</Text>
+			<Text>たんさくパワー　＋＋＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:32" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1775,10 +1777,10 @@
 		Label="plc_power_53">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあなパワー　＋＋</Text>
+			<Text>かくしあなパワー　＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:52:13" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1786,10 +1788,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなパワー　＋＋</Text>
+			<Text>かくしあなパワー　＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:32" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1814,10 +1816,10 @@
 		Label="plc_power_54">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあなパワー　＋＋＋</Text>
+			<Text>かくしあなパワー　＋＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:52:13" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1825,10 +1827,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなパワー　＋＋＋</Text>
+			<Text>かくしあなパワー　＋＋</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:32" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1853,10 +1855,10 @@
 		Label="plc_power_55">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまじないパワー　＋</Text>
+			<Text>かくしあなパワー　＋＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:26" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1864,10 +1866,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまじないパワー　＋</Text>
+			<Text>かくしあなパワー　＋＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:40" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1892,10 +1894,10 @@
 		Label="plc_power_56">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまじないパワー　＋＋</Text>
+			<Text>おまじないパワー　＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:31" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1903,10 +1905,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまじないパワー　＋＋</Text>
+			<Text>おまじないパワー　＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:40" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1931,10 +1933,10 @@
 		Label="plc_power_57">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまじないパワー　＋＋＋</Text>
+			<Text>おまじないパワー　＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:35" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1942,10 +1944,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまじないパワー　＋＋＋</Text>
+			<Text>おまじないパワー　＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:05:40" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1970,10 +1972,10 @@
 		Label="plc_power_58">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんさくパワー　Ｓ</Text>
+			<Text>おまじないパワー　＋＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:37" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1981,10 +1983,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんさくパワー　Ｓ</Text>
+			<Text>おまじないパワー　＋＋＋</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:52" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2009,10 +2011,10 @@
 		Label="plc_power_59">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんさくパワー　ＭＡＸ</Text>
+			<Text>たんさくパワー　Ｓ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:48" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2020,10 +2022,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんさくパワー　ＭＡＸ</Text>
+			<Text>たんさくパワー　Ｓ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:52" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2048,10 +2050,10 @@
 		Label="plc_power_60">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあなパワー　Ｓ</Text>
+			<Text>たんさくパワー　ＭＡＸ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:55:53" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2059,10 +2061,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなパワー　Ｓ</Text>
+			<Text>たんさくパワー　ＭＡＸ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:22" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2087,10 +2089,10 @@
 		Label="plc_power_61">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあなパワー　ＭＡＸ</Text>
+			<Text>かくしあなパワー　Ｓ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:00" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2098,10 +2100,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなパワー　ＭＡＸ</Text>
+			<Text>かくしあなパワー　Ｓ</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-26T07:56:22" />
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2126,10 +2128,10 @@
 		Label="plc_power_62">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまじないパワー　Ｓ</Text>
+			<Text>かくしあなパワー　ＭＡＸ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:06" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2137,10 +2139,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまじないパワー　Ｓ</Text>
+			<Text>かくしあなパワー　ＭＡＸ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:22" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2165,10 +2167,10 @@
 		Label="plc_power_63">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまじないパワー　ＭＡＸ</Text>
+			<Text>おまじないパワー　Ｓ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:13" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2176,10 +2178,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまじないパワー　ＭＡＸ</Text>
+			<Text>おまじないパワー　Ｓ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:04:22" />
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2191,6 +2193,45 @@
 			<CommentModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-09-26T07:56:26" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_power_64">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまじないパワー　ＭＡＸ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまじないパワー　ＭＡＸ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン追加</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-26T03:07:39" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

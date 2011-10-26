@@ -513,12 +513,8 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->play_hour > 999 || info->play_min > 59 ){
     return TRUE;
   }
-  //GパワーIDチェック(GPOWER_ID_NULL==GPOWER_ID_MAXなのでGPOWER_ID_MAXまではあり得る)
-  if( info->g_power_id > GPOWER_ID_MAX ) {
-    return TRUE;
-  }
-  //未実装のダミーIDもはじく
-  if( info->g_power_id >= GPOWER_ID_DUMMY_START && info->g_power_id <= GPOWER_ID_DUMMY_END ){
+  //GパワーIDチェック
+  if( GPOWER_IsErrorID( info->g_power_id ) ) {
     return TRUE;
   }
   //ゾーンIDチェック
@@ -1489,10 +1485,11 @@ static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info )
   }
   return FALSE;
 }
-//エラーチェック GパワーIDタイプ 
+//エラーチェック GパワーIDタイプ (発動できないパワーは不正)
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
 {
-  if( info->action.gpower_id >= GPOWER_ID_MAX ){
+//  if( info->action.gpower_id >= GPOWER_ID_MAX ){
+  if( GPOWER_IsEnableID( info->g_power_id ) == FALSE ) {
     GF_ASSERT_MSG(0,"%d\n",info->action.gpower_id);
     return TRUE;
   }
@@ -1501,7 +1498,8 @@ static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
 //エラーチェック 配布GパワーIDタイプ 
 static BOOL errchk_action_haifu_gpower(const GAMEBEACON_INFO* info )
 {
-  if( info->action.distribution.gpower_id >= GPOWER_ID_MAX ){
+//  if( info->action.distribution.gpower_id >= GPOWER_ID_MAX ){
+  if( GPOWER_IsEnableID( info->action.distribution.gpower_id ) == FALSE ) {
     GF_ASSERT_MSG(0,"%d\n",info->action.distribution.gpower_id);
     return TRUE;
   }

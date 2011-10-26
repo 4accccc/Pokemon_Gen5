@@ -105,12 +105,33 @@ void GPOWER_Clear_AllPower(void)
 
 //==================================================================
 /**
+ * 不正IDかチェック
+ * GPOWER_IsEnableID()との違いは GPOWER_ID_NULLを許容するかどうか
+ *
+ * IsErrorID()では NULL を許容する
+ */
+//==================================================================
+BOOL GPOWER_IsErrorID( GPOWER_ID gpower_id )
+{
+  //GPOWER_ID_NULL == GPOWER_ID_DUMMY_END
+  if( gpower_id == GPOWER_ID_NULL ) return FALSE; //NULLはありえる値なのでOK
+
+  if( ( gpower_id >= GPOWER_ID_MAX ) ||
+      ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id < GPOWER_ID_DUMMY_END ) )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * 発動可能な有効IDかチェック
  */
 //==================================================================
 BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id )
 {
-  //GPOWER_ID_NULL == GPOWER_ID_MAX
+  //GPOWER_ID_NULL == GPOWER_ID_DUMMY_END
   if( ( gpower_id >= GPOWER_ID_MAX ) ||
       ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id <= GPOWER_ID_DUMMY_END ) )
   {

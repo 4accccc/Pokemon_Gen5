@@ -298,7 +298,7 @@ def DataFileOutput()
     file.printf("\tGPOWER_ID_DUMMY_START = %d,\t\t//BWの未実装パワー開始ID(このIDを含む)\n", $DummyStartNo);
     file.printf("\tGPOWER_ID_DUMMY_END = %d,\t\t//BWの未実装パワー終了ID(このIDを含む)\n\n", $DummyEndNo);
     file.printf("\tGPOWER_ID_MAX = %d,\t\t//Gパワー最大数\n", PowerData.size);
-    file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
+    #file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
     file.printf("}GPOWER_ID;\n\n");
     
     file.printf("\n\n//効果系統　　!!出力元データによってenumの並びが変わる場合があります!!\n");

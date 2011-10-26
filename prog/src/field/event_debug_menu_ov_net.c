@@ -223,7 +223,7 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
         break;
       }
 
-      if(ret < GPOWER_ID_MAX){
+      if( GPOWER_IsEnableID(ret) ){
         GPOWER_TYPE type = GPOWER_ID_to_Type( work->powerdata, ret );
         POKEPARTY* party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData( work->gmSys ) );
 
@@ -277,7 +277,7 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
     FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
   }
   GFL_MSG_GetString(pMsgDataDMatsu, DM_MSG_POWER_RESET, strBuf);
-  FLDMENUFUNC_AddStringListData( list, strBuf, GPOWER_ID_MAX, heapID );
+  FLDMENUFUNC_AddStringListData( list, strBuf, GPOWER_ID_NULL, heapID );
 
   GFL_MSG_Delete( pMsgDataDMatsu );
   GFL_HEAP_FreeMemory( strBuf );
