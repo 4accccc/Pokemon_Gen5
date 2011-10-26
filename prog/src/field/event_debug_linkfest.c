@@ -48,6 +48,9 @@
 #include "savedata/playtime.h"
 #include "savedata/fmission_save.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission_data.h"
 #include "gamesystem/game_beacon.h"
@@ -83,6 +86,7 @@ enum{
  MENU_MY_GPOWER,
  MENU_MISSION_START,
  MENU_MISSION_END,
+ MENU_TUTORIAL_CLEAR,
  MENU_MISSION_REQ,
  MENU_MISSION_BEACON_WAIT,
  MENU_MISSION_MY_SCORE,
@@ -321,10 +325,11 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestFromFieldMenuList[] =
   { dlf_fldmenu_01, (void*)MENU_MISSION_MY_SCORE, GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_02, (void*)MENU_MISSION_TIME_STOP, GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_03, (void*)MENU_MISSION_END, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_04, (void*)MENU_MISSION_LEVEL_OPEN, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_05, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_06, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_07, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_04, (void*)MENU_TUTORIAL_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_05, (void*)MENU_MISSION_LEVEL_OPEN, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_06, (void*)MENU_MISSION_START, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_07, (void*)MENU_MISSION_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_08, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -427,6 +432,8 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
 static void dmenu_RefarenceGet( DMENU_LINK_FEST* wk, GAMESYS_WORK* gsys );
 static void dmenu_WorkInit( DMENU_LINK_FEST* wk );
 static void dmenu_WorkRelease( DMENU_LINK_FEST* wk );
+
+static void dmenu_TutorialClear( DMENU_LINK_FEST* wk );
 
 static void sub_BmpWinAdd( BMP_WIN* bmpwin, u8 px, u8 py, u8 sx, u8 sy );
 static void sub_BmpWinDel( BMP_WIN* bmpwin );
@@ -749,6 +756,10 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         return GMEVENT_RES_CONTINUE;
       case MENU_MISSION_END:
         FEST_MISSION_DEBUG_KillMission( wk->fmwk );
+        *seq = SEQ_EXIT; 
+        return GMEVENT_RES_CONTINUE;
+      case MENU_TUTORIAL_CLEAR:
+        dmenu_TutorialClear( wk );
         break;
       case MENU_MISSION_REQ:
         GMEVENT_CallEvent( event, event_CreateEventMissionReq( wk->gsys, wk ) );
@@ -774,6 +785,23 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+/**
+ *  @brief  チュートリアルクリアメニュー
+ */
+static void dmenu_TutorialClear( DMENU_LINK_FEST* wk )
+{
+  EVENTWORK * ev = GAMEDATA_GetEventWork( wk->gdata );
+
+#if 1
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_START );
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_CLEAR );
+#endif
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_DPOWER );
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+
+  *( EVENTWORK_GetEventWorkAdrs( ev, WK_SCENE_PALACE01 ) ) = 1;
 }
 
 //-----------------------------------------------------------------
@@ -972,6 +1000,7 @@ static void sub_BeaconInfoSet( DMENU_LINK_FEST* wk, TR_PATTERN pat )
   info->favorite_color_index = fake[FAKE_COLOR];
 #endif
 }
+
 
 //===================================================================================
 //数値入力イベント
