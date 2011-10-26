@@ -214,6 +214,31 @@ void POKEWOOD_EVENT_setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HE
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief	ポケウッドモードと性別から敵トレーナー名IDのスタート位置を帰す
+ *
+ * @param   pokewood		BTL_POKEWOOD_REC or BTL_POKEWOOD_SHOW
+ * @param   sex		      PM_MALE or PM_FEMALE
+ *
+ * @retval  int		      pw_rec_trainername_01等( pokewood_name.mstxtのID )
+ */
+//----------------------------------------------------------------------------------
+static int _get_trainername_id( int pokewood, int sex )
+{
+  if(      pokewood==BTL_POKEWOOD_REC  && sex==PM_MALE   ){
+      return pw_rec_trainername_01;
+  }else if(pokewood==BTL_POKEWOOD_REC  && sex==PM_FEMALE ){
+    return pw_rec_trainername_f_01;
+  }else if(pokewood==BTL_POKEWOOD_SHOW && sex==PM_MALE   ){
+    return pw_show_trainername_01;
+  }else if(pokewood==BTL_POKEWOOD_SHOW && sex==PM_FEMALE ){
+    return pw_show_trainername_f_01;
+  }
+  GF_ASSERT_MSG( 0,"ポケウッドモードか性別指定がおかしい pokewood=%d, sex=%d\n", pokewood, sex );
+
+  return pw_rec_trainername_01;
+}
+//----------------------------------------------------------------------------------
+/**
  * @brief	トレーナーデータを格納する
  *
  * @param   senario_no	  シナリオＮＯ
@@ -248,11 +273,8 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
   // トレーナー名を格納
   {
     GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokewood_name_dat, heapID );
-    if(PokewoodType==BTL_POKEWOOD_SHOW){
-      GFL_MSG_GetString( man, pw_show_trainername_01+senario_no, data->name );
-    }else{
-      GFL_MSG_GetString( man, pw_rec_trainername_01+senario_no, data->name );
-    }
+    int trainername_id = _get_trainername_id( PokewoodType, sex );
+    GFL_MSG_GetString( man, trainername_id+senario_no, data->name );
     GFL_MSG_Delete(man);
   }
   PMSDAT_Clear( &data->win_word );
@@ -434,7 +456,7 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     /* FALL THROUGH */
   case BTL_POKEWOOD_REC:
     bsp = createPokewoodRecBattleParam( gsys, fieldmap, heapID, prew->SenarioNo );
-    bsp->musicDefault = SEQ_BGM_VS_NORAPOKE;
+    bsp->musicDefault = SEQ_BGM_PW_FILMING;
     bsp->musicWin     = SEQ_BGM_WIN1;
     setTrainerTypeName( prew, bsp, prew->SenarioNo, BTL_POKEWOOD_REC, heapID );
     break;

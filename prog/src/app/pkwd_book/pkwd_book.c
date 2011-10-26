@@ -3466,6 +3466,7 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 {
 	s32			tmp;
 	STRBUF		*strbuf;
+	int mysex = MyStatus_GetMySex( wk->Param->mystatus );
 	
 	// ‰Šú‚Ì‚Ý‚Å‚æ‚¢‚Í‚¸
 	if(mode == 0){
@@ -3476,7 +3477,11 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		// E‹Æ–¼(ã‰fŽž‚ð•\Ž¦)(‰Šú‰»Žž‚É‚Ü‚Æ‚ß‚ÄŽæ“¾)
 		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, wk->NameBuffer[tmp], 0, PRINTSYS_LSB_Make(1,2,0) );
 		// –ð–¼(ã‰fŽž‚ð•\Ž¦)
-		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_01+tmp );
+    if(mysex==PM_MALE){
+  		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_01+tmp );
+    }else{
+  		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_f_01+tmp );
+    }
 		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORKER, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}

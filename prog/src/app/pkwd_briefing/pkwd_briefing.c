@@ -1354,8 +1354,16 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
   {
     GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                              NARC_message_pokewood_name_dat, GFL_HEAP_LOWID(heapID) );
-    CG2d->endrol_str[ENDROLL_STR_ENEMYROLE] = GFL_MSG_CreateString( msgdata, pw_show_trainername_01+scenario_no );
-    CG2d->endrol_str[ENDROLL_STR_ENEMYNAME] = GFL_MSG_CreateString( msgdata, pw_rec_trainername_01+scenario_no );
+    int rec_name_id, show_name_id;
+    if(mysex==PM_MALE){ // «•Ê‚Å•ªŠò
+      rec_name_id  = pw_rec_trainername_01;
+      show_name_id = pw_show_trainername_01;
+    }else{
+      rec_name_id  = pw_rec_trainername_f_01;
+      show_name_id = pw_show_trainername_f_01;
+    }
+    CG2d->endrol_str[ENDROLL_STR_ENEMYROLE] = GFL_MSG_CreateString( msgdata, show_name_id+scenario_no );
+    CG2d->endrol_str[ENDROLL_STR_ENEMYNAME] = GFL_MSG_CreateString( msgdata, rec_name_id+scenario_no );
     GFL_MSG_Delete(msgdata);
   
   }
