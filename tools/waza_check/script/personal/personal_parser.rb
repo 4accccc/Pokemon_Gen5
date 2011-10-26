@@ -1,5 +1,6 @@
 require "personal_index.rb" 
 require "monsno_hash.rb"
+require "waza_oshie_hash.rb"
 
 # ‹³‚¦‹Z
 $all_oshiewaza_list = [
@@ -31,6 +32,13 @@ $egg_group_list = [
 "ƒhƒ‰ƒSƒ“",
 "–³¶B",
 ]
+# ‹³‚¦‹ZƒnƒbƒVƒ…
+$oshie_hash_list = {
+  PERSONAL_PARAM::WAZA_RED    => $oshie_waza_hash_red,
+  PERSONAL_PARAM::WAZA_BLUE   => $oshie_waza_hash_blue,
+  PERSONAL_PARAM::WAZA_YELLOW => $oshie_waza_hash_yellow,
+  PERSONAL_PARAM::WAZA_GREEN  => $oshie_waza_hash_green,
+}
 
 # «•Ê
 GENDER_TYPE_MALE_ONLY = 0
@@ -229,6 +237,23 @@ class PersonalDataParser
       end
     end
     return usable_machine_list
+  end
+
+  # ‹³‚¦‹Zƒe[ƒuƒ‹æ“¾
+  def get_usable_waza_oshie_list( mons_fullname )
+    usable_oshie_list = Array.new
+    personal_items = get_personal_items( mons_fullname )
+    PERSONAL_PARAM::WAZA_RED.upto( PERSONAL_PARAM::WAZA_GREEN ) do | col_id |
+      oshie_data = personal_items[ col_id ]
+      oshie_data_split = oshie_data.split( // )
+      0.upto( oshie_data_split.size - 1 ) do |oshie_idx|
+        if oshie_data_split[ oshie_idx ] == "œ" then 
+          oshie_name = $oshie_hash_list[ col_id ][ oshie_idx ]
+          usable_oshie_list << oshie_name
+        end
+      end
+    end
+    return usable_oshie_list
   end
 
   def get_teach_waza_list( mons_fullname )

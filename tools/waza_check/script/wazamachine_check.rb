@@ -10,6 +10,7 @@ require "machine_wazaname_hash.rb"
 
 machine_wazaname_list = $machine_wazaname_hash.values
 
+out_data = Array.new
 $mons_fullname_list.each do |mons_name|
   levelwaza_list = $levelwaza_hash[ mons_name ]
   machinewaza_list = $machinewaza_hash[ mons_name ]
@@ -17,6 +18,12 @@ $mons_fullname_list.each do |mons_name|
     if machine_wazaname_list.include?( levelwaza ) == true && 
        machinewaza_list.include?( levelwaza ) == false then
       puts "#{mons_name}: #{levelwaza}"
+      out_data << "#{mons_name}: #{levelwaza}"
     end
   end
 end
+
+# o—Í
+out_file = File::open( "../result_wazamachine.txt", "w" )
+out_file.puts( out_data )
+out_file.close 

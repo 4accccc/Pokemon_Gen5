@@ -116,6 +116,10 @@ class PERSONAL_PARAM
     WEIGHT
     WAZA_OSHIE
     NO_JUMP
+    WAZA_RED
+    WAZA_BLUE
+    WAZA_YELLOW
+    WAZA_GREEN
     MAX
   ]
 end 

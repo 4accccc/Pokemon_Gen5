@@ -22,7 +22,11 @@ class Pokemon
   end
 
   def fullname
-    return @mons_name + @form_name
+    ret_name = @mons_name
+    if @form_name != nil then
+      ret_name += @form_name
+    end
+    return ret_name
   end
 
   def set_form_name( form_name )

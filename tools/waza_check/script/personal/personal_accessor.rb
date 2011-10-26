@@ -55,7 +55,7 @@ class PersonalAccessor
   end
 
   def get_default_waza_list( mons_fullname, mons_level )
-    puts mons_fullname
+    #puts mons_fullname
     default_waza_list = Array.new
     levelup_waza_list = $levelwaza_hash[ mons_fullname ]
     levelup_wazalevel_list = $levelwaza_learninglevel_hash[ mons_fullname ]
