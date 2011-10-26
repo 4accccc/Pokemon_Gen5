@@ -4,6 +4,8 @@
 
 #define DOOR_ID_R23_D26R0101_EXIT01       0
 #define DOOR_ID_R23_D10R0101_EXIT01       1
+#define DOOR_ID_R23_R23R0101_EXIT01       2
+#define DOOR_ID_R23_R23R0201_EXIT01       3
 
 #endif //ZONE_R23_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r23.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
