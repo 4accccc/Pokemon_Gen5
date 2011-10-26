@@ -313,6 +313,9 @@
 #define WK_SCENE_C15R0401                16701 /* 0x413d ポケウッド：初回入室時イベント */
 #define WK_SCENE_C08_LINK_EVENT          16702 /* 0x413e ソウリュウシティ：リンクイベントPOS制御ワーク */
 #define WK_SCENE_C05R0501_LINK_EVENT     16703 /* 0x413f ホドモエシティ：リンクイベントSCENE_CHANGE制御ワーク */
+#define WK_SCENE_C02_LINK_EVENT          16704 /* 0x4140 シッポウシティ：リンクイベントPOS制御ワーク */
+#define WK_SCENE_C04_TRIAL               16705 /* 0x4141 ライモンシティ：トライアルハウスイベント用 */
+#define WK_SCENE_C04GYM0101_GUIDE        16706 /* 0x4142 ライモンシティジム：ジムガイドイベント用 */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
