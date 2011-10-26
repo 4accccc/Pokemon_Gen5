@@ -421,8 +421,28 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
       }
       OS_Printf( "ALL MAP CHECK: zone_id = %d\n", zone_id );
       fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
-      GMEVENT_CallEvent( event,
-          DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
+      
+      // マップチェンジ
+      if( (zone_id == ZONE_ID_R04) || (zone_id == ZONE_ID_R04W ) )
+      {
+        // R04・R04Wのみ瞬間マップチェンジに変更
+        // ↓
+        // BGMのリクエストでアサートが出るため。
+        //
+        // R04・R04WのみゾーンIDの置き換えをしているため、
+        // fieldmapのゾーンチェンジの処理がはしる。
+        // そこでゾーンチェンジのBGM変更処理を行っている。
+        //
+        // そのため、通常のマップチェンジのBGM変更がいらない。
+        // 
+        GMEVENT_CallEvent( event,
+            DEBUG_EVENT_QuickChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
+      }
+      else
+      {
+        GMEVENT_CallEvent( event,
+            DEBUG_EVENT_ChangeMapDefaultPos( amcw->gsys, fieldmap, zone_id ) );
+      }
     }
     *seq = SEQ_WAIT;
     break;
