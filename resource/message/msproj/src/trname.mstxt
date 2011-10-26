@@ -25935,4 +25935,29 @@
 				Time="2011-10-19T10:17:35" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="swplazmaw_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T10:54:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T10:54:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T10:54:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T10:54:11" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

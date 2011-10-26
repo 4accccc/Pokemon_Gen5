@@ -805,6 +805,7 @@ _EVENT_DATA ev_TRID_SCHOOLB_17
 _EVENT_DATA ev_TRID_SCHOOLG_15
 _EVENT_DATA ev_TRID_SCHOOLB_18
 _EVENT_DATA ev_TRID_SCHOOLG_16
+_EVENT_DATA ev_TRID_SWPLAZMAW_12
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1600,6 +1601,7 @@ ev_TRID_SCHOOLB_17:
 ev_TRID_SCHOOLG_15:
 ev_TRID_SCHOOLB_18:
 ev_TRID_SCHOOLG_16:
+ev_TRID_SWPLAZMAW_12:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
