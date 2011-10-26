@@ -585,7 +585,7 @@
 #define FV_C05R0501_PEAPLE_01              696 /* 0x02b8 ホドモエシティ：NPC */
 #define FV_C05R0501_POKE23_01              697 /* 0x02b9 ホドモエシティ：ゾロアーク */
 #define FV_PC_NPOKE_BREEDERM               698 /* 0x02ba ポケモンセンター：BREEDERW */
-		/* not used   699(0x02bb) */
+#define FV_C06_HAKASE2_01                  699 /* 0x02bb フキヨセシティ：アララギ娘 */
 		/* not used   700(0x02bc) */
 		/* not used   701(0x02bd) */
 		/* not used   702(0x02be) */
@@ -651,7 +651,7 @@
 #define FV_C04_SWPLASMAM_01                762 /* 0x02fa ライモンシティ：プラズマ団 */
 #define FV_C13GYM0102_SWLEADER2ISS         763 /* 0x02fb C12GYM0102：ホミカISS */
 #define FV_C04_SWHEROINE_01                764 /* 0x02fc ライモンシティ：異性主人公 */
-#define FV_C06_SWLEADER6_01                765 /* 0x02fd フキヨセシティ：フウロと博士 */
+#define FV_C06_SWLEADER6_01                765 /* 0x02fd フキヨセシティ：フウロ */
 #define FV_R07R0101_HAKASE2_01             766 /* 0x02fe タワーオブヘブン：アララギ博士（娘） */
 #define FV_C06R0201_SWLEADER6_01           767 /* 0x02ff フキヨセシティ：カーゴサービス・フウロ */
 #define FV_C06R0201_HAKASE2_01             768 /* 0x0300 フキヨセシティ：カーゴサービス・アララギ娘 */
