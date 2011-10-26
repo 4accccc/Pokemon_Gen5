@@ -19,25 +19,30 @@ end
 
 # 技チェック
 out_data = Array.new
+out_file = File::open( "../result_trainer.txt", "w" )
 trainer_list.each do |trainer|
-  out_data << "#{trainer.type} #{trainer.name}\r\n"
+  out_data = ""
 
   trainer.pokemon_list.each do |poke|
-    out_data << " #{poke.fullname} Lv.#{poke.level}\r\n"
-
+    is_out = false
     poke.waza_list.each do |waza|
       oshiewaza_list = $oshiewaza_hash[ poke.fullname ]
-      if (personal_accessor.check_waza_learning( poke.fullname, poke.level, waza )) ||
-         ( is_oshiewaza( waza ) == true && oshiewaza_list.include?( waza ) == true ) then
-        out_data << "  ○#{waza}\r\n"
-      else
+      unless ((personal_accessor.check_waza_learning( poke.fullname, poke.level, waza )) ||
+        ( is_oshiewaza( waza ) == true && oshiewaza_list.include?( waza ) == true )) then
+        if is_out == false then
+          # トレーナー名首都力
+          if out_data == "" then
+            out_data << "\r\n#{trainer.type} #{trainer.name}\r\n"
+          end
+          # ポケモン名出力
+          out_data << " #{poke.fullname} Lv.#{poke.level}\r\n"
+        end
+        # 技名出力
         out_data << "  ×#{waza}\r\n"
       end
     end
   end
+  unless out_data == "" then out_file.puts( out_data ) end
 end
 
-# 出力
-out_file = File::open( "../result_trainer.txt", "w" )
-out_file.puts( out_data )
 out_file.close 
