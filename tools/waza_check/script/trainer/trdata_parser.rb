@@ -11,7 +11,7 @@ require "form_name_hash.rb"
 MAX_POKEMON_NUM = 6
 MAX_WAZA_NUM = 4
 
-is_raise = false
+$is_raise = false
 
 # 技が指定されているデータタイプ
 $waza_data_type_list = [
@@ -101,7 +101,7 @@ def GetPokemon( trdata_items, poke_idx )
 
   if form_name == nil then
     puts "[%s]にありえないフォルムのポケモンが設定されています。\n"%[ trdata_items[ PARA::TR_ID ]]
-    is_raise = true
+    $is_raise = true
   end
   pokemon = Pokemon.new
   pokemon.set_mons_name( mons_name )
@@ -142,7 +142,7 @@ def GetTrainerList( filename )
   end
 
   # 簡易エラーチェック
-  if is_raise == true then
+  if $is_raise == true then
     raise
   end
 
