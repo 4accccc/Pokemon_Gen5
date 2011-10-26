@@ -896,9 +896,6 @@ struct _C_GEAR_WORK {
 
   u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];  //リングカラーパレットを保存しておくバッファ
 
-#if 0
-  u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
-#endif
   u8 select_panel;
   u8 select_count;
 
@@ -2790,10 +2787,6 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
 
   }
-#if 0
-  _gearObjSetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
-  GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_T_COLON], FALSE );
-#endif
   for(i=0;i < ACT_NORMAL_MAX ;i++)
   {
     static const struct {
@@ -2805,19 +2798,13 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     }prm[]=
     {
       { ACTANM_AM,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-//      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_BATT2,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, CGEAR_CLACT_BG_PRI, ACT_SPRI_BASE, _CLACT_RES_COMMON },
-//      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI,    ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-//      { ACTANM_POWER_I,   POS_POWER_X, POS_POWER_Y, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
       { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-//      { ACTANM_HELP_I,    POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-//      { ACTANM_CUSTOM_I,  POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
-//      { ACTANM_S_RADAR_I, POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       
@@ -3623,11 +3610,6 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
   {  //AMPM
     GFL_CLWK* cp_wk = pWork->cellCursor[ ACT_AMPM ];
     int anm = (time.hour / 12)+ACTANM_AM;
-#if 0
-    if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
-      GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
-    }
-#endif
     if( GFL_CLACT_WK_GetAnmSeq( pWork->cellCursor[ ACT_AMPM ] ) != anm ){
       _gearObjSetAnmSeq( pWork->cellCursor[ ACT_AMPM ], anm );
     }
