@@ -92,7 +92,7 @@ ELSE
 			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_02 )
 			_MSGWIN_CLOSE()
 		
-			////対戦へ【仮】トレーナーID未発行のため仮当て
+			//対戦へ
 			_TRAINER_BTL_SET( TRID_BAKER_05, 0 )
 					
 			//敗戦チェック
