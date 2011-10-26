@@ -285,7 +285,7 @@ BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
 #ifdef PM_DEBUG
     if( DEBUG_FLG_GetFlg( DEBUG_FLG_LTvtSecretNotRnd ) )
     {
-      return TRUE;
+      now_zoneID  = target_zoneID;
     }
 #endif
     //Ç©ÇØÇÁÇÍÇÈèåè

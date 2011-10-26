@@ -526,14 +526,16 @@ static BOOL Local_Tvt_Secret_FarewellInner( LOCAL_TVT_PERSON_SYS *p_person, cons
       if( date != PERSON_STATE_SECRET_DATE_NONE )
       {
         LOCAL_TVT_CALLDATA_SetSecretDateEvent( cp_param->p_data, date );
-        //１日１回デートON
-        LOCAL_TVT_CALLDATA_SetSecretOnceDate( cp_param->p_data );
+        if( date == PERSON_STATE_SECRET_DATE_FIRST
+            || date == PERSON_STATE_SECRET_DATE_REGULAR )
+        {
+          //定期デートは１日１回デートON
+          LOCAL_TVT_CALLDATA_SetSecretOnceDate( cp_param->p_data );
+        }
       }
-      else
-      {
-        //話しかけたので好感度アップ
-        LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
-      }
+
+      //話しかけたので好感度アップ
+      LOCAL_TVT_CALLDATA_AddState( cp_param->p_data, LOCAL_TVT_PERSON_SECRET, LOCAL_TVT_SECRET_PHASE_RANGE_MAX );
     }
 
     //隠しキャラ用ゾーンIDを再設定

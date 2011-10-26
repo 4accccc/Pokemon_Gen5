@@ -548,6 +548,7 @@ static void LOCAL_TVT_SEQ_CallSelect( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *
   case SEQ_DECIDE_EXIT:
     p_wk->call_no = LOCAL_TVT_CALLSELECT_GetSelect( p_wk->p_callselect );
     LOCAL_TVT_CALLSELECT_Exit( p_wk->p_callselect );
+    p_wk->p_callselect = NULL;
     LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_Calling );
     break;
 
@@ -684,7 +685,8 @@ static void LOCAL_TVT_SEQ_Talk( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_wk_a
     if( p_wk->cnt++ > CALLMODE_END_WAIT )
     {
       PMSND_PlaySE( LOCAL_TVT_SE_CALL_ANSWER );
-      LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_FadeOut );
+      LOCAL_TVT_CHARA_SYS_SetVisible( p_wk->param.p_chara_sys, FALSE );
+      LOCAL_TVT_SEQ_SetNext( p_seqwk, LOCAL_TVT_SEQ_CallSelect );
     }
     break;
 

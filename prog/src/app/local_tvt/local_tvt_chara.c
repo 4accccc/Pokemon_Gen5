@@ -565,6 +565,23 @@ void LOCAL_TVT_CHARA_SYS_SetVisible( LOCAL_TVT_CHARA_SYS *sys, BOOL is_visible )
 {
   sys->is_visible = is_visible;
   sys->is_visible_req = TRUE;
+
+
+    {
+      int i;
+      for( i = 0 ; i < sys->member; i++ )
+      {
+        if( sys->charaWork[i] != NULL )
+        {
+          LOCAL_TVT_CHARA_SetVisible( sys->charaWork[i], sys->is_visible );
+        }
+      }
+    }
+
+    if( sys->is_visible == FALSE )
+    {
+      LOCAL_TVT_RECICON_Hide( sys );
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -1397,20 +1414,5 @@ static void Local_Tvt_SetVisibleVBlank( GFL_TCB *p_tcb, void *p_wk_adrs )
     GFL_BG_SetVisible( LTVT_FRAME_BG, sys->is_visible );
     GFL_BG_SetVisible( LTVT_FRAME_CHARA, sys->is_visible );
 
-    {
-      int i;
-      for( i = 0 ; i < sys->member; i++ )
-      {
-        if( sys->charaWork[i] != NULL )
-        {
-          LOCAL_TVT_CHARA_SetVisible( sys->charaWork[i], sys->is_visible );
-        }
-      }
-    }
-
-    if( sys->is_visible == FALSE )
-    {
-      LOCAL_TVT_RECICON_Hide( sys );
-    }
   }
 }
