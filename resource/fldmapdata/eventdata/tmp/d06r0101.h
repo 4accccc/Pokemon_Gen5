@@ -16,26 +16,25 @@
 #define FLD_ITEM_89                        0
 #define FLD_ITEM_90                        1
 #define FLD_ITEM_88                        2
-#define FLD_ITEM_91                        3
-#define TR_SCIENTISTM_16                   4
-#define TR_GUITARW_02                      5
-#define TR_ELITEM_35                       6
-#define TR_ELITEW_35                       7
-#define TR_RANGERM_25                      8
-#define FLD_ITEM_92                        9
-#define FLD_ITEM_93                       10
-#define TR_MOUNT_25                       11
-#define D06R0101_BOSS_01                  12
-#define D06R0101_WORKMAN2_01              13
-#define D06R0101_SWBELL_01                14
-#define D06R0101_WORKMAN2_02              15
+#define TR_SCIENTISTM_16                   3
+#define TR_GUITARW_02                      4
+#define TR_ELITEM_35                       5
+#define TR_ELITEW_35                       6
+#define TR_RANGERM_25                      7
+#define FLD_ITEM_92                        8
+#define FLD_ITEM_93                        9
+#define TR_MOUNT_25                       10
+#define D06R0101_BOSS_01                  11
+#define D06R0101_WORKMAN2_01              12
+#define D06R0101_SWBELL_01                13
+#define D06R0101_WORKMAN2_02              14
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D06R0101_EVB_H
 #define ZONE_D06R0101_EVB_H
 
-#define D06R0101_HIDE_ITEM_02             0
+#define HIDE_ITEM_064                     0
 #define HIDE_ITEM_061                     1
 #define HIDE_ITEM_062                     2
 #define HIDE_ITEM_063                     3

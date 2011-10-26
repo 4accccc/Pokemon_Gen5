@@ -12,9 +12,8 @@
 
 #define FLD_ITEM_281                       0
 #define FLD_ITEM_285                       1
-#define FLD_ITEM_286                       2
-#define TR_MOUNT_29                        3
-#define TR_BATTLEG_23                      4
+#define TR_MOUNT_29                        2
+#define TR_BATTLEG_23                      3
 
 #endif //ZONE_R03R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

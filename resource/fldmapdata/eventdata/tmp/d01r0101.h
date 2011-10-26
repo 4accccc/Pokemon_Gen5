@@ -17,13 +17,12 @@
 #define FLD_ITEM_291                       2
 #define FLD_ITEM_292                       3
 #define FLD_ITEM_293                       4
-#define FLD_ITEM_294                       5
-#define FLD_ITEM_295                       6
-#define FLD_ITEM_296                       7
-#define D01R0101_RATI2_01                  8
-#define TR_SCHOOLB_16                      9
-#define TR_SCHOOLG_14                     10
-#define TR_TANPAN_10                      11
+#define FLD_ITEM_295                       5
+#define FLD_ITEM_296                       6
+#define D01R0101_RATI2_01                  7
+#define TR_SCHOOLB_16                      8
+#define TR_SCHOOLG_14                      9
+#define TR_TANPAN_10                      10
 
 #endif //ZONE_D01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

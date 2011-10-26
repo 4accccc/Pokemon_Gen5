@@ -37,6 +37,7 @@
 #define C01_WOMAN2_02                     19
 #define C01_BREEDERM_01                   20
 #define C01_BOY2_01                       21
+#define FLD_ITEM_294                      22
 
 #endif //ZONE_C01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

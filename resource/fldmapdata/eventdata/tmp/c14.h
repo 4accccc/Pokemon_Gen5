@@ -23,6 +23,8 @@
 #define FLD_ITEM_171                       4
 #define C14_BOY4_02                        5
 #define C14_VETERANM_01                    6
+#define FLD_ITEM_164                       7
+#define FLD_ITEM_304                       8
 
 #endif //ZONE_C14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -25,13 +25,12 @@
 #define FLD_ITEM_72                       11
 #define FLD_ITEM_73                       12
 #define FLD_ITEM_74                       13
-#define FLD_ITEM_75                       14
-#define FLD_ITEM_76                       15
-#define FLD_ITEM_77                       16
-#define FLD_ITEM_78                       17
-#define R06_FLDMONS_01                    18
-#define R06_FLDMONS_02                    19
-#define R06_FLDMONS_03                    20
+#define FLD_ITEM_76                       14
+#define FLD_ITEM_77                       15
+#define FLD_ITEM_78                       16
+#define R06_FLDMONS_01                    17
+#define R06_FLDMONS_02                    18
+#define R06_FLDMONS_03                    19
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

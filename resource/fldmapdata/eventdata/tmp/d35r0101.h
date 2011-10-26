@@ -10,6 +10,9 @@
 
 #define D35R0101_SWLEADER6_01              0
 #define D35R0101_POKE_01                   1
+#define FLD_ITEM_272                       2
+#define FLD_ITEM_273                       3
+#define FLD_ITEM_286                       4
 
 #endif //ZONE_D35R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d35r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

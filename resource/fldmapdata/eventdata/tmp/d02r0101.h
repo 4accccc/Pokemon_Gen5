@@ -17,24 +17,23 @@
 #define FLD_ITEM_264                       3
 #define FLD_ITEM_263                       4
 #define FLD_ITEM_262                       5
-#define FLD_ITEM_261                       6
-#define FLD_ITEM_260                       7
-#define TR_FUTAGO_09                       8
-#define TR_FUTAGO_09_2                     9
-#define TR_KINDERGARTENM_10               10
-#define TR_CHILDCARE_09                   11
-#define TR_KINDERGARTENW_09               12
-#define TR_KINDERGARTENM_11               13
-#define TR_TANPAN_31                      14
-#define TR_RANGERW_28                     15
-#define TR_RANGERM_28                     16
-#define TR_VETERANM_20                    17
-#define TR_RANGERM_27                     18
-#define TR_VETERANW_17                    19
-#define TR_TANPAN_32                      20
-#define TR_RANGERW_27                     21
-#define D02R0101_SWLEADER1_01             22
-#define FLD_ITEM_258                      23
+#define FLD_ITEM_260                       6
+#define TR_FUTAGO_09                       7
+#define TR_FUTAGO_09_2                     8
+#define TR_KINDERGARTENM_10                9
+#define TR_CHILDCARE_09                   10
+#define TR_KINDERGARTENW_09               11
+#define TR_KINDERGARTENM_11               12
+#define TR_TANPAN_31                      13
+#define TR_RANGERW_28                     14
+#define TR_RANGERM_28                     15
+#define TR_VETERANM_20                    16
+#define TR_RANGERM_27                     17
+#define TR_VETERANW_17                    18
+#define TR_TANPAN_32                      19
+#define TR_RANGERW_27                     20
+#define D02R0101_SWLEADER1_01             21
+#define FLD_ITEM_258                      22
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -50,13 +49,12 @@
 #define BGID_D02R0101_STONE_05            6
 #define BGID_D02R0101_STONE_06            7
 #define BGID_D02R0101_STONE_07            8
-#define D02R0101_HIDE_ITEM_02             9
-#define D02R0101_HIDE_ITEM_03            10
-#define BGID_D02R0101_ANIMAL_TRAIL_01_1  11
-#define HIDE_ITEM_046                    12
-#define HIDE_ITEM_047                    13
-#define HIDE_ITEM_048                    14
-#define HIDE_ITEM_049                    15
-#define HIDE_ITEM_050                    16
+#define D02R0101_HIDE_ITEM_03             9
+#define BGID_D02R0101_ANIMAL_TRAIL_01_1  10
+#define HIDE_ITEM_046                    11
+#define HIDE_ITEM_047                    12
+#define HIDE_ITEM_048                    13
+#define HIDE_ITEM_049                    14
+#define HIDE_ITEM_050                    15
 
 #endif //ZONE_D02R0101_EVB_H

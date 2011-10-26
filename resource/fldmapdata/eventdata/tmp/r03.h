@@ -21,21 +21,19 @@
 #define TR_KINDERGARTENW_08                6
 #define TR_CHILDCARE_07                    7
 #define TR_SCHOOLB_13                      8
-#define FLD_ITEM_272                       9
-#define FLD_ITEM_273                      10
-#define FLD_ITEM_274                      11
-#define FLD_ITEM_275                      12
-#define FLD_ITEM_276                      13
-#define FLD_ITEM_277                      14
-#define FLD_ITEM_278                      15
-#define FLD_ITEM_279                      16
-#define R03_WOMAN3_01                     17
-#define R03_BABYGIRL1_01                  18
-#define R03_BABYGIRL1_02                  19
-#define R03_BABYBOY1_02                   20
-#define R03_BABYBOY1_01                   21
-#define R03_POKE18_01                     22
-#define R03_POKE38_01                     23
+#define FLD_ITEM_274                       9
+#define FLD_ITEM_275                      10
+#define FLD_ITEM_276                      11
+#define FLD_ITEM_277                      12
+#define FLD_ITEM_278                      13
+#define FLD_ITEM_279                      14
+#define R03_WOMAN3_01                     15
+#define R03_BABYGIRL1_01                  16
+#define R03_BABYGIRL1_02                  17
+#define R03_BABYBOY1_02                   18
+#define R03_BABYBOY1_01                   19
+#define R03_POKE18_01                     20
+#define R03_POKE38_01                     21
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
