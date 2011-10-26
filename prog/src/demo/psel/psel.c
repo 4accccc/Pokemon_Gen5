@@ -629,6 +629,8 @@ enum
   VBLANK_REQ_S02_TEXT_M_VISIBLE_OFF       = 1<< 7,
 };
 
+// 3Dê›íË
+#define CAMERA_FOVY   (172)     // âÊäp
 
 //=============================================================================
 /**
@@ -1172,7 +1174,7 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
 
-    static fx32 fovy = 170;
+    static fx32 fovy = CAMERA_FOVY;
     GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
     BOOL ret = FALSE;
 
@@ -1496,8 +1498,8 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
   // âÊäpê›íË
   {
     GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
-    GFL_G3D_CAMERA_SetfovyCos( camera, FX_SinIdx( 170/2 * PERSPWAY_COEFFICIENT ) );
-    GFL_G3D_CAMERA_SetfovySin( camera, FX_CosIdx( 170/2 * PERSPWAY_COEFFICIENT ) );
+    GFL_G3D_CAMERA_SetfovyCos( camera, FX_SinIdx( CAMERA_FOVY/2 * PERSPWAY_COEFFICIENT ) );
+    GFL_G3D_CAMERA_SetfovySin( camera, FX_CosIdx( CAMERA_FOVY/2 * PERSPWAY_COEFFICIENT ) );
   }
 
   // ÉtÉåÅ[ÉÄ
