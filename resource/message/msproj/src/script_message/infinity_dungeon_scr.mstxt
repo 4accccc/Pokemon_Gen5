@@ -3794,16 +3794,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おどろいたよ　よそういじょうだ▼
-キミの　ポケモンの　ちから
-みせてもらったよ▼
-キミなら　つぎの　エリアも
-クリアできるだろう▼
-キミの　かつやくを
+			<Text>おどろいたよ　そうぞういじょうだ▼
+それじゃ　さいごに　ボクから
+やくだつヒントを　あげるよ▼
+ここに　くるまで　いろいろな
+トレーナーが　いただろう？▼
+それぞれ　しっている　じょうほうが
+ちがうことに　きがついたかい？▼
+なかには　ボストレーナーの
+くわしい　ばしょを　しっているひとも▽
+いるみたいだよ▼
+いろいろな　トレーナーと　たたかって
+こうりゃくほうほうを　さがしてごらん▼
+それじゃ　キミの　かつやくを
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:08:48" />
+				User="nakamura_akira:W00280"
+				Time="2011-10-26T06:06:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3812,15 +3819,22 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>驚いたよ　想像以上だ▼
-キミの　ポケモンの　力
-みせてもらったよ▼
-キミなら　次の　エリアも
-クリアできるだろう▼
-キミの　活躍を
+それじゃ　最後に　ボクから
+役立つヒントを　あげるよ▼
+ここに　来るまで　いろいろな
+トレーナーが　いただろう？▼
+それぞれ　知っている　情報が
+違うことに　気がついたかい？▼
+なかには　ボストレーナーの
+詳しい　場所を　知っている人も▽
+いるみたいだよ▼
+いろいろな　トレーナーと　戦って
+攻略方法を　探してごらん▼
+それじゃ　キミの　活躍を
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:08:55" />
+				User="nakamura_akira:W00280"
+				Time="2011-10-26T06:06:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4471,15 +4485,22 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おどろいたわ　よそういじょうよ▼
-キミの　ポケモンの　ちから
-みせてもらったわ▼
-キミなら　つぎの　エリアも
-クリアできるわ▼
-キミの　かつやくを
+それじゃ　さいごに　わたしから
+やくだつヒントを　あげるわ▼
+ここに　くるまで　いろいろな
+トレーナーが　いたでしょう？▼
+それぞれ　しっている　じょうほうが
+ちがうことに　きがついたかしら？▼
+なかには　ボストレーナーの
+くわしい　ばしょを　しっているひとも▽
+いるみたよ▼
+いろいろな　トレーナーと　たたかって
+こうりゃくほうほうを　さがしてみて▼
+それじゃ　キミの　かつやくを
 たのしみに　しているわよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:52" />
+				User="nakamura_akira:W00280"
+				Time="2011-10-26T06:28:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4488,15 +4509,22 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>驚いたわ　予想以上よ▼
-キミの　ポケモンの　力
-みせてもらったわ▼
-キミなら　次の　エリアも
-クリアできるわ▼
-キミの　活躍を
+それじゃ　最後に　わたしから
+役立つヒントを　あげるわ▼
+ここに　来るまで　いろいろな
+トレーナーが　いたでしょう？▼
+それぞれ　知っている　情報が
+違うことに　気がついたかしら？▼
+なかには　ボストレーナーの
+詳しい　場所を　知っている人も▽
+いるみたよ▼
+いろいろな　トレーナーと　戦って
+攻略方法を　探してみて▼
+それじゃ　キミの　活躍を
 楽しみに　しているわよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:56" />
+				User="nakamura_akira:W00280"
+				Time="2011-10-26T06:34:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5845,10 +5873,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうせんの　まえに
-ポケモンを　かいふくしましょう</Text>
+ポケモンを　かいふくしますね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-25T01:42:49" />
+				Time="2011-10-26T03:53:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -5857,10 +5885,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>挑戦の　前に
-ポケモンを　回復しましょう</Text>
+ポケモンを　回復しますね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-25T01:42:42" />
+				Time="2011-10-26T03:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
