@@ -474,6 +474,10 @@
 #define FE_C15R0401_GUARDMAN               458 /* 0x01ca ポケウッド：楽屋前のガードマン　どけるフラグ */
 #define FE_C04R1101_FIRSTTALK              459 /* 0x01cb ライモンシティ：おとなのおねえさん　初回会話フラグ */
 #define FE_INF_AREA6_ARRIVAL               460 /* 0x01cc 無限ダンジョンエリア６到着フラグ */
+#define FE_C01GYM0101_LINKEVENT_01         461 /* 0x01cd サンヨウレストラン：リンクイベント・ポッド会話フラグ */
+#define FE_C01GYM0101_LINKEVENT_02         462 /* 0x01ce サンヨウレストラン：リンクイベント・コーン会話フラグ */
+#define FE_C01GYM0101_LINKEVENT_03         463 /* 0x01cf サンヨウレストラン：リンクイベント・デント会話フラグ */
+#define FE_C07GYM0101_LEADER7              464 /* 0x01d0 セッカジム：ハチク話しかけフラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -577,10 +581,10 @@
 #define FV_C15_PEAPLE_LANK_02              692 /* 0x02b4 ポケウッド：ランク2表示のNPC */
 #define FV_C15_PEAPLE_LANK_03              693 /* 0x02b5 ポケウッド：ランク3表示のNPC */
 #define FV_C15_PEAPLE_LANK_04              694 /* 0x02b6 ポケウッド：ランク4表示のNPC */
-		/* not used   695(0x02b7) */
-		/* not used   696(0x02b8) */
-		/* not used   697(0x02b9) */
-		/* not used   698(0x02ba) */
+#define FV_C02GYM0101_LEADER2_01           695 /* 0x02b7 シッポウシティ博物館：アロエ */
+#define FV_C05R0501_PEAPLE_01              696 /* 0x02b8 ホドモエシティ：NPC */
+#define FV_C05R0501_POKE23_01              697 /* 0x02b9 ホドモエシティ：ゾロアーク */
+#define FV_PC_NPOKE_BREEDERM               698 /* 0x02ba ポケモンセンター：BREEDERW */
 		/* not used   699(0x02bb) */
 		/* not used   700(0x02bc) */
 		/* not used   701(0x02bd) */
