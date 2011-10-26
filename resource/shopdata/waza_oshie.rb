@@ -22,12 +22,14 @@ require "csv"
 require "../sodateya/hash.rb" 
 
 #ワーク初期化
-namelist   = Array.new	# 配列名
-maxlist    = Array.new	# 配列MAX名
+namelist      = Array.new	# 配列名
+maxlist       = Array.new	# 配列MAX名
+wazanamelist  = Array.new	# 教え技名
 outbuf	   = ""			# 出力ショップデータ群
 lastnamebuf = ""		# ショップ定義名を一回分覚えておく
 closeflag  = 0			# 初回だけは配列定義を括る必要が無いのでフラグ
-
+cloindex    = 0			# 色インデックス（0=赤、1=青、2=黄色、3=緑）
+wazanamelist << Array.new
 
 #-------------------------------------
 # 技教えデータファイルオープン
@@ -57,6 +59,8 @@ reader.each { |row|
 			outbuf += sprintf("};\n")
 			outbuf += sprintf("#define %s_MAX	(NELEMS(%s))\n\n", lastnamebuf.upcase,lastnamebuf)
 			maxlist << sprintf( "%s_MAX",lastnamebuf.upcase,lastnamebuf )
+      cloindex += 1
+      wazanamelist << Array.new
 		end
 
     #新しいデータ定義の宣言
@@ -74,6 +78,7 @@ reader.each { |row|
 		end
 		if GetWazaNo( row[2].to_s ) != nil then
 			outbuf += sprintf("\t\t{ %s,\t%s, },  // %s\n", GetWazaNo( row[2].to_s ),row[3].to_s, row[2].to_s)
+      wazanamelist[cloindex] << row[2].to_s
 		else
 			STDERR.print( "「"+row[2].to_s+"」と言うどうぐは存在しません\n")
 			exit(1)
@@ -111,6 +116,34 @@ outbuf += sprintf("};\n")
 #溜めたショプデータを出力(.cdat)
 file = File.open(ARGV[1],"w")
 file.printf(outbuf)
+file.close
+
+#溜めた技リストを出力(.rb)
+file = File.open(ARGV[2],"w")
+# 赤ハッシュ
+file.puts('$oshie_waza_hash_red = {')
+wazanamelist[0].each_with_index{|wazaname,index|
+  file.puts('    %d=>"%s",'%[index,wazaname])
+}
+file.puts('}')
+# 青ハッシュ
+file.puts('$oshie_waza_hash_blue = {')
+wazanamelist[1].each_with_index{|wazaname,index|
+  file.puts('    %d=>"%s",'%[index,wazaname])
+}
+file.puts('}')
+# 黄ハッシュ
+file.puts('$oshie_waza_hash_yellow = {')
+wazanamelist[2].each_with_index{|wazaname,index|
+  file.puts('    %d=>"%s",'%[index,wazaname])
+}
+file.puts('}')
+# 緑ハッシュ
+file.puts('$oshie_waza_hash_green = {')
+wazanamelist[3].each_with_index{|wazaname,index|
+  file.puts('    %d=>"%s",'%[index,wazaname])
+}
+file.puts('}')
 file.close
 
 exit(0)

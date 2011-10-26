@@ -14,6 +14,7 @@ USERS	= mori tetsuji_ohta iwao_kazumasa ichiraku_katsuhiko nagihashi_toru
 targetname = shop_data
 targetname_bp 	= bpshop.cdat
 targetname_waza = waza_oshie.cdat
+targetname_hash = waza_oshie_hash.rb
 
 list_file = list.txt
 
@@ -81,7 +82,7 @@ $(targetname_bp): bp_item.xls
 
 $(targetname_waza): waza_oshie.xls
 	ruby $(CSVCVTR) -c waza_oshie.xls >waza_oshie.csv
-	ruby waza_oshie.rb waza_oshie.csv $(targetname_waza)
+	ruby waza_oshie.rb waza_oshie.csv $(targetname_waza) $(targetname_hash)
 
 $(targetname)_list.narc $(targetname)_num.narc : fs_item.xls
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
@@ -106,6 +107,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.dat
 	rm -f *.narc
 	rm -f *.naix
+	rm -f $(targetname_hash)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 	rm -f dat/*.dat
