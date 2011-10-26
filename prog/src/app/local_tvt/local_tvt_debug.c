@@ -43,6 +43,8 @@
 //=============================================================================
 static LOCAL_TVT_MEMBER     s_member;
 static LOCAL_TVT_TIME_ZONE  s_timezone;
+static BOOL s_is_lip_sync = FALSE;
+static BOOL s_is_lip_sync_req = FALSE;
 static LOCAL_TVT_CHARA_PARAM  s_chara[LTM_4_MEMBER];
 static int  s_chara_idx = 0;
 static int  s_debug_seq = 0;
@@ -71,6 +73,8 @@ static void Ltvt_Debug_Update_Weather( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Weather( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Update_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Update_LipSync( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Ltvt_Debug_Draw_LipSync( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 
 //呼び出しモード系
 static void Ltvt_Debug_Update_DoctorState( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
@@ -135,6 +139,11 @@ void LOCAL_TVT_DEBUG_Init( const LOCAL_TVT_DEBUG_PARAM *cp_param, HEAPID heapID 
                                 heapID ); 
     DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_TimeZone, 
                                 Ltvt_Debug_Draw_TimeZone, 
+                                cp_param->p_chara_sys, 
+                                DEBUGWIN_GROUP_GRAPHIC,
+                                heapID );
+    DEBUGWIN_AddItemToGroupEx( Ltvt_Debug_Update_LipSync, 
+                                Ltvt_Debug_Draw_LipSync, 
                                 cp_param->p_chara_sys, 
                                 DEBUGWIN_GROUP_GRAPHIC,
                                 heapID );
@@ -261,6 +270,11 @@ void LOCAL_TVT_DEBUG_Main( void )
       s_debug_seq = SEQ_NORMAL;
     }
     break;
+  }
+  
+  if( s_is_lip_sync_req )
+  {
+    LOCAL_TVT_CHARA_LipSyncAll( s_param.p_chara_sys, s_is_lip_sync );
   }
 }
 //----------------------------------------------------------------------------
@@ -582,6 +596,43 @@ static void Ltvt_Debug_Draw_Character( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
     cp_l  = scp_label[ chara ];
   }
   DEBUGWIN_ITEM_SetNameV( p_item , "%dの キャラ[%s]", s_chara_idx, cp_l );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  口パク  更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Update_LipSync( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  int buff  = s_is_lip_sync;
+  if( DebugWin_Util_ChangeValue( &buff, 0, 1 ) )
+  {
+    s_is_lip_sync  = buff;
+    s_is_lip_sync_req = TRUE;
+
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  口パク  描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Ltvt_Debug_Draw_LipSync( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  static const char*  scp_name[]  =
+  {
+    "OFF",
+    "ON",
+  };
+
+  DEBUGWIN_ITEM_SetNameV( p_item , "くちパク[%s]", scp_name[s_is_lip_sync] );
 }
 
 //----------------------------------------------------------------------------

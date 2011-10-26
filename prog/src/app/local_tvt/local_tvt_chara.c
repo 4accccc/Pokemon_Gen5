@@ -749,6 +749,29 @@ void LOCAL_TVT_CHARA_EndTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *s
   //名前表示
   LOCAL_TVT_CHARA_SYS_RedrawName( sys );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全員口パク
+ *
+ *	@param	LOCAL_TVT_CHARA_SYS *sys  キャラシステム
+ *	@param	is_on   TRUEくちパクON  FALSE OFF
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_LipSyncAll( LOCAL_TVT_CHARA_SYS *sys, BOOL is_on )
+{
+  int i;
+  for( i=0 ; i<sys->member; i++ )
+  {
+    LOCAL_TVT_CHARA *charaWork  = LOCAL_TVT_CHARA_SYS_GetWork( sys, i );
+    if( charaWork != NULL )
+    {
+      LOCAL_TVT_CHARA_SetLipSync( charaWork, is_on );
+    }
+  }
+}
+
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------

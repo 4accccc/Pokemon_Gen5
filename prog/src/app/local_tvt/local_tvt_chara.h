@@ -83,3 +83,4 @@ extern void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSG
 extern BOOL LOCAL_TVT_CHARA_WaitTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys );
 extern void LOCAL_TVT_CHARA_EndTalk( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHARA_SYS *sys );
 
+extern void LOCAL_TVT_CHARA_LipSyncAll( LOCAL_TVT_CHARA_SYS *sys, BOOL is_on );
