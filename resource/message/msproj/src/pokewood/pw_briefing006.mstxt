@@ -6,11 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ３あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスに　たいほされた
+[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャは　またしても
+[Ctrl1:xcenter ]けいむしょから　だつごくした</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:25" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ３あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスに　逮捕された
+[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャは　またしても
+[Ctrl1:xcenter ]刑務所から　脱獄した</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:29" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48,10 +50,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　しゅくてき　メカポリスを
+[Ctrl1:xcenter ]たおすため　[Name:PokemonNickname ]ニンジャは
+[Ctrl1:xcenter ]とてつもなく　ひきょうな　さくせんを
+[Ctrl1:xcenter ]じっこうしようと　していた</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:33" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -59,10 +64,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　宿敵　メカポリスを
+[Ctrl1:xcenter ]倒すため　[Name:PokemonNickname ]ニンジャは
+[Ctrl1:xcenter ]とてつもなく　ひきょうな　作戦を
+[Ctrl1:xcenter ]実行しようと　していた</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:35" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -74,10 +82,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャの　まの　てが
+[Ctrl1:xcenter ]メカポリスの　いもうとに　せまる！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:33" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -85,10 +94,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャの　魔の手が
+[Ctrl1:xcenter ]メカポリスの　妹に　迫る！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:35" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -282,11 +292,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ３あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスに　たいほされた
+[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチは　またしても
+[Ctrl1:xcenter ]けいむしょから　だつごくした</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:30" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -294,11 +305,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ３あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスに　逮捕された
+[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチは　またしても
+[Ctrl1:xcenter ]刑務所から　脱獄した</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:30" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -317,10 +329,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　しゅくてき　メカポリスを
+[Ctrl1:xcenter ]たおすため　[Name:PokemonNickname ]クノイチは
+[Ctrl1:xcenter ]とてつもなく　ひきょうな　さくせんを
+[Ctrl1:xcenter ]じっこうしようと　していた</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:38" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -328,10 +343,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　宿敵　メカポリスを
+[Ctrl1:xcenter ]倒すため　[Name:PokemonNickname ]クノイチは
+[Ctrl1:xcenter ]とてつもなく　ひきょうな　作戦を
+[Ctrl1:xcenter ]実行しようと　していた</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:37" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -343,10 +361,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチの　まの　てが
+[Ctrl1:xcenter ]メカポリスの　いもうとに　せまる！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:38" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -354,10 +373,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチの　魔の手が
+[Ctrl1:xcenter ]メカポリスの　妹に　迫る！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:46:37" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

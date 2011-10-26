@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ４あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャの　たびかさなる
+[Ctrl1:xcenter ]だつごくに　しびれを　きらした　
+[Ctrl1:xcenter ]こくさいコップは　ついに
+[Ctrl1:xcenter ]ほういさくせんを　けっこう</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ４あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャの　度重なる
+[Ctrl1:xcenter ]脱獄に　しびれを　きらした　
+[Ctrl1:xcenter ]国際コップは　ついに
+[Ctrl1:xcenter ]包囲作戦を　決行</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48,10 +52,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスの　かつやくで
+[Ctrl1:xcenter ]ヒウンシティの　ちゅうしんぶに
+[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャを　おいつめた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:20" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:14:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -59,10 +65,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスの　活躍で
+[Ctrl1:xcenter ]ヒウンシティの　中心部に
+[Ctrl1:xcenter ][Name:PokemonNickname ]ニンジャを　追いつめた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:21" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -282,11 +290,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ４あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチの　たびかさなる
+[Ctrl1:xcenter ]だつごくに　しびれを　きらした　
+[Ctrl1:xcenter ]こくさいコップは　ついに
+[Ctrl1:xcenter ]ほういさくせんを　けっこう</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:12" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -294,11 +304,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]フルメタルコップ４あらすじ
-</Text>
+			<Text>[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチの　度重なる
+[Ctrl1:xcenter ]脱獄に　しびれを　きらした　
+[Ctrl1:xcenter ]国際コップは　ついに
+[Ctrl1:xcenter ]包囲作戦を　決行</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:16" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -317,10 +329,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスの　かつやくで
+[Ctrl1:xcenter ]ヒウンシティの　ちゅうしんぶに
+[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチを　おいつめた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:23" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -328,10 +342,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]メカポリスの　活躍で
+[Ctrl1:xcenter ]ヒウンシティの　中心部に
+[Ctrl1:xcenter ][Name:PokemonNickname ]クノイチを　追いつめた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:47:22" />
+				User="ito_hiroto:W00178"
+				Time="2011-10-26T05:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
