@@ -32,6 +32,7 @@ _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
 _EVENT_DATA		ev_pos_c04gym0101_last
 _EVENT_DATA		ev_recover_c04gym0101
+_EVENT_DATA   ev_pos_c04gym0101_guide
 _EVENT_DATA_END
 
 
@@ -192,11 +193,8 @@ EVENT_START	ev_c04gym0101_leader4_01
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF
-	
-
 
 	ENDIF
-
 
 EVENT_END
 
@@ -1170,11 +1168,10 @@ ev_swleader04_end:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_up )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】カミツレひとこと（メッセージラベルが仮）
-	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_crowd_03 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	//カミツレひとこと
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_leader_08 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
-	//
 	//主人公の座標を見て移動
 	DEFINE_LOCAL  LCW_POSX
 	DEFINE_LOCAL  LCW_POSZ
@@ -1280,8 +1277,9 @@ ev_swleader04_end:
 	
 	ENDSWITCH
 
-	//【仮】カミツレひとこと（メッセージラベルが仮）
-	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_crowd_03 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	//カミツレひとこと
+	_BALLOONWIN_OBJMSG_POS( msg_c04gym0101_leader_09 , C04GYM0101_LEADER4_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //終わる
@@ -1494,6 +1492,55 @@ EVENT_START	ev_c04gym0101_guide_01
 
 EVENT_END
 
+/************************************************************/
+/*              ジムガイド　ＰＯＳイベント                  */
+/************************************************************/
+EVENT_START   ev_pos_c04gym0101_guide
+
+  DEFINE_LOCAL  LWK_POSX
+  DEFINE_LOCAL  LWK_POSZ
+
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+  
+  _OBJ_ANIME( C04GYM0101_GUIDE_01, anm_tr_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME_AUTO( C04GYM0101_GUIDE_01, LWK_POSX, 58, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( C04GYM0101_GUIDE_01, anm_staystep_down )
+  _OBJ_ANIME_WAIT()
+
+  //どうっすか？
+  _BALLOONWIN_OBJMSG_POS( msg_c04gym0101_glasses_01,C04GYM0101_GUIDE_01,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //おいしいみず入手
+  _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+
+  //このファッションショージム
+  _BALLOONWIN_OBJMSG_POS( msg_c04gym0101_glasses_02,C04GYM0101_GUIDE_01,POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //元に戻る
+  _OBJ_ANIME_AUTO( C04GYM0101_GUIDE_01, 17, 58, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C04GYM0101_GUIDE_01, anm_staystep_down )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  
+  //アイテム入手フラグをセット
+  _FLAG_SET( FE_C04GYM_ITEM )
+  
+  //イベント済みに変更
+  $WK_SCENE_C04GYM0101_GUIDE = 1
+
+  //========================================//
+
+EVENT_END
 
 /************************************************************/
 /*							石像							*/
@@ -1502,6 +1549,7 @@ EVENT_START	ev_bg_c04gym0101_statue_01
 	_TALK_START_SE_PLAY()
 
 	_PLAYER_NAME( 0 )		//主人公名取得
+  _RIVAL_NAME( 1 )    //ライバル名格納
 
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )
@@ -1513,7 +1561,7 @@ EVENT_START	ev_bg_c04gym0101_statue_01
 	ELSE
 		//バッジ入手後なら
 		
-		IF $WK_SCENE_R05 < 2 THEN
+		IF FLAG_OFF( SYS_FLAG_ARRIVE_C05 ) THEN
 			//R05ライバル戦イベント前
 			_PLAINWIN_MSG_DOWN( msg_c04gym0101_statue_02 )
 		ELSE
