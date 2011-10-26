@@ -65,7 +65,20 @@
 //情報ステータスバーパレット
 #define INFOWIN_PAL_NO  ( 0x0f ) 
 
-#define BRIEFING_BMPWIN_MAX ( 2 )
+#define BRIEFING_BMPWIN_MAX (  2 )
+#define BRIEFING_PAGE_MAX   ( 10 )
+
+// あらすじBMPWIN座標・幅定義
+#define BRIEF_BMPWIN_X    (  2 )
+#define BRIEF_BMPWIN_Y    (  4 )
+#define BRIEF_BMPWIN_W    ( 28 )
+#define BRIEF_BMPWIN_H    ( 16 )
+
+// BMPWINクリアカラーコード
+#define BRIEF_CLEAR_COLOR   ( 0xee )
+#define ENDROLL_CLEAR_COLOR ( 0x00 )
+
+
 
 enum{
   ENDROL_TITLE_PLAYER1=0,      // 「役名１」
@@ -244,6 +257,13 @@ typedef struct{
 
   POKEPARTY       *myparty;
   POKEPARTY       *enemyparty;
+
+  // vblank中にprintしたい
+  int             vblank_str_print;
+  int             briefing_linage;
+  int             briefing_index;
+
+  u8              linage_pool[BRIEFING_PAGE_MAX];
 }G2D_CONTROL;
 
 typedef struct{
@@ -337,7 +357,8 @@ const GFL_PROC_DATA PkwdEndrollProcData = {
 static void initIO(void);
 static void initVRAM(void);
 
-static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID);
+static void setupBriefingSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPID heapID);
+static void setupEndrollSystem(SYS_CONTROL* CSys, HEAPID heapID);
 static void mainSystem(SYS_CONTROL* CSys, HEAPID heapID);
 static void releaseSystem(SYS_CONTROL* CSys);
 
@@ -355,12 +376,14 @@ static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID);
 static void releaseOAMcontrol(OAM_CONTROL* COam);
 
 static void MainFunc(PKWD_BRIEFING_WORK* tw);
-static void VintrFunc(GFL_TCB *tcb, void *work);
+static void VintrBriefingFunc(GFL_TCB *tcb, void *work);
+static void VintrEndrollFunc(GFL_TCB *tcb, void *work);
 static void BriefingFunc( PKWD_BRIEFING_WORK *tw );
 
 static void initLcdWindow( void );
 static void initLcdWindow2( int left_rigth );
 
+static void _get_briefing_linage( G2D_CONTROL *CG2d, int sex );
 static void _briefing_print( G2D_CONTROL *CG2d, int page, int sex );
 static BOOL _next_page_check( PKWD_BRIEFING_WORK *tw );
 
@@ -539,7 +562,7 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
   case SEQ_SETUP:
     // セットアップ
     initWork( tw );
-    setupSystem(&tw->CSys, tw->heapID);
+    setupBriefingSystem(&tw->CSys, tw, tw->heapID);
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
@@ -547,6 +570,8 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     initBriefingMsgdata( &tw->CG2d, tw->param->scenario_no, tw->param->mystatus, tw->heapID );
     initBriefingBmpwin( &tw->CG2d, tw->heapID );
     
+    // 文字列描画の前準備
+    _get_briefing_linage( &tw->CG2d, tw->sex );
     // 1ページ目の文字列を描画
     _briefing_print( &tw->CG2d, 0, tw->sex );
     //情報ステータスバー初期化
@@ -578,9 +603,6 @@ GFL_PROC_RESULT PkwdBriefingProcMain( GFL_PROC * proc, int * seq, void * pwk, vo
     //_debug_blend();
 #endif
 
-    PRINTSYS_QUE_Main( tw->CG2d.printQue );
-    PRINT_UTIL_Trans( &tw->CG2d.printUtil[0], tw->CG2d.printQue );
-    PRINT_UTIL_Trans( &tw->CG2d.printUtil[1], tw->CG2d.printQue );
 
     break;
   case SEQ_VOICE_PLAY:
@@ -719,7 +741,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
   case SEQ_SETUP:
     // セットアップ
     initWork( tw );
-    setupSystem(&tw->CSys, tw->heapID);
+    setupEndrollSystem(&tw->CSys, tw->heapID);
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
@@ -968,9 +990,41 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
  * @param   work    
  */
 //----------------------------------------------------------------------------------
-static void VintrFunc(GFL_TCB *tcb, void *work)
+static void VintrBriefingFunc(GFL_TCB *tcb, void *work)
 {
   PKWD_BRIEFING_WORK *tw = work;
+  G2D_CONTROL *CG2d = &tw->CG2d;
+
+  if(CG2d->vblank_str_print){
+    PRINT_UTIL_PrintColor( &CG2d->printUtil[CG2d->briefing_index], CG2d->printQue, 0, 
+                          (BRIEF_BMPWIN_H*8-CG2d->briefing_linage*16)/2, 
+                          CG2d->expandbuf[CG2d->briefing_index], CG2d->fontHandle,
+                          PRINTSYS_MACRO_LSB(1,2,14) );
+    CG2d->vblank_str_print = FALSE;
+  }
+
+  PRINTSYS_QUE_Main( tw->CG2d.printQue );
+  PRINT_UTIL_Trans( &tw->CG2d.printUtil[0], tw->CG2d.printQue );
+  PRINT_UTIL_Trans( &tw->CG2d.printUtil[1], tw->CG2d.printQue );
+  
+  GFL_CLACT_SYS_VBlankFunc();
+
+  // BG転送  
+  GFL_BG_VBlankFunc();
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief VBLANK処理
+ *
+ * @param   tcb   
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
+static void VintrEndrollFunc(GFL_TCB *tcb, void *work)
+{
+  SYS_CONTROL *CSys = work;
 
   GFL_CLACT_SYS_VBlankFunc();
 
@@ -998,7 +1052,7 @@ static void VintrFunc(GFL_TCB *tcb, void *work)
  * @param   heapID  
  */
 //----------------------------------------------------------------------------------
-static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID)
+static void setupBriefingSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPID heapID)
 {
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
@@ -1008,7 +1062,33 @@ static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID)
   GFL_FONTSYS_Init();   // 初期化のみリリースなし
 
   CSys->tcbl = GFL_TCBL_Init( heapID, heapID, 4, 32 );
-  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrFunc, CSys, 5);
+  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrBriefingFunc, tw, 5);
+
+  // 上下画面設定
+  GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+  GFL_DISP_SetDispOn();
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief   基本システム初期化
+ *
+ * @param   CSys    SYS_CONTROL
+ * @param   heapID  
+ */
+//----------------------------------------------------------------------------------
+static void setupEndrollSystem(SYS_CONTROL* CSys, HEAPID heapID)
+{
+  GFL_BG_Init( heapID );
+  GFL_BMPWIN_Init( heapID );
+  GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K,
+                GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+                DTCM_SIZE, heapID, NULL );
+  GFL_FONTSYS_Init();   // 初期化のみリリースなし
+
+  CSys->tcbl = GFL_TCBL_Init( heapID, heapID, 4, 32 );
+  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrEndrollFunc, CSys, 5);
 
   // 上下画面設定
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -1038,15 +1118,6 @@ static void releaseSystem(SYS_CONTROL* CSys)
 }
 
 
-// あらすじBMPWIN座標・幅定義
-#define BRIEF_BMPWIN_X    (  2 )
-#define BRIEF_BMPWIN_Y    (  4 )
-#define BRIEF_BMPWIN_W    ( 28 )
-#define BRIEF_BMPWIN_H    ( 16 )
-
-// BMPWINクリアカラーコード
-#define BRIEF_CLEAR_COLOR   ( 0xee )
-#define ENDROLL_CLEAR_COLOR ( 0x00 )
 
 //==============================================================================
 //  G2DControl
@@ -2159,14 +2230,43 @@ static void _briefing_print( G2D_CONTROL* CG2d, int page, int sex )
   WORDSET_ExpandStr( CG2d->wordset, CG2d->expandbuf[index], strbuf );
   GFL_STR_DeleteBuffer(strbuf);
 
-  linage =   PRINTSYS_GetLineCount( CG2d->expandbuf[index] );
+  // 行数を取得
+  linage =   CG2d->linage_pool[page];
 
   //メッセージ表示
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[index] ), BRIEF_CLEAR_COLOR );
-  PRINT_UTIL_PrintColor( &CG2d->printUtil[index], CG2d->printQue, 0, 
-                        (BRIEF_BMPWIN_H*8-linage*16)/2, CG2d->expandbuf[index], CG2d->fontHandle,
-                        PRINTSYS_MACRO_LSB(1,2,14) );
+  CG2d->vblank_str_print = TRUE;
+  CG2d->briefing_linage = linage;
+  CG2d->briefing_index  = index;
+//  PRINT_UTIL_PrintColor( &CG2d->printUtil[index], CG2d->printQue, 0, 
+//                        (BRIEF_BMPWIN_H*8-linage*16)/2, CG2d->expandbuf[index], CG2d->fontHandle,
+//                        PRINTSYS_MACRO_LSB(1,2,14) );
 
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	前もってあらすじ文字列の行数を取得しておく
+ *
+ * @param   CG2d		G2D_CONTROL
+ * @param   sex		  主人公の性別
+ */
+//----------------------------------------------------------------------------------
+static void _get_briefing_linage( G2D_CONTROL *CG2d, int sex )
+{
+  int i;
+  STRBUF *strbuf = NULL;
+  
+  for(i=0;i<BRIEFING_PAGE_MAX;i++){
+    if(sex==PM_MALE){
+      strbuf = GFL_MSG_CreateString( CG2d->mm, pw_briefing_001+i );
+    }else{
+      strbuf = GFL_MSG_CreateString( CG2d->mm, pw_briefing_f_001+i );
+    }
+    CG2d->linage_pool[i] = PRINTSYS_GetLineCount( strbuf );
+    GFL_STR_DeleteBuffer(strbuf);
+  }
 }
 
 
