@@ -986,7 +986,7 @@ static GFL_CLWK* obj_ObjAdd(
   obj = GFL_CLACT_WK_Create( wk->cellUnit,
           cgrNo,palNo,cellNo,
           &ini, ACT_RENDER_ID, wk->heapID );
-  GFL_CLACT_WK_SetAutoAnmFlag( obj, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( obj, FALSE );
   GFL_CLACT_WK_SetSRTAnimeFlag( obj, FALSE );
   return obj;
 }
@@ -1022,6 +1022,7 @@ static void act_NormalObjAdd( BEACON_VIEW_PTR wk )
       prm[i].anm, prm[i].bg_pri, OBJ_SPRI_MENU);
   
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->pAct[ACT_POWER+i], (i<4) );
   }
 }
 
@@ -1088,6 +1089,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
     wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_MEDAL_OX, pp->py+ACT_MEDAL_OY, ACTANM_MEDAL_N, OBJ_BG_PRI, OBJ_SPRI_MEDAL+idx);
+  GFL_CLACT_WK_SetAutoAnmFlag( pp->cIcon, TRUE );
 
   //メダル数アクター
   for(i = 0;i < PANEL_NUM_ACTMAX;i++){
@@ -1099,7 +1101,6 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
   
     GFL_CLACT_WK_SetPlttOffs( pp->cNum[i], idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
     GFL_CLACT_WK_SetDrawEnable( pp->cNum[i], FALSE );
-    GFL_CLACT_WK_SetAutoAnmFlag( pp->cNum[i], FALSE );
   }
 
 	finit.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
