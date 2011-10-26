@@ -88,8 +88,10 @@ typedef enum{
 
 ///フォントカラー
 #define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
-#define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
-#define FCOL_FNTOAM_B ( PRINTSYS_MACRO_LSB(2,3,0))  ///<Oam白抜き
+#define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白文字抜き
+#define FCOL_FNTOAM_B ( PRINTSYS_MACRO_LSB(2,3,0))  ///<Oam黒文字抜き
+#define FCOL_FNTOAM_RW ( PRINTSYS_MACRO_LSB(6,5,0))  ///<Oam赤文字黒背景抜き
+#define FCOL_FNTOAM_RB ( PRINTSYS_MACRO_LSB(4,5,0))  ///<Oam赤文字白背景抜き
 #define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
 #define FCOL_POPUP_BASE (9)
 #define FCOL_POPUP_MAIN (1)

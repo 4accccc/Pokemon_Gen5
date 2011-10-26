@@ -915,7 +915,7 @@ static GFL_CLWK* obj_ObjAdd(
   obj = GFL_CLACT_WK_Create( wk->cellUnit,
           cgrNo,palNo,cellNo,
           &ini, ACT_RENDER_ID, wk->heapID );
-  GFL_CLACT_WK_SetAutoAnmFlag( obj, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( obj, FALSE );
   GFL_CLACT_WK_SetSRTAnimeFlag( obj, FALSE );
   return obj;
 }
@@ -944,6 +944,7 @@ static void act_NormalObjAdd( FMISSION_VIEW_PTR wk )
       OBJ_MENU_BG_PRI, OBJ_SPRI_MENU);
   
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->pAct[ACT_POWER+i], TRUE );
   }
 }
 

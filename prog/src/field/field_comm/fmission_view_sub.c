@@ -971,17 +971,20 @@ static void panel_DrawStart( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG*
 
   {
     int i,ofs = 0;
-    PRINTSYS_LSB col = FCOL_FNTOAM_W;
+    PRINTSYS_LSB col[2] = { FCOL_FNTOAM_W, FCOL_FNTOAM_RW };
 
     if( pp->type == PANEL_TYPE_MSG ){
-      col = FCOL_FNTOAM_B; 
+      col[0] = FCOL_FNTOAM_B; 
+      col[1] = FCOL_FNTOAM_RB; 
       ofs = 6;
     }
-    for( i = 0;i < PANEL_FOAM_MAX; i++ ){
-      if( wk->init_f ){
-	      PRINTSYS_PrintColor( pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col );
-      }else{
-        PRINTSYS_PrintQueColor( wk->printQue, pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col );
+    if( wk->init_f ){
+      for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+	      PRINTSYS_PrintColor( pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col[i==PANEL_FOAM_SCORE] );
+      }
+    }else{
+      for( i = 0;i < PANEL_FOAM_MAX; i++ ){
+        PRINTSYS_PrintQueColor( wk->printQue, pp->msgOam[i].bmp, ofs*(i==PANEL_FOAM_MSG), 0, pp->str[i], wk->fontHandle, col[i==PANEL_FOAM_SCORE] );
       } 
     }
   }
