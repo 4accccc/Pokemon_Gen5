@@ -660,7 +660,7 @@ void FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
     GFL_TCB_AddTask( tcbsys, FireTcbA, (void*)task_wk, 0 );
 
     // SE 再生 
-    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_04 );   // 火の玉現れる音
+    //PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_04 );   // 火の玉現れる音
   }
   else
   {
@@ -1775,6 +1775,9 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
 
       // 本が落ちるアニメ再生
       ANM_BOOK_Play( p_gmk_wk );
+
+      // SE 再生 
+      PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_06 );   // 本がばさばさ
 
       *seq = SEQ_WAIT;
     }
