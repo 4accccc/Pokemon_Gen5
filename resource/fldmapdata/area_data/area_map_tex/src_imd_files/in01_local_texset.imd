@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-08-08T19:05:08" source="in01_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-10-24T12:48:47" source="in01_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-08-08T19:05:08" source="in01_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-10-24T12:48:47" source="in01_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -733,10 +733,10 @@
 		path="C:/home/swan_data3d/field/in01/chip/tex/in01_matto4.tga"
 	>
 		<bitmap size="32">
-			1111 1100 3431 4311 5541 5555 4531 4444
-			4510 2222 4510 5552 4531 5552 4541 5552
-			4541 5552 4531 5552 4510 5552 4510 2222
-			4531 4444 5541 5555 3431 4311 1111 1100
+			6444 4600 2124 1244 5514 5555 1526 1111
+			1540 3332 1540 5553 1526 5553 1514 5553
+			1514 5553 1526 5553 1540 5553 1540 3332
+			1526 1111 5514 5555 2134 1244 6444 4600
 		</bitmap>
 	</tex_image>
 	<tex_image index="36" name="in01_matto5"
@@ -1625,16 +1625,20 @@
 	</tex_image>
 	<tex_image index="73" name="in01_yuka"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="in01_yuka_pl"
 		path="C:/home/swan_data3d/field/in01/chip/tex/in01_yuka.tga"
 	>
-		<bitmap size="32">
-			ffff 5555 eaab 4001 eaab 4001 eaab 4001
-			eaab 4001 eaab 4001 eaab 4001 ffff 5555
-			5555 ffff 4001 eaab 4001 eaab 4001 eaab
-			4001 eaab 4001 eaab 4001 eaab 5555 ffff
+		<bitmap size="64">
+			1111 1111 2222 2222 4441 1444 2222 2222
+			4441 1444 2222 2222 4441 1444 2222 2222
+			3331 1333 0002 2000 3331 1333 0002 2000
+			3331 1333 0002 2000 1111 1111 2222 2222
+			2222 2222 1111 1111 2222 2222 4441 1444
+			2222 2222 4441 1444 2222 2222 4441 1444
+			0002 2000 3331 1333 0002 2000 3331 1333
+			0002 2000 3331 1333 2222 2222 1111 1111
 		</bitmap>
 	</tex_image>
 	<tex_image index="74" name="in01_yukal"
@@ -3190,8 +3194,8 @@
 		2118 2959 319b 39dd 3dfe 0000 7fff 7fff
 	</tex_palette>
 	<tex_palette index="26" name="in01_isu_pl" color_size="16">
-		7fff 5fdf 4f7e 2ebc 1619 0453 1096 18d9
-		295c 39de 7fff 7fff 7fff 7fff 7fff 7fff
+		7fff 5bdf 4b7f 2abd 0e1b 0035 0c78 109b
+		211e 319f 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="27" name="in01_kabe1_pl" color_size="8">
 		1e5a 2abc 1618 11b5 19f7 1151 1594 1151
@@ -3221,7 +3225,7 @@
 		7754 7796 5f9e 3b3c 421d 5efe 7fff 4210
 	</tex_palette>
 	<tex_palette index="35" name="in01_matto4_pl" color_size="8">
-		0000 2577 2db9 31b8 3a3b 4a7c 7fff 7fff
+		7fff 3a3b 31fa 2db9 2577 4a7c 3193 7fff
 	</tex_palette>
 	<tex_palette index="36" name="in01_matto5_pl" color_size="8">
 		6a1c 3ab9 3eda 3699 3258 2e16 3237 7fff
@@ -3352,8 +3356,8 @@
 	<tex_palette index="72" name="in01_win_pl" color_size="8">
 		6a1c 21b3 25d4 29f5 1d71 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="73" name="in01_yuka_pl" color_size="4">
-		3abe 325c 29fa 21b8
+	<tex_palette index="73" name="in01_yuka_pl" color_size="8">
+		42dd 365b 42bd 323a 3619 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="74" name="in01_yukal2_pl" color_size="8">
 		298f 3a14 3e35 31d3 35f4 7fff 7fff 7fff
