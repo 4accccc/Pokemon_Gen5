@@ -209,8 +209,8 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// SCENARIO
 	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	8,},		// SCENE00
 	{ GFL_BG_FRAME1_S,	2,	10,	28,	2,	8,},		// SCENE01
-	{ GFL_BG_FRAME1_S,	3,	5,	28,	2,	8,},		// SCENE00_MES
-	{ GFL_BG_FRAME1_S,	3,	12,	28,	2,	8,},		// SCENE01_MES
+	{ GFL_BG_FRAME1_S,	3,	5,	28,	4,	8,},		// SCENE00_MES
+	{ GFL_BG_FRAME1_S,	3,	12,	28,	4,	8,},		// SCENE01_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ЛrЦ{
 	{ GFL_BG_FRAME1_S,	12,	17,	 2,	2,	8,},		// МїНЁ(test)
 	{ GFL_BG_FRAME1_S,	15,	17,	 2,	2,	8,},		// Н≈Се(test)
