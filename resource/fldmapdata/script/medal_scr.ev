@@ -223,8 +223,8 @@ sub_medaloyaji_intro:
   _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_04 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
   
-  //ヒントメダルをもらう
-  _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
+  //最初から所持しているメダルを初期化する
+  _INIT_MEDAL_DATA()
   
   //ヒントメダルをもらった！
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )

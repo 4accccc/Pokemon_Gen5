@@ -74,9 +74,6 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
   case SCR_MEDALUPDATE_RANK://ランクの更新
     MEDALBOX_RankUpMedalBox( medalbox );
     break;
-  case SCR_MEDALUPDATE_INIT://メダルの初期化（ヒントメダルの初期設定など）
-    MEDAL_InitHintMedal( save, heapID );
-    break;
   default:
     GF_ASSERT( 0 );
   }

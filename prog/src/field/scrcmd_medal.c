@@ -36,6 +36,8 @@
 #include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  //for FLDCIID_
 
+#include "medal_common.h"       
+
 //スクリプト参照の値とプログラム中のenum定義の値に差がでた場合Assertとなる
 SDK_COMPILER_ASSERT( SCR_MEDALRANK_IRON == MEDALBOX_RANK_IRON );
 SDK_COMPILER_ASSERT( SCR_MEDALRANK_COPPER == MEDALBOX_RANK_COPPER );
@@ -435,5 +437,23 @@ static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata )
     if ( tbl[i].event_id == SCRID_MEDAL_OYAJI_PC ) return tbl[i].id;
   }
   return -1;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   メダルデータ初期化
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdInitMedal( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+
+  // 初期化
+  MEDAL_COMMON_SetDefaultData( medalbox ,SCRCMD_WORK_GetHeapID(work) );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 

@@ -1134,6 +1134,10 @@
   DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
   DEF_CMD( EvCmdUn_GetPlayerFavorite, EV_SEQ_UN_GET_MY_FAVORITE )
   NO_CMD()
+
+  // メダル（常駐）
+  DEF_CMD( EvCmdInitMedal, EV_SEQ_MEDAL_INIT_DATA )
+  NO_CMD()
   
   END_CMD
   //スクリプトコマンドテーブル終了
