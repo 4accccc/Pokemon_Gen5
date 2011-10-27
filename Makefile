@@ -67,7 +67,7 @@ white:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 black:
 	cp ./prog/spec/version_b ./prog/version
@@ -76,7 +76,7 @@ black:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 white_rom:
 	cp ./prog/spec/version_wr ./prog/version
@@ -85,7 +85,7 @@ white_rom:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 black_rom:
 	cp ./prog/spec/version_br ./prog/version
@@ -94,7 +94,7 @@ black_rom:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 black_rom_protect:
 	cp ./prog/spec/version_brp ./prog/version
@@ -103,7 +103,7 @@ black_rom_protect:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 white_rom_protect:
 	cp ./prog/spec/version_wrp ./prog/version
@@ -112,7 +112,7 @@ white_rom_protect:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/spec/version ./prog/version
+#	cp ./prog/spec/version ./prog/version
 
 
 master_rom:
