@@ -74,8 +74,8 @@ INIT_EVENT_START   ev_zone_c15
   ENDIF
 {
 
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
   
   //ランク状況でバニッシュフラグを操作
   IF $LOCALWORK15 == SCR_PKWD_STAR_RANK_1 THEN
@@ -584,8 +584,8 @@ EVENT_START		ev_c15_oldman1_01
   //主人公名格納
   _PLAYER_NAME( 0 )
 
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
 
   //スターランクが0～2
   IF $LOCALWORK15 < 3 THEN
@@ -700,8 +700,8 @@ EVENT_START		ev_c15_adultw_01
   //主人公名格納
   _PLAYER_NAME( 0 )
   
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
 
   IF $LOCALWORK15 < 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_aduttw01_01 )
@@ -720,8 +720,8 @@ EVENT_START		ev_c15_clown_01
   //主人公名格納
   _PLAYER_NAME( 0 )
   
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
   
   IF $LOCALWORK15 < 2 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_clown_01 )
@@ -742,8 +742,8 @@ EVENT_START		ev_c15_babyboy1_01
   //主人公名格納
   _PLAYER_NAME( 0 )
   
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
 
   IF $LOCALWORK15 < 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_babyboy1_01 )

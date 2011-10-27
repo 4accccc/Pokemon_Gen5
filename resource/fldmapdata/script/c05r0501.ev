@@ -122,7 +122,7 @@ EVENT_START   ev_reserve_c05r0501_link_event_ret
 EVENT_END
 
 //=============================================================
-// RESERVE：ポケモンセンターガイドイベント
+// RESERVE：初回入室時イベント
 //=============================================================
 EVENT_START ev_reserve_c05r0501_sage6_01
 
@@ -145,7 +145,7 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：あらためて
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_01,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_01,C05R0501_SAGE6_01, POS_UL ) 
   _MSGWIN_CLOSE()
 
   //主人公名代入
@@ -158,7 +158,7 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _MSGWIN_CLOSE()
   
   //ロット：正しく言うなら
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_02,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_02,C05R0501_SAGE6_01, POS_UL ) 
   _MSGWIN_CLOSE()
   
   //ライバル：オレは
@@ -170,7 +170,7 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：そうであったか
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_03,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_03,C05R0501_SAGE6_01, POS_UL ) 
   _MSGWIN_CLOSE()
   
   //アニメ：ライバルその場歩き
@@ -186,7 +186,7 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _MSGWIN_CLOSE()
   
   //ロット：おまえのポケモンは？
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_05,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_05,C05R0501_SAGE6_01, POS_UL ) 
   _MSGWIN_CLOSE()
   
    //主人公名代入
@@ -213,13 +213,13 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：なんとおろかで　あったか
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_06,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_06,C05R0501_SAGE6_01, POS_UL ) 
   
   //主人公名代入
   _PLAYER_NAME( 0 )
   
   //ロット：ごらんの通りだ
-  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_07,C05R0501_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_07,C05R0501_SAGE6_01, POS_UL ) 
 
   {
   _YES_NO_WIN( SCWK_ANSWER )
@@ -228,7 +228,7 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   IF $SCWK_ANSWER == SCR_NO THEN
     
     //ロット：きがかわったら
-    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_11,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_11,C05R0501_SAGE6_01, POS_UL ) 
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   
@@ -257,7 +257,7 @@ EVENT_START		ev_c05r0501_sage6_01
     _TALK_OBJ_START()
     
     //ロット：ゾロアを
-    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_08,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_08,C05R0501_SAGE6_01, POS_UL ) 
 
     {
     _YES_NO_WIN( SCWK_ANSWER )
@@ -266,7 +266,7 @@ EVENT_START		ev_c05r0501_sage6_01
     IF $SCWK_ANSWER == SCR_NO THEN
       
       //ロット：気が変わったら
-      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_11,C05R0501_SAGE6_01, POS_DEFAULT ) 
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_11,C05R0501_SAGE6_01, POS_UL ) 
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
     
@@ -305,13 +305,51 @@ ev_c05r0501_poke22_get:
   ELSE
   
     //おお！たのむぞ！
-    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_09,C05R0501_SAGE6_01, POS_DEFAULT ) 
+    _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_09,C05R0501_SAGE6_01, POS_UL ) 
     _MSGWIN_CLOSE()
     
-    //ポケモンモンスターボールに入る
-    //_CALL ball_in
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
     
-    //【仮】ゾロア動作モデル削除
+    //アニメ：ゾロア主人公に隣接
+    
+    //初回入室時のケース
+    IF $LCW_POSX == 7 && $LCW_POSZ == 20 THEN
+      _OBJ_ANIME_AUTO( C05R0501_POKE22_01, 7, 19, FORCE_TYPE_NPC, 8, DIR_UD)
+    //ロットに左から話しかけたケース
+    ELSIF $LCW_POSX == 6 && $LCW_POSZ == 18 THEN
+      _OBJ_ANIME_AUTO( C05R0501_POKE22_01, 6, 17, FORCE_TYPE_NPC, 8, DIR_UD)
+    //それ以外のケース（主人公の右に隣接）
+    ELSE
+      $LCW_POSX -= 1
+      _OBJ_ANIME_AUTO( C05R0501_POKE22_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+    
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //アニメ：主人公とゾロア向き合う
+    
+    //初回入室時のケース
+    IF $LCW_POSX == 7 && $LCW_POSZ == 20 THEN
+      _OBJ_ANIME( C05R0501_POKE22_01, anm_staystep_d)
+    //ロットに左から話しかけたケース
+    ELSIF $LCW_POSX == 6 && $LCW_POSZ == 18 THEN
+      _OBJ_ANIME( C05R0501_POKE22_01, anm_staystep_d)
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+    //それ以外のケース（主人公の右に隣接）
+    ELSE
+      _OBJ_ANIME( C05R0501_POKE22_01, anm_staystep_l)
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+    
+    _TIME_WAIT( 32 )
+    
+    //ゾロア動作モデル削除
     _OBJ_DEL(C05R0501_POKE22_01)
     
     //ポケモン入手処理
@@ -320,19 +358,30 @@ ev_c05r0501_poke22_get:
     //主人公名代入
     _PLAYER_NAME( 0 )
     
-    //手に入れた（メッセージ仮）
+    //手に入れた
     _ME_PLAY( SEQ_ME_POKEGET )
     _SYSWIN_MSG(msg_c05r0501_poke_01, POS_DEFAULT)
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
     
+    //アニメ：主人公ロットに向き合う
+    IF $LCW_POSX == 6 && $LCW_POSZ == 18 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 17 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 19 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+    
     //データコンバート・クリアチェック
     _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
     
     //ロット：そのゾロアは(クリアデータあり）
     IF $LOCALWORK15 >= 1 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12,C05R0501_SAGE6_01, POS_DEFAULT ) 
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12,C05R0501_SAGE6_01, POS_UL ) 
       
        //========================================//
        //システムフラグでNポケモン起動フラグ設定
@@ -341,7 +390,7 @@ ev_c05r0501_poke22_get:
     
     //ロット：そのゾロアは(クリアデータなし）
     ELSE
-      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12a,C05R0501_SAGE6_01, POS_DEFAULT ) 
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_12a,C05R0501_SAGE6_01, POS_UL ) 
     ENDIF
     
     

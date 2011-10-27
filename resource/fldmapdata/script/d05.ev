@@ -81,17 +81,29 @@ INIT_EVENT_END
 /* 			POS：WBT誘導イベント			  */
 /**************************************************************/
 EVENT_START		ev_pos_d05_swleader5_01
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
   //アニメ：主人公WBT前へ
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 197, 469, FORCE_TYPE_NOT, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
+  IF $LCW_POSZ == 466 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_swleader5_z466)
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ == 467 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_swleader5_z467)
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ == 468 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_swleader5_z468)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 197, 469, FORCE_TYPE_NOT, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //アニメ：主人公とヤーコン・ライバル向き合う
   _OBJ_ANIME( D05_SWRIVAL_01, anm_staystep_d)
   _OBJ_ANIME( D05_SWLEADER5_01, anm_staystep_d)
 
-  //プレイヤー座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   //zが469より小さかったらsteystep_uを入れる
   IF  $LCW_POSZ <= 469 THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
@@ -159,6 +171,30 @@ EVENT_START		ev_pos_d05_swleader5_01
 	//D05R0101マップチェンジ
 	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 26, DIR_UP )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	プレイヤー：ヤーコンに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_go_swleader5_z466
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プレイヤー：ヤーコンに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_go_swleader5_z467
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プレイヤー：ヤーコンに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_go_swleader5_z468
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ヤーコン：WBTに入る
@@ -441,7 +477,7 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   //ライバル動作OBJ削除
   _OBJ_DEL( D05_SWRIVAL_01 )
   
-  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_d)
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_r)
   _OBJ_ANIME_WAIT()
   
   //チェレン：あんなことができるのは
@@ -455,7 +491,7 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   //主人公名代入
   _PLAYER_NAME(0)
   
-  //チェレン：あんなことができるのは
+  //チェレン：ぼくは
   _BALLOONWIN_OBJMSG_POS( msg_d05_swleader1_04,D05_SWLEADER1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   

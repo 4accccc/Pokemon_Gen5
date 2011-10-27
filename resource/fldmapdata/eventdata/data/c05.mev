@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/21 16:33:47
+#save date:2011/10/27 18:52:19
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -1096,7 +1096,7 @@ EVENTDATA_POSTYPE_GRID
 #Pos Event Label
 POS_C05_STOPPER_01
 #Pos Script Name
-WK_SCENE_C05_STOPPER_01
+SCRID_POS_C05_STOPPER_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name

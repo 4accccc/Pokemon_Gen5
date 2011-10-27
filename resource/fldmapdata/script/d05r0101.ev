@@ -182,6 +182,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_reserve_d05r0101_tutorial_02
 
+  //アニメ：主人公指定位置へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 9, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
   //ヤーコン：おまえら！
   _BALLOONWIN_OBJMSG_POS( msg_d05r0101_swleader5_04, D05R0101_SWLEADER5_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -279,6 +283,9 @@ EVENT_END
 /*  チェレン：話しかけ（優勝後、外に出るまで繰り返し）        */
 /**************************************************************/
 EVENT_START   ev_d05r0101_swleader1_01
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swleader1_03 )
 EVENT_END
 
@@ -286,6 +293,9 @@ EVENT_END
 /*  ライバル：話しかけ（優勝後、外に出るまで繰り返し）        */
 /**************************************************************/
 EVENT_START   ev_d05r0101_swrival_01
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_swrival_03 )
 EVENT_END
 

@@ -164,8 +164,8 @@ EVENT_START   ev_c15r0201_ol_01
   //主人公名格納
   _PLAYER_NAME( 0 )
   
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
   //メッセージ代入変数定義
   DEFINE_LOCAL LCWK_MSGID
   
@@ -185,8 +185,8 @@ EVENT_START   ev_c15r0201_middleman1_01
   //主人公名格納
   _PLAYER_NAME( 0 )
   
-  //【仮】スターランク取得
-  //_PKWD_GET_STAR_RANK( LOCALWORK15 ）
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
   //メッセージ代入変数定義
   DEFINE_LOCAL LCWK_MSGID
   
