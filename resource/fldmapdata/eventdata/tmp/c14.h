@@ -48,5 +48,6 @@
 #define BG_C14_DUMMY_FES_15              14
 #define BG_C14_DUMMY_FES_16              15
 #define BG_C14_DUMMY_FES_17              16
+#define HIDE_ITEM_208                    17
 
 #endif //ZONE_C14_EVB_H
