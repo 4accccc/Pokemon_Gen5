@@ -39,7 +39,7 @@
 #include "debug/debug_nagihashi.h"
 
 #ifdef PM_DEBUG
-//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 #endif
 
 
@@ -116,12 +116,12 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
 //------------------------------------------------------------------
 //  処理時間AVERAGE
 //------------------------------------------------------------------
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 
-u8 DEBUG_MAIN_UPDATE_TYPE = 0;  ///<FIELDMAP TOP TAIL フレームチェック用
+static u8 DEBUG_MAIN_UPDATE_TYPE = 0;  ///<FIELDMAP TOP TAIL フレームチェック用
 
 
-OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
@@ -211,7 +211,7 @@ void GAMEBEACON_Update(void)
   if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
   }
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 //  DEBUG_MAIN_TIME_AVERAGE_StartFunc();
 #endif
 
@@ -281,7 +281,7 @@ void GAMEBEACON_Update(void)
       }
     }
   }
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 //  DEBUG_MAIN_TIME_AVERAGE_EndFunc();
 #endif
 }
@@ -784,7 +784,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     }
   }
 
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
   DEBUG_MAIN_TIME_AVERAGE_StartFunc();
 #endif
   //リゾートビーコン受け取り
@@ -817,7 +817,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       }
     }
   }
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
   DEBUG_MAIN_TIME_AVERAGE_EndFunc();
 #endif
 
@@ -2439,7 +2439,7 @@ void DEBUG_RecvBeaconBufferClear(void)
   GameBeaconSys->update_log = 0;
 }
 
-#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 {
@@ -2487,7 +2487,7 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
 }
 
-#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 
 #endif  //PM_DEBUG
 
