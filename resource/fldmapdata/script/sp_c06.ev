@@ -15,6 +15,8 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL    SCRID_ZONE_C06
+_FIELD_INIT_LABEL   SCRID_INIT_C06
 _SCENE_CHANGE_LABEL		sp_c06_tbl
 _SP_EVENT_DATA_END
 

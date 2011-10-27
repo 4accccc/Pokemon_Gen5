@@ -12,6 +12,9 @@
   .include  "../../message/dst/script/msg_c05r0501.h"
   .include  "c05r0501.h"
   
+  .include  "oldc05r0501.h"
+  .include  "oldc05r0501_def.h"
+  
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou（クリア後のライバル戦）
 
@@ -36,12 +39,87 @@ _EVENT_DATA    ev_c05r0501_poke38_01
 _EVENT_DATA    ev_c05r0501_poke17_01
 _EVENT_DATA    ev_c05r0501_poke22_01
 _EVENT_DATA    ev_c05r0501_swrival_01
+_EVENT_DATA    ev_zone_c05r0501
+_EVENT_DATA    ev_scene_c05r0501_link_event
+_EVENT_DATA    ev_reserve_c05r0501_link_event_ret
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c05r0501
+  
+  IF $WK_SYS_LINK_EVENT_06 == 1 && $WK_SCENE_C05R0501_LINK_EVENT == 1 THEN
+    
+    //========================================//
+    //ゾロア非表示に
+    _FLAG_SET(FV_C05R0501_POKE22_01)
+    //リンクイベントに関与しないNPC非表示に
+    _FLAG_SET(FV_C05R0501_PEAPLE_01)
+    //ゾロアークを表示
+    _FLAG_RESET(FV_C05R0501_POKE23_01)
+    //SCENE_CHANGE起動
+    $WK_SCENE_C05R0501_LINK_EVENT = 2
+    //========================================//
+    
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*		SCENE_CHANGE：リンクイベント                             */
+/************************************************************/
+EVENT_START   ev_scene_c05r0501_link_event
+
+  //アニメ：ゾロアーク接近
+  _OBJ_ANIME_AUTO( C05R0501_POKE23_01, 7, 21, FORCE_TYPE_NPC, 16, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_OBJMSG_POS(msg_c05r0501_memory_01,C05R0501_POKE23_01 , POS_DEFAULT )
+  _VOICE_PLAY( MONSNO_530, 0 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  _MAP_FADE_BLACK_OUT_SLOW()
+  //過去イベント・ホドモエ起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDC05R0501_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC05R0501, 7, 0, 18, DIR_DOWN )
+  
+EVENT_END
+
+/************************************************************/
+/*		SCENE_CHANGE：リンクイベント                             */
+/************************************************************/
+EVENT_START   ev_reserve_c05r0501_link_event_ret
+   
+  //ブラックイン
+  _MAP_FADE_BLACK_IN_SLOW()
+  _MAP_FADE_END_CHECK()
+
+  //========================================//
+  //SCENE_CHANGE無効
+  $WK_SCENE_C05R0501_LINK_EVENT = 3
+  //リンクイベント起動終了
+  $WK_SYS_LINK_EVENT_06 = 2
+  //リンクイベントに関与しないNPCを表示
+  _FLAG_RESET(FV_C05R0501_PEAPLE_01)
+  //========================================//
+  
+  //ゾロア未入手ならゾロア表示
+  IF FLAG_OFF( FE_C05R0501_POKE22_GET ) THEN
+    //========================================//
+    _FLAG_RESET(FV_C05R0501_POKE22_01)
+    //========================================//
+  ENDIF
+  
+EVENT_END
 
 //=============================================================
 // RESERVE：ポケモンセンターガイドイベント
@@ -163,6 +241,8 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   //========================================//
   //じめんジムストッパー解除
   _FLAG_SET(FV_C05_STOPPER_02)
+  //リンクイベント起動条件をセット（初回入室を終えていないと起動しない）
+  $WK_SCENE_C05R0501_LINK_EVENT = 1
   //========================================//
 EVENT_END
 

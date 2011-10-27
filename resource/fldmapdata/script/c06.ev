@@ -11,8 +11,12 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c06.h"
   .include  "c06.h"
+  
+  .include  "oldt04r0301.h"
+  .include  "oldt04r0301_def.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（リンクイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,6 +31,10 @@ _EVENT_DATA    ev_bg_c06_sign3_01
 _EVENT_DATA    ev_c06_monsterball_01
 _EVENT_DATA    ev_pos_c06_hakase_01
 _EVENT_DATA    ev_scene_c06_swleader6_01
+_EVENT_DATA    ev_zone_c06
+_EVENT_DATA    ev_init_c06
+_EVENT_DATA    ev_c06_swleader6_01
+_EVENT_DATA    ev_reserve_c06_link_event_ret
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -34,6 +42,30 @@ DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c06
+{
+  //【仮】C06到着イベント終了でヤマジタウン到着でリンクイベント起動
+  IF $WK_SYS_LINK_EVENT_02 == 1 && $WK_SCENE_T07 >= 1 THEN
+    //========================================//
+    //C06フウロ表示
+    _FLAG_RESET( FV_C08_SWLEADER7_01 )
+    //========================================//
+  ENDIF
+}
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c06
+  //C06到着イベント終了でリンクイベント起動ならフウロを移動
+  IF $WK_SYS_LINK_EVENT_02 == 1 && $WK_SCENE_T07 >= 1 THEN
+    _OBJ_POS_CHANGE( C06_SWLEADER6_01, 77, 0, 269, DIR_DOWN)
+  ENDIF
+INIT_EVENT_END
 
 /**************************************************************/
 /*  C06 看板のイベントスクリプト1                             */
@@ -288,11 +320,13 @@ EVENT_START   ev_pos_c06_hakase_01
   _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 90, 297, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( C06_SWLEADER6_01 )
-
+  
   //========================================//
   //フウロ、アララギを非表示
   _FLAG_SET( FV_C06_SWLEADER6_01 )
+  _FLAG_SET( FV_C06_HAKASE2_01 )
   //========================================//
+
 
 EVENT_END
 
@@ -309,6 +343,7 @@ EVENT_START   ev_scene_c06_swleader6_01
   //========================================//
   //フウロと博士再表示
   _FLAG_RESET( FV_C06_SWLEADER6_01 )
+  _FLAG_RESET( FV_C06_HAKASE2_01 )
   //========================================//
   _OBJ_ADD( C06_SWLEADER6_01 )
   _OBJ_ADD( C06_HAKASE2_01 )
@@ -403,6 +438,7 @@ EVENT_START   ev_scene_c06_swleader6_01
   //========================================//
   //フウロ、アララギを非表示
   _FLAG_SET( FV_C06_SWLEADER6_01 )
+  _FLAG_SET( FV_C06_HAKASE2_01 )
   //========================================//
   //POSイベント進行
   $WK_SCENE_C06GYM = 2
@@ -411,6 +447,62 @@ EVENT_START   ev_scene_c06_swleader6_01
 
 EVENT_END
 
+/************************************************************/
+/*       話しかけ：SWLEADER6                */
+/************************************************************/
+EVENT_START   ev_c06_swleader6_01
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG( msg_c06_memory_01 )
+  _MSGWIN_CLOSE()
+  
+  _MAP_FADE_BLACK_OUT_SLOW()
+  //過去イベント・サザナミ起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDT04R0301_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDT04R0301, 6, 0, 5, DIR_DOWN )
+  
+EVENT_END
+
+/************************************************************/
+/*       RESERVE：リンクイベント終了                */
+/************************************************************/
+EVENT_START   ev_reserve_c06_link_event_ret
+  
+  //画面暗転処理
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+  
+  //アニメ：フウロ退場
+  _OBJ_ANIME( C06_SWLEADER6_01, anm_swleader6_return )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _TIME_WAIT( 8 )
+  
+  //フウロ動作モデル削除
+  _OBJ_DEL( C06_SWLEADER6_01 )
+  
+  _SE_WAIT()
+  
+  //========================================//
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_02 = 2
+  //C06フウロ非表示
+  _FLAG_SET( FV_C06_SWLEADER6_01 )
+  //========================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//アララギ：ジム前にやってくる
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swleader6_return
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //アララギ：「！」振り向く
@@ -535,4 +627,21 @@ _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0

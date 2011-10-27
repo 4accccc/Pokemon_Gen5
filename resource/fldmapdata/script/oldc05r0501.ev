@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_oldc05r0501.h"
   .include  "oldc05r0501.h"
+  
+  .include  "c05r0501.h"
+  .include  "c05r0501_def.h"
 
 //@author Suginaka Katsunori
 
@@ -40,13 +43,12 @@ EVENT_START		ev_reserve_oldc05r0501_event_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
 	_OBJ_ANIME_WAIT()
 
-	_MAP_FADE_BLACK_IN()
-
+	_MAP_FADE_BLACK_IN_SLOW()
 	//カメラ操作　デフォ位置に移動
 	_CAMERA_RECV_MOVE( 60 ) //一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
-	_MAP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
 
 	//その１：きいたか？
 	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_kahaim1_01 , OLDC05R0501_OLD_HAKAIM_01, POS_UP )
@@ -217,24 +219,24 @@ EVENT_START		ev_reserve_oldc05r0501_event_01
 	_CAMERA_MOVE( 9690,0,970720,491520,258048,1212416,30 )
 	
 	//画面暗転処理
-	//_MAP_FADE_BLACK_OUT()
-	//_MAP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT_SLOW()
+	_MAP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
+	//========================================//
+	//C05R0501ゾロアークを非表示
+  _FLAG_SET(FV_C05R0501_POKE23_01)
+	//========================================//
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//予約スクリプト
-	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101 )
-
+  _RESERVE_SCRIPT( SCRID_RESERVE_C05R0501_LINK_EVENT_RET )
+  
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
-
-	//【仮】ブラックイン　本来は飛び先へ呼ぶ
-	//_MAP_FADE_BLACK_IN()
-	//_MAP_FADE_END_CHECK()
-
+  
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_C05R0501, 7, 18, DIR_DOWN )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C05R0501, 7, 0, 25 ,  DIR_UP )
 
 EVENT_END
 

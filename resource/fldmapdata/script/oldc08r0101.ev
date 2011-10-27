@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_oldc08r0101.h"
   .include  "oldc08r0101.h"
+  
+  .include  "c08.h"
+  .include  "c08_def.h"
 
 //@author Suginaka Katsunori
 
@@ -171,23 +174,19 @@ EVENT_START		ev_reserve_oldc08r0101_event_01
 	_CAMERA_MOVE( 9694,0,970636,622592,344064,622592,30 )
 	
 	//画面暗転処理
-	//_MAP_FADE_BLACK_OUT()
-	//_MAP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//予約スクリプト
-	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101 )
+	_RESERVE_SCRIPT( SCRID_RESERVE_C08_LINK_EVENT_RET )
 
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 
-	//【仮】ブラックイン　本来は飛び先へ呼ぶ
-	//_MAP_FADE_BLACK_IN()
-	//_MAP_FADE_END_CHECK()
-
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_C08R0101, 9, 9, DIR_UP )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C08, 418, 0, 170, DIR_UP )
 
 
 EVENT_END

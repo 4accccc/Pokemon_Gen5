@@ -10,8 +10,14 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c01gym0101.h"
   .include  "c01gym0101.h"
+  
+  
+  .include  "oldc01r0501.h"
+  .include  "oldc01r0501_def.h"
+  
 
 //@author Suginaka katsunori
+//@author Mizuguchi_Mai（リンクイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -34,6 +40,7 @@ _EVENT_DATA		ev_c01gym0101_poke29b_01
 _EVENT_DATA		ev_c01gym0101_man3_01
 _EVENT_DATA		ev_c01gym0101_woman3_01
 _EVENT_DATA		ev_zone_c01gym0101
+_EVENT_DATA		ev_reserve_c01gym0101_link_event_ret
 _EVENT_DATA_END
 
 DEFINE_LOCAL	LWK_SARUHIT
@@ -87,7 +94,17 @@ EVENT_START		ev_c01gym0101_leader1a_01
 $LOCALWORK10 = 1
 //========================================/
 
-_CALL	ev_leader1_btl
+//リンクイベント起動中
+IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+  
+  _CALL ev_link_event
+
+//通常状態
+ELSE
+  
+  _CALL	ev_leader1_btl
+  
+ENDIF
 
 EVENT_END
 
@@ -101,7 +118,17 @@ EVENT_START		ev_c01gym0101_leader1b_01
 $LOCALWORK10 = 2
 //========================================/
 
-_CALL	ev_leader1_btl
+//リンクイベント起動中
+IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+  
+  _CALL ev_link_event
+
+//通常状態
+ELSE
+  
+  _CALL	ev_leader1_btl
+  
+ENDIF
 
 EVENT_END
 
@@ -115,9 +142,23 @@ EVENT_START		ev_c01gym0101_leader1c_01
 $LOCALWORK10 = 3
 //========================================/
 
-_CALL	ev_leader1_btl
+//リンクイベント起動中
+IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+  
+  _CALL ev_link_event
+
+//通常状態
+ELSE
+  
+  _CALL	ev_leader1_btl
+  
+ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*			CALL：マルチバトル							  */
+/**************************************************************/
 
 ev_leader1_btl:
 
@@ -452,6 +493,132 @@ $LOCALWORK10 = 0
 //========================================/
 
 _RET
+
+/**************************************************************/
+/*			CALL：リンクイベント							  */
+/**************************************************************/
+ev_link_event:
+  
+  IF $LOCALWORK10 == 1 THEN
+  
+    //ポッド・イベント起動（全員と話した）
+    IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+      
+      //【仮】メッセージラベル仮
+      _TALK_OBJ_START()
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      
+      //過去イベント起動
+      _CALL ev_old_brother
+      
+    //ポッド・イベント起動初回話しかけ
+    ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_01 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //========================================//
+      //会話済みフラグセット
+      _FLAG_SET( FE_C01GYM0101_LINKEVENT_01 )
+      //========================================//
+    //ポッド・イベント起動話しかけ
+    ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+    ENDIF
+  
+  ELSIF $LOCALWORK10 == 2 THEN
+  
+    //コーン・イベント起動（全員と話した）
+    IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+      
+      //【仮】メッセージラベル仮
+      _TALK_OBJ_START()
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      
+      //過去イベント起動
+      _CALL ev_old_brother
+      
+    //コーン・イベント起動初回話しかけ
+    ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_02 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //========================================//
+      //会話済みフラグセット
+      _FLAG_SET( FE_C01GYM0101_LINKEVENT_02 )
+      //========================================//
+    //コーン・イベント起動話しかけ
+    ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+    ENDIF
+    
+  //デント・イベント起動
+  ELSIF  $LOCALWORK10 == 3 THEN
+  
+    //コーン・イベント起動（全員と話した）
+    IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+    
+      //【仮】メッセージラベル仮
+      _TALK_OBJ_START()
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      
+      //過去イベント起動
+      _CALL ev_old_brother
+      
+    //コーン・イベント起動初回話しかけ
+    ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_03 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //========================================//
+      //会話済みフラグセット
+      _FLAG_SET( FE_C01GYM0101_LINKEVENT_03 )
+      //========================================//
+    //コーン・イベント起動話しかけ
+    ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+      //【仮】メッセージラベル仮
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+    ENDIF
+    
+  ENDIF
+  
+  //========================================/
+
+  //ローカルワークを初期化する。
+  $LOCALWORK10 = 0
+
+  //========================================/
+
+_RET
+
+ev_old_brother:
+  
+  _MSGWIN_CLOSE()
+  
+  //暗転
+  _MAP_FADE_BLACK_OUT_SLOW()
+  
+  //過去イベント・三つ子起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDC01R0501_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC01R0501, 7,0, 3, DIR_DOWN )
+
+_RET
+
+/**************************************************************/
+/*			C01GYM0101	LEADER1A							  */
+/**************************************************************/
+EVENT_START		ev_reserve_c01gym0101_link_event_ret
+  
+  //ブラックイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //========================================//
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_01 = 2
+  //========================================//
+
+EVENT_END
 
 /**************************************************************/
 /*			C01GYM0101	GLASSES								  */

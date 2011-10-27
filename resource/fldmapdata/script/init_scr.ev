@@ -134,6 +134,8 @@ init_flags:
 	_FLAG_SET( FV_C05_SWLEADER5_01 )
 	//C05：ライバルを非表示に
 	_FLAG_SET( FV_C05_SWRIVAL_01 )
+	//C05R0501：ゾロアークを非表示に
+	_FLAG_SET( FV_C05R0501_POKE23_01 )
   
   //D05
   
@@ -282,6 +284,9 @@ init_flags:
   _FLAG_SET( FV_C07_NINJA_01 )
   _FLAG_SET( FV_C07_NINJA_02 )
   _FLAG_SET( FV_C07_NINJA_03 )
+  
+  //C02：アロエ
+  _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
 
   //T04:サザナミタウン
   _FLAG_SET ( FV_T04_SWRIVAL_01 )

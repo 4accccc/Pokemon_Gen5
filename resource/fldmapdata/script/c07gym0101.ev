@@ -11,8 +11,12 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07gym0101.h"
   .include  "c07gym0101.h"
+  
+  .include  "oldt06r0101.h"
+  .include  "oldt06r0101_def.h"
 
   //@author fujimura_souichirou（ハチクイベント追加）
+  //@author Mizuguchi_Mai（リンクイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -35,6 +39,8 @@ _EVENT_DATA    ev_pos_c07gym0101_zimen_05
 _EVENT_DATA    ev_pos_c07gym0101_zimen_06
 _EVENT_DATA    ev_pos_c07gym0101_zimen_07
 _EVENT_DATA    ev_pos_c07gym0101_zimen_08
+_EVENT_DATA    ev_zone_c07gym0101
+_EVENT_DATA    ev_reserve_c07gym0101_link_ret
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -53,6 +59,21 @@ DEFINE_LOCAL  LCW_POSZ
 //                                                                  //
 //------------------------------------------------------------------//
 
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c07gym0101
+  
+  IF $WK_SYS_LINK_EVENT_03 == 1 THEN
+  
+    //========================================//
+    //ハチクを表示
+    _FLAG_RESET( FV_C07GYM0101_LEADDER7_01 )
+    //========================================//
+  
+  ENDIF
+  
+INIT_EVENT_END
 
 /**************************************************************/
 /*  ハチク：話しかけ                                          */
@@ -60,14 +81,77 @@ DEFINE_LOCAL  LCW_POSZ
 EVENT_START   ev_c07gym0101_leader7_01
 
   _TALK_OBJ_START()
+  
+  //リンクイベントを起動しているならばコール
+  IF $WK_SYS_LINK_EVENT_03 == 1 THEN
+    
+    _CALL ev_link_event
+  
+  //リンクイベントを起動していないなら初回会話をコール
+  ELSIF FLAG_OFF( FE_C07GYM0101_LEADER7 ) THEN
+  
+    _CALL ev_leader7_first_tark
+  
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  CALL：リンクイベント                                          */
+/**************************************************************/
+ev_link_event:
+
+    _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_memory_01 )
+    _MSGWIN_CLOSE()
+  
+    _MAP_FADE_BLACK_OUT_SLOW()
+    //過去イベント起動
+    _RESERVE_SCRIPT( SCRID_RESERVE_OLDT06R0101_EVENT_01 )
+    _MAP_FADE_END_CHECK()
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_OLDT06R0101, 6, 0, 3, DIR_DOWN )
+    
+    //========================================//
+    
+    //リンクイベント終了
+    $WK_SYS_LINK_EVENT_03 = 2
+    
+    //========================================//
+
+_RET
+
+/**************************************************************/
+/*  RESERVE：リンクイベントから復帰                                          */
+/**************************************************************/
+EVENT_START   ev_reserve_c07gym0101_link_ret
+  
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  //初回イベントが未消化なら続けて
+  IF FLAG_OFF( FE_C07GYM0101_LEADER7 ) THEN
+  
+    _CALL ev_leader7_first_tark
+  
+  ENDIF
+  
+  //退場アニメ再生
+  _CALL ev_leader7_bye
+  
+EVENT_END
+
+/**************************************************************/
+/*  CALL：初回会話イベント                                          */
+/**************************************************************/
+ev_leader7_first_tark:
 
   //ハチク：そのむかし　ケガをして
-  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_01 )
+  _BALLOONWIN_OBJMSG_POS( msg_c07gym0101_leader_01,C07GYM0101_LEADER7_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //自機方向取得
   _PLAYER_DIR_GET( LWK_DIR )
-  //アニメ：ハチク別方向を向く
+   //アニメ：ハチク別方向を向く
   SWITCH $LWK_DIR
   CASE DIR_UP THEN
     _OBJ_ANIME( C07GYM0101_LEADER7_01, anm_common_turn_l )
@@ -81,7 +165,7 @@ EVENT_START   ev_c07gym0101_leader7_01
   _OBJ_ANIME_WAIT()
 
   //ハチク：ジムリーダーを　つとめ
-  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_02 )
+  _BALLOONWIN_OBJMSG_POS( msg_c07gym0101_leader_02,C07GYM0101_LEADER7_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //自機方向取得
@@ -100,9 +184,27 @@ EVENT_START   ev_c07gym0101_leader7_01
   _OBJ_ANIME_WAIT()
 
   //ハチク：おしえることは　おそわること……
-  _BALLOONWIN_TALKOBJ_MSG( msg_c07gym0101_leader_03 )
+  _BALLOONWIN_OBJMSG_POS( msg_c07gym0101_leader_03,C07GYM0101_LEADER7_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //リンクイベント時以外なら退場アニメ再生
+  IF $WK_SYS_LINK_EVENT_03 == 0 THEN
+  
+    _CALL ev_leader7_bye
+  
+  ENDIF
+  
+  //========================================//
+  //初回会話終了
+  _FLAG_SET( FE_C07GYM0101_LEADER7 )
+  //========================================//
 
+_RET
+
+/**************************************************************/
+/*  CALL：初回会話イベント                                          */
+/**************************************************************/
+ev_leader7_bye:
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
   //アニメ：ハチク退場
@@ -122,8 +224,7 @@ EVENT_START   ev_c07gym0101_leader7_01
   //ハチクを非表示に
   _FLAG_SET( FV_C07GYM0101_LEADDER7_01 )
   //========================================//
-
-EVENT_END
+_RET
 
 /************************************************************/
 /*  ガイドー：話しかけ                                      */

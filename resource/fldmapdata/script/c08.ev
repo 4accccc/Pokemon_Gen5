@@ -12,6 +12,9 @@
   .include  "../../message/dst/script/msg_c08.h"
   .include  "c08.h"
   
+  .include  "oldc08r0101.h"
+  .include  "oldc08r0101_def.h"
+  
   //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
@@ -50,6 +53,9 @@ _EVENT_DATA    ev_c08_woman1_01
 _EVENT_DATA    ev_c08_iss_01
 _EVENT_DATA    ev_c08_oldman1_02
 _EVENT_DATA    ev_c08_man3_02
+
+_EVENT_DATA    ev_pos_c08_link_event
+_EVENT_DATA    ev_reserve_c08_link_event_ret
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -83,6 +89,16 @@ INIT_EVENT_START   ev_zone_c08
     $OBJCHRWORK0 = FIDDLE
   ENDIF
   }
+  
+  //ゲームクリア状態でリンクイベント起動ならシャガを表示・POSを有効に
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $WK_SYS_LINK_EVENT_04 == 1 && $WK_SCENE_C08_LINK_EVENT == 0 THEN
+    //========================================//
+    //C08シャガ表示
+    _FLAG_RESET( FV_C08_SWLEADER7_01 )
+    //POS有効
+    $WK_SCENE_C08_LINK_EVENT = 1
+    //========================================//
+  ENDIF
   
 INIT_EVENT_END
 
@@ -140,6 +156,14 @@ INIT_EVENT_START ev_init_c08
   ELSIF $WK_SCENE_C08_NINJA >= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     _DEBUG_PRINT_WK( 8 )
     _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+  ENDIF
+  
+  //リンクイベント起動条件を満たしているならばシャガの配置を変更（ホワイト）
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $WK_SYS_LINK_EVENT_04 == 1 && $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 167, DIR_UP )
+  //リンクイベント起動条件を満たしているならばシャガの配置を変更（ブラック）
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $WK_SYS_LINK_EVENT_04 == 1 && $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_UP )
   ENDIF
 }
 INIT_EVENT_END
@@ -1212,6 +1236,69 @@ EVENT_START   ev_c08_swplazmaw_02
 EVENT_END
 
 
+/**************************************************************/
+/* POS：リンクイベント                                   */
+/**************************************************************/
+EVENT_START   ev_pos_c08_link_event
+  
+  //アニメ：シャガ「！」振り向く
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  $LCW_POSZ -= 2
+  //アニメ：シャガ隣接
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  IF $LCW_POSX != 418 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //シャガ：起動
+  _BALLOONWIN_OBJMSG_POS( msg_c08_memory_01 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  _MAP_FADE_BLACK_OUT_SLOW()
+  
+  //過去イベント・ソウリュウ起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDC08R0101_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC08R0101, 9, 0, 9, DIR_DOWN )
+
+EVENT_END
+
+/**************************************************************/
+/* RESERVE：リンクイベント終了                                   */
+/**************************************************************/
+EVENT_START   ev_reserve_c08_link_event_ret
+
+  //画面暗転処理
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+
+  //アニメ：シャガ退場
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 418, 161, FORCE_TYPE_ALL, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ動作モデル削除
+  _OBJ_DEL( C08_SWLEADER7_01 )
+  
+  //========================================//
+  //POS無効
+  $WK_SCENE_C08_LINK_EVENT = 2
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_04 = 2
+  //C08シャガ非表示
+  _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
+  //========================================//
+
+EVENT_END
 /**************************************************************/
 /* GEGNTLEMAN_01                                              */
 /**************************************************************/

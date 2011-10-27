@@ -11,6 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "msg_oldt04r0301.h"
   .include  "oldt04r0301.h"
+  
+  .include  "c06.h"
+  .include  "c06_def.h"
 
 //@author Suginaka Katsunori
 
@@ -178,23 +181,19 @@ EVENT_START		ev_reserve_oldt04r0301_event_01
 	_OBJ_ANIME_WAIT()
 	
 	//画面暗転処理
-	//_MAP_FADE_BLACK_OUT()
-	//_MAP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//予約スクリプト
-	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101 )
+	_RESERVE_SCRIPT( SCRID_RESERVE_C06_LINK_EVENT_RET )
 
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 
-	//【仮】ブラックイン　本来は飛び先へ呼ぶ
-	//_MAP_FADE_BLACK_IN()
-	//_MAP_FADE_END_CHECK()
-
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_T04R0301, 6, 5, DIR_DOWN )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C06, 77, 0, 270, DIR_UP )
 
 EVENT_END
 

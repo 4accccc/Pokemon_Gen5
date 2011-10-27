@@ -22,6 +22,7 @@
 #define C05R0501_POKE41_01                10
 #define C05R0501_POKE38_01                11
 #define C05R0501_SWRIVAL_01               12
+#define C05R0501_POKE23_01                13
 
 #endif //ZONE_C05R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
