@@ -618,8 +618,8 @@ end
   fp_monsnum = open( "monsnum_def.h", "w" )
   fp_gra = open( "pokegra_wb.scr", "w" )
   fp_lst = open( "pokegra_wb.lst", "w" )
-  fp_wave = open( "wb_sound_pv_wav.lst", "w" )
-  fp_bank = open( "wb_sound_pv_bnk.lst", "w" )
+  fp_wave = open( "swan_sound_pv_wav.lst", "w" )
+  fp_bank = open( "swan_sound_pv_bnk.lst", "w" )
   fp_num = open( "zukan2grano.txt", "w" )
   fp_icon_scr = open( "pokeicon_all.scr", "w" )
   fp_icon_attr = open( "attr_list.txt", "w" )
@@ -996,6 +996,7 @@ end
   fp_monsnum.print( "//•ÊƒtƒHƒ‹ƒ€’è‹`\n" )
 
   form.size.times {|i|
+    split_data = read_data[ i - 1 ].split(/,/)
     if form[ i ].get_form_max != 0
       split_data = read_data[ i - 1 ].split(/,/)
       fp_monsno.printf( "//%s\n", split_data[ PARA::POKENAME ] )

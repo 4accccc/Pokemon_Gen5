@@ -22578,25 +22578,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴ</Text>
+			<Text>ドーブル２</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴ</Text>
+			<Text>ドーブル２</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -22638,5 +22638,30 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-13T10:45:44" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MONSNAME_686">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:39:35" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

@@ -84,7 +84,7 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
   }
 
   // ボスポケモンのVOICE設定
-  if(pokeNo >= MONSNO_ufo && pokeNo <= MONSNO_KARATEOU){
+  if(pokeNo >= MONSNO_ufo && pokeNo <= MONSNO_DOOBURU2){
     *waveIdx = PMVOICE_POKE652 + pokeNo-MONSNO_ufo;
     OS_Printf("pokeNo=%d, ボスポケモンvoice = %d\n", pokeNo, *waveIdx);
     return;
