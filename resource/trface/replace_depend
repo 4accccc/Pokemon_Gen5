@@ -2187,3 +2187,14 @@ cnv_tmp/trwb_pkwd_ladybug_LZ.bin : cnv_tmp/trwb_pkwd_ladybug.NCGR
 cnv_tmp/trwb_pkwd_ladybug.NCLR : ./../../../swan_doc/trgra/trwb_pkwd_ladybug.ncl 
 	@g2dcvtr $< -bg -o/cnv_tmp
 
+cnv_tmp/trwb_juggling_1.NCGR : ./../../../swan_doc/trgra/trwb_juggling.ncg 
+	@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_juggling.NCGR cnv_tmp/trwb_juggling_1.NCGR 
+
+cnv_tmp/trwb_juggling_1_LZ.bin : cnv_tmp/trwb_juggling_1.NCGR 
+	ntrcomp -l 2 cnv_tmp/trwb_juggling_1.NCGR
+
+cnv_tmp/trwb_juggling_1.NCLR : ./../../../swan_doc/trgra/trwb_juggling.ncl 
+	@g2dcvtr $< -bg -o/cnv_tmp
+	cp cnv_tmp/trwb_juggling.NCLR cnv_tmp/trwb_juggling_1.NCLR 
+
