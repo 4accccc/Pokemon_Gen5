@@ -1139,6 +1139,10 @@
   DEF_CMD( EvCmdInitMedal, EV_SEQ_MEDAL_INIT_DATA )
   NO_CMD()
   
+  //室外演出
+  DEF_CMD( EvCmdGooutEffect_Request, EV_SEQ_GOOUT_EFFECT_REQUEST )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

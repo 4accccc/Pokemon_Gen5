@@ -95,6 +95,9 @@ EVENT_START ev_pos_c04r0101_connect_c04
   //予約スクリプト：C04マップチェンジ後に主人公出てくるアニメを起動
   _RESERVE_SCRIPT( SCRID_RESERVE_C04_EXIT )
 
+  //室外演出予約
+  _GOOUT_EFFECT_REQUEST()
+
   //C04にマップチェンジ
   _MAP_CHANGE( ZONE_ID_C04, 422, 459, DIR_DOWN )
 

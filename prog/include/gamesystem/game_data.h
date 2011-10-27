@@ -931,23 +931,23 @@ extern u32 GAMEDATA_GetGooutEffectEffectID( const GAMEDATA *gamedata );
 extern void GAMEDATA_SetGooutEffectEffectID( GAMEDATA *gamedata, u32 id );
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出フラグを取得
+ *	@brief  室外演出リクエスト取得
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
  *	@return TRUEで次回エフェクトスタート  FALSEでスタートしない
  */
 //-----------------------------------------------------------------------------
-extern BOOL GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata );
+extern BOOL GAMEDATA_GetGooutEffectRequest( const GAMEDATA *gamedata );
 //----------------------------------------------------------------------------
 /**
- *	@brief  室外演出フラグを設定
+ *	@brief  室外演出リクエストを設定
  *
  *	@param	GAMEDATA *gamedata  ゲームデータ
- *	@param	flag  TRUEで次回エフェクトスタート  FALSEでスタートしない
+ *	@param	flag  TRUEで次回エフェクトスタート  FALSEでリクエストしない
  */
 //-----------------------------------------------------------------------------
-extern void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag );
+extern void GAMEDATA_SetGooutEffectRequest( GAMEDATA *gamedata, BOOL flag );
 //----------------------------------------------------------------------------
 /**
  *	@brief  フェスBGM再生リクエストフラグを取得

@@ -735,4 +735,6 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (732)
   { TRUE, FALSE, FALSE }, // _INIT_MEDAL_DATA (733)
   { FALSE, FALSE, FALSE }, // NO_CMD (734)
+  { TRUE, TRUE, TRUE }, // _GOOUT_EFFECT_REQUEST (735)
+  { FALSE, FALSE, FALSE }, // NO_CMD (736)
 };

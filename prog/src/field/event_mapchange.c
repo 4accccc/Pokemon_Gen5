@@ -1041,6 +1041,12 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     {
       FIELDMAP_WORK* p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
 
+      if( GAMEDATA_GetGooutEffectRequest( gameData ) )
+      {
+        work->is_goout_no_setup = FALSE;
+        GAMEDATA_SetGooutEffectRequest( gameData, FALSE );
+      }
+
       //外出表現表示
       if( !work->is_goout_no_setup )
       {
@@ -1973,6 +1979,7 @@ GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* f
                           rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
   work->exit_type = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = seasonUpdateEnable;
+  work->is_goout_no_setup  = TRUE;
   
   return event;
 }
@@ -2269,6 +2276,7 @@ GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
   work->exit_type          = EXIT_TYPE_WARP;
   work->seasonUpdateEnable = FALSE;
+  work->is_goout_no_setup  = TRUE;
 
   return event;
 }
@@ -2560,6 +2568,7 @@ static GMEVENT* EVENT_ChangeMapPosNoFadeCore( GAMESYS_WORK* gameSystem, FIELDMAP
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type      = EXIT_TYPE_NONE;
   work->mapchange_type = type; 
+  work->is_goout_no_setup  = TRUE;
 
   return event;
 }
@@ -2633,6 +2642,7 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type = EXIT_TYPE_NONE;
+  work->is_goout_no_setup  = TRUE;
   
   return event;
 }

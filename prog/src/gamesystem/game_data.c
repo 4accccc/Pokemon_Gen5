@@ -152,7 +152,7 @@ struct _GAMEDATA{
 
   u32   ltvt_secret_call_zoneID;  ///<隠しキャラに電話できる場所のゾーンIDのの
   u32   goout_effect_id;    ///<室外演出エフェクトID
-  u8    goout_effect_flag;
+  u8    goout_effect_req;   ///<室外演出強制リクエストフラグ
   u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
   u8    area_ofs; ///<エリアオフセット(今はリゾートでしか使っていない)
   u8    fes_bgm_flag; ///<フェスミッションBGM再生リクエストフラグ
@@ -2269,9 +2269,9 @@ void GAMEDATA_SetGooutEffectEffectID( GAMEDATA *gamedata, u32 id )
  *	@return TRUEで次回エフェクトスタート  FALSEでスタートしない
  */
 //-----------------------------------------------------------------------------
-BOOL  GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata )
+BOOL  GAMEDATA_GetGooutEffectRequest( const GAMEDATA *gamedata )
 {
-  return gamedata->goout_effect_flag;
+  return gamedata->goout_effect_req;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2281,9 +2281,9 @@ BOOL  GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata )
  *	@param	flag  TRUEで次回エフェクトスタート  FALSEでスタートしない
  */
 //-----------------------------------------------------------------------------
-void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag )
+void GAMEDATA_SetGooutEffectRequest( GAMEDATA *gamedata, BOOL flag )
 {
-  gamedata->goout_effect_flag = flag;
+  gamedata->goout_effect_req = flag;
 }
 
 //----------------------------------------------------------------------------
