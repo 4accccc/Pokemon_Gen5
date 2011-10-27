@@ -690,6 +690,7 @@
 #define		MONSNO_689		( 681 )		//だいＯＬ２
 #define		MONSNO_690		( 682 )		//Ｆ－００２
 #define		MONSNO_691		( 683 )		//カラテおう
+#define		MONSNO_692		( 684 )		//ドーブル２
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )

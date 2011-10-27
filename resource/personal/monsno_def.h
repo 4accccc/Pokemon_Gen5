@@ -695,8 +695,9 @@
 #define		MONSNO_DAIol2				( 681 )
 #define		MONSNO_ff002				( 682 )
 #define		MONSNO_KARATEOU			( 683 )
+#define		MONSNO_DOOBURU2			( 684 )
 #define		MONSNO_END					( 649 )
-#define		MONSNO_MAX					( 685 )
+#define		MONSNO_MAX					( 686 )
 
 //別フォルム定義
 //アンノーン

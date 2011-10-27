@@ -3866,11 +3866,16 @@
 	</row>
 
 	<row id="MONSNAME_684">
+		<language name="JPN" width="216">ドーブル２</language>
+		<language name="JPN_KANJI" width="216">ドーブル２</language>
+	</row>
+
+	<row id="MONSNAME_685">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>
 
-	<row id="MONSNAME_685">
+	<row id="MONSNAME_686">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>

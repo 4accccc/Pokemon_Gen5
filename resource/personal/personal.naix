@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2011-10-11T15:42:26
+	Update:2011-10-27T12:15:44
  *****************************************************************************/
 
 #ifndef NARC_PERSONAL_NAIX_
@@ -716,7 +716,8 @@ enum {
 	NARC_personal_per_702_bin = 702,
 	NARC_personal_per_703_bin = 703,
 	NARC_personal_per_704_bin = 704,
-	NARC_personal_zenkoku_to_chihou_bin = 705
+	NARC_personal_per_705_bin = 705,
+	NARC_personal_zenkoku_to_chihou_bin = 706
 };
 
 /* NARC_PERSONAL_NAIX_ */
