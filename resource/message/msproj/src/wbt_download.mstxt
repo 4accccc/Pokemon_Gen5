@@ -1301,10 +1301,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>エラー
-リストデータのＣＲＣがおかしい</Comment>
+リストデータのＣＲＣがおかしいor
+１件も正しいデータがない</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:25:50" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T07:50:01" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1402,11 +1403,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラー
-リストデータのカセットバージョンが一致しない</Comment>
+			<Comment>未使用
+
+</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:25:50" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T07:50:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1436,11 +1438,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラー
-リストデータの言語コードがおかしい</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-07-21T11:25:50" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T07:50:29" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
