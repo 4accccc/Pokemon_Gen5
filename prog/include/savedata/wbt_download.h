@@ -293,6 +293,14 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckCRC( const WBTDL_TOTAL_DATA *cp_data )
 {
   return cp_data->crc == GFL_STD_CrcCalc( cp_data, sizeof(WBTDL_TOTAL_DATA)-sizeof(cp_data->crc) );
 }
+static inline BOOL WBTDL_DATA_CheckCRC( const WBTDL_DATA * cp_data )
+{
+  return cp_data->crc == GFL_STD_CrcCalc( cp_data, sizeof(WBTDL_DATA)-sizeof(cp_data->crc) );
+}
+static inline BOOL WBTDL_DATA_IsExist( const WBTDL_DATA * cp_data )
+{
+  return cp_data->tournament_id != 0;
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static inline BOOL WBTDL_TOTAL_DATA_CheckVersion( const WBTDL_TOTAL_DATA *cp_data )
@@ -328,6 +336,59 @@ static inline BOOL WBTDL_TOTAL_DATA_CheckLang( const WBTDL_TOTAL_DATA *cp_data )
   }
 
   return check;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBTDL_DATAの正常チェック
+ *
+ *	@param	const WBTDL_DATA * cp_data データ
+ *
+ *	@return TRUE正常  FALSE中身がないか言語やバージョンが違うかCRCがあってない
+ */
+//-----------------------------------------------------------------------------
+static inline BOOL WBTDL_DATA_CheckIllegal( const WBTDL_DATA * cp_data )
+{
+  if( WBTDL_DATA_IsExist( cp_data )
+      && WBTDL_DATA_CheckVersion( cp_data )
+      && WBTDL_DATA_CheckLang( cp_data )
+      && WBTDL_DATA_CheckCRC( cp_data ) )
+  {
+
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBTDL_TOTAL_DATAの中身で正常なものの数を返す
+ *	        （０ならば正常なものがない、１以上は正常なものの数）
+ *
+ *	@param	const WBTDL_TOTAL_DATA *cp_data データ
+ *
+ *	@return ０正常なデータがなかった  １～１２正常なデータの件数
+ */
+//-----------------------------------------------------------------------------
+static inline int WBTDL_TOTAL_DATA_CheckIllegal( const WBTDL_TOTAL_DATA *cp_data )
+{
+  //全体のCRCチェック
+  if( WBTDL_TOTAL_DATA_CheckCRC( cp_data ) )
+  {
+    //１件以上落とせるデータがあるか
+    int i;
+    int cnt = 0;
+    for( i = 0; i < WBTDL_TOTAL_NUM; i++ )
+    {
+      if( WBTDL_DATA_CheckIllegal( &cp_data->data[i] ) )
+      {
+        cnt++;
+      }
+    }
+    return cnt;
+  }
+
+  return 0;
 }
 
 //------------------------------------------------------------------

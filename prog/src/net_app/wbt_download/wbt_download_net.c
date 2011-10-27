@@ -490,29 +490,15 @@ static void Wbt_Download_Net_Seq_Wifi( WBTDLNET_SEQ_WORK *p_seqwk, int *p_seq, v
       switch( COMMON_DOWNLOAD_GetDownloadResult( p_wk->p_common_download ) )
       {
       case COMMON_DOWNLOAD_RESULT_SUCCESS:   //受信成功
-#ifndef DEBUG_CHECK_DATA_NONE
-        //データチェック
-        if( !WBTDL_TOTAL_DATA_CheckCRC( cp_data ) )
-        {
-          //CRCエラー
-          WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_01, WBTDLNET_TEXT_TYPE_STREAM );
-        }
-        else if( !WBTDL_TOTAL_DATA_CheckVersion( cp_data ) )
-        {
-          //カセットバージョンが違う
-          WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_04, WBTDLNET_TEXT_TYPE_STREAM );
-        }
-        else if( !WBTDL_TOTAL_DATA_CheckLang( cp_data ) )
-        {
-          //言語コードが違う
-          WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_05, WBTDLNET_TEXT_TYPE_STREAM );
-        }
-        else
-#endif
+        if( WBTDL_TOTAL_DATA_CheckIllegal( cp_data ) > 0 )
         {
           //正常
           is_success = TRUE;
           WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_ev_msg_06, WBTDLNET_TEXT_TYPE_STREAM );
+        }
+        else
+        {
+          WBTDLNET_TEXT_Print( p_wk->p_text, p_wk->p_msg, wbt_dl_error_01, WBTDLNET_TEXT_TYPE_STREAM );
         }
         break;
       case COMMON_DOWNLOAD_RESULT_TIMEOUT:   //タイムアウト(２分)  WiFiでしか返ってこない
