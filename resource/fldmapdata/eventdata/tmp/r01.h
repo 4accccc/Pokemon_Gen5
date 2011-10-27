@@ -30,7 +30,7 @@
 #define BGID_R01_BOARD_03                 1
 #define BGID_R01_BOARD_02                 2
 #define BGID_R01_BOARD_04                 3
-#define R01_HIDE_ITEM_01                  4
+#define HIDE_ITEM_128                     4
 #define BG_R01_DUMMY_FES_01               5
 #define BG_R01_DUMMY_FES_02               6
 #define BG_R01_DUMMY_FES_03               7
@@ -48,5 +48,6 @@
 #define BG_R01_DUMMY_FES_15              19
 #define BG_R01_DUMMY_FES_16              20
 #define BG_R01_DUMMY_FES_17              21
+#define HIDE_ITEM_129                    22
 
 #endif //ZONE_R01_EVB_H

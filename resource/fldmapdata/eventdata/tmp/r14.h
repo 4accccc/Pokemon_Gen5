@@ -31,9 +31,8 @@
 #define BGID_R14_SIGN1_01                 0
 #define BGID_R14_SIGN2_01                 1
 #define BGID_R14_SIGN3_01                 2
-#define R14_HIDE_ITEM_01                  3
-#define BGID_R14_SIGN1_02                 4
-#define HIDE_ITEM_175                     5
-#define HIDE_ITEM_176                     6
+#define BGID_R14_SIGN1_02                 3
+#define HIDE_ITEM_175                     4
+#define HIDE_ITEM_176                     5
 
 #endif //ZONE_R14_EVB_H

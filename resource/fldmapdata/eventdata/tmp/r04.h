@@ -60,8 +60,7 @@
 #define HIDE_ITEM_137                     3
 #define HIDE_ITEM_138                     4
 #define HIDE_ITEM_139                     5
-#define R04_HIDE_ITEM_02                  6
-#define HIDE_ITEM_140                     7
-#define HIDE_ITEM_141                     8
+#define HIDE_ITEM_140                     6
+#define HIDE_ITEM_141                     7
 
 #endif //ZONE_R04_EVB_H

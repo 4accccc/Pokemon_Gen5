@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/26 16:44:39
+#save date:2011/10/27 17:05:54
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r06.wms
 #SECTION START:OBJ_EVENT
@@ -639,7 +639,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-28
+25
 #event number: 0
 #Bg Event Label
 BG_R06_SIGN1_01
@@ -681,45 +681,6 @@ EVENTDATA_POSTYPE_GRID
 344 0 -40
 #event number: 3
 #Bg Event Label
-R06_HIDE_ITEM_01
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_054
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 0 88
-#event number: 4
-#Bg Event Label
-R06_HIDE_ITEM_02
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_055
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-312 0 88
-#event number: 5
-#Bg Event Label
-R06_HIDE_ITEM_03
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_056
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-616 0 104
-#event number: 6
-#Bg Event Label
 BGID_R06_ANIMAL_TRAIL_01_1
 #Bg Event Type
 BG_TALK_TYPE_NORMAL
@@ -731,7 +692,7 @@ SCRID_ANIMAL_TRAIL_04
 EVENTDATA_POSTYPE_GRID
 #position
 344 0 -376
-#event number: 7
+#event number: 4
 #Bg Event Label
 BGID_R06_ANIMAL_TRAIL_01_2
 #Bg Event Type
@@ -744,7 +705,7 @@ SCRID_ANIMAL_TRAIL_04
 EVENTDATA_POSTYPE_GRID
 #position
 360 0 -376
-#event number: 8
+#event number: 5
 #Bg Event Label
 BGID_R06_ANIMAL_TRAIL_02_1
 #Bg Event Type
@@ -757,7 +718,7 @@ SCRID_ANIMAL_TRAIL_05
 EVENTDATA_POSTYPE_GRID
 #position
 664 0 136
-#event number: 9
+#event number: 6
 #Bg Event Label
 BGID_R06_ANIMAL_TRAIL_02_2
 #Bg Event Type
@@ -770,7 +731,7 @@ SCRID_ANIMAL_TRAIL_05
 EVENTDATA_POSTYPE_GRID
 #position
 680 0 136
-#event number: 10
+#event number: 7
 #Bg Event Label
 BG_R06_DUMMY_FES_01
 #Bg Event Type
@@ -783,7 +744,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 376 0 -616
-#event number: 11
+#event number: 8
 #Bg Event Label
 BG_R06_DUMMY_FES_02
 #Bg Event Type
@@ -796,7 +757,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 488 0 -536
-#event number: 12
+#event number: 9
 #Bg Event Label
 BG_R06_DUMMY_FES_03
 #Bg Event Type
@@ -809,7 +770,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 616 0 -472
-#event number: 13
+#event number: 10
 #Bg Event Label
 BG_R06_DUMMY_FES_04
 #Bg Event Type
@@ -822,7 +783,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 408 0 -472
-#event number: 14
+#event number: 11
 #Bg Event Label
 BG_R06_DUMMY_FES_05
 #Bg Event Type
@@ -835,7 +796,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 328 0 -456
-#event number: 15
+#event number: 12
 #Bg Event Label
 BG_R06_DUMMY_FES_06
 #Bg Event Type
@@ -848,7 +809,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 696 0 -328
-#event number: 16
+#event number: 13
 #Bg Event Label
 BG_R06_DUMMY_FES_07
 #Bg Event Type
@@ -861,7 +822,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 -168
-#event number: 17
+#event number: 14
 #Bg Event Label
 BG_R06_DUMMY_FES_08
 #Bg Event Type
@@ -874,7 +835,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 296 0 8
-#event number: 18
+#event number: 15
 #Bg Event Label
 BG_R06_DUMMY_FES_09
 #Bg Event Type
@@ -887,7 +848,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 280 0 88
-#event number: 19
+#event number: 16
 #Bg Event Label
 BG_R06_DUMMY_FES_10
 #Bg Event Type
@@ -900,7 +861,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 8 0 -120
-#event number: 20
+#event number: 17
 #Bg Event Label
 BG_R06_DUMMY_FES_11
 #Bg Event Type
@@ -913,7 +874,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 -168 0 -136
-#event number: 21
+#event number: 18
 #Bg Event Label
 BG_R06_DUMMY_FES_12
 #Bg Event Type
@@ -926,7 +887,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 -184 0 120
-#event number: 22
+#event number: 19
 #Bg Event Label
 BG_R06_DUMMY_FES_13
 #Bg Event Type
@@ -939,7 +900,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 184 0 184
-#event number: 23
+#event number: 20
 #Bg Event Label
 BG_R06_DUMMY_FES_14
 #Bg Event Type
@@ -952,7 +913,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 648 0 24
-#event number: 24
+#event number: 21
 #Bg Event Label
 BG_R06_DUMMY_FES_15
 #Bg Event Type
@@ -965,7 +926,7 @@ BG_TALK_DIR_ALL
 EVENTDATA_POSTYPE_GRID
 #position
 664 0 -88
-#event number: 25
+#event number: 22
 #Bg Event Label
 HIDE_ITEM_148
 #Bg Event Type
@@ -978,7 +939,7 @@ SCRID_HIDE_ITEM_148
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 -168
-#event number: 26
+#event number: 23
 #Bg Event Label
 HIDE_ITEM_149
 #Bg Event Type
@@ -991,7 +952,7 @@ SCRID_HIDE_ITEM_149
 EVENTDATA_POSTYPE_GRID
 #position
 664 0 -88
-#event number: 27
+#event number: 24
 #Bg Event Label
 HIDE_ITEM_150
 #Bg Event Type
