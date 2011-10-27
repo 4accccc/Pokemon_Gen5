@@ -6,16 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]ゆうえんち　そこは　かのじょとの
+[Ctrl1:xcenter ]おもいでの　ばしょ。
+[Ctrl1:xcenter ]はじめて　デートを　した　ばしょ。
+[Ctrl1:xcenter ]プロポーズも　ゆうえんちの
+[Ctrl1:xcenter ]かえりみち　だった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]遊園地　そこは　彼女との
+[Ctrl1:xcenter ]思い出の　場所。
+[Ctrl1:xcenter ]初めて　デートを　した　場所。
+[Ctrl1:xcenter ]プロポーズも　遊園地へ　行った
+[Ctrl1:xcenter ]帰り道　だった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +56,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]かのじょが　いなくなった　いまも
+[Ctrl1:xcenter ]ゆうえんちを　たびたび　おとずれる。
+
+[Ctrl1:xcenter ]そして　また　かのじょに　であった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:27:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +71,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]彼女が　いなくなった　今も
+[Ctrl1:xcenter ]遊園地を　たびたび　訪れる。
+
+[Ctrl1:xcenter ]そして　また　彼女に　出会った。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:29:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +90,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +101,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:27:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +298,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]ゆうえんち　そこは　かれとの
+[Ctrl1:xcenter ]おもいでの　ばしょ。
+[Ctrl1:xcenter ]はじめて　デートを　した　ばしょ。
+[Ctrl1:xcenter ]プロポーズも　ゆうえんちの
+[Ctrl1:xcenter ]かえりみち　だった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +314,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
+			<Text>[Ctrl1:xcenter ]遊園地　そこは　彼との
+[Ctrl1:xcenter ]思い出の　場所。
+[Ctrl1:xcenter ]初めて　デートを　した　場所。
+[Ctrl1:xcenter ]プロポーズも　遊園地へ　行った
+[Ctrl1:xcenter ]帰り道　だった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -335,10 +330,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>あらすじ♀用</Comment>
+			<Comment>あらすじ♀</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:49" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:14" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -346,13 +341,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]かれが　いなくなった　いまも
+[Ctrl1:xcenter ]ゆうえんちを　たびたび　おとずれる。
+
+[Ctrl1:xcenter ]そして　また　かれに　であった。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +356,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
+			<Text>[Ctrl1:xcenter ]彼が　いなくなった　今も
+[Ctrl1:xcenter ]遊園地を　たびたび　訪れる。
+
+[Ctrl1:xcenter ]そして　また　彼に　出会った。
 </Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:30:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +375,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +386,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="shimoyamada:W00184"
+				Time="2011-10-26T17:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
