@@ -31,7 +31,7 @@ ICACONV = ..\..\tools\ica\ica_converter.rb
 SOURCES_3D = \
     psel_s01.imd psel_s01.ica psel_s01.ima psel_s01.ita \
     psel_s01_cam.ica \
-    psel_s02.imd psel_s02.ica \
+    psel_s02.imd psel_s02.ica psel_s02.itp psel_s02.ima \
     psel_s02_cam.ica \
     psel_mb.imd psel_mb.ima psel_mb.ica
 
@@ -39,7 +39,7 @@ SOURCES_3D = \
 OBJECTS_3D = \
     psel_s01.nsbmd psel_s01.nsbca psel_s01.nsbma psel_s01.nsbta \
     psel_s01_cam.bin \
-    psel_s02.nsbmd psel_s02.nsbca \
+    psel_s02.nsbmd psel_s02.nsbca psel_s02.nsbtp psel_s02.nsbma \
     psel_s02_cam.bin \
     psel_mb.nsbmd psel_mb.nsbma psel_mb.nsbca
 
@@ -108,6 +108,8 @@ $(OBJECTS_3D): $(SOURCES_3D)
 	ruby $(ICACONV) -rt psel_s01_cam.ica psel_s01_cam.bin
 	g3dcvtr psel_s02.imd
 	g3dcvtr psel_s02.ica
+	g3dcvtr psel_s02.itp
+	g3dcvtr psel_s02.ima
 	ruby $(ICACONV) -rt psel_s02_cam.ica psel_s02_cam.bin
 	g3dcvtr psel_mb.imd
 	g3dcvtr psel_mb.ima

@@ -273,9 +273,9 @@ static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 // 指指しカーソルの位置
 static const u8 finger_pos[TARGET_POKE_MAX][2] =
 {
-  {  66,  39 },
-  { 128,  13 },
-  { 189,  39 },
+  {  60,  33 },
+  { 128,  33 },
+  { 200,  33 },
 };
 
 // ポケモン大小セット
@@ -492,6 +492,8 @@ static const GFL_G3D_UTIL_RES s02_res_tbl[] =
   // s02
   { ARCID_PSEL,        NARC_psel_psel_s02_nsbmd,          GFL_G3D_UTIL_RESARC },
   { ARCID_PSEL,        NARC_psel_psel_s02_nsbca,          GFL_G3D_UTIL_RESARC },
+  { ARCID_PSEL,        NARC_psel_psel_s02_nsbtp,          GFL_G3D_UTIL_RESARC },
+  { ARCID_PSEL,        NARC_psel_psel_s02_nsbma,          GFL_G3D_UTIL_RESARC },
   // mb
   { ARCID_PSEL,        NARC_psel_psel_mb_nsbmd,           GFL_G3D_UTIL_RESARC },
   { ARCID_PSEL,        NARC_psel_psel_mb_nsbma,           GFL_G3D_UTIL_RESARC },
@@ -501,12 +503,14 @@ static const GFL_G3D_UTIL_ANM s02_anm_tbl[] =
 {
   // s02
   { 1, 0 },
+  { 2, 0 },
+  { 3, 0 },
 };
 static const GFL_G3D_UTIL_ANM mb_anm_tbl[] = 
 {
   // mb
-  { 3, 0 },
-  { 4, 0 },
+  { 5, 0 },
+  { 6, 0 },
 };
 static const GFL_G3D_UTIL_OBJ s02_obj_tbl[] = 
 {
@@ -520,23 +524,23 @@ static const GFL_G3D_UTIL_OBJ s02_obj_tbl[] =
   },
   // mb
   {
-    2,                         // モデルリソースID
+    4,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    2,                         // テクスチャリソースID
+    4,                         // テクスチャリソースID
     mb_anm_tbl,                // アニメテーブル(複数指定のため)
     NELEMS(mb_anm_tbl),        // アニメリソース数
   },
   {
-    2,                         // モデルリソースID
+    4,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    2,                         // テクスチャリソースID
+    4,                         // テクスチャリソースID
     mb_anm_tbl,                // アニメテーブル(複数指定のため)
     NELEMS(mb_anm_tbl),        // アニメリソース数
   },
   {
-    2,                         // モデルリソースID
+    4,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    2,                         // テクスチャリソースID
+    4,                         // テクスチャリソースID
     mb_anm_tbl,                // アニメテーブル(複数指定のため)
     NELEMS(mb_anm_tbl),        // アニメリソース数
   },
@@ -550,14 +554,14 @@ enum
 };
 static const VecFx32 three_mb_trans[MB_MAX] =
 {
-  { FX_F32_TO_FX32(-4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
-  { FX_F32_TO_FX32( 0.0f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
-  { FX_F32_TO_FX32( 4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 12.0f) },
+  { FX_F32_TO_FX32(-4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 13.6f) },
+  { FX_F32_TO_FX32( 0.0f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 13.6f) },
+  { FX_F32_TO_FX32( 4.4f), FX_F32_TO_FX32(28.3f), FX_F32_TO_FX32( 13.6f) },
 };
 
 // 3D全体
 // 最大数
-#define THREE_RES_MAX              (5)   // s02とmbを同時に読み込んだときの総数
+#define THREE_RES_MAX              (7)   // s02とmbを同時に読み込んだときの総数
 #define THREE_OBJ_MAX              (4)   // s02とmbを同時に読み込んだときの総数
 #define THREE_ICA_ANIME_INTERVAL   (10)
 // セットアップ番号
@@ -596,7 +600,8 @@ enum
 #define TIMETABLE_S01_SCENE_END        (129*THREE_INTERRUPT)  // このフレームで止めておく
 
 #define TIMETABLE_S02_BOX_OPEN         (  0*THREE_INTERRUPT)
-#define TIMETABLE_S02_BOX_STOP         ( 39*THREE_INTERRUPT)  // このフレームで止めておく
+#define TIMETABLE_S02_MB_DISP          ( 61*THREE_INTERRUPT)  // このフレームでモンスターボール表示
+#define TIMETABLE_S02_BOX_STOP         (119*THREE_INTERRUPT)  // このフレームで止めておく
 
 enum
 {
@@ -610,9 +615,9 @@ enum
 
 static const u16 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
 {
-  {  40*THREE_INTERRUPT,  49*THREE_INTERRUPT,  70*THREE_INTERRUPT, 129*THREE_INTERRUPT, 100*THREE_INTERRUPT },
-  {  50*THREE_INTERRUPT,  59*THREE_INTERRUPT, 130*THREE_INTERRUPT, 189*THREE_INTERRUPT, 160*THREE_INTERRUPT },
-  {  60*THREE_INTERRUPT,  69*THREE_INTERRUPT, 190*THREE_INTERRUPT, 249*THREE_INTERRUPT, 220*THREE_INTERRUPT },
+  { 150*THREE_INTERRUPT, 159*THREE_INTERRUPT, 200*THREE_INTERRUPT, 259*THREE_INTERRUPT, 230*THREE_INTERRUPT },
+  { 160*THREE_INTERRUPT, 169*THREE_INTERRUPT, 260*THREE_INTERRUPT, 319*THREE_INTERRUPT, 290*THREE_INTERRUPT },
+  { 170*THREE_INTERRUPT, 179*THREE_INTERRUPT, 320*THREE_INTERRUPT, 379*THREE_INTERRUPT, 350*THREE_INTERRUPT },
 };
 
 // VBlank中のリクエスト
@@ -1172,7 +1177,7 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
 
   // DEBUG
 #ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG ){
 
     static fx32 fovy = CAMERA_FOVY;
     GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
@@ -1469,7 +1474,12 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
         prop->idx  = head_obj_idx +j;
         prop->draw = TRUE;
         if( THREE_USER_OBJ_IDX_MB_L <= (head_user_obj_idx +j) && (head_user_obj_idx +j) <= THREE_USER_OBJ_IDX_MB_R )
+        {
           prop->objstatus.trans = three_mb_trans[(head_user_obj_idx +j) - THREE_USER_OBJ_IDX_MB_L];
+
+          // 初期は非表示
+          prop->draw = FALSE;
+        }
         h++;
       }
     }
@@ -1544,13 +1554,10 @@ static void Psel_ThreeS02Main( PSEL_WORK* work )
   }
 
   // カメラアニメ
-  //@todo カメラアニメが決まっていないため最初のみのとこで回す
-#if 0
   {
     ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
-#endif
 
   // フレーム
   work->three_frame++;
@@ -3684,8 +3691,8 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
   // バックグラウンドカラー
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x2f3b );
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x2f3b );
+  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
  
   Psel_ThreeS02Init( work );
   Psel_PokeSetInit( work );
@@ -3722,7 +3729,7 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
   //if( work->three_frame == TIMETABLE_S02_BOX_OPEN )
   if( work->sub_seq_frame == 15 )
   {
-    PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
+    //PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
   }
 
   Psel_ThreeS02OnlyMbSelectAnimeMain( work ); 
@@ -3856,13 +3863,22 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   case S02_MAIN_SEQ_BOX_OPEN_STOP_WAIT:
     {
       Psel_ThreeS02Main( work );
-      //if( work->three_frame == TIMETABLE_S02_BOX_STOP )  // ～ボックスが開くまで
+      
+      if( work->three_frame == TIMETABLE_S02_MB_DISP )  // このフレームでモンスターボール表示
       {
-        if( ICA_ANIME_IncAnimeFrameNoLoop( work->three_ica_anime, THREE_ADD ) )
+        int i;
+        // モンスターボール表示
+        // MBの前にはTHREE_USER_OBJ_IDX_S02がある為-1している
+        for( i=THREE_USER_OBJ_IDX_MB_L-1; i<THREE_USER_OBJ_IDX_MB_R; i++ )
         {
-          *seq = S02_MAIN_SEQ_EXPLAIN_INIT;
+          THREE_OBJ_PROPERTY* prop;
+          prop = &(work->three_obj_prop_tbl[i]);
+          prop->draw = TRUE;
         }
-        ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+      }
+      else if( work->three_frame == TIMETABLE_S02_BOX_STOP )  // ～ボックスが開くまで
+      {
+        *seq = S02_MAIN_SEQ_EXPLAIN_INIT;
       }
     }
     break;
