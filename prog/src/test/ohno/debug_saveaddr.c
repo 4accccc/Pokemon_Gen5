@@ -40,6 +40,8 @@
 #include "savedata/c_gear_picture.h"
 #include "savedata/save_tbl.h"
 
+#include "savedata/medalbox.h"
+#include "../../savedata/medalbox_local.h"
 
 typedef struct _DEBUGSAVEADDR_WORK DEBUGSAVEADDR_WORK;
 
@@ -645,6 +647,20 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
           pAddr = (u8*)BOXDAT_GetPokeDataAddress(pBox, i, j);
           OS_TPrintf("\"%s%d\",\"0x%x\",\"%d\"\n","BOX_POKEMON",i*BOX_MAX_POS+j, (u32)pAddr-(u32)topAddr, POKETOOL_GetPPPWorkSize());
         }
+      }
+    }
+
+    {//メダルデータ：swan新規
+      MEDALBOX * p_mdlbox = SaveData_GetMedalBox( pWork->pSaveData );
+      int i;
+      for (i = 0; i < MDLID_MAX; i ++ )
+      {
+        const MEDAL_ST * pAddr = &p_mdlbox->medal[i];
+        OS_Printf("\"%s%03d\",\"0x%x\",\"%d\n","MEDALID",i, (u32)pAddr-(u32)topAddr, sizeof(MEDAL_ST));
+      }
+      {
+        const u8 * pAddr = &p_mdlbox->push_medal;
+        OS_Printf("\"%s\",\"0x%x\",\"%d\n","PUSH_MEDAL", (u32)pAddr-(u32)topAddr, sizeof(u8));
       }
     }
   }

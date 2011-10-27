@@ -11,40 +11,7 @@
 
 #include "savedata/medalbox.h"
 #include "savedata/save_tbl.h"
-
-//=============================================================================
-/**
- *					構造体宣言
-*/
-//=============================================================================
-
-//-------------------------------------
-///	メダル構造体
-//=====================================
-typedef struct {
-  u16   get_year :7;        // 取得年
-  u16   get_month :4;       // 取得月
-  u16   get_day :5;         // 取得日
-
-  u16   medal_state : 3;    // メダル状態
-  u16   is_new :1;          // 新着フラグ
-  u16   padding :12;
-}MEDAL_ST;
-
-
-//-------------------------------------
-///	メダルボックスデータ構造体
-//=====================================
-struct _MEDALBOX{
-  MEDAL_ST  medal[MDLID_MAX]; // メダルデータ
-  u8        push_medal;       // イチオシメダル番号
-  u8        box_rank;         // メダルボックスランク
-  u16       padding;
-
-  //メダルボックス内にせいそくちリストセーブデータを配置する。
-  //せいそくちリストワークをPRIVATEにするため構造体を入れずサイズ分だけ確保
-  u8        habitat_list_save_area[HABITATLIST_SAVE_WORK_SIZE];
-};
+#include "medalbox_local.h"
 
 //=============================================================================
 /**
@@ -110,6 +77,30 @@ static void SetMedalState( MEDAL_ST* p_medal_st , u8 state )
   GF_ASSERT( p_medal_st->medal_state < state );
 
   p_medal_st->medal_state = state;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルの日付を設定
+ *
+ *	@param	p_medal_st 
+ *	@param	year 
+ *	@param	month 
+ *	@param	day 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SetMedalDate( MEDAL_ST* p_medal_st, u8 year, u8 month, u8 day )
+{
+  GF_ASSERT( year <= 99 );
+  GF_ASSERT( month >= 1 );
+  GF_ASSERT( month <= 12 );
+  GF_ASSERT( day >= 1 );
+  GF_ASSERT( day <= 31 );
+
+  p_medal_st->get_year      = year;
+  p_medal_st->get_month     = month;
+  p_medal_st->get_day       = day;
 }
 
 //=============================================================================
@@ -228,18 +219,13 @@ void MEDALBOX_SetTitleMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id, u8 year
 {
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
 
-  GF_ASSERT( year <= 99 );
-  GF_ASSERT( month <= 12 );
-  GF_ASSERT( day <= 31 );
-
   SetMedalState( p_medal_st , MEDAL_STATE_TITLE_GET );
+
+  SetMedalDate( p_medal_st, year, month, day );
 
   // 新品フラグを立てる
   p_medal_st->is_new = TRUE;
   
-  p_medal_st->get_year      = year;
-  p_medal_st->get_month     = month;
-  p_medal_st->get_day       = day;
 }
 
 //----------------------------------------------------------------------------
@@ -256,17 +242,11 @@ void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id , u8 year
 {
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
 
-  GF_ASSERT( year <= 99 );
-  GF_ASSERT( month <= 12 );
-  GF_ASSERT( day <= 31 );
-
   GF_ASSERT( p_medal_st->medal_state == MEDAL_STATE_HINT_ACHIVE );
   
   SetMedalState( p_medal_st , MEDAL_STATE_HINT_GET );
 
-  p_medal_st->get_year      = year;
-  p_medal_st->get_month     = month;
-  p_medal_st->get_day       = day;
+  SetMedalDate( p_medal_st, year, month, day );
 }
 
 //----------------------------------------------------------------------------
@@ -509,6 +489,7 @@ void DEBUG_SetMedalState(MEDALBOX * p_mdlbox, MedalID medal_id , u8 state)
 {
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
   p_medal_st->medal_state = state;
+  SetMedalDate( p_medal_st, 11, 1, 1 );  //仮
 }
 #endif  //PM_DEBUG
 
