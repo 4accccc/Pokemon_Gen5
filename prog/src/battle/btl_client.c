@@ -53,7 +53,7 @@
 
 #include "debug/debug_hudson.h"
 
-#include "msg/msg_pw_director_oldman.h"
+#include "msg/msg_pw_director_gentleman.h"
 
 enum {
   PRINT_FLG = FALSE,
@@ -1668,10 +1668,11 @@ static int _get_player_client_seq(void)
 }
 
 
-#define PW_DIRECTOR_RAND_MSG_MAX    (  6 )
-#define PW_DIRECTOR_1RANK_MSG_MAX   ( 13 )
+#define PW_DIRECTOR_RAND_MSG_MAX    (  6 )  // ランダムメッセージの数
+#define PW_DIRECTOR_FIRST_MSG_MAX   (  2 )  // 初回メッセージの数
+#define PW_DIRECTOR_1RANK_MSG_MAX   ( 15 )  // ランク１つ分のメッセージの総数
 
-static const u8 rank_tbl[]={ 1,1,1,2,3 };
+static const u8 rank_tbl[]={ 0,0,0,1,2 };
 
 //----------------------------------------------------------------------------------
 /**
@@ -1699,7 +1700,14 @@ static int _get_director_msg( BTL_CLIENT *wk )
       result = pw_director_0_delay + PW_DIRECTOR_1RANK_MSG_MAX*rank;
     // 超過していなかったらランダムメッセージ
     }else{
-      result = GFUser_GetPublicRand(PW_DIRECTOR_RAND_MSG_MAX) + PW_DIRECTOR_1RANK_MSG_MAX*rank;
+      // １ターン目は「台本確認しなさい」メッセージ
+      if(wk->clientTurnCount==0){
+        result = pw_director_0_firstturn_01 + GFUser_GetPublicRand(PW_DIRECTOR_FIRST_MSG_MAX) 
+                 + PW_DIRECTOR_1RANK_MSG_MAX*rank;
+      }else{
+        // 初回以外はランダムメッセージ
+        result = GFUser_GetPublicRand(PW_DIRECTOR_RAND_MSG_MAX) + PW_DIRECTOR_1RANK_MSG_MAX*rank;
+      }
     }
   }
   

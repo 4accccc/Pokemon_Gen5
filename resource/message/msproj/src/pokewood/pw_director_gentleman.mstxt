@@ -447,24 +447,24 @@
 			<Text>カントク「カット！　なんじゃ！？
 よそうがいの　けっかに　なったの！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:04:34" />
+				User="mori:W00269"
+				Time="2011-10-26T12:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
-				Time="2011-08-02T10:58:47" />
+				Time="2011-10-26T12:36:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カントク「カット！　何じゃ！？
 予想外の　結果に　なったの！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:05:13" />
+				User="mori:W00269"
+				Time="2011-10-26T12:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
-				Time="2011-08-02T10:58:49" />
+				Time="2011-10-26T12:36:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -472,7 +472,79 @@
 </Comment>
 			<CommentModifiedBy
 				User="mori:W00269"
-				Time="2011-08-25T09:59:10" />
+				Time="2011-10-26T12:36:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_0_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「まずは　だいほんを
+よーく　かくにん　するんじゃ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:33:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:33:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「まずは　台本を
+よーく　確認するんじゃ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:33:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク0～2）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:42:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_0_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「わかっとるな？　
+だいほんかくにんは　じゅうようじゃ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:33:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「わかっとるな？　
+台本確認は　重要じゃ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:35:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:33:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク0～2）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:43:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -943,6 +1015,78 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_director_3_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「もちろん　だいほんは
+あたまに　たたきこんで　おるじゃろ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:38:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:37:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「もちろん　台本は
+頭に　たたきこんで　おるじゃろ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:38:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:37:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク3）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:43:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_3_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「きほんに　もどって
+だいほんも　みておいて　くれい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:39:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:37:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「基本に　戻って
+台本も　見ておいて　くれい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:39:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:37:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク3）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:43:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_director_msg_4_1"
 		Style="Large">
 		<LanguageCell
@@ -1409,6 +1553,78 @@
 			<CommentModifiedBy
 				User="mori:W00269"
 				Time="2011-08-25T11:44:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_4_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「おぬしに　だいほんの
+ことを　いうのは　しのびないのう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:41:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:40:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「お主に　台本の
+事を　言うのは　しのびないのう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:41:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:40:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク4）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:43:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_4_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「だいほんに　きになる
+ところは　なかったかのう？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:41:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:40:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「台本に　気になる
+所は　なかったかのう？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:40:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク4）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-26T12:43:30" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>

@@ -448,6 +448,78 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_director_0_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「ダイホン　チェックハ
+ヤクシャノ　キホン　デスヨ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:06:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「ダイホン　チェックハ
+ヤクシャノ　キホン　デスヨ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:06:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク0～2）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_0_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「ダイホン　チェックハ
+ヤクシャノ　キホン　デスヨ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:06:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「ダイホン　チェックハ
+ヤクシャノ　キホン　デスヨ！</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:06:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク0～2）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_director_msg_3_1"
 		Style="Large">
 		<LanguageCell
@@ -894,6 +966,78 @@
 			<CommentModifiedBy
 				User="mori:W00269"
 				Time="2011-08-25T11:40:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_3_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「ダイホン　チェックハ
+フィニッシュ　シテルノ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:08:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「ダイホン　チェックハ
+フィニッシュ　シテルノ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:08:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク3）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_3_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「ダイホン　チェックハ
+フィニッシュ　シテルノ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:08:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「ダイホン　チェックハ
+フィニッシュ　シテルノ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:08:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク3）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:27:51" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1353,6 +1497,78 @@
 			<CommentModifiedBy
 				User="mori:W00269"
 				Time="2011-08-25T11:44:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_4_firstturn_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「コノ　ダイホンハ
+アナタノ　コノミ　カシラ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:09:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「コノ　ダイホンハ
+アナタノ　コノミ　カシラ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:09:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク4）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_director_4_firstturn_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントク「コノ　ダイホンハ
+アナタノ　コノミ　カシラ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:09:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントク「コノ　ダイホンハ
+アナタノ　コノミ　カシラ？</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T06:09:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>最初のターンに台本チェックを促すメッセージ(ランク4）
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T04:28:15" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
