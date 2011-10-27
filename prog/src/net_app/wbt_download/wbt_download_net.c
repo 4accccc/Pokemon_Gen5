@@ -39,7 +39,7 @@
 #include "wbt_download_net.h"
 
 #ifdef PM_DEBUG
-#define DEBUG_CHECK_DATA_NONE
+//#define DEBUG_CHECK_DATA_NONE
 #endif //PM_DEBUG
 
 //=============================================================================
@@ -429,7 +429,7 @@ static void Wbt_Download_Net_Seq_Wifi( WBTDLNET_SEQ_WORK *p_seqwk, int *p_seq, v
       param.cp_attribute_02   = "";
       param.cp_attribute_03   = "";
       param.GetDownloadIndexCallback = Wbt_Download_Net_GetDownloadIndexCallback;
-      param.file_size = 55536;
+      param.file_size = sizeof(WBTDL_TOTAL_DATA);
 
       OS_TPrintf( "Wi-Fiサーチリクエスト\n" );
       if( COMMON_DOWNLOAD_RequestState( p_wk->p_common_download, COMMON_DOWNLOAD_REQ_WIFI_ND_START_SEARCH_DOWNLOAD, &param ) )
