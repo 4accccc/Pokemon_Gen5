@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_swrival.xls  pattern_num = 16
+ * original = fmmdl_anm_nonflip_swrival.xls  pattern_num = 17
  */
 //=========================================================================
 
@@ -18,7 +18,7 @@
 
 
 ///フレーム数定義
-#define DRAW_ANMFRM_NONFLIP_SWRIVAL_ACT0  ( 40 )
+#define DRAW_ANMFRM_NONFLIP_SWRIVAL_ACT0  ( 21 )
 
 
 #endif //__H_FMMDL_ANM_NONFLIP_SWRIVAL_H__

@@ -30,7 +30,7 @@ ANMID_SHINMU_C,MDLSIZE_64x64:8:8:15:t8x8x15.imd:t8x8x15:mmdl_anm/tmp/fmmdl_anm_s
 ANMID_NONFLIP_SWLEADER4,MDLSIZE_32x32:4:4:18:t4x4x18.imd:t4x4x18:mmdl_anm/tmp/fmmdl_anm_nonflip_swleader4.csv,
 ANMID_NONFLIP_BIGFOUR3,MDLSIZE_32x32:4:4:14:t4x4x14.imd:t4x4x14:mmdl_anm/tmp/fmmdl_anm_nonflip_bigfour3.csv,
 ANMID_NONFLIP_SWBOSS,MDLSIZE_32x32:4:4:19:t4x4x19.imd:t4x4x19:mmdl_anm/tmp/fmmdl_anm_nonflip_swboss.csv,
-ANMID_NONFLIP_SWRIVAL,MDLSIZE_32x32:4:4:16:t4x4x16.imd:t4x4x16:mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv,
+ANMID_NONFLIP_SWRIVAL,MDLSIZE_32x32:4:4:17:t4x4x17.imd:t4x4x17:mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv,
 ANMID_NONFLIP_SWSAGE1,MDLSIZE_32x32:4:4:15:t4x4x15.imd:t4x4x15:mmdl_anm/tmp/fmmdl_anm_nonflip_swsage1.csv,
 #END,,
 
@@ -134,5 +134,5 @@ ANMID_NONFLIP_SWSAGE1
 //パターン数 18 スワンカミツレ　フリップ無しアニメ＋芝居1パターン
 //パターン数 14 スワンレンブ　フリップ無しアニメ＋芝居1パターン
 //パターン数 19 アクロマ　フリップ無しアニメ＋芝居2パターン
-//パターン数 16 スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
+//パターン数 17 スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
 //パターン数 15 スワンゲーチス　フリップ無しアニメ＋芝居1パターン

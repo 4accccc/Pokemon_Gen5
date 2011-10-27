@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_swrival.xls  pattern_num = 16
+ * original = fmmdl_anm_nonflip_swrival.xls  pattern_num = 17
  */
 //=========================================================================
 
@@ -13,10 +13,11 @@
 // 芝居１
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWRival_Act0[] = {
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
-  { 15, ANMFLIP_OFF, ANMFLIP_OFF, 10 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 

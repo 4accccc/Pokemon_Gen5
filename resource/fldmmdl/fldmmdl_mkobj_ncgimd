@@ -1309,9 +1309,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swidolw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #swrival.imd
-./mmdl_res/swrival.imd: ./mmdl_nchara/swrival.ncg ./mmdl_nchara/swrival.ncl ./mmdl_dmy/t4x4x16.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv
+./mmdl_res/swrival.imd: ./mmdl_nchara/swrival.ncg ./mmdl_nchara/swrival.ncl ./mmdl_dmy/t4x4x17.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv
 	@echo convert ncg_imd swrival
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swrival.ncg ./mmdl_res ./mmdl_dmy/t4x4x16.imd 4 4 16
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swrival.ncg ./mmdl_res ./mmdl_dmy/t4x4x17.imd 4 4 17
 
 #fesitem.imd
 ./mmdl_res/fesitem.imd: ./mmdl_nchara/fesitem.ncg ./mmdl_nchara/fesitem.ncl ./mmdl_dmy/t4x4x1.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_onecell.csv
