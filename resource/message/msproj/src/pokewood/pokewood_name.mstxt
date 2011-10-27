@@ -7706,4 +7706,39 @@ MONSNO_KARATEOUの
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="pw_boss_poke_name_684"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドーブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドーブル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>"ポケウッド用ボスポケモン
+MONSNO_KARATEOUの
+上映時ニックネーム"</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:30" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
