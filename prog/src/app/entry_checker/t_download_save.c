@@ -79,6 +79,7 @@ static BOOL td_load_init_data( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
 static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk );
 //
 static BOOL td_chk_get_pokemon( T_DOWNLOAD_MAIN_WORK * wk, const s32 id );
+static s32  td_chk_download_data( T_DOWNLOAD_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -178,32 +179,19 @@ void TdSave_exit_data( T_DOWNLOAD_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  リストデータの初期化
+ *	@brief  リストデータの初期化(SELECTのみ通る処理)
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *
- *	@retval
+ *	@retval s32					(個数)
  */
 //-----------------------------------------------------------------------------
 s32 TdSave_init_list_data( T_DOWNLOAD_MAIN_WORK* wk )
 {
-	u16				tid;
-	s32				i;
 	s32				cnt;
-	
-	// 何個あるかをチェックする
-	// =>連番にはなっているはず
-	// (本当はそれなりのチェックがあるはず)
 	//
-	cnt = 0;
-	for(i=0;i<WBTDL_TOTAL_NUM;i++){
-		// 0埋めしているので、トーナメントIDで判定しておく
-		// => サーバが決まったら再度確認
-		tid = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[i] );
-		if(tid > 0){
-			cnt++;
-		}
-	}
+	// データをチェックして必要なデータをセット
+	cnt = td_chk_download_data( wk );
 	return( cnt );
 }
 
@@ -410,7 +398,8 @@ void TdSave_init_save( T_DOWNLOAD_MAIN_WORK* wk, const s32 src, const s32 dest )
 		return;
 	}
 	// アドレス指定
-	wbtdl = &wk->Param->data->data[src];
+//	wbtdl = &wk->Param->data->data[src];
+	wbtdl = wk->CheckBuffer[src];
 	//
 	// セーブ先を保存
 //	wk->SaveCurrent = dest;
@@ -572,7 +561,8 @@ BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 	// リストの情報のtournamentidと
 	// セーブの情報のtournamentidが一致しているかチェック
 	// フレーム情報
-	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+//	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+	tid[0] = WBTDL_DATA_GetTournamentId( wk->CheckBuffer[num] );
 	// セーブ情報
 	for(i=0;i<wk->SaveMaxNum;i++){
 		tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
@@ -604,7 +594,8 @@ static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk )
 	// (実データをコピーしておく)
 	// download -> local
 	//--------------------------
-	wbtdl = &wk->Param->data->data[wk->SaveSrc];
+//	wbtdl = &wk->Param->data->data[wk->SaveSrc];
+	wbtdl = wk->CheckBuffer[wk->SaveSrc];
 	GFL_STD_MemCopy32( wbtdl, wk->WbtSaveData[wk->SaveDest], sizeof(WBTDL_DATA) );
 	wk->SaveFlag |= (1<<(4+wk->SaveDest));
 	//
@@ -641,5 +632,44 @@ static BOOL td_chk_get_pokemon( T_DOWNLOAD_MAIN_WORK * wk, const s32 id )
 	//
 	bflg = ZUKANSAVE_GetPokeGetFlag( zsave, id );
 	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロードデータのチェック(正しいデータのみリストにセット)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval s32					(個数)
+ */
+//-----------------------------------------------------------------------------
+static s32 td_chk_download_data( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s32		i;
+	s32		j;
+	BOOL	bflg;
+	const WBTDL_DATA*	wbtdl;
+	
+	// 不正なデータかどうかをチェック
+	j=0;
+	for(i=0;i<WBTDL_TOTAL_NUM;i++){
+		// ダウンロードしたデータをチェック(ここだけ参照)
+		wbtdl = &wk->Param->data->data[i];
+		bflg = WBTDL_DATA_CheckIllegal( wbtdl );
+		// test
+//		if(i == 3){
+//			bflg = FALSE;
+//		}
+		if(bflg == TRUE){
+			wk->CheckBuffer[j] = GFL_HEAP_AllocClearMemoryLo( wk->heapID, sizeof(WBTDL_DATA) );
+			// wbtdl -> checkbuffer[j]
+			GFL_STD_MemCopy32( wbtdl, wk->CheckBuffer[j], sizeof(WBTDL_DATA) );
+			//
+//			OS_Printf("data ok :%d\n",i);
+			j++;
+		}
+	}
+	OS_Printf("total data ok :%d\n",j);
+	return( j );
 }
 

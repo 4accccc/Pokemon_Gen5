@@ -337,5 +337,7 @@ typedef struct
 	//
 	WBTDL_DATA				*CurrentWbt;					// カレント(上画面の切り替えタイミング)
 	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用
+	//
+	WBTDL_DATA				*CheckBuffer[WBTDL_TOTAL_NUM];	// チェック後のデータ
 } T_DOWNLOAD_MAIN_WORK;
 

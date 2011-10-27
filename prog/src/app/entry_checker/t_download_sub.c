@@ -1807,7 +1807,8 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num 
 	}
 	// リストデータ
 	else{
-		wbtl = &wk->Param->data->data[num];
+//		wbtl = &wk->Param->data->data[num];
+		wbtl = wk->CheckBuffer[num];
 	}
 	// いったんクリア
 	for(i=0;i<6;i++){
@@ -1949,7 +1950,8 @@ static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s
 	// リストの情報のtournamentidと
 	// セーブの情報のtournamentidが一致しているかチェック
 	// フレーム情報
-	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+//	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+	tid[0] = WBTDL_DATA_GetTournamentId( &wk->CheckBuffer[num] );
 	// セーブ情報
 	for(i=0;i<wk->SaveMaxNum;i++){
 		tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
@@ -2178,7 +2180,8 @@ static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PR
 	const WBTDL_DATA*	wbtl;
 	
 	// アドレスセット
-	wbtl = &wk->Param->data->data[pos];
+//	wbtl = &wk->Param->data->data[pos];
+	wbtl = wk->CheckBuffer[pos];
 	
 	// トーナメント名
 	strbuf  = GFL_STR_CreateBuffer( 128, wk->heapID );
@@ -2460,7 +2463,8 @@ void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 
 	if(mode == T_DOWNLOAD_DATA_SAVE){
 		wbtdl = wk->WbtSaveData[num];
 	}else{
-		wbtdl = &wk->Param->data->data[num];
+//		wbtdl = &wk->Param->data->data[num];
+		wbtdl = wk->CheckBuffer[num];
 	}
 	
 	//
@@ -2568,7 +2572,8 @@ void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 
 	if(mode == T_DOWNLOAD_DATA_SAVE){
 		wbtdl = wk->WbtSaveData[num];
 	}else{
-		wbtdl = &wk->Param->data->data[num];
+//		wbtdl = &wk->Param->data->data[num];
+		wbtdl = wk->CheckBuffer[num];
 	}
 	// アイテム数
 	wk->ItemNum[0] = TdSave_get_item_num( wk, wbtdl, T_DOWNLOAD_SAVE_ITEM_POKE );
@@ -2878,7 +2883,8 @@ void TdCmn_disp_panel_string( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s
 	}
 	// リストデータ(要修正)
 	else{
-		wbtl = &wk->Param->data->data[num];
+//		wbtl = &wk->Param->data->data[num];
+		wbtl = wk->CheckBuffer[num];
 	}
 	
 	// いったんクリア

@@ -76,11 +76,11 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 {
-#ifndef __DOWNLOAD_CHECK__
-	UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
-#else
+//#ifndef __DOWNLOAD_CHECK__
+//	UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+//#else
 	UI_TEMPLATE_HEAP_SIZE = 0x40000,  ///< ヒープサイズ
-#endif
+//#endif
 };
 
 // 段階
@@ -502,22 +502,28 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_T_DOWNLOAD_GRA, NARC_t_download_gra_t_download_pos_tblbin, wk->heapID );
 	// testバッファ
 	wk->TestBuffer = 0;
+	// バッファ
+	for(i=0;i<WBTDL_TOTAL_NUM;i++){
+		wk->CheckBuffer[i] = 0;
+	}
 	
 	// セーブデータの読み込み(全モード必ず)
 	wk->SaveMaxNum = TdSave_init_data( wk );
 	
 #ifdef __DOWNLOAD_CHECK__	// debug用
+#if 0	// なし
     // 選択画面からの場合だけデバッグを発動(暫定処理)
 	if(wk->Param->status == T_DOWNLOAD_MODE_SELECT){
 		wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_crc_bin, wk->heapID );
    		
 		// 12ブロック分上書き
 		{
-			WBTDL_DATA *adr = &wk->Param->data->data[0];
+//			WBTDL_DATA *adr = &wk->Param->data->data[0];
 			// wbtdl => save_p
 			GFL_STD_MemCopy32( wk->TestBuffer, adr, 12*sizeof(WBTDL_DATA) );
 		}
 	}
+#endif
 #endif
 	// リストデータのチェック
 	// =>選択モードの場合のみ
@@ -573,6 +579,8 @@ static void td_main( T_DOWNLOAD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void td_exit( T_DOWNLOAD_MAIN_WORK* wk )
 {
+	s32	i;
+	
 	//-----------------
 	// 終了パラメータ
 	//------------------
@@ -619,6 +627,13 @@ static void td_exit( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_exit_framelist( wk );
 	
 	// 上、下画面をまとめて処理
+	// バッファ
+	for(i=0;i<WBTDL_TOTAL_NUM;i++){
+		if(wk->CheckBuffer[i]){
+			GFL_HEAP_FreeMemory( wk->CheckBuffer[i] );
+			wk->CheckBuffer[i] = 0;
+		}
+	}
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	// debugのバッファクリア
