@@ -366,34 +366,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わかるでしょ？▼
-ポケモン　みたいにさ
+ポケモン　みたいにね
 わざを　つかうのよ！▼
 Ｆー００の　からだには
 ポケモンの　わざを　つかえる▽
 システムが　ついてるんだから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『分かるでしょ？▼
-ポケモン　みたいにさ
-わざを　つかうのよ！▼
+ポケモン　みたいにね
+わざを　使うのよ！▼
 Ｆー００の　身体には
 ポケモンの　わざが　使える▽
 システムが　ついてるんだから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -346,12 +346,12 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">おおものはいゆう</language>
-		<language name="JPN_KANJI" width="256">おおものはいゆう</language>
+		<language name="JPN" width="256">ベテランはいゆう</language>
+		<language name="JPN_KANJI" width="256">ベテランはいゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">なぞのおとこ</language>
-		<language name="JPN_KANJI" width="256">なぞのおとこ</language>
+		<language name="JPN" width="256">あやしい　しんし</language>
+		<language name="JPN_KANJI" width="256">あやしい　しんし</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">？？？『グゴガガーンッ！！</language>

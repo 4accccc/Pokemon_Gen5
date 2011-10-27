@@ -6,25 +6,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -99,28 +99,28 @@
 			<Text>モニカ『なんでよ！！　もうっ！
 やっぱり　おおきい　ままじゃない……▼
 ねえ　[Name:TrainerName Idx="1" ]……
-わたし　もう　このままなのかな……</Text>
+わたし　ずっと　このままなのかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『なんでよ！！　もうっ！
-やっぱり　おおきい　ままじゃない……▼
+やっぱり　大きいままじゃない……▼
 ねえ　[Name:TrainerName Idx="1" ]……
-わたし　もう　このままなのかな……</Text>
+私　ずっと　このままなのかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -154,29 +154,29 @@
 			Language="JPN">
 			<Text>モニカ『ちょっと！　ちょっと！
 かんたんに　あきらめないでよ！▼
-わたしの　こいびと　でしょ！
+あんた　わたしのこいびと　でしょ！
 ほうほうが　ないか　かんがえてよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちょっと！！ちょっと！！
-かんたんに　あきらめないでよ！▼
-わたしの　こいびと　でしょ！
-ほうほうが　ないか　かんがえてよ！</Text>
+簡単に　諦めないでよ！▼
+あんた　私の恋人　でしょ！
+方法が　ないか　考えてよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -208,29 +208,85 @@
 		Label="pw_event0_react_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『ちょっと！　ちょっと！
-かんたんに　いわないでっ！！▼
-[Name:TrainerName Idx="1" ]に　なにが　できるのよ！</Text>
+			<Text>モニカ『だったら　はやくなんとかしてっ！
+こんな　はずかしい　すがたじゃ▽
+わたし　いきてられないわっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ちょっと！　ちょっと！
-かんたんに　いわないでっ！！▼
-[Name:TrainerName Idx="1" ]に　なにが　できるのよ！</Text>
+			<Text>モニカ『だったら　早くなんとかしてっ！
+こんな　恥ずかしい　姿じゃ▽
+私　生きてられないわっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_react_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『まずは　おちついて</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『まずは　落ち着いて</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_react_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ『しってるわよ……▼
+でも　どうしたら　いいのか
+わかんないんだもんっ！！▽
+じぶんが　こわいんだもん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ『知ってるわよ……▼
+でも　どうしたら　いいのか
+分かんないんだもんっ！！▽
+自分が　こわいんだもん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -252,14 +308,14 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
 いったい　どうすれば　モニカは
-もとに　もどるんでしょう……</Text>
+元に　戻るんでしょう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -267,104 +323,102 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロドリゲス『ボールに　かけられた
-のろいを　とく　ほうほう……▼
+のろいを　とく　ほうほう　か……▼
 そうだな……▼
 のろいとは　つまるところ
 こころの　ちから　だ……▼
-だから　おなじように　つよい
-こころの　ちからを　かのじょに▽
-しめすことが　できれば……</Text>
+だから　ボールの　のろいよりも
+つよい　こころのちからを▽
+かのじょに　しめすことが▽
+できれば　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『ボールに　かけられた
-のろいを　とく　ほうほう……▼
+呪いを　解く　方法か……▼
 そうだな……▼
-のろいとは　つまるところ
-こころの　ちから　だ……▼
-だから　おなじように　つよい
-こころの　ちからを　かのじょに▽
-しめすことが　できれば……</Text>
+呪いとは　つまるところ
+心の　力だ……▼
+だから　ボールの　呪いよりも
+強い　心の力を▽
+彼女に　示すことが▽
+できれば　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『こころの　ちから？
-モニカを　こうげき　するんですか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『こころの　ちから？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『こころの　ちから？
-モニカを　こうげき　するんですか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『心の　力？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『ちがう……▼
-かのじょを　たすけたいという
-つよい　こころが　かのじょに▽
-とどけば　いいんだ……▼
-きみは　こいびと　だろう？▼
-かのじょを　すくいたいのなら
-そのこころを　かのじょに▽
-つたえる　ほうほうを　かんがえるんだ</Text>
+			<Text>ロドリゲス『そうだ……▼
+たとえば　かのじょに　たいする
+とても　つよい　きもち……▽
+つよい　あいを　つたえられたら……▼
+だが……▼
+それは　[Name:TrainerName Idx="1" ]くん……
+キミにしか　できないことだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:53:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『ちがう……▼
-かのじょを　たすけたいという
-つよい　こころが　かのじょに▽
-とどけば　いいんだ……▼
-きみは　こいびと　だろう？▼
-かのじょを　すくいたいのなら
-きみの　おもいを　かのじょに▽
-つたえる　ほうほうを　かんがえるんだ</Text>
+			<Text>ロドリゲス『そうだ……▼
+例えば　彼女に　対する
+とても　強い　気持ち……▽
+強い　愛を　伝えられたら……▼
+だが……▼
+それは　[Name:TrainerName Idx="1" ]くん……
+キミにしか　できないことだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:53:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -398,29 +452,29 @@
 			Language="JPN">
 			<Text>モニカ『ああ！　もうっ！！
 [Name:TrainerName Idx="1" ]！！▼
-もとはと　いえば　ぜんぶ
-あなたの　せいでしょ！！</Text>
+もとはと　いえば　ぜーんぶ
+あんたの　せい　なんだから！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ああ！　もうっ！！
 [Name:TrainerName Idx="1" ]！！▼
-もとはと　いえば　ぜんぶ
-あなたの　せいでしょ！！</Text>
+元はと　言えば　ぜーんぶ
+あんたの　せい　なんだから！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -452,29 +506,29 @@
 		Label="pw_event2_react_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『やけに　すなお　ね……▼
+			<Text>モニカ『いやに　すなおね……▼
 でも　ほんとに　わるいと
-おもってるの　かしら？</Text>
+おもってるの　かしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『やけに　すなお　ね……▼
-でも　ほんとに　わるいと
-おもってるの　かしら？</Text>
+			<Text>モニカ『いやに　素直ね……▼
+でも　ほんとに　悪いと
+思ってるの　かしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -506,54 +560,56 @@
 		Label="pw_event2_react_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『そもそも　あなたが
-へんなボールを　かってきたのが▽
-げんいん　じゃない！！</Text>
+			<Text>モニカ『なに　いってるのよ！？▼
+そもそも　あなたが
+へんなボール　かってきたのが▽
+げんいんじゃない！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『そもそも　あなたが
-へんなボールを　かったのが▽
-げんいん　じゃない！！</Text>
+			<Text>モニカ『何　言ってるのよ！？▼
+そもそも　あなたが
+変なボール　買ってきたのが▽
+原因じゃない！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『すぐ　おこる……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おこらないでよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『すぐ　おこる……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『怒らないでよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -562,58 +618,62 @@
 			Language="JPN">
 			<Text>モニカ『おこるに　きまってるでしょ！
 こんな　めに　あってるんだから！▼
-[Name:TrainerName Idx="1" ]は　わたしのこと
-なんだと　おもってるのよ！</Text>
+[Name:TrainerName Idx="1" ]は　わたしのこと　なんか
+どうだって　いいんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『おこるに　きまってるでしょ！
-こんな　めに　あってるんだから！▼
-[Name:TrainerName Idx="1" ]は　わたしのこと
-なんだと　おもってるのよ！</Text>
+			<Text>モニカ『怒るに　決まってるでしょ！
+こんな目に　合ってるんだから！▼
+[Name:TrainerName Idx="1" ]は　私のこと　なんか
+どうだって　いいんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event3_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]（じぶんの　こころを
-つたえろ　って　いってたけど……▼
+			<Text>[Name:TrainerName Idx="1" ]（どうしたら　いいんだ……
+あいを　つたえろ　って
+いったって　ただの　ことばじゃ……▽
+いまの　モニカには　つうじないよ……▽
 いったい　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]（じぶんの　こころを
-つたえろ　って　いってたけど……▼
+			<Text>[Name:TrainerName Idx="1" ]（どうしたら　いいんだ……
+愛を　伝えろ　って
+言ったって　ただの　言葉じゃ▽
+今の　モニカには　通じないよ……▽
 いったい　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -622,29 +682,29 @@
 			Language="JPN">
 			<Text>モニカ『ちょっと！　[Name:TrainerName Idx="1" ]！
 なに　ボーっと　してるのっ！？▼
-ほんとに　わたしの　こと
-しんぱいして　くれてるの！？</Text>
+ほんとうに　わたしのこと
+しんぱい　してくれてるのっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちょっと！　[Name:TrainerName Idx="1" ]！
 なに　ボーっと　してるのっ！？▼
-ほんとに　わたしの　こと
-しんぱいして　くれてるの！？</Text>
+本当に　私のこと
+心配　してくれてるのっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -676,27 +736,31 @@
 		Label="pw_event3_react_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『なによ　しかたないって……
-めんどくさがってるんでしょ！？</Text>
+			<Text>モニカ『なによ　しかたないって……▼
+けっきょく　[Name:TrainerName Idx="1" ]は
+こんなふうに　なった　わたしのこと▽
+ただ　めんどくさがってるんでしょ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なによ　しかたないって……
-めんどくさがってるんでしょ！？</Text>
+			<Text>モニカ『なによ　仕方ないって……▼
+けっきょく　[Name:TrainerName Idx="1" ]は
+こんな風に　なった　私のこと▽
+ただ　めんどくさがってるんでしょ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -729,26 +793,78 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『けど　って　なによ！！
-けど　って　いうのは！</Text>
+ほかに　なんか　あるわけ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『けど　って　なによ！！
-けど　って　いうのは！</Text>
+けど　って　言うのはっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『してるよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『してるよ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_react_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ『フン！
+くちだけなら　なんとでも　いえるわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ『フン！
+口だけなら　なんとでも　言えるわ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T12:07:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -782,146 +898,153 @@
 			Language="JPN">
 			<Text>モニカ『[Name:TrainerName Idx="1" ]は
 なんにも　してくれないし！▼
-わたしの　じんせい
-これで　オシマイ　だわっ！</Text>
+あーあ！　わたしの　じんせい
+これで　もう　オシマイよっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『[Name:TrainerName Idx="1" ]は
 なんにも　してくれないし！▼
-わたしの　じんせい
-これで　オシマイ　だわっ！</Text>
+あーあ！　私の　人生
+これで　もう　オシマイよっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ねえ　モニカ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『モニカ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ねえ　モニカ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『モニカ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『なによ！　[Name:TrainerName Idx="1" ]！
+			<Text>モニカ『うるさい！　[Name:TrainerName Idx="1" ]！
 わたしが　おおきいからって▽
 おおごえ　だす　ひつようないでしょ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なによ！　[Name:TrainerName Idx="1" ]！
-わたしが　おおきいからって▽
-おおごえ　だす　ひつようないでしょ！▼</Text>
+			<Text>モニカ『うるさい！　[Name:TrainerName Idx="1" ]！
+私が　デカいからって▽
+大声　出す　必要ないでしょ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ちょっと　モニカ！！
-ぼくの　はなしを　きいてくれよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいから　モニカ！！▼
+ぼくの……
+ぼくの　はなしを　きいてくれよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ちょっと　モニカ！！
-ぼくの　はなしを　きいてくれよ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　モニカ！！▼
+僕の……
+僕の　話を　聞いてくれよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『イヤ！！　もうイヤ！！▼
-あたし　いっしょう　このまま
-おっきな　からだで　いきてくのっ！？▼
+			<Text>モニカ『なんだって　いうのよっ！！▼
+どうせ　わたしは　このまま　いっしょう
+この　おおきな　からだの　ままで▽
+いきていくんでしょっ！？▼
 こんな　からだじゃ　いっしょう
-およめにも　いけないじゃない！！▼
-[Name:TrainerName Idx="1" ]だって
-こんな　おおきな　おんなと
+およめにも　いけないっ！！▼
+[Name:TrainerName Idx="1" ]　だって
+こんな　デカい　おんなと
 いっしょに　いたくないんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『イヤ！！　もうイヤ！！▼
-あたし　いっしょう　このまま
-おっきな　からだで　いきてくのっ！？▼
-こんな　からだじゃ　いっしょう
-およめにも　いけないじゃない！！</Text>
+			<Text>モニカ『なんだって　いうのよっ！！▼
+どうせ　私は　このまま　一生
+この　大きな　身体の　ままで▽
+生きていくんでしょっ！？▼
+こんな　身体じゃ　いっしょう
+お嫁にも　いけないっ！！▼
+[Name:TrainerName Idx="1" ]　だって
+こんな　デカい　女と
+いっしょに　いたくないんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -982,25 +1105,25 @@
 		Label="pw_event4_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『かわらないよ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『べつに　かわらないのに…</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『かわらないよ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『別に　変わらないのに…</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T12:07:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1036,31 +1159,31 @@
 ぼくは　なにも　かわらないよ……▼
 たとえ　キミが　これから　ずっと
 おおきいままでも　かわらない▼
-いままで　いっしょだよ……
+いままで　おんなじさ……
 キミのそばに　いるよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『モニカ……
 ぼくは　なにも　かわらないよ……▼
 たとえ　キミが　これから　ずっと
-おおきいままでも　かわらない▼
-いままで　いっしょだよ……
-キミのそばに　いるよ……</Text>
+大きいままでも　変わらない▼
+今までと　同じさ……
+キミの側に　いるよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1117,27 +1240,25 @@
 		Label="pw_event5_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『ありがとう……
-[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ありがとう……
-[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1145,85 +1266,89 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……ぼくたちが　いいムードで　いると
-とつぜん　ロドリゲスが　さけんだ……▼
+とつぜん　ロドリゲスが　さけんだ▼
 モニカの　はいっていた　ボールが▽
-はじけて　こわれたんだ……▼
+はじけて　こわれたって……▼
 だけど　モニカの　からだは　すぐに
-もとに　もどることは　なかった▼
+もとに　もどることは　なかった……▼
 ……　……　……　……▼
 それから　ひとつ　きせつが　めぐるたび
-モニカは　ほんの　すこしづつ▽
+モニカは　ほんの　わずかづつ▽
 ちいさくなって　いった……▼
-おおきな　モニカとの　せいかつは
-こまったことも　あったけど▽
+おおきな　モニカとの　せいかつには
+こまることも　まま　あったけど▽
 つらいと　おもうことは　なかった……▼
 やがて　ぼくが　おじいさん……
 モニカが　おばあさんに　なったころ▽
 ふたりの　しんちょうは▽
-かわらなくなった……</Text>
+かわらなくなったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ぼくたちが　いいムードで　いると
-とつぜん　ロドリゲスが　さけんだ……▼
-モニカの　はいっていた　ボールが▽
-はじけて　こわれたんだ……▼
-だけど　モニカの　からだは　すぐに
-もとに　もどることは　なかった▼
+			<Text>……僕たちが　いいムードで　いると
+突然　ロドリゲスが　さけんだ▼
+モニカの　入っていた　ボールが▽
+弾けて　壊れたって……▼
+だけど　モニカの　身体は　すぐに
+元に　戻ることは　なかった……▼
 ……　……　……　……▼
-それから　ひとつ　きせつが　めぐるたび
-モニカは　ほんの　すこしづつ▽
-ちいさくなって　いった……▼
-おおきな　モニカとの　せいかつは
-こまったことも　あったけど▽
-つらいと　おもうことは　なかった……▼
-やがて　ぼくが　おじいさん……
+それから　ひとつ　季節が　巡るたび
+モニカは　ほんの　わずかづつ▽
+小さくなって　いった……▼
+大きな　モニカとの　生活は
+困ることも　まま　あったけど▽
+辛いと　思うことは　なかった……▼
+やがて　僕が　おじいさん……
 モニカが　おばあさんに　なったころ▽
-ふたりの　しんちょうは▽
-かわらなくなった……</Text>
+二人の　身長は▽
+変わらなくなったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『もういい……　なにもかも……▼
+			<Text>モニカ『はあっ……▼
+もういいわ……　つかれた……
+なにもかも　ぜんぶ……▼
 こんな　すがたに　した　あなたも……
 この　せかいも……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『もういい……　なにもかも……▼
-こんな　すがたに　した　あなたも……
-この　せかいも……</Text>
+			<Text>モニカ『はあっ……▼
+もういいわ……　疲れた……
+なにもかも　全部……▼
+こんな姿に　した　あなたも……
+この世界も……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1255,27 +1380,27 @@
 		Label="pw_event6_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『サヨナラ　[Name:TrainerName Idx="1" ]……▼
+			<Text>モニカ『サヨナラ　[Name:TrainerName Idx="1" ]……
 もう　にどと　あうことは　ないわ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『サヨナラ　[Name:TrainerName Idx="1" ]……▼
-もう　にどと　あうことは　ないわ……</Text>
+			<Text>モニカ『サヨナラ　[Name:TrainerName Idx="1" ]……
+もう　二度と　合うことは　ないわ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1294,141 +1419,147 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『まって……
-モニカ……　どこへ　いくんだよ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『待って……
+モニカ……　どこへ　行くんだよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『さあね……
-ひとの　いないところへ　いくわ……▼
-だって　わたしは　もう　ふつうの
-にんげん　じゃないもの……</Text>
+			<Text>モニカ『どこだって　いいわ……
+ひとのいない　ところ　なら……▼
+だって　わたしは　もう
+もう　にんげん　じゃないもの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『さあね……
-ひとの　いないところへ　いくわ……▼
-だって　わたしは　もう　ふつうの
-にんげん　じゃないもの……</Text>
+			<Text>モニカ『どこだって　いいわ……
+人のいない　ところ　なら……▼
+だって　私は　もう
+もう　人間　じゃないもの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>そこまで　つげると　モニカは
-ぼくに　せを　むけて▽
+			<Text>そこまで　ぼくに　つげると
+モニカは　せを　むけて▽
 うみの　かなたへ　きえていった……▼
-あれから　１０ねんが　たった……▼
-ぼくは　ずっと　モニカを
+……　……　……　……▼
+あれから　１０ねん　たった……▼
+ぼくは　いまも　ずっと　モニカを
 さがしつづけている……▼
-モニカ……
-かのじょは　いま　どこで▽
-なにを　しているんだろう……</Text>
+ああ……　モニカ……
+キミは　いま　どこで▽
+なにを　しているんだい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そこまで　つげると　モニカは
-ぼくに　せを　むけて▽
-うみの　かなたへ　きえていった……▼
-あれから　１０ねんが　たった……▼
-ぼくは　ずっと　モニカを
-さがしつづけている……▼
-モニカ……
-かのじょは　いま　どこで▽
-なにを　しているんだろう……</Text>
+			<Text>そこまで　僕に　告げると
+モニカは　背を　向けて▽
+水面の　彼方へ　消えていった……▼
+……　……　……　……▼
+あれから　１０年　経った……▼
+僕は　今も　ずっと　モニカを
+探し続けている……▼
+ああ……　モニカ……
+キミは　今　どこで▽
+なにを　しているんだい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……
-うう……　うう……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……▼
+ウウ……　いたいよ……▼
+ウッ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……
-うう……　うう……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……▼
+ウウ……　痛いよ……▼
+ウッ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『すまない……
-モニカ……　こうするしか……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ごめんね……
+モニカ……
+ぼくには　こうするしか　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『すまない……
-モニカ……　こうするしか……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ごめんね……
+モニカ……
+ぼくには　こうするしか　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1436,86 +1567,92 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロドリゲス『おい……
-きを　うしなったぞ……▼
-どういう　つもりなんだ　キミ……</Text>
+モニカは　きを　うしなったぞ……▼
+どういう　つもりなんだ……
+[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『おい……
-きを　うしなったぞ……▼
-どういう　つもりなんだ　キミ……</Text>
+モニカは　気を　失ったぞ……▼
+どういう　つもりなんだ……
+[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『……　……　……▼
+ロドリゲスさん……▼
 やはり　そのモンスターボールを
 ぼくに　ください……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『……　……　……▼
+ロドリゲスさん……▼
 やはり　そのモンスターボールを
-ぼくに　ください……</Text>
+僕に　ください……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『このボールも　かのじょも
-このせかいに　きけんだ……▼
-わたすわけには……</Text>
+			<Text>ロドリゲス『ダメだ……
+このボールも　かのじょも▽
+このせかいに　きけんすぎる……▼
+キミに　わたすわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『このボールも　かのじょも
-このせかいに　きけんだ……▼
-わたすわけには……</Text>
+			<Text>ロドリゲス『ダメだ……
+このボールも　彼女も▽
+この世界に　危険すぎる……▼
+キミに　渡すわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1523,131 +1660,201 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
-ぼくは　かのじょと……
-モニカと　うんめいを　ともに　します</Text>
+ぼくは　かのじょと……▼
+モニカと　これからの　うんめいを
+ともに　するつもりです……▼
+そのボールを　くれないなら
+ぼくは　あなたを　たおしてでも▽
+うばって　いきます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
-ぼくは　かのじょと……
-モニカと　うんめいを　ともに　します</Text>
+ぼくは　彼女と……▼
+モニカと　これからの　運命を
+共に　するつもりです……▼
+そのボールを　くれないなら
+僕は　あなたを　倒してでも▽
+うばって　いきます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『……　……　……　……▼
-わたしは　もう　なにも　いうまい……</Text>
+			<Text>ロドリゲス『キミは……▼
+こくさいけいさつ　である
+この　わたしを　おどすつもりか……
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『……　……　……　……▼
-わたしは　もう　なにも　いうまい……</Text>
+			<Text>ロドリゲス『キミは……▼
+国際警察　である
+この私を　おどすつもりか……
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ありがとう……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロドリゲス『……　……　……　……▼
+わかった……
+わたしは　もう　なにも　いうまい……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロドリゲス『……　……　……　……▼
+分かった……
+私は　もう　なにも　言うまい……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ありがとう……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ありがとう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event7_enemy_5">
+		Label="pw_event7_enemy_6">
 		<LanguageCell
 			Language="JPN">
 			<Text>……コードネーム　ロドリゲスこと
 わたしは　こくさいけいさつとして▽
 あるまじき　つみを　おかした……▼
-よのなかに　あってはならない
-きけんな　しろものを　みすみす▽
+よのなかに　あっては　ならない
+きけんな　そんざいを　みすみす▽
 みすごして　しまったのだ……▼
-……つきひは　ながれ
-わたしは　こくさいけいさつを▽
-いんたい　した……▼
+……わたしは　この　じけんの
+せきにんを　とって▽
+こくさいけいさつを　やめた……▼
+……あれから　１０ねんいじょうの
+つきひが　ながれた……▼
 しかし　あのひから　いちども
 あの　きょだいな　ＯＬの▽
 もくげきほうこくは　なかった……▼
 はたして　あの　ふたりは
-どうなったのだろうか……</Text>
+どうなったのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……コードネーム　ロドリゲスこと
-わたしは　こくさいけいさつとして▽
-あるまじき　つみを　おかした……▼
-よのなかに　あってはならない
-きけんな　しろものを　みすみす▽
-みすごして　しまったのだ……▼
-……つきひは　ながれ
-わたしは　こくさいけいさつを▽
-いんたい　した……▼
-しかし　あのひから　いちども
-あの　きょだいな　ＯＬの▽
-もくげきほうこくは　なかった……▼
-はたして　あの　ふたりは
-どうなったのだろうか……</Text>
+私は　国際警察　として▽
+あるまじき　罪を　犯した……▼
+世の中に　あってはならない
+危険な　存在を　みすみす▽
+見過ごして　しまったのだ……▼
+……私は　この件の
+責任を　取って▽
+国際警察を　辞めた……▼
+……あれから　１０年以上の
+月日が　流れた……▼
+しかし　あの日から　一度も
+あの　巨大な　ＯＬの▽
+目撃報告は　なかった……▼
+果たして　あの　ふたりは
+どうなったのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-10-26T09:55:49" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

@@ -354,34 +354,32 @@
 		<language name="JPN_KANJI" width="256">めとめが　あったひと</language>
 	</row>
 	<row id="pw_turn_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……
-さすがは　エリートトレーナーです……▽
-ぼくは　いきが　きれてきました……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……
-さすがは　エリートトレーナーです……▽
-ぼくは　いきが　きれてきました……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『フウッ……
+さすが　エリートトレーナーですね……▽
+わたし　いきが　きれてきました……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『フウッ……
+さすが　エリートトレーナーですね……▽
+わたし　いきが　きれてきました……</language>
 	</row>
 	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">ペネロペ『ちょっと！　だいじょうぶ？</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『ちょっと！　だいじょうぶ？</language>
-	</row>
-	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
+		<language name="JPN" width="256">ミゲル『だっ！　だいじょうぶ？
+（はやく　おわらせないと……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『だっ　大丈夫！？
+（早く　終わらせないと……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
 （フッ……　なんだ？
 この　やぼったい　トレーナーに▽
 やぼったい　ポケモンは……▼
-さあ！　ペネロペ！！
+さあ！　ミゲル！！
 われらの　かれいな　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
-（フッ……　なんだ？
+（フッ……　何だ？
 この　やぼったい　トレーナーに▽
 やぼったい　ポケモンは……▼
-さあ！　ペネロペ！！
+さあ！　ミゲル！！
 われらの　かれいな　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</language>
 	</row>
@@ -392,26 +390,26 @@
 めと　めが　あってしまいましたね……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">ペネロペ『はっ　はじめまして……▼
-そうね……
-めと　めが　あってしまったわね……▼
-（ああ……　ステキな　ひと……
-やだ……　すっごく　タイプじゃない……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『はっ　はじめまして……▼
-そうね……
-めと　めが　あってしまったわね……▼
-（ああ……　ステキな　ひと……
-やだ……　すっごく　タイプじゃない……</language>
+		<language name="JPN" width="256">ミゲル『はっ　はじめまして……▼
+そうだな……
+めと　めが　あってしまったね……▼
+（ああ……　ステキな　ひとだ……
+なんて　かわいいんだ……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『はっ　はじめまして……▼
+そうだな……
+めと　めが　あってしまったね……▼
+（ああ……　ステキな　ひとだ……
+なんて　可愛いんだ……</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]のポケモン『……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]のポケモン『……</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ドーブル『ブルッ！▼
 （さあ！　かくごするが　いいっ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！▼
-（さあ！　かくごするが　いいっ！</language>
+（さあ！　覚悟するが　いいっ！</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『すごい……
@@ -422,80 +420,82 @@
 やるき　じゅうぶん　みたいですね！</language>
 	</row>
 	<row id="pw_event0_enemy_3">
-		<language name="JPN" width="256">ペネロペ『フフ……　そうね……▼
-（ちょっと！！　ドーブル！！
-しゃしゃり　ででこないでよっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『フフ……　そうね……▼
-（ちょっと！！　ドーブル！！
-しゃしゃり　ででこないでよっ！！</language>
+		<language name="JPN" width="256">ミゲル『フフ……　そうだね……▼
+（おいっ！！　ドーブル！！
+しゃしゃり　ででくるんじゃないっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『フフ……　そうだね……▼
+（おいっ！！　ドーブル！！
+しゃしゃり　ででくるんじゃないっ！！</language>
 	</row>
 	<row id="pw_event0_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『それでは……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それでは……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『では……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『では……</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おてやわらかに……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おてやわらかに……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お手柔らかに……</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">ペネロペ『こちらこそ……
-おてやわらかに　おねがいしますわ！▼
+		<language name="JPN" width="256">ミゲル『こちらこそ……
+おてやわらかに　おねがいするよ！▼
 （どうみても　としした　なのに
-なかなか　ジェントルマンね……▼
-ああ……　ヤバいなあ……
-わたしの　このみに　ピッタリ……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『こちらこそ……
-おてやわらかに　おねがいしますわ！▼
+なんて　じょうひんな　レディだ……▼
+ああ……　ヤバい……
+ますます　オレの　このみに▽
+ピッタリじゃないか……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『こちらこそ……
+おてやわらかに　おねがいするよ！▼
 （どうみても　としした　なのに
-なかなか　ジェントルマンね……▼
-ああ……　ヤバいなあ……
-わたしの　このみに　ピッタリ……</language>
+なんて　じょうひんな　レディだ……▼
+ああ……　ヤバい……
+ますます　オレの　このみに▽
+ピッタリじゃないか……</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かくご！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かくご！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『覚悟！！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">ペネロペ『フフフ……
-じしんが　あるのね……▼
+		<language name="JPN" width="256">ミゲル『フフフ……
+じしんが　あるようだね……▼
 （かりにも　エリートトレーナーの
-あたしに　たいして　そのセリフ……▼
+オレに　たいして　そのセリフ……▼
 ちょっと　ナマイキな　かんじ……
-ヤンチャなのも　かわいいわ……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『フフフ……
-じしんが　あるのね……▼
+ヤンチャなのも　また　キュートだ……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『フフフ……
+じしんが　あるようだね……▼
 （かりにも　エリートトレーナーの
-あたしに　たいして　そのセリフ……▼
+オレに　たいして　そのセリフ……▼
 ちょっと　ナマイキな　かんじ……
-ヤンチャなのも　かわいいわ……</language>
+ヤンチャなのも　また　キュートだ……</language>
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かちますよ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かちますよ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『勝ちますよ！！</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
-		<language name="JPN" width="256">ペネロペ『フッ……　できるものなら！▼
-（いい？　ドーブル！！
-かってなこと　するんじゃないわよ！▼
-いまは　あのこの　ようすを
-みるんだからね！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『フッ……　できるものなら！▼
-（いい？　ドーブル！！
-かってなこと　するんじゃないわよ！▼
-いまは　あのこの　ようすを
-みるんだからね！</language>
+		<language name="JPN" width="256">ミゲル『フッ……　できるものなら！▼
+（いいかっ！？　ドーブル！！
+かってなこと　するんじゃないぞ！▼
+いまは　かのじの　ようすを
+かんさつ　するんだぞっ！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『フッ……　できるものなら！▼
+（いいかっ！？　ドーブル！！
+かってなこと　するんじゃないぞ！▼
+いまは　かのじの　ようすを
+かんさつ　するんだぞっ！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルーッ！　ブルッ！！▼
-（なんですか！　ペネロペ！！▼
+（なんですか！　ミゲル！！▼
 なぜ　あんな　わざ　つかわせるのです！
 わたくし　じまんの　ハサミギロチンで▽
 まっぷつたつに　させなさいっ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！　ブルッ！！▼
-（なんですか！　ペネロペ！！▼
-なぜ　あんな　わざ　つかわせるのです！
-わたくし　じまんの　ハサミギロチンで▽
-まっぷつたつに　させなさいっ！</language>
+（何ですか！　ミゲル！！▼
+なぜ　あんな　わざ　使わせるのです！
+私　自慢の　ハサミギロチンで▽
+真っ二つに　させなさいっ！</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　ドーブル……
@@ -504,115 +504,105 @@
 だいじに　そだててるんですね……
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その　ドーブル……
-げんきも　あって　ステキです……▼
-それに　とても　つよそうだし……
-だいじに　そだててるんですね……
+元気も　あって　ステキです……▼
+それに　とても　　強そうだし……
+大事に　育ててるんですね……
 </language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">ペネロペ『あら　ありがとう……
-てれちゃうけど　うれしい……▼
-あなたの　[1:02:ポケモンニックネーム:1]も
-とっても　かわいい　ですわ▼
-（キャー！　ステキだって！！
-ちょっと　もう　たまんない！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『あら　ありがとう……
-てれちゃうけど　うれしい……▼
-あなたの　[1:02:ポケモンニックネーム:1]も
-とっても　かわいい　ですわ▼
-（キャー！　ステキだって！！
-ちょっと　もう　たまんない！！</language>
+		<language name="JPN" width="256">ミゲル『フフ　それほどでも……
+エリートとして　とうぜんのこと……▼
+わたしも　あなたの　ポケモン
+なかなか　ステキだと　おもうよ▼
+（ヘヘヘ！　ステキだって！！
+そのことば　オレに　いってよーっ！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『フフ　それほどでも……
+エリートとして　当然だが……▼
+わたしも　あなたの　ポケモン
+なかなか　ステキだと　おもうよ▼
+（ヘヘヘ！　ステキだって！！
+そのことば　オレに　いってよーっ！</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の[1:02:ポケモンニックネーム:1]『……</language>
-	</row>
-	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あ　あの……
 ありがとうございます……▼
-[1:02:ポケモンニックネーム:1]の　ことなのに
-なんか　ぼくも　テレるな……</language>
+ポケモンの　ことなのに
+なんか　わたしも　テレちゃいます……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あ　あの……
 ありがとうございます……▼
-[1:02:ポケモンニックネーム:1]の　ことなのに
-なんか　ぼくも　テレるな……</language>
+ポケモンの　ことなのに
+なんか　わたしも　テレちゃいます……</language>
 	</row>
-	<row id="pw_event1_enemy_3">
-		<language name="JPN" width="256">ペネロペ『とっても　ステキよ
+	<row id="pw_event1_enemy_2">
+		<language name="JPN" width="256">ミゲル『とっても　ステキだ……
 ポケモンも……　あなたも……▼
-（ヤバッ！　つい　くちに　でちゃった！
-でも　てれてる　かおも　かわいすぎ！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『とっても　ステキよ
+（ヤベッ！　つい　くちに　でちゃった！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『とっても　ステキだ……
 ポケモンも……　あなたも……▼
-（ヤバッ！　つい　くちに　でちゃった！
-でも　てれてる　かおも　かわいすぎ！</language>
+（ヤベッ！　つい　くちに　でちゃった！</language>
 	</row>
-	<row id="pw_event1_hero_4">
+	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『えっ……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『えっ……？</language>
 	</row>
-	<row id="pw_event1_enemy_4">
-		<language name="JPN" width="256">ペネロペ『しっ　しつれい！！
-ヘンなこと　いっちゃって！！▼
+	<row id="pw_event1_enemy_3">
+		<language name="JPN" width="256">ミゲル『しっ　しつれいした！！▼
 （ヤッベー……
-さすがに　ひかれちゃったかな……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『しっ　しつれい！！
-ヘンなこと　いっちゃって！！▼
+さすがに　ひかれちゃったか……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『しっ　しつれいした！！▼
 （ヤッベー……
-さすがに　ひかれちゃったかな……</language>
+さすがに　ひかれちゃったか……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うれしいな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うれしいな……</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">ペネロペ『さっ……　さあさあっ！
+		<language name="JPN" width="256">ミゲル『さっ……　さあさあっ！
 いまは　ポケモンしょうぶに▽
-しゅうちゅう　しないとっ！▼
-（よーし！　きめたっ！！
+しゅうちゅう　するとしようっ！▼
+（よーし！　きめたぞっ！！
 やっぱり　ここは　あえて　まける！▼
-まけて　シュンと　した　すがたで
-かわいさを　アピール！！▼
-そして　すかさず　かれの　つよさを
-ほめて　ほめて　ほめまくる！▽
-これで　きっと　いけるわっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『さっ……　さあさあっ！
+かのじょに　はなを　もたせ
+すかさず　その　つよさを▽
+ほめて　ほめて　ほめまくる！▼
+これで　きっと　いけるはずっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『さっ……　さあさあっ！
 いまは　ポケモンしょうぶに▽
-しゅうちゅう　しないとっ！▼
-（よーし！　きめたっ！！
+しゅうちゅう　するとしようっ！▼
+（よーし！　きめたぞっ！！
 やっぱり　ここは　あえて　まける！▼
-まけて　シュンと　した　すがたで
-かわいさを　アピール！！▼
-そして　すかさず　かれの　つよさを
-ほめて　ほめて　ほめまくる！▽
-これで　きっと　いけるわっ！！</language>
+かのじょに　はなを　もたせ
+すかさず　その　つよさを▽
+ほめて　ほめて　ほめまくる！▼
+これで　きっと　いけるはずっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">ペネロペ『さっ！　さあっ！▼
+		<language name="JPN" width="256">ミゲル『さっ！　さあっ！▼
 いいから　きを　とりなおして
-しょうぶを　つづけるわよっ！！
+しょうぶを　つづけようっ！！▼
 （あちゃー……
-かんぜんに　ひかれちゃった……▼</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『さっ！　さあっ！▼
+かんぜんに　ひかれちゃった……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『さっ！　さあっ！▼
 いいから　きを　とりなおして
-しょうぶを　つづけるわよっ！！
+しょうぶを　つづけようっ！！▼
 （あちゃー……
-かんぜんに　ひかれちゃった……▼</language>
+かんぜんに　ひかれちゃった……</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルブル……▼
-（やれやれ　ペネロペめ……▼
+（やれやれ　ミゲルめ……▼
 また　あいての　トレーナーに
 ひとめぼれ　してるな……▼
 しかも　いまの　たいど　からすると
 わざと　まける　つもり　ですか……▽
 フン……　そうは　いきません……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルブル……▼
-（やれやれ　ペネロペめ……▼
+（やれやれ　ミゲルめ……▼
 また　あいての　トレーナーに
 ひとめぼれ　してるな……▼
 しかも　いまの　たいど　からすると
@@ -620,12 +610,12 @@
 フン……　そうは　いきません……</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『さすが　です……▼
-ペネロペさんの　ドーブルは
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『さすがですね……▼
+ミゲルさんの　ドーブルは
 ホントに　つよいや……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さすが　です……▼
-ペネロペさんの　ドーブルは
-ホントに　つよいや……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さすがですね……▼
+ミゲルさんの　ドーブルは
+ホントに　強いや……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルーッ！！▼
@@ -637,239 +627,243 @@
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふう……
-ぼくの　[1:02:ポケモンニックネーム:1]じゃ　ダメかな……</language>
+わたしの　ポケモンじゃ　ダメかな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ふう……
-ぼくの　[1:02:ポケモンニックネーム:1]じゃ　ダメかな……</language>
+わたしの　ポケモンじゃ　ダメかな……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">ペネロペ『そんなこと　ないわ！
-[1:00:トレーナー名:1]さんの　[1:02:ポケモンニックネーム:1]も▽
-なかなか　てごわい　あいて！▽
-しょうぶは　これからね！▼
-（ちょっと！　ドーブル！！
-アンタ　だまってなさいっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『そんなこと　ないわ！
-[1:00:トレーナー名:1]さんの　[1:02:ポケモンニックネーム:1]も▽
-なかなか　てごわい　あいて！▽
-しょうぶは　これからね！▼
-（ちょっと！　ドーブル！！
-アンタ　だまってなさいっ！！</language>
+		<language name="JPN" width="256">ミゲル『そんなことは　ないっ！
+[1:00:トレーナー名:1]さんの　ポケモンは▽
+かなり　てごわい　あいて　だっ！▽
+しょうぶは　これからだな！▼
+（おいっ！　ドーブル！！
+オマエは　だまってろっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『そんなことは　ないっ！
+[1:00:トレーナー名:1]さんの　ポケモンは▽
+かなり　てごわい　あいて　だっ！▽
+しょうぶは　これからだな！▼
+（おいっ！　ドーブル！！
+オマエは　だまってろっ！！</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『がんばります！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『がんばります！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">ペネロペ『さあ！　いきますわ！▼
-（わかってんでしょうね！？
-さっさと　まけるのよ！　ドーブル！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『さあ！　いきますわ！▼
-（わかってんでしょうね！？
-さっさと　まけるのよ！　ドーブル！！</language>
+		<language name="JPN" width="256">ミゲル『さあ！　いくぞっ！▼
+（オイ！　わかってんだろうなっ！？
+かのじょに　さとられないように▽
+まけるんだぞっ！　ドーブル！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『さあ！　いくぞっ！▼
+（オイ！　わかってんだろうなっ！？
+かのじょに　さとられないように▽
+まけるんだぞっ！　ドーブル！！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれるかな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やれるかな……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">ペネロペ『あきらめたら　ダメよ！▼
-（ちょっと！？　ドーブル！！
-アンタ　かってに　わざの▽
-じゅんび　してんじゃないわよ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『あきらめたら　ダメよ！▼
-（ちょっと！？　ドーブル！！
-アンタ　かってに　わざの▽
-じゅんび　してんじゃないわよ！！</language>
+		<language name="JPN" width="256">ペネロペ『できるよっ！！
+[1:00:トレーナー名:1]さんなら▽
+ぜったいに　できるっ！▽
+あきらめたら　そこで　まけなんだ！▼
+（オイオイ！？　ドーブル！！
+オマエ　かってに　わざの▽
+じゅんび　してんじゃないよっ！！</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『できるよっ！！
+[1:00:トレーナー名:1]さんなら▽
+ぜったいに　できるっ！▽
+あきらめたら　そこで　まけなんだ！▼
+（オイオイ！？　ドーブル！！
+オマエ　かってに　わざの▽
+じゅんび　してんじゃないよっ！！</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『フウ……
-やった……　かてたぞ……</language>
+やった……　かてたな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『フウ……
-やった……　かてたぞ……</language>
+やった……　勝てたな……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルッ！！　ブルブルッ！！▼
 （ええい！　なぜだっ！！
 なぜ　わたしが　こんな　あいてに▽
 まけなければ　ならないっ！！▽
-ペネロペ！！　どういうことだっ！！</language>
+ミゲル！！　どういうことだっ！！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！！　ブルブルッ！！▼
 （ええい！　なぜだっ！！
-なぜ　わたしが　こんな　あいてに▽
-まけなければ　ならないっ！！▽
-ペネロペ！！　どういうことだっ！！</language>
+なぜ　わたしが　こんな相手に▽
+負けなければ　ならないっ！！▽
+ミゲル！！　どういうことだっ！！</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">ペネロペ『アアン……
-わたし　もうダメ……▼
-（よしっ！！　うまく　まけたっ！！
-さあ！！　こっからが　わたしの▽
-しんけん　しょうぶの　はじまりよっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『アアン……
-わたし　もうダメ……▼
-（よしっ！！　うまく　まけたっ！！
-さあ！！　こっからが　わたしの▽
-しんけん　しょうぶの　はじまりよっ！！</language>
+		<language name="JPN" width="256">ミゲル『クッ……　しまった……▼
+（よしっ！　しぜんに　まけられたぞ！
+さあ！！　こっからが　オレの▽
+しんの　しょうぶの　はじまりだっ！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『クッ……　しまった……▼
+（よしっ！　自然に　負けられたぞ！
+さあ！！　こっからが　オレの▽
+真の　勝負の　始まりだっ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの……
 だいじょうぶですか……▼
-もしかして
-[1:02:ポケモンニックネーム:1]の　こうげきが▽
+もしかして　ポケモンの
+わざが　ミゲルさんに▽
 あたって　しまったんじゃあ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの……
-だいじょうぶですか……▼
-もしかして
-[1:02:ポケモンニックネーム:1]の　こうげきが▽
-あたって　しまったんじゃあ……</language>
+大丈夫ですか……▼
+ひょっとして　ポケモンの
+わざが　ミゲルさんに▽
+当たって　しまったんじゃあ……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">ペネロペ『だいじょぶ　ですわ……
-あなたの　[1:02:ポケモンニックネーム:1]の　わざが▽
-しげきが　つよすぎて……▼
+		<language name="JPN" width="256">ミゲル『なに　だいじょぶさ……▼
 それに　しても　[1:00:トレーナー名:1]さん……
-おつよいんですね……▼
-（さあ！　いくわよーっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『だいじょぶ　ですわ……
-あなたの　[1:02:ポケモンニックネーム:1]の　わざが▽
-しげきが　つよすぎて……▼
+やるじゃないですか……▼
+（いくぜっ！　いくぜーっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『なに　大丈夫さ……▼
 それに　しても　[1:00:トレーナー名:1]さん……
-おつよいんですね……▼
-（さあ！　いくわよーっ！！</language>
+やるじゃないですか……▼
+（いくぜっ！　いくぜーっ！！</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ありがとう　ございます▼
-でも　トレーナーの　ペネロペさんを
-きずつけて　しまうなんて……▼
+でも　トレーナーの　ミゲルさんを
+きずつけて　しまうなんて……
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ありがとう　ございます▼
-でも　トレーナーの　ペネロペさんを
-きずつけて　しまうなんて……▼
+でも　トレーナーの　ミゲルさんを
+傷つけて　しまうなんて……
 </language>
 	</row>
 	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">ペネロペ『そんな　きに　なさらないで……▼
-（よっしゃ！　きたわっ！！
-チャンスとうらい　よっ！！▽
-ペネロペの　テクニックの　みせどころ！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『そんな　きに　なさらないで……▼
-（よっしゃ！　きたわっ！！
-チャンスとうらい　よっ！！▽
-ペネロペの　テクニックの　みせどころ！</language>
+		<language name="JPN" width="256">ミゲル『きに　しないで……▼
+（よっしゃ！　きたっ！！
+ラブチャンス　とうらい！▽
+いくぞっ！！　ミゲル！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『気に　しないで……▼
+（よっしゃ！　きたっ！！
+ラブチャンス　到来！▽
+いくぞっ！！　ミゲル！！</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ああ……
 なんて　おわびして　いいやら……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ああ……
-なんて　おわびして　いいやら……</language>
+なんて　お詫びして　いいやら……</language>
 	</row>
 	<row id="pw_event3_enemy_4">
-		<language name="JPN" width="256">ペネロペ『きに　なさらないで……▼
-それより　まけたんですから
+		<language name="JPN" width="256">ミゲル『いいんですよ……▼
+それより　まけてしまいましたから
 [1:00:トレーナー名:1]さんに▽
 しょうきんを　おしはらいしないと……▼
 （さあ！　こいっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『きに　なさらないで……▼
-それより　まけたんですから
+		<language name="JPN_KANJI" width="256">ミゲル『いいんですよ……▼
+それより　負けてしまいましたから
 [1:00:トレーナー名:1]さんに▽
-しょうきんを　おしはらいしないと……▼
+賞金を　お支払いしないと……▼
 （さあ！　こいっ！！</language>
 	</row>
 	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
-もうしわけ　なくて　ペネロペさんから▽
-おかねは　いただけませんよ……</language>
+もうしわけなくて　ミゲルさんから▽
+おかねは　いただけません……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
-もうしわけ　なくて　ペネロペさんから▽
-おかねは　いただけませんよ……</language>
+申し訳なくて　ミゲルさんから▽
+お金は　頂けません……</language>
 	</row>
 	<row id="pw_event3_enemy_5">
-		<language name="JPN" width="256">ペネロペ『そんな……▼
-では　でしたら　おかねの　かわりに
-わたしと　トレーニングいたしません？▼
+		<language name="JPN" width="256">ミゲル『そんな……▼
+……ならば　しょうきんの　かわりに
+わたしと　いっしょに▽
+トレーニングは　いかがです？▼
 いまは　まけましたが　これでも
 わたしは　エリートトレーナー……▼
 きっと　[1:00:トレーナー名:1]さんの　おやくに
-たてると　おもいますわ！▼
-（よし！！　この　ながれ……
-カンペキ！！　パーフェクトよっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『そんな……▼
-では　でしたら　おかねの　かわりに
-わたしと　トレーニングいたしません？▼
-いまは　まけましたが　これでも
+たてると　おもいますよ▼
+（よし！！　このながれ……
+カンペキ！！　パーフェクトだろっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『そんな……▼
+……ならば　賞金の　かわりに
+わたしと　一緒に▽
+トレーニングは　いかがです？▼
+今は　負けましたが　これでも
 わたしは　エリートトレーナー……▼
-きっと　[1:00:トレーナー名:1]さんの　おやくに
-たてると　おもいますわ！▼
-（よし！！　この　ながれ……
-カンペキ！！　パーフェクトよっ！！</language>
+きっと　[1:00:トレーナー名:1]さんの　お役に
+たてると　思いますよ▼
+（よし！！　この流れ……
+カンペキ！！　パーフェクトだろっ！！</language>
 	</row>
 	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいんですか……▼
-ぼくは　エリートの　かたと
+わたしは　エリートの　かたと
 トレーニング　できるなんて▽
-とても　こうえい　ですが……　
+とても　こうえい　ですけど……　
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいんですか……▼
-ぼくは　エリートの　かたと
+わたしは　エリートの　方と
 トレーニング　できるなんて▽
-とても　こうえい　ですが……　
+とても　光栄　ですけど……　
 </language>
 	</row>
 	<row id="pw_event3_enemy_6">
-		<language name="JPN" width="256">ペネロペ『もちろん！！
-（よしっ！！　これでフィニッシュ！！
+		<language name="JPN" width="256">ミゲル『ええ！！　もちろん！！
+（よっしゃー！！
 </language>
-		<language name="JPN_KANJI" width="256">ペネロペ『もちろん！！
-（よしっ！！　これでフィニッシュ！！
+		<language name="JPN_KANJI" width="256">ミゲル『ええ！！　もちろん！！
+（よっしゃー！！
 </language>
 	</row>
 	<row id="pw_event3_hero_7">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『それじゃあ
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『じゃあ……
 よろしく　おねがいします！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それじゃあ
-よろしく　おねがいします！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『じゃあ……
+よろしく　お願いします！</language>
 	</row>
 	<row id="pw_event3_enemy_7">
-		<language name="JPN" width="256">ペネロペ『こちらこそ　よろしくっ！
-たのしい　トレーニングに　しましょう！▼
-（よっしゃーっ！！
-この　しょうぶ　もらったっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『こちらこそ　よろしくっ！
-たのしい　トレーニングに　しましょう！▼
-（よっしゃーっ！！
-この　しょうぶ　もらったっ！！</language>
+		<language name="JPN" width="256">ミゲル『こちらこそ　よろしくっ！
+たのしいトレーニングに　しますよ！▼
+（やったーっ！！　やったぞーっ！！　</language>
+		<language name="JPN_KANJI" width="256">ミゲル『こちらこそ　よろしくっ！
+楽しいトレーニングに　しますよ！▼
+（やったーっ！！　やったぞーっ！！　</language>
 	</row>
 	<row id="pw_event3_enemy_8">
 		<language name="JPN" width="256">ドーブル『ブル……　ブル……▼
-（なさけないぞ……　ペネロペ……▼
+（なさけないぞ……　ミゲル……▼
 いや……▼
-そもそも　にんげんなど　こんな　ものか……</language>
+そもそも　にんげんなど
+みんな　こんなものか……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブル……　ブル……▼
-（なさけないぞ……　ペネロペ……▼
+（情けないぞ……　ミゲル……▼
 いや……▼
-そもそも　にんげんなど　こんな　ものか……</language>
+そもそも　人間など
+みんな　こんなものか……</language>
 	</row>
 	<row id="pw_event3_hero_9">
 		<language name="JPN" width="256">……めと　めが　あえば
 ポケモンしょうぶの　はなが　さく……▼
 そして　めと　めが　あえば
-こいの　はな　さく　ときも　ある……▼
+こいのはな　さくときも　ある……▼
 わかき　トレーナーたちに　とって
 ポケモンしょうぶとは　たんなる▽
 たたかいや　きょうぎでは　ない▼
-であいの　ばでも　あるのだ……▼
+であいのばでも　あるのだ……▼
 こうして　トレーナーたちの　こいは
 ひび　うまれては　きえていく……</language>
-		<language name="JPN_KANJI" width="256">……めと　めが　あえば
-ポケモンしょうぶの　はなが　さく……▼
-そして　めと　めが　あえば
-こいの　はな　さく　ときも　ある……▼
-わかき　トレーナーたちに　とって
-ポケモンしょうぶとは　たんなる▽
-たたかいや　きょうぎでは　ない▼
-であいの　ばでも　あるのだ……▼
-こうして　トレーナーたちの　こいは
-ひび　うまれては　きえていく……</language>
+		<language name="JPN_KANJI" width="256">……目と　目が　合えば
+ポケモン勝負の　花が　咲く……▼
+そして　目と　目が　あえば
+恋の花　咲くときも　ある……▼
+若きトレーナーたちに　とって
+ポケモン勝負とは　単なる▽
+戦いや　競技では　ない▼
+出会いの場でも　あるのだ……▼
+こうして　トレーナーたちの　恋は
+日々　生まれては　消えていく……</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まけました……
@@ -878,12 +872,12 @@
 さすがは　エリートですね……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">ペネロペ『あれ……　そんな……▼
-（ちょっとっ！！　ドーブル！！
-アンタ　なにしてくれてんのよ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『あれ……　そんな……▼
-（ちょっとっ！！　ドーブル！！
-アンタ　なにしてくれてんのよ！！</language>
+		<language name="JPN" width="256">ミゲル『ああ……　そんな……▼
+（オイ！！　ドーブル！！
+オマエ　なに　してくれてんだよっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『ああ……　そんな……▼
+（オイ！！　ドーブル！！
+オマエ　なに　してくれてんだよっ！！</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
@@ -891,113 +885,117 @@
 キミような　やぼったい　トレーナーに▽
 まけるはずが　ないのだよっ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
-（これが　わたしの　じつりょくっ！
+（これが　わたしの　実力っ！
 キミような　やぼったい　トレーナーに▽
-まけるはずが　ないのだよっ！</language>
+負けるはずが　ないのだよっ！</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ありがとう……▼
 ハア……
-まだまだ　ですね　ぼくは……</language>
+まだまだ　ですね　わたし……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ありがとう……▼
 ハア……
-まだまだ　ですね　ぼくは……</language>
+まだまだ　ですね　わたし……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">ペネロペ『そんなことない！！
-よかったわよ！　[1:00:トレーナー名:1]さん！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『そんなことない！！
-よかったわよ！　[1:00:トレーナー名:1]さん！</language>
+		<language name="JPN" width="256">ミゲル『そんなことない！！
+よかったよ！　[1:00:トレーナー名:1]さん！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『そんなことない！！
+良かったよ！　[1:00:トレーナー名:1]さん！</language>
 	</row>
 	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハハハ……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『フフ……▼
 なぐさめて　くれなくても
-だいじょうぶですよ……▼
-うちに　かえって　
+だいじょうぶですから……▼
+おとなしく　うちに　かえって　
 トレーニングでも　してきます</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハハハ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『フフ……▼
 なぐさめて　くれなくても
-だいじょうぶですよ……▼
-うちに　かえって　
+大丈夫ですから……▼
+大人しく　家に　帰って
 トレーニングでも　してきます</language>
 	</row>
 	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256">ペネロペ『えっ！▼
+		<language name="JPN" width="256">ミゲル『えっ！▼
 だったら　わたしと　いっしょに
 トレーニングして……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『えっ！▼
-だったら　わたしと　いっしょに
+		<language name="JPN_KANJI" width="256">ミゲル『えっ！▼
+だったら　わたしと　一緒に
 トレーニングして……</language>
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……▼
 エリートである　あなたに
-そんなこと　おねがいできませんよ▼
+そんなこと　おねがいできません▼
 それでは　しつれいします……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……▼
 エリートである　あなたに
-そんなこと　おねがいできませんよ▼
-それでは　しつれいします……</language>
+そんなこと　お願いできません▼
+それでは　失礼します……</language>
 	</row>
 	<row id="pw_event4_enemy_5">
-		<language name="JPN" width="256">ペネロペ『そんな……
-わたしの　トキメキが……▽
+		<language name="JPN" width="256">ミゲル『ああ……　そんな……
+オレの　トキメキが……▽
 こいが　いってしまった……▼
-ちょっと！！　ドーブル！！
-なにして　くれてんのよっ！！▼
-アンタ　なんか　もう　だれかと
+オイ！！　ドーブル！！
+なにして　くれてんだよーっ！！▼
+オマエなんか　もう　だれかと
 こうかん　してやるっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『そんな……
-わたしの　トキメキが……▽
-こいが　いってしまった……▼
-ちょっと！！　ドーブル！！
-なにして　くれてんのよっ！！▼
-アンタ　なんか　もう　だれかと
-こうかん　してやるっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『ああ……　そんな……
+オレの　トキメキが……▽
+恋が　行ってしまった……▼
+オイ！！　ドーブル！！
+なにして　くれてんだよーっ！！▼
+オマエなんか　もう　だれかと
+交換してやるっ！！</language>
 	</row>
 	<row id="pw_event4_hero_6">
-		<language name="JPN" width="256">これは　ある　トレーナーたちの
-こいの　ものがたり……▼
-めと　めが　あえば
-ポケモンしょうぶの　はなが　さき▼
-めと　めが　あえば
-こいの　はな　さく　ときも　ある……▼
+		<language name="JPN" width="256">……めと　めが　あえば
+ポケモンしょうぶの　はなが　さく……▼
+そして　めと　めが　あえば
+こいのはな　さくときも　ある……▼
+わかき　トレーナーたちに　とって
+ポケモンしょうぶとは　たんなる▽
+たたかいや　きょうぎでは　ない▼
+であいのばでも　あるのだ……▼
 こうして　トレーナーたちの　こいは
-ひび　うまれては　きえていくのだ……</language>
-		<language name="JPN_KANJI" width="256">これは　ある　トレーナーたちの
-こいの　ものがたり……▼
-めと　めが　あえば
-ポケモンしょうぶの　はなが　さき▼
-めと　めが　あえば
-こいの　はな　さく　ときも　ある……▼
-こうして　トレーナーたちの　こいは
-ひび　うまれては　きえていくのだ……</language>
+ひび　うまれては　きえていく……</language>
+		<language name="JPN_KANJI" width="256">……目と　目が　合えば
+ポケモン勝負の　花が　咲く……▼
+そして　目と　目が　あえば
+恋の花　咲くときも　ある……▼
+若きトレーナーたちに　とって
+ポケモン勝負とは　単なる▽
+戦いや　競技では　ない▼
+出会いの場でも　あるのだ……▼
+こうして　トレーナーたちの　恋は
+日々　生まれては　消えていく……</language>
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……▼
-なんて　タフなんだ……
-ペネロペさんの　ドーブル……</language>
+なんて　タフなの……
+ミゲルさんの　ドーブルは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……▼
 なんて　タフなんだ……
-ペネロペさんの　ドーブル……</language>
+ミゲルさんの　ドーブル……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルッ！！▼
 （しぶとい　やつめ……
 いいかげんに　してほしいものだ……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルッ！！▼
-（しぶとい　やつめ……
-いいかげんに　してほしいものだ……</language>
+（クソッ……　しぶとい　やつめ……
+いい加減に　してほしいものだ……</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『まだまだ　げんきみたいだし
-すごい　ポケモンだ……▼
-……　……　……いいなあ▼
-ほしいな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まだまだ　げんきみたいだし
-すごい　ポケモンだ……▼
-……　……　……いいなあ▼
-ほしいな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まだまだ
+ぜんぜん　げんきみたいだし▽
+すごい　ポケモン……▼
+……　……　……いいなあ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まだまだ
+全然　元気みたいだし▽
+すごい　ポケモン……▼
+……　……　……いいなあ▼</language>
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルーッ！！▼
@@ -1006,16 +1004,16 @@
 きもちわるい　ヤツだな……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！！▼
 （なんだ　この　トレーナー……
-じっと　こっちを　みて……▽
-きもちわるい　ヤツだな……</language>
+じっと　こっちを　見て……▽
+気持悪い　ヤツだな……</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの　ペネロペさん……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの　ペネロペさん……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの　ミゲルさん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの　ミゲルさん……</language>
 	</row>
 	<row id="pw_event5_enemy_2">
-		<language name="JPN" width="256">ペネロペ『なにっ？　どうしたの？</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『なにっ？　どうしたの？</language>
+		<language name="JPN" width="256">ミゲル『なにっ？　どうしたんだい？</language>
+		<language name="JPN_KANJI" width="256">ミゲル『なにっ？　どうしたの？</language>
 	</row>
 	<row id="pw_event5_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　ドーブル……▼
@@ -1024,106 +1022,90 @@
 やっぱり　すごく　いいですね……</language>
 	</row>
 	<row id="pw_event5_enemy_3">
-		<language name="JPN" width="256">ペネロペ『あ　ありがとう……▼
-でも　どうして？</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『あ　ありがとう……▼
-でも　どうして？</language>
+		<language name="JPN" width="256">ミゲル『あ　ありがとう……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『あ　ありがとう……</language>
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『えっと……
 とても　いいにくんですけど……▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『えっと……
-とても　いいにくんですけど……▼</language>
+とても　言いにくんですけど……▼</language>
 	</row>
 	<row id="pw_event5_enemy_4">
-		<language name="JPN" width="256">ペネロペ『なに？　どうしたの？</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『なに？　どうしたの？</language>
+		<language name="JPN" width="256">ミゲル『ん？　どうしたの？</language>
+		<language name="JPN_KANJI" width="256">ミゲル『ん？　どうしたの？</language>
 	</row>
 	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　ドーブル……▼
-……ぼくの　[1:02:ポケモンニックネーム:1]と
+……わたしの　ポケモンと
 こうかんして　くれませんか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その　ドーブル……▼
-……ぼくの　[1:02:ポケモンニックネーム:1]と
-こうかんして　くれませんか？</language>
+……わたしの　ポケモンと
+交換して　くれませんか？</language>
 	</row>
 	<row id="pw_event5_enemy_5">
-		<language name="JPN" width="256">ペネロペ『えっ？</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『えっ？</language>
+		<language name="JPN" width="256">ミゲル『へっ？</language>
+		<language name="JPN_KANJI" width="256">ミゲル『えっ？</language>
 	</row>
 	<row id="pw_event5_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼく……▼
-ミリーさんの　ドーブルに
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたし……▼
+ミゲルさんの　ドーブルに
 ひとめぼれ　しちゃったんです……▼
 だから……▼
 おねがいしますっ！！
-ぼくと　こうかんしてくださいっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ぼく……▼
-ミリーさんの　ドーブルに
-ひとめぼれ　しちゃったんです……▼
+わたしと　こうかんしてくださいっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わたし……▼
+ミゲルさんの　ドーブルに
+一目ぼれ　しちゃったんです……▼
 だから……▼
-おねがいしますっ！！
-ぼくと　こうかんしてくださいっ！！</language>
+お願いしますっ！！
+わたしと　交換してくださいっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_6">
-		<language name="JPN" width="256">ペネロペ『ええーっ？▼
-（どうしよう……
-わたしの　てもちの　なかじゃ▽
-そこそこだから　べつに　いいんだけど……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『ええーっ？▼
-（どうしよう……
-わたしの　てもちの　なかじゃ▽
-そこそこだから　べつに　いいんだけど……</language>
+		<language name="JPN" width="256">ミゲル『ええーっ？▼
+（さて……　どうしよう……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『ええーっ？▼
+（さて……　どうしよう……</language>
 	</row>
 	<row id="pw_event5_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねがいですっ！！▼
-ミリーさんの　ドーブルを
-ぼくに　くださいっ！！▼
-ぜったいに　しあわせに　してみせます！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おねがいですっ！！▼
-ミリーさんの　ドーブルを
-ぼくに　くださいっ！！▼
-ぜったいに　しあわせに　してみせます！</language>
+ミゲルさんの　ドーブルを
+わたしに　くださいっ！！▼
+いつでも　なかよく　しますし
+ずーっと　たいせつに　しますから！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お願いですっ！！▼
+ミゲルさんの　ドーブルを
+わたしに　くださいっ！！▼
+いつでも　仲良くしますし
+ずーっと　大切に　しますから！</language>
 	</row>
 	<row id="pw_event5_enemy_7">
-		<language name="JPN" width="256">ペネロペ『ええと……▼
-（なんて　まっすぐな　まなざし……▼
-ああ……
-そんな　セリフは　わたしに　むけて▽
+		<language name="JPN" width="256">ミゲル『ええと……▼
+（なんて　すきとおった　まなざし……▼
+ああ……　なんでドーブルなんだ……
+そのセリフは　オレに　むけて▽
 いってくれたら　いいのに……▼
-ああん……　どうしよう……
-あたし　ことわれない……▼
-それに　ドーブルを　こうかんしたら
-もっと　かれと　なかよくなれるかも……</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『ええと……▼
-（なんて　まっすぐな　まなざし……▼
-ああ……
-そんな　セリフは　わたしに　むけて▽
-いってくれたら　いいのに……▼
-ああん……　どうしよう……
-あたし　ことわれない……▼
-それに　ドーブルを　こうかんしたら
-もっと　かれと　なかよくなれるかも……</language>
-	</row>
-	<row id="pw_event5_hero_8">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねがいですっ！！▼
-ミリーさんの　ドーブルを
-ぼくに　くださいっ！！▼
-ぜったいに　しあわせに　してみせます！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おねがいですっ！！▼
-ミリーさんの　ドーブルを
-ぼくに　くださいっ！！▼
-ぜったいに　しあわせに　してみせます！</language>
+まあ　いいか……▼
+ドーブルを　こうかんしたら　もっと
+かのじょと　なかよくなれるかも……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『ええと……▼
+（なんて　透き通った　眼差し……▼
+ああ……　何でドーブルなんだ……
+そのセリフは　オレに　向けて▽
+言ってくれたら　いいのに……▼
+まあ　いいか……▼
+ドーブルを　交換したら
+もっと　彼女と　仲良くなれるかも……</language>
 	</row>
 	<row id="pw_event5_enemy_8">
 		<language name="JPN" width="256">ドーブル『ブルブルッ！▼
-（おーい！！　ミリー！！
+（おーい！！　ミゲル！！
 なにを　かんがえてるのですっ！！▽
 こいで　わたしを　すてるつもりか！！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルブルッ！▼
-（おーい！！　ミリー！！
-なにを　かんがえてるのですっ！！▽
-こいで　わたしを　すてるつもりか！！</language>
+（おーい！！　ミゲル！！
+なにを　考えてるのですっ！！▽
+恋で　わたしを　捨てるつもりか！！</language>
 	</row>
 	<row id="pw_event5_hero_9">
 		<language name="JPN" width="256">……めと　めが　あえば
@@ -1135,15 +1117,57 @@
 かぎったことでは　ない……▼
 こうして　トレーナーたちの　こいは
 ひび　うまれては　きえていく……</language>
-		<language name="JPN_KANJI" width="256">……めと　めが　あえば
-ポケモンしょうぶの　はなが　さく……▼
-めと　めが　あえば
-こいの　はな　さく　ときも　ある……▼
-いちごいちえの　じょうねつは
-ひとと　ひとの　かんけいに▽
-かぎったことでは　ない……▼
-こうして　トレーナーたちの　こいは
-ひび　うまれては　きえていく……</language>
+		<language name="JPN_KANJI" width="256">……目と　目が　合えば
+ポケモン勝負の　花が　咲く……▼
+目と　目が　合えば
+恋の花　咲くときも　ある……▼
+一期一会の　情熱は
+人と　人の　関係に▽
+限ったことでは　ない……▼
+こうして　トレーナーたちの　恋は
+日々　生まれては　消えていく……</language>
+	</row>
+	<row id="pw_event6_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほんとに　つよい……
+さすが　エリートのポケモン……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほんとに　つよい……
+さすが　エリートのポケモン……</language>
+	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">ドーブル『ブルーッ！　ブルーッ！▼
+（ミゲル！　いいかげんにしろ！！
+こんな　ザコトレーナーに　いつまで▽
+じかんを　かけるつもりだっ！！</language>
+		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！　ブルーッ！▼
+（ミゲル！　いい加減にしろ！！
+こんな　ザコトレーナーに　いつまで▽
+時間を　かけるつもりだっ！！</language>
+	</row>
+	<row id="pw_event6_react_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ステキ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ステキ……</language>
+	</row>
+	<row id="pw_event6_react_enemy_0">
+		<language name="JPN" width="256">ドーブル『ブルブルッ！▼
+（なぜ　こっちを　ずっと　みてる……
+きもちの　わるい　やつめ……▽
+さっさと　たおしてしまわないと……</language>
+		<language name="JPN_KANJI" width="256">ドーブル『ブルブルッ！▼
+（なぜ　こっちを　ずっと　見てる……
+気持悪い　やつめ……▽
+さっさと　倒してしまわないと……</language>
+	</row>
+	<row id="pw_event6_react_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『かてるのかな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『勝てるのかな……</language>
+	</row>
+	<row id="pw_event6_react_enemy_1">
+		<language name="JPN" width="256">ドーブル『ブルーッ！！　ブルッ！▼
+（ハハハ……　よわきに　なっている……
+よし……　いまが　チャンスですね……</language>
+		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！！　ブルッ！▼
+（ハハハ……　弱気に　なっている……
+よし……　今が　チャンスですね……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

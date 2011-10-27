@@ -6,25 +6,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -180,30 +180,30 @@
 にんげんを　いれたのか！？▼
 このボールは　のろわれたボール！！▼
 ひとや　ポケモンに　わざわいを　なす
-とてつもなく　きけんな　しろものだ！</Text>
+とてつもなく　きけんな　シロモノだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『それは　こっちのセリフだ！▼
-キミは　このボールの　なかに
-にんげんを　いれたのか！？▼
-このボールは　のろわれたボール！！▼
-ひとや　ポケモンに　わざわいを　なす
-とてつもなく　きけんな　しろものだ！</Text>
+キミは　このボールの　中に
+人間を　入れたのか！？▼
+このボールは　呪われたボール！！▼
+人や　ポケモンに　災いを　なす
+とてつもなく　危険な　シロモノだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -321,32 +321,32 @@
 			<Text>ロドリゲス『まずは　パニックに
 おちいっている　かのじょを▽
 とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
+キミは　こいびと　じゃないのか！？
+どうにかして　かのじょを▽
 とめて　くれないか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『まずは　パニックに
-おちいっている　かのじょを▽
-とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
-とめて　くれないか！？</Text>
+おちいっている　彼女を▽
+止めなければ　危険だ！！▼
+キミは　恋人じゃないのか！？
+どうにかして　彼女を▽
+止めてくれないか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1528,33 +1528,32 @@
 			<Text>……まるで　かみなりの　ような
 おたけびを　あげ　モニカは▽
 あたりを　はかい　しつくした……▼
-……それでも　モニカの　いかりは
-おさまらず　せかいじゅうで▽
-あばれまわった……▼
-……じたいを　おもくみた　くにぐには
+……それでも　モニカの
+いかりは　おさまらず▽
+せかいじゅうで　あばれまわった……▼
+……じたいを　おもく　みた　かっこくは
 モニカを　とめようと　したけれど▽
 かなう　ものは　いなかった……▼
 けっきょく……
 ひとりの　きょだいな　OLに　よって▽
 せかいは　ほろんで　しまったんだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……まるで　かみなりの　ような
 おたけびを　あげ　モニカは▽
 あたりを　破壊しつくした……▼
-……それでも　モニカは
-収まらず　世界中で▽
-暴れまわった……▼
-……事態を　重く　見た
-世界の　国々は
+……それでも　モニカの
+怒りは　治まらず▽
+世界中で　暴れまわった……▼
+……事態を　重く　見た　各国は
 モニカを　倒そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
@@ -1562,11 +1561,11 @@
 世界は　滅んで　しまったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1653,33 +1652,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『モニカ……▼
-たすけて　あげられなくて……▼
-……　……▼
-ごめん……▼
-……　……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『モニカ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『モニカ……▼
-助けて　あげられなくて……▼
-……　……▼
-ごめん……▼
-……　……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『モニカ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1727,39 +1718,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……モニカの　ちからに　たえきれず
-ボクは　たおれた……▼
-きずついた　ボクを　みて
-なきじゃくる　モニカ……▼
-かのじょの　なみだが　あめのように
-やさしく　ボクを　つつむ……▼
-それは　とても　ここちよくて
-ボクは　ゆっくり　めを　とじた……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ウッ　ウウッ……▼
+たすけて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……モニカの　力に　耐え切れず
-ボクは　倒れた……▼
-傷ついた　ボクを　みて
-泣きじゃくる　モニカ……▼
-彼女の　涙が　雨のように
-優しく　ボクを　包む……▼
-それは　とても　心地良くて
-ボクは　ゆっくり　目を　閉じた……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ウッ　ウウッ……▼
+助けて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:17" />
+				Time="2011-10-26T09:55:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1768,5 +1753,44 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>……モニカの　ちからに
+たえきれず　ボクは　たおれた……▼
+きずついた　ボクを　みて
+なきじゃくる　モニカ……▼
+かのじょの　なみだが　あめのように
+やさしく　ボクを　つつむ……▼
+それは　とても　ここちよくて
+ボクは　ゆっくり　めを　とじた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……モニカの　力に
+耐え切れず　ボクは　倒れた……▼
+傷ついた　ボクを　みて
+泣きじゃくる　モニカ……▼
+彼女の　涙が　雨のように
+優しく　ボクを　包む……▼
+それは　とても　心地良くて
+ボクは　ゆっくり　目を　閉じた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:43" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

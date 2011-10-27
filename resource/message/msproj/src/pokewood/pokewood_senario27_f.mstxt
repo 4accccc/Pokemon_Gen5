@@ -6,25 +6,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はいゆう</Text>
+			<Text>せいかくはいゆう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -192,18 +192,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『それは　こっちのセリフだ！▼
-キミは　このボールの　なかに
-にんげんを　いれたのか！？▼
-このボールは　のろわれたボール！！▼
-ひとや　ポケモンに　わざわいを　なす
-とてつもなく　きけんな　しろものだ！</Text>
+キミは　このボールの　中に
+人間を　入れたのか！？▼
+このボールは　呪われたボール！！▼
+人や　ポケモンに　災いを　なす
+とてつもなく　危険な　シロモノだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -321,32 +321,32 @@
 			<Text>ロドリゲス『まずは　パニックに
 おちいっている　かのじょを▽
 とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
+キミは　かぞく　じゃないのか！？
+どうにかして　かのじょを▽
 とめて　くれないか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロドリゲス『まずは　パニックに
-おちいっている　かのじょを▽
-とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
-とめて　くれないか！？</Text>
+おちいっている　彼女を▽
+止めなければ　危険だ！！▼
+キミは　家族じゃないのか！？
+どうにかして　彼女を▽
+止めてくれないか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1529,11 +1529,10 @@
 			<Text>……まるで　かみなりの　ような
 おたけびを　あげ　おねえちゃんは▽
 あたりを　はかい　しつくした……▼
-……それでも　おねえちゃんは
-おさまらず　せかいじゅうで▽
-あばれまわった……▼
-……じたいを　おもく　みた
-せかいの　くにぐには▽
+……それでも　おねえちゃんの
+いかりは　おさまらず▽
+せかいじゅうで　あばれまわった……▼
+……じたいを　おもく　みた　かっこくは
 おねえちゃんを　たおそうとしたけれど▽
 かなう　ものは　いなかった……▼
 けっきょく……
@@ -1541,22 +1540,21 @@
 せかいは　ほろんで　しまったの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……まるで　かみなりの　ような
 おたけびを　あげ　お姉ちゃんは▽
 あたりを　破壊しつくした……▼
-……それでも　お姉ちゃんは
-おさまらず　世界中で▽
-暴れまわった……▼
-……事態を　重く　見た
-世界の　国々は▽
+……それでも
+お姉ちゃんは　治まらず▽
+世界中で　暴れまわった……▼
+……事態を　重く　見た　各国は
 お姉ちゃんを　倒そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
@@ -1564,11 +1562,11 @@
 世界は　滅んで　しまったの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1655,33 +1653,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おねえちゃん……▼
-たすけて　あげられなくて……▼
-……　……▼
-ごめんね……▼
-……　……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『おねえちゃん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『お姉ちゃん……▼
-助けて　あげられなくて……▼
-……　……▼
-ごめんね……▼
-……　……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『お姉ちゃん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1729,6 +1719,46 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ウッ　ウウッ……▼
+たすけて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ウッ　ウウッ……▼
+助けて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-26T09:55:42" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:40:19" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_3">
+		<LanguageCell
+			Language="JPN">
 			<Text>……おねえちゃんの　ちからに
 たえきれず　アタシは　たおれた……▼
 きずついた　アタシを　みて
@@ -1739,11 +1769,11 @@
 アタシは　ゆっくり　めを　とじた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1757,18 +1787,11 @@
 アタシは　ゆっくり　目を　閉じた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2011-10-26T09:55:42" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

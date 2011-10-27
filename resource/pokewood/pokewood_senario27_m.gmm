@@ -346,8 +346,8 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">はいゆう</language>
-		<language name="JPN_KANJI" width="256">はいゆう</language>
+		<language name="JPN" width="256">せいかくはいゆう</language>
+		<language name="JPN_KANJI" width="256">せいかくはいゆう</language>
 	</row>
 	<row id="pw_trname_show">
 		<language name="JPN" width="256">なぞのおとこ</language>
@@ -375,13 +375,13 @@
 にんげんを　いれたのか！？▼
 このボールは　のろわれたボール！！▼
 ひとや　ポケモンに　わざわいを　なす
-とてつもなく　きけんな　しろものだ！</language>
+とてつもなく　きけんな　シロモノだ！</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『それは　こっちのセリフだ！▼
-キミは　このボールの　なかに
-にんげんを　いれたのか！？▼
-このボールは　のろわれたボール！！▼
-ひとや　ポケモンに　わざわいを　なす
-とてつもなく　きけんな　しろものだ！</language>
+キミは　このボールの　中に
+人間を　入れたのか！？▼
+このボールは　呪われたボール！！▼
+人や　ポケモンに　災いを　なす
+とてつもなく　危険な　シロモノだ！</language>
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのボールが
@@ -409,15 +409,15 @@
 		<language name="JPN" width="256">ロドリゲス『まずは　パニックに
 おちいっている　かのじょを▽
 とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
+キミは　こいびと　じゃないのか！？
+どうにかして　かのじょを▽
 とめて　くれないか！？</language>
 		<language name="JPN_KANJI" width="256">ロドリゲス『まずは　パニックに
-おちいっている　かのじょを▽
-とめなければ　きけんだ！！▼
-キミは　こいびと　だろう！？
-なんとか　かのじょを▽
-とめて　くれないか！？</language>
+おちいっている　彼女を▽
+止めなければ　危険だ！！▼
+キミは　恋人じゃないのか！？
+どうにかして　彼女を▽
+止めてくれないか！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">モニカ『イヤーッ！！▼
@@ -632,10 +632,10 @@
 		<language name="JPN" width="256">……まるで　かみなりの　ような
 おたけびを　あげ　モニカは▽
 あたりを　はかい　しつくした……▼
-……それでも　モニカの　いかりは
-おさまらず　せかいじゅうで▽
-あばれまわった……▼
-……じたいを　おもくみた　くにぐには
+……それでも　モニカの
+いかりは　おさまらず▽
+せかいじゅうで　あばれまわった……▼
+……じたいを　おもく　みた　かっこくは
 モニカを　とめようと　したけれど▽
 かなう　ものは　いなかった……▼
 けっきょく……
@@ -644,11 +644,10 @@
 		<language name="JPN_KANJI" width="256">……まるで　かみなりの　ような
 おたけびを　あげ　モニカは▽
 あたりを　破壊しつくした……▼
-……それでも　モニカは
-収まらず　世界中で▽
-暴れまわった……▼
-……事態を　重く　見た
-世界の　国々は
+……それでも　モニカの
+怒りは　治まらず▽
+世界中で　暴れまわった……▼
+……事態を　重く　見た　各国は
 モニカを　倒そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
@@ -670,32 +669,36 @@
 ごめんなさい……　ウウ……</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『モニカ……▼
-たすけて　あげられなくて……▼
-……　……▼
-ごめん……▼
-……　……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『モニカ……▼
-助けて　あげられなくて……▼
-……　……▼
-ごめん……▼
-……　……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『モニカ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『モニカ……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]！！</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">……モニカの　ちからに　たえきれず
-ボクは　たおれた……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウッ　ウウッ……▼
+たすけて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウッ　ウウッ……▼
+助けて　あげられなくて……▼
+……　……▼
+ごめん……▼
+……　……</language>
+	</row>
+	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">……モニカの　ちからに
+たえきれず　ボクは　たおれた……▼
 きずついた　ボクを　みて
 なきじゃくる　モニカ……▼
 かのじょの　なみだが　あめのように
 やさしく　ボクを　つつむ……▼
 それは　とても　ここちよくて
 ボクは　ゆっくり　めを　とじた……</language>
-		<language name="JPN_KANJI" width="256">……モニカの　力に　耐え切れず
-ボクは　倒れた……▼
+		<language name="JPN_KANJI" width="256">……モニカの　力に
+耐え切れず　ボクは　倒れた……▼
 傷ついた　ボクを　みて
 泣きじゃくる　モニカ……▼
 彼女の　涙が　雨のように

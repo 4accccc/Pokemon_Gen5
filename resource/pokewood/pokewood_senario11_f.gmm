@@ -756,11 +756,11 @@ UFOの　テストと　偽り
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しまった……▼
 ひょっとして　いまのは
 エイリアンが　うばった▽
-しみんの　ポケモン　では……</language>
+しみんの　ポケモンでは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しまった……▼
 ひょっとして　今のは
 エイリアンが　うばった▽
-市民の　ポケモン　では……</language>
+市民の　ポケモンでは……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">E『その　とおり……▼
