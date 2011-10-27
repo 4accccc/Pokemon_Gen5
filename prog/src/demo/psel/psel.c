@@ -53,9 +53,9 @@
 
 // メインBGフレーム
 #define BG_FRAME_M_THREE       (GFL_BG_FRAME0_M)     // 3D
-#define BG_FRAME_M_REAR        (GFL_BG_FRAME1_M)
-#define BG_FRAME_M_WIN         (GFL_BG_FRAME2_M)
-#define BG_FRAME_M_TEXT        (GFL_BG_FRAME3_M)     // APP_TASKMENUもここに出す
+#define BG_FRAME_M_REAR        (GFL_BG_FRAME3_M)
+#define BG_FRAME_M_WIN         (GFL_BG_FRAME1_M)
+#define BG_FRAME_M_TEXT        (GFL_BG_FRAME2_M)     // APP_TASKMENUもここに出す
 
 // メインBGフレームのプライオリティ
 #define BG_FRAME_PRI_M_THREE   (2)
@@ -3707,7 +3707,7 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
 
   // ブレンド
   G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2/* | GX_BLEND_PLANEMASK_BG3*/,
+      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG3*/,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       8, 8 );
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
