@@ -143,6 +143,12 @@ extern APP_TASKMENU_WORK * MonolithTool_TaskMenu_YesNoInit(MONOLITH_SETUP *setup
 extern void MonolithTool_TaskMenu_YesNoExit(APP_TASKMENU_WORK *app_menu);
 extern BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKMENU_WORK *app_menu, BOOL *ret_yesno);
 
+// ’Ç‰Á
+extern APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, APP_TASKMENU_RES *app_task_res, HEAPID heap_id);
+extern void MonolithTool_TaskMenu_WinExit(APP_TASKMENU_WORK *app_menu);
+extern BOOL MonolithTool_TaskMenu_WinUpdate(MONOLITH_SETUP *setup, APP_TASKMENU_WORK *app_menu, s32 *ret_yesno);
+
+
 extern void MonolithTool_BalanceGaugeRewrite(MONOLITH_APP_PARENT *appwk, BALANCE_GAUGE_DISP up_down, int frame_no);
 
 

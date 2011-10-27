@@ -3134,4 +3134,123 @@
 				Time="2011-08-29T04:26:34" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_up_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーは　３つまでしか
+うけとれません！▼
+あたらしく　デルパワーを
+うけとる　ために▽
+ハイルツリーに　かえす▽
+デルパワーを　えらんでください</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:38:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:37:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーは　３つまでしか
+うけとれません！▼
+あたらしく　デルパワーを
+うけとる　ために▽
+ハイルツリーに　かえす▽
+デルパワーを　えらんでください</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:38:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:38:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パワー画面：上</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:39:05" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_up_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『[Name:PMS ]』　を
+ハイルツリーに　かえし▼
+『[Name:PMS Idx="1" ]』を
+ハイルツリーから　うけとった！▼
+うけとった『[Name:PMS Idx="1" ]』を
+Ｃギアに　とうろくした！</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:41:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『[Name:PMS ]』　を
+ハイルツリーに　かえし▼
+『[Name:PMS Idx="1" ]』を
+ハイルツリーから　うけとった！▼
+うけとった『[Name:PMS Idx="1" ]』を
+Ｃギアに　とうろくした！</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:42:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:42:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パワー画面：上</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T05:42:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_up_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T07:00:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T07:00:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T07:00:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T07:00:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パワー画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-10-27T07:00:51" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

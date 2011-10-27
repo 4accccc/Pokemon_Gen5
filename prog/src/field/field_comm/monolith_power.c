@@ -133,6 +133,15 @@ enum{
   _SCROLL_ARROW_DOWN_Y = 192 - _MENU_BAR_Y_LEN - 4,
 };
 
+// フラグ(Flag)
+enum{
+  FLG_MODE_THREE = (1<<0),     // 3つ以上持っている
+};
+
+enum{
+  MP_ACTIVE_RATE   = 0,       // アクティブの割合(戻し)
+  MP_PASSIVE_RATE  = -10,      // パッシブの割合
+};
 
 //==============================================================================
 //  構造体定義
@@ -179,6 +188,9 @@ typedef struct{
   s32 decide_cursor_pos;  ///<決定時のカーソル位置
   BOOL cursor_pos_update;   ///<TRUE:カーソル位置に更新があった
   _SET_CURSOR_MODE cursor_mode; ///<カーソルをキーとタッチパネルどちらでいじったか
+  
+  u32       Flag;             ///<フラグ
+  s32       SlotNum;          ///<上書きするスロット番号(0-2)
   
   APP_TASKMENU_RES *app_menu_res;
   APP_TASKMENU_WORK *app_menu_work;
@@ -234,9 +246,16 @@ static void _CursorPos_NotFocus(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos);
 
 //
 static void _mp_init( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
+static void _mp_exit( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
+static s32  _mp_ret_mode( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
+//
 static s32  _mp_chk_use_power( MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id );
+static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 slotnum );
 static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id, const s32 dest );
 static s32  _mp_chk_free_buffer( MONOLITH_APP_PARENT *appwk );
+static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg );
+//
+static void _mp_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
 
 //==============================================================================
 //  データ
@@ -404,6 +423,12 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_DECIDE_STREAM_KEY_WAIT,
     SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH,
+    //
+    SEQ_SEL3MES_STREAM,      // 3つまで持っている
+    SEQ_SEL3MES_STREAM_WAIT, // 終了待ち
+    SEQ_SEL3_SELECT_WAIT,
+    SEQ_SEL3_DECIDE_STREAM,
+    SEQ_SEL3_DECIDE_SEND,
   };
   
   MonolithTool_Panel_ColorUpdate(appwk, FADE_SUB_BG);
@@ -492,10 +517,22 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         MonolithTool_PanelOBJ_SetEnable(&mpw->panel, FALSE);
       }
     }
+    // debgu
+    _mp_debug( appwk, mpw );
     
     if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
       PMSND_PlaySE( MONOLITH_SE_DECIDE );
-      *seq = SEQ_YESNO_STREAM;
+      //
+      // 空きを探して分岐
+      if( _mp_chk_free_buffer( appwk ) == -1 ){
+        // 空きがない => 3つある処理へ
+        mpw->Flag |= FLG_MODE_THREE;
+        *seq = SEQ_SEL3MES_STREAM;
+      }else{
+        // 空きがあるので通常処理
+        mpw->Flag &= ~FLG_MODE_THREE;
+        *seq = SEQ_YESNO_STREAM;
+      }
     }
     break;
   
@@ -557,24 +594,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   case SEQ_DECIDE_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
 #if 1 // 新画面の飛び先
-      s32 num;
-      
-      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
-        _Clear_MsgStream(mpw);
-        // うまく行かないので保留
-//        _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
-        mpw->decide_cursor_pos = _CURSOR_POS_NONE;
-        MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
-        MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
-        // 空きを探す
-        num = _mp_chk_free_buffer( appwk );
-        if(num == -1){
-           num = 2;
-        }
-        // セット(上画面に反映)
-        _mp_set_gpower( appwk, mpw, appwk->common->power_select_no, num );
-        appwk->common->power_eqp_update = TRUE;
-        //
+      s32 ret = _mp_ret_mode( appwk, mpw );
+      if(ret == 0){
         *seq = SEQ_TOP;
       }
 #else
@@ -647,8 +668,66 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       return GFL_PROC_RES_FINISH;
     }
     break;
+  
+  //----------
+  // 以下追加
+  //----------
+  // 3つすでに持っている
+  case SEQ_SEL3MES_STREAM:
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+      _Set_MsgStream(mpw, appwk->setup, msg_mono_pow_up_100);
+      *seq = SEQ_SEL3MES_STREAM_WAIT;
+    }
+    break;
+  // メッセージ表示待ち
+  case SEQ_SEL3MES_STREAM_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
+      // 輝度変更(passive)
+      _mp_chg_brightness( mpw, TRUE );
+      mpw->app_menu_work = MonolithTool_TaskMenu_WinInit( appwk, appwk->setup, mpw->app_menu_res, HEAPID_MONOLITH );
+      *seq = SEQ_SEL3_SELECT_WAIT;
+    }
+    break;
+  // 選択
+  case SEQ_SEL3_SELECT_WAIT:
+    {
+      s32 ret;
+      if(MonolithTool_TaskMenu_WinUpdate(appwk->setup, mpw->app_menu_work, &ret) == TRUE){
+        // 輝度変更(active)
+        _mp_chg_brightness( mpw, FALSE );
+        MonolithTool_TaskMenu_WinExit(mpw->app_menu_work);
+        mpw->app_menu_work = NULL;
+        _Clear_MsgStream(mpw);
+          OS_Printf("sel :%d\n",ret);
+        if(ret != 3){
+          mpw->SlotNum = ret;
+          *seq = SEQ_SEL3_DECIDE_STREAM;
+        }
+        else{
+          mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+          MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+          MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+          *seq = SEQ_TOP;
+        }
+      }
+    }
+    break;
+  // 選択決定
+  case SEQ_SEL3_DECIDE_STREAM:
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+      WORDSET_RegisterGPowerName( appwk->setup->wordset, 0, appwk->common->gpower_no[mpw->SlotNum] );      // 元
+      WORDSET_RegisterGPowerName( appwk->setup->wordset, 1, mpw->use_gpower_id[mpw->decide_cursor_pos] );  // 先
+      _Set_MsgStreamExpand(mpw, appwk->setup, msg_mono_pow_up_101);
+      *seq = SEQ_DECIDE_SEND;
+    }
+    break;
+  // 選択終了
+  case SEQ_SEL3_DECIDE_SEND:
+    *seq = SEQ_DECIDE_STREAM_WAIT;
+    break;
   }
-
   _ScrollArrowUpdate(mpw);
   
   return GFL_PROC_RES_CONTINUE;
@@ -672,6 +751,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   if(PRINTSYS_QUE_IsFinished(appwk->setup->printQue) == FALSE){
     return GFL_PROC_RES_CONTINUE;
   }
+  // 終了処理
+  _mp_exit( appwk, mpw );
 
   GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
 
@@ -1723,12 +1804,14 @@ static s32 _GetTouchListNo(MONOLITH_PWSELECT_WORK *mpw, u32 tp_y)
   return list_no;
 }
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------
 /**
  * 初期化
  *
- * @param   appwk	
- * @param   mpw		
+ * @param   MONOLITH_APP_PARENT 	*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
  *
  * @retval
  */
@@ -1749,8 +1832,8 @@ static void _mp_init( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
     appwk->common->gpower_no[i] = ISC_SAVE_GetGPowerID( intsave, i );
   }
   // test
-//  appwk->common->gpower_no[0] = 21;
-//  appwk->common->gpower_no[1] = 22;
+//  appwk->common->gpower_no[1] = GPOWER_ID_NULL;
+//  appwk->common->gpower_no[2] = GPOWER_ID_NULL;
   //
   // 持っているGPOWER_IDのパネルを非選択とする処理
   for(j=0;j<INTRUDE_EQUIP_GPOWER_MAX;j++){
@@ -1761,18 +1844,90 @@ static void _mp_init( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
       }
     }
   }
+  // 初期化
+  mpw->Flag = 0;
+  mpw->SlotNum = -1;
 }
 
 //--------------------------------------------------------------
 /**
- * GPOWERに対応するuse_poserの番号を調べる
+ * 終了(セーブ)
  *
- * @param   appwk	
- * @param   mpw		
- * @param   const s32 gpowerid
- * @param   const s32 先(-1自動)
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
  *
  * @retval
+ */
+//--------------------------------------------------------------
+static void _mp_exit( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  s32 i;
+  
+  // セーブ
+  for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+    ISC_SAVE_SetGPowerID( intsave, appwk->common->gpower_no[i], i );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 戻り先処理
+ *
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ *
+ * @retval  s32						(-1:なし、0:TOPへ)
+ */
+//--------------------------------------------------------------
+static s32 _mp_ret_mode( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
+{
+  s32 num;
+  s32 ret=-1;
+  
+  if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+    // メッセージウインドウをクリア
+    _Clear_MsgStream(mpw);
+    //
+    mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+    MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+    MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+    // 空きを探す(ここで分岐)
+    // 3つある場合
+    if(mpw->Flag & FLG_MODE_THREE){
+      _mp_set_gpower( appwk, mpw, appwk->common->power_select_no, mpw->SlotNum );
+      appwk->common->power_eqp_update = TRUE;
+      mpw->Flag &= ~FLG_MODE_THREE;
+      ret = 0;
+    }
+    // 空きがある場合
+    else{
+      // セット
+      num = _mp_chk_free_buffer( appwk );
+      if(num != -1){
+        _mp_set_gpower( appwk, mpw, appwk->common->power_select_no, num );
+        appwk->common->power_eqp_update = TRUE;
+        ret = 0;
+      }else{
+        // こないはず
+        OS_Printf("free buffer error");
+        ret = 0;
+      }
+    }
+  }
+  //
+  return( ret );
+}
+
+//--------------------------------------------------------------
+/**
+ * GPOWERに対応するuse_gpowerの番号を調べる
+ *
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ * @param   const GPOWER_ID			id
+ *
+ * @retval	s32						(-1:なし、場所)
  */
 //--------------------------------------------------------------
 static s32 _mp_chk_use_power( MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id )
@@ -1789,12 +1944,38 @@ static s32 _mp_chk_use_power( MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id )
 
 //--------------------------------------------------------------
 /**
+ * 指定したGPOWERの文字の色変え(_mp_set_gpowerとセット)
+ *
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ * @param   const s32				slotnum(use_gpowerの番号)
+ *
+ * @retval
+ */
+//--------------------------------------------------------------
+static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 slotnum )
+{
+  STRBUF *strbuf;
+  static const PRINTSYS_LSB print_color[] = {
+    PRINTSYS_MACRO_LSB(0xf, 2, 0),
+    PRINTSYS_MACRO_LSB(2, 1, 0),
+  };
+  
+  // 文字列の色変え(objに転送、クリアが必要かもしれない)
+  strbuf = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
+  GFL_MSG_GetString( mpw->mm_power, mpw->use_gpower_id[slotnum], strbuf );
+  PRINTSYS_PrintColor( mpw->bmp_power_name[slotnum], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[slotnum]] );
+  GFL_STR_DeleteBuffer(strbuf);
+}
+
+//--------------------------------------------------------------
+/**
  * 初期化
  *
- * @param   appwk	
- * @param   mpw		
- * @param   const s32 gpowerid
- * @param   const s32 先
+ * @param   MONOLITH_APP_PARENT 	*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ * @param   const GPOWER_ID			id
+ * @param   const s32 				dest(転送先)
  *
  * @retval
  */
@@ -1803,13 +1984,8 @@ static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
 {
   s32 old_no;
   s32 num;
-  STRBUF *strbuf;
-  //
-  static const PRINTSYS_LSB print_color[] = {
-    PRINTSYS_MACRO_LSB(0xf, 2, 0),
-    PRINTSYS_MACRO_LSB(2, 1, 0),
-  };
   
+  // 完全な上書きになるのでこれでよいはず
   // すでにある場合
   old_no = appwk->common->gpower_no[dest];
   if(old_no != GPOWER_ID_NULL){
@@ -1817,24 +1993,16 @@ static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
     num = _mp_chk_use_power( mpw, old_no );
     if(num != -1){
       mpw->use_power[num] = MONO_USE_POWER_OK;
-      //
       // 文字列の色変え
-      strbuf = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
-      GFL_MSG_GetString(mpw->mm_power, mpw->use_gpower_id[num], strbuf);
-      PRINTSYS_PrintColor( mpw->bmp_power_name[num], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[num]] );
-      GFL_STR_DeleteBuffer(strbuf);
+      _mp_chg_string_color( appwk, mpw, num );
     }
     // 新セット
     appwk->common->gpower_no[dest] = id;
     num = _mp_chk_use_power( mpw, id );
     if(num != -1){
       mpw->use_power[num] = MONO_USE_POWER_SOMEMORE;
-      
       // 文字列の色変え
-      strbuf = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
-      GFL_MSG_GetString(mpw->mm_power, mpw->use_gpower_id[num], strbuf);
-      PRINTSYS_PrintColor( mpw->bmp_power_name[num], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[num]] );
-      GFL_STR_DeleteBuffer(strbuf);
+      _mp_chg_string_color( appwk, mpw, num );
     }
   }
   else{
@@ -1844,24 +2012,21 @@ static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
     if(num != -1){
       mpw->use_power[num] = MONO_USE_POWER_SOMEMORE;
       // 文字列の色変え
-      strbuf = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
-      GFL_MSG_GetString(mpw->mm_power, mpw->use_gpower_id[num], strbuf);
-      PRINTSYS_PrintColor( mpw->bmp_power_name[num], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[num]] );
-      GFL_STR_DeleteBuffer(strbuf);
+      _mp_chg_string_color( appwk, mpw, num );
     }
   }
   // 更新
-//  _ScrollPos_NameOamReflection(mpw);
+  _ScrollPos_NameOamReflection(mpw);
+  mpw->scroll_update = TRUE;	// 必要
 }
 
 //--------------------------------------------------------------
 /**
  * セット可能の場所を見つける
  *
- * @param   appwk	
- * @param   mpw		
+ * @param	MONOLITH_APP_PARENT *appwk
  *
- * @retval
+ * @retval	s32					(-1:なし、0-2:場所)
  */
 //--------------------------------------------------------------
 static s32 _mp_chk_free_buffer( MONOLITH_APP_PARENT *appwk )
@@ -1874,5 +2039,51 @@ static s32 _mp_chk_free_buffer( MONOLITH_APP_PARENT *appwk )
     }
   }
   return(-1);
+}
+
+//--------------------------------------------------------------
+/**
+ * 輝度の変更
+ *
+ * @param	MONOLITH_PWSELECT_WORK *mpw
+ * @param	const BOOL				bflg(TRUE:変更、FALSE:戻し)
+ *
+ * @retval
+ */
+//--------------------------------------------------------------
+static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg )
+{
+  s32 rate;
+  
+  rate = MP_ACTIVE_RATE;
+  if(bflg == TRUE){
+    rate = MP_PASSIVE_RATE;
+  }
+//  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
+}
+
+//--------------------------------------------------------------
+/**
+ * debug
+ *
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ *
+ * @retval
+ */
+//--------------------------------------------------------------
+static void _mp_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
+{
+#ifdef PM_DEBUG
+  s32 i;
+  // Yボタンで全クリア
+  // 通常と違う機能なので画面の更新まではしない
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+    for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+      appwk->common->gpower_no[i] = GPOWER_ID_NULL;
+    }
+  }
+#endif
 }
 

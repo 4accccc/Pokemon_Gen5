@@ -888,7 +888,8 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	wk->CurPos		= 0;
 	wk->CurPosMax	= wk->Param->gpower_num;
 	if(wk->CurPosMax <= 0){
-		wk->CurPosMax = 1;
+//		wk->CurPosMax = 1;
+		wk->CurPos  = 3;	// ハイリンクにしておく
 		OS_Printf("gpower num error\n");
 	}
 	wk->Result		= -1;
@@ -2070,7 +2071,10 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 			if((wk->Flag & FLG_MW_DISP_CURSOR)&&(flg == 0)){
 				// ハイリンクパネル
 				if(wk->CurPos == 3){
-					wk->CurPos = wk->CurPosMax-1;
+					// 項目がない => そのまま
+					if(wk->CurPosMax != 0){
+						wk->CurPos = wk->CurPosMax-1;
+					}
 				}
 				// 通常
 				else{
@@ -2099,7 +2103,9 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 			if((wk->Flag & FLG_MW_DISP_CURSOR)&&(flg == 0)){
 				// ハイリンクパネル
 				if(wk->CurPos == 3){
-					wk->CurPos = 0;
+					if(wk->CurPosMax != 0){
+						wk->CurPos = 0;
+					}
 				}
 				// 通常
 				else{

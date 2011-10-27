@@ -42,6 +42,11 @@ enum{
 ///「はい/いいえ」ウィンドウのX位置
 #define _INFO_YESNO_X   ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
 #define _INFO_YESNO_Y   ( 12 )
+//
+/// 4択ウィンドウの情報
+#define _INFO_WIDTH   ( 20 )
+#define _INFO_WIN_X   ( 32-_INFO_WIDTH )
+#define _INFO_WIN_Y   ( 12-6 )
 
 
 //==============================================================================
@@ -1069,6 +1074,88 @@ BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKM
   }
   return FALSE;
 }
+
+//======================================================================================================
+//======================================================================================================
+//==================================================================
+/**
+ * メニューシステム：4択ウィンドウセットアップ(monolith_powerで使用)
+ *
+ * @param   setup		
+ * @param   app_task_res		
+ * @param   heap_id		
+ *
+ * @retval  APP_TASKMENU_WORK *		
+ */
+//==================================================================
+APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, APP_TASKMENU_RES *app_task_res, HEAPID heap_id)
+{
+  APP_TASKMENU_ITEMWORK itemWork[4];
+  APP_TASKMENU_INITWORK initWork;
+  APP_TASKMENU_WORK *app_menu;
+  s32 i;
+  
+  // 決めうち
+  for(i=0;i<4;i++){
+    if(i != 3){		// GPOWER_ID
+      itemWork[i].str = GFL_MSG_CreateString( setup->mm_power, setup->powerdata[appwk->common->gpower_no[i]].msg_id_title );
+    }else{			// 「やめる」
+      itemWork[i].str = GFL_MSG_CreateString( setup->mm_monolith , msg_mono_pow_up_102 );
+    }
+    itemWork[i].msgColor = PRINTSYS_LSB_Make(0xe, 0xf, 0);
+    itemWork[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  }
+  initWork.heapId = heap_id;
+  initWork.itemNum = 4;
+  initWork.itemWork = itemWork;
+  initWork.posType = ATPT_LEFT_UP;
+  initWork.charPosX = _INFO_WIN_X;
+  initWork.charPosY = _INFO_WIN_Y;
+  initWork.w = _INFO_WIDTH;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT;
+  
+  app_menu = APP_TASKMENU_OpenMenu( &initWork, app_task_res );
+  
+  for(i=0;i<4;i++){
+    GFL_STR_DeleteBuffer( itemWork[i].str );
+  }
+  return app_menu;
+}
+
+//==================================================================
+/**
+ * 4択ウィンドウ破棄(monolith_powerで使用)
+ *
+ * @param   app_menu		
+ */
+//==================================================================
+void MonolithTool_TaskMenu_WinExit(APP_TASKMENU_WORK *app_menu)
+{
+  APP_TASKMENU_CloseMenu( app_menu );
+}
+
+//==================================================================
+/**
+ * 4択ウィンドウ更新処理(monolith_powerで使用)
+ *
+ * @param   app_menu		
+ * @param   ret_yesno		戻り値がTRUEの場合、選択結果が入る(TRUE:はい、FALSE:いいえ)
+ *
+ * @retval  BOOL		TRUE:選択終了　FALSE:選択中
+ */
+//==================================================================
+BOOL MonolithTool_TaskMenu_WinUpdate(MONOLITH_SETUP *setup, APP_TASKMENU_WORK *app_menu, s32 *ret_yesno)
+{
+  APP_TASKMENU_UpdateMenu( app_menu );
+  if(APP_TASKMENU_IsFinish( app_menu ) == TRUE){
+    *ret_yesno = APP_TASKMENU_GetCursorPos( app_menu );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//======================================================================================================
+//======================================================================================================
 
 
 ///バランスゲージ描画用の設定値
