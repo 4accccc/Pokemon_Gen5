@@ -11,8 +11,7 @@
 #define ZONE_C04R0701_EVC_H
 
 #define C04R0701_INFORMATIONW_01           0
-#define C04R0701_CLOWN_01                  1
-#define C04R0701_RANGERM_01                2
+#define C04R0701_RANGERM_01                1
 
 #endif //ZONE_C04R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

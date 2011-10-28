@@ -15,7 +15,7 @@
 
   //@author fujimura_souichirou（ライバル・バトルサブウェイ前・迷子ポケモン・ライモンラリー）
   //@author Mizuguchi_Mai //バトルサブウェイトレーナーデータ周り
-  //@author	suginaka_katsunori //一言NPC配置
+  //@author	suginaka_katsunori //一言NPC配置/演出調整
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -45,8 +45,6 @@ _EVENT_DATA   ev_C04_tbossbl_01
 _EVENT_DATA   ev_C04_tboss_01
 _EVENT_DATA   ev_c04_railman_01
 _EVENT_DATA   ev_c04_poke33_01
-_EVENT_DATA   ev_pos_c04_rally_01
-_EVENT_DATA   ev_c04_clown_01
 _EVENT_DATA		ev_c04_footballm_01
 _EVENT_DATA		ev_c04_clown_02
 _EVENT_DATA		ev_c04_badman_01
@@ -56,7 +54,7 @@ _EVENT_DATA		ev_c04_girl3_01
 _EVENT_DATA		ev_c04_poke34_01
 _EVENT_DATA		ev_c04_babygirl1_01
 _EVENT_DATA		ev_c04_middlewoman1_01
-
+_EVENT_DATA   ev_pos_c04_trial_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -108,9 +106,22 @@ INIT_EVENT_END
 /*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START  ev_init_c04
-
-
+  _CALL setup_objpos
 INIT_EVENT_END
+
+setup_objpos:
+
+IF $WK_SCENE_C04_SWRIVAL == 2 THEN
+
+  _OBJ_POS_CHANGE( C04_SWRIVAL_01, 407, 1, 438, DIR_UP )
+  _OBJ_POS_CHANGE( C04_SWPLAZMAM_01, 406, 1, 438, DIR_RIGHT )
+  _OBJ_POS_CHANGE( C04_SWPLAZMAM_04, 407, 1, 437, DIR_DOWN )
+  _OBJ_POS_CHANGE( C04_SWPLAZMAM_02, 406, 1, 439, DIR_RIGHT )
+  _OBJ_POS_CHANGE( C04_SWPLAZMAW_01, 407, 1, 440, DIR_UP )
+  
+ENDIF
+
+_RET
 
 /************************************************************/
 /*  予約スクリプト：ギアステーションから出てくるアニメ      */
@@ -269,6 +280,13 @@ EVENT_START   ev_pos_c04_swrival_01
   $WK_SCENE_C04_SWRIVAL = 2
   //==================================//
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,26705920,65551,28737536,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
+
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：まてよ！　オマエら
@@ -276,13 +294,15 @@ EVENT_START   ev_pos_c04_swrival_01
   _MSGWIN_CLOSE()
 
   //アニメ：プラズマ団全員振り向き（下にいるヤツから振り向き）
-  _OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_r )
-  _TIME_WAIT( 3 )
-  _OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
-  _TIME_WAIT( 3 )
-  _OBJ_ANIME( C04_SWPLAZMAM_01, anm_staystep_r )
-  _TIME_WAIT( 3 )
-  _OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_r )
+  _OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_u )
+  _TIME_WAIT( 6 )
+  _OBJ_ANIME( C04_SWPLAZMAM_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 40 )
+
+  _OBJ_ANIME( C04_SWPLAZMAM_02, anm_dir_r )
+  _OBJ_ANIME( C04_SWPLAZMAM_01, anm_dir_r )
   _OBJ_ANIME_WAIT()
 
   //プラズマ団男：……べつに
@@ -306,13 +326,11 @@ EVENT_START   ev_pos_c04_swrival_01
   _TIME_WAIT( 3 )
   _OBJ_ANIME( C04_SWPLAZMAW_01, anm_walk2_r )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME_WAIT()
 
   //アニメ：プラズマ団がライバルを取り囲む
   _OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_d )
   _TIME_WAIT( 3 )
   _OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
   _OBJ_ANIME_WAIT()
 
   //間（ライバルがきょろきょろする）
@@ -334,6 +352,11 @@ EVENT_START   ev_pos_c04_swrival_01
   _OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
+	_CAMERA_RECV_MOVE(20)
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラのバインドを解く
+	_CAMERA_END()
+
 EVENT_END
 
 /**************************************************************/
@@ -344,6 +367,10 @@ EVENT_START   ev_c04_swrival_01
   _TALK_OBJ_START()
   //主人公名代入
   _PLAYER_NAME( 0 )
+  
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+  
   //ライバル：はんぶんずつ　かたずけるぜ！
   _BALLOONWIN_TALKOBJ_MSG( msg_c04_swrival_04 )
   _MSGWIN_CLOSE()
@@ -370,190 +397,200 @@ EVENT_END
 /**************************************************************/
 /*  プラズマ団男02（ライバルイベント中）                      */
 /**************************************************************/
-EVENT_START   ev_c04_swplazmam_02
+EVENT_START	ev_c04_swplazmam_02
+_TALK_OBJ_START()
 
-  //既に戦ったかチェック
-  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_03, SCWK_ANSWER )
+//へへへ
+_BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmam2_01 )
+_MSGWIN_CLOSE()
 
-    //まだ勝利していない
-    IF $SCWK_ANSWER ==  FALSE THEN
+//トレーナー戦呼び出し
+_TRAINER_BTL_SET( TRID_SWPLAZMAM_03, 0 )
+//敗戦チェック
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
-      //イベント進行状況をチェック（プラズマ団女に勝利しているか）
-      IF $WK_SCENE_C04_SWRIVAL == 2 THEN
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+	//========================================/
+	//イベント進行状況にプラス1
+	$WK_SCENE_C04_SWRIVAL += 1
+	//========================================/
+	_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
 
-        _TALK_OBJ_START()
-        //プラズマ団男02：へへへ！　▼
-        _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_01, C04_SWPLAZMAM_02, POS_DEFAULT )
-        _MSGWIN_CLOSE()
+ELSE
+	//========================================//
+	//負けたらリセット
+	$WK_SCENE_C04_SWRIVAL = 2
+	//========================================//
+	_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+ENDIF
 
-      ELSE
-        //自機座標取得
-        _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+//まじかよ！
+_BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmam2_03 )
+_MSGWIN_CLOSE()
 
-          //アニメ：プラズマ団主人公に隣接
-          IF $LCW_POSX == 407 && $LCW_POSZ == 440 THEN
-            $LCW_POSZ -= 1
-            _OBJ_ANIME_AUTO( C04_SWPLAZMAM_02, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-            _OBJ_ANIME_WAIT()
-          ENDIF
+//アニメ：負けたプラズマ団後退
+_OBJ_ANIME_AUTO( C04_SWPLAZMAM_02, 405, 439, FORCE_TYPE_NPC, 8, DIR_LR )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-          //自機方向取得
-          _PLAYER_DIR_GET( LWK_DIR )
-          SWITCH $LWK_DIR
-          CASE DIR_LEFT THEN
-            _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-            _OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_d )
-          CASE DIR_DOWN THEN
-            _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-            _OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
-          ENDSWITCH
-          _OBJ_ANIME_WAIT()
+//アニメ：ライバルの方のアニメ進行
+_OBJ_ANIME_AUTO( C04_SWPLAZMAM_04, 405, 437, FORCE_TYPE_NPC, 8, DIR_LR )
+_TIME_WAIT( 3 )
+_OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_l )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-        _TALK_OBJ_START()
-        //プラズマ団男02：つぎは　オレだ！　▼
-        _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_02, C04_SWPLAZMAM_02, POS_DEFAULT )
-        _MSGWIN_CLOSE()
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+_OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_u )
+_OBJ_ANIME_WAIT()
 
-      ENDIF
-      //トレーナー戦呼び出し
-      _TRAINER_BTL_SET( TRID_SWPLAZMAM_03, 0 )
+//プラズマ団女01：つぎは　アタシ
+_BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_02, C04_SWPLAZMAW_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
 
-      //結果チェック
-      _CALL ev_battle_check
+//トレーナー戦呼び出し
+_TRAINER_BTL_SET( TRID_SWPLAZMAW_12, 0 )
 
-      //========================================/
-      //イベント進行状況にプラス1
-      $WK_SCENE_C04_SWRIVAL += 1
-      //トレーナーフラグセット
-      _TRAINER_FLAG_SET( TRID_TANPAN_19 )
-      //========================================/
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 
-      //勝利後メッセージ
-      //プラズマ団男02：まじかよ！　▼
-      _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_03, C04_SWPLAZMAM_02, POS_DEFAULT )
-      _MSGWIN_CLOSE()
+	//========================================/
+	//イベント進行状況にプラス1
+	$WK_SCENE_C04_SWRIVAL += 1
+	//========================================/
+	_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
 
-      //アニメ：負けたプラズマ団後退
-      _OBJ_ANIME_AUTO( C04_SWPLAZMAM_02, 403, 439, FORCE_TYPE_NPC, 8, DIR_LR )
-      _OBJ_ANIME_WAIT()
-      _OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
-      _OBJ_ANIME_WAIT()
+ELSE
+	
+	//========================================//
+	//負けたらリセット
+	$WK_SCENE_C04_SWRIVAL = 2
+	//========================================//
+	_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 
-        //イベント進行状況をチェック（プラズマ団を２人倒したか）
-        IF $WK_SCENE_C04_SWRIVAL == 4 THEN
+ENDIF
 
-          //プラズマ団に勝利イベントへジャンプ
-          _CALL ev_pos_c04_swrival_02
+//勝利後メッセージ
+//プラズマ団女01：これでは
+_BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_03, C04_SWPLAZMAW_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
 
-        ENDIF
+//アニメ：負けたプラズマ団後退
+_OBJ_ANIME_AUTO( C04_SWPLAZMAW_01, 405, 440, FORCE_TYPE_NPC, 8, DIR_LR )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-    ENDIF
-
-    //アニメ：ライバルの方のアニメ進行
-    _OBJ_ANIME_AUTO( C04_SWPLAZMAM_04, 403, 437, FORCE_TYPE_NPC, 8, DIR_LR )
-    _TIME_WAIT( 3 )
-    _OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_l )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-
-    //プラズマ団女01のイベントへジャンプ
-    _CALL ev_c04_swplazmaw_01
+_CALL ev_pos_c04_swrival_02
 
 EVENT_END
 
 /**************************************************************/
 /*  プラズマ団女01（ライバルイベント中）                      */
 /**************************************************************/
-EVENT_START   ev_c04_swplazmaw_01
+EVENT_START	ev_c04_swplazmaw_01
+_TALK_OBJ_START()
 
-  //既に戦ったかチェック
-  _TRAINER_FLAG_CHECK( TRID_SWPLAZMAM_04, SCWK_ANSWER )
+//なんてこと
+_BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmaw1_01 )
+_MSGWIN_CLOSE()
 
-    //まだ勝利していない
-    IF $SCWK_ANSWER ==  FALSE THEN
+//トレーナー戦呼び出し
+_TRAINER_BTL_SET( TRID_SWPLAZMAW_12, 0 )
+//敗戦チェック
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
-      //イベント進行状況をチェック（プラズマ団女に勝利しているか）
-      IF $WK_SCENE_C04_SWRIVAL == 2 THEN
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+	//========================================/
+	//イベント進行状況にプラス1
+	$WK_SCENE_C04_SWRIVAL += 1
+	//========================================/
+	_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
 
-        _TALK_OBJ_START()
-        //プラズマ団女01：なんてこと
-        _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_01, C04_SWPLAZMAW_01, POS_DEFAULT )
-        _MSGWIN_CLOSE()
+ELSE
+	//========================================//
+	//負けたらリセット
+	$WK_SCENE_C04_SWRIVAL = 2
+	//========================================//
+	_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+ENDIF
 
-      ELSE
-        //自機方向取得
-        _PLAYER_DIR_GET( LWK_DIR )
-        SWITCH $LWK_DIR
-        CASE DIR_LEFT THEN
-          _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-          _OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_u )
-        ENDSWITCH
-        _OBJ_ANIME_WAIT()
+//これでは　２ねんまえと
+_BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmaw1_03 )
+_MSGWIN_CLOSE()
 
-        _TALK_OBJ_START()
-        //プラズマ団女01：つぎは　アタシ
-        _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_02, C04_SWPLAZMAW_01, POS_DEFAULT )
-        _MSGWIN_CLOSE()
+//アニメ：負けたプラズマ団後退
+_OBJ_ANIME_AUTO( C04_SWPLAZMAW_01, 405, 440, FORCE_TYPE_NPC, 8, DIR_LR )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-      ENDIF
-      //トレーナー戦呼び出し
-      _TRAINER_BTL_SET( TRID_SWPLAZMAM_04, 0 )
+//アニメ：ライバルの方のアニメ進行
+_OBJ_ANIME_AUTO( C04_SWPLAZMAM_04, 405, 437, FORCE_TYPE_NPC, 8, DIR_LR )
+_TIME_WAIT( 3 )
+_OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_l )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-      //結果チェック
-      _CALL ev_battle_check
+//自機座標取得
+_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
-      //========================================/
-      //イベント進行状況にプラス1
-      $WK_SCENE_C04_SWRIVAL += 1
-      //トレーナーフラグセット
-      _TRAINER_FLAG_SET( TRID_TANPAN_20 )
-      //========================================/
+//アニメ：プラズマ団主人公に隣接
+IF $LCW_POSX == 408 && $LCW_POSZ == 440 THEN
+	$LCW_POSZ -= 1
+	_OBJ_ANIME_AUTO( C04_SWPLAZMAM_02, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+ENDIF
 
-      //勝利後メッセージ
-      //プラズマ団女01：これでは　２ねんまえと
-      _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_03, C04_SWPLAZMAW_01, POS_DEFAULT )
-      _MSGWIN_CLOSE()
+//自機方向取得
+_PLAYER_DIR_GET( LWK_DIR )
+SWITCH $LWK_DIR
+CASE DIR_LEFT THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+	_OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_d )
+CASE DIR_DOWN THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+	_OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
+ENDSWITCH
+_OBJ_ANIME_WAIT()
 
-      //アニメ：負けたプラズマ団後退
-      _OBJ_ANIME_AUTO( C04_SWPLAZMAW_01, 403, 440, FORCE_TYPE_NPC, 8, DIR_LR )
-      _OBJ_ANIME_WAIT()
-      _OBJ_ANIME( C04_SWPLAZMAW_01, anm_staystep_r )
-      _OBJ_ANIME_WAIT()
+//プラズマ団男02：つぎは　オレだ！　▼
+_BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_02, C04_SWPLAZMAM_02, POS_DEFAULT )
+_MSGWIN_CLOSE()
 
-        //イベント進行状況をチェック（プラズマ団を２人倒したか）
-        IF $WK_SCENE_C04_SWRIVAL == 4 THEN
+//トレーナー戦呼び出し
+_TRAINER_BTL_SET( TRID_SWPLAZMAM_03, 0 )
 
-          //プラズマ団に勝利イベントへジャンプ
-          _CALL ev_pos_c04_swrival_02
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+	//========================================/
+	//イベント進行状況にプラス1
+	$WK_SCENE_C04_SWRIVAL += 1
+	//========================================/
+	_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+ELSE
+	//========================================//
+	//負けたらリセット
+	$WK_SCENE_C04_SWRIVAL = 2
+	//========================================//
+	_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+ENDIF
 
-        ENDIF
+//勝利後メッセージ
+//プラズマ団男02：まじかよ！　▼
+_BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_03, C04_SWPLAZMAM_02, POS_DEFAULT )
+_MSGWIN_CLOSE()
 
-    ENDIF
+//アニメ：負けたプラズマ団後退
+_OBJ_ANIME_AUTO( C04_SWPLAZMAM_02, 405, 439, FORCE_TYPE_NPC, 8, DIR_LR )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( C04_SWPLAZMAM_02, anm_staystep_r )
+_OBJ_ANIME_WAIT()
 
-    //アニメ：ライバルの方のアニメ進行
-    _OBJ_ANIME_AUTO( C04_SWPLAZMAM_04, 403, 437, FORCE_TYPE_NPC, 8, DIR_LR )
-    _TIME_WAIT( 3 )
-    _OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_l )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( C04_SWPLAZMAM_04, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-
-    //プラズマ団男02のイベントへジャンプ
-    _CALL ev_c04_swplazmam_02
+_CALL ev_pos_c04_swrival_02
 
 EVENT_END
-
-ev_battle_check:
-  //敗戦チェック
-  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
-
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
-  ELSE
-    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-  ENDIF
-_RET
 
 /**************************************************************/
 /*    ライバルイベント２（プラズマ団全滅）                    */
@@ -566,7 +603,7 @@ EVENT_START   ev_pos_c04_swrival_02
   //==================================//
 
   //アニメ：ライバルの方のアニメ進行
-  _OBJ_ANIME_AUTO( C04_SWPLAZMAM_01, 404, 438, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C04_SWPLAZMAM_01, 405, 438, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C04_SWPLAZMAM_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
@@ -574,8 +611,8 @@ EVENT_START   ev_pos_c04_swrival_02
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
   //アニメ：主人公ライバルに隣接
-  IF $LCW_POSX == 407 && $LCW_POSZ == 440 THEN
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 406, 439, FORCE_TYPE_NPC, 8, DIR_UD )
+  IF $LCW_POSX == 408 && $LCW_POSZ == 440 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 407, 439, FORCE_TYPE_NPC, 8, DIR_UD )
     _OBJ_ANIME_WAIT()
   ENDIF
 
@@ -603,6 +640,8 @@ EVENT_START   ev_pos_c04_swrival_02
   _OBJ_DEL( C04_SWPLAZMAM_04 )
   _OBJ_DEL( C04_SWPLAZMAW_01 )
 
+  _TIME_WAIT( 45 )
+
   //========================================//
   //暗転中にプラズマ団を非表示
   _FLAG_SET( FV_C04_SWPLASMAM_01 )
@@ -614,6 +653,10 @@ EVENT_START   ev_pos_c04_swrival_02
 
   _TIME_WAIT( 45 )
 
+  //ライバルゆっくり１歩前へ
+  _OBJ_ANIME( C04_SWRIVAL_01, anm_walk_l_16f )
+  _OBJ_ANIME_WAIT()
+
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：オレさ　プラズマだんに
@@ -621,9 +664,9 @@ EVENT_START   ev_pos_c04_swrival_02
   _MSGWIN_CLOSE()
 
   //アニメ：ライバル主人公と向き合う
-  _OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_d )
-  _TIME_WAIT( 3 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_AUTO( C04_SWRIVAL_01, 406, 439, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
 
   //ライバル：たすかったよ
@@ -650,8 +693,8 @@ EVENT_START   ev_pos_c04_swrival_02
   _MSGWIN_CLOSE()
 
   //アニメ：ライバルポケセンへ
-  _OBJ_ANIME_AUTO( C04_SWRIVAL_01, 411, 438, FORCE_TYPE_NPC, 8, DIR_LR )
-  _TIME_WAIT( 3 )
+  _OBJ_ANIME_AUTO( C04_SWRIVAL_01, 411, 440, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 20 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME_AUTO( C04_SWRIVAL_01, 411, 447, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -702,7 +745,7 @@ EVENT_START   ev_c04_swheroine_01
     //アニメ：ヒロイン向き直す
     _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_u )
     _TIME_WAIT( 8 )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
 /*
     //自機座標取得
     _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
@@ -800,11 +843,6 @@ EVENT_START   ev_c04_swheroine_01
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 
-
-    _OBJ_ANIME( C04_TBOSSBL_01, anm_back_r )
-    _OBJ_ANIME( C04_TBOSS_01, anm_back_r )
-    _OBJ_ANIME_WAIT()
-
 	_TIME_WAIT( 30 )
 
     //アニメ：ノボリとクダリ振り向き
@@ -829,21 +867,24 @@ EVENT_START   ev_c04_swheroine_01
 
     //アニメ：ノボリとクダリ移動
     _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
-    _TIME_WAIT( 8 )
+    _TIME_WAIT( 2 )
     _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 460, FORCE_TYPE_NPC, 8, DIR_UD )
     _TIME_WAIT( 16 )
     _OBJ_ANIME( C04_SWHEROINE_01, anm_dir_u )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
     _OBJ_ANIME_WAIT()
 
-	_OBJ_DEL( C04_TBOSSBL_01 )
+    _OBJ_ANIME( C04_TBOSS_01, anm_dir_u )
+    _OBJ_ANIME_WAIT()
+
+    _OBJ_DEL( C04_TBOSSBL_01 )
 
     //階段SE
     _SE_PLAY( SEQ_SE_KAIDAN ) 
-	_SE_WAIT()
+    _SE_WAIT()
     
     _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
-	_OBJ_ANIME_WAIT()
+	  _OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL( C04_TBOSS_01 )
 	
@@ -857,8 +898,9 @@ EVENT_START   ev_c04_swheroine_01
     _OBJ_ANIME_AUTO( C04_SWHEROINE_01, 422, 461, FORCE_TYPE_NPC, 8, DIR_LR )
 	_OBJ_ANIME_WAIT()
 
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_l )
+    _TIME_WAIT( 10 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
       
     //主人公名代入
@@ -1000,133 +1042,6 @@ EVENT_START   ev_c04_poke33_01
   _EASY_TALK_POKEVOICE( MONSNO_593, msg_c04_poke33_01 )
 EVENT_END
 
-/**************************************************************/
-/*  POS：ライモンラリー開始（ライモンラリー／じてんしゃ入手） */
-/**************************************************************/
-EVENT_START   ev_pos_c04_rally_01
-{
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-
-  //アニメ：クラウン接近
-  $LCW_POSZ -= 1
-  _OBJ_ANIME_AUTO( C04_CLOWN_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-
-  //クラウン：ようこそ！　ライモンシティ！！
-  _BALLOONWIN_OBJMSG_POS( msg_c04_rally_01, C04_CLOWN_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-
-  //じてんしゃ入手処理
-  _ITEM_EVENT_KEYWAIT( ITEM_ZITENSYA, 1 )
-
-  //クラウン：ライモンラリーの　ルールは　かんたん！
-  _BALLOONWIN_OBJMSG_POS( msg_c04_rally_02, C04_CLOWN_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-
-  //アニメ：クラウン移動
-  _OBJ_ANIME( C04_CLOWN_01, anm_walk_r )
-  _OBJ_ANIME_WAIT()
-
-  //アニメ：クラウン方向転換
-  _OBJ_ANIME( C04_CLOWN_01, anm_dir_d )
-  _OBJ_ANIME_WAIT()
-
-  //========================================//
-  //C04のPOSを無効に
-  $WK_SCENE_C04_RALLY = 1
-  //========================================//
-}
-EVENT_END
-
-/**************************************************************/
-/*  クラウン：話しかけ（ライモンラリー）                      */
-/**************************************************************/
-EVENT_START   ev_c04_clown_01
-{
-  _TALK_OBJ_START()
-
-  //ラリーイベント中の場合
-  IF $WK_SCENE_C04_RALLY != 7 THEN
-
-    //クラウン：まだ　おとずれて　いないのは……
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04_rally_03 )
-
-    //全てのポイントをめぐっていた場合
-    IF $WK_SCENE_C04_RALLY == 6 THEN
-      //クラウン：なんと！　のこり０！
-      _BALLOONWIN_TALKOBJ_MSG( msg_c04_rally_10 )
-      _MSGWIN_CLOSE()
-
-      //記念品受け取り
-      _ITEM_EVENT_KEYWAIT( ITEM_HUSIGINAAME, 1 )
-      //========================================//
-      //クリア後メッセージ表示終了
-      $WK_SCENE_C04_RALLY = 7
-      //========================================//
-
-    ELSE
-      //まだ訪れていない場所を数える用変数定義
-      DEFINE_LOCAL LWK_POINT_NUM  //訪れていないポイントの数
-      DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
-
-      //訪れていない場所の確認処理（繰り返し処理）
-      WHILE $LWK_COUNT_NUM < 5
-
-        //ギアステーションにおとずれていない
-        IF $LWK_COUNT_NUM == 0 && FLAG_OFF( FE_C04_RALLYPOINT_01 ) THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04_rally_04, C04_CLOWN_01, POS_DEFAULT )
-          $LWK_POINT_NUM += 1 //ポイント加算
-
-        //ミュージカルホールにおとずれていない
-        ELSIF $LWK_COUNT_NUM == 1 && FLAG_OFF( FE_C04_RALLYPOINT_02 ) THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04_rally_05, C04_CLOWN_01, POS_DEFAULT )
-          $LWK_POINT_NUM += 1 //ポイント加算
-
-        //ビッグスタジアムにおとずれていない
-        ELSIF $LWK_COUNT_NUM == 2 && FLAG_OFF( FE_C04_RALLYPOINT_03 ) THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04_rally_06, C04_CLOWN_01, POS_DEFAULT )
-          $LWK_POINT_NUM += 1 //ポイント加算
-
-        //リトルコートにおとずれていない
-        ELSIF $LWK_COUNT_NUM == 3 && FLAG_OFF( FE_C04_RALLYPOINT_04 ) THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04_rally_07, C04_CLOWN_01, POS_DEFAULT )
-          $LWK_POINT_NUM += 1 //ポイント加算
-
-        //かんらんしゃにおとずれていない
-        ELSIF $LWK_COUNT_NUM == 4 && FLAG_OFF( FE_C04_RALLYPOINT_05 ) THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04_rally_08, C04_CLOWN_01, POS_DEFAULT )
-          $LWK_POINT_NUM += 1 //ポイント加算
-
-        ENDIF
-
-        //カウント
-        $LWK_COUNT_NUM += 1
-
-      ENDWHILE
-
-      //訪れていない場所の数値を指定タグにセット
-      _NUMBER( 0, LWK_POINT_NUM, 1 )
-
-      //クラウン：～の　X箇所　ですね
-      _BALLOONWIN_TALKOBJ_MSG( msg_c04_rally_09 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ENDIF
-
-  ELSE
-    //クラウン：ライモンを　あいする
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04_rally_11 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ENDIF
-}
-EVENT_END
-
-
 //--------------------------------------------------------------------
 //☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
@@ -1189,6 +1104,13 @@ _ANIME_LABEL  anm_walk2_l
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
+//☆共通処理：左にゆっくり歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l_16f
+  _ANIME_DATA AC_WALK_L_16F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
 //☆共通処理：きょろきょろする
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_meet
@@ -1226,3 +1148,69 @@ _ANIME_LABEL	anm_back_r
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_back_d
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆プレイヤー：上向き！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_mark
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  POS：トライアルハウスイベント                             */
+/**************************************************************/
+EVENT_START   ev_pos_c04_trial_01
+
+  DEFINE_LOCAL  DOOR_ANIME_ID
+
+  //ドアアニメ再生
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 399, 467 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+  //謎の女登場
+  _OBJ_ADD_EX( 399, 467, DIR_DOWN, MMDL_ID_EVENTOBJ_00, TRAINERW, MV_DMY )
+
+  //主人公！マーク
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mark )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_back_d )
+  _OBJ_ANIME_WAIT()
+
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+  //まあ　あなた！
+  _BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_01 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //========================================//
+  
+  $WK_SCENE_C04_TRIAL = 1
+  
+  //========================================//
+
+EVENT_END

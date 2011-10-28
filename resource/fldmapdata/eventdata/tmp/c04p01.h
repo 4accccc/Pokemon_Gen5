@@ -11,20 +11,19 @@
 #ifndef ZONE_C04P01_EVC_H
 #define ZONE_C04P01_EVC_H
 
-#define C04P01_CLOWN_01                    0
-#define FLD_ITEM_62                        1
-#define C04P01_WHEEL_OBJ                   2
-#define C04P01_CLOWN_02                    3
-#define C04P01_GIRL1_01                    4
-#define C04P01_MIDDLEWOMAN2_01             5
-#define C04P01_MUSICIAN_01                 6
-#define C04P01_WOMAN2_01                   7
-#define C04P01_BABYBOY1_01                 8
-#define C04P01_TENNISW_01                  9
-#define C04P01_POKE36_01                  10
-#define C04P01_POKE38_01                  11
-#define C04P01_TVT_EV_01                  12
-#define C04P01_GLASSES_01                 13
+#define FLD_ITEM_62                        0
+#define C04P01_WHEEL_OBJ                   1
+#define C04P01_CLOWN_02                    2
+#define C04P01_GIRL1_01                    3
+#define C04P01_MIDDLEWOMAN2_01             4
+#define C04P01_MUSICIAN_01                 5
+#define C04P01_WOMAN2_01                   6
+#define C04P01_BABYBOY1_01                 7
+#define C04P01_TENNISW_01                  8
+#define C04P01_POKE36_01                   9
+#define C04P01_POKE38_01                  10
+#define C04P01_TVT_EV_01                  11
+#define C04P01_GLASSES_01                 12
 
 #endif //ZONE_C04P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
