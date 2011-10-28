@@ -169,18 +169,11 @@ static void Psel_Three_ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame )
 }
 
 
-
-
 // ProcMainのシーケンス
 enum
 {
   SEQ_START            = 0,
   SEQ_LOAD,
-  SEQ_S01_INIT,
-  SEQ_S01_FADE_IN,
-  SEQ_S01_MAIN,
-  SEQ_S01_FADE_OUT,
-  SEQ_S01_EXIT,
   SEQ_S02_INIT,
   SEQ_S02_FADE_IN,
   SEQ_S02_MAIN,
@@ -219,8 +212,6 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 
 
 // フェード
-#define S01_FADE_IN_WAIT  (0)
-#define S01_FADE_OUT_WAIT (3)//(1*THREE_INTERRUPT)  // 60フレームで真っ白にしたいので、なるべくそれに近くなるように、ここだけ特別に*THREE_INTERRUPTしない
 #define S02_FADE_IN_WAIT  (2)
 #define S02_FADE_OUT_WAIT (1*THREE_INTERRUPT)
 
@@ -263,9 +254,9 @@ TARGET;
 // タッチの当たり判定
 static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 {
-  { GFL_UI_TP_USE_CIRCLE,   66,   96,   32 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  128,   66,   26 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  189,   96,   32 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,   60,   90,   27 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  128,   90,   27 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  200,   90,   27 },  // circle
   { 21*8, 24*8 -1, 9*8, 23*8 -1 },  // rect
   { GFL_UI_TP_HIT_END, 0, 0, 0 },  // テーブル終了
 };
@@ -461,30 +452,6 @@ enum
 
 // 3D個別
 // 三匹選択
-// s01
-static const GFL_G3D_UTIL_RES s01_res_tbl[] = 
-{
-  { ARCID_PSEL,        NARC_psel_psel_s01_nsbmd,          GFL_G3D_UTIL_RESARC },
-  { ARCID_PSEL,        NARC_psel_psel_s01_nsbca,          GFL_G3D_UTIL_RESARC },
-  { ARCID_PSEL,        NARC_psel_psel_s01_nsbma,          GFL_G3D_UTIL_RESARC },
-  { ARCID_PSEL,        NARC_psel_psel_s01_nsbta,          GFL_G3D_UTIL_RESARC },
-};
-static const GFL_G3D_UTIL_ANM s01_anm_tbl[] = 
-{
-  { 1, 0 },
-  { 2, 0 },
-  { 3, 0 },
-};
-static const GFL_G3D_UTIL_OBJ s01_obj_tbl[] = 
-{
-  {
-    0,                         // モデルリソースID
-    0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
-    s01_anm_tbl,               // アニメテーブル(複数指定のため)
-    NELEMS(s01_anm_tbl),       // アニメリソース数
-  },
-};
 
 // s02
 static const GFL_G3D_UTIL_RES s02_res_tbl[] = 
@@ -567,20 +534,17 @@ static const VecFx32 three_mb_trans[MB_MAX] =
 // セットアップ番号
 enum
 {
-  THREE_SETUP_IDX_S01,
   THREE_SETUP_IDX_S02,
   THREE_SETUP_IDX_MAX
 };
 // セットアップデータ
 static const GFL_G3D_UTIL_SETUP three_setup_tbl[THREE_SETUP_IDX_MAX] =
 {
-  { s01_res_tbl,   NELEMS(s01_res_tbl),   s01_obj_tbl,   NELEMS(s01_obj_tbl)   },
   { s02_res_tbl,   NELEMS(s02_res_tbl),   s02_obj_tbl,   NELEMS(s02_obj_tbl)   },
 };
 // ユーザ(このソースのプログラムを書いた人)が決めたオブジェクト番号
 enum
 {
-  THREE_USER_OBJ_IDX_S01,
   THREE_USER_OBJ_IDX_S02,
   THREE_USER_OBJ_IDX_MB_L,  // MB_(MB_MAX)と同じ並び順にしておく
   THREE_USER_OBJ_IDX_MB_C,
@@ -591,13 +555,6 @@ enum
 
 // 3Dフレーム数
 // デザイナーさんの3Dオーサリングツール上では1フレームからスタートしているようだが、プログラムでは開始フレームを0として処理する
-#define TIMETABLE_S01_CAMERA_MOVE      (  0*THREE_INTERRUPT)
-#define TIMETABLE_S01_CARD_COME        ( 40*THREE_INTERRUPT)
-#define TIMETABLE_S01_CARD_READ        ( 69*THREE_INTERRUPT)  // このフレームで止めておく
-#define TIMETABLE_S01_CARD_VANISH      ( 70*THREE_INTERRUPT)
-#define TIMETABLE_S01_RIBBON_LOOSE     ( 90*THREE_INTERRUPT)
-#define TIMETABLE_S01_WO_START         (100*THREE_INTERRUPT)  // ホワイトアウトの開始フレーム  // 100-129
-#define TIMETABLE_S01_SCENE_END        (129*THREE_INTERRUPT)  // このフレームで止めておく
 
 #define TIMETABLE_S02_BOX_OPEN         (  0*THREE_INTERRUPT)
 #define TIMETABLE_S02_MB_DISP          ( 61*THREE_INTERRUPT)  // このフレームでモンスターボール表示
@@ -624,8 +581,6 @@ static const u16 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
 enum
 {
   VBLANK_REQ_NONE                         = 0,
-  VBLANK_REQ_S01_TEXT_M_VISIBLE_ON        = 1<< 0,
-  VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF       = 1<< 1,
   VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON    = 1<< 2,
   VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF   = 1<< 3,
   VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_ON    = 1<< 4,
@@ -807,9 +762,6 @@ static void Psel_ThreeInit( PSEL_WORK* work );
 static void Psel_ThreeExit( PSEL_WORK* work );
 
 // 3D個別
-static void Psel_ThreeS01Init( PSEL_WORK* work );
-static void Psel_ThreeS01Exit( PSEL_WORK* work );
-static void Psel_ThreeS01Main( PSEL_WORK* work );
 
 static void Psel_ThreeS02Init( PSEL_WORK* work );
 static void Psel_ThreeS02Exit( PSEL_WORK* work );
@@ -846,12 +798,6 @@ static void Psel_BgInit( PSEL_WORK* work );
 static void Psel_BgExit( PSEL_WORK* work );
 
 // BG個別
-static void Psel_BgS01Init( PSEL_WORK* work );
-static void Psel_BgS01Exit( PSEL_WORK* work );
-
-static void Psel_BgS01SubInit( PSEL_WORK* work );
-static void Psel_BgS01SubExit( PSEL_WORK* work );
-
 static void Psel_BgS02Init( PSEL_WORK* work );
 static void Psel_BgS02Exit( PSEL_WORK* work );
 
@@ -869,10 +815,6 @@ static void Psel_TextExplainPrintStart( PSEL_WORK* work, u32 str_id );
 static void Psel_TextExplainClear( PSEL_WORK* work );
 static void Psel_TextPokeInfoPrintStart( PSEL_WORK* work, TARGET target );
 static void Psel_TextPokeInfoClear( PSEL_WORK* work );
-
-// テキスト個別
-static void Psel_TextS01Init( PSEL_WORK* work );
-static void Psel_TextS01Exit( PSEL_WORK* work );
 
 // APP_TASKMENU
 static void Psel_AppTaskmenuResInit( PSEL_WORK* work );
@@ -910,11 +852,6 @@ typedef int (*PSEL_FUNC)( PSEL_WORK* work, int* seq );
 
 static int Psel_Start      ( PSEL_WORK* work, int* seq );
 static int Psel_Load       ( PSEL_WORK* work, int* seq );
-static int Psel_S01Init    ( PSEL_WORK* work, int* seq );
-static int Psel_S01FadeIn  ( PSEL_WORK* work, int* seq );
-static int Psel_S01Main    ( PSEL_WORK* work, int* seq );
-static int Psel_S01FadeOut ( PSEL_WORK* work, int* seq );
-static int Psel_S01Exit    ( PSEL_WORK* work, int* seq );
 static int Psel_S02Init    ( PSEL_WORK* work, int* seq );
 static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq );
 static int Psel_S02Main    ( PSEL_WORK* work, int* seq );
@@ -927,11 +864,6 @@ static const PSEL_FUNC func_tbl[SEQ_MAX] =
 {
   Psel_Start,
   Psel_Load,
-  Psel_S01Init,
-  Psel_S01FadeIn,
-  Psel_S01Main,
-  Psel_S01FadeOut,
-  Psel_S01Exit,
   Psel_S02Init,
   Psel_S02FadeIn,
   Psel_S02Main,
@@ -1159,7 +1091,7 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
     return GFL_PROC_RES_FINISH;
   }
 
-  if( SEQ_S01_INIT <= (*seq) && (*seq) <= SEQ_S02_EXIT )  // この時点で*seqは次のシーケンスになっている
+  if( SEQ_S02_INIT <= (*seq) && (*seq) <= SEQ_S02_EXIT )  // この時点で*seqは次のシーケンスになっている
   {
     // メイン
     PRINTSYS_QUE_Main( work->print_que );
@@ -1175,56 +1107,6 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
     PSEL_GRAPHIC_3D_EndDraw( work->graphic );
   }
 
-  // DEBUG
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG ){
-
-    static fx32 fovy = CAMERA_FOVY;
-    GFL_G3D_CAMERA *camera = PSEL_GRAPHIC_GetCamera( work->graphic );
-    BOOL ret = FALSE;
-
-    //GFL_G3D_CAMERA_GetfovySin( camera, &fovy );
-    //GFL_G3D_CAMERA_GetfovyCos( camera, &fovyCos );
-
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      fovy += 1;
-      ret = TRUE;
-    }
-    else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      fovy -= 1;
-      ret = TRUE;
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-    }
-
-    if( ret )
-    {
-      GFL_G3D_CAMERA_SetfovyCos( camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      GFL_G3D_CAMERA_SetfovySin( camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      //GFL_G3D_CAMERA_Switching( camera );
-
-      OS_Printf("==カメラ画角操作==================================\n");
-      OS_Printf("L+↑ で 画角上げる\n");
-      OS_Printf("L+↓ で 画角下げる\n");
-      OS_Printf("==================================================\n");
-      OS_Printf("カメラ画角\n");
-      OS_Printf(" fovy = %d \n", fovy);
-    }
-    {
-      fx32 tmp;
-      GFL_G3D_CAMERA_GetfovySin( camera, &tmp );
-      OS_Printf(" tmp = %d \n", tmp);
-    }
-  }
-#endif
-
-
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1239,16 +1121,6 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
 static void Psel_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   PSEL_WORK* work = (PSEL_WORK*)wk;
-
-  if( work->vblank_req & VBLANK_REQ_S01_TEXT_M_VISIBLE_ON )
-  {
-    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_ON );
-  }
-
-  if( work->vblank_req & VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF )
-  {
-    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_OFF );
-  }
 
   if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON )
   {
@@ -1326,120 +1198,6 @@ static void Psel_ThreeExit( PSEL_WORK* work )
 //-------------------------------------
 /// 3D個別
 //=====================================
-static void Psel_ThreeS01Init( PSEL_WORK* work )
-{
-  // ユニット追加
-  {
-    u16 i = THREE_SETUP_IDX_S01;
-    {
-      work->three_unit_idx[i] = GFL_G3D_UTIL_AddUnit( work->three_util, &three_setup_tbl[i] );
-    }
-  }
-
-  // オブジェクト全体
-  {
-    work->three_obj_prop_num = 1;
-    work->three_obj_prop_tbl = ThreeObjPropertyCreateArray( work->heap_id, work->three_obj_prop_num );
-  }
-
-  // オブジェクト
-  {
-    u16 h = 0;
-
-    u16 i = THREE_SETUP_IDX_S01;
-    {
-      u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( work->three_util, work->three_unit_idx[i] );
-      u16 head_user_obj_idx = THREE_USER_OBJ_IDX_S01;
-      u16 j = 0;
-      {
-        THREE_OBJ_PROPERTY* prop;
-        work->three_obj_prop_tbl_idx[head_user_obj_idx +j] = h;
-        prop = &(work->three_obj_prop_tbl[h]);
-        prop->idx  = head_obj_idx +j;
-        prop->draw = TRUE;
-        h++;
-      }
-    }
-  }
-
-  // アニメーション有効化
-  {
-    u16 i;
-    for( i=0; i<work->three_obj_prop_num; i++ )
-    {
-      THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[i]);
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
-      u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      u16 j;
-      for( j=0; j<anime_count; j++ )
-      {
-        GFL_G3D_OBJECT_EnableAnime( obj, j );
-      }
-    }
-  }
-
-  // カメラアニメ
-  {
-    work->three_ica_anime = ICA_ANIME_CreateStreamingAlloc(
-        work->heap_id, ARCID_PSEL, NARC_psel_psel_s01_cam_bin, THREE_ICA_ANIME_INTERVAL );
-    
-    ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
-  }
-
-  // フレーム
-  // デザイナーさんの3Dオーサリングツール上では1フレームからスタートしているようだが、プログラムでは開始フレームを0として処理する
-  work->three_frame = 0;
-}
-static void Psel_ThreeS01Exit( PSEL_WORK* work )
-{
-  // ユニット破棄
-  {
-    u16 i = THREE_SETUP_IDX_S01;
-    {
-      GFL_G3D_UTIL_DelUnit( work->three_util, work->three_unit_idx[i] );
-    }
-  }
-
-  // オブジェクト全体
-  {
-    ThreeObjPropertyDeleteArray( work->three_obj_prop_tbl );
-    work->three_obj_prop_num = 0;
-  }
-
-  // カメラアニメ
-  {
-    ICA_ANIME_Delete( work->three_ica_anime );
-  }
-}
-static void Psel_ThreeS01Main( PSEL_WORK* work )
-{
-  const fx32 anime_speed = THREE_ADD;  // 増加分（FX32_ONEで１フレーム進める）
-  
-  // アニメーション更新
-  {
-    u16 i;
-    for( i=0; i<work->three_obj_prop_num; i++ )
-    {
-      THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[i]);
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
-      u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-      u16 j;
-      for( j=0; j<anime_count; j++ )
-      {
-        GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
-      }
-    }
-  }
-
-  // カメラアニメ
-  {
-    ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
-    ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
-  }
-
-  // フレーム
-  work->three_frame++;
-}
 
 static void Psel_ThreeS02Init( PSEL_WORK* work )
 {
@@ -1453,7 +1211,7 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
 
   // オブジェクト全体
   {
-    work->three_obj_prop_num = THREE_USER_OBJ_IDX_MB_R - THREE_USER_OBJ_IDX_S02 +1;
+    work->three_obj_prop_num = THREE_USER_OBJ_IDX_MAX;
     work->three_obj_prop_tbl = ThreeObjPropertyCreateArray( work->heap_id, work->three_obj_prop_num );
   }
 
@@ -1466,7 +1224,7 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
       u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( work->three_util, work->three_unit_idx[i] );
       u16 head_user_obj_idx = THREE_USER_OBJ_IDX_S02;
       u16 j;
-      for( j=0; j<THREE_USER_OBJ_IDX_MB_R - THREE_USER_OBJ_IDX_S02 +1; j++ )
+      for( j=0; j<THREE_USER_OBJ_IDX_MAX; j++ )
       {
         THREE_OBJ_PROPERTY* prop;
         work->three_obj_prop_tbl_idx[head_user_obj_idx +j] = h;
@@ -2444,83 +2202,6 @@ static void Psel_BgExit( PSEL_WORK* work )
   // 何もしない
 }
 
-static void Psel_BgS01Init( PSEL_WORK* work )
-{
-  // ウィンドウ用のスクリーンを用意する
-
-  // スクリーンの作成＆転送
-  {
-    u16* scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
-    u8 i, j;
-    u16 h = 0;
-    for(j=0; j<24; j++)       // TWL_ProgramingManual.pdf TWLプログラミングマニュアル
-    {                         // 6.2.3.2.2 スクリーンデータのアドレスマッピング
-      for(i=0; i<32; i++)     // スクリーンサイズが256×256 ドットのとき
-      {                       // を参考にした。
-        u16 chara_name = (4<=j&&j<20)?1:0;  // 1キャラ目:0キャラ目
-        u16 flip_h     = 0;
-        u16 flip_v     = 0;
-        u16 pal        = BG_PAL_POS_M_WIN;
-        scr[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
-        h++;
-      }
-    }
-
-    GFL_BG_WriteScreen( BG_FRAME_M_WIN, scr, 0, 0, 32, 24 );
-    GFL_BG_LoadScreenV_Req( BG_FRAME_M_WIN );
-    
-    GFL_HEAP_FreeMemory( scr );
-  }
-}
-static void Psel_BgS01Exit( PSEL_WORK* work )
-{
-  u16 chara_name = 0;  // 0キャラ目
-  u16 flip_h     = 0;
-  u16 flip_v     = 0;
-  u16 pal        = BG_PAL_POS_M_WIN;
-  u16 scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
-  GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_WIN, scr );
-}
-
-static void Psel_BgS01SubInit( PSEL_WORK* work )
-{
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramPaletteEx(
-      handle,
-      NARC_psel_psel_bg01_NCLR,
-      PALTYPE_SUB_BG,
-      BG_PAL_POS_S_INSIDE_BALL * 0x20,
-      BG_PAL_POS_S_INSIDE_BALL * 0x20,
-      BG_PAL_NUM_S_INSIDE_BALL * 0x20,
-      work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramBgCharacter(
-      handle,
-      NARC_psel_psel_bg01_NCGR,
-      BG_FRAME_S_INSIDE_BALL,
-			0,
-      0,  // 全転送
-      FALSE,
-      work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramScreen(
-      handle,
-      NARC_psel_psel_bg01_NSCR,
-      BG_FRAME_S_INSIDE_BALL,
-      0,
-      0,  // 全転送
-      FALSE,
-      work->heap_id );
-
-  GFL_ARC_CloseDataHandle( handle );
-
-  GFL_BG_LoadScreenReq( BG_FRAME_S_INSIDE_BALL );
-}
-static void Psel_BgS01SubExit( PSEL_WORK* work )
-{
-}
-
 static void Psel_BgS02Init( PSEL_WORK* work )
 {
   // ウィンドウ用のスクリーンを用意する
@@ -2963,51 +2644,6 @@ static void Psel_TextPokeInfoClear( PSEL_WORK* work )
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_POKE_INFO] );
 }
 
-static void Psel_TextS01Init( PSEL_WORK* work )
-{
-  STRBUF* strbuf      = GFL_MSG_CreateString( work->msgdata, msg_t01r0102_letter_01 );
-
-  u16     str_width   = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-  u16     str_height  = (u16)( PRINTSYS_GetStrHeight( strbuf, work->font ) ); 
-
-  u16     bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_LETTER]) );
-  u16     bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_LETTER]) );
- 
-  u16     x = 0;
-  u16     y = 0;
-
-  // センタリング
-  if( bmp_width > str_width )
-  {
-    x = ( bmp_width - str_width ) / 2;
-  }
-  if( bmp_height > str_height )
-  {
-    y = ( bmp_height - str_height ) / 2;
-  }
-  
-  PRINTSYS_PrintQueColor(
-      work->print_que,
-      GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_LETTER]),
-      x, y,
-      strbuf,
-      work->font,
-      PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
-
-  GFL_STR_DeleteBuffer( strbuf );
-
-  work->text_finish[TEXT_LETTER] = FALSE;
-
-  // 直ちに転送できるかもしれないので、ここで1度呼んでおく
-  Psel_TextTransWait( work );
-}
-static void Psel_TextS01Exit( PSEL_WORK* work )
-{
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_LETTER]), TEXT_COLOR_B );
-  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_LETTER] );
-}
-
-
 //-------------------------------------
 /// APP_TASKMENU
 //=====================================
@@ -3445,245 +3081,9 @@ static int Psel_Load( PSEL_WORK* work, int* seq )
   // APP_TASKMENU
   Psel_AppTaskmenuResInit( work );
 
-  //return SEQ_S01_INIT;
   return SEQ_S02_INIT;
 }
 
-static int Psel_S01Init    ( PSEL_WORK* work, int* seq )
-{
-  // バックグラウンドカラー
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x2f3b );
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x2f3b );
-
-  // 生成
-  Psel_ThreeS01Init( work );
-  Psel_BgS01Init( work );
-  Psel_BgS01SubInit( work );
-  Psel_TextS01Init( work );
-
-  // テキストは非表示
-  work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF;
-
-  // ブレンド
-  work->ev1 = 0; 
-  G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2,
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-      work->ev1, 16-work->ev1 );
-  // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
-  // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
-
-  // シーケンスフレーム
-  work->sub_seq_frame = 0;
-  return SEQ_S01_FADE_IN;
-}
-static int Psel_S01FadeIn  ( PSEL_WORK* work, int* seq )
-{
-  if( work->sub_seq_frame >= 1 ) Psel_ThreeS01Main( work );  // 3Dのアニメ開始を少し遅らせる
-
-  switch(*seq)
-  {
-  case 0:
-    {
-      // フェードイン(黒→見える)
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, S01_FADE_IN_WAIT );
-      (*seq)++;
-    }
-    break;
-  case 1:
-    {
-      if( !GFL_FADE_CheckFade() )
-      {
-        // シーケンスフレーム
-        work->sub_seq_frame = 0;
-        return SEQ_S01_MAIN;
-      }
-    }
-    break;
-  }
-
-  // シーケンスフレーム
-  work->sub_seq_frame++;
-  return SEQ_S01_FADE_IN;
-}
-static int Psel_S01Main    ( PSEL_WORK* work, int* seq )
-{
-  BOOL blend_m = FALSE;
-
-  switch(*seq)
-  {
-  case 0:  // ～3Dのアニメが手紙を読む段階の4フレーム前になるまで
-    {
-      Psel_ThreeS01Main( work );
-      if( work->three_frame == TIMETABLE_S01_CARD_READ -4 )
-      {
-        (*seq)++;
-      }
-    }
-    break;
-  case 1:  // ～3Dのアニメが手紙を読む段階になるまで
-    {
-      // ブレンド
-      if( work->ev1 < 8 )
-      {
-        work->ev1++;
-        blend_m = TRUE;
-      }
-
-      Psel_ThreeS01Main( work );
-      if( work->three_frame == TIMETABLE_S01_CARD_READ )
-      {
-        (*seq)++;
-      }
-    }
-    break;
-  case 2:  // ～手紙のテキストを表示
-    {
-      // ブレンド
-      if( work->ev1 < 8 )
-      {
-        work->ev1++; 
-        blend_m = TRUE;
-      }
-      else
-      {
-        // テキストは表示
-        work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_ON;
-        (*seq)++;
-      }
-    }
-    break;
-  case 3:  // 手紙のテキストが確実に表示されるよう1フレーム待つ
-    {
-      (*seq)++;
-    }
-    break;
-  case 4:  // プレイヤーの入力待ち
-    {
-      if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
-          || ( GFL_UI_TP_GetTrg() ) )
-      {
-        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
-        else                                                    work->ktst = GFL_APP_KTST_TOUCH;
-        
-        PMSND_PlaySE( PSELSND_DECIDE );
-        
-        (*seq)++;
-      }
-    }
-    break;
-  case 5:  // 手紙のテキストを非表示
-    {
-      // テキストは非表示
-      work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF;
-
-      // ブレンド
-      if( work->ev1 != 0 )
-      {
-        work->ev1--; 
-        blend_m = TRUE;
-      }
-      (*seq)++;
-    }
-    break;
-  case 6:  // ～手紙のテキストのウィンドウの非表示が4フレーム進むまで
-    {
-      // ブレンド
-      if( work->ev1 != 0 )
-      {
-        work->ev1--; 
-        blend_m = TRUE;
-      }
-
-      if( work->ev1 == 4 )
-      {
-        (*seq)++;
-      }
-    }
-    break;
-  case 7:  // ～3Dのアニメがホワイトアウト開始の1フレーム前になるまで(ここのフレームは S01_FADE_OUT_WAIT と関係あり)
-    {
-      // ブレンド
-      if( work->ev1 != 0 )
-      {
-        work->ev1--;
-        blend_m = TRUE;
-      }
-
-      Psel_ThreeS01Main( work );
-      if( work->three_frame == TIMETABLE_S01_RIBBON_LOOSE )
-      {
-        PMSND_PlaySE( PSELSND_DEMO_RIBBON_LOOSE );
-      }
-      if( work->three_frame == TIMETABLE_S01_WO_START -1 )
-      {
-        // シーケンスフレーム
-        work->sub_seq_frame = 0;
-        return SEQ_S01_FADE_OUT;
-      }
-    }
-    break;
-  }
-
-  // ブレンド
-  if( blend_m )
-  {
-    G2_SetBlendAlpha(
-        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2,
-        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-        work->ev1, 16-work->ev1 );
-    // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
-    // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
-  }
- 
-  // シーケンスフレーム
-  work->sub_seq_frame++;
-  return SEQ_S01_MAIN;
-}
-static int Psel_S01FadeOut ( PSEL_WORK* work, int* seq )
-{
-  if( work->three_frame != TIMETABLE_S01_SCENE_END ) Psel_ThreeS01Main( work );  // 3Dのアニメを止める
-
-  switch(*seq)
-  {
-  case 0:
-    {
-      // フェードアウト(見える→白)
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, S01_FADE_OUT_WAIT );
-      (*seq)++;
-    }
-    break;
-  case 1:
-    {
-      if( !GFL_FADE_CheckFade() )
-      {
-        // シーケンスフレーム
-        work->sub_seq_frame = 0;
-        return SEQ_S01_EXIT;
-      }
-    }
-    break;
-  }
-
-  // シーケンスフレーム
-  work->sub_seq_frame++;
-  return SEQ_S01_FADE_OUT;
-}
-static int Psel_S01Exit    ( PSEL_WORK* work, int* seq )
-{
-  // ブレンド
-  G2_BlendNone();
-  G2S_BlendNone();
-
-  Psel_TextS01Exit( work );
-  Psel_BgS01SubExit( work );
-  Psel_BgS01Exit( work );
-  Psel_ThreeS01Exit( work );
-
-  // シーケンスフレーム
-  work->sub_seq_frame = 0;
-  return SEQ_S02_INIT;
-}
 
 static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
 {
@@ -3727,10 +3127,10 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
   if( work->sub_seq_frame >= 16 ) Psel_ThreeS02Main( work );  // 3Dのアニメ開始を少し遅らせる
 
   //if( work->three_frame == TIMETABLE_S02_BOX_OPEN )
-  if( work->sub_seq_frame == 15 )
-  {
+  //if( work->sub_seq_frame == 15 )
+  //{
     //PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
-  }
+  //}
 
   Psel_ThreeS02OnlyMbSelectAnimeMain( work ); 
   Psel_PokeSetMain( work );
@@ -3868,8 +3268,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       {
         int i;
         // モンスターボール表示
-        // MBの前にはTHREE_USER_OBJ_IDX_S02がある為-1している
-        for( i=THREE_USER_OBJ_IDX_MB_L-1; i<THREE_USER_OBJ_IDX_MB_R; i++ )
+        for( i=THREE_USER_OBJ_IDX_MB_L; i<=THREE_USER_OBJ_IDX_MB_R; i++ )
         {
           THREE_OBJ_PROPERTY* prop;
           prop = &(work->three_obj_prop_tbl[i]);
