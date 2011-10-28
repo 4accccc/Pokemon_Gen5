@@ -17,5 +17,13 @@ DEMO_LIST =	c_cruiser.xls \
 			      riza_bridge.xls \
 			      v_boat_port.xls \
 			      title_b.xls \
-			      title_w.xls
+			      title_w.xls \
+            plasma_ship_fly.xls \
+            city_plasma_come.xls \
+            kyuremu_union_b_01.xls \
+            kyuremu_union_b_02.xls \
+            kyuremu_union_w_01.xls \
+            kyuremu_union_w_02.xls \
+            tachiwaki_ship.xls \
+            plane_take_off.xls
 

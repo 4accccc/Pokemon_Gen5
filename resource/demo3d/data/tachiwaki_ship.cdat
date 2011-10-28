@@ -1,0 +1,212 @@
+//=========================================================================
+/**
+ * @fp	tachiwaki_ship.cdat
+ * @brief	コンバート環境にあるデータからデモ再生に使うテーブルを生成します。
+ * @autor	miyuki iwasawa
+ * @note	このファイルはdemo3d/make_cdat.rbによって自動生成されたものです。
+ */
+//=========================================================================
+
+//============================================
+// シーンパラメータ
+//============================================
+
+static const DEMO3D_SCENE_DATA data_tachiwaki_ship_scene = {
+	NARC_data_demo3d_tachiwaki_ship_camera_bin,	///<カメラID
+	DEMO3D_BGM_NONE,	///<BGM No
+	ZONE_ID_T01,	///<ゾーンID
+	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
+	FALSE,	///<2画面連結
+	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
+	GX_SORTMODE_MANUAL,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
+	FALSE,16,	///<αテストOn/Off,αテスト敷居値
+	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
+	FX32_CONST(1.0 ),	///<ScaleW
+	0,0,	///<2画面main_ofs,2画面sub_ofs
+	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
+	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
+	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
+	GX_RGB(0,0,0),31,	///<フォグRGB,A
+	0,0,GX_FOGBLEND_COLOR_ALPHA,	///<フォグshift,フォグoffset,フォグモード
+	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
+	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
+	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
+	DEMO3D_FADE_BLACK, 30,	///<フェードイン
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
+};
+
+//============================================
+// シーンコマンドパラメータ
+//============================================
+
+static const DEMO3D_CMD_DATA demo3d_cmd_tachiwaki_ship_data[] = {
+ { DEMO3D_CMD_TYPE_SE_PLAY, DEMO3D_CMD_SYNC_INIT, { SEQ_SE_FLD_79, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SE_PLAY, 1*45*30, { SEQ_SE_FLD_78, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SE_PLAY, 2*45*30, { SEQ_SE_FLD_78, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SE_PLAY, 3*45*30, { SEQ_SE_FLD_78, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 5400-60, { MASK_MAIN_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+};
+
+//============================================
+// シーンコマンドパラメータ
+//============================================
+
+static const DEMO3D_CMD_DATA demo3d_cmd_tachiwaki_ship_end_data[] = {
+ { DEMO3D_CMD_TYPE_SE_STOP, 0, { SEQ_SE_FLD_79, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+};
+
+
+//============================================
+// Unitパラメータ
+//============================================
+
+///==================================
+/// tachiwaki_ship_01 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_01[] = {
+ NARC_data_demo3d_tachiwaki_ship_01_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_01_nsbta,
+ NARC_data_demo3d_tachiwaki_ship_01_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_01[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_01, 3 },
+};
+
+///==================================
+/// tachiwaki_ship_02 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_02[] = {
+ NARC_data_demo3d_tachiwaki_ship_02_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_02_nsbma,
+ NARC_data_demo3d_tachiwaki_ship_02_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_02[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_02, 3 },
+};
+
+///==================================
+/// tachiwaki_ship_03 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_03[] = {
+ NARC_data_demo3d_tachiwaki_ship_03_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_03_nsbma,
+ NARC_data_demo3d_tachiwaki_ship_03_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_03[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_03, 3 },
+};
+
+///==================================
+/// tachiwaki_ship_04 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_04[] = {
+ NARC_data_demo3d_tachiwaki_ship_04_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_04_nsbtp,
+ NARC_data_demo3d_tachiwaki_ship_04_nsbma,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_04[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_04, 3 },
+};
+
+///==================================
+/// tachiwaki_ship_05 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_05[] = {
+ NARC_data_demo3d_tachiwaki_ship_05_nsbmd,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_05[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_05, 1 },
+};
+
+///==================================
+/// tachiwaki_ship_06 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_06[] = {
+ NARC_data_demo3d_tachiwaki_ship_06_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_06_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_06[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_06, 2 },
+};
+
+///==================================
+/// tachiwaki_ship_07 Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_07[] = {
+ NARC_data_demo3d_tachiwaki_ship_07_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_07_nsbtp,
+ NARC_data_demo3d_tachiwaki_ship_07_nsbta,
+ NARC_data_demo3d_tachiwaki_ship_07_nsbca,
+ NARC_data_demo3d_tachiwaki_ship_07_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_07[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_07, 5 },
+};
+
+///==================================
+/// tachiwaki_ship_01a Unit File Resource
+
+static const u16 res_tachiwaki_ship_file_tachiwaki_ship_01a[] = {
+ NARC_data_demo3d_tachiwaki_ship_01a_nsbmd,
+ NARC_data_demo3d_tachiwaki_ship_01a_nsbta,
+ NARC_data_demo3d_tachiwaki_ship_01a_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_file_unit_tachiwaki_ship_01a[] = {
+ { res_tachiwaki_ship_file_tachiwaki_ship_01a, 3 },
+};
+
+///========================================================
+/// シーンユニットテーブル
+///========================================================
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_01_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_01, 1 },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_01a, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_02_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_02, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_03_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_03, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_04_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_04, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_05_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_05, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_06_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_06, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_file_unit_tachiwaki_ship_07_tbl[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_07, 1 },
+};
+
+static const DEMO3D_SCENE_UNIT res_tachiwaki_ship_scene_unit[] = {
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_01_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_04_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_05_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_06_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_file_unit_tachiwaki_ship_07_tbl, 1, DEMO3D_UNITCHG_NONE },
+};
+

@@ -1,0 +1,85 @@
+//=========================================================================
+/**
+ * @fp	city_plasma_come.cdat
+ * @brief	コンバート環境にあるデータからデモ再生に使うテーブルを生成します。
+ * @autor	miyuki iwasawa
+ * @note	このファイルはdemo3d/make_cdat.rbによって自動生成されたものです。
+ */
+//=========================================================================
+
+//============================================
+// シーンパラメータ
+//============================================
+
+static const DEMO3D_SCENE_DATA data_city_plasma_come_scene = {
+	NARC_data_demo3d_city_plasma_come_camera_bin,	///<カメラID
+	DEMO3D_BGM_NONE,	///<BGM No
+	ZONE_ID_T01,	///<ゾーンID
+	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
+	FALSE,	///<2画面連結
+	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
+	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
+	FALSE,16,	///<αテストOn/Off,αテスト敷居値
+	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
+	FX32_CONST(1.0 ),	///<ScaleW
+	0,0,	///<2画面main_ofs,2画面sub_ofs
+	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
+	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
+	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
+	GX_RGB(0,0,0),31,	///<フォグRGB,A
+	0,0,GX_FOGBLEND_COLOR_ALPHA,	///<フォグshift,フォグoffset,フォグモード
+	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
+	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
+	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
+	DEMO3D_FADE_BLACK, 30,	///<フェードイン
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
+};
+
+//============================================
+// シーンコマンドパラメータ
+//============================================
+
+static const DEMO3D_CMD_DATA demo3d_cmd_city_plasma_come_data[] = {
+ { DEMO3D_CMD_TYPE_SE_PLAY, DEMO3D_CMD_SYNC_INIT, { SEQ_SE_VDEMO_01, 117, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+};
+
+//============================================
+// シーンコマンドパラメータ
+//============================================
+
+static const DEMO3D_CMD_DATA demo3d_cmd_city_plasma_come_end_data[] = {
+ { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+};
+
+
+//============================================
+// Unitパラメータ
+//============================================
+
+///==================================
+/// city_plasma_come_01 Unit File Resource
+
+static const u16 res_city_plasma_come_file_city_plasma_come_01[] = {
+ NARC_data_demo3d_city_plasma_come_01_nsbmd,
+ NARC_data_demo3d_city_plasma_come_01_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_city_plasma_come_file_unit_city_plasma_come_01[] = {
+ { res_city_plasma_come_file_city_plasma_come_01, 2 },
+};
+
+///========================================================
+/// シーンユニットテーブル
+///========================================================
+
+static const DEMO3D_FILE_UNIT_TBL res_city_plasma_come_file_unit_city_plasma_come_01_tbl[] = {
+ { res_city_plasma_come_file_unit_city_plasma_come_01, 1 },
+};
+
+static const DEMO3D_SCENE_UNIT res_city_plasma_come_scene_unit[] = {
+ { res_city_plasma_come_file_unit_city_plasma_come_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+};
+
