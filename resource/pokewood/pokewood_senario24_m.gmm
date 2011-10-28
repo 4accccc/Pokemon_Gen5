@@ -837,9 +837,9 @@
 預かって　おかないとねえ</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ああ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ああっ！
 それだけは　やめろ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ああ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ああっ！
 それだけは　やめろ！</language>
 	</row>
 	<row id="pw_event6_enemy_2">

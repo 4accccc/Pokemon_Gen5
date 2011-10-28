@@ -1652,26 +1652,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『このとびら！
-ぜったい　こわすわ！</Text>
+ぜったい　こわすから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『この扉！
-絶対　壊すわ！</Text>
+絶対　壊すから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

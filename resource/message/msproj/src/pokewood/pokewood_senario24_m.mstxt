@@ -2121,27 +2121,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『ああ！
+			<Text>[Name:TrainerName Idx="1" ]おうじ『ああっ！
 それだけは　やめろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『ああ！
+			<Text>[Name:TrainerName Idx="1" ]王子『ああっ！
 それだけは　やめろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

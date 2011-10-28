@@ -105,33 +105,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あ　あれ？
+			<Text>[Name:TrainerName Idx="1" ]ひめ『あ　あれ？
 どこよ　ここ？▽
-へんな　空気……▼
-あの　扉　いったい
+へんな　くうき……▼
+あの　とびら　いったい
 なんだったのかしら？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あ　あれ？
+			<Text>[Name:TrainerName Idx="1" ]姫『あ　あれ？
 どこよ　ここ？▽
 へんな　空気……▼
 あの　扉　いったい
 なんだったのかしら？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -189,33 +189,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『きゃああー
-ま　魔女だ！▼
-は……　速く　さっきの
-扉まで　ひきかえして▽
-逃げ出さないとっ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『きゃああー
+ま　まほうつかいだ！▼
+は……　はやく　さっきの
+とびらまで　ひきかえして▽
+にげださないとっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『きゃああー
-ま　魔女だ！▼
+			<Text>[Name:TrainerName Idx="1" ]姫『きゃああー
+ま　魔法使いだ！▼
 は……　速く　さっきの
 扉まで　ひきかえして▽
 逃げ出さないとっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -271,35 +271,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『やだ！　とびらが……▼
-父上が　いれば　こんな奴
-ろうやに　入れてやるのに！▼
-でも　私だけだし……▼
-追いつかれる　前に
-こいつら　全部　倒すしかない</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『やだ！　とびらが……▼
+父上が　いれば　こんなやつ
+ろうやに　いれてやるのに！▼
+でも　わたし　ひとりだし……▼
+おいつかれる　まえに
+こいつら　ぜんぶ　たおすしかない</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やだ！　扉が……▼
+			<Text>[Name:TrainerName Idx="1" ]姫『やだ！　扉が……▼
 父上が　いれば　こんな奴
 ろうやに　入れてやるのに！▼
-でも　私だけだし……▼
+でも　わたし　ひとりだし……▼
 追いつかれる　前に
 こいつら　全部　倒すしかない</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -350,28 +350,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『やだ！
-だんだん　こっちに　来てる！▼
+だんだん　こっちに　きてる！▼
 いそいで　たおさなきゃ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やだ！
+			<Text>[Name:TrainerName Idx="1" ]姫『やだ！
 だんだん　こっちに　来てる！▼
 いそいで　たおさなきゃ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -437,17 +437,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さ……
+			<Text>[Name:TrainerName Idx="1" ]姫『さ……
 さっきより　近づいて来てる！▼
 魔女の　どれいは　いやよ！
 私は　お姫様なんだから！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -536,25 +536,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ぜったい　ここからでる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『そうは　いかないわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『絶対　ここから出る！</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『そうは　いかないわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -610,25 +610,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『もう　すきにして……</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『もう　すきにして……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『もう　好きにして……</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『もう　好きにして……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -682,25 +682,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おかねの　ちからで……</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『おかねの　ちからで……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『お金の　力で……</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『お金の　力で……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -768,18 +768,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『父上の
+			<Text>[Name:TrainerName Idx="1" ]姫『父上の
 言うこと　きいて　おけば▽
 こんな扉に　入らなくて　済んだのに▼
 だれも　助けに　きてくれない
 自分で　出ないと　いけないのね</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -844,16 +844,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『これ
+			<Text>[Name:TrainerName Idx="1" ]姫『これ
 勝てんのかなー？▼
 どうでも　よく　なってきた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -921,15 +921,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『た……
+			<Text>[Name:TrainerName Idx="1" ]姫『た……
 たおさ……　ないと……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -997,18 +997,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あは……
+			<Text>[Name:TrainerName Idx="1" ]姫『あは……
 私の　１週間分の　おこづかいよ▽
 これあげるから　帰してよ！▼
 おかね『じゃら　じゃら
 ちゃりん　ちゃりん！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1075,15 +1075,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『こういうのが
+			<Text>[Name:TrainerName Idx="1" ]姫『こういうのが
 私の　実力　なのよねー</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1182,15 +1182,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『まけました……
+			<Text>[Name:TrainerName Idx="1" ]姫『まけました……
 わたしまけましたわ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1254,15 +1254,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ハイ……
+			<Text>[Name:TrainerName Idx="1" ]姫『ハイ……
 おっしゃる　とおりです……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1336,18 +1336,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『えっ
+			<Text>[Name:TrainerName Idx="1" ]姫『えっ
 い　いいんですか？▽
 おねがい　しますっ！▼
 わー！　たくさん
 ピカチュウ　育てよーっと！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1404,25 +1404,25 @@
 		Label="pw_event8_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『うう　つかれた……</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『うう　つかれた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:49" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:49" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『うう　疲れた……</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『うう　疲れた……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:49" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:49" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1482,18 +1482,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いやーっ！
+			<Text>[Name:TrainerName Idx="1" ]姫『いやーっ！
 父上　助けてーっ！▼
 こ　こんな　ことなら
 言うことを　聞いて▽
 夜の散歩　しなきゃ　良かった！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1561,15 +1561,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんですって！？
+			<Text>[Name:TrainerName Idx="1" ]姫『なんですって！？
 そ　そんな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1638,16 +1638,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あんた　大臣に
+			<Text>[Name:TrainerName Idx="1" ]姫『あんた　大臣に
 やとわれて　いたのね！▼
 うう……っ！　父上ー！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1760,16 +1760,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やった！
+			<Text>[Name:TrainerName Idx="1" ]姫『やった！
 ぜんぶ　倒したわ！▼
 これで　出られる……あれ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1797,16 +1797,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ええーっ！
+			<Text>[Name:TrainerName Idx="1" ]姫『ええーっ！
 もーっ　出口は　どこよ！▽
 扉は　どこ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1878,15 +1878,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ろうや『ガシャーン！▼
-[Name:TrainerName Idx="1" ]『うわーっ！
+[Name:TrainerName Idx="1" ]姫『うわーっ！
 ここから　出してーっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="sato_hitomi:W00231"
+				Time="2011-10-28T11:05:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
