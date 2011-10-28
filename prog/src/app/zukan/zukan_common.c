@@ -35,10 +35,16 @@
 //============================================================================================
 static void GetCompleteFlag( HABITATLIST_STATUS *p_dest,
     ARC_HABITAT_ZONE_DATA *p_arc_data ,ZUKAN_SAVEDATA *p_save);
-static BOOL CheckHabitatZone( ZUKAN_SAVEDATA * p_zkn_sv,
-    ARC_HABITAT_MONS_DATA *p_mons_data ,
+static BOOL CheckHabitatZone( const ZUKAN_SAVEDATA * p_zkn_sv,
+    const ARC_HABITAT_MONS_DATA *p_mons_data ,
     u16 ground_type,u16 season_id,BOOL season_enable);
 static BOOL CheckLandEnable( ARC_HABITAT_ZONE_DATA *p_arc_data,BOOL *is_vanish );
+static void GetLandEnable( BOOL *p_is_vanish ,EVENTWORK *p_event_wk );
+static u8 GetHabitatListArcID( u16 zone_group_id );
+static void* AllocHabitatListData( const ARC_HABITAT_ZONE_DATA *p_arc_data,
+    const ZUKAN_SAVEDATA * p_zkn_sv , u8  ground_type , u8  season_id, u16 *p_max,
+    HEAPID heapID );
+static GetHabitatZoneListDataCount( EVENTWORK *p_event_wk ,ARCHANDLE *p_handle	,BOOL *p_is_vanish );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -78,98 +84,6 @@ u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  指定ゾーングループのリストを作成する
- *
- *	@param	* sv
- *	@param	zone_group_id
- *	@param	** list
- *	@param	heapID 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habitat_sv, u16 ** list, HEAPID heapID )
-{
-	u32	i;
-	u16 * buf;
-	u16	max = 0;
-  s32 arc_idx = -1;
-  s32 data_cnt = 0;
-  u16 zone_group_id = HABITATLIST_SAVE_GetDefaultZoneGroupID( p_habitat_sv );
-      
-  u8 ground_type   = HABITATLIST_SAVE_GetDefaultGround( p_habitat_sv );
-  u8 season_id     = HABITATLIST_SAVE_GetDefaultSeason( p_habitat_sv );
-
-  // アーカイブハンドル取得
-  ARC_HABITAT_ZONE_DATA arc_data;
-  ARCHANDLE	*p_handle	= 
-    GFL_ARC_OpenDataHandle( ARCID_HABITAT_LIST_DATA , heapID );
-
-  // アーカイブIDを検索
-  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
-  {
-    const HABITAT_LIST_DATA *sc_habitat = &sc_habitat_list_data[i];
-    if( sc_habitat_list_data[i].zone_group_id == zone_group_id )
-    {
-      arc_idx = sc_habitat_list_data[i].arc_idx;
-      break;
-    }
-  }
-  
-  ONOUE_Printf("gt:%d\n",ground_type);
-  ONOUE_Printf("si:%d\n",season_id);
-
-  // 検索した結果発見できなかった場合
-  if( arc_idx < 0 )
-  {
-    arc_idx = 0;
-    GF_ASSERT(0);
-  }
-  
-  // アーカイブデータ取得
-  GFL_STD_MemClear( &arc_data ,sizeof(ARC_HABITAT_ZONE_DATA) );
-  GFL_ARC_LoadDataByHandle( p_handle , arc_idx , &arc_data);
-  for( i = 0; i < arc_data.data_num ; i++ )
-  {
-    BOOL flg = CheckHabitatZone( 
-        p_zkn_sv,&arc_data.mons_data[i],
-        ground_type,season_id,arc_data.season_enable[ground_type] );
-    if( flg == TRUE )
-    {
-      max++;
-    }
-  }
- 
-  ONOUE_Printf("max:%d\n",max);
-  GF_ASSERT( max > 0 );
-
-  // リスト長のデータを作成
-  buf = GFL_HEAP_AllocClearMemory( heapID ,sizeof(u16)*max );
-
-  // リストに載せるデータを保存
-  for( i = 0; i < arc_data.data_num ; i++ )
-  {
-    BOOL flg = CheckHabitatZone( 
-        p_zkn_sv,&arc_data.mons_data[i],
-        ground_type,season_id,arc_data.season_enable[ground_type] );
-    if( flg == TRUE )
-    {
-      buf[data_cnt] = arc_data.mons_data[i].monsno;
-      data_cnt++;
-      ONOUE_Printf("monsno:%d\n",buf[data_cnt]);
-    }
-  }
-
-	*list = buf;
-  
-  // アーカイブハンドルのクローズ
-  GFL_ARC_CloseDataHandle( p_handle );
-
-	return max;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  生息地リストに乗っているモンスターかチェック
  *
  *	@param	* p_zkn_sv
@@ -182,13 +96,12 @@ u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habi
  */
 //-----------------------------------------------------------------------------
 static BOOL CheckHabitatZone( 
-    ZUKAN_SAVEDATA * p_zkn_sv,
-    ARC_HABITAT_MONS_DATA *p_mons_data ,
+    const ZUKAN_SAVEDATA * p_zkn_sv,
+    const ARC_HABITAT_MONS_DATA *p_mons_data ,
     u16 ground_type,
     u16 season_id,
     BOOL season_enable)
 {
-  ;
   if(((ZUKANSAVE_GetPokeGetFlag( p_zkn_sv,p_mons_data->monsno )==TRUE) ||	      
         (ZUKANSAVE_GetPokeSeeFlag(p_zkn_sv, p_mons_data->monsno)==TRUE)) )
   {
@@ -371,6 +284,76 @@ GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  指定ゾーングループのリストを作成する
+ *
+ *	@param	* sv
+ *	@param	zone_group_id
+ *	@param	** list
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habitat_sv, u16 ** list, HEAPID heapID )
+{
+	u32	i;
+	u16 *buf;
+	u16	max = 0;
+  s32 arc_idx = -1;
+  s32 data_cnt = 0;
+  ARC_HABITAT_ZONE_DATA arc_data;
+  u16 zone_group_id = HABITATLIST_SAVE_GetDefaultZoneGroupID( p_habitat_sv );
+  u8  ground_type   = HABITATLIST_SAVE_GetDefaultGround( p_habitat_sv );
+  u8  season_id     = HABITATLIST_SAVE_GetDefaultSeason( p_habitat_sv );
+
+  // アーカイブハンドル取得
+  ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_HABITAT_LIST_DATA , heapID );
+
+  // アーカイブIDを検索
+  arc_idx = GetHabitatListArcID( zone_group_id );
+  
+  // 検索した結果発見できなかった場合
+  if( arc_idx < 0 )
+  {
+    arc_idx = 0;
+    GF_ASSERT(0);
+  }
+  
+  // アーカイブデータ取得
+  GFL_STD_MemClear( &arc_data ,sizeof(ARC_HABITAT_ZONE_DATA) );
+  GFL_ARC_LoadDataByHandle( p_handle , arc_idx , &arc_data);
+
+  // リスト長のデータを作成
+  buf = AllocHabitatListData( &arc_data ,p_zkn_sv ,ground_type ,season_id ,&max ,heapID );
+
+  // リストに載せるデータを保存
+  for( i = 0; i < arc_data.data_num ; i++ )
+  {
+    // 生息地に乗っているかチェック
+    BOOL flg = CheckHabitatZone( 
+        p_zkn_sv,&arc_data.mons_data[i],
+        ground_type,season_id,arc_data.season_enable[ground_type] );
+
+    // 生息地に乗っているポケモンのみリストに登録
+    if( flg == TRUE )
+    {
+      buf[data_cnt] = arc_data.mons_data[i].monsno;
+      data_cnt++;
+      ONOUE_Printf("monsno:%d\n",buf[data_cnt]);
+    }
+  }
+
+  // 設定
+	*list = buf;
+  
+  // アーカイブハンドルのクローズ
+  GFL_ARC_CloseDataHandle( p_handle );
+
+	return max;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  生息地リスト用ゾーンリストデータを作成する
  *
  *	@param	* p_zone_info
@@ -390,41 +373,18 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
   ARCHANDLE	*p_handle	= 
       GFL_ARC_OpenDataHandle( ARCID_HABITAT_LIST_DATA , HEAPID_ZUKAN_SYS );
 
-  // リストの表示状態取得
-  is_vanish[HABITAT_GROUND_LAND] =  TRUE; // 地上は常にOK
-  is_vanish[HABITAT_GROUND_WATERSIDE] =  // 波乗りが使える
-    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET);
-  is_vanish[HABITAT_GROUND_FISHING] =  // 釣竿入手
-    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET);
+  // 地形の存在状態を取得する
+  GetLandEnable( is_vanish , p_event_wk );
 
   // セーブデータ取得
   p_save = GAMEDATA_GetZukanSave( p_zone_info->p_gdata );
 
+  // 指定ゾーンのみ生成する場合は強制的にリスト長さを１に設定
   if( is_set_single_zone == FALSE )
   {
-    // リストの長さをまず取得
-    for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
-    {
-      const HABITAT_LIST_DATA *sc_habitat = &sc_habitat_list_data[i];
-
-      BOOL is_set = EVENTWORK_CheckEventFlag( p_event_wk ,sc_habitat->sys_flag_id);
-
-      if( is_set == TRUE )
-      {
-        ARC_HABITAT_ZONE_DATA arc_data;
-        GFL_STD_MemClear( &arc_data ,sizeof(ARC_HABITAT_ZONE_DATA) );
-
-        // アーカイブデータからデータを格納する
-        GFL_ARC_LoadDataByHandle( p_handle , sc_habitat->arc_idx , &arc_data);
-
-        // 地形が存在するかチェック
-        if( CheckLandEnable( &arc_data ,is_vanish) )
-        {
-          // データ数を設定
-          p_zone_info->zone_cnt ++;
-        }
-      }
-    }
+    // リストの長さを取得
+    p_zone_info->zone_cnt = 
+      GetHabitatZoneListDataCount( p_event_wk ,p_handle ,is_vanish );
   }
   else
   {
@@ -496,16 +456,12 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
           p_zone_data->zone_group = sc_habitat->zone_group_id;
           p_zone_data->info_ground_type = arc_data.ground_type;
           
+          // 地形の有効状態をコピー
           for( ground_type = HABITAT_GROUND_LAND; ground_type < HABITAT_GROUND_MAX;ground_type++ )
           {
             p_zone_data->season_enable[ground_type] =
                           arc_data.season_enable[ground_type];
           }
-
-          //        ONOUE_Printf("ゾーンID:%u\n",p_zone_data->zone_group);
-          //        ONOUE_Printf("季節フラグ:%u\n",p_zone_data->season_enable);
-          //        ONOUE_Printf("モンスター種類:%u\n",arc_data.data_num);
-          //        ONOUE_Printf("地形タイプ:%u\n",arc_data.ground_type);
 
           // 地形コンプリート状態を設定する
           GetCompleteFlag( p_zone_data->is_complete ,&arc_data ,p_save );
@@ -517,22 +473,25 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
             p_poke_data = &p_zone_data->poke_data[n];
             p_poke_data->monsno = arc_data.mons_data[n].monsno;
             
+            // ポケモンデータを設定
             for( season_id = 0 ; season_id < PMSEASON_TOTAL; season_id ++ )
             {
               for( ground_id = 0 ; ground_id < HABITAT_GROUND_MAX; ground_id ++ )
               {
+                // 地形が有効でかつ、ポケモンが生息する場合のみTRUEを設定
                 p_poke_data->is_appear[season_id][ground_id] = 
                   (arc_data.mons_data[n].is_appear[season_id][ground_id] & is_vanish[ground_id]);
+                // 優先フォルムを設定
                 p_poke_data->form[season_id][ground_id] = arc_data.mons_data[n].form[season_id][ground_id];
               }
             }
 
-            // ゲット
+            // 捕獲コンプリート
             if( ZUKANSAVE_GetPokeGetFlag( p_save ,p_poke_data->monsno))
             {
               p_poke_data->status = HABITAT_POKE_STATUS_GET;
             }
-            // 見た
+            // 見たコンプリート
             else if( ZUKANSAVE_GetPokeSeeFlag( p_save ,p_poke_data->monsno) )
             {
               p_poke_data->status = HABITAT_POKE_STATUS_LOOK;
@@ -542,7 +501,6 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
             {
               p_poke_data->status = HABITAT_POKE_STATUS_UNKNOWN;
             }
-            //ONOUE_Printf("-----------------\n");
           }
           data_cnt++;
         }
@@ -581,12 +539,8 @@ void ZKNCOMM_MakeHabitatListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_LIST_DATA 
   HABITATLIST_SAVE *p_habitat_sv = SaveData_GetHabitatListSave( p_svcont );
   p_save = GAMEDATA_GetZukanSave( p_zone_list->p_gdata );
 
-  // リスト状態取得
-  is_vanish[HABITAT_GROUND_LAND] = TRUE; // 常にTRUE
-  is_vanish[HABITAT_GROUND_WATERSIDE] =  // 波乗りが使える
-    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET);
-  is_vanish[HABITAT_GROUND_FISHING] =  // 釣竿入手
-    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET);
+  // 地形の存在状態を取得する
+  GetLandEnable( is_vanish , p_event_wk );
 
   // リストの長さをまず取得
   for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
@@ -802,5 +756,137 @@ static BOOL CheckLandEnable( ARC_HABITAT_ZONE_DATA *p_arc_data,BOOL *is_vanish )
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形の存在状態を取得をチェック
+ *
+ *	@param	*p_is_vanish 
+ *	@param	*p_event_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetLandEnable( BOOL *p_is_vanish ,EVENTWORK *p_event_wk )
+{
+  // 地上は常にエンカウントできる
+  p_is_vanish[HABITAT_GROUND_LAND] =  TRUE;
+
+  // 波乗りが使える（常に波乗りは使えるが、指定のイベント以降に開放する）
+  p_is_vanish[HABITAT_GROUND_WATERSIDE] =   
+    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_NAMINORI_GET);
+
+  // 釣竿入手
+  p_is_vanish[HABITAT_GROUND_FISHING] =
+    EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_SUGOI_TSURI_GET);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーングループIDから生息地アーカイブデータインデックスIDを取得する
+ *
+ *	@param	zone_group_id 
+ *
+ *	@retval 検索結果のアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+static u8 GetHabitatListArcID( u16 zone_group_id )
+{
+  int i;
+  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
+  {
+    const HABITAT_LIST_DATA *sc_habitat = &sc_habitat_list_data[i];
+    if( sc_habitat_list_data[i].zone_group_id == zone_group_id )
+    {
+      return sc_habitat_list_data[i].arc_idx;
+    }
+  }
+
+  // 見つからなかった
+  GF_ASSERT(0);
+  return sc_habitat_list_data[0].arc_idx;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  生息地リスト用リストデータを生成する
+ *
+ *	@param	ARC_HABITAT_ZONE_DATA *p_arc_data
+ *	@param	* p_zkn_sv 
+ *	@param	ground_type 
+ *	@param	season_id 
+ *	@param	*p_max 
+ *	@param	heapID 
+ *
+ *	@retval リストサイズ
+ */
+//-----------------------------------------------------------------------------
+static void* AllocHabitatListData( const ARC_HABITAT_ZONE_DATA *p_arc_data,
+    const ZUKAN_SAVEDATA * p_zkn_sv ,
+    u8  ground_type , u8  season_id, u16 *p_max,
+    HEAPID heapID )
+{
+  int i;
+	*p_max = 0;
+
+  // リストサイズを取得
+  for( i = 0; i < p_arc_data->data_num ; i++ )
+  {
+    BOOL flg = CheckHabitatZone( 
+        p_zkn_sv,&p_arc_data->mons_data[i],
+        ground_type,season_id,p_arc_data->season_enable[ground_type] );
+    if( flg == TRUE )
+    {
+      (*p_max)++;
+    }
+  }
+  ONOUE_Printf("max:%d\n",(*p_max));
+  GF_ASSERT( (*p_max) > 0 );
+
+  // リスト長のデータを作成
+  return GFL_HEAP_AllocClearMemory( heapID ,sizeof(u16)*(*p_max) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 生息地ゾーンリストのゾーン数を取得
+ *
+ *	@param	*p_event_wk 
+ *	@param	*p_handle	
+ *	@param	p_is_vanish 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GetHabitatZoneListDataCount( EVENTWORK *p_event_wk ,ARCHANDLE *p_handle	,BOOL *p_is_vanish )
+{
+  int i;
+  u32 zone_cnt = 0; // データ数
+
+  for( i = 0; i < HABITAT_LIST_DATA_MAX ; i++ )
+  {
+    const HABITAT_LIST_DATA *sc_habitat = &sc_habitat_list_data[i];
+
+    BOOL is_set = EVENTWORK_CheckEventFlag( p_event_wk ,sc_habitat->sys_flag_id);
+
+    if( is_set == TRUE )
+    {
+      ARC_HABITAT_ZONE_DATA arc_data;
+      GFL_STD_MemClear( &arc_data ,sizeof(ARC_HABITAT_ZONE_DATA) );
+
+      // アーカイブデータからデータを格納する
+      GFL_ARC_LoadDataByHandle( p_handle , sc_habitat->arc_idx , &arc_data);
+
+      // 地形が存在するかチェック
+      if( CheckLandEnable( &arc_data ,p_is_vanish) )
+      {
+        // データ数をインクリメント
+        zone_cnt ++;
+      }
+    }
+  }
+
+  return zone_cnt;
 }
 
