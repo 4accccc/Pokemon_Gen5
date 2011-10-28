@@ -123,7 +123,7 @@ typedef struct
 {
   GFL_MSGDATA *p_msg;
   GFL_FONT    *p_font;
-  PRINT_QUE   *p_que;
+                              PRINT_QUE   *p_que;
   u32 strID[KEYSYS_LIST_WINDOW_MAX];
   u32 list_max;
 
@@ -321,6 +321,52 @@ extern void KEYSYS_ACLR_Init( KEYSYS_ACLR_WORK* p_wk, const GFL_POINT *cp_start,
 extern BOOL KEYSYS_ACLR_Main( KEYSYS_ACLR_WORK* p_wk );
 extern void KEYSYS_ACLR_GetPos( const KEYSYS_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos );
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  スクロールリスト
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	定数
+//=====================================
+#define KEYSYS_SCROLL_MENU_SELECT_NULL    (BMPMENULIST_NULL)
+#define KEYSYS_SCROLL_MENU_WINDOW_MAX     (12)
+
+//-------------------------------------
+///	スクロールリスト
+//=====================================
+typedef struct _KEYSYS_SCROLL_MENU KEYSYS_SCROLL_MENU;
+//-------------------------------------
+///	選択リスト
+//=====================================
+typedef struct
+{
+  GFL_MSGDATA *p_msg;
+  GFL_FONT    *p_font;
+  GFL_CLWK    *p_down;
+  GFL_CLWK    *p_up;
+  u32 strID[KEYSYS_SCROLL_MENU_WINDOW_MAX];
+  u32 param[KEYSYS_SCROLL_MENU_WINDOW_MAX];
+  GFL_CLWK * p_mark[KEYSYS_SCROLL_MENU_WINDOW_MAX];
+  u32 list_max;
+
+  u16 frm;
+  u16 plt;
+  u16 char_ofs;
+
+  u16 cursor_pos;
+  u16 list_pos;
+
+} KEYSYS_SCROLL_MENU_SETUP;
+
+//-------------------------------------
+///	パブリック
+//=====================================
+extern KEYSYS_SCROLL_MENU * KEYSYS_SCROLL_MENU_Init( const KEYSYS_SCROLL_MENU_SETUP *cp_setup, HEAPID heapID );
+extern void KEYSYS_SCROLL_MENU_Exit( KEYSYS_SCROLL_MENU *p_wk );
+extern u32 KEYSYS_SCROLL_MENU_Main( KEYSYS_SCROLL_MENU *p_wk );
+extern BOOL KEYSYS_SCROLL_MENU_Draw( KEYSYS_SCROLL_MENU *p_wk );
+extern void KEYSYS_SCROLL_MENU_GetPos( KEYSYS_SCROLL_MENU *p_wk, u32 *p_cursor_pos, u32 *p_list_pos );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  ETC

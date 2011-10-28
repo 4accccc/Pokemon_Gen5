@@ -2028,11 +2028,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メイン　メニューに
-もどります</Text>
+			<Text>おもいで　リスト　せつめい</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:33:46" />
+				Time="2011-10-24T08:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2040,11 +2039,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メイン　メニューに
-戻ります</Text>
+			<Text>おもいで　リスト　説明</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:59:26" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T08:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2391,6 +2389,39 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:06:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_85"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもいで　リスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T03:22:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おもいで　リスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T03:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3392,6 +3423,852 @@ DSシステムフォントなので
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもいで　リスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T10:18:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おもいで　リスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T10:18:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト１</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト１</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト２</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト２</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト３</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト３</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト４</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト４</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト５</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト５</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト６</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト６</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト７</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト８</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:50:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト８</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:50:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LIST_CANCEL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-26T10:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-26T10:43:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト１の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト１の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト２の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト２の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト３の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト３の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト４の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト４の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト５の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト５の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト６の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト６の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト７の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト７の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_LISTINFO_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リスト８の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リスト８の　せつめい▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-27T10:55:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリスト</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-24T06:49:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

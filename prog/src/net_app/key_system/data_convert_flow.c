@@ -29,6 +29,7 @@
 #include "msg/msg_key_system.h"
 #include "message.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 //自分のモジュール
 #include "key_system_util.h"
@@ -44,12 +45,17 @@
 //外部公開
 #include "data_convert_flow.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_DATACONV_LIST_OPEN
+#endif
+
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
-
+#define DATACONV_INFO_LIST_MAX  (8)
+#define DATACONV_SCROLL_MENU_CANCEL (0xFF)
 //=============================================================================
 /**
  *					構造体宣言
@@ -72,11 +78,15 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 static void DataConv_Seq_SaveOuter( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SaveInner( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_InfomationList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_Explain( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //画面構築シーケンス
 static void DataConv_Seq_CreateDisplayNetMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_CreateDisplayDLPlayInfo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_CreateDisplayWifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_CreateDisplayInfomationList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_CreateDisplayExplain( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //プロセス関係シーケンス
 static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -85,6 +95,9 @@ static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, v
 
 //その他
 static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk );
+static BOOL DataConv_InfoList_GetVisible( const KEY_SYSTEM_WORK *cp_wk, u32 index );
+static BOOL DataConv_InfoList_GetVisibleAny( const KEY_SYSTEM_WORK *cp_wk );
+static BOOL DataConv_InfoList_GetMark( const KEY_SYSTEM_WORK *cp_wk, u32 index );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -101,6 +114,14 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs );
 static void DataConv_Display_CreateWifi( void *p_wk_adrs, HEAPID heapID );
 static BOOL DataConv_Display_IsEndCreateWifi( void *p_wk_adrs );
 static void DataConv_Display_DeleteWifi( void *p_wk_adrs );
+//思い出リスト画面
+static void DataConv_Display_CreateInfomationList( void *p_wk_adrs, HEAPID heapID );
+static BOOL DataConv_Display_IsEndCreateInfomationList( void *p_wk_adrs );
+static void DataConv_Display_DeleteInfomationList( void *p_wk_adrs );
+//思い出リスト説明画面
+static void DataConv_Display_CreateExplain( void *p_wk_adrs, HEAPID heapID );
+static BOOL DataConv_Display_IsEndCreateExplain( void *p_wk_adrs );
+static void DataConv_Display_DeleteExplain( void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -167,9 +188,17 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
     if( KEYSYS_MENU_IsChangeSelect( p_wk->p_menu ) )
     {
-      if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+      if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_info ) )
       {
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_72+KEYSYS_MENU_GetSelect( p_wk->p_menu ), KEYSYS_TEXT_TYPE_QUE ); 
+        u32 select = KEYSYS_MENU_GetSelect( p_wk->p_menu );
+        if( !DataConv_InfoList_GetVisibleAny(p_wk) )
+        {
+          if( select == 3 )
+          {
+            select = 4;
+          }
+        }
+        KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_72+select, KEYSYS_TEXT_TYPE_QUE ); 
       }
     }
 
@@ -178,9 +207,19 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
 
       //もどる以外は記憶
-      if( p_wk->ret < 2 )
+      if( DataConv_InfoList_GetVisibleAny(p_wk) )
       {
-        KEYSYS_MAP_Insert( &p_wk->select, "DNM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
+        if( p_wk->ret < 3 )
+        {
+          KEYSYS_MAP_Insert( &p_wk->select, "DNM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
+        }
+      }
+      else
+      {
+        if( p_wk->ret < 2 )
+        {
+          KEYSYS_MAP_Insert( &p_wk->select, "DNM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
+        }
       }
       (*p_seq)++;
     }
@@ -191,23 +230,52 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_SELECT_CALL:
-    switch( p_wk->ret )
+    if( DataConv_InfoList_GetVisibleAny(p_wk) )
     {
-    case 0://ワイヤレス
-      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wireless );
-      //もう一度メインメニュー
-      (*p_seq ) = 0;
-      break;
-    case 1://Wi-Fi
-      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wifi );
-      //もう一度メインメニュー
-      (*p_seq ) = 0;
-      break;
-    case 2://もどる
-      (*p_seq)++;
-      break;
-    default:
-      GF_ASSERT(0);
+      switch( p_wk->ret )
+      {
+      case 0://ワイヤレス
+        KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wireless );
+        //もう一度メインメニュー
+        (*p_seq ) = 0;
+        break;
+      case 1://Wi-Fi
+        KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wifi );
+        //もう一度メインメニュー
+        (*p_seq ) = 0;
+        break;
+      case 2://おもいでリスト
+        KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_InfomationList );
+        //もう一度メインメニュー
+        (*p_seq ) = 0;
+        break;
+      case 3://もどる
+        (*p_seq)++;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+    }
+    else
+    {
+      switch( p_wk->ret )
+      {
+      case 0://ワイヤレス
+        KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wireless );
+        //もう一度メインメニュー
+        (*p_seq ) = 0;
+        break;
+      case 1://Wi-Fi
+        KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wifi );
+        //もう一度メインメニュー
+        (*p_seq ) = 0;
+        break;
+      case 2://もどる
+        (*p_seq)++;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
     }
 
     break;
@@ -288,6 +356,8 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       setup.default_idx = 0;
       p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
       
+
+      KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_03, KEYSYS_TEXT_TYPE_QUE ); 
       (*p_seq)++;
     }
@@ -307,6 +377,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
         KEYSYS_LIST_Exit(p_wk->p_list);
         p_wk->p_list = NULL;
 
+        KEYSYS_TEXT_Delete( p_wk );
         switch( ret )
         {
         case 0:
@@ -683,6 +754,8 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     else
     {
+      GF_ASSERT( p_wk->p_download_data == NULL );
+      p_wk->p_download_data = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, 0x80000 );
       *p_seq = SEQ_MSG_COMM_START;
     }
     break;
@@ -702,6 +775,8 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         GFL_HEAP_FreeMemory( p_wk->p_recv_data );
       }
       p_wk->p_recv_data = WB_SAVE_CONV_AllocConvertAllData( p_wk->p_download_data, HEAPID_KEY_SYSTEM );
+      GFL_HEAP_FreeMemory( p_wk->p_download_data );
+      p_wk->p_download_data = NULL;
       (*p_seq)++;
     }
     break;
@@ -1028,6 +1103,125 @@ static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  思い出リストフロー
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_InfomationList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE,
+    SEQ_SELECT_MAIN,
+    SEQ_DISPLAY_DELETE,
+    SEQ_SELECT_CALL,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayInfomationList );
+    (*p_seq)++;
+    break;
+  case SEQ_SELECT_MAIN:
+    {
+      p_wk->ret = KEYSYS_SCROLL_MENU_Main( p_wk->p_scroll_menu );
+      if( p_wk->ret != KEYSYS_SCROLL_MENU_SELECT_NULL )
+      {
+        if( p_wk->ret != DATACONV_SCROLL_MENU_CANCEL )
+        {
+          u32 cursor;
+          u32 list;
+          KEYSYS_SCROLL_MENU_GetPos( p_wk->p_scroll_menu, &cursor, &list );
+          KEYSYS_MAP_Insert( &p_wk->select, "DI1", cursor );
+          KEYSYS_MAP_Insert( &p_wk->select, "DI2", list );
+        }
+        (*p_seq)++;
+      }
+    }
+    break;
+  case SEQ_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_SELECT_CALL:
+    switch( p_wk->ret )
+    {
+    case DATACONV_SCROLL_MENU_CANCEL://キャンセル
+      (*p_seq)++;
+      break;
+
+    default:  //デフォルト
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Explain );
+      //もう一度メニュー
+      (*p_seq ) = 0;
+    }
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明画面
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_Explain( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE,
+    SEQ_TEXT_START,
+    SEQ_TEXT_MAIN,
+    SEQ_DISPLAY_DELETE,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayExplain );
+    (*p_seq)++;
+    break;
+  case SEQ_TEXT_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, p_wk->ret + DATACONV_LISTINFO_00, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_TEXT_MAIN:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  通信方式メニュー画面の作成
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
@@ -1151,6 +1345,110 @@ static void DataConv_Seq_CreateDisplayWifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
     DataConv_Display_CreateWifi,
     DataConv_Display_IsEndCreateWifi,
     DataConv_Display_DeleteWifi,
+    NULL,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE_START:
+    //最初はメインメニュー作成
+    KEYSYS_DISPLAY_Create( p_wk->p_display, &sc_display_tbl, HEAPID_KEY_SYSTEM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_DISPLAY_CREATE_WAIT:
+    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明リスト
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_CreateDisplayInfomationList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE_START,
+    SEQ_DISPLAY_CREATE_WAIT,
+    SEQ_END,
+  };
+
+  static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl =
+  {
+    DataConv_Display_CreateInfomationList,
+    DataConv_Display_IsEndCreateInfomationList,
+    DataConv_Display_DeleteInfomationList,
+    NULL,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE_START:
+    //最初はメインメニュー作成
+    KEYSYS_DISPLAY_Create( p_wk->p_display, &sc_display_tbl, HEAPID_KEY_SYSTEM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_DISPLAY_CREATE_WAIT:
+    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明画面
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_CreateDisplayExplain( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE_START,
+    SEQ_DISPLAY_CREATE_WAIT,
+    SEQ_END,
+  };
+
+  static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl =
+  {
+    DataConv_Display_CreateExplain,
+    DataConv_Display_IsEndCreateExplain,
+    DataConv_Display_DeleteExplain,
     NULL,
   };
 
@@ -1424,7 +1722,7 @@ static void DataConv_Display_CreateNetMenu( void *p_wk_adrs, HEAPID heapID )
     int i;
     KEYSYS_MENU_PARAM menu_param;
     GFL_STD_MemClear( &menu_param, sizeof(KEYSYS_MENU_PARAM) );
-    menu_param.frm = KEYSYS_BG_FRAME_TEXT_M;
+    menu_param.frm = KEYSYS_BG_FRAME_LIST_M;
     menu_param.font_plt = KEYSYS_PLT_BG_FONT_M;
     menu_param.frm_chr  = KEYSYS_CGR_MENU_M;
     menu_param.frm_plt  = KEYSYS_PLT_BG_MENU_NORMAL_M;
@@ -1440,7 +1738,7 @@ static void DataConv_Display_CreateNetMenu( void *p_wk_adrs, HEAPID heapID )
     {
       menu_param.cursor   = 0;
     }
-    for( i = 0; i < menu_param.max; i++ )
+    for( i = 0; i < 4; i++ )
     {
       menu_param.wnd_data[i].w  = 26;
       menu_param.wnd_data[i].h  = 2;
@@ -1449,12 +1747,23 @@ static void DataConv_Display_CreateNetMenu( void *p_wk_adrs, HEAPID heapID )
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_69;
     menu_param.wnd_data[1].strID = KEYSYS_STR_70;
-    menu_param.wnd_data[2].strID = KEYSYS_STR_71;
+
+    if( DataConv_InfoList_GetVisibleAny(p_wk) )
+    {
+      menu_param.wnd_data[2].strID = KEYSYS_STR_85;
+      menu_param.wnd_data[3].strID = KEYSYS_STR_71;
+      menu_param.max  = 4;
+    }
+    else
+    {
+      menu_param.wnd_data[2].strID = KEYSYS_STR_71;
+    }
 
     p_wk->p_menu = KEYSYS_MENU_Init( &menu_param, heapID );
 
     //メッセージ
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_72+menu_param.cursor, KEYSYS_TEXT_TYPE_QUE );
+    KEYSYS_INFO_Create( p_wk, heapID );
+    KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_72+menu_param.cursor, KEYSYS_TEXT_TYPE_QUE );
   }
 }
 //----------------------------------------------------------------------------
@@ -1469,12 +1778,14 @@ static BOOL DataConv_Display_IsEndCreateNetMenu( void *p_wk_adrs )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   BOOL is_end_title  = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
-  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
+  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_info );
   BOOL is_end_menu = KEYSYS_MENU_IsDrawEnd( p_wk->p_menu );
 
   if( is_end_text && is_end_menu )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
     return TRUE;
   }
   return FALSE;
@@ -1497,7 +1808,10 @@ static void DataConv_Display_DeleteNetMenu( void *p_wk_adrs )
   //タイトルクリア
   KEYSYS_TEXT_ClearCharacter( p_wk->p_title );
 
+  KEYSYS_INFO_Delete( p_wk );
+
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
 
 }
 //----------------------------------------------------------------------------
@@ -1512,8 +1826,7 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  KEYSYS_TEXT_Exit( p_wk->p_text );
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 16, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
 
@@ -1551,12 +1864,12 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
         PALTYPE_SUB_BG, KEYSYS_PLT_BG_DLMSG_S*0x20, KEYSYS_PLT_BG_DLMSG_S*0x20, 0x20, heapID );
     //CHR
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mb_parent_ss_msg_NCGR, 
-        KEYSYS_BG_FRAME_SUB_S, 0, 0, FALSE, heapID );
+        KEYSYS_BG_FRAME_TEXT_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mb_parent_ss_NCGR, 
         KEYSYS_BG_FRAME_WND_S, 0, 32*24*32, FALSE, heapID );
     //SCR
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mb_parent_ss_msg_NSCR,
-        KEYSYS_BG_FRAME_SUB_S, 0, 0, FALSE, heapID );
+        KEYSYS_BG_FRAME_TEXT_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mb_parent_ss_NSCR,
         KEYSYS_BG_FRAME_WND_S, 0, 0, FALSE, heapID );
     GFL_ARC_CloseDataHandle( p_handle );
@@ -1579,7 +1892,7 @@ static BOOL DataConv_Display_IsEndCreateDlPlay( void *p_wk_adrs )
   if( is_end_text )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
-    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_SUB_S );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
     return TRUE;
   }
@@ -1604,22 +1917,17 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs )
         KEYSYS_BG_FRAME_WND_S, 0, 0, FALSE, HEAPID_KEY_SYSTEM );
 
     GFL_ARC_CloseDataHandle( p_handle );
+
+
+    BmpWinFrame_GraphicSet( KEYSYS_BG_FRAME_TEXT_S, KEYSYS_CGR_TEXT_S, KEYSYS_PLT_BG_FRAME_S, MENU_TYPE_SYSTEM, HEAPID_KEY_SYSTEM );
   }
 
-  KEYSYS_TEXT_Exit( p_wk->p_text );
-  GFL_BG_LoadScreenReq( KEYSYS_BG_FRAME_TEXT_M );
+  KEYSYS_TEXT_Delete( p_wk );
 
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
-  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
-  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
-
-  //GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
-  //ここではちらつくので、次の文字描画と一緒にLoadScreenする
-
-  GFL_BG_ClearScreen( KEYSYS_BG_FRAME_SUB_S );
+  GFL_BG_ClearScreen( KEYSYS_BG_FRAME_TEXT_S );
   GFL_BG_ClearScreen( KEYSYS_BG_FRAME_WND_S );
 
-  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_SUB_S );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
 }
 //----------------------------------------------------------------------------
@@ -1634,8 +1942,7 @@ static void DataConv_Display_CreateWifi( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  KEYSYS_TEXT_Exit( p_wk->p_text );
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 16, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, 0, KEYSYS_TEXT_TYPE_QUE ); 
@@ -1675,10 +1982,183 @@ static BOOL DataConv_Display_IsEndCreateWifi( void *p_wk_adrs )
 static void DataConv_Display_DeleteWifi( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+}
 
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
-  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
-  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト画面作成
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_CreateInfomationList( void *p_wk_adrs, HEAPID heapID )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  //タイトル
+  KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, DATACONV_STR_15, KEYSYS_TEXT_TYPE_QUE );
+
+  //スクロールリスト
+  {
+    int i;
+    KEYSYS_SCROLL_MENU_SETUP setup;
+    GFL_STD_MemClear( &setup, sizeof(KEYSYS_SCROLL_MENU_SETUP) );
+    setup.p_msg   = p_wk->p_msg;
+    setup.p_font  = p_wk->p_font;
+    setup.p_up    = KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_INFO_ALLOW_U, heapID );
+    setup.p_down  = KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_INFO_ALLOW_D, heapID );
+    
+    //項目の追加
+    for( i = 0; i < DATACONV_INFO_LIST_MAX; i++ )
+    {
+      if( DataConv_InfoList_GetVisible(p_wk, i ) )
+      {
+        setup.strID[setup.list_max]  = DATACONV_LIST_00+i;
+        setup.param[setup.list_max]  = i;
+        if( DataConv_InfoList_GetMark( p_wk, i ) )
+        {
+          setup.p_mark[setup.list_max]   = KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_INFO_MARK_00+i, heapID );
+;
+        }
+        setup.list_max++;
+      }
+    }
+
+    //戻るの追加
+    setup.strID[setup.list_max]  = DATACONV_LIST_CANCEL;
+    setup.param[setup.list_max]  = DATACONV_SCROLL_MENU_CANCEL;
+    setup.p_mark[setup.list_max]   = NULL;
+    setup.list_max++;
+
+    setup.frm = KEYSYS_BG_FRAME_LIST_M;
+    setup.plt = KEYSYS_PLT_BG_MENU_NORMAL_M;
+    setup.char_ofs  = KEYSYS_CGR_MENU_M;
+
+    if( KEYSYS_MAP_IsExist( &p_wk->select, "DI1" ) )
+    {
+      setup.cursor_pos  = KEYSYS_MAP_GetValue( &p_wk->select, "DI1" );
+      setup.list_pos    = KEYSYS_MAP_GetValue( &p_wk->select, "DI2" );
+      KEYSYS_MAP_Erase( &p_wk->select, "DI1" );
+      KEYSYS_MAP_Erase( &p_wk->select, "DI2" );
+    }
+
+    p_wk->p_scroll_menu = KEYSYS_SCROLL_MENU_Init( &setup, heapID );
+    GX_SetVisiblePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3);
+    p_wk->cnt = 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト画面待ち
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *
+ *	@return TRUE作成完了  FALSE作成中
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_Display_IsEndCreateInfomationList( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  BOOL is_end_menu = KEYSYS_SCROLL_MENU_Draw( p_wk->p_scroll_menu );
+  BOOL is_end_title = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
+
+  if( is_end_menu && is_end_title )
+  {
+    //どうしても１フレOBJが見えてしまうので…
+    if( p_wk->cnt++ > 1 )
+    {
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+      GX_SetVisiblePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト画面破棄
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_DeleteInfomationList( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_SCROLL_MENU_Exit( p_wk->p_scroll_menu );
+  p_wk->p_scroll_menu = NULL;
+
+  {
+    int i;
+    for( i = KEYSYS_CLWK_INFO_MARK_00; i < KEYSYS_CLWK_INFO_MARK_MAX; i++ )
+    {
+      KEYSYS_OBJ_RemoveClwk( &p_wk->obj, i );
+    }
+  }
+
+  KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_INFO_ALLOW_U );
+  KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_INFO_ALLOW_D );
+
+	GFL_BG_ClearScreen( KEYSYS_BG_FRAME_LIST_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト説明画面作成
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_CreateExplain( void *p_wk_adrs, HEAPID heapID )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  //タイトル
+  //KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, DATACONV_STR_15, KEYSYS_TEXT_TYPE_QUE );
+
+  //スクロールリスト
+  KEYSYS_TEXT_Create( p_wk, heapID );
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, 0, KEYSYS_TEXT_TYPE_QUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト説明画面待ち
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *
+ *	@return TRUE作成完了  FALSE作成中
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_Display_IsEndCreateExplain( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  if( KEYSYS_TEXT_IsMsgEnd(p_wk->p_text) )
+  {
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  思い出リスト説明画面破棄
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_DeleteExplain( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_TEXT_Delete( p_wk );
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 }
 
 
@@ -1715,4 +2195,72 @@ static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk )
   }
   
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  おもいでリストの表示
+ *
+ *	@param	const KEY_SYSTEM_WORK *cp_wk  ワーク
+ *	@param	index インデックス
+ *
+ *	@return TRUE表示してよい  ＦＡＬＳＥだめ
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_InfoList_GetVisible( const KEY_SYSTEM_WORK *cp_wk, u32 index )
+{
+#ifdef DEBUG_DATACONV_LIST_OPEN
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    return TRUE;
+  }
+#endif
+  return DATA_CONVERT_SAVE_IsEventOpen( cp_wk->p_data_sv, index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  おもいでリストの表示  どれかがTRUE
+ *
+ *	@param	const KEY_SYSTEM_WORK *cp_wk  ワーク
+ *
+ *	@return TRUE表示してよい  ＦＡＬＳＥだめ
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_InfoList_GetVisibleAny( const KEY_SYSTEM_WORK *cp_wk )
+{
+  int i;
+  for( i = 0; i < DATACONV_INFO_LIST_MAX; i++ )
+  {
+    if( DataConv_InfoList_GetVisible( cp_wk, i ) )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マークをつくフラグ取得
+ *
+ *	@param	const KEY_SYSTEM_WORK *cp_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return TRUEマーク  FALSEつかない
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_InfoList_GetMark( const KEY_SYSTEM_WORK *cp_wk, u32 index )
+{
+  EVENTWORK *p_ev = SaveData_GetEventWork(GAMEDATA_GetSaveControlWork(cp_wk->p_param->p_gamedata));
+  u32 work_num = DATA_CONVERT_SAVE_GetEventWork( index );
+  u16 *p_ev_wk  = EVENTWORK_GetEventWorkAdrs( p_ev, work_num );
+
+#ifdef DEBUG_DATACONV_LIST_OPEN
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    return TRUE;
+  }
+#endif
+
+  return *p_ev_wk == 1;
 }

@@ -17,6 +17,7 @@
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
 #include "system/time_icon.h"
+#include "ui/frame_list.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -2002,6 +2003,343 @@ void KEYSYS_ACLR_GetPos( const KEYSYS_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos )
 {
   p_pos->x = cp_wk->now_val.x >> FX32_SHIFT;
   p_pos->y = cp_wk->now_val.y >> FX32_SHIFT;
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *          スクロールリスト
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	スクロールリスト
+//=====================================
+struct _KEYSYS_SCROLL_MENU
+{
+  FRAMELIST_WORK *p_frame_list;
+  KEYSYS_SCROLL_MENU_SETUP  setup;
+  STRBUF  *p_strbuf;
+  BOOL  is_end_draw;
+};
+
+static void Keysys_Scroll_Menu_Callback_Draw( void *p_wk_adrs, u32 pos, PRINT_UTIL *p_print_util, s16 y, BOOL disp );
+static void Keysys_Scroll_Menu_Callback_Move( void *p_wk_adrs, u32 pos, BOOL flag );
+static void Keysys_Scroll_Menu_Callback_Scroll( void *p_wk_adrs, s8 move );
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールリスト作成
+ *
+ *	@param	const KEYSYS_SCROLL_MENU_SETUP *cp_setup  セットアップ
+ *	@param	heapID  ヒープID 
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+KEYSYS_SCROLL_MENU * KEYSYS_SCROLL_MENU_Init( const KEYSYS_SCROLL_MENU_SETUP *cp_setup, HEAPID heapID )
+{
+  KEYSYS_SCROLL_MENU *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(KEYSYS_SCROLL_MENU) );
+  p_wk->p_strbuf = GFL_STR_CreateBuffer( 128, heapID );
+  p_wk->setup = *cp_setup;
+
+  {
+    static const FRAMELIST_CALLBACK sc_list_callback =
+    {
+      Keysys_Scroll_Menu_Callback_Draw,
+      Keysys_Scroll_Menu_Callback_Move,
+      Keysys_Scroll_Menu_Callback_Scroll,
+    };
+    static const FRAMELIST_HEADER sc_framelist_header =
+    {
+      0,      // 下画面ＢＧ
+      FRAMELIST_SUB_BG_NONE,  // 上画面ＢＧ ( FRAMELIST_SUB_BG_NONE = 未使用 )
+      2,    // 項目フレーム表示開始Ｘ座標
+      4,    // 項目フレーム表示開始Ｙ座標
+      28,   // 項目フレーム表示Ｘサイズ
+      5,    // 項目フレーム表示Ｙサイズ
+      1,    // フレーム内に表示するBMPWINの表示Ｘ座標
+      1,    // フレーム内に表示するBMPWINの表示Ｙ座標
+      26,   // フレーム内に表示するBMPWINの表示Ｘサイズ
+      2,    // フレーム内に表示するBMPWINの表示Ｙサイズ
+      0,    // フレーム内に表示するBMPWINのパレット
+      {20,20,10,8,5,4,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
+      0,   // 選択項目のパレット
+      1,   // スクロールバーのＹサイズ（キャラ単位）
+      0,   // 項目登録数
+      1,   // 背景登録数
+      0,   // 初期カーソル位置
+      0,   // カーソル移動範囲
+      0,   // 初期スクロール値
+      NULL,  // タッチデータ
+      NULL, // コールバック関数
+      NULL, // コールバック関数に渡されるワーク
+    };
+
+    FRAMELIST_HEADER  header  = sc_framelist_header;
+    header.mainBG   = cp_setup->frm;
+    header.bmpPal   = cp_setup->plt;
+    header.selPal   = cp_setup->plt+1;
+    header.itemMax  = cp_setup->list_max;
+    header.initPos  = cp_setup->cursor_pos;
+    header.posMax   = 4;
+    header.initScroll = 0;
+    header.cbFunc   = &sc_list_callback;
+    header.cbWork   = p_wk;
+
+    p_wk->p_frame_list = FRAMELIST_Create( &header, heapID );
+
+    FRAMELIST_SetUseKey( p_wk->p_frame_list, PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_A );
+
+    //リソース読み込み
+    {
+      ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_KEY_SYSTEM, heapID );
+
+      //キャラ読み込み  ->すでに読んでいる
+      //GFL_BG_SetClearCharacter( cp_setup->frm, 0x20, 0, heapID );
+      //GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_menu_frame_NCGR, cp_setup->frm, 1, 0, FALSE, heapID );
+      //スクリーン読み込み
+      FRAMELIST_LoadFrameGraphicAHOfs( p_wk->p_frame_list, p_handle, NARC_key_system_gra_menu_frame_NSCR, FALSE, 0, cp_setup->char_ofs, cp_setup->plt );		// 通常
+      //点滅パレット読み込み
+      FRAMELIST_LoadBlinkPalette( p_wk->p_frame_list, p_handle, NARC_key_system_gra_menu_frame_NCLR, 1, 2 );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+
+    //項目追加
+    {
+      int i;
+      for( i = 0; i < cp_setup->list_max; i++ )
+      {
+        FRAMELIST_AddItem( p_wk->p_frame_list, 0, i );
+      }
+    }
+  }
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールリスト破棄
+ *
+ *	@param	KEYSYS_SCROLL_MENU *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_SCROLL_MENU_Exit( KEYSYS_SCROLL_MENU *p_wk )
+{
+	FRAMELIST_Exit( p_wk->p_frame_list );
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+
+	GFL_BG_SetScroll( p_wk->setup.frm, GFL_BG_SCROLL_Y_SET, 0 );
+
+  GFL_HEAP_FreeMemory( p_wk );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールリストメイン処理
+ *
+ *	@param	KEYSYS_SCROLL_MENU *p_wk  ワーク
+ *
+ *	@return 選択したもの
+ */
+//-----------------------------------------------------------------------------
+u32 KEYSYS_SCROLL_MENU_Main( KEYSYS_SCROLL_MENU *p_wk )
+{
+  u32 ret = FRAMELIST_Main( p_wk->p_frame_list );
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  {
+    ret = p_wk->setup.list_max-1;
+    ret = p_wk->setup.param[ret];
+  }
+  else if( ret >= 0xfffffff0 )
+  {
+    ret = KEYSYS_SCROLL_MENU_SELECT_NULL;
+  }
+  else
+  {
+    ret = FRAMELIST_GetListPos( p_wk->p_frame_list );
+    ret = p_wk->setup.param[ret];
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールリスト描画処理
+ *
+ *	@param	KEYSYS_SCROLL_MENU *p_wk  ワーク
+ *
+ *	@return TRUE描画完了  FALSE描画中
+ */
+//-----------------------------------------------------------------------------
+BOOL KEYSYS_SCROLL_MENU_Draw( KEYSYS_SCROLL_MENU *p_wk )
+{
+  if( p_wk->is_end_draw )
+  {
+    return TRUE;
+  }
+
+  if( FRAMELIST_Init( p_wk->p_frame_list ) == FALSE )
+  {
+    //タッチ前提のためか、最初は光らないので…
+    FRAMELIST_SetCursorPos( p_wk->p_frame_list, p_wk->setup.cursor_pos );
+
+    //最初からlistの値入れるとずれるので…
+    if( FRAMELIST_CheckScrollMax( p_wk->p_frame_list ) )
+    {
+      FRAMELIST_ForceScroll( p_wk->p_frame_list, p_wk->setup.list_pos );
+    }
+    p_wk->is_end_draw = TRUE;
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  位置を取得
+ *
+ *	@param	KEYSYS_SCROLL_MENU *p_wk  ワーク
+ *	@param	p_cursor_pos  カーソル位置
+ *	@param	p_list_pos    リスト位置
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_SCROLL_MENU_GetPos( KEYSYS_SCROLL_MENU *p_wk, u32 *p_cursor_pos, u32 *p_list_pos )
+{
+  if( p_cursor_pos )
+  {
+    *p_cursor_pos = FRAMELIST_GetCursorPos( p_wk->p_frame_list );
+    NAGI_Printf( "cursor%d ", *p_cursor_pos );
+  }
+  if( p_list_pos )
+  {
+    *p_list_pos   = FRAMELIST_GetScrollCount( p_wk->p_frame_list );
+    NAGI_Printf( "list%d\n", *p_list_pos );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト描画コールバック
+ *
+ *	@param	void *p_wk_adrs ワーク
+ *	@param	pos 項目位置
+ *	@param	*p_print_util PRINTUTIL
+ *	@param	y   表示Y位置
+ *	@param	disp  描画先
+ */
+//-----------------------------------------------------------------------------
+static void Keysys_Scroll_Menu_Callback_Draw( void *p_wk_adrs, u32 pos, PRINT_UTIL *p_print_util, s16 y, BOOL disp )
+{
+	KEYSYS_SCROLL_MENU *p_wk = p_wk_adrs;
+
+  //文字描画
+  {
+    PRINT_QUE *p_que = FRAMELIST_GetPrintQue( p_wk->p_frame_list );
+    GFL_MSG_GetString( p_wk->setup.p_msg, p_wk->setup.strID[ pos ], p_wk->p_strbuf );
+    PRINT_UTIL_PrintColor( p_print_util, p_que, 0, 0, p_wk->p_strbuf, p_wk->setup.p_font, PRINTSYS_LSB_Make( 0xE, 0xF, 1 ) );
+  }
+
+  //OBJ
+  if( p_wk->setup.p_mark[pos] )
+  {
+    GFL_CLACTPOS clpos;
+    clpos.x = 224;
+    clpos.y = y + 16;
+    GFL_CLACT_WK_SetWldPos( p_wk->setup.p_mark[pos], &clpos );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_mark[pos], TRUE );
+  }
+
+  //上、下OBJ
+  {
+    if( p_wk->setup.p_up )
+    {
+      if( FRAMELIST_GetScrollCount(p_wk->p_frame_list) > 0 )
+      {
+        //もしスクロール値があるなら表示
+        GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_up, TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_up, FALSE );
+      }
+    }
+    if(p_wk->setup.p_down )
+    {
+      if( FRAMELIST_CheckScrollMax(p_wk->p_frame_list) )
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_down, TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_down, FALSE );
+      }
+    }
+  }
+
+  NAGI_Printf( "draw pos=%d y=%d disp=%d\n", pos, y, disp );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リスト移動コールバック
+ *
+ *	@param	void *p_wk_adrs ワーク
+ *	@param	pos 項目位置
+ *	@param	flag  TRUE初期化時  FALSEそれ以外
+ */
+//-----------------------------------------------------------------------------
+static void Keysys_Scroll_Menu_Callback_Move( void *p_wk_adrs, u32 pos, BOOL flag )
+{
+	KEYSYS_SCROLL_MENU *p_wk = p_wk_adrs;
+  NAGI_Printf( "move pos=%d flag=%d\n", pos, flag );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リストスクロールコールバック
+ *
+ *	@param	void *p_wk_adrs ワーク
+ *	@param	move スクロール値
+ */
+//-----------------------------------------------------------------------------
+static void Keysys_Scroll_Menu_Callback_Scroll( void *p_wk_adrs, s8 move )
+{
+	KEYSYS_SCROLL_MENU *p_wk = p_wk_adrs;
+  NAGI_Printf( "scroll move=%d\n", move );
+
+  //OBJのスクロール設定
+  {
+    int i;
+    GFL_CLACTPOS pos;
+    for( i = 0; i < p_wk->setup.list_max; i++ )
+    {
+      if( p_wk->setup.p_mark[i] )
+      {
+        if( GFL_CLACT_WK_GetDrawEnable( p_wk->setup.p_mark[i] ) == FALSE ){
+          continue;
+        }
+
+        GFL_CLACT_WK_GetWldPos( p_wk->setup.p_mark[i], &pos );
+        pos.y -= move;
+        GFL_CLACT_WK_SetWldPos( p_wk->setup.p_mark[i], &pos );
+
+        if( pos.y <= -12 || pos.y >= 256+12 )
+        {
+          GFL_CLACT_WK_SetDrawEnable( p_wk->setup.p_mark[i], FALSE );
+        }
+      }
+    }
+  }
+
+
+  //なぜかFRAME_LISTはスクロールすると余白部分(上部のみ）に書き残しが残るので消す
+  if( move < 0 )
+  {
+    u32 scroll = FRAMELIST_GetScrollCount( p_wk->p_frame_list );
+    u32 start = scroll*5;
+    NAGI_Printf( "%d\n", scroll );
+    GFL_BG_FillScreen( p_wk->setup.frm, 0, 0, start, 32, 4, GFL_BG_SCRWRT_PALNL );
+  }
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

@@ -112,7 +112,9 @@ struct _FRAMELIST_WORK {
 	u8	keyRepPos;					// キーリピート処理テーブル位置
 	u8	listWait;						// キーリピートウェイト
 
-	HEAPID	heapID;								// ヒープＩＤ
+	HEAPID	heapID;					// ヒープＩＤ
+  int use_key;
+  BOOL is_no_scr_req;
 };
 
 // メインシーケンス
@@ -203,6 +205,9 @@ static void DrawListItemSub( FRAMELIST_WORK * wk, s32 pos, s8 py );
 static void ChangeCursorPosPalette( FRAMELIST_WORK * wk, u16 now, u16 old );
 static void PrintTransMain( FRAMELIST_WORK * wk );
 
+static u32 GetTrgKey( FRAMELIST_WORK * wk );
+static u32 GetContKey( FRAMELIST_WORK * wk );
+
 
 //============================================================================================
 //	グローバル
@@ -243,7 +248,7 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 	u32	i;
 	
 	wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FRAMELIST_WORK) );
-
+  wk->use_key = PAD_ALL_MASK;
 	wk->hed    = *hed;
 	wk->heapID = heapID;
 
@@ -340,7 +345,10 @@ void FRAMELIST_Exit( FRAMELIST_WORK * wk )
   GF_ASSERT( wk );
 
 	// タッチデータ削除
-	GFL_HEAP_FreeMemory( wk->touch );
+  if( wk->touch != NULL )
+  {
+	  GFL_HEAP_FreeMemory( wk->touch );
+  }
 
 	// BMPWIN削除
 	for( i=0; i<wk->printMax; i++ ){
@@ -422,6 +430,35 @@ void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 data
 		wk->hed.itemSizX*wk->hed.itemSizY*2 );
 
 	GFL_HEAP_FreeMemory( buf );
+}
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		背景グラフィック読み込み  （キャラオフセット版）
+ *
+ * @param		wk				ワーク
+ * @param		ah				アーカイブハンドル
+ * @param		dataIdx		データインデックス
+ * @param		comp			圧縮フラグ TRUE = 圧縮
+ * @param		frameNum	背景番号
+ * @param   char_ofs  キャラクターオフセット
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_LoadFrameGraphicAHOfs( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, BOOL comp, u32 frameNum, u16 char_ofs, u8 plt_ofs )
+{
+  //普通に読み込む
+  FRAMELIST_LoadFrameGraphicAH( wk, ah, dataIdx, comp, frameNum );
+
+  //キャラ、パレットオフセット分ずらす
+  {
+    int i;
+    for( i = 0; i < wk->hed.itemSizX*wk->hed.itemSizY; i++ )
+    {
+      u16 *p_scrn = &wk->wfrmGra[frameNum].scrn[i];
+      *p_scrn =  (plt_ofs<<12)+ (*p_scrn & 0xC00) + (((*p_scrn & 0x3FF)+char_ofs)& 0x3FF);
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -530,7 +567,7 @@ u32 FRAMELIST_Main( FRAMELIST_WORK * wk )
 	case MAINSEQ_WAIT:
 		// Ａボタンが押されたら選択を返す
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+			if( GetTrgKey(wk) & PAD_BUTTON_DECIDE ){
 				ret = wk->listPos;
 			}
 		}
@@ -800,7 +837,7 @@ static int MoveListTouch( FRAMELIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MoveListKey( FRAMELIST_WORK * wk )
 {
-	if( GFL_UI_KEY_GetTrg() & KEY_TOUCH_CHG_TRG ){
+	if( GetTrgKey(wk) & KEY_TOUCH_CHG_TRG ){
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
 			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 			wk->listOldPos = PALCHG_NONE;
@@ -809,12 +846,12 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		}
 	}
 
-	if( !(GFL_UI_KEY_GetCont()) ){
+	if( !(GetContKey(wk)) ){
 		wk->keyRepeat = 0;
 		wk->keyRepPos = 6;
 	}
 
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_UP  ){
+	if( GetContKey(wk) & PAD_KEY_UP  ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listPos != 0 ){
 			wk->listOldPos = wk->listPos;
@@ -829,7 +866,7 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;					// 動作なし
 	}
 
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+	if( GetContKey(wk) & PAD_KEY_DOWN ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listPos < (wk->listPosMax-1) ){
 			wk->listOldPos = wk->listPos;
@@ -844,7 +881,7 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;					// 動作なし
 	}
 
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+	if( GetContKey(wk) & PAD_KEY_LEFT ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listScroll != 0 ){
 			wk->listWait = KEYWAIT_LIST_PAGE_MOVE;
@@ -859,7 +896,7 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;						// 動作なし
 	}
 
-	if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+	if( GetContKey(wk) & PAD_KEY_RIGHT ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listScroll < wk->listScrollMax ){
 			wk->listWait = KEYWAIT_LIST_PAGE_MOVE;
@@ -874,11 +911,11 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 		return COMMAND_NONE;						// 動作なし
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+	if( GetTrgKey(wk) & PAD_BUTTON_DECIDE ){
 		return COMMAND_SELECT;					// 選択
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+	if( GetTrgKey(wk) & PAD_BUTTON_L ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listPos != 0 || wk->listScroll != 0 ){
 			return COMMAND_LIST_TOP;		// リスト一番上まで移動
@@ -887,7 +924,7 @@ static int MoveListKey( FRAMELIST_WORK * wk )
 	}
 
 	// リストの一番下へ移動
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+	if( GetTrgKey(wk) & PAD_BUTTON_R ){
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 		if( wk->listPos != (wk->listPosMax-1) || wk->listScroll != wk->listScrollMax ){
 			return COMMAND_LIST_BOTTOM;		// リスト一番下まで移動
@@ -1933,7 +1970,10 @@ static void PutItemFrame( FRAMELIST_WORK * wk, u32 idx, s8 py )
 			wk->hed.itemSizX, wk->hed.itemSizY );
 		py++;
 	}
-	GFL_BG_LoadScreenV_Req( frm );
+  if( !wk->is_no_scr_req )
+  {
+	  GFL_BG_LoadScreenV_Req( frm );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1960,7 +2000,10 @@ static void ClearItemFrame( FRAMELIST_WORK * wk, u8 frm, s8 py )
 		GFL_BG_FillScreen( frm, 0, wk->hed.itemPosX, py, wk->hed.itemSizX, 1, 0 );
 		py++;
 	}
-	GFL_BG_LoadScreenV_Req( frm );
+  if( !wk->is_no_scr_req )
+  {
+    GFL_BG_LoadScreenV_Req( frm );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2110,7 +2153,10 @@ void FRAMELIST_ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal )
 			pal );
 		py++;
 	}
-	GFL_BG_LoadScreenV_Req( wk->hed.mainBG );
+  if( !wk->is_no_scr_req )
+  {
+    GFL_BG_LoadScreenV_Req( wk->hed.mainBG );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2153,6 +2199,24 @@ static void PrintTransMain( FRAMELIST_WORK * wk )
 	for( i=0; i<wk->printMax; i++ ){
 		PRINT_UTIL_Trans( &wk->printUtil[i].util, wk->que );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーを取得
+ *
+ *	@param	FRAMELIST_WORK * wk   ワーク
+ *
+ *	@return キー
+ */
+//-----------------------------------------------------------------------------
+static u32 GetTrgKey( FRAMELIST_WORK * wk )
+{
+  return GFL_UI_KEY_GetTrg() & wk->use_key;
+}
+static u32 GetContKey( FRAMELIST_WORK * wk )
+{
+  return GFL_UI_KEY_GetCont() & wk->use_key;
 }
 
 
@@ -2313,3 +2377,36 @@ void FRAMELIST_SetFrameMax( FRAMELIST_WORK * wk, const s32 num )
 	wk->putFrameMaxMain = num;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用するキー設定
+ *
+ *	@param	  wk        ワーク
+ *	@param	  key_mask  ここにマスクしたキーだけ使用可能になる
+ */
+//-----------------------------------------------------------------------------
+void FRAMELIST_SetUseKey( FRAMELIST_WORK * wk, int key_mask )
+{
+  wk->use_key = key_mask;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制スクロール(一瞬でその位置まで飛ぶ)
+ *
+ *	@param	wk      ワーク
+ *	@param  scroll  スクロール
+ */
+//-----------------------------------------------------------------------------
+void FRAMELIST_ForceScroll( FRAMELIST_WORK * wk, int scroll )
+{
+  if( scroll > 0 )
+  {
+    wk->is_no_scr_req = TRUE;
+    InitListScroll( wk, wk->hed.scrollSpeed[0], scroll, MAINSEQ_WAIT, FALSE );
+    while( FRAMELIST_Main(wk ) == FRAMELIST_RET_SCROLL )
+    {
+    }
+    wk->is_no_scr_req = FALSE;
+  }
+}

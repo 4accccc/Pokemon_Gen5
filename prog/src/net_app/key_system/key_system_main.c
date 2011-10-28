@@ -47,6 +47,7 @@
 
 FS_EXTERN_OVERLAY( outside_save );
 FS_EXTERN_OVERLAY( multiboot );
+FS_EXTERN_OVERLAY( ui_common );
 
 //=============================================================================
 /**
@@ -136,31 +137,12 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   ( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk;
-  u32 heap_size;
-
-  //タイトルから来るときだけヒープを大きくし、
-  //セーブデータ受信用メモリを確保する
-  if( p_param_adrs == NULL )
-  {
-    heap_size = 0xb0000;
-  }
-  else
-  {
-    heap_size = 0x50000;
-  }
-
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, heap_size );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, 0x30000 );
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(KEY_SYSTEM_WORK), HEAPID_KEY_SYSTEM );
   GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_WORK) );
   p_wk->p_param = p_param_adrs;
-
-  //ダウンロードデータ
-  if( p_param_adrs == NULL )
-  {
-    p_wk->p_download_data = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, 0x80000 );
-  }
 
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
@@ -302,6 +284,11 @@ static GFL_PROC_RESULT Key_System_Proc_Main
         MB_PARENT_DATACONV_Exit( p_wk->p_mb );
         p_wk->p_mb = NULL;
       }
+      if( p_wk->p_download_data )
+      {
+        GFL_HEAP_FreeMemory( p_wk->p_download_data );
+        p_wk->p_download_data = NULL;
+      }
       KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
       //通信エラーが起こったら強制的にメインメニューへ
       KEYSYS_SEQ_Clear( p_wk->p_seq );  //積んだシーケンスを全部クリア
@@ -349,6 +336,12 @@ static GFL_PROC_RESULT Key_System_Proc_Main
   if( p_wk->p_text )
   {
     KEYSYS_TEXT_Draw( p_wk->p_text );
+  }
+
+  //説明描画
+  if( p_wk->p_info )
+  {
+    KEYSYS_TEXT_Draw( p_wk->p_info );
   }
 
   //テキストセット描画
@@ -598,6 +591,8 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
 
   //最初にクリアキャラセット
   GFL_BG_SetClearCharacter( KEYSYS_BG_FRAME_TEXT_M, 0x20, KEYSYS_CGR_CLEAR_M*0x20, heapID );
+  GFL_BG_SetClearCharacter( KEYSYS_BG_FRAME_LIST_M, 0x20, KEYSYS_CGR_CLEAR_M*0x20, heapID );
+  GFL_BG_SetClearCharacter( KEYSYS_BG_FRAME_TEXT_S, 0x20, KEYSYS_CGR_CLEAR_S*0x20, heapID );
 
   {
     ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_KEY_SYSTEM, heapID );
@@ -630,7 +625,7 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
 
     //CHR
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_menu_frame_NCGR, 
-        KEYSYS_BG_FRAME_TEXT_M, KEYSYS_CGR_MENU_M, 0, FALSE, heapID );
+        KEYSYS_BG_FRAME_LIST_M, KEYSYS_CGR_MENU_M, 0, FALSE, heapID );
 
 
     //パレットを保存
@@ -655,6 +650,7 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
 
   //フレーム
   BmpWinFrame_GraphicSet( KEYSYS_BG_FRAME_TEXT_M, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M, MENU_TYPE_SYSTEM, HEAPID_KEY_SYSTEM );
+  BmpWinFrame_GraphicSet( KEYSYS_BG_FRAME_TEXT_S, KEYSYS_CGR_TEXT_S, KEYSYS_PLT_BG_FRAME_S, MENU_TYPE_SYSTEM, HEAPID_KEY_SYSTEM );
 
   //フォント
   {	
@@ -896,13 +892,22 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
     clwk_data.bgpri   = 0;
     break;
 
+  case KEYSYS_CLWK_INFO_MARK_00:
+  case KEYSYS_CLWK_INFO_MARK_01:
+  case KEYSYS_CLWK_INFO_MARK_02:
+  case KEYSYS_CLWK_INFO_MARK_03:
+  case KEYSYS_CLWK_INFO_MARK_04:
+  case KEYSYS_CLWK_INFO_MARK_05:
+  case KEYSYS_CLWK_INFO_MARK_06:
+  case KEYSYS_CLWK_INFO_MARK_07:
+    is_draw_enable = FALSE;
   case KEYSYS_CLWK_MARK:
     draw_type = CLSYS_DRAW_MAIN;
     clwk_data.pos_x = 200;
     clwk_data.pos_y = 38;
     clwk_data.anmseq  = 6;
     clwk_data.softpri = 0;
-    clwk_data.bgpri   = 0;
+    clwk_data.bgpri   = 2;
     break;
     
   case KEYSYS_CLWK_KEY:
@@ -943,6 +948,25 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
     clwk_data.softpri = 1;
     clwk_data.bgpri   = 1;
     is_auto_anm       = FALSE;
+    is_draw_enable    = FALSE;
+    break;
+
+  case KEYSYS_CLWK_INFO_ALLOW_U:
+    draw_type = CLSYS_DRAW_MAIN;
+    clwk_data.pos_x   = 256-8;
+    clwk_data.pos_y   = 40;
+    clwk_data.anmseq  = 13;
+    clwk_data.softpri = 0;
+    clwk_data.bgpri   = 0;
+    is_draw_enable    = FALSE;
+    break;
+  case KEYSYS_CLWK_INFO_ALLOW_D:
+    draw_type = CLSYS_DRAW_MAIN;
+    clwk_data.pos_x   = 256-8;
+    clwk_data.pos_y   = 192-18;
+    clwk_data.anmseq  = 14;
+    clwk_data.softpri = 0;
+    clwk_data.bgpri   = 0;
     is_draw_enable    = FALSE;
     break;
   default:
@@ -1176,6 +1200,7 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
   GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
   //管理外セーブシステム
   p_wk->p_outside_sv = OutsideSave_SystemLoad( heapID );
@@ -1219,16 +1244,11 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
   KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
 
- 
-  //上画面、下部テキスト作成
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
-  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
-  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
-
   //上画面タイトル作成
   p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
   KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
+
 
   PMSND_PlayBGM( KEYSYS_BGM_MAIN );
 
@@ -1268,6 +1288,13 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
     p_wk->p_title = NULL;
   }
 
+  //説明破棄
+  if( p_wk->p_info )
+  {
+    KEYSYS_TEXT_Exit( p_wk->p_info );
+    p_wk->p_info = NULL;
+  }
+
   //テキスト破棄
   if( p_wk->p_text )
   {
@@ -1305,8 +1332,78 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
 	GFL_FONT_Delete( p_wk->p_font );
   p_wk->p_font = NULL;
 
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+}
+//-------------------------------------
+/// TEXT
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
+{
+  GF_ASSERT( p_wk->p_text == NULL );
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+  KEYSYS_TEXT_ClearCharacter( p_wk->p_text );
+  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk )
+{
+  GF_ASSERT( p_wk->p_text );
+  KEYSYS_TEXT_Exit( p_wk->p_text );
+  p_wk->p_text = NULL;
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+}
+
+//-------------------------------------
+/// INFO
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明ウィンドウ作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_INFO_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
+{
+  //説明ウィンドウ
+  GF_ASSERT( p_wk->p_info == NULL );
+  p_wk->p_info = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_S, 2, 2, 28, 20, KEYSYS_PLT_BG_FONT_S, p_wk->p_font, heapID );
+  KEYSYS_TEXT_SetColor( p_wk->p_info, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_info, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  説明ウィンドウ破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_INFO_Delete( KEY_SYSTEM_WORK *p_wk )
+{
+  GF_ASSERT( p_wk->p_info );
+  KEYSYS_TEXT_Exit( p_wk->p_info );
+  p_wk->p_info = NULL;
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
 }
 
 //=============================================================================
@@ -1460,9 +1557,9 @@ static void KeySys_Seq_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 
     if( KEYSYS_MENU_IsChangeSelect( p_wk->p_menu ) )
     {
-      if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+      if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_info ) )
       {
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_65+KEYSYS_MENU_GetSelect( p_wk->p_menu ), KEYSYS_TEXT_TYPE_QUE ); 
+        KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_65+KEYSYS_MENU_GetSelect( p_wk->p_menu ), KEYSYS_TEXT_TYPE_QUE ); 
       }
     }
 
@@ -1641,7 +1738,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
     int i;
     KEYSYS_MENU_PARAM menu_param;
     GFL_STD_MemClear( &menu_param, sizeof(KEYSYS_MENU_PARAM) );
-    menu_param.frm = KEYSYS_BG_FRAME_TEXT_M;
+    menu_param.frm = KEYSYS_BG_FRAME_LIST_M;
     menu_param.font_plt = KEYSYS_PLT_BG_FONT_M;
     menu_param.frm_chr  = KEYSYS_CGR_MENU_M;
     menu_param.frm_plt  = KEYSYS_PLT_BG_MENU_NORMAL_M;
@@ -1670,12 +1767,14 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
 
     p_wk->p_menu = KEYSYS_MENU_Init( &menu_param, heapID );
 
-    //メッセージ
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_65+menu_param.cursor, KEYSYS_TEXT_TYPE_QUE );
   }
 
   //タイトル
   KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, KEYSYS_STR_76, KEYSYS_TEXT_TYPE_QUE );
+
+  //下画面説明文
+  KEYSYS_INFO_Create( p_wk, heapID );
+  KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_65, KEYSYS_TEXT_TYPE_QUE );
 
   KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 }
@@ -1691,13 +1790,15 @@ static BOOL KeySys_Display_IsEndCreateMainMenu( void *p_wk_adrs )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   BOOL is_end_title  = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
-  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
+  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_info );
   BOOL is_end_menu = KEYSYS_MENU_IsDrawEnd( p_wk->p_menu );
 
   if( is_end_text && is_end_menu && is_end_title )
   {
-    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
     return TRUE;
   }
   return FALSE;
@@ -1713,11 +1814,15 @@ static void KeySys_Display_DeleteMainMenu( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  //下画面破棄
+  KEYSYS_INFO_Delete( p_wk );
+
   //メニュー破棄
   KEYSYS_MENU_Exit( p_wk->p_menu );
   p_wk->p_menu = NULL;    
   
-  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
 
 }
 
@@ -1732,6 +1837,8 @@ static void KeySys_Display_DeleteMainMenu( void *p_wk_adrs )
 static void KeySys_Display_CreateText( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_TEXT_Create( p_wk, heapID );
 
   //メッセージ
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_000, KEYSYS_TEXT_TYPE_QUE );
@@ -1774,5 +1881,5 @@ static void KeySys_Display_DeleteText( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
   
-  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  KEYSYS_TEXT_Delete( p_wk );
 }

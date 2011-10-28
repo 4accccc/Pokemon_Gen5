@@ -82,3 +82,6 @@ extern const STRCODE * DATA_CONVERT_SAVE_GetName( const DATA_CONVERT_SAVE *cp_wk
 extern void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data );
 extern void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag, BOOL on_off );
 extern void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u16 value );
+
+extern BOOL DATA_CONVERT_SAVE_IsEventOpen( const DATA_CONVERT_SAVE *cp_wk, u32 index );
+extern u32 DATA_CONVERT_SAVE_GetEventWork( u32 index );

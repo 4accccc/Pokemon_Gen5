@@ -12,6 +12,9 @@
 #include "system/gfl_use.h"
 #include "savedata/data_convert_save.h"
 #include "savedata/musical_save.h"
+
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -449,4 +452,87 @@ void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u
 {
   GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );
   p_wk->data.work[ wk ]  = value;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const DATA_CONVERT_SAVE *cp_wk  ワーク
+ *	@param	index イベント番号
+ *
+ *	@return TRUEオープン中  FALSEオープンしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL DATA_CONVERT_SAVE_IsEventOpen( const DATA_CONVERT_SAVE *cp_wk, u32 index )
+{
+  typedef BOOL (*GET_FLAG_FUNCTION)( const DATA_CONVERT_SAVE *cp_wk, int param );
+  static const struct
+  {
+    int   param;
+    GET_FLAG_FUNCTION GetFlagFunction;
+  }sc_list_flag[] =
+  {
+    {
+      WB_SAVE_CONV_FLAG_BADGE_01,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      WB_SAVE_CONV_FLAG_BADGE_06,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      WB_SAVE_CONV_FLAG_GAME_CLEAR,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      WB_SAVE_CONV_FLAG_BADGE_08,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      WB_SAVE_CONV_FLAG_BADGE_05,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      WB_SAVE_CONV_FLAG_GAME_CLEAR,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    },
+    {
+      DATA_CONVERT_OWNER_MUSICAL,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_IsExist,
+    },
+    {
+      WB_SAVE_CONV_FLAG_GAME_CLEAR,
+      (GET_FLAG_FUNCTION)DATA_CONVERT_SAVE_GetFlag,
+    }
+  };
+  GF_ASSERT( index < NELEMS(sc_list_flag) );
+
+  return sc_list_flag[index].GetFlagFunction( cp_wk, sc_list_flag[index].param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント番号
+ *
+ *	@param	u32 index   番号
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+u32 DATA_CONVERT_SAVE_GetEventWork( u32 index )
+{
+  static const int sc_work[]  =
+  {
+    WK_SYS_LINK_EVENT_01,
+    WK_SYS_LINK_EVENT_02,
+    WK_SYS_LINK_EVENT_03,
+    WK_SYS_LINK_EVENT_04,
+    WK_SYS_LINK_EVENT_05,
+    WK_SYS_LINK_EVENT_06,
+    WK_SYS_LINK_EVENT_07,
+    WK_SYS_LINK_EVENT_08,
+  };
+  GF_ASSERT( index < NELEMS(sc_work) );
+
+  return sc_work[ index ];
 }

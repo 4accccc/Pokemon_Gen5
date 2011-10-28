@@ -50,10 +50,12 @@
 enum
 {
   KEYSYS_BG_FRAME_TEXT_M  = GFL_BG_FRAME0_M,
+  KEYSYS_BG_FRAME_LIST_M  = GFL_BG_FRAME1_M,
   KEYSYS_BG_FRAME_WND_M   = GFL_BG_FRAME2_M,
   KEYSYS_BG_FRAME_BACK_M  = GFL_BG_FRAME3_M,
+
   KEYSYS_BG_FRAME_TEXT_S  = GFL_BG_FRAME0_S,
-  KEYSYS_BG_FRAME_SUB_S   = GFL_BG_FRAME1_S,
+  //KEYSYS_BG_FRAME_SUB_S   = GFL_BG_FRAME1_S,
   KEYSYS_BG_FRAME_WND_S   = GFL_BG_FRAME2_S,
   KEYSYS_BG_FRAME_BACK_S  = GFL_BG_FRAME3_S,
 };
@@ -72,6 +74,7 @@ enum
   KEYSYS_PLT_BG_DLPLAY_S  = 9,
   KEYSYS_PLT_BG_DLMSG_S   = 0xD,
   KEYSYS_PLT_BG_FONT_S    = 0xE,
+  KEYSYS_PLT_BG_FRAME_S   = 0xF,
 
   KEYSYS_PLT_OBJ_COMMON_M = 0,
   KEYSYS_PLT_OBJ_BARICON_M,
@@ -83,9 +86,14 @@ enum
 enum
 {
   //BG_FRAME_TEXT_Mのキャラ
-  KEYSYS_CGR_CLEAR_M,
+  KEYSYS_CGR_CLEAR_M  = 0,
   KEYSYS_CGR_TEXT_M,
   KEYSYS_CGR_MENU_M = KEYSYS_CGR_TEXT_M + 9,
+
+  //BG_FRAME_TEXT_Sのキャラ
+  KEYSYS_CGR_CLEAR_S  = 0,
+  KEYSYS_CGR_TEXT_S,
+  KEYSYS_CGR_MENU_S = KEYSYS_CGR_TEXT_S + 9,
 };
 
 //OBJリソース管理
@@ -112,6 +120,17 @@ typedef enum
   KEYSYS_CLWK_WINDOW,
   KEYSYS_CLWK_KIRAKIRA,
   KEYSYS_CLWK_LOCK_OPEN,
+  KEYSYS_CLWK_INFO_MARK_00,
+  KEYSYS_CLWK_INFO_MARK_01,
+  KEYSYS_CLWK_INFO_MARK_02,
+  KEYSYS_CLWK_INFO_MARK_03,
+  KEYSYS_CLWK_INFO_MARK_04,
+  KEYSYS_CLWK_INFO_MARK_05,
+  KEYSYS_CLWK_INFO_MARK_06,
+  KEYSYS_CLWK_INFO_MARK_07,
+  KEYSYS_CLWK_INFO_MARK_MAX,
+  KEYSYS_CLWK_INFO_ALLOW_U,
+  KEYSYS_CLWK_INFO_ALLOW_D,
   KEYSYS_CLWK_MAX,
 }KEYSYS_CLWK;
 
@@ -271,6 +290,8 @@ typedef struct
 
   KEYSYS_TEXT_WORK        *p_text;
 
+  KEYSYS_TEXT_WORK        *p_info;
+
   KEYSYS_TEXT_WORK        *p_title;
 
   KEYSYS_MENU_WORK        *p_menu;
@@ -278,6 +299,8 @@ typedef struct
   KEYSYS_LIST_WORK        *p_list;
 
   KEYSYS_TEXTSET_WORK     *p_textset;
+
+  KEYSYS_SCROLL_MENU      *p_scroll_menu;
 
   GFL_FONT                *p_font;
 
@@ -382,3 +405,15 @@ extern void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk );
 //=====================================
 extern void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk );
+
+//-------------------------------------
+/// TEXT
+//=====================================
+extern void KEYSYS_TEXT_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk );
+
+//-------------------------------------
+/// INFO
+//=====================================
+extern void KEYSYS_INFO_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_INFO_Delete( KEY_SYSTEM_WORK *p_wk );

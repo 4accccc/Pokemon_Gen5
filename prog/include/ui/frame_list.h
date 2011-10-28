@@ -180,6 +180,7 @@ extern void FRAMELIST_AddItem( FRAMELIST_WORK * wk, u32 type, u32 param );
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, BOOL comp, u32 frameNum );
+extern void FRAMELIST_LoadFrameGraphicAHOfs( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, BOOL comp, u32 frameNum, u16 char_ofs, u8 plt_ofs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -366,3 +367,23 @@ extern void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk );
 // 値のセット
 extern void FRAMELIST_SetFrameMax( FRAMELIST_WORK * wk, const s32 num );
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用するキー設定
+ *
+ *	@param	  wk        ワーク
+ *	@param	  key_mask  ここにマスクしたキーだけ使用可能になる
+ */
+//-----------------------------------------------------------------------------
+extern void FRAMELIST_SetUseKey( FRAMELIST_WORK * wk, int key_mask );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制スクロール
+ *
+ *	@param	wk      ワーク
+ *	@param  scroll  スクロール
+ */
+//-----------------------------------------------------------------------------
+extern void FRAMELIST_ForceScroll( FRAMELIST_WORK * wk, int scroll );
