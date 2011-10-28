@@ -21905,7 +21905,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D35R0101,
 		MAPNAME_D35,
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
-		WEATHER_NO_MIST,
+		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
