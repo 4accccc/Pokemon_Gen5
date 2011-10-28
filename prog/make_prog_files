@@ -597,8 +597,7 @@ SRCS_OVERLAY_NOTWIFI_FES_GIMMICK_NPC = field/fes_gimmick_npc_nw.c
 #===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm_command.c \
-        field/field_comm/intrude_mission.c \
-        field/field_comm/intrude_symbol.c
+        field/field_comm/intrude_mission.c
 
 #ユニオンシステムでほぼ常駐に置かなければいけないもの(侵入の常駐物と並列化)
 #===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK

@@ -314,6 +314,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
 
 
 
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ðíœ
 //==============================================================================
 //
 //  N“üæ‚ÌƒVƒ“ƒ{ƒ‹ƒf[ƒ^‚ð—v‹‚µAŽóM
@@ -330,7 +331,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_ReqIntrudeSymbolParam(GAMESYS_WORK *gsys, u16 *result_ptr, SYMBOL_MAP_ID symbol_map_id)
+static GMEVENT * EVENT_ReqIntrudeSymbolParam(GAMESYS_WORK *gsys, u16 *result_ptr, SYMBOL_MAP_ID symbol_map_id)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   EVENT_REQ_SYMBOL_PARAM *ersp;
@@ -391,6 +392,7 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
   
 	return GMEVENT_RES_CONTINUE;
 }
+#endif  //undef(DISABLE_INTRUDE)
 
 
 
@@ -466,9 +468,13 @@ GMEVENT * EVENT_SymbolMapWarp(
   esmw->result_ptr = NULL;
   esmw->symbol_map_id = symbol_map_id;
   esmw->se_request = se_request;
+#ifdef DISABLE_INTRUDE //swan‚ÅN“ü‚ðíœ
+  esmw->my_palace = TRUE;
+#else
   if(IntrudeSymbol_CheckIntrudeNetID(GAMESYSTEM_GetGameCommSysPtr(gsys), gamedata) == INTRUDE_NETID_NULL){
     esmw->my_palace = TRUE;
   }
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ðíœ
 
 	return( event );
 }
@@ -509,12 +515,13 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 {
   EVENT_SYMBOL_MAP_WARP *esmw = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 	enum{
     _SEQ_INIT,
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ðíœ
     _SEQ_REQ_WAIT,
+#endif  //undef(DISABLE_INTRUDE)
     _SEQ_FADEOUT,
     _SEQ_CHANGE_MAP,
     _SEQ_FADEIN,
@@ -526,6 +533,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 	case _SEQ_INIT:
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldWork ) );
     
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ðíœ
   	if(esmw->my_palace == TRUE){
       *seq = _SEQ_FADEOUT;
     }
@@ -543,6 +551,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
       (*seq) = _SEQ_FINISH;
       break;
     }
+#endif  //undef(DISABLE_INTRUDE)
     (*seq)++;
     break;
   case _SEQ_FADEOUT:

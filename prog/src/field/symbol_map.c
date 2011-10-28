@@ -386,6 +386,12 @@ static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SY
   SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
 
+#ifdef DISABLE_INTRUDE //swanで侵入を削除
+  //侵入を削除したので自分のマップしか存在しない
+  *small = SymbolSave_GetMapLevelSmall( symbol_save );
+  *large = SymbolSave_GetMapLevelLarge( symbol_save );
+  return TRUE;
+#else
   if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
   { //自分のマップ
     *small = SymbolSave_GetMapLevelSmall( symbol_save );
@@ -408,6 +414,7 @@ static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SY
     *large = isw->map_level_large;
     return TRUE;
   }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //--------------------------------------------------------------
@@ -450,7 +457,9 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
   SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
   if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
+#endif
   { //自分のマップ
     SYMBOL_MAP_ID symmap_id = GAMEDATA_GetSymbolMapID( gamedata );
     u8 occ_num;
@@ -464,6 +473,7 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
     isw->symbol_map_id = symmap_id;
     return isw;
   }
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
   else
   { //通信相手のマップ
     INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
@@ -479,6 +489,7 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
       return isw;
     }
   }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==============================================================================

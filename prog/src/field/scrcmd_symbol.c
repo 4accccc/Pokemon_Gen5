@@ -101,7 +101,6 @@ VMCMD_RESULT EvCmdSymbolMapPokeSet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   INTRUDE_SYMBOL_WORK * isw;
   u32 start_no;
@@ -135,7 +134,7 @@ VMCMD_RESULT EvCmdSymbolPokeGet( VMHANDLE * core, void *wk )
   if ( mmdl ) {
     u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
     SymbolSave_DataShift( symbol_save, no );
-    sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
+    //sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -161,7 +160,7 @@ VMCMD_RESULT EvCmdSymbolMapMovePokemon( VMHANDLE * core, void * wk )
   if ( mmdl ) {
     u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
     *ret_wk = SymbolSave_Field_MoveAuto( symbol_save, no );
-    sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
+    //sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
   } else {
     *ret_wk = FALSE;
   }
@@ -219,12 +218,16 @@ VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk )
   switch ( mode )
   {
   case SCR_SYMMAP_INFO_IS_MINE:
+#ifdef DISABLE_INTRUDE //swanで侵入を削除
+    *ret_wk = TRUE; //侵入がないので、常に自分のマップ
+#else
     //※下記関数で通信時も非通信時も自分かどうかの判定ができる
     if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL ) {
       *ret_wk = TRUE;
     } else {
       *ret_wk = FALSE;
     }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
     break;
   case SCR_SYMMAP_INFO_IS_KEEPZONE:
     {
@@ -277,12 +280,22 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
 
   if ( warp_dir == DIR_DOWN && SYMBOLMAP_IsEntranceID(sid) )
   { //入ったところのマップで下向き→パレスに戻る
+#ifdef DISABLE_INTRUDE //swanで侵入を削除
+    ///パレスと森の出入り口座標(パレス側)
+    static const VecFx32 PalaceForestDoorwayPos = {FX32_CONST(504), FX32_CONST(32), FX32_CONST(360)};
+    VecFx32 warp_pos, player_pos;
+    FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+    FIELD_PLAYER_GetPos( player, &player_pos );
+    warp_pos = PalaceForestDoorwayPos;
+#else
     VecFx32 warp_pos, player_pos;
     FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
     FIELD_PLAYER_GetPos( player, &player_pos );
     IntrudeSymbol_GetPosPalaceForestDoorway( game_comm, gamedata, &warp_pos );
+#endif  //DISABLE_INTRUDE swanで侵入を削除
     //入った位置によって出現先もずらす
     warp_pos.x += player_pos.x - SYMBOL_MAP_DOWN_ENTRANCE_X;
     new_event = EVENT_ChangeMapPos( gsys, fieldmap, ZONE_ID_PALACE01, &warp_pos, DIR_DOWN, FALSE );
@@ -299,6 +312,26 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+#if 0
+//==================================================================
+//==================================================================
+VMCMD_RESULT EvCmdSymbolMapEntrance( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK *   work = wk;
+  SCRIPT_WORK *     sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *  gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * new_event;
+  //ビンゴマップへワープ
+  {
+    //入った位置によって出現先もずらす
+    VecFx32 warp_pos = { SYMBOL_MAP_DOWN_ENTRANCE_X, 0, SYMBOL_MAP_DOWN_ENTRANCE_Z };
+    warp_pos.x += FIELD_GRI
+    new_event = EVENT_SymbolMapWarp(gsys, TRUE, &warp_pos, DIR_UP, SYMBOL_MAP_ID_ENTRANCE);
+  }
+  SCRIPT_CallEvent( sc, new_event );
+  return VMCMD_RESULT_SUSPEND;
+}
+#endif
 
 //==============================================================================
 //==============================================================================
@@ -346,6 +379,7 @@ static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID he
     return pp;
 }
 
+#ifndef DISABLE_INTRUDE //swanで侵入を削除
 //--------------------------------------------------------------
 /**
  * @brief シンボルポケモンの状況が更新されたことを通知する
@@ -370,6 +404,7 @@ static void sendDataChange( SCRCMD_WORK * work )
     OS_TPrintf( "送信リクエスト：シンボルポケモン更新\n" );
   }
 }
+#endif  //DISABLE_INTRUDE swanで侵入を削除
 
 
 
