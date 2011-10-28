@@ -236,7 +236,7 @@ _EVENT_DATA  ev_hide_item_212
 //--------------------------------------------------------------
 EVENT_START ev_hide_item_000
 //サンヨウシティ ( 754, 580 )
-	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_000 )// キズぐすり
+	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_000 )// かいふくのくすり
 EVENT_END
 
 EVENT_START ev_hide_item_001
@@ -650,7 +650,7 @@ EVENT_START ev_hide_item_082
 EVENT_END
 
 EVENT_START ev_hide_item_083
-//サザナミ湾 ( 774, 296 )
+//サザナミ湾 ( 772, 296 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_083 )// ハートのウロコ
 EVENT_END
 
@@ -730,17 +730,17 @@ EVENT_START ev_hide_item_098
 EVENT_END
 
 EVENT_START ev_hide_item_099
-//チャンピオンロード　外 ( 580, 95 )
+//２３番道路 ( 580, 95 )
 	_ITEM_EVENT_HIDEITEM( 74, 1, FLAG_HIDEITEM_099 )// きいろいかけら
 EVENT_END
 
 EVENT_START ev_hide_item_100
-//チャンピオンロード　外 ( 608, 68 )
+//２３番道路 ( 608, 68 )
 	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_100 )// ハイパーボール
 EVENT_END
 
 EVENT_START ev_hide_item_101
-//チャンピオンロード　外 ( 629, 73 )
+//２３番道路 ( 629, 73 )
 	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_101 )// ポイントアップ
 EVENT_END
 
@@ -1085,7 +1085,7 @@ EVENT_START ev_hide_item_169
 EVENT_END
 
 EVENT_START ev_hide_item_170
-//１３番道路 ( 699, 237 )
+//１３番道路 ( 698, 234 )
 	_ITEM_EVENT_HIDEITEM( 89, 1, FLAG_HIDEITEM_170 )// おおきなしんじゅ
 EVENT_END
 
@@ -1175,7 +1175,7 @@ EVENT_START ev_hide_item_187
 EVENT_END
 
 EVENT_START ev_hide_item_188
-//１８番道路 ( 663, 747 )
+//１８番道路 ( 657, 744 )
 	_ITEM_EVENT_HIDEITEM( 537, 1, FLAG_HIDEITEM_188 )// きれいなウロコ
 EVENT_END
 
@@ -1185,12 +1185,12 @@ EVENT_START ev_hide_item_189
 EVENT_END
 
 EVENT_START ev_hide_item_190
-//１８番道路 ( 644, 742 )
+//１８番道路 ( 621, 762 )
 	_ITEM_EVENT_HIDEITEM( 582, 1, FLAG_HIDEITEM_190 )// おだんごしんじゅ
 EVENT_END
 
 EVENT_START ev_hide_item_191
-//１８番道路 ( 652, 722 )
+//１８番道路 ( 651, 730 )
 	_ITEM_EVENT_HIDEITEM( 88, 1, FLAG_HIDEITEM_191 )// しんじゅ
 EVENT_END
 
@@ -1225,7 +1225,7 @@ EVENT_START ev_hide_item_197
 EVENT_END
 
 EVENT_START ev_hide_item_198
-//２３番道路 ( 643, 142 )
+//２３番道路 ( 667, 78 )
 	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_198 )// ふしぎなアメ
 EVENT_END
 
@@ -1245,17 +1245,17 @@ EVENT_START ev_hide_item_201
 EVENT_END
 
 EVENT_START ev_hide_item_202
-//サザナミタウン ( 732, 705 )
+//サザナミタウン ( 733, 307 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_202 )// ハートのウロコ
 EVENT_END
 
 EVENT_START ev_hide_item_203
-//サザナミタウン ( 763, 302 )
+//サザナミタウン ( 753, 305 )
 	_ITEM_EVENT_HIDEITEM( 88, 1, FLAG_HIDEITEM_203 )// しんじゅ
 EVENT_END
 
 EVENT_START ev_hide_item_204
-//サザナミタウン ( 716, 315 )
+//サザナミタウン ( 719, 317 )
 	_ITEM_EVENT_HIDEITEM( 88, 1, FLAG_HIDEITEM_204 )// しんじゅ
 EVENT_END
 
@@ -1270,12 +1270,12 @@ EVENT_START ev_hide_item_206
 EVENT_END
 
 EVENT_START ev_hide_item_207
-//１７番水道 ( 692, 747 )
+//１７番水道 ( 707, 737 )
 	_ITEM_EVENT_HIDEITEM( 71, 1, FLAG_HIDEITEM_207 )// あさせのかいがら
 EVENT_END
 
 EVENT_START ev_hide_item_208
-//２１番水道 ( 777, 146 )
+//セイガイハシティ ( 783, 142 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_208 )// ハートのウロコ
 EVENT_END
 
@@ -1285,8 +1285,8 @@ EVENT_START ev_hide_item_209
 EVENT_END
 
 EVENT_START ev_hide_item_210
-//３番道路 ( 696, 558 )
-	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_210 )// キズぐすり
+//３番道路 ( 697, 558 )
+	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_210 )// きんのたま
 EVENT_END
 
 EVENT_START ev_hide_item_211

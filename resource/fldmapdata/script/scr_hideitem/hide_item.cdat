@@ -1,6 +1,6 @@
 static const HIDE_ITEM_DATA hide_item_data[213] = {
 
-	{ // キズぐすり
+	{ // かいふくのくすり
 		  0, 
 		1,0, // flags
 		ZONE_ID_C01, // サンヨウシティ
@@ -502,7 +502,7 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		 83, 
 		1,1, // flags
 		ZONE_ID_D20, // サザナミ湾
-		774,296, // x, y
+		772,296, // x, y
 	},
 	{ // しんじゅ
 		 84, 
@@ -597,19 +597,19 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 	{ // きいろいかけら
 		 99, 
 		1,0, // flags
-		ZONE_ID_D26, // チャンピオンロード　外
+		ZONE_ID_R23, // ２３番道路
 		580, 95, // x, y
 	},
 	{ // ハイパーボール
 		100, 
 		1,0, // flags
-		ZONE_ID_D26, // チャンピオンロード　外
+		ZONE_ID_R23, // ２３番道路
 		608, 68, // x, y
 	},
 	{ // ポイントアップ
 		101, 
 		1,0, // flags
-		ZONE_ID_D26, // チャンピオンロード　外
+		ZONE_ID_R23, // ２３番道路
 		629, 73, // x, y
 	},
 	{ // やみのいし
@@ -1024,7 +1024,7 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		170, 
 		1,1, // flags
 		ZONE_ID_R13, // １３番道路
-		699,237, // x, y
+		698,234, // x, y
 	},
 	{ // キトサン
 		171, 
@@ -1132,7 +1132,7 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		188, 
 		1,1, // flags
 		ZONE_ID_R18, // １８番道路
-		663,747, // x, y
+		657,744, // x, y
 	},
 	{ // ハートのウロコ
 		189, 
@@ -1144,13 +1144,13 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		190, 
 		1,0, // flags
 		ZONE_ID_R18, // １８番道路
-		644,742, // x, y
+		621,762, // x, y
 	},
 	{ // しんじゅ
 		191, 
 		1,1, // flags
 		ZONE_ID_R18, // １８番道路
-		652,722, // x, y
+		651,730, // x, y
 	},
 	{ // たつじんのおび
 		192, 
@@ -1192,7 +1192,7 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		198, 
 		1,0, // flags
 		ZONE_ID_R23, // ２３番道路
-		643,142, // x, y
+		667, 78, // x, y
 	},
 	{ // キトサン
 		199, 
@@ -1216,19 +1216,19 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		202, 
 		1,1, // flags
 		ZONE_ID_T04, // サザナミタウン
-		732,705, // x, y
+		733,307, // x, y
 	},
 	{ // しんじゅ
 		203, 
 		1,1, // flags
 		ZONE_ID_T04, // サザナミタウン
-		763,302, // x, y
+		753,305, // x, y
 	},
 	{ // しんじゅ
 		204, 
 		1,1, // flags
 		ZONE_ID_T04, // サザナミタウン
-		716,315, // x, y
+		719,317, // x, y
 	},
 	{ // あおいかけら
 		205, 
@@ -1246,13 +1246,13 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		207, 
 		1,1, // flags
 		ZONE_ID_W17, // １７番水道
-		692,747, // x, y
+		707,737, // x, y
 	},
 	{ // ハートのウロコ
 		208, 
 		1,1, // flags
-		ZONE_ID_C14, // ２１番水道
-		777,146, // x, y
+		ZONE_ID_C14, // セイガイハシティ
+		783,142, // x, y
 	},
 	{ // かいふくのくすり
 		209, 
@@ -1260,11 +1260,11 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		ZONE_ID_C01, // サンヨウシティ
 		746,602, // x, y
 	},
-	{ // キズぐすり
+	{ // きんのたま
 		210, 
 		1,0, // flags
 		ZONE_ID_R03, // ３番道路
-		696,558, // x, y
+		697,558, // x, y
 	},
 	{ // キズぐすり
 		211, 
