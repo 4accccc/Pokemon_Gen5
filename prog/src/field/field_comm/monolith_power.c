@@ -253,7 +253,7 @@ static void _mp_exit( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
 static s32  _mp_ret_mode( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
 //
 static s32  _mp_chk_use_power( MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id );
-static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 slotnum );
+static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 buffernum );
 static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id, const s32 dest );
 static s32  _mp_chk_free_buffer( MONOLITH_APP_PARENT *appwk );
 static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg );
@@ -704,7 +704,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         MonolithTool_TaskMenu_WinExit(mpw->app_menu_work);
         mpw->app_menu_work = NULL;
         _Clear_MsgStream(mpw);
-          OS_Printf("sel :%d\n",ret);
+        OS_Printf("sel :%d\n",ret);
         if(ret != 3){
           mpw->SlotNum = ret;
           *seq = SEQ_SEL3_DECIDE_STREAM;
@@ -1978,12 +1978,12 @@ static s32 _mp_chk_use_power( MONOLITH_PWSELECT_WORK *mpw, const GPOWER_ID id )
  *
  * @param   MONOLITH_APP_PARENT		*appwk
  * @param   MONOLITH_PWSELECT_WORK	*mpw
- * @param   const s32				slotnum(use_gpowerの番号)
+ * @param   const s32				buffernum(use_gpowerの番号)
  *
  * @retval
  */
 //--------------------------------------------------------------
-static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 slotnum )
+static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, const s32 buffernum )
 {
   STRBUF *strbuf;
   static const PRINTSYS_LSB print_color[] = {
@@ -1993,8 +1993,8 @@ static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_
   
   // 文字列の色変え(objに転送、クリアが必要かもしれない)
   strbuf = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
-  GFL_MSG_GetString( mpw->mm_power, mpw->use_gpower_id[slotnum], strbuf );
-  PRINTSYS_PrintColor( mpw->bmp_power_name[slotnum], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[slotnum]] );
+  GFL_MSG_GetString( mpw->mm_power, mpw->use_gpower_id[buffernum], strbuf );
+  PRINTSYS_PrintColor( mpw->bmp_power_name[buffernum], 0, 0, strbuf, appwk->setup->font_handle, print_color[mpw->use_power[buffernum]] );
   GFL_STR_DeleteBuffer(strbuf);
 }
 
@@ -2005,7 +2005,7 @@ static void _mp_chg_string_color( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_
  * @param   MONOLITH_APP_PARENT 	*appwk
  * @param   MONOLITH_PWSELECT_WORK	*mpw
  * @param   const GPOWER_ID			id
- * @param   const s32 				dest(転送先)
+ * @param   const s32 				dest(転送先:0-2)
  *
  * @retval
  */

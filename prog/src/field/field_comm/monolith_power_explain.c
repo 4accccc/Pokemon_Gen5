@@ -63,9 +63,7 @@ static void _Setup_BmpWin_Exit(MONOLITH_POWEREXPLAIN_WORK *pew);
 static void _Write_Title(MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
 static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
-
 //
-static void mpe_init_data(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew);
 static s32  mpe_chk_have_number( MONOLITH_APP_PARENT *appwk, const GPOWER_ID id );
 
 
@@ -107,9 +105,6 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Init(GFL_PROC * proc, int * seq,
     pew = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_POWEREXPLAIN_WORK), HEAPID_MONOLITH);
     GFL_STD_MemClear(pew, sizeof(MONOLITH_POWEREXPLAIN_WORK));
     pew->print_select_gpower_id = GPOWER_ID_NULL;
-    
-    // 初期化
-//    mpe_init_data( appwk, appwk->setup, pew );
     
     //BG
     _Setup_BGFrameSetting();
@@ -350,9 +345,11 @@ static void _Write_Title(MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
 /**
  * 装備パワー描画
  *
- * @param   appwk		
- * @param   setup		
- * @param   pew		
+ * @param   MONOLITH_APP_PARENT			*appwk
+ * @param   MONOLITH_SETUP				*setup
+ * @param   MONOLITH_POWEREXPLAIN_WORK	*pew
+ *
+ * @retval
  */
 //--------------------------------------------------------------
 static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
@@ -376,6 +373,7 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
     }
   }
   // 何も表示していない場合
+  // (=>持っていないメッセージ表示)
   if(flg == 0){
     str_name = GFL_MSG_CreateString(setup->mm_monolith, msg_mono_pow_up_001);
     PRINT_UTIL_Print(&pew->print_util[BMPWIN_EQP], setup->printQue, 
@@ -389,9 +387,11 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
 /**
  * 下画面で選択中のパワー描画
  *
- * @param   appwk		
- * @param   setup		
- * @param   pew		
+ * @param   MONOLITH_APP_PARENT			*appwk
+ * @param   MONOLITH_SETUP				*setup
+ * @param   MONOLITH_POWEREXPLAIN_WORK	*pew
+ *
+ * @retval
  */
 //--------------------------------------------------------------
 static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
@@ -408,10 +408,11 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
     if(num != -1){
       flg = 1;
     }
+    // 取得済み
     if(appwk->common->power_mono_use == MONO_USE_POWER_OK){
       flg = 1;
     }
-    // 通常表示
+    // 説明文表示
     if(flg == 1){
       STRBUF *str_explain, *str_point, *str_expand;
       
@@ -434,6 +435,7 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
       GFL_STR_DeleteBuffer(str_point);
       GFL_STR_DeleteBuffer(str_expand);
     }
+    // レベルが足りないメッセージ
     else{
       const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
       int num, msg_id;
@@ -469,29 +471,8 @@ static void _Write_SelectPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup
   }
 }
 
-//--------------------------------------------------------------
-/**
- * 初期化
- *
- * @param   appwk		
- * @param   setup		
- * @param   pew		
- */
-//--------------------------------------------------------------
-static void mpe_init_data(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_POWEREXPLAIN_WORK *pew)
-{
-#if 0
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
-  s32 i;
-  
-  // 初期データセット
-  for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
-    pew->gpower_id[i] = ISC_SAVE_GetGPowerID( intsave, i );
-  }
-#endif
-}
-
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 //--------------------------------------------------------------
 /**
  * GPOWERをすでに持っているか

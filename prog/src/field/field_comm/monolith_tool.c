@@ -1081,11 +1081,12 @@ BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKM
 /**
  * メニューシステム：4択ウィンドウセットアップ(monolith_powerで使用)
  *
- * @param   setup		
- * @param   app_task_res		
- * @param   heap_id		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_SETUP			*setup
+ * @param   APP_TASKMENU_RES		*app_task_res
+ * @param   HEAPID					heap_id
  *
- * @retval  APP_TASKMENU_WORK *		
+ * @retval  APP_TASKMENU_WORK *
  */
 //==================================================================
 APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, APP_TASKMENU_RES *app_task_res, HEAPID heap_id)
@@ -1097,7 +1098,7 @@ APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit( MONOLITH_APP_PARENT *appwk, M
   
   // 決めうち
   for(i=0;i<4;i++){
-    if(i != 3){		// GPOWER_ID
+    if(i != 3){		// 持っているGPOWER_ID(3つ)
       itemWork[i].str = GFL_MSG_CreateString( setup->mm_power, setup->powerdata[appwk->common->gpower_no[i]].msg_id_title );
     }else{			// 「やめる」
       itemWork[i].str = GFL_MSG_CreateString( setup->mm_monolith , msg_mono_pow_up_102 );
@@ -1126,7 +1127,7 @@ APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit( MONOLITH_APP_PARENT *appwk, M
 /**
  * 4択ウィンドウ破棄(monolith_powerで使用)
  *
- * @param   app_menu		
+ * @param   APP_TASKMENU_WORK		*app_menu
  */
 //==================================================================
 void MonolithTool_TaskMenu_WinExit(APP_TASKMENU_WORK *app_menu)
@@ -1138,8 +1139,9 @@ void MonolithTool_TaskMenu_WinExit(APP_TASKMENU_WORK *app_menu)
 /**
  * 4択ウィンドウ更新処理(monolith_powerで使用)
  *
- * @param   app_menu		
- * @param   ret_yesno		戻り値がTRUEの場合、選択結果が入る(TRUE:はい、FALSE:いいえ)
+ * @param   MONOLITH_SETUP			*setup
+ * @param   APP_TASKMENU_WORK		*app_menu
+ * @param   s32	*ret_yesno		戻り値がTRUEの場合、選択結果が入る(TRUE:はい、FALSE:いいえ)
  *
  * @retval  BOOL		TRUE:選択終了　FALSE:選択中
  */
