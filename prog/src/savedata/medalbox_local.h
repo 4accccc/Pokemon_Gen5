@@ -39,7 +39,8 @@ struct _MEDALBOX{
   MEDAL_ST  medal[MDLID_MAX]; ///< メダルデータ
   u8        push_medal;       ///< イチオシメダル番号(MEDALID_MAXのとき、存在しない）
   u8        box_rank;         ///< メダルボックスランク(MEDALBOX_RANK_～の定義を参照）
-  u16       padding;
+  u8        tutorial_flag;    ///< チュートリアルクリアのフラグ
+  u8        padding;
 
   /**
    * @brief せいそくちリスト用セーブ領域
