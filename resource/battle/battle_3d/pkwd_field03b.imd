@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-10-27T23:21:28" source="pkwd_field03b_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-10-28T18:35:00" source="pkwd_field03b_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-10-27T23:21:28" source="pkwd_field03b_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-10-28T18:35:00" source="pkwd_field03b_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -7025,7 +7025,7 @@
 		billboard="off"
 		scale="191.823975 191.823975 147.456787"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -0.366455 -14.209229"
+		translate="0.000000 -0.654053 -14.209229"
 		visibility="on"
 		display_size="2"
 		vertex_size="104" polygon_size="40"
@@ -7046,7 +7046,7 @@
 		billboard="off"
 		scale="0.005127 0.005127 0.006836"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.001953 0.096436"
+		translate="0.000000 0.002197 0.096436"
 		visibility="on"
 		display_size="1"
 		vertex_size="36" polygon_size="9"
@@ -7066,7 +7066,7 @@
 		billboard="off"
 		scale="0.005127 0.005127 0.006836"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.001953 0.096436"
+		translate="0.000000 0.001953 0.096680"
 		visibility="on"
 		display_size="2"
 		vertex_size="183" polygon_size="63"
@@ -7107,7 +7107,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-6.050049 0.000000 -0.834961"
+		translate="-6.050049 -0.281006 -0.834961"
 		visibility="on"
 		display_size="1"
 		vertex_size="90" polygon_size="26"
@@ -7127,7 +7127,7 @@
 		billboard="off"
 		scale="0.883301 1.259766 0.883301"
 		rotate="0.000000 0.000000 0.000000"
-		translate="10.935547 0.865723 0.903076"
+		translate="10.935547 0.983154 0.903076"
 		visibility="on"
 		display_size="1"
 		vertex_size="58" polygon_size="26"
