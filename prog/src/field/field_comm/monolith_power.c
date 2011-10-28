@@ -2126,7 +2126,8 @@ static void _mp_main_keycursor( MONOLITH_PWSELECT_WORK *mpw, const s32 mode )
 //--------------------------------------------------------------
 static void _mp_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
 {
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+#if 0
   s32 i;
   // Yボタンで全クリア
   // 通常と違う機能なので画面の更新まではしない
