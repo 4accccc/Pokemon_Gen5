@@ -36,7 +36,7 @@
 #include "arc_def.h"
 #include "font/font.naix"
 #include "script_message.naix"
-#include "msg/script/msg_t01r0102.h"
+#include "msg/script/msg_c12.h"
 #include "psel.naix"
 
 // サウンド
@@ -280,9 +280,9 @@ static const u16 poke_monsno[TARGET_POKE_MAX] =
 // gmm
 static const u32 poke_str_id[TARGET_POKE_MAX] =
 {
-  msg_t01r0102_ball_grass_01,
-  msg_t01r0102_ball_fire_01,
-  msg_t01r0102_ball_water_01,
+  msg_c12_ball_grass_01,
+  msg_c12_ball_fire_01,
+  msg_c12_ball_water_01,
 };
 
 // リソース
@@ -2354,7 +2354,7 @@ static void Psel_TextInit( PSEL_WORK* work )
       work->heap_id );
 
   // メッセージ
-  work->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_t01r0102_dat, work->heap_id );
+  work->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_c12_dat, work->heap_id );
 
   // TCBL
   work->ps_tcblsys = GFL_TCBL_Init( work->heap_id, work->heap_id, 1, 0 );
@@ -2660,7 +2660,7 @@ static void Psel_AppTaskmenuWinInit( PSEL_WORK* work )
 {
   // 窓の設定
   APP_TASKMENU_ITEMWORK item;
-  item.str       = GFL_MSG_CreateString( work->msgdata, msg_t01r0102_ball_select_03 );
+  item.str       = GFL_MSG_CreateString( work->msgdata, msg_c12_ball_select_03 );
   item.msgColor  = APP_TASKMENU_ITEM_MSGCOLOR;
   item.type      = APP_TASKMENU_WIN_TYPE_NORMAL;
 
@@ -2702,7 +2702,7 @@ static void Psel_AppTaskmenuInit( PSEL_WORK* work )
   // 窓の設定
   for( i=0; i<NELEMS(item); i++ )
   {
-    item[i].str      = GFL_MSG_CreateString( work->msgdata, msg_t01r0102_ball_select_yes +i );
+    item[i].str      = GFL_MSG_CreateString( work->msgdata, msg_c12_ball_select_yes +i );
     item[i].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
     //item[i].type     = APP_TASKMENU_WIN_TYPE_NORMAL;  // NORMALでも最後尾のボタンはBボタンがショートカットボタンになっているようだが、Aボタンで最後尾のボタンを選ぶと決定音が鳴りBボタンで最後尾のボタンを選ぶとキャンセル音がなる。
     item[i].type     = (i==0) ? APP_TASKMENU_WIN_TYPE_NORMAL : APP_TASKMENU_WIN_TYPE_RETURN;
@@ -3285,7 +3285,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     {
       // テキストとウィンドウは表示
       work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON;
-      Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_01 );
+      Psel_TextExplainStreamStart( work, msg_c12_ball_select_01 );
       
       *seq = S02_MAIN_SEQ_EXPLAIN_WAIT;
 
@@ -3499,7 +3499,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   case S02_MAIN_SEQ_ZOOM_IN_ANIME_INIT:
     {
       // テキストとウィンドウは表示しっぱなしなので、テキストのみ更新される
-      Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_02 );
+      Psel_TextExplainStreamStart( work, msg_c12_ball_select_02 );
 
       // ズームイン
       Psel_ThreeS02MbZoomAnimeStart( work, work->select_target_poke, FALSE );
@@ -3565,7 +3565,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
         else
         {
           // テキストとウィンドウは表示しっぱなしなので、テキストのみ更新される
-          Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_01 );
+          Psel_TextExplainStreamStart( work, msg_c12_ball_select_01 );
 
           *seq = S02_MAIN_SEQ_ZOOM_OUT_ANIME_INIT;
         }
