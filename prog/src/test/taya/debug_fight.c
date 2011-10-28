@@ -43,10 +43,12 @@
 #include "fieldmap\zone_id.h"
 #include "system\net_err.h"
 #include "tr_tool\trtype_def.h"
+#include "savedata/etc_save.h"
 
 // local includes ---------------------
 #include "msg\debug\msg_debug_fight.h"
 #include "debug_fight_comm.h"
+#include "msg/debug/msg_debugname.h"
 
 // archive includes -------------------
 #include "arc_def.h"
@@ -878,6 +880,29 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   ZONEDATA_Open( HEAPID_BTL_DEBUG_SYS );
   GAMEBEACON_Setting( wk->gameData );
   setupBagItem( wk->gameData, wk->heapID );
+
+  // ライバル名
+  {
+    // ライバル名のセット
+    STRBUF *namebuf;
+    GFL_MSGDATA *msgman;
+    SAVE_CONTROL_WORK *sv_ctrl_work = GAMEDATA_GetSaveControlWork( wk->gameData );
+    ETC_SAVE_WORK *etcsave = SaveData_GetEtc( sv_ctrl_work );
+
+    msgman = GFL_MSG_Create( 
+        GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
+
+    namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RIVAL_TMP );
+
+    // セーブデータに保存
+    {
+      const STRCODE *strcode = GFL_STR_GetStringCodePointer(namebuf);
+      EtcSave_SetRivalName( etcsave, strcode );
+    }
+
+    GFL_STR_DeleteBuffer(namebuf);
+    GFL_MSG_Delete(msgman);
+  }
 
   // 仮想フィールドBGMスタック設定
   {
