@@ -91,7 +91,7 @@ typedef enum{
 #define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam”’•¶Žš”²‚«
 #define FCOL_FNTOAM_B ( PRINTSYS_MACRO_LSB(2,3,0))  ///<Oam••¶Žš”²‚«
 #define FCOL_FNTOAM_RW ( PRINTSYS_MACRO_LSB(6,5,0))  ///<OamÔ•¶Žš•”wŒi”²‚«
-#define FCOL_FNTOAM_RB ( PRINTSYS_MACRO_LSB(4,5,0))  ///<OamÔ•¶Žš”’”wŒi”²‚«
+#define FCOL_FNTOAM_RB ( PRINTSYS_MACRO_LSB(6,4,0))  ///<OamÔ•¶Žš”’”wŒi”²‚«
 #define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG”’”²‚«
 #define FCOL_POPUP_BASE (9)
 #define FCOL_POPUP_MAIN (1)

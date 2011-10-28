@@ -406,7 +406,6 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 #ifdef DEBUG_ONLY_FOR_iwasawa
 //    wk->my_data.power = 1;
 #endif
-//    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
   wk->game_comm = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
   wk->wifi_list = GAMEDATA_GetWiFiList( wk->gdata );
