@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-30T03:40:32"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-10-28T18:44:42"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="4" xyz="3.500000 0.000000 -0.500000" whd="4.000000 0.000000 1.000000"/>
 
-<tex_image_array size="32">
+<tex_image_array size="33">
 	<tex_image index="0" name="10_dirt"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
@@ -1230,9 +1230,27 @@
 			b223 6322 8232 22b2 00a2 b2a0 2b22 a0a0
 		</bitmap>
 	</tex_image>
+	<tex_image index="32" name="out10_yasai"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="out10_yasai_pl"
+		path="C:/home/swan_data3d/field/out10/chip/tex_winter/out10_yasai.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 00e0 0000 0000 0a00 003b 0000 0008
+			9580 000f 0000 000c e5a0 000e 2be0 002c
+			0fc0 0aff fc38 00fe 0000 bc08 000c 0002
+			0000 c00c 02af 080b e000 002f 09ac 0e8c
+			3b00 00f0 0af0 00fc 0000 0000 0f00 0038
+			0000 0000 0000 000c 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="32">
+<tex_palette_array size="33">
 	<tex_palette index="0" name="10_dirt_2_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1339,6 +1357,9 @@
 	<tex_palette index="31" name="nagakusa02b_pl" color_size="16">
 		71e3 218d 3a30 29ef 25ae 29d1 2a12 25d1
 		2e14 3658 56b5 4a52 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="32" name="out10_yasai_pl" color_size="4">
+		25b0 2a73 2610 25ae
 	</tex_palette>
 </tex_palette_array>
 
@@ -1661,7 +1682,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="32">
+	<ex_tex_image_array size="33">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -1694,8 +1715,9 @@
 		<ex_tex_image index="29" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="30" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="32" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="32">
+	<ex_tex_palette_array size="33">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -1728,6 +1750,7 @@
 		<ex_tex_palette index="29" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="30" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="31" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="32" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="4">
 		<ex_material index="0" disp_pos="-180.000000 300.000000"/>
