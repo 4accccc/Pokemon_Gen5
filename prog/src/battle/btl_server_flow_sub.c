@@ -868,7 +868,7 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
   numer = _calc_adjust_level_sub( numer_int );
   denom = _calc_adjust_level_sub( denom_int );
 
-  result = ((base_exp * numer) / denom) + 1;
+  result = (((u64)base_exp * numer) / denom) + 1;
 
   expMargin = BPP_GetExpMargin( bpp );
   if( result > expMargin ){
