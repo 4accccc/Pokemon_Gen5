@@ -2150,6 +2150,7 @@ u32 KEYSYS_SCROLL_MENU_Main( KEYSYS_SCROLL_MENU *p_wk )
   {
     ret = p_wk->setup.list_max-1;
     ret = p_wk->setup.param[ret];
+    PMSND_PlaySE( KEYSYS_SE_CANCEL );
   }
   else if( ret >= 0xfffffff0 )
   {
@@ -2157,6 +2158,7 @@ u32 KEYSYS_SCROLL_MENU_Main( KEYSYS_SCROLL_MENU *p_wk )
   }
   else
   {
+    PMSND_PlaySE( KEYSYS_SE_DECIDE );
     ret = FRAMELIST_GetListPos( p_wk->p_frame_list );
     ret = p_wk->setup.param[ret];
   }
@@ -2333,12 +2335,22 @@ static void Keysys_Scroll_Menu_Callback_Scroll( void *p_wk_adrs, s8 move )
 
 
   //なぜかFRAME_LISTはスクロールすると余白部分(上部のみ）に書き残しが残るので消す
-  if( move < 0 )
   {
     u32 scroll = FRAMELIST_GetScrollCount( p_wk->p_frame_list );
     u32 start = scroll*5;
     NAGI_Printf( "%d\n", scroll );
-    GFL_BG_FillScreen( p_wk->setup.frm, 0, 0, start, 32, 4, GFL_BG_SCRWRT_PALNL );
+ 
+    if( move < 0 )
+    {
+      GFL_BG_FillScreen( p_wk->setup.frm, 0, 0, start, 32, 4, GFL_BG_SCRWRT_PALNL );
+    }
+    else if( move > 0 )
+    {
+      if( scroll != 0 && FRAMELIST_GetBgScrollCount(p_wk->p_frame_list) == 1 )
+      {
+        GFL_BG_FillScreen( p_wk->setup.frm, 0, 0, start, 32, 4, GFL_BG_SCRWRT_PALNL );
+      }
+    }
   }
 }
 

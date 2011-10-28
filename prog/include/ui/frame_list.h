@@ -387,3 +387,14 @@ extern void FRAMELIST_SetUseKey( FRAMELIST_WORK * wk, int key_mask );
  */
 //-----------------------------------------------------------------------------
 extern void FRAMELIST_ForceScroll( FRAMELIST_WORK * wk, int scroll );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGスクロール回数取得（SCROLLコールバックの中でこの回数-1だと最後に呼ばれるSCROLLコールバック）
+ *
+ *	@param	const FRAMELIST_WORK * wk ワーク
+ *
+ *	@return BGスクロール回数
+ */
+//-----------------------------------------------------------------------------
+extern u8 FRAMELIST_GetBgScrollCount( const FRAMELIST_WORK * wk );

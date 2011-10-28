@@ -2410,3 +2410,17 @@ void FRAMELIST_ForceScroll( FRAMELIST_WORK * wk, int scroll )
     wk->is_no_scr_req = FALSE;
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGスクロール回数取得（SCROLLコールバックの中でこの回数-1だと最後に呼ばれるSCROLLコールバック）
+ *
+ *	@param	const FRAMELIST_WORK * wk ワーク
+ *
+ *	@return BGスクロール回数
+ */
+//-----------------------------------------------------------------------------
+u8 FRAMELIST_GetBgScrollCount( const FRAMELIST_WORK * wk )
+{
+	return wk->listBgScrollCount;
+}
