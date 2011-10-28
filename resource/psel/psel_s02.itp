@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-27T19:49:51" source="psel_s02_009.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-28T20:17:26" source="psel_s02_012.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -25,19 +25,19 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="2">
-		0 38
+	<frame_idx size="3">
+		0 38 64
 	</frame_idx>
-	<image_idx size="2">
-		0 1
+	<image_idx size="3">
+		0 1 0
 	</image_idx>
-	<palette_idx size="2">
-		0 1
+	<palette_idx size="3">
+		0 1 0
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="bell_007_2" data_size="2" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="bell_007_2" data_size="3" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>

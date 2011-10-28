@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-24T15:25:30" source="psel_mb.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-28T20:31:36" source="psel_mb.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -65,7 +65,7 @@
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
-	0.000000 0.315186 0.437500
+	0.000000 0.191406 0.504150
 </node_translate_data>
 
 <node_anm_array size="4">
