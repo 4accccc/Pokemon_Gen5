@@ -487,9 +487,13 @@ HABITATLIST_SAVE* MEDALBOX_GetHabitatListSave( MEDALBOX *p_mdlbox )
 #ifdef PM_DEBUG
 void DEBUG_SetMedalState(MEDALBOX * p_mdlbox, MedalID medal_id , u8 state)
 {
+  RTCDate date;
   MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
   p_medal_st->medal_state = state;
-  SetMedalDate( p_medal_st, 11, 1, 1 );  //‰¼
+
+  // Œ»İ‚Ì“ú•t‚ğİ’è
+  GFL_RTC_GetDate( &date );
+  SetMedalDate( p_medal_st, date.year, date.month, date.day );
 }
 #endif  //PM_DEBUG
 

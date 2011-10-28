@@ -171,6 +171,10 @@ static void debugMenuAllTitleMedalOpen( DEBUG_MEDALBOX_WORK* wk )
   MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
   u8 medal_state;
   MedalID medal_id;
+  RTCDate date;
+
+  // 現在の日付を設定
+  GFL_RTC_GetDate( &date );
 
   for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
   {
@@ -188,7 +192,7 @@ static void debugMenuAllTitleMedalOpen( DEBUG_MEDALBOX_WORK* wk )
       {
         DEBUG_SetMedalState( medal_box , medal_id, MEDAL_STATE_TITLE_ACHIVE );
       }
-      MEDALBOX_SetTitleMedalGetFlg( medal_box , medal_id , 99 , 12 , 31 );
+      MEDALBOX_SetTitleMedalGetFlg( medal_box, medal_id, date.year, date.month , date.day );
       GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medal_box,FALSE));
 
       // 設定後の開放状況を表示
@@ -214,6 +218,10 @@ static void debugMenuAllHintMedalOpen( DEBUG_MEDALBOX_WORK* wk )
   MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
   u8 medal_state;
   MedalID medal_id;
+  RTCDate date;
+  
+  // 現在の日付を設定
+  GFL_RTC_GetDate( &date );
 
   for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
   {
@@ -228,6 +236,7 @@ static void debugMenuAllHintMedalOpen( DEBUG_MEDALBOX_WORK* wk )
 
       if( medal_state < MEDAL_STATE_HINT_GET )
       {
+
         OS_Printf("MEDALID %d: %u ->",medal_id , medal_state);
 
         // ヒントメダルを開放
@@ -235,7 +244,7 @@ static void debugMenuAllHintMedalOpen( DEBUG_MEDALBOX_WORK* wk )
         {
           MEDALBOX_SetHintMedalAchive( medal_box , medal_id );
         }
-        MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id , GFL_STD_MtRand( 99 ) + 1 , GFL_STD_MtRand( 12 ) + 1 , GFL_STD_MtRand( 31 ) + 1 );
+        MEDALBOX_SetHintMedalGetFlg( medal_box , medal_id , date.year, date.month , date.day );
 
         // 設定後の開放状況を表示
         medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
@@ -589,6 +598,11 @@ static MEDALDATA * allocMedalData( HEAPID heapID )
 //----------------------------------------------------------------------------
 static void setMedalState( MEDALBOX * medal_box, u8 id, u8 state )
 {
+  RTCDate date;
+
+  // 現在の日付を設定
+  GFL_RTC_GetDate( &date );
+
   DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_NONE );
   switch ( state )
   {
@@ -604,7 +618,7 @@ static void setMedalState( MEDALBOX * medal_box, u8 id, u8 state )
     break;
   case MEDAL_STATE_TITLE_GET:
     DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
-    MEDALBOX_SetTitleMedalGetFlg( medal_box, id, 12, 12, 12 );
+    MEDALBOX_SetTitleMedalGetFlg( medal_box, id, date.year, date.month , date.day );
     GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medal_box,FALSE));
     break;
   }
@@ -717,7 +731,6 @@ static void debugMenuMedalDataRandomSet( DEBUG_MEDALBOX_WORK* wk )
 
         // タイトルメダルを開放
         DEBUG_SetMedalState( medal_box , medal_id, MEDAL_STATE_TITLE_ACHIVE );
-        //MEDALBOX_SetTitleMedalGetFlg( medal_box , medal_id , GFL_STD_MtRand( 99 ) + 1 , GFL_STD_MtRand( 12 ) + 1 , GFL_STD_MtRand( 31 ) + 1  );
 
         // 設定後の開放状況を表示
         medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
