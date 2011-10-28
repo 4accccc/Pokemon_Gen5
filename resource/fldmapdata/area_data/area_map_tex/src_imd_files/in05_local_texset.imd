@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-04-27T11:54:49" source="in05_local_texset.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-10-03T16:49:44" source="in05_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-04-27T11:54:49" source="in05_local_texset.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-10-03T16:49:44" source="in05_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -871,14 +871,14 @@
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf03.tga"
 	>
 		<bitmap size="64">
-			6666 6666 6666 7666 4444 4444 4444 7624
-			3344 3333 3333 7624 4451 3333 3333 7624
-			4188 3333 3333 7624 1881 3334 3333 7624
-			1014 3334 3333 7624 3333 3334 3333 7624
-			1014 3334 3333 7624 1881 3334 3333 7624
-			4188 3333 3333 7624 3351 3333 3333 7624
-			4444 4444 4444 7623 2222 2222 2222 7622
-			6666 6666 6666 7666 6666 6666 6666 7666
+			7777 7777 7777 8777 6666 6666 6666 8733
+			1111 1111 1111 8733 5562 5555 5555 8733
+			5299 4444 5444 8733 2992 4444 5444 8733
+			2025 5555 5555 8733 4444 1111 1111 8733
+			2025 5555 5555 8733 2992 4444 5444 8733
+			5299 4444 5444 8733 4462 4444 5444 8733
+			5555 5555 5555 8733 3333 3333 3333 8733
+			7777 7777 7777 8777 7777 7777 7777 8777
 		</bitmap>
 	</tex_image>
 	<tex_image index="25" name="in05_speaker"
@@ -957,10 +957,10 @@
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_yuka1.tga"
 	>
 		<bitmap size="32">
-			0000 a000 aaa8 faaa 5558 f955 5558 f955
-			5558 f955 5558 f955 5558 f955 5558 f955
-			5558 f955 5558 f955 5558 f955 5558 f955
-			5558 f955 aaa8 faaa fffe ffff fffe ffff
+			0000 a000 0000 a000 aaa0 faaa aaa0 faaa
+			55a0 fa55 55a0 fa55 55a0 fa55 55a0 fa55
+			55a0 fa55 55a0 fa55 55a0 fa55 55a0 fa55
+			aaa0 faaa aaa0 faaa fffa ffff fffa ffff
 		</bitmap>
 	</tex_image>
 	<tex_image index="28" name="in05_yuka2"
@@ -1109,8 +1109,8 @@
 		0264 03a7 4bf5 001e 0013 4e7f 7fff 7fff
 	</tex_palette>
 	<tex_palette index="24" name="in05_shelf03_pl" color_size="16">
-		7bfd 73fb 33a7 3fea 4fef 63f6 5f18 52b5
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7bfd 5ff4 73fb 33a7 3fea 4fef 63f6 5f18
+		52b5 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="25" name="in05_speaker_pl" color_size="16">
 		633a 7fff 6318 5ef7 56b5 5294 4e73 4a52
