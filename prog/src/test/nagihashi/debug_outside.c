@@ -171,8 +171,17 @@ static GFL_PROC_RESULT Debug_Outside_Proc_Init( GFL_PROC *p_proc, int *p_seq, vo
     DEBUGWIN_InitProc( BG_FRAME_TEXT_M, p_wk->p_font );
     {
       OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr(p_wk->p_outside_sv);
-      KEY_SYSTEM_SAVE *p_key_system = OUTSIDE_PERMANENT_GetKeySystem(p_per);
       DATA_CONVERT_SAVE *p_data_conv = OUTSIDE_PERMANENT_GetDataConvert(p_per);
+      KEY_SYSTEM_SAVE *p_key_system = NULL;
+        
+      if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
+      {
+        p_key_system = SAVE_CONTROL_GetKeySystem( SaveControl_GetPointer() );
+      }
+      else
+      {
+        p_key_system = OUTSIDE_PERMANENT_GetKeySystem(p_per);
+      }
       DEBUGWIN_KEY_SYSTEM_Init( p_key_system, HEAPID_NAGI_DEBUG_SUB );
       DEBUGWIN_DATA_CONVERT_Init( p_data_conv, HEAPID_NAGI_DEBUG_SUB );
     }
@@ -344,15 +353,33 @@ static void Seqfunc_Main( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_SAVE_START:
     if( DEBUG_MSGWIN_IsPrintEnd( p_wk->p_msgwin ) )
     {
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
+      {
+        SaveControl_SaveAsyncInit(SaveControl_GetPointer() );
+      }
+      else
+      {
+        OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      }
       (*p_seq)++;
     }
     break;
   case SEQ_SAVE_WAIT:
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
     {
-      DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
-      (*p_seq) = SEQ_MAIN;
+      if( SaveControl_SaveAsyncMain( SaveControl_GetPointer() ) == SAVE_RESULT_OK )
+      {
+        DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
+        (*p_seq) = SEQ_MAIN;
+      }
+    }
+    else
+    {
+      if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+      {
+        DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
+        (*p_seq) = SEQ_MAIN;
+      }
     }
     break;
   }

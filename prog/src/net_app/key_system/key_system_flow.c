@@ -330,6 +330,7 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   switch( *p_seq )
   {
   case SEQ_DISPLAY_CREATE:
+    KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayRecvDemo );
     (*p_seq)++;
     break;
@@ -410,6 +411,7 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     break;
   case SEQ_DISPLAY_DELETE:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    KEYSYS_TEXT_Delete( p_wk );
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -548,6 +550,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   switch( *p_seq )
   {
   case SEQ_YESNO_START:
+    KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrcYesno );
     (*p_seq)++;
     break;
@@ -567,6 +570,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         case 1:
           KEYSYS_TEXTSET_Exit( p_wk->p_textset );
           p_wk->p_textset = NULL;
+
           GFL_BG_ClearScreen( KEYSYS_BG_FRAME_WND_S );
           GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
           GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
@@ -751,6 +755,10 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     break;
   case SEQ_END:
     KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
+
+    KEYSYS_TEXT_Delete( p_wk );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
@@ -1865,11 +1873,7 @@ static void KeySys_Display_CreateIrc( void *p_wk_adrs, HEAPID heapID )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   //メッセージ
-  if( p_wk->p_text == NULL )
-  {
-    KEYSYS_TEXT_Create( p_wk, heapID );
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_22, KEYSYS_TEXT_TYPE_WAIT );
-  }
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_22, KEYSYS_TEXT_TYPE_WAIT );
 
   KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_WAVE_D, heapID );
   KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_WAVE_U, heapID );
@@ -1938,7 +1942,6 @@ static void KeySys_Display_DeleteIrc( void *p_wk_adrs )
   KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_WAVE_D );
 
   KEYSYS_TEXT_EndWait( p_wk->p_text );
-  KEYSYS_TEXT_Delete( p_wk );
 
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
@@ -2182,7 +2185,6 @@ static void KeySys_Display_CreateRecvDemo( void *p_wk_adrs, HEAPID heapID )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   //デモ初期化
-  KEYSYS_TEXT_Create( p_wk, heapID );
   KeySys_Demo_Init( &p_wk->demo, &p_wk->obj, p_wk->p_text, p_wk->p_font, heapID );
 }
 //----------------------------------------------------------------------------
@@ -2211,8 +2213,6 @@ static void KeySys_Display_DeleteRecvDemo( void *p_wk_adrs )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   KeySys_Demo_Exit( &p_wk->demo );
-
-  KEYSYS_TEXT_Delete( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2300,7 +2300,6 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
   KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_HAVEKEY_M );
 
   //メッセージ
-  KEYSYS_TEXT_Create( p_wk, heapID );
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_31, KEYSYS_TEXT_TYPE_STREAM_FIX );
 }
 //----------------------------------------------------------------------------
@@ -2344,7 +2343,6 @@ static void KeySys_Display_DeleteSendDemo( void *p_wk_adrs )
   p_wk->p_textset = NULL;
 
   KEYSYS_TEXT_EndWait( p_wk->p_text );
-  KEYSYS_TEXT_Delete( p_wk );
 
   KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 
@@ -2383,7 +2381,6 @@ static void KeySys_Display_CreateIrcYesno( void *p_wk_adrs, HEAPID heapID )
   }
 
   {
-    KEYSYS_TEXT_Create( p_wk, heapID );
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_60, KEYSYS_TEXT_TYPE_QUE ); 
   }
 
@@ -2519,8 +2516,6 @@ static void KeySys_Display_DeleteIrcYesno( void *p_wk_adrs )
 
   KEYSYS_LIST_Exit(p_wk->p_list);
   p_wk->p_list = NULL;
-
-  KEYSYS_TEXT_Delete( p_wk );
 
   //テキストセット
   //KEYSYS_TEXTSET_Exit( p_wk->p_textset );
