@@ -37,9 +37,10 @@ enum {
 	NARC_field_fog_table_zonefog_in85_n_dat = 23,
 	NARC_field_fog_table_zonefog_out13_dat = 24,
 	NARC_field_fog_table_zonefog_out27_dat = 25,
-	NARC_field_fog_table_zonefog_out57_t07d24_dat = 26,
-	NARC_field_fog_table_zonefog_out70_dat = 27,
-	NARC_field_fog_table_zonefog_table_bin = 28
+	NARC_field_fog_table_zonefog_out34_d35_dat = 26,
+	NARC_field_fog_table_zonefog_out57_t07d24_dat = 27,
+	NARC_field_fog_table_zonefog_out70_dat = 28,
+	NARC_field_fog_table_zonefog_table_bin = 29
 };
 
 /* NARC_FIELD_FOG_TABLE_NAIX_ */
