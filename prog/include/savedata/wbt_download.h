@@ -270,16 +270,18 @@ static inline BOOL WBTDL_DATA_IsVetoWazaNo( const WBTDL_DATA * wbtdl_data, u16 w
 //------------------------------------------------------------------
 static inline BOOL WBTDL_DATA_CheckVersion( const WBTDL_DATA * wbtdl_data )
 {
-#if 1  // ‰¼‘Î‰ž
-  BOOL bflg=FALSE;
-  //
-  if((GET_VERSION() == VERSION_W2)||(GET_VERSION() == VERSION_B2)){
-    bflg = TRUE;
+  switch( wbtdl_data->cassette_version )
+  {
+  case 0: //W2‚ªOK
+    return GET_VERSION() == VERSION_W2;
+  case 1: //B2‚ªOK
+    return GET_VERSION() == VERSION_B2;
+  case 2: //—¼•ûOK
+    return TRUE;
+  default:
+    GF_ASSERT(0);
+    return FALSE;
   }
-  return( bflg );
-#else
-  return wbtdl_data->cassette_version == PM_VERSION;
-#endif
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
