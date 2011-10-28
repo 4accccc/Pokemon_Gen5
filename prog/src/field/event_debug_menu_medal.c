@@ -489,15 +489,17 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
     {
       if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
       {
-        work->draw_medal_id--;
-        if( work->draw_medal_id < 0 )
+        if( work->draw_medal_id == 0 )
         {
           work->draw_medal_id = MDLID_MAX-1;
         }
+        else
+        {
+          work->draw_medal_id--;
+        }
         DrawMedalData( work , work->draw_medal_id );
       }
-
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+      else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
       {
         work->draw_medal_id++;
         if( work->draw_medal_id >= MDLID_MAX )
@@ -506,23 +508,23 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         }
         DrawMedalData( work , work->draw_medal_id );
       }
-
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+      else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
       {
         int i;
         for( i = 0 ; i<10 ; i++ )
         {
-          work->draw_medal_id--;
-          if( work->draw_medal_id < 0 )
+          if( work->draw_medal_id == 0 )
           {
             work->draw_medal_id = MDLID_MAX-1;
+          }
+          else
+          {
+            work->draw_medal_id--;
           }
         }
         DrawMedalData( work , work->draw_medal_id );
       }
-
-
-      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+      else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
       {
         work->draw_medal_id+=10;
         if( work->draw_medal_id >= MDLID_MAX )
@@ -531,8 +533,7 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         }
         DrawMedalData( work , work->draw_medal_id );
       }
-
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
         u8 medal_state = MEDALBOX_GetMedalState( medal_box , work->draw_medal_id );
         medal_state = medal_state + 1;
@@ -544,7 +545,7 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         DEBUG_SetMedalState( medal_box , work->draw_medal_id , medal_state );
         DrawMedalData( work , work->draw_medal_id );
       }
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
       {
         u8 medal_state = MEDALBOX_GetMedalState( medal_box , work->draw_medal_id );
 
@@ -560,7 +561,7 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         DEBUG_SetMedalState( medal_box , work->draw_medal_id , medal_state );
         DrawMedalData( work , work->draw_medal_id );
       }
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+      else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
       {
         return TRUE;
       }
