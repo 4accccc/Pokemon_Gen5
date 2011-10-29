@@ -132,11 +132,12 @@ C15に入室と同時にイベント起動
 
 チュートリアルイベントキャラ
 
-連れ歩き中のメッセージ
-立ち止まって話す。</Comment>
+連れ歩き中のメッセージ立ち止まって話す。
+
+終了後連れ歩き再開</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T10:35:13" />
+				Time="2011-10-29T04:44:32" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -147,10 +148,12 @@ C15に入室と同時にイベント起動
 えいが　さくひんの　じょうえいは
 もちろんの　こと▽
 えいがスターの　ファンが▽
-あつまることも　あるんですよ！▼</Text>
+あつまることも　あるんですよ！▼
+ちょっと　なかの　ようすを
+のぞいて　みましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:24" />
+				Time="2011-10-29T04:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -162,10 +165,12 @@ C15に入室と同時にイベント起動
 映画作品の　上映は
 もちろんの　こと▽
 映画スターの　ファンが▽
-集まることも　あるんですよ！▼</Text>
+集まることも　あるんですよ！▼
+ちょっと　中の　様子を
+のぞいて　みましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:25" />
+				Time="2011-10-29T04:42:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -175,27 +180,35 @@ C15に入室と同時にイベント起動
 			Language="JPN">
 			<Comment>♂sunglasses
 
+！チュートリアルイベント修正
+
 チュートリアルイベントキャラ
 
-シアター近くで停止
-
-メッセージ終了後移動再開</Comment>
+シアター前で停止。
+↓
+カメラあおりでシアター全景をみせる。
+↓
+メッセージ表示
+↓
+シアター入室ｃ１５r0301へ
+↓
+→pokewood_scr.mstxtのmsg_pw_tutorial_00_01へ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T01:29:53" />
+				Time="2011-10-29T06:10:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_sunglasses_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここが　さつえいスタジオ！▼
+			<Text>さあ！　ここが　さつえいスタジオです！▼
 ここで　ポケウッドの　えいがは
 うまれるのです！▼
 さあ！　なかへ　どうぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:20:12" />
+				Time="2011-10-29T06:10:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -203,13 +216,13 @@ C15に入室と同時にイベント起動
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここが　撮影スタジオ！▼
+			<Text>さあ！　ここが　撮影スタジオ！▼
 ここで　ポケウッドの　映画は
 生まれるのです！▼
 さあ！　中へ　どうぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:19:53" />
+				Time="2011-10-29T06:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -219,15 +232,22 @@ C15に入室と同時にイベント起動
 			Language="JPN">
 			<Comment>♂sunglasses
 
+！チュートリアルイベント修正
+
 チュートリアルイベントキャラ
 
 撮影スタジオ前で停止
 
-メッセージ終了後スタジオ入室
-→msg_pw_tutorial_01</Comment>
+カメラあおりでスタジオ全景をみせる。
+↓
+メッセージ表示
+↓
+シアター入室ｃ１５r0201へ
+↓
+→pokewood_scr.mstxtのmsg_msg_pw_tutorial_01へ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T06:55:44" />
+				Time="2011-10-29T06:13:14" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1006,11 +1026,11 @@ msg_c15_oldman1_01_04
 だんせいには　あっとうてきに
 ナツメさんが　ウケてますよ▼
 え？　[Name:TrainerName ]さん？
-さいきんに　にゅうか　はじめたけど
+さいきんに　にゅうか　はじめたけど▽
 うりあげは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:34:16" />
+				Time="2011-10-29T03:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1026,11 +1046,11 @@ msg_c15_oldman1_01_04
 男性には　圧倒的に
 ナツメさんが　ウケてますよ▼
 え？　[Name:TrainerName ]さん？
-さいきんに　入荷はじめたけど
+さいきんに　入荷はじめたけど▽
 売り上げは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:56:02" />
+				Time="2011-10-29T03:35:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1599,13 +1619,14 @@ Buona giornata！</Text>
 		Label="msg_c15_babygirl2_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>People know me as the miraculous child actress!
-Not to mention, a top star!
-My popularity and acting skills
+			<Text>People know me as the
+miraculous child actress!▽
+Not to mention, a top star!▽
+My popularity and acting skills▽
 are way beyond yours, rookie!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:51:30" />
+				Time="2011-10-27T06:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1613,13 +1634,14 @@ are way beyond yours, rookie!</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>People know me as the miraculous child actress!
-Not to mention, a top star!
-My popularity and acting skills
+			<Text>People know me as the
+miraculous child actress!▽
+Not to mention, a top star!▽
+My popularity and acting skills▽
 are way beyond yours, rookie!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:53:39" />
+				Time="2011-10-27T06:46:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1763,12 +1785,12 @@ Bis  bald.</Text>
 		Label="msg_c15_adultw_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　[Name:TrainerName ]……▼
-こんどは　いつ　わたしが　かんとくする
-えいがに　しゅつえんして　くれるの？</Text>
+			<Text>アラ　[Name:TrainerName ]……▼
+コンドハ　イツ　ワタシノ　カントクスル
+ムービーニ　シュツエン　シテクレルノ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T11:56:02" />
+				Time="2011-10-29T03:29:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1776,12 +1798,12 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　[Name:TrainerName ]……▼
-今度は　いつ　私の　監督する
-映画に　出演して　くれるの？</Text>
+			<Text>アラ　[Name:TrainerName ]……▼
+今度ハ　イツ　私ノ　カントクスル
+ムービーニ　出演　シテクレルノ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T11:56:23" />
+				Time="2011-10-29T03:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2110,12 +2132,12 @@ Bis  bald.</Text>
 			Language="JPN">
 			<Text>おお！　[Name:TrainerName ]！
 おぬしの　はつしゅつえんの　さくひんを▽
-とったのは　わし　なんじゃ▼
+とったのは　わし　なんじゃよ▼
 つまり　そだてのおや　どうぜん！
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:26:48" />
+				Time="2011-10-28T09:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2125,12 +2147,12 @@ Bis  bald.</Text>
 			Language="JPN_KANJI">
 			<Text>おお！　[Name:TrainerName ]！
 おぬしの　初出演の　作品を▽
-監督したのは　わし　なんじゃ▼
+監督したのは　わし　なんじゃよ▼
 つまり　育ての親　同然！
 感謝を　忘れては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:27:28" />
+				Time="2011-10-28T09:06:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2195,7 +2217,7 @@ Bis  bald.</Text>
 [Name:TrainerName ]ちゃん……
 きょうは　きねんすべき　ひ　なんだ……▼
 この　だいざ……
-そして　うえにたつ　どうぞうが　みてよ……▼
+そして　うえにたつ　どうぞうを　みてよ▼
 ……ボクはね　ここを　つくったとき
 ひとつの　ねがいと　ちかいを　たてたんだ▼
 このポケウッドが　せかいじゅうを
@@ -2203,16 +2225,16 @@ Bis  bald.</Text>
 でんどうと　なるひ　まで……▼
 そして　そんな　ポケウッドに　ふさわしい
 しんの　スターが　あらわれるまで▽
-この　だいざの　うえには
+この　だいざの　うえには▽
 なにも　たてずに　おこうと……▼
 ……だが　みてよ▼
-ここには　すでに　どうぞうが　ある……
+ここには　すでに　どうぞうが　あるだろ……
 つまり　ぼくの　ねがいは　かなったのさ……▼
 [Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2011-10-28T09:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2224,7 +2246,7 @@ Bis  bald.</Text>
 [Name:TrainerName ]ちゃん……
 今日は　記念すべき日　なんだ……▼
 この　台座……
-そして　上に建つ　銅像が　みてよ……▼
+そして　上に建つ　銅像を　みてよ▼
 ……ボクはね　ここを　つくったとき
 一つの　願いと　誓いを　立てたんだ▼
 このポケウッドが　世界中を
@@ -2232,16 +2254,16 @@ Bis  bald.</Text>
 殿堂と　なる日　まで……▼
 そして　そんな　ポケウッドに　相応しい
 真の　スターが　誕生するまで▽
-この台座の　上には
+この台座の　上には▽
 何も　建てずに　おこうと……▼
 ……　……だが　みてよ▼
-ここには　すでに　銅像が　ある……
+ここには　すでに　銅像が　あるだろ……
 つまり　僕の　願いは　叶ったのさ……▼
 [Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2011-10-28T09:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

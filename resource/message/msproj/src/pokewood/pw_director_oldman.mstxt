@@ -220,11 +220,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ホウ……
+			<Text>カントク『フン……
 わるくない　セリフだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T09:41:11" />
+				Time="2011-10-27T11:14:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -232,11 +232,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『ホウ……
+			<Text>カントク『フン……
 悪くない　セリフだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T09:41:20" />
+				Time="2011-10-27T11:14:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -472,11 +472,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「だいほんは　みろよ！
-きほんちゅうの　きほんだッ！</Text>
+			<Text>カントク「オイ！　しんじん！
+オマエは　だいほんを▽
+なめるように　よんどけっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:31:38" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T11:13:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -484,11 +485,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク「台本は　見ろよ！
-基本中の　基本だッ！</Text>
+			<Text>カントク「オイ！　新人！
+オマエは　まず　台本を▽
+なめるように　読んどけっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:32:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T11:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -508,11 +510,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「だいほんは　みろよ！
+			<Text>カントク「だいほん　みろッ！
 きほんちゅうの　きほんだッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:32:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T11:14:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -520,11 +522,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク「台本は　見ろよ！
+			<Text>カントク「台本を　見ろッ！
 基本中の　基本だッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:32:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T11:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -759,11 +761,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ホウ……
-わるくない　セリフだな……</Text>
+			<Text>カントク『ホホウ……
+そのセリフとは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:52:56" />
+				Time="2011-10-27T11:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -799,7 +801,7 @@
 いちおう　もらって　おこうか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:53:56" />
+				Time="2011-10-27T11:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -915,11 +917,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『はい　カーット！
-よし！　こりゃ　いけるぜ！！</Text>
+			<Text>カントク『カーーーーット！！！
+さつえい　しゅうりょうだッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T08:16:58" />
+				Time="2011-10-27T11:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -951,11 +953,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『カット！　カット！
-もういい！　おわるぞっ！</Text>
+			<Text>カントク『カット……
+やれやれ……　かえるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T08:16:58" />
+				Time="2011-10-27T11:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -987,11 +989,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『カット！　カット！
-こりゃ　さんぴが　わかれそうだぜ！</Text>
+			<Text>カントク『カット……
+これは　いがいに　いけるかもな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T08:16:58" />
+				Time="2011-10-27T11:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

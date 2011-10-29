@@ -131,34 +131,34 @@
 			<Text>ドーブル『ブルッ！　ブルブルッ！！▼
 （フッ……　なんだ？
 この　やぼったい　トレーナーに▽
-やぼったい　ポケモンは……▼
+やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ミゲル！！
 われらの　かれいな　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルッ！　ブルブルッ！！▼
 （フッ……　何だ？
 この　やぼったい　トレーナーに▽
-やぼったい　ポケモンは……▼
+やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ミゲル！！
 われらの　かれいな　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -248,25 +248,25 @@
 		Label="pw_event0_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]のポケモン『……</Text>
+			<Text>[Name:TrainerName Idx="1" ]の[Name:PokemonNickname Idx="0" ]『……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]のポケモン『……</Text>
+			<Text>[Name:TrainerName Idx="1" ]の[Name:PokemonNickname Idx="0" ]『……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -679,33 +679,33 @@
 			Language="JPN">
 			<Text>ミゲル『フフ　それほどでも……
 エリートとして　とうぜんのこと……▼
-わたしも　あなたの　ポケモン
+わたしも　あなたの　[Name:PokemonNickname Idx="0" ]
 なかなか　ステキだと　おもうよ▼
 （ヘヘヘ！　ステキだって！！
 そのことば　オレに　いってよーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:38:54" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:38:54" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『フフ　それほどでも……
 エリートとして　当然だが……▼
-わたしも　あなたの　ポケモン
+わたしも　あなたの　[Name:PokemonNickname Idx="0" ]
 なかなか　ステキだと　おもうよ▼
 （ヘヘヘ！　ステキだって！！
 そのことば　オレに　いってよーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:38:54" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:38:54" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -714,29 +714,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『あ　あの……
 ありがとうございます……▼
-ポケモンの　ことなのに
+[Name:PokemonNickname Idx="0" ]の　ことなのに
 なんか　わたしも　テレちゃいます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『あ　あの……
 ありがとうございます……▼
-ポケモンの　ことなのに
+[Name:PokemonNickname Idx="0" ]の　ことなのに
 なんか　わたしも　テレちゃいます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -744,28 +744,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミゲル『とっても　ステキだ……
-ポケモンも……　あなたも……▼
+[Name:PokemonNickname Idx="0" ]も……　あなたも……▼
 （ヤベッ！　つい　くちに　でちゃった！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『とっても　ステキだ……
-ポケモンも……　あなたも……▼
+[Name:PokemonNickname Idx="0" ]も……　あなたも……▼
 （ヤベッ！　つい　くちに　でちゃった！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:30:26" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -871,11 +871,11 @@
 これで　きっと　いけるはずっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T05:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T05:48:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -890,11 +890,11 @@
 これで　きっと　いけるはずっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T05:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T05:48:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1102,26 +1102,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ふう……
-わたしの　ポケモンじゃ　ダメかな……</Text>
+わたしの　[Name:PokemonNickname Idx="0" ]じゃ　ダメかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ふう……
-わたしの　ポケモンじゃ　ダメかな……</Text>
+わたしの　[Name:PokemonNickname Idx="0" ]じゃ　ダメかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1130,34 +1130,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミゲル『そんなことは　ないっ！
-[Name:TrainerName Idx="1" ]さんの　ポケモンは▽
+[Name:TrainerName Idx="1" ]さんの　[Name:PokemonNickname Idx="0" ]は▽
 かなり　てごわい　あいて　だっ！▽
 しょうぶは　これからだな！▼
 （おいっ！　ドーブル！！
 オマエは　だまってろっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『そんなことは　ないっ！
-[Name:TrainerName Idx="1" ]さんの　ポケモンは▽
+[Name:TrainerName Idx="1" ]さんの　[Name:PokemonNickname Idx="0" ]は▽
 かなり　てごわい　あいて　だっ！▽
 しょうぶは　これからだな！▼
 （おいっ！　ドーブル！！
 オマエは　だまってろっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1431,31 +1431,31 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『あの……
 だいじょうぶですか……▼
-もしかして　ポケモンの
+もしかして　[Name:PokemonNickname Idx="0" ]の
 わざが　ミゲルさんに▽
 あたって　しまったんじゃあ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『あの……
 大丈夫ですか……▼
-ひょっとして　ポケモンの
+ひょっとして　[Name:PokemonNickname Idx="0" ]の
 わざが　ミゲルさんに▽
 当たって　しまったんじゃあ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1854,42 +1854,42 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めと　めが　あえば
-ポケモンしょうぶの　はなが　さく……▼
+[Name:PokemonNickname Idx="0" ]しょうぶの　はなが　さく……▼
 そして　めと　めが　あえば
 こいのはな　さくときも　ある……▼
 わかき　トレーナーたちに　とって
-ポケモンしょうぶとは　たんなる▽
+[Name:PokemonNickname Idx="0" ]しょうぶとは　たんなる▽
 たたかいや　きょうぎでは　ない▼
 であいのばでも　あるのだ……▼
 こうして　トレーナーたちの　こいは
 ひび　うまれては　きえていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……目と　目が　合えば
-ポケモン勝負の　花が　咲く……▼
+[Name:PokemonNickname Idx="0" ]勝負の　花が　咲く……▼
 そして　目と　目が　あえば
 恋の花　咲くときも　ある……▼
 若きトレーナーたちに　とって
-ポケモン勝負とは　単なる▽
+[Name:PokemonNickname Idx="0" ]勝負とは　単なる▽
 戦いや　競技では　ない▼
 出会いの場でも　あるのだ……▼
 こうして　トレーナーたちの　恋は
 日々　生まれては　消えていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2186,42 +2186,42 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めと　めが　あえば
-ポケモンしょうぶの　はなが　さく……▼
+[Name:PokemonNickname Idx="0" ]しょうぶの　はなが　さく……▼
 そして　めと　めが　あえば
 こいのはな　さくときも　ある……▼
 わかき　トレーナーたちに　とって
-ポケモンしょうぶとは　たんなる▽
+[Name:PokemonNickname Idx="0" ]しょうぶとは　たんなる▽
 たたかいや　きょうぎでは　ない▼
 であいのばでも　あるのだ……▼
 こうして　トレーナーたちの　こいは
 ひび　うまれては　きえていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……目と　目が　合えば
-ポケモン勝負の　花が　咲く……▼
+[Name:PokemonNickname Idx="0" ]勝負の　花が　咲く……▼
 そして　目と　目が　あえば
 恋の花　咲くときも　ある……▼
 若きトレーナーたちに　とって
-ポケモン勝負とは　単なる▽
+[Name:PokemonNickname Idx="0" ]勝負とは　単なる▽
 戦いや　競技では　ない▼
 出会いの場でも　あるのだ……▼
 こうして　トレーナーたちの　恋は
 日々　生まれては　消えていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2288,29 +2288,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『まだまだ
 ぜんぜん　げんきみたいだし▽
-すごい　ポケモン……▼
+すごい　[Name:PokemonNickname Idx="0" ]……▼
 ……　……　……いいなあ▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『まだまだ
 全然　元気みたいだし▽
-すごい　ポケモン……▼
+すごい　[Name:PokemonNickname Idx="0" ]……▼
 ……　……　……いいなあ▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2503,28 +2503,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『その　ドーブル……▼
-……わたしの　ポケモンと
+……わたしの　[Name:PokemonNickname Idx="0" ]と
 こうかんして　くれませんか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『その　ドーブル……▼
-……わたしの　ポケモンと
+……わたしの　[Name:PokemonNickname Idx="0" ]と
 交換して　くれませんか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2722,7 +2722,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めと　めが　あえば
-ポケモンしょうぶの　はなが　さく……▼
+[Name:PokemonNickname Idx="0" ]しょうぶの　はなが　さく……▼
 めと　めが　あえば
 こいの　はな　さく　ときも　ある……▼
 いちごいちえの　じょうねつは
@@ -2732,16 +2732,16 @@
 ひび　うまれては　きえていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T06:11:12" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T06:11:12" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……目と　目が　合えば
-ポケモン勝負の　花が　咲く……▼
+[Name:PokemonNickname Idx="0" ]勝負の　花が　咲く……▼
 目と　目が　合えば
 恋の花　咲くときも　ある……▼
 一期一会の　情熱は
@@ -2751,11 +2751,11 @@
 日々　生まれては　消えていく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2763,26 +2763,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ほんとに　つよい……
-さすが　エリートのポケモン……</Text>
+さすが　エリートの[Name:PokemonNickname Idx="0" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ほんとに　つよい……
-さすが　エリートのポケモン……</Text>
+さすが　エリートの[Name:PokemonNickname Idx="0" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-10-28T04:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-10-28T04:51:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

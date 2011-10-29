@@ -350,8 +350,8 @@
 		<language name="JPN_KANJI" width="256">せいかくはいゆう</language>
 	</row>
 	<row id="pw_trname_show">
-		<language name="JPN" width="256">なぞのおとこ</language>
-		<language name="JPN_KANJI" width="256">なぞのおとこ</language>
+		<language name="JPN" width="256">ひみつけいさつ</language>
+		<language name="JPN_KANJI" width="256">ひみつけいさつ</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『モニカ……</language>
@@ -408,15 +408,15 @@
 自分が　こわいんだもん！！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……▼
 いったい　どうすれば
 おねえちゃんは　もとに　もどるの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん……▼
 いったい　どうすれば
 お姉ちゃんは　元に　戻るの……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ロドリゲス『ボールに　かけられた
+		<language name="JPN" width="256">グアイ『ボールに　かけられた
 のろいを　とく　ほうほう　か……▼
 そうだな……▼
 のろいとは　つまるところ
@@ -425,7 +425,7 @@
 つよい　こころのちからを▽
 かのじょに　しめすことが▽
 できれば　きっと……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『ボールに　かけられた
+		<language name="JPN_KANJI" width="256">グアイ『ボールに　かけられた
 呪いを　解く　方法か……▼
 そうだな……▼
 呪いとは　つまるところ
@@ -440,14 +440,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『心の　力？</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">ロドリゲス『そうだ……▼
+		<language name="JPN" width="256">グアイ『そうだ……▼
 たとえば　かのじょに　たいする
 とても　つよい　きもち……▽
 つよい　あいを　つたえられたら……▼
 だが……▼
 それは　[1:00:トレーナー名:1]くん……
 キミにしか　できないことだな……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『そうだ……▼
+		<language name="JPN_KANJI" width="256">グアイ『そうだ……▼
 例えば　彼女に　対する
 とても　強い　気持ち……▽
 強い　愛を　伝えられたら……▼
@@ -511,13 +511,13 @@
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（どうしたら　いいの……
-あいを　つたえろ　って
-いったって　ただの　ことばじゃ……▽
+あいを　つたえろ　って▽
+いったって　ただの　ことばじゃ▽
 いまの　おねえちゃんには▽
 きっと　つうじないよ……▽
 いったい　どうすれば……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（どうしたら　いいの……
-愛を　伝えろ　って
+愛を　伝えろ　って▽
 言ったって　ただの　言葉じゃ▽
 今の　お姉ちゃんには▽
 きっと　通じないよ……▽
@@ -671,14 +671,14 @@
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">……ふたりで　わらいあってると
-とつぜん　ロドリゲスさんが▽
+とつぜん　グアイさんが▽
 おおきな　こえで　さけんだの……▼
 おねえちゃんの　はいっていた
 ボールが　はじけて　こわれたって▼
 いそいで　おねえちゃんを　みると
 あんなに　デカかった　からだが▽
 みるみる　ちぢんでいった……▼
-……ロドリゲスさんの　いってた
+……グアイさんの　いってた
 のろいとか　こころの　ちからって▽
 いみは　よく　わかんない……▼
 だけど　おねえちゃんは
@@ -686,14 +686,14 @@
 もとどおりに　なった　おねえちゃんに
 アタシは　おもいきり　とびついた……</language>
 		<language name="JPN_KANJI" width="256">……ふたりで　笑いあってると
-突然　ロドリゲスさんが▽
+突然　グアイさんが▽
 大きな　声で　さけんだの……▼
 お姉ちゃんの　入っていた
 ボールが　弾けて　壊れたって▼
 急いで　お姉ちゃんを　みると
 あんなに　デカかった　身体が▽
 みるみる　縮んでいった……▼
-……ロドリゲスさんの　言ってた
+……グアイさんの　言ってた
 呪いとか　心の　力って▽
 意味は　よく　分かんない……▼
 だけど　お姉ちゃんは
@@ -778,43 +778,43 @@
 アタシには　こうするしかないの……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
-		<language name="JPN" width="256">ロドリゲス『おい……
+		<language name="JPN" width="256">グアイ『おい……
 モニカは　きを　うしなったぞ……▼
 どういう　つもりなんだ……
 [1:00:トレーナー名:1]くん……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『おい……
+		<language name="JPN_KANJI" width="256">グアイ『おい……
 モニカは　気を　失ったぞ……▼
 どういう　つもりなんだ……
 [1:00:トレーナー名:1]くん……</language>
 	</row>
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……　……▼
-ロドリゲスさん……▼
+グアイさん……▼
 やっぱり　そのモンスターボールを
 アタシに　ください……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……　……▼
-ロドリゲスさん……▼
+グアイさん……▼
 やっぱり　そのモンスターボールを
 アタシに　ください……</language>
 	</row>
 	<row id="pw_event7_enemy_2">
-		<language name="JPN" width="256">ロドリゲス『ダメだ……
+		<language name="JPN" width="256">グアイ『ダメだ……
 このボールも　かのじょも▽
 このせかいに　きけんすぎる……▼
 キミに　わたすわけには……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『ダメだ……
+		<language name="JPN_KANJI" width="256">グアイ『ダメだ……
 このボールも　彼女も▽
 この世界に　危険すぎる……▼
 キミに　渡すわけには……</language>
 	</row>
 	<row id="pw_event7_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……▼
 アタシは　おねえちゃんと　これからの
 うんめいを　ともに　します……▼
 そのボールを　くれないなら
 アタシは　あなたを　たおしてでも▽
 うばっていく　つもりよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん……▼
 アタシは　お姉ちゃんと　これからの
 運命を　共に　します……▼
 そのボールを　くれないなら
@@ -822,24 +822,24 @@
 うばっていく　つもりよ……</language>
 	</row>
 	<row id="pw_event7_enemy_3">
-		<language name="JPN" width="256">ロドリゲス『キミは……▼
-こくさいけいさつ　である
+		<language name="JPN" width="256">グアイ『キミは……▼
+ひみつけいさつ　である
 この　わたしを　おどすつもりか……
 </language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『キミは……▼
-国際警察　である
+		<language name="JPN_KANJI" width="256">グアイ『キミは……▼
+秘密警察　である
 この私を　おどすつもりか……
 </language>
 	</row>
 	<row id="pw_event7_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ロドリゲスさん……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん……</language>
 	</row>
 	<row id="pw_event7_enemy_4">
-		<language name="JPN" width="256">ロドリゲス『……　……　……　……▼
+		<language name="JPN" width="256">グアイ『……　……　……　……▼
 わかった……
 わたしは　もう　なにも　いうまい……</language>
-		<language name="JPN_KANJI" width="256">ロドリゲス『……　……　……　……▼
+		<language name="JPN_KANJI" width="256">グアイ『……　……　……　……▼
 分かった……
 私は　もう　なにも　言うまい……</language>
 	</row>
@@ -848,8 +848,8 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ありがとう……</language>
 	</row>
 	<row id="pw_event7_enemy_6">
-		<language name="JPN" width="256">……コードネーム　ロドリゲスこと
-わたしは　こくさいけいさつとして▽
+		<language name="JPN" width="256">……コードネーム　グアイこと
+わたしは　ひみつけいさつとして▽
 あるまじき　つみを　おかした……▼
 よのなかに　あっては　ならない
 きけんな　そんざいを　みすみす▽
@@ -864,8 +864,8 @@
 もくげきほうこくは　なかった……▼
 はたして　あの　ふたりは
 どうなったのだろう……</language>
-		<language name="JPN_KANJI" width="256">……コードネーム　ロドリゲスこと
-私は　国際警察　として▽
+		<language name="JPN_KANJI" width="256">……コードネーム　グアイこと
+私は　秘密警察　として▽
 あるまじき　罪を　犯した……▼
 世の中に　あってはならない
 危険な　存在を　みすみす▽

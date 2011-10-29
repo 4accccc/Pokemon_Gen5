@@ -544,7 +544,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・Ｖが　ふたたび　しゅつげん
+			<Text>Ｍ・Ｂが　ふたたび　しゅつげん
 けっせん　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -552,11 +552,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-27T10:31:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｖ２が　再び　出現
+			<Text>Ｍ・Ｂ２が　再び　出現
 決戦　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -564,7 +564,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-27T10:31:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -743,11 +743,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつりあいな　こい
-あいては　たかびしゃな　にんきもの</Text>
+			<Text>トレーナーたちの　れんあいもよう
+ふつりあいな　こい
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:28:44" />
+				Time="2011-10-27T09:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -755,11 +756,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>不釣り合いな　恋
-相手は　高飛車な　人気者</Text>
+			<Text>トレーナーたちの　恋愛模様
+不釣り合いな　恋</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:28:55" />
+				Time="2011-10-27T09:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -782,10 +783,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>れんあい３あらすじ</Text>
+			<Text>トレーナーたちの　れんあいもよう
+ゆうえんちで　さいかいする　ふたり</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:05:47" />
+				Time="2011-10-27T09:48:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -793,10 +795,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>れんあい３あらすじ</Text>
+			<Text>トレーナーたちの　恋愛模様
+遊園地で　再会する　ふたり</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:57" />
+				Time="2011-10-27T09:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1015,12 +1018,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょだいかした　ＯＬに
+			<Text>きょだいな　ＯＬ　しゅつげん
 パニックに　おちいる　まち
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:35:04" />
+				Time="2011-10-27T06:48:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1028,11 +1031,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>巨大化した　ＯＬに
+			<Text>巨大な　ＯＬ　出現
 パニックに　おちいる　街</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:35:22" />
+				Time="2011-10-27T06:48:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1056,10 +1059,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きょだいかした　ＯＬの　うんめい
-</Text>
+うんめいの　カギは　「あい」</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:36:02" />
+				Time="2011-10-27T06:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1068,10 +1071,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>巨大化した　ＯＬの　運命
-</Text>
+運命の　カギは　「愛」</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:35:58" />
+				Time="2011-10-27T06:49:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1367,10 +1370,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストハンターあらすじ</Text>
+			<Text>ゆうれいが　しゅつぼつする　むら
+ちょうさする　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:03:55" />
+				Time="2011-10-27T09:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1378,10 +1382,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストハンターあらすじ</Text>
+			<Text>幽霊が　出没する　村
+調査する　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:40" />
+				Time="2011-10-27T09:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1404,10 +1409,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストハンター２あらすじ</Text>
+			<Text>とりつかれた　しょうじょ
+たちむかう　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:03:49" />
+				Time="2011-10-27T09:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1415,10 +1421,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストハンター２あらすじ</Text>
+			<Text>とりつかれた　少女
+立ち向かう　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:40" />
+				Time="2011-10-27T09:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1441,10 +1448,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストハンター３あらすじ</Text>
+			<Text>ひほうに　ひそむ　あくりょう
+なぞをとく　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:03:45" />
+				Time="2011-10-27T09:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1452,10 +1460,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストハンター３あらすじ</Text>
+			<Text>秘宝に　潜む　悪霊
+謎をとく　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:40" />
+				Time="2011-10-27T09:54:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1478,10 +1487,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストハンター４あらすじ</Text>
+			<Text>ふっかつした　はかいの　まじん
+はめつを　とめる　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:03:40" />
+				Time="2011-10-27T09:53:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1489,10 +1499,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストハンター４あらすじ</Text>
+			<Text>復活した　破壊の魔神
+破滅を止める　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:40" />
+				Time="2011-10-27T09:54:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1515,11 +1526,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンのぎゃくしゅう
-あらすじ</Text>
+			<Text>ハチクマン　ふっかつ？
+ゆめの　けっせんは　そらをこえて</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:03:30" />
+				Time="2011-10-27T10:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1527,11 +1538,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンのぎゃくしゅう
-あらすじ</Text>
+			<Text>ハチクマン　復活？
+夢の決戦は　空を超えて</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:40" />
+				Time="2011-10-27T10:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3805,10 +3816,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3816,10 +3827,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:41:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3842,10 +3853,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カットいないに　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T09:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3853,10 +3864,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>５カット以内に　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T09:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3996,10 +4007,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>８カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:42:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4007,10 +4018,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>８カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4070,10 +4081,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>６カットの　あいだ　いきのこれ
+あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T12:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4081,10 +4093,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>６カットの　あいだ　生き残れ
+相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T12:19:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4107,10 +4120,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>６カットの　あいだ　いきのこれ
+あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:44:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4118,10 +4132,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>６カットの　あいだ　生き残れ
+相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T03:44:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4413,10 +4428,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>まいカット　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4424,10 +4439,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>毎カット　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4450,10 +4465,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>まいカット　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4461,10 +4476,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>毎カット　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4487,10 +4502,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カットいないに
+すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4498,10 +4514,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カット以内に
+すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:17:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4524,10 +4541,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カットいないに
+すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:17:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4535,10 +4553,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>１０カット以内に
+すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4561,10 +4580,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>まいカット　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:18:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4572,10 +4591,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>毎カット　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-10-27T10:18:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6114,10 +6133,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>UFOと　なぞのおんな</Text>
+			<Text>ＵＦОと　なぞのおんな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-10-27T06:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6125,10 +6144,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>UFOと　謎の女</Text>
+			<Text>ＵＦОと　謎の女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-10-27T06:08:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6318,10 +6337,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>M・V　ふたたび</Text>
+			<Text>Ｍ・V　ふたたび</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-10-27T06:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6329,10 +6348,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>M・V　再び</Text>
+			<Text>Ｍ・V　再び</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-10-27T06:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6522,10 +6541,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？の　ばあい</Text>
+			<Text>マリアの　ばあい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T11:27:02" />
+				Time="2011-10-27T10:37:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6533,10 +6552,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？の　場合</Text>
+			<Text>マリアの　場合</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T11:27:08" />
+				Time="2011-10-27T10:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6728,11 +6747,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>OLの　かのじょは　いかに
-きょだいかに　くのう　したか</Text>
+			<Text>ОＬの　かのじょは　その
+きょだいかに　いかに　くのうしたか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:23:02" />
+				Time="2011-10-27T12:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6740,11 +6759,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>OLの　彼女は　いかに
-巨大化に　苦悩　したか</Text>
+			<Text>ОＬの　彼女は　その
+巨大化に　いかに　苦悩したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:22:11" />
+				Time="2011-10-27T12:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7036,10 +7055,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー
+あくりょうの　むら</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-10-27T10:21:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7047,10 +7067,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー
+悪霊の　村</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-10-27T10:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7070,10 +7091,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル２
+あくりょうしょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:03:10" />
+				Time="2011-10-27T10:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7081,10 +7103,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ２
+悪霊少女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:37" />
+				Time="2011-10-27T10:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7104,10 +7127,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル３
+あくりょうの　ひほう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:03:10" />
+				Time="2011-10-27T10:21:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7115,10 +7139,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ３
+悪霊の　秘宝</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:37" />
+				Time="2011-10-27T10:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7138,10 +7163,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル４
+あくりょうの　まじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:03:10" />
+				Time="2011-10-27T10:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7149,10 +7175,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ４
+悪霊の　魔神
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:37" />
+				Time="2011-10-27T10:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7172,10 +7200,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンのぎゃくしゅうサブ</Text>
+			<Text>ザ・ドリームマッチ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:03:10" />
+				Time="2011-10-27T10:28:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7183,10 +7211,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンのぎゃくしゅうサブ</Text>
+			<Text>The Dream　Match</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:37" />
+				Time="2011-10-27T10:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7478,10 +7506,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>UFOと　なぞのおんな</Text>
+			<Text>ＵＦОと　なぞのおんな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T06:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7489,10 +7517,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>UFOと　謎の女</Text>
+			<Text>ＵＦОと　謎の女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T06:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7682,25 +7710,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>M・V　ふたたび</Text>
+			<Text>Ｍ・Ｂ　ふたたび</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T06:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:31:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>M・V　再び</Text>
+			<Text>Ｍ・Ｂ　再び</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T06:05:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:31:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -7886,10 +7914,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？の　ばあい</Text>
+			<Text>アントニオの　ばあい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T11:26:26" />
+				Time="2011-10-27T10:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7897,10 +7925,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？の　場合</Text>
+			<Text>アントニオの　場合</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T11:26:30" />
+				Time="2011-10-27T10:30:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8092,11 +8120,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>OLの　かのじょは　いかに
+			<Text>ＯＬの　かのじょは　いかに
 きょだいかに　くのう　したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:37:06" />
+				Time="2011-10-27T06:04:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8104,11 +8132,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>OLの　彼女は　いかに
+			<Text>ＯＬの　彼女は　いかに
 巨大化に　苦悩　したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:38:07" />
+				Time="2011-10-27T06:04:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8400,10 +8428,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー
+あくりょうの　むら</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8411,10 +8440,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー
+悪霊の　村</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8434,10 +8464,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル２
+あくりょうしょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8445,10 +8476,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ２
+悪霊少女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8468,10 +8500,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル３
+あくりょうの　ひほう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8479,10 +8512,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ３
+悪霊の　秘宝</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8502,10 +8536,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ファイル４
+あくりょうの　まじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8513,10 +8548,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハンターサブタイトル</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ４
+悪霊の　魔神
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8536,10 +8573,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンのぎゃくしゅうサブ</Text>
+			<Text>ザ・ドリームマッチ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8547,10 +8584,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンのぎゃくしゅうサブ</Text>
+			<Text>The Dream　Match</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-10-27T10:29:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

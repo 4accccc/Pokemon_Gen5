@@ -359,46 +359,6 @@
 		<language name="JPN_KANJI" width="256">助手『ダメです！　Ｆー００！
 いうことを　ききませんっ！！</language>
 	</row>
-	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">Ｆー００『ギゴ……　ググ……</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴ……　ググ……</language>
-	</row>
-	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_6">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_7">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_8">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_9">
-		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴーッ！</language>
-	</row>
-	<row id="pw_turn_enemy_10">
-		<language name="JPN" width="256">Ｆー００『ギ……　ギゴゴゴ……</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ギ……　ギゴゴゴ……</language>
-	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『[1:00:トレーナー名:1]……</language>
@@ -615,9 +575,9 @@
 	</row>
 	<row id="pw_event1_react_enemy_3">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]……▼
-アリガトウ……</language>
+イママデ……　アリガトウ……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『[1:00:トレーナー名:1]……▼
-アリガトウ……</language>
+イママデ……　アリガトウ……</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『グスッ……▼
@@ -711,7 +671,7 @@
 つごうよく　ありません……▼
 ほんとうに　こわれてしまえば
 ロボットでも　なおらない……▼
-きえさった　メモリだって▽
+きえさった　メモリだって
 とりもどすことは　できない……▼
 ……でも▼
 なぜか　Ｆー００には
@@ -728,7 +688,7 @@
 万能では　ありません……▼
 本当に　壊れてしまえば
 ロボットでも　直らない……▼
-消え去った　メモリだって▽
+消え去った　メモリだって
 取り戻すことは　できない……▼
 ……でも▼
 なぜか　Ｆー００には
@@ -984,6 +944,40 @@
 私は　Ｆー００を……▼
 大切な　友達を
 助けられなかったのだ……</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">Ｆー００『グギ……
+ギゴググゴゴゴゴーッ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『グギ……
+ギゴググゴゴゴゴーッ！</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００！！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">Ｆー００『ダメ……
+[1:00:トレーナー名:1]……　ニゲテ……▼
+ギゴググゴゴゴゴーッ！</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ダメ……
+[1:00:トレーナー名:1]……　ニゲテ……▼
+ギゴググゴゴゴゴーッ！</language>
+	</row>
+	<row id="pw_event5_react_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しっかりしてよ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しっかりしてよ！！</language>
+	</row>
+	<row id="pw_event5_react_enemy_0">
+		<language name="JPN" width="256">Ｆー００『ギゴグゴゴ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ギゴグゴゴ……</language>
+	</row>
+	<row id="pw_event5_react_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　ダメなのか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　ダメなのか……</language>
+	</row>
+	<row id="pw_event5_react_enemy_1">
+		<language name="JPN" width="256">Ｆー００『ギゴグゴゴ……</language>
+		<language name="JPN_KANJI" width="256">Ｆー００『ギゴグゴゴ……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

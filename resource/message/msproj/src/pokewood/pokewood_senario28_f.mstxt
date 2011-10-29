@@ -39,25 +39,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞのおとこ</Text>
+			<Text>ひみつけいさつ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T07:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T07:35:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞのおとこ</Text>
+			<Text>ひみつけいさつ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T07:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T07:35:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -293,36 +293,36 @@
 		Label="pw_event1_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……▼
 いったい　どうすれば
 おねえちゃんは　もとに　もどるの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……▼
 いったい　どうすれば
 お姉ちゃんは　元に　戻るの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『ボールに　かけられた
+			<Text>グアイ『ボールに　かけられた
 のろいを　とく　ほうほう　か……▼
 そうだな……▼
 のろいとは　つまるところ
@@ -333,15 +333,15 @@
 できれば　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『ボールに　かけられた
+			<Text>グアイ『ボールに　かけられた
 呪いを　解く　方法か……▼
 そうだな……▼
 呪いとは　つまるところ
@@ -352,11 +352,11 @@
 できれば　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -388,7 +388,7 @@
 		Label="pw_event1_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『そうだ……▼
+			<Text>グアイ『そうだ……▼
 たとえば　かのじょに　たいする
 とても　つよい　きもち……▽
 つよい　あいを　つたえられたら……▼
@@ -397,15 +397,15 @@
 キミにしか　できないことだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:53:10" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:53:10" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『そうだ……▼
+			<Text>グアイ『そうだ……▼
 例えば　彼女に　対する
 とても　強い　気持ち……▽
 強い　愛を　伝えられたら……▼
@@ -414,11 +414,11 @@
 キミにしか　できないことだな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:53:10" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:53:10" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -648,34 +648,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]（どうしたら　いいの……
-あいを　つたえろ　って
-いったって　ただの　ことばじゃ……▽
+あいを　つたえろ　って▽
+いったって　ただの　ことばじゃ▽
 いまの　おねえちゃんには▽
 きっと　つうじないよ……▽
 いったい　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-10-27T12:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-10-27T12:26:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]（どうしたら　いいの……
-愛を　伝えろ　って
+愛を　伝えろ　って▽
 言ったって　ただの　言葉じゃ▽
 今の　お姉ちゃんには▽
 きっと　通じないよ……▽
 いったい　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-10-27T12:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-10-27T12:26:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1270,14 +1270,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……ふたりで　わらいあってると
-とつぜん　ロドリゲスさんが▽
+とつぜん　グアイさんが▽
 おおきな　こえで　さけんだの……▼
 おねえちゃんの　はいっていた
 ボールが　はじけて　こわれたって▼
 いそいで　おねえちゃんを　みると
 あんなに　デカかった　からだが▽
 みるみる　ちぢんでいった……▼
-……ロドリゲスさんの　いってた
+……グアイさんの　いってた
 のろいとか　こころの　ちからって▽
 いみは　よく　わかんない……▼
 だけど　おねえちゃんは
@@ -1286,23 +1286,23 @@
 アタシは　おもいきり　とびついた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……ふたりで　笑いあってると
-突然　ロドリゲスさんが▽
+突然　グアイさんが▽
 大きな　声で　さけんだの……▼
 お姉ちゃんの　入っていた
 ボールが　弾けて　壊れたって▼
 急いで　お姉ちゃんを　みると
 あんなに　デカかった　身体が▽
 みるみる　縮んでいった……▼
-……ロドリゲスさんの　言ってた
+……グアイさんの　言ってた
 呪いとか　心の　力って▽
 意味は　よく　分かんない……▼
 だけど　お姉ちゃんは
@@ -1311,11 +1311,11 @@
 アタシは　思いっきり　飛びついた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1566,31 +1566,31 @@
 		Label="pw_event7_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『おい……
+			<Text>グアイ『おい……
 モニカは　きを　うしなったぞ……▼
 どういう　つもりなんだ……
 [Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『おい……
+			<Text>グアイ『おい……
 モニカは　気を　失ったぞ……▼
 どういう　つもりなんだ……
 [Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1598,68 +1598,68 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……　……　……▼
-ロドリゲスさん……▼
+グアイさん……▼
 やっぱり　そのモンスターボールを
 アタシに　ください……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……　……　……▼
-ロドリゲスさん……▼
+グアイさん……▼
 やっぱり　そのモンスターボールを
 アタシに　ください……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『ダメだ……
+			<Text>グアイ『ダメだ……
 このボールも　かのじょも▽
 このせかいに　きけんすぎる……▼
 キミに　わたすわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『ダメだ……
+			<Text>グアイ『ダメだ……
 このボールも　彼女も▽
 この世界に　危険すぎる……▼
 キミに　渡すわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……▼
 アタシは　おねえちゃんと　これからの
 うんめいを　ともに　します……▼
 そのボールを　くれないなら
@@ -1667,15 +1667,15 @@
 うばっていく　つもりよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……▼
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……▼
 アタシは　お姉ちゃんと　これからの
 運命を　共に　します……▼
 そのボールを　くれないなら
@@ -1683,96 +1683,96 @@
 うばっていく　つもりよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『キミは……▼
-こくさいけいさつ　である
+			<Text>グアイ『キミは……▼
+ひみつけいさつ　である
 この　わたしを　おどすつもりか……
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『キミは……▼
-国際警察　である
+			<Text>グアイ『キミは……▼
+秘密警察　である
 この私を　おどすつもりか……
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ロドリゲスさん……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『グアイさん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロドリゲス『……　……　……　……▼
+			<Text>グアイ『……　……　……　……▼
 わかった……
 わたしは　もう　なにも　いうまい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロドリゲス『……　……　……　……▼
+			<Text>グアイ『……　……　……　……▼
 分かった……
 私は　もう　なにも　言うまい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1804,8 +1804,8 @@
 		Label="pw_event7_enemy_6">
 		<LanguageCell
 			Language="JPN">
-			<Text>……コードネーム　ロドリゲスこと
-わたしは　こくさいけいさつとして▽
+			<Text>……コードネーム　グアイこと
+わたしは　ひみつけいさつとして▽
 あるまじき　つみを　おかした……▼
 よのなかに　あっては　ならない
 きけんな　そんざいを　みすみす▽
@@ -1822,16 +1822,16 @@
 どうなったのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……コードネーム　ロドリゲスこと
-私は　国際警察　として▽
+			<Text>……コードネーム　グアイこと
+私は　秘密警察　として▽
 あるまじき　罪を　犯した……▼
 世の中に　あってはならない
 危険な　存在を　みすみす▽
@@ -1848,11 +1848,11 @@
 どうなったのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-10-29T08:20:41" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

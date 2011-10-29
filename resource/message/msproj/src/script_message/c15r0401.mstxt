@@ -129,15 +129,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さまは　ごじぶんの
-ポケモンを　えいがに
-しゅつえん　させまして？▼
+ポケモンちゃんを　えいがに▽
+しゅつえん　させてまして？▼
 ポケモンだって　やくしゃ……▼
 よい　さくひんに　しゅつえん　なされば
 きっと　スターの　かがやきを▽
 てに　いれますわよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T02:11:19" />
+				Time="2011-10-28T09:05:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -146,15 +146,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さまは　ご自分の
-ポケモンを　映画に
-出演　させまして？▼
+ポケモンを　映画に▽
+出演　させてまして？▼
 ポケモンだって　役者……▼
 よい　作品に　出演なされば
 きっと　スターの　輝きを▽
 手に　いれますわよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T02:11:05" />
+				Time="2011-10-28T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
