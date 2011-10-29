@@ -374,6 +374,41 @@ void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
   }
 }
 
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック 指定データと同じミッションをテーブルから削除する
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *
+ *  格納したミッションを指定ミッションを比較し、同じミッションだったらテーブルから削除 
+ */
+//------------------------------------------------------------------
+void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk )
+{
+  int i,end;
+  FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
+
+  for(i = 0;i < tbl->entry_num; i++ ){
+    if( FEST_BEACON_IsSame( &tbl->entry[i].mission.beacon, &fmwk->beacon ) ){
+      //同じミッションなので削除
+      end = tbl->entry_num-1;
+      if( i < end ){
+        GFL_STD_MemCopy32( &tbl->entry[i+1], &tbl->entry[i], sizeof(FMISSION_ENTRY)*(end-i));
+        if( end > 0){
+          --i;  //前詰めしたのでサーチ位置もずらしておく
+        }
+      }
+      FMISSION_ENTRY_Clear( &tbl->entry[tbl->entry_num-1] );
+      --tbl->entry_num;
+
+      if( tbl->entry_num == 0 ){
+        GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
+      }
+    }
+  }
+}
+
 //=================================================================================
 ///サブルーチン
 //=================================================================================

@@ -187,6 +187,8 @@ GMEVENT* EVENT_FMissionStartFailed( GAMESYS_WORK * gsys, void* work )
   //パラメータ取得
   wk->foul_code = param->foul_code;
 
+  //ミッションエントリースタックテーブルから削除
+  FMISSION_ENTRY_TBL_DeleteData( wk->fest_sys, &param->mission );
   return event;
 }
 
@@ -412,6 +414,10 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       if( wk->succeed_f ){  //他者ミッションに参加
         LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
         FMISSION_SAVE_IncMissionEntryNum( f_save );
+  
+        //ミッションエントリースタックテーブルから削除
+        FMISSION_ENTRY_TBL_DeleteData( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
+
       }else{  //自分で開催した場合。LINK_FESTIVAL_MissionStartはこのイベントに来る前に呼ばれている
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
       

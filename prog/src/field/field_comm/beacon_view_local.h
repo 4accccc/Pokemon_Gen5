@@ -129,7 +129,6 @@ typedef struct _BEACON_VIEW{
   WIFI_LIST*  wifi_list;
   LINK_FESTIVAL*  fest_sys;
   FEST_MISSION*  fmwk;
-  FMISSION_ENTRY_TBL* fmission_entry_tbl;
   FMISSION_DATA_MAN* fm_data_man;
   POWER_CONV_DATA* gpower_data;
 

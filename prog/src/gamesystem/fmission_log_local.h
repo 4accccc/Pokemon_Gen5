@@ -187,3 +187,14 @@ extern void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_IN
 //------------------------------------------------------------------
 extern void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys );
 
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック 指定データと同じミッションをテーブルから削除する
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *
+ *  格納したミッションを指定ミッションを比較し、同じミッションだったらテーブルから削除 
+ */
+//------------------------------------------------------------------
+extern void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk );
+

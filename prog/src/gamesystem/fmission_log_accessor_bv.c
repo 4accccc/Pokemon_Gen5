@@ -42,19 +42,21 @@
 /*
  *  ミッションエントリーデータテーブル データ取得
  *
- *  @param  tbl       FMISSION_ENTRY_TBL型構造体へのポインタ
+ *  @param  fest_sys  LINK_FESTIVAL型構造体へのポインタ
  *  @param  fmwk      ミッションパラメータを受けるSTRBUFへのポインタ
  *  @param  name_buf  ミッション配布者の名前を受けるSTRBUFへのポインタ
  *
  *  @retval TRUE      データ取得成功
  *  @retval FALSE     データ取得失敗
  *
- *  情報取得に成功した場合、テーブル内のデータが前詰めされます
+ *  情報取得に成功しても、テーブル内のデータは消えません。
+ *  適切な処理後は FMISSION_ENTRY_TBL_DeleteData()を呼び出して不要になったデータを消してください
  */
 //------------------------------------------------------------------
-BOOL FMISSION_ENTRY_TBL_GetData( FMISSION_ENTRY_TBL* tbl, FEST_MISSION* fmwk, STRBUF* name_buf )
+BOOL FMISSION_ENTRY_TBL_GetData( LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, STRBUF* name_buf )
 {
   BOOL ret = FALSE;
+  FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   if( tbl->entry_num == 0 ){
     return FALSE;
@@ -66,7 +68,7 @@ BOOL FMISSION_ENTRY_TBL_GetData( FMISSION_ENTRY_TBL* tbl, FEST_MISSION* fmwk, ST
   }else{
     GFL_STR_ClearBuffer( name_buf );
   }
-
+#if 0
   //テーブル前詰め
   GFL_STD_MemCopy32( &tbl->entry[1], &tbl->entry[0], sizeof(FMISSION_ENTRY)*FMISSION_ENTRY_TBL_END);
   FMISSION_ENTRY_Clear( &tbl->entry[FMISSION_ENTRY_TBL_END] );
@@ -75,7 +77,7 @@ BOOL FMISSION_ENTRY_TBL_GetData( FMISSION_ENTRY_TBL* tbl, FEST_MISSION* fmwk, ST
   if( tbl->entry_num == 0){
     GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
   }
-
+#endif
   return ret;
 }
 
