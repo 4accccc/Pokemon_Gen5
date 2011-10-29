@@ -13,7 +13,7 @@
   .include  "c12pc0101.h"
   
   //@author Mizuguchi_Mai（案内イベント・ショップ等配置担当）
-  //@author	suginaka_katsunori	//性格NPC・
+  //@author	suginaka_katsunori	//性格NPC配置・演出調整
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -49,20 +49,42 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	
 	//ベル：ポケモンセンターは
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_02 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：主人公・ベル、パソコン方面を見る
+	_MSGWIN_CLOSE()
+
+	//受付員：せっかくだから
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_pcwoman1_01 , C12PC0101_PCWOMAN , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
+	_OBJ_ANIME_WAIT()
+
+	//預け後に通常絵に戻す
+	_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke_wait )
+	_OBJ_ANIME_WAIT()
+    
+	_CALL sub_heal_kaifuku_anime     //回復アニメ呼び出し
+	_TEMOTI_POKEMON_KAIFUKU()        //手持ちポケモン回復処理
+    
+	_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
+	_OBJ_ANIME_WAIT()
+	_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+
+	//アニメ：主人公・ベル、パソコン方面を見る
 	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_l )
+	_TIME_WAIT( 8 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 	_OBJ_ANIME_WAIT()
   
-  //ベル：つぎはあっち
+	//ベル：つぎはあっち
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_03 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//アニメ：主人公・ベルPC前へ
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 4, 12, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_pc )
+	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 4, 12, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_pc )
 	_OBJ_ANIME_WAIT()
 	
 	//アニメ：ベル、PCを見る
@@ -81,11 +103,23 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	
 	//ベル：つぎはあっち
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_05 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//アニメ：主人公・ベルショップ前へ
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 16, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_shop )
+	_OBJ_ANIME_AUTO( C12PC0101_SWBELL_01, 4, 13, FORCE_TYPE_NPC, 8, DIR_UD)
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_walk_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME_AUTO( C12PC0101_SWBELL_01, 9, 17, FORCE_TYPE_NPC, 8, DIR_LR)
+	_TIME_WAIT( 4 )
+	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 16, FORCE_TYPE_NPC, 8, DIR_LR)
 	_OBJ_ANIME_WAIT()
 	
 	//アニメ：ベル、ショップを見る
@@ -240,12 +274,101 @@ _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //	☆共通処理：ギョエ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+/**************************************************************/
+//サブルーチン：〆のメッセージ
+/**************************************************************/
+sub_heal_goodbye:
+  _OBJ_ANIME( C12PC0101_PCWOMAN, anm_heal_p01_bow ) //お辞儀アニメ
+  _OBJ_ANIME_WAIT()
+_RET
+
+//--------------------------------------------------------------------
+//おじぎ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_heal_p01_bow
+  _ANIME_DATA  AC_PC_BOW,1
+  _ANIME_DATA  AC_WAIT_4F,1
+/*
+  _ANIME_DATA  AC_DIR_L,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_U,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_R,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_D,1
+  _ANIME_DATA  AC_WAIT_4F,1
+*/
+  _ANIME_DATA  ACMD_END,0
+
+_ANIME_LABEL  anm_hero_azuke
+  _ANIME_DATA AC_HERO_BANZAI,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_hero_azuke_wait
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_hero_uketori
+  _ANIME_DATA AC_HERO_BANZAI_UKE,1
+  _ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+//サブルーチン：回復アニメ
+/**************************************************************/
+sub_heal_kaifuku_anime:
+{
+  DEFINE_LOCAL  POKEMON_COUNT
+
+  _OBJ_ANIME( C12PC0101_PCWOMAN, anm_heal_p01_turn_up )
+  _OBJ_ANIME_WAIT()
+
+  _GET_PARTY_POKE_COUNT( POKEMON_COUNT, POKECOUNT_MODE_NOT_EGG )
+  _POKECEN_RECOVER_ANIME( POKEMON_COUNT )
+
+  _OBJ_ANIME( C12PC0101_PCWOMAN, anm_heal_p01_turn_down )
+  _OBJ_ANIME_WAIT()
+_RET
+}
+
+//--------------------------------------------------------------------
+//  左を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_heal_p01_turn_up
+  _ANIME_DATA  AC_DIR_U,1
+  _ANIME_DATA  ACMD_END,0
+
+//--------------------------------------------------------------------
+//  下を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_heal_p01_turn_down
+  _ANIME_DATA  AC_DIR_D,1
+  _ANIME_DATA  ACMD_END,0
+
 /**************************************************************/
 /*		C12PC0101	WOMAN1									  */
 /**************************************************************/

@@ -24,6 +24,9 @@
 #define C12_BOY2_01                        6
 #define C12_SWLEADER1_01                   7
 #define FLD_ITEM_0                         8
+#define C12_MIDDLEMAN1_02                  9
+#define C12_GIRL1_01                      10
+#define C12_WOMAN1_01                     11
 
 #endif //ZONE_C12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

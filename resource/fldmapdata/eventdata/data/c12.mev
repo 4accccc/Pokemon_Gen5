@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/29 16:37:41
+#save date:2011/10/29 22:15:58
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #hold event type:
 1
 #hold event number:
-9
+12
 #event number: 0
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 168
+-168 144 88
 #event number: 3
 #type
 1
@@ -289,6 +289,99 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 216 16 -728
+#event number: 9
+#type
+1
+#ID name
+C12_MIDDLEMAN1_02
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_MIDDLEMAN1_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 16 -264
+#event number: 10
+#type
+1
+#ID name
+C12_GIRL1_01
+#OBJ CODE Number
+GIRL1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_GIRL1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 16 40
+#event number: 11
+#type
+1
+#ID name
+C12_WOMAN1_01
+#OBJ CODE Number
+WOMAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_WOMAN1_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 16 -440
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -581,7 +674,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #Pos Event Label
 POS_C12_RIVAL_PAIR_01
@@ -618,21 +711,21 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 2
 #Pos Event Label
-POS_C12_SWBELL_MEET_03
+POS_C12_SWBELL_MEET_STOP_02
 #Pos Script Name
-SCRID_POS_C12_SWBELL_MEET_03
+SCRID_POS_C12_SWBELL_MEET_STOP_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C12_WHITE_MEET
 #Event Trigger Work Value
-2
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 144 136
+-184 144 56
 #size
-6 1
+3 1
 #event number: 3
 #Pos Event Label
 POS_C12_SWBELL_MEET_01
@@ -647,14 +740,14 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 88
+-184 136 40
 #size
 3 1
 #event number: 4
 #Pos Event Label
-POS_C12_SWBELL_MEET_02
+POS_C12_SWBELL_MEET_STOP_01
 #Pos Script Name
-SCRID_POS_C12_SWBELL_MEET_02
+SCRID_POS_C12_SWBELL_MEET_STOP_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
@@ -664,24 +757,24 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 88
+-184 136 40
 #size
 3 1
 #event number: 5
 #Pos Event Label
-POS_C12_SWBELL_MEET_04
+POS_C12_SWBELL_MEET_BTL
 #Pos Script Name
-SCRID_POS_C12_SWBELL_MEET_04
+SCRID_POS_C12_SWBELL_MEET_BTL
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C12_WHITE_MEET
 #Event Trigger Work Value
-3
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 72
+-184 136 40
 #size
 3 1
 #event number: 6
@@ -733,6 +826,23 @@ WK_SCENE_C12_WHITE_MEET
 EVENTDATA_POSTYPE_GRID
 #position
 72 16 136
+#size
+3 1
+#event number: 9
+#Pos Event Label
+POS_C12_SWBELL_MEET_STOP_01A
+#Pos Script Name
+SCRID_POS_C12_SWBELL_MEET_STOP_01A
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 144 88
 #size
 3 1
 #Map Event List Data End
