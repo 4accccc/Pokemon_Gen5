@@ -14,6 +14,7 @@
   .include  "pair_scr_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori//調整
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -39,6 +40,9 @@ _EVENT_DATA    ev_bg_c12r0101_souvenir_01
 _EVENT_DATA    ev_bg_c12r0101_souvenir_02
 _EVENT_DATA    ev_pos_c12r0101_gameclear
 _EVENT_DATA_END
+
+//ママのPOSイベントで使用
+DEFINE_LOCAL	ans_yes
 
 //------------------------！注意！------------------------------//
 //																//
@@ -76,36 +80,44 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START ev_pos_c12r0101_startevents
 
+  //カメラ移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,360448,-4096,557056,60 )
+  _CAMERA_WAIT_MOVE()	
+
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //ママ表示
   //========================================//
   _FLAG_RESET( FV_C12R0101_SWMAMA )
   //========================================//
   _OBJ_ADD( C12R0101_SWMAMA_01 )
-  
+  _SE_WAIT()
+
   //メッセージ：ただいま！
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_01, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_01, C12R0101_SWMAMA_01, POS_UP )
   _MSGWIN_CLOSE()
   
   //アニメ：ママ隣接
+  _CAMERA_RECV_MOVE(60)
   _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 9, 8, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //メッセージ：アララギはかせって
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_02, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_02, C12R0101_SWMAMA_01, POS_UP )
   _MSGWIN_CLOSE()
   
   //アニメ：ママ回転
   _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
   _OBJ_ANIME_WAIT()
   
-  //メッセージ：ポケモンずかんほしい？
+  //メッセージ：自分のパートナーがほしい？
   _PLAYER_NAME( 0 ) //プレイヤー名を反映
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_03,C12R0101_SWMAMA_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_03,C12R0101_SWMAMA_01, POS_UP )
   _YES_NO_WIN( SCWK_ANSWER )
 
   //いいえなら再質問
@@ -113,7 +125,6 @@ EVENT_START ev_pos_c12r0101_startevents
     //いいえの処理
     
     //再質問にyesと答えるまでループ
-    DEFINE_LOCAL	ans_yes
     $ans_yes = SCR_NO
 
     WHILE $ans_yes == SCR_NO
@@ -122,7 +133,7 @@ EVENT_START ev_pos_c12r0101_startevents
       _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_backstep_01 )
       _OBJ_ANIME_WAIT()
       //メッセージ：ええーちょっとおどろき
-     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_05,C12R0101_SWMAMA_01, POS_DEFAULT )
+     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_05,C12R0101_SWMAMA_01, POS_UP )
      _MSGWIN_CLOSE()
      
      //アニメ：もとの位置に戻る
@@ -130,21 +141,100 @@ EVENT_START ev_pos_c12r0101_startevents
      _OBJ_ANIME_WAIT()
      
      //メッセージ：もういちど
-     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_04,C12R0101_SWMAMA_01, POS_DEFAULT )
+     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_04,C12R0101_SWMAMA_01, POS_UP )
      _YES_NO_WIN( ans_yes )
    ENDWHILE
   ENDIF
 
   //はいを選択した
-  //メッセージ：ほしいよね！
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_06,C12R0101_SWMAMA_01, POS_DEFAULT )
+  //メッセージ：よし　だい１ステップクリア
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_06,C12R0101_SWMAMA_01, POS_UP )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はいの場合
+  IF $SCWK_ANSWER == SCR_YES THEN
+  	//さすが！
+  	_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_08,C12R0101_SWMAMA_01, POS_UP )
+  ELSE
+  	//そっか…
+  	_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_09,C12R0101_SWMAMA_01, POS_UP )
+  ENDIF
   _MSGWIN_CLOSE()
   
+  //アニメ：ママ回転
+  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
+  _OBJ_ANIME_WAIT()
+
+  //メッセージ：またまた質問です
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_10,C12R0101_SWMAMA_01, POS_UP )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  //いいえなら再質問
+  IF $SCWK_ANSWER == SCR_NO THEN
+    //いいえの処理
+    
+    //再質問にyesと答えるまでループ
+    $ans_yes = SCR_NO
+
+    WHILE $ans_yes == SCR_NO
+     //メッセージ：ママがききたいのは
+     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_12,C12R0101_SWMAMA_01, POS_UP )
+     _YES_NO_WIN( ans_yes )
+   ENDWHILE
+  ENDIF
+  
+  //よし！だい２ステップクリア！
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_11,C12R0101_SWMAMA_01, POS_UP )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ママ回転
+  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
+  _OBJ_ANIME_WAIT()
+  
+  //ライブキャスターを既に使用している場合
+  IF FLAG_ON( FH_01) THEN
+
+  	//メッセージ：プレイヤー！あなたの　やるべきことが　きまったわ
+  	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+  	_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_13,C12R0101_SWMAMA_01, POS_UP )
+  	_AB_KEYWAIT_MARK()
+  	_MSGWIN_CLOSE()
+  
+  //ライブキャスターをまだ使用していない場合
+  ELSE
+
+  	//メッセージ：プレイヤー！あなたの　やるべきことが　きまったわ
+  	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+  	_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_14,C12R0101_SWMAMA_01, POS_UP )
+  	_YES_NO_WIN( SCWK_ANSWER )
+  	
+  	//はいの場合
+  	IF $SCWK_ANSWER == SCR_YES THEN 
+  	
+  		_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_07,C12R0101_SWMAMA_01, POS_UP )
+ 	 	_AB_KEYWAIT_MARK()
+  		_MSGWIN_CLOSE()
+  	
+  	//いいえの場合
+  	ELSE
+  	
+  		_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_15,C12R0101_SWMAMA_01, POS_UP )
+ 	 	_AB_KEYWAIT_MARK()
+  		_MSGWIN_CLOSE()
+  		
+  	ENDIF
+
+  ENDIF
+
   //アニメ：通れるように移動
   _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 8, 7, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  
+  //カメラ処理終了
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //========================================//
   //POSイベント無効
