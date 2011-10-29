@@ -11,5 +11,7 @@
 #define SCRID_BG_R19_BOARD_01 (4)
 #define SCRID_BG_R19_BOARD_02 (5)
 #define SCRID_BG_R19_BOARD_03 (6)
+#define SCRID_POS_R19_CHAMPION_02 (7)
+#define SCRID_POS_R19_ZUKAN_01 (8)
 
 #endif //_R19_DEF_H_

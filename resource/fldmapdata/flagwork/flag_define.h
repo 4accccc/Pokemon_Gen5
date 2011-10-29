@@ -586,7 +586,7 @@
 #define FV_C05R0501_POKE23_01              697 /* 0x02b9 ホドモエシティ：ゾロアーク */
 #define FV_PC_NPOKE_BREEDERM               698 /* 0x02ba ポケモンセンター：BREEDERW */
 #define FV_C06_HAKASE2_01                  699 /* 0x02bb フキヨセシティ：アララギ娘 */
-		/* not used   700(0x02bc) */
+#define FV_C08_SWLEADER7_02                700 /* 0x02bc ソウリュウシティ：シャガ */
 		/* not used   701(0x02bd) */
 		/* not used   702(0x02be) */
 		/* not used   703(0x02bf) */

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/29 11:47:59
+#save date:2011/10/29 15:50:40
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r19.wms
 #SECTION START:OBJ_EVENT
@@ -400,7 +400,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+4
 #event number: 0
 #Pos Event Label
 POS_R19_POKEGET_01
@@ -433,6 +433,40 @@ WK_SCENE_R19
 EVENTDATA_POSTYPE_GRID
 #position
 696 16 -88
+#size
+1 6
+#event number: 2
+#Pos Event Label
+POS_R19_CHAMPION_02
+#Pos Script Name
+SCRID_POS_R19_CHAMPION_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R19
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+680 16 -88
+#size
+1 6
+#event number: 3
+#Pos Event Label
+POS_R19_ZUKAN_01
+#Pos Script Name
+SCRID_POS_R19_ZUKAN_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R19
+#Event Trigger Work Value
+5
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 16 -72
 #size
 1 6
 #Map Event List Data End

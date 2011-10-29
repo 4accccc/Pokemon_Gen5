@@ -25,6 +25,8 @@ _EVENT_DATA    ev_r19_boy2_01
 _EVENT_DATA    ev_bg_r19_board_01
 _EVENT_DATA    ev_bg_r19_board_02
 _EVENT_DATA    ev_bg_r19_board_03
+_EVENT_DATA    ev_pos_r19_champion_02
+_EVENT_DATA    ev_pos_r19_zukan_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -36,7 +38,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*ポケモン捕獲デモ                                */
 /**************************************************************/
 EVENT_START   ev_pos_r19_pokeget_01
-
+{
   //性別が格納されるローカル変数を定義
   DEFINE_LOCAL SCWK_SEX
   _GET_MY_SEX(SCWK_SEX)
@@ -44,35 +46,21 @@ EVENT_START   ev_pos_r19_pokeget_01
   //メッセージ：おおい（しっぽなしメッセージ）
   //男性だった場合
   IF $SCWK_SEX == PM_MALE THEN
-  
   _PLAINWIN_MSG_DOWN( msg_r19_white_01a )
-  _MSGWIN_CLOSE()
   
   //女性だった場合
   ELSE
-  
-  
   _PLAINWIN_MSG_DOWN( msg_r19_white_01b )
-  _MSGWIN_CLOSE()
   
   ENDIF
+  _MSGWIN_CLOSE()
+}
 
-  //フィールド上にベル配置
-  _OBJ_ADD_EX( 53, 703, DIR_UP, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
-  
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  //【仮】主人公の位置より1歩下につくように
-  $LCW_POSZ += 1
-  
-  //アニメ：ベル隣接
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
+  //アニメ：ベル登場
+  _CALL ev_r19_swbell_commeing
   
   _BALLOONWIN_OBJMSG_POS( msg_r19_white_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
   
   //プレイヤー位置取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
@@ -81,52 +69,25 @@ EVENT_START   ev_pos_r19_pokeget_01
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
   
+  _CAMERA_MOVE( 9688,0,970752,3899392,65551,45580288,40 )
+  
   //ベル草むらへ
   SWITCH $LCW_POSZ
-  CASE 692 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z692 )
-  CASE 693 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z693 )
-  CASE 694 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z694 )
-  CASE 695 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z695 )
   CASE 696 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z696 )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_gotokusa_01_z696 )
+    _TIME_WAIT( 8*3 )
   CASE 697 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z697 )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_gotokusa_01_z697 )
+    _TIME_WAIT( 8*3 )
   DEFAULT  //目の前に立ったケースと同じ処理を行う
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_01_z695 )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_gotokusa_01_z695 )
+    _TIME_WAIT( 8*5 )
   ENDSWITCH
-  
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 56, 695, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
-    //主人公草むらを見る
-  SWITCH $LCW_POSZ
-  CASE 692 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, r19_player_lookkusa_01_z692 )
-  CASE 693 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, r19_player_lookkusa_01_z693 )
-  CASE 694 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, r19_player_lookkusa_01_z694 )
-  CASE 695 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  CASE 696 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, r19_player_lookkusa_01_z696 )
-  CASE 697 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, r19_player_lookkusa_01_z697 )
-  DEFAULT  //目の前に立ったケースと同じ処理を行う
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  ENDSWITCH
-  
-  _CAMERA_MOVE( 9688,0,970752,3899392,65551,45580288,30 )
-
-  //アニメ：主人公ベル方面を見る
-  
-  _OBJ_ANIME_WAIT()
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
-  /**/
   //捕獲デモ呼び出し
   _CAPTURE_DEMO_SET()
   
@@ -134,19 +95,17 @@ EVENT_START   ev_pos_r19_pokeget_01
   _CAMERA_PURGE()		//カメラのバインドを解く
   
   //カメラ操作　博士中心に
-  //_CAMERA_MOVE( 9694,0,970800,51675136,0,47480832,1 )
   _CAMERA_MOVE( 9688,0,970752,3899392,65551,45580288,1 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //暗転終了
   _WILD_WIN()
-  /**/
   
   //自機にカメラを戻す
   _CAMERA_DEF_MOVE (24)
   
   //アニメ：ベル戻る
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_02 )
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 57, 695, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
    
   //カメラ待ち
@@ -158,14 +117,8 @@ EVENT_START   ev_pos_r19_pokeget_01
   _BALLOONWIN_OBJMSG_POS( msg_r19_white_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //アニメ：ベル退場・主人公見送り
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,r19_swbell_gotokusa_03 )
-  _TIME_WAIT(16)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  //サポートOBJ消す
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  //アニメ：ベル退場
+  _CALL ev_r19_swbell_bye
 
   //==================================//
   
@@ -188,91 +141,119 @@ EVENT_START   ev_pos_r19_pokeget_01
   
 EVENT_END
 
-//--------------------------------------------------------------------
-//主人公：草むらを見るz692                     
-//--------------------------------------------------------------------
-	_ANIME_LABEL r19_player_lookkusa_01_z692
-	_ANIME_DATA AC_WALK_D_8F,3
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA ACMD_END,0
+/**************************************************************/
+/*CALL：ベル登場                                */
+/**************************************************************/
+ev_r19_swbell_commeing:
+  //アニメ：主人公下を見る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //フィールド上にベル配置
+  _OBJ_ADD_EX( 53, 703, DIR_UP, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSZ == 692 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_commeing_01_z692)
+  ELSIF $LCW_POSZ == 693 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_commeing_01_z693)
+  ELSIF $LCW_POSZ == 694 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_commeing_01_z694)
+  ELSE
+    $LCW_POSX -= 1
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+    _TIME_WAIT(8*3)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //z695以上だったら693へ誘導
+  IF $LCW_POSZ < 695 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 54, 695, FORCE_TYPE_NPC, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 55, 695, FORCE_TYPE_NPC, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+_RET
+
+/**************************************************************/
+/*CALL：ベル退場                                */
+/**************************************************************/
+ev_r19_swbell_bye:
+  
+  IF $WK_SCENE_R19 == 0 THEN
+    //アニメ：ベル退場・主人公見送り
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_bye_01)
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, r19_swbell_bye_02)
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+   //サポートOBJ消す
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+_RET
 
 //--------------------------------------------------------------------
-//主人公：草むらを見るz693                     
+//ベル：登場                     
 //--------------------------------------------------------------------
-	_ANIME_LABEL r19_player_lookkusa_01_z693
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公：草むらを見るz694                     
-//--------------------------------------------------------------------
-	_ANIME_LABEL r19_player_lookkusa_01_z694
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公：草むらを見るz696                     
-//--------------------------------------------------------------------
-	_ANIME_LABEL r19_player_lookkusa_01_z696
-	_ANIME_DATA AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公：草むらを見るz697                     
-//--------------------------------------------------------------------
-	_ANIME_LABEL r19_player_lookkusa_01_z697
+	_ANIME_LABEL r19_swbell_commeing_01_z692
+	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//ベル：草むらに移動z692                     
+//ベル：登場                     
 //--------------------------------------------------------------------
-	_ANIME_LABEL r19_swbell_gotokusa_01_z692
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_LABEL r19_swbell_commeing_01_z693
+	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//ベル：草むらに移動z693                     
+//ベル：登場                     
 //--------------------------------------------------------------------
-	_ANIME_LABEL r19_swbell_gotokusa_01_z693
-	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_WALK_R_8F,4
-	_ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//ベル：草むらに移動z694                     
-//--------------------------------------------------------------------
-	_ANIME_LABEL r19_swbell_gotokusa_01_z694
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_LABEL r19_swbell_commeing_01_z694
+	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //ベル：草むらに移動z695                     
 //--------------------------------------------------------------------
 	_ANIME_LABEL r19_swbell_gotokusa_01_z695
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,5
 	_ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //ベル：草むらに移動z696                     
 //--------------------------------------------------------------------
 	_ANIME_LABEL r19_swbell_gotokusa_01_z696
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WALK_R_8F,5
 	_ANIME_DATA ACMD_END,0
 
-
 //--------------------------------------------------------------------
-//ベル：草むらに移動z696                     
+//ベル：草むらに移動z697                     
 //--------------------------------------------------------------------
 	_ANIME_LABEL r19_swbell_gotokusa_01_z697
-	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA AC_WALK_R_8F,5
 	_ANIME_DATA ACMD_END,0
 
@@ -286,9 +267,17 @@ EVENT_END
 //--------------------------------------------------------------------
 //ベル：退場                     
 //--------------------------------------------------------------------
-	_ANIME_LABEL r19_swbell_gotokusa_03
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_LABEL r19_swbell_bye_01
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_L_8F,4
+	_ANIME_DATA AC_WALK_D_8F,8
+	_ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//ベル：退場                     
+//--------------------------------------------------------------------
+	_ANIME_LABEL r19_swbell_bye_02
+	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA AC_WALK_D_8F,8
 	_ANIME_DATA ACMD_END,0
 
@@ -380,13 +369,10 @@ EVENT_START   ev_pos_r19_champion_01
   _OBJ_DEL(R19_CHAMPION_01)
   
   //==================================//
-  
-  //R19のPOS無効
+  //R19のアデク登場POS無効
   $WK_SCENE_R19 = 2
-  
   //R19のアデク非表示
   _FLAG_SET( FV_R19_CHAMPION_01 )
-  
   //==================================//
   
 EVENT_END
@@ -453,6 +439,234 @@ EVENT_END
 	_ANIME_LABEL r19_champion_bye
 	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+/*POS：アデクきのみイベント                               */
+/**************************************************************/
+EVENT_START   ev_pos_r19_champion_02
+  
+  //==================================//
+  //R19のアデク表示
+  _FLAG_RESET( FV_R19_CHAMPION_01 )
+  //==================================//
+  
+  _OBJ_ADD( R19_CHAMPION_01 )
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //メッセージ：プライヤー名！
+  _PLAINWIN_MSG_DOWN( msg_r19_champion_10 )
+  _MSGWIN_CLOSE()
+  
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  _CAMERA_MOVE( 9688,0,970752,6127616,393311,45318144,40 )
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち  
+  
+  _TIME_WAIT( 40 )
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (8*8)
+   
+   //アテグジャンプ
+	_OBJ_HIGH_JUMP( R19_CHAMPION_01, 93, 1, 693 )
+	
+	//カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+	
+	//着地後WAIT
+	_TIME_WAIT ( 14 )
+	
+	//自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX += 2
+  
+  IF $LCW_POSZ != 693 THEN
+    _OBJ_ANIME_AUTO( R19_CHAMPION_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+  ENDIF
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：すまぬ！
+  _BALLOONWIN_OBJMSG_POS( msg_r19_champion_11, R19_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク隣接
+  _OBJ_ANIME( R19_CHAMPION_01, anm_leftwalk )
+  _OBJ_ANIME_WAIT()
+  
+  //オレンのみ入手処理
+  _ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI, 5)
+  
+  //アニメ：アデク戻る
+  _OBJ_ANIME( R19_CHAMPION_01, anm_champion_item_ret )
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //メッセージ：いま渡したのは
+  _BALLOONWIN_OBJMSG_POS( msg_r19_champion_12, R19_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク下を見る
+  _OBJ_ANIME( R19_CHAMPION_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+   //メッセージ：さらに
+  _BALLOONWIN_OBJMSG_POS( msg_r19_champion_13, R19_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク演技
+  _OBJ_ANIME( R19_CHAMPION_01, anm_champion_act_01 )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：さてと…
+  _BALLOONWIN_OBJMSG_POS( msg_r19_champion_14, R19_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク主人公に向き直る
+  _OBJ_ANIME( R19_CHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：そうして
+  _BALLOONWIN_OBJMSG_POS( msg_r19_champion_15, R19_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク退場
+  _OBJ_ANIME( R19_CHAMPION_01,r19_champion_bye )
+  _OBJ_ANIME_WAIT()
+  
+  //アデク動作モデル削除
+  _OBJ_DEL( R19_CHAMPION_01 )
+  
+  //==================================//
+  //R19のきのみPOS無効
+  $WK_SCENE_R19 = 4
+  //R19アデク非表示
+  _FLAG_SET( FV_R19_CHAMPION_01 )
+  //==================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------
+//	アデク：髪の毛ゆれ演出
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_champion_act_01
+	_ANIME_DATA	AC_CHAMPION_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アデク：アイテム渡した後もどる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_champion_item_ret
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*POS：せいそくちリスト                               */
+/**************************************************************/
+EVENT_START   ev_pos_r19_zukan_01
+
+  //プレイヤー名格納
+  _PLAYER_NAME( 0 )
+  
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_BERU )
+
+{
+  //性別が格納されるローカル変数を定義
+  DEFINE_LOCAL SCWK_SEX
+  _GET_MY_SEX(SCWK_SEX)
+  
+  //メッセージ：おおい（しっぽなしメッセージ）
+  //男性だった場合
+  IF $SCWK_SEX == PM_MALE THEN
+  
+  _PLAINWIN_MSG_DOWN( msg_r19_swbell_01 )
+  _MSGWIN_CLOSE()
+  
+  //女性だった場合
+  ELSE
+  
+  
+  _PLAINWIN_MSG_DOWN( msg_r19_swbell_02 )
+  _MSGWIN_CLOSE()
+  
+  ENDIF
+}
+  
+  //アニメ：ベル登場
+  _CALL ev_r19_swbell_commeing
+  
+  //ベル：ごめんね！
+  _BALLOONWIN_OBJMSG_POS( msg_r19_swbell_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //システム：パワーアップした
+  _SE_PLAY( SEQ_SE_SW_ZKN_KAIHOU  )
+  _SYSWIN_MSG(msg_r19_swbell_04, POS_DEFAULT)
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _SYSWIN_CLOSE()
+  
+  //せいそくちリスト開放
+  _SET_ZUKAN_HABITAT_FLAG()
+  
+  //ベル：せいそくちリストは
+  _BALLOONWIN_OBJMSG_POS( msg_r19_swbell_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  
+  //つかいかたは
+  _BALLOONWIN_OBJMSG_POS( msg_r19_swbell_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はいなら再度説明
+  IF $SCWK_ANSWER == SCR_YES THEN
+    {
+    //再質問にyesと答えるまでループ
+    DEFINE_LOCAL	ans_yes
+    $ans_yes = SCR_YES
+    
+     WHILE $ans_yes == SCR_YES
+      _BALLOONWIN_OBJMSG_POS( msg_r19_swbell_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+      _YES_NO_WIN( ans_yes )
+     ENDWHILE
+     }
+  ENDIF
+  
+  //ベル：ポケモンずかんをうめることは
+  _BALLOONWIN_OBJMSG_POS( msg_r19_swbell_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベル退場
+  _CALL ev_r19_swbell_bye
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
+  
+  //==================================//
+  //R19のすべてのPOS無効
+  $WK_SCENE_R19 = 6
+  //==================================//
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swbell_zukan_back
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*段差降りパフォーマンスの少年                                */
@@ -537,17 +751,22 @@ EVENT_END
 	_ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：下に1歩歩く
+//	☆共通処理：1歩歩く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_downwalk
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//	☆共通処理：上に1歩歩く
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_upwalk
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rightwalk
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leftwalk
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------

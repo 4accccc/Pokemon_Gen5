@@ -193,6 +193,9 @@ EVENT_START ev_scene_t06r0101_champion_01
   //T06‚Ìƒƒ_ƒ‹‚¨‚â‚¶‚ð•\Ž¦
 	_FLAG_RESET( FV_T06_SUNGLASSES_01 )
 	
+	//R19‚Ì‚«‚Ì‚ÝPOS—LŒø
+  $WK_SCENE_R19 = 3
+	
   //========================================//
   
 EVENT_END

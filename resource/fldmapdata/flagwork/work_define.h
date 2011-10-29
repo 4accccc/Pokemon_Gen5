@@ -316,6 +316,7 @@
 #define WK_SCENE_C02_LINK_EVENT          16704 /* 0x4140 シッポウシティ：リンクイベントPOS制御ワーク */
 #define WK_SCENE_C04_TRIAL               16705 /* 0x4141 ライモンシティ：トライアルハウスイベント用 */
 #define WK_SCENE_C04GYM0101_GUIDE        16706 /* 0x4142 ライモンシティジム：ジムガイドイベント用 */
+#define WK_SCENE_D22_BOY2                16707 /* 0x4143 サンギ牧場：誘導用POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
