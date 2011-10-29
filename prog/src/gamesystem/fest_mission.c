@@ -66,29 +66,46 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
   //無効値で初期化
   beacon->goal = FMISSION_GOAL_NULL;
   beacon->m_id = FMISSION_ID_NULL;
+
+  fmwk->start_rtc = FMISSION_RTC_NULL;
 }
 
 
 //---------------------------------------------------------
 /*
  * @brief ミッション開始処理
+ *
+ * LINK_FESTIVAL_MissionStart()の内部からだけ呼び出しOK
  */
 //---------------------------------------------------------
 void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succeed_f )
 {
   FEST_BEACON* beacon = &fmwk->beacon;
-  
   FEST_MISSION_Clear( fmwk );
+
   *fmwk = *src;
- 
   if( !succeed_f ){ //継承ミッションでなければキー生成
     beacon->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
   }else{
     beacon->my_score = 0; //継承ミッションの場合、スコアクリア
+    beacon->time = FEST_MISSION_GetLife( src ); //受信時点からの残りライフを設定
   }
+  fmwk->start_rtc = FMISSION_RTC_NULL;  //RTCは必ず初期化
 
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート m_id=%d, key = %08x, goal=%d, param=%d, min life=%d sec\n",
-    beacon->m_id, beacon->key, beacon->goal, beacon->base_param, beacon->life/60);
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート m_id=%d, key = %08x, goal=%d, param=%d, time=%d sec\n",
+    beacon->m_id, beacon->key, beacon->goal, beacon->base_param, beacon->time);
+}
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションプレイ開始処理
+ *
+ * LINK_FESTIVAL_MissionPlayStart()の内部からだけ呼び出しOK
+ */
+//---------------------------------------------------------
+void FEST_MISSION_PlayStart( FEST_MISSION* fmwk )
+{
+  FEST_MISSION_SetRTC( fmwk );
 }
 
 //---------------------------------------------------------
@@ -104,6 +121,63 @@ void FEST_MISSION_End( FEST_MISSION* fmwk )
 
 //---------------------------------------------------------
 /*
+ * @brief ミッションRTCセット
+ *
+ * RTCパラメータを現パラメータでセット
+ */
+//---------------------------------------------------------
+void FEST_MISSION_SetRTC( FEST_MISSION* fmwk )
+{
+  fmwk->start_rtc = GFL_RTC_GetDateTimeBySecond();
+}
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションRTC 残り時間取得
+ *
+ * 現在のRTCを取得し、start_rtcとの差分から残り時間を取得する
+ */
+//---------------------------------------------------------
+u32 FEST_MISSION_GetLife( const FEST_MISSION* fmwk )
+{
+  s64 now_sec = GFL_RTC_GetDateTimeBySecond();
+  s64 diff = 0;
+
+  if( fmwk->start_rtc == FMISSION_RTC_NULL ){
+    return  fmwk->beacon.time;  //スタート時間が未登録の場合制限時間をそのまま返す
+  }
+  diff = ( now_sec-fmwk->start_rtc );
+  
+  if( diff < 0 ){
+    return 0; //逆転してたら何かおかしいので0を返す
+  }
+  diff = (s64)fmwk->beacon.time - diff;
+  if( diff < 0 ){
+    return 0;
+  }
+  return (u32)diff;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief ミッションRTC エントリーに十分な残り時間が残っているか？
+ *
+ * 現在のRTCを取得し、start_rtcとの差分から残り時間を取得
+ * エントリー条件に十分な残り時間があるかを返す
+ */
+//---------------------------------------------------------
+BOOL FEST_MISSION_IsLifeLeftForEntry( const FEST_MISSION* fmwk )
+{
+  u32 life = FEST_MISSION_GetLife( fmwk );
+
+  if( life < LINKFEST_LIFE_LIMIT ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//---------------------------------------------------------
+/*
  * @brief ミッション状態監視処理
  */
 //---------------------------------------------------------
@@ -114,12 +188,14 @@ void FEST_MISSION_Update( FEST_MISSION* fmwk )
   if( beacon->m_id == FMISSION_ID_NULL ){
     return;
   }
+#if 0
   if( beacon->life ){
     --beacon->life;
     if( beacon->life == 0 ){
       OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", beacon->m_id, beacon->key );
     }
   }
+#endif
 }
 
 //---------------------------------------------------------
@@ -137,9 +213,11 @@ BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk )
   if( beacon->m_id == FMISSION_ID_NULL ){
     return FALSE;
   }
-  if( beacon->life == 0){
+#if 0
+  if( beacon->time == 0){
     return TRUE;
   }
+#endif
   return FALSE;
 }
 
@@ -256,11 +334,11 @@ u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff )
   if( bonus == 0 ){
     return 0;
   }
-  if( beacon->life + bonus > FMISSION_LIFE_MAX ){
-    bonus = FMISSION_LIFE_MAX-beacon->life;
-    beacon->life = FMISSION_LIFE_MAX;
+  if( beacon->time + bonus > FMISSION_TIME_MAX ){
+    bonus = FMISSION_TIME_MAX-beacon->time;
+    beacon->time = FMISSION_TIME_MAX;
   }else{
-    beacon->life += bonus;
+    beacon->time += bonus;
   }
   //フレームを秒に変換して返す
   if( (bonus/60) == 0 ){
@@ -338,7 +416,7 @@ void FEST_MISSION_DEBUG_KillMission( FEST_MISSION* fmwk )
   if( beacon->m_id == FMISSION_ID_NULL ){
     return;
   }
-  beacon->life = 0;
+  beacon->time = 0;
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", beacon->m_id, beacon->key );
 }
 

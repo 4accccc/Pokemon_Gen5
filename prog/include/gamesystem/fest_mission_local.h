@@ -24,7 +24,7 @@ struct _FEST_BEACON{
   //絶対必要
   u32  key;              ///<マジックキー
   
-  u32  life:18;          ///<ミッションの残り時間(frame)
+  u32  time:18;          ///<ミッションの制限時間(sec)
   u32  my_score:14;      ///<マイスコア(max9999)
 
   u32  m_id:7;           ///<ミッションNo(127) FEST_MISSION_ID
@@ -46,13 +46,15 @@ struct _FEST_BEACON{
   u32  version_idx:1;    ///<開催バージョンIndex(FMISSION_VERSION_WHITE / FMISSION_VERSION_BLACK )
 };
 
-///typedef宣言はfest_mission.h内(構造体サイズが20byteを越えてはいけない)
+///typedef宣言はfest_mission.h内(FEST_BEACON構造体サイズが20byteを越えてはいけない)
 struct _FEST_MISSION{
   FEST_BEACON beacon;
   FMISSION_ARC_COMMON arc;
+  s64 start_rtc;  //ミッション開始時RTC(日付+時刻の秒変換値)
+  s32 end_life;   //ミッション終了時の残り時間(秒)
 };
 
 #define FMISSION_GOAL_NULL  (0x3FFF)  //ミッション目標無効値
 #define FMISSION_SCORE_MAX  (9999)    //ミッションスコア最大値
-#define FMISSION_LIFE_MAX   (((59*60)+59)*60) //ミッションライフMax(59分59秒)
-
+#define FMISSION_TIME_MAX   (((59*60)+59)) //ミッション制限時間Max(59分59秒)
+#define FMISSION_RTC_NULL   (0xFFFFFFFF) //ミッションスタート時RTC無効値

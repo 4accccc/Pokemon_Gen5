@@ -430,44 +430,6 @@ VMCMD_RESULT EvCmdIntrudeMapChangeFMissionStart( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
-//--------------------------------------------------------------
-/**
- * フェスミッション開始カウントダウン ウェイト部分
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvWaitFMissionCountDown(VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  return (LINK_FESTIVAL_MissionReadyTimerGet(GAMESYSTEM_GetLinkFestivalWork(gsys)) == 0 );
-}
-
-//==================================================================
-/**
- * フェスミッション開始前のカウントダウン開始～カウントダウン終了まで待つ
- *
- * @param   core		
- * @param   wk		
- *
- * @retval  VMCMD_RESULT		
- */
-//==================================================================
-VMCMD_RESULT EvCmdFMissionCountDown( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-	u16 timer_sec	= SCRCMD_GetVMWorkValue( core, work );
-  
-  LINK_FESTIVAL_MissionReadyTimerSet( GAMESYSTEM_GetLinkFestivalWork(gsys), timer_sec );
-  
-  VMCMD_SetWait( core, EvWaitFMissionCountDown );
-  return VMCMD_RESULT_SUSPEND;
-}
-
 //==================================================================
 /**
  * @brief スクリプトコマンド：パレスから戻る

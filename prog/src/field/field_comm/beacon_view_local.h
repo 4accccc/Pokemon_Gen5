@@ -21,6 +21,7 @@
 #include "net/wih_dwc.h"
 #include "field/field_comm/intrude_work.h"
 #include "field/fld_vreq.h"
+#include "field/event_fmission.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
 #include "system/bmp_oam.h"
@@ -92,10 +93,14 @@ typedef struct _LOG_CTRL{
 
   u8  g_power;
 
+#if 0
   u8  fm_entry;
   u32 fm_my_score;
   u32 fm_score;
   u32 fm_sec;
+#endif
+  u8  menu_mode;  //最後に選択したメニューのモード
+  FMISSION_START_FOUL_CODE foul_code; //ミッション開始失敗コード
   FEST_MISSION mission; //フェスタミッション
 }LOG_CTRL;
 

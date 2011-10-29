@@ -338,7 +338,7 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFMissionMenuData = {
 /*
  *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
  */
-static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
+static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_FEST_BEACON_START] = {
   ///<GAMEBEACON_ACTION_NULL  ///<データ無し 0
   { NULL,                                 BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE, },
 
@@ -442,32 +442,6 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   { GAMEBEACON_Set_FreeWord,              BEACON_PSET_FREEWORD,	  BEACON_ARG_FWORD,	},
   ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
   { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
-  ///<FEST_MISSION フェスタミッション配布 51 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 52 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 53 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 54 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 55 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 56 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 57 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 58 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 59 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 60 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 61 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 62 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
-  ///<FEST_MISSION フェスタミッション配布 63 
-  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
@@ -1580,7 +1554,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
         break;
       case 1:
         GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            0, GAMEBEACON_ACTION_MAX-1,
+            0, GAMEBEACON_ACTION_FEST_BEACON_START-1,
             &evwk->action, BPRM_WSET_ACTION ));
         break;
       case 2:
@@ -1695,8 +1669,8 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   if( evwk->action < 2 ){ //ランダム
     int action,range;
     
-    range = GAMEBEACON_ACTION_MAX-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
-    action = GFUser_GetPublicRand0( 0xFFFF )%range+GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+    range = GAMEBEACON_ACTION_FEST_BEACON_START-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+    action = GFUser_GetPublicRand0( range )+GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
     evwk->b_prm = &DATA_DebugBeaconParam[ action ];
     evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
 

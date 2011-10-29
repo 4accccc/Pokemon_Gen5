@@ -380,7 +380,7 @@ BOOL BeaconView_CheckSpecialFMissionEntry( BEACON_VIEW_PTR wk )
   FEST_MISSION mission;
  
   //なにか別のミッションに参加中ならスルーする
-  if( FEST_MISSION_IsEntry( wk->fmwk ) ){
+  if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys ) ){
     return FALSE;
   }
   //ハイリンクに侵入されていたらスルー
@@ -2194,6 +2194,7 @@ typedef struct _TASKWK_WIN_FMISSION{
 }TASKWK_WIN_FMISSION;
 
 static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* work);
+static FMISSION_START_FOUL_CODE winFMission_CheckEntry( BEACON_VIEW_PTR wk, const FEST_MISSION* fmwk, u8 menu_mode );
 
 /*
  *  @brief  メッセージウィンドウ フェスタミッション参加確認タスク登録
@@ -2209,6 +2210,7 @@ static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* ta
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_FMISSION ));
 
   FEST_MISSION_Clear( &wk->ctrl.mission );
+  wk->ctrl.foul_code = FMISSION_START_FOUL_NULL;
 
   twk->bvp = wk;
   twk->wait = POPUP_WAIT;
@@ -2258,16 +2260,37 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
 
       switch( twk->ret){
       case TMENU_CYN_CHECK:
-        //ミッション内容を覚えておく
-        bvp->ctrl.mission = twk->mission;
-        BVSEvent_Reserve( bvp, EV_FMISSION_CHECK );
-        twk->seq = 3;
+        {
+          FMISSION_START_FOUL_CODE foul = winFMission_CheckEntry( bvp, &twk->mission, twk->ret );
+        
+          //ミッション内容を覚えておく
+          bvp->ctrl.mission = twk->mission;
+          bvp->ctrl.menu_mode = twk->ret;
+          if( foul == FMISSION_START_FOUL_NULL ){
+            BVSEvent_Reserve( bvp, EV_FMISSION_CHECK );
+            twk->seq = 3;
+          }else{
+            bvp->ctrl.foul_code = foul;
+            BVSEvent_Reserve( bvp, EV_FMISSION_START_FAILED );
+            twk->seq = 4;
+          }
+        }
         break;
       case TMENU_CYN_YES:
-        //ミッション内容を覚えておく
-        bvp->ctrl.mission = twk->mission;
-        BVSEvent_Reserve( bvp, EV_FMISSION_START );
-        twk->seq = 4;
+        {
+          FMISSION_START_FOUL_CODE foul = winFMission_CheckEntry( bvp, &twk->mission, twk->ret );
+          //ミッション内容を覚えておく
+          bvp->ctrl.mission = twk->mission;
+          bvp->ctrl.menu_mode = twk->ret;
+          
+          if( foul == FMISSION_START_FOUL_NULL ){
+            BVSEvent_Reserve( bvp, EV_FMISSION_START );
+          }else{
+            bvp->ctrl.foul_code = foul;
+            BVSEvent_Reserve( bvp, EV_FMISSION_START_FAILED );
+          }
+          twk->seq = 4;
+        }
         break;
       case TMENU_CYN_NO:
         //無視ミッション登録しておく
@@ -2277,13 +2300,13 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
       }
     }
     return;
-  case 4: //使うイベント待ち
+  case 4: //参加&参加失敗イベント待ち
     if( bvp->ctrl.mission.beacon.m_id != FMISSION_ID_NULL ) {
       //途中キャンセルされていたら、選択しなおし
       FEST_MISSION_Clear( &bvp->ctrl.mission );
       twk->seq = 3;
     }else{
-      //正常に使えていれば、メニューを終了させる
+      //正常イベントが終了なら、メニューを終了させる
       BVCTMenu_End( bvp->tmenu );
       twk->seq = 6;
     }
@@ -2307,6 +2330,24 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
   
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  指定されたミッションに参加できるかチェック 
+ */
+//----------------------------------------------------------------------
+static FMISSION_START_FOUL_CODE winFMission_CheckEntry( BEACON_VIEW_PTR wk, const FEST_MISSION* fmwk, u8 menu_mode )
+{
+  if( FEST_MISSION_IsLifeLeftForEntry( fmwk ) == FALSE ){
+    //十分な寿命がない
+    if( menu_mode == TMENU_CYN_CHECK ){
+      return FMISSION_START_FOUL_TIMEUP_CHECK;
+    }else{
+      return FMISSION_START_FOUL_TIMEUP_JOIN;
+    }
+  }
+  return FMISSION_START_FOUL_NULL;
 }
 
 /////////////////////////////////////////////////////////////////////

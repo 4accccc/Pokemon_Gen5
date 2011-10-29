@@ -27,7 +27,6 @@ extern VMCMD_RESULT EvCmdIntrudeMissionStartWait( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeGetPalaceAreaOffset( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeMapChangeFMissionStart( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdFMissionCountDown( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdReturnFromHilink( VMHANDLE * core, void *wk );
 
 //-- イベント単体抜き出し

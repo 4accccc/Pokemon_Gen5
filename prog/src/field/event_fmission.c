@@ -41,7 +41,7 @@
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/medalbox.h"
 #include "app/mdlid_def.h"  // for MDLID_
-
+#include "scrcmd.h"
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
 
@@ -76,6 +76,11 @@
 #define EVFMISSION_SE_FADE_EFF  (SEQ_SE_W295_01)
 #define EVFMISSION_SE_END_EFF   (SEQ_SE_SW_FES_05)
 
+typedef enum{
+  MSGPRINT_MODE_NORMAL,  //メッセージが終わったら自動でウィンドウを閉じる
+  MSGPRINT_MODE_LAST,    //キー待ちしてからウィンドウを閉じる
+}MSGPRINT_MODE;
+
 typedef struct _POWER_FLD_EFF{
   u8  ct;
   GAMESYS_WORK * gsys;
@@ -83,7 +88,9 @@ typedef struct _POWER_FLD_EFF{
 }POWER_FLD_EFF;
 
 typedef struct _MSGPRINT_EVWORK{
+  int seq;
   FLDSYSWIN_STREAM* winStream;
+  MSGPRINT_MODE mode;
 }MSGPRINT_EVWORK;
 
 typedef struct _FMISSION_EVWORK{
@@ -114,17 +121,20 @@ typedef struct _FMISSION_EVWORK{
 
   LINKFEST_MISSION_RESULT result;
   int   param;
+  FMISSION_START_FOUL_CODE foul_code;
 
   STRBUF* s_buf;
   STRBUF* s_tmp;
 }FMISSION_EVWORK;
 
 static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void * work);
+static GMEVENT_RESULT event_FMissionStartFailedMain(GMEVENT * event, int *  seq, void * work);
 static GMEVENT_RESULT event_FMissionEndMain(GMEVENT * event, int *  seq, void * work);
 static GMEVENT_RESULT event_FMissionCheckMain(GMEVENT * event, int *  seq, void * work);
 static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 static void sub_ReleaseFMissionWork( FMISSION_EVWORK* wk );
+
 static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 line );
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk );
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk );
@@ -154,6 +164,32 @@ GMEVENT* EVENT_FMissionStart( GAMESYS_WORK * gsys, void* work )
 
   return event;
 }
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスタミッション参加失敗イベント
+ *
+ *  @param  work  FEST_MISSION*
+ */
+//----------------------------------------------------------------------
+GMEVENT* EVENT_FMissionStartFailed( GAMESYS_WORK * gsys, void* work )
+{
+  GMEVENT* event;
+  FMISSION_EVWORK* wk;
+  FMISSION_START_PARAM* param = (FMISSION_START_PARAM*)work;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  event = GMEVENT_Create(gsys, NULL, event_FMissionStartFailedMain, sizeof(FMISSION_EVWORK));
+  wk = GMEVENT_GetEventWork(event);
+
+  sub_InitFMissionWork( wk, gsys, fieldmap );
+
+  //パラメータ取得
+  wk->foul_code = param->foul_code;
+
+  return event;
+}
+
 
 //----------------------------------------------------------------------
 /*
@@ -313,7 +349,7 @@ static GMEVENT_RESULT event_MsgPrint(GMEVENT * event, int *  seq, void * work);
 /*
  *  @brief  システムメッセージプリントイベント
  */
-static void evcall_MsgPrint( GAMESYS_WORK * gsys, GMEVENT* parent, FLDMSGBG* fmb, GFL_MSGDATA* msgData, u16 msg_id )
+static void evcall_MsgPrintEx( GAMESYS_WORK * gsys, GMEVENT* parent, FLDMSGBG* fmb, GFL_MSGDATA* msgData, u16 msg_id, MSGPRINT_MODE mode )
 {
   GMEVENT* event;
   MSGPRINT_EVWORK* evwk;
@@ -321,18 +357,36 @@ static void evcall_MsgPrint( GAMESYS_WORK * gsys, GMEVENT* parent, FLDMSGBG* fmb
   event = GMEVENT_Create(gsys, NULL, event_MsgPrint, sizeof(MSGPRINT_EVWORK));
   evwk = GMEVENT_GetEventWork(event);
 
+  evwk->mode = mode;
   evwk->winStream = FLDSYSWIN_STREAM_Add( fmb, msgData, SYSMSG_WIN_SX );
   FLDSYSWIN_STREAM_PrintStart( evwk->winStream, 0, 0, msg_id );
   
   //イベントコール取得
   GMEVENT_CallEvent( parent, event );
 }
+static void evcall_MsgPrint( GAMESYS_WORK * gsys, GMEVENT* parent, FLDMSGBG* fmb, GFL_MSGDATA* msgData, u16 msg_id )
+{
+  evcall_MsgPrintEx( gsys, parent,fmb, msgData, msg_id, MSGPRINT_MODE_NORMAL );
+}
 
 static GMEVENT_RESULT event_MsgPrint(GMEVENT * event, int *  seq, void * work)
 {
   MSGPRINT_EVWORK* evwk = work;
 
-  if( !FLDSYSWIN_STREAM_Print( evwk->winStream )){
+  switch( evwk->seq ){
+  case 0:
+    if( FLDSYSWIN_STREAM_Print( evwk->winStream )){
+      if( evwk->mode == MSGPRINT_MODE_NORMAL ){
+        break;
+      }
+      evwk->seq++;
+    }
+    return GMEVENT_RES_CONTINUE;
+  case 1:
+    //ラストキー待ち
+    if( ( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY) ){
+      break;
+    }
     return GMEVENT_RES_CONTINUE;
   }
   FLDSYSWIN_STREAM_Delete( evwk->winStream );
@@ -429,12 +483,34 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     (*seq)++;
     break;
   case 6:
-    LINK_FESTIVAL_MissionLiveStatusSet( wk->fest_sys, TRUE );
+    LINK_FESTIVAL_MissionPlayStart( wk->fest_sys );
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  フェスタミッション発動失敗
+ */
+//-----------------------------------------------------------------
+static GMEVENT_RESULT event_FMissionStartFailedMain(GMEVENT * event, int *  seq, void * work)
+{
+  FMISSION_EVWORK* wk = work;
+
+  switch (*seq) {
+  case 0:
+    evcall_MsgPrintEx( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_start_failed01+(wk->foul_code-1), MSGPRINT_MODE_LAST );
+    (*seq)++;
+    break;
+  case 1:
+    sub_ReleaseFMissionWork( wk );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
 
 //-----------------------------------------------------------------
 /*
@@ -582,14 +658,18 @@ static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 l
 //-----------------------------------------------------------------
 static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 {
-  int sec = LINKFEST_FRAME2SEC(wk->mission.beacon.life);
+  int sec = FEST_MISSION_GetLife( &wk->mission ); //残り時間
   
   //説明文
   FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
-  //パラメータまとめてWordset
-  FMISSION_DATA_WordsetParamAll( wk->wset, &wk->mission );
+  //パラメータWordset
+  WORDSET_RegisterItemName(wk->wset, 0, wk->mission.beacon.item );
+  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.beacon.pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 2, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 3, sec%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 4, wk->mission.beacon.goal, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
   //残り時間
   if( (sec / 60) == 0 ){

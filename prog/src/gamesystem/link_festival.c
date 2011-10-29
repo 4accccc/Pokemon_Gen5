@@ -106,6 +106,7 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
   if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( wk->gdata ) == FALSE ){  //表フィールドにいる間だけ更新
     u32 score;
 
+#if 0
 #ifdef PM_DEBUG
     if( !wk->deb_time_stop_f ){
       FEST_MISSION_Update( &wk->mission );
@@ -113,14 +114,12 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
 #else
     FEST_MISSION_Update( &wk->mission );
 #endif
+#endif
     score = LINK_FESTIVAL_GetNowScore(wk);
     if( score-wk->now_score ){
       wk->finfo_bonus += FEST_MISSION_TimeBonusCalc( &wk->mission,  score-wk->now_score );
       wk->now_score = score;
     }
-  }
-  if( wk->ready_timer ){
-    --wk->ready_timer;
   }
   lnkfes_BeaconSend( wk );
 }
@@ -147,6 +146,20 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル 送信用ミッションデータ生成
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_GetBeaconSendParam( LINK_FESTIVAL* wk, FEST_BEACON* dat, u16 act_param )
+{
+  *dat = *wk->m_beacon;
+
+  //アクションParamと残り時間上書き
+  dat->act_param = act_param;
+  dat->time = LINK_FESTIVAL_GetMissionLife( wk );
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッション　現在の自分のスコアを返す
  *
  * @retval 自分のスコア 
@@ -166,7 +179,16 @@ u16 LINK_FESTIVAL_GetMyScore( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 u16 LINK_FESTIVAL_GetMissionLife( LINK_FESTIVAL* wk )
 {
-  return LINKFEST_FRAME2SEC( wk->m_beacon->life );
+  u32 life = FEST_MISSION_GetLife( &wk->mission );
+
+#ifdef PM_DEBUG
+  if( wk->deb_time_stop_f ) {
+    if( life == 0 ){
+      life = 1; //ストップ状態なら残り1で止める
+    }
+  }
+#endif
+  return life;
 }
 
 //---------------------------------------------------------
@@ -279,8 +301,10 @@ void LINK_FESTIVAL_GetMissionArcCommonData( LINK_FESTIVAL* wk, u8 m_id, FMISSION
 /*
  * @brief リンクフェスティバル ミッションスタート
  *
- * この関数を呼んだ時点でビーコン送信は開始されるが、
+ * この関数を呼んだ時点で内部的にはミッションが開始され、ビーコン送信も開始されるが、
  * アップデートは無効のまま(時間カウントが始まらない)ので注意！
+ *
+ * ミッションをライブ状態にするには、MissionStart後にMissionPlayStart()を呼び出してください
  */
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, BOOL succeed_f )
@@ -304,6 +328,31 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
 
   //BGM変更用フラグを立てておく
   GAMEDATA_SetFesBGMFlag( wk->gdata, TRUE );
+
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションプレイスタート
+ *
+ * MissionStartを呼んだ時点で内部的にはミッションが開始され、ビーコン送信も開始されていますが
+ * アップデートは無効のまま(時間カウントが始まらない)なので
+ * Start後に、この関数を呼び出してプレイ状態に遷移してください
+ *
+ * 時間カウントの基準も、この関数を呼び出したタイミングで決定します
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk )
+{
+  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
+    GF_ASSERT(0); //ミッション開始してないのに呼び出しちゃダメ
+    return;
+  }
+  //残り時間カウントの基準となるRTCをセット
+  FEST_MISSION_PlayStart( &wk->mission );
+  
+  //ライブ状態セット
+  LINK_FESTIVAL_MissionLiveStatusSet( wk, TRUE );
 }
 
 //---------------------------------------------------------
@@ -346,34 +395,6 @@ u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
   zone_id = PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork( wk->gdata ) );
   return FSND_GetFieldBGM( wk->gdata, zone_id, GAMEDATA_GetSeasonID( wk->gdata ) );
 }
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル ミッションReadyタイマーセット
- *
- * @param カウントダウンタイム(秒)
- */
-//---------------------------------------------------------
-void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk, u32 timer )
-{
-  wk->ready_timer = LINKFEST_SEC2FRAME(timer);  //sec2frame
-}
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル ミッションReadyタイマーゲット
- *
- * @return  カウンター値(秒)
- */
-//---------------------------------------------------------
-int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk )
-{
-  if( wk->ready_timer ){
-    return LINKFEST_FRAME2SEC(wk->ready_timer);
-  }
-  return wk->ready_timer;
-}
-
 
 //---------------------------------------------------------
 /*
@@ -514,20 +535,26 @@ BOOL LINK_FESTIVAL_IsMissionClear( LINK_FESTIVAL* wk, u32* score )
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 {
-  u32 score;
+  u32 score,life;
   BOOL ret;
 
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return FALSE;
   }
-  ret = LINK_FESTIVAL_IsMissionClear( wk, &score );
+  life = LINK_FESTIVAL_GetMissionLife( wk );
 
   //スコアクリア型の終了チェック
-  if(ret && (wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE)){
-    return TRUE;
+  if( LINK_FESTIVAL_IsMissionClear( wk, &score ) && (wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE)){
+    ret = TRUE;
+  }else{
+    //タイムオーバーチェック
+    ret = ( life == 0 );
   }
-  //タイムオーバーチェック
-  return FEST_MISSION_IsEnd(&wk->mission);
+  if( ret ){  //今の残り時間を覚えて、ライブ状態を解除する
+    LINK_FESTIVAL_MissionLiveStatusSet( wk, FALSE );
+    wk->mission.end_life = life; 
+  }
+  return ret;
 }
 
 //---------------------------------------------------------
@@ -678,10 +705,10 @@ BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon
       beacon->m_id, beacon->key, beacon->base_param );
     return TRUE;
   }
-  //残り時間が一定以上か？
-  if( beacon->life < LINKFEST_LIFE_LIMIT ){
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore3 m_id=%d, key=%08x, param=%d life=%dsec\n",
-      beacon->m_id, beacon->key, beacon->base_param, beacon->life/60 );
+  //制限時間が一定以上か？
+  if( beacon->time < LINKFEST_LIFE_LIMIT ){
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore3 m_id=%d, key=%08x, param=%d time=%dsec\n",
+      beacon->m_id, beacon->key, beacon->base_param, beacon->time );
     return TRUE;
   }
   return FALSE;
@@ -836,7 +863,7 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
     --wk->beacon_timer;
     return;
   }
-  GAMEBEACON_Set_FestMission(&wk->mission);
+  GAMEBEACON_Set_FestMission();
   wk->beacon_timer = wk->beacon_wait;
 }
 
@@ -879,7 +906,6 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->tmap_root = 0xFFFF; //無効値で初期化
   MI_CpuClear8( wk->m_gmk_work, sizeof(u8)*FMISSION_WORK_AREA_LEN);
 
-  wk->ready_timer = 0;
   wk->top_score_update_f = FALSE;
 
 #ifdef PM_DEBUG

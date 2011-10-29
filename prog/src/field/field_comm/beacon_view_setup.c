@@ -246,6 +246,22 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     FEST_MISSION_Clear( &wk->ctrl.mission );
     break;
   
+  case EV_FMISSION_START_FAILED:
+    {
+      FMISSION_START_PARAM  param;
+
+      MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
+      param.mission = wk->ctrl.mission;
+      param.succeed_f = TRUE;
+      param.foul_code = wk->ctrl.foul_code;
+
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( event_fmission ), EVENT_FMissionStartFailed, &param );
+    }
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, wk->ctrl.menu_mode )) );
+    FEST_MISSION_Clear( &wk->ctrl.mission );
+    break;
+  
   case EV_FMISSION_CHECK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_fmission), EVENT_FMissionCheck, &wk->ctrl.mission );
@@ -428,11 +444,10 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
-    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv, 0);
-//#ifdef DEBUG_ONLY_FOR_iwasawa
-    wk->my_data.power = 1;
-//#endif
-//    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
+    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv,0);
+#ifdef DEBUG_ONLY_FOR_iwasawa
+//    wk->my_data.power = 1;
+#endif
   }
   wk->game_comm = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
   wk->wifi_list = GAMEDATA_GetWiFiList( wk->gdata );

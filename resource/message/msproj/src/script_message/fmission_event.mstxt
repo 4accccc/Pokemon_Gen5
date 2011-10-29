@@ -203,6 +203,80 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fmission_start_failed01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかに　しっぱい　しました▼
+のこり　じかんが　すくないと
+さんか　できないことが　あります</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T09:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-27T14:05:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加に　失敗　しました▼
+残り時間が　少ないと
+参加できないことが　あります</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T09:09:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-27T14:05:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション開始失敗メッセージ
+時間切れ(参加しようとした時)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T08:33:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_start_failed02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんか　できない　ミッションでした▼
+のこり　じかんが　すくないと
+さんか　できないことが　あります</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T09:09:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T08:34:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できない　ミッションでした▼
+残り時間が　少ないと
+参加できないことが　あります</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T09:09:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T08:35:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション開始失敗メッセージ
+時間切れ(内容確認しようとした時)</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-10-28T08:33:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fmission_start_title"
 		Style="Large">
 		<LanguageCell

@@ -202,7 +202,7 @@ void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID i
     beacon->version_idx = FMISSION_VERSION_BLACK;
   }
  
-  beacon->life = pp->level[level].time*60; //sec2frame
+  beacon->time = pp->level[level].time;
 
   //アーカイブコモンデータセット
   fmwk->arc = dat.common;
@@ -229,24 +229,6 @@ void FMISSION_DATA_GetMissionParamDirect( FEST_MISSION_ID id, FMISSION_LEVEL lev
   FMISSION_DATA_GetMissionParamByHandle( handle, id, level, fmwk );
   GFL_ARC_CloseDataHandle( handle );
 
-}
-
-
-//---------------------------------------------------------
-/*
- * @brief ミッションパラメータ一括ワードセット
- */
-//---------------------------------------------------------
-void FMISSION_DATA_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
-{
-  FEST_BEACON* beacon = &fmwk->beacon;
-  int sec = LINKFEST_FRAME2SEC(beacon->life);
-
-  WORDSET_RegisterItemName( wset, 0, beacon->item );
-  WORDSET_RegisterNumber( wset, 1, beacon->pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 2, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 3, sec%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 4, beacon->goal, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
 //---------------------------------------------------------

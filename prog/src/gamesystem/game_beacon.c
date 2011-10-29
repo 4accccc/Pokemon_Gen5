@@ -1244,7 +1244,6 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
   //パラメータ生成
   GAMEBEACON_SUB_SendBeaconSetCommon( &tmp );
   
-
   switch( action ){
   case GAMEBEACON_ACTION_FMISSION_FREEWORD:
     BEACONINFO_Set_FreeWord( info, (const STRBUF*)param1, param2 );
@@ -1259,8 +1258,7 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
     BEACONINFO_Set_PPLittle( info, (const STRBUF*)param1);
     break;
   default:
-    info->action.fmission = LINK_FESTIVAL_GetMissionWork( fest_sys )->beacon;
-    info->action.fmission.act_param = (u16)param1;
+    LINK_FESTIVAL_GetBeaconSendParam( fest_sys, &info->action.fmission, (u16)param1 );
     break;
   }
   info->action.action_no = action;  //アクションno上書き
@@ -1268,8 +1266,10 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
   BEACONINFO_Set_Details_Walk( info );
 
   //生成したパラメータで、自分用のミッションログを生成
-  FMISSION_LOG_TBL_SetLogFromBeacon(
-    LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, LINK_FESTIVAL_GetMyScore( fest_sys ), FMISSION_LOG_SET_NORMAL, TRUE );
+  if( action != GAMEBEACON_ACTION_FMISSION ){
+    FMISSION_LOG_TBL_SetLogFromBeacon(
+      LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, LINK_FESTIVAL_GetMyScore( fest_sys ), FMISSION_LOG_SET_NORMAL, TRUE );
+  }
   
   if(GAMEBEACON_SUB_CheckPriority( action ) == TRUE){
     //実際の送信バッファに生成したパラメータを反映して、送信リクエストをかける
@@ -2191,15 +2191,13 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 //==================================================================
 /**
  * 送信ビーコンセット：フェスタミッション配布
- *
- * @param   FEST_MISSION		ミッションパラメータ
  */
 //==================================================================
-void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
+void GAMEBEACON_Set_FestMission( void )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
-  BEACONINFO_Set_FestMission(&GameBeaconSys->send.info, mission);
+
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION, 0);
 }
 
 //==================================================================
@@ -2294,19 +2292,6 @@ static BOOL SendBeacon_Update_ResortData( GAMEBEACON_SYSTEM *bsys )
     return TRUE;
   }
   return FALSE;
-}
-//==================================================================
-/**
- * ビーコンセット：フェスタミッション配布
- *
- * @param   FEST_MISSION		ミッションパラメータ
- */
-//==================================================================
-void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* fmwk )
-{
-  info->action.action_no = GAMEBEACON_ACTION_FMISSION;
-  info->action.fmission = fmwk->beacon;
-  BEACONINFO_Set_Details_Walk(info);
 }
 
 // 赤外線検出用

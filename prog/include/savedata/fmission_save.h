@@ -149,10 +149,10 @@ extern void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST
  * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
  * @param id      ミッションID
- * @param rest_time_frame 残り時間(フレーム単位)
+ * @param rest_time_sec 残り時間(秒)
  */
 //---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame );
+extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_sec );
 
 //---------------------------------------------------------------------------
 /**

@@ -1635,7 +1635,7 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   param.mission.beacon.pay = fake[FAKE_PAY];
   param.mission.beacon.goal = fake[FAKE_GOAL];
   param.mission.beacon.base_param = fake[FAKE_PARAM];
-  param.mission.beacon.life = fake[FAKE_TIME]*60;
+  param.mission.beacon.time = fake[FAKE_TIME];
 
   param.succeed_f = FALSE;
 

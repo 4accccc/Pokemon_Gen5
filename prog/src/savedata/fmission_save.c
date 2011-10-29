@@ -223,24 +223,20 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
  * @brief ミッションステータス ハイスコア(数値)をアップデートする	
  * @param	work		ワークへのポインタ
  * @param id      ミッションID
- * @param rest_time_frame 残り時間(フレーム単位)
+ * @param rest_time_sec 残り時間(秒)
  */
 //---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_frame )
+BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_sec )
 {
-  u32 sec;
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
     return FALSE;
   }
-  if( rest_time_frame > FMISSION_LIFE_MAX ){
-    rest_time_frame = FMISSION_LIFE_MAX;
+  if( rest_time_sec > FMISSION_TIME_MAX ){
+    rest_time_sec = FMISSION_TIME_MAX;
   }
-  //フレームを秒変換
-  sec = rest_time_frame/60+((rest_time_frame%60)!=0); //余りは+1sec
-
-  if( sec > sv->high_score[id] ){
-    sv->high_score[id] = sec;
+  if( rest_time_sec > sv->high_score[id] ){
+    sv->high_score[id] = rest_time_sec;
     return TRUE;
   }
   return FALSE;

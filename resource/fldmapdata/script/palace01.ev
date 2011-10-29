@@ -131,7 +131,7 @@ _RET
 sub_monolith_fest_mission_entry:
 {
   _SYSWIN_MSG( plc_fmission_entry, POS_DOWN )
-  _FMISSION_COUNT_DOWN( 4 ) //4秒カウントダウン
+  _TIME_WAIT(120) //4秒カウントダウン 
   _SYSWIN_CLOSE()
 
   //表フィールドに遷移

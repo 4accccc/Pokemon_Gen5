@@ -210,7 +210,6 @@ void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAME
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
 
-void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission );
 void BEACONINFO_Set_FMissionEventClear(GAMEBEACON_INFO *info, u16 ev_id );
 
 void BEACONINFO_Set_Details_BattleWildPoke(GAMEBEACON_INFO *info, u16 monsno);

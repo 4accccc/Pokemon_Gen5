@@ -188,13 +188,6 @@ extern void FMISSION_DATA_GetMissionParamDirect( FEST_MISSION_ID id, FMISSION_LE
 
 //---------------------------------------------------------
 /*
- * @brief ミッションパラメータ一括ワードセット
- */
-//---------------------------------------------------------
-extern void FMISSION_DATA_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk );
-
-//---------------------------------------------------------
-/*
  * @brief ミッションタイトル文字列取得
  *
  * ミッションパラメータからミッションタイトル文字列を生成

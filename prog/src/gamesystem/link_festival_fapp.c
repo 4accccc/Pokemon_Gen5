@@ -69,7 +69,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
-    pl->new_record_time_f = FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->life );
+    pl->new_record_time_f = FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->time );
   }
 
   //ご褒美
@@ -80,12 +80,12 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     pl->item_num = wk->m_beacon->pay;
     switch( wk->m_beacon->pay_bonus ){
      case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
-       { //(残り時間frame/600)*ミッションレベル
-         u32 frame = wk->m_beacon->life/600;
-         pl->bonus_num += frame*(wk->m_beacon->m_level+1);
+       { //(残り秒/10)*ミッションレベル
+         u32 value = wk->mission.end_life/10;
+         pl->bonus_num += value*(wk->m_beacon->m_level+1);
        }
        //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
-       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (LINKFEST_FRAME2SEC(wk->m_beacon->life) >= (mission_time_sec)));
+       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (wk->mission.end_life >= mission_time_sec) );
       break;
      case FMISSION_PAY_BONUS_SCORE: //スコアボーナス(トータルスコアに依存するボーナス)
        { //(トータルスコア-目標値)/人数*ミッションレベル

@@ -28,10 +28,7 @@
 #define LINKFEST_LOG_MAX  (99) //フェスミッションログMax(自分含めて100がmax)
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスミッションログEndIndex
 
-#define LINKFEST_FRAME2SEC(frame) ((frame/60)+((frame%60)!=0))
-#define LINKFEST_SEC2FRAME(sec) (sec*60)
-
-#define LINKFEST_LIFE_LIMIT (LINKFEST_SEC2FRAME(30)) //frame単位で30秒
+#define LINKFEST_LIFE_LIMIT (30) //30秒
 
 #define FES_BGM_RECOVER_NONE  (0xFFFFFFFF)  //BGMのリカバー無しコード
 
@@ -139,6 +136,13 @@ extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル 送信用ミッションデータ生成
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_GetBeaconSendParam( LINK_FESTIVAL* wk, FEST_BEACON* dat, u16 act_param );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッション　現在の自分のスコアを返す
  *
  * @retval 自分のスコア 
@@ -210,6 +214,19 @@ extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッションプレイスタート
+ *
+ * MissionStartを呼んだ時点で内部的にはミッションが開始され、ビーコン送信も開始されていますが
+ * アップデートは無効のまま(時間カウントが始まらない)なので
+ * Start後に、この関数を呼び出してプレイ状態に遷移してください
+ *
+ * 時間カウントの基準も、この関数を呼び出したタイミングで決定します
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッションアップデート　有効無効設定
  */
 //---------------------------------------------------------
@@ -224,25 +241,6 @@ extern void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
  */
 //---------------------------------------------------------
 extern u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル ミッションReadyカウンターセット
- *
- * @param カウントダウンタイム(秒)
- */
-//---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk, u32 timer );
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル ミッションReadyカウンターゲット
- *
- * @return  カウンター値(秒)
- */
-//---------------------------------------------------------
-extern int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk );
-
 
 //---------------------------------------------------------
 /*

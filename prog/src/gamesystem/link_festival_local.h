@@ -30,8 +30,6 @@ struct _LINK_FESTIVAL{
   u16 beacon_wait;  ///フェスビーコン送信制御frame
   u16 beacon_timer; //frame
   
-  u16 ready_timer;    ///<ミッション開始前タイマー
-  
   u16 finfo_total_score;  //フィールドで表示しているトータルスコア
   u16 finfo_my_score;     //フィールドで表示しているマイスコア
   u16 finfo_bonus;  //フィールドで表示しているタイムボーナス

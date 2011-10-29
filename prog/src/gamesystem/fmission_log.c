@@ -322,6 +322,9 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE*sizeof(STRCODE));
 
+  //積んだ時点のRTCを覚えておく
+  FEST_MISSION_SetRTC( &entry.mission );
+
   if( ret == ENTRY_NEW ){
     if( tbl->entry_num == FMISSION_ENTRY_TBL_MAX ){
       //古いデータを押し出して積む
@@ -343,7 +346,7 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
  *
  *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
  *
- *  格納したミッションのライフを減算する 
+ *  格納したミッションのライフのエントリー寿命をチェックし、寿命が尽きたらテーブルから削除 
  */
 //------------------------------------------------------------------
 void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
@@ -352,21 +355,20 @@ void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   for(i = 0;i < tbl->entry_num; i++ ){
-    if( tbl->entry[i].mission.beacon.life ){
-      if( --tbl->entry[i].mission.beacon.life < LINKFEST_LIFE_LIMIT ){
-        end = tbl->entry_num-1;
-        if( i < end ){
-          GFL_STD_MemCopy32( &tbl->entry[i+1], &tbl->entry[i], sizeof(FMISSION_ENTRY)*(end-i));
-          if( end > 0){
-            --i;  //前詰めしたのでサーチ位置もずらしておく
-          }
+    if( FEST_MISSION_IsLifeLeftForEntry( &tbl->entry[i].mission ) == FALSE ){
+      //エントリー寿命が尽きたので削除
+      end = tbl->entry_num-1;
+      if( i < end ){
+        GFL_STD_MemCopy32( &tbl->entry[i+1], &tbl->entry[i], sizeof(FMISSION_ENTRY)*(end-i));
+        if( end > 0){
+          --i;  //前詰めしたのでサーチ位置もずらしておく
         }
-        FMISSION_ENTRY_Clear( &tbl->entry[tbl->entry_num-1] );
-        --tbl->entry_num;
+      }
+      FMISSION_ENTRY_Clear( &tbl->entry[tbl->entry_num-1] );
+      --tbl->entry_num;
 
-        if( tbl->entry_num == 0 ){
-          GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
-        }
+      if( tbl->entry_num == 0 ){
+        GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
       }
     }
   }
@@ -426,25 +428,6 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE*sizeof(STRCODE));
 
-#if 0
-  if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_FREEWORD ){
-    //EOM込み
-    GFL_STD_MemCopy16( info->action.freeword.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
-    p_log->param = info->action.freeword.shortcut_id;
-  }else if(
-    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_DOWN ||
-    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE ||
-    info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE
-    ){
-    //EOM込み
-    GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));
-    p_log->param = 0;
-  }else if( action == FMISSION_LOG_ACT_MAP_CHANGE){
-    p_log->param = info->townmap_root_zone_id;
-  }else{
-    p_log->param = info->action.fmission.act_param;
-  }
-#else
   switch( action ){
   case FMISSION_LOG_ACT_FREEWORD:
     //EOM込み
@@ -465,7 +448,6 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
     p_log->param = info->action.fmission.act_param;
     break;
   }
-#endif
   return TRUE;
 }
 
@@ -492,7 +474,7 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
   //スタックにすでに積まれているミッションと同一なら無視か上書き
   for( i = 0;i < tbl->entry_num;i++){
     if( FEST_BEACON_IsSame( &tbl->entry[i].mission.beacon, beacon )){
-      if( tbl->entry[i].mission.beacon.life < beacon->life ){  //新しい方がライフが長ければ上書き
+      if( tbl->entry[i].mission.beacon.time < beacon->time ){  //新しい方がライフが長ければ上書き
         return ENTRY_UPDATE0+i;
       }
       return ENTRY_NONE;
