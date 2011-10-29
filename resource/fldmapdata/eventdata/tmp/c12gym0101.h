@@ -13,7 +13,7 @@
 #define C12GYM0101_WOMAN2_01               0
 #define C12GYM0101_BOY2_01                 1
 #define C12GYM0101_BOY3_01                 2
-#define C12GYM0101_BOY3_02                 3
+#define C12GYM0101_BOY2_02                 3
 #define C12GYM0101_GIRL3_01                4
 
 #endif //ZONE_C12GYM0101_EVC_H

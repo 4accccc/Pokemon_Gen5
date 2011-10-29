@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/29 15:17:49
+#save date:2011/10/29 16:14:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #hold event type:
 1
 #hold event number:
-19
+18
 #event number: 0
 #type
 1
@@ -479,37 +479,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C13_BADMAN_02
-#OBJ CODE Number
-BADMAN
-#MOVE CODE Number
-MV_LEFT
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C13_BADMAN_02
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--184 -48 24
-#event number: 16
-#type
-1
-#ID name
 C13_MAN3A_01
 #OBJ CODE Number
 MAN3
@@ -537,7 +506,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 760 -32 -216
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -568,7 +537,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 296 -48 24
-#event number: 18
+#event number: 17
 #type
 1
 #ID name
