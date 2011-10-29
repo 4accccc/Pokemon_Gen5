@@ -26,7 +26,7 @@
 //-------------------------------------
 ///	セーブサイズ
 //=====================================
-#define KEY_SYSTEM_SAVE_WORK_SIZE (36)
+#define KEY_SYSTEM_SAVE_WORK_SIZE (14*4)
 
 //-------------------------------------
 ///	キーシステム種類
@@ -37,6 +37,8 @@ typedef enum
   KEY_SYSTEM_TYPE_DIFFICULT_EASY,     //難易度変更
   KEY_SYSTEM_TYPE_DIFFICULT_HARD,     //難易度変更
   KEY_SYSTEM_TYPE_CITY_WFBC,          //反対の街開放キー
+  KEY_SYSTEM_TYPE_DOOR_BLACK,         //黒のドアキー
+  KEY_SYSTEM_TYPE_DOOR_WHITE,         //白のドアキー
 
   KEY_SYSTEM_TYPE_MAX
 } KEY_SYSTEM_TYPE;
@@ -64,6 +66,18 @@ typedef enum
 
   KEY_SYSTEM_WFBC_MAX
 } KEY_SYSTEM_WFBC;
+
+//-------------------------------------
+///	DOOR
+//=====================================
+typedef enum
+{
+  KEY_SYSTEM_DOOR_NORMAL,   //通常
+  KEY_SYSTEM_DOOR_BLACK,    //黒のドアキー
+  KEY_SYSTEM_DOOR_WHITE,    //白のドアキー
+
+  KEY_SYSTEM_DOOR_MAX
+} KEY_SYSTEM_DOOR;
 
 //=============================================================================
 /**
@@ -104,6 +118,9 @@ extern KEY_SYSTEM_DIFFICULT KEY_SYSTEM_SAVE_GetDifficult( const KEY_SYSTEM_SAVE 
 
 extern void KEY_SYSTEM_SAVE_SetWfbc( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_WFBC wfbc );
 extern KEY_SYSTEM_WFBC KEY_SYSTEM_SAVE_GetWfbc( const KEY_SYSTEM_SAVE *cp_wk );
+
+extern void KEY_SYSTEM_SAVE_SetDoor( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_DOOR door );
+extern KEY_SYSTEM_DOOR KEY_SYSTEM_SAVE_GetDoor( const KEY_SYSTEM_SAVE *cp_wk );
 
 #ifdef PM_DEBUG
 extern void KEY_SYSTEM_SAVE_DEBUG_SetHave( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits );

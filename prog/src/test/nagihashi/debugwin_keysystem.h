@@ -80,6 +80,42 @@ static void DebugWin_D_Key_Have_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC );
   DEBUGWIN_ITEM_SetNameV( p_item , "まちキー=%d", is_exits );
 }
+
+static void DebugWin_U_Key_Have_03( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK );
+    KEY_SYSTEM_SAVE_DEBUG_SetHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK, !is_exits );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_Key_Have_03( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK );
+  DEBUGWIN_ITEM_SetNameV( p_item , "くろのドアキー=%d", is_exits );
+}
+
+static void DebugWin_U_Key_Have_04( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE );
+    KEY_SYSTEM_SAVE_DEBUG_SetHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE, !is_exits );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_Key_Have_04( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE );
+  DEBUGWIN_ITEM_SetNameV( p_item , "しろのドアキー=%d", is_exits );
+}
+
+
 static void DebugWin_U_Key_Use_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
@@ -128,6 +164,39 @@ static void DebugWin_D_Key_Use_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC );
   DEBUGWIN_ITEM_SetNameV( p_item , "まちキー=%d", is_exits );
 }
+static void DebugWin_U_Key_Use_03( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK);
+    KEY_SYSTEM_SAVE_DEBUG_SetUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK, !is_exits );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_Key_Use_03( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_BLACK );
+  DEBUGWIN_ITEM_SetNameV( p_item , "くろのドアキー=%d", is_exits );
+}
+static void DebugWin_U_Key_Use_04( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE);
+    KEY_SYSTEM_SAVE_DEBUG_SetUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE, !is_exits );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_Key_Use_04( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DOOR_WHITE );
+  DEBUGWIN_ITEM_SetNameV( p_item , "しろのドアキー=%d", is_exits );
+}
+
 static void DebugWin_U_Key_Difficult( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
   KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
@@ -196,6 +265,34 @@ static void DebugWin_D_Key_Wfbc( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   DEBUGWIN_ITEM_SetNameV( p_item , "まち=%s", sc_wfbc[wfbc] );
 }
 
+static void DebugWin_U_Key_Door( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    KEY_SYSTEM_DOOR door = KEY_SYSTEM_SAVE_GetDoor( p_key_system );
+    door++;
+    door %= KEY_SYSTEM_DOOR_MAX;
+    KEY_SYSTEM_SAVE_SetDoor( p_key_system, door );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void DebugWin_D_Key_Door( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  static const char *sc_wfbc[] =
+  {
+    "なし",
+    "くろのドア",
+    "しろのドア",
+  };
+
+  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
+
+  KEY_SYSTEM_WFBC wfbc = KEY_SYSTEM_SAVE_GetDoor( p_key_system );
+
+  DEBUGWIN_ITEM_SetNameV( p_item , "ドア=%s", sc_wfbc[wfbc] );
+}
+
 static void DEBUGWIN_KEY_SYSTEM_Init( KEY_SYSTEM_SAVE *p_key_system, HEAPID heapID )
 {
   DEBUGWIN_AddGroupToTop( KEYSYSTEM_DEBUGWIN_GROUP, "キーシステム", heapID );
@@ -208,6 +305,11 @@ static void DEBUGWIN_KEY_SYSTEM_Init( KEY_SYSTEM_SAVE *p_key_system, HEAPID heap
 
   DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Wfbc, 
                               DebugWin_D_Key_Wfbc, 
+                              p_key_system, 
+                              KEYSYSTEM_DEBUGWIN_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Door, 
+                              DebugWin_D_Key_Door, 
                               p_key_system, 
                               KEYSYSTEM_DEBUGWIN_GROUP, 
                               heapID );
@@ -235,6 +337,16 @@ static void DEBUGWIN_KEY_SYSTEM_Init( KEY_SYSTEM_SAVE *p_key_system, HEAPID heap
                               p_key_system, 
                               KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
                               heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Have_03, 
+                              DebugWin_D_Key_Have_03, 
+                              p_key_system, 
+                              KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Have_04, 
+                              DebugWin_D_Key_Have_04, 
+                              p_key_system, 
+                              KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
+                              heapID );
 
   DEBUGWIN_AddGroupToGroup( KEYSYSTEM_RECV_DEBUGWIN_GROUP, "こうもくかいほう", KEYSYSTEM_DEBUGWIN_GROUP , heapID );
 
@@ -251,6 +363,16 @@ static void DEBUGWIN_KEY_SYSTEM_Init( KEY_SYSTEM_SAVE *p_key_system, HEAPID heap
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_02, 
                               DebugWin_D_Key_Use_02, 
+                              p_key_system, 
+                              KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_03, 
+                              DebugWin_D_Key_Use_03, 
+                              p_key_system, 
+                              KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_04, 
+                              DebugWin_D_Key_Use_04, 
                               p_key_system, 
                               KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
                               heapID );

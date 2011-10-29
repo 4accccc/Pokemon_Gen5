@@ -65,6 +65,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Seq_App_Door( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -78,6 +79,7 @@ static void KeySys_Seq_CreateDisplayWfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, 
 static void KeySys_Seq_CreateDisplayRecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_CreateDisplaySendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_CreateDisplayIrcYesno( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Seq_CreateDisplayDoor( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -114,6 +116,10 @@ static void KeySys_Display_DeleteSendDemo( void *p_wk_adrs );
 static void KeySys_Display_CreateIrcYesno( void *p_wk_adrs, HEAPID heapID );
 static BOOL KeySys_Display_IsEndCreateIrcYesno( void *p_wk_adrs );
 static void KeySys_Display_DeleteIrcYesno( void *p_wk_adrs );
+//ドア
+static void KeySys_Display_CreateDoor( void *p_wk_adrs, HEAPID heapID );
+static BOOL KeySys_Display_IsEndCreateDoor( void *p_wk_adrs );
+static void KeySys_Display_DeleteDoor( void *p_wk_adrs );
 
 //-------------------------------------
 ///	キー格納情報
@@ -135,6 +141,7 @@ typedef enum
 {
   KEYSYS_SELMENU_TYPE_DIFFICULTY,
   KEYSYS_SELMENU_TYPE_WFBC,
+  KEYSYS_SELMENU_TYPE_DOOR
 }KEYSYS_SELMENU_TYPE;
 static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE type, KEYSYS_OBJ_WORK *p_obj, KEYSYS_MENU_WORK **pp_menu, GFL_MSGDATA *p_msg, GFL_FONT *p_font, KEY_SYSTEM_SAVE *p_sv, GAMEDATA *p_gamedata, HEAPID heapID );
 static void KeySys_SelMenu_Exit( KEYSYS_SELECT_MENU *p_wk );
@@ -151,12 +158,15 @@ static void KeySys_SelMenu_Difficulty_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MEN
 static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Difficulty_DecideCallBack( int index, void *p_wk_adrs );
 static void KeySys_SelMenu_Wfbc_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARAM *p_param );
 static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, void *p_wk_adrs );
+static void KeySys_SelMenu_Door_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARAM *p_param );
+static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Door_DecideCallBack( int index, void *p_wk_adrs );
 
 //-------------------------------------
 /// メッセージ取得
 //=====================================
 static u16 KeySys_Mes_GetDifficultInfoMessage( const KEY_SYSTEM_SAVE *cp_save );
 static u16 KeySys_Mes_GetWfbcInfoMessage( const KEY_SYSTEM_SAVE *cp_save );
+static u16 KeySys_Mes_GetDoorInfoMessage( const KEY_SYSTEM_SAVE *cp_save );
 static u16 KeySys_Mes_GetLockListInfoMessage( const KEY_SYSTEM_SAVE *cp_save, u16 cursor );
 static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE index, BOOL recv_or_send );
 
@@ -193,6 +203,7 @@ enum
   KEYSYS_DISPLAY_BOTH_RECV_DEMO,
   KEYSYS_DISPLAY_APP_SEND_DEMO,
   KEYSYS_DISPLAY_APP_IRC_YESNO,
+  KEYSYS_DISPLAY_APP_DOOR,
   KEYSYS_DISPLAY_MAX
 };
 static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl[KEYSYS_DISPLAY_MAX] =
@@ -251,6 +262,13 @@ static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl[KEYSYS_DISPLAY_MAX] =
     KeySys_Display_CreateIrcYesno,
     KeySys_Display_IsEndCreateIrcYesno,
     KeySys_Display_DeleteIrcYesno,
+    NULL,
+  },
+  //KEYSYS_DISPLAY_APP_DOOR
+  {
+    KeySys_Display_CreateDoor,
+    KeySys_Display_IsEndCreateDoor,
+    KeySys_Display_DeleteDoor,
     NULL,
   },
 };
@@ -345,24 +363,32 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         KEYSYS_STR_81,
         KEYSYS_STR_82,
         KEYSYS_STR_83,
+        KEYSYS_STR_95,
+        KEYSYS_STR_96,
       };
       static const u16 sc_key_to_info_b[]  =
       {
         KEYSYS_STR_81,
         KEYSYS_STR_82,
         KEYSYS_STR_84,
+        KEYSYS_STR_95,
+        KEYSYS_STR_96,
       };
       static const u16 sc_key_to_menu_w[]  =
       {
         KEYSYS_STR_07,
         KEYSYS_STR_09,
         KEYSYS_STR_10,
+        KEYSYS_STR_93,
+        KEYSYS_STR_94,
       };
       static const u16 sc_key_to_menu_b[]  =
       {
         KEYSYS_STR_07,
         KEYSYS_STR_09,
         KEYSYS_STR_11,
+        KEYSYS_STR_93,
+        KEYSYS_STR_94,
       };
       u16 menu_msg;
       STRBUF *p_str;
@@ -808,7 +834,7 @@ static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     if( KEYSYS_MENU_IsDecide( p_wk->p_menu ) )
     {
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
-      if( p_wk->ret != 2 )
+      if( p_wk->ret != 3 )
       {
         KEYSYS_MAP_Insert( &p_wk->select, "KLL", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
       }
@@ -833,7 +859,11 @@ static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
       KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Wfbc );
       *p_seq = SEQ_SELECT_RET;
       break;
-    case 2://もどる
+    case 2://ドアのきりかえ
+      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Door );
+      *p_seq = SEQ_SELECT_RET;
+      break;
+    case 3://もどる
       KEYSYS_SEQ_Return( p_seqwk );
       break;
     default:
@@ -1074,6 +1104,111 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ドア選択
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Seq_App_Door( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE,
+    SEQ_MAIN,
+
+    SEQ_SAVE,
+    SEQ_RET_START,
+    SEQ_RET_WAIT,
+
+    SEQ_UNSELECT_MSG_START,
+    SEQ_UNSELECT_MSG_WAIT,
+
+    SEQ_DISPLAY_DELETE,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayDoor );
+    (*p_seq)++;
+    break;
+  case SEQ_MAIN:
+    KeySys_SelMenu_Main( &p_wk->selmenu );
+
+    if( KeySys_SelMenu_IsDecide( &p_wk->selmenu ) )
+    {
+      if( KeySys_SelMenu_GetSelect( &p_wk->selmenu ) == 3 )
+      {
+        (*p_seq) = SEQ_DISPLAY_DELETE;
+      }
+      else
+      {
+        (*p_seq) = SEQ_SAVE;
+      }
+    }
+    else if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_UNSELECT )
+    {
+      (*p_seq ) = SEQ_UNSELECT_MSG_START;
+    }
+    break;
+
+  case SEQ_SAVE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
+    (*p_seq)++;
+    break;
+  case SEQ_RET_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetDoorInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
+    (*p_seq)++;
+    break;
+  case SEQ_RET_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      KeySys_SelMenu_ReStart( &p_wk->selmenu );
+      (*p_seq) = SEQ_MAIN;
+    }
+    break;
+
+  case SEQ_UNSELECT_MSG_START:
+    switch( KeySys_SelMenu_GetUnSelectedIndex( &p_wk->selmenu ) )
+    {
+    case KEY_SYSTEM_DOOR_BLACK:
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_89, KEYSYS_TEXT_TYPE_QUE );
+      break;
+    case KEY_SYSTEM_DOOR_WHITE:
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_90, KEYSYS_TEXT_TYPE_QUE );
+      break;
+    }
+    (*p_seq)++;
+    break;
+
+  case SEQ_UNSELECT_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      if( GFL_UI_KEY_GetTrg() )
+      {
+        (*p_seq) = SEQ_RET_START;
+      }
+    }
+    break;
+
+  case SEQ_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  受信デモ
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
@@ -1159,12 +1294,16 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
           KEYSYS_STR_07,
           KEYSYS_STR_09,
           KEYSYS_STR_10,
+          KEYSYS_STR_93,
+          KEYSYS_STR_94,
         };
         static const u16 sc_key_to_menu_b[]  =
         {
           KEYSYS_STR_07,
           KEYSYS_STR_09,
           KEYSYS_STR_11,
+          KEYSYS_STR_93,
+          KEYSYS_STR_94,
         };
         u16 menu_msg;
 
@@ -1755,6 +1894,49 @@ static void KeySys_Seq_CreateDisplayIrcYesno( KEYSYS_SEQ_WORK *p_seqwk, int *p_s
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア切り替え画面作成
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Seq_CreateDisplayDoor( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE_START,
+    SEQ_DISPLAY_CREATE_WAIT,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE_START:
+    KEYSYS_DISPLAY_Create( p_wk->p_display, &sc_display_tbl[KEYSYS_DISPLAY_APP_DOOR], HEAPID_KEY_SYSTEM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_DISPLAY_CREATE_WAIT:
+    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1969,7 +2151,7 @@ static void KeySys_Display_CreateLockList( void *p_wk_adrs, HEAPID heapID )
     menu_param.frm_plt  = KEYSYS_PLT_BG_MENU_NORMAL_M;
     menu_param.p_msg    = p_wk->p_msg;
     menu_param.p_font   = p_wk->p_font;
-    menu_param.max      = 3;
+    menu_param.max      = 4;
     if( KEYSYS_MAP_IsExist( &p_wk->select, "KLL" ) )
     {
       menu_param.cursor   = KEYSYS_MAP_GetValue( &p_wk->select, "KLL" );
@@ -1988,7 +2170,8 @@ static void KeySys_Display_CreateLockList( void *p_wk_adrs, HEAPID heapID )
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_04;
     menu_param.wnd_data[1].strID = KEYSYS_STR_05;
-    menu_param.wnd_data[2].strID = KEYSYS_STR_06;
+    menu_param.wnd_data[2].strID = KEYSYS_STR_91;
+    menu_param.wnd_data[3].strID = KEYSYS_STR_06;
     p_wk->p_menu = KEYSYS_MENU_Init( &menu_param, heapID );
 
     //メッセージ
@@ -2523,6 +2706,71 @@ static void KeySys_Display_DeleteIrcYesno( void *p_wk_adrs )
 
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア  作成
+ *
+ *	@param	void *p_wk_adrs ワークアドレス 
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Display_CreateDoor( void *p_wk_adrs, HEAPID heapID )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  //メッセージ
+  KEYSYS_TEXT_Create( p_wk, heapID );
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetDoorInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
+
+
+  //メニュー追加
+  KeySys_SelMenu_Init( &p_wk->selmenu, KEYSYS_SELMENU_TYPE_DOOR, &p_wk->obj, &p_wk->p_menu, p_wk->p_msg, p_wk->p_font, p_wk->p_key_sv, p_wk->p_param->p_gamedata, heapID );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア  作成待ち
+ *
+ *	@param	void *p_wk_adrs   ワークアドレス
+ *
+ *	@return　TRUE作成完了 FALSE破棄
+ */
+//-----------------------------------------------------------------------------
+static BOOL KeySys_Display_IsEndCreateDoor( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
+  BOOL is_end_menu = KeySys_SelMenu_IsDrawEnd( &p_wk->selmenu );
+
+  if( is_end_text && is_end_menu )
+  {
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア  破棄
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Display_DeleteDoor( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  //メニュー破棄
+  KeySys_SelMenu_Exit( &p_wk->selmenu );
+
+  KEYSYS_TEXT_Delete( p_wk );
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_LIST_M );
+}
 
 //=============================================================================
 /**
@@ -2721,6 +2969,9 @@ static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE t
     break;
   case KEYSYS_SELMENU_TYPE_WFBC:
     p_wk->Init = KeySys_SelMenu_Wfbc_Init;
+    break;
+  case KEYSYS_SELMENU_TYPE_DOOR:
+    p_wk->Init = KeySys_SelMenu_Door_Init;
     break;
   default:
     GF_ASSERT(0);
@@ -3116,6 +3367,109 @@ static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, voi
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  タイプ別初期化  ドア
+ *
+ *	@param	KEYSYS_SELECT_MENU *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_SelMenu_Door_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARAM *p_param )
+{
+  //メニューの設定
+  p_param->max      = 4;
+  p_param->wnd_data[0].strID  = KEYSYS_STR_92;
+  p_param->wnd_data[1].strID  = KEYSYS_STR_93;
+  p_param->wnd_data[2].strID  = KEYSYS_STR_94;
+  p_param->wnd_data[3].strID  = KEYSYS_STR_06;
+  p_wk->DecideCallBack = KeySys_SelMenu_Door_DecideCallBack;
+
+  //OBJの設定
+  {
+    if( !KEY_SYSTEM_SAVE_IsUse( p_wk->p_key_sv, KEY_SYSTEM_TYPE_DOOR_BLACK ) )
+    {
+      GFL_CLWK *p_clwk = KEYSYS_OBJ_GetClwk( p_wk->p_obj, KEYSYS_CLWK_LOCK_01 );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk,TRUE );
+    }
+    if( !KEY_SYSTEM_SAVE_IsUse( p_wk->p_key_sv, KEY_SYSTEM_TYPE_DOOR_WHITE ) )
+    {
+      GFL_CLWK *p_clwk = KEYSYS_OBJ_GetClwk( p_wk->p_obj, KEYSYS_CLWK_LOCK_02 );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk,TRUE );
+    }
+
+    {
+      GFL_CLACTPOS pos;
+
+      GFL_CLWK *p_clwk = KEYSYS_OBJ_GetClwk( p_wk->p_obj, KEYSYS_CLWK_MARK );
+      KEY_SYSTEM_DOOR door = KEY_SYSTEM_SAVE_GetDoor( p_wk->p_key_sv );
+
+      pos.x = (p_param->wnd_data[door].x-2)*8;
+      pos.y = (p_param->wnd_data[door].y+1)*8;
+      GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DRAW_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk,TRUE );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Aボタンを押したあとの決定コールバック
+ *
+ *	@param	int index   押したウィンドウのインデックス
+ *	@param	*p_wk_adrs  ワークアドレス
+ *
+ *	@return TRUE決定  FALSE押せない
+ */
+//-----------------------------------------------------------------------------
+static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Door_DecideCallBack( int index, void *p_wk_adrs )
+{
+  KEYSYS_SELECT_MENU *p_wk = p_wk_adrs;
+
+  //選択済みは押せない
+  if( KEY_SYSTEM_SAVE_GetDoor( p_wk->p_key_sv ) == index )
+  {
+    return KEYSYS_SELECT_MENU_RET_SELECTED;
+  }
+  else if( index < KEY_SYSTEM_DOOR_MAX )
+  {
+    //ロックされてたら押せない
+    switch( index )
+    {
+    case KEY_SYSTEM_DOOR_BLACK:
+      if( !KEY_SYSTEM_SAVE_IsUse( p_wk->p_key_sv, KEY_SYSTEM_TYPE_DOOR_BLACK ) )
+      {
+        return KEYSYS_SELECT_MENU_RET_UNSELECT;
+      }
+      break;
+    case KEY_SYSTEM_DOOR_WHITE:
+      if( !KEY_SYSTEM_SAVE_IsUse( p_wk->p_key_sv, KEY_SYSTEM_TYPE_DOOR_WHITE ) )
+      {
+        return KEYSYS_SELECT_MENU_RET_UNSELECT;
+      }
+      break;
+    }
+
+    //押した！
+    KEY_SYSTEM_SAVE_SetDoor( p_wk->p_key_sv, index );
+
+    //マークの位置変更
+    {
+      const KEYSYS_MENU_PARAM *cp_param = KEYSYS_MENU_GetParam( *p_wk->pp_menu );
+
+      GFL_CLACTPOS pos;
+
+      GFL_CLWK *p_clwk = KEYSYS_OBJ_GetClwk( p_wk->p_obj, KEYSYS_CLWK_MARK );
+
+      pos.x = (cp_param->wnd_data[index].x-2)*8;
+      pos.y = (cp_param->wnd_data[index].y+1)*8;
+      GFL_CLACT_WK_SetPos( p_clwk, &pos, CLSYS_DRAW_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( p_clwk,TRUE );
+    }
+  }
+
+  return KEYSYS_SELECT_MENU_RET_DECIDE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  難易度設定の説明文取得
  *
  *	@param	const KEY_SYSTEM_SAVE *cp_save キーシステムセーブ
@@ -3151,6 +3505,20 @@ static u16 KeySys_Mes_GetWfbcInfoMessage( const KEY_SYSTEM_SAVE *cp_save )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ドア設定の説明文取得
+ *
+ *	@param	const KEY_SYSTEM_SAVE *cp_save  キーシステムセーブ
+ *
+ *	@return メッセージ
+ */
+//-----------------------------------------------------------------------------
+static u16 KeySys_Mes_GetDoorInfoMessage( const KEY_SYSTEM_SAVE *cp_save )
+{
+  KEY_SYSTEM_DOOR door = KEY_SYSTEM_SAVE_GetDoor( cp_save );
+  return KEYSYS_STR_86 + door;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ロックリストの説明文取得
  *
  *	@param	const KEY_SYSTEM_SAVE *cp_save  キーシステムセーブ
@@ -3168,6 +3536,8 @@ static u16 KeySys_Mes_GetLockListInfoMessage( const KEY_SYSTEM_SAVE *cp_save, u1
   case 1:
     return KeySys_Mes_GetWfbcInfoMessage( cp_save );
   case 2:
+    return KeySys_Mes_GetDoorInfoMessage( cp_save );
+  case 3:
     return KEYSYS_STR_28;
   default:
     GF_ASSERT(0);
@@ -3342,7 +3712,9 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
     {
       2,  //しろのかんたんキー
       1,  //くろのむずかしいキー
-      1,
+      1,  //あとで帰る
+      1,  //くろのドアキー
+      2,  //しろのドアキー
     };
     u8 plt_ofs  = sc_plt_ofs[ key ];
 

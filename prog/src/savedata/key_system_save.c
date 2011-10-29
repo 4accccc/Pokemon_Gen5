@@ -27,26 +27,31 @@
 */
 //=============================================================================
 //-------------------------------------
-///	持っているキーのマジックキー（固有ならなんでもよい。ここでは円周率縦読み）
+///	持っているキーのマジックキー
 //=====================================
 static const u32 sc_have_magic_num[KEY_SYSTEM_TYPE_MAX] =
 {
-  0x35691,//KEY_SYSTEM_TYPE_SELF_DIFFICULT,     //難易度変更
-  0x18256,//KEY_SYSTEM_TYPE_SELF_CLOSEDOOR,     //開かずの扉
-  0x59389,//KEY_SYSTEM_TYPE_SELF_INFINITYDUNGEON, //無限ダンジョン
+  0x35691,//KEY_SYSTEM_TYPE_DIFFICULT_EASY,     //難易度変更
+  0x18256,//KEY_SYSTEM_TYPE_DIFFICULT_HARD,     //難易度変更
+  0x59389,//KEY_SYSTEM_TYPE_CITY_WFBC,          //反対の街開放キー
+  0x48292,//KEY_SYSTEM_TYPE_DOOR_BLACK,         //黒のドアキー
+  0x09892,//KEY_SYSTEM_TYPE_DOOR_WHITE,         //白のドアキー
+
 };
 //-------------------------------------
-///	要素開放されたもののマジックキー（固有ならなんでもよい。ここでは円周率縦読み）
+///	要素開放されたもののマジックキー
 //=====================================
 static const u32 sc_use_magic_num[KEY_SYSTEM_TYPE_MAX] =
 {
-  0x93389,//KEY_SYSTEM_TYPE_RECV_DIFFICULT,     //難易度変更
-  0x22843,//KEY_SYSTEM_TYPE_RECV_CLOSEDOOR,     //開かずの扉
-  0x34771,//KEY_SYSTEM_TYPE_RECV_INFINITYDUNGEON, //無限ダンジョン
+  0x93389,//KEY_SYSTEM_TYPE_DIFFICULT_EASY,     //難易度変更
+  0x22843,//KEY_SYSTEM_TYPE_DIFFICULT_HARD,     //難易度変更
+  0x34771,//KEY_SYSTEM_TYPE_CITY_WFBC,          //反対の街開放キー
+  0xab031,//KEY_SYSTEM_TYPE_DOOR_BLACK,         //黒のドアキー
+  0xb3818,//KEY_SYSTEM_TYPE_DOOR_WHITE,         //白のドアキー
 };
 
 //-------------------------------------
-///	難易度のマジックキー（固有ならなんでもよい。ここでは円周率縦読み）
+///	難易度のマジックキー
 //=====================================
 static const u32 sc_difficult_magic_num[KEY_SYSTEM_DIFFICULT_MAX] =
 {
@@ -56,12 +61,22 @@ static const u32 sc_difficult_magic_num[KEY_SYSTEM_DIFFICULT_MAX] =
 };
 
 //-------------------------------------
-///	WFBCのマジックキー（固有ならなんでもよい。ここでは円周率縦読み）
+///	WFBCのマジックキー
 //=====================================
 static const u32 sc_wfbc_magic_num[KEY_SYSTEM_WFBC_MAX] =
 {
   0x34525,//KEY_SYSTEM_WFBC_SELF,     //自分のバージョンの街
   0x11963,//KEY_SYSTEM_WFBC_REVERSE,  //反対バージョンの街
+};
+
+//-------------------------------------
+///	ドアのマジックキー
+//=====================================
+static const u32 sc_door_magic_num[KEY_SYSTEM_DOOR_MAX] =
+{
+  0x94525,//KEY_SYSTEM_DOOR_NORMAL,   //通常
+  0x81963,//KEY_SYSTEM_DOOR_BLACK,    //黒のドアキー
+  0x38569,//KEY_SYSTEM_DOOR_WHITE,    //白のドアキー
 };
 
 //=============================================================================
@@ -78,6 +93,7 @@ struct _KEY_SYSTEM_SAVE
   u32                   use[KEY_SYSTEM_TYPE_MAX];
   u32                   diffcult;
   u32                   wfbc;
+  u32                   door;
   u32                   seed;
 };
 
@@ -308,6 +324,52 @@ KEY_SYSTEM_WFBC KEY_SYSTEM_SAVE_GetWfbc( const KEY_SYSTEM_SAVE *cp_wk )
   }
 
   return KEY_SYSTEM_WFBC_SELF;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ドアを設定
+ *
+ *	@param	KEY_SYSTEM_SAVE *p_wk ワーク
+ *	@param	door              設定するドア
+ */
+//-----------------------------------------------------------------------------
+void KEY_SYSTEM_SAVE_SetDoor( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_DOOR door )
+{
+  GF_ASSERT( door < KEY_SYSTEM_DOOR_MAX );
+  {
+    u32 masic_num = sc_door_magic_num[ door ];
+    u32 key = masic_num ^ p_wk->seed; //xorで暗号化
+
+    p_wk->door = key;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドアを取得
+ *
+ *	@param	const KEY_SYSTEM_SAVE *cp_wk  ワーク
+ *
+ *	@return ドア
+ */
+//-----------------------------------------------------------------------------
+KEY_SYSTEM_DOOR KEY_SYSTEM_SAVE_GetDoor( const KEY_SYSTEM_SAVE *cp_wk )
+{
+  int i;
+
+  for( i = 0; i < KEY_SYSTEM_DOOR_MAX; i ++ )
+  {
+    u32 key = cp_wk->door;
+    u32 masic_num = key ^ cp_wk->seed;  //xorで復号化
+
+    if( masic_num == sc_door_magic_num[ i ] )
+    {
+      return i;
+    }
+  }
+
+  return KEY_SYSTEM_DOOR_NORMAL;
 }
 
 #ifdef PM_DEBUG

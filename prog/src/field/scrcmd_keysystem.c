@@ -90,6 +90,29 @@ VMCMD_RESULT EvCmdKeySys_GetDifficulty( VMHANDLE *p_core, void *p_wk_adrs )
 
   return VMCMD_RESULT_CONTINUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドアを取得
+ *
+ *	@param	VMHANDLE *p_core  VMハンドル
+ *	@param	*p_wk_adrs  スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdKeySys_GetDoor( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_scrcmd = p_wk_adrs;
+  SCRIPT_WORK *p_sc = SCRCMD_WORK_GetScriptWork( p_scrcmd );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_scrcmd );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+  KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( p_sv );
+  u16 *p_ret = SCRCMD_GetVMWork( p_core, p_scrcmd );
+  *p_ret = KEY_SYSTEM_SAVE_GetDoor( p_key );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 static void EvCmdKeySys_CallKeyGetDemo_Callback( void* p_wk_adrs )
 {

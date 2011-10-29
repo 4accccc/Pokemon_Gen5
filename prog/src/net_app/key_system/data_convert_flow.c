@@ -396,7 +396,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     GF_ASSERT( p_wk->p_mb == NULL );
 
     p_wk->p_recv_data = NULL;
-    p_wk->p_mb = MB_PARENT_DATACONV_Init( HEAPID_KEY_SYSTEM );
+    p_wk->p_mb = MB_PARENT_DATACONV_Init( GFL_HEAPID_APP );
     {
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
       BOOL is_save_exist = SaveData_GetExistFlag( p_sv );
@@ -507,6 +507,12 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
   case SEQ_CONVERT_YESNO_MSG:
+    KEYSYS_TEXT_Exit( p_wk->p_text );
+    p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+    KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+    KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_07, KEYSYS_TEXT_TYPE_STREAM );
     *p_seq = SEQ_CONVERT_YESNO_START;
     break;
@@ -794,6 +800,11 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
   case SEQ_CONVERT_YESNO_MSG:
+    KEYSYS_TEXT_Exit( p_wk->p_text );
+    p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+    KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+    KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_07, KEYSYS_TEXT_TYPE_STREAM );
     *p_seq = SEQ_CONVERT_YESNO_START;
     break;

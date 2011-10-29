@@ -12,6 +12,7 @@
 #include "system/gfl_use.h"
 #include "savedata/data_convert_save.h"
 #include "savedata/musical_save.h"
+#include "print/str_tool.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
@@ -100,11 +101,21 @@ BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAV
   int i;
   BOOL same_owner = TRUE;
 
+
+  //
+  OS_TPrintf( "▼コンバート情報\n" );
+  OS_TPrintf( "トレーナーID=%d\n", cp_all_data->owner.trainerID );
+  OS_TPrintf( "性別=%d\n", cp_all_data->owner.sex );
+  OS_TPrintf( "バージョン=%d\n", cp_all_data->owner.version );
+
   for( i = 0; i < DATA_CONVERT_OWNER_MAX; i++ )
   {
     if( bit & (1<<i) )
     {
-      if( GFL_STD_MemComp( &cp_wk->owner[i], &cp_all_data->owner, sizeof(WB_SAVE_CONV_OWNER) ) != 0 )
+      if( cp_wk->owner[i].trainerID != cp_all_data->owner.trainerID
+        || STRTOOL_Comp( cp_wk->owner[i].name, cp_all_data->owner.name ) == FALSE
+        || cp_wk->owner[i].sex != cp_all_data->owner.sex 
+        || cp_wk->owner[i].version != cp_all_data->owner.version )
       {
         same_owner = FALSE;
         break;

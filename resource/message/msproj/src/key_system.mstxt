@@ -2436,6 +2436,399 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_86"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひみつの　ドアを　あけることができます
+げんざいは　とじて　います</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:56:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>秘密の　ドアを　開けることができます
+現在は　閉じて　います</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:56:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_87"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひみつの　ドアを　あけることができます
+げんざいは　くろの　ドアを　あけています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:57:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>秘密の　ドアを　開けることができます
+現在は　黒の　ドアを　開けています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:57:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_88"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひみつの　ドアを　あけることができます
+げんざいは　しろの　ドアを　あけています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:57:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>秘密の　ドアを　開けることができます
+現在は　白の　ドアを　開けています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:57:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_89"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのドアキーを　もらわないと
+この　こうもくは　えらべません</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:58:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒のドアキーを　もらわないと
+この項目は　選択できません</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:59:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_90"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのドアキーを　もらわないと
+この　こうもくは　えらべません</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:59:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白のドアキーを　もらわないと
+この項目は　選択できません</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T07:59:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_91"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひみつの　ドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:02:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひみつの　ドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:02:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_92"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とじている</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:08:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>閉じている</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:08:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_93"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:08:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒のドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:09:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_94"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:09:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白のドア</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:09:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_95"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのドアキー　を
+てにいれました▼
+「くろのドア」が
+せんたく　できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒のドアキー　を
+入手しました▼
+「黒のドア」が
+選択できるように　なりました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:29:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_96"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのドアキー　を
+てにいれました▼
+「しろのドア」が
+せんたく　できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:29:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白のドアキー　を
+入手しました▼
+「白のドア」が
+選択できるように　なりました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-29T08:29:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="DATACONV_ROM_TITLE"
 		Style="Large">
 		<LanguageCell

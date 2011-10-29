@@ -15178,9 +15178,9 @@
 /**
  * _KEYSYS_GET_DIFFICULTY 現在の難易度を取得 
  * @param ret_wk    取得したデータ以下
- *                  KEY_SYSTEM_DIFFICULT_EASY    (0)   //簡単
- *                  KEY_SYSTEM_DIFFICULT_NORMAL  (1)   //通常
- *                  KEY_SYSTEM_DIFFICULT_HARD    (2)   //難しい
+ *                  KEYSYS_DIFFICULT_EASY    (0)   //簡単
+ *                  KEYSYS_DIFFICULT_NORMAL  (1)   //通常
+ *                  KEYSYS_DIFFICULT_HARD    (2)   //難しい
  */
 //--------------------------------------------------------------
 #define _KEYSYS_GET_DIFFICULTY( ret_wk ) \
@@ -15206,6 +15206,24 @@
   .macro  _ASM_KEYSYS_CALL_DEMO get_key
   .short  EV_SEQ_KEYSYS_CALL_DEMO
   .short  \get_key
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * _KEYSYS_GET_DOOR 現在の難易度を取得 
+ * @param ret_wk    取得したデータ以下
+ *                  KEYSYS_DOOR_NORMAL     (0)   //通常
+ *                  KEYSYS_DOOR_BLACK      (1)   //黒のトビラ
+ *                  KEYSYS_DOOR_WHITE      (2)   //白のトビラ
+ */
+//--------------------------------------------------------------
+#define _KEYSYS_GET_DOOR( ret_wk ) \
+      _ASM_KEYSYS_GET_DOOR ret_wk
+
+  .macro  _ASM_KEYSYS_GET_DOOR ret_wk
+  .short  EV_SEQ_KEYSYS_GET_DOOR
+  .short  \ret_wk
   .endm
 
 //======================================================================

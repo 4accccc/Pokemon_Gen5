@@ -1050,7 +1050,7 @@
   DEF_CMD( EvCmdKeySys_GetWfbc, EV_SEQ_KEYSYS_GET_WFBC )
   DEF_CMD( EvCmdKeySys_GetDifficulty, EV_SEQ_KEYSYS_GET_DIFFICULTY )
   DEF_CMD( EvCmdKeySys_CallKeyGetDemo, EV_SEQ_KEYSYS_CALL_DEMO )
-  NO_CMD()
+  DEF_CMD( EvCmdKeySys_GetDoor, EV_SEQ_KEYSYS_GET_DOOR )
 
   //データコンバート
   DEF_CMD( EvCmdDataConv_GetFlag, EV_SEQ_DATACONV_GET_FLAG )
