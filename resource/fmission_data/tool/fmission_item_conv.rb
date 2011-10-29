@@ -32,7 +32,7 @@ DST_BRIEF_NPC_HDAT = "フェス NPCミッション用アイテムデータテーブル ヘッダ"
 DST_AUTOR = "miyuki iwasawa"
 DST_NOTE = "このファイルはresource/fmission_data/tool/fmission_item_conv.rbによって自動生成されたものです。"
 
-KIRA_ITEM_SET_NUM = 4
+KIRA_ITEM_SET_NUM = 6
 
 TRADE_ITEM_TBL_MAX = 3
 TRADE_ITEM_CATEGORY_MAX = 4

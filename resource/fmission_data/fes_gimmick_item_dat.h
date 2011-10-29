@@ -14,7 +14,7 @@
 #ifndef __ASM_NO_DEF_
 #endif
 
-#define FES_KIRA_ITEM_PARAM_NUM   ( 4 )
+#define FES_KIRA_ITEM_PARAM_NUM   ( 6 )
 
 
 
