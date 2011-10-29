@@ -32,6 +32,9 @@
 #define C13_WOMAN2_01                     13
 #define C13_POKE29_01                     14
 #define C13_BADMAN_02                     15
+#define C13_MAN3A_01                      16
+#define C13_WOMAN2A_01                    17
+#define C13_MAN3_01                       18
 
 #endif //ZONE_C13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -24,5 +24,8 @@
 #define SCRID_BG_C13_GYMSIGN_01 (17)
 #define SCRID_C13_POKE29_01 (18)
 #define SCRID_C13_BADMAN_02 (19)
+#define SCRID_C13_WOMAN2A_01 (20)
+#define SCRID_C13_MAN3_01 (21)
+#define SCRID_C13_MAN3A_01 (22)
 
 #endif //_C13_DEF_H_

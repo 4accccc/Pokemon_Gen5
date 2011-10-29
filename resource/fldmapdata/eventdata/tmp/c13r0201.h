@@ -11,6 +11,10 @@
 
 #define C13R0201_WORKMAN2_01               0
 #define C13R0201_MIDDLEWOMAN1_01           1
+#define C13R0201_BABYBOY1_01               2
+#define C13R0201_BABYGIRL1_01              3
+#define C13R0201_BABYGIRL1_02              4
+#define C13R0201_WOMAN3_01                 5
 
 #endif //ZONE_C13R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

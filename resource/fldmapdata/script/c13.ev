@@ -41,6 +41,9 @@ _EVENT_DATA   ev_bg_c13_sign2_01
 _EVENT_DATA   ev_bg_c13_gymsign_01
 _EVENT_DATA   ev_c13_poke29_01
 _EVENT_DATA   ev_c13_badman_02
+_EVENT_DATA	ev_c13_woman2a_01
+_EVENT_DATA	ev_c13_man3_01
+_EVENT_DATA	ev_c13_man3a_01
 _EVENT_DATA_END
 
 
@@ -762,6 +765,27 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c13_poke29_01
   _EASY_TALK_POKEVOICE( MONSNO_538, msg_c13_poke29_01 )
+EVENT_END
+
+/************************************************************/
+/*	C13	WOMAN2A：一言メッセージ						*/
+/************************************************************/
+EVENT_START	ev_c13_woman2a_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_woman2a_01 )
+EVENT_END
+
+/************************************************************/
+/*	C13	MAN3：一言メッセージ						*/
+/************************************************************/
+EVENT_START	ev_c13_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_man3_01 )
+EVENT_END
+
+/************************************************************/
+/*	C13	MAN3a：一言メッセージ						*/
+/************************************************************/
+EVENT_START	ev_c13_man3a_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_man3a_01 )
 EVENT_END
 
 /**************************************************************/
