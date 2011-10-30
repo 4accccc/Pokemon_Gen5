@@ -587,9 +587,9 @@
 #define FV_PC_NPOKE_BREEDERM               698 /* 0x02ba ポケモンセンター：BREEDERW */
 #define FV_C06_HAKASE2_01                  699 /* 0x02bb フキヨセシティ：アララギ娘 */
 #define FV_C08_SWLEADER7_02                700 /* 0x02bc ソウリュウシティ：シャガ */
-		/* not used   701(0x02bd) */
-		/* not used   702(0x02be) */
-		/* not used   703(0x02bf) */
+#define FV_R20_SWRIVAL_01                  701 /* 0x02bd 20番道路：ライバル */
+#define FV_R20_SWPLAZMA_01                 702 /* 0x02be 20番道路：プラズマ団 */
+#define FV_R20_SWLEADER1_01                703 /* 0x02bf 20番道路：チェレン */
 		/* not used   704(0x02c0) */
 		/* not used   705(0x02c1) */
 #define FV_C05_HAKAIM_01                   706 /* 0x02c2 ホドモエシティ：旧プラズマ団 */
@@ -2120,25 +2120,25 @@
 #define SYS_FLAG_WBT_TUTORIAL             2441 /* 0x0989 WBT:チュートリアル中のフラグ */
 #define SYS_FLAG_NPOKE_OPEN               2442 /* 0x098a ホドモエシティ：Nポケ開放フラグ */
 #define SYS_FLAG_FMISSION_ENTRY           2443 /* 0x098b フェスミッション参加フラグ */
-		/* not used  2444(0x098c) */
-		/* not used  2445(0x098d) */
-		/* not used  2446(0x098e) */
-		/* not used  2447(0x098f) */
-		/* not used  2448(0x0990) */
-		/* not used  2449(0x0991) */
-		/* not used  2450(0x0992) */
-		/* not used  2451(0x0993) */
-		/* not used  2452(0x0994) */
-		/* not used  2453(0x0995) */
-		/* not used  2454(0x0996) */
-		/* not used  2455(0x0997) */
-		/* not used  2456(0x0998) */
-		/* not used  2457(0x0999) */
-		/* not used  2458(0x099a) */
-		/* not used  2459(0x099b) */
-		/* not used  2460(0x099c) */
-		/* not used  2461(0x099d) */
-		/* not used  2462(0x099e) */
+#define SYS_FLAG_FES_OPEN_01              2444 /* 0x098c フェスミッションのオープンフラグその1 */
+#define SYS_FLAG_FES_OPEN_02              2445 /* 0x098d フェスミッションのオープンフラグその2 */
+#define SYS_FLAG_FES_OPEN_03              2446 /* 0x098e フェスミッションのオープンフラグその3 */
+#define SYS_FLAG_FES_OPEN_04              2447 /* 0x098f フェスミッションのオープンフラグその4 */
+#define SYS_FLAG_FES_OPEN_05              2448 /* 0x0990 フェスミッションのオープンフラグその5 */
+#define SYS_FLAG_FES_OPEN_06              2449 /* 0x0991 フェスミッションのオープンフラグその6 */
+#define SYS_FLAG_FES_OPEN_07              2450 /* 0x0992 フェスミッションのオープンフラグその7 */
+#define SYS_FLAG_FES_OPEN_08              2451 /* 0x0993 フェスミッションのオープンフラグその8 */
+#define SYS_FLAG_FES_OPEN_09              2452 /* 0x0994 フェスミッションのオープンフラグその9 */
+#define SYS_FLAG_FES_OPEN_10              2453 /* 0x0995 フェスミッションのオープンフラグその10 */
+#define SYS_FLAG_FES_OPEN_11              2454 /* 0x0996 フェスミッションのオープンフラグその11 */
+#define SYS_FLAG_FES_OPEN_12              2455 /* 0x0997 フェスミッションのオープンフラグその12 */
+#define SYS_FLAG_FES_OPEN_13              2456 /* 0x0998 フェスミッションのオープンフラグその13 */
+#define SYS_FLAG_FES_OPEN_14              2457 /* 0x0999 フェスミッションのオープンフラグその14 */
+#define SYS_FLAG_FES_OPEN_15              2458 /* 0x099a フェスミッションのオープンフラグその15 */
+#define SYS_FLAG_FES_OPEN_16              2459 /* 0x099b フェスミッションのオープンフラグその16 */
+#define SYS_FLAG_FES_OPEN_17              2460 /* 0x099c フェスミッションのオープンフラグその17 */
+#define SYS_FLAG_FES_OPEN_18              2461 /* 0x099d フェスミッションのオープンフラグその18 */
+#define SYS_FLAG_FES_OPEN_19              2462 /* 0x099e フェスミッションのオープンフラグその19 */
 #define SYS_FLAG_ARRIVE_N01R0401          2463 /* 0x099f 到着フラグ：N01R0101 */
 #define SYS_FLAG_ARRIVE_D20R0501          2464 /* 0x09a0 到着フラグ：D20R0501 */
 #define SYS_FLAG_ARRIVE_D31R0201          2465 /* 0x09a1 到着フラグ：D31R0201 */
