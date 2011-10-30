@@ -110,7 +110,7 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   MI_CpuClear8( wk->mmdl_tbl, sizeof(MMDL*)*FES_GIMMICK_NPC_POINT_MAX );
 
   //乱数コンテキスト初期化
-  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, zone_id, &rnd_c );
+  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, FES_GIMMICK_SUB_GetRndInitZone(zone_id), &rnd_c );
 
   sub_SetPosByLot( gsys, wk, fmwk, zone_id, &rnd_c );
   

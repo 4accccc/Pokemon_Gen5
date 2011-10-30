@@ -97,7 +97,7 @@ void FES_GIMMICK_ITEM_ZoneChangeSetup( FES_GIMMICK_ITEM_WORK* wk, GAMESYS_WORK* 
   MI_CpuClear8( wk->item, sizeof(u16)*FES_GIMMICK_ITEM_POINT_MAX );
   
   //乱数コンテキスト初期化
-  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, zone_id, &rnd_c );
+  FES_GIMMICK_SUB_RndInit( fmwk->beacon.key, FES_GIMMICK_SUB_GetRndInitZone(zone_id), &rnd_c );
 
   sub_SetPosByLot( gsys, wk, fmwk, zone_id, &rnd_c );
   IWASAWA_Printf( "zone_id = %d\n", zone_id ); 

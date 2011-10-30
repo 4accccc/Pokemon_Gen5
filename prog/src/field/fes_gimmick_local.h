@@ -56,6 +56,7 @@ struct _FES_GIMMICK{
   FES_GIMMICK_TMP_WORK  tmp_wk; //テンポラリワーク領域
 };
 
+extern u16 FES_GIMMICK_SUB_GetRndInitZone( const u16 zone_id );
 extern void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandContext* rnd_c );
 extern u32 FES_GIMMICK_SUB_RndGet( GFL_STD_RandContext* rnd_c, u32 range, u32* p_tbl, int tbl_max );
 
