@@ -86,11 +86,11 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succe
   *fmwk = *src;
   if( !succeed_f ){ //継承ミッションでなければキー生成
     beacon->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
+    fmwk->start_rtc = FMISSION_RTC_NULL;
   }else{
     beacon->my_score = 0; //継承ミッションの場合、スコアクリア
     beacon->time = FEST_MISSION_GetLife( src ); //受信時点からの残りライフを設定
   }
-  fmwk->start_rtc = FMISSION_RTC_NULL;  //RTCは必ず初期化
 
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート m_id=%d, key = %08x, goal=%d, param=%d, time=%d sec\n",
     beacon->m_id, beacon->key, beacon->goal, beacon->base_param, beacon->time);

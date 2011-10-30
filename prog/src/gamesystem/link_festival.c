@@ -342,14 +342,16 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
  * 時間カウントの基準も、この関数を呼び出したタイミングで決定します
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk )
+void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk, BOOL succeed_f  )
 {
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     GF_ASSERT(0); //ミッション開始してないのに呼び出しちゃダメ
     return;
   }
-  //残り時間カウントの基準となるRTCをセット
-  FEST_MISSION_PlayStart( &wk->mission );
+  if( !succeed_f ){
+    //継承ミッションでなければ残り時間カウントの基準となるRTCをセット
+    FEST_MISSION_PlayStart( &wk->mission );
+  }
   
   //ライブ状態セット
   LINK_FESTIVAL_MissionLiveStatusSet( wk, TRUE );
@@ -672,6 +674,8 @@ void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
   if( wk->log_num < LINKFEST_LOG_MAX ){
     ++wk->log_num;
   }
+  //エントリースタックにのっていたら削除する
+  FMISSION_ENTRY_TBL_DeleteData( wk, fmwk );
   return;
 }
 

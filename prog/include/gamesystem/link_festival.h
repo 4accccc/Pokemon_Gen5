@@ -223,7 +223,7 @@ extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m
  * 時間カウントの基準も、この関数を呼び出したタイミングで決定します
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk );
+extern void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk, BOOL succeed_f );
 
 //---------------------------------------------------------
 /*

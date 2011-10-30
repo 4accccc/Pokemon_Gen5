@@ -489,7 +489,7 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     (*seq)++;
     break;
   case 6:
-    LINK_FESTIVAL_MissionPlayStart( wk->fest_sys );
+    LINK_FESTIVAL_MissionPlayStart( wk->fest_sys, wk->succeed_f );
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
