@@ -181,6 +181,10 @@ EVENT_START ev_bg_d27r1201_pass_01
     _HIDE_SHIP_PASSWORD_ID_GET( LOCALWORK10 )
     _DEBUG_PRINT_WK( LOCALWORK10 )
     
+    //起動SE
+    _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_01 )
+    _SE_WAIT()
+    
     //パスワードを入れますか？
     _SYSWIN_MSG( msg_d27r1201_pass_02 , POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
@@ -197,8 +201,12 @@ EVENT_START ev_bg_d27r1201_pass_01
       //正解
       IF $LCW_PASSRESULT == TRUE THEN
         
+        //正解SE
+        _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_02 )
+
         //バリアが解除された！
         _SYSWIN_MSG( msg_d27r1201_switch_01 , POS_DOWN )
+        _SE_WAIT()
         _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
         
@@ -226,6 +234,11 @@ EVENT_START ev_bg_d27r1201_pass_01
       
       //不正解
       ELSE
+
+        //不正解SE
+        _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_03 )
+        _SE_WAIT()
+      
         _SYSWIN_MSG( msg_d27r1201_pass_03 , POS_DOWN )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
