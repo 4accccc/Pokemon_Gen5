@@ -52,7 +52,7 @@ _EVENT_DATA    ev_c15_pwmoji_04
 _EVENT_DATA    ev_c15_babygirl2_01
 _EVENT_DATA    ev_c15_adultw_02
 _EVENT_DATA    ev_c15_pwmoji_05
-_EVENT_DATA    ev_c15_babygi1_03
+_EVENT_DATA    ev_c15_babyboy1_03
 _EVENT_DATA    ev_c15_adultw_03
 _EVENT_DATA    ev_c15_veteranm_01
 _EVENT_DATA_END
@@ -870,7 +870,7 @@ EVENT_END
 /**************************************************************/
 /*			一言メッセージ					  */
 /**************************************************************/
-EVENT_START		ev_c15_babygi1_03
+EVENT_START		ev_c15_babyboy1_03
   //主人公名格納
   _PLAYER_NAME( 0 )
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_babyboy1_03 )

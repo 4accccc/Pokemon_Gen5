@@ -45,6 +45,10 @@
 #define C15_PWMOJI_04                     31
 #define C15_BABYGIRL2_01                  32
 #define C15_ADULTW_02                     33
+#define C15_PWMOJI_05                     34
+#define C15_BABYBOY1_03                   35
+#define C15_ADULTW_03                     36
+#define C15_VETERANM_01                   37
 
 #endif //ZONE_C15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
