@@ -13,5 +13,6 @@
 #define SCRID_BG_R19_BOARD_03 (6)
 #define SCRID_POS_R19_CHAMPION_02 (7)
 #define SCRID_POS_R19_ZUKAN_01 (8)
+#define SCRID_R19_GIRL2_01 (9)
 
 #endif //_R19_DEF_H_

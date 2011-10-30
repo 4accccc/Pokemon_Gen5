@@ -75,6 +75,9 @@ init_flags:
 	
 	//c12r0202：レパルダス非表示
   _FLAG_SET( FV_C12R0202_POKE32_01 )
+  
+  //R20
+  _FLAG_SET( FV_R20_SWPLAZMA_01 )
 
   //C03P09 ヒウンアイスイベントの行列非表示
   _FLAG_SET( FV_C03P09_PEOPLE_01 )

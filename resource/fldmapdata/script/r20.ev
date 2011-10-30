@@ -25,12 +25,15 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_r20_mountman_01
 _EVENT_DATA    ev_pos_r20_mountman_02
-_EVENT_DATA    ev_pos_r20_swbell_01
+_EVENT_DATA    ev_pos_r20_swrival_01
 _EVENT_DATA    ev_r20_mountman_01
 _EVENT_DATA    ev_bg_r20_board_01
 _EVENT_DATA    ev_pos_ochiba_fall
 _EVENT_DATA    ev_zone_r20
 _EVENT_DATA    ev_init_r20
+_EVENT_DATA    ev_r20_swrival_01
+_EVENT_DATA    ev_r20_swplazmaw_01
+_EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
@@ -41,7 +44,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_r20
- 
+{
   //季節チェック
   DEFINE_LOCAL SCWK_SEASON
   _GET_SEASON_ID( SCWK_SEASON )
@@ -53,15 +56,18 @@ INIT_EVENT_START   ev_zone_r20
   ELSE
     _FLAG_RESET( FV_R20_RANGER_01 )
   ENDIF
-  
+}
 INIT_EVENT_END
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_r20
-
-//
+  IF $WK_SCENE_R20 == 2 THEN
+    _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 161, -3, 662, DIR_UP )
+  ELSIF $WK_SCENE_R20 == 3 THEN
+    _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 162, -3, 668, DIR_DOWN )
+  ENDIF
 
 INIT_EVENT_END
 
@@ -149,16 +155,17 @@ EVENT_START   ev_pos_r20_mountman_02
     _TRAINER_LOSE()
   ENDIF
   
-  //メッセージ：おおそれは
+  //メッセージ：まいった
   _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_04, R20_MOUNTMAN_01, POS_DEFAULT )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
-  //==================================//
+  //ライバル移動
+  _OBJ_POS_CHANGE( R20_SWRIVAL_01, 161, -3, 662, DIR_UP )
   
+  //==================================//
   //R20 POS無効
-  $WK_SCENE_R20 = 3
-
+  $WK_SCENE_R20 = 2
   //==================================//
 EVENT_END
 
@@ -191,74 +198,202 @@ EVENT_END
 
 
 /**************************************************************/
-/*POS：ベルとポケガイダンス                     */
+/*POS：長い草イベント                     */
 /**************************************************************/
-EVENT_START   ev_pos_r20_swbell_01
-  //性別が格納されるローカル変数を定義
-  DEFINE_LOCAL SCWK_SEX
-  _GET_MY_SEX(SCWK_SEX)
-  
-  //メッセージ：おおい（しっぽなしメッセージ）
-  //男性だった場合
-  IF $SCWK_SEX == PM_MALE THEN
-  
-  _PLAINWIN_MSG_DOWN( msg_r20_white_11a )
-  
-  //女性だった場合
-  ELSE
-  _PLAINWIN_MSG_DOWN( msg_r20_white_11b )
+EVENT_START   ev_pos_r20_swrival_01
 
-  
-  ENDIF
-  
-  _MSGWIN_CLOSE()
+  //アニメ：ライバル「！」
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
 
-  //フィールド上にベル配置
-  _OBJ_ADD_EX( 134, 662, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
-  
-  //自機座標取得
+  //プレイヤー位置取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  //【仮】主人公の位置より1歩下につくように
-  $LCW_POSX -= 1
   
-  //アニメ：ベル隣接
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  //アニメ：ライバル隣接
+  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, LCW_POSX, 661, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
-  _BALLOONWIN_OBJMSG_POS( msg_r20_white_12, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //ライバル：こっちだ！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_01, R20_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】芝居
-  
-  //せいそくちリスト開放SE再生
-  _SE_PLAY( SEQ_SE_SW_ZKN_KAIHOU  )
-  _SE_WAIT()
-  
-  //せいそくちリスト開放
-  _SET_ZUKAN_HABITAT_FLAG()
-  
-  //メッセージ：じゃじゃーん
-  _BALLOONWIN_OBJMSG_POS( msg_r20_white_13, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-  _BALLOONWIN_OBJMSG_POS( msg_r20_white_14, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //メッセージ：じゃあいっぱい
-  _BALLOONWIN_OBJMSG_POS( msg_r20_white_15, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：退場
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 134,662, FORCE_TYPE_NPC, 8, DIR_UD)
+  //アニメ：主人公・ライバル長い草方面に移動
+  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 162, 665, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 163, 665, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
-  //サポートOBJ消す
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  //アニメ：主人公・ライバル、チェレンに向き合う
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：二人とも見て！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_01, R20_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：全員長い草方面を見る
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_d)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_d)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：いろのこい
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_02, R20_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレンと向き合う
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_l)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：そう！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_03, R20_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン退場
+  _OBJ_ANIME_AUTO( R20_SWLEADER1_01, 161, 653, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_u)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：へぇ
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_02, R20_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公と向き合う
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：きめた！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_03, R20_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル移動
+  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 162, 668, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン動作モデル非表示
+  _OBJ_DEL( R20_SWLEADER1_01 )
 	
   //==================================//
+  //POS無効
+  $WK_SCENE_R20 = 3
+  //チェレン非表示
+  _FLAG_SET( FV_R20_SWLEADER1_01 )
+  //==================================//
   
-  //山男戦闘イベントPOS有効
-  $WK_SCENE_R20 = 2
+EVENT_END
 
+/**************************************************************/
+/*  ライバル：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_r20_swrival_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_swrival_04 )
+EVENT_END
+
+/**************************************************************/
+/*  SWPLAZMAW：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_r20_swplazmaw_01
+  
+  _TALK_OBJ_START()
+
+  //==================================//
+  //ライバル表示
+  _FLAG_RESET( FV_R20_SWRIVAL_01 )
+  //==================================//
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( R20_SWRIVAL_01 )
+  
+  //ライバル位置移動
+  _OBJ_POS_CHANGE( R20_SWRIVAL_01, 155, 2, 654, DIR_DOWN )
+  
+  //PLAZMAW：しつこい！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swplazmaw_01, R20_SWPLAZMAW_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】戦闘処理
+  _TRAINER_BTL_SET( TRID_MOUNT_14, 0 )
+  
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  //PLAZMAW：よく考えたら
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swplazmaw_02, R20_SWPLAZMAW_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：PLAZMAW退場
+  IF $LCW_POSX == 155 THEN
+    _OBJ_ANIME_AUTO( R20_SWPLAZMAW_01, 156, 653, FORCE_TYPE_NPC, 4, DIR_LR)
+  ELSE
+    _OBJ_ANIME_AUTO( R20_SWPLAZMAW_01, 155, 653, FORCE_TYPE_NPC, 4, DIR_UD)
+  ENDIF
+  
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：ライバル隣接
+  IF $LCW_POSX == 156 THEN
+    _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 155, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+    _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSX += 1
+    _OBJ_ANIME_AUTO( R20_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+    _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_l)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //ライバル：……オレも
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_05, R20_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 155, 654, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル・SWPLAZMAWの動作モデル削除
+  _OBJ_DEL( R20_SWRIVAL_01 )
+  _OBJ_DEL( R20_SWPLAZMAW_01 )
+  
+  //==================================//
+  //ライバル非表示
+  _FLAG_SET( FV_R20_SWRIVAL_01 )
+  //SWPLAZMAW非表示
+  _FLAG_SET( FV_R20_SWPLAZMA_01 )
+  //C13船舶所にライバルと船長を表示
+  _FLAG_RESET(FV_C13R0401_SWRIVAL)
+  _FLAG_RESET(FV_C13R0401_PILOT)
   //==================================//
   
 EVENT_END

@@ -31,6 +31,9 @@
 #define FLD_ITEM_8                        18
 #define FLD_ITEM_9                        19
 #define FLD_ITEM_10                       20
+#define R20_SWRIVAL_01                    21
+#define R20_SWPLAZMAW_01                  22
+#define R20_SWLEADER1_01                  23
 
 #endif //ZONE_R20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -27,6 +27,7 @@ _EVENT_DATA    ev_bg_r19_board_02
 _EVENT_DATA    ev_bg_r19_board_03
 _EVENT_DATA    ev_pos_r19_champion_02
 _EVENT_DATA    ev_pos_r19_zukan_01
+_EVENT_DATA    ev_r19_girl2_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -714,6 +715,13 @@ EVENT_START   ev_r19_boy2_01
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 	ENDIF
+EVENT_END
+
+/**************************************************************/
+/*  girl2：一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_r19_girl2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19_girl2_01 )
 EVENT_END
 
 /**************************************************************/

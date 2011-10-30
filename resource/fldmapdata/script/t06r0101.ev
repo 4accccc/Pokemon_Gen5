@@ -106,7 +106,17 @@ EVENT_START ev_scene_t06r0101_champion_01
   _MSGWIN_CLOSE()
   
   //戦闘処理
-  _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+  //最初の３匹によって分岐
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLB_17, 0 )
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLB_18, 0 )
+  ENDIF
   _CALL ev_battle_check
   
   //アニメ：BOY3定位置に戻る
@@ -143,12 +153,22 @@ EVENT_START ev_scene_t06r0101_champion_01
 	_OBJ_ANIME_AUTO( T06R0101_GIRL3_01, 6, 9, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
-  //メッセージ：あたしは　ポケモンに
+  //メッセージ：あいしょうが
   _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_03,T06R0101_GIRL3_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //戦闘処理
-  _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+  //最初の３匹によって分岐
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLG_15, 0 )
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_BTL_SET( TRID_SCHOOLG_16, 0 )
+  ENDIF
   _CALL ev_battle_check
   
   //メッセージ：こころおどる
@@ -156,6 +176,7 @@ EVENT_START ev_scene_t06r0101_champion_01
   _MSGWIN_CLOSE()
   
   _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME( T06R0101_GIRL3_01, anm_girl3_back )
   _OBJ_ANIME_WAIT()
   
@@ -168,15 +189,22 @@ EVENT_START ev_scene_t06r0101_champion_01
   _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_04,T06R0101_GIRL3_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //メッセージ：よければ
+  //瀕死・タマゴを除くポケモンの先頭を選択
+  DEFINE_LOCAL LWK_FRONT
+  _GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
+  //先頭ポケモンの名前を取得
+  _TEMOTI_MONS_NAME  (  1 , LWK_FRONT  )
+  
+  //メッセージ：では　がんばった
+  _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_10,T06R0101_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
-  //オレンのみ入手処理
-	_ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI, 5)
+  //【仮】回復処理（メッセージが必要かも）
+  _SE_PLAY( SEQ_SE_RECOVERY )
+  _SE_WAIT()
+	//回復処理
+	_TEMOTI_POKEMON_KAIFUKU()
 	
 	//メッセージ：であうはずの
   _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_11,T06R0101_CHAMPION_01, POS_DEFAULT )
