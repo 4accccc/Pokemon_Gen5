@@ -413,6 +413,7 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
 
       if( wk->succeed_f ){  //他者ミッションに参加
         LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
+        wk->mission = *LINK_FESTIVAL_GetMissionWork( wk->fest_sys );  //スタートで情報が書き換わるので取得しなおし
         FMISSION_SAVE_IncMissionEntryNum( f_save );
   
         //ミッションエントリースタックテーブルから削除
@@ -665,7 +666,8 @@ static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 l
 static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 {
   int sec = FEST_MISSION_GetLife( &wk->mission ); //残り時間
-  
+ 
+//  OS_TFPrintf(2,"draw sec=%d\n",sec);
   //説明文
   FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
