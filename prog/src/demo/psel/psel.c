@@ -143,9 +143,12 @@ enum
 #define PSELSND_CANCEL  ( SEQ_SE_CANCEL1 )
 #define PSELSND_MOVE    ( SEQ_SE_SELECT1 )
 
-#define PSELSND_DEMO_RIBBON_LOOSE  ( SEQ_SE_SDEMO_01 )
-#define PSELSND_DEMO_BOX_OPEN      ( SEQ_SE_SDEMO_02 )
 #define PSELSND_DEMO_ZOOM_UP       ( SEQ_SE_SDEMO_03 )
+
+#define PSELSND_DEMO_BEL_SWITCH     ( SEQ_SE_SW_BELLBOX_01)
+#define PSELSND_DEMO_GLASS_CLEAR    ( SEQ_SE_SW_BELLBOX_02)
+#define PSELSND_DEMO_BOX_OPEN       ( SEQ_SE_SW_BELLBOX_03)
+
 
 
 // フレーム合わせ
@@ -559,6 +562,9 @@ enum
 #define TIMETABLE_S02_BOX_OPEN         (  0*THREE_INTERRUPT)
 #define TIMETABLE_S02_MB_DISP          ( 61*THREE_INTERRUPT)  // このフレームでモンスターボール表示
 #define TIMETABLE_S02_BOX_STOP         (119*THREE_INTERRUPT)  // このフレームで止めておく
+// SEフレーム
+#define TIMETABLE_S02_SE01             ( 60*THREE_INTERRUPT)  // スイッチに触れる動き
+#define TIMETABLE_S02_SE02             ( 81*THREE_INTERRUPT)  // ふたが開く
 
 enum
 {
@@ -3126,11 +3132,7 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
 {
   if( work->sub_seq_frame >= 16 ) Psel_ThreeS02Main( work );  // 3Dのアニメ開始を少し遅らせる
 
-  //if( work->three_frame == TIMETABLE_S02_BOX_OPEN )
-  //if( work->sub_seq_frame == 15 )
-  //{
-    //PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
-  //}
+  
 
   Psel_ThreeS02OnlyMbSelectAnimeMain( work ); 
   Psel_PokeSetMain( work );
@@ -3263,7 +3265,17 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   case S02_MAIN_SEQ_BOX_OPEN_STOP_WAIT:
     {
       Psel_ThreeS02Main( work );
-      
+
+      if( work->three_frame == TIMETABLE_S02_SE01 )
+      {
+        PMSND_PlaySE( PSELSND_DEMO_BEL_SWITCH );
+        PMSND_PlaySE( PSELSND_DEMO_GLASS_CLEAR );
+      }
+      else if( work->three_frame == TIMETABLE_S02_SE02 )
+      {
+        PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
+      }
+
       if( work->three_frame == TIMETABLE_S02_MB_DISP )  // このフレームでモンスターボール表示
       {
         int i;
