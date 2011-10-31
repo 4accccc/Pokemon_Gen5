@@ -2441,6 +2441,13 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
         2,
         0,
       },
+      {
+        1,
+        16,
+        18,
+        2,
+        0,
+      },
     };
     int i;
     int cnt = 0;
@@ -2450,11 +2457,15 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
         KEYSYS_STR_13,
         KEYSYS_STR_14,
         KEYSYS_STR_18,  //WF
+        KEYSYS_STR_93,
+        KEYSYS_STR_94,
       },
       {
         KEYSYS_STR_13,
         KEYSYS_STR_14,
         KEYSYS_STR_15,  //BC
+        KEYSYS_STR_93,
+        KEYSYS_STR_94,
       }
     };
 

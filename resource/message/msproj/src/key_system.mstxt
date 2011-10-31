@@ -2743,6 +2743,72 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_97"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T05:56:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒のドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T05:56:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_98"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T05:56:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白のドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T05:56:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="KEYSYS_STR_95"
 		Style="Large">
 		<LanguageCell
