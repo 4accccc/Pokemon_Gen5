@@ -1489,7 +1489,7 @@ static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
 {
 //  if( info->action.gpower_id >= GPOWER_ID_MAX ){
-  if( GPOWER_IsEnableID( info->g_power_id ) == FALSE ) {
+  if( GPOWER_IsEnableID( info->action.g_power_id ) == FALSE ) {
     GF_ASSERT_MSG(0,"%d\n",info->action.gpower_id);
     return TRUE;
   }
