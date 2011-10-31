@@ -1103,7 +1103,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
     wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_MEDAL_OX, pp->py+ACT_MEDAL_OY, ACTANM_MEDAL_N, OBJ_BG_PRI, OBJ_SPRI_MEDAL+idx);
-  GFL_CLACT_WK_SetAutoAnmFlag( pp->cIcon, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( pp->cMedal, TRUE );
 
   //メダル数アクター
   for(i = 0;i < PANEL_NUM_ACTMAX;i++){
