@@ -4313,6 +4313,7 @@ static BOOL zonedata_IsEnvSE( u16 zone_id )
 {
   if ( zone_id == ZONE_ID_C06GYM0101 ) return TRUE;
   if ( zone_id == ZONE_ID_C04R1101 ) return TRUE;
+  if ( zone_id == ZONE_ID_C09R0401 ) return TRUE;
   return FALSE;
 }
 
