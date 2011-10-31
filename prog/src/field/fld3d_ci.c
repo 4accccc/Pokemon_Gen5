@@ -81,10 +81,10 @@
     CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB)
 
 // VSカットイン内のテクスチャ名(主人公)
-#define HEROGRA_TEX_NAME_UP "trsw_hero01"
-#define HEROGRA_TEX_NAME_DOWN "trsw_hero02"
-#define HEROGRA_PAL_NAME_UP "hero01"
-#define HEROGRA_PAL_NAME_DOWN "hero02"
+#define HEROGRA_TEX_NAME_UP "trwb_hero_ine"
+#define HEROGRA_TEX_NAME_DOWN "trwb_hero_ine_02"
+#define HEROGRA_PAL_NAME_UP "trwb_hero_ine_pl"
+#define HEROGRA_PAL_NAME_DOWN "trwb_hero_ine_02_pl"
 
 // 名前テクスチャ名
 #define NAMEGRA_TEX_NAME_UP "name_up"

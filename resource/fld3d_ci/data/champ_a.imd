@@ -964,11 +964,11 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="trsw_hero01"
+	<tex_image index="4" name="trwb_hero_ine"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero01"
+		palette_name="trwb_hero_ine_pl"
 		path="C:/home/swan_data3d/cut_in/capture_cut_in/champ/tex/trsw_hero01.tga"
 	>
 		<bitmap size="4096">
@@ -1486,11 +1486,11 @@
 			0000 0000 c000 11bb bb11 9dd1 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="trsw_hero02"
+	<tex_image index="5" name="trwb_hero_ine_02"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hero02"
+		palette_name="trwb_hero_ine_02_pl"
 		path="C:/home/swan_data3d/cut_in/capture_cut_in/champ/tex/trsw_hero02.tga"
 	>
 		<bitmap size="4096">
@@ -3332,11 +3332,11 @@
 </tex_image_array>
 
 <tex_palette_array size="10">
-	<tex_palette index="0" name="hero01" color_size="16">
+	<tex_palette index="0" name="trwb_hero_ine_pl" color_size="16">
 		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
 		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
 	</tex_palette>
-	<tex_palette index="1" name="hero02" color_size="16">
+	<tex_palette index="1" name="trwb_hero_ine_02_pl" color_size="16">
 		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
 		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
 	</tex_palette>
