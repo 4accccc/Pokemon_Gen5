@@ -264,9 +264,9 @@ static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 // 指指しカーソルの位置
 static const u8 finger_pos[TARGET_POKE_MAX][2] =
 {
-  {  60,  33 },
-  { 128,  33 },
-  { 200,  33 },
+  {  42,  29 },
+  { 128,  29 },
+  { 211,  29 },
 };
 
 // ポケモン大小セット
