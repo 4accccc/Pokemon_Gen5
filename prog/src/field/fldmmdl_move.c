@@ -1524,7 +1524,7 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL *mmdl0, s16 x0, s16 y0, s16 z0 )
     MMDL_RECT rect;
     u32 status_flag;
 
-    if( mmdl0->obj_code == MMDL_ID_PLAYER ){
+    if( mmdl0->obj_id == MMDL_ID_PLAYER ){
       status_flag = (MMDL_STABIT_FELLOW_HIT_NON|MMDL_STABIT_PLAYER_HIT_NON);
     }else{
       status_flag = (MMDL_STABIT_FELLOW_HIT_NON);
