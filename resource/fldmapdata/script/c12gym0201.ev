@@ -280,8 +280,8 @@ ev_leader1_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_07 )
 	_BALLOONWIN_CLOSE()
 
-  //リーダー戦勝利時の情報登録
-  _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+	//リーダー戦勝利時の情報登録
+	_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
 	//バッジ入手処理
 	_SET_BADGE_FLAG( BADGE_ID_01 )		//バッジフラグon
 	_PLAYER_NAME( 0 )
@@ -332,6 +332,9 @@ ev_leader1_btl:
    _FLAG_RESET( FV_C12_SWBELL )
    //C12R0101のベル非表示
    _FLAG_SET( FV_C12R0101_SWBELL )
+   
+   //R19イベント起動
+   $WK_SCENE_R19 = 5
     
    //========================================//
    
