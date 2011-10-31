@@ -49,12 +49,25 @@ DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+//------------------------------注意--------------------------------//
+//
+//  LOCALWORK15をリンクイベントで使用。
+//                                                                  //
+//------------------------------------------------------------------//
+
+
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_c05r0501
   
-  IF $WK_SYS_LINK_EVENT_06 == 1 && $WK_SCENE_C05R0501_LINK_EVENT == 1 THEN
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  _DEBUG_PRINT_WK(LOCALWORK15)
+  
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_06 == 0 && $WK_SCENE_C05R0501_LINK_EVENT == 1 THEN
     
     //========================================//
     //ゾロア非表示に
@@ -107,7 +120,7 @@ EVENT_START   ev_reserve_c05r0501_link_event_ret
   //SCENE_CHANGE無効
   $WK_SCENE_C05R0501_LINK_EVENT = 3
   //リンクイベント起動終了
-  $WK_SYS_LINK_EVENT_06 = 2
+  $WK_SYS_LINK_EVENT_06 = 1
   //リンクイベントに関与しないNPCを表示
   _FLAG_RESET(FV_C05R0501_PEAPLE_01)
   //========================================//
@@ -321,7 +334,7 @@ ev_c05r0501_poke22_get:
       _OBJ_ANIME_AUTO( C05R0501_POKE22_01, 6, 17, FORCE_TYPE_NPC, 8, DIR_UD)
     //それ以外のケース（主人公の右に隣接）
     ELSE
-      $LCW_POSX -= 1
+      $LCW_POSX += 1
       _OBJ_ANIME_AUTO( C05R0501_POKE22_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
     ENDIF
     

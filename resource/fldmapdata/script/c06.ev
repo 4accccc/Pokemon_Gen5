@@ -42,13 +42,22 @@ DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+//------------------------------注意--------------------------------//
+//                                                                  //
+//  LOCALWORK15をリンクイベントで使用。
+//                                                                  //
+//------------------------------------------------------------------//
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_c06
 {
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
+
   //【仮】C06到着イベント終了でヤマジタウン到着でリンクイベント起動
-  IF $WK_SYS_LINK_EVENT_02 == 1 && $WK_SCENE_T07 >= 1 THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
     //========================================//
     //C06フウロ表示
     _FLAG_RESET( FV_C08_SWLEADER7_01 )
@@ -62,7 +71,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_c06
   //C06到着イベント終了でリンクイベント起動ならフウロを移動
-  IF $WK_SYS_LINK_EVENT_02 == 1 && $WK_SCENE_T07 >= 1 THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
     _OBJ_POS_CHANGE( C06_SWLEADER6_01, 77, 0, 269, DIR_DOWN)
   ENDIF
 INIT_EVENT_END
@@ -489,7 +498,7 @@ EVENT_START   ev_reserve_c06_link_event_ret
   
   //========================================//
   //リンクイベント終了
-  $WK_SYS_LINK_EVENT_02 = 2
+  $WK_SYS_LINK_EVENT_02 = 1
   //C06フウロ非表示
   _FLAG_SET( FV_C06_SWLEADER6_01 )
   //========================================//

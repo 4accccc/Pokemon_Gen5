@@ -45,8 +45,13 @@ _EVENT_DATA_END
 
 DEFINE_LOCAL	LWK_SARUHIT
 
-//LOCALWORK10をリーダーの会話分岐に使用しています。
-//LOCALWORK11、LOCALWORK12をサルショーで使用しています。
+//------------------------------注意--------------------------------//
+
+//  LOCALWORK10をリーダーの会話分岐に使用しています。
+//  LOCALWORK11、LOCALWORK12をサルショーで使用しています。
+//  LOCALWORK15をリンクイベントで使用。
+
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*			ZONE CHANGE LABEL								  */
@@ -94,8 +99,13 @@ EVENT_START		ev_c01gym0101_leader1a_01
 $LOCALWORK10 = 1
 //========================================/
 
+//データコンバートフラグチェック
+_DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_01, LOCALWORK15 )
+
+_DEBUG_PRINT_WK( LOCALWORK15 )
+
 //リンクイベント起動中
-IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_01 == 0 THEN
   
   _CALL ev_link_event
 
@@ -118,8 +128,11 @@ EVENT_START		ev_c01gym0101_leader1b_01
 $LOCALWORK10 = 2
 //========================================/
 
+//データコンバートフラグチェック
+_DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_01, LOCALWORK15 )
+
 //リンクイベント起動中
-IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_01 == 0 THEN
   
   _CALL ev_link_event
 
@@ -142,8 +155,11 @@ EVENT_START		ev_c01gym0101_leader1c_01
 $LOCALWORK10 = 3
 //========================================/
 
+//データコンバートフラグチェック
+_DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_01, LOCALWORK15 )
+
 //リンクイベント起動中
-IF $WK_SYS_LINK_EVENT_01 == 1 THEN
+IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_01 == 0 THEN
   
   _CALL ev_link_event
 
@@ -615,7 +631,7 @@ EVENT_START		ev_reserve_c01gym0101_link_event_ret
 
   //========================================//
   //リンクイベント終了
-  $WK_SYS_LINK_EVENT_01 = 2
+  $WK_SYS_LINK_EVENT_01 = 1
   //========================================//
 
 EVENT_END
