@@ -671,6 +671,8 @@ sub_come_shop:
         _MAP_FADE_END_CHECK()
         _FIELD_CLOSE()
         _FIELD_OPEN()
+	      _CAMERA_START()		//カメラ操作開始
+	      _CAMERA_PURGE()		//カメラのバインドを解く
 
         _RESORT_RESET_MMDL( LWK_LIST_RET_IDX )
 
