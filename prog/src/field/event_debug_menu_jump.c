@@ -279,7 +279,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
           break;
         }
         else if(ret == ZONE_ID_PALACE01){
-          VecFx32 pos = {PALACE_MAP_LEN/2, 32*FX32_ONE, 488*FX32_ONE};
+          VecFx32 pos = { PALACE_MAP_FIRST_X, PALACE_MAP_FIRST_Y, PALACE_MAP_FIRST_Z };
           mapchange_event = EVENT_ChangeMapPos(work->gmSys, work->fieldWork, ret, &pos, 0, FALSE);
         }
         else{
