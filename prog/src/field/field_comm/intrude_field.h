@@ -29,10 +29,11 @@ enum{
   PALACE_MAP_TREE_X = 504 << FX32_SHIFT,            ///<パレスの木 配置座標
   PALACE_MAP_TREE_Y = 32 << FX32_SHIFT,
   PALACE_MAP_TREE_Z = 504 << FX32_SHIFT,
-  PALACE_MAP_MONOLITH_X = 504 << FX32_SHIFT,       ///<モノリス配置開始座標X
-  PALACE_MAP_MONOLITH_Y = 32,
-  PALACE_MAP_MONOLITH_Z = 472 << FX32_SHIFT,
-  PALACE_MAP_MONOLITH_NUM = 1,                      ///<モノリスの連続設置数
+
+  //swanで整理
+  PALACE_MAP_FIRST_X = PALACE_MAP_LEN/2 - 1*FX32_ONE, ///<ハイリンクに移動したときの初期X位置
+  PALACE_MAP_FIRST_Y = 32*FX32_ONE,                   ///<ハイリンクに移動したときの初期Y位置
+  PALACE_MAP_FIRST_Z = 584 * FX32_ONE,                ///<ハイリンクに移動したときの初期Z位置
 
   PALACE_MAP_SYMMAP_ENTRANCE_X = FX32_CONST(504),   ///<シンボルマップ入り口の左端X座標
   PALACE_MAP_SYMMAP_ENTRANCE_Z = FX32_CONST(344),   ///<シンボルマップ入り口のZ座標

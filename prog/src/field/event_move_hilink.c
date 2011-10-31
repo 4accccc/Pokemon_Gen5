@@ -82,9 +82,7 @@ static GMEVENT_RESULT event_MoveHilinkMain(GMEVENT * event, int *  seq, void * w
         { //何も通信が起動していないのを待ってイベントコールし、シーケンスを進める
           ///パレスへワープしてきたときの出現座標
           static const VecFx32 PalaceWarpPos = {
-            PALACE_MAP_LEN/2 - 1*FX32_ONE,
-            32*FX32_ONE,
-            488 * FX32_ONE,
+            PALACE_MAP_FIRST_X, PALACE_MAP_FIRST_Y, PALACE_MAP_FIRST_Z,
           };
           intrude_event = EVENT_ChangeMapFldToPalace(
               gsys, ZONE_ID_PALACE01, &PalaceWarpPos, FALSE );
