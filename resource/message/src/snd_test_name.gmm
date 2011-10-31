@@ -5625,6 +5625,10 @@
 		<language name="JPN" width="256">BGM-VS-HUE</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-HUE</language>
 	</row>
+	<row id="msg_seq_bgm_vs_swan_n">
+		<language name="JPN" width="256">BGM-VS-SWAN-N</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-SWAN-N</language>
+	</row>
 	<row id="msg_seq_bgm_win_wbt">
 		<language name="JPN" width="256">BGM-WIN-WBT</language>
 		<language name="JPN_KANJI" width="256">BGM-WIN-WBT</language>
@@ -5637,10 +5641,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1298">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1299">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -8973,10 +8973,6 @@
 		<language name="JPN" width="256">SW-MDUN-BL-05</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-BL-05</language>
 	</row>
-	<row id="msg_seq_se_sw_mdun_bl_06">
-		<language name="JPN" width="256">SW-MDUN-BL-06</language>
-		<language name="JPN_KANJI" width="256">SW-MDUN-BL-06</language>
-	</row>
 	<row id="msg_seq_se_sw_mdun_wh_01">
 		<language name="JPN" width="256">SW-MDUN-WH-01</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-WH-01</language>
@@ -8996,6 +8992,10 @@
 	<row id="msg_seq_se_sw_mdun_wh_05">
 		<language name="JPN" width="256">SW-MDUN-WH-05</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-WH-05</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_06">
+		<language name="JPN" width="256">SW-MDUN-BL-06</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-06</language>
 	</row>
 	<row id="msg_seq_se_sw_card_01">
 		<language name="JPN" width="256">SW-CARD-01</language>
