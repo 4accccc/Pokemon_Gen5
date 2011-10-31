@@ -660,7 +660,7 @@ void FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
     GFL_TCB_AddTask( tcbsys, FireTcbA, (void*)task_wk, 0 );
 
     // SE çƒê∂ 
-    //PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_04 );   // âŒÇÃã åªÇÍÇÈâπ
+    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_04 );   // âŒÇÃã åªÇÍÇÈâπ
   }
   else
   {
