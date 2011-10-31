@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/29 16:14:43
+#save date:2011/10/31 12:33:29
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #SECTION START:OBJ_EVENT
@@ -319,7 +319,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 -232
+520 0 -232
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 0 -216
+536 0 -216
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 0 -248
+536 0 -248
 #event number: 12
 #type
 1
@@ -845,7 +845,7 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C13
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -862,7 +862,7 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C13
 #Event Trigger Work Value
-1
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -879,13 +879,13 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C13
 #Event Trigger Work Value
-3
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 152
+-200 0 104
 #size
-7 1
+1 4
 #event number: 3
 #Pos Event Label
 POS_C13_SWPLAZMA

@@ -50,8 +50,8 @@ DEFINE_LOCAL  LWK_MSG_ID_AFTER
 DEFINE_LOCAL  LWK_MSG_ID_NG
 
 /************************************************************/
-/*					ジムギミック初期化						*/
-/*          ZONE_CHANGE_LABEL             */
+/*				ジムギミック初期化					*/
+/*				ZONE_CHANGE_LABEL					*/
 /************************************************************/
 INIT_EVENT_START  ev_zone_c13gym0102
 
@@ -307,9 +307,9 @@ ev_leader2_btl:
 	
 	//ポケウッド誘導イベント開始
 	$WK_SCENE_C15_TUTORIAL_01 = 1
-	//【仮】ポケウッド入り口ストッパー無効
-	$WK_SCENE_C13 = 2
-  _FLAG_SET( FV_C13_SUNGLASSES )
+	//ポケウッド入り口ストッパー無効
+	$WK_SCENE_C13 = 3
+	_FLAG_SET( FV_C13_SUNGLASSES )
   
 	//================================================//
 	//電光掲示板フラグセット

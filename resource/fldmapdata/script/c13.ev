@@ -125,7 +125,7 @@ EVENT_START		ev_pos_c13_swleader2_meet_01
 	//========================================/
 	
 	//ホミカとの出会いイベント終了
-	$WK_SCENE_C13 = 1
+	$WK_SCENE_C13 = 2
 	
 	//ホミカとホミカ父を非表示
 	_FLAG_SET(FV_C13_SWLEADER2_MEET)
@@ -273,7 +273,7 @@ EVENT_START   ev_c13_sunglasses_01
 EVENT_END
 
 /**************************************************************/
-/*			ポケウッドのストッパー							  */
+/*			ポケウッドのストッパー					  */
 /**************************************************************/
 EVENT_START		ev_pos_c13_sunglasses_stop
 
@@ -385,14 +385,14 @@ EVENT_START		ev_pos_c13_livecaster
 	//========================================/
 	
 	//ライブキャスターイベント終了
-	$WK_SCENE_C13 = 4
+	$WK_SCENE_C13 = 1
 	
 	//========================================/
 	
 EVENT_END
 
 /**************************************************************/
-/*		C13	ネオプラズマ団イベント							  */
+/*		C13	ネオプラズマ団イベント					  */
 /**************************************************************/
 EVENT_START		ev_pos_c13_swplazma
 
@@ -402,16 +402,16 @@ EVENT_END
 
 ev_swplazma:
 
-	//ホミカ：あんたらの　その　かっこう
+	//ホミカ：あんたら……　もしかして
 	_BALLOONWIN_OBJMSG( msg_c13_swleader2_03 , C13_SWLEADER2_02 )
 	_MSGWIN_CLOSE()
 	
-	//ネオプラズマ団男：ノーノーノー！　おれらは　ネオプラズマだん
+	//ネオプラズマ団男：そうとも！
 	_BALLOONWIN_OBJMSG( msg_c13_swplazmam1_01 , C13_SWPLAZMAM_01 )
 	_MSGWIN_CLOSE()
 
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
+	//ライバル名代入
+	_RIVAL_NAME( 1 )
 
 	//ライバル：プラズマだん　ふっかつ？
 	_BALLOONWIN_OBJMSG( msg_c13_swrival_01 , C13_SWRIVAL_01 )
@@ -429,15 +429,12 @@ ev_swplazma:
 	_BALLOONWIN_OBJMSG( msg_c13_swplazmam1_02 , C13_SWPLAZMAM_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( C13_SWPLAZMAM_01, anm_walk_l )
-	_OBJ_ANIME( C13_SWPLAZMAM_02, anm_walk_l )
-	_OBJ_ANIME( C13_SWPLAZMAW_01, anm_walk_l )
-	_OBJ_ANIME_WAIT()
-	
 	_TIME_WAIT( 10 )
 	
 	//ライバル：一歩前へ出る
 	_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_r )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_anime )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：ボコボコに　されるのは
@@ -462,10 +459,22 @@ EVENT_START		ev_c13_swleader2_02
 	IF $WK_SCENE_C13 == 6 THEN
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_swleader2_04 )
+		
+		_TALK_OBJ_START()
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swleader2_04 )
+		_AB_KEYWAIT_MARK()
+		_MSGWIN_CLOSE()
+
+		_OBJ_ANIME( C13_SWLEADER2_02, anm_staystep_r )
+		_OBJ_ANIME_WAIT()
+
 	ELSE
-	
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_z669 )
+		_TALK_OBJ_START()
+		
+		_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 239, 670, FORCE_TYPE_NOT, 8, DIR_UD )
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( C13_SWLEADER2_02, anm_staystep_r )
 		_OBJ_ANIME_WAIT()
 		
 		_CALL	ev_swplazma
@@ -474,7 +483,7 @@ EVENT_START		ev_c13_swleader2_02
 EVENT_END
 
 /**************************************************************/
-/*		C13	SWRIVAL		分岐メッセージ						  */
+/*		C13	SWRIVAL		分岐メッセージ				  */
 /**************************************************************/
 EVENT_START		ev_c13_swrival_01
 
@@ -483,24 +492,34 @@ EVENT_START		ev_c13_swrival_01
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
 		
-    //ライバル名代入
-    _RIVAL_NAME( 1 )
+		//ライバル名代入
+		_RIVAL_NAME( 1 )
 		
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_swrival_03 )
+		_TALK_OBJ_START()
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swrival_03 )
+		_AB_KEYWAIT_MARK()
+		_MSGWIN_CLOSE()
+
+		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_r )
+		_OBJ_ANIME_WAIT()
+		
 	ELSE
-	
+		
+		_TALK_OBJ_START()
+		
 		DEFINE_LOCAL	LWK_DIR
 	
 		_PLAYER_DIR_GET( LWK_DIR )
 		SWITCH $LWK_DIR
 		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_z671)
+			_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 239, 670, FORCE_TYPE_NOT, 8, DIR_UD )
 		CASE DIR_DOWN THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come_z670 )
+			_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 239, 670, FORCE_TYPE_NOT, 8, DIR_LR )
 		ENDSWITCH
-		
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_r )
 		_OBJ_ANIME_WAIT()
-		
+
 		_CALL	ev_swplazma
 
 	ENDIF
@@ -508,7 +527,7 @@ EVENT_START		ev_c13_swrival_01
 EVENT_END
 
 /**************************************************************/
-/*		C13	SWPLAZMAM	分岐メッセージ						  */
+/*		C13	SWPLAZMAM	分岐メッセージ					  */
 /**************************************************************/
 EVENT_START		ev_c13_swplazmam_01
 _TALK_OBJ_START()
@@ -530,14 +549,13 @@ _TALK_OBJ_START()
 		_TRAINER_BTL_SET(TRID_SWPLAZMAM_34,0)
 		
 		//敗戦チェック
-  	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-  	
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()	//勝利処理へ
 		ELSE
 			_TRAINER_LOSE()	//敗北処理へ
 		ENDIF
-		
 		
 		//ホミカ・ライバルの向きを右向きに直す
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_dir_r )
@@ -552,12 +570,23 @@ _TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swplazmam1_06 )
 		_MSGWIN_CLOSE()
 		
-		//ネオプラズマ団一同：船の方へ逃げる
-		_OBJ_ANIME( C13_SWPLAZMAM_01, anm_swplazma_leave )
-		_TIME_WAIT( 5 )
-		_OBJ_ANIME( C13_SWPLAZMAW_01, anm_swplazma_leave )
-		_TIME_WAIT( 5 )
-		_OBJ_ANIME( C13_SWPLAZMAM_02, anm_swplazma_leave )
+		//ネオプラズマ団Ｒ２０へ
+		_OBJ_ANIME( C13_SWPLAZMAM_01, anm_swplazma_dotuku )
+		_OBJ_ANIME_WAIT()
+
+		_OBJ_ANIME( C13_SWPLAZMAM_01, anm_swplazma_dotuku1 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_doke )
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_ANIME_AUTO( C13_SWPLAZMAM_01, 228, 670, FORCE_TYPE_NOT, 4, DIR_LR )
+		_OBJ_ANIME_AUTO( C13_SWPLAZMAW_01, 228, 670, FORCE_TYPE_NOT, 4, DIR_UD )
+		_TIME_WAIT( 4 )
+		_OBJ_ANIME_AUTO( C13_SWPLAZMAM_02, 228, 670, FORCE_TYPE_NOT, 4, DIR_UD )
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_ANIME( C13_SWLEADER2_02, anm_staystep_l )
+		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 		_OBJ_ANIME_WAIT()
 		
 		//ネオプラズマ団一同のOBJ削除
@@ -566,73 +595,61 @@ _TALK_OBJ_START()
 		_OBJ_DEL( C13_SWPLAZMAM_02 )
 		
 		//ライバル：一歩前へ出る
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_r )
+		_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_l )
 		_OBJ_ANIME_WAIT()
 		
-    //ライバル名代入
-    _RIVAL_NAME( 1 )
+		//ライバル名代入
+		_RIVAL_NAME( 1 )
 		
-		//ライバル：あいつら！　にげるための
+		//ライバル：チッ！
 		_BALLOONWIN_OBJMSG( msg_c13_swrival_04 , C13_SWRIVAL_01 )
 		_MSGWIN_CLOSE()
 		
-		//ホミカ：アタシの　オヤジに　いえば
+		//ホミカ：てわけして探すよ！
 		_BALLOONWIN_OBJMSG( msg_c13_swleader2_05 , C13_SWLEADER2_02 )
 		_MSGWIN_CLOSE()
 		
 		//ホミカ：画面左に移動するが、途中で振り返る
 		_OBJ_ANIME( C13_SWLEADER2_02, anm_swleader2_leave2 )
 		_OBJ_ANIME_WAIT()
-		
-		//ライバル・プレイヤー：ホミカのほうへ向く
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_dir_l )
-		//_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME_AUTO( C13_SWLEADER2_02, 237, 669, FORCE_TYPE_NOT, 8, DIR_UD )
 		_OBJ_ANIME_WAIT()
 		
 		//ホミカ：……まけていたら　たいせつな
 		_BALLOONWIN_OBJMSG( msg_c13_swleader2_06 , C13_SWLEADER2_02 )
 		_MSGWIN_CLOSE()
 		
-		//ホミカ：プレイヤーに隣接する
-		_OBJ_ANIME( C13_SWLEADER2_02, anm_swleader2_come )
-		_OBJ_ANIME_WAIT()
-		
 		//どうぐ入手：ひでんマシン１
 		_ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN01, 1 )
 		
-		//ホミカ：ジムの方へ去る
-		_OBJ_ANIME( C13_SWLEADER2_02, anm_swleader2_leave3 )
+		//ホミカ：R20の方へ去る
+		_OBJ_ANIME_AUTO( C13_SWLEADER2_02, 228, 669, FORCE_TYPE_NOT, 4, DIR_LR )
 		_OBJ_ANIME_WAIT()
 		
 		//ホミカのOBJ削除
 		_OBJ_DEL( C13_SWLEADER2_02 )
 		
 		//ライバル：プレイヤーに隣接する
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_come )
+		_OBJ_ANIME_AUTO( C13_SWRIVAL_01, 238, 670, FORCE_TYPE_NOT, 8, DIR_UD )
 		_OBJ_ANIME_WAIT()
-		
+		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_u )
+		_TIME_WAIT( 8 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
 		_OBJ_ANIME_WAIT()
 		
-    //ライバル名代入
-    _RIVAL_NAME( 1 )
+		//ライバル名代入
+		_RIVAL_NAME( 1 )
 		
 		//ライバル：それ……　ひでんマシン
 		_BALLOONWIN_OBJMSG( msg_c13_swrival_05 , C13_SWRIVAL_01 )
 		_MSGWIN_CLOSE()
 	
 		//ライバル：船舶所の中へ
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_leave1 )
-		_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME_AUTO( C13_SWRIVAL_01, 228, 670, FORCE_TYPE_NOT, 4, DIR_LR )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 		_OBJ_ANIME_WAIT()
-		
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_leave2 )
-		_OBJ_ANIME_WAIT()
-		
-		//階段SE再生
-		_SE_PLAY( SEQ_SE_KAIDAN )
+
 		//ライバルのOBJ削除
 		_OBJ_DEL( C13_SWRIVAL_01 )
 		_SE_WAIT()
@@ -646,12 +663,17 @@ _TALK_OBJ_START()
 		_FLAG_SET(FV_C13_SWPLAZMA)
 		
 		//船舶所にライバルと船長を表示
-		_FLAG_RESET(FV_C13R0401_SWRIVAL)
-		_FLAG_RESET(FV_C13R0401_PILOT)
+		//_FLAG_RESET(FV_C13R0401_SWRIVAL)
+		//_FLAG_RESET(FV_C13R0401_PILOT)
 		
 		//どくジムにホミカ表示
-		_FLAG_RESET(FV_C13GYM0102_SWLEADER2)
-		
+		//_FLAG_RESET(FV_C13GYM0102_SWLEADER2)
+	
+		//R20ライバル非表示
+		_FLAG_SET( FV_R20_SWRIVAL_01 )
+
+		//R20イベント進行
+		$WK_SCENE_R20 = 4
 	
 		//========================================/
 	
@@ -666,25 +688,13 @@ _TALK_OBJ_START()
 	ENDIF
 
 EVENT_END
-
-//--------------------------------------------------------------------
-//	◆ネオプラズマ団：イベントアニメ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swplazmam_back
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_16F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_swplazma_leave
-	_ANIME_DATA	AC_WALK_R_6F,8
-	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 //	◆ホミカ：去る・近づく
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader2_leave2
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,3
 	_ANIME_DATA	AC_WALK_L_16F,1
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_DIR_R,1
@@ -720,25 +730,43 @@ _ANIME_LABEL	anm_swrival_leave2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_VANISH_ON, 1
 	_ANIME_DATA	ACMD_END,0
-	
+
+_ANIME_LABEL	anm_swrival_anime
+	_ANIME_DATA	AC_SWRIVAL_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	◆プレイヤー：定位置に移動
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_come_z669
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
+_ANIME_LABEL	anm_player_doke
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_come_z670
-	_ANIME_DATA	AC_WALK_R_8F,1
+//--------------------------------------------------------------------
+//	◆ネオプラズマ団：イベントアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazmam_back
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swplazma_dotuku
+	_ANIME_DATA	AC_STAY_WALK_L_4F,4
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_come_z671
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
+_ANIME_LABEL	anm_swplazma_dotuku1
+	_ANIME_DATA	AC_WALK_L_4F,2
 	_ANIME_DATA	ACMD_END,0
 	
-	
+
 /**************************************************************/
 /*		C13		街看板										  */
 /**************************************************************/
