@@ -2485,7 +2485,11 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
       }
     }
 
-    GF_ASSERT( cnt+1 <= NELEMS(wnd_data) );
+    //GF_ASSERT( cnt+1 <= NELEMS(wnd_data) );
+    if( cnt+1 > NELEMS(wnd_data) )
+    {
+      cnt = NELEMS(wnd_data)-1;
+    }
 
     p_wk->p_textset = KEYSYS_TEXTSET_Init( wnd_data, cnt+1, KEYSYS_BG_FRAME_TEXT_M, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, p_wk->p_msg, heapID );
   }

@@ -278,6 +278,10 @@ static GFL_PROC_RESULT Key_System_Proc_Main
     case KEYSYS_NET_ERROR_TYPE_RETURN:      //再度通信をすればつながります。
     case KEYSYS_NET_ERROR_TYPE_DISCONNECT:  //切断したらメインメニューに戻る
       KEYSYS_NET_ClearError( p_wk->p_net );
+      if( p_wk->p_text )
+      {
+        KEYSYS_TEXT_Delete( p_wk );
+      }
       PMSND_StopSE(); //通信のループ音を消す
       if( p_wk->p_mb )
       {
