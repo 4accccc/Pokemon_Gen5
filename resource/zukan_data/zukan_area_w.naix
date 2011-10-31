@@ -693,7 +693,8 @@ enum {
 	NARC_zukan_area_w_zkn_area_w_monsno_680_dat = 679,
 	NARC_zukan_area_w_zkn_area_w_monsno_681_dat = 680,
 	NARC_zukan_area_w_zkn_area_w_monsno_682_dat = 681,
-	NARC_zukan_area_w_zkn_area_w_monsno_683_dat = 682
+	NARC_zukan_area_w_zkn_area_w_monsno_683_dat = 682,
+	NARC_zukan_area_w_zkn_area_w_monsno_684_dat = 683
 };
 
 /* NARC_ZUKAN_AREA_W_NAIX_ */
