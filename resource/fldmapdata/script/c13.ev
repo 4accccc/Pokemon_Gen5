@@ -671,6 +671,8 @@ _TALK_OBJ_START()
 	
 		//R20ライバル非表示
 		_FLAG_SET( FV_R20_SWRIVAL_01 )
+		//R20プラズマ団表示
+		_FLAG_RESET( FV_R20_SWPLAZMA_01 )
 
 		//R20イベント進行
 		$WK_SCENE_R20 = 4
