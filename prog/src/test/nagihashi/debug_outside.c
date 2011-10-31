@@ -331,8 +331,12 @@ static void Seqfunc_Main( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   enum
   {
     SEQ_MAIN,
+    SEQ_MSG_WAIT,
+    SEQ_SAVE_OUT_START,
+    SEQ_SAVE_OUT_WAIT,
     SEQ_SAVE_START,
     SEQ_SAVE_WAIT,
+    SEQ_END_MSG,
   };
 
   DEBUG_OUTSIDE_WORK *p_wk = p_wk_adrs;
@@ -350,37 +354,48 @@ static void Seqfunc_Main( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       (*p_seq)++;
     }
     break;
-  case SEQ_SAVE_START:
+
+  case SEQ_MSG_WAIT:
     if( DEBUG_MSGWIN_IsPrintEnd( p_wk->p_msgwin ) )
     {
-      if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
-      {
-        SaveControl_SaveAsyncInit(SaveControl_GetPointer() );
-      }
-      else
-      {
-        OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      }
       (*p_seq)++;
     }
     break;
+
+  case SEQ_SAVE_OUT_START:
+    OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+    (*p_seq)++;
+    break;
+
+  case SEQ_SAVE_OUT_WAIT:
+    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    {
+      if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
+      {
+        (*p_seq) = SEQ_SAVE_START;
+      }
+      else
+      {
+        (*p_seq) = SEQ_END_MSG;
+      }
+    }
+    break;
+
+  case SEQ_SAVE_START:
+    SaveControl_SaveAsyncInit(SaveControl_GetPointer() );
+    (*p_seq)++;
+    break;
+
   case SEQ_SAVE_WAIT:
-    if( SaveData_GetExistFlag( SaveControl_GetPointer() ) )
+    if( SaveControl_SaveAsyncMain( SaveControl_GetPointer() ) == SAVE_RESULT_OK )
     {
-      if( SaveControl_SaveAsyncMain( SaveControl_GetPointer() ) == SAVE_RESULT_OK )
-      {
-        DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
-        (*p_seq) = SEQ_MAIN;
-      }
+      (*p_seq) = SEQ_END_MSG;
     }
-    else
-    {
-      if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-      {
-        DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
-        (*p_seq) = SEQ_MAIN;
-      }
-    }
+    break;
+
+  case SEQ_END_MSG:
+    DEBUG_MSGWIN_Print( p_wk->p_msgwin, p_wk->p_msg, OUTSIDE_STR_01, p_wk->p_font );
+    (*p_seq) = SEQ_MAIN;
     break;
   }
 }
