@@ -119,9 +119,9 @@ BOOL GPOWER_IsErrorID( GPOWER_ID gpower_id )
   if( ( gpower_id >= GPOWER_ID_MAX ) ||
       ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id < GPOWER_ID_DUMMY_END ) )
   {
-    return FALSE;
+    return TRUE;
   }
-  return TRUE;
+  return FALSE;
 }
 
 //==================================================================
