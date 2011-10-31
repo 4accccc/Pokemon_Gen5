@@ -54,14 +54,14 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   _SE_PLAY( SEQ_SE_FLD_87 )
   _SE_WAIT()
   
+  //SUNGLASSES配置
+  _OBJ_ADD_EX( 7, 0, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
+  
   //ドア開ける
   DEFINE_LOCAL	DOOR_ANIME_ID
   _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
   _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
   _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-  
-  //SUNGLASSES配置
-  _OBJ_ADD_EX( 7, 1, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
   
   //会長来る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
@@ -116,9 +116,11 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   _SYSWIN_CLOSE()
   
   {
-  //【仮】カットインID取得
-  //_GET_MEDAL_CIID( GOAL, LOCALWORK15 )
-  //_CALL_FLD3D_CUTIN( LOCALWORK15 )
+  //バッジ入手演出再生
+  //カットインID取得
+  _GET_MEDAL_CIID( MDLID_GOAL, LOCALWORK15 )
+  _CALL_FLD3D_CUTIN( LOCALWORK15 )
+  
   }
   
   //SUNGLASSES：これからもがんばって
@@ -130,8 +132,8 @@ EVENT_START   ev_scene_c03r1102_commendation_01
 
   //ゴールイン終了
   $WK_SCENE_MEDAL_EVENT = 3
-  //【仮】メダル獲得処理
-  //_GET_MEDAL( GOAL, TRUE ) 
+  //メダル獲得処理
+  _GET_MEDAL( MDLID_GOAL, TRUE ) 
 	//================================================//
 }
 EVENT_END
@@ -161,14 +163,14 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   _SE_PLAY( SEQ_SE_FLD_87 )
   _SE_WAIT()
   
+  //SUNGLASSES配置
+  _OBJ_ADD_EX( 7, 0, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
+  
   //ドア開ける
   DEFINE_LOCAL	DOOR_ANIME_ID
   _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
   _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
   _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-  
-  //SUNGLASSES配置
-  _OBJ_ADD_EX( 7, 1, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
   
   //会長来る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
@@ -198,20 +200,19 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   //SUNGLASSES：ゆうしゅうな せいせきを おさめ…
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_03 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
-  /*
+  
   //歓声があがる
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_01 , 6 , 1 , 1 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_01 , 6 , 0 , 1 )
   _TIME_WAIT( 10 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_02 , 5 , 5 , 2 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_02 , 8 , 5 , 2 )
   _TIME_WAIT( 10 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_03 , 21 , 3 , 3 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_03 , 11 , 10 , 3 )
   _TIME_WAIT( 30 )
   _SUBWIN_CLOSE( 1 )
   _TIME_WAIT( 5 )
   _SUBWIN_CLOSE( 2 )
   _TIME_WAIT( 5 )
   _SUBWIN_CLOSE( 3 )
-  */
   
    //SUNGLASSES：きねんに さしあげます
   _PLAYER_NAME( 0 )
@@ -224,33 +225,33 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   _SYSWIN_CLOSE()
   
   {
-  //【仮】カットインID取得
-  //_GET_MEDAL_CIID( ALL_COMPLETE, LOCALWORK15 )
-  //_CALL_FLD3D_CUTIN( LOCALWORK15 )
+  //カットインID取得
+  _GET_MEDAL_CIID( MDLID_ALL_COMPLETE, LOCALWORK15 )
+  _CALL_FLD3D_CUTIN( LOCALWORK15 )
   }
-  /*
+  
   //歓声があがる
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_04 , 21 , 3 , 1 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_04 , 9 , 8 , 1 )
   _TIME_WAIT( 10 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_05 , 5 , 5 , 2 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_05 , 3 , 3 , 2 )
   _TIME_WAIT( 10 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_06 , 2 , 1 , 3 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_06 , 12 , 12 , 3 )
   _TIME_WAIT( 30 )
   _SUBWIN_CLOSE( 1 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_07 , 16 , 1 , 4 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_07 , 14 , 5 , 4 )
   _TIME_WAIT( 10 )
   _SUBWIN_CLOSE( 2 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_08 , 4 , 3 , 5 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_08 , 3 , 20 , 5 )
   _TIME_WAIT( 10 )
   _SUBWIN_CLOSE( 3 )
-  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_09 , 2 , 6 , 6 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_09 , 16 , 15 , 6 )
   _TIME_WAIT( 30 )
   _SUBWIN_CLOSE( 4 )
   _TIME_WAIT( 5 )
   _SUBWIN_CLOSE( 5 )
   _TIME_WAIT( 5 )
   _SUBWIN_CLOSE( 6 )
-  */
+  
   //SUNGLASSES：これからもがんばって
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_end , MMDL_ID_EVENTOBJ_00, POS_DOWN )
@@ -260,8 +261,8 @@ EVENT_START   ev_scene_c03r1102_commendation_02
 
   //ゴールイン終了
   $WK_SCENE_MEDAL_EVENT = 5
-  //【仮】メダル獲得処理
-  //_GET_MEDAL( ALL_COMPLETE, TRUE ) 
+  //メダル獲得処理
+  _GET_MEDAL( MDLID_ALL_COMPLETE, TRUE ) 
 	//================================================//
 }
 EVENT_END
@@ -285,7 +286,7 @@ _ANIME_LABEL	anm_player_walk_to_peaple01
 //	OLDMAN01登場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_oldman_comming
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
