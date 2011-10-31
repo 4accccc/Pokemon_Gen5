@@ -953,6 +953,62 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_105"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　に
+くろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-27T05:51:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　に
+くろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-27T05:51:28" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_106"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　に
+しろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-27T05:51:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　に
+しろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-27T05:51:28" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="KEYSYS_STR_35"
 		Style="Large">
 		<LanguageCell
@@ -1058,6 +1114,62 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:04:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_103"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいて　に
+くろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手に
+くろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_104"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいて　に
+しろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手に
+しろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1203,6 +1315,62 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_99"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　から
+くろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:42:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　から
+くろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:43:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:42:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さん　から
+しろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:43:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:42:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さん　から
+しろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:43:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:42:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="KEYSYS_STR_42"
 		Style="Large">
 		<LanguageCell
@@ -1308,6 +1476,62 @@
 			<TextModifiedBy
 				User="mizuguchi_mai:W00226"
 				Time="2011-08-29T06:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいて　から
+くろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:45:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手　から
+くろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:45:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんあいて　から
+しろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:45:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信相手　から
+しろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2743,72 +2967,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="KEYSYS_STR_97"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>くろのドアキー</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T05:56:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>黒のドアキー</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T05:56:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:18" />
-		</LanguageCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="KEYSYS_STR_98"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>しろのドアキー</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T05:56:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>白のドアキー</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T05:56:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:18" />
-		</LanguageCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="KEYSYS_STR_95"
 		Style="Large">
 		<LanguageCell
@@ -2881,6 +3039,72 @@
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-10-29T08:29:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_97"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:36:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒のドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:36:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_98"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:36:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白のドアキー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-31T06:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

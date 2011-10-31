@@ -2540,7 +2540,11 @@ static void KeySys_Display_DeleteSendDemo( void *p_wk_adrs )
   KEYSYS_TEXTSET_Exit( p_wk->p_textset );
   p_wk->p_textset = NULL;
 
-  KEYSYS_TEXT_EndWait( p_wk->p_text );
+  if( p_wk->p_text )
+  {
+    KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+    KEYSYS_TEXT_EndWait( p_wk->p_text );
+  }
 
   KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 
@@ -3580,23 +3584,25 @@ static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE 
   if( recv_or_send )
   {
     //受信
-    is_ok = ( p_wk->key_data[ KEYSYS_DATA_SELF ].is_use[ KEY_SYSTEM_TYPE_DIFFICULT_EASY + index ] == FALSE
-    && p_wk->key_data[ KEYSYS_DATA_OTHER ].is_have[ KEY_SYSTEM_TYPE_DIFFICULT_EASY + index ] == TRUE );
+    is_ok = ( p_wk->key_data[ KEYSYS_DATA_SELF ].is_use[ index ] == FALSE
+    && p_wk->key_data[ KEYSYS_DATA_OTHER ].is_have[ index ] == TRUE );
   }
   else
   {
     //送信
-    is_ok = ( p_wk->key_data[ KEYSYS_DATA_SELF ].is_have[ KEY_SYSTEM_TYPE_DIFFICULT_EASY + index ] == TRUE
-    && p_wk->key_data[ KEYSYS_DATA_OTHER ].is_use[ KEY_SYSTEM_TYPE_DIFFICULT_EASY + index ] == FALSE );
+    is_ok = ( p_wk->key_data[ KEYSYS_DATA_SELF ].is_have[ index ] == TRUE
+    && p_wk->key_data[ KEYSYS_DATA_OTHER ].is_use[ index ] == FALSE );
   }
+
 
   if( index == KEY_SYSTEM_TYPE_CITY_WFBC )
   {
     if( p_wk->key_data[KEYSYS_DATA_SELF].version == p_wk->key_data[KEYSYS_DATA_OTHER].version )
     {
-      is_ok = FALSE;
+      return FALSE;
     }
   }
+
 
   if( is_ok )
   {
@@ -3624,6 +3630,12 @@ static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE 
         //B2の場合受信するのはホワイトキー  送信するのはブラックキー
         index = recv_or_send ? 3: 2;
       }
+    }
+    else if( index > KEY_SYSTEM_TYPE_CITY_WFBC )
+    {
+      //WFBCキーでメッセージを２つ使っているのでそ
+      //れよりおおきキーは１つメッセージがずれている
+      index++;
     }
 
     strID += index;
