@@ -35,8 +35,16 @@
 #include "debug/debug_hudson.h"
 
 //#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
-//#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
 
+#ifdef DEBUG_ONLY_FOR_yoshida
+#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#endif
+#ifdef DEBUG_ONLY_FOR_toyama
+#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#endif
+#ifdef DEBUG_ONLY_FOR_mori
+#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#endif
 //============================================================================================
 /**
  *  定数宣言
@@ -548,9 +556,16 @@ void  BTLV_EFFECT_Main( void )
 
 #ifdef DEBUG_BG_ANIME_CHANGE
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
-//    BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
-    BTLV_FIELD_ChangeModel( bew->bfw, debug_anime );
-    if(++debug_anime>1){ debug_anime=0; }
+    int no,anime;
+    no = BTLV_FIELD_OldModelNo(bew->bfw);
+    anime = no>>8;
+    anime++;
+    no = (no&0xff) | (anime<<8);
+    if(BTLV_FIELD_CheckChangeModel(bew->bfw, no)==FALSE || anime==5){
+      anime=0;
+      no = (no&0xff) | (anime<<8);
+    }
+    BTLV_FIELD_ChangeModel( bew->bfw, no );
   }
 #endif
 

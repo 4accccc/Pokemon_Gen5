@@ -32,3 +32,8 @@ extern BOOL             BTLV_FIELD_CheckExecutePaletteFade( BTLV_FIELD_WORK* bfw
 extern void             BTLV_FIELD_SetVanishFlag( BTLV_FIELD_WORK* bfw, BTLV_FIELD_VANISH flag );
 extern void             BTLV_FIELD_SetAnmStopOnce( BTLV_FIELD_WORK *bfw );
 
+#ifdef PM_DEBUG
+extern BOOL BTLV_FIELD_CheckChangeModel( BTLV_FIELD_WORK *bfw, int no );
+extern int BTLV_FIELD_OldModelNo( BTLV_FIELD_WORK *bfw );
+
+#endif

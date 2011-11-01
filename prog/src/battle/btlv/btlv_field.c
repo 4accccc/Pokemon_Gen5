@@ -55,7 +55,7 @@ struct _BTLV_FIELD_WORK
   int                   field_index;
   HEAPID                heapID;
 	GFL_TCB*			        p_vblank;           //背景モデリングデータ差し替えVSYNCタスク用
-
+  u16                   old_field_no;       // 戦闘背景登録時のNOを保存
 };
 
 typedef struct
@@ -133,6 +133,8 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID,
         season = BATT_FIELD_ANIME_1+season-1;
       }
     }
+    bfw->old_field_no = index|(season<<8);
+    OS_Printf("index=%d, season=%d, field_no = %d\n", index, season, pokewood_field);
   }
 
   // WBT決勝戦では戦闘背景がアニメする
@@ -352,6 +354,44 @@ static void _field_anime_delete( BTLV_FIELD_WORK *bfw )
 
 }
 
+#ifdef PM_DEBUG
+//=============================================================================================
+/**
+ * @brief	
+ *
+ * @param   bfw		
+ * @param   no		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTLV_FIELD_CheckChangeModel( BTLV_FIELD_WORK *bfw, int no )
+{
+  int index = no&0xff;
+  int anime = (no>>8)&0xff;
+  int offset = field_anime_tbl[anime];
+  BOOL  ret=FALSE;
+  BATT_BG_TBL_BG_TABLE* bbtbt;
+
+  // 背景テーブル確保
+  bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, GFL_HEAP_LOWID( bfw->heapID ) );
+
+  //IMDデータ読み込み
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ offset ] != BATT_BG_TBL_NO_FILE ){
+    ret=TRUE;
+  }
+  // 背景テーブル解放
+  GFL_HEAP_FreeMemory( bbtbt );
+
+  return ret;
+}
+
+int BTLV_FIELD_OldModelNo( BTLV_FIELD_WORK *bfw )
+{
+  return bfw->old_field_no;
+}
+#endif
+
 //=============================================================================================
 /**
  * @brief 背景モデリング読み替え
@@ -368,6 +408,8 @@ void BTLV_FIELD_ChangeModel( BTLV_FIELD_WORK *bfw, int no )
   int offset = field_anime_tbl[anime];
   BOOL  ret;
   BATT_BG_TBL_BG_TABLE* bbtbt;
+
+  OS_Printf("index=%d, anime=%d\n", index, anime);
 
   // 背景モデリングリソース全解放
   _field_model_delete( bfw );
@@ -466,6 +508,8 @@ void BTLV_FIELD_ChangeModel( BTLV_FIELD_WORK *bfw, int no )
 
   // 背景テーブル解放
   GFL_HEAP_FreeMemory( bbtbt );
+  
+  bfw->old_field_no = no; //登録したモデリングNOとアニメ定義を保存
   
 }
 
