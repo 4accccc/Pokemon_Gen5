@@ -128,6 +128,10 @@ enum
 
 #define ITEM_LIST_NUM (8)
 
+//デフォルト幅
+#define BAG_TASKMENU_PLATE_WIDTH (14) 
+#define BAG_TASKMENU_PLATE_HEIGHT (3)
+
 typedef enum{
   _CLACT_PLT,
   _CLACT_CHR,
@@ -2010,8 +2014,8 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
-  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = BAG_TASKMENU_PLATE_WIDTH;
+  appinit.h        = BAG_TASKMENU_PLATE_HEIGHT;
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -2046,8 +2050,8 @@ void ITEMDISP_SortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int nu
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
-  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = BAG_TASKMENU_PLATE_WIDTH;
+  appinit.h        = BAG_TASKMENU_PLATE_HEIGHT;
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -2086,8 +2090,8 @@ void ITEMDISP_RepositorySortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork, u8 num )
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
-  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = BAG_TASKMENU_PLATE_WIDTH;
+  appinit.h        = BAG_TASKMENU_PLATE_HEIGHT;
 
   for(i=0;i<num;i++){
     int menu_id = pWork->rep_submenuList[i];
