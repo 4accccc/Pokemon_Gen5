@@ -83,6 +83,9 @@ static u8 panel_FrameColorGet( PANEL_WORK* pp );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct );
 static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, int* task_ct );
+static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
+static BOOL panel_IsMedalDisable( PANEL_WORK* pp );
+static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_Draw( BEACON_VIEW_PTR wk,
     PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, BOOL icon_cancel_f, int* task_ct );
 
@@ -203,7 +206,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
     }
   
     pp = panel_GetPanelFromDataIndex( wk, idx );
-    if( pp->medal == PANEL_MEDAL_NONE ){
+    if( panel_IsMedalDisable( pp ) ){
       return SEQ_MAIN;
     }
     wk->ctrl.target = ret;
@@ -1106,7 +1109,7 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
 
-  if( pp->medal != PANEL_MEDAL_NONE ){
+  if( pp->medal_num != PANEL_MEDAL_NONE ){
     panel_MedalVisibleSet( pp, visible_f );
   }
   if( !visible_f ){ //隠したい時だけ強制
@@ -1339,6 +1342,19 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
 }
 
 /*
+ *  @brief  パネル　メダルが無効か？
+ */
+static BOOL panel_IsMedalDisable( PANEL_WORK* pp )
+{
+  if( pp->medal_num == PANEL_MEDAL_NONE ||
+      pp->medal_num == 0 ||
+      pp->push_medal == MDLID_MAX ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/*
  *  @brief  パネル　メダル描画
  */
 static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
@@ -1347,15 +1363,20 @@ static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO*
   u16 num = PANEL_MEDAL_NONE;
 
   if( pp->version == VERSION_BLACK || pp->version == VERSION_WHITE ){
-    pp->medal = num;
+    pp->medal_num = num;
     panel_MedalVisibleSet( pp, FALSE );
     return;
   }
-  pp->medal = GAMEBEACON_Get_MedalCount(info);
+  pp->medal_num = GAMEBEACON_Get_MedalCount( info );
+  pp->push_medal = GAMEBEACON_Get_PushMedal( info );
+
+  if( panel_IsMedalDisable( pp ) ){
+    BVCAct_AnmStart( pp->cMedal, ACTANM_MEDAL_OFF );
+  }
 
   for(i = 0;i < PANEL_NUM_ACTMAX;i++){
     static const u16 tbl[] = {1,10,100,1000};
-    int value = ( pp->medal%tbl[(i+1)] ) / tbl[i];
+    int value = ( pp->medal_num%tbl[(i+1)] ) / tbl[i];
 //    GFL_CLACT_WK_SetAnmFrame( pp->cNum[i], FX32_CONST(value) );
     GFL_CLACT_WK_SetAnmIndex( pp->cNum[i], value );
   }

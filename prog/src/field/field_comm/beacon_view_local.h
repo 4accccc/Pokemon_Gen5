@@ -54,8 +54,8 @@ typedef struct _PANEL_WORK{
   u8  timeout_f;  //タイムアウトフラグ
   u8  version;    ///<カセットバージョン
   u8  color;      //パネルカラー
-  u8  medal;      //一押しメダルID
-  u8  medal_num;  //メダル数  
+  u8  medal_num;  //メダル数
+  MedalID push_medal; //イチオシメダル
   u16 tr_id;  //トレーナーID
   s16 px;
   s16 py;
