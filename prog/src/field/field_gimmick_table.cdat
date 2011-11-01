@@ -181,7 +181,7 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     PALACE_GMK_Move,    //
   },
   {
-    FS_OVERLAY_ID(palace_map_gimmick),  //
+    NULL,  //
     NULL,    //パレスゾーンのマップ
     NULL,    //パレスゾーンのマップ
     NULL,    //パレスゾーンのマップ
