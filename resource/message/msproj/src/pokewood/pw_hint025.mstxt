@@ -749,10 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　こうかに　ちゅうもく！</Text>
+			<Text>かくれた　こうかを　いかして
+あいてを　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:48:45" />
+				Time="2011-11-01T10:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　効果に　注目！</Text>
+			<Text>隠れた　効果を　活かして
+相手を　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:48:58" />
+				Time="2011-11-01T10:35:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -865,10 +867,11 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　こうかに　ちゅうもく！</Text>
+			<Text>かくれた　こうかを　いかして
+あいてを　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:49:04" />
+				Time="2011-11-01T10:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -876,10 +879,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　効果に　注目！</Text>
+			<Text>隠れた　効果を　活かして
+相手を　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:50:07" />
+				Time="2011-11-01T10:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -900,10 +904,11 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　こうかに　ちゅうもく！</Text>
+			<Text>かくれた　こうかを　いかして
+あいてを　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:49:04" />
+				Time="2011-11-01T10:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -911,10 +916,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　効果に　注目！</Text>
+			<Text>隠れた　効果を　活かして
+相手を　こうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:50:07" />
+				Time="2011-11-01T10:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

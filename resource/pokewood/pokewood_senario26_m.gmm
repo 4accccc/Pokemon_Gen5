@@ -557,8 +557,8 @@
 		<language name="JPN_KANJI" width="256">ドスッ！！</language>
 	</row>
 	<row id="pw_event2_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『グヘッ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グヘッ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ブヘッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ブヘッ！！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">グアイ『すまんな……▼
@@ -578,8 +578,8 @@
 おとこの　すがたは　すでになく▽
 モンスターボールも　なくなっていた▼
 そのかわり　テーブルの　うえには
-みたこともない　あつさの
-さつたばが……▼
+みたこともないほど　たかく　つまれた▽
+さつたばの　やまが……▼
 ボールの　なかの　モニカ……
 かのじょは　どうしているのだろう……</language>
 		<language name="JPN_KANJI" width="256">……グアイと　名乗る　男に
@@ -589,8 +589,8 @@
 男の　姿は　すでになく▽
 モンスターボールも　なくなっていた▼
 その代わり　テーブルの　上には
-見たこともない　厚さの
-札束が……▼
+見たこともないほど　高く　積まれた▽
+札束の　山が……▼
 ボールの中の　モニカ……
 彼女は　どうしているのだろう……</language>
 	</row>

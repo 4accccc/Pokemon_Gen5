@@ -1063,25 +1063,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『グヘッ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ブヘッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-01T07:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-01T07:01:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『グヘッ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ブヘッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-01T07:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-01T07:01:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1142,17 +1142,17 @@
 おとこの　すがたは　すでになく▽
 モンスターボールも　なくなっていた▼
 そのかわり　テーブルの　うえには
-みたこともない　あつさの
-さつたばが……▼
+みたこともないほど　たかく　つまれた▽
+さつたばの　やまが……▼
 ボールの　なかの　モニカ……
 かのじょは　どうしているのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:31" />
+				Time="2011-11-01T07:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:31" />
+				Time="2011-11-01T07:01:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1163,17 +1163,17 @@
 男の　姿は　すでになく▽
 モンスターボールも　なくなっていた▼
 その代わり　テーブルの　上には
-見たこともない　厚さの
-札束が……▼
+見たこともないほど　高く　積まれた▽
+札束の　山が……▼
 ボールの中の　モニカ……
 彼女は　どうしているのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:31" />
+				Time="2011-11-01T07:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:31" />
+				Time="2011-11-01T07:01:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

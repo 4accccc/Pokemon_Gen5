@@ -271,7 +271,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいとかいに　ＵＦＯ　しゅつげん
+			<Text>だいとかいに　ＵＦО　しゅつげん
 しゅつどうする　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -279,11 +279,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-29T09:20:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大都会に　ＵＦＯ　出現
+			<Text>大都会に　ＵＦО　出現
 出動する　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -291,7 +291,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-29T09:20:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -349,7 +349,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふたたび　しゅつげんする　ＵＦＯと
+			<Text>ふたたび　しゅつげんする　ＵＦОと
 デコイさくせんの　ゆくえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -357,11 +357,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-29T09:20:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>再び　出現する　ＵＦＯと
+			<Text>再び　出現する　ＵＦОと
 デコイ作戦の　行方</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -369,7 +369,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:28" />
+				Time="2011-10-29T09:20:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1731,10 +1731,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Full Metal Cop</Text>
+			<Text>Ｆｕｌｌ　Ｍｅｔａｌ　Ｃｏｐ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:34:51" />
+				Time="2011-10-29T09:22:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1768,10 +1768,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Full Metal Cop　２</Text>
+			<Text>Ｆｕｌｌ　Ｍｅｔａｌ　Ｃｏｐ２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:35:42" />
+				Time="2011-10-29T09:22:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1805,10 +1805,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Full Metal Cop　３</Text>
+			<Text>Ｆｕｌｌ　Ｍｅｔａｌ　Ｃｏｐ３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:35:48" />
+				Time="2011-10-29T09:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1842,10 +1842,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Full Metal Cop　４</Text>
+			<Text>Ｆｕｌｌ　Ｍｅｔａｌ　Ｃｏｐ４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:35:53" />
+				Time="2011-10-29T09:22:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1916,10 +1916,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>侵略者　Episode　２</Text>
+			<Text>侵略者　Ｅｐｉｓｏｄｅ２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:23:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1953,10 +1953,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>侵略者 Episode　３</Text>
+			<Text>侵略者　Ｅｐｉｓｏｄｅ３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:23:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1990,10 +1990,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>侵略者 Episode　４</Text>
+			<Text>侵略者　Ｅｐｉｓｏｄｅ４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:23:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2064,10 +2064,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大怪獣　Episode　２</Text>
+			<Text>大怪獣　Ｅｐｉｓｏｄｅ２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:24:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2101,10 +2101,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大怪獣　Episode　３</Text>
+			<Text>大怪獣　Ｅｐｉｓｏｄｅ３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:24:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2138,10 +2138,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大怪獣　Episode　４</Text>
+			<Text>大怪獣　Ｅｐｉｓｏｄｅ４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2511,7 +2511,7 @@
 			<Text>ＯＬ・ザ・ジャイアント！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:24:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2545,10 +2545,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Pt.２</Text>
+			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:25:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2582,10 +2582,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Pt.３</Text>
+			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:25:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2619,10 +2619,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Pt.４</Text>
+			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-10-29T09:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3368,7 +3368,7 @@
 他の相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:37:24" />
+				Time="2011-10-29T09:26:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3968,11 +3968,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０カットいないにセットW２をたおせ
+			<Text>２０カットいないにセットＷ２をたおせ
 ほかの　あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:05:35" />
+				Time="2011-10-29T09:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3980,11 +3980,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０カット以内にセットW２を倒せ
+			<Text>２０カット以内にセットＷ２を倒せ
 他の　相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:12" />
+				Time="2011-10-29T09:26:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4198,11 +4198,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>７カットの　あいだ　いきのこれ
-あいてを　ぜんめつさせると　ＮＧ</Text>
+			<Text>１０カットいないに
+すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:52" />
+				Time="2011-11-01T10:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4210,11 +4210,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>７カットの　あいだ　生き残れ
-相手を　全滅させると　ＮＧ</Text>
+			<Text>１０カット以内に
+すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:53" />
+				Time="2011-11-01T10:41:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4237,10 +4237,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　セットをたおせ</Text>
+			<Text>２０カットいないに
+すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:57" />
+				Time="2011-11-01T10:41:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4248,10 +4249,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に　セットを倒せ</Text>
+			<Text>２０カット以内に
+すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:58" />
+				Time="2011-11-01T10:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4620,7 +4622,7 @@
 			<Text>ＴＩＴＬＥ　えいがの　なまえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-06T07:41:34" />
+				Time="2011-10-29T09:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4631,7 +4633,7 @@
 			<Text>ＴＩＴＬＥ　映画タイトル</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:10:44" />
+				Time="2011-10-29T09:52:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4655,7 +4657,7 @@
 			<Text>ＰＬＯＴ　あらすじ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:08:56" />
+				Time="2011-10-29T09:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4666,7 +4668,7 @@
 			<Text>ＰＬＯＴ　あらすじ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:09:00" />
+				Time="2011-10-29T09:51:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4687,10 +4689,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>MISSION　クリアもくひょう</Text>
+			<Text>ＭＩＳＳＩＯＮ　クリアもくひょう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-06T07:40:42" />
+				Time="2011-10-29T09:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4698,10 +4700,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>MISSION　クリア目標</Text>
+			<Text>ＭＩＳＳＩＯＮ　クリア目標</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-06T07:40:59" />
+				Time="2011-10-29T09:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4797,7 +4799,7 @@
 			<Text>ＣＡＳＴ　きょうえんしゃ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:13:56" />
+				Time="2011-10-29T09:53:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4808,7 +4810,7 @@
 			<Text>ＣＡＳＴ　共演者</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:14:06" />
+				Time="2011-10-29T09:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5567,10 +5569,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SCREEN　１</Text>
+			<Text>ＳＣＲＥＥＮ　１</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-26T11:51:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:27:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5593,10 +5595,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SCREEN　２</Text>
+			<Text>ＳＣＲＥＥＮ　２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-26T11:51:29" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:27:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5619,10 +5621,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SCREEN　３</Text>
+			<Text>ＳＣＲＥＥＮ　３</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-26T11:51:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5645,10 +5647,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SCREEN　４</Text>
+			<Text>ＳＣＲＥＥＮ　４</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-26T11:51:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:27:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6337,10 +6339,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・V　ふたたび</Text>
+			<Text>Ｍ・Ｂ　ふたたび</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:08:01" />
+				Time="2011-10-29T09:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6348,10 +6350,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・V　再び</Text>
+			<Text>Ｍ・Ｂ　再び</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:08:06" />
+				Time="2011-10-29T09:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7211,10 +7213,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>The Dream　Match</Text>
+			<Text>Ｔｈｅ　Ｄｒｅａｍ　Ｍａｔｃｈ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:28:40" />
+				Time="2011-10-29T09:28:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

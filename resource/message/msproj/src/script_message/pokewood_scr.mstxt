@@ -52,7 +52,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:09:49" />
+				Time="2011-10-29T09:31:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -60,7 +60,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！
 前に　キミが　出演した▽
 映画は　大ヒット　しただろ！▼
 おかげで　ライターが　続編の
@@ -71,7 +71,7 @@
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T13:55:21" />
+				Time="2011-10-29T09:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -203,7 +203,7 @@
 		Label="msg_pw_studio_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＷＡＯ！　いま　こうかいちゅうの
+			<Text>ワオ！　いま　こうかいちゅうの
 さくひんで　スクリーンが▽
 いっぱい　だぜ！▼
 あたらしい　さくひんを　とるには
@@ -213,7 +213,7 @@
 ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:56:44" />
+				Time="2011-10-29T09:31:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -292,12 +292,12 @@
 		Label="msg_pw_studio_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　じゃあ　さつえいする
+			<Text>オーケー！　じゃあ　さつえいする
 さくひんの　だいほんを▽
 えらんで　くれよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:37:43" />
+				Time="2011-10-29T09:45:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -333,11 +333,11 @@
 		Label="msg_pw_studio_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　じゃあ　この　さくひんに
+			<Text>オーケー！　じゃあ　この　さくひんに
 しゅつえんする　ポケモンは　どうする？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:39:28" />
+				Time="2011-10-29T09:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -385,11 +385,12 @@
 		Label="msg_pw_studio_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　ＯＫ！　じゃあ　さくひんに
-しゅつえんする　ポケモンを　きめてくれ！▼</Text>
+			<Text>オーケー！　オーケー！
+じゃあ　さくひんに　しゅつえんさせる▽
+ポケモンを　きめてくれよ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:18:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:46:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -398,10 +399,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ！　ＯＫ！　じゃあ　作品に
-出演する　ポケモンを　決めてくれ！▼</Text>
+出演する　ポケモンを　決めてくれよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:50:10" />
+				Time="2011-10-29T09:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -425,12 +426,12 @@
 		Label="msg_pw_studio_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　ＯＫ！▼
+			<Text>オーケー！　オーケー！▼
 じゃあ　この　さくひんに　ピッタリの
 ポケモンを　てはい　しとくぜ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T09:50:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:46:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -505,11 +506,11 @@
 		Label="msg_pw_studio_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！
+			<Text>オーケー！
 じゃあ　さつえいを　はじめようか！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T11:20:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -605,12 +606,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！▼
 最近　キミは　役者らしい
 イイ顔に　なってきたねえー</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:26:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:32:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -631,14 +632,14 @@
 		Label="msg_pw_studio_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＯＲＲＹ！▼
+			<Text>ソーリー！▼
 [Name:TrainerName ]の　ポケモンは
 たしかに　イカしてると　おもうぜ！▼
 ただ　まずは　ポケウッドの　ポケモンで
 さくひんを　とってくれないか！？▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T09:50:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:47:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -675,12 +676,12 @@
 		Label="msg_pw_studio_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＨ！　ざんねんだが　そのポケモンは
+			<Text>オウ！　ざんねんだが　そのポケモンは
 ポケウッドの　さつえいには▽
 チャレンジ　できないんだ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T09:50:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -825,7 +826,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！
 ビックニュース　だぜ！▼
 キミの　出演した　映画が
 歴代の　興行成績を▽
@@ -839,7 +840,7 @@
 大ヒットを　飛ばしてくれよな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:24:23" />
+				Time="2011-10-29T09:32:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -879,7 +880,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
 最近　キミの　人気が　すごくてさ！
 キミだからこそ　できる　作品の▽
 制作が　決定　したんだぜ！▼
@@ -888,8 +889,8 @@
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:05:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -931,7 +932,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
 キミの　ポケウッドの　キャリアも
 けっこう　長く　なってきたよな！▼
 そんな　ベテラン　間近の
@@ -942,8 +943,8 @@
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:05:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:33:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -982,7 +983,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
 きょうは　新しい　台本の
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
@@ -990,8 +991,8 @@
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1013,10 +1014,11 @@
 		Label="msg_pw_studio_23">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうした……？　やめるのか？</Text>
+			<Text>どうした……？
+さつえいを　やめるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:23:24" />
+				Time="2011-10-29T09:34:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1024,10 +1026,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうした……？　止めるのか？</Text>
+			<Text>どうした……？
+撮影を　止めるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:23:15" />
+				Time="2011-10-29T09:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1170,12 +1173,10 @@
 		Label="msg_pw_studio_27">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドウシタノ？　アキラメルノ？
-アキラメタラ　ソコデ▽
-サツエイ　シッパイ　ダヨ？</Text>
+			<Text>ドウシタノ？　アキラメルノ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:24:50" />
+				Time="2011-10-29T09:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1183,12 +1184,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドウシタノ？　アキラメルノ？
-アキラメタラ　ソコデ▽
-撮影　失敗ダヨ？</Text>
+			<Text>ドウシタノ？　アキラメルノ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:24:39" />
+				Time="2011-10-29T09:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

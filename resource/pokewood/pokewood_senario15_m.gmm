@@ -359,9 +359,9 @@
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほんとうに……
-M・Vが　あらわれた……</language>
+Ｍ・Ｂが　あらわれた……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『本当に……
-M・Vが　現れた……</language>
+Ｍ・Ｂが　現れた……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">おとこ『だれだね……</language>
@@ -389,24 +389,24 @@ M・Vが　現れた……</language>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくは　[1:00:トレーナー名:1]！
 イッシュぼうえいたい　です！▼
 セリザワさんと　いいましたね……
-そのM・Vは　あなたのもの　ですか？　</language>
+そのＭ・Ｂは　あなたのもの　ですか？　</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『僕は　[1:00:トレーナー名:1]！
 イッシュ防衛隊　です！▼
 セリザワさんと　言いましたね……
-そのM・Vは　あなたのもの　ですか？　</language>
+そのＭ・Ｂは　あなたのもの　ですか？　</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">セリザワ『イッシュぼうえいたい……▼
 そうか　あれは　キミが……▼
 ……ちょうど　いいねェ▼
 わたしの　けいかくを　じゃました
-あげく　M・Vを　はかい　してくれた▽
+あげく　Ｍ・Ｂを　はかい　してくれた▽
 れいを　しなければ　いかんなァ……</language>
 		<language name="JPN_KANJI" width="256">セリザワ『イッシュ防衛隊……▼
 そうか　あれは　キミが……▼
 ……ちょうど　いいねェ▼
 私の　プランを　邪魔した
-挙句　M・Vを　破壊してくれた▽
+挙句　Ｍ・Ｂを　破壊してくれた▽
 礼を　しなければ　いかんなァ……</language>
 	</row>
 	<row id="pw_event0_hero_4">
@@ -432,28 +432,28 @@ M・Vが　現れた……</language>
 言っていた　男なのかっ！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｖ２『グゴガガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｖ２『グゴガガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">セリザワ『……よけいな　ことを
 してくれた　ものだよ　キミは▼
 ……あの　バカな　さぎょういんが
-あのまま　Ｍ・Ｖを　つかっていれば▽
+あのまま　Ｍ・Ｂを　つかっていれば▽
 まちを　はかい　できたものを……</language>
 		<language name="JPN_KANJI" width="256">セリザワ『……余計な　ことを
 してくれた　ものだよ　キミは▼
 ……あの　バカな　作業員が
-あのまま　Ｍ・Ｖを　使っていれば▽
+あのまま　Ｍ・Ｂを　使っていれば▽
 街を　破壊できたものを……</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まえに　あらわれた
-Ｍ・Ｖも　あなたの　しわざか……▼
+Ｍ・Ｂも　あなたの　しわざか……▼
 まちの　はかい　なんて……
 いったい　なんの　ために……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『以前に　現れた
-Ｍ・Ｖも　あなたの　仕業か……▼
+Ｍ・Ｂも　あなたの　仕業か……▼
 街の　破壊なんて……
 一体　何の　ために……</language>
 	</row>
@@ -526,12 +526,12 @@ M・Vが　現れた……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はいっ！</language>
 	</row>
 	<row id="pw_event2_hero_2">
-		<language name="JPN" width="256">つうしん『Ｍ・Ｖ２の　からだは
+		<language name="JPN" width="256">つうしん『Ｍ・Ｂ２の　からだは
 とくしゅな　きんぞくで▽
 おおわれて　いるようだ！▼
 ふつうに　こうげきしても
 ダメージは　きたいできない！</language>
-		<language name="JPN_KANJI" width="256">通信『Ｍ・Ｖ２の　表面は
+		<language name="JPN_KANJI" width="256">通信『Ｍ・Ｂ２の　表面は
 特殊な　金属で▽
 コーティング　されているようだ！▼
 普通に　攻撃しても
@@ -571,9 +571,9 @@ M・Vが　現れた……</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">セリザワ『ハハハ……
-こうせいのうだろ？　Ｍ・Ｖ２は……</language>
+こうせいのうだろ？　Ｍ・Ｂ２は……</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……
-高性能だろ？　Ｍ・Ｖ２は……</language>
+高性能だろ？　Ｍ・Ｂ２は……</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしよう……</language>
@@ -691,11 +691,11 @@ M・Vが　現れた……</language>
 		<language name="JPN" width="256">セリザワ『ハハハ……▼
 どうだね？　[1:00:トレーナー名:1]くん
 すばらしい　スペックだろう？▽
-わたしの　Ｍ・Ｖ２は……</language>
+わたしの　Ｍ・Ｂ２は……</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……▼
 どうだね？　[1:00:トレーナー名:1]くん
 素晴らしい　スペックだろう？▽
-わたしの　Ｍ・Ｖ２は……</language>
+わたしの　Ｍ・Ｂ２は……</language>
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こうなったら……
@@ -725,9 +725,9 @@ M・Vが　現れた……</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぜったいに……
-M・V２を　とめなければ……</language>
+Ｍ・Ｂ２を　とめなければ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『絶対に……
-M・V２を　停めなければ……</language>
+Ｍ・Ｂ２を　停めなければ……</language>
 	</row>
 	<row id="pw_event4_enemy_3">
 		<language name="JPN" width="256">セリザワ『……おいっ！！▼
@@ -825,10 +825,10 @@ M・V２を　停めなければ……</language>
 	</row>
 	<row id="pw_event5_enemy_4">
 		<language name="JPN" width="256">セリザワ『まだ　ふまん　かね？▼
-……では　このまま　Ｍ・Ｖ２に
+……では　このまま　Ｍ・Ｂ２に
 ポケモンともども　はかいされるかね？</language>
 		<language name="JPN_KANJI" width="256">セリザワ『まだ　不満　かね？▼
-……では　このまま　Ｍ・Ｖ２に
+……では　このまま　Ｍ・Ｂ２に
 ポケモンともども　破壊されるかね？</language>
 	</row>
 	<row id="pw_event5_hero_5">
@@ -861,7 +861,7 @@ M・V２を　停めなければ……</language>
 ……わたしには　ありあまる　とみと
 ざいさんが　あるのだッ……▼
 こんな　ポンコツよりも
-さらに　すぐれた　Ｍ・Ｖを▽
+さらに　すぐれた　Ｍ・Ｂを▽
 てに　いれることも▽
 ぞうさも　ないこと　なんだぞ！</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ググググ……
@@ -869,7 +869,7 @@ M・V２を　停めなければ……</language>
 ……私には　ありあまる　富と
 財産が　あるのだッ……▼
 こんな　ポンコツよりも
-さらに　優れたＭ・Ｖを▽
+さらに　優れたＭ・Ｂを▽
 手に　入れることも▽
 造作も　ないこと　なんだぞ！</language>
 	</row>
@@ -878,10 +878,10 @@ M・V２を　停めなければ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何て　やつだ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
-		<language name="JPN" width="256">セリザワ『あたらしい　Ｍ・Ｖで
+		<language name="JPN" width="256">セリザワ『あたらしい　Ｍ・Ｂで
 おまえを　はかい　してやる……▼
 おぼえていろよっ！！</language>
-		<language name="JPN_KANJI" width="256">セリザワ『新しい　Ｍ・Ｖで
+		<language name="JPN_KANJI" width="256">セリザワ『新しい　Ｍ・Ｂで
 お前を　破壊　してやる……▼
 覚えていろよっ！！</language>
 	</row>
@@ -911,14 +911,14 @@ M・V２を　停めなければ……</language>
 	</row>
 	<row id="pw_event6_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はい！！
-Ｍ・Ｖ２は　かんぜんに　ていし！▼
+Ｍ・Ｂ２は　かんぜんに　ていし！▼
 にんむ　かんりょう　しました！！▼
-しかし　Ｍ・Ｖ２を　あやつっていた
+しかし　Ｍ・Ｂ２を　あやつっていた
 セリザワには　にげられました！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はい！！
-Ｍ・Ｖ２は　完全に　停止！▼
+Ｍ・Ｂ２は　完全に　停止！▼
 任務　完了しました！！▼
-しかし　Ｍ・Ｖ２を　操っていた
+しかし　Ｍ・Ｂ２を　操っていた
 セリザワには　逃げられました！</language>
 	</row>
 	<row id="pw_event6_hero_7">
@@ -928,7 +928,7 @@ M・V２を　停めなければ……</language>
 あくじは　しょうめい　された！▼
 まもなく　かれは　たいほ　される！
 ざいさんも　すべて　ぼっしゅう　され▽
-にどと　M・Vを　てに　いれることも▽
+にどと　Ｍ・Ｂを　てに　いれることも▽
 できない　だろう！▼
 ごくろうだった！　[1:00:トレーナー名:1]！！　
 ほんぶに　かえってくるんだ！</language>
@@ -938,7 +938,7 @@ M・V２を　停めなければ……</language>
 証明された！▼
 まもなく　彼は　たいほ　される！
 財産も　すべて　没収され▽
-二度と　M・Vを　手に　入れることも▽
+二度と　Ｍ・Ｂを　手に　入れることも▽
 できない　だろう！▼
 ご苦労だった！　[1:00:トレーナー名:1]！！　
 本部に　帰ってくるんだ！</language>
