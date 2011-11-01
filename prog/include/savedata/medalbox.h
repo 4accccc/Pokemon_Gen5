@@ -83,6 +83,10 @@ extern u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count
 // 現在のランクでメダルボックスに入るメダル最大数を取得
 extern u16 MEDALBOX_GetMedalBoxMax( const MEDALBOX *p_mdlbox );
 
+// チュートリアルフラグを取得する
+extern u8 MEDALBOX_GetTutorialFlag( const MEDALBOX *p_mdlbox );
+// チュートリアルフラグを設定する
+extern void MEDALBOX_SetTutorialFlag( MEDALBOX *p_mdlbox );
 
 // セーブデータの初期化
 extern void MEDALBOX_Init(MEDALBOX *p_mdlbox);

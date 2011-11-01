@@ -663,7 +663,8 @@ typedef struct {
   BOOL        is_print_util_wati;                     // プリントユーティリティー終了待ち
   BOOL        is_polis_active;                        // 光沢がスクロール中かどうか
   s32         polis_frame;                            // 光沢用フレーム
-  PRINT_UTIL  print_util[PRINT_UTIL_MAX];           // 文字列描画フレーム用ユーティリティー
+  PRINT_UTIL  print_util[PRINT_UTIL_MAX];             // 文字列描画フレーム用ユーティリティー
+  MEDALBOX* p_medal_box;                              // メダルボックスセーブ
 #ifdef PM_DEBUG
   // デバッグ
   u8              debgu_seq;
@@ -778,6 +779,8 @@ static void MDLSYS_PrintInit( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_PrintMain( MEDALBOXSYS_WORK *p_wk );
 static void MDLSYS_PrintDelete( MEDALBOXSYS_WORK *p_wk );
 static u32 MDLSYS_BG_GetFrame( int frame_id );
+static void SetPrintStreamWin( MEDALBOXSYS_WORK *p_wk , STRBUF* str );
+static void ReleasePrintStreamWin( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
 // 初期化シーケンス
@@ -801,6 +804,8 @@ static void SetCursorState( MEDALBOXSYS_WORK *p_wk , CURSOR_STATE state , u8 med
 static void NewEffectMain( MEDALBOXSYS_WORK *p_wk );
 static void SlideTouchCheck( MEDALBOXSYS_WORK *p_wk );
 static BOOL SlideTouchMain( MEDALBOXSYS_WORK *p_wk );
+static u32 GetBoxColorOffset( MEDALBOX* p_medal_box );
+static void SetStateMedalCursor( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
 // ページ切替シーケンスメイン
@@ -862,6 +867,11 @@ static void OpenSearchMenu( MEDALBOXSYS_WORK *p_wk );
 static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk );
 
 //=============================================================================
+// チュートリアルメイン
+//=============================================================================
+static GFL_PROC_RESULT MDLSYS_TUTORIAL_Main( MEDALBOXSYS_WORK *p_wk );
+
+//=============================================================================
 // メダルシステム
 //=============================================================================
 static void MDLSYS_PageMedalDraw( MEDALBOXSYS_WORK *p_wk , u8 draw_page , u8 unit_pos , BOOL is_draw_medal_name);
@@ -869,15 +879,6 @@ static void MDLSYS_GetDrawMedalPos( int num , GFL_CLACTPOS* p_pos );
 static void MDLSYS_GetDrawPushMedalButtonPos( int num , GFL_CLACTPOS* p_pos );
 static s32  MDLSYS_GetMedalObjWindID( int num );
 static void MDLSYS_PolishEffectScrollMain( MEDALBOXSYS_WORK *p_wk );
-
-//=============================================================================
-// デバッグ関数
-//=============================================================================
-#ifdef PM_DEBUG
-static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk );
-static void DBEG_MDLSYS_DebugInit( MEDALBOXSYS_WORK *p_wk );
-#endif
-
 
 
 // 外部参照用プロセスデータ定義
@@ -977,9 +978,6 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
   // メダル情報を表示する
   DrawMedalInfo( p_wk , NULL , INFOTYPE_TARGET );
 
-#ifdef PM_DEBUG
-  DBEG_MDLSYS_DebugInit( p_wk );
-#endif
   return GFL_PROC_RES_FINISH;
 }
 
@@ -1012,20 +1010,6 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
       return GFL_PROC_RES_FINISH;
     }
   }
-
-#ifdef PM_DEBUG
-  {
-    const int trg = GFL_UI_KEY_GetTrg();
-
-    // デバッグ関数
-    DBEG_MDLSYS_DebugMain( p_wk );
-
-    //  if( trg & PAD_BUTTON_START )
-    //  {
-    //    return GFL_PROC_RES_FINISH;
-    //  }
-  }
-#endif
 
   switch( p_wk->now_seq )
   {
@@ -1077,6 +1061,11 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
     // 一押しメダル登録シーケンス
   case SEQ_PUSUMEDALBUTTON:
     proc_ret = MDLSYS_PUSHMEDALBUTTON_Main( p_wk );
+    break;
+
+    // チュートリアルシーケンス
+  case SEQ_MDLBOX_TUTORIAL:
+    proc_ret = MDLSYS_TUTORIAL_Main( p_wk );
     break;
 
   default:
@@ -1204,6 +1193,12 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void
 static void MDLSYS_MakeCommonData( MEDALBOXSYS_WORK *p_wk )
 {
   HEAPID heapID = p_wk->heapID;
+  MEDALBOX* p_medal_box;
+  SAVE_CONTROL_WORK *p_sv;
+
+  // セーブデータ取得
+  p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+  p_wk->p_medal_box = SaveData_GetMedalBox( p_sv );
 
 	// フォント
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
@@ -1345,6 +1340,7 @@ static void MDLSYS_GraphicDelete( MEDALBOXSYS_WORK *p_wk )
 static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 {
   int i;
+  u32 color_offset;
   HEAPID heapID = p_wk->heapID;
 
 	//初期化
@@ -1426,33 +1422,9 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
 				MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_BACK_S), 0, 0, FALSE, heapID );
 
     // ボックスランクで色を変える
-    {
-      u8      box_rank;
-      SAVE_CONTROL_WORK *p_sv;
-      MEDALBOX* p_medal_box;
-      u32     color_offset;
-
-      // セーブデータの取得
-      p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
-      p_medal_box = SaveData_GetMedalBox( p_sv );
-      box_rank = MEDALBOX_GetMedalBoxRank( p_medal_box );
-      color_offset = box_rank;
-
-      // B2とW2で色を変化させる
-      if( box_rank == MEDALBOX_RANK_BW )
-#if PM_VERSION == VERSION_W2
-      {
-        color_offset = box_rank;
-      }
-#else
-      {
-        color_offset = box_rank + 1;
-      }
-#endif
-
-      GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_medalbox_gra_medal_bgd_NCLR,
-          PALTYPE_MAIN_BG, 0x20*(color_offset+FONTBORD_COLOR_OFFSET) , 0x20*FONTBORD_COLOR_OFFSET , 0x20 , heapID );
-    }
+    color_offset = GetBoxColorOffset( p_wk->p_medal_box );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_medalbox_gra_medal_bgd_NCLR,
+        PALTYPE_MAIN_BG, 0x20*(color_offset+FONTBORD_COLOR_OFFSET) , 0x20*FONTBORD_COLOR_OFFSET , 0x20 , heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -1481,6 +1453,33 @@ static void MDLSYS_BGInit( MEDALBOXSYS_WORK *p_wk )
     GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_MONITOR_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
     GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_EFFECTS_S) ,GFL_BG_SCROLL_Y_SET , FX_Whole(p_wk->monitor_offset) );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックスのカラーオフセットを取得する
+ *
+ *	@param	p_medal_box 
+ *
+ *	@retval カラーオフセット
+ */
+//-----------------------------------------------------------------------------
+static u32 GetBoxColorOffset( MEDALBOX* p_medal_box )
+{
+  u8 box_rank = MEDALBOX_GetMedalBoxRank( p_medal_box );
+  u32 color_offset = box_rank;
+
+  // B2とW2で色を変化させる
+  if( box_rank == MEDALBOX_RANK_BW )
+  {
+    if( GET_VERSION() == VERSION_W2 ){
+      color_offset = box_rank;
+    }else{
+      color_offset = box_rank + 1;
+    }
+  }
+
+  return color_offset;
 }
 
 //----------------------------------------------------------------------------
@@ -1557,7 +1556,7 @@ static void MDLSYS_BGDelete( MEDALBOXSYS_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
 {
-  
+  u32 color_offset;
   HEAPID heapID = p_wk->heapID;
 
 	//システム作成
@@ -1620,34 +1619,10 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
         CLSYS_DRAW_MAIN ,  32*MEDALOBJ_PALETTENUM_MEDAL , 0 , MEDALOBJ_PALETTENUM_UI , heapID );	
     
     // ボックスランクで色を変える
-    {
-      u8      box_rank;
-      SAVE_CONTROL_WORK *p_sv;
-      MEDALBOX* p_medal_box;
-      u32     color_offset;
-
-      // セーブデータの取得
-      p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
-      p_medal_box = SaveData_GetMedalBox( p_sv );
-      box_rank = MEDALBOX_GetMedalBoxRank( p_medal_box );
-      color_offset = box_rank;
-
-      // B2とW2で色を変化させる
-      if( box_rank == MEDALBOX_RANK_BW )
-#if PM_VERSION == VERSION_W2
-      {
-        color_offset = box_rank;
-      }
-#else
-      {
-        color_offset = box_rank+1;
-      }
-#endif
-
-      GFL_CLGRP_PLTT_RegisterEx( p_handle[ARC_TYPE_MEDAL_GRA],
-          NARC_medalbox_gra_medal_obj2_NCLR ,
-          CLSYS_DRAW_MAIN ,  32*(MEDALOBJ_PALETTENUM_MEDAL+3) , color_offset+3 , 1 , heapID );	
-    }
+    color_offset = GetBoxColorOffset( p_wk->p_medal_box );
+    GFL_CLGRP_PLTT_RegisterEx( p_handle[ARC_TYPE_MEDAL_GRA],
+        NARC_medalbox_gra_medal_obj2_NCLR ,
+        CLSYS_DRAW_MAIN ,  32*(MEDALOBJ_PALETTENUM_MEDAL+3) , color_offset+3 , 1 , heapID );	
 
     obj_res[ OBJRESID_UI_CGR ]     = GFL_CLGRP_CGR_Register( p_handle[ARC_TYPE_MEDAL_GRA],
         NARC_medalbox_gra_medal_obj2_NCGR , FALSE, CLSYS_DRAW_MAIN, heapID );
@@ -2558,27 +2533,52 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
       // 次のシーケンスへ移動
       if( cap_scroll_end && monitor_scroll_end )
       {
-        // 終了方法を調べてカーソルを表示する
-        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+        // チュートリアルクリア後か判断
+        if( MEDALBOX_GetTutorialFlag( p_wk->p_medal_box ) == TRUE )
         {
-          u8 medal_id   = GAMEDATA_GetMedalBoxTopMedalID( p_wk->p_param->p_gamedata );
-          u8 medal_pos  = MEDALDATASYS_GetMedalSortPos( &p_wk->medal_data , medal_id );
-          if( medal_id != MDLID_MAX )
-          {
-            SetCursor( p_wk , medal_pos%PAGE_MEDAL_MAX , TRUE );
-          }
-          else
-          {
-            SetCursor( p_wk , 0  , TRUE );
-          }
+          // 終了方法を調べてカーソルを表示する
+          SetStateMedalCursor( p_wk );
+
+          // 通常起動
+          MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
         }
-        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+        else
+        {
+          // チュートリアルシーケンスに移動する
+          MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_TUTORIAL );
+        }
       }
     }
     break;
   }
 
   return GFL_PROC_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了方法を調べてカーソルを表示する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetStateMedalCursor( MEDALBOXSYS_WORK *p_wk )
+{
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+  {
+    u8 medal_id   = GAMEDATA_GetMedalBoxTopMedalID( p_wk->p_param->p_gamedata );
+    u8 medal_pos  = MEDALDATASYS_GetMedalSortPos( &p_wk->medal_data , medal_id );
+    if( medal_id != MDLID_MAX )
+    {
+      SetCursor( p_wk , medal_pos%PAGE_MEDAL_MAX , TRUE );
+    }
+    else
+    {
+      SetCursor( p_wk , 0  , TRUE );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3350,18 +3350,11 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
   u8      box_rank;
   PRINTSYS_LSB font_colro = GetMedalInfoFontColor();
   WORDSET *p_word_set = WORDSET_Create( p_wk->heapID ); 
-  SAVE_CONTROL_WORK *p_sv;
-  MEDALBOX* p_medal_box;
 
   GF_ASSERT( p_wk );
 
-  // セーブデータの取得
-  p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
-  p_medal_box = SaveData_GetMedalBox( p_sv );
-
-
   // ボックスランクの取得
-  box_rank = MEDALBOX_GetMedalBoxRank( p_medal_box );
+  box_rank = MEDALBOX_GetMedalBoxRank( p_wk->p_medal_box );
 
   // =======================================
   // メダル画像変更
@@ -3434,11 +3427,11 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
       u16 title_cnt;  // タイトル取得数
       u16 get_cnt;    // 総取得数
       u8  rank_target_medal;
-      title_cnt = MEDALBOX_GetMedalCount( p_medal_box , FALSE);
-      get_cnt = MEDALBOX_GetMedalCount( p_medal_box , TRUE);
+      title_cnt = MEDALBOX_GetMedalCount( p_wk->p_medal_box , FALSE);
+      get_cnt = MEDALBOX_GetMedalCount( p_wk->p_medal_box , TRUE);
 
       // 目標メダル数を取得
-      rank_target_medal = MEDALBOX_GetMedalBoxMax( p_medal_box ) + 1;
+      rank_target_medal = MEDALBOX_GetMedalBoxMax( p_wk->p_medal_box ) + 1;
 
       if( info_type == INFOTYPE_GET )
       {
@@ -3608,7 +3601,7 @@ static void DrawMedalInfo( MEDALBOXSYS_WORK *p_wk , MY_MEDAL_ST *p_medal_st , IN
   {
     if( info_type == INFOTYPE_GET )
     {
-      MEDALBOX_SetNewMedalFlgOff( p_medal_box , p_medal_st->medal_id  );
+      MEDALBOX_SetNewMedalFlgOff( p_wk->p_medal_box , p_medal_st->medal_id  );
     }
   }
 
@@ -5135,21 +5128,6 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
         PMSND_PlaySE( SEQ_SE_BEEP );
       }
 
-      // メニュー用BMPWIN作成
-      p_wk->p_menu_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
-          2   , 24-6   ,
-          28  , 4  ,
-          SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
-      
-      // スクリーンの作成
-      GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
-
-      // フレーム用グラフィックをセットする
-      BmpWinFrame_GraphicSet( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
-
-      // ウィンドウ枠の表示
-      BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
-
       // 説明文の作成
       switch( p_wk->pushmedal_set_type )
       {
@@ -5164,21 +5142,8 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
         break;
       }
 
-      // ウィンドウのクリアー
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_menu_win), 15 );
-
-      // 転送
-      GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
-
-      // プリントストリームの作成
-      p_wk->p_print_stream = PRINTSYS_PrintStream( p_wk->p_menu_win , 0 , 0 , str ,
-          p_wk->p_font , MSGSPEED_GetWait() , p_wk->p_tcb_sys , 0 , p_wk->heapID , 15 );
-
-      // 転送
-      GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
-
-      // 転送リクエスト
-      GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+      // プリントストリームをセットする
+      SetPrintStreamWin( p_wk ,str );
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -5210,8 +5175,9 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
     break;
   case 3:
     {
-      // ビットマップウィンドウの削除
-      GFL_BMPWIN_Delete( p_wk->p_menu_win );
+
+      // プリントストリームウィンドウを開放
+      ReleasePrintStreamWin( p_wk );
 
       // エフェクトの読み込み
       MDLSYS_EFFETC_ReLoad( p_wk );
@@ -5459,45 +5425,157 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
 
 }
 
-#ifdef PM_DEBUG
-// ============================================================
-// 
-// デバッグ関数
-//
-// ============================================================
-
-static void DBEG_MDLSYS_DebugInit( MEDALBOXSYS_WORK *p_wk )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  チュートリアルシーケンスメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GFL_PROC_RESULT MDLSYS_TUTORIAL_Main( MEDALBOXSYS_WORK *p_wk )
 {
-//  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CAP], FALSE );
-
-}
-
-static void DBEG_MDLSYS_DebugMain( MEDALBOXSYS_WORK *p_wk )
-{
-  const int trg = GFL_UI_KEY_GetTrg();
-  const int cont = GFL_UI_KEY_GetCont();
-
-  switch( p_wk->debgu_seq )
+  switch( p_wk->sub_seq )
   {
-  default:
+  case 0:
     {
-      p_wk->debgu_seq = 0;
+      // 光沢を消す
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+      // OBJウィンドウは無効化
+      GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
+      // メニュ面としてのプライオリティーを設定
+      GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M );
+
+      // エフェクト面の位置を元に戻しておく
+      GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,GFL_BG_SCROLL_X_SET , 0 );
+      p_wk->sub_seq++;
     }
     break;
-  }
-  
-  // デバッグシーケンス切替
-  if( trg & PAD_BUTTON_SELECT )
-  {
-    p_wk->debgu_seq ++;
-    
-    switch( p_wk->debgu_seq )
+  case 1:
     {
-    case 0: OS_Printf("デバッグモード：グラフィック操作\n"); break;
-    case 1: OS_Printf("デバッグモード：シーケンス切替\n"); break;
-    default:OS_Printf("デバッグモード：グラフィック操作\n"); break;
+      STRBUF * str;
+
+      // メッセージ表示
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALBOX_TUTORIAL );
+
+      // プリントストリームをセットする
+      SetPrintStreamWin( p_wk ,str );
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+
+      // ページのリフレッシュ
+      PageRefresh( p_wk ,FALSE , TRUE);
+
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+      p_wk->sub_seq++;
     }
+    break;
+  case 2:
+    {
+      // カーソル点滅
+      BLINKPALANM_Main( p_wk->p_blinkanm_wk );
+
+      // プリントストリーム終了判定
+      if( p_wk->p_print_stream == NULL )
+      {
+        GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_OFF );
+        p_wk->sub_seq++;
+      }
+    }
+    break;
+  case 3:
+    {
+      // プリントストリームウィンドウを開放
+      ReleasePrintStreamWin( p_wk );
+
+      // エフェクトの読み込み
+      MDLSYS_EFFETC_ReLoad( p_wk );
+
+      {
+        // OBJウィンドウを有効化
+        GX_SetVisibleWnd( GX_WNDMASK_OW );
+
+        // エフェクト面としてのプライオリティーを設定
+        GFL_BG_SetPriority( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , MEDALBOXSYS_BG_PRIORITY_ETC_M_EFFETC );
+      }
+
+      // 表示を有効化
+      GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
+
+      // チュートリアルフラグセット
+      MEDALBOX_SetTutorialFlag( p_wk->p_medal_box );
+
+      // 終了方法を調べてカーソルを表示する
+      SetStateMedalCursor( p_wk );
+
+      MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
+      p_wk->sub_seq++;
+    }
+
+    break;
   }
+  return GFL_PROC_RES_CONTINUE;
 }
-#endif
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリントストリームを使ったメッセージウィンドウを設定する
+ *
+ *	@param	*p_wk 
+ *	@param	str 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetPrintStreamWin( MEDALBOXSYS_WORK *p_wk , STRBUF* str )
+{
+  // メニュー用BMPWIN作成
+  p_wk->p_menu_win = GFL_BMPWIN_Create( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) ,
+      2   , 24-6   ,
+      28  , 4  ,
+      SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
+
+  // スクリーンの作成
+  GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
+
+  // フレーム用グラフィックをセットする
+  BmpWinFrame_GraphicSet( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M) , 1 , APP_WINFRAME_USE_PALETE , MENU_TYPE_SYSTEM , p_wk->heapID );
+
+  // ウィンドウ枠の表示
+  BmpWinFrame_Write( p_wk->p_menu_win , WINDOW_TRANS_ON_V, 1, APP_WINFRAME_USE_PALETE );
+
+  // ウィンドウのクリアー
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_menu_win), 15 );
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+
+  // プリントストリームの作成
+  p_wk->p_print_stream = PRINTSYS_PrintStream( p_wk->p_menu_win , 0 , 0 , str ,
+      p_wk->p_font , MSGSPEED_GetWait() , p_wk->p_tcb_sys , 0 , p_wk->heapID , 15 );
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_menu_win );
+
+  // 転送リクエスト
+  GFL_BG_LoadScreenV_Req(MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリントストリームウィンドウを開放する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ReleasePrintStreamWin( MEDALBOXSYS_WORK *p_wk )
+{
+  // ビットマップウィンドウの削除
+  GFL_BMPWIN_Delete( p_wk->p_menu_win );
+}
 

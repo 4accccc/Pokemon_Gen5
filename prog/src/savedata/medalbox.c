@@ -455,6 +455,34 @@ u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  チュートリアルフラグを取得する
+ *
+ *	@param	MEDALBOX *p_mdlbox 
+ *
+ *	@retval TRUEの時チュートリアルクリア
+ */
+//-----------------------------------------------------------------------------
+u8 MEDALBOX_GetTutorialFlag( const MEDALBOX *p_mdlbox )
+{
+  return p_mdlbox->tutorial_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  チュートリアルフラグを設定する
+ *
+ *	@param	MEDALBOX *p_mdlbox 
+ *
+ *	@retval 
+ */
+//-----------------------------------------------------------------------------
+void MEDALBOX_SetTutorialFlag( MEDALBOX *p_mdlbox )
+{
+  p_mdlbox->tutorial_flag = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  メダルデータのポインタを取得
  *
  *	@param	* p_sv 
