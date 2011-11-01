@@ -613,3 +613,53 @@ static AT_POKEMON_DATA* GetPokemonData( ANIMAL_TRAIL_ARC_DATA* p_data ,int main_
     return &p_data->poke_data_w[main_table_index];
   }
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定の獣道にデータを設定する
+ *
+ *	@param	core
+ *	@param	wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSetAnimalTrailData( VMHANDLE* core, void* wk )
+{
+  AT_POKEMON_DATA *p_poke;
+  ANIMAL_TRAIL_ARC_DATA data;
+  ETC_SAVE_WORK *p_save;
+  SCRCMD_WORK   *p_wk     = wk;
+  GAMEDATA      *p_gdata  = SCRCMD_WORK_GetGameData( p_wk );
+  u8  trail_id    = SCRCMD_GetVMWorkValue( core, p_wk );
+  u16 main_table_index    = SCRCMD_GetVMWorkValue( core, p_wk );
+  u16 data_table_index    = SCRCMD_GetVMWorkValue( core, p_wk );
+  u8  is_female           = SCRCMD_GetVMWorkValue( core, p_wk );
+  SAVE_CONTROL_WORK*      p_save_control;
+
+  // セーブデータの取得
+  p_save_control  = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_save          = SaveData_GetEtc( p_save_control );
+
+
+  // セーブデータに格納
+  ANIMAL_TRAIL_SAVE_SetMainTableIndex( p_save ,trail_id ,main_table_index );
+  ANIMAL_TRAIL_SAVE_SetDataTableIndex( p_save ,trail_id ,data_table_index );
+  ANIMAL_TRAIL_SAVE_SetObjectSetFlag( p_save ,trail_id ,TRUE );
+  
+  // メスかどうかを固定(0~99)
+  if( is_female == TRUE )
+  {
+    // メス固定
+    ANIMAL_TRAIL_SAVE_SetFemaleNum( p_save ,trail_id ,0 );
+  }
+  else
+  {
+    // オス固定
+    ANIMAL_TRAIL_SAVE_SetFemaleNum( p_save ,trail_id ,100 );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

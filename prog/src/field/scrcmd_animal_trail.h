@@ -19,4 +19,5 @@ extern VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWarpAnimalTrail( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdResetNowAnimalTrailObject( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdExitAnimalTrail( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSetAnimalTrailData( VMHANDLE* core, void* wk );
 

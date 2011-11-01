@@ -5944,6 +5944,32 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_onoue_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>獣道データセット</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-01T10:39:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-01T10:39:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>獣道データセット</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-01T10:39:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-01T10:39:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_suginaka_14"
 		Style="Large">
 		<LanguageCell

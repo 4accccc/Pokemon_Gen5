@@ -1143,6 +1143,11 @@
   DEF_CMD( EvCmdGooutEffect_Request, EV_SEQ_GOOUT_EFFECT_REQUEST )
   NO_CMD()
 
+  // 獣道２
+  DEF_CMD( EvCmdSetAnimalTrailData, EV_SEQ_ANIMAL_TRAIL_SET_DATA )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -15109,6 +15109,40 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _ANIMAL_TRAIL_DATA_SET
+ * @brief 獣道のデータを設定
+ * @param trail_id          獣道のID(SCR_ANIMAL_TRAIL_ID_01~SCR_ANIMAL_TRAIL_ID_20)
+ * @param main_table_index  メインテーブルインデックス(noteを参照)
+ * @param data_table_index  データテーブルインデックス(0~3)
+ * @param is_female         TRUEの時メス、FALSEの時オス
+ *
+ * @note メインテーブルインデックスIDは以下を参照
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_A ランクAポケモン
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_B ランクBポケモン
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_C ランクCポケモン
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_S ランクSアイテム
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_A ランクAアイテム
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_B ランクBアイテム
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_C ランクCアイテム
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_S ランクSアイテム(隠し)
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_A ランクAアイテム(隠し)
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_B ランクBアイテム(隠し)
+ * SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_C ランクCアイテム(隠し)
+ */
+//--------------------------------------------------------------
+#define _ANIMAL_TRAIL_DATA_SET( trail_id ,main_table_index ,data_table_index ,is_female ) \
+    _ASM_ANIMAL_TRAIL_DATA_SET trail_id ,main_table_index ,data_table_index ,is_female
+
+    .macro  _ASM_ANIMAL_TRAIL_DATA_SET trail_id ,main_table_index ,data_table_index ,is_female
+    .short  EV_SEQ_ANIMAL_TRAIL_SET_DATA
+    .short  \trail_id
+    .short  \main_table_index
+    .short  \data_table_index
+    .short  \is_female
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _ANIMAL_TRAIL_RESET_OBJECT
  * @brief 獣道に設置してあるオブジェクトをリセット
  */

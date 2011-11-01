@@ -1798,6 +1798,7 @@ EVENT_START ev_debug_onoue
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_05,   4 ) // メダル獲得済み確認
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_06,   5 ) // 全捕獲チェック
 	_BMPMENU_MAKE_LIST( msg_debug_onoue_07,   6 ) // 全捕獲
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_08,   7 ) // 獣道データセット
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1848,6 +1849,10 @@ EVENT_START ev_debug_onoue
 	  DEFINE_LOCAL RET_WK
     _INFINITY_DUNGEON_GET_DUNGEON_STATUS(RET_WK)
     _DEBUG_PRINT_WK(RET_WK)
+  }
+  CASE 7 THEN
+  {
+    _ANIMAL_TRAIL_DATA_SET(SCR_ANIMAL_TRAIL_ID_03,SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_A,3,TRUE)
   }
   ENDSWITCH
  

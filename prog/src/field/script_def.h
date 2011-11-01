@@ -778,6 +778,40 @@
 #define SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM    (6) ///<‚¯‚à‚Ì‚Ý‚¿‚É‰B‚µƒAƒCƒeƒ€‚ªÝ’u‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
 #define SCR_ANIMAL_TRAIL_GET_NOW_TRAIL_ID    (7) ///<Œ»Ý‚Ìb“¹ID‚ðŽæ“¾
 
+#define SCR_ANIMAL_TRAIL_ID_01              (0) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_02              (1) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_03              (2) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_04              (3) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_05              (4) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_06              (5) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_07              (6) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_08              (7) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_09              (8) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_10              (9) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_11              (10) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_12              (11) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_13              (12) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_14              (13) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_15              (14) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_16              (15) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_17              (16) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_18              (17) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_19              (18) ///<b“¹ID
+#define SCR_ANIMAL_TRAIL_ID_20              (19) ///<b“¹ID
+
+// ƒƒCƒ“ƒe[ƒuƒ‹ƒCƒ“ƒfƒbƒNƒX
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_A  (0)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_B  (1)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_C  (2)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_S  (3)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_A  (4)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_B  (5)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_ITEM_C  (6)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_S  (7)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_A  (8)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_B  (9)
+#define SCR_ANIMAL_TRAIL_MAIN_TABLE_HIDE_ITEM_C  (10)
+
 //--------------------------------------------------------------
 //  scrcmd_intrude_field.c
 //  ƒnƒCƒŠƒ“ƒNŠÖ˜A’è‹`
