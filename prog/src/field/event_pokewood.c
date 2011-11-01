@@ -546,7 +546,13 @@ static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM 
   
   // 録画データから手持ちポケモンの名前を取得する
   POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
-  PP_Get( pp, ID_PARA_nickname, str );
+  {
+    int monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    GFL_MSGDATA *monsname_msg =  GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                             NARC_message_monsname_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    GFL_MSG_GetString( monsname_msg, monsno, str );
+    GFL_MSG_Delete( monsname_msg );
+  }
   param->message = str;
   BattleRec_UnloadToolModule();
   GFL_HEAP_FreeMemory( pp );

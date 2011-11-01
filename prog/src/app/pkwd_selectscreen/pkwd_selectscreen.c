@@ -1262,7 +1262,7 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
 
       // æ“ªŽèŽ‚¿ƒ|ƒPƒ‚ƒ“–¼Žæ“¾
       POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
-      WORDSET_RegisterPokeNickName( wk->wordset[i], 0, pp );
+      WORDSET_RegisterPokeMonsName( wk->wordset[i], 0, pp );
 
       OS_Printf("%d: senario_no=%d\n", i , wk->scenario_no[i]);
       GFL_HEAP_FreeMemory( pp );
