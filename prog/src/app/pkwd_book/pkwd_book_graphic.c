@@ -387,12 +387,12 @@ typedef struct
 //=====================================
 struct _PKWD_BOOK_GRAPHIC_WORK
 {
-	GRAPHIC_BG_WORK		bg;
-	GRAPHIC_OBJ_WORK	obj;
-	GRAPHIC_G3D_WORK	g3d;
-	GFL_TCB				*p_vblank_task;
+	GRAPHIC_BG_WORK		bg;         ///< BG周り制御ワーク
+	GRAPHIC_OBJ_WORK	obj;        ///< OAM周り制御ワーク
+	GRAPHIC_G3D_WORK	g3d;        ///< 3D周り制御ワーク(未使用）
+	GFL_TCB				*p_vblank_task; ///< Vblank関数登録ワーク
 	//
-	PALETTE_FADE_PTR	PalPtr;	// パレットアニメ用(vblank中の処理となるのでここで対応)
+	PALETTE_FADE_PTR	PalPtr;	    ///< パレットアニメ用(vblank中の処理となるのでここで対応)
 };
 
 //=============================================================================

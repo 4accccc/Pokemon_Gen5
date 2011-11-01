@@ -2135,6 +2135,16 @@ static int _check_maxturn( const BTL_MAIN_MODULE *mainModule, int win_flag )
 /*    ポケウッド勝敗判定                                                                              */
 /*                                                                                                    */
 /*====================================================================================================*/
+//=============================================================================================
+/**
+ * @brief ポケウッド勝敗判定
+ *
+ * @param   mainModule  BTL_MAIN_MODULE
+ * @param   pokeCon     BTL_POKE_CONTAINER
+ *
+ * @retval  int 0=判定なし, PW_SVSUB_WIN=勝利, PW_SVSUB_LOSE=敗北
+ */
+//=============================================================================================
 int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_CONTAINER *pokeCon )
 {
   int senario_no = BTL_MAIN_GetPokewoodSenarioNo( mainModule );

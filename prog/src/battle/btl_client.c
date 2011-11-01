@@ -153,51 +153,54 @@ typedef struct {
   u16  skipTurnCount;
 }RECPLAYER_CONTROL;
 
+/// ポケウッド評価計算用ワーク
 typedef struct{
-  s16 endturn_point;    // 終了ターンによる得点
-  s16 star_point;       // スターポケモンによる得点
-  s16 ending_point;     // エンディングによる得点
-  s16 serif_point;      // セリフ選択による得点
-  s16 scenario_difficult;// シナリオ難易度による得点
-  s16 audience_point;   // 観客数
+  s16 endturn_point;    ///< 終了ターンによる得点
+  s16 star_point;       ///< スターポケモンによる得点
+  s16 ending_point;     ///< エンディングによる得点
+  s16 serif_point;      ///< セリフ選択による得点
+  s16 scenario_difficult;///< シナリオ難易度による得点
+  s16 audience_point;   ///< 観客数
   
-  u8  endturn;          // 実際の終了ターン
-  u8  pokemon_count;    // ポケモン繰り出し回数
-  u8  ending_no;        // エンディングNO
-  u8  serif_count;      // 選択肢回数
+  u8  endturn;          ///< 実際の終了ターン
+  u8  pokemon_count;    ///< ポケモン繰り出し回数
+  u8  ending_no;        ///< エンディングNO
+  u8  serif_count;      ///< 選択肢回数
 
-  int director_msg;     // 0の場合はランダム。選択肢の後は3分岐の番号が入る(GOOD,NORMAL,BAD)
+  int director_msg;     ///< 0の場合はランダム。選択肢の後は3分岐の番号が入る(GOOD,NORMAL,BAD)
   
-  int estimate;         // 最終評価数値
+  int estimate;         ///< 最終評価数値
   
 }POKEWOOD_ESTIMATE_WORK;
 
+/// ポケウッド下画面観客制御用ワーク
 typedef struct{
-  u16  account;                         // 席に座った人数
-  u16  etc;
-  u32  on_off;                          // 観客表示のON/OFFのbitデータ
-  u16  timer[POKEWOOD_AUDIENCE_MAX];    // 変更した観客意志表示の持続時間
+  u16  account;                         ///< 席に座った人数
+  u16  etc;                             ///< 余り
+  u32  on_off;                          ///< 観客表示のON/OFFのbitデータ
+  u16  timer[POKEWOOD_AUDIENCE_MAX];    ///< 変更した観客意志表示の持続時間
 }POKEWOOD_AUDIENCE_WORK;
 
+/// ポケウッド下画面観客制御用ワーク
 typedef struct{
-  u8   seq, next_seq; ///<  ポケウッドシーケンス管理用
+  u8   seq, next_seq;             ///<  ポケウッドシーケンス管理用
   u8   stage_seq, next_stage_seq; ///<  ポケモン・トレーナー表示シーケンス管理用
-  u8   bookmark;      ///<  ポケウッドシナリオ進行しおり
-  u8   stage_setup;   ///<  ポケウッドイベント進行管理フラグ
-  s8   event_no;      ///<  実行中イベントＮＯ
-  int  choice;        ///<  ポケウッドイベントの選択肢で選択した番号
-  int  vfx;           ///<  背景チェンジ指定用ワーク
-  s8   flagwork[EVENT_DATA_MAX];   ///<  フラグ管理用配列
-  int  my_msg, enemy_msg; ///< 撮影終了時のメッセージラベル取得用
-  u16  now_waza;          ///< 現在のターンに選んだ技（ターン切り替え後消滅）
-  u16  now_dead_poke;     ///< 現在ターンに瀕死になった相手ポケモン（ターン切り替え後消滅）
+  u8   bookmark;                  ///<  ポケウッドシナリオ進行しおり
+  u8   stage_setup;               ///<  ポケウッドイベント進行管理フラグ
+  s8   event_no;                  ///<  実行中イベントＮＯ
+  int  choice;                    ///<  ポケウッドイベントの選択肢で選択した番号
+  int  vfx;                       ///<  背景チェンジ指定用ワーク
+  s8   flagwork[EVENT_DATA_MAX];  ///<  フラグ管理用配列
+  int  my_msg, enemy_msg;         ///< 撮影終了時のメッセージラベル取得用
+  u16  now_waza;                  ///< 現在のターンに選んだ技（ターン切り替え後消滅）
+  u16  now_dead_poke;             ///< 現在ターンに瀕死になった相手ポケモン（ターン切り替え後消滅）
 
-  u32  event_spend;   ///< 起動済みのイベントをbit単位で立てる（２重起動防止）
-  int  stage_cond;    ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
+  u32  event_spend;               ///< 起動済みのイベントをbit単位で立てる（２重起動防止）
+  int  stage_cond;                ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
   STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
 
-  POKEWOOD_ESTIMATE_WORK Estimate;  ///< ポケウッド評価計算用ワーク
-  POKEWOOD_AUDIENCE_WORK Audience;  ///< 観客操作ワーク
+  POKEWOOD_ESTIMATE_WORK Estimate; ///< ポケウッド評価計算用ワーク
+  POKEWOOD_AUDIENCE_WORK Audience; ///< 観客操作ワーク
 }POKEWOOD_SEQ_WORK;
 
 /*--------------------------------------------------------------------------*/

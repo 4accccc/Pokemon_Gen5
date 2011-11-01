@@ -265,10 +265,10 @@ typedef struct
 //=====================================
 struct _PKWD_SELECT_SCREEN_GRAPHIC_WORK
 {
-	GRAPHIC_BG_WORK		bg;
-	GRAPHIC_OBJ_WORK	obj;
-	GRAPHIC_G3D_WORK		g3d;
-	GFL_TCB						*p_vblank_task;
+	GRAPHIC_BG_WORK		bg;             ///< BG周り制御ワーク
+	GRAPHIC_OBJ_WORK	obj;            ///< OAM周り制御ワーク
+	GRAPHIC_G3D_WORK	g3d;            ///< 3D周り制御ワーク
+	GFL_TCB						*p_vblank_task; ///< VBlank関数登録ワーク
 };
 
 //=============================================================================

@@ -36,8 +36,8 @@
 #define PWS_B_NONE    ( PWS_A_NONE<<4 )     ///< BBお盆の上に何もない
 
 // 条件指定
-#define PROVISION_TYPE_WAZA       ( 1 )
-#define PROVISION_TYPE_DEAD_POKE  ( 0 )
+#define PROVISION_TYPE_DEAD_POKE  ( 0 ) ///< イベント発動条件：指定敵ポケモンの瀕死
+#define PROVISION_TYPE_WAZA       ( 1 ) ///< イベント発動条件：指定の技
 
 
 // シナリオデータから指定されるお盆状態(AAとBBが同時に指定されている）
@@ -58,7 +58,7 @@ enum{
   // いつかポケモンから無人状態も要望されるか？
 };
 
-// 勝利条件の数値定義
+/// 勝利条件の数値定義
 enum{
   PW_PROV_EVERY_TURN=0,     ///< 毎ターン倒す
   PW_PROV_ALL_DEAD,         ///< ターン内に相手を全滅
@@ -71,7 +71,7 @@ enum{
   PW_PROV_SUCIDE,           ///< 自滅する
 };
 
-// ポケウッド敵トレーナー所持ポケモン情報
+/// ポケウッド敵トレーナー所持ポケモン情報( resource/pokewood_partyで生成）
 typedef struct {
   s16 monsno; ///< 開発NO
   s16 sex;    ///< 性別（poke_tool.h参照
@@ -79,6 +79,7 @@ typedef struct {
   s16 etc;    ///< パディング
 } POKEWOOD_ENEMY_POKE;
 
+/// ポケウッドシナリオデータ選択肢連動データ
 typedef struct{
   s16 my_message;         ///< GMMメッセージID
   s16 enemy_message;      ///< GMMメッセージID
@@ -88,7 +89,7 @@ typedef struct{
   s16 padding;            ///< あまり
 }POKEWOOD_EVENT_REACTION_DATA;
 
-// ポケウッドイベントデータ
+/// ポケウッドシナリオイベントデータ
 typedef struct {
   s16 start_turn;         ///< イベント開始ターン
   s16 flag_provision;     ///< 分岐条件値（ポケウッド内で保持するワークとの比較に使用する値）
@@ -101,7 +102,7 @@ typedef struct {
   POKEWOOD_EVENT_REACTION_DATA reaction[EVENT_REACTION_MAX]; ///< 選択肢対応データが格納される
 }POKEWOOD_EVENT_DATA;
 
-// ポケウッドシナリオデータ
+/// ポケウッドシナリオデータ本体
 typedef struct{
   s16 senario_no;     ///< シナリオNO
   s16 category;       ///< 映画カテゴリー
