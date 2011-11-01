@@ -40,6 +40,7 @@
 static void DEBUG_SetMenuWorkZoneIDNameAll(
     GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
 static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work );
+static void sortBmpMenuListData( BMP_MENULIST_DATA * list ,u32 list_size );
 
 //======================================================================
 //  デバッグメニュー どこでもジャンプ
@@ -487,6 +488,9 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
     GFL_STR_AddString( strBuf2, strBuf1 );
     FLDMENUFUNC_AddStringListData( list, strBuf2, id, heapID );
   }
+
+  // ソート
+  sortBmpMenuListData( (BMP_MENULIST_DATA *)list ,max );
   
   GFL_MSG_Delete( pMsgData );
   GFL_HEAP_FreeMemory( strBuf1 );
@@ -504,6 +508,53 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
 static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work )
 {
   return ZONEDATA_GetZoneIDMax();
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPメニューのソート
+ *
+ *	@param	* list 
+ *	@param	list_size 
+ *
+ *	@retval
+ *
+ *	@note event_debug_menu_mmdl_list.cからコピーしてきました
+ */
+//-----------------------------------------------------------------------------
+static void sortBmpMenuListData( BMP_MENULIST_DATA * list ,u32 list_size )
+{
+  const STRCODE eom = GFL_STR_GetEOMCode();
+  u32 i, j;
+
+  for ( i = 0; i < list_size - 1; i ++ )
+  {
+    BMP_MENULIST_DATA * list_a = list + i;
+    for ( j = i + 1; j < list_size; j ++ )
+    {
+      BMP_MENULIST_DATA * list_b = list + j;
+      const STRCODE * str_a = GFL_STR_GetStringCodePointer( (const STRBUF*)list_a->str );
+      const STRCODE * str_b = GFL_STR_GetStringCodePointer( (const STRBUF*)list_b->str );
+      while ( TRUE )
+      {
+        if ( *str_a == eom || *str_a < *str_b )
+        {
+          break;
+        }
+        else if ( *str_a > *str_b || *str_b == eom )
+        { //swap
+          BMP_MENULIST_DATA list_temp;
+          list_temp = *list_a;
+          *list_a = *list_b;
+          *list_b = list_temp;
+          break;
+        }
+        str_a ++;
+        str_b ++;
+      }
+    }
+  }
 }
 
 #endif //PM_DEBUG
