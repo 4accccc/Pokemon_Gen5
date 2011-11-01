@@ -250,4 +250,10 @@ ARC_TARGET_DATA = \
 	fes_ci.nsbmd \
 	fes_ci.nsbca \
 	mugen_banjiro_a.nsbmd \
-	mugen_banjiro_b.nsbmd
+	mugen_banjiro_b.nsbmd \
+	zekuromu_ci_a.nsbmd \
+	zekuromu_ci_a.nsbca \
+	zekuromu_ci_a.nsbta \
+	resiramu_ci_a.nsbmd \
+	resiramu_ci_a.nsbca \
+	resiramu_ci_a.nsbta

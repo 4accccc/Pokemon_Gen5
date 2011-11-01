@@ -262,7 +262,13 @@ enum {
 	NARC_fld3d_ci_fes_ci_nsbmd = 248,
 	NARC_fld3d_ci_fes_ci_nsbca = 249,
 	NARC_fld3d_ci_mugen_banjiro_a_nsbmd = 250,
-	NARC_fld3d_ci_mugen_banjiro_b_nsbmd = 251
+	NARC_fld3d_ci_mugen_banjiro_b_nsbmd = 251,
+	NARC_fld3d_ci_zekuromu_ci_a_nsbmd = 252,
+	NARC_fld3d_ci_zekuromu_ci_a_nsbca = 253,
+	NARC_fld3d_ci_zekuromu_ci_a_nsbta = 254,
+	NARC_fld3d_ci_resiramu_ci_a_nsbmd = 255,
+	NARC_fld3d_ci_resiramu_ci_a_nsbca = 256,
+	NARC_fld3d_ci_resiramu_ci_a_nsbta = 257
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
