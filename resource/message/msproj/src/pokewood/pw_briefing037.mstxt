@@ -6,12 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『ゴーストイレイザー　報告書
-[Ctrl1:xcenter ]ファイル№　００２
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]』</Text>
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+
+[Ctrl1:xcenter ]　ファイル№　００２
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:36:46" />
+				Time="2011-10-31T04:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『ゴーストイレイザー　報告書
-[Ctrl1:xcenter ]ファイル№　００２
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]』</Text>
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+
+[Ctrl1:xcenter ]　ファイル№　００２
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:36:54" />
+				Time="2011-10-31T04:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50,11 +54,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『悪霊に　からだを　のっとられた
-[Ctrl1:xcenter ]少女が　いるとの　情報あり。』</Text>
+			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+
+[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:22:22" />
+				Time="2011-10-31T04:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -62,11 +67,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『悪霊に　からだを　のっとられた
-[Ctrl1:xcenter ]少女が　いるとの　情報あり。』</Text>
+			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+
+[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:22:28" />
+				Time="2011-10-31T04:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -78,12 +84,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『この　少女は　村で
+			<Text>[Ctrl1:xcenter ]この人物は　村で
+
 [Ctrl1:xcenter ]幽霊騒動が　おきて以来
-[Ctrl1:xcenter ]誰も　見かけていないという。』</Text>
+
+[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:24:41" />
+				Time="2011-10-31T04:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -91,12 +99,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『この　少女は　村で
+			<Text>[Ctrl1:xcenter ]この人物は　村で
+
 [Ctrl1:xcenter ]幽霊騒動が　おきて以来
-[Ctrl1:xcenter ]誰も　見かけていないという。』</Text>
+
+[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:24:48" />
+				Time="2011-10-31T04:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -108,12 +118,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『これより　調査の　ため
-[Ctrl1:xcenter ]少女の　家を　たずねて
-[Ctrl1:xcenter ]接触を　こころみる。』</Text>
+			<Text>[Ctrl1:xcenter ]これより　調査の　ため
+
+[Ctrl1:xcenter ]接触を　こころみる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:24:19" />
+				Time="2011-10-31T04:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -121,12 +131,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『これより　調査の　ため
-[Ctrl1:xcenter ]少女の　家を　たずねて
-[Ctrl1:xcenter ]接触を　こころみる。』</Text>
+			<Text>[Ctrl1:xcenter ]これより　調査の　ため
+
+[Ctrl1:xcenter ]接触を　こころみる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T08:24:21" />
+				Time="2011-10-31T04:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -294,12 +304,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『ゴーストイレイザー　報告書
-[Ctrl1:xcenter ]ファイル№　００２
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]』</Text>
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+
+[Ctrl1:xcenter ]　ファイル№　００２
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:37:10" />
+				Time="2011-10-31T04:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -307,12 +319,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『ゴーストイレイザー　報告書
-[Ctrl1:xcenter ]ファイル№　００２
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]』</Text>
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+
+[Ctrl1:xcenter ]　ファイル№　００２
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:37:06" />
+				Time="2011-10-31T04:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -331,11 +345,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『悪霊に　からだを　のっとられた
-[Ctrl1:xcenter ]人物が　いるとの　情報あり。』</Text>
+			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+
+[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -343,11 +358,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『悪霊に　からだを　のっとられた
-[Ctrl1:xcenter ]人物が　いるとの　情報あり。』</Text>
+			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+
+[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -359,12 +375,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『この人物は
-[Ctrl1:xcenter ]霊魂の騒ぎが　始まって以来
-[Ctrl1:xcenter ]誰も　見かけていないという。』</Text>
+			<Text>[Ctrl1:xcenter ]この人物は　村で
+
+[Ctrl1:xcenter ]幽霊騒動が　おきて以来
+
+[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -372,12 +390,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『この人物は
-[Ctrl1:xcenter ]霊魂の騒ぎが　始まって以来
-[Ctrl1:xcenter ]誰も　見かけていないという。』</Text>
+			<Text>[Ctrl1:xcenter ]この人物は　村で
+
+[Ctrl1:xcenter ]幽霊騒動が　おきて以来
+
+[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -389,11 +409,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『これより　調査の　ため
-[Ctrl1:xcenter ]接触を　こころみる。』</Text>
+			<Text>[Ctrl1:xcenter ]これより　調査の　ため
+
+[Ctrl1:xcenter ]接触を　こころみる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -401,11 +422,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『これより　調査の　ため
-[Ctrl1:xcenter ]接触を　こころみる。』</Text>
+			<Text>[Ctrl1:xcenter ]これより　調査の　ため
+
+[Ctrl1:xcenter ]接触を　こころみる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-27T07:51:03" />
+				Time="2011-10-31T04:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

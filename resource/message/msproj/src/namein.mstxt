@@ -379,11 +379,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたなの　かたがきは？
+			<Text>あなたの　かたがきは？
 （このまち　だけの　よばれかた　です）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-29T05:45:05" />
+				Time="2011-10-31T11:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -391,11 +391,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分の　かたがきは？
+			<Text>あなたの　かたがきは？
 （このまち　だけの　よばれかた　です）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-29T05:45:19" />
+				Time="2011-10-31T11:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
