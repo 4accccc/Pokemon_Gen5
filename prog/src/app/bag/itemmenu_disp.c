@@ -141,6 +141,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork );
 
 static void PrintStr( FIELD_ITEMMENU_WORK * wk, PRINT_UTIL * util, const STRBUF * str, u16 x, u16 y, PRINTSYS_LSB color );
 static void PrintScreenTrans( PRINT_UTIL * util );
+static BOOL CheckIsDrawNumberPocket( u8 pocket_id );
 
 
 //------------------------------------------------------------------------------
@@ -727,6 +728,7 @@ void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
 	ITEM_ST * item;
+  u32 item_pocket_id;
 	int wazano;
 	u32	i;
 
@@ -753,7 +755,10 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemReport.win), 0 );
 
 	// わざマシンNOを取得
-	wazano = ITEM_GetWazaNo( item->id );
+  wazano = ITEM_GetWazaNo( item->id );
+
+  // ポケット番号取得
+  item_pocket_id = MYITEM_GetPocketID( pWork->pMyItem , item->id );
 
 	// 技マシン以外
 	if( wazano == WAZANO_NULL ){
@@ -764,8 +769,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
 
-		if( pWork->pocketno != BAG_POKE_EVENT ){
-	    //「×」
+		if( CheckIsDrawNumberPocket( item_pocket_id ) ){
+	    //「× 個数」
 	    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
 	    WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
 	                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
@@ -804,9 +809,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   if( pWork->pocketno == BAG_POKE_REPOSITORY )
   {
     u32 dot;
-    u32 pocket_id;
-    pocket_id = MYITEM_GetPocketID( pWork->pMyItem , item->id );
-    ITEMMENU_WordsetPocketName( pWork, 0, pocket_id );
+    ITEMMENU_WordsetPocketName( pWork, 0, item_pocket_id );
     GFL_MSG_GetString( pWork->MsgManager, mes_bag_114, pWork->pStrBuf );
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
 
@@ -3033,4 +3036,28 @@ void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk )
 	PRINT_UTIL_Trans( &wk->winPocketNone, wk->SysMsgQue );
 	PRINT_UTIL_Trans( &wk->itemInfoDispWin, wk->SysMsgQue );
 	PRINT_UTIL_Trans( &wk->pocketNameWin, wk->SysMsgQue );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケット番号から、個数を書くか書かないか調べる
+ *
+ *	@param	pocket_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckIsDrawNumberPocket( u8 pocket_id )
+{
+  const BOOL is_draw_num[] =
+  {
+    TRUE,   // BAG_POKE_NORMAL(道具)
+    TRUE,   // BAG_POKE_DRUG(薬)
+    FALSE,  // BAG_POKE_WAZA(技マシン)
+    TRUE,   // BAG_POKE_NUTS(木の実)
+    FALSE,  // BAG_POKE_EVENT(大切なもの)
+    TRUE,   // BAG_POKE_REPOSITORY(保管)
+  };
+  GF_ASSERT( pocket_id < BAG_POKE_MAX );
+  return is_draw_num[pocket_id];
 }
