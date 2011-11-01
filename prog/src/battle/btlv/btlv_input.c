@@ -1087,7 +1087,7 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
   //
   // debug
 #ifdef PM_DEBUG
-  debug_btlv_audience( biw );
+  //debug_btlv_audience( biw );
 #endif
 }
 
