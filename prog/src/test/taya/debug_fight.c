@@ -103,9 +103,6 @@ typedef enum {
 
   BTLTYPE_POKEWOOD_REC_SINGLE,
   BTLTYPE_POKEWOOD_SHOW_SINGLE,
-  BTLTYPE_POKEWOOD_REC_DOUBLE,
-  BTLTYPE_POKEWOOD_SHOW_DOUBLE,
-
 
   BTLTYPE_MAX,
 }BtlType;
@@ -613,8 +610,6 @@ static const struct {
   { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DEMO_CAPTURE
   { 0, 0, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_REC  },   // BTLTYPE_POKEWOOD_REC_SINGLE
   { 0, 0, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_SHOW },   // BTLTYPE_POKEWOOD_SHOW_SINGLE
-  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_REC  },   // BTLTYPE_POKEWOOD_REC_DOUBLE
-  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_SHOW },   // BTLTYPE_POKEWOOD_SHOW_DOUBLE
 };
 
 /*--------------------------------------------------------------------------*/
@@ -1476,7 +1471,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->trainerType = loopValue( save->trainerType + incValue, 0, TRTYPE_MAX -1 );
     break;
   case SELITEM_POKEWOOD_SENARIO:
-    save->pokewoodSenario = (save->pokewoodSenario+1)%10;
+    save->pokewoodSenario = loopValue( save->pokewoodSenario + incValue, 0, 39 );
     break;
   case SELITEM_PWCUTIN_EARLY:
     save->fCutin ^= 1;
@@ -2619,6 +2614,8 @@ FS_EXTERN_OVERLAY(battle);
       int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
       if(pokewoodflag != BTL_POKEWOOD_NONE){
         wk->setupParam.PokewoodMode = pokewoodflag;
+        wk->setupParam.audience_num = 1;
+        wk->setupParam.audience_bit = 1;
       }
 
       wk->setupParam.pokewoodSenario = wk->saveData.pokewoodSenario;
