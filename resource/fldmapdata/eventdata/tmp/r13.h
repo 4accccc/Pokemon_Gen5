@@ -35,6 +35,8 @@
 #define R13_POKE4_01                      21
 #define FLD_ITEM_138                      22
 #define FLD_ITEM_140                      23
+#define TR_BATTLEG_25                     24
+#define TR_KARATE_.33                     25
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
