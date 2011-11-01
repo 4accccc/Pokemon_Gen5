@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00210" date="2011-08-28T18:27:23" source="pkwd_field13b_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-01T13:12:37" source="pkwd_field13c_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="yoshida" host="W00210" date="2011-08-28T18:27:23" source="pkwd_field13b_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-01T13:12:37" source="pkwd_field13c_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="10 10"
-	compress_material="on" material_size="4 4"
+	compress_node="merge" node_size="11 11"
+	compress_material="on" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -2152,7 +2152,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="4">
+<material_array size="5">
 	<material index="0" name="file16Material"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -2249,9 +2249,28 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="4" name="imadummy"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="12 12 12"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="-1" tex_palette_idx="-1"
+	/>
 </material_array>
 
-<matrix_array size="9">
+<matrix_array size="10">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
@@ -2261,9 +2280,10 @@
 	<matrix index="6" mtx_weight="1" node_idx="7"/>
 	<matrix index="7" mtx_weight="1" node_idx="8"/>
 	<matrix index="8" mtx_weight="1" node_idx="9"/>
+	<matrix index="9" mtx_weight="1" node_idx="10"/>
 </matrix_array>
 
-<polygon_array size="9">
+<polygon_array size="10">
 	<polygon index="0" name="polygon0"
 		vertex_size="418" polygon_size="198"
 		triangle_size="0" quad_size="198"
@@ -3345,6 +3365,29 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="7" name="polygon7"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.031250 -0.031250 0.000000"
+		volume_max="0.031250 0.031250 0.000000"
+		volume_r="0.044189"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="off"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">7</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<nrm xyz="-0.011719 -0.023438 0.998047"/>
+					<pos_s xyz="-0.031250 -0.031250 0.000000"/>
+					<pos_xy xy="0.031250 -0.031250"/>
+					<pos_xy xy="0.031250 0.031250"/>
+					<pos_xy xy="-0.031250 0.031250"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="8" name="polygon8"
 		vertex_size="120" polygon_size="60"
 		triangle_size="20" quad_size="40"
 		volume_min="-2.297607 -2.297607 0.000000"
@@ -3354,7 +3397,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">7</mtx_list>
+			<mtx_list size="1">8</mtx_list>
 			<primitive_array size="10">
 				<primitive index="0" type="quad_strip" vertex_size="42">
 					<mtx idx="0"/>
@@ -3658,7 +3701,7 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
-	<polygon index="8" name="polygon8"
+	<polygon index="9" name="polygon9"
 		vertex_size="120" polygon_size="60"
 		triangle_size="20" quad_size="40"
 		volume_min="-2.297607 -2.297607 0.000000"
@@ -3668,7 +3711,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">8</mtx_list>
+			<mtx_list size="1">9</mtx_list>
 			<primitive_array size="10">
 				<primitive index="0" type="quad_strip" vertex_size="42">
 					<mtx idx="0"/>
@@ -3932,7 +3975,7 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="10">
+<node_array size="11">
 	<node index="0" name="world_root" kind="null"
 		parent="-1"
 		child="1"
@@ -4087,11 +4130,31 @@
 	>
 		<display index="0" material="2" polygon="6" priority="0"/>
 	</node>
-	<node index="8" name="pTorus2" kind="mesh"
+	<node index="8" name="imadummy1" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="9"
 		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 -26.565430 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.031250 -0.031250 0.000000"
+		volume_max="0.031250 0.031250 0.000000"
+		volume_r="0.044189"
+	>
+		<display index="0" material="4" polygon="7" priority="0"/>
+	</node>
+	<node index="9" name="pTorus2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="10"
+		brother_prev="8"
 		draw_mtx="on"
 		billboard="off"
 		scale="0.901855 0.901855 0.901855"
@@ -4105,13 +4168,13 @@
 		volume_max="2.297607 2.297607 0.000000"
 		volume_r="2.297607"
 	>
-		<display index="0" material="3" polygon="7" priority="0"/>
+		<display index="0" material="3" polygon="8" priority="0"/>
 	</node>
-	<node index="9" name="pTorus3" kind="mesh"
+	<node index="10" name="pTorus3" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="8"
+		brother_prev="9"
 		draw_mtx="on"
 		billboard="off"
 		scale="0.480957 0.480957 0.480957"
@@ -4125,12 +4188,12 @@
 		volume_max="2.297607 2.297607 0.000000"
 		volume_r="2.297607"
 	>
-		<display index="0" material="1" polygon="8" priority="0"/>
+		<display index="0" material="1" polygon="9" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="682" polygon_size="324"
-	triangle_size="40" quad_size="284"/>
+<output_info vertex_size="686" polygon_size="325"
+	triangle_size="40" quad_size="285"/>
 
 </body>
 
