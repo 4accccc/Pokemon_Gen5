@@ -78,7 +78,6 @@ static BOOL debugMenuCallProc_PokewoodRec3( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow1( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow2( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk );
-static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk );
@@ -93,6 +92,7 @@ static BOOL debugMenu_OpenScenario5 (POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario6 (POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario7 (POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario8 (POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario9 (POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario10(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario11(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario12(POKEWOOD_FUNC_WORK *wk);
@@ -100,12 +100,15 @@ static BOOL debugMenu_OpenScenario13(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario14(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario15(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario16(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario17(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario18(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario19(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario20(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario21(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario22(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario23(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario24(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario25(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario26(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario27(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario28(POKEWOOD_FUNC_WORK *wk);
@@ -113,6 +116,7 @@ static BOOL debugMenu_OpenScenario29(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario30(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario31(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario32(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario33(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario34(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario35(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario36(POKEWOOD_FUNC_WORK *wk);
@@ -132,6 +136,7 @@ static BOOL debugMenu_series08_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series09_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series10_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_scenario_full_open(POKEWOOD_FUNC_WORK *wk);
 
 
 //-----------------------------------------------------------------------------
@@ -164,20 +169,19 @@ static const FLDMENUFUNC_HEADER DebugPokewoodMenuHeader =
 //-----------------------------------------------------------------------------
 static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
 {
-  { DEBUG_STRID_POKEWOOD_REC_02, (void*)debugMenuCallProc_PokewoodRec2, GFL_OVERLAY_BLANK_ID },  //
-  { DEBUG_STRID_POKEWOOD_SHOW_02, (void*)debugMenuCallProc_PokewoodShow2, GFL_OVERLAY_BLANK_ID }, //
-  { DEBUG_STRID_POKEWOOD_REC_01, (void*)debugMenuCallProc_PokewoodRec1, GFL_OVERLAY_BLANK_ID },  // 
-  { DEBUG_STRID_POKEWOOD_SHOW_01, (void*)debugMenuCallProc_PokewoodShow1, GFL_OVERLAY_BLANK_ID }, //
-  { DEBUG_STRID_POKEWOOD_REC_03, (void*)debugMenuCallProc_PokewoodRec3, GFL_OVERLAY_BLANK_ID },  // 
-  { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
-//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShow4, GFL_OVERLAY_BLANK_ID },
-//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShow4, GFL_OVERLAY_BLANK_ID },
+//  { DEBUG_STRID_POKEWOOD_REC_02, (void*)debugMenuCallProc_PokewoodRec2, GFL_OVERLAY_BLANK_ID },  //
+//  { DEBUG_STRID_POKEWOOD_SHOW_02, (void*)debugMenuCallProc_PokewoodShow2, GFL_OVERLAY_BLANK_ID }, //
+//  { DEBUG_STRID_POKEWOOD_REC_01, (void*)debugMenuCallProc_PokewoodRec1, GFL_OVERLAY_BLANK_ID },  // 
+//  { DEBUG_STRID_POKEWOOD_SHOW_01, (void*)debugMenuCallProc_PokewoodShow1, GFL_OVERLAY_BLANK_ID }, //
+//  { DEBUG_STRID_POKEWOOD_REC_03, (void*)debugMenuCallProc_PokewoodRec3, GFL_OVERLAY_BLANK_ID },  // 
+//  { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BRIEFING, (void*)debugMenuCallProc_PokewoodBriefing, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ENDROLL, (void*)debugMenuCallProc_PokewoodEndroll, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_RECORD_MONITOR, (void*)debugMenuCallProc_PokewoodRecordMonitor, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_ALL_OPEN, (void*)debugMenu_scenario_full_open, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN02, (void*)debugMenu_OpenScenario2, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN03, (void*)debugMenu_OpenScenario3, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN04, (void*)debugMenu_OpenScenario4, GFL_OVERLAY_BLANK_ID },
@@ -185,6 +189,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN06, (void*)debugMenu_OpenScenario6, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN07, (void*)debugMenu_OpenScenario7, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN08, (void*)debugMenu_OpenScenario8, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN09, (void*)debugMenu_OpenScenario9, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN10, (void*)debugMenu_OpenScenario10, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN11, (void*)debugMenu_OpenScenario11, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN12, (void*)debugMenu_OpenScenario12, GFL_OVERLAY_BLANK_ID },
@@ -192,12 +197,15 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN14, (void*)debugMenu_OpenScenario14, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN15, (void*)debugMenu_OpenScenario15, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN16, (void*)debugMenu_OpenScenario16, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN17, (void*)debugMenu_OpenScenario17, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN18, (void*)debugMenu_OpenScenario18, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN19, (void*)debugMenu_OpenScenario19, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN20, (void*)debugMenu_OpenScenario20, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN21, (void*)debugMenu_OpenScenario21, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN22, (void*)debugMenu_OpenScenario22, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN23, (void*)debugMenu_OpenScenario23, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN24, (void*)debugMenu_OpenScenario24, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN25, (void*)debugMenu_OpenScenario24, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN26, (void*)debugMenu_OpenScenario26, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN27, (void*)debugMenu_OpenScenario27, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN28, (void*)debugMenu_OpenScenario28, GFL_OVERLAY_BLANK_ID },
@@ -205,6 +213,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN30, (void*)debugMenu_OpenScenario30, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN31, (void*)debugMenu_OpenScenario31, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN32, (void*)debugMenu_OpenScenario32, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN33, (void*)debugMenu_OpenScenario33, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN34, (void*)debugMenu_OpenScenario34, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN35, (void*)debugMenu_OpenScenario35, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN36, (void*)debugMenu_OpenScenario36, GFL_OVERLAY_BLANK_ID },
@@ -461,12 +470,6 @@ static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk )
   return callShowProc( wk, PKWD_REC_POS_02 );
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk )
-{
-  return callShowProc( wk, PKWD_REC_POS_03 );
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -581,10 +584,13 @@ static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk )
 {
   GMEVENT *event = wk->gmEvent;
 	GMEVENT *new_event;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
 	PKWD_BRIEFING_PARAM  *param = PKWD_BRIEFING_PARAM_Create( HEAPID_PROC, wk->gmSys, 0 );
 
   param->audienceNum = 10;
-
+  param->scenario_no = 0;
+  
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BRIEFING_EVENT_Call, (void *)param );
 
@@ -593,14 +599,14 @@ static BOOL debugMenuCallProc_PokewoodBriefing( POKEWOOD_FUNC_WORK * wk )
 	GMEVENT_ChangeEvent( event, new_event );
 
 	OS_Printf( "Pkwd Briefing Start\n" );
-  
+
 	return TRUE;
   
 }
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	あらすじ画面デバッグ呼び出し
+ * @brief	エンドロール画面デバッグ呼び出し
  *
  * @param   wk		
  *
@@ -614,7 +620,7 @@ static BOOL debugMenuCallProc_PokewoodEndroll( POKEWOOD_FUNC_WORK * wk )
 	PKWD_BRIEFING_PARAM  *param = PKWD_BRIEFING_PARAM_Create( HEAPID_PROC, wk->gmSys, 0 );
 
   param->audienceNum = 10;
-  param->scenario_no = 14;
+  param->scenario_no = 11;
 
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_ENDROLL_EVENT_Call, (void *)param );
@@ -683,177 +689,46 @@ static BOOL debugMenuCallProc_PokewoodRecordMonitor( POKEWOOD_FUNC_WORK * wk )
 // シナリオオープンデバッグ用の関数
 //----------------------------------------------------------------------------------
 
-static BOOL debugMenu_OpenScenario2 ( POKEWOOD_FUNC_WORK *wk )
-{
-  _open_flag( wk, 1 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario3 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 2 );
-  return FALSE;
-}
+static BOOL debugMenu_OpenScenario2 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  1 );  return FALSE;}
+static BOOL debugMenu_OpenScenario3 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  2 );  return FALSE;}
+static BOOL debugMenu_OpenScenario4 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  3 );  return FALSE;}
+static BOOL debugMenu_OpenScenario5 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  4 );  return FALSE;}
+static BOOL debugMenu_OpenScenario6 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  5 );  return FALSE;}
+static BOOL debugMenu_OpenScenario7 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  6 );  return FALSE;}
+static BOOL debugMenu_OpenScenario8 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  7 );  return FALSE;}
+static BOOL debugMenu_OpenScenario9 (POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  8 );  return FALSE;}
+static BOOL debugMenu_OpenScenario10(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk,  9 );  return FALSE;}
+static BOOL debugMenu_OpenScenario11(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 10 );  return FALSE;}
+static BOOL debugMenu_OpenScenario12(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 11 );  return FALSE;}
+static BOOL debugMenu_OpenScenario13(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 12 );  return FALSE;}
+static BOOL debugMenu_OpenScenario14(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 13 );  return FALSE;}
+static BOOL debugMenu_OpenScenario15(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 14 );  return FALSE;}
+static BOOL debugMenu_OpenScenario16(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 15 );  return FALSE;}
+static BOOL debugMenu_OpenScenario17(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 16 );  return FALSE;}
+static BOOL debugMenu_OpenScenario18(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 17 );  return FALSE;}
+static BOOL debugMenu_OpenScenario19(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 18 );  return FALSE;}
+static BOOL debugMenu_OpenScenario20(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 19 );  return FALSE;}
+static BOOL debugMenu_OpenScenario21(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 20 );  return FALSE;}
+static BOOL debugMenu_OpenScenario22(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 21 );  return FALSE;}
+static BOOL debugMenu_OpenScenario23(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 22 );  return FALSE;}
+static BOOL debugMenu_OpenScenario24(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 23 );  return FALSE;}
+static BOOL debugMenu_OpenScenario25(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 24 );  return FALSE;}
+static BOOL debugMenu_OpenScenario26(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 25 );  return FALSE;}
+static BOOL debugMenu_OpenScenario27(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 26 );  return FALSE;}
+static BOOL debugMenu_OpenScenario28(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 27 );  return FALSE;}
+static BOOL debugMenu_OpenScenario29(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 28 );  return FALSE;}
+static BOOL debugMenu_OpenScenario30(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 29 );  return FALSE;}
+static BOOL debugMenu_OpenScenario31(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 30 );  return FALSE;}
+static BOOL debugMenu_OpenScenario32(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 31 );  return FALSE;}
+static BOOL debugMenu_OpenScenario33(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 32 );  return FALSE;}
+static BOOL debugMenu_OpenScenario34(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 33 );  return FALSE;}
+static BOOL debugMenu_OpenScenario35(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 34 );  return FALSE;}
+static BOOL debugMenu_OpenScenario36(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 35 );  return FALSE;}
+static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 36 );  return FALSE;}
+static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 37 );  return FALSE;}
+static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 38 );  return FALSE;}
+static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 39 );  return FALSE;}
 
-static BOOL debugMenu_OpenScenario4 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 3 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario5 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 4 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario6 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 5 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario7 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 6 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario8 (POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 7 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario10(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk,  9 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario11(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 10 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario12(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 11 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario13(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 12 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario14(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 13 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario15(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 14 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario16(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 15 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario18(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 17 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario19(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 18 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario20(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 19 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario22(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 21 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario23(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 22 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario24(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 23 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario26(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 25 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario27(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 26 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario28(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 27 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario29(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 28 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario30(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 29 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario31(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 30 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario32(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 31 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario34(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 33 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario35(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 34 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario36(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 35 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 36 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 37 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 38 );
-  return FALSE;
-}
-static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk)
-{
-  _open_flag( wk, 39 );
-  return FALSE;
-}
 static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk)
 {
   _open_flag( wk, 35 );
@@ -861,6 +736,15 @@ static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk)
   _open_flag( wk, 37 );
   _open_flag( wk, 38 );
   _open_flag( wk, 39 );
+  return FALSE;
+}
+
+static BOOL debugMenu_scenario_full_open( POKEWOOD_FUNC_WORK *wk )
+{
+  int i;
+  for(i=0;i<40;i++){
+    _open_flag( wk, i );
+  }
   return FALSE;
 }
 

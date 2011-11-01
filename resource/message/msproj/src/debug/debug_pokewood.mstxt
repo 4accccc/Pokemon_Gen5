@@ -418,6 +418,32 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_ALL_OPEN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>全シナリオオープン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:12:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:12:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全シナリオオープン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:13:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:13:03" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_STRID_POKEWOOD_OPEN02"
 		Style="Large">
 		<LanguageCell
@@ -593,6 +619,32 @@
 			<TextModifiedBy
 				User="mori:W00269"
 				Time="2011-09-14T12:23:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_OPEN09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オープン：シナリオ９</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オープン：シナリオ９</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:30:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -782,6 +834,32 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_OPEN17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オープン：シナリオ１７</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:30:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オープン：シナリオ１７</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:30:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_STRID_POKEWOOD_OPEN18"
 		Style="Large">
 		<LanguageCell
@@ -860,6 +938,32 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_OPEN21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オープン：シナリオ２１</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オープン：シナリオ２１</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_STRID_POKEWOOD_OPEN22"
 		Style="Large">
 		<LanguageCell
@@ -931,6 +1035,32 @@
 			<TextModifiedBy
 				User="mori:W00269"
 				Time="2011-09-14T12:23:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_OPEN25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オープン：シナリオ２５</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オープン：シナリオ２５</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1113,6 +1243,32 @@
 			<TextModifiedBy
 				User="mori:W00269"
 				Time="2011-09-14T12:23:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_OPEN33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オープン：シナリオ３３</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オープン：シナリオ３３</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-01T04:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -409,9 +409,9 @@ typedef struct
 	GFL_MSGDATA				*MsgData[PKWD_BOOK_MES_MAX];			///< メッセージ
 	WORDSET					*Wordset;								///< wordset
 	//
-	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
-	GFL_BMP_DATA			*BmpData[PKWD_BOOK_BMPOAM_MAXNUM];		// Bmp
-	BMPOAM_ACT_PTR			BmpOamWork[PKWD_BOOK_BMPOAM_MAXNUM];	// BMPOAM用Work
+	BMPOAM_SYS_PTR			BmpOamSys;								///< BMPOAM
+	GFL_BMP_DATA			*BmpData[PKWD_BOOK_BMPOAM_MAXNUM];		///< Bmp
+	BMPOAM_ACT_PTR			BmpOamWork[PKWD_BOOK_BMPOAM_MAXNUM];	///< BMPOAM用Work
 	//
 	FRAMELIST_WORK			*frame_list_work;			///< リスト
 	//
@@ -419,16 +419,16 @@ typedef struct
 	APP_TASKMENU_ITEMWORK	appitem[3];					///< 3項目あり
 	APP_TASKMENU_RES		*pAppTaskRes;
 	//
-	s32						Step;						// ステップ
-	s32						Mode;						// モード
-	s32						SubMode;					// サブモード
-	s32						TitleMode;					// タイトル
-	s32						NextMode;					// 次
-	u32						Flag;						// フラグ
-	u32						PFlag;						// フラグ
-	u32						PFlag2;						// フラグ(要整理)
-	s32						ScenarioCurPos;				// 台本カーソル(0-47)
-	s32						ScenarioMax;				// シナリオ最大
+	s32						Step;						///< ステップ
+	s32						Mode;						///< モード
+	s32						SubMode;					///< サブモード
+	s32						TitleMode;					///< タイトル
+	s32						NextMode;					///< 次
+	u32						Flag;						///< フラグ
+	u32						PFlag;						///< フラグ
+	u32						PFlag2;						///< フラグ(要整理)
+	s32						ScenarioCurPos;				///< 台本カーソル(0-47)
+	s32						ScenarioMax;				///< シナリオ最大
 	s32						ListCurPos;					///< リストのトップ(画面上のトップ)
 	s32						ListScrollPos;				///< リストのスクロール
 	s32						InfoCurPos;					///< 詳細用のカーソル(PokeMax+1)
@@ -437,7 +437,7 @@ typedef struct
 	u32						NewFlag;					///< NEWフラグ
 	s32						OldPos;						///< 一つ前の位置
 	//
-	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
+	s16						*EmptyBuffer;				///< 座標用のバッファ(必ず破棄すること)
 	//
 	s32						PokeMax;					///< ポケモン最大
 	s32						PokePageNum;				///< ポケモンページ番号(0-max-1)
@@ -456,33 +456,33 @@ typedef struct
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				res_cnum;		// リソース番号(注意)
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;	///< empty番号(これから座標を参照)
+	u8				res_cnum;		///< リソース番号(注意)
 }PKWD_BOOK_OBJ_DATA;
 
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;		///< id
+	u8				offset;		///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }PKWD_BOOK_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
 	u8				pad;
 }PKWD_BOOK_BGCHR_DATA;
 
@@ -490,23 +490,23 @@ typedef struct{
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				poff;			// パレットのオフセット
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				poff;			  ///< パレットのオフセット
 }PKWD_BOOK_BGSCN_DATA;
 
 //-----------------------------------------
 // BMPOAMの定義
 //------------------------------------------
 typedef struct{
-	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				width;			///< サイズ(8x8単位)(0xffの場合は終了判定)
 	u8				height;
-	u8				softpri;		// プライオリティ(obj)
-	u8				bgpri;			// プライオリティ(bg)
-	u8				visible;		// 表示/非表示
-	u8				paloffset;		// パレットオフセット(nclの何番目か)
-	u8				empty_num;		// empty番号
+	u8				softpri;		///< プライオリティ(obj)
+	u8				bgpri;			///< プライオリティ(bg)
+	u8				visible;		///< 表示/非表示
+	u8				paloffset;	///< パレットオフセット(nclの何番目か)
+	u8				empty_num;	///< empty番号
 	u8				pad;
 }PKWD_BOOK_BMPOAM_DATA;
 
@@ -514,12 +514,12 @@ typedef struct{
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
+	u8				frmnumber;	///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				  ///< 座標
 	u8				y;
-	u8				width;			// サイズ
+	u8				width;			///< サイズ
 	u8				height;
-	u8				palnum;			// パレット番号
+	u8				palnum;			///< パレット番号
 }PKWD_BOOK_CANVAS_DATA;
 
 //=============================================================================
@@ -5147,16 +5147,8 @@ static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk )
 static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 {
 #ifdef PM_DEBUG
-	s32		i;
 	s32		tmp;
 	
-	// X:全オープン
-	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
-		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
-			POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
-		}
-		OS_Printf("*** all open ***\n");
-	}
 	// Y:NEW
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].openid;
