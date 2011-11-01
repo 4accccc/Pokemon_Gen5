@@ -313,6 +313,7 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
 static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
 static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
 static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
+static u32 GetLandTypeMsgIDSelect( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type ,const u32 *p_ground_msg,u32 sea_msg,u32 fishing_msg);
 
 // データ処理系---------------------------------------
 static HABITAT_ZONE_DATA* GetNowListData( HABITAT_ZONE_WK *p_wk );
@@ -330,6 +331,8 @@ static void SetShortCutButtonCutAnmSeq( HABITAT_ZONE_WK *p_wk );
 static BOOL CheckCanMoveLandType( HABITAT_ZONE_WK *p_wk );
 static void CheckPokeSelectKeyInput( HABITAT_ZONE_WK *p_wk );
 static void CheckTopKeyInput( HABITAT_ZONE_WK *p_wk );
+static void SetLandTypeChangeSeq( HABITAT_ZONE_WK *p_wk , HABITAT_GROUND_TYPE land_type);
+static void SetEventIcon( HABITAT_ZONE_WK *p_wk ,HABITAT_GROUND_TYPE ground_type ,GFL_CLWK *p_clwk );
 
 // ポケモンアイコン系---------------------------------------
 static void MakePokeIconList( HABITAT_ZONE_WK *p_wk );
@@ -507,15 +510,7 @@ static void MAINSEQ_FadeOut( HABITAT_ZONE_WK *p_wk )
         GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
 
         // イベントアイコンも非表示に（アイコンをフェードできない）
-        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
-            OBJ_WK_EVENT_ICON_01 );
-        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
-            OBJ_WK_EVENT_ICON_02 );
-        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-        p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,
-            OBJ_WK_EVENT_ICON_03 );
-        GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+        HABITAT_ZONE_GRA_SetEventIconEnable( &p_wk->gra_sys ,FALSE );
 
         // マップ面を非表示にする
         {
@@ -593,50 +588,20 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
     break;
   case TPID_BUTTON_GROUND_LAND:
     {
-      if( p_wk->land_type == HABITAT_GROUND_LAND != TRUE )
-      {
-        if( CheckCanMoveLandType( p_wk ) )
-        {
-          if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
-          {
-            ONOUE_Printf("草地\n");
-            p_wk->land_type = HABITAT_GROUND_LAND;
-            SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
-          }
-        }
-      }
+      // 地形タイプ切替(草地)
+      SetLandTypeChangeSeq( p_wk , HABITAT_GROUND_LAND );
     }
     break;
   case TPID_BUTTON_GROUND_WATERSIDE:
     {
-      if( p_wk->land_type == HABITAT_GROUND_WATERSIDE != TRUE )
-      {
-        if( CheckCanMoveLandType( p_wk ) )
-        {
-          if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
-          {
-            ONOUE_Printf("水辺\n");
-            p_wk->land_type = HABITAT_GROUND_WATERSIDE;
-            SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
-          }
-        }
-      }
+      // 地形タイプ切替(水辺)
+      SetLandTypeChangeSeq( p_wk , HABITAT_GROUND_WATERSIDE );
     }
     break;
   case TPID_BUTTON_GROUND_FISHING:
     {
-      if( p_wk->land_type == HABITAT_GROUND_FISHING != TRUE )
-      {
-        if( CheckCanMoveLandType( p_wk ) )
-        {
-          if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
-          {
-            ONOUE_Printf("釣り\n");
-            p_wk->land_type = HABITAT_GROUND_FISHING;
-            SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,SEQ_CHANGE_PARAM_SET_LAND_TYPE );
-          }
-        }
-      }
+      // 地形タイプ切替(釣り)
+      SetLandTypeChangeSeq( p_wk , HABITAT_GROUND_FISHING );
     }
     break;
   case TPID_BUTTON_UP:
@@ -721,6 +686,32 @@ static void MAINSEQ_TopKeyInput( HABITAT_ZONE_WK *p_wk )
       CheckTopKeyInput( p_wk );
     }
     break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定地形タイプに変えれるか判断した後にシーケンスを切り替える
+ *
+ *	@param	*p_wk 
+ *	@param	land_type
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetLandTypeChangeSeq( HABITAT_ZONE_WK *p_wk , HABITAT_GROUND_TYPE land_type)
+{
+  if( p_wk->land_type == land_type != TRUE )
+  {
+    if( CheckCanMoveLandType( p_wk ) )
+    {
+      if( p_wk->land_appear[land_type] == TRUE )
+      {
+        p_wk->land_type = land_type;
+        SetNextSeq( p_wk ,MAIN_SEQ_CHANGE_LAND_TYPE ,
+            SEQ_CHANGE_PARAM_SET_LAND_TYPE );
+      }
+    }
   }
 }
 
@@ -2110,41 +2101,23 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
 {
-  u32 msg_id = msg_seisoku_zone_01;
+  u32 msg_id;
+  const u32 msg_id_table[] =
+  {
+    msg_seisoku_zone_01,  // 草地
+    msg_seisoku_zone_02,  // 砂地
+    msg_seisoku_zone_03,  // 沼
+    msg_seisoku_zone_04,  // 洞窟
+    msg_seisoku_zone_08,  // 橋
+    msg_seisoku_zone_07,  // 混合
+    msg_seisoku_zone_09,  // なし
+  };
 
-  // 場所ごとにメッセージを切り替える
-  if( type == HABITAT_GROUND_LAND )
-  {
-    const msg_id_table[] =
-    {
-      msg_seisoku_zone_01,  // 草地
-      msg_seisoku_zone_02,  // 砂地
-      msg_seisoku_zone_03,  // 沼
-      msg_seisoku_zone_04,  // 洞窟
-      msg_seisoku_zone_08,  // 橋
-      msg_seisoku_zone_07,  // 混合
-      msg_seisoku_zone_09,  // なし
-    };
-    GF_ASSERT( info_type <= HABITAT_GROUND_INFO_NONE );
-    
-    // 地形ごとにメッセージを選択
-    msg_id = msg_id_table[info_type];
-  }
-  else if( type == HABITAT_GROUND_WATERSIDE )
-  {
-    // 水辺
-    msg_id = msg_seisoku_zone_05;
-   
-  }
-  else if( type == HABITAT_GROUND_FISHING )
-  {
-    // 釣り
-    msg_id = msg_seisoku_zone_06;
-  }
-  else
-  {
-    GF_ASSERT( 0 );
-  }
+  // メッセージを取得
+  msg_id = GetLandTypeMsgIDSelect(type,info_type,
+      msg_id_table,
+      msg_seisoku_zone_05,
+      msg_seisoku_zone_06);
 
   return msg_id;
 }
@@ -2162,41 +2135,22 @@ static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE 
 static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
 {
   u32 msg_id = msg_seisoku_zone_01;
-
-  // 場所ごとにメッセージを切り替える
-  if( type == HABITAT_GROUND_LAND )
+  const u32 msg_id_table[] =
   {
-    // @todo 橋のメッセージIDは仮
-    const msg_id_table[] =
-    {
-      msg_seisoku_result_08,  // 草地
-      msg_seisoku_result_09,  // 砂地
-      msg_seisoku_result_10,  // 沼
-      msg_seisoku_result_11,  // 洞窟
-      msg_seisoku_result_15,  // 橋
-      msg_seisoku_result_14,  // 混合
-      msg_seisoku_result_14,  // なし
-    };
-    GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
-    
-    // 地形ごとにメッセージを選択
-    msg_id = msg_id_table[info_type];
-  }
-  else if( type == HABITAT_GROUND_WATERSIDE )
-  {
-    // 水辺
-    msg_id = msg_seisoku_result_12;
-   
-  }
-  else if( type == HABITAT_GROUND_FISHING )
-  {
-    // 釣り
-    msg_id = msg_seisoku_result_13;
-  }
-  else
-  {
-    GF_ASSERT( 0 );
-  }
+    msg_seisoku_result_08,  // 草地
+    msg_seisoku_result_09,  // 砂地
+    msg_seisoku_result_10,  // 沼
+    msg_seisoku_result_11,  // 洞窟
+    msg_seisoku_result_15,  // 橋
+    msg_seisoku_result_14,  // 混合
+    msg_seisoku_result_14,  // なし
+  };
+  
+  // メッセージを取得
+  msg_id = GetLandTypeMsgIDSelect(type,info_type,
+      msg_id_table,
+      msg_seisoku_result_12,
+      msg_seisoku_result_13);
 
   return msg_id;
 }
@@ -2214,36 +2168,60 @@ static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO
 static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
 {
   u32 msg_id = msg_seisoku_zone_01;
+  const u32 msg_id_table[] =
+  {
+    msg_seisoku_result_01,  // 草地
+    msg_seisoku_result_02,  // 砂地
+    msg_seisoku_result_03,  // 沼
+    msg_seisoku_result_04,  // 洞窟
+    msg_seisoku_result_16,  // 橋
+    msg_seisoku_result_07,  // 混合
+    msg_seisoku_result_07,  // なし
+  };
+   
+  // メッセージを取得
+  msg_id = GetLandTypeMsgIDSelect(type,info_type,
+      msg_id_table,
+      msg_seisoku_result_05,
+      msg_seisoku_result_06);
+
+  return msg_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形タイプを判断して、テーブルからメッセージIDを選択する
+ *
+ *	@param	type 
+ *	@param	info_type 
+ *	@param	u32 *p_ground_msg
+ *	@param	sea_msg
+ *	@param	fishing_msg
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetLandTypeMsgIDSelect( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type ,const u32 *p_ground_msg,u32 sea_msg,u32 fishing_msg)
+{
+  u32 msg_id = msg_seisoku_zone_01;
 
   // 場所ごとにメッセージを切り替える
   if( type == HABITAT_GROUND_LAND )
   {
-    // @todo 橋のメッセージIDは仮
-    const msg_id_table[] =
-    {
-      msg_seisoku_result_01,  // 草地
-      msg_seisoku_result_02,  // 砂地
-      msg_seisoku_result_03,  // 沼
-      msg_seisoku_result_04,  // 洞窟
-      msg_seisoku_result_16,  // 橋
-      msg_seisoku_result_07,  // 混合
-      msg_seisoku_result_07,  // なし
-    };
     GF_ASSERT( info_type < HABITAT_GROUND_INFO_NONE );
-    
     // 地形ごとにメッセージを選択
-    msg_id = msg_id_table[info_type];
+    msg_id = p_ground_msg[info_type];
   }
   else if( type == HABITAT_GROUND_WATERSIDE )
   {
     // 水辺
-    msg_id = msg_seisoku_result_05;
+    msg_id = sea_msg;
    
   }
   else if( type == HABITAT_GROUND_FISHING )
   {
     // 釣り
-    msg_id = msg_seisoku_result_06;
+    msg_id = fishing_msg;
   }
   else
   {
@@ -2612,54 +2590,39 @@ static void RefreshEventIcon( HABITAT_ZONE_WK *p_wk )
 {
   // 達成イベントアイコン表示
   GFL_CLWK *p_clwk;
-  HABITATLIST_STATUS event;
 
   // 草地
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_01 );
-  if( p_wk->land_appear[HABITAT_GROUND_LAND] == TRUE )
-  {
-    // 地形が存在
-    event = CheckCompleteEvent( p_wk ,HABITAT_GROUND_LAND );
-    if( event != HABITAT_ZONE_STATUS_NONE )
-    {
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
-    }
-    else
-    {
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-    }
-  }
-  else
-  {
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-  }
+  SetEventIcon( p_wk ,HABITAT_GROUND_LAND ,p_clwk );
 
   // 海
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_02 );
-  if( p_wk->land_appear[HABITAT_GROUND_WATERSIDE] == TRUE )
-  {
-    // 地形が存在
-    event = CheckCompleteEvent( p_wk ,HABITAT_GROUND_WATERSIDE );
-    if( event != HABITAT_ZONE_STATUS_NONE )
-    {
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
-    }
-    else
-    {
-      GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-    }
-  }
-  else
-  {
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-  }
+  SetEventIcon( p_wk ,HABITAT_GROUND_WATERSIDE ,p_clwk );
 
   // 釣り
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_03 );
-  if( p_wk->land_appear[HABITAT_GROUND_FISHING] == TRUE )
+  SetEventIcon( p_wk ,HABITAT_GROUND_FISHING ,p_clwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントアイコンを設定
+ *
+ *	@param	*p_wk 
+ *	@param	ground_type 
+ *	@param	*p_clwk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetEventIcon( HABITAT_ZONE_WK *p_wk ,HABITAT_GROUND_TYPE ground_type ,GFL_CLWK *p_clwk )
+{
+  HABITATLIST_STATUS event;
+
+  if( p_wk->land_appear[ground_type] == TRUE )
   {
     // 地形が存在
-    event = CheckCompleteEvent( p_wk ,HABITAT_GROUND_FISHING );
+    event = CheckCompleteEvent( p_wk ,ground_type );
     if( event != HABITAT_ZONE_STATUS_NONE )
     {
       GFL_CLACT_WK_SetDrawEnable( p_clwk ,TRUE);
@@ -2867,12 +2830,7 @@ static void SetPokeSelectButton( HABITAT_ZONE_WK *p_wk )
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_CANCEL );
   GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
   // イベントボタン
-  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_01 );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_02 );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-  p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_EVENT_ICON_03 );
-  GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
+  HABITAT_ZONE_GRA_SetEventIconEnable( &p_wk->gra_sys ,FALSE );
 
   // 説明を見る
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_BUTTON_EXPLANATION );

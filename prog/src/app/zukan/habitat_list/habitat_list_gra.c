@@ -60,13 +60,6 @@ FS_EXTERN_OVERLAY(ui_common);
 #define	FRAME_SCROLL_X_VALUE	( 1 )		// 背景スクロールカウント
 #define	Y_SCROLL_COUNT	( -24 )		// マップのY軸ずれ
 
-// @todo zukan_detail_map.cと同じ定義なので、共通読み込みできるようにする
-// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
-#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
-#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
-
 // リスト表示項目数
 #define	ZKNLISTMAIN_LIST_POS_MAX		( 7 )
 
@@ -192,6 +185,7 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data );
 static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py ,BOOL disp );
 static void SetCursorEnable( HABITAT_LIST_GRA_WK *p_wk , BOOL flg );
 static void RefreshCursorPos( HABITAT_LIST_GRA_WK *p_wk );
+static void GetExistLandType( ZUKANHABITAT_LIST_LISTDATA *p_data ,u8 *is_l ,u8 *is_w ,u8 *is_f );
 
 //===============================================================================
 // 初期化・終了関数呼び出し
@@ -1589,13 +1583,8 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
   s32 i;
   BOOL is_notice = FALSE;
   BOOL is_cmp;
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] & 
-    p_data->is_vanish[ HABITAT_GROUND_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] &
-    p_data->is_vanish[ HABITAT_GROUND_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] &
-    p_data->is_vanish[ HABITAT_GROUND_FISHING ];
-
+  u8 is_l,is_w,is_f;
+ 
   const BOOL land_type[][HABITAT_GROUND_MAX]=
   {
     {TRUE,FALSE,FALSE}, // 草地だけ
@@ -1604,6 +1593,9 @@ static s32 GetBackGroundScreenID( ZUKANHABITAT_LIST_LISTDATA *p_data )
     {FALSE,TRUE,TRUE},  // 水辺、釣り
     {TRUE,TRUE,TRUE},   // 草地、水辺、釣り
   };
+ 
+  // 指定地形が存在しているか取得する
+  GetExistLandType( p_data, &is_l ,&is_w ,&is_f );
 
   for( i = 0; i < FLIST_BACK_NORMAL_MAX ; i++ )
   {
@@ -1779,14 +1771,8 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
   GRA_ICON_DATA *p_icondata;
   GFL_CLACTPOS pos;
   ZUKANHABITAT_LIST_LISTDATA *p_data = &p_wk->p_list_data[item_index];
-  
-  u8 is_l = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] & 
-    p_data->is_vanish[ HABITAT_GROUND_LAND ];
-  u8 is_w = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] &
-    p_data->is_vanish[ HABITAT_GROUND_WATERSIDE ];
-  u8 is_f = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] &
-    p_data->is_vanish[ HABITAT_GROUND_FISHING ];
-
+  u8 is_l,is_w,is_f;
+ 
   // HABITAT_LIST_STATUSと同じ順番で、アニメーションシーケンスを定義
   u16 anm_seq;
   u16 sc_anm_seq_tbl[] =
@@ -1797,6 +1783,9 @@ static void SetFrameMenuIcon( HABITAT_LIST_GRA_WK *p_wk ,u32 item_index ,s16 py 
     OBJ_ANM_SEQ_LOOK_ICON,  // 見たアイコン
     0,                      // ダミー（なし）
   };
+ 
+  // 指定地形が存在しているか取得する
+  GetExistLandType( p_data, &is_l ,&is_w ,&is_f );
 
   if( disp == TRUE )
   {
@@ -2271,5 +2260,27 @@ void HABITAT_LIST_GRA_StartMiniMapIconAnm( HABITAT_LIST_GRA_WK *p_wk )
 void HABITAT_LIST_GRA_SetBlinkStop( HABITAT_LIST_GRA_WK *p_wk ,BOOL is_stop )
 {
   p_wk->is_stop_blink = is_stop;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地形タイプが存在するかチェック
+ *
+ *	@param	*p_data 
+ *	@param	is_l 
+ *	@param	is_w 
+ *	@param	is_f 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetExistLandType( ZUKANHABITAT_LIST_LISTDATA *p_data ,u8 *is_l ,u8 *is_w ,u8 *is_f )
+{
+  (*is_l) = p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] & 
+    p_data->is_vanish[ HABITAT_GROUND_LAND ];
+  (*is_w) = p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] &
+    p_data->is_vanish[ HABITAT_GROUND_WATERSIDE ];
+  (*is_f) = p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] &
+    p_data->is_vanish[ HABITAT_GROUND_FISHING ];
 }
 

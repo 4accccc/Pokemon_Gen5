@@ -64,14 +64,6 @@ FS_EXTERN_OVERLAY(townmap);
 #define	FRAME_SCROLL_X_VALUE	( 1 )		// 背景スクロールカウント
 #define	MAP_Y_SCROLL_COUNT	( -24 )		// マップのY軸ずれ
 
-// @todo zukan_detail_map.cと同じ定義なので、共通読み込みできるようにする
-// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
-#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
-#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
-#define DATA_IDX_NONE (0xFF)
-
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -452,6 +444,7 @@ static void GRA_InitBg(void)
 		GFL_BG_ClearScreen( BGM_FRAME_EVMSG_WIN );
 		GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
     GFL_BG_SetVisible( BGM_FRAME_EVMSG_WIN ,VISIBLE_ON );
+    GFL_BG_FillCharacter( BGM_FRAME_EVMSG_WIN, 0, 1, 0 );
 	}
 	{	// 背景
 		GFL_BG_BGCNT_HEADER cnth= {
@@ -1753,7 +1746,6 @@ void HABITAT_ZONE_GRA_SetMapBlink( HABITAT_ZONE_GRA_WK *p_wk ,u16 zone_group )
 //-----------------------------------------------------------------------------
 static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk )
 {
-  // @todo zukan_detail_map.cとほぼ同じ処理なので、対処を考える
   // 更新
   {
     G2S_SetBlendAlpha(
@@ -1763,29 +1755,9 @@ static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk )
         16 - p_wk->obj_exist_ev1 );
   }
 
-  // カウントを進める
-  if( (u32)p_wk->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD >= OBJ_EXIST_ALPHA_ANIME_COUNT_MAX )
-  {
-    p_wk->obj_exist_alpha_anime_count = (u16)( (u32)p_wk->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD - OBJ_EXIST_ALPHA_ANIME_COUNT_MAX );
-  }
-  else
-  {
-    p_wk->obj_exist_alpha_anime_count += OBJ_EXIST_ALPHA_ANIME_COUNT_ADD;
-  }
+  // アルファカウントを進める
+  ZKNCOMM_AlphaUpdate( &p_wk->obj_exist_alpha_anime_count ,&p_wk->obj_exist_ev1 );
 
-  // ev1を求める 
-  {
-    // 1～0に変換
-    fx16 cos = ( FX_CosIdx(p_wk->obj_exist_alpha_anime_count) + FX16_ONE ) /2;
-    p_wk->obj_exist_ev1 = OBJ_EXIST_ALPHA_MIN + ( ( (OBJ_EXIST_ALPHA_MAX - OBJ_EXIST_ALPHA_MIN) * cos ) >>FX16_SHIFT );
-  }
-
-// TWLプログラミングマニュアル
-// 第 1 対象面でOBJ=1 の場合は、OBJ の種類に関わらずすべてのOBJに対して処理が実行されます。
-// OBJ=0 の場合は、半透明OBJ、ビットマップOBJ、3D 面を描画したBG0 面の場合のみ処理が実行されます。
-//
-// つまり、GX_BLEND_PLANEMASK_OBJにしてしまうと、GX_OAM_MODE_NORMALも半透明になってしまう。
-// GX_BLEND_PLANEMASK_NONEにしておけば、GX_OAM_MODE_XLUだけが半透明になる。
 }
 
 //----------------------------------------------------------------------------
@@ -1800,8 +1772,8 @@ static void GRA_AlpaMain( HABITAT_ZONE_GRA_WK* p_wk )
 //-----------------------------------------------------------------------------
 static void GRA_ObjExistAlphaReset( HABITAT_ZONE_GRA_WK* p_wk )
 {
-  p_wk->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
-  p_wk->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+  // アルファカウントリセット
+  ZKNCOMM_AlphaReset( &p_wk->obj_exist_alpha_anime_count ,&p_wk->obj_exist_ev1 );
 
   // 更新
   {
@@ -2175,3 +2147,25 @@ void HABITAT_ZONE_GRA_SetBlinkStop( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_stop )
   p_wk->is_stop_blink = is_stop;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントアイコンの表示状態を設定
+ *
+ *	@param	*p_wk
+ *	@param	is_enable 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_SetEventIconEnable( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_enable )
+{
+  GFL_CLWK *p_clwk;
+
+  // イベントボタン
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_EVENT_ICON_01 );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_enable);
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_EVENT_ICON_02 );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_enable);
+  p_clwk = HABITAT_ZONE_GRA_GetComClWk( p_wk ,OBJ_WK_EVENT_ICON_03 );
+  GFL_CLACT_WK_SetDrawEnable( p_clwk ,is_enable);
+}

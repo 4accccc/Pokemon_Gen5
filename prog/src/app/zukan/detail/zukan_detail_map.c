@@ -33,6 +33,7 @@
 #include "field/zonedata.h"
 #include "app/townmap_data_sys.h"
 #include "app/townmap_util.h"
+#include "../zukan_common.h"
 
 #include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
 
@@ -419,12 +420,6 @@ enum
   OBJ_PUSH_BUTTON_NONE  = OBJ_MAX,            // 現在押されているボタンがないとき
 };
 
-// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
-#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
-#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
-#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
-
 
 // 各ポケモンの情報
 // 一年中か季節ごとか
@@ -597,7 +592,7 @@ struct _ZUKAN_DETAIL_MAP_WORK
   GFL_CLWK*                   obj_exist_clwk[TOWNMAP_DATA_MAX];
   GFL_CLUNIT*                 usual_clunit;  // 不必要だったかも、途中でテストを止めたので最終結論までは出していない。
   GFL_CLSYS_REND*             usual_rend;    // レンダラー全体に対して半透明設定が反映されると思っていてつくったもの。
-  int                         obj_exist_ev1;
+  s32                         obj_exist_ev1;
   u16                         obj_exist_alpha_anime_count;
 
   // 隠しスポット
@@ -4626,21 +4621,7 @@ static void Zukan_Detail_Map_ObjExistAlphaMain( ZUKAN_DETAIL_MAP_WORK* work )
   }
 
   // カウントを進める
-  if( (u32)work->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD >= OBJ_EXIST_ALPHA_ANIME_COUNT_MAX )
-  {
-    work->obj_exist_alpha_anime_count = (u16)( (u32)work->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD - OBJ_EXIST_ALPHA_ANIME_COUNT_MAX );
-  }
-  else
-  {
-    work->obj_exist_alpha_anime_count += OBJ_EXIST_ALPHA_ANIME_COUNT_ADD;
-  }
-
-  // ev1を求める 
-  {
-    // 1～0に変換
-    fx16 cos = ( FX_CosIdx(work->obj_exist_alpha_anime_count) + FX16_ONE ) /2;
-    work->obj_exist_ev1 = OBJ_EXIST_ALPHA_MIN + ( ( (OBJ_EXIST_ALPHA_MAX - OBJ_EXIST_ALPHA_MIN) * cos ) >>FX16_SHIFT );
-  }
+  ZKNCOMM_AlphaUpdate( &work->obj_exist_alpha_anime_count ,&work->obj_exist_ev1 );
 
 // TWLプログラミングマニュアル
 // 第 1 対象面でOBJ=1 の場合は、OBJ の種類に関わらずすべてのOBJに対して処理が実行されます。
@@ -4651,8 +4632,8 @@ static void Zukan_Detail_Map_ObjExistAlphaMain( ZUKAN_DETAIL_MAP_WORK* work )
 }
 static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_WORK* work )
 {
-  work->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
-  work->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+  // アルファカウントのリセット
+  ZKNCOMM_AlphaReset( &work->obj_exist_alpha_anime_count ,&work->obj_exist_ev1 );
 
   // さっそくこのリセットした値でAlphaを
   // 更新

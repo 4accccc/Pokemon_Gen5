@@ -407,3 +407,5 @@ extern BOOL HABITAT_ZONE_GRA_CheckTrayPalTrance( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_SetHeroIcon( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_SetBlinkStop( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_stop )
 ;
+extern void HABITAT_ZONE_GRA_SetEventIconEnable( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_enable );
+

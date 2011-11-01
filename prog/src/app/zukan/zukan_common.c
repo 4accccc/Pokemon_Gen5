@@ -30,6 +30,12 @@
 #define	BASEBG_SCROLL_WAIT	( 4 )			// ＢＧスクロールウェイト
 #define	BASEBG_SCROLL_VAL		( 1 )			// ＢＧスクロール値
 
+// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
+#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
+#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
+
 //============================================================================================
 //	プロトタイプ
 //============================================================================================
@@ -888,5 +894,50 @@ static GetHabitatZoneListDataCount( EVENTWORK *p_event_wk ,ARCHANDLE *p_handle	,
   }
 
   return zone_cnt;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファアニメーションメイン
+ *
+ *	@param	p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ZKNCOMM_AlphaUpdate( u16* p_obj_exist_alpha_anime_count ,s32 *p_obj_exist_ev1)
+{
+  // カウントを進める
+  if( (*p_obj_exist_alpha_anime_count) + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD >= OBJ_EXIST_ALPHA_ANIME_COUNT_MAX )
+  {
+    (*p_obj_exist_alpha_anime_count) = (u16)( (u32)(*p_obj_exist_alpha_anime_count) + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD - OBJ_EXIST_ALPHA_ANIME_COUNT_MAX );
+  }
+  else
+  {
+    (*p_obj_exist_alpha_anime_count) += OBJ_EXIST_ALPHA_ANIME_COUNT_ADD;
+  }
+
+  // ev1を求める 
+  {
+    // 1～0に変換
+    fx16 cos = ( FX_CosIdx((*p_obj_exist_alpha_anime_count)) + FX16_ONE ) /2;
+    (*p_obj_exist_ev1) = OBJ_EXIST_ALPHA_MIN + ( ( (OBJ_EXIST_ALPHA_MAX - OBJ_EXIST_ALPHA_MIN) * cos ) >>FX16_SHIFT );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファカウントのリセット
+ *
+ *	@param	p_obj_exist_alpha_anime_count 
+ *	@param	*p_obj_exist_ev1
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ZKNCOMM_AlphaReset( u16* p_obj_exist_alpha_anime_count ,s32 *p_obj_exist_ev1)
+{
+  (*p_obj_exist_ev1)                  = OBJ_EXIST_ALPHA_MIN;
+  (*p_obj_exist_alpha_anime_count)    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
 }
 

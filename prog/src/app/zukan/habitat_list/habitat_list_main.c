@@ -416,7 +416,6 @@ static void MAINSEQ_AppInit( HABITAT_LIST_WK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-// @todo 地名表示バーとメニューバーのスクロールアウト、フェード処理を入れる
 static void MAINSEQ_AppExit( HABITAT_LIST_WK *p_wk )
 {
   u32 sc_cnt = HABITAT_LIST_GRA_GetScrollCount( &p_wk->gra_sys );
@@ -488,7 +487,6 @@ static void MAINSEQ_KeyInput( HABITAT_LIST_WK *p_wk )
   // 項目選択
   default:
     {
-      // @todo 戻り値にゾーングループを設定する
       u32 list_pos = HABITAT_LIST_GRA_GetListPos( &p_wk->gra_sys );
       SetRetMod( p_wk ,HABITAT_LIST_RET_CALL_ZONE_INFO );
       SetNextSeq( p_wk, MAIN_SEQ_ITEM_BLINK ,SEQ_CHANGE_PARAM_NONE);
@@ -788,7 +786,6 @@ static BOOL CheckInput( HABITAT_LIST_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MAINSEQ_PageMove( HABITAT_LIST_WK *p_wk )
 {
-  // @todo ボタンアニメーション
   // シーケンスをすすめる
   SetNextSeq( p_wk, MAIN_SEQ_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
 }
@@ -1047,6 +1044,7 @@ static void InitModeButton( HABITAT_LIST_WK *p_wk )
 static HABITAT_GROUND_TYPE GetButtonType(
                   ZUKANHABITAT_LIST_LISTDATA *p_data,u8 button_no )
 {
+  HABITAT_GROUND_TYPE ground_type;
   u8 index = HABITAT_GROUND_MAX -1 ;
   HABITAT_GROUND_TYPE button_data[HABITAT_GROUND_MAX] = {
     HABITAT_GROUND_MAX,
@@ -1054,27 +1052,16 @@ static HABITAT_GROUND_TYPE GetButtonType(
     HABITAT_GROUND_MAX
   };
 
-  if( (p_data->is_exist_landtype[ HABITAT_GROUND_FISHING ] == TRUE )
-      && ( p_data->is_vanish[HABITAT_GROUND_FISHING] == TRUE ) )
+  // 釣り、水辺、草地の順でチェックする
+  for( ground_type = HABITAT_GROUND_FISHING; ground_type >= HABITAT_GROUND_LAND; ground_type-- )
   {
-    button_data[ index ] = HABITAT_GROUND_FISHING;
-    ONOUE_Printf("釣　");
-    index--;
+    if( (p_data->is_exist_landtype[ ground_type ] == TRUE )
+        && ( p_data->is_vanish[ground_type] == TRUE ) )
+    {
+      button_data[ index ] = ground_type;
+      index--;
+    }
   }
-  if( (p_data->is_exist_landtype[ HABITAT_GROUND_WATERSIDE ] == TRUE) 
-      && ( p_data->is_vanish[HABITAT_GROUND_WATERSIDE] == TRUE ) )
-  {
-    button_data[ index ] = HABITAT_GROUND_WATERSIDE;
-    ONOUE_Printf("水　");
-    index--;
-  }
-  if( (p_data->is_exist_landtype[ HABITAT_GROUND_LAND ] == TRUE )
-      && ( p_data->is_vanish[HABITAT_GROUND_LAND] == TRUE ) )
-  {
-    ONOUE_Printf("草　");
-    button_data[ index ] = HABITAT_GROUND_LAND;
-  }
-  ONOUE_Printf("\n");
 
   return button_data[button_no];
 }

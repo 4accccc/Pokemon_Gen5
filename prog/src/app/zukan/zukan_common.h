@@ -27,7 +27,6 @@
 
 #define	FRAME_SCROLL_COUNT	( 48 )		// 背景スクロールカウント
 
-
 // セルアクターデータ
 typedef struct {
 	GFL_CLWK_DATA	dat;
@@ -200,4 +199,6 @@ extern void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT
 extern void ZKNCOMM_MakeHabitatListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_LIST_DATA * p_zone_list );
 
 extern u16 ZKNCOMM_MakeHabitatList( ZUKAN_SAVEDATA * p_zkn_sv,HABITATLIST_SAVE  *p_habitat_sv, u16 ** list, HEAPID heapID );
+extern void ZKNCOMM_AlphaUpdate( u16* p_obj_exist_alpha_anime_count ,s32 *p_obj_exist_ev1);
+extern void ZKNCOMM_AlphaReset( u16* p_obj_exist_alpha_anime_count ,s32 *p_obj_exist_ev1);
 
