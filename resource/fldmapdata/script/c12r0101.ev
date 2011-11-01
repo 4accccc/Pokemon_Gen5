@@ -185,11 +185,6 @@ EVENT_START ev_pos_c12r0101_startevents
   
   //よし！だい２ステップクリア！
   _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_11,C12R0101_SWMAMA_01, POS_UP )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：ママ回転
-  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
-  _OBJ_ANIME_WAIT()
   
   //ライブキャスターを既に使用している場合
   IF FLAG_ON( FH_01) THEN
