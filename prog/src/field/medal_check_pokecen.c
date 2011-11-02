@@ -26,6 +26,7 @@
 #include "poke_tool/poketype_def.h" // for POKETYPE_MAX
 #include "medal_achieve_data.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"                          // MDL_FLAG_ANIMALTRAIL_～
+#include "../../../resource/fldmapdata/flagwork/work_define.h"                          // WK_SYS_LINK_EVENT_～
 #include "../../../../resource/habitat_list/habitat_list_data.h" 
 // for HABITAT_LIST_DATA_MAX
 
@@ -34,7 +35,6 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/sodateya_work.h"
 #include "savedata/bsubway_savedata.h"
-#include "savedata/outside_permanent.h"
 #include "savedata/habitat_list_save.h"
 
 //=============================================================================
@@ -1314,20 +1314,32 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
 //-----------------------------------------------------------------------------
 static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
 {
-  u32 sum = 0;
-  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
-  DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_svc );
-  WB_SAVE_CONV_FLAG flg;
-
-  // データコンバートフラグ数チェック
-  for( flg = 0; flg < WB_SAVE_CONV_FLAG_MAX ; flg++ )
+  int i;
+  s32 check_cnt = 0;
+  const s32 flag_tbl[] =
   {
-    if( DATA_CONVERT_SAVE_GetFlag( p_dataconv, flg ) )
+    WK_SYS_LINK_EVENT_01,
+    WK_SYS_LINK_EVENT_02,	
+    WK_SYS_LINK_EVENT_03,	
+    WK_SYS_LINK_EVENT_04,	
+    WK_SYS_LINK_EVENT_05,	
+    WK_SYS_LINK_EVENT_06,	
+    WK_SYS_LINK_EVENT_07,	
+    WK_SYS_LINK_EVENT_08,	
+  };
+  EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
+
+  // イベント実行数を数える
+  for( i = 0; i < NELEMS(flag_tbl); i ++ )
+  {
+    if( (*EVENTWORK_GetEventWorkAdrs( p_event_wk, flag_tbl[i] )) == 1 )
     {
-      sum ++;
+      check_cnt++;
     }
   }
-  return cmp_target( sum , target_cnt );
+
+  ONOUE_Printf("リンクイベント実行数:%d/%u\n",check_cnt,target_cnt);
+  return cmp_target( check_cnt , target_cnt );
 }
 
 //----------------------------------------------------------------------------
