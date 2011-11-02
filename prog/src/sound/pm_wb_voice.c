@@ -70,9 +70,12 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
               u32* waveIdx )    // [out]波形IDX
 {
   static const PMVOICE_FORM_PARAM DATA_PMVoiceFormTbl[] = {
-    { MONSNO_SHEIMI,  FORMNO_SHEIMI_SKY, WAVE_ARC_PV492_SKY }, //シェイミスカイフォルム
-    { MONSNO_KYUREMU, FORMNO_KYUREMU_WHITE, WAVE_ARC_PV653_WHITE }, //キュレム　レシラム合体フォルム
-    { MONSNO_KYUREMU, FORMNO_KYUREMU_BLACK, WAVE_ARC_PV653_BLACK }, //キュレム　ゼクロム合体フォルム
+    { MONSNO_SHEIMI,     FORMNO_SHEIMI_SKY,    WAVE_ARC_PV492_SKY   }, // シェイミスカイフォルム
+    { MONSNO_KYUREMU,    FORMNO_KYUREMU_WHITE, WAVE_ARC_PV653_WHITE }, // キュレム レシラム合体フォルム
+    { MONSNO_KYUREMU,    FORMNO_KYUREMU_BLACK, WAVE_ARC_PV653_BLACK }, // キュレム ゼクロム合体フォルム
+    { MONSNO_TORUNEROSU, FORMNO_TORUNEROSU_AR, WAVE_ARC_PV648_REIJU }, // トルネロス 霊獣フォルム
+    { MONSNO_BORUTOROSU, FORMNO_BORUTOROSU_AR, WAVE_ARC_PV649_REIJU }, // ボルトロス 霊獣フォルム
+    { MONSNO_RANDOROSU,  FORMNO_RANDOROSU_AR,  WAVE_ARC_PV652_REIJU }, // ランドロス 霊獣フォルム
   };
   int i;
 
