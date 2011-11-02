@@ -11,7 +11,7 @@
 #ifndef ZONE_R06_EVC_H
 #define ZONE_R06_EVC_H
 
-#define TR_SCIENTISTM_13                   0
+#define TR_BREEDERW_06                     0
 #define TR_PARASOL_09                      1
 #define TR_SCHOOLG_10                      2
 #define TR_SCIENTISTM_14                   3
