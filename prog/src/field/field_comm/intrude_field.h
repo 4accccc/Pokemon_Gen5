@@ -30,6 +30,11 @@ enum{
   PALACE_MAP_TREE_Y = 32 << FX32_SHIFT,
   PALACE_MAP_TREE_Z = 504 << FX32_SHIFT,
 
+  PALACE_MAP_BRIDGE_X = 504 << FX32_SHIFT,       ///<パレスの橋 配置座標
+  PALACE_MAP_BRIDGE_01_Z = 552 << FX32_SHIFT,
+  PALACE_MAP_BRIDGE_02_Z = 568 << FX32_SHIFT,
+  PALACE_MAP_BRIDGE_OUT_Z = 584 << FX32_SHIFT,   // パレスの橋の外
+
   //swanで整理
   PALACE_MAP_FIRST_X = PALACE_MAP_LEN/2 - 1*FX32_ONE, ///<ハイリンクに移動したときの初期X位置
   PALACE_MAP_FIRST_Y = 32*FX32_ONE,                   ///<ハイリンクに移動したときの初期Y位置

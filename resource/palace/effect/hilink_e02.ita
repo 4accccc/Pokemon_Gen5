@@ -3,9 +3,9 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-05T23:07:43" source="p_bar_003.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-31T16:38:55" source="hilink_e01.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
@@ -32,14 +32,14 @@
 </tex_rotate_data>
 
 <tex_translate_data size="31">
-	0.000000 0.000000 0.042236 0.085693 0.130127 0.175537 0.221436 0.267822 0.314453 0.361328
-	0.408447 0.455078 0.501465 0.547363 0.592773 0.637207 0.680664 0.722900 0.763916 0.803223
-	0.841309 0.877197 0.911377 0.943115 0.972900 1.000000 0.998535 0.954590 0.886475 0.812256
-	0.750000
+	0.000000 -0.500000 -0.465576 -0.431152 -0.396484 -0.362061 -0.327637 -0.293213 -0.258545 -0.224121
+	-0.189697 -0.155273 -0.120605 -0.086182 -0.051758 -0.017334 0.017334 0.051758 0.086182 0.120605
+	0.155273 0.189697 0.224121 0.258545 0.293213 0.327637 0.362061 0.396484 0.431152 0.465576
+	0.500000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
-	<tex_srt_anm index="0" material_name="lambert2">
+	<tex_srt_anm index="0" material_name="out25_hamon3">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>

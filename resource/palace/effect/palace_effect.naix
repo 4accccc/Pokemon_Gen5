@@ -11,15 +11,15 @@
 #define NARC_PALACE_EFFECT_NAIX_
 
 enum {
-	NARC_palace_effect_block_nsbma = 0,
-	NARC_palace_effect_block_nsbmd = 1,
-	NARC_palace_effect_block_nsbta = 2,
-	NARC_palace_effect_p_barrier_nsbca = 3,
-	NARC_palace_effect_p_barrier_nsbma = 4,
-	NARC_palace_effect_p_barrier_nsbmd = 5,
-	NARC_palace_effect_p_barrier_nsbta = 6,
-	NARC_palace_effect_warp01_nsbmd = 7,
-	NARC_palace_effect_warp01_nsbta = 8
+	NARC_palace_effect_hilink_e01_nsbma = 0,
+	NARC_palace_effect_hilink_e01_nsbmd = 1,
+	NARC_palace_effect_hilink_e01_nsbta = 2,
+	NARC_palace_effect_hilink_e02_nsbmd = 3,
+	NARC_palace_effect_hilink_e02_nsbta = 4,
+	NARC_palace_effect_hilink_e03_nsbmd = 5,
+	NARC_palace_effect_hilink_e03_nsbta = 6,
+	NARC_palace_effect_hilink_e03_s_nsbca = 7,
+	NARC_palace_effect_hilink_e03_s_nsbma = 8
 };
 
 /* NARC_PALACE_EFFECT_NAIX_ */

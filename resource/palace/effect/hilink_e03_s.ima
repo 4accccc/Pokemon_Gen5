@@ -3,9 +3,9 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-09T19:08:32" source="block_004.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-10-31T16:42:19" source="hilink_e03_a.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
@@ -15,31 +15,31 @@
 	tool_start_frame="1"
 	tool_end_frame="20"
 	interpolation="frame"
-	compress_material="on" material_size="1 1"
+	compress_material="on" material_size="3 3"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
 <mat_color_data size="23">
-	25 0 31 0 31 0 31 31 31 0
-	31 0 0 0 0 31 0 0 0 0
-	0 0 0
+	25 31 0 0 2 3 5 7 8 10
+	11 13 15 16 18 20 21 23 24 26
+	28 29 31
 </mat_color_data>
 
 <mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="lambert3">
+	<mat_color_anm index="0" material_name="out25_hamon5">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
 		<ambient_r frame_step="1" data_size="1" data_head="1"/>
 		<ambient_g frame_step="1" data_size="1" data_head="1"/>
 		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="1"/>
-		<specular_g frame_step="1" data_size="1" data_head="1"/>
-		<specular_b frame_step="1" data_size="1" data_head="1"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="20" data_head="3"/>
 	</mat_color_anm>
 </mat_color_anm_array>
