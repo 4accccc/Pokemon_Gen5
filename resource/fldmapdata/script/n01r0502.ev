@@ -291,16 +291,18 @@ ev_n02r0502_boss_stone:
       _VOICE_PLAY( MONSNO_651, 0 )
       _AB_KEYWAIT_MARK()
       _GIZAPLAINWIN_CLOSE()
+      //トレーナー戦
+      _TRAINER_BTL_SET( TRID_BOSS_01, 0 )
     //ホワイト：ンバーニガガ！
     ELSE
       _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_02, POS_DOWN )
       _VOICE_PLAY( MONSNO_650, 0 )
       _AB_KEYWAIT_MARK()
       _GIZAPLAINWIN_CLOSE()
+      //トレーナー戦
+      _TRAINER_BTL_SET( TRID_BOSS_01, 0 )
     ENDIF
     
-    //【仮】トレーナー戦（トレーナーラベルが仮）
-    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
     //結果チェック
     _CALL ev_battle_check
     
