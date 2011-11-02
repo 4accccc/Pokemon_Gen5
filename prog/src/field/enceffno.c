@@ -199,7 +199,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
     SEQ_BGM_VS_HUE,       ///<TRTYPE_GRP_RIVAL ライバル
     SEQ_BGM_VS_TRAINER,   ///<TRTYPE_GRP_TRAINER_SWBOSS ポケモントレーナーのアクロマ
     SEQ_BGM_VS_ACHROMA,   ///<TRTYPE_GRP_PLASMA_SWBOSS プラズマ団のアクロマ
-    SEQ_BGM_VS_N_2,       ///<TRTYPE_GRP_N ポケモントレーナーのN
+    SEQ_BGM_VS_SWAN_N,    ///<TRTYPE_GRP_N ポケモントレーナーのN
     SEQ_BGM_VS_NEO_PLASMA,///<TRTYPE_GRP_PLASMA プラズマ団(ネオ)
     SEQ_BGM_VS_IRIS,      ///<TRTYPE_GRP_CHAMPION チャンピオン
     SEQ_BGM_VS_NEW_G_CIS, ///<TRTYPE_GRP_SAGE ゲーチス
