@@ -1346,6 +1346,12 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
  */
 static BOOL panel_IsMedalDisable( PANEL_WORK* pp )
 {
+#if 0
+  if( pp->medal_num == PANEL_MEDAL_NONE ){
+    return TRUE;
+  }
+  return FALSE;
+#endif
   if( pp->medal_num == PANEL_MEDAL_NONE ||
       pp->medal_num == 0 ||
       pp->push_medal == MDLID_MAX ){
