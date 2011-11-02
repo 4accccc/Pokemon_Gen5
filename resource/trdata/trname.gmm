@@ -2291,8 +2291,8 @@
 	</row>
 
 	<row id="backpackerw_17">
-		<language name="JPN" width="216">コハル</language>
-		<language name="JPN_KANJI" width="216">コハル</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitem_26">
@@ -4256,23 +4256,23 @@
 	</row>
 
 	<row id="basket_13">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">マック</language>
+		<language name="JPN_KANJI" width="216">マック</language>
 	</row>
 
 	<row id="tennis_13">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">エリザベス</language>
+		<language name="JPN_KANJI" width="216">エリザベス</language>
 	</row>
 
 	<row id="tennis_14">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ビクトリア</language>
+		<language name="JPN_KANJI" width="216">ビクトリア</language>
 	</row>
 
 	<row id="basket_14">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ビフ</language>
+		<language name="JPN_KANJI" width="216">ビフ</language>
 	</row>
 
 	<row id="mount_32">
@@ -4398,6 +4398,11 @@
 	<row id="swplazmaw_12">
 		<language name="JPN" width="216">したっぱ</language>
 		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="breederw_06">
+		<language name="JPN" width="216">コハル</language>
+		<language name="JPN_KANJI" width="216">コハル</language>
 	</row>
 
 	<flowchart-group-list>

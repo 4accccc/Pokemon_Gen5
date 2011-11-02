@@ -10,4 +10,5 @@ static const u16 breeder_id_list[] = {
 	TRID_BREEDERM_05,
 	TRID_BREEDERW_05,
 	TRID_BREEDERM_06,
+	TRID_BREEDERW_06,
 };

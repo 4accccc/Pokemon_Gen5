@@ -801,7 +801,8 @@
 #define	TRID_SCHOOLB_18   ( 788 ) 
 #define	TRID_SCHOOLG_16   ( 789 ) 
 #define	TRID_SWPLAZMAW_12   ( 790 ) 
-#define TRID_MAX  ( 791 )
+#define	TRID_BREEDERW_06   ( 791 ) 
+#define TRID_MAX  ( 792 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
