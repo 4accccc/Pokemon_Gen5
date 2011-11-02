@@ -126,6 +126,9 @@ EVENT_START	ev_pos_n01r0502_boss_01
   //動作モデルワープ
   _OBJ_POS_CHANGE(N01R0502_BOSS_01,16,0,48,DIR_UP)
   
+  //ライバル曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_N_SWAN )
+  
   //メッセージ：そこのトレーナー！
   _PLAINWIN_MSG_DOWN( msg_n01r0502_boss_01 )
   _MSGWIN_CLOSE()
@@ -219,6 +222,9 @@ EVENT_START	ev_pos_n01r0502_boss_01
   
   //CALL：ストーン入手用会話処理へジャンプ
   _CALL ev_n02r0502_boss_stone
+  
+  //イベント曲停止
+	_END_EVENT_BGM()
   
   
 EVENT_END
