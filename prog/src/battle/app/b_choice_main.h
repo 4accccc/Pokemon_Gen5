@@ -68,6 +68,7 @@ typedef struct {
 	s16					Timer[BC_TIMER_MAX];	///< タイマ
 	//
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
+  u16         blend_rate;   ///< 半透明設定用のワーク
 } BCHOICE_WORK;
 
 typedef int (*pBChoiceFunc)(BCHOICE_WORK*);

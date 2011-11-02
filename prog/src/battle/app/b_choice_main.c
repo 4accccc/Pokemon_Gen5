@@ -567,6 +567,7 @@ static BOOL battle_choice_end( GFL_TCB * tcb, BCHOICE_WORK * wk )
 	return TRUE;
 }
 
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief	シーケンスmain
@@ -621,6 +622,8 @@ static void bc_main_seq( BCHOICE_WORK * wk )
 			bflg = bc_is_endfade( wk );
 			if(bflg == FALSE){
 				wk->Step = STEP_END;
+        G2S_BlendNone();
+        GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 			}
 			break;
 		//
@@ -631,6 +634,7 @@ static void bc_main_seq( BCHOICE_WORK * wk )
 		default:
 			break;
 	}
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1621,6 +1625,7 @@ static void bc_init_screen_anime( BCHOICE_WORK *wk )
 //-----------------------------------------------------------------------------
 static void bc_main_screen_anime( BCHOICE_WORK *wk )
 {
+
 	// 終了判定
 	if(!(wk->Flag & FLG_SET_ANIME)){
 		return;
@@ -1642,6 +1647,49 @@ static void bc_main_screen_anime( BCHOICE_WORK *wk )
 			wk->Timer[BC_ANIM_TIMER] = 0;
 		}
 	}
+
+//  if(GFL_UI_KEY_GetRepeat()&PAD_KEY_UP){
+//    if(debug_blend_rate<30){
+//      debug_blend_rate++;
+//    }
+//  }else if(GFL_UI_KEY_GetRepeat()&PAD_KEY_DOWN){
+//    if(debug_blend_rate>0){
+//      debug_blend_rate--;
+//    }
+//  }
+
+  {
+    const GFL_UI_TP_HITTBL *tbl = bc_rect_tbl[wk->Mode];
+
+    if(wk->blend_rate<16){
+      wk->blend_rate+=1;
+    }
+
+    // 半透明設定
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2,
+                       GX_BLEND_PLANEMASK_BG0|
+                       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+                       16-wk->blend_rate, 15+wk->blend_rate );
+  
+  
+    // 上画面の上下をマスクする
+    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+                           GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
+                           GX_WND_PLANEMASK_OBJ, FALSE );
+    if(wk->blend_rate>10){
+      G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 |
+                             GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
+                             GX_WND_PLANEMASK_OBJ, TRUE );
+    }else{
+      G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+                             GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
+                             GX_WND_PLANEMASK_OBJ, TRUE );
+    }
+    GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+    G2S_SetWnd0Position( 0, tbl[wk->Result].rect.top, 255, tbl[wk->Result].rect.bottom);
+  }
+  OS_Printf("blend_rate=%d, cursor=%d, result=%d\n", wk->blend_rate, wk->Cursor, wk->Result);
+
 }
 
 //-----------------------------------------------------------------------------
