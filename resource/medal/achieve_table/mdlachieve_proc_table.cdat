@@ -98,7 +98,6 @@ MDLACHIEVEPROC sc_achieve_proc[] = {
   NULL,
   NULL,
   MDLREC_CHECK_DataConvertFlgCheck, // MDLRECID_DATACONVERT
-  NULL,
   MDLREC_CHECK_AmusementMedalCnt, // MDLRECID_APLMDL_GET
   NULL,
   NULL,
