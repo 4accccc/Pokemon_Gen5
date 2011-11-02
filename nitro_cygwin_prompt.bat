@@ -9,11 +9,15 @@ SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
 SET PROJECT_ARCDIR=%PROJECT_ROOT%prog/arc/
 
-SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\
-SET CWFOLDER_TWL=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\
+SET PROGRAM_FILES=C:\Program Files
+IF %PROCESSOR_ARCHITECTURE%==AMD64 SET PROGRAM_FILES=C:\x86Programs
+
+SET CWFolder_NITRO=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\
+SET CWFOLDER_TWL=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET CW_TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
-SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DSi V1.2\license.dat
+SET LM_LICENSE_FILE=%PROGRAM_FILES%\Freescale\CW for NINTENDO DSi V1.2\license.dat
+
 SET NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
 SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
@@ -30,11 +34,6 @@ REM ƒnƒCƒuƒŠƒbƒh‚Å‚È‚¢ê‡‰º‹L‚Ì•”•ª‚ð—LŒø‚É‚µ‚Ä‚­‚¾‚³‚¢ ƒnƒCƒuƒŠƒbƒh‚ÌŽž‚Í–³Œø‚
 REM ####################################################
 SET TWLSDK_PLATFORM=NITRO
 SET TARGET_PLATFORM=NITRO
-
-REM ####################################################
-REM SDƒJ[ƒh‚ÉƒfƒoƒbƒOƒƒO‚ðo—Í‚·‚é‹@”\‚ðON‚É‚µ‚Ü‚·BƒnƒCƒuƒŠƒbƒh‚ÅDSi‚Ì‚Ý“®‚«‚Ü‚·
-REM ####################################################
-REM SET PM_DEBUG_SD_PRINT=yes
 
 SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
