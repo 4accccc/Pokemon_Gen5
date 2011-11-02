@@ -126,10 +126,10 @@ EVENT_START	ev_pos_n01r0502_boss_01
   //動作モデルワープ
   _OBJ_POS_CHANGE(N01R0502_BOSS_01,16,0,48,DIR_UP)
   
-  //ライバル曲再生
+  //N曲再生
   _START_EVENT_BGM( SEQ_BGM_E_N_SWAN )
   
-  //メッセージ：そこのトレーナー！
+  //メッセージ：そこだ！
   _PLAINWIN_MSG_DOWN( msg_n01r0502_boss_01 )
   _MSGWIN_CLOSE()
   
@@ -223,9 +223,6 @@ EVENT_START	ev_pos_n01r0502_boss_01
   //CALL：ストーン入手用会話処理へジャンプ
   _CALL ev_n02r0502_boss_stone
   
-  //イベント曲停止
-	_END_EVENT_BGM()
-  
   
 EVENT_END
 
@@ -243,6 +240,10 @@ EVENT_START	ev_n01r0502_boss_02
       
   //ダークストーン・ライトストーン入手イベント
   ELSE
+    
+    //N曲再生
+    _START_EVENT_BGM( SEQ_BGM_E_N_SWAN )
+    
     //CALL：戦闘前会話処理へジャンプ
     _CALL ev_n02r0502_boss_stone
   ENDIF
@@ -283,7 +284,7 @@ ev_n02r0502_boss_stone:
   
   _YES_NO_WIN( SCWK_ANSWER )
   //はい
-  IF $LCWK_ANSWER == SCR_YES THEN
+  IF $SCWK_ANSWER == SCR_YES THEN
     //みせてほしい！
     _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_08, N01R0502_BOSS_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
@@ -318,8 +319,12 @@ ev_n02r0502_boss_stone:
   //いいえ
   ELSE
     //いつまでも　待つ！
-    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_09, PAIR_TRAINER_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_09, N01R0502_BOSS_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    
+    //イベント曲停止
+    _END_EVENT_BGM()
   ENDIF
   
 
@@ -396,6 +401,9 @@ ev_n02r0502_boss_vs_end:
   //Ｎ：そのストーンを持って
   _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17b , msg_n01r0502_boss_17w , N01R0502_BOSS_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
+  
+  //イベント曲停止
+	_END_EVENT_BGM()
   
   //==================================//
   //n01r0502 全てのイベント終了

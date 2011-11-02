@@ -49,12 +49,14 @@ DEFINE_LOCAL  LCW_POSZ
 /*  ZONE_CHANGE                                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_t06
+
   //イベント進行でアデクの配置を分岐
   IF $WK_SCENE_T06 == 1 THEN
-    _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_UP , 113, 2, 669 )
+    _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_DOWN , 113, 2, 669 )
   ELSIF $WK_SCENE_T06 == 2 || $WK_SCENE_T06 == 3 THEN
     _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_RIGHT , 111, 2, 669 )
   ENDIF
+  
 INIT_EVENT_END
 
 
@@ -62,12 +64,7 @@ INIT_EVENT_END
 /*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START   ev_init_t06
-  //イベント進行でアデクの配置を分岐
-  IF $WK_SCENE_T06 == 1 THEN
-    _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_UP , 113, 2, 669 )
-  ELSIF $WK_SCENE_T06 == 2 || $WK_SCENE_T06 == 3 THEN
-    _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_RIGHT , 111, 2, 669 )
-  ENDIF
+//
 INIT_EVENT_END
 
 
