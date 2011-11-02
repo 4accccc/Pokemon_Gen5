@@ -430,7 +430,8 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     }
     else
 #endif
-    if( work->cardType == CARD_TYPE_INVALID )
+    if( work->cardType == CARD_TYPE_INVALID
+        || work->cardType == CARD_TYPE_WB )
     {
       //ROMˆá‚¤I
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_02 , work->initData->msgSpeed );

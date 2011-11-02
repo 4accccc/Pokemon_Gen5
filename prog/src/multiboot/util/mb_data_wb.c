@@ -19,6 +19,7 @@
 #include "poke_tool/poke_tool.h"
 #include "multiboot/mb_data_main.h"
 #include "mb_data_wb.h"
+#include "multiboot/wb_save.h"
 
 
 //=============================================================================
@@ -40,7 +41,10 @@
 //=============================================================================
 #ifdef PM_DEBUG
 static u32 debug_seq = 0;
+//#define DEBUG_SCREEN_DRAW
 #endif
+
+static void MB_DATA_DEBUG_ScreenDraw( const u8 idx );
 
 BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
 {
@@ -58,6 +62,7 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
   switch( dataWork->subSeq )
   {
   case SEQ_INIT: //初期化およびデータ読み込み
+    MB_DATA_DEBUG_ScreenDraw( 96 + 0 );
     WB_SAVE_Init();
     {
 #if DLPLAY_FUNC_USE_PRINT
@@ -65,6 +70,7 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
     sprintf(str,"Start load data. size:[%d]", saveSize );
     //DLPlayFunc_PutString(str,dataWork->msgSys );
 #endif
+    MB_DATA_DEBUG_ScreenDraw( 96 + 2 );
     {
       s32 lockID = OS_GetLockID();
       GF_ASSERT_HEAVY( lockID != OS_LOCK_ID_ERROR );
@@ -73,13 +79,17 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
       CARD_UnlockRom( (u16)lockID );
       OS_ReleaseLockID( (u16)lockID );
     }
+    MB_DATA_DEBUG_ScreenDraw( 96 + 4 );
     dataWork->pData    = GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
+    MB_DATA_DEBUG_ScreenDraw( 96 + 6 );
     dataWork->pDataMirror= GFL_HEAP_AllocClearMemory(  dataWork->heapId, saveSize );
   
+    MB_DATA_DEBUG_ScreenDraw( 96 + 8 );
     dataWork->lockID_ = OS_GetLockID();
     GF_ASSERT_HEAVY( dataWork->lockID_ != OS_LOCK_ID_ERROR );
     //WBは4Mbitフラッシュ
     CARD_LockBackup( (u16)dataWork->lockID_ );
+    MB_DATA_DEBUG_ScreenDraw( 96 + 10 );
 #if PM_DEBUG
     if( dataWork->isDummyCard == TRUE )
     {
@@ -106,7 +116,9 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
         CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
       }
     }
+    MB_DATA_DEBUG_ScreenDraw( 96 + 12 );
     CARD_ReadFlashAsync( 0x0000 , dataWork->pData , saveSize , NULL , NULL );
+    MB_DATA_DEBUG_ScreenDraw( 96 + 14 );
     dataWork->subSeq++;
     }
     break;
@@ -331,4 +343,12 @@ void * MB_DATA_WB_GetSaveAddress( MB_DATA_WORK *dataWork, const u16 id )
     GF_ASSERT_HEAVY(0); 
     return NULL;
   }
+}
+
+static void MB_DATA_DEBUG_ScreenDraw( const u8 idx )
+{
+#ifdef DEBUG_SCREEN_DRAW
+  u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
+  scrBuf[idx] = 0;
+#endif
 }

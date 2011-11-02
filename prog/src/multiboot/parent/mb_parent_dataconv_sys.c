@@ -525,7 +525,11 @@ static MBGameRegistry * Mp_Parent_MBGameRegistry_Create( const STRBUF *cp_title_
   int i;
   MBGameRegistry *p_registry = GFL_HEAP_AllocMemory( heapID, sizeof(MBGameRegistry) );
 
+#ifdef PM_DEBUG
   p_registry->romFilePathp = "/dl_rom/child2.srl";
+#else
+  p_registry->romFilePathp = "/dl_rom/child2_r.srl";
+#endif
   p_registry->gameNamep = GFL_HEAP_AllocClearMemory( heapID, MB_GAME_NAME_LENGTH*2 );
   {
     u16 title_len = GFL_STR_GetBufferLength( cp_title_str );

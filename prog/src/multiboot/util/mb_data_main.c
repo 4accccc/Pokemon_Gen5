@@ -25,7 +25,9 @@
 //======================================================================
 //  define
 //======================================================================
-
+#ifdef PM_DEBUG
+//#define DEBUG_SCREEN_DRAW
+#endif
 //======================================================================
 //  enum
 //======================================================================
@@ -134,7 +136,15 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   #endif
     }
   }
-  if( dataWork->cardType != CARD_TYPE_INVALID && dataWork->cardType != CARD_TYPE_WB )
+
+  //WBはROM内アクセスをしないが、フラッシュのみアクセスするので
+  //アクセス解除のみ
+  if( dataWork->cardType == CARD_TYPE_WB )
+  {
+    // ROMアクセスを解除する。
+    CARD_Enable(TRUE);
+  }
+  else if( dataWork->cardType != CARD_TYPE_INVALID )
   {
     MB_DATA_InitCardSystem( dataWork );
   }
@@ -176,7 +186,7 @@ void  MB_DATA_ResetSaveLoad( MB_DATA_WORK *dataWork )
 BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork )
 {
   //自前で読み込む・・・
-  MB_DATA_DEBUG_ScreenDraw( 64+dataWork->subSeq );
+  //MB_DATA_DEBUG_ScreenDraw( 64+dataWork->subSeq );
   switch( dataWork->cardType )
   {
   case CARD_TYPE_DP:
@@ -683,7 +693,7 @@ static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork )
 
 static void MB_DATA_DEBUG_ScreenDraw( const u8 idx )
 {
-#if PM_DEBUG&0
+#ifdef DEBUG_SCREEN_DRAW
   u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
   scrBuf[idx] = 0;
 #endif

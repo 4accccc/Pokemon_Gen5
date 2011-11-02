@@ -38,7 +38,7 @@
 
 #define DEBUG_MB_IDENTIFY_DUMMYCARD //ダミーカードを認識する
 //#define DEBUG_MB_ERROR_KEYINPUT     //デバッグ操作でエラーをだす
-
+//#define DEBUG_SCREEN_DRAW
 #endif
 
 //=============================================================================
@@ -131,6 +131,7 @@ static void Mb_DataConv_Bg_Main( MB_DATA_CONVERT_WORK *p_wk );
 //=====================================
 static BOOL Mb_DataConv_Err_Check( void );
 
+static void MB_DATA_DEBUG_ScreenDraw( const u8 idx );
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -421,6 +422,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_COMM_WAIT:
     if( MB_COMM_IsInitComm(p_wk->p_comm) )
     {
+      //MB_DATA_DEBUG_ScreenDraw( 32*2 );
       GF_ASSERT_MSG_HEAVY( MB_IsMultiBootChild(),"This DS is not multiboot child!!\n");
       GFL_NET_ReloadIconTopOrBottom(TRUE, p_wk->heapID );
 
@@ -455,6 +457,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     break;
 
   case SEQ_CHECK_ROM:
+    //MB_DATA_DEBUG_ScreenDraw( 32*2 );
     p_wk->p_data = MB_DATA_InitSystem( p_wk->heapID );
     p_wk->card_type = MB_DATA_GetCardType( p_wk->p_data );
 
@@ -472,13 +475,18 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       MB_DATA_SetCardType( p_wk->p_data, CARD_TYPE_WB );
       OS_TPrintf( "ダミーカードなのでWBとして認識させるよ\n" );
       (*p_seq)++;
+      MB_DATA_DEBUG_ScreenDraw( 32*2+1*2 );
     }
     else
 #endif
-    if( p_wk->card_type == CARD_TYPE_INVALID )
+    if( p_wk->card_type == CARD_TYPE_WB )
+    {
+      MB_DATA_DEBUG_ScreenDraw( 32*2+2*2 );
+      (*p_seq)++;
+    }
+    else
     {
       //ROM違う！
-
       MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_02 , p_wk->p_comm_init->msgSpeed );
 
       MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
@@ -486,12 +494,9 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       OS_TPrintf( "ROM違う\n" );
       (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
-    else
-    {
-      (*p_seq)++;
-    }
     break;
   case SEQ_LOAD_DATA:
+    MB_DATA_DEBUG_ScreenDraw( 32*2+3*2 );
     if( MB_DATA_LoadDataFirst( p_wk->p_data ) == TRUE )
     {
 #ifdef DEBUG_MB_ERROR_KEYINPUT
@@ -520,6 +525,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     break;
   case SEQ_LOAD_ERR:
     {
+      //MB_DATA_DEBUG_ScreenDraw( 32*2+4*2 );
       switch( MB_DATA_GetErrorState( p_wk->p_data ) )
       {
       case DES_MISS_LOAD_BACKUP:
@@ -716,4 +722,13 @@ static BOOL Mb_DataConv_Err_Check( void )
     return TRUE;
   }
   return FALSE;
+}
+
+
+static void MB_DATA_DEBUG_ScreenDraw( const u8 idx )
+{
+#ifdef DEBUG_SCREEN_DRAW
+  u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
+  scrBuf[idx] = 0;
+#endif
 }
