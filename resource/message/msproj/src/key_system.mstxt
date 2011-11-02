@@ -136,10 +136,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんいど</Text>
+			<Text>モードへんこう</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:44:13" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -147,10 +147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>難易度</Text>
+			<Text>モード変更</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:44:17" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -214,10 +214,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんたん</Text>
+			<Text>アシストモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:45:12" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -225,10 +225,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんたん</Text>
+			<Text>アシストモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:21:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:22:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -240,10 +240,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつう</Text>
+			<Text>ノーマルモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:45:23" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -251,10 +251,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふつう</Text>
+			<Text>ノーマルモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:21:07" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -266,10 +266,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むずかしい</Text>
+			<Text>チャレンジモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:45:33" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:25:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -277,10 +277,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むずかしい</Text>
+			<Text>チャレンジモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:21:14" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:25:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -370,10 +370,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのかんたんキー</Text>
+			<Text>アシストキー</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:24:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -381,10 +381,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのかんたんキー</Text>
+			<Text>アシストキー</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:24:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -396,10 +396,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのむずかしいキー</Text>
+			<Text>チャレンジキー</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:25:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -407,10 +407,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのむずかしいキー</Text>
+			<Text>チャレンジキー</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:25:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -422,10 +422,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティキー</Text>
+			<Text>まてんろうのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T06:26:17" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -433,10 +433,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティキー</Text>
+			<Text>まてんろうのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T06:26:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -448,10 +448,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストキー</Text>
+			<Text>じゅどうのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:25:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -459,10 +459,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキー</Text>
+			<Text>じゅどうのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:25:10" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -474,12 +474,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラック　か
-ポケットモンスター　ホワイト　と▽
+			<Text>ポケットモンスター　ブラック２　か
+ポケットモンスター　ホワイト２　と▽
 キーの　そうじゅしんが　できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:16:11" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -487,12 +487,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラック　か
-ポケットモンスター　ホワイト　と▽
+			<Text>ポケットモンスター　ブラック２　か
+ポケットモンスター　ホワイト２　と▽
 キーの　送受信が　できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:16:17" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:45:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -595,11 +595,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんいどを　かえることが　できます
-げんざいの　なんいどは　かんたん</Text>
+			<Text>モードを　かえることが　できます
+ただいま　アシストモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:52:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -607,11 +607,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>難易度を　変えることが　できます
-現在の　難易度は　かんたん</Text>
+			<Text>モードを　変えることが　できます
+ただいま アシストモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:18:04" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -623,11 +623,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんいどを　かえることが　できます
-げんざいの　なんいどは　ふつう</Text>
+			<Text>モードを　かえることが　できます
+ただいま　ノーマルモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:53:14" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:28:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -635,11 +635,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>難易度を　変えることが　できます
-現在の　難易度は　ふつう</Text>
+			<Text>モードを　変えることが　できます
+ただいま　ノーマルモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:17:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:28:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -651,11 +651,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんいどを　かえることが　できます
-げんざいの　なんいどは　むずかしい</Text>
+			<Text>モードを　かえることが　できます
+ただいま　チャレンジモード</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:53:22" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -663,11 +663,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>難易度を　変えることが　できます
-現在の　難易度は　むずかしい</Text>
+			<Text>モードを　変えることが　できます
+ただいま　チャレンジモード</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:17:26" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -846,10 +846,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-しろのかんたんキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:26" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -858,10 +858,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-しろのかんたんキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:20" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -874,10 +874,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-くろのむずかしいキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:32" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -886,10 +886,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-くろのむずかしいキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:38" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -902,10 +902,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-ホワイトフォレストキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:51:42" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -914,10 +914,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-ホワイトフォレストキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:51:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:30:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -930,10 +930,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-ブラックシティキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:51:52" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -942,10 +942,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-ブラックシティキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:51:54" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -958,10 +958,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-くろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:41" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:31:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -970,10 +970,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-くろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:43" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -986,10 +986,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　に
-しろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -998,10 +998,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　に
-しろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:53" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:32:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1014,10 +1014,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-しろのかんたんキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:25:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:32:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1026,10 +1026,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-しろのかんたんキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:03:53" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1042,10 +1042,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-くろのむずかしいキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:26:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1054,10 +1054,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-くろのむずかしいキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:03:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1070,10 +1070,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-ホワイトフォレストキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:52:09" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1082,10 +1082,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-ホワイトフォレストキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:03:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1098,10 +1098,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-ブラックシティキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-27T05:52:16" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1110,10 +1110,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-ブラックシティキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:04:01" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1126,10 +1126,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-くろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:12" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1138,10 +1138,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-くろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:18" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1154,10 +1154,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　に
-しろのドアキーを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:26" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1166,10 +1166,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-しろのドアキーを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:46:29" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1208,10 +1208,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-しろのかんたんキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:22:43" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1220,10 +1220,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-しろのかんたんキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:22:36" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1236,10 +1236,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-くろのむずかしいキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:22:49" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1248,10 +1248,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-くろのむずかしいキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:22:54" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1264,10 +1264,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-ホワイトフォレストキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:04" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1276,10 +1276,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-ホワイトフォレストキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:28" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1292,10 +1292,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-ブラックシティキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:01" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1304,10 +1304,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-ブラックシティキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:32" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1320,10 +1320,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-くろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:43:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1332,10 +1332,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-くろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:43:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1348,10 +1348,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　から
-しろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:43:10" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1360,10 +1360,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　から
-しろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:43:12" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1376,10 +1376,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-しろのかんたんキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:23:04" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1388,10 +1388,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-しろのかんたんキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+アシストキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:23:11" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1404,10 +1404,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-くろのむずかしいキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:25:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1416,10 +1416,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-くろのむずかしいキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:25:30" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1432,10 +1432,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-ホワイトフォレストキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:12:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1444,10 +1444,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-ホワイトフォレストキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+じゅどうのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:42" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1460,10 +1460,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-ブラックシティキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:12:42" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1472,10 +1472,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-ブラックシティキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+まてんろうのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T06:13:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1488,10 +1488,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-くろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:45:13" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1500,10 +1500,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-くろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+くろがねのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:45:16" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1516,10 +1516,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいて　から
-しろのドアキーを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　うけとった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:45:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1528,10 +1528,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手　から
-しろのドアキーを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　受け取った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:45:25" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:39:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1683,11 +1683,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのかんたんキーを　もらわないと
+			<Text>アシストキーを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:17:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1695,11 +1695,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのかんたんキーを　もらわないと
+			<Text>アシストキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:04:23" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1711,11 +1711,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのむずかしいキーを　もらわないと
+			<Text>チャレンジキーを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:17:51" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1723,11 +1723,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのむずかしいキーを　もらわないと
+			<Text>チャレンジキーを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:04:30" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1739,11 +1739,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストキーを　もらわないと
+			<Text>じゅどうのカギを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:17:53" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1751,11 +1751,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキーを　もらわないと
+			<Text>じゅどうのカギを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:04:33" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1767,11 +1767,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティキーを　もらわないと
+			<Text>まてんろうのカギを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:17:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1779,11 +1779,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティキーを　もらわないと
+			<Text>まてんろうのカギを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:04:36" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2018,12 +2018,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラック２か
-ポケットモンスター　ホワイト２と▽
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトと▽
 つうしんして　レポートを　うけつぎます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:18:28" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2031,12 +2031,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラック２か
-ポケットモンスター　ホワイト２と▽
+			<Text>ポケットモンスター　ブラックか
+ポケットモンスター　ホワイトと▽
 通信して　レポートを　受け継ぎます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:18:31" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2083,10 +2083,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート</Text>
+			<Text>おもいでリンク</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:31:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2094,10 +2094,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート</Text>
+			<Text>おもいでリンク</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:31:49" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2332,13 +2332,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのかんたんキー　で
+			<Text>アシストキー　で
 ロックを　かいじょ　しました▼
-なんいど「かんたん」が　せんたく
-できるように　なりました▼</Text>
+モードへんこう「アシストモード」が
+せんたく　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:44:44" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2346,13 +2346,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのかんたんキー　で
+			<Text>アシストキー　で
 ロックを　解除　しました▼
-難易度「かんたん」が　選択
-できるように　なりました▼</Text>
+モード変更「アシストモード」が
+選択　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:46:05" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:46:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2364,13 +2364,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのむずかしいキー　で
+			<Text>チャレンジキー　で
 ロックを　かいじょ　しました▼
-なんいど「むずかしい」が　せんたく
-できるように　なりました▼</Text>
+モードへんこう「チャレンジモード」が
+せんたく　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:44:53" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:46:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2378,13 +2378,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのむずかしいキー　で
+			<Text>チャレンジキー　で
 ロックを　解除　しました▼
-難易度「むずかしい」が　選択
-できるように　なりました▼</Text>
+モード変更「チャレンジモード」が
+選択　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:46:29" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2396,13 +2396,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストキー　で
+			<Text>じゅどうのカギ　で
 ロックを　かいじょ　しました▼
-まちのへんこう「ホワイトフォレスト」が　せんたく
-できるように　なりました▼</Text>
+まちのへんこう「ホワイトフォレスト」が
+せんたくできるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:44:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2410,13 +2410,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキー　で
+			<Text>じゅどうのカギ　で
 ロックを　解除　しました▼
 街の変更「ホワイトフォレスト」が　選択
 できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:46:44" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:49:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2428,13 +2428,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティキー　で
+			<Text>まてんろうのカギ　で
 ロックを　かいじょ　しました▼
-まちのへんこう「ブラックシティ」が　せんたく
-できるように　なりました▼</Text>
+まちのへんこう「ブラックシティ」が
+せんたく　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:45:04" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:49:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2442,13 +2442,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキー　で
+			<Text>まてんろうのカギ　で
 ロックを　解除　しました▼
-街の変更「ブラックシティ」が　選択
-できるように　なりました▼</Text>
+街の変更「ブラックシティ」が
+選択　できるように　なりました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:47:00" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2467,15 +2467,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのかんたんキー　を
+			<Text>アシストキー　を
 てにいれました▼
-なんいど「かんたん」が
+モードへんこう「アシストモード」が
 せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:07:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2483,15 +2483,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのかんたんキー　を
+			<Text>アシストキー　を
 入手しました▼
-難易度「かんたん」が
+モード変更「アシストモード」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:07:09" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2510,15 +2510,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのむずかしいキー　を
+			<Text>チャレンジキー　を
 てにいれました▼
-なんいど「むずかしい」が
+モードへんこう「チャレンジモード」が
 せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:06:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2526,15 +2526,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのむずかしいキー　を
+			<Text>チャレンジキー　を
 入手しました▼
-難易度「むずかしい」が
+モード変更「チャレンジモード」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:07:13" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2553,13 +2553,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストキー　を
+			<Text>じゅどうのカギ　を
 てにいれました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:43:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2567,13 +2567,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストキー　を
+			<Text>じゅどうのカギ　を
 入手しました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:06:28" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2592,13 +2592,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティキー　を
+			<Text>まてんろうのカギ　を
 てにいれました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:42:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2606,13 +2606,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティキー　を
+			<Text>まてんろうのカギ　を
 入手しました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:06:31" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2769,11 +2769,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのドアキーを　もらわないと
+			<Text>くろがねのカギを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:58:57" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:50:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2781,11 +2781,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒のドアキーを　もらわないと
+			<Text>くろがねのカギを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:59:37" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2804,11 +2804,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのドアキーを　もらわないと
+			<Text>ひょうざんのカギを　もらわないと
 この　こうもくは　えらべません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:59:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2816,11 +2816,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白のドアキーを　もらわないと
+			<Text>ひょうざんのカギを　もらわないと
 この項目は　選択できません</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:59:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2971,15 +2971,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのドアキー　を
+			<Text>くろがねのカギ　を
 てにいれました▼
-「くろのドア」が
+ひみつのドア「くろのドア」が
 せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:28:54" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2987,15 +2987,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒のドアキー　を
+			<Text>くろがねのカギ　を
 入手しました▼
-「黒のドア」が
+ひみつのドア「黒のドア」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:29:18" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3014,15 +3014,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのドアキー　を
+			<Text>ひょうざんのカギ　を
 てにいれました▼
-「しろのドア」が
+ひみつのドア「しろのドア」が
 せんたく　できるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:29:39" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:52:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3030,15 +3030,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白のドアキー　を
+			<Text>ひょうざんのカギ　を
 入手しました▼
-「白のドア」が
+ひみつのドア「白のドア」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:29:36" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:52:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3057,10 +3057,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのドアキー</Text>
+			<Text>くろがねのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:36:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3068,10 +3068,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒のドアキー</Text>
+			<Text>くろがねのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:36:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3090,10 +3090,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのドアキー</Text>
+			<Text>ひょうざんのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:36:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3101,10 +3101,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白のドアキー</Text>
+			<Text>ひょうざんのカギ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-31T06:36:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3339,11 +3339,11 @@ DSシステムフォントなので
 ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
-『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
+『おもいでリンク　ＩＤ：[Digit:5digits Idx="0" ]』を
 えらんでください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:20" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3357,11 +3357,11 @@ DSシステムフォントなので
 ソフトを　セットし
 電源を　入れた　あとに
 『ＤＳダウンロードプレイ』から
-『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
+『おもいでリンク　ＩＤ：[Digit:5digits Idx="0" ]』を
 選んでください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:30" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:53:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3400,11 +3400,11 @@ DSシステムフォントなので
 ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
-『データコンバート』を　
+『おもいでリンク』を　
 えらんでください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:25" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3418,11 +3418,11 @@ DSシステムフォントなので
 ソフトを　セットし
 電源を　いれた　あとに
 『ＤＳダウンロードプレイ』から
-『データコンバート』を　
+『おもいでリンク』を　
 選んでください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:34" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3455,11 +3455,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート　きどうちゅう！
+			<Text>おもいでリンク　きどうちゅう！
 しばらく　おまちください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T11:42:16" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3467,11 +3467,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート　起動中！
+			<Text>おもいでリンク　起動中！
 しばらく　お待ちください</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:50:26" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3506,10 +3506,10 @@ DSシステムフォントなので
 			Language="JPN">
 			<Text>もう１つの　ＤＳの
 せつぞくに　しっぱい　しました▼
-データコンバートを　しゅうりょうします▼</Text>
+おもいでリンクを　しゅうりょうします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:15:18" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3519,10 +3519,10 @@ DSシステムフォントなので
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳの
 接続に　失敗しました▼
-データコンバートを　終了します▼</Text>
+おもいでリンクを　終了します▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:15:11" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:54:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3609,10 +3609,10 @@ DSシステムフォントなので
 でんげんをきり　ただしい　ソフトを
 さしてから　てんそうマシンを
 きどうしなおして　ください▼
-データコンバートを　しゅうりょうします▼</Text>
+おもいでリンクを　しゅうりょうします▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:44:40" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:55:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3624,10 +3624,10 @@ DSシステムフォントなので
 電源を切り　正しい　ソフトを
 さしてから　転送マシンを
 起動し直してください▼
-データコンバートを　終了します▼</Text>
+おもいでリンクを　終了します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:44:43" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:55:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3664,10 +3664,10 @@ DSシステムフォントなので
 できませんでした
 レポートが　かかれていないか
 こわれている　かのうせいがあります▼
-データコンバートを　しゅうりょうします▼</Text>
+おもいでリンクを　しゅうりょうします▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:44:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:55:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3679,10 +3679,10 @@ DSシステムフォントなので
 できませんでした
 レポートが　書かれていないか
 壊れている　可能性があります▼
-データコンバートを　終了します▼</Text>
+おもいでリンクを　終了します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:44:48" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3715,10 +3715,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバートが　かんりょうしました▼</Text>
+			<Text>おもいでリンクが　かんりょうしました▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-26T11:24:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3726,10 +3726,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバートが　完了しました▼</Text>
+			<Text>おもいでリンクが　完了しました▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-26T11:24:25" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:56:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3763,11 +3763,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ぜんかいと　ことなる　レポートを
-コンバートしようと　しています
-コンバートを　ぞっこう　しますか？</Text>
+リンクしようと　しています
+リンクを　ぞっこう　しますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:40:00" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3776,11 +3776,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>前回と　異なる　レポートを
-コンバートしようと　しています
-コンバートを　続行しますか？</Text>
+リンクしようと　しています
+リンクを　続行しますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:07:47" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:56:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3813,12 +3813,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバートを
+			<Text>おもいでリンクを
 キャンセル　しました▽
 しゅうりょう　します▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:48" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3826,12 +3826,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバートを
+			<Text>おもいでリンクを
 キャンセル　しました▽
 終了します▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:20:57" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3975,10 +3975,10 @@ DSシステムフォントなので
 ゲームシンクを　おこない
 ポケモンを　ねむらせて　ください
 ねむらせた　あとに
-データコンバートすることが　できます</Text>
+おもいでリンク　できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:13" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3991,10 +3991,10 @@ DSシステムフォントなので
 ゲームシンクを　おこない
 ポケモンを　眠らせて　ください
 眠らせた　後に
-データコンバートすることが　できます</Text>
+おもいでリンク　できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4078,11 +4078,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート　かんりょう！
+			<Text>おもいでリンク　かんりょう！
 せかいに　へんかが　おこったようです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:09:27" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4090,11 +4090,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート　完了！
+			<Text>おもいでリンク　完了！
 世界に　変化が　おこったようです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:09:32" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T06:57:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4174,10 +4174,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト１</Text>
+			<Text>さんにん　そろって</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:10" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4185,10 +4185,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト１</Text>
+			<Text>さんにん　そろって</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:12" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:26:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4196,10 +4196,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.1</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:26:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4221,10 +4221,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト２</Text>
+			<Text>それぞれの　ホネ　と　ユメ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:27" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4232,10 +4232,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト２</Text>
+			<Text>それぞれの　ホネ　と　ユメ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:29" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4243,10 +4243,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.2</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:26:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4268,10 +4268,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト３</Text>
+			<Text>もとめる　ココロ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:33" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4279,10 +4279,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト３</Text>
+			<Text>もとめる　ココロ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:35" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4290,10 +4290,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.3</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4315,10 +4315,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト４</Text>
+			<Text>あらたな　チャンピオン</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:39" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4326,10 +4326,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト４</Text>
+			<Text>あらたな　チャンピオン</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:41" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4337,10 +4337,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.4</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4362,10 +4362,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト５</Text>
+			<Text>ついきゅう　ハイセンス！！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4373,10 +4373,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト５</Text>
+			<Text>ついきゅう　ハイセンス！！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4384,10 +4384,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.5</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4409,10 +4409,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト６</Text>
+			<Text>しろ　と　くろ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4420,10 +4420,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト６</Text>
+			<Text>しろ　と　くろ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:52" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4431,10 +4431,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.6</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4456,10 +4456,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト７</Text>
+			<Text>さらば　あいすべき　スター</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4467,10 +4467,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト７</Text>
+			<Text>さらば　あいすべき　スター</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4478,10 +4478,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.7</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4503,10 +4503,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト８</Text>
+			<Text>トモダチ　と　であい　と　わかれ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:50:01" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4514,10 +4514,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト８</Text>
+			<Text>トモダチ　と　であい　と　わかれ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:50:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:28:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4525,10 +4525,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.8</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:27:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4572,10 +4572,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>キャンセル</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4597,10 +4597,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト１の　せつめい▼</Text>
+			<Text>サンヨウシティ　の　レストラン
+コーン　ポッド　デント　の▽
+３にん　に　はなしを　きこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:01" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4608,10 +4610,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト１の　せつめい▼</Text>
+			<Text>サンヨウシティ　の　レストラン
+コーン　ポッド　デント　の▽
+３にん　に　はなしを　きこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:03" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4619,10 +4623,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.1</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4644,10 +4648,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト２の　せつめい▼</Text>
+			<Text>シッポウシティ　の　はくぶつかん　で
+ホネの　スペシャリスト　アロエ　から▽
+はなしを　きこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:07" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4655,10 +4661,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト２の　せつめい▼</Text>
+			<Text>シッポウシティ　の　はくぶつかん　で
+ホネの　スペシャリスト　アロエ　から▽
+はなしを　きこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:09" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4666,10 +4674,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.2</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4691,10 +4699,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト３の　せつめい▼</Text>
+			<Text>むかし　セッカシティの
+ジム　だったばしょ　で▽
+ハチクが　まっているようだ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:15" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4702,10 +4712,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト３の　せつめい▼</Text>
+			<Text>むかし　セッカシティの
+ジム　だったばしょ　で▽
+ハチクが　まっているようだ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:17" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4713,10 +4725,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.3</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4738,10 +4750,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト４の　せつめい▼</Text>
+			<Text>でんどういり　した　あとの
+ソウリュウシティ　で▽
+シャガ　が　むかしを　おもっている▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4749,10 +4763,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト４の　せつめい▼</Text>
+			<Text>でんどういり　した　あとの
+ソウリュウシティ　で▽
+シャガ　が　むかしを　おもっている▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:26" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4760,10 +4776,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.4</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4785,10 +4801,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト５の　せつめい▼</Text>
+			<Text>フキヨセシティ　ジムまえ　で
+フウロが　しんぱいごと　を▽
+だれかに　はなしたがっている▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:31" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4796,10 +4814,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト５の　せつめい▼</Text>
+			<Text>フキヨセシティ　ジムまえ　で
+フウロが　しんぱいごと　を▽
+だれかに　はなしたがっている▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:34" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4807,10 +4827,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.5</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4832,10 +4852,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト６の　せつめい▼</Text>
+			<Text>ホドモエリーグに　ちょうせんしたあと
+ロットの　いる　しせつに▽
+だれかが　おとずれた　ようだ……▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:38" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4843,10 +4865,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト６の　せつめい▼</Text>
+			<Text>ホドモエリーグに　ちょうせんしたあと
+ロットの　いる　しせつに▽
+だれかが　おとずれた　ようだ……▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:41" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4854,10 +4878,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.6</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4879,10 +4903,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト７の　せつめい▼</Text>
+			<Text>ミュージカル　で　オーナーが
+むかしばなしを　したがっている▼
+みじっそう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:46" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4890,10 +4916,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト７の　せつめい▼</Text>
+			<Text>ミュージカル　で　オーナーが
+むかしばなしを　したがっている▼
+みじっそう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:48" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4901,10 +4929,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.7</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4926,10 +4954,14 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リスト８の　せつめい▼</Text>
+			<Text>ポケモンセンター　で
+パソコンを　みながら▼
+ポケモンの　ことを　かんがえている
+ポケモンブリーダーが　いる▼
+みじっそう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:53" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4937,10 +4969,14 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト８の　せつめい▼</Text>
+			<Text>ポケモンセンター　で
+パソコンを　みながら▼
+ポケモンの　ことを　かんがえている
+ポケモンブリーダーが　いる▼
+みじっそう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-27T10:55:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4948,10 +4984,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリスト</Comment>
+			<Comment>おもいでリスト No.8</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-24T06:49:06" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
