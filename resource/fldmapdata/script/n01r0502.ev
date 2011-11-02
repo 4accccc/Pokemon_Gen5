@@ -300,7 +300,7 @@ ev_n02r0502_boss_stone:
       _AB_KEYWAIT_MARK()
       _GIZAPLAINWIN_CLOSE()
       //トレーナー戦
-      _TRAINER_BTL_SET( TRID_BOSS_01, 0 )
+      _TRAINER_BTL_SET( TRID_BOSS_02, 0 )
     ENDIF
     
     //結果チェック
