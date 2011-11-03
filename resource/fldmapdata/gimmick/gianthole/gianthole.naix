@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gianthole.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GIANTHOLE_NAIX_
+#define NARC_GIANTHOLE_NAIX_
+
+enum {
+	NARC_gianthole_blizzard_01_nsbmd = 0,
+	NARC_gianthole_blizzard_01_nsbca = 1,
+	NARC_gianthole_blizzard_01_nsbta = 2,
+	NARC_gianthole_blizzard_02_nsbmd = 3,
+	NARC_gianthole_blizzard_02_nsbca = 4,
+	NARC_gianthole_blizzard_02_nsbta = 5
+};
+
+/* NARC_GIANTHOLE_NAIX_ */
+#endif

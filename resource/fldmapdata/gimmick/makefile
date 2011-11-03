@@ -38,7 +38,8 @@ SUBDIRS	=	gym_denki \
 					champion \
 					gym_old_denki \
 					pokewood \
-					h06
+					h06 \
+					gianthole
 
 .PHONY:	do-build clean
 
