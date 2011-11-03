@@ -34,5 +34,6 @@
     "ANMID_NONFLIP_BIGFOUR3"=>28, #スワンレンブ　フリップ無しアニメ＋芝居1パターン
     "ANMID_NONFLIP_SWBOSS"=>29, #アクロマ　フリップ無しアニメ＋芝居2パターン
     "ANMID_NONFLIP_SWRIVAL"=>30, #スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
-    "ANMID_NONFLIP_SWSAGE1"=>31, #スワンゲーチス　フリップ無しアニメ＋芝居1パターン
+    "ANMID_NONFLIP_SWSAGE1"=>31, #スワンゲーチス　フリップ無しアニメ＋芝居２パターン
+    "ANMID_FLIP_SWMAMA2"=>32, #スワンママ お芝居3種有り　フリップ有アニメを継承
   }

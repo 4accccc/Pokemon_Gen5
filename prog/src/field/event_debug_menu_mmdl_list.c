@@ -398,7 +398,13 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWRIVAL_ACT0;
                 break;
               case MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1:
-                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SWSAGE1_STICK;
+                ac_act_u = ac_act_d = AC_SWSAGE1_HIT_STICK;
+                ac_act_l = ac_act_r = AC_SWSAGE1_RAISE_STICK;
+                break;
+              case MMDL_BLACT_ANMTBLNO_FLIP_SWMAMA2:
+                ac_act_u = AC_SWMAMA2_ANSWER_PHONE;
+                ac_act_d = AC_SWMAMA2_HANG_UP_PHONE;
+                ac_act_l = ac_act_r = AC_SWMAMA2_CHASE_PETAL;
                 break;
 #if 0
               case MMDL_BLACT_ANMTBLNO_SHINMU_A:

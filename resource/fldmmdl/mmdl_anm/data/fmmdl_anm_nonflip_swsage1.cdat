@@ -1,7 +1,7 @@
 //=========================================================================
 /**
  * @file	fmmdl_anm_nonflip_swsage1.cdat
- * @brief	ANMID_NONFLIP_SWSAGE1 -> スワンゲーチス　フリップ無しアニメ＋芝居1パターン
+ * @brief	ANMID_NONFLIP_SWSAGE1 -> スワンゲーチス　フリップ無しアニメ＋芝居２パターン
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
@@ -10,9 +10,25 @@
 //=========================================================================
 
 //============================================
-// 芝居１
+// 芝居１　杖を床に打ちつける
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWSage1_Act0[] = {
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 11 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
+//============================================
+// 芝居２　杖を掲げる
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWSage1_Act1[] = {
   {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
   { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
   { 13, ANMFLIP_OFF, ANMFLIP_OFF, 11 },  ///<
@@ -68,5 +84,6 @@ static const GFL_BBDACT_ANM * const DATA_BlActNonFlip_SWSage1Tbl[DRAW_ANMNO_NONF
   DATA_BlActNonFlip_WalkL12F,
   DATA_BlActNonFlip_WalkR12F,
   DATA_BlActNonFlip_SWSage1_Act0,
+  DATA_BlActNonFlip_SWSage1_Act1,
 };
 

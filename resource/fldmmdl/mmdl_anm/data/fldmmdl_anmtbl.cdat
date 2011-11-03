@@ -40,6 +40,7 @@
 #include "fmmdl_anm_nonflip_swboss.cdat"
 #include "fmmdl_anm_nonflip_swrival.cdat"
 #include "fmmdl_anm_nonflip_swsage1.cdat"
+#include "fmmdl_anm_flip_swmama2.cdat"
 
 
 //===========================================
@@ -111,7 +112,9 @@ const MMDL_BBDACT_ANMTBL DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX]
   //MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL
   { DATA_BlActNonFlip_SWRivalTbl, DRAW_ANMNO_NONFLIP_SWRIVAL_MAX },  ///<スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
   //MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1
-  { DATA_BlActNonFlip_SWSage1Tbl, DRAW_ANMNO_NONFLIP_SWSAGE1_MAX },  ///<スワンゲーチス　フリップ無しアニメ＋芝居1パターン
+  { DATA_BlActNonFlip_SWSage1Tbl, DRAW_ANMNO_NONFLIP_SWSAGE1_MAX },  ///<スワンゲーチス　フリップ無しアニメ＋芝居２パターン
+  //MMDL_BLACT_ANMTBLNO_FLIP_SWMAMA2
+  { DATA_BlActFlip_SWMama2Tbl, DRAW_ANMNO_FLIP_SWMAMA2_MAX },  ///<スワンママ お芝居3種有り　フリップ有アニメを継承
 };
 
 #endif //__D_FLDMMDL_ANMTBL_D__

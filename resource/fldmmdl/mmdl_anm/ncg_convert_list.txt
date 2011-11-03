@@ -32,6 +32,7 @@ ANMID_NONFLIP_BIGFOUR3,MDLSIZE_32x32:4:4:14:t4x4x14.imd:t4x4x14:mmdl_anm/tmp/fmm
 ANMID_NONFLIP_SWBOSS,MDLSIZE_32x32:4:4:19:t4x4x19.imd:t4x4x19:mmdl_anm/tmp/fmmdl_anm_nonflip_swboss.csv,
 ANMID_NONFLIP_SWRIVAL,MDLSIZE_32x32:4:4:17:t4x4x17.imd:t4x4x17:mmdl_anm/tmp/fmmdl_anm_nonflip_swrival.csv,
 ANMID_NONFLIP_SWSAGE1,MDLSIZE_32x32:4:4:15:t4x4x15.imd:t4x4x15:mmdl_anm/tmp/fmmdl_anm_nonflip_swsage1.csv,
+ANMID_FLIP_SWMAMA2,MDLSIZE_32x32:4:4:13:t4x4x13.imd:t4x4x13:mmdl_anm/tmp/fmmdl_anm_flip_swmama2.csv,
 #END,,
 
 パラメータ内訳：対応モデル:横キャラ数:縦キャラ数:総パターン数:対応imd名:対応ダミーncg&nclファイル名:アニメ定義ファイルcsv
@@ -68,7 +69,8 @@ ANMID_NONFLIP_SWSAGE1,MDLSIZE_32x32:4:4:15:t4x4x15.imd:t4x4x15:mmdl_anm/tmp/fmmd
 #define ANMID_NONFLIP_BIGFOUR3 28 //スワンレンブ　フリップ無しアニメ＋芝居1パターン
 #define ANMID_NONFLIP_SWBOSS 29 //アクロマ　フリップ無しアニメ＋芝居2パターン
 #define ANMID_NONFLIP_SWRIVAL 30 //スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
-#define ANMID_NONFLIP_SWSAGE1 31 //スワンゲーチス　フリップ無しアニメ＋芝居1パターン
+#define ANMID_NONFLIP_SWSAGE1 31 //スワンゲーチス　フリップ無しアニメ＋芝居２パターン
+#define ANMID_FLIP_SWMAMA2 32 //スワンママ お芝居3種有り　フリップ有アニメを継承
 
 
 //fldmmdl_list.xls <説明タブ>コピペ用フィールド
@@ -104,6 +106,7 @@ ANMID_NONFLIP_BIGFOUR3
 ANMID_NONFLIP_SWBOSS
 ANMID_NONFLIP_SWRIVAL
 ANMID_NONFLIP_SWSAGE1
+ANMID_FLIP_SWMAMA2
 //ダミー
 //パターン数 24 自機基本アニメ
 //パターン数 7 汎用人型　フリップ有アニメ
@@ -135,4 +138,5 @@ ANMID_NONFLIP_SWSAGE1
 //パターン数 14 スワンレンブ　フリップ無しアニメ＋芝居1パターン
 //パターン数 19 アクロマ　フリップ無しアニメ＋芝居2パターン
 //パターン数 17 スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
-//パターン数 15 スワンゲーチス　フリップ無しアニメ＋芝居1パターン
+//パターン数 15 スワンゲーチス　フリップ無しアニメ＋芝居２パターン
+//パターン数 13 スワンママ お芝居3種有り　フリップ有アニメを継承

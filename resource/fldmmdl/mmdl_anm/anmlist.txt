@@ -34,5 +34,6 @@ ANMFILE_LIST =	fmmdl_anm_hero.xls \
 				fmmdl_anm_nonflip_bigfour3.xls \
 				fmmdl_anm_nonflip_swboss.xls \
 				fmmdl_anm_nonflip_swrival.xls \
-				fmmdl_anm_nonflip_swsage1.xls
+				fmmdl_anm_nonflip_swsage1.xls \
+				fmmdl_anm_flip_swmama2.xls
 

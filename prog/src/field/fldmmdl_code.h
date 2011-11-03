@@ -640,8 +640,12 @@
 #define AC_BIGFOUR3_STANDUP (AC_ACT0_STOP) ///<スワンレンブ専用 立ち上がるアニメ
 #define AC_SWBOSS_POINT_FINGER_D (AC_ACT0_STOP)      ///<アクロマ専用 指を指す正面始動 アニメ
 #define AC_SWBOSS_POINT_FINGER_L (AC_ACT1_STOP)      ///<アクロマ専用 指を指す左向き始動 アニメ
-#define AC_SWSAGE1_STICK (AC_ACT0_STOP)     ///<スワンゲーチス専用 杖で床を打つアニメ
-#define AC_OLD_NINJA_APPEAR (AC_NINJA_ACT0)   ///<セピア忍者専用 現れるアニメ
-#define AC_OLD_NINJA_DISAPPER (AC_NINJA_ACT1)   ///<セピア忍者専用 消えるアニメ
+#define AC_SWSAGE1_HIT_STICK (AC_ACT0_STOP)       ///<スワンゲーチス専用 杖で床を打つアニメ
+#define AC_SWSAGE1_RAISE_STICK (AC_ACT1_STOP)     ///<スワンゲーチス専用 杖を掲げるアニメ
+#define AC_OLD_NINJA_APPEAR (AC_NINJA_ACT0)       ///<セピア忍者専用 現れるアニメ
+#define AC_OLD_NINJA_DISAPPER (AC_NINJA_ACT1)     ///<セピア忍者専用 消えるアニメ
+#define AC_SWMAMA2_CHASE_PETAL (AC_ACT0_STOP)      ///<スワンママ専用 花びらを目で追うアニメ
+#define AC_SWMAMA2_ANSWER_PHONE (AC_ACT1_STOP)      ///<スワンママ専用 電話に出るアニメ
+#define AC_SWMAMA2_HANG_UP_PHONE (AC_ACT2_STOP)     ///<スワンママ専用 電話を切るアニメ
 
 #endif //MMDL_CODE_H_FILE
