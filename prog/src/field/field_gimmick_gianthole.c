@@ -237,6 +237,31 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
   EXPOBJ_ObjMain( p_wk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ÉAÉjÉÅçƒê∂
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	id  0:ëOîº 1:å„îº
+ */
+//-----------------------------------------------------------------------------
+void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  GF_ASSERT( id<2 );
+
+  if( id == 0 )
+  {
+    ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_01 );
+  }
+  else
+  {
+    ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_02 );
+  }
+}
+
 //=============================================================================
 /**
  *					staticä÷êî

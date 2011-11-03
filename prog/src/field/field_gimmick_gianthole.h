@@ -20,3 +20,5 @@ extern void GIANTHOLE_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void GIANTHOLE_GIMMICK_End( FIELDMAP_WORK *p_fieldmap );
 extern void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 
+extern void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id );
+

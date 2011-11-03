@@ -29,6 +29,7 @@
   .include "../../../prog/src/field/scrcmd_bgate_table.cdat"
   .include "../../../prog/src/field/scrcmd_hide_ship_table.cdat"
   .include "../../../prog/src/field/scrcmd_pokecen_table.cdat"
+  .include "../../../prog/src/field/scrcmd_demo_gimmick_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -16117,4 +16118,24 @@
 
 //======================================================================
 //======================================================================
+
+//=============================================================================
+// ギミック関係
+//=============================================================================
+
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_GIMMICK_GIANTHOLE_ANM_START
+ * @brief キュレムの「こごえるせかい」アニメ再生
+ * @param id    0:前半 1:後半
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_ANM_START( id ) \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_ANM_START id
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_ANM_START  id
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_ANM_START
+  .short  \id
+  .endm
 

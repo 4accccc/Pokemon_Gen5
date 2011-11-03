@@ -32,6 +32,7 @@
 #include "scrcmd_bgate_table.h"
 #include "scrcmd_hide_ship_table.h"
 #include "scrcmd_pokecen_table.h"
+#include "scrcmd_demo_gimmick_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -60,6 +61,7 @@ FS_EXTERN_OVERLAY( scrcmd_pokewood );
 FS_EXTERN_OVERLAY( scrcmd_bgate );
 FS_EXTERN_OVERLAY( scrcmd_hide_ship );
 FS_EXTERN_OVERLAY( scrcmd_pokecen );
+FS_EXTERN_OVERLAY( scrcmd_demo_gimmick );
 
 //=============================================================================
 /**
@@ -223,6 +225,13 @@ static const ZONEID UseZoneIDTbl_pokecen[] =
   ZONE_ID_D26PC0101,
   ZONE_ID_C09R0701,
 };
+//-------------------------------------
+///	デモギミック関係
+//=====================================
+static const ZONEID UseZoneIDTbl_demo_gimmick[] = 
+{
+  ZONE_ID_D10R0501,   // ジャイアントホール
+};
 
 //=============================================================================
 /**
@@ -350,6 +359,14 @@ static const struct
     UseZoneIDTbl_pokecen,
     NELEMS(UseZoneIDTbl_pokecen),
     FS_OVERLAY_ID( scrcmd_pokecen ),
+    GFL_OVERLAY_BLANK_ID,
+  },
+  //DEMO_GIMMICK
+  {
+    ScriptCmdTbl_demo_gimmick,
+    UseZoneIDTbl_demo_gimmick,
+    NELEMS(UseZoneIDTbl_demo_gimmick),
+    FS_OVERLAY_ID( scrcmd_demo_gimmick ),
     GFL_OVERLAY_BLANK_ID,
   },
 };
