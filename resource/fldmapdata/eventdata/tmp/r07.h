@@ -12,7 +12,7 @@
 #define ZONE_R07_EVC_H
 
 #define TR_MINI_17                         0
-#define TR_TANPAN_21                       1
+#define TR_BREEDERM_05                     1
 #define TR_KINDERGARTENM_07                2
 #define TR_KINDERGARTENW_07                3
 #define TR_FUTAGO_07                       4
@@ -24,6 +24,7 @@
 #define FLD_ITEM_102                      10
 #define FLD_ITEM_103                      11
 #define FLD_ITEM_104                      12
+#define TR_TANPAN_21                      13
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

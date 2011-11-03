@@ -9,15 +9,14 @@
 #ifndef ZONE_R12_EVC_H
 #define ZONE_R12_EVC_H
 
-#define TR_BREEDERM_05                     0
-#define TR_FANW_12                         1
-#define TR_FANW_12_2                       2
-#define TR_KARATE_14                       3
-#define TR_BATTLEG_14                      4
-#define FLD_ITEM_144                       5
-#define FLD_ITEM_145                       6
-#define FLD_ITEM_146                       7
-#define FLD_ITEM_147                       8
+#define TR_FANW_12                         0
+#define TR_FANW_12_2                       1
+#define TR_KARATE_14                       2
+#define TR_BATTLEG_14                      3
+#define FLD_ITEM_144                       4
+#define FLD_ITEM_145                       5
+#define FLD_ITEM_146                       6
+#define FLD_ITEM_147                       7
 
 #endif //ZONE_R12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
