@@ -5,7 +5,7 @@
  * @autor	miyuki iwasawa
  * @note	このファイルはfldmmdl/tool/make_anmtbl_cdat.rbによって自動生成されたものです。
  * 
- * original = fmmdl_anm_nonflip_swsage1.xls  pattern_num = 15
+ * original = fmmdl_anm_nonflip_swsage1.xls  pattern_num = 18
  */
 //=========================================================================
 
@@ -29,15 +29,11 @@ static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWSage1_Act0[] = {
 // 芝居２　杖を掲げる
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActNonFlip_SWSage1_Act1[] = {
-  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF, 11 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
-  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF,  6 },  ///<
+  { 15, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  { 16, ANMFLIP_OFF, ANMFLIP_OFF,  4 },  ///<
+  { 17, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 
