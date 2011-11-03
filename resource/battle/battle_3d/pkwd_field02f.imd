@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-10-31T20:50:29" source="pkwd_field02f_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-03T14:25:08" source="pkwd_field02f_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-10-31T20:50:29" source="pkwd_field02f_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-03T14:25:08" source="pkwd_field02f_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1667,7 +1667,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="8"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -5381,7 +5381,7 @@
 					<tex st="-78.562500 0.687500"/>
 					<pos_xy xy="-0.044189 0.031982"/>
 					<tex st="-133.875000 63.250000"/>
-					<pos_diff xyz="0.012939 -0.021240 -0.010010"/>
+					<pos_diff xyz="0.012939 -0.025391 -0.010010"/>
 					<tex st="-133.875000 0.687500"/>
 					<pos_xy xy="-0.031250 0.026855"/>
 					<tex st="-189.125000 63.250000"/>
@@ -5397,7 +5397,7 @@
 					<tex st="-299.750000 0.687500"/>
 					<pos_xy xy="0.016113 0.031982"/>
 					<tex st="-355.062500 63.250000"/>
-					<pos_diff xyz="0.015137 -0.021484 0.006104"/>
+					<pos_diff xyz="0.015137 -0.025635 0.006104"/>
 					<tex st="-355.062500 0.687500"/>
 					<pos_xy xy="0.031250 0.025635"/>
 					<tex st="-410.375000 63.250000"/>
@@ -5405,7 +5405,7 @@
 					<tex st="-410.375000 0.687500"/>
 					<pos_xy xy="0.044189 0.036377"/>
 					<tex st="-465.625000 63.250000"/>
-					<pos_diff xyz="0.010010 -0.025391 0.012939"/>
+					<pos_diff xyz="0.010010 -0.029785 0.012939"/>
 					<tex st="-465.625000 0.687500"/>
 					<pos_xy xy="0.054199 0.022705"/>
 					<tex st="-520.937500 63.250000"/>
@@ -5419,7 +5419,7 @@
 					<tex st="585.000000 0.687500"/>
 					<pos_xy xy="0.060303 0.031982"/>
 					<tex st="529.687500 63.250000"/>
-					<pos_diff xyz="0.002197 -0.021484 0.016113"/>
+					<pos_diff xyz="0.002197 -0.025635 0.016113"/>
 					<tex st="529.687500 0.687500"/>
 					<pos_xy xy="0.062500 0.026855"/>
 					<tex st="474.437500 63.250000"/>

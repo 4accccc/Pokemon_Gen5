@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-10-31T19:59:23" source="pkwd_field09e_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-03T14:21:05" source="pkwd_field09e_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-10-31T19:59:23" source="pkwd_field09e_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-03T14:21:05" source="pkwd_field09e_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="15 14"
-	compress_material="on" material_size="14 14"
+	compress_material="on" material_size="15 15"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -881,7 +881,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="14">
+<material_array size="15">
 	<material index="0" name="cmtry_blck_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -936,7 +936,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="32"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1104,7 +1104,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="24"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1128,7 +1128,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="8"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1146,7 +1146,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="lambert1"
+	<material index="11" name="efect_haze_2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="16"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="10" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="12" name="lambert1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1165,7 +1189,7 @@
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
-	<material index="12" name="lm50"
+	<material index="13" name="lm53"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="5"
@@ -1184,7 +1208,7 @@
 		shininess_table_flag="off"
 		tex_image_idx="-1" tex_palette_idx="-1"
 	/>
-	<material index="13" name="pasted__ima"
+	<material index="14" name="lm54"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7342,7 +7366,7 @@
 		volume_max="0.062500 0.147949 0.031250"
 		volume_r="0.160645"
 	>
-		<display index="0" material="10" polygon="1" priority="0"/>
+		<display index="0" material="11" polygon="1" priority="0"/>
 	</node>
 	<node index="3" name="pCylinder27" kind="mesh"
 		parent="0"
@@ -7383,7 +7407,7 @@
 		volume_max="5.354248 4.622559 0.009033"
 		volume_r="7.073486"
 	>
-		<display index="0" material="11" polygon="5" priority="0"/>
+		<display index="0" material="12" polygon="5" priority="0"/>
 	</node>
 	<node index="5" name="pPlane43" kind="mesh"
 		parent="4"
@@ -7414,7 +7438,7 @@
 		billboard="off"
 		scale="-9.937988 0.718994 10.638916"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.910400 5.705322"
+		translate="2.795898 0.910400 6.703857"
 		visibility="on"
 		display_size="1"
 		vertex_size="18" polygon_size="8"
@@ -7423,7 +7447,7 @@
 		volume_max="0.007813 0.260010 0.031250"
 		volume_r="0.267334"
 	>
-		<display index="0" material="10" polygon="7" priority="0"/>
+		<display index="0" material="11" polygon="7" priority="0"/>
 	</node>
 	<node index="7" name="pCylinder80" kind="mesh"
 		parent="0"
@@ -7434,7 +7458,7 @@
 		billboard="off"
 		scale="-9.937988 0.718994 10.638916"
 		rotate="0.000000 119.722900 0.000000"
-		translate="-0.458496 0.910400 10.477539"
+		translate="-4.053223 0.910400 11.476074"
 		visibility="on"
 		display_size="1"
 		vertex_size="18" polygon_size="8"
@@ -7443,7 +7467,7 @@
 		volume_max="0.000000 0.292480 0.031250"
 		volume_r="0.299072"
 	>
-		<display index="0" material="10" polygon="8" priority="0"/>
+		<display index="0" material="11" polygon="8" priority="0"/>
 	</node>
 	<node index="8" name="pasted__ima1" kind="mesh"
 		parent="0"
@@ -7463,7 +7487,7 @@
 		volume_max="0.031250 0.031250 0.000000"
 		volume_r="0.044189"
 	>
-		<display index="0" material="13" polygon="2" priority="0"/>
+		<display index="0" material="14" polygon="2" priority="0"/>
 	</node>
 	<node index="9" name="polySurface14" kind="mesh"
 		parent="0"
@@ -7483,7 +7507,7 @@
 		volume_max="0.313232 0.025635 0.628418"
 		volume_r="1.035400"
 	>
-		<display index="0" material="12" polygon="9" priority="0"/>
+		<display index="0" material="13" polygon="9" priority="0"/>
 	</node>
 	<node index="10" name="polySurface46" kind="mesh"
 		parent="0"
