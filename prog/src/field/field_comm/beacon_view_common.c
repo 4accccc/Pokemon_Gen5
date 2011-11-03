@@ -331,7 +331,7 @@ u32 BVCPrint_GetBeaconMsgID(const GAMEBEACON_INFO *info)
 {
   GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo(info);
 
-  if(action == GAMEBEACON_ACTION_NULL || action >= GAMEBEACON_ACTION_MAX){
+  if(action == GAMEBEACON_ACTION_NULL || action >= GAMEBEACON_ACTION_NORMAL_MAX ){
     GF_ASSERT_MSG(0, "action_no = %d\n", action);
     return msg_beacon_001;
   }

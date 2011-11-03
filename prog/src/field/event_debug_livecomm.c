@@ -338,7 +338,7 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFMissionMenuData = {
 /*
  *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
  */
-static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_FEST_BEACON_START] = {
+static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_NORMAL_MAX] = {
   ///<GAMEBEACON_ACTION_NULL  ///<データ無し 0
   { NULL,                                 BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE, },
 
@@ -1554,7 +1554,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
         break;
       case 1:
         GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            0, GAMEBEACON_ACTION_FEST_BEACON_START-1,
+            0, GAMEBEACON_ACTION_NORMAL_MAX-1,
             &evwk->action, BPRM_WSET_ACTION ));
         break;
       case 2:
@@ -1669,7 +1669,7 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   if( evwk->action < 2 ){ //ランダム
     int action,range;
     
-    range = GAMEBEACON_ACTION_FEST_BEACON_START-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+    range = GAMEBEACON_ACTION_NORMAL_MAX-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
     action = GFUser_GetPublicRand0( range )+GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
     evwk->b_prm = &DATA_DebugBeaconParam[ action ];
     evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];

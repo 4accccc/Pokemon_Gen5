@@ -54,8 +54,11 @@ enum{
 
 /*
  *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
+ *
+ *  データ容量節約と管理の煩雑さを回避するため、GAMEBEACON_ACTION_NORMAL_MAX以上(==フェスビーコン)は
+ *  データを持たずに、アクセサ側で判別して固定値を返します。注意！
  */
-static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
+static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_NORMAL_MAX][2] = {
   BEACON_WSET_DEFAULT,	  BEACON_ICON_HELLO,	    ///<GAMEBEACON_ACTION_NULL  ///<データ無し 0
   		
   BEACON_WSET_DEFAULT,	  BEACON_ICON_HELLO,	    ///<SEARCH, XXさんをサーチしました！ 1
@@ -110,20 +113,6 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50
 
   //スワンで追加されたビーコン
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FEST_MISSION, フェスタミッションをサーチしました！ 51
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_ENCOUNT, フェスタミッションをサーチしました！ 52
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_WIN, フェスタミッションをサーチしました！ 53
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_CAPTURE, フェスタミッションをサーチしました！ 54
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_ESCAPE, フェスタミッションをサーチしました！ 55
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_TR_ENCOUNT, フェスタミッションをサーチしました！ 56
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_GAMEOVER, フェスタミッションをサーチしました！ 57
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_ITEM_GET, フェスタミッションをサーチしました！ 58
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_GPOWER, フェスタミッションをサーチしました！ 59
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_EVENT_CLEAR, イベントクリア！ 60
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_ITEM_GET, ミッションアイテムゲット！ 61
-  
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_FREEWORD, フェスタミッションをサーチしました！ 62
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_DOWN, フェスタミッションをサーチしました！ 63
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
@@ -525,10 +514,13 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->suretigai_count > 99999 || info->thanks_recv_count > 99999 ){
     return TRUE;
   }
+#if 0
+  //メダルIDとイチオシメダルは0-255まですべて有効値でu8なのでエラーチェック不要
   //メダルIDチェック
-  if( info->medal_count >= MDLID_MAX ){
+  if( info->medal_count > MDLID_MAX ){
     return TRUE;
   }
+#endif
   //アクション詳細データチェック
   if( (DATA_ErrorCheckFuncTbl[GAMEBEACON_GetActionDataType(info->action.action_no )])(info) ){
     return TRUE;
@@ -1260,6 +1252,9 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_BEACON*
 //==================================================================
 u8 GAMEBEACON_GetActionDataType( GAMEBEACON_ACTION action )
 {
+  if( action >= GAMEBEACON_ACTION_NORMAL_MAX ){
+    return BEACON_WSET_DEFAULT; //フェスビーコンは固定でデフォルト
+  }
   return DATA_BeaconDataType[action][0];
 }
 //==================================================================
@@ -1271,6 +1266,9 @@ u8 GAMEBEACON_GetActionDataType( GAMEBEACON_ACTION action )
 //==================================================================
 u8 GAMEBEACON_GetActionDataIconType( GAMEBEACON_ACTION action )
 {
+  if( action >= GAMEBEACON_ACTION_NORMAL_MAX ){
+    return BEACON_ICON_HELLO; //フェスビーコンは固定でデフォルト
+  }
   return DATA_BeaconDataType[action][1];
 }
 
