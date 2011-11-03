@@ -318,5 +318,17 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     NULL,
     NULL,
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_gianthole),
+    GIANTHOLE_GIMMICK_Setup,  // ジャイアントホール
+    GIANTHOLE_GIMMICK_End,    // ジャイアントホール
+    GIANTHOLE_GIMMICK_Move,   // ジャイアントホール
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_c12),
+    C12_GIMMICK_Setup,  // ヒオウギシティ
+    C12_GIMMICK_End,    // ヒオウギシティ
+    C12_GIMMICK_Move,   // ヒオウギシティ
+  },
 };
 
