@@ -55,13 +55,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_GROUND_ENT_Move,
   },
   {
-    FS_OVERLAY_ID(field_gym_ice),                         //10
+    FS_OVERLAY_ID(field_gym_ice),
     GYM_ICE_Setup,
     GYM_ICE_End,
     GYM_ICE_Move,
   },
   {
-    FS_OVERLAY_ID(field_gym_dragon),
+    FS_OVERLAY_ID(field_gym_dragon),              //10
     GYM_DRAGON_Setup,
     GYM_DRAGON_End,
     GYM_DRAGON_Move,
@@ -115,13 +115,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     BSUBWAY_GIMMICK_Move, //C04R0104
   },
   {
-    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01005          // 20
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01005
     BSUBWAY_GIMMICK_Setup, //C04R0105
     BSUBWAY_GIMMICK_End, //C04R0105
     BSUBWAY_GIMMICK_Move, //C04R0105
   },
   {
-    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01006
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01006          //20
     BSUBWAY_GIMMICK_Setup, //C04R0106
     BSUBWAY_GIMMICK_End, //C04R0106
     BSUBWAY_GIMMICK_Move, //C04R0106
@@ -175,19 +175,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     SPPOKE_GMK_MoveMerodhia,    //C03R0901
   },
   {
-    FS_OVERLAY_ID(palace_gimmick),  //                          //30
+    FS_OVERLAY_ID(palace_gimmick),
     PALACE_GMK_Setup,    //
     PALACE_GMK_End,    //
     PALACE_GMK_Move,    //
   },
   {
-    NULL,  //
-    NULL,    //パレスゾーンのマップ
-    NULL,    //パレスゾーンのマップ
-    NULL,    //パレスゾーンのマップ
-  },
-  {
-    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109       //;30
     BSUBWAY_GIMMICK_Setup, //C04R0109
     BSUBWAY_GIMMICK_End, //C04R0109
     BSUBWAY_GIMMICK_Move, //C04R0109
@@ -235,7 +229,7 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     WBT_GIMMICK_Move,      // WBT
   },
   {
-    FS_OVERLAY_ID(field_gym_poison),                            //40
+    FS_OVERLAY_ID(field_gym_poison),
     GYM_POISON_Setup,       // 毒ジム
     GYM_POISON_End,       // 毒ジム
     GYM_POISON_Move,       // 毒ジム
@@ -247,7 +241,7 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_WATER_Move,       // 水ジム
   },
   {
-    FS_OVERLAY_ID(field_fourkings_ghost),//C09R0101
+    FS_OVERLAY_ID(field_fourkings_ghost),//C09R0101           //40
     FOURKINGS_GHOST_Setup,  // 四天王 ゴースト
     FOURKINGS_GHOST_End,    // 四天王 ゴースト
     FOURKINGS_GHOST_Move,   // 四天王 ゴースト
@@ -295,7 +289,7 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     CHAMPION_Move,  // チャンピオン部屋
   },
   {
-    FS_OVERLAY_ID(field_gimmick_hide_ship_bow),//D27R0201 D27R1201    //50
+    FS_OVERLAY_ID(field_gimmick_hide_ship_bow),//D27R0201 D27R1201
     HIDE_SHIP_BOW_Setup,  // アジト船　船首
     HIDE_SHIP_BOW_End,    // アジト船　船首
     HIDE_SHIP_BOW_Move,   // アジト船　船首
@@ -307,7 +301,7 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_OLD_ELEC_Move,
   },
   {
-    FS_OVERLAY_ID(pkwd_field_gimmick),//C15
+    FS_OVERLAY_ID(pkwd_field_gimmick),//C15         //50
     PKWD_FIELD_Setup,  // ポケウッド フィールド
     PKWD_FIELD_End,    // ポケウッド フィールド
     PKWD_FIELD_Move,   // ポケウッド フィールド
