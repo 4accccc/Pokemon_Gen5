@@ -1109,7 +1109,7 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
 
-  if( pp->medal_num != PANEL_MEDAL_NONE ){
+  if( pp->push_medal != PANEL_MEDAL_NONE ){
     panel_MedalVisibleSet( pp, visible_f );
   }
   if( !visible_f ){ //‰B‚µ‚½‚¢Žž‚¾‚¯‹­§
@@ -1346,15 +1346,8 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
  */
 static BOOL panel_IsMedalDisable( PANEL_WORK* pp )
 {
-#if 0
-  if( pp->medal_num == PANEL_MEDAL_NONE ){
-    return TRUE;
-  }
-  return FALSE;
-#endif
-  if( pp->medal_num == PANEL_MEDAL_NONE ||
-      pp->medal_num == 0 ||
-      pp->push_medal == MDLID_MAX ){
+  if( pp->medal_num == 0 ||
+      pp->push_medal >= MDLID_MAX ){
     return TRUE;
   }
   return FALSE;
@@ -1366,10 +1359,10 @@ static BOOL panel_IsMedalDisable( PANEL_WORK* pp )
 static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
   int i;
-  u16 num = PANEL_MEDAL_NONE;
 
   if( pp->version == VERSION_BLACK || pp->version == VERSION_WHITE ){
-    pp->medal_num = num;
+    pp->medal_num = 0;
+    pp->push_medal = PANEL_MEDAL_NONE;
     panel_MedalVisibleSet( pp, FALSE );
     return;
   }
@@ -1378,6 +1371,8 @@ static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO*
 
   if( panel_IsMedalDisable( pp ) ){
     BVCAct_AnmStart( pp->cMedal, ACTANM_MEDAL_OFF );
+  }else{
+    BVCAct_AnmStart( pp->cMedal, ACTANM_MEDAL_N );
   }
 
   for(i = 0;i < PANEL_NUM_ACTMAX;i++){
