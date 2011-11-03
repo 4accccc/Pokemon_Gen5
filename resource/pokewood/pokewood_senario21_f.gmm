@@ -376,10 +376,10 @@
 おもいだせーーーーっ！</language>
 	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">アントニオ『[1:00:トレーナー名:1]……？
-</language>
-		<language name="JPN_KANJI" width="256">アントニオ『[1:00:トレーナー名:1]……？
-</language>
+		<language name="JPN" width="256">アントニオ『……　……　……
+……　……　……　[1:00:トレーナー名:1]……？</language>
+		<language name="JPN_KANJI" width="256">アントニオ『……　……　……
+……　……　……　[1:00:トレーナー名:1]……？</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アントニオ
@@ -394,13 +394,13 @@
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まちがい　ない！
 アントニオだ！　アントニオーー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まちがい　ない！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『間違い　ない！
 アントニオだ！　アントニオーー！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ドーブル『……あのー　こうふんの　ところ
 ちょっと　すみません</language>
-		<language name="JPN_KANJI" width="256">ドーブル『……あのー　こうふんの　ところ
+		<language name="JPN_KANJI" width="256">ドーブル『……あのー　興奮の　ところ
 ちょっと　すみません</language>
 	</row>
 	<row id="pw_event0_hero_2">
@@ -412,17 +412,17 @@
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ドーブル『ゆうれいが　いるんですから
 ポケモンだって　しゃべりますよ</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ゆうれいが　いるんですから
+		<language name="JPN_KANJI" width="256">ドーブル『幽霊が　いるんですから
 ポケモンだって　しゃべりますよ</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれい……！
 ……　……　……　……　……　……▽
-そうだった……　１ねんまえ……▽
+……そうだった……　１ねんまえ……▽
 アントニオは……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ゆうれい……！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『幽霊……！
 ……　……　……　……　……　……▽
-そうだった……　１ねんまえ……▽
+……そうだった……　１年前……▽
 アントニオは……</language>
 	</row>
 	<row id="pw_event0_enemy_3">
@@ -430,16 +430,16 @@
 あなたに　あいに　きたんです▼
 でも　ちょっとした　アクシデントで
 きおくを　うしなったんです</language>
-		<language name="JPN_KANJI" width="256">ドーブル『アントニオさんは
-あなたに　あいに　きたんです▼
+		<language name="JPN_KANJI" width="256">ドーブル『マリアさんは
+あなたに　会いに　きたんです▼
 でも　ちょっとした　アクシデントで
-きおくを　うしなったんです</language>
+記憶を　失ったんです</language>
 	</row>
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれいって
 きおくを　なくすの？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ゆうれいって
-きおくを　なくすの？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『幽霊って
+記憶を　失くすの？</language>
 	</row>
 	<row id="pw_event0_enemy_4">
 		<language name="JPN" width="256">ドーブル『ポケモン　だって
@@ -454,20 +454,20 @@
 よみがえりますよ</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ポケモン　だって
 しゃべる　くらい　ですから▼
-ゆうれいが　きおくなくしても
+幽霊が　記憶を　なくしても
 おかしく　ないしょう？▼
 さて　あなたは　トレーナーとして
-うでが　たつと　おききしました▼
-ポケモンしょうぶで
-かれいな　すがたを　みせれば▼
-アントニオさんの　きおくも
+腕が　たつと　お聞きしました▼
+ポケモン勝負で
+華麗な　姿を　みせれば▼
+アントニオさんの　記憶も
 よみがえりますよ</language>
 	</row>
 	<row id="pw_event0_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　むちゃな……
-そんな　はなし　きいたこと　ない……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　むちゃな……
-そんな　はなし　きいたこと　ない……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　無茶な……
+そんな話　聞いたこと　ない……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　無茶な……
+そんな話　聞いたこと　ない……</language>
 	</row>
 	<row id="pw_event0_enemy_5">
 		<language name="JPN" width="256">ドーブル『しょうぶの　あいまに
@@ -476,46 +476,46 @@
 メロメロに　すれば▽
 きっと　よみがえりますよ▽
 さあ　しょうぶです！</language>
-		<language name="JPN_KANJI" width="256">ドーブル『しょうぶの　あいまに
-あいの　こくはくも　おわすれず！▼
-あいの　セリフで　かのじょを
+		<language name="JPN_KANJI" width="256">ドーブル『勝負の　合間に
+愛の　告白も　お忘れず！▼
+愛の　言葉で　彼女を
 メロメロに　すれば▽
 きっと　よみがえりますよ▽
-さあ　しょうぶです！</language>
+さあ　勝負です！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし！
-つのる　おもいを　つたえよう……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！
-つのる　おもいを　つたえよう……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]（よし！
+つのる　おもいを　つたえよう……）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（よし！
+つのる　思いを　伝えよう……）</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみなしでは　いきられない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみなしでは　いきられない！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなた　なしでは　いきられない</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなた　なしでは　生きられない！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">アントニオ『……　……</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみが　すきだー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　すきだー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたが　だいすきー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたが　大好きー！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">アントニオ『……　……（ニコッ）</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……（ニコッ）</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『（ニコリ）！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（ニコリ）！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……（ことばは　いらない！）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……（言葉は　いらない！）</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">アントニオ『……　……？？？</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……？？？</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみといると　たのしいんだ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみといると　たのしいんだ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたしか　いないのー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたしか　いないのー</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
 		<language name="JPN" width="256">アントニオ『……　……</language>
@@ -526,19 +526,19 @@
 おぼえている？▽
 あなたの　だいすき　だったもの</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アントニオ！
-おぼえている？▽
-あなたの　だいすき　だったもの</language>
+覚えている？▽
+あなたの　大好き　だったもの</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:1]だよ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:1]だよ</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみが　かわいがっていた
-[1:02:ポケモンニックネーム:1]だよ　おぼえているだろ▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたが　かわいがっていた
+[1:02:ポケモンニックネーム:1]よ　おぼえているでしょ▼
 アントニオ『……　……（ニコッ）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　かわいがっていた
-[1:02:ポケモンニックネーム:1]だよ　おぼえているだろ▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたが　可愛がっていた
+[1:02:ポケモンニックネーム:1]よ　覚えているでしょ▼
 アントニオ『……　……（ニコッ）</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
@@ -547,17 +547,19 @@
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『いつも　あまえていた
-[1:00:トレーナー名:1]だよ　おぼえているだろ▼
+[1:00:トレーナー名:1]よ　おぼえているでしょ▼
 アントニオ『……　……？？？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いつも　あまえていた
-[1:00:トレーナー名:1]だよ　おぼえているだろ▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いつも　甘えていた
+[1:00:トレーナー名:1]だよ　覚えているでしょ▼
 アントニオ『……　……？？？</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうだ　ゆうえんちを
-めぐりましょう！　そう……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうだ　ゆうえんちを
-めぐりましょう！　そう……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうだ！
+ゆうえんちで　あそびましょう！▽
+そうね……　あそこに　しましょう！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうだ！
+遊園地で　遊びましょう！▽
+そうね……　あそこに　しましょう！</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ジェットコースターへ！</language>
@@ -577,7 +579,7 @@
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おばけやしきへ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おばけやしきへ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お化け屋敷へ！</language>
 	</row>
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">アントニオ『……　……</language>
@@ -585,29 +587,31 @@
 	</row>
 	<row id="pw_event3_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かんらんしゃへ　！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かんらんしゃへ　！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『観覧車へ　！</language>
 	</row>
 	<row id="pw_event3_react_enemy_3">
 		<language name="JPN" width="256">アントニオ『……　……</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ストレートじゃなく
-ちょっと　へんかを　いれてみる……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ストレートじゃなく
-ちょっと　へんかを　いれてみる……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]（ストレートじゃなく
+ちょっと　へんかを　いれてみる……？▽
+どうしようか……？）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1](ストレートじゃなく
+ちょっと　変化を　いれてみる……？▽
+どうしようか……？）</language>
 	</row>
 	<row id="pw_event4_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　きらいー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　きらいー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　嫌いー！</language>
 	</row>
 	<row id="pw_event4_react_enemy_0">
 		<language name="JPN" width="256">アントニオ『……　……？？？</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……？？？</language>
 	</row>
 	<row id="pw_event4_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いや　やっぱり　すきだー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いや　やっぱり　すきだー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっぱり　だいすきー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やっぱり　大好きー！</language>
 	</row>
 	<row id="pw_event4_react_enemy_1">
 		<language name="JPN" width="256">アントニオ『……　……（ニコッ）</language>
@@ -631,30 +635,30 @@
 ……　……　……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『これで　きめる……！
-おもいを　すべて　ぶつけよう</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『これで　きめる……！
-おもいを　すべて　ぶつけよう</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]（これで　きめる……！
+おもいを　すべて　ぶつけよう）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（これで　決める……！
+思いを　すべて　ぶつけよう）</language>
 	</row>
 	<row id="pw_event5_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたしのせかいに　きて！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わたしのせかいに　きて！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わたしの世界に　きて！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
 		<language name="JPN" width="256">アントニオ『……　……</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……</language>
 	</row>
 	<row id="pw_event5_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『すきー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『すきー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だいすきー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『大好きー！</language>
 	</row>
 	<row id="pw_event5_react_enemy_1">
 		<language name="JPN" width="256">アントニオ『……　……</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……</language>
 	</row>
 	<row id="pw_event5_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたしの　いのちを　ささげる</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わたしの　いのちを　ささげる</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたしの　いのち　あげる！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わたしの命　あげる！</language>
 	</row>
 	<row id="pw_event5_react_enemy_2">
 		<language name="JPN" width="256">アントニオ『……　……？？？</language>
@@ -662,7 +666,7 @@
 	</row>
 	<row id="pw_event5_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もういちど　やりなおそう！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もういちど　やりなおそう！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう一度やりなおそう！</language>
 	</row>
 	<row id="pw_event5_react_enemy_3">
 		<language name="JPN" width="256">アントニオ『……　……</language>
@@ -670,17 +674,17 @@
 	</row>
 	<row id="pw_event9_enemy_0">
 		<language name="JPN" width="256">ドーブル『ざんねん！
-けっちゃくがつきません！▼
-この　つづきは　また
+けっちゃくが　つきません！▼
+つづきは　また
 あしたの　ゆめで　しましょうか</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ざんねん！
-けっちゃくがつきません！▼
-この　つづきは　また
-あしたの　ゆめで　しましょうか</language>
+		<language name="JPN_KANJI" width="256">ドーブル『残念！
+決着が　つきません！▼
+続きは　また
+明日の　夢で　しましょうか</language>
 	</row>
 	<row id="pw_event9_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆめ……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ゆめ……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『夢……？</language>
 	</row>
 	<row id="pw_event9_enemy_1">
 		<language name="JPN" width="256">ドーブル『そうですよ…！
@@ -697,16 +701,16 @@
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『そうですよ…！
-これは　あなたの　ゆめですよ▼
-げんじつの　せかいでは
+これは　あなたの　夢ですよ▼
+現実の　世界では
 あなたは　アントニオさんと▽
-なかよく　くらして　いるんですから▼
-ほら　ねぼう　しそうだから
-おこしに　きますよ！▼
+仲良く　暮らして　いるんですから▼
+ほら　寝坊　しそうだから
+起こしに　きますよ！▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……▼
-こえ『[1:00:トレーナー名:1]　あさだぞー▼
-おきろー　ちこく　するぞー▼
+声『[1:00:トレーナー名:1]　朝だぞー▼
+起きろー　遅刻　するぞー▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 	</row>
@@ -722,25 +726,25 @@
 げんじつ　なのだろうか？▼
 どちらも　ゆめ……？
 どちも　げんじつ……？▼
-……まあ　どうでも　いいか……▼
+……まあ　どうでも　いい……▼
 わたしに　とっては
 アントニオが　そんざい　する　せかいが▽
-げんじつ　だから……</language>
-		<language name="JPN_KANJI" width="256">めざめると　いつも　どおり
-げんきな　アントニオが　いた▼
-しかし　その　せかいで　ねむると
-ゆうえんちで　ドーブルが　いて▽
-また　ポケモンしょうぶを　はじめる▼
-そこで　また　ゆめから　さめると……
-げんきな　アントニオが　いて……▼
+げんじつ　なのだから……</language>
+		<language name="JPN_KANJI" width="256">目覚めると　いつも　どおり
+元気な　アントニオが　いた▼
+しかし　その　世界で　眠ると
+遊園地で　ドーブルが　いて▽
+また　ポケモン勝負を　はじめる▼
+そこで　また　夢から　覚めると……
+元気な　アントニオが　いて……▼
 いったい　どちらが
-げんじつ　なのだろうか？▼
-どちらも　ゆめ……？
-どちも　げんじつ……？▼
+現実　なのだろうか？▼
+どちらも　夢……？
+どちも　現実……？▼
 ……まあ　どうでも　いいか……▼
 わたしに　とっては
-アントニオが　そんざい　する　せかいが▽
-げんじつ　だから……</language>
+アントニオが　存在する　世界が▽
+現実　なのだから……</language>
 	</row>
 	<row id="pw_event10_enemy_0">
 		<language name="JPN" width="256">ドーブル『ざんねん！
@@ -748,17 +752,17 @@
 あなた　よわいですねー▼
 こんな　ことでは　アントニオさんの
 きおくは　よみがえりませんよ</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ざんねん！
-みこみ　ちがいでしたか▽
-あなた　よわいですねー▼
+		<language name="JPN_KANJI" width="256">ドーブル『残念！
+見込み　違いでしたか▽
+あなた　弱いですねー▼
 こんな　ことでは　アントニオさんの
-きおくは　よみがえりませんよ</language>
+記憶は　よみがえりませんよ</language>
 	</row>
 	<row id="pw_event10_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たのむ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねがい！
 もういちど　しょうぶを！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たのむ！
-もういちど　しょうぶを！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お願い！
+もう一度　勝負を！</language>
 	</row>
 	<row id="pw_event10_enemy_1">
 		<language name="JPN" width="256">ドーブル『ざんねん　ながら　ダメ　です
@@ -767,16 +771,16 @@
 こおりの　ように
 きおくが　とけて　しまうんです▽
 なので　きょうは　ここまで　です▼
-きっと　もどって　きますので
-また　ここで　おあい　しましょう</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ざんねん　ながら　ダメ　です
-この　せかいに　たましいが▽
-ながい　あいだ　とどまっていると▼
-こおりの　ように
-きおくが　とけて　しまうんです▽
-なので　きょうは　ここまで　です▼
-きっと　もどって　きますので
-また　ここで　おあい　しましょう</language>
+また　もどって　きますので
+ここで　おあい　しましょう</language>
+		<language name="JPN_KANJI" width="256">ドーブル『残念ながら　ダメ　です
+この世界に　魂が▽
+長い時間　とどまっていると▼
+氷の　ように
+記憶が　とけて　しまうんです▽
+なので　今日は　ここまで　です▼
+また　戻って　きますので
+ここで　お会い　しましょう</language>
 	</row>
 	<row id="pw_event10_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まってーー！！
@@ -789,18 +793,18 @@
 げんじつ　だったのか？　わからない▼
 ……ただ　きょうも　こうして
 ゆうえんちへ　かよいつづける▽
-げんじつだけは　ある</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まってーー！！
+げんじつだけは　ある……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『待ってーー！！
 アントニオ！　ドーブル！▼
 ……　……　……　……　……
 ……　……　……　……　……▼
-きが　つくと　ゆうえんちの
-ベンチに　こしを　かけていた▼
-あれは　ゆめだったのか？
-げんじつ　だったのか？　わからない▼
-……ただ　きょうも　こうして
-ゆうえんちへ　かよいつづける▽
-げんじつだけは　ある</language>
+気が　つくと　遊園地の
+ベンチに　腰を　かけていた▼
+あれは　夢だったのか？
+現実　だったのか？　わからない▼
+……ただ　今日も　こうして
+遊園地へ　通い続ける▽
+現実だけは　ある……</language>
 	</row>
 	<row id="pw_event11_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アントニオ！
@@ -810,11 +814,13 @@
 	</row>
 	<row id="pw_event11_enemy_0">
 		<language name="JPN" width="256">アントニオ『……　……　……
-[1:00:トレーナー名:1]………　……▽
+……　……　……　……　……　……▽
+……　……　[1:00:トレーナー名:1]……　……▽
 [1:00:トレーナー名:1]！！▽
 [1:00:トレーナー名:1]　なんだね……！</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　……　……
-[1:00:トレーナー名:1]………　……▽
+……　……　……　……　……　……▽
+……　……　[1:00:トレーナー名:1]……　……▽
 [1:00:トレーナー名:1]！！▽
 [1:00:トレーナー名:1]　なんだね……！</language>
 	</row>
@@ -822,9 +828,9 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おもいだしたんだね
 アントニオ！▽
 あなたに　また　あえるなんて……！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おもいだしたんだね
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『思い出したんだね
 アントニオ！▽
-あなたに　また　あえるなんて……！▼</language>
+あなたに　また　会えるなんて……！▼</language>
 	</row>
 	<row id="pw_event11_enemy_1">
 		<language name="JPN" width="256">アントニオ『……きみに　あうため
@@ -834,11 +840,11 @@
 それから　まっしろさ……▼
 まさか　あんなことに
 なっているなんて……</language>
-		<language name="JPN_KANJI" width="256">アントニオ『……きみに　あうため
-この　せかいに　きたんだけど▼
-きみの　かわりはてた
-すがたを　みて　ショックで……▽
-それから　まっしろさ……▼
+		<language name="JPN_KANJI" width="256">アントニオ『……きみに　会うため
+この　世界に　きたんだけど▼
+きみの　変わり果てた
+姿を　みて　ショックで……▽
+それから　真っ白さ……▼
 まさか　あんなことに
 なっているなんて……</language>
 	</row>
@@ -848,22 +854,24 @@
 そんなに　ひどい
 すがた　だった　かしら……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たしかに　あなたが
-いなくなって　おちこんだけど……▼
+いなくなって　落ち込んだ……▼
 そんなに　ひどい
-すがた　だった　かしら……？</language>
+姿　だった　かしら……？</language>
 	</row>
 	<row id="pw_event11_enemy_2">
-		<language name="JPN" width="256">ドーブル『[1:00:トレーナー名:1]さん……！
-あなたも　ここ　さいきんの　きおく▽
+		<language name="JPN" width="256">ドーブル『……　……　……
+[1:00:トレーナー名:1]さん……！▽
+あなたも　さいきんの　きおく▽
 まっしろ　じゃ　ないですか？▼
 かれとの　おもいでが　ある
 ゆうえんちへ　いく　きおくが▽
 ぼんやりと　ある　くらいで……▼</language>
-		<language name="JPN_KANJI" width="256">ドーブル『[1:00:トレーナー名:1]さん……！
-あなたも　ここ　さいきんの　きおく▽
-まっしろ　じゃ　ないですか？▼
-かれとの　おもいでが　ある
-ゆうえんちへ　いく　きおくが▽
+		<language name="JPN_KANJI" width="256">ドーブル『……　……　……
+[1:00:トレーナー名:1]さん……！▽
+あなたも　最近の　記憶▽
+真っ白　じゃ　ないですか？▼
+彼との　思い出が　ある
+遊園地へ　行く　記憶が▽
 ぼんやりと　ある　くらいで……▼</language>
 	</row>
 	<row id="pw_event11_hero_3">
@@ -873,18 +881,18 @@
 わたしは　なにを　していたの？▽
 きのうは？　おとといは？
 </language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……　うそ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……　ウソ……
 ……　……　……　……　……▽
 ……　いや　たしかに▽
-わたしは　なにを　していたの？▽
-きのうは？　おとといは？
+わたしは　何を　していたの？▽
+昨日は？　おとといは？
 </language>
 	</row>
 	<row id="pw_event11_enemy_3">
 		<language name="JPN" width="256">ドーブル『……　……　……　……　
 [1:00:トレーナー名:1]さんは……▽
 アントニオ　さんが　いなくなったあと▽
-じこに　まきこまれたん　です▼
+しばらくして……▼
 ただ　あなたは　この　せかいに
 つよい　おもいが　あったようで▽
 おもいでの　ばしょを▽
@@ -894,12 +902,12 @@
 		<language name="JPN_KANJI" width="256">ドーブル『……　……　……　……　
 [1:00:トレーナー名:1]さんは……▽
 アントニオ　さんが　いなくなったあと▽
-じこに　まきこまれたん　です▼
-ただ　あなたは　この　せかいに
-つよい　おもいが　あったようで▽
-おもいでの　ばしょを▽
+しばらくして……▼
+ただ　あなたは　この　世界に
+つよい　思いが　あったようで▽
+思い出の　場所を▽
 さまよい　づづけて　いたんです▼
-もうすこしで　きおくが　すべて　きえ
+もう少しで　記憶が　すべて　消え
 あなたで　なくなる　ところでした……</language>
 	</row>
 	<row id="pw_event11_hero_4">
@@ -910,7 +918,7 @@
 	</row>
 	<row id="pw_event11_enemy_4">
 		<language name="JPN" width="256">ドーブル『あなたを　たすけるため
-アントニオさんを　よんだんですけど▽
+アントニオさんを　つれてきたんですが▽
 あなたを　みた　アントニオさん▽
 なきくずれて　そのまま▽
 きおくを　うしなって……▼
@@ -919,15 +927,15 @@
 もどられて……▼
 ……　まあ　おにあいの　ふたりって
 いえばいいんですかね……？</language>
-		<language name="JPN_KANJI" width="256">ドーブル『あなたを　たすけるため
-アントニオさんを　よんだんですけど▽
+		<language name="JPN_KANJI" width="256">ドーブル『あなたを　助けるため
+アントニオさんを　連れてきたんですが▽
 あなたを　みた　アントニオさん▽
-なきくずれて　そのまま▽
-きおくを　うしなって……▼
+泣き崩れて　そのまま▽
+記憶を　失って……▼
 すると　アントニオさんを　みた
-[1:00:トレーナー名:1]さんが　しょうきに▽
-もどられて……▼
-……　まあ　おにあいの　ふたりって
+[1:00:トレーナー名:1]さんが　正気に▽
+戻られて……▼
+……　まあ　お似合いの　ふたりって
 いえばいいんですかね……？</language>
 	</row>
 	<row id="pw_event11_hero_5">
@@ -953,7 +961,7 @@
 きっと　あるんでしょう？
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『じゃあ
-あのよ　とやらへ　いきましょうか▼
+あの世　とやらへ　行きましょうか▼
 ポケモンが　しゃべるくらいだから
 きっと　あるんでしょう？
 </language>
@@ -963,8 +971,8 @@
 きっと　きにいると　おもいますよ▽
 ゆうえんち　だって　あるですから</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ええ　もちろん！
-きっと　きにいると　おもいますよ▽
-ゆうえんち　だって　あるですから</language>
+きっと　気にいる　思いますよ▽
+遊園地　だって　あるですから</language>
 	</row>
 	<row id="pw_event11_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うふふ　そう……　でも
@@ -973,11 +981,11 @@
 アントニオがいれば　どうでも　いいの</language>
 	</row>
 	<row id="pw_event11_enemy_7">
-		<language name="JPN" width="256">ドーブル『ふふふ
+		<language name="JPN" width="256">ドーブル『ふっふっふっ
 さあ　おにあいの　おふたりさん！▽
 どうぞ　ごあんない　します……</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ふふふ
-さあ　おにあいの　おふたりさん！▽
+		<language name="JPN_KANJI" width="256">ドーブル『ふっふっふっ
+さあ　お似合いの　おふたりさん！▽
 どうぞ　ごあんない　します……</language>
 	</row>
 ﻿	<flowchart-group-list>
