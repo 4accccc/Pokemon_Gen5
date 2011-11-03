@@ -340,6 +340,20 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミッション開始のエフェクト開始
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void PALACE_GMK_EffectStart( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PALACE_GMK_WORK *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
+
+  ANM_EFFECT_03_Play( p_wk );
+}
 
 //==============================================================================
 //  				static関数

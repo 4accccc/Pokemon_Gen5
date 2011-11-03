@@ -130,6 +130,9 @@ _RET
 //--------------------------------------------------------------
 sub_monolith_fest_mission_entry:
 {
+  // ギミックエフェクトスタート
+  _MISSION_START_GMK_EFFECT()
+
   _SYSWIN_MSG( plc_fmission_entry, POS_DOWN )
   _TIME_WAIT(120) //4秒カウントダウン 
   _SYSWIN_CLOSE()
