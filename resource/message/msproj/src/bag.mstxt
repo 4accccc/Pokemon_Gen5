@@ -5645,10 +5645,10 @@ common_scr.gmmの変更も忘れないでください
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットに　もどす</Text>
+			<Text>もとのポケットへ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-28T03:37:22" />
+				Time="2011-11-04T11:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5656,10 +5656,10 @@ common_scr.gmmの変更も忘れないでください
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットに　もどす</Text>
+			<Text>もとのポケットへ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-28T03:37:31" />
+				Time="2011-11-04T11:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -56,15 +56,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]はじめて　デートを　した　ばしょ。
+			<Text>[Ctrl1:xcenter ]はじめて
 
-[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
-
-[Ctrl1:xcenter ]かんらんしゃ　だった。
-</Text>
+[Ctrl1:xcenter ]デートを　した　ばしょ。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:09:44" />
+				Time="2011-11-04T09:31:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,15 +69,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]初めて　デートを　した　場所。
+			<Text>[Ctrl1:xcenter ]初めて　
 
-[Ctrl1:xcenter ]プロポーズは　遊園地の
-
-[Ctrl1:xcenter ]観覧車　だった。
-</Text>
+[Ctrl1:xcenter ]デートを　した　場所。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:09:49" />
+				Time="2011-11-04T09:31:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -92,13 +86,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
+			<Text>[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
 
-[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
+[Ctrl1:xcenter ]かんらんしゃ　だった。
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:48:36" />
+				Time="2011-11-04T09:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -106,13 +100,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]彼女と　わかれた　今も
+			<Text>[Ctrl1:xcenter ]プロポーズは　遊園地の
 
-[Ctrl1:xcenter ]遊園地を　訪れる。
+[Ctrl1:xcenter ]観覧車　だった。
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:37:15" />
+				Time="2011-11-04T09:31:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -124,12 +118,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そして　かのじょと
+			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
 
-[Ctrl1:xcenter ]さいかい　した。</Text>
+[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:30" />
+				Time="2011-11-04T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -137,12 +132,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そして　彼女と
+			<Text>[Ctrl1:xcenter ]彼女と　わかれた　今も
 
-[Ctrl1:xcenter ]再会を　した。</Text>
+[Ctrl1:xcenter ]遊園地を　訪れる。
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:18" />
+				Time="2011-11-04T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -154,13 +150,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]そして　かのじょと
+
+[Ctrl1:xcenter ]さいかい　した。</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T09:30:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]そして　彼女と
+
+[Ctrl1:xcenter ]再会を　した。</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T09:30:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:12" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]なぜか　ポケモンしょうぶを　
 
 [Ctrl1:xcenter ]もうしこまれた……！
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:40" />
+				Time="2011-11-04T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -175,33 +201,7 @@
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_006"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T10:09:28" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T07:09:54" />
+				Time="2011-11-04T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,15 +360,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]はじめて　デートを　した　ばしょ。
+			<Text>[Ctrl1:xcenter ]はじめて
 
-[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
-
-[Ctrl1:xcenter ]かんらんしゃ　だった。
-</Text>
+[Ctrl1:xcenter ]デートを　した　ばしょ。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:11:13" />
+				Time="2011-11-04T09:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -376,15 +373,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]初めて　デートを　した　場所。
+			<Text>[Ctrl1:xcenter ]初めて　
 
-[Ctrl1:xcenter ]プロポーズは　遊園地の
-
-[Ctrl1:xcenter ]観覧車　だった。
-</Text>
+[Ctrl1:xcenter ]デートを　した　場所。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:35:58" />
+				Time="2011-11-04T09:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -396,13 +390,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
+			<Text>[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
 
-[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
+[Ctrl1:xcenter ]かんらんしゃ　だった。
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:48:47" />
+				Time="2011-11-04T09:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -410,13 +404,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]彼と　わかれた　今も
+			<Text>[Ctrl1:xcenter ]プロポーズは　遊園地の
 
-[Ctrl1:xcenter ]遊園地を　訪れる。
+[Ctrl1:xcenter ]観覧車　だった。
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:12:18" />
+				Time="2011-11-04T09:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -428,12 +422,44 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
+
+[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T09:31:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]彼と　わかれた　今も
+
+[Ctrl1:xcenter ]遊園地を　訪れる。
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T09:31:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そして　かれと
 
 [Ctrl1:xcenter ]さいかい　した。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:12:30" />
+				Time="2011-11-04T09:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -446,7 +472,7 @@
 [Ctrl1:xcenter ]再会を　した。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:12:24" />
+				Time="2011-11-04T09:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -454,7 +480,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_briefing_f_005"
+		Label="pw_briefing_f_006"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -464,7 +490,7 @@
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:54" />
+				Time="2011-11-04T09:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -479,33 +505,7 @@
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T13:38:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_006"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				Time="2011-11-04T09:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

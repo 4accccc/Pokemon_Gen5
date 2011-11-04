@@ -54,12 +54,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]あくりょうに　からだを　のっとられた
+			<Text>[Ctrl1:xcenter ]ある　むらで
 
-[Ctrl1:xcenter ]じんぶつが　いるとの　じょうほう　あり。</Text>
+[Ctrl1:xcenter ]あくりょうに　とりつかれた
+
+[Ctrl1:xcenter ]しょうじょが　いるとの
+
+[Ctrl1:xcenter ]じょうほう　あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:26:53" />
+				Time="2011-11-04T15:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -67,12 +71,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+			<Text>[Ctrl1:xcenter ]ある　村で
 
-[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
+[Ctrl1:xcenter ]悪霊に　とりつかれた
+
+[Ctrl1:xcenter ]少女が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:21" />
+				Time="2011-11-04T15:23:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -84,14 +90,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]この　じんぶつは　むらで
+			<Text>[Ctrl1:xcenter ]ゆうれい　そうどうが
 
-[Ctrl1:xcenter ]ゆうれい　そうどうが　おきて　いらい
+[Ctrl1:xcenter ]おきて　いらい
 
-[Ctrl1:xcenter ]だれも　みかけていないという。</Text>
+[Ctrl1:xcenter ]だれも　しょうじょを
+
+[Ctrl1:xcenter ]みかけて　いないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:27:17" />
+				Time="2011-11-04T14:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -99,14 +107,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]この人物は　村で
+			<Text>[Ctrl1:xcenter ]幽霊騒動が
 
-[Ctrl1:xcenter ]幽霊騒動が　おきて以来
+[Ctrl1:xcenter ]おきて以来
 
-[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
+[Ctrl1:xcenter ]だれも　少女を　
+
+[Ctrl1:xcenter ]見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:21" />
+				Time="2011-11-04T14:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -345,12 +355,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]あくりょうに　からだを　のっとられた
+			<Text>[Ctrl1:xcenter ]ある　むらで
 
-[Ctrl1:xcenter ]じんぶつが　いるとの　じょうほう　あり。</Text>
+[Ctrl1:xcenter ]あくりょうに　とりつかれた
+
+[Ctrl1:xcenter ]しょうじょが　いるとの
+
+[Ctrl1:xcenter ]じょうほう　あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:27:55" />
+				Time="2011-11-04T15:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -358,12 +372,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]悪霊に　からだを　のっとられた
+			<Text>[Ctrl1:xcenter ]ある　村で
 
-[Ctrl1:xcenter ]人物が　いるとの　情報あり。</Text>
+[Ctrl1:xcenter ]悪霊に　とりつかれた
+
+[Ctrl1:xcenter ]少女が　いるとの　情報あり。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:31" />
+				Time="2011-11-04T15:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -375,14 +391,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]この　じんぶつは　むらで
+			<Text>[Ctrl1:xcenter ]ゆうれい　そうどうが
 
-[Ctrl1:xcenter ]ゆうれい　そうどうが　おきて　いらい
+[Ctrl1:xcenter ]おきて　いらい
 
-[Ctrl1:xcenter ]だれも　みかけていないという。</Text>
+[Ctrl1:xcenter ]だれも　しょうじょを
+
+[Ctrl1:xcenter ]みかけて　いないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:27:55" />
+				Time="2011-11-04T14:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -390,14 +408,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]この人物は　村で
+			<Text>[Ctrl1:xcenter ]幽霊騒動が
 
-[Ctrl1:xcenter ]幽霊騒動が　おきて以来
+[Ctrl1:xcenter ]おきて以来
 
-[Ctrl1:xcenter ]だれも　見かけていないという。</Text>
+[Ctrl1:xcenter ]だれも　少女を　
+
+[Ctrl1:xcenter ]見かけていないという。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:31" />
+				Time="2011-11-04T14:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

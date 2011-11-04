@@ -68,6 +68,66 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_turn_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『くうきが　おもたい……
+はやく　けっちゃくを　つけないと▽
+とりこまれる　きけんが……
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T14:14:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T14:14:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『空気が　重たい……
+早く　決着を　つけないと▽
+とりこまれる　危険が……
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T14:14:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T14:14:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが……！
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが……！
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event0_hero_0"
 		Style="Large">
 		<LanguageCell
@@ -210,28 +270,55 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event0_react_hero_0">
+		Label="pw_event0_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　しまつするものだ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（のりうつった　ものが
+はなしかけてきた……？）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『幽霊を　始末するもの！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（のりうつった者が
+話しかけてきた……？）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event0_react_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　しまつするものよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:49:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:49:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　始末するものよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:49:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:49:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -265,25 +352,25 @@
 		Label="pw_event0_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　とむらうものだ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　とむらうものよ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『幽霊を　とむらうもの　だ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　とむらうものよ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -457,27 +544,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なぜ　さわいでいるか……？
-おそらく……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（なぜ……
+さわいでいるか……？　おそらく……）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T05:49:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なぜ　騒いでいるか……？
-おそらく……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（なぜ……
+騒いでいるか……？　おそらく……）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T05:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T05:49:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -491,25 +578,25 @@
 		Label="pw_event1_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『たのしいから？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにか　たのしいから？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『楽しいから？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何か　楽しいから？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -543,25 +630,25 @@
 		Label="pw_event1_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おこっている？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにかに　おこっている？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『怒っている？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何かに　怒っている？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -595,25 +682,25 @@
 		Label="pw_event1_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『しんぱいごとが　ある？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにか　しんぱいが　ある？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『心配ごとが　ある？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何か　心配が　ある？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -645,25 +732,25 @@
 		Label="pw_event1_react_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『こわいから？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにか　こわいから？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『怖いから？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何か　怖いから？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -702,16 +789,16 @@
 ウググ……　ウググ……▽
 オレタチ　ムスガメ▽
 シンパイ……▽
-オマエニ……　タノム……　ウググ…▽
+オマエニ……　タノミ……　ガググ…▽
 あががががががあががあ……▽
 た…た…たすけ…</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -719,16 +806,16 @@
 ウググ……　ウググ……▽
 オレタチ　ムスガメ▽
 シンパイ……▽
-オマエニ……　タノム……　ウググ…▽
+オマエニ……　タノミ……　ガググ…▽
 あががががががあががあ……▽
 た…た…たすけ…</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -808,27 +895,27 @@
 		Label="pw_event2_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　ひとの
-いしきが　もどった……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（とりつかれた　ひとの
+いしきが　もどった……？）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　人の
-意識が　もどった……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（とりつかれた　人の
+意識が　もどった……？）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -836,82 +923,84 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『こ…こいつを
-たいじ　してくれ▼
+こいつらを……　たいじ　してくれ！▼
 こいつらに　わたしの　むすめが
 とりつかれた……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『こ…こいつを
-退治　してくれ▼
+こいつらを……　退治　してくれ！▼
 こいつらに　わたしの　娘が
 とりつかれた……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ふたりの　はなし……
-どうすれば　いいんだ……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（ふたつの　はなし……
+どうすれば　いいんだ……？▽
+よし……　きめた！）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『二人の　話……
-どうすれば　いいんだ……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（二つの　話……
+どうすれば　いいんだ……？▽
+よし……　決めた！）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　けしてやる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　けす！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『幽霊を　消してさる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『幽霊を　消す！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:41:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -947,25 +1036,25 @@
 		Label="pw_event2_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　とむらってやる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ゆうれいを　とむらう！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『幽霊を　とむらってやる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『幽霊を　とむらう！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T13:41:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1001,75 +1090,79 @@
 		Label="pw_event2_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ちょっと　まって……！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ゆうれいの　はなしを　きく！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ちょっと　まって……！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『幽霊の　話を　きく！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_react_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス『ウググ……</Text>
+			<Text>カダス『なっ……
+なにを　いっているんだアアアア……▽
+ウググ……　ハナシ　キイテクレルカ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス『ウググ……</Text>
+			<Text>カダス『なっ……
+何を　言っているんだアアアア……▽
+ウググ……　ハナシ　キイテクレルカ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_react_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　フリだ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　フリだ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　フリだ！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『とりつかれた　フリだ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T03:59:16" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1109,26 +1202,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『オマエ
-ツヨイ　ココロ　アルナ……　</Text>
+ココロガ　ツヨイ……　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『オマエ
-ツヨイ　ココロ　アルナ……　</Text>
+ココロガ　ツヨイ……　</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1178,35 +1271,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス『コノ　オトコノ　ムスメ……
+			<Text>カダス『コノ　オトコノ
+ムスメ……▽
 トテモ　ヤサシイ……▼
-ワレワレノ　ハカヲ　イツモ　キレイニ
+ハカヲ　イツモ　キレイニ
 シテクレル▼
 イツモ　ヤサシク
 コエヲ　カケテクレル……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス『コノ　オトコノ　ムスメ……
+			<Text>カダス『コノ　オトコノ
+ムスメ……▽
 トテモ　ヤサシイ……▼
-ワレワレノ　ハカヲ　イツモ　キレイニ
+ハカヲ　イツモ　キレイニ
 シテクレル▼
 イツモ　ヤサシク
 コエヲ　カケテクレル……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1220,27 +1315,31 @@
 		Label="pw_event3_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ゆうれいと　かいわが　できる
-ちからを　もっている……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ゆうれいに
+とりつかれた　ひとが　いる……？▽
+そのひとを　たすけたいのね……？
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『幽霊と　会話が　できる
-チカラを　もっている……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『幽霊に
+とりつかれた　人が　いる……？▽
+その人を　助けたいのね……？
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1252,7 +1351,7 @@
 エタイノ　シレナイモノニ
 トリツカレテル……▼
 ソイツハ　オソロシイ
-チカラヲ　モッテイル……▼
+チカラガ　アル……▼
 ワレワレ　デハ　カナワナイ
 ダカラ　サワギヲ　オコシタ▽
 ツヨイ　ヤツ　ヨボウト　シタ……▼
@@ -1260,11 +1359,11 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1273,7 +1372,7 @@
 エタイノ　シレナイモノニ
 トリツカレテル……▼
 ソイツハ　オソロシイ
-チカラヲ　モッテイル……▼
+チカラガ　アル……▼
 ワレワレ　デハ　カナワナイ
 ダカラ　サワギヲ　オコシタ▽
 ツヨイ　ヤツ　ヨボウト　シタ……▼
@@ -1281,11 +1380,11 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:20:04" />
+				Time="2011-11-04T06:04:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1295,32 +1394,32 @@
 			<Text>『ゴーストイレイザー　ほうこくしょ
 　ファイル№００１　への　ついき』▼
 むらの　はかば　いじょう　なし
-べっけんで　きになる　じょうほう　あり▽
-ちょうさを　けいぞく　する▽
+べっけんで　きになる　じょうほう　あり▼
+ちょうさを　けいぞく　する
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
 　ファイル№００１　への　追記』▼
 村の墓地　異常なし
-別件で　気になる　情報あり▽
-調査を　継続　する▽
+別件で　気になる　情報あり▼
+調査を　継続　する
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1647,23 +1746,50 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event5_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが　うごかない……！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが　動かない……！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event5_enemy_0"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『オマエノ　カラダ
-ジョウブソウダ▼
+ジョウブ　ソウダ▼
 オレノ　ウツワニ　ナレ
 オマエノ　タマシイハ　イラナイ▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:11:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1694,39 +1820,47 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]のこえ『タスケテ……
-ダレニモ　コエガガ　キコエナイ……？▼
+			<Text>[Name:TrainerName Idx="1" ]『うわああああああ
+……　……　……　……　……　……▼
+[Name:TrainerName Idx="1" ]のこえ『タスケテ……
+ダレニモ　コエガ　キコエナイ……？▼
 タスケテ……　タスケテ……
 タスケテ……　……　……▼
+……　……　……　……　……　……　
+……　……　……　……　……　……▼
 ……　アタマガ　ボンヤリ　シテキタ
 ナンデ　ワタシハ　コウナッタ？▼
 アレ　ソウイエバ　ワタシハ
-ナニモノダッケ……▼</Text>
+ナニモノダッケ……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:41:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]のこえ『タスケテ……
-ダレニモ　コエガガ　キコエナイ……？▼
+			<Text>[Name:TrainerName Idx="1" ]『うわああああああ
+……　……　……　……　……　……▼
+[Name:TrainerName Idx="1" ]のこえ『タスケテ……
+ダレニモ　コエガ　キコエナイ……？▼
 タスケテ……　タスケテ……
 タスケテ……　……　……▼
+……　……　……　……　……　……　
+……　……　……　……　……　……▼
 ……　アタマガ　ボンヤリ　シテキタ
 ナンデ　ワタシハ　コウナッタ？▼
 アレ　ソウイエバ　ワタシハ
-ナニモノダッケ……▼</Text>
+ナニモノダッケ……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:41:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T13:41:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1743,33 +1877,33 @@
 			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
 　ファイル№００１への　ついき』▼
-ファイル№００１を　さいごに▽
+ファイル№００１を　さいごに
 [Name:TrainerName Idx="1" ]から　れんらく　なし▼
-[Name:TrainerName Idx="1" ]　しょうそく　ふめい
+[Name:TrainerName Idx="1" ]　しょうそく　ふめい……
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
 　ファイル№００１への　追記』▼
-ファイル№００１を　最後に▽
+ファイル№００１を　最後に
 [Name:TrainerName Idx="1" ]から　連絡なし▼
-[Name:TrainerName Idx="1" ]　消息不明
+[Name:TrainerName Idx="1" ]　消息不明……
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1780,6 +1914,33 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event6_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが　うごかない……！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『うう……
+カラダが　動かない……！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T04:09:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event6_enemy_0"
 		Style="Large">
 		<LanguageCell
@@ -1787,32 +1948,34 @@
 			<Text>カダス『オマエノ　カラダ
 ジョウブソウダ▼
 オレノ　ウツワニ　ナレ
-オマエノ　タマシイヲ　モラオウ▼
+オマエノ　タマシイモ　
+ノコシテ　ヤロウ……▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『オマエノ　カラダ
 ジョウブソウダ▼
 オレノ　ウツワニ　ナレ
-オマエノ　タマシイヲ　モラオウ▼
+オマエノ　タマシイモ　
+ノコシテ　ヤロウ……▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:43" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1827,37 +1990,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>%MYNAME『ウガガ……
-ムラノ　ユウレイ　サワギ　ウソ……▽
-ムラハ　カイテキデ　アンゼン▽
-ケシキハ　スバラシク　クウキ　ウマイ▽
+			<Text>[Name:TrainerName Idx="1" ]『ウガガ……
+ムラノ　ユウレイ　サワギ　ウソ……▼
+ムラハ　カイテキデ　アンゼン
+ケシキハ　スバラシク　クウキ　ウマイ▼
 メンドウナ　ヤツ　コナイヨウニ
 ホウコク　シヨウ　ソウシヨウ……
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>%MYNAME『ウガガ……
-ムラノ　ユウレイ　サワギ　ウソ……▽
-ムラハ　カイテキデ　アンゼン▽
-ケシキハ　スバラシク　クウキ　ウマイ▽
+			<Text>[Name:TrainerName Idx="1" ]『ウガガ……
+ムラノ　ユウレイ　サワギ　ウソ……▼
+ムラハ　カイテキデ　アンゼン
+ケシキハ　スバラシク　クウキ　ウマイ▼
 メンドウナ　ヤツ　コナイヨウニ
 ホウコク　シヨウ　ソウシヨウ……
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T12:20:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1878,14 +2041,14 @@
 さいきん　ニセ　じょうほう　おおし▽
 ちゅうい　されたし▼
 なお　むらは　あんぜんで
-かいてきで　けしきもよく…………▼</Text>
+かいてきで　けしきは　すばらしく……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1895,14 +2058,14 @@
 最近　ニセ情報　多し▽
 注意　されたし▼
 なお　村は　とても　安全で
-快適で　景色もよく…………▼</Text>
+快適で　景色は　素晴らしく……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T14:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:45" />
+				Time="2011-11-04T14:14:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

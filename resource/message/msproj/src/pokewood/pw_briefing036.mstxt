@@ -73,10 +73,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ある村　からの　
 
-[Ctrl1:xcenter ]幽霊に　関わる　調査依頼。</Text>
+[Ctrl1:xcenter ]幽霊に　関わる
+
+[Ctrl1:xcenter ]調査依頼。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:56" />
+				Time="2011-11-04T12:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -88,16 +90,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いらいにんの　むらでは
+			<Text>[Ctrl1:xcenter ]ここ　すうじつ　ゆうれいを
 
-[Ctrl1:xcenter ]ここ　すうじつ　ゆうれいを
+[Ctrl1:xcenter ]もくげき　した　ひとが
 
-[Ctrl1:xcenter ]もくげき　した　ひとが　
-
-[Ctrl1:xcenter ]たくさん　いると　いう。</Text>
+[Ctrl1:xcenter ]たすう　いると　いう。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:22:43" />
+				Time="2011-11-04T12:43:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -105,16 +105,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]依頼人の　村では
-
-[Ctrl1:xcenter ]ここ　数日　幽霊を
+			<Text>[Ctrl1:xcenter ]ここ　数日　幽霊の
 
 [Ctrl1:xcenter ]目撃した　人が
 
-[Ctrl1:xcenter ]多数いると　いう。</Text>
+[Ctrl1:xcenter ]多数いる　という。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:21:08" />
+				Time="2011-11-04T12:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -128,12 +126,13 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]むらびとの　なかには
 
-[Ctrl1:xcenter ]ゆうれいに とりつかれた　ものがいる
+[Ctrl1:xcenter ]ゆうれいに とりつかれた
 
-[Ctrl1:xcenter ]ウワサも　あるという。</Text>
+[Ctrl1:xcenter ]ものも　いると　いう。
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:24:02" />
+				Time="2011-11-04T12:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -143,12 +142,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]村人の　なかには
 
-[Ctrl1:xcenter ]幽霊に とりつかれた　ものがいる
+[Ctrl1:xcenter ]幽霊に とりつかれた
 
-[Ctrl1:xcenter ]ウワサも　あるという。</Text>
+[Ctrl1:xcenter ]者も　いる　という。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:23:54" />
+				Time="2011-11-04T12:44:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -160,14 +159,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]これより　ゆうれいの　もくげきが
+			<Text>[Ctrl1:xcenter ]これより　ゆうれいが
 
-[Ctrl1:xcenter ]あがっている　はかばの　ちょうさを
+[Ctrl1:xcenter ]たすう　もくげき　されている
+
+[Ctrl1:xcenter ]ぼちの　ちょうさを
 
 [Ctrl1:xcenter ]かいし　する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:15" />
+				Time="2011-11-04T12:42:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -175,14 +176,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]これより　幽霊の　目撃が
+			<Text>[Ctrl1:xcenter ]これより　幽霊が
 
-[Ctrl1:xcenter ]多数ある　墓地　調査を
+[Ctrl1:xcenter ]多数　目撃されている
+
+[Ctrl1:xcenter ]墓地の　ちょうさを
 
 [Ctrl1:xcenter ]開始する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:56" />
+				Time="2011-11-04T12:42:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -384,10 +387,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ある村　からの　
 
-[Ctrl1:xcenter ]幽霊に　関わる　調査依頼。</Text>
+[Ctrl1:xcenter ]幽霊に　関わる
+
+[Ctrl1:xcenter ]調査依頼。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:47" />
+				Time="2011-11-04T12:45:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -399,16 +404,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いらいにんの　むらでは
+			<Text>[Ctrl1:xcenter ]ここ　すうじつ　ゆうれいを
 
-[Ctrl1:xcenter ]ここ　すうじつ　ゆうれいを
+[Ctrl1:xcenter ]もくげき　した　ひとが
 
-[Ctrl1:xcenter ]もくげき　した　ひとが　
-
-[Ctrl1:xcenter ]たくさん　いると　いう。</Text>
+[Ctrl1:xcenter ]たすう　いると　いう。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:44" />
+				Time="2011-11-04T12:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -416,16 +419,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]依頼人の　村では
-
-[Ctrl1:xcenter ]ここ　数日　幽霊を
+			<Text>[Ctrl1:xcenter ]ここ　数日　幽霊の
 
 [Ctrl1:xcenter ]目撃した　人が
 
-[Ctrl1:xcenter ]多数いると　いう。</Text>
+[Ctrl1:xcenter ]多数いる　という。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:53" />
+				Time="2011-11-04T12:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -439,12 +440,13 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]むらびとの　なかには
 
-[Ctrl1:xcenter ]ゆうれいに とりつかれた　ものがいる
+[Ctrl1:xcenter ]ゆうれいに とりつかれた
 
-[Ctrl1:xcenter ]ウワサも　あるという。</Text>
+[Ctrl1:xcenter ]ものも　いると　いう。
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:44" />
+				Time="2011-11-04T12:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -454,12 +456,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]村人の　なかには
 
-[Ctrl1:xcenter ]幽霊に とりつかれた　ものがいる
+[Ctrl1:xcenter ]幽霊に とりつかれた
 
-[Ctrl1:xcenter ]ウワサも　あるという。</Text>
+[Ctrl1:xcenter ]者も　いる　という。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:53" />
+				Time="2011-11-04T12:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -471,14 +473,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]これより　ゆうれいの　もくげきが
+			<Text>[Ctrl1:xcenter ]これより　ゆうれいが
 
-[Ctrl1:xcenter ]あがっている　はかばの　ちょうさを
+[Ctrl1:xcenter ]たすう　もくげき　されている
+
+[Ctrl1:xcenter ]ぼちの　ちょうさを
 
 [Ctrl1:xcenter ]かいし　する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:44" />
+				Time="2011-11-04T12:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -486,14 +490,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]これより　幽霊の　目撃が
+			<Text>[Ctrl1:xcenter ]これより　幽霊が
 
-[Ctrl1:xcenter ]多数ある　墓地　調査を
+[Ctrl1:xcenter ]多数　目撃されている
+
+[Ctrl1:xcenter ]墓地の　ちょうさを
 
 [Ctrl1:xcenter ]開始する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:47" />
+				Time="2011-11-04T12:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
