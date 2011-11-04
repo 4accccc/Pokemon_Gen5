@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-11-04T11:32:44" source="map22_09_s.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-11-04T14:38:19" source="map22_09_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-04T11:32:44" source="map22_09_s.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-04T14:38:19" source="map22_09_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -32,20 +32,16 @@
 <tex_image_array size="26">
 	<tex_image index="0" name="18_michi_hibi"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
+		format="palette4"
 		color0_mode="transparency"
 		palette_name="18_michi_hibi_pl"
 		path="C:/home/swan_data3d/field/out18/chip/tex/18_michi_hibi.tga"
 	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 3330 0033 0033 2230 2233 3032 0032
-			1300 1112 1221 0031 2000 2111 1112 0003
-			3000 2211 3122 0003 0000 2212 3213 0003
-			0000 3212 3213 0003 3000 3212 3213 0003
-			2000 3211 3213 0300 1300 2111 0321 0223
-			2200 1112 0032 0012 0020 1223 3003 0321
-			0000 2330 2303 0230 0000 0000 0000 0000
+		<bitmap size="32">
+			0000 0000 0000 0000 5400 0505 a5a4 0646
+			fed0 07eb bf80 01fe af40 017a ae00 016d
+			6e00 016d 6e40 016d 6f80 106d bfd0 291b
+			fea0 0e06 e908 1b41 9400 2491 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="doukutu01"
@@ -883,8 +879,8 @@
 </tex_image_array>
 
 <tex_palette_array size="26">
-	<tex_palette index="0" name="18_michi_hibi_pl" color_size="8">
-		0000 3298 36b9 3ad9 7fff 7fff 7fff 7fff
+	<tex_palette index="0" name="18_michi_hibi_pl" color_size="4">
+		7fff 36b8 3298 2e77
 	</tex_palette>
 	<tex_palette index="1" name="doukutu01_pl" color_size="16">
 		7fff 198e 2213 2256 1df2 2e99 2e13 258f
@@ -1434,7 +1430,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="sea_mizu1_2"
+	<material index="19" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="16"
