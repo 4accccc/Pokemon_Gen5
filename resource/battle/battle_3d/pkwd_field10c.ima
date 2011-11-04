@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-02T12:42:52" source="pkwd_field10c_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-04T16:53:15" source="pkwd_field10c_all.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -15,7 +15,7 @@
 	tool_start_frame="0"
 	tool_end_frame="1000"
 	interpolation="frame"
-	compress_material="on" material_size="18 16"
+	compress_material="on" material_size="18 18"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
