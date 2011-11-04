@@ -23,24 +23,22 @@
 #define H04_VOICE_01                       3
 #define TR_TENNIS_13                       4
 #define TR_TANPAN_23                       5
-#define TR_ARTIST_05                       6
-#define TR_FISHING_21                      7
-#define TR_MINI_18                         8
-#define TR_BACKPACKERM_22                  9
-#define H04_STOP_01                       10
-#define H04_OLDMAN1_01                    11
-#define H04_BOY1_01                       12
-#define H04_BACKPACKERW_01                13
-#define FLD_ITEM_148                      14
-#define FLD_ITEM_149                      15
-#define FLD_ITEM_150                      16
-#define FLD_ITEM_151                      17
-#define FLD_ITEM_152                      18
-#define FLD_ITEM_153                      19
-#define H04_MAN3_01                       20
-#define TR_BASKET_13                      21
-#define TR_BASKET_14                      22
-#define TR_TENNIS_14                      23
+#define TR_FISHING_21                      6
+#define TR_ARTIST_05                       7
+#define H04_STOP_01                        8
+#define H04_OLDMAN1_01                     9
+#define H04_BOY1_01                       10
+#define H04_BACKPACKERW_01                11
+#define FLD_ITEM_148                      12
+#define FLD_ITEM_149                      13
+#define FLD_ITEM_150                      14
+#define FLD_ITEM_151                      15
+#define FLD_ITEM_152                      16
+#define FLD_ITEM_153                      17
+#define H04_MAN3_01                       18
+#define TR_BASKET_13                      19
+#define TR_BASKET_14                      20
+#define TR_TENNIS_14                      21
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
