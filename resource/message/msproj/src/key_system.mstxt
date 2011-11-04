@@ -3123,10 +3123,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート　ＩＤ：[Digit:5digits Idx="0" ]</Text>
+			<Text>おもいでリンク　ＩＤ：[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:13:40" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T01:42:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3134,10 +3134,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート　ＩＤ：[Digit:5digits Idx="0" ]</Text>
+			<Text>おもいでリンク　ＩＤ：[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:13:31" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T01:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3607,12 +3607,12 @@ DSシステムフォントなので
 			Language="JPN">
 			<Text>ただしい　ソフトが　ささっていません
 でんげんをきり　ただしい　ソフトを
-さしてから　てんそうマシンを
+さしてから　おもいでリンクを
 きどうしなおして　ください▼
 おもいでリンクを　しゅうりょうします▼</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:55:16" />
+				Time="2011-11-04T01:45:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3622,12 +3622,12 @@ DSシステムフォントなので
 			Language="JPN_KANJI">
 			<Text>正しい　ソフトが　ささっていません
 電源を切り　正しい　ソフトを
-さしてから　転送マシンを
+さしてから　おもいでリンクを
 起動し直してください▼
 おもいでリンクを　終了します▼</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:55:25" />
+				Time="2011-11-04T01:45:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4027,12 +4027,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セーブデータを
-ダウンロードしています▽
+			<Text>レポートを
+リンク　しています▽
 しばらく　おまちください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:50" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T01:46:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4040,12 +4040,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セーブデータを
-ダウンロードしています▽
+			<Text>レポートを
+リンク　しています▽
 しばらく　お待ちください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T01:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4801,12 +4801,13 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フキヨセシティ　ジムまえ　で
-フウロが　しんぱいごと　を▽
+			<Text>ヤマジタウンに　たどりついた　あと
+フキヨセシティ　ジムまえ　で▼
+フウロが　しんぱいごと　を
 だれかに　はなしたがっている▼</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:34:16" />
+				Time="2011-11-04T01:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4814,12 +4815,13 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フキヨセシティ　ジムまえ　で
-フウロが　しんぱいごと　を▽
+			<Text>ヤマジタウンに　たどりついた　あと
+フキヨセシティ　ジムまえ　で▼
+フウロが　しんぱいごと　を
 だれかに　はなしたがっている▼</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:34:19" />
+				Time="2011-11-04T01:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
