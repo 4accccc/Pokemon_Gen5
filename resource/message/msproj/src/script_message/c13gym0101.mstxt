@@ -322,4 +322,40 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c13gym0101_poster_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶん　ヴォーカル　できます！
+それいがいの　メンバー　きゅうぼ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:45:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じぶん　ヴォーカル　できます！
+それ以外の　メンバー　急募！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:47:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:46:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・GRIDX＝1、GRIDZ＝10</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:45:52" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

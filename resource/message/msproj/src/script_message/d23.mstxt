@@ -50,4 +50,367 @@
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よぉ！　いい　はなし　だぜ▼
+あんたの　モンスターボールと
+おれの　ハイパーボールを▽
+こうかん　しよーじゃねーか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よぉ！　いい　話だぜ▼
+あんたの　モンスターボールと
+おれの　ハイパーボールを▽
+交換しよーじゃねーか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・道具交換前
+・はい/いいえの選択肢表示
+　はい　→badman1_02
+　はい選択、だけど
+　モンスターボールを持っていない→badman1_03
+　いいえ→badman1_04
+※不便なところに配置で</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へっへっへ！　きになるだろうが
+ハイパーボール　つかってくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>へっへっへ！　気になるだろうが
+ハイパーボール　使ってくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+モンスターボール　もってないのかよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+モンスターボール　持ってないのかよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択だけど
+　モンスターボールを持っていない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ふつー　とりかえっこ　するだろ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ふつー　取り換えっこ　するだろ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なっ！
+いい　はなし　だったろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なっ！
+いい　話だったろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・道具交換後
+・日付が変わればbadman1_01から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ハイパーボール　もちすぎだろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ハイパーボール　持ちすぎだろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ハイパーボールを受け取れない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23_badman1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0" ]を　ゆずって
+かわりに　[Name:Item Idx="2" ]を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0" ]を　譲って
+代わりに　[Name:Item Idx="2" ]を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・道具交換時
+・アイテム入手ME再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T06:42:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

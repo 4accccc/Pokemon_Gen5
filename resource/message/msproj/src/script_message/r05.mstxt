@@ -2881,7 +2881,9 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そらをとぶ　でーす！▼
+			<Text>じゃじゃーん！▼
+そらをとぶ　の
+ひでんマシン　でーす！▼
 たたかっていないときに
 その　わざを　つかうと　いきたい▽
 ポケモンセンターなどに　いけるよ▼
@@ -2889,7 +2891,7 @@ musician_01</Text>
 かくしあな　ってしってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:47:44" />
+				Time="2011-11-04T08:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2897,7 +2899,9 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらをとぶ　でーす！▼
+			<Text>じゃじゃーん！▼
+そらをとぶ　の
+ひでんマシン　でーす！▼
 戦っていないときに
 その技を　使うと　行きたい▽
 ポケモンセンターなどに　行けるよ▼
@@ -2905,7 +2909,7 @@ musician_01</Text>
 隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:00:55" />
+				Time="2011-11-04T08:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2943,7 +2947,9 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そらをとぶ　でーす！▼
+			<Text>じゃじゃーん！▼
+そらをとぶ　の
+ひでんマシン　でーす！▼
 たたかっていないときに
 その　わざを　つかうと　いきたい▽
 ポケモンセンターなどに　いけるよ▼
@@ -2951,7 +2957,7 @@ musician_01</Text>
 かくしあな　ってしってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:47:51" />
+				Time="2011-11-04T08:27:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2959,7 +2965,9 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらをとぶ　でーす！▼
+			<Text>じゃじゃーん！▼
+そらをとぶ　の
+ひでんマシン　でーす！▼
 戦っていないときに
 その技を　使うと　行きたい▽
 ポケモンセンターなどに　行けるよ▼
@@ -2967,7 +2975,7 @@ musician_01</Text>
 隠し穴　って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:01:03" />
+				Time="2011-11-04T08:27:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3005,11 +3013,11 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごおい！
+			<Text>すごーい！
 じゃあ　すぐに　みつかるかも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3017,11 +3025,11 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごおい！
+			<Text>すごーい！
 じゃあ　すぐに　みつかるかも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:41:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3063,10 +3071,10 @@ musician_01</Text>
 ポケモンが　かくれそうな　あなが▽
 ときどき　みつかるんだよ▼
 それを　そのまんま
-かくしあな　って　よんでるの</Text>
+かくしあな　って　よんでるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:32:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3080,10 +3088,10 @@ musician_01</Text>
 ポケモンが　隠れそうな　穴が▽
 ときどき　みつかるんだよ▼
 それを　そのまんま
-隠し穴　って　呼んでるの</Text>
+隠し穴　って　呼んでるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:01:39" />
+				Time="2011-11-04T08:32:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3119,14 +3127,12 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　この　あたりで　なにか
-ものおとが　きこえたから▽
-かくしあな　ありそうなんだよねえ▼
-というわけで
-いっしょに　さがそうよ！</Text>
+			<Text>まって！▼
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3134,14 +3140,12 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　この辺りで　なにか
-物音が　きこえたから▽
-隠し穴　ありそうなんだよねえ▼
-というわけで
-いっしょに　探そうよ！</Text>
+			<Text>まって！▼
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:33" />
+				Time="2011-11-04T08:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3150,13 +3154,11 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて
-・誘導
-　そらをとぶ禁止
-　posで移動制限</Comment>
+・！マーク表示後にメッセージ表示
+・続けてswbell_09</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:01:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3179,11 +3181,13 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！</Text>
+			<Text>あっち！▼
+あっちから　なにか　きこえた！▼
+あたし　みみが　いいの
+ね！　いっしょに　きて！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3191,11 +3195,13 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっとちょっとお！
-いっしょに　探してよお！</Text>
+			<Text>あっち！▼
+あっちから　なにか　きこえた！▼
+あたし　耳が　いいの
+ね！　一緒に　来て！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:33" />
+				Time="2011-11-04T09:08:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3204,11 +3210,12 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・発見前
-・pos</Comment>
+・メッセージ表示後
+　GRIDX＝373、GRIDZ＝425まで誘導
+・続けてswbell_10</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:01:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3231,12 +3238,11 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっとちょっとお！
-いっしょに　さがしてよお！▽
-そらをとぶは　いまは　だめだよ</Text>
+			<Text>この　あたりから
+ものおとが　きこえるんだけどなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:53:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3244,12 +3250,11 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっとちょっとお！
-いっしょに　探してよお！▽
-そらをとぶは　いまは　だめだよ</Text>
+			<Text>この　辺りから
+物音が　きこえるんだけどなあ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:33" />
+				Time="2011-11-04T09:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3258,11 +3263,11 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・発見前
-・そらをとぶ</Comment>
+・右と下をキョロキョロしてからメッセージ表示
+・続けてswbell_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:01:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3285,11 +3290,12 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　あたりから
-ものおとが　きこえるんだけどなあ</Text>
+			<Text>うあ！　ここ！！▼
+はいれそうな　すきまが　あるよ
+ね！　みてみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3297,11 +3303,12 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この辺りから
-物音が　きこえるんだけどなあ</Text>
+			<Text>うあ！　ここ！！▼
+はいれそうな　隙間が　あるよ
+ね！　みてみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:33" />
+				Time="2011-11-04T09:09:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3310,10 +3317,11 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・発見前</Comment>
+・マップ切り替え
+・隠し穴の中へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T08:57:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3336,11 +3344,10 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いま　みつけたのって……！
-かくしあな　でしょ！！</Text>
+			<Text>ポケモンだあ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3348,11 +3355,10 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　みつけたのって……！
-隠し穴　でしょ！！</Text>
+			<Text>ポケモンだあ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:38" />
+				Time="2011-11-04T09:00:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3361,12 +3367,13 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・発見後
-　かくしあな発見時にはい/いいえで
-　いいえ選択時</Comment>
+・隠し穴マップ
+・GRIDX＝15、GRIDZ＝15まで誘導
+　ベルはGRIDX＝16、GRIDZ＝15
+・続けてswbell_13</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:32:26" />
+				Time="2011-11-04T09:09:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3392,10 +3399,10 @@ musician_01</Text>
 			<Text>すごいね！　だいはっけん！
 だいはっけん　だよお！▼
 ほかにも　かくしあなが　あるか
-あたしも　しらべてみるねえ！</Text>
+あたしも　しらべてみるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:51:14" />
+				Time="2011-11-04T08:59:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3406,10 +3413,10 @@ musician_01</Text>
 			<Text>すごいね！　大発見！
 大発見　だよ！▼
 他にも　隠し穴が　あるか
-あたしも　調べてみるねえ！</Text>
+あたしも　調べてみるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:02:58" />
+				Time="2011-11-04T08:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3418,15 +3425,13 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・かくしあな発見時にはい/いいえで
-　はい選択時
-・マップ移動するとベルもついてきて
-　！マーク表示後に、このメッセージ表示
-・表示後、ベルだけ外にでていく
-</Comment>
+・隠し穴マップ
+・主人公と向き合ってメッセージ表示
+・メッセージ表示後、ベルだけ退場
+　画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:46:04" />
+				Time="2011-11-04T09:09:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
