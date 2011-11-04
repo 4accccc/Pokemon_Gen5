@@ -666,13 +666,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ『もう！
-ほんとうに　おやこで　そっくり！▼
-ううん　ちがうわね
-おとうさんの　ほうが　てきとうかな▼</Text>
+			<Text>フウロ『もう！　おおらかと　いうか
+どこか　てきとうと　いうか……▽
+おやこって　やっぱり　にちゃうのね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T03:53:25" />
+				Time="2011-11-04T12:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -680,13 +679,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『もう！
-ほんとうに　父娘で　そっくり！▼
-ううん　違うわね
-お父さんの　方が　適当かな▼</Text>
+			<Text>フウロ『もう！　おおらかと　いうか
+どこか　適当と　いうか……▽
+親子って　やっぱり　似ちゃうのね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T03:53:45" />
+				Time="2011-11-04T12:26:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

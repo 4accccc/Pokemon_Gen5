@@ -1032,6 +1032,167 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t07_infomationw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すばやく　たくさん　おとどけ！
+ヤマジ　カーゴ　サービス　です▼
+ひこうきに　のって
+フキヨセシティに　いかれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すばやく　たくさん　おとどけ！
+ヤマジ　カーゴ　サービス　です▼
+飛行機に　乗って
+フキヨセシティに　行かれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・飛行機に乗れる状態＝t07到着後から
+・はい/いいえの選択肢表示
+・はい　→infomationw_03
+　いいえ→infomationw_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_infomationw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わかりました！　それでは
+ひこうきに　のって　おまちください▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかりました！　それでは
+飛行機に　乗って　お待ちください▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・画面暗転→発着デモへ（暫定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_infomationw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい！
+いつでも　ごりよう　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい！
+いつでも　ご利用ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T11:54:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t07_sign_01"
 		Style="Large">
 		<LanguageCell
