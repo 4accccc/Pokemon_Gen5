@@ -1594,7 +1594,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pc_memory_01">
+		Label="msg_pc_memory_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おもいでリンクの　ラベル
@@ -1625,6 +1626,194 @@
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-21T10:22:24" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_rndmatch_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>お客様！▼
+ランダムマッチに　参加中
+電源を　切りましたね▼
+ランダムマッチには
+参加できません▼
+しばらく　時間が　たちましたら
+また　お越しください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お客様！▼
+ランダムマッチに　参加中
+電源を　切りましたね▼
+ランダムマッチには
+参加できません▼
+しばらく　時間が　たちましたら
+また　お越しください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＳＷＡＮより追加
+
+電源切断の警告
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_rndmatch_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＳＷＡＮより追加
+
+ＢＰ入手ｍｓｇ
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_rndmatch_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たいせんの　せいかを　たたえられて
+バトルポイントを　[Digit:2digits Idx="1" ]　てにいれた！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>対戦の　成果を　たたえられて
+バトルポイントを　[Digit:2digits Idx="1" ]　てにいれた！</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＳＷＡＮより追加
+
+ＢＰ入手ｍｓｇ
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_rndmatch_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンレポートに　かきこんでします
+でんげんを　きらないでください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T13:00:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンレポートに　書き込んでいます
+電源を　きらないでください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T13:00:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-21T10:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＳＷＡＮより追加
+
+ＢＰ入手ｍｓｇ
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-04T09:17:09" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

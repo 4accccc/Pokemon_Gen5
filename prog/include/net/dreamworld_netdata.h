@@ -9,7 +9,7 @@
 //============================================================================================
 #pragma once
 
-//#define DREAM_WORK_SERVER_FOOTMARK_ON
+#define DREAM_WORK_SERVER_FOOTMARK_ON
 
 #include "savedata/dreamworld_data.h"
 
@@ -65,9 +65,9 @@ typedef struct
   u8 region_code;       ///< PM_LANG   27
   u8 rom_code;          ///< PM_VERSION   28
   u8 sex;               ///< 性別 30
-  u16 pokemon;          ///< 足あとマットを踏んだポケモン
   u8  padding;          ///
-}DREAM_WORKD_FOOTMARK_DATA;
+  u16 pokemon;          ///< 足あとマットを踏んだポケモン
+}DREAM_WORLD_FOOTMARK_DATA;
 
 
 /// アカウント作成構造体
@@ -75,9 +75,7 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
   u8 GameSyncID[12];   /// GameSyncID
 };
 
-#define DOWNLOADPOKE_MORE_VER (1)   //ダウンロードポケモンを増やす場合１
 
-#if DOWNLOADPOKE_MORE_VER  //新しくする構造体
 
 #define DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX (10)   //ダウンロードできるポケモン最大数
 
@@ -107,45 +105,15 @@ typedef struct {
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
+  u16 dummy1;
 #ifdef DREAM_WORK_SERVER_FOOTMARK_ON
-  DREAM_WORKD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
+  DREAM_WORLD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
 #endif //DREAM_WORK_SERVER_FOOTMARK_ON
   u16 CRC;  /// このデータのCRC-16/CCITT
+  u16 dummy2;
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
 
 
-#else
-
-#define DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX (1)   //ダウンロードできるポケモン最大数
-
-/// ダウンロードデータ構造体
-typedef struct {
-  u32 uploadCount;     ///< アップロード回数
-  u16 sleepPokemonLv;   ///< 寝ていたポケモンのレベルアップ値
-  u16 findPokemon;         ///< であったポケモン番号
-  u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
-  u8 findPokemonForm;      ///< であったポケモンのフォルム番号
-  u8 findPokemonSex;       ///< であったポケモン性別    0=MALE 1=FEMALE 2=NEUTER 3=RANDOM
-  u8 sleepPokemonState;  ///< 寝ているポケモンの状態 // DREAM_WORLD_SERVER_PLAY_TYPEと同じ
-  u8 musicalNo;      ///< ミュージカル演目 webで選択した番号  無い場合 0xff
-  u8 cgearNo;        ///< CGEAR画像   webで選択した番号  無い場合 0xff
-  u8 zukanNo;        ///< 図鑑画像    webで選択した番号  無い場合 0xff
-  u8 signin;        ///<	大好きクラブで登録が終わったかどうか  登録済みなら 1
-  u8 bGet;          ///<	このデータをすでに受け取ったかどうか 
-  u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
-  u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
-  DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
-  u8 findPokemonAct;  ///< であったポケモンの動き
-  u8 dummy;
-#ifdef DREAM_WORK_SERVER_FOOTMARK_ON
-  DREAM_WORKD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
-#endif //DREAM_WORK_SERVER_FOOTMARK_ON
-  u16 CRC;  /// このデータのCRC-16/CCITT
-} DREAM_WORLD_SERVER_DOWNLOAD_DATA;
-
-
-
-#endif
 
 
 

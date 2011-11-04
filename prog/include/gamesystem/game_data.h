@@ -1057,3 +1057,32 @@ extern void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata );
  */
 //-----------------------------------------------------------------------------
 extern RESORT_WORK* GAMEDATA_GetReosrtWork( GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで獲得したBPを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return BP
+ */
+//-----------------------------------------------------------------------------
+extern u8 GAMEDATA_GetRndMaptchBp( const GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで取得するBPの加算
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_AddRndMaptchBp( GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで取得するBPのリセット
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_ResetRndMaptchBp( GAMEDATA *gamedata );

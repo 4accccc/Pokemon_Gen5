@@ -14,6 +14,7 @@
   .include  "pokecen_scr_def.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
+  .include  "../../../prog/src/field/scrcmd_rndmatch.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -70,6 +71,7 @@ sub_wifi_counter_main:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
+  DEFINE_LOCAL  i_check_btl_recorder
 
   //C-Gear取得チェック
   IF FLAG_OFF( FE_CGEAR_GET ) THEN
@@ -100,7 +102,12 @@ sub_wifi_counter_main:
       $i_seq = $reg_return
 
     CASE SEQ_COUNTER_EXP THEN
-      _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_07 , SCWK_TARGET_OBJID, POS_DL ) //Wi-Fiコネクションでは…
+      _ITEM_CHK( ITEM_BATORUREKOODAA, 1, i_check_btl_recorder )
+      IF $i_check_btl_recorder == TRUE THEN
+        _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_07 , SCWK_TARGET_OBJID, POS_DL ) //対戦と交換
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_08, SCWK_TARGET_OBJID, POS_DL ) //交換が
+      ENDIF
       $i_seq = SEQ_MAIN_MENU
 
     CASE SEQ_RANDOM_MATCH THEN
@@ -154,12 +161,15 @@ sub_wifi_counter_main_menu:
 
   //分岐・ランダムマッチ/GTS/説明を聞く/やめる
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
-		
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GTS )	            //GTS
 
   _ITEM_CHK( ITEM_GUZZUKEESU, 1, i_check_goods_case )
   _ITEM_CHK( ITEM_BATORUREKOODAA, 1, i_check_btl_recorder )
+		
+  IF $i_check_btl_recorder == TRUE THEN
+	  _BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
+  ENDIF
+	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GTS )	            //GTS
+
 
   IF $i_check_goods_case == TRUE && $i_check_btl_recorder == TRUE THEN
 	  _BMPMENU_MAKE_LIST( msg_wifi_counter_win03, SEQ_MUSICAL )	        //ミュージカルショット
@@ -291,19 +301,26 @@ sub_rndmatch_exp:
   	_BMPMENU_MAKE_LIST( msg_rndmatch_02_win01, 0 )   //ランダムマッチに就いて
 	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win02, 1 )   //レーティングモードについて
 	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win03, 2 )   //フリーモードについて
-	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win04, 3 )   //もどる
+	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win05, 3 )   //でんげんせつだんについて
+	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win04, 4 )   //もどる
 		
 	  //メニュー表示
   	_BMPMENU_START()
 
     //どの説明を聞きますか（消）
-    IF $i_ret < 3 THEN
-      $i_msg = msg_rndmatch_02_exp01
-      $i_msg += $i_ret
-      _BALLOONWIN_OBJMSG_POS( i_msg , SCWK_TARGET_OBJID, POS_DL )
-    ELSE
+    SWITCH $i_ret
+    CASE 0 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_exp01, SCWK_TARGET_OBJID, POS_DL )
+    CASE 1 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_exp02, SCWK_TARGET_OBJID, POS_DL )
+    CASE 2 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_exp03, SCWK_TARGET_OBJID, POS_DL )
+    CASE 3 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_exp04, SCWK_TARGET_OBJID, POS_DL )
+    DEFAULT
       $i_loop = FALSE
-    ENDIF
+    ENDSWITCH
+
   ENDWHILE
 
   //メニュー表示に戻る
@@ -319,6 +336,17 @@ sub_rndmatch_try_select:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_msg
   
+  //swan 電源切断検知
+  _RNDMATCH_GET_DATA( RNDMATCH_PARAM_POWER_OFF, i_ret )
+  IF $i_ret == TRUE THEN
+    _RNDMATCH_GET_DATA( RNDMATCH_PARAM_PENALTY, i_ret )
+    IF $i_ret == FALSE THEN
+      _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_09, SCWK_TARGET_OBJID, POS_DL )
+      $reg_return = SEQ_SUB_RNDMATCH_EXIT
+      _RET
+    ENDIF
+  ENDIF
+
   //本体無線通信設定チェック
   _CALL sub_available_wireless_check
   IF $SCWK_ANSWER == FALSE THEN
@@ -401,6 +429,7 @@ sub_rndmatch_try:
 {
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_msg
+  DEFINE_LOCAL  zone_id
 
   _BALLOONWIN_CLOSE()
 
@@ -419,12 +448,28 @@ sub_rndmatch_try:
   //パーティ選択保存
   $lwk_rm_party = $i_ret
  
+  //swan 電源切断チェックフラグを立てる
+  _RNDMATCH_START_CHECK()
+  _RNDMATCH_SET_DATA( RNDMATCH_PARAM_ENTRY, TRUE )
+
+  //復帰時の出現先をここにする
+
+  _GET_ZONE_ID( zone_id )
+  _SET_SP_LOCATION_DIRECT( zone_id, DIR_DOWN, 10, -1, 1 )
+  //↑で設定した特殊接続先からゲームを開始するリクエスト
+  _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
+  $WK_SYS_SCENE_COMM = 1
+
   // レポートを書く
   _REPORT_EVENT_CALL( i_ret )
 
   // 書き込みに失敗
   IF $i_ret != SCR_REPORT_OK THEN
     $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RNDMATCH_END_CHECK()
+    _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+    $WK_SYS_SCENE_COMM = 0
+    _RNDMATCH_SET_DATA( RNDMATCH_PARAM_ENTRY, FALSE )
     _RET
   ENDIF
 
@@ -433,9 +478,17 @@ sub_rndmatch_try:
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
   IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
     $reg_return = SEQ_SUB_RNDMATCH_EXIT
+    _RNDMATCH_END_CHECK()
+    _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+    $WK_SYS_SCENE_COMM = 0
+    _RNDMATCH_SET_DATA( RNDMATCH_PARAM_ENTRY, FALSE )
     _RET
   ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
     $reg_return = SEQ_SUB_RNDMATCH_RETRY
+    _RNDMATCH_END_CHECK()
+    _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+    $WK_SYS_SCENE_COMM = 0
+    _RNDMATCH_SET_DATA( RNDMATCH_PARAM_ENTRY, FALSE )
     _RET
   ENDIF
 

@@ -20,6 +20,15 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
+  DEF_CMD( EvCmdRndMatchGetData, EV_SEQ_RNDMATCH_GET_DATA )
+  DEF_CMD( EvCmdRndMatchStartCheck, EV_SEQ_RNDMATCH_START_CHECK )
+  DEF_CMD( EvCmdRndMatchEndCheck, EV_SEQ_RNDMATCH_END_CHECK )
+  DEF_CMD( EvCmdRndMatchSetData, EV_SEQ_RNDMATCH_SET_DATA )
+  DEF_CMD( EvCmdRndMatchAddBp, EV_SEQ_RNDMATCH_ADD_BP )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
  
   END_CMD
   //スクリプトコマンドテーブル終了

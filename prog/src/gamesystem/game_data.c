@@ -120,7 +120,7 @@ struct _GAMEDATA{
   u8 symbol_map_id;       ///<シンボルマップの現在位置
   
   u8 intrude_season[FIELD_COMM_MEMBER_MAX];    ///<通信相手の季節
-  u8 pad;
+  u8 bp; //bwではpadだった
   
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
@@ -2389,4 +2389,40 @@ void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata )
 RESORT_WORK* GAMEDATA_GetReosrtWork( GAMEDATA *gamedata )
 {
   return gamedata->p_resort_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで獲得したBPを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return BP
+ */
+//-----------------------------------------------------------------------------
+u8 GAMEDATA_GetRndMaptchBp( const GAMEDATA *gamedata )
+{
+  return gamedata->bp;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで取得するBPの加算
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_AddRndMaptchBp( GAMEDATA *gamedata )
+{
+  gamedata->bp++;
+  gamedata->bp  = MATH_CLAMP( gamedata->bp, 0, 99 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランダムマッチで取得するBPのリセット
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_ResetRndMaptchBp( GAMEDATA *gamedata )
+{
+  gamedata->bp = 0;
 }

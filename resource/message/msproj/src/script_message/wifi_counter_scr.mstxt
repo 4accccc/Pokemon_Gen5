@@ -5704,7 +5704,7 @@ http://www.pokemon-gl.com/
 	</TextRow>
 	<TextRow
 		Label="msg_wifi_counter_08"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>グローバルターミナルでは
@@ -5761,7 +5761,8 @@ http://www.pokemon-gl.com/
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wifi_counter_09">
+		Label="msg_wifi_counter_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ランダムマッチで
@@ -5803,125 +5804,6 @@ http://www.pokemon-gl.com/
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-01T08:07:53" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wifi_counter_10">
-		<LanguageCell
-			Language="JPN">
-			<Text>お客様！▼
-ランダムマッチに　参加中
-電源を　切りましたね▼
-ランダムマッチには
-参加できません▼
-しばらく　時間が　たちましたら
-また　お越しください</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:06:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:01:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>お客様！▼
-ランダムマッチに　参加中
-電源を　切りましたね▼
-ランダムマッチには
-参加できません▼
-しばらく　時間が　たちましたら
-また　お越しください</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:07:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:01:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-電源切断の警告
-</Comment>
-			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:08:04" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wifi_counter_11">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName ]は▼</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:06:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:01:41" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]は▼</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:05:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:01:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
-</Comment>
-			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:08:24" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wifi_counter_12">
-		<LanguageCell
-			Language="JPN">
-			<Text>たいせんの　せいかを　たたえられて
-バトルポイントを　[Digit:2digits Idx="1" ]　てにいれた！</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:06:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:05:37" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>対戦の　成果を　たたえられて
-バトルポイントを　[Digit:2digits Idx="1" ]　てにいれた！</Text>
-			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:07:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:07:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
-</Comment>
-			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-01T08:08:27" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -5976,7 +5858,8 @@ http://www.pokemon-gl.com/
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_rndmatch_02_exp04">
+		Label="msg_rndmatch_02_exp04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ランダムマッチの　参加中に

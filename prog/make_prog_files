@@ -1064,7 +1064,8 @@ SRCS_OVERLAY_SCRCMD_HIDE_SHIP  =  field/scrcmd_hide_ship.c \
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_POKECEN  =  field/scrcmd_pokecen.c \
                                 field/scrcmd_pokecen_table.c \
-                                field/medal_check_pokecen.c
+                                field/medal_check_pokecen.c \
+                                field/scrcmd_rndmatch.c
                                 
 # スクリプトコマンド並列化  ギミック関係
 #===> GROUP_OVERLAY_DEBUGMENU

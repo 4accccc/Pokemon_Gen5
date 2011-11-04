@@ -17,6 +17,7 @@
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
 #include "system/time_icon.h"
+#include "savedata/battlematch_savedata.h"
 
 //文字表示
 #include "print/printsys.h"
@@ -907,4 +908,26 @@ void WBM_RECORD_Count( GAMEDATA *p_gamedata, BtlResult result )
 
   // 各通信対戦の回数を＋１する
   RECORD_Inc( p_rec, RECID_WIFI_BATTLE );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  電源切断チェックのアップデート処理
+ *
+ *	@param	GAMEDATA *p_gamedata
+ *	@param	result 
+ */
+//-----------------------------------------------------------------------------
+void WBM_UpdatePowerOffCheck( GAMEDATA *p_gamedata, BtlResult result )
+{
+  {
+    BATTLEMATCH_DATA *p_sv = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork(p_gamedata) );
+    BATTLEMATCH_SetProgTime( p_sv );
+  }
+
+  if( result != BTL_RESULT_RUN )
+  {
+    GAMEDATA_AddRndMaptchBp( p_gamedata );
+  }
 }

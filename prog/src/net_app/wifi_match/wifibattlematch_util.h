@@ -173,3 +173,9 @@ extern void WBM_SUBPROC_CallProc( WBM_SUBPROC_WORK *p_wk, u32 procID );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 extern void WBM_RECORD_Count( GAMEDATA *p_gamedata, BtlResult result );
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *			  ‚»‚Ì‘¼
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+extern void WBM_UpdatePowerOffCheck( GAMEDATA *p_gamedata, BtlResult result );

@@ -443,6 +443,8 @@ VMCMD_RESULT EvCmdSetSpLocationHere( VMHANDLE * core, void * wk )
   LOCATION_SetDirect( &spLoc, PLAYERWORK_getZoneID( player ), 
       PLAYERWORK_getDirection_Type( player ), vec->x, vec->y, vec->z );
   GAMEDATA_SetSpecialLocation( gamedata, &spLoc );
+
+  NAGI_Printf( "zoneID%d X%dY%dZ%d\n", PLAYERWORK_getZoneID( player ), FX32_TO_GRID(vec->x),FX32_TO_GRID(vec->y),FX32_TO_GRID(vec->z) );
   return VMCMD_RESULT_CONTINUE;
 }
 

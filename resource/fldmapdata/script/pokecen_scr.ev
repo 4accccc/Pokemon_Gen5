@@ -10,6 +10,7 @@
   //.include  "pokecen_scr.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
+  .include  "../../../prog/src/field/scrcmd_rndmatch.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -551,6 +552,7 @@ sub_pokecen_elevator_out:
   DEFINE_LOCAL  LWK_WOMANID
   DEFINE_LOCAL  LWK_BM_FLOOR_ID
   DEFINE_LOCAL  LWK_BM_DOOR_ID
+  DEFINE_LOCAL  LWK_IS_RNDMATCH
 
   $WK_SYS_SCENE_COMM = 0
   _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
@@ -627,6 +629,13 @@ sub_pokecen_elevator_out:
   _SE_WAIT()
 
   _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
+
+//ランダムマッチ
+  _RNDMATCH_GET_DATA( RNDMATCH_PARAM_ENTRY, LWK_IS_RNDMATCH )
+  IF $LWK_IS_RNDMATCH == TRUE THEN
+    _CALL sub_rndmatch_end
+  ENDIF
+
   _RET
 }
 
@@ -662,3 +671,56 @@ EVENT_START    ev_geonet
   ENDIF
 EVENT_END
 
+//==============================================================
+//サブルーチン：ランダムマッチからの戻り
+//==============================================================
+sub_rndmatch_end:
+{
+  DEFINE_LOCAL  i_ret
+
+  _RNDMATCH_GET_DATA( RNDMATCH_PARAM_POWER_OFF, i_ret )
+  IF $i_ret == TRUE THEN
+
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+    _OBJ_ANIME_WAIT()
+
+    _BALLOONWIN_OBJMSG_POS( msg_rndmatch_00, SCWK_TARGET_OBJID, POS_DL )
+	  _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ELSE
+    //BP獲得処理
+    _RNDMATCH_GET_DATA( RNDMATCH_PARAM_BP, i_ret )
+    IF $i_ret > 0 THEN
+ 
+
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+      _OBJ_ANIME_WAIT()
+
+      _RNDMATCH_ADD_BP( i_ret )
+
+      _PLAYER_NAME(0)
+      _SYSWIN_MSG( msg_rndmatch_01, POS_DOWN )
+      _NUMBER( 1, i_ret, 2 )
+      _ME_PLAY( SEQ_ME_BPGET )
+      _SYSWIN_MSG( msg_rndmatch_02, POS_DOWN )
+	    _ME_WAIT()
+	    _AB_KEYWAIT_MARK()
+      _SYSWIN_CLOSE()
+    ENDIF
+
+  ENDIF
+
+  //最後にセーブ
+  _RNDMATCH_SET_DATA( RNDMATCH_PARAM_ENTRY, FALSE )
+  _SYSWIN_MSG( msg_rndmatch_03 , POS_DOWN )
+  _TIME_WAIT(1) //画面に反映
+  _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
+  _REPORT_CALL( i_ret )
+  _MSGWIN_CLOSE()
+}
+_RET
+
+
+_ANIME_LABEL    anm_player_up
+  _ANIME_DATA   AC_DIR_U, 1
+  _ANIME_DATA   ACMD_END, 0

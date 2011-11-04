@@ -11,6 +11,7 @@
 
 //システム
 #include "system/main.h"      //GFL_HEAPID_APP参照
+#include "savedata/battlematch_savedata.h"
 
 //フィールド
 #include "event_fieldmap_control.h"
@@ -148,6 +149,13 @@ static GMEVENT_RESULT EVENT_WifiBattleMatchMain(GMEVENT * event, int *  seq, voi
     }
     break;
   case _WAIT_NET_END:
+      //電源切断フラグOFF
+    {
+      BATTLEMATCH_DATA *p_sv = SaveData_GetBattleMatch(GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys)) );
+      BATTLEMATCH_EndPowerOffCheck(p_sv);
+    }
+
+
       (*seq) ++;
     break;
   case _FIELD_OPEN:

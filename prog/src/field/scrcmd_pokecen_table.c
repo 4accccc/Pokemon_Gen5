@@ -14,6 +14,7 @@
 //スクリプトコマンド
 #include "scrcmd_pokecen.h"
 #include "system/vm_cmd.h"
+#include "scrcmd_rndmatch.h"
 
 //外部参照
 #include "scrcmd_pokecen_table.h"

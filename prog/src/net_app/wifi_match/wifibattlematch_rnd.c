@@ -2099,6 +2099,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// レーティングセーブ処理
     //=====================================
   case SEQ_START_SAVE_MSG:
+    WBM_UpdatePowerOffCheck( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_WAIT );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
@@ -3231,6 +3233,7 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// セーブ処理
     //=====================================
   case SEQ_START_SAVE_MSG:
+    WBM_UpdatePowerOffCheck( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_017, WBM_TEXT_TYPE_WAIT);
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );

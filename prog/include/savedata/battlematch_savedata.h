@@ -55,3 +55,18 @@ extern const RNDMATCH_DATA * BATTLEMATCH_GetRndMatchConst( const BATTLEMATCH_DAT
 extern RNDMATCH_DATA * BATTLEMATCH_GetRndMatch( BATTLEMATCH_DATA * p_sv );
 extern const LIVEMATCH_DATA * BATTLEMATCH_GetLiveMatchConst( const BATTLEMATCH_DATA * cp_sv );
 extern LIVEMATCH_DATA * BATTLEMATCH_GetLiveMatch( BATTLEMATCH_DATA * p_sv );
+
+
+//----------------------------------------------------------
+//ìdåπêÿífëŒçÙ
+//----------------------------------------------------------
+extern void BATTLEMATCH_StartPowerOffCheck( BATTLEMATCH_DATA * p_sv );
+extern void BATTLEMATCH_EndPowerOffCheck( BATTLEMATCH_DATA * p_sv );
+
+extern BOOL BATTLEMATCH_IsPowerOff( const BATTLEMATCH_DATA * cp_sv );
+extern BOOL BATTLEMATCH_IsSameDS( const BATTLEMATCH_DATA * cp_sv );
+extern BOOL BATTLEMATCH_IsEndPenaltyTime( const BATTLEMATCH_DATA * cp_sv );
+extern void BATTLEMATCH_SetProgTime( BATTLEMATCH_DATA * p_sv );
+
+extern void BATTLEMATCH_SetRndmatch( BATTLEMATCH_DATA * p_sv, BOOL is_on );
+extern BOOL BATTLEMATCH_GetRndmatch( const BATTLEMATCH_DATA * cp_sv );

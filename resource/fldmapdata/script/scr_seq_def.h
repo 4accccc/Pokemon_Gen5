@@ -16117,7 +16117,93 @@
   .endm
 
 //======================================================================
+// ランダムマッチ（電源切断対策）
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief データを取得
+ *
+ * @param param 以下の値
+ *        RNDMATCH_PARAM_POWER_OFF  (0) //電源切断したか
+ *        RNDMATCH_PARAM_SAME_DS    (1) //同じDSか
+ *        RNDMATCH_PARAM_PENALTY    (2) //ペナルティ時間終了か
+ *        RNDMATCH_PARAM_BP         (3) //BP
+ *        RNDMATCH_PARAM_ENTRY      (4) //ランダムマッチ参加中？
+ *
+ * @param ret_wk  上記の値の受け取り
+ *
+ */
+//--------------------------------------------------------------
+#define _RNDMATCH_GET_DATA( param, ret_wk ) \
+      _ASM_RNDMATCH_GET_DATA param, ret_wk
+
+  .macro  _ASM_RNDMATCH_GET_DATA param, ret_wk
+  .short  EV_SEQ_RNDMATCH_GET_DATA
+  .short  \param
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 電源切断チェック開始
+ *
+ */
+//--------------------------------------------------------------
+#define _RNDMATCH_START_CHECK() \
+      _ASM_RNDMATCH_START_CHECK
+
+  .macro  _ASM_RNDMATCH_START_CHECK
+  .short  EV_SEQ_RNDMATCH_START_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 電源切断チェック開始
+ *
+ */
+//--------------------------------------------------------------
+#define _RNDMATCH_END_CHECK() \
+      _ASM_RNDMATCH_END_CHECK
+
+  .macro  _ASM_RNDMATCH_END_CHECK
+  .short  EV_SEQ_RNDMATCH_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief データを設定
+ *
+ * @param param 以下の値
+ *        RNDMATCH_PARAM_ENTRY      (4) //ランダムマッチ参加中？
+ *
+ * @param value  値
+ *
+ */
+//--------------------------------------------------------------
+#define _RNDMATCH_SET_DATA( param, value ) \
+      _ASM_RNDMATCH_SET_DATA param, value
+
+  .macro  _ASM_RNDMATCH_SET_DATA param, value
+  .short  EV_SEQ_RNDMATCH_SET_DATA
+  .short  \param
+  .short  \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief BPを追加
+ *
+ * @param value  追加するBP
+ *
+ */
+//--------------------------------------------------------------
+#define _RNDMATCH_ADD_BP( value ) \
+      _ASM_RNDMATCH_ADD_BP value
+
+  .macro  _ASM_RNDMATCH_ADD_BP value
+  .short  EV_SEQ_RNDMATCH_ADD_BP
+  .short  \value
+  .endm
 
 //=============================================================================
 // ギミック関係
@@ -16138,4 +16224,7 @@
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_ANM_START
   .short  \id
   .endm
+
+//======================================================================
+//======================================================================
 
