@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-10-19T21:39:13" source="champ.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-11-04T11:28:17" source="champ.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-10-19T21:39:13" source="champ.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-11-04T11:28:17" source="champ.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -964,11 +964,11 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="trwb_hero_ine"
+	<tex_image index="4" name="trsw_hero01"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="trwb_hero_ine_pl"
+		palette_name="trsw_hero01_pl"
 		path="C:/home/swan_data3d/cut_in/capture_cut_in/champ/tex/trsw_hero01.tga"
 	>
 		<bitmap size="4096">
@@ -1486,11 +1486,11 @@
 			0000 0000 c000 11bb bb11 9dd1 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="trwb_hero_ine_02"
+	<tex_image index="5" name="trsw_hero02"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="trwb_hero_ine_02_pl"
+		palette_name="trsw_hero02_pl"
 		path="C:/home/swan_data3d/cut_in/capture_cut_in/champ/tex/trsw_hero02.tga"
 	>
 		<bitmap size="4096">
@@ -3332,36 +3332,36 @@
 </tex_image_array>
 
 <tex_palette_array size="10">
-	<tex_palette index="0" name="trwb_hero_ine_pl" color_size="16">
-		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
-		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
-	</tex_palette>
-	<tex_palette index="1" name="trwb_hero_ine_02_pl" color_size="16">
-		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
-		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
-	</tex_palette>
-	<tex_palette index="2" name="lead01" color_size="16">
+	<tex_palette index="0" name="lead01" color_size="16">
 		7c1f 24a7 0c42 5629 368b 3bcf 677b 77df
 		298e 52fb 3e16 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="lead02" color_size="16">
+	<tex_palette index="1" name="lead02" color_size="16">
 		7c1f 24a7 0c42 468b 47ce 677b 77df 298e
 		52fb 3e16 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="name_down_pl" color_size="16">
+	<tex_palette index="2" name="name_down_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
 		5ef5 3a80 0f45 47b3 296b 02ff 089d 7fff
 	</tex_palette>
-	<tex_palette index="5" name="name_up_pl" color_size="16">
+	<tex_palette index="3" name="name_up_pl" color_size="16">
 		3ad7 5ebf 737f 5e5f 7c1f 7dc0 76ef 7f60
 		5ef5 3a80 0f45 47b3 296b 02ff 089d 7fff
 	</tex_palette>
-	<tex_palette index="6" name="pl_light_pl" color_size="16">
+	<tex_palette index="4" name="pl_light_pl" color_size="16">
 		7f91 7f91 7fb1 7fb2 7fb2 7fd3 7fd4 7ff5
 		7ff6 7ff8 7ffa 7ffb 7ffc 7ffd 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="ps_line_a_pl" color_size="8">
+	<tex_palette index="5" name="ps_line_a_pl" color_size="8">
 		7fb7 7fd7 7ff7 7ffb 7ffc 7ffd 7ffe 7fff
+	</tex_palette>
+	<tex_palette index="6" name="trsw_hero01_pl" color_size="16">
+		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
+		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
+	</tex_palette>
+	<tex_palette index="7" name="trsw_hero02_pl" color_size="16">
+		7c1f 6f5c 1085 5a91 5208 3566 7fff 373a
+		373b 052c 2a14 73bf 35af 633a 1ce8 4e96
 	</tex_palette>
 	<tex_palette index="8" name="vs_pl" color_size="56">
 		6e9b 7fbd 7fde 7cc0 7f7a 7ce0 7d02 7d65
@@ -3395,7 +3395,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="4"
+		tex_image_idx="0" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3419,7 +3419,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="5"
+		tex_image_idx="1" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3443,7 +3443,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="6"
+		tex_image_idx="2" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3467,7 +3467,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="7"
+		tex_image_idx="3" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3491,7 +3491,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="0"
+		tex_image_idx="4" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3515,7 +3515,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="1"
+		tex_image_idx="5" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3539,7 +3539,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="2"
+		tex_image_idx="6" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3563,7 +3563,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="3"
+		tex_image_idx="7" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
