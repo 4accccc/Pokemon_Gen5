@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-11-01T11:14:41" source="st_house02_s.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-11-04T11:39:38" source="st_house02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-01T11:14:41" source="st_house02_s.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-04T11:39:38" source="st_house02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -263,14 +263,14 @@
 		path="C:/home/swan_data3d/build_model/outdoor/st_house02/tex/sth02_w.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 2200 0000 0000 0000 2200
-			0000 0000 0000 2200 0000 0000 0000 2200
-			0000 0000 0000 2200 0000 0000 0000 2200
-			1111 1111 1111 6611 1111 1111 1111 6611
-			1111 1111 1111 6611 1111 1111 1111 6611
-			1111 1111 1111 6611 3333 3333 3333 6633
-			4444 4444 4444 6644 5555 5555 5555 6655
-			6666 6666 6666 6666 6666 6666 6666 6666
+			0000 0000 0000 1100 0000 0000 0000 1100
+			0000 0000 0000 1100 0000 0000 0000 1100
+			0000 0000 0000 1100 0000 0000 0000 1100
+			1111 1111 1111 5511 1111 1111 1111 5511
+			1111 1111 1111 5511 1111 1111 1111 5511
+			1111 1111 1111 5511 2222 2222 2222 5522
+			3333 3333 3333 5533 4444 4444 4444 5544
+			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -288,7 +288,7 @@
 		1d6f 1d70 2191 25b2 25d3 29d3 29f4 7fff
 	</tex_palette>
 	<tex_palette index="3" name="sth02_w_pl" color_size="8">
-		6714 7398 7399 7799 7bba 7bbb 7bdc 7fff
+		6713 7798 7bb9 7bdb 7bdc 7ffd 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
