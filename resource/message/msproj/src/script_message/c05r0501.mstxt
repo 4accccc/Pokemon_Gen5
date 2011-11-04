@@ -504,14 +504,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
 あやまられても　いもうとの　ポケモン
-ここに　いないんだろ！▼
-[Name:TrainerName ]！
-オレは　ポケモンジムに　いく▼
-もっと　つよくなって　プラズマだんを
-ぜんいん　やっつけるッ！！▼</Text>
+ここに　いないんだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:03:09" />
+				Time="2011-11-04T10:34:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -521,14 +517,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
 謝られても　妹の　ポケモン
-ここに　いないんだろ！▼
-[Name:TrainerName ]！
-オレは　ポケモンジムに　行く▼
-もっと　強くなって　プラズマ団を
-全員　やっつけるッ！！▼</Text>
+ここに　いないんだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:03:17" />
+				Time="2011-11-04T10:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -537,13 +529,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ後、室外へダッシュで移動
-・続けてsage6_06
-・0＝主人公名
-・1＝ライバル名</Comment>
+・続けてswrival_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:17:52" />
+				Time="2011-11-04T10:34:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -567,6 +556,58 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！
+オレは　ポケモンジムに　いく▼
+もっと　つよくなって　プラズマだんを
+ぜんいん　やっつけるッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:34:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:33:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！
+オレは　ポケモンジムに　行く▼
+もっと　強くなって　プラズマ団を
+全員　やっつけるッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:34:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:33:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・メッセージ後、室外へダッシュで移動
+・続けてsage6_06
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:34:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-04T10:33:55" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0501_sage6_06"
@@ -947,15 +988,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　ゾロアは　たびをしていた
+			<Text>その　ゾロアは
 Ｎさまが　トモダチとして▽
-たのみに　なされた　ポケモンだ▼
+あいされた　ポケモンだ▼
 イッシュには　ゾロアの　ほかにも
 Ｎさまが　トモダチと　なさった▽
 ポケモンが　おおく　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:08:20" />
+				Time="2011-11-04T10:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -963,15 +1004,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　ゾロアは　旅をしていた
+			<Text>その　ゾロアは
 Ｎさまが　トモダチとして▽
-頼みに　なされた　ポケモンだ▼
+愛された　ポケモンだ▼
 イッシュには　ゾロアの　他にも
 Ｎさまが　トモダチと　なさった▽
 ポケモンが　多く　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:08:14" />
+				Time="2011-11-04T10:51:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

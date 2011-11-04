@@ -601,11 +601,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレの　なまえは　ヒュウ！
-プラズマだん！　ききたいことがある！▼</Text>
+			<Text>オレの　なまえは　ヒュウ！▼
+プラズマだん！
+ききたいことが　ある！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T05:44:31" />
+				Time="2011-11-04T10:07:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -613,11 +614,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレの　名前は　ヒュウ！
-プラズマ団！　ききたいことがある！▼</Text>
+			<Text>オレの　名前は　ヒュウ！▼
+プラズマ団！
+ききたいことが　ある！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:18:54" />
+				Time="2011-11-04T10:08:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1006,7 +1008,7 @@
 理解してもらえるかも　しれません</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:21:39" />
+				Time="2011-11-04T10:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1043,13 +1045,13 @@
 			Language="JPN">
 			<Text>ロット『おきゃくじん▼
 わるいが　ここに　はいるなら
-あなた　という　トレーナー▽
+あなた　という　トレーナーが▽
 どんな　じんぶつか　みせてもらいたい▼
 そう　ポケモンしょうぶ　でな
 それで　よろしいかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:14:49" />
+				Time="2011-11-04T10:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1302,12 +1304,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『すみません……▼
+			<Text>元プラズマ団『すみません……▼
 ロットさまは　わたしたちを
 守るため　ああ　おっしゃってます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:34:01" />
+				Time="2011-11-04T10:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
