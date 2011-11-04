@@ -50,11 +50,11 @@
 			Language="JPN">
 			<Text>ただしい　ソフトが　ささっていません
 でんげんをきり　ただしい　ソフトを
-さしてから　データコンバートを
+さしてから　おもいでリンクを
 きどうしなおして　ください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:36" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -64,11 +64,11 @@
 			Language="JPN_KANJI">
 			<Text>正しい　ソフトが　ささっていません
 電源を切り　正しい　ソフトを
-さしてから　データコンバートを
+さしてから　おもいでリンクを
 起動し直してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:40" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:25:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -94,12 +94,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバートを　しゅうりょうします
+			<Text>おもいでリンクを　しゅうりょうします
 でんげんを　きって
 しゅうりょうしてください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:45" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:25:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -107,12 +107,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバートを　終了します
+			<Text>おもいでリンクを　終了します
 電源を切って
 終了してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:47" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -140,10 +140,10 @@
 			Language="JPN">
 			<Text>データの　よみこみに
 しっぱい　しました
-データコンバートを　しゅうりょうします</Text>
+おもいでリンクを　しゅうりょうします</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:52" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -152,10 +152,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>データの読み込みに　失敗しました
-データコンバートを　終了します</Text>
+おもいでリンクを　終了します</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:37:54" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -190,10 +190,10 @@
 			Language="JPN">
 			<Text>もう１つの　ＤＳの
 せつぞくに　しっぱい　しました
-データコンバートを　しゅうりょうします</Text>
+おもいでリンクを　しゅうりょうします</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:40:48" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:26:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -203,10 +203,10 @@
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳの
 接続に　失敗しました
-データコンバートを　終了します</Text>
+おもいでリンクを　終了します</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:40:55" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -239,12 +239,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート　きどうちゅう！
-セーブデータをコンバートしています
+			<Text>おもいでリンク　きどうちゅう！
+レポートを　リンクしています
 このまま　しばらく　おまちください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:38:42" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -252,12 +252,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート　起動中！
-セーブデータをコンバートしています
+			<Text>おもいでリンク　起動中！
+レポートを　リンクしています
 このまま　しばらく　お待ちください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T05:38:37" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -430,10 +430,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>データコンバート</Text>
+			<Text>おもいでリンク</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T06:39:49" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:27:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -441,10 +441,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データコンバート</Text>
+			<Text>おもいでリンク</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-19T06:39:51" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-04T02:27:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
