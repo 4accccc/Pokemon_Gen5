@@ -8901,6 +8901,14 @@
 		<language name="JPN" width="256">SW-WBT-20</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-20</language>
 	</row>
+	<row id="msg_seq_se_sw_wbt_21">
+		<language name="JPN" width="256">SW-WBT-21</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-21</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_22">
+		<language name="JPN" width="256">SW-WBT-22</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-22</language>
+	</row>
 	<row id="msg_seq_se_sw_fes_01">
 		<language name="JPN" width="256">SW-FES-01</language>
 		<language name="JPN_KANJI" width="256">SW-FES-01</language>
