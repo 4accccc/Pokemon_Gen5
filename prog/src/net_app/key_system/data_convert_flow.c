@@ -193,9 +193,9 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
         u32 select = KEYSYS_MENU_GetSelect( p_wk->p_menu );
         if( !DataConv_InfoList_GetVisibleAny(p_wk) )
         {
-          if( select == 3 )
+          if( select == 2 )
           {
-            select = 4;
+            select = 3;
           }
         }
         KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_72+select, KEYSYS_TEXT_TYPE_QUE ); 

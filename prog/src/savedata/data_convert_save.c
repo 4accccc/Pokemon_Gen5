@@ -144,20 +144,27 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
   const WB_SAVE_CONV_OWNER  *cp_src_owner = &cp_all_data->owner;
   const WB_SAVE_CONV_DATA   *cp_src_data  = &cp_all_data->data;
   WB_SAVE_CONV_DATA         *p_dst_data   = &p_wk->data;
+  u32 cnt;
 
   BOOL is_convert[DATA_CONVERT_OWNER_MAX]  = { FALSE, FALSE, FALSE };
 
   //フラグの更新
+  cnt = 0;
   for( i = 0; i < WB_SAVE_CONV_FLAG_MAX; i++ )
   {
     BOOL flag = (cp_src_data->flag[ i/8 ] & (1<<(i%8)) ) != 0;
     if( flag )
     {
+      //自分が０で新しく１になったら変更された
+      if( (p_dst_data->flag[ i/8 ] & (1<<(i%8)) ) == 0 )
+      {
+        is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
+      }
+
       if( data_in )
       {
         DATA_CONVERT_SAVE_SetFlag( p_wk, i, TRUE );
       }
-      is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
     }
   }
 
@@ -181,11 +188,16 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
 
     if( flag && cp_src_data->work[i] != p_dst_data->work[i] )
     {
+      //自分が０で新しく１になったら変更された
+      if( p_dst_data->work[i] == 0 )
+      {
+        is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
+      }
+
       if( data_in )
       {
         DATA_CONVERT_SAVE_SetWork( p_wk, i, cp_src_data->work[i] );
       }
-      is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
     }
   }
 
@@ -199,13 +211,13 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
         || cp_src_data->musical_entry_num != p_dst_data->musical_entry_num
         || GFL_STD_MemComp( cp_src_data->musical_item, p_dst_data->musical_item, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0 )
       {
+        is_convert[DATA_CONVERT_OWNER_MUSICAL] = TRUE;
         if( data_in )
         {
           p_dst_data->musical_sum_point = cp_src_data->musical_sum_point;
           p_dst_data->musical_entry_num = cp_src_data->musical_entry_num;
           GFL_STD_MemCopy( cp_src_data->musical_item, p_dst_data->musical_item, WB_SAVE_CONV_MUSICAL_ITEM_BIT );
         }
-        is_convert[DATA_CONVERT_OWNER_MUSICAL] = TRUE;
       }
     }
   }
@@ -238,6 +250,11 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
       }
     }
   }
+
+  OS_TPrintf( "▼変更があったか\n" );
+  OS_TPrintf( "SYSTEM   %d\n", is_convert[DATA_CONVERT_OWNER_SYS] );
+  OS_TPrintf( "MUSICAL  %d\n", is_convert[DATA_CONVERT_OWNER_MUSICAL] );
+  OS_TPrintf( "DENDOU   %d\n", is_convert[DATA_CONVERT_OWNER_DENDOU] );
 
   return (is_convert[DATA_CONVERT_OWNER_SYS]<<DATA_CONVERT_OWNER_SYS)
     | (is_convert[DATA_CONVERT_OWNER_MUSICAL]<<DATA_CONVERT_OWNER_MUSICAL)

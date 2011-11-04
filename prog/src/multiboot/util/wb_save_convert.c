@@ -147,23 +147,24 @@ static void Wb_Save_Conv_ConvertData( const void *cp_data_adrs, WB_SAVE_CONV_DAT
       {
         u32 src_bit;
         u32 dst_bit;
+        u32 on;
       } sc_convert_flag_tbl[] =
       {
-        { SYS_FLAG_GAME_CLEAR,    WB_SAVE_CONV_FLAG_GAME_CLEAR        },
-        { SYS_FLAG_FIRST_POKE_GET,WB_SAVE_CONV_FLAG_FIRST_POKE_GET    },
-        { SYS_FLAG_CHAMPION_WIN,  WB_SAVE_CONV_FLAG_CHAMPION_WIN      },
-        { FV_T01R0102_AWARD_01,   WB_SAVE_CONV_FLAG_BSUBWAY_AWARD_01  },
-        { FV_T01R0102_AWARD_02,   WB_SAVE_CONV_FLAG_BSUBWAY_AWARD_02  },
-        { FV_T01R0102_TROPHY_01,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_01 },
-        { FV_T01R0102_TROPHY_02,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_02 },
-        { FV_T01R0102_TROPHY_03,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_03 },
+        { SYS_FLAG_GAME_CLEAR,    WB_SAVE_CONV_FLAG_GAME_CLEAR,       TRUE },
+        { SYS_FLAG_FIRST_POKE_GET,WB_SAVE_CONV_FLAG_FIRST_POKE_GET,   TRUE },
+        { SYS_FLAG_CHAMPION_WIN,  WB_SAVE_CONV_FLAG_CHAMPION_WIN,     TRUE },
+        { FV_T01R0102_AWARD_01,   WB_SAVE_CONV_FLAG_BSUBWAY_AWARD_01, FALSE },
+        { FV_T01R0102_AWARD_02,   WB_SAVE_CONV_FLAG_BSUBWAY_AWARD_02, FALSE },
+        { FV_T01R0102_TROPHY_01,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_01,FALSE },
+        { FV_T01R0102_TROPHY_02,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_02,FALSE },
+        { FV_T01R0102_TROPHY_03,  WB_SAVE_CONV_FLAG_BSUBWAY_TROPHY_03,FALSE },
       };
 
       int i;
 
       for( i = 0; i < NELEMS(sc_convert_flag_tbl); i++ )
       {
-        if( BIT_CHECK( cp_ev->flag, sc_convert_flag_tbl[i].src_bit ) )
+        if( BIT_CHECK( cp_ev->flag, sc_convert_flag_tbl[i].src_bit ) == sc_convert_flag_tbl[i].on )
         {
           BIT_ON( p_wk->flag, sc_convert_flag_tbl[i].dst_bit );
           OS_TPrintf( "flag[%d->%d]=On\n", sc_convert_flag_tbl[i].src_bit, sc_convert_flag_tbl[i].dst_bit );
