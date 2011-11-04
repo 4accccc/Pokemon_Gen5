@@ -194,6 +194,8 @@ typedef struct{
   GFL_MSGDATA       *wazaInfoMsgData; // わざ説明MSGDATA
   BOOL              waza_select_flag; // 技を選択したフラグ
   u16               select_waza_no;   // 選択した技No
+  u16               waza_oshie_personal_idx[SHOP_ITEM_MAX];  // パーソナルデータの並びのテーブル
+  u16               select_personal_idx;  // 選択した技NoのパーソナルデータでのIDX
 
 } SHOP_BUY_APP_WORK;
 
@@ -259,7 +261,7 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type );
 // 技教え
 static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color );
 static void ShopDecideWazaOshieMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price );
-static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit );
+static void checkSkillTeach( GAMESYS_WORK *gsys, int waza_oshie_no, int color_type, u8 *oboeBit );
 
 
 // BMPWIN定義テーブル
@@ -526,8 +528,11 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         EVENT_POKESEL_PARAM_WOBOE prm;
         prm.retDecide = &sbw->retDecide;
         prm.retPos    = &sbw->retPos;
-        checkSkillTeach( gsys, &prm.learnBit );
+        checkSkillTeach( gsys, sbw->wk.select_personal_idx, sbw->wk.waza_oshie_type, &prm.learnBit );
         prm.wazano    = sbw->wk.select_waza_no;
+        OS_Printf("選択した技NO %d\n", prm.wazano);
+        OS_Printf("パーソナルでの順番 %d\n", sbw->wk.select_personal_idx);
+        OS_Printf("わざ教えタイプ %d\n", sbw->wk.waza_oshie_type);
         call_event = GMEVENT_CreateOverlayEventCall( gsys,
             FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelectWazaOboe, (void*)&prm );
         GMEVENT_CallEvent( event, call_event );
@@ -555,7 +560,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         if( sbw->retDecide )
         {
           u8 bit;
-          checkSkillTeach( gsys, &bit );
+          checkSkillTeach( gsys, sbw->wk.select_personal_idx, sbw->wk.waza_oshie_type, &bit );
 
           // 選択したポケモンが技教え可能かチェック
           // 可能ならかけらを消費する
@@ -941,6 +946,7 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
     } else {
       wk->selectitem = wk->lineup[ret].id;
       wk->price      = wk->lineup[ret].price; //ITEM_GetParam( ret, ITEM_PRM_PRICE, wk->heapId );
+      wk->select_personal_idx = wk->waza_oshie_personal_idx[ret];
       wk->item_multi = 1;
 
       // 技おしえ判定
@@ -1517,10 +1523,9 @@ static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color )
   int i,itemnum;
   GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                              NARC_message_itemname_dat, wk->heapId );
-  const  SHOP_ITEM *itemlist;
 
   // 変動ショップ
-  itemlist = waza_oshie_data_table[color];
+  const WAZA_OSHIE_DATA *waza_oshie_list = waza_oshie_data_table[color];
 
   // どうぐ名登録・BMPMENULISTデータ作成
   itemnum = waza_oshie_datanum_table[color];
@@ -1532,15 +1537,18 @@ static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color )
 
   for(i=0;i<itemnum;i++)
   {
-      int id = itemlist[i].id;
-      OS_Printf("strId=%d\n", id);
+      const SHOP_ITEM itemlist = waza_oshie_list[i].shop_item;
+      u16 order = waza_oshie_list[i].order;
+
+      OS_Printf("strId=%d\n", itemlist.id);
       
       // 技名を文字列登録
-      _add_menuitem( wk, i, wk->type, itemlist[i].id, itemMsgData );
+      _add_menuitem( wk, order, wk->type, itemlist.id, itemMsgData );
       
       // 商品ラインナップテーブルにIDと値段を登録
-      wk->lineup[i].id    = itemlist[i].id;
-      wk->lineup[i].price = itemlist[i].price;
+      wk->lineup[ order ].id    = itemlist.id;
+      wk->lineup[ order ].price = itemlist.price;
+      wk->waza_oshie_personal_idx[ order ] = i;
   }
   wk->lineup_num = i;
   
@@ -2794,7 +2802,7 @@ static void submenu_screen_clear( int type )
  *	@param	*oboeBit    ビット単位でどのポケモンに教えられるか？を返す
  */
 //-----------------------------------------------------------------------------
-static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit )
+static void checkSkillTeach( GAMESYS_WORK *gsys, int waza_oshie_no, int color_type, u8 *oboeBit )
 {
   GAMEDATA *    gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
@@ -2807,10 +2815,8 @@ static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit )
   
   for ( pos = 0; pos < max; pos++ )
   {
-    int waza_no = 0;
-    int color = 0;
     POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
-    if( PP_CheckWazaOshieSW( pp, waza_no, color) == TRUE )
+    if( PP_CheckWazaOshieSW( pp, waza_oshie_no, color_type) == TRUE )
     {
       *oboeBit |= ( 1 << pos );
     }

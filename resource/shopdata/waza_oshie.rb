@@ -48,6 +48,14 @@ outbuf += sprintf( "// œwaza_oshie.xls‚ğresource/shopdata/‚ÅƒRƒ“ƒo[ƒg‚µ‚Äo—Í‚
 outbuf += sprintf( "//\n")
 outbuf += sprintf( "//====================================================================\n\n")
 
+outbuf += sprintf( "//-------------------------------------\n")
+outbuf += sprintf( "/// ¤•iƒf[ƒ^‚Æ•À‚Ñ‡‚Ì\‘¢‘Ì\n")
+outbuf += sprintf( "//=====================================\n")
+outbuf += sprintf( "typedef struct {\n")
+outbuf += sprintf( "\tSHOP_ITEM\t\tshop_item;\n")
+outbuf += sprintf( "\tu16\t\t\t\t\torder;\t\t// “X‚É•À‚Ô‡”Ô\n")
+outbuf += sprintf( "} WAZA_OSHIE_DATA;\n\n")
+
 # CSVƒf[ƒ^‚©‚ço—Í
 reader.each { |row|
 
@@ -65,19 +73,23 @@ reader.each { |row|
 
     #V‚µ‚¢ƒf[ƒ^’è‹`‚ÌéŒ¾
     outbuf += sprintf( "// %s\n", row[0] )
-		outbuf += sprintf( "static const SHOP_ITEM %s[] = {\n", row[1].to_s )
+		outbuf += sprintf( "static const WAZA_OSHIE_DATA %s[] = {\n", row[1].to_s )
 		namelist << row[1].to_s
 		closeflag = 1
 		lastnamebuf = row[1].to_s
   end
 
   if row[2].to_s!="" then
+    if row[4].to_s=="" then
+			STDERR.print( ""+row[2]+"‚Ì‰¡‚É‡”Ô‚ª‘‚¢‚Ä‚ ‚è‚Ü‚¹‚ñ\n")
+			exit(1)
+		end
 		if row[3].to_s=="" then
 			STDERR.print( ""+row[2]+"‚Ì‰¡‚ÉƒRƒXƒg‚ª‘‚¢‚Ä‚ ‚è‚Ü‚¹‚ñ\n")
 			exit(1)
 		end
 		if GetWazaNo( row[2].to_s ) != nil then
-			outbuf += sprintf("\t\t{ %s,\t%s, },  // %s\n", GetWazaNo( row[2].to_s ),row[3].to_s, row[2].to_s)
+			outbuf += sprintf("\t\t{ { %s,\t%s, }, %s},  // %s\n", GetWazaNo( row[2].to_s ),row[3].to_s, row[4].to_s, row[2].to_s)
       wazanamelist[cloindex] << row[2].to_s
 		else
 			STDERR.print( "u"+row[2].to_s+"v‚ÆŒ¾‚¤‚Ç‚¤‚®‚Í‘¶İ‚µ‚Ü‚¹‚ñ\n")
@@ -97,7 +109,7 @@ maxlist << sprintf( "%s_MAX",lastnamebuf.upcase,lastnamebuf )
 
 # ˆêŠ‡ƒAƒNƒZƒX—p‚É”z—ñƒ|ƒCƒ“ƒ^‚Ì”z—ñ‚ğ’è‹`
 outbuf += sprintf("\n\n// ˆêŠ‡ƒAƒNƒZƒX—p”z—ñ’è‹`\n")
-outbuf += sprintf("static const SHOP_ITEM *waza_oshie_data_table[]={\n")
+outbuf += sprintf("static const WAZA_OSHIE_DATA *waza_oshie_data_table[]={\n")
 namelist.each{ |name|
 	outbuf += sprintf("\t%s,\n", name)
 }
