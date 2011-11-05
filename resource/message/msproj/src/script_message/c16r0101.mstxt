@@ -553,6 +553,444 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_drill_sel_ans_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>マーケットでは
+ぼうけんに　やくだつ　しなものを▽
+やすく　かうことが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:39:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マーケットでは
+ぼうけんに　やくだつ　しなものを▽
+やすく　かうことが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:39:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>マーケット</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:39:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>くじやでは　１にち　１かいの
+ちゅうせんに　あたると▽
+ごうか　けいひんが　もらえます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:50:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くじやでは　１にち　１かいの
+ちゅうせんに　あたると▽
+ごうか　けいひんが　もらえます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:50:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>くじ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:47:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>はなや　では
+きのみを　かうことが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:21:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はなや　では
+きのみを　かうことが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:29:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>花屋</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:49:27" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほいくじょでは
+ポケモンの　タマゴを　あたためて▼
+ふだん　より　はやく
+ふか　させることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:24:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほいくじょでは
+ポケモンの　タマゴを　あたためて▼
+ふだん　より　はやく
+ふか　させることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>保育所</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:49:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうじょうでは
+ポケモンを　きたえて　つよくします▼
+ポケモンの　レベルや
+ポケモンの　つよさの　きそポイントを▽
+あげることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:27:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうじょうでは
+ポケモンを　きたえて　つよくします▼
+ポケモンの　レベルや
+ポケモンの　つよさの　きそポイントを▽
+あげることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:27:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>道場</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:48:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふるどうぐや　では
+ほりだしものが　うっています▼
+ふつうの　おみせでは　かえない
+しなものが　ならぶことが　あります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:35:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふるどうぐや　では
+ほりだしものが　うっています▼
+ふつうの　おみせでは　かえない
+しなものが　ならぶことが　あります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:35:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具屋</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:48:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>カフェ　では
+ポケモンと　しょくじが　できます▼
+しょくじを　した　ポケモンが
+よろこんで　なつきやすく　なります▼
+また　しょくじの　こうかに　より
+レベルや　つよさの　きそポイントを▽
+あげることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:39:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カフェ　では
+ポケモンと　しょくじが　できます▼
+しょくじを　した　ポケモンが
+よろこんで　なつきやすく　なります▼
+また　しょくじの　こうかに　より
+レベルや　つよさの　きそポイントを▽
+あげることが　できます</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:39:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カフェ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:48:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>びようしつ　では
+ポケモンを　きれいに　します▼
+カットや　メイクを　することで
+ポケモンは　よろこび▽
+なつき　やすく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:43:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>びようしつ　では
+ポケモンを　きれいに　します▼
+カットや　メイクを　することで
+ポケモンは　よろこび▽
+なつき　やすく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:43:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>美容室</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:48:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]で　たてられる
+おみは　７つの　しゅるいが　あります▼
+まちに　しょうたいした　とき
+じゅうにん　やりたい　しゅるいの▽
+おみせが　たてられます▼
+おみせに　ひとを　あんないして
+にんきを　あげると　ランクアップして▽
+おみせは　おおきく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:22:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]で　たてられる
+おみは　７つの　しゅるいが　あります▼
+まちに　しょうたいした　とき
+じゅうにん　やりたい　しゅるいの▽
+おみせが　たてられます▼
+おみせに　ひとを　あんないして
+にんきを　あげると　ランクアップして▽
+おみせは　おおきく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店について
+保育所が無い状態
+
+0：街名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:46:11" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]で　たてられる
+おみは　８つの　しゅるいが　あります▼
+まちに　しょうたいした　とき
+じゅうにん　やりたい　しゅるいの▽
+おみせが　たてられます▼
+おみせに　ひとを　あんないして
+にんきを　あげると　ランクアップして▽
+おみせは　おおきく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:22:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]で　たてられる
+おみは　８つの　しゅるいが　あります▼
+まちに　しょうたいした　とき
+じゅうにん　やりたい　しゅるいの▽
+おみせが　たてられます▼
+おみせに　ひとを　あんないして
+にんきを　あげると　ランクアップして▽
+おみせは　おおきく　なります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:22:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店について
+保育所が有り状態
+
+0：街名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:46:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>おみせに　ついて
+しりたいこと　ありますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:15:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おみせに　ついて
+しりたいこと　ありますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:15:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>質問文</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:45:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="resort_drill_sel_ans_07"
 		Style="Large">
 		<LanguageCell
@@ -879,6 +1317,40 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_drill_sel_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おみせ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:35:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:35:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おみせ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:35:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T05:35:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢7
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="resort_drill_sel_08"
 		Style="Large">
 		<LanguageCell
@@ -971,6 +1443,312 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くわしく　きく</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くわしく　きく</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:10:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マーケット　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マーケット　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くじや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:11:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くじや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はなや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はなや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほいくじょ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほいくじょ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうじょう　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうじょう　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:12:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふるどうぐや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふるどうぐや　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カフェ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カフェ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>びようしつ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>びようしつ　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>お店質問用の選択
+追加2011.11.05</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:11:15" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="resort_prize_owner_greet_01"
