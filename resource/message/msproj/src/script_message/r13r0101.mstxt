@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　キャモメ　むかしは　みんなに
+			<Text>このコ　むかしは　みんなに
 メールを　はいたつ　してたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T08:16:41" />
+				Time="2011-11-05T07:45:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　キャモメ　昔は　みんなに
+			<Text>このコ　昔は　みんなに
 メールを　配達してたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T08:16:50" />
+				Time="2011-11-05T07:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -93,6 +93,92 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13_oldman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョインアベニューは　いまごろ
+どうなってるかな？　ばあさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:46:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョインアベニューは　いまごろ
+どうなってるかな？　ばあさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:49:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:46:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13_oldwoman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひさしぶりに　ポケウッドに
+いってみたいですねえ　じいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:49:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひさしぶりに　ポケウッドに
+行ってみたいですねえ　じいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:50:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:49:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-05T07:46:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r13r0101_veteranm_01"

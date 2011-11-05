@@ -1608,11 +1608,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウシティの　シャガさん
-とっても　つよいんだよ！▼</Text>
+			<Text>ソウリュウシティの　シャガさんは
+ドラゴンポケモンの　つかいて　で▽
+とっても　つよい　ジムリーダーなの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:35:35" />
+				Time="2011-11-05T07:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1620,11 +1621,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウシティの　シャガさん
-とっても　強いんだよ！▼</Text>
+			<Text>ソウリュウシティの　シャガさんは
+ドラゴンポケモンの　使い手　で▽
+とっても　強い　ジムリーダーなの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:35:42" />
+				Time="2011-11-05T07:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1776,13 +1778,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『やれやれ
-おまえらと　でくわすとはな▼
-われわれの　もくてき　なぞ
-りかい　できぬくせに▽
-あれこれ　かぎまわるで　ない▼</Text>
+それは　ごくろうな　はなしだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:59:47" />
+				Time="2011-11-05T07:26:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1791,13 +1790,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『やれやれ
-おまえらと　でくわすとはな▼
-われわれの　目的なぞ
-理解できぬくせに▽
-あれこれ　かぎまわるで　ない▼</Text>
+それは　ごくろうな　話だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T06:05:14" />
+				Time="2011-11-05T07:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1831,15 +1827,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエらの　つごうなんて
-どうでも　いいんだよ▼
-オレは　うばわれた
+			<Text>[Name:TrainerName Idx="1" ]『オレは　うばわれた
 ポケモンを　とりもどすだけさ！▼
 [Name:TrainerName ]！　ちからを　かせ！
 じゅんびは　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T12:38:39" />
+				Time="2011-11-05T07:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1847,15 +1841,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエらの　都合なんて
-どうでも　いいんだよ▼
-オレは　奪われた
+			<Text>[Name:TrainerName Idx="1" ]『オレは　奪われた
 ポケモンを　取り戻すだけさ！▼
 [Name:TrainerName ]！　力を　貸せ！
 準備は　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T12:38:42" />
+				Time="2011-11-05T07:27:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2142,10 +2134,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・画面左（r12方面）へ移動
 ・続けてswrival_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:05:51" />
+				Time="2011-11-05T07:35:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2199,11 +2192,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
+・倍速移動で画面左（r12方面）へ移動
+　画面外に消えると主人公操作可能に
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:24" />
+				Time="2011-11-05T07:36:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
