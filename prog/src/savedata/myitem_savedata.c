@@ -1561,7 +1561,7 @@ static void DelClearItemST( ITEM_ST *st )
  *	@brief アイテムの存在フラグテーブルを作成する
  *
  *	@param	p_myitem
- *	@param	*p_dest   テーブル出力先
+ *	@param	*p_dest   テーブル出力先(アイテムの数分のテーブルを渡してください)
  *
  *	@retval
  */
@@ -1574,7 +1574,7 @@ void MYITEM_GetExistanceTable( MYITEM_PTR p_myitem, u8 *p_dest )
   u32 tbl_max;
 	
   // テーブルクリア
-  GFL_STD_MemClear(p_dest, sizeof(p_dest));
+  GFL_STD_MemClear(p_dest, sizeof(u8)*(ITEM_DATA_MAX+1));
 
   // 保管以外のバッグをチェック
   for( pocket = BAG_POKE_NORMAL; pocket <= BAG_POKE_EVENT ; pocket ++ )

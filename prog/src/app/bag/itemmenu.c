@@ -3031,6 +3031,7 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
+  ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -3042,14 +3043,15 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 
   // ソート用データ生成
   // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
-  //ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
+  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
   for( i=0; i<length; i++ ){
-    void * dat = ITEM_GetItemDataArcHandle( pWork->item_data_ah, item[i].id, pWork->heapID );
+    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
     sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
     sort[i].st   = item[i];
     GFL_HEAP_FreeMemory( dat );
     ONOUE_Printf("%u:%u\n",item[i].id,sort[i].type);
   }
+  GFL_ARC_CloseDataHandle( ah );
 
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
 
@@ -3182,6 +3184,7 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
+  ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -3192,8 +3195,10 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
   length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
 
   // ソート用データ生成
+  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
+
   for( i=0; i<length; i++ ){
-    void * dat = ITEM_GetItemDataArcHandle( pWork->item_data_ah, item[i].id, pWork->heapID );
+    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
     u64 count = MYITEM_GetItemNumFromSave( pWork->pMyItem, item[i].id );
     
     // 逆順のときはソート番号を逆順に入れておく
@@ -3208,6 +3213,7 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
     sort[i].st    = item[i];
     GFL_HEAP_FreeMemory( dat );
   }
+  GFL_ARC_CloseDataHandle( ah );
 
   if( is_max_top == TRUE )
   {
@@ -4244,9 +4250,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   // アイテム破損データを修復
   MYITEM_CheckSafety( pWork->pMyItem );
-	
-  // アイテムデータアーカイブハンドル
-  pWork->item_data_ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
 
   // バッグ用アイテム初期化
   BAGITEM_InitData( &pWork->bag_item , pParam->p_myitem ,pWork->heapID );
@@ -4447,9 +4450,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   // バッグアイテムの開放
   BAGITEM_DeleteData( &pWork->bag_item );
-
-  // アーカイブハンドルの開放
-  GFL_ARC_CloseDataHandle( pWork->item_data_ah );
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );
@@ -5393,3 +5393,4 @@ static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
 
   ChangeStateItemKindSelectItemMenu( wk );
 }
+
