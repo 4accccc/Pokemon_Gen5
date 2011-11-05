@@ -7,13 +7,15 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= matsuda hiro_nakamura shimoyamada genya_hosaka tetsuji_ohta ito_hiroto iwasawa ichiraku_katsuhiko
+USERS	= matsuda hiro_nakamura shimoyamada genya_hosaka tetsuji_ohta ito_hiroto iwasawa ichiraku_katsuhiko onoue_masayuki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = item_data
 targetname2 = item_battle_pocket
+
+POCKET_DATA = item_pocket_data.cdat
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -73,11 +75,11 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: wb_item.xls
+$(targetname).narc: wb_item.xls $(RUBYDIR)item_conv.rb
 	$(COPY) $(PROJECT_PROGDIR)include/item/itemuse_def.h ./itemuse_def.h
 	$(CSVCVTR) -o wb_item_sort_in.csv -p 1 -s csv wb_item.xls
 	$(RUBYDIR)sort_remover.rb wb_item_sort_in.csv wb_item.csv swan_item_sort.csv
-	$(RUBYDIR)item_conv.rb wb_item.csv ../message/template.gmm
+	$(RUBYDIR)item_conv.rb wb_item.csv ../message/template.gmm $(POCKET_DATA)
 	itemconv.bat $(PROJECT_PROGDIR) $(PROJECT_ROOT)
 	$(NAIXCUT) $(targetname).naix
 

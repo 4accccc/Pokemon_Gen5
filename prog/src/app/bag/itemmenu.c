@@ -323,6 +323,8 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 //  pWork->bChange = TRUE;
   pWork->bCursorChange = 1;
 //  pWork->bCellChange = 1;
+
+  ONOUE_Printf("再描画\n");
 }
 
 //------------------------------------------------------------------------------
@@ -393,7 +395,6 @@ int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
 int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 {
   int length = 0;
-
   if(pWork->moveMode){
     length = MYITEM_GetItemThisPocketNumber(pWork->ScrollItem, BAG_MYITEM_MAX);
   }
@@ -978,6 +979,8 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
+
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1954,9 +1957,9 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_DEBUG )
   {
     int item_id;
-    for( item_id = 0; item_id <= ITEM_DATA_MAX ; item_id++ )
+    for( item_id = ITEM_DUMMY_DATA; item_id <= ITEM_DATA_MAX ; item_id++ )
     {
-      BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,item_id);
+      BOOL is_in = MYITEM_CheckInRepository( pWork->pMyItem ,item_id);
       if( is_in == FALSE )
       {
         // しまう
@@ -1968,6 +1971,9 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       }
     }
     pWork->oamlistpos_old = 0xffff;
+     
+    PMSND_PlaySE( SE_BAG_REPOSITORY );
+    CursorPosRefresh( pWork );
     _windowRewrite(pWork);
     ITEMDISP_ScrollCursorChangePos( pWork );
   }
@@ -2576,7 +2582,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
 {
   BOOL rslt;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
-  BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,pWork->ret_item);  // MYITEM_SubItemないで変更があるので、先に取得する
+  BOOL is_in = MYITEM_CheckInRepository( pWork->pMyItem ,pWork->ret_item);  // MYITEM_SubItemないで変更があるので、先に取得する
 
   // 手持ちからアイテム削除
   rslt = MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, sub_num, pWork->heapID );
@@ -2589,7 +2595,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
     if( is_in == TRUE )
     {
       // 保管ポケットから取り除く
-      BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
+      BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ) ,FALSE );
     }
     CursorPosRefresh( pWork );
   }
@@ -2850,7 +2856,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
 {
-  BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,pWork->ret_item);
+  BOOL is_in = MYITEM_CheckInRepository( pWork->pMyItem ,pWork->ret_item);
   u32 pocket_id = MYITEM_GetPocketID( pWork->pMyItem , pWork->ret_item );
   if( is_in == FALSE )
   {
@@ -2866,7 +2872,7 @@ static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString( pWork->MsgManager, mes_bag_125, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
     ITEMMENU_WordsetPocketName( pWork, 0, pocket_id );
-    BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
+    BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ),TRUE);
   }
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
@@ -3025,7 +3031,6 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
-  ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -3037,15 +3042,14 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 
   // ソート用データ生成
   // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
-  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
+  //ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
   for( i=0; i<length; i++ ){
-    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
+    void * dat = ITEM_GetItemDataArcHandle( pWork->item_data_ah, item[i].id, pWork->heapID );
     sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
     sort[i].st   = item[i];
     GFL_HEAP_FreeMemory( dat );
     ONOUE_Printf("%u:%u\n",item[i].id,sort[i].type);
   }
-  GFL_ARC_CloseDataHandle( ah );
 
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
 
@@ -3178,7 +3182,6 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
-  ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -3189,10 +3192,8 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
   length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
 
   // ソート用データ生成
-  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
-
   for( i=0; i<length; i++ ){
-    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
+    void * dat = ITEM_GetItemDataArcHandle( pWork->item_data_ah, item[i].id, pWork->heapID );
     u64 count = MYITEM_GetItemNumFromSave( pWork->pMyItem, item[i].id );
     
     // 逆順のときはソート番号を逆順に入れておく
@@ -3207,7 +3208,6 @@ static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
     sort[i].st    = item[i];
     GFL_HEAP_FreeMemory( dat );
   }
-  GFL_ARC_CloseDataHandle( ah );
 
   if( is_max_top == TRUE )
   {
@@ -4244,6 +4244,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   // アイテム破損データを修復
   MYITEM_CheckSafety( pWork->pMyItem );
+	
+  // アイテムデータアーカイブハンドル
+  pWork->item_data_ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
 
   // バッグ用アイテム初期化
   BAGITEM_InitData( &pWork->bag_item , pParam->p_myitem ,pWork->heapID );
@@ -4387,6 +4390,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   pWork->oamlistpos_old = pWork->oamlistpos;
 
   state(pWork);
+
 //  SORT_Draw(pWork);
 
   // セルリスト更新
@@ -4443,6 +4447,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   // バッグアイテムの開放
   BAGITEM_DeleteData( &pWork->bag_item );
+
+  // アーカイブハンドルの開放
+  GFL_ARC_CloseDataHandle( pWork->item_data_ah );
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );

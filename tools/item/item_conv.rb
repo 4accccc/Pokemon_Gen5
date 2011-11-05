@@ -7,23 +7,50 @@
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
 
+  # sort_remover.rbを通るとソート２，３が削られる
 class PARA
   enum_const_set %w[
     NO
     KIND
     NAME
+    KANZI
+    ICON_C
+    ICON_P
+    PRICE
+    EQ_EFFECT
+    POWER
+    POWER_HELP
+    THROW_POWER
+    THROW_EFFECT
+    SHIZENNOMEGUMI_POWER
+    SHIZENNOMEGUMI_TYPE
+    TSUIBAMU_EFFECT
+    INFO_KANA_1
+    INFO_KANA_2
+    INFO_KANA_3
+    INFO_KANZI_1
+    INFO_KANZI_2
+    INFO_KANZI_3
+    MULTI
+    WAZA_MACHINE
+    IMPORTANT
+    BENRI
+    SORTNO_NORMAL
+    POCKET_TYPE
   ]
 end
 
-	if ARGV.size < 2
+	if ARGV.size < 3
 		print "error: ruby item_conv.rb read_file gmm_file\n"
 		print "read_file:読み込むファイル\n"
 		print "gmm_file:特性名のgmmファイルを書き出すための元になるファイル\n"
+		print "pocket_file:ポケット番号を出力するファイル名\n"
 		exit( 1 )
 	end
 
   ARGV_READ_FILE = 0
   ARGV_READ_GMM_FILE = 1
+  ARGV_POCKET_NO_FILE = 2
 
   label = LabelMake.new
   read_data = []
@@ -122,4 +149,63 @@ end
   tokuinfo_gmm.close_gmm
   print "アイテムラベル＆gmmファイル　生成終了\n"
 =end
+
+# タイプ名からポケットタイプへ変換するテーブル
+pocket_no_hash = {
+  "NORMAL"=>"BAG_POKE_NORMAL", # 道具
+  "DRUG"=>"BAG_POKE_DRUG", # 薬
+  "WAZA"=>"BAG_POKE_WAZA", # 
+  "NUTS"=>"BAG_POKE_NUTS", # 木の実
+  "EVENT"=>"BAG_POKE_EVENT", # 大切なもの
+  "0"=>"BAG_POKE_NORMAL", # 道具
+}
+
+#define	BAG_POKE_DRUG		    ( 1 )		// 薬
+#define	BAG_POKE_WAZA		    ( 2 )		// 技マシン
+#define	BAG_POKE_NUTS		    ( 3 )		// 木の実
+#define	BAG_POKE_EVENT		  ( 4 )		// 大切な物
+#define	BAG_POKE_REPOSITORY	( 5 )		// 保管
+
+header = <<-EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  アイテム番号からポケット番号を引くための配列
+ *	@author	Masayuki Onoue
+ *	@date		2011.11.02
+ *  @note   \\tools\\item\\item_conv.rbが作成したデータです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+static const u8 itemid_to_pocketno[] =
+{
+EOS
+
+fname = ARGV[ ARGV_POCKET_NO_FILE ]
+fp_pocket = open( fname , "w" )
+fp_pocket.printf( header%[ fname ] )
+
+# ダミーの登録
+fp_pocket.printf("  %s,  // ダミー(0)\n",pocket_type = pocket_no_hash["0"] )
+
+read_data.size.times {|i|
+  split_data = read_data[ i ].split(/,/)
+
+  p_type = split_data[ PARA::POCKET_TYPE ]
+  if pocket_no_hash.key?(p_type) then
+    # 未登録タイプ(0)の場合は道具を指定
+    pocket_type = pocket_no_hash[p_type]
+  else
+    raise "エラー：未登録のfield保存先「%s」が使用されています!\n"%[p_type]
+  end
+
+  fp_pocket.printf("  %s,  // %s(%d)\n",pocket_type , split_data[ PARA::NAME ], split_data[ PARA::NO ].to_i )
+}
+
+fp_pocket.printf( "};\n\n" )
+fp_pocket.close
+
 

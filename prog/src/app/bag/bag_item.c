@@ -80,10 +80,13 @@ void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
   p_wk->heapID    = heapID;
   p_wk->p_myitem  = p_myitem;
 
+  // テーブルクリア
+  GFL_STD_MemClear(p_wk->repository_item, sizeof(p_wk->repository_item));
+
   // 保管ポケットデータから保管済みのアイテムID一覧を作成する
   for( item_id = 0; item_id <= ITEM_DATA_MAX ; item_id++ )
   {
-    is_in = MYITEM_GetRepositoryFlag( p_wk->p_myitem ,item_id);
+    is_in = MYITEM_CheckInRepository( p_wk->p_myitem ,item_id);
 
     if( is_in )
     {
@@ -162,7 +165,7 @@ ITEM_ST * BAGITEM_PosItemGet( BAGITEM_WORK *p_wk, u16 pocket, u16 pos )
         return &p_wk->dummy;
       }
 
-      is_in = MYITEM_GetRepositoryFlag( p_wk->p_myitem ,item->id);
+      is_in = MYITEM_CheckInRepository( p_wk->p_myitem ,item->id);
       if( is_in == FALSE )
       {
         if( index == pos )
@@ -221,11 +224,12 @@ ITEM_ST * BAGITEM_PosItemGet( BAGITEM_WORK *p_wk, u16 pocket, u16 pos )
  *
  *	@param	*p_wk バッグアイテムワーク
  *	@param	pos   保管ポケット内の位置
+ *	@param	is_rm_rep_flag TRUEの時保管フラグを取り除く
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos )
+void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos ,BOOL is_rm_rep_flag )
 {
   REPOSITORY_ITEM_ST *rep_st;
   s32   index = 0;
@@ -239,7 +243,10 @@ void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos )
       if( index == pos )
       {
         // 保管フラグを取り除く
-        MYITEM_SetRepositoryFlag( p_wk->p_myitem , p_wk->repository_item[i].id , FALSE );
+        if( is_rm_rep_flag == TRUE )
+        {
+          MYITEM_SetRepositoryFlag( p_wk->p_myitem , p_wk->repository_item[i].id , FALSE );
+        }
 
         // アイテムを一番下に移動
         MYITEM_MoveBottom( p_wk->p_myitem ,p_wk->repository_item[i].id );
@@ -404,23 +411,70 @@ void BAGITEM_SortRepositoryItem( BAGITEM_WORK *p_wk , u16 SortType )
 u32 BAGITEM_GetItemPocketNumber( BAGITEM_WORK *p_wk , u32 pocket )
 {
   int i;
-  u32 count;
-  count = MYITEM_GetItemPocketNumber(  p_wk->p_myitem, pocket );
+  u32 count = 0;
 
+#if 0
   // 保管ポケットの場合は非表示になっているものをカウントしない
+  count = MYITEM_GetItemPocketNumber(  p_wk->p_myitem, pocket );
   if( pocket == BAG_POKE_REPOSITORY )
   {
     for( i=0; i<=BAG_TOTAL_NUM; i++ )
     {
       if( p_wk->repository_item[i].visible == FALSE )
       {
-        if( MYITEM_GetRepositoryFlag( p_wk->p_myitem ,p_wk->repository_item[i].id) )
+        if( MYITEM_CheckInRepository( p_wk->p_myitem ,p_wk->repository_item[i].id) )
         {
           count --;
         }
       }
     }
   }
+#else
+  {
+    u32 i;
+    u32 max;
+    const ITEM_ST* p_item_st;
+    // アイテム存在テーブルを作成
+    MYITEM_GetExistanceTable( p_wk->p_myitem ,p_wk->item_existence_table );
+
+    if( pocket != BAG_POKE_REPOSITORY )
+    {
+      p_item_st = MYITEM_MyPocketDataGet( p_wk->p_myitem , pocket ,&max );
+
+      for( i = 0; i < max; i++ )
+      {
+        if( p_item_st[i].id != ITEM_DUMMY_DATA )
+        {
+          // アイテムが存在していてかつ、保管に登録されていないものを数える
+          u16 itemno = p_item_st[i].id;
+          if( (p_wk->item_existence_table[ itemno ] ) &&
+              ( !MYITEM_GetRepositoryFlag( p_wk->p_myitem ,itemno ) ))
+          {
+            count++;
+          }
+        }
+      }
+    }
+    else
+    {
+      // 保管ポケットデータから数を数える
+      for( i = 0; i <= ITEM_DATA_MAX ; i++ )
+      {
+        if( p_wk->repository_item[i].id != ITEM_DUMMY_DATA )
+        {
+          // 表示状態になっているものを数える
+          u16 itemno = p_wk->repository_item[i].id;
+          if( (p_wk->item_existence_table[ itemno ] ) &&
+              (p_wk->repository_item[i].visible == TRUE) )
+          {
+            count++;
+          }
+        }
+      }
+    }
+  }
+
+#endif
 
   return count;
 }

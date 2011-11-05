@@ -139,6 +139,10 @@ extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
 //extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
 extern void MYITEM_MoveBottom( MYITEM_PTR myitem, u16 item_no );
+extern u16 MYITEM_GetItemAddPocket( MYITEM_PTR myitem, u16 id );
+extern BOOL MYITEM_CheckInRepository( MYITEM_PTR myitem, u16 item_no );
+extern void MYITEM_GetExistanceTable( MYITEM_PTR p_myitem, u8 *p_dest );
+extern const ITEM_ST* MYITEM_MyPocketDataGet( MYITEM_PTR myitem ,s32 pocket ,u32 * max);
 
 
 #ifdef CREATE_INDEX

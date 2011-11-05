@@ -587,6 +587,9 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 			GFL_CLACT_WK_SetPlttOffs(
 				pWork->clwkWazaKind[i], APP_COMMON_GetWazaKindPltOffset(i), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkWazaKind[i], FALSE);
 		}
 
     cellInitData2.pos_x = 10*8;
@@ -605,6 +608,9 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 			GFL_CLACT_WK_SetPlttOffs(
 				pWork->clwkWazaType[i], APP_COMMON_GetPokeTypePltOffset(i), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+      
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkWazaType[i], FALSE);
 		}
   }
 
@@ -641,6 +647,9 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkSort, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, TRUE );
+
+    // SRTアニメ無効
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkSort, FALSE);
 
 		ITEMDISP_ChangeSortButton( pWork );
   }
@@ -1234,6 +1243,10 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
                                            pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellicon, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, TRUE );
+    
+    // SRTアニメ無効
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellicon, FALSE);
+
   }
 }
 
@@ -1363,6 +1376,9 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+    
+    // SRTアニメ無効
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkScroll, FALSE);
 
 		ITEMDISP_ScrollCursorChangePos( pWork );		// 初期位置設定
   }
@@ -1380,6 +1396,9 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       pWork->cellUnit,
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN, pWork->heapID );
+    
+    // SRTアニメ無効
+    GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkCur, FALSE);
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkCur, TRUE );
@@ -1412,6 +1431,10 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
+    
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->listCell[i], FALSE);
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->listMarkCell[i], FALSE);
 
     }
   }
@@ -1485,7 +1508,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
   int length;
-	ARCHANDLE * ah;
 
   // 文字色指定
   static const u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
@@ -1532,7 +1554,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	if( pWork->oamlistpos_old == pWork->oamlistpos ){ return; }
 
 	// リスト表示
-	ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
 	for( i=0; i<ITEM_LIST_NUM; i++ ){
     ITEM_ST * item;
 
@@ -1552,7 +1573,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 
       // ※ページ切替時にロードするようにすれば、負荷が軽減される
 //      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-			itemdata = ITEM_GetItemDataArcHandle( ah, item->id, pWork->heapID );
+			itemdata = ITEM_GetItemDataArcHandle( pWork->item_data_ah, item->id, pWork->heapID );
 			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
 
 			// 文字色指定。枠の外はグラデ
@@ -1630,8 +1651,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
-  GFL_ARC_CloseDataHandle( ah );
-
 	pWork->bCellChange = 1;
 }
 
@@ -1826,6 +1845,9 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
                                                    &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
+       
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkBarIcon[i], FALSE);
     }
 
     // 検索ボタン
@@ -1843,6 +1865,9 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_SEARCH] , FALSE );
 
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_SEARCH], TRUE );
+       
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkBarIcon[BAR_ICON_SEARCH], FALSE);
     }
 
     
@@ -1882,6 +1907,9 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[ clwk_id ], TRUE );
      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ clwk_id ] , FALSE );
+      
+      // SRTアニメ無効
+      GFL_CLACT_WK_SetSRTAnimeFlag( pWork->clwkBarIcon[ clwk_id ], FALSE);
     }
   }
 
@@ -3065,3 +3093,4 @@ static BOOL CheckIsDrawNumberPocket( u8 pocket_id )
   GF_ASSERT( pocket_id < BAG_POKE_MAX );
   return is_draw_num[pocket_id];
 }
+

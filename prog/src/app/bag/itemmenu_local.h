@@ -316,6 +316,10 @@ struct _FIELD_ITEMMENU_PARAM {
   BAGITEM_WORK  bag_item;
   s32           sort_mode;
   s32           repository_sort_mode;
+
+  // アイテムデータのアーカイブハンドル
+	ARCHANDLE * item_data_ah;
+  
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置

@@ -2811,19 +2811,8 @@ static BOOL printBuyMsgCallBack( u32 param )
 //----------------------------------------------------------------------------------
 static void ShopPrintMsgItem( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 {
-  u16 pocket;
-  BOOL is_in = MYITEM_GetRepositoryFlag( wk->myitem, itemno );
+  u16 pocket = MYITEM_GetItemAddPocket( wk->myitem, itemno );
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
-
-
-  if( is_in == TRUE )
-  {
-    pocket = (u16)BAG_POKE_REPOSITORY;
-  }
-  else
-  {
-    pocket = (u16)ITEM_GetParam( itemno, ITEM_PRM_POCKET, wk->heapId );
-  }
 
   WORDSET_RegisterItemPocketName( wk->wordSet, 1, pocket);
 

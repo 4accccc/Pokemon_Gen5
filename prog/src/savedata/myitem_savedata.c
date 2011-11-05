@@ -10,6 +10,7 @@
 #include "savedata/myitem_savedata.h"
 #include "item/item.h"
 #include "myitem_savedata_local.h"
+#include "../../../resource/itemconv/item_pocket_data.cdat"
 
 
 
@@ -50,14 +51,15 @@ struct _BAG_CURSOR {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, HEAPID heap );
+static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max );
 static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max);
 static void bottomInsert( ITEM_ST * item, const u32 max );
 static u32 GetRepositoryNum( MYITEM_PTR myitem );
 static BOOL SearchInPocket( MYITEM_PTR myitem, u16 item_no, u16 pocket );
 static void SortRepository(MYITEM_PTR myitem, ITEM_ST *item, u32 max );
 static void ChengeItem( ITEM_ST * p1, ITEM_ST * p2 );
-
+static u8 GetPocketIDFromTable( u16 item_id );
+static void DelClearItemST( ITEM_ST *st );
 
 
 //==============================================================================
@@ -139,15 +141,14 @@ void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMy
   {
     for( i = 0; i < max ; i++ )
     {
-      BOOL is_in = MYITEM_GetRepositoryFlag( myitem , MyItemSt[i].id );
+      BOOL is_in = MYITEM_CheckInRepository( myitem , MyItemSt[i].id );
       if( is_in == FALSE )
       {
         GFL_STD_MemCopy(&MyItemSt[i], &itemst[i], sizeof(ITEM_ST) );
       }
       else
       {
-        itemst[i].id = ITEM_DUMMY_DATA;
-        itemst[i].no = 0;
+        DelClearItemST( &itemst[i] ); 
       }
     }
   }
@@ -158,7 +159,7 @@ void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMy
       // ダミーデータは書き込まない
       if( itemst[i].id != ITEM_DUMMY_DATA )
       {
-        BOOL is_in = MYITEM_GetRepositoryFlag( myitem , itemst[i].id );
+        BOOL is_in = MYITEM_CheckInRepository( myitem , itemst[i].id );
         if( is_in == FALSE )
         {
           GFL_STD_MemCopy(&itemst[i],&MyItemSt[i],sizeof(ITEM_ST) );
@@ -214,7 +215,7 @@ static void SortRepository(MYITEM_PTR myitem, ITEM_ST *item, u32 max )
 
   for( i=0; i<max-1; i++ ){
     for( j=i+1; j<max; j++ ){
-      BOOL is_in = MYITEM_GetRepositoryFlag( myitem , item[i].id );
+      BOOL is_in = MYITEM_CheckInRepository( myitem , item[i].id );
       if( item[j].id != ITEM_DUMMY_DATA )
       {
         if( is_in == TRUE ){
@@ -261,7 +262,6 @@ void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index , u32 setitem )
  * @param	pocket		ポケット番号
  * @param	item	MYITEM取得場所
  * @param	max		最大数取得場所
- * @param	heap		ヒープID
  * @return none
  */
 //------------------------------------------------------------------
@@ -307,13 +307,12 @@ static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 
  * @param	id		アイテム番号
  * @param	item	MYITEM取得場所
  * @param	max		最大数取得場所
- * @param	heap		ヒープID
  * @return	ポケット番号
  */
 //------------------------------------------------------------------
-static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, HEAPID heap )
+static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max )
 {
-	s32 pocket = ITEM_GetParam( id, ITEM_PRM_POCKET, heap );
+	s32 pocket = GetPocketIDFromTable( id );
 
 	MyPocketDataGet(myitem, pocket, item, max);
 	return pocket;
@@ -363,18 +362,17 @@ static ITEM_ST * AddItemSearch( ITEM_ST * item, u32 siz, u16 id, u16 num, u16 ma
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
  * @retval	成功 = アイテム位置
  * @retval	失敗 = NULL
  */
 //------------------------------------------------------------------
-static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
+static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num )
 {
 	ITEM_ST * add;
 	u32	max;
 	u32	pocket;
 
-	pocket = MyItemDataGet( myitem, item_no, &add, &max, heap );
+	pocket = MyItemDataGet( myitem, item_no, &add, &max );
 	if( pocket == BAG_POKE_WAZA ){
 		return AddItemSearch( add, max, item_no, num, ITEM_MAX_WAZAMACHINE );
 	}
@@ -387,14 +385,14 @@ static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID 
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	成功
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
 BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-	if( AddItemPosGet( myitem, item_no, num, heap ) == NULL ){
+	if( AddItemPosGet( myitem, item_no, num ) == NULL ){
 		return FALSE;
 	}
 	return TRUE;
@@ -406,14 +404,14 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	成功
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
 BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-	ITEM_ST * add = AddItemPosGet( myitem, item_no, num, heap );
+	ITEM_ST * add = AddItemPosGet( myitem, item_no, num );
 
 	if( add == NULL ){ return FALSE; }
 	add->id = item_no;
@@ -425,7 +423,7 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 //	{
 //		u32	pocket;
 //		u32	max;
-//		pocket = MyItemDataGet( myitem, item_no, &add, &max, heap );
+//		pocket = MyItemDataGet( myitem, item_no, &add, &max );
 //		// 木の実
 //		if( pocket == BAG_POKE_NUTS ){
 //			MYITEM_SortNumber( add, max );
@@ -485,28 +483,27 @@ static ITEM_ST * SubItemSearch( ITEM_ST * item, u32 siz, u16 id, u16 num )
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
  * @retval	成功 = アイテム位置
  * @retval	失敗 = NULL
  */
 //------------------------------------------------------------------
-static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
+static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num )
 {
 	ITEM_ST * sub;
 	u32	max;
 
-	MyItemDataGet( myitem, item_no, &sub, &max, heap );
+	MyItemDataGet( myitem, item_no, &sub, &max );
 	return SubItemSearch( sub, max, item_no, num );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  指定したアイテムIDのアイテムが保管ポケットに入っているか調べる
+ *	@brief 保管フラグを取得する
  *
  *	@param	myitem  手持ちアイテム構造体へのポインタ
  *	@param	item_no アイテムID
  *
- *	@retval TRUE：入っている
+ *	@retval TRUE：登録されている
  */
 //-----------------------------------------------------------------------------
 BOOL MYITEM_GetRepositoryFlag( MYITEM_PTR myitem, u16 item_no )
@@ -521,19 +518,35 @@ BOOL MYITEM_GetRepositoryFlag( MYITEM_PTR myitem, u16 item_no )
   bit_mask = bit_mask << (item_no%32);
   bit_data = myitem->RepositoryFlag[bit_pos] & bit_mask;
 
-  // 保管フラグを調査
   if( bit_data )
   {
-//    // ポケット内に存在するか調べる
-//    pocket_no = MYITEM_GetPocketID( myitem , item_no );
-//    if( pocket_no != BAG_POKE_MAX )
-//    {
-//      return TRUE;
-//    }
-
-    // 入れるときに、持っていないものは入れないことで存在確認をする必要がない
-    // ここでポケットや個数などを調べるとスクロール速度が大幅に落ちてしまう
     return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管ポケットに入っているかを調べる
+ *
+ *	@param	myitem
+ *	@param	item_no 
+ *
+ *	@retval TRUEの時入っている
+ *	@note   保管ポケットフラグが登録されていても、アイテムを所持していい無い時は保管に入っていることにはならない
+ */
+//-----------------------------------------------------------------------------
+BOOL MYITEM_CheckInRepository( MYITEM_PTR myitem, u16 item_no )
+{
+  // 保管フラグを調査
+  if( MYITEM_GetRepositoryFlag( myitem , item_no ) )
+  {
+    // ポケット内に存在するか調べる
+    u8 pocket = MYITEM_GetPocketID( myitem , item_no );
+    if( pocket != BAG_POKE_MAX  )
+    {
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -586,59 +599,25 @@ static void MYITEM_SetRepositoryFlagCore( MYITEM_PTR myitem, u16 item_no , BOOL 
 void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set )
 {
   MYITEM_SetRepositoryFlagCore( myitem, item_no, set );
-
-  //いでんしのくさびは２つセットで書き換える
-  if(item_no == ITEM_IDENSINOKUSABI){
-    MYITEM_SetRepositoryFlagCore( myitem, ITEM_IDENSINOKUSABI_1, set );
-  }else if( item_no == ITEM_IDENSINOKUSABI_1){
-    MYITEM_SetRepositoryFlagCore( myitem, ITEM_IDENSINOKUSABI, set );
-  }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  セーブデータからポケット位置を検索する
+ *	@brief  アイテムIDからポケット位置を取得する
  *
- *	@param	myitem  手持ちアイテム構造体へのポインタ
- *	@param	item_no 検索するアイテム番号
+ *	@param	item_no アイテム番号
  *
- *	@retval ポケット番号
+ *	@retval ポケット番号(持っていないときはBAG_POKE_MAX)
  */
 //-----------------------------------------------------------------------------
 u32 MYITEM_GetPocketID( MYITEM_PTR myitem, u16 item_no )
 {
-  BOOL is_in;
-
-  is_in = SearchInPocket( myitem , item_no , BAG_POKE_NORMAL);
+  u8 pocket = GetPocketIDFromTable(item_no);
+  BOOL is_in = SearchInPocket( myitem ,item_no ,pocket );
   if( is_in )
   {
-    return BAG_POKE_NORMAL;
+    return pocket;
   }
-
-  is_in = SearchInPocket( myitem , item_no , BAG_POKE_DRUG);
-  if( is_in )
-  {
-    return BAG_POKE_DRUG;
-  }
-
-  is_in = SearchInPocket( myitem , item_no , BAG_POKE_WAZA);
-  if( is_in )
-  {
-    return BAG_POKE_WAZA;
-  }
-
-  is_in = SearchInPocket( myitem , item_no , BAG_POKE_NUTS);
-  if( is_in )
-  {
-    return BAG_POKE_NUTS;
-  }
-
-  is_in = SearchInPocket( myitem , item_no , BAG_POKE_EVENT);
-  if( is_in )
-  {
-    return BAG_POKE_EVENT;
-  }
-
   return BAG_POKE_MAX;
 }
 
@@ -681,28 +660,26 @@ static BOOL SearchInPocket( MYITEM_PTR myitem, u16 item_no, u16 pocket )
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	成功
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
 BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-	ITEM_ST * sub = SubItemPosGet( myitem, item_no, num, heap );
+	ITEM_ST * sub = SubItemPosGet( myitem, item_no, num );
 
 	if( sub == NULL ){ return FALSE; }
 
 	sub->no -= num;
 	if( sub->no == 0 ){
-    // アイテムがなくなった場合は保管ポケットからもはずす
-    MYITEM_SetRepositoryFlag( myitem , item_no , FALSE );
 		sub->id = 0;
   }
 
 	{
 		u32	max;
 
-		MyItemDataGet( myitem, item_no, &sub, &max, heap );
+		MyItemDataGet( myitem, item_no, &sub, &max );
 		MYITEM_SortSpace( sub, max );
 	}
 
@@ -716,7 +693,7 @@ BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
  * @param	max			検索数
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	成功
  * @retval	FALSE	失敗
  */
@@ -743,14 +720,14 @@ BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, HEAP
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	存在する
  * @retval	FALSE	存在しない
  */
 //------------------------------------------------------------------
 BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-	if( SubItemPosGet( myitem, item_no, num, heap ) == NULL ){
+	if( SubItemPosGet( myitem, item_no, num ) == NULL ){
 		return FALSE;
 	}
 	return TRUE;
@@ -837,7 +814,7 @@ u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket , 
       {
         if( is_count_repository == FALSE )
         {
-          BOOL is_in = MYITEM_GetRepositoryFlag( myitem , item[i].id );
+          BOOL is_in = MYITEM_CheckInRepository( myitem , item[i].id );
           if( is_in == FALSE )
           {
             num++;
@@ -898,7 +875,7 @@ static u32 GetRepositoryNum( MYITEM_PTR myitem )
   {
     if( item_id != ITEM_DUMMY_DATA )
     {
-      BOOL is_in = MYITEM_GetRepositoryFlag( myitem ,item_id);
+      BOOL is_in = MYITEM_CheckInRepository( myitem ,item_id);
 
       if( is_in )
       {
@@ -914,13 +891,13 @@ static u32 GetRepositoryNum( MYITEM_PTR myitem )
  * @brief	手持ちの個数チェック
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	item_no		指定するアイテムのナンバー
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @return	手持ち数
  */
 //------------------------------------------------------------------
 u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap )
 {
-	ITEM_ST * sub = SubItemPosGet( myitem, item_no, 1, heap );
+	ITEM_ST * sub = SubItemPosGet( myitem, item_no, 1 );
 
 	if( sub == NULL ){
 		return 0;
@@ -965,7 +942,7 @@ u16 MYITEM_GetItemNumFromSave( MYITEM_PTR myitem, u16 item_no )
  * @param	max			検索数
  * @param	item_no		指定するアイテムのナンバー
  * @param	num			アイテムの個数
- * @param	heap		ヒープID
+ * @param	heap		ヒープID(現在未使用)
  * @retval	TRUE	成功
  * @retval	FALSE	失敗
  */
@@ -1105,8 +1082,16 @@ void MYITEM_SortSpace( ITEM_ST * item, const u32 max )
 		for( j=i+1; j<max; j++ ){
 			if( item[i].no == 0 ){
 				ChengeItem( &item[i], &item[j] );
-			}
-		}
+      }
+      if( item[i].id != ITEM_DUMMY_DATA )
+      {
+        if( item[i].id == item[j].id )
+        {
+          ONOUE_Printf("エラー：%d\n",item[i].no);
+          GF_ASSERT(0);
+        }
+      }
+    }
 	}
 }
 
@@ -1286,38 +1271,34 @@ void MYITEM_KyuremuItemSwap( MYITEM_PTR myitem, KYUREMU_ITEM_SWAP mode )
   static const u16 swap[2] = { ITEM_IDENSINOKUSABI, ITEM_IDENSINOKUSABI_1 };
   ITEM_ST* tbl = myitem->MyEventItem;
   ITEM_ST* item = NULL;
+  BOOL is_in;
   int i;
 
+  // キュレム合体用アイテムを検索し、挿げ替える
   for(i = 0;i < BAG_EVENT_ITEM_MAX;i++ ){
-#if 0
     if( tbl[i].id == swap[mode] ){
       if( item == NULL ){
         item = &tbl[i];
         item->id = swap[mode^1];
         item->no = 1;
       }else{
-        tbl[i].id = 0;  //同じアイテムが2スロット以上あるのは不正
-        tbl[i].no = 0;
+        //同じアイテムが2スロット以上あるのは不正
+        DelClearItemST( &tbl[i] ); 
       }
-    }else if( tbl[i].id == swap[mode-1])
+    }
+    else if( tbl[i].id == swap[mode^1])
+    {
       //スワップ後のアイテムと同じものが他にあるのは不正
-      tbl[i].id = 0;
-      tbl[i].no = 0;
+      DelClearItemST( &tbl[i] ); 
     }
-#else
-    if( tbl[i].id == swap[mode] ){
-      OS_Printf("item=%d\n",tbl[i].id);
-      tbl[i].id = swap[mode^1];
-    }
-#endif
   }
-#if 0
+
   //保管ポケットのフラグも制御
-  MYITEM_SetRepositoryFlag( myitem , swap[mode] , FALSE );
-  MYITEM_SetRepositoryFlag( myitem , swap[mode^1] , TRUE );
+  is_in = MYITEM_GetRepositoryFlag( myitem , swap[mode] );
+  MYITEM_SetRepositoryFlag( myitem , swap[mode^1] , is_in );
+
   //隙間を詰める	
   MYITEM_SortSpace( tbl, BAG_EVENT_ITEM_MAX );
-#endif
 }
 
 //------------------------------------------------------------------
@@ -1518,6 +1499,116 @@ void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page )
 {
 	wk->btl.item = item;
 	wk->btl.page = page;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムIDからポケット番号を取得する
+ *
+ *	@param	item_id 
+ *
+ *	@retval ポケット番号
+ */
+//-----------------------------------------------------------------------------
+static u8 GetPocketIDFromTable( u16 item_id )
+{
+  GF_ASSERT( ITEM_DATA_MAX >= item_id );
+  return itemid_to_pocketno[item_id];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムを追加するべきポケット番号を取得する
+ *
+ *	@param	myitem
+ *	@param	id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 MYITEM_GetItemAddPocket( MYITEM_PTR myitem, u16 id )
+{
+  // 保管フラグを取得
+  BOOL flg = MYITEM_GetRepositoryFlag( myitem , id );
+
+  // 保管ポケット判断
+  if( flg == TRUE )
+  {
+    return BAG_POKE_REPOSITORY;
+  }
+
+  // 通常ポケット
+  return GetPocketIDFromTable( id );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief アイテムSTの中をクリアする
+ *
+ *	@param	*st 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DelClearItemST( ITEM_ST *st )
+{
+  st->id = ITEM_DUMMY_DATA;
+  st->no = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief アイテムの存在フラグテーブルを作成する
+ *
+ *	@param	p_myitem
+ *	@param	*p_dest   テーブル出力先
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MYITEM_GetExistanceTable( MYITEM_PTR p_myitem, u8 *p_dest )
+{
+  s32 i;
+  u16 pocket;
+  ITEM_ST* p_item_st;
+  u32 tbl_max;
+	
+  // テーブルクリア
+  GFL_STD_MemClear(p_dest, sizeof(p_dest));
+
+  // 保管以外のバッグをチェック
+  for( pocket = BAG_POKE_NORMAL; pocket <= BAG_POKE_EVENT ; pocket ++ )
+  {
+    MyPocketDataGet(p_myitem, pocket, &p_item_st, &tbl_max);
+
+    for( i = 0; i < tbl_max ;i ++ )
+    {
+      if( p_item_st[i].id != ITEM_DUMMY_DATA ) 
+      {
+        p_dest[ p_item_st[i].id ] = TRUE;
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定ポケットの参照先を取得する
+ *
+ *	@param	myitem 
+ *	@param	pocket 
+ *	@param	* max   テーブルの最大値
+ *
+ *	@retval 取得アドレス
+ */
+//-----------------------------------------------------------------------------
+const ITEM_ST* MYITEM_MyPocketDataGet( MYITEM_PTR myitem ,s32 pocket ,u32 * max)
+{
+  ITEM_ST *p_item_st;
+
+  MyPocketDataGet( myitem, pocket, &p_item_st, max);
+
+  return (p_item_st);
 }
 
 //------------------------------------------------------------------
