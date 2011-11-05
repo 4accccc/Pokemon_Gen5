@@ -4625,7 +4625,7 @@
 おまねきしたいと　おもいます▼
 ワザマ『ワザマで　ございます……▼
 さて　ちょうのまい　ですが
-これは　とくこう　ぼうぎょ▽
+これは　とくこう　とくぼう▽
 すばやさが　あがる　たいへんに▽
 ごきげんな　わざです▼
 にちじょうでの　こうかてきな
@@ -4645,8 +4645,8 @@
 それでは　みなさま　また　じかい
 おあいしましょう　さようなら</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:26:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4666,7 +4666,7 @@
 お招きしたいと　思います▼
 ワザマ『ワザマで　ございます……▼
 さて　ちょうのまい　ですが
-これは　特攻　防御▽
+これは　特攻　特防▽
 素早さが　あがる　大変に▽
 ご機嫌な　技です▼
 日常での　効果的な
@@ -4686,8 +4686,8 @@
 それでは　みなさま　また　次回
 お会いしましょう　さようなら</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:26:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4697,10 +4697,12 @@
 			Language="JPN">
 			<Comment>■バトル　わざと暮らす
 ・担当：中津井
-※BWと同じ</Comment>
+※BWと同じ
+
+2011.11.5　ぼうぎょ→とくぼう　に修正</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-25T03:13:38" />
+				User="shimoyamada:W00184"
+				Time="2011-11-05T12:26:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
