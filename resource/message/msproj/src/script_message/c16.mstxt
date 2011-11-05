@@ -1719,4 +1719,39 @@
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c16_sys_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にゅうりょく　する　ことばは
+つうしんで　あいてに　おくります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:00:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T10:59:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>にゅうりょく　する　ことばは
+つうしんで　あいてに　おくります</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:00:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:00:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チュートリアルでフリーワードを登録する際、フリーワードが通信で送られることを明示するテキスト</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-05T11:01:58" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
