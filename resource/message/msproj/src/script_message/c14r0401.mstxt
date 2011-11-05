@@ -96,11 +96,11 @@
 			<Comment>♀
 ・クリア後
 ・手持ちに
-　ラブカスがいる→
-　ラブカスがいない→</Comment>
+　ラブカスがいる→nurse_03
+　ラブカスがいない→nurse_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T03:30:13" />
+				Time="2011-11-05T10:46:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
