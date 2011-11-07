@@ -1823,4 +1823,114 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_girl3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　おきにいりの
+いっさつを　よんであげるね！▼
+「シンオウちほうの　しんわ」▼
+むかし　シンオウが　できたとき
+ポケモンと　ひとは▽
+おたがいに　ものを　おくり▽
+ものを　おくられ　ささえあっていた▼
+そこで　ある　ポケモンは
+いつも　ひとを　たすけてやるため▼
+ひとの　まえに　あらわれるよう
+ほかの　ポケモンに　はなした▼
+それからだ
+ひとが　くさむらに　はいると▽
+ポケモンが　とびだすようになったのは▼
+ですって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:48:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:39:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　お気に入りの
+一冊を　読んであげるね！▼
+シンオウ地方の　神話▼
+昔　シンオウが　できたとき
+ポケモンと　人は▽
+お互いに　ものを　贈り▽
+ものを　贈られ　支えあっていた▼
+そこで　ある　ポケモンは
+いつも　人を　助けてやるため▼
+人の　前に　現われるよう
+他の　ポケモンに　話した▼
+それからだ
+人が　草むらに　はいると▽
+ポケモンが　飛びだすようになったのは▼
+ですって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:49:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:39:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:37:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:47:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_boy1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　としょかん
+まえは　ジムだったんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:45:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　図書館
+前は　ジムだったんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:45:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:45:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:37:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T02:47:27" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
