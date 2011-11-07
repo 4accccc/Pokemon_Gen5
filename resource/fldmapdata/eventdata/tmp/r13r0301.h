@@ -11,6 +11,7 @@
 
 #define R13R0301_BADMAN_01                 0
 #define R13R0301_POKE_01                   1
+#define R13R0301_WOMAN1_01                 2
 
 #endif //ZONE_R13R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r13r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
