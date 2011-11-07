@@ -37,6 +37,7 @@ _EVENT_DATA		ev_c04p01_poke36_01
 _EVENT_DATA		ev_c04p01_poke38_01
 _EVENT_DATA		ev_c04p01_tvt_ev_01
 _EVENT_DATA		ev_c04p01_glasses_01
+_EVENT_DATA		ev_c04p01_girl4_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -324,4 +325,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c04p01_glasses_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_glasses_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C04P01	girl4							  */
+/**************************************************************/
+EVENT_START		ev_c04p01_girl4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04p01_girl4_01 )
 EVENT_END

@@ -24,6 +24,7 @@
 #define C04P01_POKE38_01                  10
 #define C04P01_TVT_EV_01                  11
 #define C04P01_GLASSES_01                 12
+#define C04P01_GIRL4_01                   13
 
 #endif //ZONE_C04P01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04p01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

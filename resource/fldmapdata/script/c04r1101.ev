@@ -36,6 +36,7 @@ _EVENT_DATA   ev_prg_c04r1101_tr_disp_on
 _EVENT_DATA		ev_init_c04r1101			//対戦後のコースタートレーナーをどかす
 _EVENT_DATA		ev_recover_c04r1101		//環境ＳＥ初期化（セーブ復帰用）
 _EVENT_DATA		ev_c04r1101_adultw_01
+_EVENT_DATA		ev_c04r1101_glasses_01
 _EVENT_DATA_END
 
 
@@ -475,4 +476,11 @@ ELSE
 
 ENDIF
 
+EVENT_END
+
+/************************************************************/
+/*				ダンペイ							*/
+/************************************************************/
+EVENT_START	ev_c04r1101_glasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1101_glasses_01 )
 EVENT_END

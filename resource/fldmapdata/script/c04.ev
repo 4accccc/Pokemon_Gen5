@@ -287,6 +287,8 @@ EVENT_START   ev_pos_c04_swrival_01
 	_CAMERA_MOVE( 9688,0,970752,26705920,65551,28737536,20 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()
 
+  _START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：まてよ！　オマエら
@@ -357,6 +359,8 @@ EVENT_START   ev_pos_c04_swrival_01
 	_CAMERA_BIND()		//カメラのバインドを解く
 	_CAMERA_END()
 
+  _END_EVENT_BGM()
+
 EVENT_END
 
 /**************************************************************/
@@ -399,6 +403,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_c04_swplazmam_02
 _TALK_OBJ_START()
+
+_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
 //へへへ
 _BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmam2_01 )
@@ -491,6 +497,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_c04_swplazmaw_01
 _TALK_OBJ_START()
+
+_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
 //なんてこと
 _BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmaw1_01 )
@@ -640,6 +648,8 @@ EVENT_START   ev_pos_c04_swrival_02
   _OBJ_DEL( C04_SWPLAZMAM_04 )
   _OBJ_DEL( C04_SWPLAZMAW_01 )
 
+  _START_EVENT_BGM_SILENT( 40 )
+
   _TIME_WAIT( 45 )
 
   //========================================//
@@ -656,6 +666,8 @@ EVENT_START   ev_pos_c04_swrival_02
   //ライバルゆっくり１歩前へ
   _OBJ_ANIME( C04_SWRIVAL_01, anm_walk_l_16f )
   _OBJ_ANIME_WAIT()
+
+  _START_EVENT_BGM(SEQ_BGM_E_EMOTION)
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
@@ -689,7 +701,6 @@ EVENT_START   ev_pos_c04_swrival_02
 
   //ライバル：たすかったよ
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_08, C04_SWRIVAL_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバルポケセンへ
@@ -707,6 +718,8 @@ EVENT_START   ev_pos_c04_swrival_02
   //ライバルを非表示
   _FLAG_SET( FV_C04_SWRIVAL_01 )
   //========================================//
+
+  _END_EVENT_BGM()
 
 EVENT_END
 
@@ -745,28 +758,17 @@ EVENT_START   ev_c04_swheroine_01
     //アニメ：ヒロイン向き直す
     _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_u )
     _TIME_WAIT( 8 )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
-/*
-    //自機座標取得
-    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-
-    //アニメ：主人公移動
-    IF $LCW_POSX == 422 && $LCW_POSZ == 462 THEN
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 423, 461, FORCE_TYPE_NPC, 8, DIR_LR )
-      _OBJ_ANIME_WAIT()
-    ELSE
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-      _OBJ_ANIME_WAIT()
-    ENDIF
-*/
-    //アニメ：ノボリ・クダリ振り向き
-    _OBJ_ANIME( C04_TBOSSBL_01, anm_dir_d )
-    _OBJ_ANIME( C04_TBOSS_01, anm_dir_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME_WAIT()
 
     //ヒロイン：ということで　サブウェイマスターに（主人公が女の子の場合は男口調）
     _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_05, msg_c04_hero_05, C04_SWHEROINE_01, POS_DOWN )
     _MSGWIN_CLOSE()
+    
+    //アニメ：ノボリ・クダリ振り向き
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_d )
+    _OBJ_ANIME( C04_TBOSS_01, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
 
 	//暗転処理
 	_BLACK_OUT()
@@ -782,8 +784,8 @@ EVENT_START   ev_c04_swheroine_01
 	//対戦ポジションに移動
 	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 420, 1, 461, DIR_RIGHT )
 	_OBJ_POS_CHANGE( C04_SWHEROINE_01, 420, 1, 463, DIR_RIGHT )
-	_OBJ_POS_CHANGE( C04_TBOSSBL_01, 424, 1, 461, DIR_LEFT )
-	_OBJ_POS_CHANGE( C04_TBOSS_01, 424, 1, 463, DIR_LEFT )
+	_OBJ_POS_CHANGE( C04_TBOSSBL_01, 424, 1, 463, DIR_LEFT )
+	_OBJ_POS_CHANGE( C04_TBOSS_01, 424, 1, 461, DIR_LEFT )
 	
 	_TIME_WAIT( 20 )
 	
@@ -792,11 +794,11 @@ EVENT_START   ev_c04_swheroine_01
 	_DISP_FADE_END_CHECK()
 
     //ノボリ：このような　ばしょでの
-    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_02, C04_TBOSSBL_01, POS_UP )
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_02, C04_TBOSSBL_01, POS_DOWN )
     _MSGWIN_CLOSE()
 
     //クダリ：ルールを　まもって
-    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_02, C04_TBOSS_01, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_02, C04_TBOSS_01, POS_UP )
     _MSGWIN_CLOSE()
 
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
@@ -851,42 +853,42 @@ EVENT_START   ev_c04_swheroine_01
 
     //勝利後メッセージ
     //ノボリ：ブラボー！！▼
-    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_03, C04_TBOSSBL_01, POS_UP )
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_03, C04_TBOSSBL_01, POS_DOWN )
     _MSGWIN_CLOSE()
 
     _OBJ_ANIME( C04_TBOSS_01, anm_staystep_l )
     _OBJ_ANIME_WAIT()
 
     //クダリ：ぼく　クダリ▼
-    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_03, C04_TBOSS_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_03, C04_TBOSS_01, POS_UP )
     _MSGWIN_CLOSE()
 
     //ノボリ：ぜひ！　ぜひ！　つぎは
-    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_04, C04_TBOSSBL_01, POS_UP )
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_04, C04_TBOSSBL_01, POS_DOWN )
     _MSGWIN_CLOSE()
 
     //アニメ：ノボリとクダリ移動
-    _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
     _TIME_WAIT( 2 )
-    _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 460, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 460, FORCE_TYPE_NPC, 8, DIR_UD )
     _TIME_WAIT( 16 )
     _OBJ_ANIME( C04_SWHEROINE_01, anm_dir_u )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
     _OBJ_ANIME_WAIT()
 
-    _OBJ_ANIME( C04_TBOSS_01, anm_dir_u )
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_dir_u )
     _OBJ_ANIME_WAIT()
 
-    _OBJ_DEL( C04_TBOSSBL_01 )
+    _OBJ_DEL( C04_TBOSS_01 )
 
     //階段SE
     _SE_PLAY( SEQ_SE_KAIDAN ) 
     _SE_WAIT()
     
-    _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
 	  _OBJ_ANIME_WAIT()
 	
-	_OBJ_DEL( C04_TBOSS_01 )
+	_OBJ_DEL( C04_TBOSSBL_01 )
 	
     //階段SE
     _SE_PLAY( SEQ_SE_KAIDAN ) 
@@ -957,6 +959,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_C04_tbossbl_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tbossbl_01 )
+  
+  _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
 EVENT_END
 
 /**************************************************************/
@@ -964,6 +970,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_C04_tboss_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tboss_01 )
+  
+  _OBJ_ANIME( C04_TBOSS_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
 EVENT_END
 
 /**************************************************************/
