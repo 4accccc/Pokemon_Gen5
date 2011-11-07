@@ -234,6 +234,12 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
       continue;
     }
 
+    // 未登録の場合はスキップ
+    if( GAMEBEACON_Get_PushMedal( tmpInfo ) == MDLID_MAX )
+    {
+      continue;
+    }
+
     p_wk->init_param.list_size ++;
   }
 
@@ -265,6 +271,13 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     if( p_wk->p_param->target == i )
     {
       p_wk->init_param.target = data_index;
+    }
+
+    
+    // 未登録の場合はスキップ
+    if( GAMEBEACON_Get_PushMedal( tmpInfo ) == MDLID_MAX )
+    {
+      continue;
     }
 
     // データ各の先を取得
