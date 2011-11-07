@@ -170,7 +170,11 @@ const CI_SE_TBL Tbl27[] = {
 	{ CI_SE_NONE, 0 },
 };
 
-#define CI_SE_TBL_MAX  (28)
+const CI_SE_TBL Tbl28[] = {
+	{ CI_SE_NONE, 0 },
+};
+
+#define CI_SE_TBL_MAX  (29)
 const CI_SE_TBL * const SeTbl[ CI_SE_TBL_MAX ] = {
 	Tbl0,
 	Tbl1,
@@ -200,4 +204,5 @@ const CI_SE_TBL * const SeTbl[ CI_SE_TBL_MAX ] = {
 	Tbl25,
 	Tbl26,
 	Tbl27,
+	Tbl28,
 };
