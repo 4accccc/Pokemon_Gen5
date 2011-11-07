@@ -118,25 +118,26 @@ enum{
 };
 
 // パレット
-// 上(MAIN)：BG  (0-4:下地),(5-8:poke),(10:font)
-// 上(MAIN)：OBJ (14:通信アイコン)
+// 上(MAIN)：BG  (0:下地),(10:font)
+// 上(MAIN)：OBJ (5-7:poke),(8-13:parts),(14:通信アイコン)
 //
 // 下(SUB) ：BG  (0-1:リストパネル),(6,7:下地),(8:cmn),(10:font)
-// 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-14:obj)
+// 下(SUB) ：OBJ (4-7:cmn),(8-13:obj)
 enum{
-	// 何本目か(bg)
-  PLTID_MAIN_POKE     = 5,    // pok
+	// 何本目か
+	// (main bg)
 	PLTID_MAIN_FONT			= 10,		// font
-
-  PLTID_MAIN_OBJ_LIST = 8,    // obj
-
+	// (main obj)
+	PLTID_MAIN_POKE			= 5,		// pok
+	PLTID_MAIN_OBJ_LIST		= 8,		// obj
 	//
+	// (sub bg)
 	PLTID_SUB_BG_BASE		= 6,		// 通常bg
 	PLTID_SUB_BG_CMN		= 8,		// cmn
 	PLTID_SUB_FONT			= 10,		// font
-	//
+	// (sub obj)
 	PLTID_SUB_OBJ_CMN		= 4,		// cmn
-	PLTID_SUB_OBJ_LIST	= 8,		// list
+	PLTID_SUB_OBJ_LIST		= 8,		// list
 	//
 	// 何番目か
 	MES_CLEAR_COLOR			= 0,		// クリアカラー
@@ -144,12 +145,12 @@ enum{
 
 // 最大値
 enum{
-	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 30*2,		// empty
+	PKWD_RECORD_MONITOR_EMPTY_MAXNUM = 33*2,		// empty
 	//
 	PKWD_RECORD_MONITOR_CMN_OBJ_MAXNUM	= 3,	// obj(cmn)
 	PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM	= POKEWOOD_MYPOKE_NUM,	// obj(poke)
 	PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM	= 10,	// obj(list)
-	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM	  = 11,	// obj(up)
+	PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM	  = 11+3,	// obj(up)
 	//
 	PKWD_RECORD_MONITOR_BGNUM_MAXNUM		= 8,	// bg
 	//
@@ -248,6 +249,10 @@ enum{
   CLWK_UP_LINE_RED,   // 赤いライン
   CLWK_UP_LINE_GREEN, // 緑ライン
   CLWK_UP_LINE_BLUE,  // 青いライン
+  //
+  CLWK_UP_MARK_GOOD,         // 評価アイコン(good)
+  CLWK_UP_MARK_BAD,          // 評価アイコン(bad)
+  CLWK_UP_MARK_STRANGE,      // 評価アイコン(strange)
 };
 
 // CLWK(List)のアニメシーケンス
@@ -262,6 +267,10 @@ enum{
   CLWK_LIST_ANM_SEQ_LINE_RED,   // 赤いライン
   CLWK_LIST_ANM_SEQ_LINE_GREEN, // 緑ライン
   CLWK_LIST_ANM_SEQ_LINE_BLUE,  // 青いライン
+  //
+  CLWK_LIST_ANM_SEQ_GOOD,		// 評価アイコン(good)
+  CLWK_LIST_ANM_SEQ_BAD,		// 評価アイコン(bad)
+  CLWK_LIST_ANM_SEQ_STRANGE,	// 評価アイコン(strange)
 };
 
 
@@ -290,7 +299,7 @@ enum{
 //-------------
 // 文字列
 //-------------
-// 固定文字列(pwb_fix_mestbl)と対応
+// 固定文字列(pwm_fix_mestbl)と対応
 enum{
 	MES_ID_TOP_01 = 0,      // 「上映作品の最高記録」
 	MES_ID_TOP_02,          // 「興行成績記録」
@@ -304,8 +313,8 @@ enum{
 	PWB_CVS_TOP_01 = 0,      // 「上映作品の最高記録」
 	PWB_CVS_TOP_02,          // 「興行成績記録」
 	PWB_CVS_TOP_03,          // 「主な出演キャスト」
-  PWB_CVS_TOP_04,          //  メインタイトル
-  PWB_CVS_TOP_05,          //  サブタイトル
+	PWB_CVS_TOP_04,          //  メインタイトル
+	PWB_CVS_TOP_05,          //  サブタイトル
 	PWB_CVS_TOP_06,          // 「タグ:4桁数値 億円」
 	PWB_CVS_TOP_07,          // 「タグ：トレーナー名」
 	PWB_CSV_TOP_MAX,		// max
@@ -320,6 +329,7 @@ enum{
  *								構造体定義
  */
 //=============================================================================
+#if 0
 //----------------------
 // ポケモンの情報(1体)
 //----------------------
@@ -331,6 +341,7 @@ typedef struct{
 	u32					sex;			// 性別
   u32         form;     // フォルムNo
 } PKWD_RECORD_MONITOR_POKE_WORK;
+#endif
 
 //-------------------------------------
 /// シナリオ開放状況
@@ -339,7 +350,7 @@ typedef struct{
 	u8					openid;		// 開放のシナリオ番号(0-47)(0xff:初期値)
 	u8					color;		// カラー(0-3)
 	u8					stateflag;// マーク(0:なし,1:newマーク 2:upマーク)
-  u8          dummy;
+	u8					dummy;
 } PKWD_RECORD_MONITOR_FLAG_BUFFER;
 
 //-------------------------------------
@@ -402,9 +413,8 @@ typedef struct
 	PKWD_RECORD_MONITOR_FLAG_BUFFER	FlagBuffer[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< フラグのバッファ
 	//
 	u8	          profits[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< 収益の高いフラグ
-  BOOL          first_anime_flag;        // 最初のアニメフラグ
+	BOOL          first_anime_flag;        // 最初のアニメフラグ
 	//
-	
 } PKWD_RECORD_MONITOR_MAIN_WORK;
 
 //-----------------------------------------
@@ -501,7 +511,7 @@ static const PKWD_RECORD_MONITOR_BGSCN_DATA pwc_bgscn_tbl[] = {
 // OBJの情報(cmn)
 //------------------
 // 情報
-static const s16 pwb_obj_cmn_itbl[] = {
+static const s16 pwm_obj_cmn_itbl[] = {
 	RESID_CMN_OBJ_PLT,
 	RESID_CMN_OBJ_CHR,
 	RESID_CMN_OBJ_CEL,
@@ -511,7 +521,7 @@ static const s16 pwb_obj_cmn_itbl[] = {
 };
 
 // OBJのテーブルデータ
-static const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_cmn_tbl[] = {
+static const PKWD_RECORD_MONITOR_OBJ_DATA pwm_obj_cmn_tbl[] = {
 	{  1,	0x30,	1,	1,	0,	1,	3,	RESID_CMN_OBJ_CHR,},		// 戻る
 	{  4,	0x30,	1,	1,	0,	1,	0,	RESID_CMN_OBJ_CHR,},		// 左矢印
 	{  5,	0x30,	1,	1,	0,	1,	1,	RESID_CMN_OBJ_CHR,},		// 右矢印
@@ -523,7 +533,7 @@ static const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_cmn_tbl[] = {
 // OBJ(poke)
 //----------------
 // 情報
-static const s16 pwb_obj_poke_itbl[] = {
+static const s16 pwm_obj_poke_itbl[] = {
 	RESID_POKE_PLT,		// plt res
 	0,					// chr res(未使用)
 	RESID_POKE_CEL,		// cel res
@@ -533,7 +543,7 @@ static const s16 pwb_obj_poke_itbl[] = {
 };
 
 // OBJのテーブルデータ
-const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_poke_tbl[] = {
+const PKWD_RECORD_MONITOR_OBJ_DATA pwm_obj_poke_tbl[] = {
 	{ 1,	0x28,	1,	0,	0,	0,	4, RESID_POKE_CHR_00,},		// ポケモン00
 	{ 1,	0x28,	1,	0,	0,	0,	5, RESID_POKE_CHR_01,},		// ポケモン01
 	{ 1,	0x28,	1,	0,	0,	0,	6, RESID_POKE_CHR_02,},		// ポケモン02
@@ -548,7 +558,7 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_poke_tbl[] = {
 // OBJ(list)
 //----------------
 // narc, resid, paloffset, palnum
-static const s16 pwb_obj_list_info_tbl[] = {
+static const s16 pwm_obj_list_info_tbl[] = {
 	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 6, // NCL
 	NARC_b_scenario_gra_pkwd_list_obj_NCGR, RESID_LIST_CHR, 0, 0,	// NCG
 	NARC_b_scenario_gra_pkwd_list_obj_NCER, RESID_LIST_CEL, 0, 0,	// NCE
@@ -556,7 +566,7 @@ static const s16 pwb_obj_list_info_tbl[] = {
 };
 
 // 情報
-static const s16 pwb_obj_list_itbl[] = {
+static const s16 pwm_obj_list_itbl[] = {
 	RESID_LIST_PLT,		// plt res
 	RESID_LIST_CHR,		// chr res
 	RESID_LIST_CEL,		// cel res
@@ -566,7 +576,7 @@ static const s16 pwb_obj_list_itbl[] = {
 };
 
 // OBJのテーブルデータ
-const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_list_tbl[] = {
+const PKWD_RECORD_MONITOR_OBJ_DATA pwm_obj_list_tbl[] = {
 	{ CLWK_LIST_ANM_SEQ_SLIDER,	0x30, 1, 0,	0,	1,	16,	RESID_LIST_CHR,},		// スクロールバー
 	//
 	{ CLWK_LIST_ANM_SEQ_NEW,	0x30, 2, 0,	0,	1,	17,	RESID_LIST_CHR,},		// NEWマーク
@@ -585,7 +595,7 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_list_tbl[] = {
 //---------------
 // OBJ(up)
 //---------------
-static const s16 pwb_obj_up_itbl[] = {
+static const s16 pwm_obj_up_itbl[] = {
 	RESID_LIST_PLT,		// plt res
 	RESID_LIST_CHR,		// chr res
 	RESID_LIST_CEL,		// cel res
@@ -595,7 +605,7 @@ static const s16 pwb_obj_up_itbl[] = {
 };
 
 // OBJのテーブルデータ
-const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
+const PKWD_RECORD_MONITOR_OBJ_DATA pwm_obj_up_tbl[] = {
 	{ CLWK_LIST_ANM_SEQ_CROWN, 0x30, 1, 0, 0, 1, 26, RESID_LIST_CHR,}, // 王冠
 	{ CLWK_LIST_ANM_SEQ_KIRA,  0x30, 0, 0, 0, 1, 26, RESID_LIST_CHR,}, // キラキラ
 	{ CLWK_LIST_ANM_SEQ_STAR,  0x30, 0, 0, 0, 1, 10, RESID_LIST_CHR,}, // スター
@@ -607,7 +617,11 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
 	{ CLWK_LIST_ANM_SEQ_LINE_RED, 0x30, 2, 0, 0, 0, 27, RESID_LIST_CHR,}, // 赤いライン
 	{ CLWK_LIST_ANM_SEQ_LINE_GREEN, 0x30, 2, 0, 0, 0, 28, RESID_LIST_CHR,}, // 緑ライン
 	{ CLWK_LIST_ANM_SEQ_LINE_BLUE, 0x30, 2, 0, 0, 0, 29, RESID_LIST_CHR,}, // 青いライン
-
+	// 評価アイコン
+	{ CLWK_LIST_ANM_SEQ_GOOD,   0x30, 0, 0, 0, 1, 30, RESID_LIST_CHR,}, // GOOD
+	{ CLWK_LIST_ANM_SEQ_BAD,    0x30, 0, 0, 0, 1, 31, RESID_LIST_CHR,}, // BAD
+	{ CLWK_LIST_ANM_SEQ_STRANGE,0x30, 0, 0, 0, 1, 32, RESID_LIST_CHR,}, // STRANGE
+	//
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
@@ -616,7 +630,7 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwb_obj_up_tbl[] = {
 // CANVASの設定
 //---------------
 // 上画面
-static const PKWD_RECORD_MONITOR_CANVAS_DATA pwb_canvas_00_tbl[] = {
+static const PKWD_RECORD_MONITOR_CANVAS_DATA pwm_canvas_00_tbl[] = {
 	{ GFL_BG_FRAME0_M,	2,	1,	27,	2,	10,},		// 「上映作品の最高記録」
 	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	10,},		//「興行成績記録」
 	{ GFL_BG_FRAME0_M,  2, 17,	18,	2,	10,},		//「主な出演キャスト」
@@ -627,21 +641,21 @@ static const PKWD_RECORD_MONITOR_CANVAS_DATA pwb_canvas_00_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 // RECORD_MONITOR
-static const PKWD_RECORD_MONITOR_CANVAS_DATA pwb_canvas_01_tbl[] = {
+static const PKWD_RECORD_MONITOR_CANVAS_DATA pwm_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	4,	10,},		// win
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
 // (canvas)まとめ
-static const PKWD_RECORD_MONITOR_CANVAS_DATA *pwb_canvas_tbl[] = {
-	pwb_canvas_01_tbl,
+static const PKWD_RECORD_MONITOR_CANVAS_DATA *pwm_canvas_tbl[] = {
+	pwm_canvas_01_tbl,
 };
 
 //------------------------
 // スクリーンのオフセット
 //------------------------
-static const s16 pwb_bgscr_tbl[] = {
+static const s16 pwm_bgscr_tbl[] = {
 	0,  192,	// 基本
 	256, 0,		// 右
 	0,   0,		// 下
@@ -650,7 +664,7 @@ static const s16 pwb_bgscr_tbl[] = {
 //-------------
 // fixメッセージ
 //--------------
-static const s16 pwb_fix_mestbl[] = {
+static const s16 pwm_fix_mestbl[] = {
 	pw_record_monitor_01,     // 「上映作品の最高記録」
 	pw_record_monitor_02,     // 「興行成績記録」
 	pw_record_monitor_04,     // 「主な出演キャスト」
@@ -662,7 +676,7 @@ static const s16 pwb_fix_mestbl[] = {
 // fixメッセージ
 //-------------
 // main(上)
-static const u16 pwb_fmes00_tbl[] = {
+static const u16 pwm_fmes00_tbl[] = {
 	MES_ID_TOP_01,	PWB_CVS_TOP_01,		// 「上映作品の最高記録」
 	MES_ID_TOP_02,	PWB_CVS_TOP_02,		// 「興行成績記録」 
 	MES_ID_TOP_03,	PWB_CVS_TOP_03,		// 「主な出演キャスト」 
@@ -671,27 +685,27 @@ static const u16 pwb_fmes00_tbl[] = {
 };
 
 // fixメッセージ(まとめ)
-static const u16 *pwb_fmes_tbl[] = {
-	pwb_fmes00_tbl,
+static const u16 *pwm_fmes_tbl[] = {
+	pwm_fmes00_tbl,
 	//
 };
 
 //--------------
 // 単語登録するメッセージ
 //--------------
-static const u16 pwb_mes_tbl[] = {
+static const u16 pwm_mes_tbl[] = {
   pw_title_00,              // メインタイトル
   pw_moviesubtitle_m_01,    // サブタイトル 男
   pw_moviesubtitle_f_01,    // サブタイトル 女
 	pw_record_monitor_03,     // 「タグ:4桁数値 億円」
 	pw_record_monitor_05,     // 「タグ：トレーナー名」
 };
-#define MES_TBL_NUM   ( NELEMS(pwb_mes_tbl) )
+#define MES_TBL_NUM   ( NELEMS(pwm_mes_tbl) )
 
 //---------------------
 // カーソル情報のempty
 //---------------------
-static const s16 pwb_curpos_tbl[] = {
+static const s16 pwm_curpos_tbl[] = {
 	0, 1,			// 通常
 };
 
@@ -699,24 +713,23 @@ static const s16 pwb_curpos_tbl[] = {
 // タッチペン領域
 //------------------
 // RECORD_MONITOR(リスト側がほとんどやってくれる)
-static const GFL_UI_TP_HITTBL pwb_rect_00_tbl[] = {
+static const GFL_UI_TP_HITTBL pwm_rect_00_tbl[] = {
   { 168, 184, 232, 248 }, 			// 戻る
   //
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
 
 // (タッチペン)まとめ
-static const GFL_UI_TP_HITTBL *pwb_rect_tbl[] = {
-	pwb_rect_00_tbl,
+static const GFL_UI_TP_HITTBL *pwm_rect_tbl[] = {
+	pwm_rect_00_tbl,
 };
 
 //---------------------
 // リストデータ
 //---------------------
 // リストタッチデータ
-static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
+static const FRAMELIST_TOUCH_DATA pwm_list_tp_tbl[] =
 {
-#if 1		// 後日、余力があればSLIDEでタッチにも対応を検討
   { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
   { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
@@ -724,15 +737,7 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
   { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
   { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
   { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
-#else
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
-#endif
+
   { {   4, 164, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
@@ -742,7 +747,7 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
 };
 
 // スクロールなしのタッチデータ
-static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
+static const FRAMELIST_TOUCH_DATA pwm_list_tp2_tbl[] =
 {
   { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
@@ -760,7 +765,7 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
 
 //#include "../pkwd_book/pokewood_category.cdat"
 
-static const FRAMELIST_HEADER pwb_frame_list_header = {
+static const FRAMELIST_HEADER pwm_frame_list_header = {
   GFL_BG_FRAME2_S,			// 上
   FRAMELIST_SUB_BG_NONE,	// 下
   
@@ -784,7 +789,7 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
    7,   // カーソル移動範囲
    0,   // 初期スクロール値
   
-  pwb_list_tp_tbl,  // タッチデータ
+  pwm_list_tp_tbl,  // タッチデータ
   
   NULL, // コールバック関数
   NULL, // コールバック関数に渡されるワーク
@@ -805,88 +810,88 @@ static GFL_PROC_RESULT PkwdRecordMonitorProc_Exit( GFL_PROC *proc, int *seq, voi
 //-------------------------------------
 ///	以下に追加
 //=====================================
-static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_down( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_down( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
 //
 // emptyの設定
-static s16  pwb_get_empty( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 num );
+static s16  pwm_get_empty( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 num );
 //
 // bgの設定
-static void pwb_init_bg( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_init_bg2( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 pnum );
+static void pwm_init_bg( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_init_bg2( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 pnum );
 //
 // objの設定
-static void pwb_init_obj_res_cmn( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype );
-static void pwb_init_obj_res_poke( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_chg_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex, const u32 form );
-static void pwb_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr );
+static void pwm_init_obj_res_cmn( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype );
+static void pwm_init_obj_res_poke( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_chg_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex, const u32 form );
+static void pwm_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr );
 // 
-static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const PKWD_RECORD_MONITOR_OBJ_DATA *obj_adr, const s16 *info_adr );
-static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
-static void pwb_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
-static void pwb_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
-static BOOL pwb_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
+static void pwm_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const PKWD_RECORD_MONITOR_OBJ_DATA *obj_adr, const s16 *info_adr );
+static void pwm_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk );
+static void pwm_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
+static void pwm_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
+static BOOL pwm_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
 //
 //
 // 文字列表示
-static void pwb_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode );
-static void pwb_exit_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type );
-static void pwb_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
-static void pwb_disp_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
+static void pwm_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode );
+static void pwm_exit_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type );
+static void pwm_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
+static void pwm_disp_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
 								const PRINTSYS_LSB col );
-static u16  pwb_get_putsize( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const STRBUF * buf, GFL_FONT * font, u32 mode, const u32 canvas_no );
-static void pwb_clear_canvas( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const u32 color);
-static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 type, const s32 mode );
-static void pwb_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static u16  pwm_get_putsize( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const STRBUF * buf, GFL_FONT * font, u32 mode, const u32 canvas_no );
+static void pwm_clear_canvas( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const u32 color);
+static void pwm_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 type, const s32 mode );
+static void pwm_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 // bgスクロール
-static void pwb_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode );
+static void pwm_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode );
 //----------------
 // 以下、各アプリ
 //----------------
 // 台本選択
-static void pwb_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
+static void pwm_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
 //
 // ポケモン詳細
-static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 //
 // クリア(共通)
-static void pwb_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
+static void pwm_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
 
 //
 // main処理
-static BOOL pwb_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_chk_end( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static BOOL pwm_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_chk_end( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 //
-static void pwb_chg_cmn_cursor( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
-static s32  pwb_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode );
+static void pwm_chg_cmn_cursor( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
+static s32  pwm_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode );
 
 // フラグチェック
-static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
-static s32  pwb_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num );
+static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
+static s32  pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num );
 //
-static void pwb_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode );
+static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode );
 //
 // フレーム関連
-static void pwb_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_exit_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static u32  pwb_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static s32  pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 mode );
+static void pwm_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_exit_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static u32  pwm_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static s32  pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 mode );
 
-static void pwb_listclear( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_set_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_calc_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_listclear( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_set_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_calc_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 //
-static void pwb_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
-static void pwb_listcallback_move(void *work, u32 pos, BOOL flag);
-static void pwb_listcallback_scroll( void *work, s8 mv );
+static void pwm_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
+static void pwm_listcallback_move(void *work, u32 pos, BOOL flag);
+static void pwm_listcallback_scroll( void *work, s8 mv );
 //
 static void _liststr_print(      PKWD_RECORD_MONITOR_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg );
 static void _liststr_print_null( PKWD_RECORD_MONITOR_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg );
@@ -895,15 +900,18 @@ static void _strbuf_print(  PKWD_RECORD_MONITOR_MAIN_WORK* wk, PRINT_UTIL *print
 //
 //
 // スクロールバー
-static void pwb_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
-static void pwb_main_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+static void pwm_main_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 //
 // newマーク
-static void pwb_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
-static void pwb_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rate );
+static void pwm_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
+static void pwm_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rate );
+
+// マーク
+static void pwm_disp_mark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const BOOL bflg, const s32 mode, const s32 pos );
 
 // debug
-static void pwb_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
+static void pwm_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
 
 
 //=============================================================================
@@ -923,19 +931,19 @@ const GFL_PROC_DATA PkwdRecordMonitorProcData =
 //------------------
 // 関数のテーブル
 //------------------
-static void (*(pwb_functbl[]))(PKWD_RECORD_MONITOR_MAIN_WORK *) = {
-	pwb_init_record_monitor,			// record_monitor(init)
-	pwb_main_record_monitor,			// record_monitor(main)
-	pwb_exit_record_monitor,			// record_monitor(exit)
+static void (*(pwm_functbl[]))(PKWD_RECORD_MONITOR_MAIN_WORK *) = {
+	pwm_init_record_monitor,			// record_monitor(init)
+	pwm_main_record_monitor,			// record_monitor(main)
+	pwm_exit_record_monitor,			// record_monitor(exit)
 };
 
 //---------------------
 // リストのコールバック
 //---------------------
-static const FRAMELIST_CALLBACK pwb_list_callback = {
-	pwb_listcallback_draw,
-	pwb_listcallback_move,
-	pwb_listcallback_scroll,
+static const FRAMELIST_CALLBACK pwm_list_callback = {
+	pwm_listcallback_draw,
+	pwm_listcallback_move,
+	pwm_listcallback_scroll,
 };
 
 //=============================================================================
@@ -988,7 +996,7 @@ static GFL_PROC_RESULT PkwdRecordMonitorProc_Init( GFL_PROC *proc, int *seq, voi
 	//----------------
 	// 通常はこの中で初期化
 	//----------------
-	pwb_init( wk );
+	pwm_init( wk );
 	
 	// ワイプ
 	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
@@ -1016,7 +1024,7 @@ static GFL_PROC_RESULT PkwdRecordMonitorProc_Exit( GFL_PROC *proc, int *seq, voi
 	//----------------
 	// 処理を記述
 	//----------------
-	pwb_exit( wk );
+	pwm_exit( wk );
 	
 	// WORDSET破棄
 	WORDSET_Delete( wk->Wordset );
@@ -1093,10 +1101,10 @@ static GFL_PROC_RESULT PkwdRecordMonitorProc_Main( GFL_PROC *proc, int *seq, voi
 	//----------------
 	// 処理を追加
 	//----------------
-	pwb_main( wk );
+	pwm_main( wk );
 	
 	// Queの処理
-	pwb_main_print( wk );
+	pwm_main_print( wk );
 	
 	//2D描画
 	PKWD_RECORD_MONITOR_GRAPHIC_2D_Draw( wk->graphic );
@@ -1118,7 +1126,7 @@ static GFL_PROC_RESULT PkwdRecordMonitorProc_Main( GFL_PROC *proc, int *seq, voi
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	s32		i;
 	s32		tmp;
@@ -1142,13 +1150,13 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	wk->OldPos			= -1;
 	//
 	wk->frame_list_work = 0;
-  wk->first_anime_flag = FALSE;
+	wk->first_anime_flag = FALSE;
 	//
 	for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
 		wk->FlagBuffer[i].openid   = 0xff;
 		wk->FlagBuffer[i].color    = 0;
 		wk->FlagBuffer[i].stateflag= 0;
-    wk->profits[i] = 0;
+		wk->profits[i] = 0;
 	}
 	//
 	// canvas
@@ -1167,15 +1175,15 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	//---------------------
 	wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );	// いろいろ
 	
-	pwb_chk_flag( wk );
+	pwm_chk_flag( wk );
 	// シナリオ番号セット
-	tmp = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
+	tmp = pwm_get_scenario_curpos( wk, wk->ScenarioCurPos );
 	
 	//---------------
 	// bgの初期化
 	//---------------
-	pwb_init_bg(  wk );
-	pwb_init_bg2( wk, GFL_BG_FRAME1_S, PLTID_SUB_BG_CMN );
+	pwm_init_bg(  wk );
+	pwm_init_bg2( wk, GFL_BG_FRAME1_S, PLTID_SUB_BG_CMN );
 	
 	//------------------------
 	// フォントパレットセット
@@ -1197,19 +1205,19 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	//------------
 	// OBJ初期化
 	//------------
-	pwb_init_obj( wk );
+	pwm_init_obj( wk );
 	//
 	
 	//---------------
 	// stringの初期化
 	//---------------
-	pwb_init_string( wk, STR_MAIN, 0 );				// 1回のみ
-	pwb_init_string( wk, STR_SUB,  TMODE_RECORD_MONITOR );
+	pwm_init_string( wk, STR_MAIN, 0 );				// 1回のみ
+	pwm_init_string( wk, STR_SUB,  TMODE_RECORD_MONITOR );
 	
 	// fix文字列
-	pwb_disp_fix_string( wk, STR_MAIN, 0 );
+	pwm_disp_fix_string( wk, STR_MAIN, 0 );
 	//
-	pwb_disp_record_monitor_string( wk, 0 );
+	pwm_disp_record_monitor_string( wk, 0 );
 	
 	//------------
 	// パレット
@@ -1221,17 +1229,17 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	//------------
 	// リスト処理
 	//------------
-	pwb_init_framelist( wk );
+	pwm_init_framelist( wk );
 	
 	//--------------------
 	// スクロール切り替え
 	//--------------------
-	pwb_set_bgscroll( wk, 0 );
+	pwm_set_bgscroll( wk, 0 );
 	
 	//------------
 	// 上画面表示
 	//------------
-	pwb_disp_up_bg( wk, 0 );
+	pwm_disp_up_bg( wk, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1243,13 +1251,13 @@ static void pwb_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	// 下画面
-	pwb_down( wk );
+	pwm_down( wk );
 	
 	// debug
-	pwb_debug( wk );
+	pwm_debug( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1261,7 +1269,7 @@ static void pwb_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	s32		i;
 	
@@ -1269,8 +1277,8 @@ static void pwb_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	
 	// stringの破棄
-	pwb_exit_string( wk, STR_MAIN );
-	pwb_exit_string( wk, STR_SUB );
+	pwm_exit_string( wk, STR_MAIN );
+	pwm_exit_string( wk, STR_SUB );
 	
 	//メッセージ破棄
   if(wk->MsgData){
@@ -1278,10 +1286,10 @@ static void pwb_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
     wk->MsgData = NULL;
   }
 	// リスト破棄
-	pwb_exit_framelist( wk );
+	pwm_exit_framelist( wk );
 	
 	// OBJ破棄
-	pwb_exit_obj( wk );
+	pwm_exit_obj( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1293,10 +1301,10 @@ static void pwb_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_down( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_down( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	// 入力
-	pwb_key_all( wk );
+	pwm_key_all( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1308,7 +1316,7 @@ static void pwb_down( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	BOOL	bflg;
 	
@@ -1330,7 +1338,7 @@ static void pwb_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 		//
 		// 本体
 		case STEP_LV1:
-			bflg = pwb_main_loop( wk );
+			bflg = pwm_main_loop( wk );
 			if(bflg == FALSE){
 				wk->Step = STEP_END;
 			}
@@ -1355,7 +1363,7 @@ static void pwb_key_all( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval s16					座標
  */
 //-----------------------------------------------------------------------------
-static s16 pwb_get_empty( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 num )
+static s16 pwm_get_empty( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 num )
 {
 	s16	*adr;
 	
@@ -1378,7 +1386,7 @@ static s16 pwb_get_empty( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 num )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_bg( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_init_bg( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	u16		*adr;
 	s32		i,j,k;
@@ -1459,7 +1467,7 @@ static void pwb_init_bg( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_bg2( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 pnum )
+static void pwm_init_bg2( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 pnum )
 {
 	u16			*adr;
 	s32			i;
@@ -1508,7 +1516,7 @@ static void pwb_init_bg2( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, con
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_obj_res_cmn( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype )
+static void pwm_init_obj_res_cmn( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype )
 {
 	// cmnのidを取得
 	const u32 	arcid    = APP_COMMON_GetArcId();
@@ -1538,7 +1546,7 @@ static void pwb_init_obj_res_cmn( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 d
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_init_obj_res_poke( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_init_obj_res_poke( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	ARCHANDLE	*ah;
 	u32			i;
@@ -1576,7 +1584,7 @@ static void pwb_init_obj_res_poke( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chg_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex, const u32 form )
+static void pwm_chg_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex, const u32 form )
 {
 	NNSG2dCharacterData * dat;
 	void * buf;
@@ -1608,7 +1616,7 @@ static void pwb_chg_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 wnum
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr )
+static void pwm_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr )
 {
 	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
     GFL_CLUNIT*	p_clunit = PKWD_RECORD_MONITOR_GRAPHIC_GetClunit( wk->graphic );
@@ -1635,7 +1643,7 @@ static void pwb_init_obj_res( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawt
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const PKWD_RECORD_MONITOR_OBJ_DATA *obj_adr, const s16 *info_adr )
+static void pwm_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 drawtype, const PKWD_RECORD_MONITOR_OBJ_DATA *obj_adr, const s16 *info_adr )
 {
 	s16						tmp;
 	s16						pos[2];
@@ -1669,10 +1677,10 @@ static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 draw
 	else if(buf[4] == CLWKMODE_LIST){		// list
 		clwk = &wk->wk_obj.clwk_list[0];
 	}
-  else if(buf[4] == CLWKMODE_UP )    // up
-  {
+	else if(buf[4] == CLWKMODE_UP )    // up
+	{
 		clwk = &wk->wk_obj.clwk_up[0];
-  }
+	}
 	
 	for(i=0;i<buf[3];i++){
 		// 終了判定
@@ -1681,8 +1689,8 @@ static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 draw
 		}
 		tmp = adr->empty_num;
 		// 決めうち
-		pos[0] = pwb_get_empty(wk, tmp*2);
-		pos[1] = pwb_get_empty(wk, tmp*2+1);
+		pos[0] = pwm_get_empty(wk, tmp*2);
+		pos[1] = pwm_get_empty(wk, tmp*2+1);
 		cldata.pos_x 	= pos[0];
 		cldata.pos_y 	= pos[1];
     ICHI_Printf("x %d y %d\n", pos[0], pos[1]);
@@ -1740,25 +1748,25 @@ static void pwb_init_obj_clwk( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 draw
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	GFL_CLUNIT*	p_clunit = PKWD_RECORD_MONITOR_GRAPHIC_GetClunit( wk->graphic );
 	//
 	// リソース読み込み(cmn)
-	pwb_init_obj_res_cmn( wk, CLSYS_DRAW_SUB );
+	pwm_init_obj_res_cmn( wk, CLSYS_DRAW_SUB );
 	// リソース読み込み(poke)
-	pwb_init_obj_res_poke( wk );
+	pwm_init_obj_res_poke( wk );
 	// リソース読み込み(list)
-	pwb_init_obj_res( wk, CLSYS_DRAW_MAX, &pwb_obj_list_info_tbl[0]);
+	pwm_init_obj_res( wk, CLSYS_DRAW_MAX, &pwm_obj_list_info_tbl[0]);
 	//
 	// CLWK登録(cmn)
-	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_cmn_tbl[0], &pwb_obj_cmn_itbl[0] );
+	pwm_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwm_obj_cmn_tbl[0], &pwm_obj_cmn_itbl[0] );
 	// CLWK登録(poke)
-	pwb_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwb_obj_poke_tbl[0], &pwb_obj_poke_itbl[0] );
+	pwm_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwm_obj_poke_tbl[0], &pwm_obj_poke_itbl[0] );
 	// CLWK登録(list)
-	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_list_tbl[0], &pwb_obj_list_itbl[0] );
+	pwm_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwm_obj_list_tbl[0], &pwm_obj_list_itbl[0] );
 	// CLWK登録(up)
-	pwb_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwb_obj_up_tbl[0], &pwb_obj_up_itbl[0] );
+	pwm_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwm_obj_up_tbl[0], &pwm_obj_up_itbl[0] );
 	//
 	// 通信アイコンセット(上画面)
 	GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
@@ -1784,7 +1792,7 @@ static void pwb_init_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
+static void pwm_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	s32		i;
 	
@@ -1837,7 +1845,7 @@ static void pwb_exit_obj( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq )
+static void pwm_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq )
 {
 	// 切り替え
 	// CMN
@@ -1891,7 +1899,7 @@ static void pwb_chg_objseq( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
+static void pwm_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
 {
 	// cmn
 	if(wmode == CLWKMODE_CMN){
@@ -1942,7 +1950,7 @@ static void pwb_set_obj_visible( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wm
  *	@retval	const BOOL			(TRUE:再生中、FALSE:停止、終了)
  */
 //-----------------------------------------------------------------------------
-static BOOL pwb_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum )
+static BOOL pwm_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode, const s32 wnum )
 {
 	BOOL	bflg=TRUE;
 	
@@ -2007,19 +2015,19 @@ static BOOL pwb_is_anime_end( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 wmode
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode )
+static void pwm_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode )
 {
 	s32		i;
 	const PKWD_RECORD_MONITOR_CANVAS_DATA *adr;
 	
 	if(type == STR_MAIN){	// main(基本1回)
-		adr = &pwb_canvas_00_tbl[0];
+		adr = &pwm_canvas_00_tbl[0];
 		wk->PFlag2 = 0;
 	}else{					// sub(何度も書き換えがある)
-		adr = pwb_canvas_tbl[mode];
+		adr = pwm_canvas_tbl[mode];
 		wk->PFlag = 0;
 		// 破棄
-		pwb_exit_string( wk, STR_SUB );
+		pwm_exit_string( wk, STR_SUB );
 	}
 	//
 	for(i=0;i<PKWD_RECORD_MONITOR_CANVAS_MAXNUM;i++){
@@ -2034,7 +2042,7 @@ static void pwb_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, 
 			wk->PrintUtil[i].win  = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
 		}
 		// clear
-		pwb_clear_canvas( wk, type, i, MES_CLEAR_COLOR );
+		pwm_clear_canvas( wk, type, i, MES_CLEAR_COLOR );
 		//
 		adr++;
 	}
@@ -2050,7 +2058,7 @@ static void pwb_init_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_exit_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type )
+static void pwm_exit_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type )
 {
 	s32		i;
 	
@@ -2090,7 +2098,7 @@ static void pwb_exit_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
+static void pwm_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 	s32		i;
 	BOOL	bflg;
@@ -2130,7 +2138,7 @@ static void pwb_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 		}
 	}
 	// 待ち
-	pwb_chk_canvas( wk );
+	pwm_chk_canvas( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -2149,16 +2157,16 @@ static void pwb_main_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_disp_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
+static void pwm_disp_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
 								const PRINTSYS_LSB col )
 {
 	u16		siz;
 	
 	// clear
-	pwb_clear_canvas( wk, type, mode, MES_CLEAR_COLOR );
+	pwm_clear_canvas( wk, type, mode, MES_CLEAR_COLOR );
 	
 	// 表示位置の補正
-	siz = pwb_get_putsize( wk, strbuf, wk->font, pmode, mode );
+	siz = pwm_get_putsize( wk, strbuf, wk->font, pmode, mode );
 	if(type == STR_MAIN){		// main
 		PRINT_UTIL_PrintColor( &wk->PrintUtil2[mode], wk->print_que, x+siz, y, strbuf, wk->font, col );
 	}else{						// sub
@@ -2180,7 +2188,7 @@ static void pwb_disp_string( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, 
  * @return	補正値
  */
 //--------------------------------------------------------------------------------------------
-static u16  pwb_get_putsize( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const STRBUF * buf, GFL_FONT * font, u32 mode, const u32 canvas_no )
+static u16  pwm_get_putsize( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const STRBUF * buf, GFL_FONT * font, u32 mode, const u32 canvas_no )
 {
   u32 x = 0;
 
@@ -2209,7 +2217,7 @@ static u16  pwb_get_putsize( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const STRBUF * b
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_clear_canvas( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const u32 color)
+static void pwm_clear_canvas( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type, const s32 mode, const u32 color)
 {
 	if(type == STR_MAIN){
 		if(wk->PrintUtil2[mode].win){
@@ -2236,12 +2244,12 @@ static void pwb_clear_canvas( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 type,
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode )
+static void pwm_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode )
 {
 	s16		buf[2];
 	
-	buf[0] = pwb_bgscr_tbl[2*mode];				// x
-	buf[1] = pwb_bgscr_tbl[2*mode+1];			// y
+	buf[0] = pwm_bgscr_tbl[2*mode];				// x
+	buf[1] = pwm_bgscr_tbl[2*mode+1];			// y
 	// セット
 	GFL_BG_SetScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_X_SET, buf[0] );
 	GFL_BG_SetScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, buf[1] );
@@ -2258,7 +2266,7 @@ static void pwb_set_bgscroll( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mode 
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 type, const s32 mode )
+static void pwm_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 type, const s32 mode )
 {
 	u16		buf[2];
 	const u16	*adr;
@@ -2267,7 +2275,7 @@ static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 t
 	STRBUF	*strbuf;
 	
 	// 指定の方法注意(要修正)
-	adr = pwb_fmes_tbl[type+mode];
+	adr = pwm_fmes_tbl[type+mode];
 	for(i=0;i<PKWD_RECORD_MONITOR_CANVAS_MAXNUM;i++){
 		// 終了判定
 		if(adr[2*i] == 0xffff){
@@ -2275,16 +2283,16 @@ static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 t
 		}
 		buf[0] = adr[2*i];		// mesid
 		buf[1] = adr[2*i+1];	// id
-		strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_fix_mestbl[ buf[0] ] );
+		strbuf = GFL_MSG_CreateString( wk->MsgData, pwm_fix_mestbl[ buf[0] ] );
 
     if( buf[0] == MES_ID_TOP_01 )
     {
       // 中央揃え
-      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, TEXT_COL_MAIN );
+      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, TEXT_COL_MAIN );
     }
     else
     {
-      pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, TEXT_COL_MAIN );
+      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, TEXT_COL_MAIN );
     }
 		
 		GFL_STR_DeleteBuffer( strbuf );
@@ -2300,7 +2308,7 @@ static void pwb_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 t
  * @return
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	s32		num;
 	BOOL	bflg;
@@ -2314,7 +2322,7 @@ static void pwb_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
 	if(bflg == TRUE){
 		// スクロール切り替え
-		pwb_set_bgscroll( wk, wk->TitleMode );
+		pwm_set_bgscroll( wk, wk->TitleMode );
 		// 切り替え終了
 		wk->Flag &= ~FLG_CHG_TITLE;
 	}
@@ -2333,7 +2341,7 @@ static void pwb_chk_canvas( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// main処理へ
 	wk->Mode 		= MODE_MAIN_RECORD_MONITOR;
@@ -2343,21 +2351,21 @@ static void pwb_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	if(wk->Flag & FLG_SET_INIT){
 		wk->Flag |= FLG_CHG_TITLE;
 		// 矢印位置
-		pwb_chg_cmn_cursor( wk, 0 );
+		pwm_chg_cmn_cursor( wk, 0 );
 		// frame再セット
-		pwb_set_init_framelist( wk );
+		pwm_set_init_framelist( wk );
 	}
 	// objの初期化
-	pwb_clear_obj( wk, 0 );
+	pwm_clear_obj( wk, 0 );
   // キーとタッチでもう1回処理
-	pwb_disp_up_bg( wk, 0 );
+	pwm_disp_up_bg( wk, 0 );
 	//
 	// スクロールバー初期化
-	pwb_init_scrollbar( wk );
+	pwm_init_scrollbar( wk );
 	//
 	// 再計算
-	pwb_chk_newmark( wk, 1 );
-	pwb_scroll_newmark( wk, 0 );
+	pwm_chk_newmark( wk, 1 );
+	pwm_scroll_newmark( wk, 0 );
 	//
 	//
 	wk->Flag |= FLG_SET_INIT;
@@ -2372,7 +2380,7 @@ static void pwb_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	s32		tmp;
 	s32		flg;
@@ -2393,20 +2401,20 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
       GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
 
       // ラインのOBJ表示
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, TRUE );
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, TRUE );
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, TRUE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, TRUE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, TRUE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, TRUE );
 
-      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, CLWK_LIST_ANM_SEQ_LINE_RED );
-      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, CLWK_LIST_ANM_SEQ_LINE_GREEN );
-      pwb_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, CLWK_LIST_ANM_SEQ_LINE_BLUE );
+      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, CLWK_LIST_ANM_SEQ_LINE_RED );
+      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, CLWK_LIST_ANM_SEQ_LINE_GREEN );
+      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, CLWK_LIST_ANM_SEQ_LINE_BLUE );
       wk->SubMode = STEP_LINE_ANIME_WAIT;
       break;
     case STEP_LINE_ANIME_WAIT:
       // ラインのOBJアニメ終了待ち
-      if( pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_RED) == FALSE
-          && pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN) == FALSE
-          && pwb_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
+      if( pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_RED) == FALSE
+          && pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN) == FALSE
+          && pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
         )
       {
         GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
@@ -2414,21 +2422,21 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
         GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
         GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
 
-        pwb_disp_record_monitor_string( wk, 1 );
+        pwm_disp_record_monitor_string( wk, 1 );
         // poke icon 表示
-        pwb_disp_poke_obj( wk );
+        pwm_disp_poke_obj( wk );
         wk->SubMode = STEP_LV1;
       }
       break;
 
 		// 通常
 		case STEP_LV1:
-			pwb_key_record_monitor( wk );
+			pwm_key_record_monitor( wk );
 			break;
 		//
 		// 待ち(戻る)
 		case STEP_LV2:
-			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_BACK);
+			bflg = pwm_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_BACK);
 			if(bflg == FALSE){
 				// 終了内容
 				wk->Mode++;
@@ -2438,7 +2446,7 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		//
 		// アニメ待ち(右)
 		case STEP_LV2+10:
-			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+			bflg = pwm_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
 			if(bflg == FALSE){
 				// 終了内容
 				wk->SubMode = STEP_LV1;
@@ -2448,7 +2456,7 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		//
 		// アニメ待ち(左)
 		case STEP_LV2+20:
-			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+			bflg = pwm_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
 			if(bflg == FALSE){
 				// 終了内容
 				wk->SubMode = STEP_LV1;
@@ -2459,10 +2467,10 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		// リストスクロール待ち
 		case STEP_LV3:
 			// main
-			ret = pwb_main_framelist( wk );
+			ret = pwm_main_framelist( wk );
 			if(ret == FRAMELIST_RET_NONE){
 				// 再計算
-				pwb_calc_framelist( wk );
+				pwm_calc_framelist( wk );
 				wk->Flag |= FLG_UPDATE;
 				wk->SubMode = STEP_LV1;
 				// アニメフラグoff
@@ -2488,12 +2496,12 @@ static void pwb_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 終了判定
-	pwb_chk_end( wk );
+	pwm_chk_end( wk );
 	// リストクリア
-	pwb_listclear( wk );
+	pwm_listclear( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2505,7 +2513,7 @@ static void pwb_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	s32		flg=0;		// 更新の有無
 	s32		mflg=0;		// 決定の有無
@@ -2516,8 +2524,8 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	BOOL	bflg;
 	
 	// main
-	ret = pwb_main_framelist( wk );
-	listflg = pwb_is_main_framelist( wk, ret );
+	ret = pwm_main_framelist( wk );
+	listflg = pwm_is_main_framelist( wk, ret );
 	if(listflg != 0){
 		flg = 2;
 	}
@@ -2530,7 +2538,7 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	
 	if(flg == 0){
 		// タッチペンの判定(戻るのみ)
-		id = pwb_chk_tp( wk, wk->TitleMode );
+		id = pwm_chk_tp( wk, wk->TitleMode );
 		if(id == 0){
 			mflg = 1;
 		}
@@ -2544,7 +2552,7 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		// 戻る
 		if(mflg == 1){
 			// 戻るシーケンス変更
-			pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
+			pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
 			wk->SubMode = STEP_LV2;
 			// SE
 			PMSND_PlaySE( SND_PKWD_RECORD_MONITOR_CANCEL );
@@ -2560,27 +2568,26 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	//
 	// 上文字列更新
 	if(flg != 0){
-
-    // 画面に何も出ていない状態ならアニメ開始から入る
-    if( wk->first_anime_flag == FALSE )
-    {
-      // アニメさせるシーケンスに移行
-      wk->SubMode = STEP_LINE_ANIME;
-      wk->first_anime_flag = TRUE;
-    }
-    else
-    {
-      pwb_disp_record_monitor_string( wk, 1 );
-      // poke icon 表示
-      pwb_disp_poke_obj( wk );
-    }
-
+		//
+		// 画面に何も出ていない状態ならアニメ開始から入る
+		if( wk->first_anime_flag == FALSE )
+		{
+			// アニメさせるシーケンスに移行
+			wk->SubMode = STEP_LINE_ANIME;
+			wk->first_anime_flag = TRUE;
+		}
+		else
+		{
+			pwm_disp_record_monitor_string( wk, 1 );
+			// poke icon 表示
+			pwm_disp_poke_obj( wk );
+		}
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 	}
 	//
 	// スクロールバー処理(要検討)
-	pwb_main_scrollbar( wk );
+	pwm_main_scrollbar( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2594,21 +2601,32 @@ static void pwb_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
+static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
 {
 	s32			i;
 	s32			id;
 	STRBUF	*strbuf;
-  HEAPID  heapID = GFL_HEAP_LOWID( wk->heapID );
+	STRBUF	*namebuf;
+//  HEAPID  heapID = GFL_HEAP_LOWID( wk->heapID );
 	
 	// カーソル位置からシナリオのidを計算
-	id = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
+	id = pwm_get_scenario_curpos( wk, wk->ScenarioCurPos );
 	
 	// 初期のみでよいはず
 	if(mode == 0){
     // トレーナ名
+#if 1
+		strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[4] );
+		namebuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, wk->heapID );
+		WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
+		WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
+		GFL_STR_DeleteBuffer( strbuf );
+		// 表示
+		pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, namebuf, 1, TEXT_COL_MAIN );
+		GFL_STR_DeleteBuffer( namebuf );
+#else
     {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[4] );
+      strbuf = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[4] );
 
       // 単語登録
       {
@@ -2619,10 +2637,11 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
         strbuf = namebuf;
       }
 
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, strbuf, 1, TEXT_COL_MAIN );
+      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, strbuf, 1, TEXT_COL_MAIN );
 
       GFL_STR_DeleteBuffer( strbuf );
     }
+#endif
 	}
 
   //
@@ -2634,9 +2653,9 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 
     // メインタイトル
     {
-      u32 str_id = pwb_mes_tbl[0] + id;
+      u32 str_id = pwm_mes_tbl[0] + id;
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, TEXT_COL_MAIN );
+      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
     // サブタイトル
@@ -2646,12 +2665,28 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       // 男女別でラベルがある
       if( MyStatus_GetMySex( wk->Param->mystatus ) == PM_MALE )
       {
-        str_id = pwb_mes_tbl[1] + id;
+        str_id = pwm_mes_tbl[1] + id;
       }
       else
       {
-        str_id = pwb_mes_tbl[2] + id;
+        str_id = pwm_mes_tbl[2] + id;
       }
+#if 1
+	{
+		STRBUF  *monsbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
+		u32 monsno,form,sex;
+		//
+		strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
+		POKEICON_UnpackResourceData( p_pkwd_record->pokeicon[0], &monsno, &form, &sex );
+		WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, monsno );
+		WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
+		WORDSET_ExpandStr( wk->Wordset, monsbuf, strbuf );
+		GFL_STR_DeleteBuffer( strbuf );
+		//
+		pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, monsbuf, 0, TEXT_COL_MAIN );
+		GFL_STR_DeleteBuffer( monsbuf );
+	}
+#else
       strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
 
       // 単語登録 先頭ポケモン名
@@ -2667,12 +2702,23 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
         strbuf = monsbuf;
       }
 
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, TEXT_COL_MAIN );
+      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
+#endif
     }
     // XXXX億円
+#if 1
+	strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
+	namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
+	WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
+	GFL_STR_DeleteBuffer( strbuf );
+	// 表示
+	pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, namebuf, 1, TEXT_COL_MAIN );
+	GFL_STR_DeleteBuffer( namebuf );
+#else
     {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwb_mes_tbl[3] );
+      strbuf = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
 
       // 単語登録
       {
@@ -2683,11 +2729,11 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
         strbuf = namebuf;
       }
 
-      pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, strbuf, 1, TEXT_COL_MAIN );
+      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, strbuf, 1, TEXT_COL_MAIN );
 
       GFL_STR_DeleteBuffer( strbuf );
     }
-    
+#endif
   }
 
 }
@@ -2706,10 +2752,10 @@ static void pwb_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	s32 i;
-	s32 id = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
+	s32 id = pwm_get_scenario_curpos( wk, wk->ScenarioCurPos );
   // ポケウッドのセーブ取得
   const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, id );
 	
@@ -2726,23 +2772,23 @@ static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 
     if( monsno > 0 )
     {
-      pwb_chg_poke_obj( wk, i, monsno, sex, form );
-      pwb_set_obj_visible( wk, CLWKMODE_POKE, i, TRUE );
+      pwm_chg_poke_obj( wk, i, monsno, sex, form );
+      pwm_set_obj_visible( wk, CLWKMODE_POKE, i, TRUE );
 
       // スターポケ判定
       if( p_pkwd_record->pokeicon_star_bit & (1<<i) )
       {
-        pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, TRUE );
+        pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, TRUE );
       }
       else
       {
-        pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
+        pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
       }
     }
     else
     {
-      pwb_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
+      pwm_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
     }
   }
 
@@ -2752,16 +2798,19 @@ static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
     ICHI_Printf("scenario_id %d profits %d \n", id, wk->profits[id]);
     if( wk->profits[ id ] == 1 )
     {
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, TRUE );
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, TRUE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, TRUE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, TRUE );
     }
     else
     {
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, FALSE );
-      pwb_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, FALSE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, FALSE );
+      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, FALSE );
     }
   }
-
+	// 評価マーク表示
+	for(i=0;i<3;i++){
+		pwm_disp_mark( wk, TRUE, i, i );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2773,23 +2822,23 @@ static void pwb_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
+static void pwm_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
 {
 	s32		i;
 	
 	// 表示したいものはこの後で表示すること
 	// poke
 	for(i=0;i<PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM;i++){
-		pwb_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
+		pwm_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
 	}
 	//
 	// list
 	for(i=0;i<PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM;i++){
-		pwb_set_obj_visible( wk, CLWKMODE_LIST, i, FALSE );
+		pwm_set_obj_visible( wk, CLWKMODE_LIST, i, FALSE );
 	}
 	// up
 	for(i=0;i<PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM;i++){
-		pwb_set_obj_visible( wk, CLWKMODE_UP, i, FALSE );
+		pwm_set_obj_visible( wk, CLWKMODE_UP, i, FALSE );
 	}
 }
 
@@ -2805,7 +2854,7 @@ static void pwb_clear_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
  * @return	BOOL				(TRUE:制御中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
-static BOOL pwb_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static BOOL pwm_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	BOOL	bflg=TRUE;
 	BOOL	tflg;
@@ -2815,7 +2864,7 @@ static BOOL pwb_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		return( FALSE );
 	}
 	// 処理の分岐
-	pwb_functbl[wk->Mode]( wk );
+	pwm_functbl[wk->Mode]( wk );
 	//
 	//
 	// 終了判定
@@ -2834,7 +2883,7 @@ static BOOL pwb_main_loop( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chk_end( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_chk_end( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 次の処理
 	if(wk->NextMode != MODE_END){
@@ -2852,19 +2901,19 @@ static void pwb_chk_end( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chg_cmn_cursor( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
+static void pwm_chg_cmn_cursor( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
 {
 	s16				i;
 	s16				buf[2];
 	GFL_CLACTPOS	pos;
 	//
 	// emptyを取得する
-	buf[0] = pwb_curpos_tbl[0];		// 左側
-	buf[1] = pwb_curpos_tbl[1];		// 右側
+	buf[0] = pwm_curpos_tbl[0];		// 左側
+	buf[1] = pwm_curpos_tbl[1];		// 右側
 	//
 	for(i=0;i<2;i++){
-		pos.x = pwb_get_empty( wk, buf[i]*2 );
-		pos.y = pwb_get_empty( wk, buf[i]*2+1 );
+		pos.x = pwm_get_empty( wk, buf[i]*2 );
+		pos.y = pwm_get_empty( wk, buf[i]*2+1 );
 		// 設定
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_cmn[CLWK_CMN_LEFT+i], &pos, CLSYS_DEFREND_SUB );
 	}
@@ -2880,12 +2929,12 @@ static void pwb_chg_cmn_cursor( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mo
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static s32 pwb_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode )
+static s32 pwm_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode )
 {
 	s32	id;
 	//
 	// タッチペン判定
-	id = GFL_UI_TP_HitTrg( pwb_rect_tbl[mode] );
+	id = GFL_UI_TP_HitTrg( pwm_rect_tbl[mode] );
 	return( id );
 }
 
@@ -2901,7 +2950,7 @@ static s32 pwb_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
+static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 	s32		i;
 	s32		j;
@@ -2976,7 +3025,7 @@ static void pwb_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static s32 pwb_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num )
+static s32 pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num )
 {
 	s32			id;
 	
@@ -3002,7 +3051,7 @@ static s32 pwb_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s3
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode )
+static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode )
 {
   u8    flag = VISIBLE_OFF;
 	int		mode;
@@ -3047,16 +3096,16 @@ static void pwb_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
-	FRAMELIST_HEADER  header = pwb_frame_list_header;
+	FRAMELIST_HEADER  header = pwm_frame_list_header;
 	ARCHANDLE * arc_handle;
 	s32		i;
 	//
 	header.cbWork = wk;
 	//
 	// 破棄
-	pwb_exit_framelist( wk );
+	pwm_exit_framelist( wk );
 	//
 	// 読み込み
 	arc_handle = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
@@ -3071,12 +3120,12 @@ static void pwb_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	// FrameListの設定
 	//---------------
 	// パラメータ設定
-	header.cbFunc  = &pwb_list_callback;
+	header.cbFunc  = &pwm_list_callback;
 	header.itemMax 		= wk->ScenarioMax;			// 重要
 	header.initPos		= wk->ListCurPos;
 	header.initScroll	= wk->ListScrollPos;
 	if(wk->ScenarioMax <= PKWD_RECORD_MONITOR_LIST_MAX){
-		header.touch = pwb_list_tp2_tbl;
+		header.touch = pwm_list_tp2_tbl;
 	}
 	
 	// 生成
@@ -3117,7 +3166,7 @@ static void pwb_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static u32 pwb_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static u32 pwm_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	u32		ret = FRAMELIST_RET_NONE;
 	// Main
@@ -3138,7 +3187,7 @@ static u32 pwb_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  s32						(0:なし、1:カーソル移動、2:決定)
  */
 //--------------------------------------------------------------------------------------------
-static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 mode )
+static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 mode )
 {
 	s16			flg=0;
 	
@@ -3182,17 +3231,17 @@ static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		// 要整理
 		if(wk->Flag & FLG_LEFT_ANIM){
 			// 左シーケンス変更
-			pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
+			pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
 		}
 		else if(wk->Flag & FLG_RIGHT_ANIM){
 			// 右シーケンス変更
-			pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
+			pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
 		}
 	}
 	// 決定
 	else if(flg == 2){
 		// カーソル位置の取得
-		pwb_calc_framelist( wk );
+		pwm_calc_framelist( wk );
 		//
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
       // SE
@@ -3203,7 +3252,7 @@ static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 	// ここでなくてもいいはず
 	// 上画面表示
 	//if(flg != 0){
-	//  pwb_disp_up_bg( wk, 1 );
+	//  pwm_disp_up_bg( wk, 1 );
 	//}
 	return( flg );
 }
@@ -3217,7 +3266,7 @@ static s32 pwb_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_exit_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_exit_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 破棄
 	if( wk->frame_list_work ){
@@ -3235,12 +3284,12 @@ static void pwb_exit_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_listclear( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_listclear( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	GFL_BG_ClearScreen( GFL_BG_FRAME2_S );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
 	// 戻り用の再計算
-	pwb_calc_framelist( wk );
+	pwm_calc_framelist( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3252,14 +3301,14 @@ static void pwb_listclear( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_set_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_set_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 初期化
 	if(wk->frame_list_work){
 		// FRAMELIST_Initだけでは、カーソル情報が再セットできずに
 		// 復帰させることができない(=>スクロール値がセットできない)
 		// そのため、再度初期化しカーソル情報をセットするようにした
-		pwb_init_framelist( wk );
+		pwm_init_framelist( wk );
 	}
 }
 
@@ -3272,7 +3321,7 @@ static void pwb_set_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_calc_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_calc_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 初期化
 	if(wk->frame_list_work){
@@ -3292,7 +3341,7 @@ static void pwb_calc_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  */
 //--------------------------------------------------------------------------------------------
 // draw
-static void pwb_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp )
+static void pwm_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp )
 {
 	PKWD_RECORD_MONITOR_MAIN_WORK * wk = (PKWD_RECORD_MONITOR_MAIN_WORK *)work;
 	// タイトル表示
@@ -3300,20 +3349,20 @@ static void pwb_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, 
 }
 
 // move
-static void pwb_listcallback_move(void *work, u32 pos, BOOL flag)
+static void pwm_listcallback_move(void *work, u32 pos, BOOL flag)
 {
 //	PKWD_RECORD_MONITOR_MAIN_WORK * wk = (PKWD_RECORD_MONITOR_MAIN_WORK *)work;
 //	// 再計算
-//	pwb_calc_framelist( wk );
+//	pwm_calc_framelist( wk );
 }
 
 // scroll
-static void pwb_listcallback_scroll( void *work, s8 mv )
+static void pwm_listcallback_scroll( void *work, s8 mv )
 {
 	PKWD_RECORD_MONITOR_MAIN_WORK * wk = (PKWD_RECORD_MONITOR_MAIN_WORK *)work;
 	// 再計算
-	pwb_chk_newmark( wk, 0 );
-	pwb_scroll_newmark( wk, mv );
+	pwm_chk_newmark( wk, 0 );
+	pwm_scroll_newmark( wk, mv );
 }
 
 //----------------------------------------------------------------------------------
@@ -3372,7 +3421,7 @@ static void _strbuf_print( PKWD_RECORD_MONITOR_MAIN_WORK *wk, PRINT_UTIL *print_
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	BOOL	bflg=TRUE;
 	//
@@ -3380,7 +3429,7 @@ static void pwb_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		bflg = FALSE;
 	}
 	// 表示
-	pwb_set_obj_visible( wk, CLWKMODE_LIST, CLWK_LIST_BALL, bflg );
+	pwm_set_obj_visible( wk, CLWKMODE_LIST, CLWK_LIST_BALL, bflg );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3392,7 +3441,7 @@ static void pwb_init_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_main_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+static void pwm_main_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 {
 	// 表示
 	GFL_CLACTPOS cp_pos;
@@ -3429,7 +3478,7 @@ static void pwb_main_scrollbar( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
  * @return  
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
+static void pwm_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode )
 {
 	s16				mbuf[2];
 	s32				i;
@@ -3501,21 +3550,21 @@ static void pwb_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
 		if(NewFlag & (1<<i)){
 			bflg = TRUE;
       // newマーク
-      pwb_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_NEW );
+      pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_NEW );
 		}
 		else if(UpFlag & (1<<i)){
 			bflg = TRUE;
       // upマーク
-      pwb_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_UP );
+      pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_UP );
 		}
-		pwb_set_obj_visible( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, bflg );
+		pwm_set_obj_visible( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, bflg );
 	}
 	//
 	// 座標初期化
 	for(i=0;i<9;i++){
 		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
-		pos.x = pwb_get_empty( wk, (17+i)*2 );
-		pos.y = pwb_get_empty( wk, (17+i)*2+1 );
+		pos.x = pwm_get_empty( wk, (17+i)*2 );
+		pos.y = pwm_get_empty( wk, (17+i)*2+1 );
 		pos.y += off*24;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 	}
@@ -3533,7 +3582,7 @@ static void pwb_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rate )
+static void pwm_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rate )
 {
 	s32				i;
 	GFL_CLACTPOS	pos;
@@ -3545,6 +3594,26 @@ static void pwb_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rat
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	マーク表示
+ *
+ * @param	PKWD_RECORD_MONITOR_MAIN_WORK*		wk
+ * @param	const BOOL							(TRUE:表示、FALSE:非表示)
+ * @param	const s32 mode						(0:GOOD、1:BAD、2:STRANGE)
+ * @param	const s32 pos						(0-2:場所
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwm_disp_mark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const BOOL bflg, const s32 mode, const s32 pos )
+{
+	// 表示/非表示
+	pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_MARK_GOOD+pos, bflg );
+	if(bflg == TRUE){
+		pwm_chg_objseq(  wk, CLWKMODE_UP, CLWK_UP_MARK_GOOD+pos, CLWK_LIST_ANM_SEQ_GOOD+mode );
+	}
+}
 
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
@@ -3559,7 +3628,7 @@ static void pwb_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rat
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
+static void pwm_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 #ifdef PM_DEBUG
   static int ev1;

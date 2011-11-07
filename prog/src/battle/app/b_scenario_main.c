@@ -1174,6 +1174,8 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 {
 	s32			i;
 	s32			id = wk->TopNum;
+	s32			offx;
+	u32			pmode;
 	STRBUF		*strbuf;
 	
 	// 初期のみでよいはず
@@ -1183,8 +1185,15 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 		//
 		// タイトル、あらすじ、クリア目標
 		for(i=0;i<3;i++){
+			// タイトルはセンタリング
+			pmode = 0;
+			offx  = 0;
+			if(i == 0){
+				pmode = 2;
+				offx  = 112;
+			}
 			strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[i]+id );
-			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0), 0 );
+			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(15,2,0), 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 		}
 		// 切り替え
@@ -2472,6 +2481,8 @@ static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 	const u16	*adr;
 	u16		col;
 	s32		i;
+	s32		offx;
+	u32		pmode;
 	STRBUF	*strbuf;
 	
 	adr = bs_fmes_tbl[mode];
@@ -2489,8 +2500,15 @@ static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 		if(buf[2] == 1){
 			col = PRINTSYS_LSB_Make(1,2,0);
 		}
+		// タイトルはセンタリング
+		pmode = 0;
+		offx  = 0;
+		if(buf[0] == 0){
+			pmode = 2;
+			offx  = 112;
+		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], bs_fix_mestbl[ buf[0] ] );
-		BsCmn_DispString( wk, buf[1], 0, 0, strbuf, 0, col, 0 );
+		BsCmn_DispString( wk, buf[1], offx, 0, strbuf, pmode, col, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }

@@ -196,7 +196,7 @@ static const BS_CANVAS_DATA bs_canvas_00_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// TITLE
 	{ GFL_BG_FRAME1_S,	2,	5,	28,	2,	8,},		// PLOT
 	{ GFL_BG_FRAME1_S,	2,	12,	28,	2,	8,},		// GOAL
-	{ GFL_BG_FRAME1_S,	3,	3,	28,	2,	8,},		// TITLE_MES
+	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	8,},		// TITLE_MES
 	{ GFL_BG_FRAME1_S,	3,	7,	28,	4,	8,},		// PLOT_MES
 	{ GFL_BG_FRAME1_S,	3,	14,	28,	4,	8,},		// GOAL_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ‹r–{

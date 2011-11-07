@@ -712,7 +712,7 @@ static const PKWD_BOOK_CANVAS_DATA pwb_canvas_00_tbl[] = {
 	{ GFL_BG_FRAME1_M,	2,	1,	28,	2,	10,},		// TITLE
 	{ GFL_BG_FRAME1_M,	2,	5,	28,	2,	10,},		// PLOT
 	{ GFL_BG_FRAME1_M,	2,	12,	28,	2,	10,},		// GOAL
-	{ GFL_BG_FRAME1_M,	3,	3,	28,	2,	10,},		// TITLE_MES
+	{ GFL_BG_FRAME1_M,	2,	3,	28,	2,	10,},		// TITLE_MES
 	{ GFL_BG_FRAME1_M,	3,	7,	28,	4,	10,},		// PLOT_MES
 	{ GFL_BG_FRAME1_M,	3,	14,	28,	4,	10,},		// GOAL_MES
 
@@ -2912,6 +2912,8 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 	const u16	*adr;
 	u16		col;
 	s32		i;
+	s32		offx;
+	u32		pmode;
 	STRBUF	*strbuf;
 	
 	// 指定の方法注意(要修正)
@@ -2926,6 +2928,8 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		buf[2] = adr[4*i+2];	// col
 		buf[3] = adr[4*i+3];	// num
 		// 表示
+		pmode = 0;
+		offx  = 0;
 		col = PRINTSYS_LSB_Make(15,2,0);
 		if(buf[2] == 1){
 			col = PRINTSYS_LSB_Make(1,2,0);
@@ -2933,9 +2937,13 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		// 上画面
 		if(type == STR_MAIN){
 			col = PRINTSYS_LSB_Make(3,2,1);
+			if(i == 0){
+				pmode = 2;
+				offx  = 112;
+			}
 		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], pwb_fix_mestbl[ buf[0] ] );
-		pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, col );
+		pwb_disp_string( wk, type, buf[1], offx, 0, strbuf, pmode, col );
 		
 		GFL_STR_DeleteBuffer( strbuf );
 	}
@@ -3241,6 +3249,8 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 {
 	s32			i;
 	s32			id;
+	s32			offx;
+	u32			pmode;
 	STRBUF		*strbuf;
 	
 	// カーソル位置からシナリオのidを計算
@@ -3254,7 +3264,14 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// タイトル、あらすじ、クリア目標
 	for(i=0;i<3;i++){
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
-		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+		pmode = 0;
+		offx  = 0;
+		if(i == 0){
+			// タイトルだけセンタリング
+			pmode = 2;
+			offx  = 112;
+		}
+		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 15, 14, 0 ) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }

@@ -990,6 +990,7 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 					OS_Printf("(key) result :%d\n",wk->Result);
 					// 決定
 					PMSND_PlaySE( SND_PKWD_BC_DECIDE );
+					mflg = 1;
 				}
 			}
 			else{
@@ -1004,12 +1005,15 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 			OS_Printf("(tp) result :%d\n",wk->Result);
 			// 決定
 			PMSND_PlaySE( SND_PKWD_BC_DECIDE );
+			mflg = 1;
 		}
 	}
 	//
 	// 更新
 	if( mflg == 1 ){
-		bc_disp_cursor( wk, TRUE, wk->Mode, wk->Cursor );
+		// 決定時にカーソルを消すようにした
+//		bc_disp_cursor( wk, TRUE, wk->Mode, wk->Cursor );
+		bc_disp_cursor( wk, bflg, wk->Mode, wk->Cursor );
 	}
 	//
 	return( bflg );
