@@ -22,7 +22,7 @@
 #define PW_CUTIN_WND_SHAKE_PARAM_NUM (2)
 //リソースチェンジ
 #define PW_CUTIN_CMD_RES_CHANGE  (4)
-#define PW_CUTIN_RES_CHANGE_PARAM_NUM (3)
+#define PW_CUTIN_RES_CHANGE_PARAM_NUM (6)
 //待機
 #define PW_CUTIN_CMD_WAIT  (5)
 #define PW_CUTIN_WAIT_PARAM_NUM (1)

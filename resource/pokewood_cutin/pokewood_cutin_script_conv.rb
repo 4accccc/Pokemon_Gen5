@@ -183,6 +183,7 @@ SCR_COL_START       = 0         #列開始位置
 SCR_COL_CMD         = 1         #列:コマンド
 SCR_COL_PARAM_START = 2         #列:引数開始
 SCR_COL_PARAM_END   = SCR_COL_PARAM_START+CMD_PARAM_MAX #列:引数開始
+SCR_COL_PARAM_CHECK   = SCR_COL_PARAM_END   #列:引数チェック
 
 def convertScript( csv, hCsv, data, naix, sadl )
 
@@ -195,11 +196,25 @@ def convertScript( csv, hCsv, data, naix, sadl )
     cmd = csv.get( row, SCR_COL_CMD )
     cmd_d = getCmdData( cmd )
 
+    #引数個数チェック
+    param_cnt = csv.get( row, SCR_COL_PARAM_CHECK )
+    if param_cnt.to_i != 0
+      puts "#{cmd}の引数の数が合いません\n"
+      exit(1)
+    end
+
     data.write_u16( cmd_d[:PG_VALUE] )
 
-    next_param = 0
+    next_param = -1
     for col in SCR_COL_PARAM_START...SCR_COL_PARAM_END
       param = csv.get( row, col )
+
+      if next_param != -1
+        data.write_u16(next_param)
+        next_param = -1
+        col -= 1
+        next
+      end
 
       if param != nil
         def_d = getDefData( param )
@@ -214,21 +229,44 @@ def convertScript( csv, hCsv, data, naix, sadl )
         if def_d == nil
 
           case param_name
-          when "読み替えるパレット"
+          when "読み替えるパレット男"
             begin
               param = RESOUSE_PREFIX+param.sub(/\.ncl/,"_NCLR")
               data.write_u16( naix.search( param, cmd ) )
             rescue HeaderSearchError
               exit(1)
             end
-          when "読み替えるキャラ"
+          when "読み替えるキャラ男"
             begin
               param = RESOUSE_PREFIX+param.sub(/\.ncg/,"_NCGR")
               data.write_u16( naix.search( param, cmd ) )
             rescue HeaderSearchError
               exit(1)
             end
-          when "読み替えるセル"
+          when "読み替えるセル男"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.nce/,"_NCER")
+              data.write_u16( naix.search( param, cmd ) )
+              param = param.sub(/_NCER/,"_NANR")
+              next_param = naix.search( param, cmd )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "読み替えるパレット女"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.ncl/,"_NCLR")
+              data.write_u16( naix.search( param, cmd ) )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "読み替えるキャラ女"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.ncg/,"_NCGR")
+              data.write_u16( naix.search( param, cmd ) )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "読み替えるセル女"
             begin
               param = RESOUSE_PREFIX+param.sub(/\.nce/,"_NCER")
               data.write_u16( naix.search( param, cmd ) )
@@ -255,9 +293,7 @@ def convertScript( csv, hCsv, data, naix, sadl )
         else
           data.write_u16( def_d[:PG_VALUE] )
         end
-      else
-        data.write_u16(next_param)
-        next_param = 0
+
       end
 
     end

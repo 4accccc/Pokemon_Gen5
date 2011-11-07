@@ -867,7 +867,14 @@ static BOOL Bw_Scrcmd_ResChange( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIP
     (*p_seq)++;
     break;
   case SEQ_LOAD:
-    Bw_Graphic_Load( p_wk, cp_param->param[0], cp_param->param[1], cp_param->param[2], cp_param->param[3] );
+    if( p_wk->player_sex == PTL_SEX_MALE )
+    {
+      Bw_Graphic_Load( p_wk, cp_param->param[0], cp_param->param[1], cp_param->param[2], cp_param->param[3] );
+    }
+    else
+    {
+      Bw_Graphic_Load( p_wk, cp_param->param[4], cp_param->param[5], cp_param->param[6], cp_param->param[7] );
+    }
     return TRUE;
   }
 

@@ -49,7 +49,7 @@ begin
       target = file.sub( "\.csv", "" )
       system( "ruby #{CONVNAME} #{file} #{NAIXNAME} #{SADLNAME} #{target}" )
       if $? != 0
-        puts "コンバートに失敗しました"
+        puts "#{ target }.csvのコンバートに失敗しました"
         exit(1)
       end
 
