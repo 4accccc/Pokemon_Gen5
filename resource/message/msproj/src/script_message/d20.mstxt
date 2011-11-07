@@ -216,4 +216,106 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d20_tvt_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターが　なっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターが　鳴っている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・GRIDX＝781～787、GRIDZ＝266で発生
+・コール音再生と同時に表示
+・コール音終了後にtvt_event_08.mstxtを表示
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム
+ライブキャスター</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d20_tvt_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]は
+ライブキャスターを　つなげた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・メッセージ表示後、ライブキャスター画面へ
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム
+ライブキャスター</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:08:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
