@@ -467,9 +467,9 @@
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おばあさん！
-だいじょうぶですかっ！</language>
+ごぶじ　ですかっ！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おばあさん！
-大丈夫ですかっ！</language>
+ご無事ですかっ！？</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">おとしより『ごめんなさいねえ……
@@ -497,17 +497,21 @@
 ちっ……　ちょっと！　アンタっ！！
 後ろっ！！　後ろっ！</language>
 	</row>
+	<row id="pw_event2_enemy_3">
+		<language name="JPN" width="256">ＵＦＯ『……　……</language>
+		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
+	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『マズい……
 こっちに　ちかづいて　くる……▼
 ……しかも　なんだ？
-UFOの　からだが　すこしずつ▽
-ひかり　はじめたぞ……</language>
+UFOの　ぜんしんが　すこしずつ▽
+ひかり　はじめている……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『マズい……
 こっちに　近づいてくる……▼
 ……しかも　何だ？
-UFOの　体が　少しずつ▽
-光り始めたぞ……</language>
+UFOの　全身が　少しずつ▽
+光り始めている……</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>

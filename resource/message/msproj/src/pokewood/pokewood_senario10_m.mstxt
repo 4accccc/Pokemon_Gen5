@@ -965,6 +965,31 @@ UFOに　捕まったら　お仕舞いだぞ！</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event1_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>UFO『……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>UFO『……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event1_hero_1"
 		Style="Large">
 		<LanguageCell

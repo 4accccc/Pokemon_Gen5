@@ -796,9 +796,9 @@
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう！　なんなのよ！
-いいかげんに　してっ！</language>
+あんた　いいかげんに　してっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう！　なんなのよ！
-いい加減に　してっ！</language>
+あんた　いい加減に　してっ！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">グアイ『わるいな……▼
@@ -809,8 +809,8 @@
 手段は　選んでいられないさ</language>
 	</row>
 	<row id="pw_event5_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『どういうこと！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どういうこと！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どういうこと！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どういうこと！！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
 		<language name="JPN" width="256">グアイ『さてな……▼

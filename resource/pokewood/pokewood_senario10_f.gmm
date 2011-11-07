@@ -525,6 +525,10 @@ UFOに　つかまったら　おしまいだぞ！</language>
 		<language name="JPN_KANJI" width="256">逃げ惑う市民『早く　逃げろ！！
 UFOに　捕まったら　お仕舞いだぞ！</language>
 	</row>
+	<row id="pw_event1_enemy_0">
+		<language name="JPN" width="256">UFO『……　……</language>
+		<language name="JPN_KANJI" width="256">UFO『……　……</language>
+	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
 Eからの　れんらくは　まだ……</language>

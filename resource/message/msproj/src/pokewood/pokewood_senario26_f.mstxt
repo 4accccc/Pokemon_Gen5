@@ -2023,26 +2023,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もう！　なんなのよ！
-いいかげんに　してっ！</Text>
+あんた　いいかげんに　してっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もう！　なんなのよ！
-いい加減に　してっ！</Text>
+あんた　いい加減に　してっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2078,25 +2078,25 @@
 		Label="pw_event5_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『どういうこと！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『どういうこと！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『どういうこと！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『どういうこと！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:02:54" />
+				Time="2011-11-07T11:54:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

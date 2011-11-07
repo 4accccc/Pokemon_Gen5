@@ -866,6 +866,39 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event2_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょういん『おしらせ　いたします……▼
+ほんせんの　しゅっこう　じゅんびが
+かんりょう　いたしました……▼
+じょうせんきぼうの　おきゃくさまは
+まどぐちまで　おいそぎください……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T12:05:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T12:05:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>乗員『お知らせ　いたします……▼
+本船の　出港準備が
+完了いたしました……▼
+乗船希望の　お客様は
+窓口まで　お急ぎください……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T12:05:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T12:05:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event2_enemy_0"
 		Style="Large">
 		<LanguageCell

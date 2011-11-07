@@ -620,26 +620,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『おばあさん！
-だいじょうぶですかっ！</Text>
+ごぶじ　ですかっ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『おばあさん！
-大丈夫ですかっ！</Text>
+ご無事ですかっ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -763,6 +763,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_event2_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ『……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ『……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event2_hero_4"
 		Style="Large">
 		<LanguageCell
@@ -770,30 +795,30 @@
 			<Text>[Name:TrainerName Idx="1" ]『マズい……
 こっちに　ちかづいて　くる……▼
 ……しかも　なんだ？
-UFOの　からだが　すこしずつ▽
-ひかり　はじめたぞ……</Text>
+UFOの　ぜんしんが　すこしずつ▽
+ひかり　はじめている……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『マズい……
 こっちに　近づいてくる……▼
 ……しかも　何だ？
-UFOの　体が　少しずつ▽
-光り始めたぞ……</Text>
+UFOの　全身が　少しずつ▽
+光り始めている……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-07T09:34:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

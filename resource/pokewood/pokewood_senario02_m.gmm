@@ -513,6 +513,18 @@
 悪の　怪人　ハチクマンは
 トイレなどに　ゆかぬのだっ！！</language>
 	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">じょういん『おしらせ　いたします……▼
+ほんせんの　しゅっこう　じゅんびが
+かんりょう　いたしました……▼
+じょうせんきぼうの　おきゃくさまは
+まどぐちまで　おいそぎください……</language>
+		<language name="JPN_KANJI" width="256">乗員『お知らせ　いたします……▼
+本船の　出港準備が
+完了いたしました……▼
+乗船希望の　お客様は
+窓口まで　お急ぎください……</language>
+	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ハチクマン『グムム……
 じかんが……　ふねが……</language>
