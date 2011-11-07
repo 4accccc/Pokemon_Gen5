@@ -64,11 +64,10 @@ static const DEMO3D_CMD_DATA demo3d_cmd_city_plasma_come_end_data[] = {
 
 static const u16 res_city_plasma_come_file_city_plasma_come_01[] = {
  NARC_data_demo3d_city_plasma_come_01_nsbmd,
- NARC_data_demo3d_city_plasma_come_01_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_city_plasma_come_file_unit_city_plasma_come_01[] = {
- { res_city_plasma_come_file_city_plasma_come_01, 2 },
+ { res_city_plasma_come_file_city_plasma_come_01, 1 },
 };
 
 ///========================================================
