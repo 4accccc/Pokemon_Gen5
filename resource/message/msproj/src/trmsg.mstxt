@@ -43258,8 +43258,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_BCHAMP_01_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_BCHAMP_1_01_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>ブラボー！！▼
@@ -43270,12 +43269,12 @@
 あなたさまがた　なら
 もっともっと　うえを　めざせましょう▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -43287,24 +43286,16 @@
 あなたさまがた　なら
 もっともっと　上を　目指せましょう▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:30" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_BCHAMP2_01_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_BCHAMP2_1_01_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼく　クダリ▼
@@ -43313,12 +43304,12 @@
 さいこう　バツグン！▽
 ものすごーく　つよい　トレーナー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -43328,20 +43319,13 @@
 最高　バツグン！▽
 ものすごーく　強い　トレーナー！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:05:28" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:30" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_BADRIDER_01_10_TRMSG_FIGHT_LOSE"
