@@ -1901,11 +1901,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『やれやれ……
-ワタシが　たたかわねば　ならんとは▼</Text>
+			<Text>ヴィオ『やれやれ……▼
+さむいなか　ワタシが
+たたかわねば　ならんとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:08:35" />
+				Time="2011-11-07T09:39:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1913,11 +1914,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『やれやれ……
-ワタシが　戦わねば　ならんとは▼</Text>
+			<Text>ヴィオ『やれやれ……▼
+寒い中　ワタシが
+戦わねば　ならんとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:51:12" />
+				Time="2011-11-07T09:39:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2018,13 +2020,13 @@
 			Language="JPN">
 			<Text>シャガ『さすがだな
 きみの　おかげで　たすかった▼
-たたかってくれた　ポケモンたちにも
-かんしゃ　しているよ▼
+たたかってくれた　きみの　だいじな
+ポケモンにも　かんしゃ　しているよ▼
 せめてもの　きもち　だ
 この　くすりで　かいふくを……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:34:26" />
+				Time="2011-11-07T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2034,13 +2036,13 @@
 			Language="JPN_KANJI">
 			<Text>シャガ『さすがだな
 きみの　おかげで　助かった▼
-戦ってくれた　ポケモンたちにも
-感謝しているよ▼
+戦ってくれた　きみの　大事な
+ポケモンにも　感謝しているよ▼
 せめてもの　気持ちだ
 この薬で　回復を……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:34:30" />
+				Time="2011-11-07T09:40:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2080,7 +2082,7 @@
 すぐに　もどるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:50:34" />
+				Time="2011-11-07T09:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2129,12 +2131,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむ……！　いって　もどるまでの
-きろくこうしん　だな▼
-いいか　[Name:TrainerName ]
-いでんしのくさび　とは　これだ！▼</Text>
+きろくこうしん　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T06:46:25" />
+				Time="2011-11-07T09:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2143,12 +2143,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむ……！　行って　戻るまでの
-記録更新　だな▼
-いいか　[Name:TrainerName ]
-いでんしのくさび　とは　これだ！▼</Text>
+記録更新　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T06:46:29" />
+				Time="2011-11-07T09:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2157,13 +2155,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・大切なもの入手デモを流用して
-　いでんしのくさびを表示できるか？
-・続けてswleader7_16
+・画面下向きで
+・続けてswleader7_15a
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:02:34" />
+				Time="2011-11-07T09:47:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2172,6 +2169,61 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-09T11:22:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_15a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいか　[Name:TrainerName ]
+いでんしのくさび　とは　これだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:47:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:46:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいか　[Name:TrainerName ]
+いでんしのくさび　とは　これだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:47:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:46:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公をむいて
+・大切なもの入手デモを流用して
+　いでんしのくさびを表示できるか？
+・続けてswleader7_16
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:47:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T09:46:57" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2243,8 +2295,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……ジムが　かくしばしょか
-なるほど　よく　かんがえている▼
+			<Text>？？？『……ジムが
+かくしばしょ　だったか▼
+なるほど
+よく　かんがえている▼
 シャガが　いなければ　はいれないし
 いれば　さいきょうの　ばんにんとなる▼
 ポケモンジムを　かいそう　したのも
@@ -2253,7 +2307,7 @@
 いま　わたしが　いただきましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:52:58" />
+				Time="2011-11-07T09:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2261,8 +2315,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……ジムが　隠し場所か
-なるほど　よく　考えている▼
+			<Text>？？？『……ジムが
+隠し場所　だったか▼
+なるほど
+よく　考えている▼
 シャガが　いなければ　入れないし
 いれば　最強の　番人となる▼
 ポケモンジムを　改装したのも
@@ -2271,7 +2327,7 @@
 今　わたしが　いただきましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:05:54" />
+				Time="2011-11-07T09:51:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2280,13 +2336,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・突然出現する
+・突然。３体出現する
 ・シャガ、主人公に！マーク後
 　メッセージ表示
 ・続けてswleader7_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:53:54" />
+				Time="2011-11-07T09:57:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2401,13 +2457,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、１体から３体へ
-　画面下に移動
-　１体のみ
+・メッセージ表示後、
+　１体のみ画面下に移動
 ・続けてswleader7_18</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:53:36" />
+				Time="2011-11-07T09:57:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2587,11 +2642,12 @@
 			<Text>？？？『……ざんねん▼
 いでんしのくさびを　もっているのは
 ほかの　なかま　です▼
-じかんかせぎは　できました
+そう……
+じかんかせぎは　できました▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:21:57" />
+				Time="2011-11-07T09:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2602,11 +2658,12 @@
 			<Text>？？？『……残念▼
 いでんしのくさびを　持っているのは
 他の　仲間です▼
-時間稼ぎは　できました
+そう……
+時間稼ぎは　できました▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:21:51" />
+				Time="2011-11-07T09:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3087,16 +3144,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName ]！▼
-きみの　はんだんに　まかせるけれど
-よければ　いっしょに　きてほしい！▼
+			<Text>チェレン『[Name:TrainerName ]！
+できれば　いっしょに　きてほしい！▼
 プラズマだん　とも　わたりあえる
 ポケモントレーナー　だからね▼
 では　シャガさん
 いってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T06:11:54" />
+				Time="2011-11-07T10:00:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3105,15 +3161,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『[Name:TrainerName ]！▼
-きみの　判断に　任せるけれど
-よければ　一緒に　来てほしい！▼
+できれば　一緒に　来てほしい！▼
 プラズマ団とも　渡り合える
 ポケモントレーナー　だからね▼
 では　シャガさん
 行ってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:29:32" />
+				Time="2011-11-07T10:00:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
