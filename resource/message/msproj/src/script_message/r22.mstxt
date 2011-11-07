@@ -458,11 +458,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・表示後、c14方向に消えて行く
-・画面外に消えると主人公操作可能</Comment>
+・表示後、c14方向に移動
+・！マークをだし、主人公を振り返り
+　メッセージ表示
+・続けてswboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T05:58:07" />
+				Time="2011-11-07T13:08:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -471,6 +473,62 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:58:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そういえば！▼
+２１ばんすいどうに　ある
+ほらあなの　ちかくで▽
+きょうみぶかい　ものを　みましたよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:15:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:04:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そういえば！▼
+２１番水道に　ある
+洞穴の　近くで▽
+興味深い　ものを　みましたよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:15:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:08:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、再度c14方向に消えて行く
+・画面外に消えると主人公操作可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:04:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T13:03:28" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
