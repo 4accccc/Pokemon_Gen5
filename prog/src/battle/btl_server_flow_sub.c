@@ -49,6 +49,14 @@
 
 #include "pokewood/pokewood_senario.h"
 
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+  // 一度に取得できる経験値の上限
+  BTL_SVFSUB_GET_EXP_MAX = (100000),
+};
+
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -826,6 +834,12 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
 
       // Ｇパワー補正
       result[i].exp = GPOWER_Calc_Exp( result[i].exp );
+
+      // 取得上限チェック
+      if( result[i].exp > BTL_SVFSUB_GET_EXP_MAX )
+      {
+        result[i].exp = BTL_SVFSUB_GET_EXP_MAX;
+      }
 
       BTL_N_Printf( DBGSTR_SVFL_ExpCalc_Result, i, result[i].exp);
     }
