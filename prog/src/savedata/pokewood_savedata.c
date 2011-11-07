@@ -36,8 +36,9 @@ struct _POKEWOOD_SAVEDATA{
   u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
   u32 strange_flag[POKEWOOD_ARRAY_NUM];       ///< ストレンジエンド取得済みフラグ
   u32 senario_theatergo_flag[POKEWOOD_ARRAY_NUM];///< 指定のシナリオを一度でも上映して観た事がある
+  u32 bad_flag[POKEWOOD_ARRAY_NUM];           ///< バッドエンド取得済みフラグ
 
-  u8 array[132];                              ///<
+  u8 array[124];                              ///< 余り
 };
 
 //---------------------------------------------------------------------------
@@ -135,6 +136,8 @@ static u32* _get_flagtable_pointer( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type
     return sv->strange_flag;
   case PWSV_TYPE_SENARIO_THEATERGO:
     return sv->senario_theatergo_flag;
+  case PWSV_TYPE_SENARIO_BAD:
+    return sv->bad_flag;
   }
   GF_ASSERT(0);
   return NULL;

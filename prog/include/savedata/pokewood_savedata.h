@@ -25,6 +25,7 @@ typedef enum{
   PWSV_TYPE_SENARIO_ANNOUNCED,  ///< シナリオオープン告知済みフラグ
   PWSV_TYPE_SENARIO_STRANGE,    ///< ストレンジEND取得済みフラグ
   PWSV_TYPE_SENARIO_THEATERGO,  ///< 指定のシナリオを一度でも上映して観た事がある
+  PWSV_TYPE_SENARIO_BAD,        ///< バッドEND取得済みフラグ
 } PokewoodFlagType;
 
 // プレイヤーのポケウッドスターランク定義
