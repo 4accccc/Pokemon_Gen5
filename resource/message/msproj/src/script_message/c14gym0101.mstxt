@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お！　さっそく　きたか！▼
+			<Text>お！　さっそく　来たか！▼
 おはん　強そーやね！
 ほな　はじめよーかい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:20:30" />
+				Time="2011-11-07T11:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,12 +183,12 @@
 イッシュちほうの　あたらしい
 ジムバッジじゃ！　きれいじゃろ？▼
 で　ジムバッジが　８こ　あるんなら
-どんな　ポケモンとでも　なかよしだ！▼
+どんな　ポケモンとでも　なかよしよ！▼
 えーっと
 わざマシンも　わたすんじゃな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:16:46" />
+				Time="2011-11-07T11:46:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,12 +200,12 @@
 イッシュ地方の　あたらしい
 ジムバッジじゃ！　きれいじゃろ？▼
 で　ジムバッジが　８個　あるんなら
-どんな　ポケモンとでも　仲良しだ！▼
+どんな　ポケモンとでも　仲良しよ！▼
 えーっと
 わざマシンも　渡すんじゃな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:19:12" />
+				Time="2011-11-07T11:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -322,11 +322,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、水上移動でジム入り口へ
-　動作モデルの追加を要相談</Comment>
+・メッセージ表示後、画面上へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:27:48" />
+				Time="2011-11-07T12:00:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -349,10 +348,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>とりゃお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-11-07T12:00:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,10 +359,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>とりゃお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-11-07T12:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -372,11 +371,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・復帰タイミングは要検討
-・クリアから</Comment>
+・飛び込む前に表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:56:55" />
+				Time="2011-11-07T12:00:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -385,6 +383,64 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:33:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14gym0101_swleader8_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おだやかな　なみも
+あらぶる　なみも▽
+すべて　おなじ　うみ▼
+ものごとには　いろんな
+いちめんが　あるたい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>穏やかな　波も
+荒ぶる　波も▽
+すべて　同じ　海▼
+物事には　いろんな
+一面が　あるたい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・復帰タイミングは要検討
+・クリアから</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER8
+ジムリーダー・シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T11:59:52" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

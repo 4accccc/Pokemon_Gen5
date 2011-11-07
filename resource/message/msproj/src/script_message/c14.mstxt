@@ -11,10 +11,10 @@
 というわけで　オマエの　ミッションは
 ジムバッジを　てにいれること▼
 あいては　プラズマだん
-できるかぎり　つよくならないとな▼</Text>
+できるかぎり　つよくならないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:25:43" />
+				Time="2011-11-07T12:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27,10 +27,10 @@
 というわけで　オマエの　ミッションは
 ジムバッジを　手に入れること▼
 相手は　プラズマ団
-できるかぎり　強くならないとな▼</Text>
+できるかぎり　強くならないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:25:49" />
+				Time="2011-11-07T12:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -39,12 +39,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・h06のゲートからでるとイベント開始
-・！マーク後、主人公に近寄りメッセージ表示
+・GRIDX＝789、GRIDZ＝173
+・会話時
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:51:43" />
+				Time="2011-11-07T12:39:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -63,16 +63,78 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c14_swrival_01a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+ぜったいに　とりもどすぞ▼
+というわけで　オマエの　ミッションは
+ジムバッジを　てにいれること▼
+あいては　プラズマだん
+できるかぎり　つよくならないとな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+絶対に　取り戻すぞ▼
+というわけで　オマエの　ミッションは
+ジムバッジを　手に入れること▼
+相手は　プラズマ団
+できるかぎり　強くならないとな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝789、GRIDZ＝173
+・GRIDX＝789、GRIDZ＝174～175で起動時
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:39:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c14_swrival_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　だけど
-どこに　いるのか　つかめていない▽
-てわけして　さがすしか　ないな</Text>
+			<Text>[Name:TrainerName Idx="1" ]『はやく
+ジムバッジを　もらってこいよ▼
+そうしたら　てわけして
+プラズマだんを　さがすぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T08:26:46" />
+				Time="2011-11-07T12:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,12 +142,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマ団だけど
-どこに　いるのか　つかめていない▽
-手分けして　探すしか　ないな</Text>
+			<Text>[Name:TrainerName Idx="1" ]『はやく
+ジムバッジを　もらってこいよ▼
+そうしたら　手分けして
+プラズマ団を　探すぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T08:26:51" />
+				Time="2011-11-07T12:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -175,12 +238,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばしゃーん！▼
-って　じぶんで　いうのも
-なんか　なさけない　はなし　たい▼</Text>
+			<Text>とりゃお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:10:59" />
+				Time="2011-11-07T12:22:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -188,12 +249,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ばしゃーん！▼
-って　自分で　いうのも
-なんか　情けない　話たい▼</Text>
+			<Text>とりゃお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:07:33" />
+				Time="2011-11-07T12:22:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -268,12 +327,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ後、泳いでジム方向へ（要相談）
+・メッセージ後、歩いてジム方向へ
 ・画面外に消えると主人公操作可能
 　c14ジムストッパーのメッセージ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:16:16" />
+				Time="2011-11-07T11:15:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -296,13 +355,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
+			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたな！
+オマエ　すごい　ヤツだな！▼
 ほんとうなら　ポケモンリーグに
-ちょうせん　できるけど▽
+ちょうせん……　だけど▽
 さきに　プラズマだん　だからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:45:40" />
+				Time="2011-11-07T12:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -310,13 +370,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
+			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたな！
+オマエ　すごい　ヤツだな！▼
 本当なら　ポケモンリーグに
-挑戦できるけど▽
+挑戦……　だけど▽
 先に　プラズマ団だからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:45:31" />
+				Time="2011-11-07T12:41:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -382,12 +443,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・海から登場（要相談）
-　GRIDX＝GRIDZ＝に配置
-・続けて</Comment>
+・画面したから登場
+・続けてswrival_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:43:22" />
+				Time="2011-11-07T12:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1221,6 +1281,53 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_fighterm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うみを……　しぜんを
+コントロールなんて　むりだな▼
+しぜんと　うまく　つきあうのが
+ポケモンや　ひと　なのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:43:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>海を……　自然を
+コントロールなんて　無理だな▼
+自然と　うまく　つきあうのが
+ポケモンや　人なのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:44:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:44:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝799、GRIDZ＝152、右向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:43:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>fighterm_1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T12:42:55" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14_sign1_01"
