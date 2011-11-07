@@ -6,16 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]せいぎの　ヒーロー　[Name:PokemonNickname ]キッド……
+[Ctrl1:xcenter ]あくの　かいじん　ハチクマン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:50:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:32:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]正義の　ヒーロー　[Name:PokemonNickname ]キッド……
+[Ctrl1:xcenter ]悪の　怪人　ハチクマン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:51:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,13 +48,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ふたりの　ゆめのたいけつが
+[Ctrl1:xcenter ]いま　ふたたび……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -72,13 +60,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ふたりの　夢の対決が
+[Ctrl1:xcenter ]いま　再び……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:52:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -90,12 +76,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,11 +87,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T10:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -301,16 +284,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]せいぎの　ヒロイン　[Name:PokemonNickname ]ガール……
+[Ctrl1:xcenter ]あくの　かいじん　ハチクマン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -318,16 +296,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]みんな　えがおの　ゆうえんち
-[Ctrl1:xcenter ]おとうさんも　おかあさんも
-[Ctrl1:xcenter ]おとこのこも　おんなのこも
-[Ctrl1:xcenter ]みんな　ニコニコ
-[Ctrl1:xcenter ]そんなばしょに　あらわれた
-[Ctrl1:xcenter ]あやしいかげ
-</Text>
+			<Text>[Ctrl1:xcenter ]正義の　ヒロイン　[Name:PokemonNickname ]ガール……
+[Ctrl1:xcenter ]悪の　怪人　ハチクマン……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:37:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,13 +319,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ふたりの　ゆめのたいけつが
+[Ctrl1:xcenter ]いま　ふたたび……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,13 +331,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]へいわを　じゃまするなんて
-[Ctrl1:xcenter ]ゆるせない！
-[Ctrl1:xcenter ]そこに　あのヒーローがあらわれた！
-</Text>
+			<Text>[Ctrl1:xcenter ]ふたりの　夢の対決が
+[Ctrl1:xcenter ]いま　再び……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -378,12 +347,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -391,11 +358,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そのヒーローこそ
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:02:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

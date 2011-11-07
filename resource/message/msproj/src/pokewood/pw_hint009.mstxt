@@ -792,10 +792,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくじつに　わざを　きめろ！
-セリフの　せんたくが　じゅうよう！</Text>
+（セリフの　せんたくが　じゅうよう！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:16:08" />
+				Time="2011-11-03T03:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -804,10 +804,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>確実に　わざを　決めろ！
-セリフの　選択が　重要！</Text>
+（セリフの　選択が　重要！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:16:21" />
+				Time="2011-11-03T03:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -828,10 +828,10 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　ねらいを　さだめろ</Text>
+			<Text>あいてに　ねらいを　さだめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:11:03" />
+				Time="2011-11-03T03:58:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -839,10 +839,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　ねらいを　定めろ</Text>
+			<Text>相手に　ねらいを　定めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:11:32" />
+				Time="2011-11-03T03:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -863,10 +863,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくじつに　わざを　きめろ</Text>
+			<Text>かくじつに　わざを　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:11:12" />
+				Time="2011-11-03T03:58:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -874,10 +874,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>確実に　わざを　決めろ</Text>
+			<Text>確実に　わざを　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:11:26" />
+				Time="2011-11-03T03:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

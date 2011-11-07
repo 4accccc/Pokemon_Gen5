@@ -422,9 +422,9 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うるさい……
-はやく　しろ……</language>
+わかってるから　はやくしろ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うるさい……
-早くしろ……</language>
+分かっているから　早くしろ……</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『よし……
@@ -552,19 +552,19 @@
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">じょしゅ『しっ　しつれいしました！▼
-でも　この　Ｆー００の
-せっけいデータを　かいしゃに▽
-うりこめば　われわれは▽
-おおがねもち　ですね！▼
+でも　このＦー００の　せっけいデータを
+かいしゃに　うりこめば　あかじつづきの▽
+われわれの　ラボだって　きっと▽
+もちなおす　はずですよ！！▼
 もっと　いろんな　けんきゅうが
-できるように　なりますよ！</language>
+できるように　なりますね！！</language>
 		<language name="JPN_KANJI" width="256">助手『しっ　失礼しました！▼
-でも　この　Ｆー００の
-設計データを　会社に▽
-売り込めば　我々は▽
-大金持ち　ですね！▼
+でも　このＦー００の　設計データを
+会社に　売り込めば　赤字続きの▽
+我々の　ラボだって　きっと▽
+持ち直す　はずですよ！！▼
 もっと　色々な　研究が
-できるように　なりますよ！</language>
+できるように　なりますね！！</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
@@ -574,7 +574,7 @@
 オレが　しょぶん　した……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
 それは　無理だな……
-Ｆー００は　誰にも　渡さん▼
+Ｆー００は　だれにも　渡さん▼
 設計データも　すべて
 オレが　処分した……</language>
 	</row>
@@ -611,19 +611,19 @@
 オレだけの　ロボットだ……</language>
 	</row>
 	<row id="pw_event3_hero_6">
-		<language name="JPN" width="256">……こうして　わたしは
-せかいはつの　ともだちロボット▽
+		<language name="JPN" width="256">……こうして　わたしは　せかいはつの
+こころを　もつ　ロボットである▽
 Ｆー００を　かんせい　させた……▼
-Ｆー００は　けんきゅうの
-しゅうたいせいで　あり▽
-わたしの　ゆめと　ねがいの▽
+Ｆー００は　わたしの　けんきゅうの
+しゅうたいせいで　あり　どうじに▽
+わたしじしんの　ゆめと　ねがいの▽
 けっしょう　だった……</language>
 		<language name="JPN_KANJI" width="256">……こうして　私は　世界初の
-友達ロボット　Ｆー００を▽
-完成させた……▼
-Ｆー００は　研究の
-集大成で　あり▽
-私の　夢と　願いの▽
+心を　持つ　ロボットである▽
+Ｆー００を　完成させた……▼
+Ｆー００は　私の　研究の
+集大成で　あり　同時に▽
+私自身の　夢と　願いの▽
 結晶　だった……</language>
 	</row>
 	<row id="pw_event4_hero_0">
@@ -690,16 +690,16 @@
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">……こうして　わたしは
-せかいはつの　ともだちロボットを▽
-かんせい　ちょくぜんで▽
+せかいはつの　こころを　もつ▽
+ロボットを　かんせいちょくぜんで▽
 こわして　しまった……▼
 それからも　ひっしで　けんきゅうを
 つづけたが　Ｆー００の　ような▽
 すぐれた　ロボットは　にどと▽
 つくることは　できなかった……</language>
 		<language name="JPN_KANJI" width="256">……こうして　私は
-世界初の　友達ロボットを▽
-完成直前で▽
+世界初の　心を持つ▽
+ロボットを　完成直前で▽
 壊してしまった……▼
 それからも　必死で　研究を
 続けたが　Ｆー００の　ような▽
@@ -809,16 +809,16 @@
 Ｆー００が　壊れてしまいますっ！</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『わかってるよ……
-ちょっとした　ミスだ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わかってるよ……
-ちょっとした　ミスだ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『わかってる……
+ちょっとした　ミスだろう……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『分かってる……
+ちょっとした　ミスだろう……</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">じょしゅ『ほんと　たのみますよ！
 われわれの　ラボの　うんめいが▽
 かかってるんですから！！</language>
-		<language name="JPN_KANJI" width="256">じょしゅ『ほんと　頼みますよ！
+		<language name="JPN_KANJI" width="256">助手『ほんと　頼みますよ！
 我々の　ラボの　運命が▽
 かかってるんですから！！</language>
 	</row>
@@ -833,16 +833,18 @@
 僕は　博士の　ためを　思って……</language>
 	</row>
 	<row id="pw_event6_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『しらないよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しらないよ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しったことか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『知ったことか……</language>
 	</row>
 	<row id="pw_event6_react_enemy_1">
-		<language name="JPN" width="256">じょしゅ『テストの　きたい　ですから
+		<language name="JPN" width="256">じょしゅ『かんべんして　くださいよ！
+テストの　きたい　なんですし▽
 らんぼうに　あつかったら▽
-どうなるか　わからないですよ！</language>
-		<language name="JPN_KANJI" width="256">助手『テストの　機体　ですから
+どうなるか　わからないんですから！</language>
+		<language name="JPN_KANJI" width="256">助手『勘弁して　くださいよ！
+テストの　機体　なんですし▽
 乱暴に　扱ったら▽
-どうなるか　分からないですよ！</language>
+どうなるか　分からないですから！</language>
 	</row>
 	<row id="pw_event6_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうだな……</language>

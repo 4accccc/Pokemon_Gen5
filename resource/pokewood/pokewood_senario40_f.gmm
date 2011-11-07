@@ -359,8 +359,8 @@
 けっせんの　ばには　むかぬ……▽
 さあ！　ついてくるが　いいっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……▼
-せまい　ちじょうなど　われらの
-けっせんの　ばには　むかぬ……▽
+せまい　地上など　我らの
+決戦の　場には　向かぬ……▽
 さあ！　ついてくるが　いいっ！！</language>
 	</row>
 	<row id="pw_turn_enemy_2">
@@ -449,7 +449,7 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『生意気な　ほどの
 自信では　ないか……▼
 ならば　わがはいの　誇る
-ポケモン軍団……
+ポケモン軍団……▼
 すべて　いちげきで
 倒して　みせよっ！</language>
 	</row>
@@ -621,7 +621,7 @@
 そしても　光さえも　吸い込む▽
 暗黒の　エネルギー……▼
 ファファファ……
-じつに　わがはいに　相応しい……</language>
+実に　わがはいに　相応しい……</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ハチクマンさん……
@@ -734,7 +734,7 @@
 貴様が　そんな　有様では
 わがはいの名　まで　けがれるわ……▼
 止む得ぬ……▼
-こうなれば　わがはいが　じきじきに
+こうなれば　わがはいが　直々に
 貴様を　きたえ直して　やろう！▼
 さあ！　[1:02:ポケモンニックネーム:0]ガール！！
 わがはいのアジトへ　ゆく！！▼
@@ -840,7 +840,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『フン……
 すべて　たおしたわよ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『フン……
-すべて　たおしたわよ……</language>
+すべて　倒したわよ……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">ハチクマン『フッ……
@@ -862,7 +862,7 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『『あっぱれで　ある！！
 わがはい　完敗　だっ！！▽
 よくぞ　やりとげたわ！！▼
-さすがは　わがはいの　息子……</language>
+さすがは　わがはいの　娘……</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『えっ？</language>
@@ -909,13 +909,13 @@
 そうよね……▼
 ママは　いってたもの……
 パパは　わたしが　あかちゃんの　ころ▽
-じぶんのゆめの　ために　わたしたちを
+じぶんのゆめの　ために　わたしたちを▽
 すてて　でていって　しまったって……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『そう……
 そうよね……▼
 ママは　いってたもの……
 パパは　私が　赤ちゃんの　ころ▽
-自分の夢の　ために　私たちを
+自分の夢の　ために　私たちを▽
 捨てて　出て行って　しまったって……</language>
 	</row>
 	<row id="pw_event6_enemy_4">
@@ -939,12 +939,12 @@
 まて……
 [1:02:ポケモンニックネーム:0]ガール……▼
 きさまに　ひとつだけ
-いって　おくことが　ある……▼</language>
+いって　おくことが　ある……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『……　……▼
 待て……
 [1:02:ポケモンニックネーム:0]ガール……▼
 貴様に　ひとつだけ
-言っておくことが　ある……▼</language>
+言っておくことが　ある……</language>
 	</row>
 	<row id="pw_event6_hero_6">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なによ……</language>
@@ -952,11 +952,11 @@
 	</row>
 	<row id="pw_event6_enemy_6">
 		<language name="JPN" width="256">ハチクマン『ガール……▼
-きさまの　せいぎの　ちから……
+きさまの　もつ　そのちから……
 せかいの　へいわの　だけでなく▽
 ははおやにも　そそぐことだ……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ガール……▼
-貴様の　正義の力……
+貴様の持つ　その力……
 世界の平和　だけでなく▽
 母親にも　注ぐことだ……</language>
 	</row>
@@ -965,17 +965,19 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ハチクマンさん……</language>
 	</row>
 	<row id="pw_event6_enemy_7">
-		<language name="JPN" width="256">ハチクマン『さらばだ……
+		<language name="JPN" width="256">ハチクマン『では　さらばだ……
 [1:02:ポケモンニックネーム:0]ガール……▼
-いや　[1:00:トレーナー名:1]よ……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『さらばだ……
+いや……▼
+[1:00:トレーナー名:1]よ……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『では　さらばだ……
 [1:02:ポケモンニックネーム:0]ガール……▼
-いや　[1:00:トレーナー名:1]よ……</language>
+いや……▼
+[1:00:トレーナー名:1]よ……</language>
 	</row>
 	<row id="pw_event6_hero_8">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なんでッ！！▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なんでッ！！
 なぜ　わたしの　ほんみょうをっ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『なんでッ！！▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『なんでッ！！
 なぜ　私の　本名をっ！</language>
 	</row>
 	<row id="pw_event6_enemy_8">
@@ -992,7 +994,8 @@
 そして　そのしょうたい……▽
 そう　すべては　ゆめ……▼
 もしくは　[1:02:ポケモンニックネーム:0]ガールの
-りそう　なのかも　しれない……</language>
+りそう　なのかも　しれない……▼
+おそらく……</language>
 		<language name="JPN_KANJI" width="256">……目覚まし時計の　音に
 [1:02:ポケモンニックネーム:0]ガールは▽
 眠い　目を　こする……▼
@@ -1000,7 +1003,8 @@
 そして　その正体……▽
 そう　すべては　夢……▼
 もしくは　[1:02:ポケモンニックネーム:0]キッドの
-理想　なのかも　しれない……</language>
+理想　なのかも　しれない……▼
+おそらく……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

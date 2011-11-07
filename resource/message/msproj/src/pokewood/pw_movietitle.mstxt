@@ -206,10 +206,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>怪盗の　次なる　獲物
-狙われた　刑事の　妹</Text>
+ねらわれた　刑事の　妹</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:28:17" />
+				Time="2011-11-03T06:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -271,7 +271,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいとかいに　ＵＦО　しゅつげん
+			<Text>だいとかいに　ＵＦＯ　しゅつげん
 しゅつどうする　イッシュぼうえいたい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -279,15 +279,15 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:20:07" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大都会に　ＵＦО　出現
+			<Text>大都会に　ＵＦＯ　出現
 出動する　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:15:35" />
+				Time="2011-11-03T06:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -349,7 +349,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふたたび　しゅつげんする　ＵＦОと
+			<Text>ふたたび　しゅつげんする　ＵＦＯと
 デコイさくせんの　ゆくえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -357,11 +357,11 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:20:07" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>再び　出現する　ＵＦОと
+			<Text>再び　出現する　ＵＦＯと
 デコイ作戦の　行方</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -369,7 +369,7 @@
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:20:07" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -556,11 +556,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｂ２が　再び　出現
+			<Text>Ｍ・Ｂが　再び　出現
 決戦　イッシュ防衛隊</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T02:21:20" />
+				Time="2011-11-03T06:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -952,11 +952,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬと　大ゲンカ
+			<Text>ＯＬとの　大ゲンカ
 怪しいボールが　招く　悲劇</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:31:46" />
+				Time="2011-11-03T06:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -979,11 +979,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎな　ほうもんしゃ
+			<Text>あやしい　ほうもんしゃ
 ぬすまれる　ＯＬと　ボール</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:33:10" />
+				Time="2011-11-04T07:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -991,11 +991,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>不思議な　訪問者
+			<Text>怪しい　訪問者
 盗まれる　ＯＬと　ボール</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:33:17" />
+				Time="2011-11-04T07:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1215,10 +1215,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>てんさいはつめいかの　じっけん
-こころを　もつ　ロボットの　たんじょう　</Text>
+こころをもつ　ロボットの　たんじょう　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:04:14" />
+				Time="2011-11-03T06:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1227,10 +1227,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>天才発明家の　実験
-心を　持つ　ロボットの　誕生</Text>
+心を持つ　ロボットの　誕生</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:47" />
+				Time="2011-11-03T06:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1293,10 +1293,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うらぎられた　てんさいはつめいかと
-ぼうそうする　ロボット</Text>
+ぼうそうする　ロボットの　ゆくえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:04:06" />
+				Time="2011-11-03T06:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1305,10 +1305,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>裏切られた　天才発明家と
-暴走する　ロボット</Text>
+暴走する　ロボットの　行方</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T12:06:47" />
+				Time="2011-11-03T06:26:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1332,10 +1332,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>てんさいはつめいかと　ロボット
-さいごの　おもいでと　わかれ</Text>
+さいごのおもいで　えいえんのわかれ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T13:27:12" />
+				Time="2011-11-03T06:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1344,10 +1344,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>天才発明家と　ロボット
-最後の　思い出と　別れ</Text>
+最後の思い出　　永遠の別れ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T13:27:04" />
+				Time="2011-11-03T06:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1461,10 +1461,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>秘宝に　潜む　悪霊
-謎をとく　ゴーストイレイザー</Text>
+なぞを　解く　ゴーストイレイザー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:54:14" />
+				Time="2011-11-03T06:25:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1530,7 +1530,7 @@
 ゆめの　けっせんは　そらをこえて</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:15:00" />
+				Time="2011-11-03T05:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1639,10 +1639,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン２</Text>
+			<Text>ハチクマンの　ぎゃくしゅう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T05:05:21" />
+				Time="2011-11-03T05:49:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1650,10 +1650,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン２</Text>
+			<Text>ハチクマンの　逆襲</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T04:51:30" />
+				Time="2011-11-03T05:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1683,10 +1683,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン　ＦＩＮＡＬ</Text>
+			<Text>ハチクマンの　ぎゃくしゅう２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:22:31" />
+				Time="2011-11-03T05:50:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1694,10 +1694,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン　ＦＩＮＡＬ</Text>
+			<Text>ハチクマンの　逆襲２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:22:34" />
+				Time="2011-11-03T05:50:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3052,10 +3052,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンの　ぎゃくしゅう</Text>
+			<Text>ハチクマンのぎゃくしゅう　ファイナル</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:57:22" />
+				Time="2011-11-03T05:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3063,10 +3063,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンの　逆襲</Text>
+			<Text>ハチクマンの逆襲　ＦＩＮＡＬ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T05:58:17" />
+				Time="2011-11-03T05:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4007,10 +4007,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>８カットいないに　ぜんめつしろ</Text>
+			<Text>１０カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:42:35" />
+				Time="2011-11-04T07:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4018,10 +4018,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８カット以内に　全滅しろ</Text>
+			<Text>１０カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:42:48" />
+				Time="2011-11-04T07:10:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4044,10 +4044,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>８カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-11-04T07:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4055,10 +4055,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>８カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:59:17" />
+				Time="2011-11-04T07:08:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5897,10 +5897,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド２</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド
+かえって　きた　ハチクマン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-11-03T05:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5908,10 +5909,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド２</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド
+帰ってきた　ハチクマン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-11-03T05:53:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5931,10 +5933,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　ファイナル</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド２
+ハチクマンの　さいご</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:06:27" />
+				Time="2011-11-03T05:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5942,10 +5945,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　ＦＩＮＡＬ</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド
+ハチクマンの　最期</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:06:40" />
+				Time="2011-11-03T05:53:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6135,25 +6139,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＵＦОと　なぞのおんな</Text>
+			<Text>ＵＦＯと　なぞのおんな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-27T06:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＵＦОと　謎の女</Text>
+			<Text>ＵＦＯと　謎の女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-27T06:08:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6713,11 +6717,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんもんしゃは　なんどでも
+			<Text>ほうもんしゃは　なんどでも
 インターフォンを　ならす</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T02:22:38" />
+				Time="2011-11-03T05:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7270,10 +7274,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール２</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール
+かえって　きた　ハチクマン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:44" />
+				Time="2011-11-03T05:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7281,10 +7286,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール２</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール
+帰ってきた　ハチクマン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:55" />
+				Time="2011-11-03T05:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7304,10 +7310,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール　ファイナル</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール２
+ハチクマンの　さいご</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:06:50" />
+				Time="2011-11-03T05:55:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7315,10 +7322,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール　ＦＩＮＡＬ</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール２
+ハチクマンの　最期</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:06:55" />
+				Time="2011-11-03T05:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7508,25 +7516,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＵＦОと　なぞのおんな</Text>
+			<Text>ＵＦＯと　なぞのおんな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-27T06:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＵＦОと　謎の女</Text>
+			<Text>ＵＦＯと　謎の女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-27T06:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-11-03T06:23:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">

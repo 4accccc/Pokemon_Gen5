@@ -442,11 +442,33 @@
 ここは　力ずくでも▽
 頂いていくことに　なる……</language>
 	</row>
+	<row id="pw_event0_react_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はあ？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はあ？</language>
+	</row>
+	<row id="pw_event0_react_enemy_0">
+		<language name="JPN" width="256">グアイ『わるいな……▼
+きみに　つみが　ないのは
+わかってるんだが……</language>
+		<language name="JPN_KANJI" width="256">グアイ『悪いな……▼
+君に　罪が　ないのは
+分かってるんだが……</language>
+	</row>
+	<row id="pw_event0_react_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな！　らんぼうな！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな！　乱暴な！</language>
+	</row>
+	<row id="pw_event0_react_enemy_1">
+		<language name="JPN" width="256">グアイ『わかってるさ……
+でも　しかたないこと　なんだ……</language>
+		<language name="JPN_KANJI" width="256">グアイ『分かってるさ……
+でも　仕方ないこと　なんだ……</language>
+	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！！
-なんですか　いきなりっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！！
-なんですか　いきなりっ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やめてよ！
+なんで　アタシが　こんな　めに！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やめてよ！
+なんで　アタシが　こんな　目に！！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">グアイ『すまん……▼
@@ -489,12 +511,10 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ボールが　かってに……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">グアイ『かってに　だと……▼
-これは　マズい……▼
-こうなったら　ちからづくでも……</language>
-		<language name="JPN_KANJI" width="256">グアイ『勝手に　だと……▼
-これは　マズい……▼
-こうなったら　ちからづくでも……</language>
+		<language name="JPN" width="256">グアイ『かってに　だと……
+やはり　マズいな……</language>
+		<language name="JPN_KANJI" width="256">グアイ『勝手に　だと……
+やはり　マズいな……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アタシじゃないんです！</language>
@@ -775,10 +795,10 @@
 どうなってしまうのだろう……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『らんぼう　すぎます！
-いいかげんに　してくださいよっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『らんぼう　すぎます！
-いいかげんに　してくださいよっ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう！　なんなのよ！
+いいかげんに　してっ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう！　なんなのよ！
+いい加減に　してっ！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">グアイ『わるいな……▼
@@ -789,14 +809,14 @@
 手段は　選んでいられないさ</language>
 	</row>
 	<row id="pw_event5_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『どういうことですか！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どういうことですか！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どういうこと！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どういうこと！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
-		<language name="JPN" width="256">グアイ『まあ　いい……▼
+		<language name="JPN" width="256">グアイ『さてな……▼
 いずれに　しても　ボールは
 かえしてもらうっ！！</language>
-		<language name="JPN_KANJI" width="256">グアイ『まあ　いい……▼
+		<language name="JPN_KANJI" width="256">グアイ『さてな……▼
 いずれに　しても　ボールは
 返してもらうっ！！</language>
 	</row>

@@ -44,17 +44,305 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c15_sunglasses_00_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>なるほどな……
+よさそうじゃないか　そのこ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T02:49:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なるほどな……
+良さそうじゃないか　その子……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:28:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwowner
+
+チュートリアルイベントキャラ
+
+C15に入室と同時にイベント起動
+
+x31,z55辺りに配置
+
+メッセージ終了後→msg_c15_sunglasses_00_02</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:35:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ええ……
+まもなく　みえると　おもうんですが……▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:33:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T02:50:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ええ……
+まもなく　みえると　おもうんですが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwstaff
+
+チュートリアルイベントキャラ
+
+x31,z54辺りに配置
+
+メッセージ終了後→msg_c15_sunglasses_00_03</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:36:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ！　うわさを　すれば！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:08:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T02:52:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ！　うわさを　すれば！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwstaff
+
+チュートリアルイベントキャラ
+
+メッセージ終了後→msg_c15_sunglasses_00_03</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:36:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウエルカム　トゥー　ポケウッド！！▼
+やー　[Name:TrainerName ]さん！
+おまちして　おりましたよ！▼
+ごしょうかい　しましょう！
+こちらは　ウッドウさん　です！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:52:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:08:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウエルカム　トゥー　ポケウッド！！▼
+やー　[Name:TrainerName ]さん！
+おまちして　おりましたよ！▼
+ごしょうかい　しましょう！
+こちらは　ウッドウさん　です！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwstaff
+
+チュートリアルイベントキャラ
+
+メッセージ終了後→msg_c15_sunglasses_00_04</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:36:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハロー！ハロー！　ボクは　ウッドウ！
+キミが　　[Name:TrainerName Idx="0" ]ちゃんか！▼
+さっそく　いろいろ　はなしたいところ　なんだけど
+ちょっと　こちらで　じゅんびが　ひつようでさ！▼
+もうしわけないけど　すこし　あとで
+ボクのところに　きてもらえるかな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:35:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:09:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハロー！ハロー！　ボクは　ウッドウ！
+キミが　　[Name:TrainerName Idx="0" ]ちゃんか！▼
+さっそく　いろいろ　はなしたいところ　なんだけど
+ちょっと　こちらで　じゅんびが　ひつようでさ！▼
+もうしわけないけど　すこし　あとで
+ボクのところに　きてもらえるかな！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:35:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了後→msg_c15_sunglasses_00_06</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:36:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>では　それまでの　あいだ　わたくしが
+ポケウッドを　あんない　しましょう！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:10:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>では　それまでの　あいだ　わたくしが
+ポケウッドを　あんない　しましょう！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwstaff
+
+チュートリアルイベントキャラ
+
+メッセージ終了後→msg_c15_sunglasses_00_07</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:36:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_sunglasses_00_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウンウン　それがいい！▼
+えいが！　それは　アメイジング！▼
+その　おどろきと　かんどうを
+[Name:TrainerName Idx="0" ]ちゃんに▽
+たいけんして　もらえるはず！▼
+じゃあ　また　あとでね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:20:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウンウン　それがいい！▼
+えいが！　それは　アメイジング！▼
+その　おどろきと　かんどうを
+[Name:TrainerName Idx="0" ]ちゃんに▽
+たいけんして　もらえるはず！▼
+じゃあ　また　あとでね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T03:54:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂　pwowner
+
+チュートリアルイベントキャラ
+
+メッセージ終了後→msg_c15_sunglasses_01</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-04T05:37:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c15_sunglasses_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウエルカム　トゥー　ポケウッド！！
-おまちして　おりました！▼
-さっそくですが　あなたを
-まっている　かたが　いますので▽
-ごあんない　させてください！▼</Text>
+			<Text>それじゃあ　いきましょうか！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:11" />
+				Time="2011-11-04T03:31:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -62,14 +350,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウエルカム　トゥー　ポケウッド！！
-お待ちしておりました！▼
-早速ですが　あなたを
-待っている　方が　いますので▽
-ご案内　させてください！▼</Text>
+			<Text>それじゃあ　いきましょうか！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:14" />
+				Time="2011-11-04T03:54:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -77,32 +361,29 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂　pwstaff
 
 チュートリアルイベントキャラ
 
-C15に入室と同時にイベント起動
-
-メッセージ終了後連れ歩き開始</Comment>
+メッセージ終了後→msg_c15_sunglasses_02</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T10:34:38" />
+				Time="2011-11-04T05:37:22" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_sunglasses_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ついでと　いっては　なんですが
-かるく　ポケウッドに　ついて▽
-ごしょうかい　しましょう！▼
+			<Text>せっかくですから　ポケウッドに　ついて▽
+かるく　ごしょうかい　しましょう！▼
 ここ　ポケウッドは　えいがの　ために
 つくられた　えいがの　みやこ！▼
 ここで　おおくの　えいがが　つくられ
 そして　じょうえい　されています！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:19" />
+				Time="2011-11-04T03:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -110,16 +391,15 @@ C15に入室と同時にイベント起動
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ついでと　いっては　なんですが
-軽く　ポケウッドに　ついて▽
-ご紹介　しましょう！▼
+			<Text>折角ですから　ポケウッドに　ついて▽
+軽く　ご紹介　しましょう！▼
 ここ　ポケウッドは　映画の　ために
 つくられた　映画の　都！▼
 ここで　多くの　映画が　つくられ
 そして　上映されています！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:41:20" />
+				Time="2011-11-04T03:32:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -127,7 +407,7 @@ C15に入室と同時にイベント起動
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂　pwstaff
 
 
 チュートリアルイベントキャラ
@@ -137,7 +417,7 @@ C15に入室と同時にイベント起動
 終了後連れ歩き再開</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T04:44:32" />
+				Time="2011-11-04T05:38:48" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -178,7 +458,8 @@ C15に入室と同時にイベント起動
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂　pwstaff
+
 
 ！チュートリアルイベント修正
 
@@ -195,20 +476,21 @@ C15に入室と同時にイベント起動
 →pokewood_scr.mstxtのmsg_pw_tutorial_00_01へ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T06:10:15" />
+				Time="2011-11-04T05:38:51" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_sunglasses_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ！　ここが　さつえいスタジオです！▼
+			<Text>さあ！　ここは　さつえいスタジオです！▼
 ここで　ポケウッドの　えいがは
 うまれるのです！▼
-さあ！　なかへ　どうぞ！</Text>
+ウッドウさんが　まってるはずです！
+さあ　なかへ　どうぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T06:10:28" />
+				Time="2011-11-04T05:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -219,10 +501,11 @@ C15に入室と同時にイベント起動
 			<Text>さあ！　ここが　撮影スタジオ！▼
 ここで　ポケウッドの　映画は
 生まれるのです！▼
+ウッドウさんが　待ってるはずです！
 さあ！　中へ　どうぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T06:10:46" />
+				Time="2011-11-04T05:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -230,7 +513,8 @@ C15に入室と同時にイベント起動
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂　pwstaff
+
 
 ！チュートリアルイベント修正
 
@@ -247,7 +531,7 @@ C15に入室と同時にイベント起動
 →pokewood_scr.mstxtのmsg_msg_pw_tutorial_01へ</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T06:13:14" />
+				Time="2011-11-04T05:38:53" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

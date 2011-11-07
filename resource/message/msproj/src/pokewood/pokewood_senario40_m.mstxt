@@ -1059,14 +1059,14 @@
 そしても　光さえも　吸い込む▽
 暗黒の　エネルギー……▼
 ファファファ……
-じつに　わがはいに　相応しい……</Text>
+実に　わがはいに　相応しい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2011-11-03T06:40:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2011-11-03T06:40:12" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1469,7 +1469,7 @@
 貴様が　そんな　有様では
 わがはいの名　まで　けがれるわ……▼
 止む得ぬ……▼
-こうなれば　わがはいが　じきじきに
+こうなれば　わがはいが　直々に
 貴様を　きたえ直して　やろう！▼
 さあ！　[Name:PokemonNickname Idx="0" ]キッド！！
 わがはいのアジトへ　ゆく！！▼
@@ -1478,11 +1478,11 @@
 トレーニングするぞっ！！　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2025,15 +2025,15 @@
 そうだよな……▼
 かあさんは　いってた……
 オヤジは　ぼくが　あかちゃんの　ころ▽
-じぶんのゆめの　ために　ぼくらを
+じぶんのゆめの　ために　ぼくらを▽
 すてて　でていって　しまったって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2041,15 +2041,15 @@
 そうだよな……▼
 母さんは　いってた……
 オヤジは　僕が　赤ん坊の　ころ▽
-自分の夢の　ために　僕らを
+自分の夢の　ために　僕らを▽
 捨てて　出て行って　しまったって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2118,14 +2118,14 @@
 まて……
 [Name:PokemonNickname Idx="0" ]キッド……▼
 きさまに　ひとつだけ
-いって　おくことが　ある……▼</Text>
+いって　おくことが　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2133,14 +2133,14 @@
 待て……
 [Name:PokemonNickname Idx="0" ]キッド……▼
 貴様に　ひとつだけ
-言っておくことが　ある……▼</Text>
+言っておくことが　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2173,30 +2173,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『キッド……▼
-きさまの　せいぎの　ちから……
+きさまの　もつ　そのちから……
 せかいのへいわ　だけでなく▽
 ははおやにも　そそぐことだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『キッド……▼
-貴様の　正義の力……
+貴様の持つ　その力……
 世界の平和　だけでなく▽
 母親にも　注ぐことだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2228,56 +2228,58 @@
 		Label="pw_event6_enemy_7">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『さらばだ……
+			<Text>ハチクマン『では　さらばだ……
 [Name:PokemonNickname Idx="0" ]キッド……▼
-いや　[Name:TrainerName Idx="1" ]よ……</Text>
+いや……▼
+[Name:TrainerName Idx="1" ]よ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『さらばだ……
+			<Text>ハチクマン『では　さらばだ……
 [Name:PokemonNickname Idx="0" ]キッド……▼
-いや　[Name:TrainerName Idx="1" ]よ……</Text>
+いや……▼
+[Name:TrainerName Idx="1" ]よ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_hero_8">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『えッ！！▼
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『えッ！！
 なぜ　ぼくの　ほんみょうをっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『えッ！！▼
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『えッ！！
 なぜ　僕の　本名をっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2318,14 +2320,15 @@
 そして　そのしょうたい……▽
 そう　すべては　ゆめ……▼
 もしくは　[Name:PokemonNickname Idx="0" ]キッドの
-りそう　なのかも　しれない……</Text>
+りそう　なのかも　しれない……▼
+おそらく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:17:20" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:17:20" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2336,14 +2339,15 @@
 そして　その正体……▽
 そう　すべては　夢……▼
 もしくは　[Name:PokemonNickname Idx="0" ]キッドの
-理想　なのかも　しれない……</Text>
+理想　なのかも　しれない……▼
+おそらく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:17:20" />
+				Time="2011-11-04T12:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:17:20" />
+				Time="2011-11-04T12:20:38" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

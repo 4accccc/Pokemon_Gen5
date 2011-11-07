@@ -298,26 +298,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ほら　Ｆー００！▼
-ポケモンに　こうげきしてみて！</Text>
+もっと　おもいっきり　ポケモンに　
+こうげき　してみなよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T05:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T05:12:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ほら　Ｆー００！▼
-ポケモンに　こうげきしてみて！</Text>
+もっと　思いっきり　ポケモンに
+こうげき　してみなよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T05:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T05:12:23" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1318,41 +1320,41 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……　……▼
 オレは　ちいさい　ころから
-べんきょう　ばかり　してきた▼
+べんきょう　ばかり　してきた……▼
 だから　ともだちと　よべる
-あいては　だれも　いない……▼
+あいては　ひとりも　いない……▼
 いまじゃ　アンタたち　おとなに
 まざって　けんきゅう　ばかりの▽
 まいにち　だろ……▼
 Ｆー００だけ　なんだよ……
 オレが　いっしょに　あそべるのは</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:52:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……　……▼
 オレは　小さい　ころから
-勉強　ばかり　してきた▼
+勉強　ばかり　してきた……▼
 だから　友達と　呼べる
-相手は　誰も　いない……▼
+相手は ひとりも　いない……▼
 今じゃ　アンタたち　大人に
 混ざって　研究ばかりの▽
 毎日　だろ……▼
 Ｆー００だけ　なんだよ……
 オレが　一緒に　遊べるのは</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:52:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2021,25 +2023,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『ざんねんですが……</Text>
+			<Text>じょしゅ『ざんねん　ながら……▼
+はかせは　われわれに　Ｆー００を
+さわらせて　くださいませんから▽
+そんな　ひまなど……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:30:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『残念ですが……</Text>
+			<Text>助手『残念ながら……▼
+博士は　我々に　Ｆー００を
+触らせて　くださいませんから▽
+そんな　ひまなど……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:30:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:30:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2352,31 +2360,31 @@
 			Language="JPN">
 			<Text>じょしゅ『はかせっ！！▼
 ちょっとっ！　だれか　きてっ！
-[Name:TrainerName Idx="1" ]はかせ　がっ！！▼
-Ｆー００に　やられたのっ！！▼
+[Name:TrainerName Idx="1" ]はかせ　が▽
+Ｆー００に　おそわれたわっ！！▼
 このロボット　きけんすぎるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:08:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『博士っ！！▼
-ちょっとッ！　誰か　来てっ！
-[Name:TrainerName Idx="1" ]博士　がっ！！▼
-Ｆー００に　やられたのっ！！▼
+ちょっとッ！　だれか　来てっ！
+[Name:TrainerName Idx="1" ]博士が▽
+Ｆー００に　襲われたわっ！！▼
 このロボット　危険すぎるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T07:08:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2431,12 +2439,12 @@
 		Label="pw_event6_hero_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>はしゃぎすぎた　Ｆー００に
+			<Text>……はしゃぎすぎた　Ｆー００に
 こうげき　された　わたしは▽
 そのまま　きを　うしなった……▼
-……めざめると　じょしゅの
-てに　よって　Ｆー００は▽
-はかい　されていた……▼
+……しばらくたって　めざめると
+Ｆー００は　じょしゅたちに　よって▽
+バラバラに　はかい　されていた……▼
 わたしは　かつて　Ｆー００だった
 スクラップを　だきしめて▽
 けんきゅうしょを　さった……▼
@@ -2445,20 +2453,20 @@
 たずさわることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T06:38:39" />
+				Time="2011-11-05T07:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T06:38:39" />
+				Time="2011-11-05T07:08:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はしゃぎすぎた　Ｆー００に
+			<Text>……はしゃぎすぎた　Ｆー００に
 こうげき　された　私は▽
 そのまま　気を　失った……▼
-……目覚めると　助手の
-手に　よって　Ｆー００は▽
-破壊されていた……▼
+……しばらくたって　目覚めると
+Ｆー００は　助手たちに　よって▽
+バラバラに　破壊されていた……▼
 私は　かつて　Ｆー００だった
 スクラップを　抱きしめて▽
 研究所を　去った……▼
@@ -2467,11 +2475,11 @@
 携わることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T06:38:39" />
+				Time="2011-11-05T07:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T06:38:39" />
+				Time="2011-11-05T07:08:08" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

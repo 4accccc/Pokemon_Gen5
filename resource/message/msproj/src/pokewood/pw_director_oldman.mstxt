@@ -1013,11 +1013,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「だいほんを　みろとか
-いまさら　いわなくても　いいよな？</Text>
+			<Text>カントク『オイ！　いまいちど
+だいほん　かくにん　しとけよ！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:33:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1025,11 +1026,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク「台本を　見ろとか
-今さら　言わなくても　いいよな？</Text>
+			<Text>カントク『オイ！　いまいちど
+台本　確認は　しとけよ！
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:33:37" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1049,11 +1051,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「だいほんを　みろとか
-いまさら　いわなくても　いいよな？</Text>
+			<Text>カントク『だいほん　おぼえてるか！？
+わすれそうなら　くっちまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:33:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1061,11 +1063,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク「台本を　見ろとか
-今さら　言わなくても　いいよな？</Text>
+			<Text>カントク『台本　覚えてるか！？
+忘れそうなら　食っちまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:33:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1441,11 +1443,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『カーーーーット！！！
-さつえい　しゅうりょうだッ！</Text>
+			<Text>カントク『カッート！！
+さいこう！　さいこうだな！　おまえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:05:17" />
+				Time="2011-11-05T06:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1454,10 +1456,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カントク『カッート！！
-さいこう！　さいこうだぜ！　おまえ！</Text>
+最高！　最高だな！　お前！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T08:16:58" />
+				Time="2011-11-05T06:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1549,11 +1551,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「おまえに　だいほんを
-みられると　きんちょう　するな……</Text>
+			<Text>カントク『きほんに　もどり　だいほんをよむ
+それも　プロのやりかた　だぞ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:34:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1561,11 +1563,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク「お前に　台本を
-見れれると　緊張　するな……</Text>
+			<Text>カントク『基本に　戻り　台本を読む
+それも　プロのやり方　だぞ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:35:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1585,11 +1587,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク「おまえに　だいほんを
-みられると　きんちょう　するな……</Text>
+			<Text>カントク『だいほんは……
+いわなくても　わかってるな　オマエなら</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:35:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-05T06:23:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

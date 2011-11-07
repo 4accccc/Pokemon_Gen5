@@ -282,11 +282,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ＮО！　ＮО！
-何ナノ　ソノ　セリフハ！</Text>
+			<Text>カントク『ＮＯ！　ＮＯ！
+ナンナノ　ソノ　セリフハ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:57:09" />
+				Time="2011-11-03T07:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -294,11 +294,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『ＮО！　ＮО！
+			<Text>カントク『ＮＯ！　ＮＯ！
 何ナノ　ソノ　セリフハ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:56:50" />
+				Time="2011-11-03T07:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -736,10 +736,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『エクセレント！！
-ソノ　コトバ　エクセレント！</Text>
+ソノ　セリフ　エクセレント！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:03:47" />
+				Time="2011-11-03T05:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -748,10 +748,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カントク『エクセレント！！
-ソノ　言葉　エクセレント！</Text>
+ソノ　セリフ　エクセレント！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:03:58" />
+				Time="2011-11-03T05:35:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1274,10 +1274,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『クール！</Text>
+			<Text>カントク『クール！
+ソノ　セリフ　クールネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:51:20" />
+				Time="2011-11-03T05:35:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1285,10 +1286,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『クール！</Text>
+			<Text>カントク『クール！
+ソノ　セリフ　クールネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:51:16" />
+				Time="2011-11-03T05:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1308,10 +1310,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ソレデ　イイノ？</Text>
+			<Text>カントク『ソノ　セリフ　イイノ？
+ソノ　セリフデ　イイノ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:52:06" />
+				Time="2011-11-03T05:36:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1319,10 +1322,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『ソレデ　イイノ？</Text>
+			<Text>カントク『ソノ　セリフ　イイノ？
+ソノ　セリフデ　イイノ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:52:10" />
+				Time="2011-11-03T05:36:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1342,10 +1346,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ミステイク？</Text>
+			<Text>カントク『マサカノ　ミステイク？
+セリフハ　タイセツニネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:51:48" />
+				Time="2011-11-03T05:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1353,10 +1358,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『ミステイク？</Text>
+			<Text>カントク『マサカノ　ミステイク？
+セリフハ　大切ニネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:51:49" />
+				Time="2011-11-03T05:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

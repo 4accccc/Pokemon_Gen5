@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+（セリフせんたくが　じゅうよう！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:42:45" />
+				Time="2011-11-03T03:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,11 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>威力の　弱い　わざを　使え！
+（セリフ選択が　重要！）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:43:13" />
+				Time="2011-11-03T04:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -794,10 +794,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:33" />
+				Time="2011-11-03T04:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -805,11 +805,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>威力の　弱い　わざを　使え！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:56" />
+				Time="2011-11-03T04:18:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -831,10 +830,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:33" />
+				Time="2011-11-03T03:24:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -842,11 +841,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>威力の　弱い　わざを　使え！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:56" />
+				Time="2011-11-03T04:18:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -867,11 +865,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+			<Text>いっきに　まけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:33" />
+				Time="2011-11-03T04:16:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -879,11 +876,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>一気に　負けろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:56" />
+				Time="2011-11-03T04:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -904,11 +900,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+			<Text>いっきに　まけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:33" />
+				Time="2011-11-03T03:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -916,11 +911,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>一気に　負けろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:56" />
+				Time="2011-11-03T03:24:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -941,11 +935,10 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう）</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:33" />
+				Time="2011-11-03T04:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -953,11 +946,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いりょくの　弱い　わざを　使え！
-（セリフ選択が　重要）</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:44:56" />
+				Time="2011-11-03T04:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -978,10 +970,10 @@
 		Label="pw_movie_hint_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:45:57" />
+				Time="2011-11-03T04:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -989,10 +981,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:45:46" />
+				Time="2011-11-03T04:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1013,10 +1005,10 @@
 		Label="pw_movie_hint_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:46:00" />
+				Time="2011-11-03T04:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1024,10 +1016,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:45:56" />
+				Time="2011-11-03T04:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1048,10 +1040,10 @@
 		Label="pw_movie_hint_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:46:00" />
+				Time="2011-11-03T04:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1059,10 +1051,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:45:56" />
+				Time="2011-11-03T04:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
