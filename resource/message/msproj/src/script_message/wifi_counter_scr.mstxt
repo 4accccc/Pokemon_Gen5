@@ -5765,17 +5765,16 @@ http://www.pokemon-gl.com/
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランダムマッチ　または
-Wi-Fiたいかいに　さんかちゅうに▼
+			<Text>おきゃくさま！▼
+ぜんかい　さんかした　ランダムマッチ
+または　Wi-Fiたいかいで▼
 DSほんたいの
-でんげんが　きれたため▼
-しばらくの　あいだ
-ランダムマッチに　さんか　できません▼
-じかんを　おいてから
-おこしください</Text>
+でんげんが　きれましたね▼
+ルールにより　しばらくの　あいだ
+ランダムマッチに　さんか　できません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T12:16:39" />
+				Time="2011-11-07T13:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5783,17 +5782,16 @@ DSほんたいの
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ランダムマッチ　または
-Wi-Fi大会に　参加中に▼
+			<Text>お客様！▼
+前回　参加した　ランダムマッチ
+または　Wi-Fi大会で▼
 DS本体の
-電源が　切れたため▼
-しばらくの　あいだ
-ランダムマッチに　参加できません▼
-時間を　おいてから
-お越しください</Text>
+電源が　切れましたね▼
+ルールにより　しばらくの　あいだ
+ランダムマッチに　参加できません▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T12:16:52" />
+				Time="2011-11-07T13:22:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5871,10 +5869,10 @@ Wi-Fiたいかいに　さんかちゅうに▽
 ほんたいの　でんげんが　きれると▼
 ランダムマッチには
 しばらく　さんか　できなくなります▽
-ごちゅうい　ください</Text>
+ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T12:13:26" />
+				Time="2011-11-07T12:51:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5887,10 +5885,10 @@ Wi-Fi大会に　参加中に▽
 本体の電源が　切れると▼
 ランダムマッチには
 しばらく　参加できなくなります▽
-ご注意　ください</Text>
+ご注意　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T12:10:52" />
+				Time="2011-11-07T12:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"

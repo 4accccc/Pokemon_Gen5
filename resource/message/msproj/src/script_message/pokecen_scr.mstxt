@@ -1640,16 +1640,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>お客様！▼
-ランダムマッチに　参加中
-電源を　切りましたね▼
-ランダムマッチには
-参加できません▼
-しばらく　時間が　たちましたら
-また　お越しください</Text>
+			<Text>おきゃくさま！▼
+ランダムマッチに　さんかちゅう
+DSほんたいの▽
+でんげんが　きれましたね▼
+ルールにより　ランダムマッチには
+しばらく　さんか　できません▼
+じかんが　たちましたら
+また　おこしください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="shimoyamada:W00184"
+				Time="2011-11-07T13:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1658,15 +1659,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お客様！▼
-ランダムマッチに　参加中
-電源を　切りましたね▼
-ランダムマッチには
-参加できません▼
-しばらく　時間が　たちましたら
+ランダムマッチに　参加中▽
+DS本体の　電源が　切れましたね▼
+ルールにより　ランダムマッチには
+しばらく　参加できません▼
+時間が　たちましたら
 また　お越しください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="shimoyamada:W00184"
+				Time="2011-11-07T13:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
