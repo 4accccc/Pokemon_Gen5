@@ -23,6 +23,7 @@
 
 // mine
 #include "field_gimmick_gianthole.h"
+#include "field_gimmick_gianthole_se_def.h"
 
 //=============================================================================
 /**
@@ -36,6 +37,28 @@
 #define MAP_SIZE          (512 << FX32_SHIFT )
 #define MAP_HALF_SIZE     (256 << FX32_SHIFT )
 
+//-------------------------------------
+///	アニメ再生タイプ
+//=====================================
+typedef enum {
+  ANIME_TYPE_NULL,
+  ANIME_TYPE_FIRST_HALF,    // 前半
+  ANIME_TYPE_SECOND_HALF,   // 後半
+} ANIME_TYPE;
+
+
+// SE再生フレーム定義
+enum{
+  FRAME_SE_COLD       = 0,  // キュレム足元から冷気
+  FRAME_SE_ICE_ROT_1  = 5,  // 氷の回転音(1段階目)
+  FRAME_SE_ICE_ROT_2  =10,  // 氷の回転音(3段階目)
+  FRAME_SE_ICE_STOP   =20,  // 氷が主人公の周囲に集まり一瞬とまる
+  FRAME_SE_ICE_LEAVE  =30,  // 氷が一瞬はなれる
+  FRAME_SE_ICE_ATTACK =40,  // 氷が主人公に襲い掛かる
+
+  FRAME_SE_ICE_BREAK  =10,  // 氷が砕け散る
+};
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -47,6 +70,9 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+
+  ANIME_TYPE          anm_type;
+  u32                 frame;
 
 } GIANTHOLE_GIMMICK_TMP;
 
@@ -212,26 +238,55 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
       OS_Printf("デバッグ こごえるせかい前半\n");
 
       // 表示設定
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, TRUE );
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, TRUE );
 
-      ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_01 );
+      GIANTHOLE_GIMMICK_AnmStart( gsys, 0 );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
       OS_Printf("デバッグ こごえるせかい後半\n");
 
       // 表示設定
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, TRUE );
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, TRUE );
 
-      ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_02 );
+      GIANTHOLE_GIMMICK_AnmStart( gsys, 1 );
     }
   }
 #endif
+
+  // SE再生
+  if( p_wk->anm_type != ANIME_TYPE_NULL )
+  {
+    // 前半
+    if( p_wk->anm_type == ANIME_TYPE_FIRST_HALF )
+    {
+      switch( p_wk->frame ){
+      case FRAME_SE_COLD:       PMSND_PlaySE( GIANTHOLE_SE_COLD );      break;
+      case FRAME_SE_ICE_ROT_1:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_1 ); break;
+      case FRAME_SE_ICE_ROT_2:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_2 ); break;
+      case FRAME_SE_ICE_STOP:   PMSND_PlaySE( GIANTHOLE_SE_ICE_STOP );  break;
+      case FRAME_SE_ICE_LEAVE:  PMSND_PlaySE( GIANTHOLE_SE_ICE_LEAVE ); break;
+      case FRAME_SE_ICE_ATTACK: PMSND_PlaySE( GIANTHOLE_SE_ICE_ATTACK );break;
+      }
+    }
+    // 後半
+    else
+    {
+      switch( p_wk->frame ){
+      case FRAME_SE_ICE_BREAK:  PMSND_PlaySE( GIANTHOLE_SE_ICE_BREAK ); break;
+      }
+    }
+
+    p_wk->frame++;
+  }
+
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
@@ -252,13 +307,19 @@ void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id )
 
   GF_ASSERT( id<2 );
 
+  // 初期化
+  p_wk->anm_type = ANIME_TYPE_NULL;
+  p_wk->frame = 0;
+
   if( id == 0 )
   {
     ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_01 );
+    p_wk->anm_type = ANIME_TYPE_FIRST_HALF;
   }
   else
   {
     ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_02 );
+    p_wk->anm_type = ANIME_TYPE_SECOND_HALF;
   }
 }
 
