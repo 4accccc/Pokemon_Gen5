@@ -4106,13 +4106,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　ポケモン
-ゼクロム　レシラムは▼
-イッシュの　シンボル　だが
-いまは　どこに　いるのだろうな</Text>
+			<Text>イッシュの　シンボルである
+ゼクロム　レシラム　だけど▽
+いまは　どこに　いるのだろうな▼
+だれかに　おおむかしからの
+ちえを　つたえているのかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T04:00:18" />
+				Time="2011-11-07T06:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4120,13 +4121,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　ポケモン
-ゼクロム　レシラムは▼
-イッシュの　シンボル　だが
-いまは　どこに　いるのだろうな</Text>
+			<Text>イッシュの　シンボルである
+ゼクロム　レシラム　だけど▽
+いまは　どこに　いるのだろうな▼
+だれかに　大昔からの
+知恵を　伝えているのかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T04:00:24" />
+				Time="2011-11-07T06:25:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
