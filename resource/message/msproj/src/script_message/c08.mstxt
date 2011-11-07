@@ -4654,17 +4654,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくな　けいじばん！[Ctrl2:PageClear ]
+			<Text>おとくな　けいじばん！▼
 
 シャガしちょうが　みとめた
-つよい　トレーナーに[Ctrl2:PageClear ]
+つよい　トレーナーに▼
 ドラゴンタイプ　さいきょうの　わざを
-でんじゅ　します！[Ctrl2:PageClear ]
+でんじゅ　します！▼
 くわしくは
 シャガしちょうの　いえで！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T05:56:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4672,17 +4672,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得な　掲示板！[Ctrl2:PageClear ]
+			<Text>お得な　掲示板！▼
 
 シャガ市長が　認めた
-つよい　トレーナーに[Ctrl2:PageClear ]
+つよい　トレーナーに▼
 ドラゴンタイプ　最強の　技を
-伝授します！[Ctrl2:PageClear ]
+伝授します！▼
 詳しくは
 シャガ市長の　家で！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-07T05:56:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4722,10 +4722,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:11:08" />
+				Time="2011-11-07T05:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4733,10 +4735,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:11:14" />
+				Time="2011-11-07T05:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4745,10 +4749,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモンジム
-・White2ver</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T04:55:08" />
+				Time="2011-11-07T05:47:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4777,10 +4781,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:11:14" />
+				Time="2011-11-07T05:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4788,10 +4794,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソウリュウシティ　ポケモンジム
+リーダー　シャガ▽
+スパルタン　メイヤー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:11:14" />
+				Time="2011-11-07T05:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4799,10 +4807,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>ポケモンジム
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:58" />
+				Time="2011-11-07T05:47:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4817,58 +4826,6 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c08_gymsign_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:50" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ソウリュウシティ　ポケモンジム
-リーダー　シャガ[Ctrl2:LineFeed ]
-スパルタン　メイヤー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:50" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモンジム
-※swanで新規作成</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:11:28" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>看板</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-23T05:10:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
