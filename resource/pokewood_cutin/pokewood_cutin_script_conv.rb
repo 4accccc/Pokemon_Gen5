@@ -293,7 +293,8 @@ def convertScript( csv, hCsv, data, naix, sadl )
         else
           data.write_u16( def_d[:PG_VALUE] )
         end
-
+      else
+        data.write_u16( 0 )
       end
 
     end
