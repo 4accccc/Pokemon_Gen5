@@ -767,7 +767,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		151,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.190 SWSAGE2♂プラズマだん
+	{ // No.190 SWSAGE2♂ポケモントレーナー
 		152,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},

@@ -6276,25 +6276,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん</Text>
+			<Text>ポケモントレーナー</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:16:16" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-04T15:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:16:16" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-04T15:06:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん</Text>
+			<Text>ポケモントレーナー</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:16:16" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-04T15:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:16:16" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-04T15:06:38" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

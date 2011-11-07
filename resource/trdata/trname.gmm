@@ -2221,8 +2221,8 @@
 	</row>
 
 	<row id="mini_18">
-		<language name="JPN" width="216">エイミ</language>
-		<language name="JPN_KANJI" width="216">エイミ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="artist_05">
@@ -2286,8 +2286,8 @@
 	</row>
 
 	<row id="backpackerm_22">
-		<language name="JPN" width="216">マサユキ</language>
-		<language name="JPN_KANJI" width="216">マサユキ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="backpackerw_17">
@@ -2911,8 +2911,8 @@
 	</row>
 
 	<row id="karate_17">
-		<language name="JPN" width="216">リイチ</language>
-		<language name="JPN_KANJI" width="216">リイチ</language>
+		<language name="JPN" width="216">リュウヘイ</language>
+		<language name="JPN_KANJI" width="216">リュウヘイ</language>
 	</row>
 
 	<row id="battleg_16">
@@ -2921,8 +2921,8 @@
 	</row>
 
 	<row id="karate_18">
-		<language name="JPN" width="216">リュウヘイ</language>
-		<language name="JPN_KANJI" width="216">リュウヘイ</language>
+		<language name="JPN" width="216">リイチ</language>
+		<language name="JPN_KANJI" width="216">リイチ</language>
 	</row>
 
 	<row id="battleg_17">
@@ -3936,8 +3936,8 @@
 	</row>
 
 	<row id="backpackerm_29">
-		<language name="JPN" width="216">マイケル</language>
-		<language name="JPN_KANJI" width="216">マイケル</language>
+		<language name="JPN" width="216">マサユキ</language>
+		<language name="JPN_KANJI" width="216">マサユキ</language>
 	</row>
 
 	<row id="backpackerm_30">
@@ -4266,8 +4266,8 @@
 	</row>
 
 	<row id="tennis_14">
-		<language name="JPN" width="216">ビクトリア</language>
-		<language name="JPN_KANJI" width="216">ビクトリア</language>
+		<language name="JPN" width="216">エイミ</language>
+		<language name="JPN_KANJI" width="216">エイミ</language>
 	</row>
 
 	<row id="basket_14">

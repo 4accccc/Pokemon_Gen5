@@ -1396,8 +1396,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SWSAGE2">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SWSAGE3">
