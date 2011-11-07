@@ -1,3 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_transceiver_t04_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！
+いま　どこにいる？▽
+サザナミ？▼
+わかった！▼
+そのまま　マリンチューブを　とおって
+セイガイハシティ　こいよな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:29:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！
+いま　どこにいる？▽
+サザナミ？▼
+わかった！▼
+そのまま　マリンチューブを　通って
+セイガイハシティ　来いよな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■　t04：サザナミ用メッセージ
+・c08ソウリュウでの氷イベント後
+・ライバルの口ぱくアニメーション再生
+・TVトランシーバー終了処理
+・フィールドに復帰する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:29:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:28:44" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

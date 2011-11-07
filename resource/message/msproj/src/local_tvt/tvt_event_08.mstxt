@@ -1,3 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_transceiver_d20_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]！
+いま　どこにいる？▽
+うみべのどうくつ　ちかく？▼
+ずいぶんと　たいへんな
+ルートを　えらぶもんだな▼
+まあ　いいや
+オマエの　かってだもんな▽
+そのかわり　はやく　こいよ▼
+セイガイハシティには　サザナミの
+マリンチューブからも　いけるからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:40:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]！
+いま　どこにいる？▽
+海辺の洞穴　近く？▼
+ずいぶんと　大変な
+ルートを　選ぶもんだな▼
+まあ　いいや
+オマエの　勝手だもんな▽
+そのかわり　はやく　来いよ▼
+セイガイハシティには　サザナミの
+マリンチューブからも　行けるからな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:40:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■　d20：サザナミ用メッセージ
+・c08ソウリュウでの氷イベント後
+・ライバルの口ぱくアニメーション再生
+・TVトランシーバー終了処理
+・フィールドに復帰する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:31:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T10:30:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
