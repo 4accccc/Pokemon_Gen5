@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/31 12:33:29
+#save date:2011/11/07 15:30:27
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #SECTION START:OBJ_EVENT
@@ -491,7 +491,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C13_MAN3A_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -553,7 +553,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C13_MAN3_01
 #Direction Type Number
-DIR_UP
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
