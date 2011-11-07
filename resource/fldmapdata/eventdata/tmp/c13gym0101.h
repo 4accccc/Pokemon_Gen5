@@ -19,5 +19,6 @@
 
 #define BGID_C13GYM0101_STATUE_01         0
 #define BGID_C13GYM0101_STATUE_02         1
+#define BGID_C13GYM0101_POSTER_01         2
 
 #endif //ZONE_C13GYM0101_EVB_H

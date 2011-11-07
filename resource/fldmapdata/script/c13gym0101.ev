@@ -25,7 +25,8 @@ _EVENT_DATA    ev_zone_c13gym0101
 _EVENT_DATA    ev_init_c13gym0101
 _EVENT_DATA    ev_pos_c13gym0101_guide    // ガイドPOSイベント
 _EVENT_DATA    ev_c13gym0101_danpei_01    // ガイドスクリプトイベント
-_EVENT_DATA		ev_bg_c13gym0101_statue_01
+_EVENT_DATA	ev_bg_c13gym0101_statue_01
+_EVENT_DATA	ev_bg_c13gym0101_poster_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -252,4 +253,14 @@ ENDIF
 _LAST_KEYWAIT()
 _PLAINWIN_CLOSE()
 
+EVENT_END
+
+/************************************************************/
+/*					BG：ポスター					*/
+/************************************************************/
+EVENT_START ev_bg_c13gym0101_poster_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c13gym0101_poster_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
