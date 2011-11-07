@@ -644,4 +644,55 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c13gym0102_dancer_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれ　ＰＡ！▼
+ライブハウスで　ききやすいように
+おとの　バランスを　とってるの！▼
+きみ　トレーナー？▼
+だったら　つれてあるく　ポケモンの
+タイプ　バランスを　かんがえなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:08:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:04:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おれ　ＰＡ！▼
+ライブハウスで　聴きやすいように
+音の　バランスを　とってるの！▼
+きみ　トレーナー？▼
+だったら　連れて歩く　ポケモンの
+タイプ　バランスを　考えなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:08:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:08:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝2、GRIDZ＝14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:05:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANCER</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-07T06:00:59" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
