@@ -2076,6 +2076,9 @@ oldc04r0201_def.h: oldc04r0201.ev
 oldd06r0101_def.h: oldd06r0101.ev
 	$(EV_DEF) oldd06r0101.ev $(SCR_OFFS_ID_H)
 
+t07r0201_def.h: t07r0201.ev
+	$(EV_DEF) t07r0201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
