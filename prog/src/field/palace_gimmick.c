@@ -112,22 +112,12 @@ typedef enum {
   OBJ_TREE_B_3,
   OBJ_TREE_B_4,
   OBJ_TREE_B_5,
-  OBJ_TREE_B_6,
-  OBJ_TREE_B_7,
-  OBJ_TREE_B_8,
-  OBJ_TREE_B_9,
-  OBJ_TREE_B_10,
 
   OBJ_TREE_W_1,
   OBJ_TREE_W_2,
   OBJ_TREE_W_3,
   OBJ_TREE_W_4,
   OBJ_TREE_W_5,
-  OBJ_TREE_W_6,
-  OBJ_TREE_W_7,
-  OBJ_TREE_W_8,
-  OBJ_TREE_W_9,
-  OBJ_TREE_W_10,
 
   OBJ_EFFECT_01,
   OBJ_EFFECT_02,
@@ -151,22 +141,12 @@ static const GFL_G3D_UTIL_OBJ obj_table[ OBJ_NUM ] =
   { RES_TREE_ALL, 2, RES_TREE_ALL, NULL, 0 },
   { RES_TREE_ALL, 3, RES_TREE_ALL, NULL, 0 },
   { RES_TREE_ALL, 4, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 5, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 6, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 7, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 8, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 9, RES_TREE_ALL, NULL, 0 },
   //•
-  { RES_TREE_ALL, 0+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 1+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 2+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 3+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 4+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 5+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 6+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 7+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 8+10, RES_TREE_ALL, NULL, 0 },
-  { RES_TREE_ALL, 9+10, RES_TREE_ALL, NULL, 0 },
+  { RES_TREE_ALL, 0+5, RES_TREE_ALL, NULL, 0 },
+  { RES_TREE_ALL, 1+5, RES_TREE_ALL, NULL, 0 },
+  { RES_TREE_ALL, 2+5, RES_TREE_ALL, NULL, 0 },
+  { RES_TREE_ALL, 3+5, RES_TREE_ALL, NULL, 0 },
+  { RES_TREE_ALL, 4+5, RES_TREE_ALL, NULL, 0 },
 
 
   //EFFECT
@@ -553,9 +533,9 @@ static int _GetTreeLevel(int wb_level)
 {
   int tree_level;
   
-  tree_level = wb_level / 3;
-  if(tree_level > 9){
-    tree_level = 9;
+  tree_level = wb_level / 6;
+  if(tree_level > 4){
+    tree_level = 4;
   }
   return tree_level;
 }
