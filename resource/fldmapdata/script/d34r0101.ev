@@ -12,6 +12,12 @@
   .include  "msg_d34r0101.h"
   .include  "d34r0101.h"
 
+  .include  "r05.h"
+  .include  "r05_def.h"
+  .include  "d34r0101_def.h"
+
+  //@author	suginaka_katsunori //ベルの初回イベント
+  
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
@@ -20,6 +26,7 @@ _EVENT_DATA    ev_animal_trail_normal_item
 _EVENT_DATA    ev_animal_trail_hide_item
 _EVENT_DATA    ev_init_d34r0101
 _EVENT_DATA    ev_animal_trail_back_zone
+_EVENT_DATA	ev_reserve_d34r0101_event_01
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -152,3 +159,124 @@ _ANIME_LABEL	anm_set_down_dir
   _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
+/************************************************************/
+/*		初回ベル　説明リザーブイベント				*/
+/************************************************************/
+EVENT_START	ev_reserve_d34r0101_event_01
+
+  //フィールド上にベル配置
+  _OBJ_ADD_EX( 15, 26, DIR_UP, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+
+  //画面復帰処理
+  _MAP_FADE_BLACK_IN_SLOW()
+  _MAP_FADE_END_CHECK()
+
+  //上へ移動
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 14, 14, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 10 )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 14, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //ベル向きなおす
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //メッセージ：ポケモンだあ
+  _BALLOONWIN_OBJMSG_POS( msg_d34r0101_swbell_01,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ベル向きなおす
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：すごいね！
+  _BALLOONWIN_OBJMSG_POS( msg_d34r0101_swbell_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 15, 23, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 25 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0

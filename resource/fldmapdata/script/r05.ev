@@ -12,8 +12,12 @@
   .include  "../../message/dst/script/msg_r05.h"
   .include  "r05.h"
   .include  "musical_scr_def.h"
+  .include  "r05_def.h"
+  
+  .include  "d34r0101.h"
+  .include  "d34r0101_def.h"
 
-  //@author	suginaka_katsunori
+  //@author	suginaka_katsunori（チャールズなど、ベルイベント修正）
   //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
   //@author Mizuguchi_Mai（ベル）
 
@@ -102,11 +106,9 @@ EVENT_START	ev_bg_r05_board_03
 EVENT_END
 
 /**************************************************************/
-/*		【仮】POS：ベルかくしあなイベント							  */
+/*		POS：ベルかくしあなイベント					  */
 /**************************************************************/
 EVENT_START		ev_pos_r05_swbell_01
-
-  //2011.09.29 かくしあなへの誘導とr16との連携が仮
   
   _PLAYER_NAME( 0 )
 
@@ -119,30 +121,38 @@ EVENT_START		ev_pos_r05_swbell_01
   
   //メッセージ：おうい！
   _BALLOONWIN_OBJMSG_MF( msg_r05_swbell_01,msg_r05_swbell_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
-  
-  //アニメ：主人公振り向き
-  _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_r)
+
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
   _OBJ_ANIME_WAIT()
   
+  //ベル曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_BERU )
+  
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_dir_r)
+  _OBJ_ANIME_WAIT()
+
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  
-  //アニメ：主人公中央へ
-  IF $LCW_POSZ != 438 THEN
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 373, 438, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  
+ 
   //アニメ：ベル隣接・主人公振り向き
   _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_to_player)
+ 
+  //アニメ：主人公中央へ
+  IF $LCW_POSZ != 438 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 372, 438, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
   IF $LCW_POSZ != 438 THEN
     _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_r)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //メッセージ：いいところで
   _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_03,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //わざマシン入手処理　「そらをとぶ」
@@ -163,16 +173,117 @@ EVENT_START		ev_pos_r05_swbell_01
   }
   _MSGWIN_CLOSE()
   
-  //アニメ：
-  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_bye)
+  _TIME_WAIT( 30 )
+  
+  //ベル：！マーク
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_gyoe)
   _OBJ_ANIME_WAIT()
   
-  //ベル動作モデル削除
-  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_staystep_u)
+  _OBJ_ANIME_WAIT()
   
+  //メッセージ：まって！
+  _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_08,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 372, 436, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 15 )
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：キョロキョロする
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_kyoro)
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT(20)
+  
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：あっちから
+  _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_09,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tsureteke )
+  _TIME_WAIT( 5 )
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 369, 425, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：キョロキョロする２
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_kyoro2)
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 374, 425, FORCE_TYPE_NPC, 8, DIR_LR)
+  _TIME_WAIT( 10 )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 373, 425, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：キョロキョロする３
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_kyoro3)
+  _OBJ_ANIME_WAIT()
+
+  //メッセージ：この　あたりから
+  _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_10,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：キョロキョロする４
+  _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_kyoro4)
+  _OBJ_ANIME_WAIT()
+
+  //メッセージ：うあ！ここ！
+  _BALLOONWIN_OBJMSG_POS( msg_r05_swbell_11,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  _SYSWIN_MSG( msg_r05_swbell_12, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //いいえを選択した場合
+  IF $SCWK_ANSWER == SCR_NO THEN
+  
+  	_SYSWIN_CLOSE()
+  	
+  	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_l )
+  	_TIME_WAIT( 8 )
+  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  	_OBJ_ANIME_WAIT()
+  
+  	//メッセージ：せっかくだから
+  	_BALLOONWIN_OBJMSG_POS( msg_r05_swbell_13,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  	_MSGWIN_CLOSE()
+  	
+  	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  	_OBJ_ANIME_WAIT()
+  
+  //はいを選択した場合
+  ELSE
+  
+  	_SYSWIN_CLOSE()
+  
+  ENDIF
+
+  //かくしあなにチラーミィ配置
+  _ANIMAL_TRAIL_DATA_SET( SCR_ANIMAL_TRAIL_ID_03 ,SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_A ,0 ,FALSE )
+
+  //リザーブスクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_D34R0101_EVENT_01 )
+  
+  //画面暗転処理
+  _MAP_FADE_BLACK_OUT_SLOW()
+  _MAP_FADE_END_CHECK()
+
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  //ベル動作モデル削除
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
   _SE_WAIT()
+
+  _END_EVENT_BGM()
+
+  _MAP_CHANGE_NO_FADE( ZONE_ID_D34R0101, 15, 0, 27, DIR_UP )
   
   //========================================//
   //R05かくしあなイベントPOS無効
@@ -185,18 +296,67 @@ EVENT_END
 //	ベル：隣接
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_bell_to_player
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	ベル：ゲートへ帰る
+//	ベル：キョロキョロする
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_bell_bye
-	_ANIME_DATA	AC_WALK_R_8F,3
+_ANIME_LABEL	anm_bell_kyoro
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_bell_kyoro2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_bell_kyoro3
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_bell_kyoro4
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：ベルについていく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_tsureteke
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*		R05		きのみ販売イベント							  */
+/*		R05		きのみ販売イベント					  */
 /**************************************************************/
 EVENT_START		ev_r05_breederw_01
 
@@ -821,6 +981,26 @@ _ANIME_LABEL	anm_dir_r
 _ANIME_LABEL	anm_dir_l
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //	◆チャールズ：退場
