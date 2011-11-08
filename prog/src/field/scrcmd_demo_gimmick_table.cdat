@@ -17,7 +17,10 @@
   //スクリプトコマンドテーブル開始
   INIT_OVERLAY_CMD( demo_gimmick )
 
+  DEF_CMD( EvCmdGianthole_Disp, EV_SEQ_DEMO_GIMMICK_GIANTHOLE_DISP )
   DEF_CMD( EvCmdGianthole_AnmStart, EV_SEQ_DEMO_GIMMICK_GIANTHOLE_ANM_START )
+  DEF_CMD( EvCmdGianthole_FadeOut, EV_SEQ_DEMO_GIMMICK_GIANTHOLE_FADE_OUT )
+  DEF_CMD( EvCmdGianthole_BrightnessBlack, EV_SEQ_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK )
 
   END_CMD
   //スクリプトコマンドテーブル終了

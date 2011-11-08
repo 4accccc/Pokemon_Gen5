@@ -32,5 +32,8 @@
 */
 //=============================================================================
 
+extern VMCMD_RESULT EvCmdGianthole_Disp( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_AnmStart( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGianthole_FadeOut( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGianthole_BrightnessBlack( VMHANDLE *core, void *wk );
 

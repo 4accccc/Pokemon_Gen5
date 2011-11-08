@@ -294,6 +294,33 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  モデル表示
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	id  0:前半 1:後半
+ */
+//-----------------------------------------------------------------------------
+void GIANTHOLE_GIMMICK_Disp( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  GF_ASSERT( id<2 );
+
+  if( id == 0 )
+  {
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, FALSE );
+  }
+  else
+  {
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, FALSE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  アニメ再生
  *
  *	@param	GAMESYS_WORK *gsys

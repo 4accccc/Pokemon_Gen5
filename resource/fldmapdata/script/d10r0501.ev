@@ -155,8 +155,25 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
   // 暗転処理(メモリ開放)
   {
-    _MAP_FADE_BLACK_OUT()
-    _MAP_FADE_END_CHECK()
+    // 背景を真っ暗なままメッセージを出したいので
+    // 専用フェードを使う
+    _DEMO_GIMMICK_GIANTHOLE_FADE_OUT()
+
+    _TIME_WAIT(20)
+
+    // ROMバージョン取得
+    _GET_ROM_VERSION( LCWK_VERSION )
+
+    //ブラック：クロスサンダー
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01b )
+    //ホワイト：クロスフレイム
+    ELSE
+      _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01w )
+    ENDIF
+    _MSGWIN_CLOSE()
+
+    _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK()
 
     // カメラ戻し
     _CAMERA_BIND()	//カメラバインド
@@ -176,27 +193,21 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
     //=======================================
 
+    // こごえるせかい(後半)モデル表示
+    _DEMO_GIMMICK_GIANTHOLE_DISP(1)
+
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
+
   }
 
-
-  // ROMバージョン取得
-  _GET_ROM_VERSION( LCWK_VERSION )
-
-	//ブラック：クロスサンダー
+  // カットイン再生
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01b )
-    _MSGWIN_CLOSE()
-    // カットイン再生
     _CALL_FLD3D_CUTIN( FLDCIID_ZEKUROMU )
-  //ホワイト：クロスフレイム
   ELSE
-    _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01w )
-    _MSGWIN_CLOSE()
-    // カットイン再生
     _CALL_FLD3D_CUTIN( FLDCIID_RESIRAMU )
   ENDIF
+
 
   // こごえるせかいエフェクト(後半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(1)
@@ -257,15 +268,15 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //ブラック：ババリバリッシュ！
   IF $LCWK_VERSION == VERSION_B2 THEN
     _GIZAPLAINWIN_MSG_POS( msg_d10r0501_mu_01, POS_DOWN )
-    //【仮】鳴き声指定仮
-    _VOICE_PLAY( MONSNO_653, 0 )
+    // ゼクロム 鳴き声指定仮
+    _VOICE_PLAY( MONSNO_651, 0 )
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   //ホワイト：ンバーニガガッ！
   ELSE
     _GIZAPLAINWIN_MSG_POS( msg_d10r0501_shin_01, POS_DOWN )
-    //【仮】鳴き声指定仮
-    _VOICE_PLAY( MONSNO_653, 0 )
+    // レシラム 鳴き声指定仮
+    _VOICE_PLAY( MONSNO_650, 0 )
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   ENDIF
@@ -290,6 +301,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // ゲーチス：つえをかかげる
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
+  _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 20 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
 
   // いでんしのくさびカットイン

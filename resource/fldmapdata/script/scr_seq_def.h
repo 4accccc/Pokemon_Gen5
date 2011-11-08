@@ -16208,6 +16208,21 @@
 //=============================================================================
 // ギミック関係
 //=============================================================================
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_GIMMICK_GIANTHOLE_DISP
+ * @brief キュレムの「こごえるせかい」モデル表示
+ * @param id    0:前半 1:後半
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_DISP( id ) \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_DISP id
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_DISP id
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_DISP
+  .short  \id
+  .endm
 
 //--------------------------------------------------------------
 /**
@@ -16224,6 +16239,41 @@
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_ANM_START
   .short  \id
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_FADE_OUT
+ * @brief メッセージ以外フェードアウト
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *        
+ *        ※ジャイアントホールデモ専用のコマンドです。
+ *        　通常は使わないように！
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_FADE_OUT() \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
+ * @brief マスター輝度を黒にする
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ *        ※ジャイアントホールデモ専用のコマンドです。
+ *        　通常は使わないように！
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK() \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
+  .endm
+
 
 //======================================================================
 //======================================================================
