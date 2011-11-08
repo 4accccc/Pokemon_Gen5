@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-11-04T12:37:44" source="out14_local_texset.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-11-08T11:40:30" source="out14_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-04T12:37:44" source="out14_local_texset.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-08T11:40:30" source="out14_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,46 +38,46 @@
 		path="C:/home/swan_data3d/field/out14/chip/tex/dou_brk01.tga"
 	>
 		<bitmap size="256">
-			5555 5555 1111 1111 3111 aaaa 5aaa 5555
-			5555 5555 1111 1155 a311 3aaa 3a66 5555
-			5555 1555 5511 1555 a331 3aaa a666 5553
-			5555 5155 5555 1555 aa31 63aa a666 5553
-			5533 5515 5555 5555 aa33 63aa 3a66 3553
-			3366 5555 5555 b555 aaa3 a3aa 33a6 6333
-			6677 5553 5555 3b55 aaaa 333a a33a 76aa
-			7888 5536 5555 3b55 aaaa 3333 aa33 876a
-			7888 5b36 aab5 3334 3333 3333 aaa3 776a
-			6777 b333 7763 3346 666a 3666 aaa3 763a
-			a677 33aa 8876 a467 776a 6677 aa33 7633
-			aa66 763a 7888 a476 766a 6777 3a33 6aa3
-			33aa 86a3 6788 4787 666a 6777 33a6 aaa3
-			3333 76aa 6677 7888 66a4 6666 3aa6 3333
-			3333 6aaa 7666 8888 aa37 6666 3aa6 3333
-			3333 aaaa 76aa 8888 3378 a66a 3aaa 3333
-			333a aaaa 776a 8888 2678 aaa3 33aa a333
-			33a6 aaa3 776a 8888 6678 3333 3332 6aa3
-			aa66 aaa3 766a 8887 a677 3333 aaaa 66a3
-			aaa6 aa33 76aa 7777 3a77 9833 8999 66aa
-			aaaa 3333 76aa 7777 a367 998a 9999 6aa8
-			aaaa 3333 6333 7777 77a6 9998 8999 a788
-			3aaa 666a 6666 a666 776a 9998 8899 7789
-			a33a 8886 8788 6aa6 7776 9887 9889 7789
-			763a 9988 8789 7768 7777 8877 9988 a789
-			8733 9998 8789 7778 7777 8777 9888 a778
-			8733 8888 7788 7777 7777 7777 8888 aa78
-			7733 8888 7778 7777 8887 7888 8887 3aa7
-			73a0 7887 3777 7777 8888 8888 7877 3aa7
-			3000 7777 3377 8773 8778 8888 7778 03aa
-			0000 3333 0a33 3330 7333 8887 3a77 0033
-			0000 0000 0000 0000 3a00 7773 33aa 0003
+			4444 4444 4444 4444 bb14 9877 b789 4444
+			4444 4444 4444 4444 7b11 a998 b89a 4441
+			4444 4444 4444 1444 87b1 aa99 79cc 441b
+			4444 4444 4444 1444 97b1 caa9 789c 441b
+			4444 4444 4444 1144 987b ccaa 7789 441b
+			4444 4444 4444 b1d4 8777 9cc9 b778 411b
+			4444 bbbd 44db b114 877b 8888 1b77 d111
+			bd4d 887b d779 11bd 77bb 9999 b788 1111
+			9bd1 aa99 779a 111b 8711 9999 b788 1b1b
+			99b1 a999 78aa bb1b 8b11 8889 b778 bbbb
+			9975 8999 7788 bb7b 7b1b 8888 bb77 bb77
+			9875 7999 b777 b771 7b1b 7777 7777 b777
+			98b5 7788 5b77 7899 bb1b b777 877b 7899
+			87b5 8888 9977 89aa b11b b1b1 9987 89aa
+			77b6 7888 a998 9cca 11b7 7b11 a998 99ca
+			7b12 7777 aa99 89cc 11b7 7b11 aa99 29cc
+			1117 8711 caa9 789c 11b7 87b1 caa9 789c
+			11bb 7bbb cc98 7789 11bb 7bbb cca8 778a
+			111b 777b 8888 b778 111b 777b aa88 b778
+			b11b 7737 877b b888 b1bb 7737 877b b228
+			71bb 7393 77bb 7788 71bb 7393 77bb 7782
+			3b78 b799 7bbb 8888 3b78 b799 7bbb 8888
+			3b89 bb73 877b 9998 3b89 bb73 877b 9998
+			bb77 bbbb 87bb aaa9 bb77 bbbb 87bb aaa9
+			1b77 bbbb 87b1 8aa9 1b77 bbbb 87b1 8aa9
+			1bb7 1bb1 8bb1 8888 6bb7 1bb1 8bb1 8888
+			11bb 11b1 7b11 7788 61bb 11b1 7b16 7788
+			661b 1111 bb66 b778 661b 1116 bb66 b778
+			1661 1111 b161 bb77 1611 1111 b161 bb77
+			b111 7777 111b 1b11 b111 7777 111b 1b11
+			7bbb 0000 1b78 1111 7bbb 0000 1b78 1111
+			0007 0000 b780 bbbb 0007 0000 b700 bbbb
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="dou_brk01_pl" color_size="16">
-		0000 14a6 156d 158d 19b0 1ce7 1dd0 1df2
-		2213 2256 258f 294a 7fff 7fff 7fff 7fff
+		0000 158d 19d0 19d2 1ce7 1d8e 1daf 1dd0
+		1df2 1df3 1e15 258f 2636 294a 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
