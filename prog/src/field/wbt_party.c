@@ -40,6 +40,11 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 enum {
+  MY_RENTAL_POWER_RND = 20,
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
   NG_POKE_MAX = 12,
   NG_ITEM_MAX = 12,
 };
@@ -349,7 +354,7 @@ static void choiceBSubwayData(
   u8 selected[TEMOTI_POKEMAX];
 
   GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
-  GFL_STD_MemClear( index_array, sizeof(u16) * TEMOTI_POKEMAX );
+  //GFL_STD_MemClear( index_array, sizeof(u16) * TEMOTI_POKEMAX );
 
   for( set_count = 0; set_count != cnt; set_count ++ )
   {
@@ -360,7 +365,7 @@ static void choiceBSubwayData(
     //NGなデータを更新し、抽選可能な対象を数える
     available_count = POKECANDIDATE_updateNG( pcan, ng_info );
 #ifdef  PM_DEBUG
-    DEBUG_POKECANDIDATE_dump( pcan );
+//    DEBUG_POKECANDIDATE_dump( pcan );
 #endif
     //抽選対象が必要な数に満たない場合Assert
     GF_ASSERT( available_count >= cnt - set_count );
@@ -387,6 +392,64 @@ static void choiceBSubwayData(
 
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief レンタルの抽選範囲を決定する
+ * @param[in]   wbtcup      トーナメント種別
+ * @param[in]   isStrong
+ * @param[out]  idx_s       範囲開始位置
+ * @param[out]  idx_e       範囲終了位置
+ */
+//------------------------------------------------------------------
+static void getRentalRange( WBTCUP wbtcup, BOOL isStrong, u16 * idx_s, u16 * idx_e )
+{
+  static u16 rent_idx_table[2][2][2] = {
+  //WBTRENT_TYPE_WEAK
+    {
+      {   1, 132 }, { 209, 558 },
+    },
+  //WBTRENT_TYPE_STRONG
+    {
+      { 133, 208 }, { 559, 908 },
+    }
+  };
+
+  int index;
+
+  switch ( wbtcup )
+  {
+  default:
+    GF_ASSERT( 0 );
+  case WBTCUP_RENTAL:       index = 0; break;
+  case WBTCUP_RENTALMASTER: index = 1; break;
+  }
+
+  *idx_s = rent_idx_table[isStrong][index][0];
+  *idx_e = rent_idx_table[isStrong][index][1];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u16 * createRangeTable( WBTCUP wbtcup, BOOL isStrong, HEAPID tempHeapID, u16 * length )
+{
+  u16 use_poke_cnt;
+  u16 * use_poke_table;
+  u16 index_s, index_e;
+  int i;
+
+  getRentalRange( wbtcup, isStrong, &index_s, &index_e );
+
+  TAMADA_Printf("choose range = %3d-%3d\n", index_s, index_e );
+  use_poke_cnt = index_e - index_s + 1;
+  use_poke_table = GFL_HEAP_AllocClearMemory( tempHeapID, sizeof(u16) * use_poke_cnt );
+  for ( i = 0; i < use_poke_cnt; i ++ )
+  {
+    use_poke_table[i] = index_s + i;
+  }
+  *length = use_poke_cnt;
+  return use_poke_table;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief バトルサブウェイ形式データからの抽選処理
@@ -420,41 +483,6 @@ void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
   TAMADA_Printf("Time To Choose:%8ld\n", end - start );
 }
 
-//------------------------------------------------------------------
-/**
- * @brief レンタルの抽選範囲を決定する
- * @param[in]   wbtcup      トーナメント種別
- * @param[in]   rent_type   レンタル時の指定
- * @param[out]  idx_s       範囲開始位置
- * @param[out]  idx_e       範囲終了位置
- */
-//------------------------------------------------------------------
-static void getRentalRange( WBTCUP wbtcup, WBTRENT_TYPE rent_type, u16 * idx_s, u16 * idx_e )
-{
-  static u16 rent_idx_table[WBTRENT_TYPE_NUM][2][2] = {
-  //WBTRENT_TYPE_WEAK
-    {
-      {   1, 132 }, { 209, 558 },
-    },
-  //WBTRENT_TYPE_STRONG
-    {
-      { 133, 208 }, { 559, 908 },
-    }
-  };
-
-  int index;
-
-  switch ( wbtcup )
-  {
-  default:
-    GF_ASSERT( 0 );
-  case WBTCUP_RENTAL:       index = 0; break;
-  case WBTCUP_RENTALMASTER: index = 1; break;
-  }
-
-  *idx_s = rent_idx_table[rent_type][index][0];
-  *idx_e = rent_idx_table[rent_type][index][1];
-}
 
 //------------------------------------------------------------------
 /**
@@ -466,57 +494,65 @@ static void WBTSYS_SetupRentalParty(
   enum {
     DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
   };
-  int index_s, index_e;
   u16 index_array[ TEMOTI_POKEMAX ];
   int i;
 
   HEAPID tempHeapID = GFL_HEAP_LOWID( wbtsys->heapID );
 
+  u16 use_poke_cnt;
+  u16 * use_poke_table;
 
-  //選出する範囲を決める
-  switch ( wbtsys->wbtcup ) 
+  WBT_NGPMINFO * ng_info;
+
+  ng_info = NGINFO_Create( tempHeapID, wbtsys->wbtcup );
+  if ( ng_mons_tbl )
+  { //NGテーブルがある場合は、そこからNGのポケモンナンバーを登録する
+    for ( i = 0; i < num; i ++ )
+    {
+      WBT_NGINFO_AddNGMons( ng_info, ng_mons_tbl[i] );
+    }
+  }
+
+  //バトルサブウェイデータから抽選するのに必要なパラメータを生成
+  GFL_STD_MemClear( index_array, sizeof(index_array) );
+
+  switch ( wbtsys->rental_type )
   {
   default:
-    GF_ASSERT( 0 );
+    GF_ASSERT(0);
     /* FALL THROUGH */
-  case WBTCUP_RENTAL:
-    index_s = 1;
-    index_e = 208;//バッフロン
-    break;
-  case WBTCUP_RENTALMASTER:
-    index_s = 209;
-    index_e = 908;  //ケッキング
-    break;
-  }
-
-  { //バトルサブウェイデータから抽選するのに必要なパラメータを生成
-    u16 use_poke_cnt;
-    u16 * use_poke_table;
-
-    WBT_NGPMINFO * ng_info;
-
-    use_poke_cnt = index_e - index_s + 1;
-    use_poke_table = GFL_HEAP_AllocClearMemory( tempHeapID, sizeof(u16) * use_poke_cnt );
-    for ( i = 0; i < use_poke_cnt; i ++ )
-    {
-      use_poke_table[i] = index_s + i;
-    }
-
-    ng_info = NGINFO_Create( tempHeapID, wbtsys->wbtcup );
-    if ( ng_mons_tbl )
-    { //NGテーブルがある場合は、そこからNGのポケモンナンバーを登録する
-      for ( i = 0; i < num; i ++ )
-      {
-        WBT_NGINFO_AddNGMons( ng_info, ng_mons_tbl[i] );
-      }
-    }
-
+  case WBTRENT_TYPE_WEAK:
+    use_poke_table = createRangeTable( wbtsys->wbtcup, FALSE, tempHeapID, &use_poke_cnt );
     WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
-        use_poke_cnt, use_poke_table, ARCID_BSW_PD, num, NULL );
-
-    WBT_NGINFO_Delete( ng_info );
+        use_poke_cnt, use_poke_table,
+        ARCID_BSW_PD, num, NULL );
     GFL_HEAP_FreeMemory( use_poke_table );
+    break;
+  case WBTRENT_TYPE_STRONG:
+    use_poke_table = createRangeTable( wbtsys->wbtcup, TRUE, tempHeapID, &use_poke_cnt );
+    WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
+        use_poke_cnt, use_poke_table,
+        ARCID_BSW_PD, num, NULL );
+    GFL_HEAP_FreeMemory( use_poke_table );
+    break;
+  case WBTRENT_TYPE_ALL:
+    use_poke_table = createRangeTable( wbtsys->wbtcup, TRUE, tempHeapID, &use_poke_cnt );
+    WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
+        use_poke_cnt, use_poke_table,
+        ARCID_BSW_PD, 3, NULL );
+    GFL_HEAP_FreeMemory( use_poke_table );
+    if ( num > 3 )
+    {
+      use_poke_table = createRangeTable( wbtsys->wbtcup, FALSE, tempHeapID, &use_poke_cnt );
+      WBTSYS_ChooseBSubwayData( index_array + 3, ng_info, tempHeapID,
+          use_poke_cnt, use_poke_table,
+          ARCID_BSW_PD, num - 3, NULL );
+      GFL_HEAP_FreeMemory( use_poke_table );
+    }
+    break;
   }
+
+  WBT_NGINFO_Delete( ng_info );
 
   { //抽選したポケモンを使ってPOKEPARTYを設定する
     BSUBWAY_POKEMON * btpwd;
@@ -538,8 +574,6 @@ static void WBTSYS_SetupRentalParty(
  * @brief レンタルトーナメント用手持ちポケモン生成
  * @param[in]   wbtsys
  *
- * @todo  パワー乱数の値をどう決定するのか？
- *
  *  ここから手持ちを選択するため、6体生成する
  */
 //------------------------------------------------------------------
@@ -548,7 +582,7 @@ void WBTSYS_SetupMyRentalParty(
 {
   u32 tr_id = GFUser_GetPublicRand( 0 );
     
-  WBTSYS_SetupRentalParty( wbtsys, wbtsys->sp_party, tr_id, 0x10, TEMOTI_POKEMAX, NULL );
+  WBTSYS_SetupRentalParty( wbtsys, wbtsys->sp_party, tr_id, MY_RENTAL_POWER_RND, TEMOTI_POKEMAX, NULL );
 
   //「ようすをみる」で正常に表示がされるように各種パラメータを上書きする
   {
@@ -581,7 +615,6 @@ void WBTSYS_SetupMyRentalParty(
  * @brief レンタルトーナメント用対戦相手ポケモン生成
  * @param[in]   wbtsys
  *
- * @todo  パワー乱数の値をどう決定するのか？
  */
 //------------------------------------------------------------------
 void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys )
@@ -590,6 +623,8 @@ void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys )
   int i;
   int num = WBTSYS_GetPartyMax( wbtsys );
   int max = PokeParty_GetPokeCount( wbtsys->my_party );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+  u8 pow_rnd      = WBTTRAINER_GetPowerRnd(wbt_tr);
   //自分の手持ちとポケモンがかぶらないように抽選する
   GFL_STD_MemClear( ng_mons_table, sizeof(ng_mons_table) );
   for ( i = 0; i < max; i ++ )
@@ -597,7 +632,7 @@ void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys )
     POKEMON_PARAM * pp = PokeParty_GetMemberPointer( wbtsys->my_party, i );
     ng_mons_table[i] = PP_Get( pp, ID_PARA_monsno, NULL );
   }
-  WBTSYS_SetupRentalParty( wbtsys, wbtsys->npc_party, 12345, 0x10, num, ng_mons_table );
+  WBTSYS_SetupRentalParty( wbtsys, wbtsys->npc_party, 12345, pow_rnd, num, ng_mons_table );
 }
 
 

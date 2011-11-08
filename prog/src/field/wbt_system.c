@@ -215,6 +215,19 @@ WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys )
 {
   return wbtsys->MixInfoWinWork;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetRentalType( WBTSYS * wbtsys, WBTRENT_TYPE rental_type )
+{
+  wbtsys->rental_type = rental_type;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTRENT_TYPE WBTSYS_GetRentalType( const WBTSYS * wbtsys )
+{
+  return wbtsys->rental_type;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

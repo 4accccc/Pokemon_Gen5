@@ -129,6 +129,9 @@ extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBT_MIXWIN * www );
 extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 
+extern void WBTSYS_SetRentalType( WBTSYS * wbtsys, WBTRENT_TYPE rental_type );
+extern WBTRENT_TYPE WBTSYS_GetRentalType( const WBTSYS * wbtsys );
+
 extern void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * strbuf );
 
 //------------------------------------------------------------------

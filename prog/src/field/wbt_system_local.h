@@ -169,6 +169,7 @@ struct _WBT_SYSTEM {
   WBTDL_DATA wbtdl_data;
 
   ///ポケモン選択関連
+
     u8 use_btlbox;  ///<バトルボックスを使用するかどうか？フラグ
     POKEPARTY *btl_box_party; //バトルボックス用POKEPARTY
     
@@ -192,6 +193,8 @@ struct _WBT_SYSTEM {
 
   ///スクリプトとプログラムのやりとりのためのアドレスを保持するポインタ
   u16 * scr_answer_work;
+
+  WBTRENT_TYPE rental_type; ///<レンタル選別の種類
 };
 
 

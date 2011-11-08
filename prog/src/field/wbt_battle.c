@@ -726,6 +726,8 @@ static void makeRomTrainerData(
     int i;
     u16 index_array[ TEMOTI_POKEMAX ];
 
+    GFL_STD_MemClear16(index_array, sizeof(index_array));
+
     //トレーナーROMデータ取得
     trd = FBI_TOOL_GetTrainerRomData( base_arc_id + WBTBTD_ARCOFS_TR_NORMAL, tr_id, tempHeapID  );
 
