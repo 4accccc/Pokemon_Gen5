@@ -13,6 +13,7 @@
   .include  "h04.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //演出調整・作り直し
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -34,6 +35,7 @@ _EVENT_DATA    ev_h04_boy1_01
 _EVENT_DATA    ev_h04_oldman1_01
 _EVENT_DATA    ev_h04_backpackerw_01
 _EVENT_DATA    ev_h04_man3_01
+_EVENT_DATA	ev_init_h04
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -44,6 +46,17 @@ DEFINE_LOCAL  LCW_INDEX
 DEFINE_LOCAL  LCW_FRONT
 DEFINE_LOCAL  LCW_SIDE
 
+/************************************************************/
+/*				FIELD_INIT_SCRIPT					*/
+/************************************************************/
+INIT_EVENT_START ev_init_h04
+
+	//橋トレーナーイベント後なら位置を変える
+	IF $WK_SCENE_H04_STOP_01 == 1 THEN
+		_OBJ_RAIL_LOC_SET( H04_STOP_01, 8, 1, 12 )
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  h04 SIGN1の会話用イベントスクリプト                      */
@@ -343,33 +356,44 @@ _RET
 /**************************************************************/
 EVENT_START   ev_pos_h04_stop_01
 {
-
   //アニメ：ストッパー「！」振り向き
-  _OBJ_ANIME( H04_STOP_01, anm_stop_guide01 )
+  _OBJ_ANIME( H04_STOP_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-
-  //主人公座標取得
-  //_PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
 
   //主人公座標取得（レールロケーション取得）
   _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
 
   //アニメ：ストッパー接近
-  IF $LCW_SIDE == 5 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_a )
-  ELSIF $LCW_SIDE == 6 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_b )
-  ELSIF $LCW_SIDE == 7 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_c )
-  ELSIF $LCW_SIDE == 8 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_d )
-  ELSIF $LCW_SIDE == 9 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_e )
-  ELSIF $LCW_SIDE == 10 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_f )
-  ELSIF $LCW_SIDE == 11 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_come_g )
-  ENDIF
+  SWITCH $LCW_SIDE
+  CASE 5 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_5 )
+  CASE 6 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_6 )
+  CASE 7 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_7 )
+  CASE 8 THEN
+
+  CASE 9 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_9 )
+  CASE 10 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_10 )
+  CASE 11 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_11 )
+  CASE 12 THEN
+	_OBJ_ANIME( H04_STOP_01, anm_stop_come_12 )
+  ENDSWITCH
+
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+	_OBJ_ANIME( H04_STOP_01, anm_staystep_r )
+  CASE DIR_RIGHT THEN
+	_OBJ_ANIME( H04_STOP_01, anm_staystep_l )
+  ENDSWITCH
+  
   _OBJ_ANIME_WAIT()
 
   //ストッパー：ちょっと　まてーい！▼
@@ -397,172 +421,99 @@ EVENT_START   ev_pos_h04_stop_01
 
     //ストッパー：２ねんかん　コツコツと　のばした
     _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
+    
+	//主人公座標取得（レールロケーション取得）
+	_GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
 
+	//アニメ：ストッパートボトボ退場
+	SWITCH $LCW_SIDE
+	CASE 5 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_5 )
+	CASE 6 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_6 )
+	CASE 7 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_7 )
+	CASE 8 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_8 )
+	CASE 9 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_9 )
+	CASE 10 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_10 )
+	CASE 11 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_esc_11 )
+	CASE 12 THEN
+	
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
 
   ELSE    //いいえ
-    //ストッパー：そうであろう！　９９９れんしょうの
-    _BALLOONWIN_OBJMSG( msg_h04_stop_04, H04_STOP_01 )
-    _MSGWIN_CLOSE()
+	//ストッパー：そうであろう！　９９９れんしょうの
+	_BALLOONWIN_OBJMSG( msg_h04_stop_04, H04_STOP_01 )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
 
-    //アニメ：主人公押しのけられる
-    _OBJ_ANIME( H04_STOP_01, anm_walk_r )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-    _OBJ_ANIME_WAIT()
+	_PLAYER_DIR_GET(SCWK_ANSWER)
 
+	//アニメ：主人公押しのけられる
+	SWITCH $SCWK_ANSWER
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_walk_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_walk_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
+
+	SWITCH $SCWK_ANSWER
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_walk_l )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_walk_r )
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
+
+	//主人公座標取得（レールロケーション取得）
+	_GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+
+	//アニメ：ストッパー戻る
+	SWITCH $LCW_SIDE
+	CASE 5 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_5 )
+	CASE 6 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_6 )
+	CASE 7 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_7 )
+	CASE 8 THEN
+
+	CASE 9 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_9 )
+	CASE 10 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_10 )
+	CASE 11 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_11 )
+	CASE 12 THEN
+		_OBJ_ANIME( H04_STOP_01, anm_stop_back_12 )
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
+  
+	SWITCH $SCWK_ANSWER
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_staystep_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( H04_STOP_01, anm_staystep_l )
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
   ENDIF
-
-  //主人公座標取得（レールロケーション取得）
-  _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
-
-  //アニメ：ストッパー元居た場所へ
-  IF $LCW_SIDE == 5 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_a )
-  ELSIF $LCW_SIDE == 6 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_b )
-  ELSIF $LCW_SIDE == 7 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_c )
-  ELSIF $LCW_SIDE == 8 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_d )
-  ELSIF $LCW_SIDE == 9 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_e )
-  ELSIF $LCW_SIDE == 10 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_f )
-  ELSIF $LCW_SIDE == 11 THEN
-    _OBJ_ANIME( H04_STOP_01, anm_stop_back_g )
-  ENDIF
-  _OBJ_ANIME_WAIT()
-
 }
 EVENT_END
-
-//一時しのぎ
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Aパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_a
-  _ANIME_DATA AC_WALK_U_8F,6
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Aパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_a
-  _ANIME_DATA AC_WALK_D_8F,7
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Bパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_b
-  _ANIME_DATA AC_WALK_U_8F,5
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Bパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_b
-  _ANIME_DATA AC_WALK_D_8F,6
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Cパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_c
-  _ANIME_DATA AC_WALK_U_8F,4
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Cパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_c
-  _ANIME_DATA AC_WALK_D_8F,5
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Dパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_d
-  _ANIME_DATA AC_WALK_U_8F,3
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Dパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_d
-  _ANIME_DATA AC_WALK_D_8F,4
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Eパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_e
-  _ANIME_DATA AC_WALK_U_8F,2
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Eパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_e
-  _ANIME_DATA AC_WALK_D_8F,3
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Fパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_f
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Fパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_f
-  _ANIME_DATA AC_WALK_D_8F,2
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：主人公前にやってくる（Gパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_come_g
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//  ストッパー：定位置へ（Gパターン）
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_back_g
-  _ANIME_DATA AC_WALK_D_8F,1
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /*  男の子：話しかけ                                          */
@@ -679,57 +630,6 @@ EVENT_START   ev_h04_man3_01
 
 EVENT_END
 
-
-//--------------------------------------------------------------------
-//共通：ターン右                 
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_r
-  _ANIME_DATA AC_STAY_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通：ターン左                        
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_l
-  _ANIME_DATA AC_STAY_WALK_L_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通：ターン上                        
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_u
-  _ANIME_DATA AC_STAY_WALK_U_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通：ターン下                         
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_d
-  _ANIME_DATA AC_STAY_WALK_D_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//☆共通処理：右に1歩歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_walk_r
-  _ANIME_DATA AC_WALK_R_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//☆共通処理：左に1歩歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_walk_l
-  _ANIME_DATA AC_WALK_L_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//ストッパー：「！」振り向く
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_stop_guide01
-  _ANIME_DATA AC_STAY_WALK_U_8F,1
-  _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA ACMD_END,0
-
  //--------------------------------------------------------------------
 //	●橋マニア：退場演出
 //--------------------------------------------------------------------
@@ -747,3 +647,245 @@ _ANIME_LABEL	anm_man3_leave2
 _ANIME_LABEL	anm_player_ou
   _ANIME_DATA	AC_DIR_R,1
   _ANIME_DATA	ACMD_END,0
+
+//-----------------------------------------------------------
+//	ストッパー：主人公前へ移動
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_stop_come_5
+	_ANIME_DATA	AC_STAY_WALK_U_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_6
+	_ANIME_DATA	AC_STAY_WALK_U_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_7
+	_ANIME_DATA	AC_STAY_WALK_U_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_9
+	_ANIME_DATA	AC_STAY_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_10
+	_ANIME_DATA	AC_STAY_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_11
+	_ANIME_DATA	AC_STAY_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_D_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_come_12
+	_ANIME_DATA	AC_STAY_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_D_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+//-----------------------------------------------------------
+//	ストッパー：元の位置へ移動
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_stop_back_5
+	_ANIME_DATA	AC_WALK_D_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_6
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_7
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_9
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_10
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_11
+	_ANIME_DATA	AC_WALK_U_4F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_back_12
+	_ANIME_DATA	AC_WALK_U_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+//-----------------------------------------------------------
+//	ストッパー：端のほうへ移動
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_stop_esc_5
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_6
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_7
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_stop_esc_8
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_9
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_10
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_11
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop_esc_12
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+  
+//--------------------------------------------------------------------
+//☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：右に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_r
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：左に2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk2_l
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：左にゆっくり歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l_16f
+  _ANIME_DATA AC_WALK_L_16F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：きょろきょろする
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_meet
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：後退
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_r
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_back_d
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
