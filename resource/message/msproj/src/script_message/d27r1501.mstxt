@@ -58,4 +58,205 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r1501_swplazmam_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれの　さゆうに　ある　ベッドは
+だれも　つかっていない▼
+ウソだと　おもうなら　しらべてから
+やすんでも　いいんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:58:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:56:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おれの　左右に　ある　ベッドは
+だれも　使っていない▼
+ウソだと　思うなら　調べてから
+休んでも　いいんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:57:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：クリア前
+・GRIDX＝25、GRIDZ＝2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:57:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:30" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1501_bed_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベッドが　ある……！
+すこし　やすんで　いきますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベッドが　ある……！
+すこし　休んで　いきますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:58:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:52:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＢＧメッセージ
+・はい／いいえの選択肢表示
+　はい　→bed_02
+　いいえ→終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:59:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1501_bed_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は　ベッドに　はいり
+すやすやと　ねいきを　たてた……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は　ベッドに　はいり
+すやすやと　寝息を　たてた……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:58:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:52:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＢＧメッセージ
+・画面暗転して回復処理＋回復ＳＥ
+　その後、画面復帰してbed_03表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:59:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1501_bed_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]と　ポケモンは
+やすんで　げんきいっぱいに　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]と　ポケモンは
+休んで　元気一杯に　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:58:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:52:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＢＧメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:52:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベッド</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T11:53:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

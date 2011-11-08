@@ -155,10 +155,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリアが　かいじょ　された！</Text>
+			<Text>バリアが　かいじょ　される！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T02:26:13" />
+				Time="2011-11-08T13:05:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -166,10 +166,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリアが　解除された！</Text>
+			<Text>バリアが　解除される！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T02:26:13" />
+				Time="2011-11-08T13:05:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

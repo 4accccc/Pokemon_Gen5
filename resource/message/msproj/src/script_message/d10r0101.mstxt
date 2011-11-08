@@ -336,11 +336,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おれです　おれ！
-もとプラズマだん　です！▽
+もとプラズマだん　の！▽
 ロットさまに　たのまれ　スパイを……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-11-08T12:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -349,11 +349,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おれです　おれ！
-元プラズマ団　です！▽
+元プラズマ団の！▽
 ロットさまに　頼まれ　スパイを……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-11-08T12:10:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -562,10 +562,12 @@
 じぶんらが　わるいからですよね……▼
 ポケモンのため　とはいえ
 けっきょくは　じぶんらの▽
-やりたいことを　やってただけだし……</Text>
+やりたいことを　やってただけだし……▼
+すみません！　じぶん
+まだ　やることが　あるので！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:19:17" />
+				Time="2011-11-08T12:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -577,10 +579,12 @@
 自分らが　悪いからですよね……▼
 ポケモンのため　とはいえ
 結局は　自分らの▽
-やりたいことを　やってただけだし……</Text>
+やりたいことを　やってただけだし……▼
+すみません！　自分
+まだ　やることが　あるので！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:19:13" />
+				Time="2011-11-08T12:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -589,11 +593,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・以降繰り返し
-・ゲーチス戦後に削除</Comment>
+・メッセージ表示後、
+　倍速移動で画面下に移動
+・画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-11-08T12:52:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

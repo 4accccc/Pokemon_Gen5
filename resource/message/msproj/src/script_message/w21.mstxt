@@ -884,13 +884,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だって　あの　ポケモン……
+			<Text>だって　あの　ポケモン……▼
 キュレム　だっけ▼
 あいつの　なきごえ
 なんだか　かなしそう　だった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T12:51:42" />
+				Time="2011-11-08T12:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -898,13 +898,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だって　あの　ポケモン……
+			<Text>だって　あの　ポケモン……▼
 キュレム　だっけ▼
 あいつの　鳴き声
 なんだか　哀しそう　だった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T12:51:45" />
+				Time="2011-11-08T12:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1002,10 +1002,10 @@
 キュレムが　でんせつの
 ドラゴンポケモン　ならば▼
 たいこう　できるのは　レシラム……
-もしくは　ゼクロム　だけど……！▼</Text>
+もしくは　ゼクロム　だけ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:18:43" />
+				Time="2011-11-08T12:05:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,10 +1018,10 @@
 キュレムが　伝説の
 ドラゴンポケモン　ならば▼
 対抗できるのは　レシラム……
-もしくは　ゼクロム　だけど……！▼</Text>
+もしくは　ゼクロム　だけ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:20:16" />
+				Time="2011-11-08T12:05:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1064,10 +1064,10 @@
 キュレムが　でんせつの
 ドラゴンポケモン　ならば▼
 たいこう　できるのは　ゼクロム……
-もしくは　レシラム　だけど……！▼</Text>
+もしくは　レシラム　だけ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:18:49" />
+				Time="2011-11-08T12:05:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1080,10 +1080,10 @@
 キュレムが　伝説の
 ドラゴンポケモン　ならば▼
 対抗できるのは　ゼクロム……
-もしくは　レシラム　だけど……！▼</Text>
+もしくは　レシラム　だけ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:20:12" />
+				Time="2011-11-08T12:05:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
