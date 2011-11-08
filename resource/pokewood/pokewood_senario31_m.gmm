@@ -493,12 +493,20 @@
 ひとがたの　親玉　なのか？</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ううっ……
-ハッ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ううっ……
-ハッ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ううっ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ううっ……</language>
+	</row>
+	<row id="pw_event1_enemy_0">
+		<language name="JPN" width="256">ひとがた『ギョッ　ギヨギョ……
+……　……　……▼</language>
+		<language name="JPN_KANJI" width="256">ひとがた『ギョッ　ギヨギョ……
+……　……　……▼</language>
 	</row>
 	<row id="pw_event1_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハッ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハッ！</language>
+	</row>
+	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『いまの　ひとがた……
 はじめから　ぼくの　ポケモンを▽
 まきぞえに　する　つもりで……？</language>
@@ -506,13 +514,13 @@
 初めから　ぼくの　ポケモンを▽
 まきぞえに　する　つもりで……？</language>
 	</row>
-	<row id="pw_event1_enemy_1">
+	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">？？？『ブヒャ！　ブフフフ！
 バヒヒヒ！　ブヒュー！</language>
 		<language name="JPN_KANJI" width="256">？？？『ブヒャ！　ブフフフ！
 バヒヒヒ！　ブヒュー！</language>
 	</row>
-	<row id="pw_event1_hero_2">
+	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（また　あの　こえだ
 しかも　わらっている……？▽
 なかまが　たおれたのに▽
@@ -524,7 +532,7 @@
 喜んでいるのか？　こいつ……▼
 まさしく　怪物　だな……</language>
 	</row>
-	<row id="pw_event1_enemy_2">
+	<row id="pw_event1_enemy_3">
 		<language name="JPN" width="256">かいぶつ『ブルルル……
 ニンゲン……▽
 ワガ　シモベ……▼
@@ -534,7 +542,7 @@
 ワガ　シモベト　ナルベシ……▼
 ブルルン！　ブヒュルル　ブバア</language>
 	</row>
-	<row id="pw_event1_hero_3">
+	<row id="pw_event1_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ことば！？　ウッ……
 あたまに　ちょくせつ　ひびく！ ▼
 テレパシー？　……いや
@@ -548,7 +556,7 @@
 頭が　おかしく　なりそうだ！ 
 こいつ……</language>
 	</row>
-	<row id="pw_event1_enemy_3">
+	<row id="pw_event1_enemy_4">
 		<language name="JPN" width="256">かいぶつ『ブバァーッ！</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブバァーッ！</language>
 	</row>
@@ -750,8 +758,7 @@
 世界は　無　に　帰した……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">かいぶつ『ナントイウ
-シブトサ……▼
+		<language name="JPN" width="256">かいぶつ『ナントイウ　シブトサ……▼
 ワレニ　ヒッテキ　スル
 セイメイリョク　ヲ……？</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ナントイウ

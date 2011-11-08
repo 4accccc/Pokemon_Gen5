@@ -367,7 +367,7 @@
 ハチクほうの　ちからが▽
 あれば　このせかい　など……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……▼
-わがはいの　頭脳と
+我輩の　頭脳と
 ハチク砲の　パワーが▽
 あれば　この世界　など……</language>
 	</row>
@@ -376,7 +376,7 @@
 わがはいは　こんなことでは▽
 たおれぬぞ……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『まだまだ……
-わがはいは　こんなことでは▽
+我輩は　こんなことでは▽
 倒れぬぞ……</language>
 	</row>
 	<row id="pw_turn_enemy_5">
@@ -424,9 +424,9 @@
 パワーを　りようした　マシン！▽
 そのなも　ハチクほう　だっ！　</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
-見たか！　これが　わがはいの▽
+見たか！　これが　我輩の▽
 開発した　バトルシップ！▼
-その名も　ハチクかん！！▼
+その名も　ハチク艦よ！！▼
 そして　ハチクかんの　装備は
 あの　豪華客船　から▽
 盗み出した　ブラックダイアの▽
@@ -480,7 +480,7 @@
 おもいしるが　よいわっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！▼
 おろかなり！　[1:02:ポケモンニックネーム:0]ガール！
-わがはいの　真の　実力！▽
+我輩の　真の　実力！▽
 思い知るが　よいわっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
@@ -503,7 +503,7 @@
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！！
 それでこそ　わがはいの　てき！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！！
-それでこそ　わがはいの　敵！！</language>
+それでこそ　我輩の　敵！！</language>
 	</row>
 	<row id="pw_event0_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
@@ -616,7 +616,7 @@
 おもいしったか！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
 どうだ！　[1:02:ポケモンニックネーム:0]ガール！▼
-わがはいの　恐ろしさを
+我輩の　恐ろしさを
 思い知ったか！！</language>
 	</row>
 	<row id="pw_event2_hero_1">
@@ -735,10 +735,10 @@
 	</row>
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">ハチクマン『なんだと……▼
-きさま……　わがはいに
+きさま……　このわがはいに
 なさけでも　かける　つもりかっ！？</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『何だと……▼
-貴様……　わがはいに
+貴様……　この我輩に
 情けでも　かける　つもりかっ！？</language>
 	</row>
 	<row id="pw_event3_hero_4">
@@ -908,7 +908,7 @@
 ハチクほうを　わがはいに
 むけて　はっしゃ　するのだ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ハチクかん　よ！！▼
-ハチク砲を　わがはいに
+ハチク砲を　我輩に
 向けて　発射　するのだ！！</language>
 	</row>
 	<row id="pw_event4_hero_6">
@@ -925,7 +925,7 @@
 さらばだ！　[1:02:ポケモンニックネーム:0]　ガール！！
 ファ！！　ファファファファファー！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！▼
-……　わがはいは……
+……　我輩は……
 現実と　幻想を▽
 さ迷う　悪の　怪人……▼
 さらばだ！　[1:02:ポケモンニックネーム:0]　ガール！！

@@ -48,10 +48,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なるほどな……
-よさそうじゃないか　そのこ……</Text>
+よさそうじゃないか　そのこ……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:34" />
+				Time="2011-11-07T12:18:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -60,10 +60,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほどな……
-良さそうじゃないか　その子……</Text>
+良さそうじゃないか　その子……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:28:49" />
+				Time="2011-11-07T12:18:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -129,10 +129,10 @@ x31,z54辺りに配置
 		Label="msg_c15_sunglasses_00_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ！　うわさを　すれば！</Text>
+			<Text>あ！　うわさを　すれば！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:08:40" />
+				Time="2011-11-07T12:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -140,10 +140,10 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ！　うわさを　すれば！</Text>
+			<Text>あ！　うわさを　すれば！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:29" />
+				Time="2011-11-07T12:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -169,10 +169,10 @@ x31,z54辺りに配置
 やー　[Name:TrainerName ]さん！
 おまちして　おりましたよ！▼
 ごしょうかい　しましょう！
-こちらは　ウッドウさん　です！</Text>
+こちらは　ウッドウさん　です！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:52:59" />
+				Time="2011-11-07T12:18:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -182,12 +182,12 @@ x31,z54辺りに配置
 			Language="JPN_KANJI">
 			<Text>ウエルカム　トゥー　ポケウッド！！▼
 やー　[Name:TrainerName ]さん！
-おまちして　おりましたよ！▼
-ごしょうかい　しましょう！
-こちらは　ウッドウさん　です！</Text>
+お待ちして　おりましたよ！▼
+ご紹介　しましょう！
+こちらは　ウッドウさん　です！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:29" />
+				Time="2011-11-07T12:18:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -211,13 +211,14 @@ x31,z54辺りに配置
 			Language="JPN">
 			<Text>ハロー！ハロー！　ボクは　ウッドウ！
 キミが　　[Name:TrainerName Idx="0" ]ちゃんか！▼
-さっそく　いろいろ　はなしたいところ　なんだけど
-ちょっと　こちらで　じゅんびが　ひつようでさ！▼
-もうしわけないけど　すこし　あとで
-ボクのところに　きてもらえるかな！</Text>
+さっそく　ポケウッドに　ついて　じっくり
+せつめいしたい　ところ　なんだけどね▽
+ちょっと　じゅんびが　ひつようなの▼
+もうしわけないけどさ　もうすこしだけ
+まって　もらえるかなー？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:35:46" />
+				Time="2011-11-07T12:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -227,13 +228,14 @@ x31,z54辺りに配置
 			Language="JPN_KANJI">
 			<Text>ハロー！ハロー！　ボクは　ウッドウ！
 キミが　　[Name:TrainerName Idx="0" ]ちゃんか！▼
-さっそく　いろいろ　はなしたいところ　なんだけど
-ちょっと　こちらで　じゅんびが　ひつようでさ！▼
-もうしわけないけど　すこし　あとで
-ボクのところに　きてもらえるかな！</Text>
+さっそく　ポケウッドに　ついて　じっくり
+説明したいところ　なんだけどね▽
+ちょっと　準備が　必要なの▼
+申し訳ないけどさ　もう少しだけ
+待って　もらえるかなー？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:35:52" />
+				Time="2011-11-07T12:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -256,10 +258,10 @@ x31,z54辺りに配置
 		<LanguageCell
 			Language="JPN">
 			<Text>では　それまでの　あいだ　わたくしが
-ポケウッドを　あんない　しましょう！</Text>
+ポケウッドを　ごあんない　しましょう！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:16" />
+				Time="2011-11-07T12:25:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -267,11 +269,11 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　それまでの　あいだ　わたくしが
-ポケウッドを　あんない　しましょう！</Text>
+			<Text>では　それまでの　あいだ　私が
+ポケウッドを　ご案内　しましょう！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:29" />
+				Time="2011-11-07T12:26:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -293,15 +295,16 @@ x31,z54辺りに配置
 		Label="msg_c15_sunglasses_00_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウンウン　それがいい！▼
+			<Text>ウンウン！　それ　ナイスね！▼
 えいが！　それは　アメイジング！▼
-その　おどろきと　かんどうを
+その　おどろき　そして　かんどうを
+ていきょうする　このポケウッドを▽
 [Name:TrainerName Idx="0" ]ちゃんに▽
-たいけんして　もらえるはず！▼
+かんじちゃって　もらおう！▼
 じゃあ　また　あとでね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:35:03" />
+				Time="2011-11-07T12:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -309,15 +312,16 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウンウン　それがいい！▼
-えいが！　それは　アメイジング！▼
-その　おどろきと　かんどうを
+			<Text>ウンウン！　それが　ナイスね！▼
+映画！　それは　アメイジング！▼
+その驚き　そして感動　
+提供する　このポケウッドを▽
 [Name:TrainerName Idx="0" ]ちゃんに▽
-たいけんして　もらえるはず！▼
-じゃあ　また　あとでね！</Text>
+感じちゃって　もらおう！▼
+じゃあ　また　後でね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:29" />
+				Time="2011-11-07T12:30:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -339,10 +343,12 @@ x31,z54辺りに配置
 		Label="msg_c15_sunglasses_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃあ　いきましょうか！</Text>
+			<Text>イエス！　ボス！▼
+では　[Name:TrainerName Idx="0" ]さん
+わたくしと　まいりましょう！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:31:50" />
+				Time="2011-11-07T12:29:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -350,10 +356,12 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃあ　いきましょうか！</Text>
+			<Text>イエス！　ボス！▼
+では　[Name:TrainerName Idx="0" ]さん
+私と　参りましょう！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:54:29" />
+				Time="2011-11-07T12:29:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -365,10 +373,11 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_02</Comment>
+メッセージ終了後→連れ歩き開始
+→msg_c15_sunglasses_02</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:37:22" />
+				Time="2011-11-07T12:31:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -428,12 +437,12 @@ x31,z54辺りに配置
 えいが　さくひんの　じょうえいは
 もちろんの　こと▽
 えいがスターの　ファンが▽
-あつまることも　あるんですよ！▼
+あつまることも　ありますね▼
 ちょっと　なかの　ようすを
-のぞいて　みましょう！</Text>
+のぞいて　みましょうか▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T04:42:29" />
+				Time="2011-11-07T12:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -443,14 +452,14 @@ x31,z54辺りに配置
 			Language="JPN_KANJI">
 			<Text>ここは　シアター！▼
 映画作品の　上映は
-もちろんの　こと▽
+もちろんの　ことですが▽
 映画スターの　ファンが▽
-集まることも　あるんですよ！▼
+集まることも　ありますね▼
 ちょっと　中の　様子を
-のぞいて　みましょう！</Text>
+のぞいて　みましょうか▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T04:42:59" />
+				Time="2011-11-07T12:32:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -483,14 +492,14 @@ x31,z54辺りに配置
 		Label="msg_c15_sunglasses_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ！　ここは　さつえいスタジオです！▼
-ここで　ポケウッドの　えいがは
+			<Text>ここが　さつえいスタジオです！▼
+ここから　ポケウッドの　えいがは
 うまれるのです！▼
-ウッドウさんが　まってるはずです！
-さあ　なかへ　どうぞ！</Text>
+さあ　なかへ　どうぞ！
+ウッドウさんが　まってるはずです！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:37:47" />
+				Time="2011-11-07T12:34:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -498,14 +507,14 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ！　ここが　撮影スタジオ！▼
+			<Text>さあ　ここが　撮影スタジオです！▼
 ここで　ポケウッドの　映画は
 生まれるのです！▼
-ウッドウさんが　待ってるはずです！
-さあ！　中へ　どうぞ！</Text>
+さあ　中へ　どうぞ！
+ウッドウさんが　待ってるはずです！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:19:21" />
+				Time="2011-11-07T12:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2421,7 +2430,7 @@ Bis  bald.</Text>
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T09:06:48" />
+				Time="2011-11-07T13:05:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2503,22 +2512,24 @@ Bis  bald.</Text>
 この　だいざ……
 そして　うえにたつ　どうぞうを　みてよ▼
 ……ボクはね　ここを　つくったとき
-ひとつの　ねがいと　ちかいを　たてたんだ▼
-このポケウッドが　せかいじゅうを
-かんどうさせる　エンターテイメントの▽
-でんどうと　なるひ　まで……▼
-そして　そんな　ポケウッドに　ふさわしい
-しんの　スターが　あらわれるまで▽
+ひとつの　ねがいと　ちかいを　たてたの▼
+それは　このポケウッドがね
+せかいじゅうを　アメイジングさせる▽
+エンターテインメントの　でんどうに▽
+せいちょうする　そのひ　まで……▼
+そして　そんなポケウッドに　ふさわしい
+しんのスターが　うまれる　ひまで……▽
 この　だいざの　うえには▽
 なにも　たてずに　おこうと……▼
 ……だが　みてよ▼
-ここには　すでに　どうぞうが　あるだろ……
-つまり　ぼくの　ねがいは　かなったのさ……▼
+すでに　ここには　りっぱな
+どうぞうが　たっているでしょ？▼
+つまり　ボクのねがいは　かなったの……▼
 [Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T09:07:53" />
+				Time="2011-11-07T13:13:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2532,22 +2543,24 @@ Bis  bald.</Text>
 この　台座……
 そして　上に建つ　銅像を　みてよ▼
 ……ボクはね　ここを　つくったとき
-一つの　願いと　誓いを　立てたんだ▼
-このポケウッドが　世界中を
-感動させる　エンターテイメントの▽
-殿堂と　なる日　まで……▼
-そして　そんな　ポケウッドに　相応しい
-真の　スターが　誕生するまで▽
+一つの　願いと　誓いを　立てたの▼
+それは　このポケウッドがね
+世界中を　アメイジングさせる
+エンターテインメントの　殿堂に
+成長する　その日まで……▼
+そして　そんなポケウッドに　相応しい
+真の　スターが　誕生する日まで……▽
 この台座の　上には▽
 何も　建てずに　おこうと……▼
 ……　……だが　みてよ▼
-ここには　すでに　銅像が　あるだろ……
-つまり　僕の　願いは　叶ったのさ……▼
+すでに　ここには　立派な
+銅像が　立っているでしょ？
+つまり　ボクの願いは　叶ったの……▼
 [Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T09:07:45" />
+				Time="2011-11-07T13:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2671,7 +2684,7 @@ Bis  bald.</Text>
 ボクから　ささやかな　プレゼントだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2011-11-07T13:15:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2684,7 +2697,7 @@ Bis  bald.</Text>
 ボクから　ささやかな　プレゼントだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2011-11-07T13:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

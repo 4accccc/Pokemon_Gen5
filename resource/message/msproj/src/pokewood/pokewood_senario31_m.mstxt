@@ -791,27 +791,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ううっ……
-ハッ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ううっ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ううっ……
-ハッ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ううっ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -820,70 +818,58 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとがた『ギョッ　ギヨギョ……
+……　……　……▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひとがた『ギョッ　ギヨギョ……
+……　……　……▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_hero_1"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いまの　ひとがた……
-はじめから　ぼくの　ポケモンを▽
-まきぞえに　する　つもりで……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ハッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『今の　ひとがた……
-初めから　ぼくの　ポケモンを▽
-まきぞえに　する　つもりで……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ハッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_event1_enemy_1"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>？？？『ブヒャ！　ブフフフ！
-バヒヒヒ！　ブヒュー！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>？？？『ブヒャ！　ブフフフ！
-バヒヒヒ！　ブヒュー！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -898,33 +884,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]（また　あの　こえだ
-しかも　わらっている……？▽
-なかまが　たおれたのに▽
-よろこんでいるのか？　こいつ……▼
-まさしく　かいぶつ　だな……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いまの　ひとがた……
+はじめから　ぼくの　ポケモンを▽
+まきぞえに　する　つもりで……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]（また　あの　声だ
-しかも　笑っている……？▽
-仲間が　倒れたのに▽
-喜んでいるのか？　こいつ……▼
-まさしく　怪物　だな……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『今の　ひとがた……
+初めから　ぼくの　ポケモンを▽
+まきぞえに　する　つもりで……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -939,31 +921,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ブルルル……
-ニンゲン……▽
-ワガ　シモベ……▼
-ブルルン！　ブヒュルル　ブバア</Text>
+			<Text>？？？『ブヒャ！　ブフフフ！
+バヒヒヒ！　ブヒュー！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブルルル……
-ニンゲンドモ……▽
-ワガ　シモベト　ナルベシ……▼
-ブルルン！　ブヒュルル　ブバア</Text>
+			<Text>？？？『ブヒャ！　ブフフフ！
+バヒヒヒ！　ブヒュー！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -978,35 +956,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ことば！？　ウッ……
-あたまに　ちょくせつ　ひびく！ ▼
-テレパシー？　……いや
-もっと　じゃあくな　ちから……！▼ 
-あたまが　おかしく　なりそうだ！ 
-こいつ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]（また　あの　こえだ
+しかも　わらっている……？▽
+なかまが　たおれたのに▽
+よろこんでいるのか？　こいつ……▼
+まさしく　かいぶつ　だな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『言葉！？　ウッ……
-頭に　直接　ひびく！ ▼
-テレパシー？　……いや
-もっと　邪悪な　力……！▼ 
-頭が　おかしく　なりそうだ！ 
-こいつ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]（また　あの　声だ
+しかも　笑っている……？▽
+仲間が　倒れたのに▽
+喜んでいるのか？　こいつ……▼
+まさしく　怪物　だな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1021,25 +997,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ブバァーッ！</Text>
+			<Text>かいぶつ『ブルルル……
+ニンゲン……▽
+ワガ　シモベ……▼
+ブルルン！　ブヒュルル　ブバア</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブバァーッ！</Text>
+			<Text>かいぶつ『ブルルル……
+ニンゲンドモ……▽
+ワガ　シモベト　ナルベシ……▼
+ブルルン！　ブヒュルル　ブバア</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1048,6 +1030,66 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ことば！？　ウッ……
+あたまに　ちょくせつ　ひびく！ ▼
+テレパシー？　……いや
+もっと　じゃあくな　ちから……！▼ 
+あたまが　おかしく　なりそうだ！ 
+こいつ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『言葉！？　ウッ……
+頭に　直接　ひびく！ ▼
+テレパシー？　……いや
+もっと　邪悪な　力……！▼ 
+頭が　おかしく　なりそうだ！ 
+こいつ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいぶつ『ブバァーッ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かいぶつ『ブバァーッ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event1_react_hero_0"
@@ -1918,17 +1960,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ナントイウ
-シブトサ……▼
+			<Text>かいぶつ『ナントイウ　シブトサ……▼
 ワレニ　ヒッテキ　スル
 セイメイリョク　ヲ……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T10:19:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

@@ -330,36 +330,36 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『わがはいの　ポケモンを
-たったの　いちげき　だと……▽
+たったの　一撃だと……▽
 やるな！　[Name:PokemonNickname Idx="0" ]ガール！▼
 だが　しかし！　だが　しかし！▼
-わがはいの　おうぎで
+わがはいの　あくのおうぎで
 きさまを　ひざまづかせて　やろう！▼
 さあ！　かくごは　よいか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『わがはいの　ポケモンを
-たったの　いちげきで……▽
+たったの　一撃で……▽
 やるな！　[Name:PokemonNickname Idx="0" ]ガール！▼
 だが　しかし！　だが　しかし！▼
-わがはいの　奥義で
+わがはいの　悪の奥義で
 貴様を　ひざまづかせて　やろう！▼
 さあ！　覚悟は　よいか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -494,16 +494,16 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！
 情けないぞ！　[Name:PokemonNickname Idx="0" ]ガール！▼
-貴様のような　やつに　わがはいの
+貴様のような　やつに　我輩の
 奥義を　使うまでも　ない！▼
 この　技でも　くらうが　いい！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -664,16 +664,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グムムム……▼
-わがはいの　奥義を
-ものともせず　しかも▽
-いちげきで　しずめるとは……</Text>
+我輩の　奥義を
+物ともせず　しかも▽
+一撃で　しずめるとは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:58" />
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:58" />
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -924,16 +924,16 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！
 おろかなり！　[Name:PokemonNickname Idx="0" ]ガール！▼
-わがはいを　倒す　最大の
+我輩を　倒す　最大の
 チャンスを　逃しおって！！▼
 周りを　見てみるが　よいわっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1003,17 +1003,17 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファファファ！！
 大衆の　注目は▽
-わがはいに　集まって　おる！▼
+我輩に　集まっておる！▼
 貴様の　ような　ヒロインより
 世の中は　怪人を▽
 望んで　おるのだっ！　</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1133,16 +1133,16 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グムムム……▼
 こんな　弱気な　小娘に
-わがはいが　敗れるとは……▼
+我輩が　敗れるとは……▼
 この　くつじょく……
 いずれ　晴らしてやるぞ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T03:23:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
