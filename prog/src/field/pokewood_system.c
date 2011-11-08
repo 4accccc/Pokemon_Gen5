@@ -306,11 +306,14 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
   // 指定シナリオのプレイ済みフラグを立てる
   POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, scenario_no );  // シナリオ撮影済みフラグを立てる
 
-  // 成功END・ストレンジENDだったらセーブデータに反映させる
+  // 映画のエンディング３パターン（成功・失敗・ストレンジ）を
+  // シナリオ毎のセーブデータに反映させる
   if(result==BTL_POKEWOOD_RESULT_SUCCESS){
     POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_SUCCESS, scenario_no );
   }else if(result==BTL_POKEWOOD_RESULT_STRANGE){
     POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_STRANGE, scenario_no );
+  }else if(result==BTL_POKEWOOD_RESULT_BAD){
+    POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_BAD,     scenario_no );
   }
 }
 

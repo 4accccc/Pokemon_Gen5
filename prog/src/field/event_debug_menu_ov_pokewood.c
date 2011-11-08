@@ -288,11 +288,12 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
     int i;
     POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
     for(i=0;i<40;i++){
-      OS_Printf("p senario%02d open=%d, played=%d, success=%d, strange=%d, announced=%d\n", i ,
+      OS_Printf("p senario%02d open=%d, played=%d, success=%d, strange=%d, bad=%d, announced=%d\n", i ,
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_OPEN, i ),     // シナリオオープンフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_PLAYED, i ),   // シナリオ撮影済みフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_SUCCESS, i ),  // シナリオ成功終了済みフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_STRANGE, i ),   // シナリオストレンジ終了済みフラグ
+                POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_BAD, i ),   // シナリオストレンジ終了済みフラグ
                 POKEWOOD_SAVEDATA_GetPokewoodFlag( ps,PWSV_TYPE_SENARIO_ANNOUNCED, i ) // シナリオオープン告知済みフラグ
                 );
     }
@@ -743,7 +744,7 @@ static BOOL debugMenu_scenario_full_open( POKEWOOD_FUNC_WORK *wk )
 {
   int i;
   for(i=0;i<40;i++){
-    _open_flag( wk, i );
+    _set_scenario_done( wk, i );
   }
   return FALSE;
 }
