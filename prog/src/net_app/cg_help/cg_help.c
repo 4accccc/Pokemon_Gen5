@@ -153,7 +153,7 @@ typedef struct
 
 typedef struct _CG_HELP_ICON_ANM{
   u16  anm_no:8;
-  u16  visible:1;
+  u16  res_idx:1;
 }CG_HELP_ICON_ANM;
 
 //======================================================================
@@ -468,12 +468,6 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
     work->cellResIdx[CHCR_CGEAR_ANM2] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
           NARC_c_gear_sw_c_gear_btn_m1_ncer , NARC_c_gear_sw_c_gear_btn_m1_nanr, work->heapId  );
 
-#if 0
-    //通信マーク用背景キャラ
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_c_gear_sw_c_gear_ncgr ,
-                      CG_HELP_FRAME_ICON , 0 , 0, FALSE , work->heapId );
-    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_sw_c_gear_m_nclr, &work->commIconPlt , work->heapId );
-#endif
     GFL_ARC_CloseDataHandle( arcHandle );
   }
   //OBJ初期化
@@ -503,8 +497,6 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
 static void CG_HELP_ReleaseResource( CG_HELP_WORK *work )
 {
   int i;
-
-//  GFL_HEAP_FreeMemory( work->commIconPltRes );
 
   for(i = 0;i < CG_HELP_ICON_MAX;i++){
     GFL_CLACT_WK_Remove( work->clwkIcon[i] );
@@ -691,6 +683,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 {
   int i;
   const CG_HELP_ICON_ANM* p_anm;
+#if 0  
   static const CG_HELP_ICON_ANM anmArr[ICON_TYPE_MAX][CG_HELP_ICON_MAX] = 
   {
     {
@@ -722,6 +715,19 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
       { 0, 0 },
     }
   };
+#else
+  static const CG_HELP_ICON_ANM anmArr[ICON_TYPE_MAX] = 
+  {
+    { NANR_c_gear_btn_m1_IR,  CG_HELP_ICON_COMM },
+    { NANR_c_gear_btn_m1_WiFi,  CG_HELP_ICON_COMM },
+    { NANR_c_gear_btn_m1_Wireless, CG_HELP_ICON_COMM },
+    { NANR_c_gear_obj_beacon_sample, CG_HELP_ICON_NORMAL },
+    { NANR_c_gear_obj_search, CG_HELP_ICON_NORMAL },
+    { NANR_c_gear_obj_conficon, CG_HELP_ICON_NORMAL },
+    { NANR_c_gear_obj_powicon, CG_HELP_ICON_NORMAL },
+  };
+  
+#endif
   static const iconType[CG_HELP_PAGE_MAX] = 
   {
     ICON_TYPE_IR,
@@ -741,6 +747,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
     ICON_TYPE_ONOFF,
   };
 
+#if 0
   for( i = 0;i < CG_HELP_ICON_MAX;i++){
     p_anm = &anmArr[ iconType[page] ][i];
     GFL_CLACT_WK_SetAnmSeq( work->clwkIcon[i] , p_anm->anm_no );
@@ -748,64 +755,11 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 //    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon[i] , p_anm->auto_anm );
 //    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon[i] , p_anm->anm_idx );
   }
-
-#if 0
-  //BMP設定
-  if( page <= CG_HELP_COMM_PAGE_END )
-  {
-    static const colArr[CG_HELP_COMM_PAGE_END+1] = {1,1,1,1,1,1,1,1};
-    static const posArr[CG_HELP_COMM_PAGE_END+1] = {0x0c,0x14,0x14,0x10,0x10,0x10,0x10,0x10};
-    void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(colArr[page]));
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
-                                        CG_HELP_PLT_MAIN_ICONBASE * 32 ,
-                                        transBase , 32 );
-    {
-      u8 x,y;
-      u16 *transBuf = GFL_HEAP_AllocClearMemory( work->heapId , 2*4*4 );
-      for( y=0;y<4;y++ )
-      {
-        for( x=0;x<4;x++ )
-        {
-          transBuf[y*4+x] = posArr[page]+x + 0x20*y + (CG_HELP_PLT_MAIN_ICONBASE<<12);
-        }
-      }
-      
-      GFL_BG_WriteScreen( CG_HELP_FRAME_ICON , transBuf , 2 , 4 , 4 , 4 );
-      GFL_HEAP_FreeMemory( transBuf );
-    }
-  }
-  else
-  {
-    u16 *transBuf = GFL_HEAP_AllocClearMemory( work->heapId , 2*4*4 );
-    GFL_BG_WriteScreen( CG_HELP_FRAME_ICON , transBuf , 2 , 4 , 4 , 4 );
-    GFL_HEAP_FreeMemory( transBuf );
-  }
-  GFL_BG_LoadScreenReq(CG_HELP_FRAME_ICON);
-#endif
-#if 0
-  //BMP設定座標設定
-  {
-    GFL_CLACTPOS pos = {4*8,6*8};
-    GFL_CLACT_WK_SetPos( work->clwkIcon , &pos , CLSYS_DRAW_SUB );
-  }
-  //特殊なセル設定
-  if( page == CG_HELP_PAGE_CUSTOM )
-  {
-    //設定
-    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
-    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 1 );
-  }
-  else
-  if( page == CG_HELP_PAGE_HELP || page == CG_HELP_PAGE_HELP2 )
-  {
-    //HELP
-    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
-    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 0 );
-  }
-  else
-  {
-    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , TRUE );
-  }
+#else
+  p_anm = &anmArr[ iconType[page] ];
+  GFL_CLACT_WK_SetAnmSeq( work->clwkIcon[p_anm->res_idx] , p_anm->anm_no );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkIcon[p_anm->res_idx] , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkIcon[p_anm->res_idx^1] , FALSE );
 #endif
 }
 

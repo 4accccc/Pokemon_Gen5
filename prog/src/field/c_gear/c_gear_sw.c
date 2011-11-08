@@ -426,13 +426,10 @@ enum{
   //↑Ring1に属してる
   ACT_IR,
   ACT_IR_RING,
-  ACT_IR_STR,
   ACT_WIRELESS,
   ACT_WIRELESS_RING,
-  ACT_WIRELESS_STR,
   ACT_WIFI,
   ACT_WIFI_RING,
-  ACT_WIFI_STR,
 
   ACT_DEF_DRAW_MAX, //デフォルト描画するものMax
 
@@ -443,7 +440,7 @@ enum{
 #define ACT_TIME_MAX    (ACT_T_MIN2-ACT_T_HOUR1+1)
 #define ACT_NORMAL_MAX  (ACT_MAX-ACT_AMPM) //初期化時だけ使用してる
 #define ACT_COMMON_MAX  ( ACT_POWER ) //電源Offでも表示するOBJIDのmax
-#define ACT_PANEL_SET_NUM (3)
+#define ACT_PANEL_SET_NUM (2)
 #define ACT_R4_OBJ_START  (ACT_T_HOUR1) //Ring4に属してる
 #define ACT_R4_OBJ_END    (ACT_S_RADAR)
 
@@ -470,9 +467,6 @@ enum{
  ACTANM_FMISSION_OFF,
  ACTANM_CONNECT_INFO,
  ACTANM_LOGO_ALL,
- ACTANM_S_IR,
- ACTANM_S_WIRELESS,
- ACTANM_S_WIFI,
  ACTANM_RING_IR,
  ACTANM_RING_WIRELESS,
  ACTANM_RING_WIFI,
@@ -2674,7 +2668,6 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_RING );
     GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], FALSE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], TRUE );
     break;
   case PANEL_VIEW_CUSTOM:
     _gearObjSetAnmSeq( pWork->cellCursor[act+0], id+ANM_OFS_PANEL_NORMAL );
@@ -2683,7 +2676,6 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_RING );
     GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], TRUE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], TRUE );
     break;
   case PANEL_VIEW_DRUG:
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+0], FALSE );
@@ -2691,7 +2683,6 @@ static void _gearObjSetPanelView(  C_GEAR_WORK* pWork, CGEAR_PANEL_ID id,  PANEL
     GFL_CLACT_WK_SetSoftPri( pWork->cellCursor[act+1], ACT_SPRI_PANEL_DRUG );
     GFL_CLACT_WK_SetSRTAnimeFlag( pWork->cellCursor[act+1], TRUE ); //SRTアニメ反映
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+1], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[act+2], FALSE );
     break;
   }
 }
@@ -2810,13 +2801,10 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       
       { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
       { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_IR,          POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
       { ACTANM_RING_WIRELESS, POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_WIRELESS,    POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       { ACTANM_WIFI,          POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
       { ACTANM_RING_WIFI,     POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
-      { ACTANM_S_WIFI,        POS_WIFI_DEF_X, POS_WIFI_DEF_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
       
       { ACTANM_E_IR,      POS_IR_DEF_X, POS_IR_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_EFFECT, _CLACT_RES_COMMON },
     };
