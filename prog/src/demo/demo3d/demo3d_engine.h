@@ -103,3 +103,20 @@ extern fx32 DEMO3D_ENGINE_GetMaxFrame( const DEMO3D_ENGINE_WORK* wk );
 //-----------------------------------------------------------------------------
 extern void DEMO3D_ENGINE_SetEndResult( DEMO3D_ENGINE_WORK* wk, DEMO3D_RESULT end_result );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3Dグラフィック カメラパラメータ再設定
+ *
+ *	@param	DEMO3D_ENGINE_WORK* wk  ワーク
+ *
+ *  @param  wk
+ *  @param  fovy_sin    
+ *  @param  fovy_cos
+ *  @param  main_ofs    main view offset
+ *  @param  sub_ofs     sub view offset
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void Demo3D_ENGINE_CameraParamMake( DEMO3D_ENGINE_WORK* wk, fx32 fovy_sin, fx32 fovy_cos, fx32 main_ofs, fx32 sub_ofs );
+

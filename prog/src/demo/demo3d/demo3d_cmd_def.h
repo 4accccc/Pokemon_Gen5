@@ -228,7 +228,21 @@ typedef enum
 //======================================================
   DEMO3D_CMD_TYPE_MOTIONBL_END,
 
-  
+//以下SWAN追加
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Fovy再設定コマンド
+ *
+ *	@param	param[0] Fovy Sin 
+ *	@param	param[1] Fovy Cos
+ *	@param	param[2] Main View Offset (2画面表示でなければ無効)
+ *	@param	param[3] Sub View Offset (2画面表示でなければ無効)
+ *
+ *	FovyのSin,Cos と 両画面の場合はMain/Sub画面の描画オフセットも再設定します
+ */
+//-----------------------------------------------------------------------------
+  DEMO3D_CMD_TYPE_FOVY_SET,
+
   DEMO3D_CMD_TYPE_END, ///< コマンド終了
   DEMO3D_CMD_TYPE_MAX,
 } DEMO3D_CMD_TYPE;

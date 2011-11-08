@@ -62,6 +62,7 @@ static void DEMOCMD_TalkWinReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int
 static void DEMOCMD_ScrDrawReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_Start(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_FovySet(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 
 static int sub_ConvFrame( DEMO3D_CMD_WORK* wk, int frame );
 
@@ -90,6 +91,8 @@ void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])() =
   DEMOCMD_ScrDrawReq,
   DEMOCMD_MotionBL_Start,
   DEMOCMD_MotionBL_End,
+  //swan追加
+  DEMOCMD_FovySet,
   NULL, // end
 };
 
@@ -1040,6 +1043,23 @@ static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, i
 {
   DEMO3D_MotionBlExit( wk->mb );
   wk->mb = NULL;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Fovy再設定コマンド
+ *
+ *	@param	param[0] Fovy Sin 
+ *	@param	param[1] Fovy Cos
+ *	@param	param[2] Main View Offset (2画面表示でなければ無効)
+ *	@param	param[3] Sub View Offset (2画面表示でなければ無効)
+ *
+ *	FovyのSin,Cos と 両画面の場合はMain/Sub画面の描画オフセットも再設定します
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_FovySet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  Demo3D_ENGINE_CameraParamMake( core, (fx32)param[0], (fx32)param[1], (fx32)param[2], (fx32)param[3] );
 }
 
 //=============================================================================

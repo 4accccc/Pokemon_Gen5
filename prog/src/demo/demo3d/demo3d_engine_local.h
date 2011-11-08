@@ -23,6 +23,10 @@ struct _DEMO3D_ENGINE_WORK {
   ICA_ANIME*    ica_anime;
   GFL_G3D_UTIL*   g3d_util;
   GFL_G3D_CAMERA* camera;
+  fx32  fovy_sin;
+  fx32  fovy_cos;
+  fx32  dview_main_ofs;
+  fx32  dview_sub_ofs;
   fx32  def_top;
   fx32  def_bottom;
   u32   scene_unit_max;

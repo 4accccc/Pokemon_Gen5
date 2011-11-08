@@ -123,7 +123,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   // メンバ初期化
   wk->graphic       = graphic;
   wk->demo_id       = param->demo_id;
-  
+  wk->heapID = heapID;
+
   //環境パラメータセット
   wk->env.demo_id = wk->demo_id;
   wk->env.scene_id = param->scene_id;
@@ -140,11 +141,18 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   IWASAWA_Printf("start_frame=%d\n",wk->env.start_frame);
 
   // コンバータデータからカメラ生成
+  Demo3D_ENGINE_CameraParamMake( wk, wk->scene->fovy_sin, wk->scene->fovy_cos, wk->scene->dview_main_ofs, wk->scene->dview_sub_ofs );
+#if 0
   {
     fx32 fovySin, fovyCos;
-    
-    fovySin = FX_SinIdx( (wk->scene->fovy_sin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
-    fovyCos = FX_CosIdx( (wk->scene->fovy_cos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+   
+    wk->fovy_sin = wk->scene->fovy_sin;
+    wk->fovy_cos = wk->scene->fovy_cos;
+    wk->dview_main_ofs = wk->scene->dview_main_ofs;
+    wk->dview_sub_ofs = wk->scene->dview_sub_ofs;
+
+    fovySin = FX_SinIdx( (wk->fovy_sin>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+    fovyCos = FX_CosIdx( (wk->fovy_cos>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
 
     wk->camera = GFL_G3D_CAMERA_CreateFrustumByPersPrmW( 
                   &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
@@ -155,6 +163,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
     GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_bottom );
 
   }
+#endif
   set_SceneParam( wk, param, wk->scene, heapID );
   
   // アニメーションスピードを取得
@@ -456,12 +465,12 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
   // 上画面
   if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE )
   {
-    top = bottom = wk->scene->dview_main_ofs;
+    top = bottom = wk->dview_main_ofs;
   }
   // 下画面
   else
   {
-    top = bottom = wk->scene->dview_sub_ofs;
+    top = bottom = wk->dview_sub_ofs;
   }
 #ifdef PM_DEBUG
   {
@@ -492,9 +501,9 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
       OS_Printf("offset def_top = %f, def_bottom = %f\n",
           FX_FX32_TO_F32(wk->def_top), FX_FX32_TO_F32(wk->def_bottom));
       OS_Printf("offset_main view = %f, d = %d o = %d\n",
-          FX_FX32_TO_F32(wk->scene->dview_main_ofs+wk->def_top+ofs_m),(wk->scene->dview_main_ofs+ofs_m),ofs_m );
+          FX_FX32_TO_F32(wk->dview_main_ofs+wk->def_top+ofs_m),(wk->dview_main_ofs+ofs_m),ofs_m );
       OS_Printf("offset_sub view = %f, d = %d o= %d\n",
-          FX_FX32_TO_F32(wk->scene->dview_sub_ofs+wk->def_top+ofs_s),(wk->scene->dview_sub_ofs+ofs_s),ofs_s );
+          FX_FX32_TO_F32(wk->dview_sub_ofs+wk->def_top+ofs_s),(wk->dview_sub_ofs+ofs_s),ofs_s );
     }
     if( GFL_G3D_DOUBLE3D_GetFlip() == FALSE ){
       offset = ofs_m;
@@ -658,6 +667,55 @@ void DEMO3D_ENGINE_SetEndResult( DEMO3D_ENGINE_WORK* wk, DEMO3D_RESULT end_resul
   wk->end_result = end_result;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  3Dグラフィック カメラパラメータ再設定
+ *
+ *	@param	DEMO3D_ENGINE_WORK* wk  ワーク
+ *
+ *  @param  wk
+ *  @param  fovy_sin    
+ *  @param  fovy_cos
+ *  @param  main_ofs    main view offset
+ *  @param  sub_ofs     sub view offset
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void Demo3D_ENGINE_CameraParamMake( DEMO3D_ENGINE_WORK* wk, fx32 fovy_sin, fx32 fovy_cos, fx32 main_ofs, fx32 sub_ofs )
+{ 
+  fx32 fovySin, fovyCos;
+   
+  wk->fovy_sin = fovy_sin;
+  wk->fovy_cos = fovy_cos;
+  wk->dview_main_ofs = main_ofs;
+  wk->dview_sub_ofs = sub_ofs;
+  
+  //カメラを一旦破棄
+  if( wk->camera != NULL ){
+    FrustCamera_Delete( wk->camera );
+  }
+ 
+  fovySin = FX_SinIdx( FX_DEG_TO_IDX( FX_Div(wk->fovy_sin, FX32_CONST(2)) ) );
+  fovyCos = FX_CosIdx( FX_DEG_TO_IDX( FX_Div(wk->fovy_cos, FX32_CONST(2)) ) );
+#if 0
+  {
+    fx64c fsin_c = FX_SinFx64c(FX_DEG_TO_RAD(FX_Div(wk->fovy_sin, FX32_CONST(2))));
+    fx64c fcos_c = FX_CosFx64c(FX_DEG_TO_RAD(FX_Div(wk->fovy_cos, FX32_CONST(2))));
+    fovySin = fsin_c>>(32-12);
+    fovyCos = fcos_c>>(32-12);
+  }
+#endif
+  wk->camera = GFL_G3D_CAMERA_CreateFrustumByPersPrmW( 
+                  &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
+                  fovySin, fovyCos, defaultCameraAspect, wk->scene->near, wk->scene->far, wk->scene->scale_w, wk->heapID );
+  
+  // デフォルトのtop/buttomを再取得
+  GFL_G3D_CAMERA_GetTop( wk->camera, &wk->def_top );
+  GFL_G3D_CAMERA_GetBottom( wk->camera, &wk->def_bottom );
+  
+  GFL_G3D_CAMERA_Switching( wk->camera );
+}
 
 //-----------------------------------------------------------------------------
 /**

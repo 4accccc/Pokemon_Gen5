@@ -17,6 +17,7 @@ $h_pm_version = {"ver_all"=>"0xFF","ver_b2"=>"VERSION_B2","ver_w2"=>"VERSION_W2"
 #プレフィックス・サフィックス定義
 #==============================================
 $psfix_fx16 = $_psfix_prm.new( "FX16_CONST( ", " )")
+$psfix_fx32 = $_psfix_prm.new( "FX32_CONST( ", " )")
 $psfix_msg_arc = $_psfix_prm.new( "NARC_message_", "_dat")
 $psfix_2dgra_ncl = $_psfix_prm.new( "NARC_demo3d_2dgra_", "_NCLR")
 $psfix_2dgra_ncg = $_psfix_prm.new( "NARC_demo3d_2dgra_", "_lz_NCGR")
@@ -122,6 +123,12 @@ $prm_motionbl_start = [
   $_cmd_prm.new( 0, 31, nil, nil ), #新しくブレンドするα
   $_cmd_prm.new( 0, 31, nil, nil ), #バッファリングされているα
 ] 
+$prm_fovy_set = [
+  $_cmd_prm.new( 1.0, 179, nil, $psfix_fx32 ), #Fovy Sin
+  $_cmd_prm.new( 1.0, 179, nil, $psfix_fx32 ), #Fovy Cos
+  $_cmd_prm.new( -1024, 1024, nil, nil ), #Top view offset
+  $_cmd_prm.new( -1024, 1024, nil, nil ), #Top view offset
+]
 
 $cmd_tbl = [
   CDemo3DCmd::new( "SE_PLAY", $prm_se_play),
@@ -141,6 +148,7 @@ $cmd_tbl = [
   CDemo3DCmd::new( "SCR_DRAW_REQ", $prm_scr_draw_req),
   CDemo3DCmd::new( "MOTIONBL_START", $prm_motionbl_start),
   CDemo3DCmd::new( "MOTIONBL_END", nil ),
+  CDemo3DCmd::new( "FOVY_SET", $prm_fovy_set ),
   CDemo3DCmd::new( "END", nil),
 ]
 
