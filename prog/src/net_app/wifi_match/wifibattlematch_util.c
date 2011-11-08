@@ -199,6 +199,24 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
       }
     }
     break;
+
+  case WBM_TEXT_TYPE_STREAM_WAIT:
+    if( p_wk->p_stream )
+    { 
+      BOOL is_end = FALSE;
+
+      if( p_wk->p_keycursor )
+      { 
+        APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+        is_end  = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->common, p_wk->p_stream );
+      }
+
+      if( is_end )
+      { 
+        p_wk->is_end_print  = TRUE;
+      }
+    }
+    break;
   }
 
   GFL_TCBL_Main( p_wk->p_tcbl );
@@ -234,6 +252,20 @@ void WBM_TEXT_PrintBuf( WBM_TEXT_WORK* p_wk, const STRBUF *cp_str, WBM_TEXT_TYPE
   GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_str );
 
   WBM_TEXT_PrintInner( p_wk, type );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  待機アイコンセット
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void WBM_TEXT_SetWaitIcon( WBM_TEXT_WORK* p_wk )
+{
+  if( p_wk->p_keycursor == NULL )
+  {
+    p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, p_wk->heapID );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -310,6 +342,15 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
     p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
         p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
     p_wk->print_update  = WBM_TEXT_TYPE_STREAM;
+    break;
+
+  case WBM_TEXT_TYPE_STREAM_WAIT:
+    GF_ASSERT_HEAVY( p_wk->p_keycursor == NULL );
+
+    APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
+        p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
+    p_wk->print_update  = WBM_TEXT_TYPE_STREAM_WAIT;
     break;
   }
 

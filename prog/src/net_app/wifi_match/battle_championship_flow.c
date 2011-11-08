@@ -22,6 +22,9 @@
 #include "sound/pm_sndsys.h"
 #include "system/net_err.h"
 #include "system/ds_system.h"
+#include "savedata/battlematch_savedata.h"
+#include "savedata/bsubway_savedata.h"
+#include "savedata/record.h"
 
 //プロセス
 #include "net_app/wifibattlematch.h"
@@ -88,6 +91,11 @@ struct _BATTLE_CHAMPIONSHIP_FLOW_WORK
   //ヒープID
   HEAPID                          heapID;
 
+  WORDSET                         *p_wordset;
+
+  STRBUF                          *p_strbuf;
+
+
   //デジタル選手証フロー
   DIGITALCARD_CHECK_WORK          *p_flow;
 };
@@ -113,6 +121,8 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 static void SEQFUNC_LiveInfo( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_CheckPowerOff( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_ReturnWifiCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	便利関数
@@ -176,6 +186,8 @@ BATTLE_CHAMPIONSHIP_FLOW_WORK *BATTLE_CHAMPIONSHIP_FLOW_Init( const BATTLE_CHAMP
   GFL_STD_MemClear( p_wk, sizeof(BATTLE_CHAMPIONSHIP_FLOW_WORK) );
   p_wk->param   = *cp_param;
   p_wk->heapID  = heapID;
+  p_wk->p_wordset = WORDSET_Create( heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
 
   p_wk->p_err_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heapID );
 
@@ -197,6 +209,8 @@ void BATTLE_CHAMPIONSHIP_FLOW_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
   WBM_SEQ_Exit( p_wk->p_seq);
 
   GFL_MSG_Delete( p_wk->p_err_msg );
+  WORDSET_Delete( p_wk->p_wordset );
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -255,7 +269,7 @@ static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
     break;
   case BATTLE_CHAMPIONSHIP_FLOW_MODE_WIFIMENU:   //WIFIメニューから開始
-    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_ReturnWifiCup );
     break;
   case BATTLE_CHAMPIONSHIP_FLOW_MODE_LIVEMENU:   //LIVEメニューから開始
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveMenu );
@@ -534,9 +548,7 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           }
           else
           { 
-            //接続できるとき
-            BattleRec_DataClear();
-            UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_WIFICUP );
+            WBM_SEQ_SetNext( p_seqwk, SEQFUNC_CheckPowerOff );
           }
 #ifdef DEBUGWIN_USE
     DEBUGWIN_WIFI_Exit( p_wk );
@@ -956,6 +968,271 @@ static void SEQFUNC_EnableWireless( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	電源切断をしたとき
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_CheckPowerOff( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  { 
+    SEQ_CHECK,
+    SEQ_START_POWEROFF,
+
+    SEQ_START_DIRTY_MSG,
+    SEQ_WAIT_DIRTY_MSG,
+
+    SEQ_START_DIRTY_MSG_NOSAVE,
+    SEQ_WAIT_DIRTY_MSG_NOSAVE,
+
+    SEQ_START_SAVE_MSG,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+
+    SEQ_OK_END,
+    SEQ_NG_END,
+  };
+
+  BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk = p_wk_adrs;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->param.p_gamedata);
+  BATTLEMATCH_DATA * p_btlmatch = SaveData_GetBattleMatch(p_sv);
+
+
+  switch( *p_seq )
+  {
+  case SEQ_CHECK:
+    //swan 切断チェック
+    if( BATTLEMATCH_IsPowerOff( p_btlmatch ) )
+    {
+      if( BATTLEMATCH_IsSameDS( p_btlmatch ) )
+      {
+        if( BATTLEMATCH_IsEndPenaltyTime( p_btlmatch) )
+        {
+          RECORD_Inc( SaveData_GetRecord(p_sv), RECID_RNDMATCH_POWEROFF );
+          *p_seq  = SEQ_START_POWEROFF;
+        }
+        else
+        {
+          //ペナルティ時間内
+          *p_seq  = SEQ_START_DIRTY_MSG_NOSAVE;
+        }
+      }
+      else
+      {
+        //違うDSなので、あらたにセーブ
+        BATTLEMATCH_StartPowerOffCheck( p_btlmatch );
+        *p_seq = SEQ_START_DIRTY_MSG;
+      }
+    }
+    else
+    {
+      *p_seq = SEQ_START_POWEROFF;
+    }
+    break;
+
+  case SEQ_START_POWEROFF:
+    BATTLEMATCH_StartPowerOffCheck( p_btlmatch );
+    WBM_SEQ_SetReservSeq( p_seqwk,SEQ_OK_END );
+    *p_seq = SEQ_START_SAVE_MSG;
+    break;
+
+  case SEQ_START_DIRTY_MSG:
+    UTIL_TEXT_Print( p_wk, BC_STR_08 );
+    *p_seq = SEQ_WAIT_DIRTY_MSG;
+    break;
+  case SEQ_WAIT_DIRTY_MSG:
+    if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
+    {
+      WBM_SEQ_SetReservSeq( p_seqwk,SEQ_NG_END );
+      *p_seq = SEQ_START_SAVE_MSG;
+    }
+    break;
+
+  case SEQ_START_DIRTY_MSG_NOSAVE:
+    UTIL_TEXT_Print( p_wk, BC_STR_08 );
+    *p_seq = SEQ_WAIT_DIRTY_MSG_NOSAVE;
+    break;
+
+  case SEQ_WAIT_DIRTY_MSG_NOSAVE:
+    if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_NG_END;
+    }
+    break;
+
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->param.p_text, p_wk->param.p_msg, BC_STR_09, WBM_TEXT_TYPE_WAIT );
+    *p_seq = SEQ_START_SAVE;
+    break;
+  case SEQ_START_SAVE:
+    GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
+    *p_seq = SEQ_WAIT_SAVE;
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT result = GAMEDATA_SaveAsyncMain(p_wk->param.p_gamedata);
+      switch(result){
+      case SAVE_RESULT_OK:
+      case SAVE_RESULT_NG:
+        WBM_SEQ_NextReservSeq(p_seqwk);
+        break;
+      }
+    }
+    break;
+  
+  case SEQ_OK_END:
+    //接続できるとき
+    BattleRec_DataClear();
+    UTIL_FLOW_End( p_wk, BATTLE_CHAMPIONSHIP_FLOW_RET_WIFICUP );
+    break;
+  case SEQ_NG_END:
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WiFiCupからの戻り
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_ReturnWifiCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  { 
+    SEQ_CHECK,
+
+    SEQ_START_BP_MSG_01,
+    SEQ_WAIT_BP_MSG_01,
+    SEQ_START_BP_MSG_02,
+    SEQ_CHECK_BP_MSG_ICON_02,
+    SEQ_WAIT_BP_MSG_02,
+
+    SEQ_START_SAVE_MSG,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+
+    SEQ_END,
+  };
+
+  BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk = p_wk_adrs;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->param.p_gamedata);
+  BATTLEMATCH_DATA * p_btlmatch = SaveData_GetBattleMatch(p_sv);
+
+  switch( *p_seq )
+  {
+  case SEQ_CHECK:
+
+#ifdef PM_DEBUG
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      GAMEDATA_AddRndMaptchBp(p_wk->param.p_gamedata);
+    }
+#endif
+
+    BATTLEMATCH_EndPowerOffCheck( p_btlmatch );
+    if( GAMEDATA_GetRndMaptchBp(p_wk->param.p_gamedata) == 0  )
+    {
+      *p_seq = SEQ_START_SAVE_MSG;
+    }
+    else
+    {
+      *p_seq = SEQ_START_BP_MSG_01;
+    }
+    break;
+
+
+  case SEQ_START_BP_MSG_01:
+    WBM_TEXT_Print( p_wk->param.p_text, p_wk->param.p_msg, BC_STR_10, WBM_TEXT_TYPE_STREAM );
+    *p_seq = SEQ_WAIT_BP_MSG_01;
+    break;
+  case SEQ_WAIT_BP_MSG_01:
+    if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
+    {
+      *p_seq = SEQ_START_BP_MSG_02;
+    }
+    break;
+
+  case SEQ_START_BP_MSG_02:
+    PMSND_PushBGM();
+    PMSND_PlayBGM( SEQ_ME_BPGET );
+
+    //単語登録
+    {
+      STRBUF *p_src = GFL_MSG_CreateString( p_wk->param.p_msg, BC_STR_11 );
+      WORDSET_RegisterPlayerName( p_wk->p_wordset, 0, GAMEDATA_GetMyStatus(p_wk->param.p_gamedata) );
+      WORDSET_RegisterNumber( p_wk->p_wordset, 1, GAMEDATA_GetRndMaptchBp(p_wk->param.p_gamedata), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+
+      WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_src );
+      GFL_STR_DeleteBuffer( p_src );
+    }
+
+    WBM_TEXT_PrintBuf( p_wk->param.p_text, p_wk->p_strbuf, WBM_TEXT_TYPE_STREAM_WAIT );
+    *p_seq = SEQ_CHECK_BP_MSG_ICON_02;
+    break;
+
+  case SEQ_CHECK_BP_MSG_ICON_02:
+    if( PMSND_CheckPlayBGM() == FALSE )
+    {
+      PMSND_PopBGM();
+      WBM_TEXT_SetWaitIcon( p_wk->param.p_text );
+      *p_seq = SEQ_WAIT_BP_MSG_02;
+    }
+    break;
+
+  case SEQ_WAIT_BP_MSG_02:
+    if( UTIL_TEXT_IsEnd( p_wk ) == TRUE )
+    {
+      BSUBWAY_SCOREDATA *p_bsubway = GAMEDATA_GetBSubwayScoreData( p_wk->param.p_gamedata );
+      u16 bp = GAMEDATA_GetRndMaptchBp(p_wk->param.p_gamedata);
+      BSUBWAY_SCOREDATA_AddBattlePoint( p_bsubway, bp );
+      GAMEDATA_ResetRndMaptchBp( p_wk->param.p_gamedata );
+
+      *p_seq = SEQ_START_SAVE_MSG;
+    }
+    break;
+
+  case SEQ_START_SAVE_MSG:
+    WBM_TEXT_Print( p_wk->param.p_text, p_wk->param.p_msg, BC_STR_09, WBM_TEXT_TYPE_WAIT );
+    *p_seq = SEQ_START_SAVE;
+    break;
+  case SEQ_START_SAVE:
+    GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
+    *p_seq = SEQ_WAIT_SAVE;
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT result = GAMEDATA_SaveAsyncMain(p_wk->param.p_gamedata);
+      switch(result){
+      case SAVE_RESULT_OK:
+      case SAVE_RESULT_NG:
+        *p_seq = SEQ_END;
+        break;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiMenu );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+}
+
 //=============================================================================
 /**
  *  便利関数

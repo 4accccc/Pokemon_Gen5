@@ -60,6 +60,8 @@ void BATTLEMATCH_Init( BATTLEMATCH_DATA *p_wk )
 { 
   LIVEMATCH_Init( &p_wk->livematch );
   RNDMATCH_Init( &p_wk->rndmatch );
+
+  OS_GetMacAddress( p_wk->mac_address );
 }
 
 //----------------------------------------------------------
@@ -213,7 +215,7 @@ BOOL BATTLEMATCH_IsSameDS( const BATTLEMATCH_DATA * cp_sv )
 //-----------------------------------------------------------------------------
 BOOL BATTLEMATCH_IsEndPenaltyTime( const BATTLEMATCH_DATA * cp_sv )
 {
-  static const s64  sc_penalty_time = 60*60*3;  //3ŽžŠÔ
+  static const s64  sc_penalty_time = 60*60*4;  //4ŽžŠÔ
 
   if( BATTLEMATCH_IsPowerOff(cp_sv) )
   {

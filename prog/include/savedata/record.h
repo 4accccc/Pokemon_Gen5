@@ -144,8 +144,8 @@ extern void RECORD_DebugSet( RECORD *rec );
 
 #define RECID_POKEWOOD_HIGH   ( LARGE_REC_START+50 )   ///< ポケウッド最高興行収入
 #define RECID_POKEWOOD_TOTAL  ( LARGE_REC_START+51 )   ///< ポケウッド累計興行収入
-#define RECID_LARGE_53   ( LARGE_REC_START+52 )   /// 以下未使用
-#define RECID_LARGE_54   ( LARGE_REC_START+53 )
+#define RECID_RNDMATCH_POWEROFF   ( LARGE_REC_START+52 )   /// ランダムマッチ電源切断カウント
+#define RECID_LARGE_54   ( LARGE_REC_START+53 )   ///以下未使用
 #define RECID_LARGE_55   ( LARGE_REC_START+54 )
 #define RECID_LARGE_56   ( LARGE_REC_START+55 )
 #define RECID_LARGE_57   ( LARGE_REC_START+56 )
@@ -341,7 +341,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 
 #define RECID_POKEWOOD_HIGH_FLAG    ( 3 )   ///< ポケウッド最高興行収入 9,999
 #define RECID_POKEWOOD_TOTAL_FLAG   ( 0 )   ///< ポケウッド累計興行収入 999,999,999
-#define RECID_LARGE_53_FLAG   ( 1 )
+#define RECID_RNDMATCH_POWEROFF_FLAG   ( 0 )  ///< 電源切断カウント 999,999,999
 #define RECID_LARGE_54_FLAG   ( 1 )
 #define RECID_LARGE_55_FLAG   ( 1 )
 #define RECID_LARGE_56_FLAG   ( 1 )

@@ -344,6 +344,8 @@ sub_rndmatch_try_select:
       _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_09, SCWK_TARGET_OBJID, POS_DL )
       $reg_return = SEQ_SUB_RNDMATCH_EXIT
       _RET
+    ELSE
+      _RNDMATCH_SET_DATA( RNDMATCH_PARAM_POWER_OFF_CNT, i_ret )
     ENDIF
   ENDIF
 

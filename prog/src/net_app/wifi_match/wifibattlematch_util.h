@@ -33,6 +33,7 @@ typedef enum
   WBM_TEXT_TYPE_QUE,     //プリントキューを使う
   WBM_TEXT_TYPE_STREAM,  //ストリームを使う
   WBM_TEXT_TYPE_WAIT,   //待機アイコンをつかう  終了はEndWait
+  WBM_TEXT_TYPE_STREAM_WAIT,  //
 
   WBM_TEXT_TYPE_MAX,    //c内部にて使用
 } WBM_TEXT_TYPE;
@@ -52,7 +53,7 @@ extern BOOL WBM_TEXT_IsEnd( const WBM_TEXT_WORK* cp_wk );
 extern void WBM_TEXT_EndWait( WBM_TEXT_WORK* p_wk );
 extern void WBM_TEXT_ClearCharacterVram( WBM_TEXT_WORK* p_wk );
 extern void WBM_TEXT_PrintBuf( WBM_TEXT_WORK* p_wk, const STRBUF *cp_str, WBM_TEXT_TYPE type );
-
+extern void WBM_TEXT_SetWaitIcon( WBM_TEXT_WORK* p_wk );
 
 extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font );
 

@@ -635,7 +635,8 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="BC_STR_08">
+		Label="BC_STR_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Wi-Fi大会 または
@@ -681,7 +682,8 @@ Wi-Fi大会には　参加できません▼
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="BC_STR_09">
+		Label="BC_STR_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レポートに　書き込んでいます
@@ -715,14 +717,15 @@ Wi-Fi大会には　参加できません▼
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="BC_STR_10">
+		Label="BC_STR_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たいせんの　せいかを　たたえて
-バトルポイントを　しんてい　いたします</Text>
+バトルポイントを　しんてい　いたします▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-08T13:31:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -731,10 +734,10 @@ Wi-Fi大会には　参加できません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>たいせんの　せいかを　たたえて
-バトルポイントを　しんてい　いたします</Text>
+バトルポイントを　しんてい　いたします▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-08T13:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -752,14 +755,15 @@ Wi-Fi大会には　参加できません▼
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="BC_STR_11">
+		Label="BC_STR_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は バトルポイントを
-[Digit:2digits Idx="1" ]　てにいれた！</Text>
+[Digit:2digits Idx="1" ]　てにいれた！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-08T13:29:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -768,10 +772,10 @@ Wi-Fi大会には　参加できません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は バトルポイントを
-[Digit:2digits Idx="1" ]　てにいれた！</Text>
+[Digit:2digits Idx="1" ]　てにいれた！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-08T13:29:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"

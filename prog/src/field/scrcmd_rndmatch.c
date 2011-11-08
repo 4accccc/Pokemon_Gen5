@@ -24,6 +24,7 @@
 #include "event_fieldmap_control.h"
 #include "savedata/battlematch_savedata.h"
 #include "savedata/bsubway_savedata.h"
+#include "savedata/record.h"
 
 //ŠO•”ŒöŠJ
 #include "scrcmd_rndmatch.h"
@@ -170,6 +171,9 @@ VMCMD_RESULT EvCmdRndMatchSetData( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RNDMATCH_PARAM_ENTRY:
     BATTLEMATCH_SetRndmatch( p_match_sv, value );
+    break;
+  case RNDMATCH_PARAM_POWER_OFF_CNT:
+    RECORD_Inc( SaveData_GetRecord(p_sv), RECID_RNDMATCH_POWEROFF );
     break;
   default:
     GF_ASSERT(0);

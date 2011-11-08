@@ -21,6 +21,7 @@
 #define RNDMATCH_PARAM_PENALTY    (2) //ペナルティ時間内か
 #define RNDMATCH_PARAM_BP         (3) //BP
 #define RNDMATCH_PARAM_ENTRY      (4) //ランダムマッチ参加中？
+#define RNDMATCH_PARAM_POWER_OFF_CNT  (5) //
 
 //=============================================================================
 /**

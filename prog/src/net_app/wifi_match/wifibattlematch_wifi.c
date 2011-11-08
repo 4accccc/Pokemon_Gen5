@@ -71,10 +71,8 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 
 
-#if defined(DEBUG_ONLY_FOR_nagihashi_toru)||defined(DEBUG_ONLY_FOR_shimoyamada)
-#define GPF_FLAG_ON             //GPFフラグを強制ONにする
-#endif
 
+#define GPF_FLAG_ON             //GPFフラグを強制ONにする
 //#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
@@ -824,6 +822,7 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_SUCCESS )
       { 
         WIFIBATTLEMATCH_NET_GetRecvGpfData( p_wk->p_net, p_wk->p_param->p_gpf_data );
+
         *p_seq = SEQ_CHECK_SIGNIN;
       }
       else if( ret == WIFIBATTLEMATCH_RECV_GPFDATA_RET_DIRTY )
@@ -3820,6 +3819,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_SAVE:
     { 
+      WBM_UpdatePowerOffCheck( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
       Util_SaveScore( p_wk, p_wk->p_param->p_wifi_sake_data );
     }
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
