@@ -16170,11 +16170,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろう
+			<Text>しろのじゅどう
 エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:23" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-08T09:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16182,11 +16182,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろのまてんろう
+			<Text>白の樹洞
 エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-08T09:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16205,11 +16205,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのじゅどう
+			<Text>くろのまてんろう
 エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:15" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-08T09:51:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16217,11 +16217,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろのじゅどう
+			<Text>黒の摩天楼
 エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-08T09:51:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
