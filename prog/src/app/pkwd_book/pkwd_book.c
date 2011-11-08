@@ -338,6 +338,13 @@ enum{
 	PWB_CVS_INFO_MAX,		// max
 };
 
+// いろいろ
+enum{
+	PWB_LEFT_MODE	 = 0,	// 左そろえモード(通常)
+	PWB_CENTER_MODE  = 2,	// 中央そろえのモード
+	PWB_CENTER_OFF_X = 112,	// 中央そろえのoffset(canvasが変わったらここも変更)
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -2928,7 +2935,7 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		buf[2] = adr[4*i+2];	// col
 		buf[3] = adr[4*i+3];	// num
 		// 表示
-		pmode = 0;
+		pmode = PWB_LEFT_MODE;
 		offx  = 0;
 		col = PRINTSYS_LSB_Make(15,2,0);
 		if(buf[2] == 1){
@@ -2938,8 +2945,8 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		if(type == STR_MAIN){
 			col = PRINTSYS_LSB_Make(3,2,1);
 			if(i == 0){
-				pmode = 2;
-				offx  = 112;
+				pmode = PWB_CENTER_MODE;
+				offx  = PWB_CENTER_OFF_X;
 			}
 		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], pwb_fix_mestbl[ buf[0] ] );
@@ -3125,6 +3132,8 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 				// やめる
 				else{
 					wk->SubMode = STEP_LV1;
+					// 上画面表示
+					pwb_disp_up_bg( wk, 0 );
 				}
 //				OS_Printf("selwin :%d\n",flg);
 				//
@@ -3264,12 +3273,12 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// タイトル、あらすじ、クリア目標
 	for(i=0;i<3;i++){
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
-		pmode = 0;
+		pmode = PWB_LEFT_MODE;
 		offx  = 0;
 		if(i == 0){
 			// タイトルだけセンタリング
-			pmode = 2;
-			offx  = 112;
+			pmode = PWB_CENTER_MODE;
+			offx  = PWB_CENTER_OFF_X;
 		}
 		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 15, 14, 0 ) );
 		GFL_STR_DeleteBuffer( strbuf );
@@ -4530,6 +4539,7 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 {
 	s16			flg=0;
 	s16			mflg=0;
+	u32			pnum;
 	
 	switch(mode){
 		case 0:								// 項目をタッチ
@@ -4586,6 +4596,9 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		// newマークが更新されない
 		// =>ここで処理を通すようにする
 		if(mflg == 1){
+			// カーソル位置の再設定(カーソル点滅用)
+			pnum = FRAMELIST_GetCursorPos( wk->frame_list_work );
+			FRAMELIST_SetCursorPos( wk->frame_list_work, pnum );
 			// 再計算(端になるので初期化(1)でよい)
 			pwb_chk_newmark( wk, 1 );
 		}

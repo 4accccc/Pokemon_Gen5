@@ -2400,45 +2400,45 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	switch( wk->SubMode ){
 		// 初期化
 		case STEP_INIT:
-      wk->SubMode = STEP_LV1;
-      break;
-    case STEP_LINE_ANIME:
-      // ラインのOBJアニメ
-      
-      GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-
-      // ラインのOBJ表示
-      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, TRUE );
-      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, TRUE );
-      pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, TRUE );
-
-      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, CLWK_LIST_ANM_SEQ_LINE_RED );
-      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, CLWK_LIST_ANM_SEQ_LINE_GREEN );
-      pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, CLWK_LIST_ANM_SEQ_LINE_BLUE );
-      wk->SubMode = STEP_LINE_ANIME_WAIT;
-      break;
-    case STEP_LINE_ANIME_WAIT:
-      // ラインのOBJアニメ終了待ち
-      if( pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_RED) == FALSE
-          && pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN) == FALSE
-          && pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
-        )
-      {
-        GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
-        GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
-        GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-        GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
-
-        pwm_disp_record_monitor_string( wk, 1 );
-        // poke icon 表示
-        pwm_disp_poke_obj( wk );
-        wk->SubMode = STEP_LV1;
-      }
-      break;
-
+			wk->SubMode = STEP_LV1;
+			break;
+		//
+		// ラインのobjアニメ
+		case STEP_LINE_ANIME:
+			// ラインのOBJアニメ
+			GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+			GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+			GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+			GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+			
+			// ラインのOBJ表示
+			pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, TRUE );
+			pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, TRUE );
+			pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, TRUE );
+			
+			pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_RED, CLWK_LIST_ANM_SEQ_LINE_RED );
+			pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN, CLWK_LIST_ANM_SEQ_LINE_GREEN );
+			pwm_chg_objseq( wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE, CLWK_LIST_ANM_SEQ_LINE_BLUE );
+			wk->SubMode = STEP_LINE_ANIME_WAIT;
+			break;
+		case STEP_LINE_ANIME_WAIT:
+			// ラインのOBJアニメ終了待ち
+			if( pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_RED) == FALSE
+				&& pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_GREEN) == FALSE
+				&& pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
+			)
+			{
+				GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+				GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+				GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+				GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+				
+				pwm_disp_record_monitor_string( wk, 1 );
+				// poke icon 表示
+				pwm_disp_poke_obj( wk );
+				wk->SubMode = STEP_LV1;
+			}
+			break;
 		// 通常
 		case STEP_LV1:
 			pwm_key_record_monitor( wk );
@@ -3083,7 +3083,7 @@ static s32 pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s3
 //--------------------------------------------------------------------------------------------
 static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode )
 {
-  u8    flag = VISIBLE_OFF;
+	u8		flag = VISIBLE_OFF;
 	int		mode;
 	//
 	// 引き継ぐ
@@ -3093,21 +3093,20 @@ static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
 		//
 		// キーだと表示
 		if(mode == GFL_APP_END_KEY){
-      //flag = VISIBLE_ON;    // アニメ後ONにする
-
-      if( wk->first_anime_flag == FALSE )
-      {
-        // アニメさせるシーケンスに移行
-        wk->SubMode = STEP_LINE_ANIME;
-        wk->first_anime_flag = TRUE;
-      }
+			//flag = VISIBLE_ON;    // アニメ後ONにする
+			if( wk->first_anime_flag == FALSE )
+			{
+				// アニメさせるシーケンスに移行
+				wk->SubMode = STEP_LINE_ANIME;
+				wk->first_anime_flag = TRUE;
+			}
 		}
-    // フォント面のみを考慮にいれる
-    GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
+		// フォント面のみを考慮にいれる
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
 	// 表示
 	else{
-    flag = VISIBLE_ON;
+		flag = VISIBLE_ON;
 		// フォント面のみを考慮にいれる
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
@@ -3221,6 +3220,7 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 {
 	s16			flg=0;
 	s16			mflg=0;
+	u32			pnum;
 	
 	switch(mode){
 		case 0:								// 項目をタッチ
@@ -3275,6 +3275,9 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		// newマークが更新されない
 		// =>ここで処理を通すようにする
 		if(mflg == 1){
+			// カーソル位置の再設定(カーソル点滅用)
+			pnum = FRAMELIST_GetCursorPos( wk->frame_list_work );
+			FRAMELIST_SetCursorPos( wk->frame_list_work, pnum );
 			// 再計算(端になるので初期化(1)でよい)
 			pwm_chk_newmark( wk, 1 );
 		}

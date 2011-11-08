@@ -89,6 +89,11 @@ enum{
 enum{
 	MES_END_ID 			= pw_index_00,			// 終了番号([なし]の記述番号)
 	MES_HINT_MAX		= 20,
+	//
+	//
+	BS_LEFT_MODE		= 0,		// 左そろえ用モード(通常)
+	BS_CENTER_MODE		= 2,		// 中央そろえ用モード
+	BS_CENTER_OFF_X		= 112,		// 中央そろえ用
 };
 
 //------------
@@ -1186,11 +1191,11 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 		// タイトル、あらすじ、クリア目標
 		for(i=0;i<3;i++){
 			// タイトルはセンタリング
-			pmode = 0;
+			pmode = BS_LEFT_MODE;
 			offx  = 0;
 			if(i == 0){
-				pmode = 2;
-				offx  = 112;
+				pmode = BS_CENTER_MODE;
+				offx  = BS_CENTER_OFF_X;
 			}
 			strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[i]+id );
 			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(15,2,0), 0 );
@@ -2501,11 +2506,11 @@ static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 			col = PRINTSYS_LSB_Make(1,2,0);
 		}
 		// タイトルはセンタリング
-		pmode = 0;
+		pmode = BS_LEFT_MODE;
 		offx  = 0;
 		if(buf[0] == 0){
-			pmode = 2;
-			offx  = 112;
+			pmode = BS_CENTER_MODE;
+			offx  = BS_CENTER_OFF_X;
 		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], bs_fix_mestbl[ buf[0] ] );
 		BsCmn_DispString( wk, buf[1], offx, 0, strbuf, pmode, col, 0 );
