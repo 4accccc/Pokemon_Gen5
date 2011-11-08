@@ -3033,4 +3033,84 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_seisoku_explain_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そのばしょ　すべての　ポケモンが
+ずかんに　とうろく　されると
+スタンプが　つきます
+めざせ　イッシュちほう　せいは！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:01:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その場所　全ての　ポケモンが
+図鑑に　登録　されると
+スタンプが　つきます
+目指せ　イッシュ地方　制覇！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:01:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>初回「みた」達成時に表示
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:33" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_explain_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そのばしょ　すべての　ポケモンを
+つかまえると　モンスターボールの
+スタンプが　つきます
+やったね！　おめでとう！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:03:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その場所　全ての　ポケモンを
+捕まえると　モンスターボールの
+スタンプが　つきます
+やったね！　おめでとう！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>初回「みた」達成時に表示
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T06:02:38" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
