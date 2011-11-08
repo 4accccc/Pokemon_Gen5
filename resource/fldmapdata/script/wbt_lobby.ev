@@ -937,6 +937,7 @@ ev_wbt_get_reward:
 
 ev_wbt_get_sourvenir:
   _BALLOONWIN_OBJMSG_POS( msg_wbt_info_28, SCWK_TARGET_OBJID, POS_DL )
+  _MSGWIN_CLOSE()
   //Žc”OÜŽæ“¾ˆ—
   _GET_RND( SCWK_ANSWER, 4 )
   SWITCH $SCWK_ANSWER
