@@ -9365,10 +9365,6 @@
 		<language name="JPN" width="256">SW-PKWOOD-03</language>
 		<language name="JPN_KANJI" width="256">SW-PKWOOD-03</language>
 	</row>
-	<row id="msg_seq_se_sw_starpoke">
-		<language name="JPN" width="256">SW-STARPOKE</language>
-		<language name="JPN_KANJI" width="256">SW-STARPOKE</language>
-	</row>
 	<row id="msg_seq_se_sw_pkwood_aud_01">
 		<language name="JPN" width="256">SW-PKWOOD-AUD-01</language>
 		<language name="JPN_KANJI" width="256">SW-PKWOOD-AUD-01</language>
