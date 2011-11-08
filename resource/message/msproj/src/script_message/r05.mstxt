@@ -3317,11 +3317,10 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・マップ切り替え
-・隠し穴の中へ</Comment>
+・マップ切り替え</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T08:57:15" />
+				Time="2011-11-08T11:18:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3344,10 +3343,12 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンだあ……！▼</Text>
+			<Text>おや？
+はいれそうな すきまが　ある！▼
+はいってみますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:00:36" />
+				Time="2011-11-08T11:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3355,10 +3356,12 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンだあ……！▼</Text>
+			<Text>おや？
+入れそうな すきまが　ある！▼
+入ってみますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:00:37" />
+				Time="2011-11-08T11:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3367,13 +3370,13 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・隠し穴マップ
-・GRIDX＝15、GRIDZ＝15まで誘導
-　ベルはGRIDX＝16、GRIDZ＝15
-・続けてswbell_13</Comment>
+※システムウインドウで表示
+・はい/いいえの選択肢表示
+・はい　→マップ切り替え
+　いいえ→swbell_13</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:09:18" />
+				Time="2011-11-08T11:20:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3396,13 +3399,10 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいね！　だいはっけん！
-だいはっけん　だよお！▼
-ほかにも　かくしあなが　あるか
-あたしも　しらべてみるね！▼</Text>
+			<Text>せっかくだから　はいろうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T08:59:50" />
+				Time="2011-11-08T11:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3410,13 +3410,10 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいね！　大発見！
-大発見　だよ！▼
-他にも　隠し穴が　あるか
-あたしも　調べてみるね！▼</Text>
+			<Text>せっかくだから　入ろうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T08:59:55" />
+				Time="2011-11-08T11:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3425,13 +3422,10 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・隠し穴マップ
-・主人公と向き合ってメッセージ表示
-・メッセージ表示後、ベルだけ退場
-　画面外に消えると主人公操作可能に</Comment>
+・隠し穴マップに</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:09:23" />
+				Time="2011-11-08T11:19:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
