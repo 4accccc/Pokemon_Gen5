@@ -7734,10 +7734,11 @@ NPC：ASSISTANTM
 よろこんで　このばしょに　あつまる▼
 そして　トレーナーの　たたかいを
 モニターし　データを　あつめる▼
-つよいトレーナーが　さらに
-つよいトレーナーを　よびよせる▼
-ぼうだいな　たたかいの　データが
-あつまっていると　おもうよ▼
+さまざまな　たたかいの　データが
+あつまるわけだ▼
+ここの　しゅさいしゃは
+データを　あつめることで▽
+つよさを　おいもとめているのかもね▼
 でも　ポケモンの　つよさは
 データだけじゃ　きまらない▼
 ポケモンとの　チームワーク▼
@@ -7753,7 +7754,7 @@ NPC：ASSISTANTM
 ねがっているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T08:59:41" />
+				Time="2011-11-08T09:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7771,10 +7772,11 @@ NPC：ASSISTANTM
 喜んで　この場所に　集まる▼
 そして　トレーナーの　戦いを
 モニターし　データを　集める▼
-強いトレーナーが　さらに
-強いトレーナーを　呼び寄せる▼
-膨大な　戦いの　データが
-集まっていると　思うよ▼
+様々な　戦いの　データが
+集まるわけだ▼
+ここの　主催者は　データを
+集めることで　強さを▽
+追い求めているのかもね▼
 でも　ポケモンの　強さは
 データだけじゃ　決まらない▼
 ポケモンとの　チームワーク▼
@@ -7789,7 +7791,7 @@ NPC：ASSISTANTM
 手に　いれられることを　願っているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T09:00:00" />
+				Time="2011-11-08T09:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8104,8 +8106,8 @@ NPC：FIGHTERM
 そうそう　おもしろい話を
 聞いたから　教えてやるよ▼
 この場所は　ある保護団体が
-探索を　した後に　一般に▽
-開放されたのは　知ってるか？▼
+探索を　した後に▽
+一般に　開放されたのは　知ってるか？▼
 なんで　こんな場所を　鍛錬の
 場所として　開放したんだろうな▼
 まあ　これだけ　広い場所なら
@@ -8114,7 +8116,7 @@ NPC：FIGHTERM
 それじゃ　またな▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T08:59:06" />
+				Time="2011-11-08T09:07:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8147,7 +8149,7 @@ NPC：FIGHTERM
 おわって　いないらしい▼
 そこで　トレーナーに　たんれんの
 ばしょとして　ていきょうしながら▼
-つよい　トレーナーには　じゅどうの
+つよい　トレーナーに　じゅどうの
 おくちに　すすんで　もらいながら▽
 たんさくを　すすめているんだとさ▼
 ポケモンと　つよい　きずなで
@@ -8164,7 +8166,7 @@ NPC：FIGHTERM
 おたがいに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T08:58:04" />
+				Time="2011-11-08T09:09:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8181,7 +8183,7 @@ NPC：FIGHTERM
 探索が　終って　いないらしい▼
 そこで　トレーナーに　鍛錬の
 場所として　提供しながら▼
-強い　トレーナーには　樹洞の
+強い　トレーナーに　樹洞の
 奥地に　進んで　もらいながら▽
 探索を　進めて　いるんだとさ▼
 ポケモンと　強い　絆で　結ばれた
@@ -8196,7 +8198,7 @@ NPC：FIGHTERM
 お互いに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T08:58:20" />
+				Time="2011-11-08T09:09:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
