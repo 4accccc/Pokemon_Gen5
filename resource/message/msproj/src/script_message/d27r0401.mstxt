@@ -312,14 +312,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なるほど……！
-それは　りそう　かもしれない▼
-だが　あなたが
+あなたの　へんじは
+わたくしに　とっての　りそう！▼
+じっさい　あなたは
 その　しんねんを　もって！▼
-ポケモンと　むきあっていることが
-つよさの　りゆうには　なっている！▼</Text>
+ポケモンと　むきあい
+ちからを　ひきだしているッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:06:00" />
+				Time="2011-11-08T13:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -328,14 +329,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほど……！
-それは　理想かもしれない▼
-だが　あなたが
+あなたの　へんじは
+わたくしに　とっての　理想！▼
+実際　あなたは
 その　信念を　もって！▼
-ポケモンと　向き合っていることが
-強さの　理由には　なっている！▼</Text>
+ポケモンと　向き合い
+力を　ひきだしているッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:06:11" />
+				Time="2011-11-08T13:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,15 +373,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど……！
-それが　しんじつ　なのかもしれない▼
-だが　あなたは
+			<Text>なるほど……！▼
+あなたの　へんじは
+わたくしに　とっての　しんじつか？▼
+だが　あなたは　そうこたえつつ
 それでも　あきらめず！▼
 ポケモンと　むきあっていることが
 つよさの　りゆうに　なっている！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:06:04" />
+				Time="2011-11-08T13:16:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -387,15 +390,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど……！
-それが　真実なのかもしれない▼
-だが　あなたが
+			<Text>なるほど……！▼
+あなたの　返事は
+わたくしに　とっての　真実か？▼
+だが　あなたは　そう答えつつ
 それでも　あきらめず！▼
 ポケモンと　向き合っていることが
 強さの　理由に　なっている！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:06:08" />
+				Time="2011-11-08T13:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

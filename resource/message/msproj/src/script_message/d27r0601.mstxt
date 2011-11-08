@@ -695,14 +695,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ダークトリニティ『……つよがるな▼
-やっと　であえた　ポケモンを
-こうげきできるのは　つよさではない▽
+やっと　であえた　ポケモンと
+たたかえないだろう！▽
 そこで　だまって　みているんだな▼
 さて　オマエだ！
 ゲーチスさまの　ジャマは　させん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:11:39" />
+				Time="2011-11-08T13:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -711,14 +711,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ダークトリニティ『……つよがるな▼
-やっと　であえた　ポケモンを
-攻撃できるのは　強さではない▽
+やっと　であえた　ポケモンと
+戦えないだろう！▽
 そこで　黙って　みているんだな▼
 さて　オマエだ！
 ゲーチスさまの　ジャマは　させん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:11:55" />
+				Time="2011-11-08T13:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1105,13 +1105,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オマエ……
-この　ポケモンは　かえしてやる▼
+その　ポケモンは　かえしてやる▼
 ゲーチスさまが　これから
 なされることを　かんがえれば▽
 そいつは　もう　ようずみだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-10T06:31:14" />
+				Time="2011-11-08T13:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1120,13 +1120,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オマエ……
-この　ポケモンは　返してやる▼
+その　ポケモンは　返してやる▼
 ゲーチスさまが　これから
 なされることを　考えれば▽
 そいつは　もう　用済みだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-10T06:31:19" />
+				Time="2011-11-08T13:36:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1169,10 +1169,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……わるい▼
 あたまの　なかが　グチャグチャで……
-どうしていいか　わかんねーよ</Text>
+どうしていいか　わかんねーよ▼
+やっと　あえたのに
+こいつ　オレを　にらみつけてる……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:13:13" />
+				Time="2011-11-08T13:41:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1182,10 +1184,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……悪い▼
 頭の　中が　グチャグチャで……
-どうしていいか　わかんねーよ</Text>
+どうしていいか　わかんねーよ▼
+やっと　会えたに
+こいつ　オレを　にらみつけてる……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-10T06:31:30" />
+				Time="2011-11-08T13:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1228,12 +1232,10 @@
 [Name:TrainerName ]▼
 あいつらの　おもいどおりに　させたら
 チョロネコや　キュレムみたいに▽
-かわいそうな　ポケモンが　ふえちまう▼
-だから　たたかうぜ
-オレは！</Text>
+かわいそうな　ポケモンが　ふえるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:15:34" />
+				Time="2011-11-08T13:41:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1246,12 +1248,10 @@
 [Name:TrainerName ]▼
 あいつらの　思い通りに　させたら
 チョロネコや　キュレムみたいに▽
-可哀想な　ポケモンが　増えちまう▼
-だから　たたかうぜ
-オレは！</Text>
+可哀想な　ポケモンが　増えるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:15:38" />
+				Time="2011-11-08T13:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1496,5 +1496,47 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_poke_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グルーゥッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:36:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:36:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グルーゥッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:36:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:36:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:36:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE32
+ポケモン・レパルダス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-08T13:35:47" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
