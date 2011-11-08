@@ -4973,39 +4973,6 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_info_29"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>仮　回復メッセージ▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:32:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:31:54" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>仮　回復メッセージ▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:32:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:32:02" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>仮　ポケモン選択前に回復</Comment>
-			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:32:36" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
 		Label="msg_wbt_notice_01"
 		Style="Large">
 		<LanguageCell

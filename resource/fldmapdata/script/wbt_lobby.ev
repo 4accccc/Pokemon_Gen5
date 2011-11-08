@@ -550,17 +550,13 @@ ev_select_pokemon:
     //レンタル用の手持ち生成
     _WBT_SETUP_RENTAL_PARTY( SCWK_ANSWER )
   ELSE
-    //回復メッセージ
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_29, SCWK_TARGET_OBJID, POS_DL )
-    _SE_PLAY( SEQ_SE_RECOVERY )
-    _SE_WAIT()
-    //回復処理
-    _TEMOTI_POKEMON_KAIFUKU()
-
     //トーナメントに参加するポケモンを選択してください
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_15, SCWK_TARGET_OBJID, POS_DL )
     _MSGWIN_CLOSE()
   ENDIF
+
+  //回復処理
+  _TEMOTI_POKEMON_KAIFUKU()
 
 //ポケモン選択画面表示　　　　　　　　　　　　　　　　　　　　　　　　
   _WBT_SELECT_POKEMON( SCWK_ANSWER )
