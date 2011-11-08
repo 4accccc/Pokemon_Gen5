@@ -231,6 +231,7 @@ static const ZONEID UseZoneIDTbl_pokecen[] =
 static const ZONEID UseZoneIDTbl_demo_gimmick[] = 
 {
   ZONE_ID_D10R0501,   // ジャイアントホール
+  ZONE_ID_C12,        // ヒオウギシティ
 };
 
 //=============================================================================

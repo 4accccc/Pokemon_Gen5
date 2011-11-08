@@ -35,6 +35,7 @@
 // mine
 #include "scrcmd_demo_gimmick.h"
 #include "field_gimmick_gianthole.h"
+#include "field_gimmick_c12.h"
 
 // debug
 #include "debug/debug_str_conv.h"
@@ -79,7 +80,6 @@ VMCMD_RESULT EvCmdGianthole_Disp( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  // ゲートID
   id  = VMGetU16( core );
 
   GIANTHOLE_GIMMICK_Disp( gsys, id );
@@ -98,7 +98,6 @@ VMCMD_RESULT EvCmdGianthole_AnmStart( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  // ゲートID
   id  = VMGetU16( core );
 
   GIANTHOLE_GIMMICK_AnmStart( gsys, id );
@@ -275,3 +274,19 @@ static GMEVENT_RESULT BrightnessBlackEvent( GMEVENT* event, int* seq, void* wk )
 
   return GMEVENT_RES_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  物語開始デモ  花びらアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdC12_AnmStart( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  C12_GIMMICK_AnmStart( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

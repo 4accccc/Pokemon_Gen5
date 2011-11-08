@@ -20,3 +20,5 @@ extern void C12_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void C12_GIMMICK_End( FIELDMAP_WORK *p_fieldmap );
 extern void C12_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 
+extern void C12_GIMMICK_AnmStart( GAMESYS_WORK *gsys );
+

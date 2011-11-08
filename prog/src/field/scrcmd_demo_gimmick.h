@@ -32,8 +32,13 @@
 */
 //=============================================================================
 
+// ジャイアントホール
 extern VMCMD_RESULT EvCmdGianthole_Disp( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_AnmStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_FadeOut( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_BrightnessBlack( VMHANDLE *core, void *wk );
+
+// 物語開始
+// c12 ヒオウギシティ
+extern VMCMD_RESULT EvCmdC12_AnmStart( VMHANDLE *core, void *wk );
 

@@ -16276,6 +16276,22 @@
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_INTRO_ANM_START
+ * @brief 花びらが舞うアニメスタート
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_INTRO_ANM_START() \
+    _ASM_DEMO_GIMMICK_INTRO_ANM_START
+
+  .macro  _ASM_DEMO_GIMMICK_INTRO_ANM_START
+  .short  EV_SEQ_DEMO_GIMMICK_INTRO_ANM_START
+  .endm
+
+
 
 //======================================================================
 //======================================================================

@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: intro_demo.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_INTRO_DEMO_NAIX_
+#define NARC_INTRO_DEMO_NAIX_
+
+enum {
+	NARC_intro_demo_intro_gm1_sp_nsbmd = 0,
+	NARC_intro_demo_intro_gm1_sp_nsbca = 1,
+	NARC_intro_demo_intro_gm1_sp_nsbma = 2,
+	NARC_intro_demo_intro_gm1_su_nsbmd = 3,
+	NARC_intro_demo_intro_gm1_su_nsbca = 4,
+	NARC_intro_demo_intro_gm1_su_nsbma = 5,
+	NARC_intro_demo_intro_gm1_au_nsbmd = 6,
+	NARC_intro_demo_intro_gm1_au_nsbca = 7,
+	NARC_intro_demo_intro_gm1_au_nsbma = 8,
+	NARC_intro_demo_intro_gm1_wi_nsbmd = 9,
+	NARC_intro_demo_intro_gm1_wi_nsbca = 10,
+	NARC_intro_demo_intro_gm1_wi_nsbma = 11
+};
+
+/* NARC_INTRO_DEMO_NAIX_ */
+#endif

@@ -376,3 +376,4 @@
   ARCID_MARINE_TUBE_GRA "marine_tube_gra.narc"  # マリンチューブ掲示板グラフィック
   ARCID_RESONANCE_RESORT_GRAPHIC "resonance_resort_graphic.narc" #レゾナンスリゾートグラフィック
   ARCID_GIANTHOLE_GIMMICK "fieldmap/gianthole.narc" # H06ギミック
+  ARCID_INTRO_DEMO_GIMMICK "fieldmap/intro_demo.narc" # 物語開始ギミック
