@@ -320,6 +320,16 @@ enum{
 	PWB_CSV_TOP_MAX,		// max
 };
 
+// マーク(stateflag)
+enum{
+	FLG_PWRM_GOOD		= (1<<0),	// GOOD
+	FLG_PWRM_BAD		= (1<<1),	// BAD
+	FLG_PWRM_STRANGE	= (1<<2),	// STRANGE
+	//
+	FLG_PWRM_NEW		= (1<<3),	// NEW
+	FLG_PWRM_UP			= (1<<4),	// UP
+};
+
 // 文字色
 // 上画面
 #define TEXT_COL_MAIN   ( PRINTSYS_LSB_Make(13, 12, 11 ) )   // 黒文字
@@ -349,7 +359,7 @@ typedef struct{
 typedef struct{
 	u8					openid;		// 開放のシナリオ番号(0-47)(0xff:初期値)
 	u8					color;		// カラー(0-3)
-	u8					stateflag;// マーク(0:なし,1:newマーク 2:upマーク)
+	u8					stateflag;	// マーク(bit判断)
 	u8					dummy;
 } PKWD_RECORD_MONITOR_FLAG_BUFFER;
 
@@ -2758,6 +2768,7 @@ static void pwm_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	s32 id = pwm_get_scenario_curpos( wk, wk->ScenarioCurPos );
   // ポケウッドのセーブ取得
   const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, id );
+	BOOL	bflg;
 	
 	//--------
 	// ポケモン
@@ -2809,7 +2820,11 @@ static void pwm_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
   }
 	// 評価マーク表示
 	for(i=0;i<3;i++){
-		pwm_disp_mark( wk, TRUE, i, i );
+		bflg = FALSE;
+		if( wk->FlagBuffer[wk->ScenarioCurPos].stateflag & (1<<i) ){
+			bflg = TRUE;
+		}
+		pwm_disp_mark( wk, bflg, i, i );
 	}
 }
 
@@ -2954,49 +2969,64 @@ static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
 	s32		i;
 	s32		j;
-  u16   max_profits = 0;  // 最高収益
-  u16   scenario[PKWD_RECORD_MONITOR_SCENARIO_MAX];  // 最高収益
-  u8    profits_idx;
+	u16		max_profits = 0;  // 最高収益
+	u16		scenario[PKWD_RECORD_MONITOR_SCENARIO_MAX];  // 最高収益
+	u8		profits_idx;
 	BOOL	bflg;
 	//
 	// openチェック
 	j=0;
 	for(i=0;i<PKWD_RECORD_MONITOR_SCENARIO_MAX;i++){
-    bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_THEATERGO, i );
+		bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_THEATERGO, i );
 		if(bflg == TRUE){
-      const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, i );
-
+			const POKEWOOD_BOXOFFICE_RECORD *p_pkwd_record = POKEWOOD_SAVEDATA_GetBoxOfficeData( wk->Param->pokewood_sv, i );
 			wk->FlagBuffer[j].openid = i;
 			//
 			// new or upチェック
-      {
-        if( p_pkwd_record->new_flag == 1 ){
-          wk->FlagBuffer[j].stateflag = 1;
-        }
-        else if( p_pkwd_record->update_flag == 1 )
-        {
-          wk->FlagBuffer[j].stateflag = 2;
-        }
-      }
-
-      // 王冠チェック
-      {
-        if( p_pkwd_record->profits >=  max_profits )
-        {
-          if( p_pkwd_record->profits >  max_profits )
-          {
-            profits_idx = 0;
-          }
-
-          max_profits = p_pkwd_record->profits;
-
-          // 保存
-          scenario[ profits_idx ] = i;
-          profits_idx++;
-        }
-      }
+			{
+				// 閲覧してない場合が0
+				if( p_pkwd_record->new_flag == 0 ){
+					wk->FlagBuffer[j].stateflag |= FLG_PWRM_NEW;
+				}
+				if( p_pkwd_record->update_flag == 1 ){
+					wk->FlagBuffer[j].stateflag |= FLG_PWRM_UP;
+				}
+			}
+			//
+			// 王冠チェック
+			{
+				if( p_pkwd_record->profits >=  max_profits )
+				{
+					if( p_pkwd_record->profits >  max_profits )
+					{
+						profits_idx = 0;
+					}
+					max_profits = p_pkwd_record->profits;
+					// 保存
+					scenario[ profits_idx ] = i;
+					profits_idx++;
+				}
+			}
+			//----------------------
+			// 評価マークのチェック
+			//----------------------
+			// GOOD
+			bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_SUCCESS, i );
+			if(bflg == TRUE){
+				wk->FlagBuffer[j].stateflag |= FLG_PWRM_GOOD;
+			}
+			// BAD
+			bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_BAD, i );
+			if(bflg == TRUE){
+				wk->FlagBuffer[j].stateflag |= FLG_PWRM_BAD;
+			}
+			// STRANGE
+			bflg = POKEWOOD_SAVEDATA_GetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_STRANGE, i );
+			if(bflg == TRUE){
+				wk->FlagBuffer[j].stateflag |= FLG_PWRM_STRANGE;
+			}
 			// colorチェック
-      // カラーは変更しない
+			// カラーは変更しない
 			// wk->FlagBuffer[j].color = PokewoodCategoryData[i]&0x03;
 			//
 			j++;
@@ -3006,9 +3036,9 @@ static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	wk->ScenarioMax = j;
 	// 最高収益のシナリオにフラグをたてる
 	for(i=0;i<profits_idx;i++){
-    wk->profits[ scenario[ i ] ] = 1;
-    ICHI_Printf(" 収益 %d \n", scenario[i]);
-  }
+		wk->profits[ scenario[ i ] ] = 1;
+		ICHI_Printf(" 収益 %d \n", scenario[i]);
+	}
 	// 結果
 	for(i=0;i<wk->ScenarioMax;i++){
 		OS_Printf("flag :%d,%d,%d\n",wk->FlagBuffer[i].openid, wk->FlagBuffer[i].color, wk->FlagBuffer[i].stateflag );
@@ -3190,6 +3220,7 @@ static u32 pwm_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 mode )
 {
 	s16			flg=0;
+	s16			mflg=0;
 	
 	switch(mode){
 		case 0:								// 項目をタッチ
@@ -3216,6 +3247,7 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		case FRAMELIST_RET_JUMP_TOP:		// top
 		case FRAMELIST_RET_JUMP_BOTTOM:		// bottom
 			flg = 1;
+			mflg = 1;
 			break;
 		//
 		case FRAMELIST_RET_MOVE:			// move
@@ -3236,6 +3268,15 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		else if(wk->Flag & FLG_RIGHT_ANIM){
 			// 右シーケンス変更
 			pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
+		}
+		//
+		// LRの処理
+		// スクロールのcallbackは呼ばれないため、
+		// newマークが更新されない
+		// =>ここで処理を通すようにする
+		if(mflg == 1){
+			// 再計算(端になるので初期化(1)でよい)
+			pwm_chk_newmark( wk, 1 );
 		}
 	}
 	// 決定
@@ -3398,7 +3439,7 @@ static void PrintStrBuf( PKWD_RECORD_MONITOR_MAIN_WORK *wk, PRINT_UTIL *print_ut
 	//
 	width     = PRINTSYS_GetStrWidth( strbuf, wk->font, 0 );
 	bmp_width = GFL_BMPWIN_GetSizeX( print_util->win ) * 8;
-	x         = (bmp_width - width)/2;
+	x         = 8+(bmp_width - width)/2;
 	//
 	PRINT_UTIL_PrintColor( print_util, que, x, y, strbuf, wk->font, col );
 	GFL_STR_DeleteBuffer( strbuf );
@@ -3485,8 +3526,8 @@ static void pwm_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
 	s32				off;
 	s32				buf[2];
 	BOOL			bflg;
-  u32       NewFlag;
-  u32       UpFlag;
+	u32				NewFlag;
+	u32				UpFlag;
 	GFL_CLACTPOS	pos;
 	
 	// 初期化
@@ -3515,32 +3556,32 @@ static void pwm_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
 	//
 	// (0-6),(-1),(7)の順番
 	for(i=0;i<PKWD_RECORD_MONITOR_LIST_MAX;i++){
-		if(wk->FlagBuffer[buf[0]+i].stateflag == 1){
+		if(wk->FlagBuffer[buf[0]+i].stateflag & FLG_PWRM_NEW){
 			NewFlag |= (1<<i);
 		}
-		else if(wk->FlagBuffer[buf[0]+i].stateflag == 2){
+		if(wk->FlagBuffer[buf[0]+i].stateflag & FLG_PWRM_UP){
 			UpFlag |= (1<<i);
-    }
-
+		}
 	}
 	//
 	// 0でない場合=>上側がある
 	if(buf[0] > 0){
-		if(wk->FlagBuffer[buf[0]-1].stateflag == 1){
+		if(wk->FlagBuffer[buf[0]-1].stateflag & FLG_PWRM_NEW){
 			NewFlag |= (1<<PKWD_RECORD_MONITOR_LIST_MAX);
 		}
-		else if(wk->FlagBuffer[buf[0]-1].stateflag == 2){
+		if(wk->FlagBuffer[buf[0]-1].stateflag & FLG_PWRM_UP){
 			UpFlag |= (1<<PKWD_RECORD_MONITOR_LIST_MAX);
-    }
+		}
 	}
+	//
 	// 下側にデータがある場合
 	if((buf[0]+PKWD_RECORD_MONITOR_LIST_MAX) < wk->ScenarioMax){
-		if(wk->FlagBuffer[buf[0]+PKWD_RECORD_MONITOR_LIST_MAX].stateflag == 1){
+		if(wk->FlagBuffer[buf[0]+PKWD_RECORD_MONITOR_LIST_MAX].stateflag & FLG_PWRM_NEW){
 			NewFlag |= (1<<(PKWD_RECORD_MONITOR_LIST_MAX+1));
 		}
-		else if(wk->FlagBuffer[buf[0]+PKWD_RECORD_MONITOR_LIST_MAX].stateflag == 1){
+		if(wk->FlagBuffer[buf[0]+PKWD_RECORD_MONITOR_LIST_MAX].stateflag & FLG_PWRM_UP){
 			UpFlag |= (1<<(PKWD_RECORD_MONITOR_LIST_MAX+1));
-    }
+		}
 	}
 	//
 	// ここまでで、NewFlag,UpFlagがセットされる
@@ -3549,13 +3590,13 @@ static void pwm_chk_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode 
 		bflg = FALSE;
 		if(NewFlag & (1<<i)){
 			bflg = TRUE;
-      // newマーク
-      pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_NEW );
+			// newマーク
+			pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_NEW );
 		}
 		else if(UpFlag & (1<<i)){
 			bflg = TRUE;
-      // upマーク
-      pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_UP );
+			// upマーク
+			pwm_chg_objseq( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, CLWK_LIST_ANM_SEQ_UP );
 		}
 		pwm_set_obj_visible( wk, CLWKMODE_LIST, CLWK_LIST_NEW_00+i, bflg );
 	}
@@ -3666,7 +3707,36 @@ static void pwm_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
       G2_ChangeBlendAlpha(ev1, ev2);
     }
   }
-
+  
+	// 評価マークのonチェック
+	{
+		s32		i;
+		
+		// Rを押しながら
+		if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+			// X:GOOD
+			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
+				for(i=0;i<wk->ScenarioMax;i++){
+					POKEWOOD_SAVEDATA_SetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_SUCCESS, wk->FlagBuffer[i].openid );
+					wk->FlagBuffer[i].stateflag |= FLG_PWRM_GOOD;
+				}
+			}
+			// Y:BAD
+			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+				for(i=0;i<wk->ScenarioMax;i++){
+					POKEWOOD_SAVEDATA_SetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_BAD, wk->FlagBuffer[i].openid );
+					wk->FlagBuffer[i].stateflag |= FLG_PWRM_BAD;
+				}
+			}
+			// A:STRANGE
+			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+				for(i=0;i<wk->ScenarioMax;i++){
+					POKEWOOD_SAVEDATA_SetPokewoodFlag( wk->Param->pokewood_sv, PWSV_TYPE_SENARIO_STRANGE, wk->FlagBuffer[i].openid );
+					wk->FlagBuffer[i].stateflag |= FLG_PWRM_STRANGE;
+				}
+			}
+		}
+	}
 #endif
 }
 

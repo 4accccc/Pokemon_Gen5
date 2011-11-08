@@ -4529,6 +4529,7 @@ static u32 pwb_main_framelist( PKWD_BOOK_MAIN_WORK * wk )
 static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 {
 	s16			flg=0;
+	s16			mflg=0;
 	
 	switch(mode){
 		case 0:								// 項目をタッチ
@@ -4555,6 +4556,7 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		case FRAMELIST_RET_JUMP_TOP:		// top
 		case FRAMELIST_RET_JUMP_BOTTOM:		// bottom
 			flg = 1;
+			mflg = 1;
 			break;
 		//
 		case FRAMELIST_RET_MOVE:			// move
@@ -4578,6 +4580,14 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		else if(wk->Flag & FLG_RIGHT_ANIM){
 			// 右シーケンス変更
 			pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
+		}
+		// LRの処理
+		// スクロールのcallbackは呼ばれないため、
+		// newマークが更新されない
+		// =>ここで処理を通すようにする
+		if(mflg == 1){
+			// 再計算(端になるので初期化(1)でよい)
+			pwb_chk_newmark( wk, 1 );
 		}
 	}
 	// 決定
