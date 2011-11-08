@@ -162,3 +162,72 @@ extern void HABITATLIST_SAVE_SetDefaultGround( HABITATLIST_SAVE *p_sv , u16 grou
 //-----------------------------------------------------------------------------
 extern u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv );
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーン全捕獲コンプリートフラグ取得（生息地リストでイベントを見たタイミングで設定されています）
+ *
+ *	@param	*p_sv 
+ *	@param	habitat_zone_id ゾーンインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーン全捕獲コンプリートフラグ設定
+ *
+ *	@param	*p_sv 
+ *	@param	habitat_zone_id ゾーンインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  見たコンプリートチュートリアルフラグを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval 1の時既にチュートリアルを見てる
+ */
+//-----------------------------------------------------------------------------
+extern u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  捕獲コンプリートチュートリアルフラグを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval 1の時既にチュートリアルを見てる
+ */
+//-----------------------------------------------------------------------------
+extern u8 HABITATLIST_SAVE_GetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  見たコンプリートチュートリアルフラグをセット
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  捕獲コンプリートチュートリアルフラグをセット
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void HABITATLIST_SAVE_SetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
+

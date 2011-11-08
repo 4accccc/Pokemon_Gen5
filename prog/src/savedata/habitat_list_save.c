@@ -28,6 +28,8 @@ typedef struct {
   u32 ground_status:2;
   u32 waterside_status:2;
   u32 fishing_status:2;
+  u32 zone_complete_flg:1;
+  u32 pad:1;
 } HABITAT_ZONE_STATUS_DATA;
 
 // 取得用共用体
@@ -59,9 +61,11 @@ struct _HABITATLIST_SAVE
   //TODO せいそくちリスト実装者が中のパラメータ決めてください。
   //HABITATLIST_SAVE_WORK_SIZEの大きさで足りなかったら増やしてください
   //あと100byte程度は増やせるはず…。詳しくはblock 70のalignを見てください。
-  u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX-4];
+  u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX-6];
   u8  zone_status[HABITATLIST_ZONE_ID_MAX];
   HABITAT_ZONE_DATA list_data;
+  u8 look_tutorial_flag;
+  u8 get_tutorial_flag;
 };
 
 SDK_COMPILER_ASSERT( sizeof(HABITATLIST_SAVE) == HABITATLIST_SAVE_WORK_SIZE );
@@ -142,6 +146,43 @@ HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 ha
     GF_ASSERT(0);
     return HABITAT_ZONE_STATUS_NONE;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーン全捕獲コンプリートフラグ取得（生息地リストでイベントを見たタイミングで設定されています）
+ *
+ *	@param	*p_sv 
+ *	@param	habitat_zone_id ゾーンインデックス
+ *
+ *	@retval 0の時、まだゾーン全コンプリートイベントを見ていない
+ */
+//-----------------------------------------------------------------------------
+u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
+{
+  HABITAT_ZONE_STATUS_DATA_PACK status;
+  status  = GetZoneStatus( p_sv ,habitat_zone_id );
+  return status.data.zone_complete_flg;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーン全捕獲コンプリートフラグ設定
+ *
+ *	@param	*p_sv 
+ *	@param	habitat_zone_id ゾーンインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
+{
+  HABITAT_ZONE_STATUS_DATA_PACK set_data;
+  set_data  = GetZoneStatus( p_sv ,habitat_zone_id );
+
+  // フラグ設定
+  set_data.data.zone_complete_flg = 1;
+  SetZoneStatus( p_sv,habitat_zone_id , set_data );
 }
 
 //----------------------------------------------------------------------------
@@ -304,5 +345,61 @@ void HABITATLIST_SAVE_SetDefaultGround( HABITATLIST_SAVE *p_sv , u16 ground_type
 u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv )
 {
   return p_sv->list_data.default_ground_type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  見たコンプリートチュートリアルフラグを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval 1の時既にチュートリアルを見てる
+ */
+//-----------------------------------------------------------------------------
+u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
+{
+  return p_sv->look_tutorial_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  捕獲コンプリートチュートリアルフラグを取得
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval 1の時既にチュートリアルを見てる
+ */
+//-----------------------------------------------------------------------------
+u8 HABITATLIST_SAVE_GetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
+{
+  return p_sv->get_tutorial_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  見たコンプリートチュートリアルフラグをセット
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
+{
+  p_sv->look_tutorial_flag = 1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  捕獲コンプリートチュートリアルフラグをセット
+ *
+ *	@param	*p_sv 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITATLIST_SAVE_SetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
+{
+  p_sv->get_tutorial_flag = 1;
 }
 
