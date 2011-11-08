@@ -7726,23 +7726,24 @@ NPC：ASSISTANTM
 			<Text>キミも　このエリア５まで
 たどりついたようだね▼
 あれから　さらに　しらべて
-しんじじつが　わかったよ▼
-ここは　さいきょうと　いわれた
-あるトレーナーに　たいこうするため▼
-トレーナーを　そだてる
-しせつだったようだ▼
-たが　このばしょを　けんせつした
-そしきが　かいめつ▼
-いまの　ざいだんが　このばしょを
-かいとり　いっぱんの　トレーナーに▽
-かいほうしたらしい▼
-それからというもの　いつのまにか
-つわものを　もとめる　トレーナーが▽
-あつまるばしょに　なったようだ▼
-さいきょうとは　なんなのか▼
-いまでも　その　こたえを　さがして
-たたかう　トレーナーも　いるのだろう▼
-さて　ここでの　ちょうさも　おわったし
+きょうみぶかいことが　わかったよ▼
+ここの　ほんとうの　もくてきは
+ポケモンの　たたかいを▽
+けんきゅうすること　みたいだ▼
+たたかいを　もとめるトレーナーは
+よろこんで　このばしょに　あつまる▼
+そして　トレーナーの　たたかいを
+モニターし　データを　あつめる▼
+つよいトレーナーが　さらに
+つよいトレーナーを　よびよせる▼
+ぼうだいな　たたかいの　データが
+あつまっていると　おもうよ▼
+でも　ポケモンの　つよさは
+データだけじゃ　きまらない▼
+ポケモンとの　チームワーク▼
+それが　あって　はじめて　ほんとうの
+つよさに　なるんじゃないかな▼
+さて　ここの　もくてきも　ちょうさしたし
 わたしは　つぎの　ちょうさに　いくよ▼
 しぜんゆたかな　まちに　とつじょ
 あらわれた　ふしぎな　たいじゅの▽
@@ -7752,7 +7753,7 @@ NPC：ASSISTANTM
 ねがっているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-29T07:08:03" />
+				Time="2011-11-08T06:18:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7763,23 +7764,23 @@ NPC：ASSISTANTM
 			<Text>キミも　このエリア５まで
 たどり着いたようだね▼
 あれから　さらに　調べて
-真実が　わかったよ▼
-ここは　最強と　いわれた
-あるトレーナーに　対抗するため▼
-トレーナーを　育てる
-施設だったようだ▼
-たが　この場所を　建設した
-組織が　壊滅▼
-今の　財団が　この場所を
-買い取り　一般の　トレーナーに▽
-開放したらしい▼
-それからというもの　いつのまにか
-つわものを　求める　トレーナーが▽
-集まる場所に　なったようだ▼
-最強とは　なんなのか▼
-今でも　その　答えを　探して
-戦う　トレーナーも　いるのだろう▼
-さて　ここでの　調査も　終ったし
+興味深いことが　わかったよ▼
+ここの　本当の　目的は　ポケモンの
+戦いを　研究すること　みたいだ▼
+戦いを　求めるトレーナーは
+喜んで　この場所に　集まる▼
+そして　トレーナーの　戦いを
+モニターし　データを　集める▼
+強いトレーナーが　さらに
+強いトレーナーを　呼び寄せる▼
+膨大な　戦いの　データが
+集まっていると　思うよ▼
+でも　ポケモンの　強さは
+データだけじゃ　決まらない▼
+ポケモンとの　チームワーク▼
+それが　あって　はじめて　本当の
+強さに　なるんじゃないかな▼
+さて　ここの　目的も　調査したし
 わたしは　次の　調査に　行くよ▼
 自然豊かな　街に　突如現れた
 不思議な　大樹の▽
@@ -7788,7 +7789,7 @@ NPC：ASSISTANTM
 手に　いれられることを　願っているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-29T07:08:32" />
+				Time="2011-11-08T06:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8075,25 +8076,23 @@ NPC：FIGHTERM
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっと　またあえたな
-たんさくは　すすんでいるか？▼
+			<Text>おっと　またあえたな▼
 そうそう　おもしろいはなしを
 きいたから　おしえてやるよ▼
-うわさなんだが　このばしょは
-まだまだ　たんさくが　おわって▽
-いないらしい▼
-こうして　トレーナーに
-たんれんの　ばしょとして▽
-ていきょうしながら▼
-たんさくを　いまだに　すすめて
-いるんだとさ▼
-キミのような　ちょうせんしゃが
-いつか　このばしょの　さいしんぶに▽
-とうたつするのかも　しれないな▼
+このばしょは　あるほごだんたいが
+たんさくを　したあとに▼
+いっぱんに　かいほうされたのは
+しってるか？▼
+なんで　こんなばしょを　たんれんの
+ばしょとして　かいほうしたんだろうな▼
+まあ　これだけ　ひろいばしょなら
+まわりを　きにしないで
+たいせんできるし▽
+しゅぎょうにも　なるから　いいけどさ▼
 それじゃ　またな▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:28:49" />
+				Time="2011-11-08T06:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8101,25 +8100,21 @@ NPC：FIGHTERM
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっと　また会えたな
-探索は　進んでいるか？▼
+			<Text>おっと　また会えたな▼
 そうそう　おもしろい話を
 聞いたから　教えてやるよ▼
-うわさなんだが　この場所は
-まだまだ　探索が　終って▽
-いないらしい▼
-こうして　トレーナーに　
-鍛錬の　場所として▽
-提供しながら▼
-探索を　今だに　進めて
-いるんだとさ▼
-キミのような　挑戦者が
-いつか　この場所の　最深部に▽
-到達するのかも　しれないな▼
+この場所は　ある保護団体が
+探索を　した後に　一般に▽
+開放されたのは　知ってるか？▼
+なんで　こんな場所を　鍛錬の
+場所として　開放したんだろうな▼
+まあ　これだけ　広い場所なら
+周りを　気にしないで　対戦できるし▽
+修行にも　なるから　いいけどさ▼
 それじゃ　またな▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-09T01:28:49" />
+				Time="2011-11-08T06:50:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8144,22 +8139,22 @@ NPC：FIGHTERM
 			Language="JPN">
 			<Text>キミも　このエリア５まで
 たどりついたようだな▼
-もっと　おもしろい　はなしを
-きいたから　おしえてやるよ▼
-ここは　さいきょうと　いわれた
-あるトレーナーと　ほごだんたいが▼
-きょうりょくして　たんさくを
-すすめていた　ばしょだったらしい▼
-その　トレーナーが　エリア５までの
-あんぜんを　かくほした　のちに▼
-ほごだんたいが　このばしょを
-いっぱんの　トレーナーに▽
-かいほうしたんだとさ▼
-そのトレーナーも　たんさくと
-しゅぎょうを　していた　らしい▼
-さらなるたかみを　めざすため
-どりょくを　おこたらない▽
-ひとだったようだな▼
+そうそう　おれたち　トレーナーに
+このばしょを　ていきょうしている▽
+りゆうが　わかったぜ▼
+じつは　このばしょは
+まだまだ　たんさくが▽
+おわって　いないらしい▼
+そこで　トレーナーに　たんれんの
+ばしょとして　ていきょうしながら▼
+つよい　トレーナーには　じゅどうの
+おくちに　すすんで　もらいながら▽
+たんさくを　すすめているんだとさ▼
+ポケモンと　つよい　きずなで
+むすばれた▼
+キミのような　ちょうせんしゃが
+いつか　このばしょの　さいしんぶに▽
+とうたつするのかも　しれないな▼
 さて　ここでの　しょうぎょうは
 ここまでだ▼
 おれは　つぎの　しゅぎょうとして
@@ -8169,7 +8164,7 @@ NPC：FIGHTERM
 おたがいに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-29T07:31:17" />
+				Time="2011-11-08T06:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8179,22 +8174,20 @@ NPC：FIGHTERM
 			Language="JPN_KANJI">
 			<Text>キミも　このエリア５まで
 たどり着いたようだな▼
-もっと　おもしろい　話を
-聞いたから　教えてやるよ▼
-ここは　最強と　いわれた
-あるトレーナーと　保護団体が▼
-協力して　探索を
-進めていた　場所だったらしい▼
-その　トレーナーが　エリア５までの
-安全を　確保した　後に▼
-保護団体が　この場所を
-一般の　トレーナーに▽
-開放したんだとさ▼
-そのトレーナーも　探索と
-修行を　していた　らしい▼
-さらなる高みを　目指すため
-努力を　怠らない▽
-人だったようだな▼
+そうそう　おれたち　トレーナーに
+この場所を　提供している▽
+理由が　わかったぜ▼
+じつは　この場所は　まだまだ
+探索が　終って　いないらしい▼
+そこで　トレーナーに　鍛錬の
+場所として　提供しながら▼
+強い　トレーナーには　樹洞の
+奥地に　進んで　もらいながら▽
+探索を　進めて　いるんだとさ▼
+ポケモンと　強い　絆で　結ばれた
+キミのような　挑戦者が▼
+いつか　この場所の　最深部に
+到達するのかも　知れないな▼
 さて　ここでの　修行は　ここまでだ▼
 おれは　次の　修行として
 ある都会に　突如できた▽
@@ -8203,7 +8196,7 @@ NPC：FIGHTERM
 お互いに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-10-29T07:31:29" />
+				Time="2011-11-08T06:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16168,76 +16161,6 @@ NPC：MUGENBOSS（バンジロウ）
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:56" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_elevator_06_w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>くろのまてんろう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:18:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>くろのまてんろう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:19:53" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>到着</Comment>
-			<CommentModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:59:21" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_elevator_06_b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>しろのじゅどう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:19:50" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>しろのじゅどう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
-			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T11:30:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:19:55" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>到着</Comment>
-			<CommentModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-11-07T10:59:23" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
