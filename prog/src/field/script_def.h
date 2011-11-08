@@ -720,6 +720,11 @@
 #define SCR_WBT_MIX_TARGET_ENEMY1     (2)     ///<ミックス選択：相手手持ち１（＝自分の選択）
 #define SCR_WBT_MIX_TARGET_ENEMY2     (3)     ///<ミックス選択：相手手持ち２（＝自分の選択）
 
+#define SCR_WBT_RENTAL_TYPE_1         (0)     ///<レンタル種別：弱いポケモン抽選
+#define SCR_WBT_RENTAL_TYPE_2         (1)     ///<レンタル種別：強いポケモン抽選
+#define SCR_WBT_RENTAL_TYPE_3         (2)     ///<レンタル種別：弱い強い混ぜて抽選
+
+
 
 #define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置

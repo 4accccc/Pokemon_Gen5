@@ -13625,12 +13625,14 @@
 //--------------------------------------------------------------
 /**
  * @brief WBTÅFÉåÉìÉ^ÉãópÇÃéËéùÇøê∂ê¨
+ * @param[in] rental_type
  */
 //--------------------------------------------------------------
-#define _WBT_SETUP_RENTAL_PARTY() \
-    _ASM_WBT_SETUP_RENTAL_PARTY
-    .macro  _ASM_WBT_SETUP_RENTAL_PARTY
+#define _WBT_SETUP_RENTAL_PARTY( rental_type ) \
+    _ASM_WBT_SETUP_RENTAL_PARTY rental_type
+    .macro  _ASM_WBT_SETUP_RENTAL_PARTY rental_type
     .short  EV_SEQ_WBT_SETUP_RENTAL_PARTY
+    .short  \rental_type
     .endm
 
 //--------------------------------------------------------------

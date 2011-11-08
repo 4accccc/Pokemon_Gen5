@@ -68,6 +68,14 @@ typedef enum {
   WBTMIX_TARGET_NUM,
 }WBTMIX_TARGET;
 
+typedef enum {
+  WBTRENT_TYPE_WEAK = 0,    ///<レンタル選択：弱いグループから
+  WBTRENT_TYPE_STRONG,      ///<レンタル選択：強いグループから
+  WBTRENT_TYPE_ALL,         ///<レンタル選択：強弱両方のグループから
+
+  WBTRENT_TYPE_NUM,
+}WBTRENT_TYPE;
+
 //------------------------------------------------------------------
 /// WBT会場の観客パターン数
 //------------------------------------------------------------------
@@ -195,7 +203,8 @@ extern void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
     HEAPID tempHeapID,
     u16 use_poke_cnt, const u16 * use_poke_table,
     ARCID arc_id, u8 num, GFL_STD_RandContext * rand );
-extern void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 place_id );
+extern void WBTSYS_SetupMyRentalParty(
+    WBTSYS * wbtsys, WBTRENT_TYPE rent_type, const MYSTATUS * mystatus, u16 place_id );
 extern void WBTSYS_SetupEnemyRentalParty( WBTSYS * wbtsys );
 
 extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup );

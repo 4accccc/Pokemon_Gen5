@@ -141,7 +141,7 @@ while line = file_csv.gets
     get_itemsym(file_id,get_csvdata(csvdata,count,CSVNO_ITEMNAME)) )
   
   if( get_csvdata(csvdata,count,CSVNO_ITEMSYM) == nil )
-    printf( "ERROR アイテム名 %s はありません\n",
+    printf( "ERROR アイテム名 \"%s\" はありません\n",
            get_csvdata(csvdata,count,CSVNO_ITEMNAME) )
     error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
     exit 1

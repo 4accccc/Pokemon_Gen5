@@ -264,8 +264,9 @@ VMCMD_RESULT EvCmdWBTSetupRentalParty( VMHANDLE * core, void * wk )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   const MYSTATUS * myStatus = GAMEDATA_GetMyStatus( gamedata );
   u16 place_id = ZONEDATA_GetPlaceNameID( SCRCMD_WORK_GetZoneID( wk ) );
+  u16 rental_type  = SCRCMD_GetVMWorkValue( core, wk );
 
-  WBTSYS_SetupMyRentalParty( wbtsys, myStatus, place_id );
+  WBTSYS_SetupMyRentalParty( wbtsys, rental_type, myStatus, place_id );
   TAMADA_Printf("EvCmdWBTSetupRentalParty\n");
   return VMCMD_RESULT_CONTINUE;
 }

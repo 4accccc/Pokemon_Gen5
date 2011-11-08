@@ -422,6 +422,42 @@ void WBTSYS_ChooseBSubwayData( u16 * index_array, WBT_NGPMINFO * ng_info,
 
 //------------------------------------------------------------------
 /**
+ * @brief レンタルの抽選範囲を決定する
+ * @param[in]   wbtcup      トーナメント種別
+ * @param[in]   rent_type   レンタル時の指定
+ * @param[out]  idx_s       範囲開始位置
+ * @param[out]  idx_e       範囲終了位置
+ */
+//------------------------------------------------------------------
+static void getRentalRange( WBTCUP wbtcup, WBTRENT_TYPE rent_type, u16 * idx_s, u16 * idx_e )
+{
+  static u16 rent_idx_table[WBTRENT_TYPE_NUM][2][2] = {
+  //WBTRENT_TYPE_WEAK
+    {
+      {   1, 132 }, { 209, 558 },
+    },
+  //WBTRENT_TYPE_STRONG
+    {
+      { 133, 208 }, { 559, 908 },
+    }
+  };
+
+  int index;
+
+  switch ( wbtcup )
+  {
+  default:
+    GF_ASSERT( 0 );
+  case WBTCUP_RENTAL:       index = 0; break;
+  case WBTCUP_RENTALMASTER: index = 1; break;
+  }
+
+  *idx_s = rent_idx_table[rent_type][index][0];
+  *idx_e = rent_idx_table[rent_type][index][1];
+}
+
+//------------------------------------------------------------------
+/**
  */
 //------------------------------------------------------------------
 static void WBTSYS_SetupRentalParty(
@@ -507,7 +543,8 @@ static void WBTSYS_SetupRentalParty(
  *  ここから手持ちを選択するため、6体生成する
  */
 //------------------------------------------------------------------
-void WBTSYS_SetupMyRentalParty( WBTSYS * wbtsys, const MYSTATUS * mystatus, u16 place_id )
+void WBTSYS_SetupMyRentalParty(
+    WBTSYS * wbtsys, WBTRENT_TYPE rent_type, const MYSTATUS * mystatus, u16 place_id )
 {
   u32 tr_id = GFUser_GetPublicRand( 0 );
     
