@@ -1507,7 +1507,8 @@ static GMEVENT_RESULT debugMenuEncEffListEvent(
     break;
   case 3:
     if( GFL_FADE_CheckFade() == FALSE ){
-      return( GMEVENT_RES_FINISH );
+      (*seq) = 0;
+      //return( GMEVENT_RES_FINISH );
     }
   }
 
