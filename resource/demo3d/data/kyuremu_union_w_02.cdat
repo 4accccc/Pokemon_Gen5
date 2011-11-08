@@ -66,12 +66,10 @@ static const DEMO3D_CMD_DATA demo3d_cmd_kyuremu_union_w_02_end_data[] = {
 
 static const u16 res_kyuremu_union_w_02_file_kyuremu_union_w_02[] = {
  NARC_data_demo3d_kyuremu_union_w_02_nsbmd,
- NARC_data_demo3d_kyuremu_union_w_02_nsbtp,
- NARC_data_demo3d_kyuremu_union_w_02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_kyuremu_union_w_02_file_unit_kyuremu_union_w_02[] = {
- { res_kyuremu_union_w_02_file_kyuremu_union_w_02, 3 },
+ { res_kyuremu_union_w_02_file_kyuremu_union_w_02, 1 },
 };
 
 ///========================================================
