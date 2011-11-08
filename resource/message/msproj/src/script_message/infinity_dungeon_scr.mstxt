@@ -7753,7 +7753,7 @@ NPC：ASSISTANTM
 ねがっているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:18:21" />
+				Time="2011-11-08T08:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7789,7 +7789,7 @@ NPC：ASSISTANTM
 手に　いれられることを　願っているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:18:31" />
+				Time="2011-11-08T09:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8092,7 +8092,7 @@ NPC：FIGHTERM
 それじゃ　またな▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:50:31" />
+				Time="2011-11-08T08:58:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8114,7 +8114,7 @@ NPC：FIGHTERM
 それじゃ　またな▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:50:23" />
+				Time="2011-11-08T08:59:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8164,7 +8164,7 @@ NPC：FIGHTERM
 おたがいに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:38:17" />
+				Time="2011-11-08T08:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8196,7 +8196,7 @@ NPC：FIGHTERM
 お互いに　がんばろうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T06:37:38" />
+				Time="2011-11-08T08:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16161,6 +16161,76 @@ NPC：MUGENBOSS（バンジロウ）
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_elevator_06_w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのまてんろう
+エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T11:30:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろのまてんろう
+エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T11:30:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:19:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>到着</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:59:21" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_elevator_06_b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのじゅどう
+エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T11:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しろのじゅどう
+エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T11:30:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:19:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>到着</Comment>
+			<CommentModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-07T10:59:23" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
