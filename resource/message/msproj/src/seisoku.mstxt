@@ -2568,11 +2568,11 @@
 		Label="msg_seisoku_result_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place ]　はし
+			<Text>[Name:Place ]の
 すべての　ポケモンを　つかまえました</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:01:34" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -2580,11 +2580,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]　橋
+			<Text>[Name:Place ]の
 すべての　ポケモンを　捕まえました</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:01:49" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2604,11 +2604,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place ]　はし
+			<Text>[Name:Place ]の
 すべての　ポケモンを　みました</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:03:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -2616,11 +2616,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]　橋
+			<Text>[Name:Place ]の
 すべての　ポケモンを　みました</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:03:26" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2987,7 +2987,7 @@
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3072,6 +3072,13 @@
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-08T06:02:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_seisoku_explain_02"
@@ -3112,5 +3119,55 @@
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-08T06:02:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_seisoku_complete_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Place ]
+すべての　ポケモンを　つかまえました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:56:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:54:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Place ]
+全ての　ポケモンを　捕まえました</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:56:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:54:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>草むら・水上・釣りにおいて
+全て「ほかく」の条件を達成している時に表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-08T11:54:54" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
