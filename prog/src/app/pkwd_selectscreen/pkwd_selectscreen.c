@@ -1142,7 +1142,7 @@ static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 #define SUBTITLE_WIN2_H  (  4 )
 #define MSGWIN_W      ( 28 )
 #define MSGWIN_H      (  4 )
-#define TITLE_PAL     ( 10 )
+#define TITLE_PAL     ( 13 )
 #define SUBTITLE_PAL  ( 14 )
 #define MSGWINFRAME_PAL   ( 14 )
 #define MSGWIN_PAL        ( 15 )
@@ -1422,10 +1422,10 @@ static void _draw_titlelist( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     if(wk->load_result[i]){
       GFL_MSG_GetString( wk->msg, pw_screen_01+i, strbuf );
       PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4, strbuf, 
-                             wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+                             wk->font, PRINTSYS_LSB_Make( 1, 5, 0 ) );
       GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[i], strbuf );
       PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4+16, strbuf, 
-                             wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+                             wk->font, PRINTSYS_LSB_Make( 1, 5, 0 ) );
       PrintTool_ScreenTrans( wk, i );		// ƒXƒNƒŠ[ƒ““]‘—
 
     }
