@@ -258,24 +258,6 @@ void C12_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   C12_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-
-      // 表示設定
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_INTRO_DEMO_SP, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_INTRO_DEMO_SU, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_INTRO_DEMO_AU, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_INTRO_DEMO_WI, TRUE );
-
-      C12_GIMMICK_AnmStart( gsys );
-    }
-  }
-#endif
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
