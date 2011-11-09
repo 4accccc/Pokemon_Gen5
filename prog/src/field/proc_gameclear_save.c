@@ -229,7 +229,6 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 {
   GAMECLEAR_MSG_WORK * wk = mywk;
   GAMECLEAR_MSG_PARAM * para = pwk;
-  const u16 pal_white[]={0xffff};     //下画面0番パレット潰す用データ
 
   int trg = GFL_UI_KEY_GetTrg();
 
@@ -248,9 +247,12 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
       G2_BlendNone();
       GX_SetVisiblePlane( GX_PLANEMASK_BG0 );
       if(GetVersion()==VERSION_B2){
+        const u16 pal_b[]={0};     //下画面0番パレット潰す用データ
+        GXS_LoadBGPltt( pal_b, 0, 2);
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
       }else{
-        GXS_LoadBGPltt( pal_white, 0, 2);
+        const u16 pal_w[]={0xffff};     //下画面0番パレット潰す用データ
+        GXS_LoadBGPltt( pal_w, 0, 2);
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 0 );
       }
     }

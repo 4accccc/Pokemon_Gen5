@@ -31,7 +31,7 @@
 #include "event_demo3d.h"
 #include "move_pokemon.h" 
 #include "proc_gameclear_save.h"
-
+#include "net_app/key_system.h"
 #include "savedata/medalbox.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -57,6 +57,7 @@ typedef struct {
   DENDOUDEMO_PARAM    dendouDemoParam;    // 殿堂入り デモのパラメータ
   STAFFROLL_DATA      staffRollDemoParam; // スタッフロール デモのパラメータ
   THE_END_PARAM       theEndDemoParam;    // 「THE END」デモ画面用のパラメータ
+  KEY_SYSTEM_PARAM    keySystemParam;     // クリア時のキー入手デモパラメータ
 
   int nowSeq; // 現在のシーケンス
   int seqArray[ MAX_SEQ_NUM ]; // 実行シーケンス配列
@@ -80,6 +81,7 @@ enum {
   GMCLEAR_SEQ_STAFF_ROLL_WAIT,  // スタッフロール終了待ち
   GMCLEAR_SEQ_ENDING_DEMO,      // エンディングデモ
   GMCLEAR_SEQ_CLEAR_SCRIPT,     // ゲームクリアスクリプト処理
+  GMCLEAR_SEQ_GET_CLEAR_KEY,    // クリア時のキー入手デモ
   GMCLEAR_SEQ_SAVE_MESSAGE,     // セーブ中メッセージ表示
   GMCLEAR_SEQ_FRAME_WAIT,       // フレーム経過待ち
   GMCLEAR_SEQ_THE_END,          //「THE END」表示
@@ -201,6 +203,20 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     SCRIPT_CallGameClearScript( gsys, HEAPID_PROC ); 
     NowSeqFinish( work, seq );
     break; 
+
+  case GMCLEAR_SEQ_GET_CLEAR_KEY:
+    //念のため、既に持っていたら出さない
+    {
+      KEY_SYSTEM_SAVE *p_key_sv = SAVE_CONTROL_GetKeySystem(save);
+      if( !KEY_SYSTEM_SAVE_IsHave(p_key_sv, work->keySystemParam.get_key) )
+      {
+        GMEVENT_CallProc( event, 
+            FS_OVERLAY_ID(key_system), &KEY_SYSTEM_ProcData, &work->keySystemParam );
+      }
+    }
+    NowSeqFinish( work, seq );
+    break;
+
   case GMCLEAR_SEQ_SAVE_MESSAGE:
     GMEVENT_CallProc( event, 
         FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, &work->para_child );
@@ -265,6 +281,18 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   // デモパラメータを設定
   SetupDendouDemoParam( gcwk );    // 殿堂入り
   SetupStaffRollDemoParam( gcwk ); // スタッフロール
+  {
+    gcwk->keySystemParam.p_gamedata = gamedata;
+    gcwk->keySystemParam.mode       = KEY_SYSTEM_MODE_GET;
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      gcwk->keySystemParam.get_key    = KEY_SYSTEM_TYPE_DIFFICULT_HARD;
+    }
+    else
+    {
+      gcwk->keySystemParam.get_key    = KEY_SYSTEM_TYPE_DIFFICULT_EASY;
+    }
+  }
 
   // 実行するシーケンスの流れを決定
   SetupSequence( gcwk );
@@ -344,6 +372,8 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_GET_CLEAR_KEY;
     work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
     work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
