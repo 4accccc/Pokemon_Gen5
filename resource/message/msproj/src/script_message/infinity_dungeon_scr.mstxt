@@ -4374,11 +4374,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　いける▼
 それが　わかって　うれしいぜ！▼
-サンキュー！▼
-また　ぜんりょくで　しょうぶな！▼</Text>
+そうだ！　あとで　じーちゃんの
+いえに　きてくれよ▼
+この　たたかいの　きねんに
+わたしたいものが　あるからさ！▼
+やくそくだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-29T03:53:26" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T09:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4396,11 +4399,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　行ける▼
 それが　わかって　うれしいぜ！▼
-サンキュー！▼
-また　全力で　勝負な！▼</Text>
+そうだ！　あとで　じーちゃんの
+家に　来てくれよ▼
+この　戦いの　記念に
+渡したいものが　あるからさ！▼
+約束だぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-29T03:53:58" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T09:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5064,11 +5070,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　いける▼
 それが　わかって　うれしいぜ！▼
-サンキュー！▼
-また　ぜんりょくで　しょうぶな！▼</Text>
+そうだ！　あとで　じーちゃんの
+いえに　きてくれよ▼
+この　たたかいの　きねんに
+わたしたいものが　あるからさ！▼
+やくそくだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-29T03:54:07" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T09:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5086,11 +5095,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　行ける▼
 それが　わかって　うれしいぜ！▼
-サンキュー！▼
-また　全力で　勝負な！▼</Text>
+そうだ！　あとで　じーちゃんの
+家に　来てくれよ▼
+この　戦いの　記念に
+渡したいものが　あるからさ！▼
+約束だぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-29T03:54:07" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T09:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16171,10 +16183,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>しろのじゅどう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T09:50:57" />
+				Time="2011-11-09T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16183,10 +16195,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>白の樹洞
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T09:51:36" />
+				Time="2011-11-09T09:32:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16206,10 +16218,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>くろのまてんろう
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T09:51:05" />
+				Time="2011-11-09T09:31:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -16218,10 +16230,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>黒の摩天楼
-エリア[Digit:2digits ]　[Digit:2digits Idx="1" ]かい</Text>
+エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-08T09:51:44" />
+				Time="2011-11-09T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
