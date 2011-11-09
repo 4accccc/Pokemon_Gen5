@@ -68,11 +68,11 @@
 			Language="JPN">
 			<Text>ポケモンセンターは　タダで
 ポケモンの　かいふくが　できるの！▼
-あなたの　ポケモンも　よわったら
-ここで　かいふく　させてあげてね▼</Text>
+ポケモンが　よわったら
+えんりょなく　あずけると　いいよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T12:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82,11 +82,11 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターは　タダで
 ポケモンの　回復が　できるの！▼
-あとで　あなたも　ポケモンを
-回復させてあげると　いいよ▼</Text>
+ポケモンが　弱ったら
+遠慮なく　あずけると　いいよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T12:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -130,11 +130,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せっかくだから　ポケモンの
-たいりょくかいふくを　しましょう▼</Text>
+			<Text>ポケモンの　かいふくって
+こんな　かんじ　ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:46:43" />
+				Time="2011-11-09T12:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,11 +142,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せっかくだから　ポケモンの
-体力回復を　しましょう▼</Text>
+			<Text>ポケモンの　回復って
+こんな　感じ　ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:49:18" />
+				Time="2011-11-09T12:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -156,11 +156,10 @@
 			Language="JPN">
 			<Comment>♀
 ・回復処理へ
-※アニメを途中から再生する形だが大丈夫か？
 ・続けてwhite_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:47:25" />
+				Time="2011-11-09T12:35:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -239,14 +238,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これが　パソコン！
+			<Text>この　しかくいのが　パソコン！
 トレーナーなら　だれでも　つかえるの▼
 つれている　ポケモンを　あずけたり▼
 ぎゃくに　パソコンに　あずけている
 ポケモンを　ひきだせるんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T12:36:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -254,14 +253,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これが　パソコン！
+			<Text>この　四角いのが　パソコン！
 トレーナーなら　だれでも　使えるの▼
 連れている　ポケモンを　預けたり▼
 逆に　パソコンに　預けている
 ポケモンを　引きだせるんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T12:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
