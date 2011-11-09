@@ -2309,21 +2309,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t06r0101_mugenboss_end_08"
+		Label="msg_t06r0101_mugenboss_end_08b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まってたぜ　[Name:TrainerName ]！▼
-このまえの　たたかい
-すげえ　ワクワクしたよな！▼
-やくその　いいものを　わたすぜ▼
-おれと　おまえの　たたかいの
-きねんに　このポケモンを▽
-うけとってくれ▼
-</Text>
+			<Text>よお！▼
+やくそく　だったな▼
+おいらと　おまえ▼
+さいこうの　しょうぶを　したよな▼
+その　きねんだ！▼
+フカマルを　そだててくれ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T05:56:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2331,16 +2329,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>待ってたぜ　[Name:TrainerName ]！▼
-この前の　戦い　すげえ
-ワクワクしたよな！▼
-約束の　いいものを　渡すぜ▼
-おれと　おまえの　戦いの
-記念に　このポケモンを▽
-受け取ってくれ▼</Text>
+			<Text>よお！▼
+約束だったな▼
+おいらと　おまえ▼
+最高の　勝負を　したよな▼
+その　記念だ！▼
+フカマルを　育ててくれ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T05:57:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2349,11 +2346,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・Black2ver
 ・バンジロウ撃破フラグでバンジロウ配置
-・0＝主人公名</Comment>
+・ポケモン「フカマル」入手処理
+　手持ち一杯のときは
+　続けてmugenboss_end_09</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T06:01:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:28:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2372,17 +2372,168 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t06r0101_mugenboss_end_08w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よお！▼
+やくそく　だったな▼
+おいらと　おまえ▼
+さいこうの　しょうぶを　したよな▼
+その　きねんだ！▼
+ミニリューを　そだててくれ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:26:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:24:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よお！▼
+約束だったな▼
+おいらと　おまえ▼
+最高の　勝負を　したよな▼
+その　記念だ！▼
+ミニリューを　育ててくれ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:26:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:24:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・バンジロウ撃破フラグでバンジロウ配置
+・ポケモン「ミニリュー」入手処理
+　手持ち一杯のときは
+　続けてmugenboss_end_09</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:28:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:26:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_poke_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+[Name:PokemonName Idx="1" ]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:43:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:41:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+[Name:PokemonName Idx="1" ]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:43:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝主人公名
+・1=ポケモン名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:41:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:41:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_poke_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てにいれた　[Name:PokemonName Idx="1" ]に
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:40:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:40:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てにいれた　[Name:PokemonName Idx="1" ]に
+ニックネームを　つけますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:40:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:40:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・はい/いいえの選択肢表示
+　はい　→名前入力画面に
+　いいえ→終了
+・1=ポケモン名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:51:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:41:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t06r0101_mugenboss_end_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　おまえ　てもちの
-ポケモンが　いっぱいじゃないか！▼
-まってるから　てもちを
-あけて　きてくれよ！▼</Text>
+			<Text>なんだ　おまえ！▼
+てもちが　いっぱい　なのか？▼
+わかった▼
+ここで　まってるぜ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T05:59:49" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2390,13 +2541,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　おまえ　手持ちの
-ポケモンが　一杯じゃないか！▼
-ここで　待ってるから　手持ちを
-あけて　来てくれよ！▼</Text>
+			<Text>なんだ　おまえ！▼
+手持ちが　一杯なのか？▼
+わかった▼
+ここで　待ってるぜ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T05:59:28" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2431,15 +2582,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このまえ　タマゴから　うまれたんだ
+			<Text>おまえを　みとめて　たくすんだ！▼
 だいじに　そだててくれよ▼
 [Name:TrainerName ]！▼
-おまえは　おいらの　ライバルだ▼
-また　くろのまてんろうで
-しょうぶしようぜ！▼</Text>
+くろのまてんろうで　まってる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T06:08:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:51:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2447,15 +2596,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この前　タマゴから　産まれたんだ▼
-大事に　育ててくれよ
+			<Text>おまえを　認めて　たくすんだ！▼
+大事に　育ててくれよ▼
 [Name:TrainerName ]！▼
-おまえは　おいらの　ライバルだ▼
-また　黒の摩天楼で
-勝負しようぜ！▼</Text>
+黒の摩天楼で　待ってる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T06:08:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2494,14 +2641,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいじに　そだててくれよ
+			<Text>おまえを　みとめて　たくすんだ！▼
+だいじに　そだててくれよ▼
 [Name:TrainerName ]！▼
-おまえは　おいらの　ライバルだ▼
-また　しろのじゅどうで
-しょうぶしようぜ！▼</Text>
+しろのじゅどうで　まってる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T05:54:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:57:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2509,14 +2655,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大事に　育ててくれよ
+			<Text>おまえを　認めて　たくすんだ！▼
+大事に　育ててくれよ▼
 [Name:TrainerName ]！▼
-おまえは　おいらの　ライバルだ▼
-また　白の樹洞で
-勝負しようぜ！▼</Text>
+白の樹洞で　待ってる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T06:03:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T08:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
