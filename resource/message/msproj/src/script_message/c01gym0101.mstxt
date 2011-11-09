@@ -1470,11 +1470,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンヨウブリッジ　めいぶつ
+			<Text>サンヨウレストラン　めいぶつ
 [Name:PokemonName Idx="1" ]ショー　みていかない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T08:25:44" />
+				Time="2011-11-09T06:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1958,10 +1958,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　[Name:PokemonName Idx="1" ]が
-を　もっているのね？</Text>
+こだいのどうかを　もっているのね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T08:23:58" />
+				Time="2011-11-09T07:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1970,10 +1970,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　[Name:PokemonName Idx="1" ]が
-を　持っているのね？</Text>
+こだいのどうかを　持っているのね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T08:24:53" />
+				Time="2011-11-09T07:19:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2157,10 +2157,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・メッセージ表示後
+　ポケモンをしまうアニメ
 ・イベント終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T08:28:54" />
+				Time="2011-11-09T07:21:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2362,15 +2364,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３にんで　いちにんまえ
-そう　いわれるのも　しゃくだし▼
-かといって
-３にんの　じつりょくは　よこならびで▼
-だれが　ジムリーダーになるか
-いつまでも　きめられなかったって！</Text>
+			<Text>サンヨウシティ　ジムリーダー
+みつごの　コンビネーション▼
+くさポケモンつかいの　デントが
+いい　ちゃばを　えらぶ▼
+みずポケモンつかいの　コーンが
+さいこうの　みずを　よういする▼
+ほのおポケモンつかいの　ポッドが
+ベストの　ひかげんで　おゆをそそぐ▼
+なるほど
+さいこうの　ティーが　できるわけネ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:56:59" />
+				Time="2011-11-09T07:25:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2378,15 +2384,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>三人で　一人前
-そう　いわれるのも　しゃくだし▼
-かといって
-三人の　実力は　横並びで▼
-だれが　ジムリーダーになるか
-いつまでも　決められなかったって！</Text>
+			<Text>サンヨウシティ　ジムリーダー
+三つ子の　コンビネーション▼
+くさポケモン使いの　デントが
+いい　茶葉を　選ぶ▼
+みずポケモン使いの　コーンが
+最高の　水を　用意する▼
+ほのおポケモン使いの　ポッドが
+ベストの　火加減で　お湯を注ぐ▼
+なるほど
+最高の　ティーが　できるわけネ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:56:53" />
+				Time="2011-11-09T07:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

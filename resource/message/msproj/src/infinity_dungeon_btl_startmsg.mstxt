@@ -27114,10 +27114,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしに　かてば　ポケモンたちを
-ちりょうしてやろう！　しょうぶ！▼</Text>
+かいふく　してやろう！　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27126,10 +27126,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしに　勝てば　ポケモンたちを
-治療してやろう！　勝負！▼</Text>
+回復してやろう！　勝負！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27201,11 +27201,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちりょうして　ほしいのなら……
+			<Text>かいふくして　ほしいのなら……
 いのちの　きらめきを　みせるのだ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:23:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27213,11 +27213,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>治療して　欲しいのなら……
+			<Text>回復して　欲しいのなら……
 命の　きらめきを　みせるのだ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T06:00:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27244,12 +27244,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どんな　ポケモンか　ふかくしらないと
-ただしい　ちりょうは　できない！▼
+ただしく　かいふく　できない！▼
 それが　ぼくの　やりかただ！
 たたかいながら　しんだんするよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:24:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27258,12 +27258,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どんな　ポケモンか　深く知らないと
-正しい　治療は　できない！▼
+正しく　回復できない！▼
 それが　ぼくの　やり方だ！
 戦いながら　診断するよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T03:24:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T07:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

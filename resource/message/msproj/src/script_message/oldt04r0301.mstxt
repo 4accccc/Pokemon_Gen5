@@ -470,11 +470,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・old_leader4_04とは逆方向を向いたまま
+・下向きでメッセージ表示
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T09:44:32" />
+				Time="2011-11-09T06:30:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -804,11 +804,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ『うーん
-ハイセンスすぎて　わかりにくいかも▼</Text>
+			<Text>フウロ『うーん▼
+ハイセンスすぎて　ちょっと
+いえ　かなり　わかりにくいかも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T06:52:08" />
+				Time="2011-11-09T06:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -816,11 +817,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『うーん
-ハイセンスすぎて　わかりにくいかも▼</Text>
+			<Text>フウロ『うーん▼
+ハイセンスすぎて　ちょっと
+いえ　かなり　わかりにくいかも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T09:44:50" />
+				Time="2011-11-09T06:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
