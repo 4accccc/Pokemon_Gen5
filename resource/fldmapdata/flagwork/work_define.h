@@ -317,6 +317,7 @@
 #define WK_SCENE_C04_TRIAL               16705 /* 0x4141 ライモンシティ：トライアルハウスイベント用 */
 #define WK_SCENE_C04GYM0101_GUIDE        16706 /* 0x4142 ライモンシティジム：ジムガイドイベント用 */
 #define WK_SCENE_D22_BOY2                16707 /* 0x4143 サンギ牧場：誘導用POS制御ワーク */
+#define WK_SCENE_MUGENDUNGEON_CLEAR      16708 /* 0x4144 無限ダンジョン：自分のROMバージョンと同じダンジョンをクリアしたか */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -373,6 +374,7 @@
 #define WK_OTHER_C01GYM0101_BTL          16781 /* 0x418d サンヨウレストラン：ジムリーダー戦闘後会話分岐用 */
 #define WK_OTHER_C01GYM0101_SARU         16782 /* 0x418e サンヨウレストラン：３猿決定用ワーク */
 #define WK_OTHER_D20_ARRIVE              16783 /* 0x418f 海底遺跡到達度・取得ワーク */
+#define WK_OTHER_INF_ELEVATOR_UP_MOVE    16784 /* 0x4190 無限ダンジョン内のエレベーター移動方向 */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 
