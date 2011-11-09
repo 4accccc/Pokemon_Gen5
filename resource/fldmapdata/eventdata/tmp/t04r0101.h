@@ -13,6 +13,7 @@
 #define T04R0101_FIGHTERM_01               0
 #define T04R0101_STOPPER_01                1
 #define T04R0101_INFORMATIONW_01           2
+#define T04R0101_STOPPER_02                3
 
 #endif //ZONE_T04R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -25,8 +25,8 @@ _EVENT_DATA    ev_init_t04r0101
 _EVENT_DATA    ev_reserve_t04r0101_first
 _EVENT_DATA    ev_bg_t04r0101_board_01
 _EVENT_DATA    ev_t04r0101_informationw_01
-_EVENT_DATA    ev_t04r0101_stopper_01
 _EVENT_DATA    ev_pos_t04r0101_stopper_01
+_EVENT_DATA    ev_t04r0101_stopper_02
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -44,10 +44,7 @@ DEFINE_LOCAL  LCW_POSZ
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_t04r0101
-  //ソウリュウシティイベント後はOBJの配置を変更
-  IF $WK_SCENE_T04R101_STOPPER_01 == 1 THEN
-    _OBJ_POS_CHANGE( T04R0101_STOPPER_01, 3, 0, 4, DIR_DOWN )
-  ENDIF
+//
 INIT_EVENT_END
 
 /**************************************************************/
@@ -64,12 +61,8 @@ EVENT_END
 /**************************************************************/
 /* 			ストッパー：話しかけ			  */
 /**************************************************************/
-EVENT_START		ev_t04r0101_stopper_01
-  IF $WK_SCENE_T04R101_STOPPER_01 == 0 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_cleaningm_01 )
-  ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_cleaningm_02 )
-  ENDIF
+EVENT_START		ev_t04r0101_stopper_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_cleaningm_02 )
 EVENT_END
 
 /**************************************************************/
@@ -81,20 +74,14 @@ EVENT_START		ev_pos_t04r0101_stopper_01
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
   //主人公にふりむき
-  IF $LCW_POSZ == 7 THEN
-    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_u )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-    _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_l )
+  _OBJ_ANIME_WAIT()
   
-  ELSE
+  $LCW_POSX += 2
   
-    _OBJ_ANIME( T04R0101_STOPPER_01, anm_stopper_lookpleyer_d )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-    _OBJ_ANIME_WAIT()
-    
-  ENDIF
+   //アニメ：おじさん隣接
+  _OBJ_ANIME_AUTO( T04R0101_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
   
   //ストッパー：メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_t04r0101_cleaningm_01,T04R0101_STOPPER_01, POS_DEFAULT )
@@ -103,24 +90,24 @@ EVENT_START		ev_pos_t04r0101_stopper_01
   
   //主人公1歩戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
-  _OBJ_ANIME( T04R0101_STOPPER_01 , anm_staystep_l )
+  //アニメ：おじさん戻る
+  _OBJ_ANIME_AUTO( T04R0101_STOPPER_01, 18, 8, FORCE_TYPE_NPC, 4, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T04R0101_STOPPER_01, anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
 EVENT_END
 
 //--------------------------------------------------------------------
-//	ストッパー：振り向き（上方向）
+//	ストッパー：振り向き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_stopper_lookpleyer_u
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-  _ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	ストッパー：振り向き（下方向）
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stopper_lookpleyer_d
-  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+_ANIME_LABEL	anm_stopper_lookpleyer_l
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,2
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_WALK_U_4F,2
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
   _ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 

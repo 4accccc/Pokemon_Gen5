@@ -332,6 +332,8 @@ init_flags:
 
  //T04：サザナミ七賢人
   _FLAG_SET(FV_T04_SAGE7_01)
+ //T04：ストッパー（ソウリュウシティ後通常状態で表示）
+  _FLAG_SET(FV_T04R101_STOPPER_02)
 
   //T01R0102:カノコタウンのＢＷ主人公の部屋
   _FLAG_SET( FV_T01R0102_AWARD_01 )  //表彰状（地方）
