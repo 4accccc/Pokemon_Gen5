@@ -18,6 +18,7 @@
 #define T07_WOMAN1_01                      4
 #define T07_SWBELL_01                      5
 #define FLD_ITEM_110                       6
+#define T07_INFORMATIONW_01                7
 
 #endif //ZONE_T07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

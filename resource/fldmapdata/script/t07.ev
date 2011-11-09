@@ -22,12 +22,13 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_scene_t07_hakase2_01
-_EVENT_DATA    ev_t07_HAKASE2_01
+_EVENT_DATA    ev_t07_hakase2_01
 _EVENT_DATA    ev_t07_workman2_01
 _EVENT_DATA    ev_t07_backpackerm_01
 _EVENT_DATA    ev_t07_woman1_01
 _EVENT_DATA    ev_t07_poke20_01
 _EVENT_DATA    ev_bg_t07_sign_01
+_EVENT_DATA    ev_t07_informationw_01
 _EVENT_DATA_END
 
 
@@ -122,9 +123,42 @@ EVENT_START   ev_scene_t07_hakase2_01
 EVENT_END
 
 /**************************************************************/
+/*  汎用受付♀（飛行機に乗ってフキヨセシティへ）              */
+/**************************************************************/
+EVENT_START   ev_t07_informationw_01
+{
+
+  _TALK_OBJ_START()
+  //フキヨセシティに　いかれますか？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t07_infomationw_01 )
+
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+    //ひこうきに　のって　おまちください▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t07_infomationw_02 )
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+      //【仮】発着デモへ（詳細未定）
+      //マップチェンジ
+      _MAP_CHANGE( ZONE_ID_C06R0201, 14, 19, DIR_DOWN )
+
+  ELSE  //いいえ
+    //いつでも　ごりよう　ください！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t07_infomationw_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
 /*  アララギ博士                                              */
 /**************************************************************/
-EVENT_START   ev_t07_HAKASE2_01
+EVENT_START   ev_t07_hakase2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_hakase2_09 )
 EVENT_END
 

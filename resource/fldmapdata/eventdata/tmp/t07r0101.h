@@ -9,9 +9,8 @@
 #ifndef ZONE_T07R0101_EVC_H
 #define ZONE_T07R0101_EVC_H
 
-#define T07R0101_INFOMATIONW_01            0
-#define T07R0101_OLDMAN1_02                1
-#define T07R0101_MIDDLEMAN1_01             2
+#define T07R0101_OLDMAN1_02                0
+#define T07R0101_MIDDLEMAN1_01             1
 
 #endif //ZONE_T07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

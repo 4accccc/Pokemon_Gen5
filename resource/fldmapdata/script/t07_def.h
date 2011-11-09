@@ -12,5 +12,6 @@
 #define SCRID_T07_WOMAN1_01 (5)
 #define SCRID_T07_POKE20_01 (6)
 #define SCRID_BG_T07_SIGN_01 (7)
+#define SCRID_T07_INFORMATIONW_01 (8)
 
 #endif //_T07_DEF_H_
