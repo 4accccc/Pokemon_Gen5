@@ -2308,4 +2308,246 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_mugenboss_end_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まってたぜ　[Name:TrainerName ]！▼
+このまえの　たたかい
+すげえ　ワクワクしたよな！▼
+やくその　いいものを　わたすぜ▼
+おれと　おまえの　たたかいの
+きねんに　このポケモンを▽
+うけとってくれ▼
+</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T05:56:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>待ってたぜ　[Name:TrainerName ]！▼
+この前の　戦い　すげえ
+ワクワクしたよな！▼
+約束の　いいものを　渡すぜ▼
+おれと　おまえの　戦いの
+記念に　このポケモンを▽
+受け取ってくれ▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T05:57:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・バンジロウ撃破フラグでバンジロウ配置
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:01:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_mugenboss_end_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ　おまえ　てもちの
+ポケモンが　いっぱいじゃないか！▼
+まってるから　てもちを
+あけて　きてくれよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T05:59:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ　おまえ　手持ちの
+ポケモンが　一杯じゃないか！▼
+ここで　待ってるから　手持ちを
+あけて　来てくれよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T05:59:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・手持ちのポケモンが6匹の場合表示</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:00:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_mugenboss_end_10b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このまえ　タマゴから　うまれたんだ
+だいじに　そだててくれよ▼
+[Name:TrainerName ]！▼
+おまえは　おいらの　ライバルだ▼
+また　くろのまてんろうで
+しょうぶしようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:08:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この前　タマゴから　産まれたんだ▼
+大事に　育ててくれよ
+[Name:TrainerName ]！▼
+おまえは　おいらの　ライバルだ▼
+また　黒の摩天楼で
+勝負しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:08:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン入手処理後に引き続き表示
+・黒の摩天楼クリア時はこちらを表示
+・メッセージ表示後、室外へ
+　このとき移動速度倍速で
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:09:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0101_mugenboss_end_10w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいじに　そだててくれよ
+[Name:TrainerName ]！▼
+おまえは　おいらの　ライバルだ▼
+また　しろのじゅどうで
+しょうぶしようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T05:54:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>大事に　育ててくれよ
+[Name:TrainerName ]！▼
+おまえは　おいらの　ライバルだ▼
+また　白の樹洞で
+勝負しようぜ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:03:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン入手処理後に引き続き表示
+・白の樹洞クリア時はこちらを表示
+・メッセージ表示後、室外へ
+　このとき移動速度倍速で
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-09T06:09:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-22T08:49:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
