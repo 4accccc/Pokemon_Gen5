@@ -11,6 +11,8 @@
 #define ZONE_C02GYM0201_EVC_H
 
 #define C02GYM0201_GLASSES_01              0
+#define C02GYM0201_GIRL3_01                1
+#define C02GYM0201_BOY1_01                 2
 
 #endif //ZONE_C02GYM0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02gym0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

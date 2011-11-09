@@ -32,6 +32,8 @@ _EVENT_DATA   ev_bg_c02gym0201_category_03_01
 _EVENT_DATA   ev_bg_c02gym0201_category_03_02
 _EVENT_DATA   ev_bg_c02gym0201_category_03_03
 _EVENT_DATA   ev_bg_c02gym0201_category_03_04
+_EVENT_DATA	ev_c02gym0201_girl3_01
+_EVENT_DATA	ev_c02gym0201_boy1_01
 _EVENT_DATA_END
 
 
@@ -292,4 +294,16 @@ EVENT_START   ev_bg_c02gym0201_category_03_04
 
 EVENT_END
 
+/************************************************************/
+/*	girl3：一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c02gym0201_girl3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_girl3_01 )
+EVENT_END
 
+/************************************************************/
+/*	boy1：一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c02gym0201_boy1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_boy1_01 )
+EVENT_END

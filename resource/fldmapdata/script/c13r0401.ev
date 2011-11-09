@@ -11,6 +11,10 @@
   .include  "scr_seq_def.h"
   .include  "msg_c13r0401.h"
   .include  "c13r0401.h"
+  
+  .include  "c03p15_def.h"
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -76,10 +80,15 @@ _TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_02 , C13R0401_PILOT_01, POS_DOWN )
 		_MSGWIN_CLOSE()
 		
-		//暗転・出航デモ再生
+		//３Ｄデモコール
+		_DEMO_FADEOUT_BLACK_CALL_SINGLE()
+		_CALL_3D_DEMO( DEMO3D_ID_TACHIWAKI_SHIP )
+
+		//リザーブスクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_C03P15_END )
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P15, 15, 21, DIR_DOWN )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P15, 12, 0, 10, DIR_LEFT )
 
 	//いいえの場合
 	ELSE
@@ -131,16 +140,18 @@ _TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_02 , C13R0401_PILOT_01, POS_DOWN )
 		_MSGWIN_CLOSE()
 		
-		//【仮】暗転・出航デモ再生
+		//３Ｄデモコール
+		_DEMO_FADEOUT_BLACK_CALL_SINGLE()
+		_CALL_3D_DEMO( DEMO3D_ID_TACHIWAKI_SHIP )
 
 		//スワンライバルのOBJを削除する
 		_OBJ_DEL( C13R0401_SWRIVAL_01 )
 		
 		//マップ差し替え：C03P15アジト船出現
-    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
 
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_C03P15, 12, 10, DIR_LEFT )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P15, 12, 0, 10, DIR_LEFT )
 
 		//========================================/
 		

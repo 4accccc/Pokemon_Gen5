@@ -661,10 +661,6 @@ _TALK_OBJ_START()
 		//イベントOBJのバニシュフラグをセット
 		_FLAG_SET(FV_C13_SWPLAZMA)
 		
-		//船舶所にライバルと船長を表示
-		//_FLAG_RESET(FV_C13R0401_SWRIVAL)
-		//_FLAG_RESET(FV_C13R0401_PILOT)
-		
 		//どくジムにホミカ表示
 		//_FLAG_RESET(FV_C13GYM0102_SWLEADER2)
 	

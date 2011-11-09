@@ -11,8 +11,11 @@
   .include  "msg_c03p15.h"
   .include  "c03p15.h"
 
+  .include  "c13r0401_def.h"
+
   //@author fujimura_souichirou（ヒウン名所巡りイベント）
   //@author Mizuguchi_Mai（タチワキ接続関連）
+  //@author suginaka_katsunori（船の復帰処理）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +27,7 @@
 _EVENT_DATA   ev_c03p15_pilot_01
 _EVENT_DATA   ev_scene_c03p15_first_01
 _EVENT_DATA   ev_c03p15_informationw_01
+_EVENT_DATA	ev_reserve_c03p15_end
 _EVENT_DATA_END
 
 
@@ -31,6 +35,10 @@ _EVENT_DATA_END
 /*  SCENE_CHANGE：船から下りたところ                        */
 /************************************************************/
 EVENT_START   ev_scene_c03p15_first_01
+
+  //暗転復帰
+  _MAP_FADE_BLACK_IN()
+  _DISP_FADE_END_CHECK()
 
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
@@ -349,4 +357,15 @@ _ANIME_LABEL  anm_common_hatena
   _ANIME_DATA AC_MARK_HATENA,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*		船降りた後のリザーブ						*/
+/************************************************************/
+EVENT_START	ev_reserve_c03p15_end
 
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	_PLACE_NAME_DISPLAY()	//地名表示演出
+	
+EVENT_END
