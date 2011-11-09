@@ -1,5 +1,5 @@
 #event data
-#save date:2011/08/12 14:03:50
+#save date:2011/11/09 12:41:03
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14r0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--200 0 200
+-152 0 136
 #event number: 1
 #type
 1
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C14R0101_MIDDLEMAN1_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 200
+-152 0 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

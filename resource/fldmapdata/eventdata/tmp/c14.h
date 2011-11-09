@@ -25,6 +25,10 @@
 #define C14_VETERANM_01                    6
 #define FLD_ITEM_164                       7
 #define FLD_ITEM_304                       8
+#define C14_MIDDLEMAN2_01                  9
+#define C14_SWIMMERW_01                   10
+#define C14_SWIMMERW_02                   11
+#define C14_GIRL4_02                      12
 
 #endif //ZONE_C14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
