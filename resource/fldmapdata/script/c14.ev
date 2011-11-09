@@ -32,6 +32,10 @@ _EVENT_DATA    ev_c14_boy4_01
 _EVENT_DATA    ev_c14_boy4_02
 _EVENT_DATA    ev_pos_c14_swleader8_01
 _EVENT_DATA    ev_pos_c14_kaodasi_01
+_EVENT_DATA    ev_c14_girl4_02
+_EVENT_DATA    ev_c14_middleman2_01
+_EVENT_DATA    ev_c14_swimmerw_01
+_EVENT_DATA    ev_c14_swimmerw_02
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -627,4 +631,30 @@ _ANIME_LABEL  anm_eventobj_bye_02
   _ANIME_DATA AC_WALK_L_8F,9
   _ANIME_DATA ACMD_END,0
 
+/**************************************************************/
+/*		GIRL4_2	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_girl4_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_girl4a_01 )
+EVENT_END
 
+/**************************************************************/
+/*		MIDDLEMAN2	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		SWIMMERW_01	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_swimmerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swimmerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		SWIMMERW_02	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_swimmerw_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swimmerw1_01 )
+EVENT_END

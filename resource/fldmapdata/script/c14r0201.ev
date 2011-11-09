@@ -13,6 +13,7 @@
   .include  "c14r0201.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,6 +23,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c14r0201_badman_01
+_EVENT_DATA    ev_c14r0201_waitress_01
 _EVENT_DATA_END
 
 
@@ -123,4 +125,9 @@ EVENT_START   ev_c14r0201_badman_01
 }
 EVENT_END
 
-
+/**************************************************************/
+/*		WAITRESS	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14r0201_waitress_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14r0201_waitress_01 )
+EVENT_END
