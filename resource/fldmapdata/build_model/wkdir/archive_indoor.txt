@@ -218,3 +218,7 @@
 "nsbmdfiles/mado_in07wh1.nsbmd"
 "nsbmdfiles/mado_in07wh2.nsbmd"
 "nsbmdfiles/sd06_obj_01.nsbmd"
+"nsbmdfiles/reji_obj_01.nsbmd"
+"nsbmdfiles/reji_obj_02.nsbmd"
+"nsbmdfiles/reji_obj_03.nsbmd"
+"nsbmdfiles/reji_obj_04.nsbmd"
