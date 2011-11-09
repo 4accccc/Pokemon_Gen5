@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-30T21:49:08" source="dra_all_ew.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-08T20:12:38" source="dra_all_pb.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-10-30T21:49:08" source="dra_all_ew.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-08T20:12:38" source="dra_all_pb.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -94,14 +94,14 @@
 		path="C:/home/swan_data3d/gimmick/gym_dragon/tex/btex/gym_dra007.tga"
 	>
 		<bitmap size="64">
-			7777 6777 4666 0454 7777 6666 4446 0044
-			4446 4444 3444 0002 4444 4444 0344 0000
-			3333 0033 0200 3000 4444 4444 0234 4300
-			4444 4444 3444 4300 7777 6667 4444 4402
-			7777 6677 4446 4402 7777 6667 4444 4313
-			4444 4444 3444 4212 3333 4443 3344 3010
-			3333 3333 0000 2000 4444 4444 3444 2002
-			6666 6666 4466 0044 7777 6777 4666 0344
+			2222 4332 5444 9606 3322 4444 6654 9866
+			5555 6655 7666 9998 6666 6666 8766 9999
+			7776 8877 9888 7999 5555 6666 9876 6799
+			5333 6655 8766 6799 3222 4443 7665 6698
+			2222 4433 7654 6698 3222 4443 7665 6717
+			3333 6655 7666 6818 5555 6666 8766 7919
+			6666 7776 9888 8999 4444 6664 7666 8998
+			3333 4443 6654 9986 2222 4332 6544 9766
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gym_dra009"
@@ -630,14 +630,15 @@
 
 <tex_palette_array size="4">
 	<tex_palette index="0" name="dra_kemuri03_pl" color_size="4">
-		7fff 4e73 39ce 7fff
+		7fff 39ce 294a 7fff
 	</tex_palette>
 	<tex_palette index="1" name="gym_dra002_pl" color_size="16">
 		2508 2529 2929 294a 2d4a 2d6b 316b 318c
 		35ad 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="gym_dra007_pl" color_size="8">
-		2108 2508 2529 294a 2d6b 356b 35ad 3def
+	<tex_palette index="2" name="gym_dra007_pl" color_size="16">
+		356b 2508 3def 39ce 35ad 318c 2d6b 294a
+		2529 2108 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gym_dra009_pl" color_size="16">
 		2108 2508 2529 2929 294a 2d4a 2d6b 316b
