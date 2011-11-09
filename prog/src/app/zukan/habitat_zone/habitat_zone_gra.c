@@ -361,21 +361,24 @@ static void GRA_StreamMain( HABITAT_ZONE_GRA_WK *p_wk )
 {
   BOOL ret;
 
-  // タスクの更新
-  GFL_TCBL_Main( p_wk->p_tcb_sys );
-
-  // キーカーソルの更新
-  APP_KEYCURSOR_Main(p_wk->p_cursor,p_wk->p_print_stream ,p_wk->p_event_win_sub );
-
-  // ストリームの更新
-  ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_sys_wk , p_wk->p_print_stream );
-
-  if( ret == TRUE )
+  if( p_wk->p_event_win_sub != NULL )
   {
-    if( p_wk->is_cursor_draw == TRUE )
+    // タスクの更新
+    GFL_TCBL_Main( p_wk->p_tcb_sys );
+
+    // キーカーソルの更新
+    APP_KEYCURSOR_Main(p_wk->p_cursor,p_wk->p_print_stream ,p_wk->p_event_win_sub );
+
+    // ストリームの更新
+    ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_sys_wk , p_wk->p_print_stream );
+
+    if( ret == TRUE )
     {
-      APP_KEYCURSOR_Write( p_wk->p_cursor , GFL_BMPWIN_GetBmp( p_wk->p_event_win_sub ) , 0xF );
-      GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
+      if( p_wk->is_cursor_draw == TRUE )
+      {
+        APP_KEYCURSOR_Write( p_wk->p_cursor , GFL_BMPWIN_GetBmp( p_wk->p_event_win_sub ) , 0xF );
+        GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
+      }
     }
   }
 }
@@ -614,29 +617,8 @@ static void GRA_InitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
                                                   p_wk->p_font_win_sub  );
   }
 
-  // 達成イベント用BMPWIN作成
-  {
-    p_wk->p_event_win_sub = GFL_BMPWIN_Create( BGM_FRAME_EVMSG_WIN,
-        2   , 8   ,
-        32 -4  , 24 -8 -7 -4 ,
-        HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_B );
-
-    // スクリーンの作成
-    GFL_BMPWIN_MakeScreen( p_wk->p_event_win_sub );
-
-    // ウィンドウのクリアー
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_event_win_sub), 0 );
-
-    // 転送
-    GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
-
-    // 転送リクエスト
-    GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
-    
-    // プリントユーティリティーの準備
-    PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_EVENT_MSG_WIN ] ,
-                                                  p_wk->p_event_win_sub  );
-  }
+  // 達成イベント用BMPWINクリア
+  p_wk->p_event_win_sub = NULL;
   
 	// フォント
   p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ZUKAN_HABITAT_ZONE );
@@ -1214,7 +1196,6 @@ static void GRA_ExitBmpWin( HABITAT_ZONE_GRA_WK *p_wk )
 	GFL_BMPWIN_Exit();
   GFL_BMPWIN_Delete( p_wk->p_font_win );
   GFL_BMPWIN_Delete( p_wk->p_font_win_sub );
-  GFL_BMPWIN_Delete( p_wk->p_event_win_sub );
 }
 
 //=============================================================================
@@ -1330,7 +1311,7 @@ static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk )
   BOOL trans_end;
 
   // 描画待ちフラグを初期化
-  p_wk->is_print_util_wati = FALSE;
+  p_wk->is_print_util_wati = TRUE;
 
   // プリントキューを更新
   PRINTSYS_QUE_Main( p_wk->p_print_que );
@@ -1339,9 +1320,10 @@ static void GRA_PrintMain( HABITAT_ZONE_GRA_WK *p_wk )
   for( i = 0; i < PRINT_UTIL_MAX ; i++ )
   {
     trans_end = PRINT_UTIL_Trans( &p_wk->print_util[i], p_wk->p_print_que );
-    if( p_wk->is_print_util_wati == FALSE )
+    if( trans_end == FALSE )
     {
-      p_wk->is_print_util_wati = trans_end;
+      p_wk->is_print_util_wati = FALSE;
+      break;
     }
   }
 }
@@ -1824,6 +1806,42 @@ void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  イベント用BMPWINを生成
+ *
+ *	@param	*p_wk 
+ *	@param	pos_y   Y位置指定
+ *	@param	size_y  Y高さ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void HABITAT_ZONE_GRA_MakeEventBmpWinWin( HABITAT_ZONE_GRA_WK *p_wk ,u8 pos_y ,u8 size_y )
+{
+  // 達成イベント用BMPWIN作成
+  p_wk->p_event_win_sub = GFL_BMPWIN_Create( BGM_FRAME_EVMSG_WIN,
+      2   , pos_y   ,
+      32 -4  , size_y ,
+      HABITAT_ZONE_MBG_PAL_FONT , GFL_BMP_CHRAREA_GET_B );
+
+  // スクリーンの作成
+  GFL_BMPWIN_MakeScreen( p_wk->p_event_win_sub );
+
+  // ウィンドウのクリアー
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_event_win_sub), 0 );
+
+  // 転送
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_event_win_sub );
+
+  // 転送リクエスト
+  GFL_BG_LoadScreenV_Req( BGM_FRAME_EVMSG_WIN );
+
+  // プリントユーティリティーの準備
+  PRINT_UTIL_Setup( &p_wk->print_util[ PRINT_UTIL_EVENT_MSG_WIN ] ,
+      p_wk->p_event_win_sub  );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  フレーム付きメッセージウィンドウを作成
  *
  *	@param	STRBUF* str
@@ -1834,7 +1852,10 @@ void HABITAT_ZONE_GRA_SetSmallIconStatus( HABITAT_ZONE_GRA_WK* p_wk,
 //-----------------------------------------------------------------------------
 void HABITAT_ZONE_GRA_MakeFrameWinMsg(const STRBUF* str,HABITAT_ZONE_GRA_WK *p_wk )
 {
-  GFL_BMPWIN *p_win = GetBmpWin( p_wk,PRINT_UTIL_EVENT_MSG_WIN );
+  GFL_BMPWIN *p_win;
+
+  
+  p_win = GetBmpWin( p_wk,PRINT_UTIL_EVENT_MSG_WIN );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_win) ,15 );
 
   // スクリーンの作成
@@ -1872,8 +1893,25 @@ void HABITAT_ZONE_GRA_DeleteFrameWinMsg( HABITAT_ZONE_GRA_WK *p_wk )
   GFL_BMPWIN_ClearScreen( p_win );
   GFL_BG_LoadScreenV_Req( BGM_FRAME_FONT );
   p_wk->p_print_stream = NULL;
+  
+  // BMPWinの削除
+  GFL_BMPWIN_Delete( p_wk->p_event_win_sub );
+  p_wk->p_event_win_sub = NULL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プリントストリームの状態を取得する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+PRINTSTREAM_STATE HABITAT_ZONE_GRA_CheckPrintStreamStatus( HABITAT_ZONE_GRA_WK *p_wk )
+{
+  return PRINTSYS_PrintStreamGetState( p_wk->p_print_stream );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  カーソルを表示する

@@ -408,4 +408,6 @@ extern void HABITAT_ZONE_GRA_SetHeroIcon( HABITAT_ZONE_GRA_WK *p_wk );
 extern void HABITAT_ZONE_GRA_SetBlinkStop( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_stop )
 ;
 extern void HABITAT_ZONE_GRA_SetEventIconEnable( HABITAT_ZONE_GRA_WK *p_wk,BOOL is_enable );
+extern PRINTSTREAM_STATE HABITAT_ZONE_GRA_CheckPrintStreamStatus( HABITAT_ZONE_GRA_WK *p_wk );
+extern void HABITAT_ZONE_GRA_MakeEventBmpWinWin( HABITAT_ZONE_GRA_WK *p_wk ,u8 pos_y ,u8 size_y );
 

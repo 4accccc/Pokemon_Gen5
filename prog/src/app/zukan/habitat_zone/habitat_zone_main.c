@@ -240,6 +240,17 @@ enum{
   TPID_PS_LIST_CURSOR_20,
 };
 
+// コンプリートイベントシーケンス
+enum{
+  CMP_EVENT_ALL_CMP_CHECK,
+  CMP_EVENT_FANFARE_CHECK,
+  CMP_EVENT_ALL_CMP_KEY_CHECK,
+  CMP_EVENT_STAMP_START,
+  CMP_EVENT_STAMP_END,
+  CMP_EVENT_NEXT_STATE_CHECK,
+  CMP_EVENT_END,
+};
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -266,6 +277,7 @@ static void MAINSEQ_ChangeLandType( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_PokeSelectKeyInput( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk );
 static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk );
+static void MAINSEQ_CompleteTutorial( HABITAT_ZONE_WK *p_wk );
 
 //--------------------------------------------------
 // ID定義
@@ -282,6 +294,7 @@ typedef enum _MAIN_SEQ{
   MAIN_SEQ_MOVE_POKE_CURSOR,
   MAIN_SEQ_COMPLETE_EVETN,
   MAIN_SEQ_APPEXIT,
+  MAIN_SEQ_COMPLETE_TUTORIAL,
   MAIN_SEQ_NULL,
 }MAIN_SEQ;
 
@@ -300,6 +313,7 @@ static const MainFunc MainSeq[] = {
   MAINSEQ_MovePokeCursor,     // ポケモン選択カーソルを移動させる
   MAINSEQ_CompleteEvetn,      // 達成イベント
   MAINSEQ_AppExit,            // アプリケーションの終了処理
+  MAINSEQ_CompleteTutorial,   // コンプリートイベントチュートリアル
   NULL,                       // 何も処理をしない
 };
 
@@ -1468,21 +1482,17 @@ static void MAINSEQ_ChangeZone( HABITAT_ZONE_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void SetCompIcon( HABITAT_ZONE_WK *p_wk )
 {
-  HABITATLIST_STATUS event;
   GFL_CLWK *p_clwk;
   HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
-
+  s32 index;
+  HABITATLIST_STATUS ls;
   p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
-  event = CheckCompleteEventNowLandType( p_wk );
 
-  // イベントが存在するかチェック
-  if( event != HABITAT_ZONE_STATUS_NONE )
-  {
-    GFL_CLACT_WK_SetDrawEnable( p_clwk ,FALSE);
-    return;
-  }
+  // セーブデータの状態を取得する
+  index = GetSaveDataIndex( p_zd->zone_group );
+  ls = HABITATLIST_SAVE_GetZoneStatus( p_wk->p_habitat_sv,index,p_wk->land_type );
 
-  switch( p_zd->is_complete[p_wk->land_type] )
+  switch( ls )
   {
   case HABITAT_ZONE_STATUS_NONE:
     {
@@ -1902,71 +1912,131 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
 {
   switch( p_wk->sub_seq )
   {
-  default:
+  case CMP_EVENT_ALL_CMP_CHECK:
     {
-      // 起動シーケンス待ち
-      p_wk->sub_seq++;
-    }
-    break;
-  case COMPLETE_EVENT_WAIT_FRAME:
-    {
-      u32           msg_id;
-      STRBUF        *str;
-      STRBUF        *dest_str;
-
-      // ゾーンIDに対応した地名メッセージIDを取得
-      HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
-      u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
-     
-      // BGMの切替
-      PMSND_PushBGM();
-      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
+      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET_ALL )
       {
+        STRBUF  *str;
+        STRBUF  *dest_str;
+        
+        s32 index;
+        HABITAT_GROUND_TYPE land_type;
+        HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+
+        // ゾーンIDに対応した地名メッセージIDを取得
+        HABITAT_ZONE_DATA *p_list_data = GetNowListData( p_wk );
+        u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
+
+        ONOUE_Printf("捕獲コンプリート\n");
+
+        // ワードセットに登録
+        WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
+
+        // ワードセット生成展開先バッファー作成
+        dest_str = GFL_STR_CreateBuffer( 256, HEAPID_ZUKAN_HABITAT_ZONE );
+
+        // メッセージの書き込み
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_seisoku_complete_01 );
+
+        WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
+
+        // 捕獲コンプリートフラグセット
+        HABITATLIST_SAVE_SetGetCmpTutorialFlag(p_wk->p_habitat_sv);
+        
+        // BMPWIN作成
+        HABITAT_ZONE_GRA_MakeEventBmpWinWin( &p_wk->gra_sys ,10 ,5 );
+
+        // メッセージの書き込み
+        HABITAT_ZONE_GRA_MakeFrameWinMsg( dest_str,&p_wk->gra_sys );
+        
+        // バッファーの消去 
+        GFL_STR_DeleteBuffer( str );
+        GFL_STR_DeleteBuffer( dest_str );
+
+        // ファンファーレ再生
+        PMSND_PushBGM();
+
         // ファンファーレ
         PMSND_PlayBGM( SEQ_ME_ZUKAN_01 );
-        // 地形メッセージIDを取得
-        msg_id = GetLandTypeMsgIDGetCmp( p_wk->land_type,p_list_data->info_ground_type);
+
+        // 全コンプリートフラグセット
+        index = GetSaveDataIndex( p_zd->zone_group );
+        HABITATLIST_SAVE_SetZoneCompleteFlag( p_wk->p_habitat_sv,index );
+        p_wk->sub_seq++;
       }
       else
       {
-        // ファンファーレ
-        PMSND_PlayBGM( SEQ_ME_ZUKAN_02 );
-        // 地形メッセージIDを取得
-        msg_id = GetLandTypeMsgIDLookCmp( p_wk->land_type,p_list_data->info_ground_type);
+        // 全コンプリートをスキップ
+        p_wk->sub_seq = CMP_EVENT_STAMP_START;
       }
-
-      // ワードセットに登録
-      WORDSET_RegisterPlaceName( p_wk->p_word_set, 0, place_id );
-
-      // ワードセット生成展開先バッファー作成
-      dest_str = GFL_STR_CreateBuffer( 256, HEAPID_ZUKAN_HABITAT_ZONE );
-
-      // メッセージの書き込み
-      str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_id );
-      WORDSET_ExpandStr( p_wk->p_word_set, dest_str , str  );
-
-      // メッセージの書き込み
-      HABITAT_ZONE_GRA_MakeFrameWinMsg( dest_str,&p_wk->gra_sys );
-      GFL_STR_DeleteBuffer( dest_str );
-      GFL_STR_DeleteBuffer( str );
-      p_wk->sub_seq++;
     }
     break;
-  case COMPLETE_EVENT_WAIT_FRAME + 1:
+  case CMP_EVENT_FANFARE_CHECK:
     {
+      // ファンファーレ待ち
       if( !PMSND_CheckPlayBGM() )
       {
-        // BGMを戻す
-        PMSND_PopBGM();
-        p_wk->sub_seq++;
+        // 描画待ち
+        if( HABITAT_ZONE_GRA_CheckPrintStreamStatus(&p_wk->gra_sys) == PRINTSTREAM_STATE_DONE )
+        {
+          // カーソル表示
+          HABITAT_ZONE_GRA_EnableStrCursor( &p_wk->gra_sys );
+          p_wk->sub_seq++;
+        }
       }
     }
     break;
-  case COMPLETE_EVENT_WAIT_FRAME + 2:
+  case CMP_EVENT_ALL_CMP_KEY_CHECK:
+    {
+      // キー待ち
+      if( (GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY) ||
+          (GFL_UI_TP_GetTrg() == TRUE) )
+      {
+        s32 index;
+        HABITAT_GROUND_TYPE land_type;
+        HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+        HABITATLIST_STATUS event;
+
+        // BGMを戻す
+        PMSND_PopBGM();
+
+        // ウィンドウの削除
+        HABITAT_ZONE_GRA_DeleteFrameWinMsg( &p_wk->gra_sys );
+
+        // イベントが存在するかチェック
+        event = CheckCompleteEventNowLandType( p_wk );
+
+        // 全ての地形をコンプリート
+        index = GetSaveDataIndex( p_zd->zone_group );
+        for( land_type = 0; land_type < HABITAT_GROUND_MAX; land_type ++ )
+        {
+          HABITATLIST_SAVE_SetZoneStatus( p_wk->p_habitat_sv,
+              index,land_type ,HABITAT_ZONE_STATUS_GET );
+        }
+        
+        // はんこイベントを発生させるかチェック
+        if( event != HABITAT_ZONE_STATUS_NONE )
+        {
+          p_wk->sub_seq++;
+        }
+        else
+        {
+          // イベントアイコンをリフレッシュ
+          RefreshEventIcon( p_wk );
+          // 通常キー入力に起動
+          SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+          p_wk->sub_seq = CMP_EVENT_END;
+        }
+      }
+    }
+    break;
+  case CMP_EVENT_STAMP_START:
     // はんこアニメーション再生
     {
       GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
-      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
+      if( (p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET) ||
+          (p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET_ALL))
       {
         HABITAT_ZONE_GRA_SetAnmSeq( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG ,OBJ_ANM_SEQ_STAMP_BIG_GET);
       }
@@ -1980,7 +2050,7 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       p_wk->sub_seq++;
     }
     break;
-  case COMPLETE_EVENT_WAIT_FRAME + 3:
+  case CMP_EVENT_STAMP_END:
     // はんこアニメーション終了待ち
     {
       GFL_CLWK *p_clwk = HABITAT_ZONE_GRA_GetComClWk( &p_wk->gra_sys ,OBJ_WK_STAMP_BIG );
@@ -1993,38 +2063,119 @@ static void MAINSEQ_CompleteEvetn( HABITAT_ZONE_WK *p_wk )
       // アニメーション終了待ち
       if( GFL_CLACT_WK_CheckAnmActive( p_clwk ) == FALSE )
       {
-        HABITAT_ZONE_GRA_EnableStrCursor( &p_wk->gra_sys );
         GFL_CLACT_WK_SetBgPri( p_clwk ,1 );
         p_wk->sub_seq++;
       }
     }
     break;
-  case COMPLETE_EVENT_WAIT_FRAME + 4:
+  case CMP_EVENT_NEXT_STATE_CHECK:
     {
-      if( (GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY) ||
-          (GFL_UI_TP_GetTrg() == TRUE) )
+      s32 index;
+      HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+      // ゾーンのステータスを設定する(全コンプの時は事前に行っている)
+      if( p_wk->cmp_event_id != HABITAT_ZONE_STATUS_GET_ALL )
       {
-        s32 index;
-        HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
-
-        // 決定音
-        PMSND_PlaySystemSE( APP_PRINTSYS_COMMON_SE_TRG );
-
-        // ゾーンのステータスを設定する
         index = GetSaveDataIndex( p_zd->zone_group );
         HABITATLIST_SAVE_SetZoneStatus( p_wk->p_habitat_sv,
             index,p_wk->land_type ,p_wk->cmp_event_id );
+      }
 
-        // イベントアイコンをリフレッシュ
-        RefreshEventIcon( p_wk );
-        
-        // ウィンドウの削除
-        HABITAT_ZONE_GRA_DeleteFrameWinMsg( &p_wk->gra_sys );
+      // イベントアイコンをリフレッシュ
+      RefreshEventIcon( p_wk );
+      
+      // サブシーケンスを進めておく
+      p_wk->sub_seq++;
 
-        // 通常キー入力に起動
-        SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+      // 捕獲コンプリートチュートリアル判断
+      if( ( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET ) &&
+          ( HABITATLIST_SAVE_GetGetCmpTutorialFlag(p_wk->p_habitat_sv) != TRUE ))
+      {
+        SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_TUTORIAL ,SEQ_CHANGE_PARAM_NONE);
+        return;
+      }
+      
+      // 見たコンプリートチュートリアル判断
+      if( ( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_LOOK ) &&
+          ( HABITATLIST_SAVE_GetLookCmpTutorialFlag(p_wk->p_habitat_sv) != TRUE ))
+      {
+        SetNextSeq( p_wk, MAIN_SEQ_COMPLETE_TUTORIAL ,SEQ_CHANGE_PARAM_NONE);
+        return;
+      }
+      
+      // 通常キー入力に起動
+      SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンプリートイベントチュートリアル
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MAINSEQ_CompleteTutorial( HABITAT_ZONE_WK *p_wk )
+{
+  // チュートリアルイベントメイン
+  switch(p_wk->sub_seq)
+  {
+  case 0:
+    {
+      STRBUF        *str;
+
+      if( p_wk->cmp_event_id == HABITAT_ZONE_STATUS_GET )
+      {
+        ONOUE_Printf("捕獲コンプリートチュートリアル\n");
+        // メッセージの読み込み
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_seisoku_explain_02 );
+        // 捕獲コンプリートフラグセット
+        HABITATLIST_SAVE_SetGetCmpTutorialFlag(p_wk->p_habitat_sv);
+      }
+      else
+      {
+        ONOUE_Printf("見たコンプリートチュートリアル\n");
+        // メッセージの読み込み
+        str = GFL_MSG_CreateString( p_wk->p_app_msg , msg_seisoku_explain_01 );
+        // メッセージの読み込み
+        HABITATLIST_SAVE_SetLookCmpTutorialFlag(p_wk->p_habitat_sv);
+      }
+       
+      // BMPWIN作成
+      HABITAT_ZONE_GRA_MakeEventBmpWinWin( &p_wk->gra_sys ,8 ,9 );
+
+      // メッセージの書き込み
+      HABITAT_ZONE_GRA_MakeFrameWinMsg( str,&p_wk->gra_sys );
+      GFL_STR_DeleteBuffer( str );
+
+      p_wk->sub_seq++;
+    }
+    break;
+  case 1:
+    {
+      // 描画待ち
+      if( HABITAT_ZONE_GRA_CheckPrintStreamStatus(&p_wk->gra_sys) == PRINTSTREAM_STATE_DONE )
+      {
+        HABITAT_ZONE_GRA_EnableStrCursor( &p_wk->gra_sys );
         p_wk->sub_seq++;
       }
+    }
+    break;
+  case 2:
+    {
+      s32 index;
+      HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+      // ウィンドウの削除
+      HABITAT_ZONE_GRA_DeleteFrameWinMsg( &p_wk->gra_sys );
+
+      // 通常キー入力に起動
+      SetNextSeq( p_wk, MAIN_SEQ_TOP_KEY_INPUT ,SEQ_CHANGE_PARAM_NONE);
+
+      p_wk->sub_seq++;
     }
   }
 }
@@ -2471,6 +2622,8 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
     // 小アイコンを非表示にする
     HABITAT_ZONE_GRA_SetSmallIconStatus(&p_wk->gra_sys,index,GRA_SMALLICON_NONE);
     index++;
+
+    // 空枠を１つにする場合はここでbreakする
     break;
   }
 
@@ -3028,6 +3181,20 @@ static s32 CheckIsExistPoke( HABITAT_ZONE_WK *p_wk ,u8 index )
 //-----------------------------------------------------------------------------
 static HABITATLIST_STATUS CheckCompleteEventNowLandType( HABITAT_ZONE_WK *p_wk )
 {
+  s32 index;
+  HABITAT_ZONE_DATA *p_zd =  GetNowListData( p_wk );
+
+  // 全コンプリートチェック
+  if( p_zd->is_zone_complete == TRUE )
+  {
+    index = GetSaveDataIndex( p_zd->zone_group );
+    if( HABITATLIST_SAVE_GetZoneCompleteFlag( p_wk->p_habitat_sv,index ) == FALSE )
+    {
+      return HABITAT_ZONE_STATUS_GET_ALL;
+    }
+  }
+
+  // 地形ごとのコンプリートチェック
   return CheckCompleteEvent( p_wk , p_wk->land_type );
 }
 

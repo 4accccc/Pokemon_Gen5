@@ -37,6 +37,7 @@ typedef enum {
   HABITAT_ZONE_STATUS_NONE,
   HABITAT_ZONE_STATUS_LOOK,
   HABITAT_ZONE_STATUS_GET,
+  HABITAT_ZONE_STATUS_GET_ALL,
 }HABITATLIST_STATUS;
 
 //=============================================================================
@@ -170,7 +171,7 @@ extern u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv );
  *	@param	*p_sv 
  *	@param	habitat_zone_id ゾーンインデックス
  *
- *	@retval
+ *	@retval FALSEの時、まだゾーン全コンプリートイベントを見ていない
  */
 //-----------------------------------------------------------------------------
 extern u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
@@ -193,7 +194,7 @@ extern void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 hab
  *
  *	@param	*p_sv 
  *
- *	@retval 1の時既にチュートリアルを見てる
+ *	@retval TRUEの時既にチュートリアルを見てる
  */
 //-----------------------------------------------------------------------------
 extern u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
@@ -204,7 +205,7 @@ extern u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv );
  *
  *	@param	*p_sv 
  *
- *	@retval 1の時既にチュートリアルを見てる
+ *	@retval TRUEの時既にチュートリアルを見てる
  */
 //-----------------------------------------------------------------------------
 extern u8 HABITATLIST_SAVE_GetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv );

@@ -455,22 +455,35 @@ void ZKNCOMM_MakeHabitatZoneListData( HABITATLIST_SAVE *p_sv,ZUKANHABITAT_ZONE_D
           // データ初期化
           GFL_STD_MemClear( p_zone_data ,sizeof(p_zone_data) );
 
+          // コンプリートした状態に初期化
+          p_zone_data->is_zone_complete = TRUE;
+
           // 最大値チェック
           GF_ASSERT( arc_data.data_num <= HABITAT_ZONE_POKE_LIST_MAX );
 
           // ゾーンごとのデータ
           p_zone_data->zone_group = sc_habitat->zone_group_id;
           p_zone_data->info_ground_type = arc_data.ground_type;
+ 
           
-          // 地形の有効状態をコピー
+          // 地形コンプリート状態を設定する
+          GetCompleteFlag( p_zone_data->is_complete ,&arc_data ,p_save );
+
+          // 地形の有効状態をコピー,コンプリートのチェック
           for( ground_type = HABITAT_GROUND_LAND; ground_type < HABITAT_GROUND_MAX;ground_type++ )
           {
             p_zone_data->season_enable[ground_type] =
                           arc_data.season_enable[ground_type];
-          }
 
-          // 地形コンプリート状態を設定する
-          GetCompleteFlag( p_zone_data->is_complete ,&arc_data ,p_save );
+            // 地形が存在してかつ、
+            // 捕獲コンプリートでない場合もしくは地形がオープンしていない場合はコンプリートフラグを落とす
+            if( (arc_data.land_enable[ ground_type ] == TRUE ) &&
+                (( p_zone_data->is_complete[ground_type] != HABITAT_ZONE_STATUS_GET ) ||
+                (is_vanish[ground_type] == FALSE )))
+            {
+              p_zone_data->is_zone_complete = FALSE;
+            }
+          }
 
           // ポケモンデータを設定
           for( n = 0; n < arc_data.data_num; n ++ )

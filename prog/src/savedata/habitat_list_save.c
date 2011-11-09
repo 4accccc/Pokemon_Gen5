@@ -6,6 +6,9 @@
  *	@author	Toru=Nagihashi
  *	@data		2011.07.22
  *
+ *	@note /resource/habitat_list/habitat_list_data.cdatのゾーンIDの並びが、
+ *	ゾーンデータIDインデックスと対応しています。
+ *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
@@ -155,7 +158,7 @@ HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 ha
  *	@param	*p_sv 
  *	@param	habitat_zone_id ゾーンインデックス
  *
- *	@retval 0の時、まだゾーン全コンプリートイベントを見ていない
+ *	@retval FALSEの時、まだゾーン全コンプリートイベントを見ていない
  */
 //-----------------------------------------------------------------------------
 u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
@@ -181,7 +184,7 @@ void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zo
   set_data  = GetZoneStatus( p_sv ,habitat_zone_id );
 
   // フラグ設定
-  set_data.data.zone_complete_flg = 1;
+  set_data.data.zone_complete_flg = TRUE;
   SetZoneStatus( p_sv,habitat_zone_id , set_data );
 }
 
@@ -353,7 +356,7 @@ u8 HABITATLIST_SAVE_GetDefaultGround( HABITATLIST_SAVE *p_sv )
  *
  *	@param	*p_sv 
  *
- *	@retval 1の時既にチュートリアルを見てる
+ *	@retval TRUEの時既にチュートリアルを見てる
  */
 //-----------------------------------------------------------------------------
 u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
@@ -367,7 +370,7 @@ u8 HABITATLIST_SAVE_GetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
  *
  *	@param	*p_sv 
  *
- *	@retval 1の時既にチュートリアルを見てる
+ *	@retval TRUEの時既にチュートリアルを見てる
  */
 //-----------------------------------------------------------------------------
 u8 HABITATLIST_SAVE_GetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
@@ -386,7 +389,7 @@ u8 HABITATLIST_SAVE_GetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
 //-----------------------------------------------------------------------------
 void HABITATLIST_SAVE_SetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
 {
-  p_sv->look_tutorial_flag = 1;
+  p_sv->look_tutorial_flag = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -400,6 +403,6 @@ void HABITATLIST_SAVE_SetLookCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
 //-----------------------------------------------------------------------------
 void HABITATLIST_SAVE_SetGetCmpTutorialFlag( HABITATLIST_SAVE *p_sv )
 {
-  p_sv->get_tutorial_flag = 1;
+  p_sv->get_tutorial_flag = TRUE;
 }
 
