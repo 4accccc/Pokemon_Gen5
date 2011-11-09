@@ -332,7 +332,7 @@
 みんな　かって　ですよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:14:24" />
+				Time="2011-11-09T02:44:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -848,11 +848,11 @@
 			Language="JPN">
 			<Text>なにー！　アクロマさまを
 やっつけた　だとー！！▼
-うわー！　つよがっていたが
-ポケモンを　もっていないんだ！▼</Text>
+うわー！　つよがっていたが　おれ
+ポケモン　もっていないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T09:12:07" />
+				Time="2011-11-09T02:56:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -862,11 +862,11 @@
 			Language="JPN_KANJI">
 			<Text>なにー！　アクロマさまを
 やっつけた　だとー！！▼
-うわー！　強がっていたが
-ポケモンを　持っていないんだ！▼</Text>
+うわー！　強がっていたが　おれ
+ポケモン　持っていないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:14:20" />
+				Time="2011-11-09T02:56:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,12 +1018,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　プラズマカードが　ないと
+			<Text>プラズマカードが　ないと
 パスワードは　にゅうりょく　できない▼
 あとは　じぶんで　がんばりなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:35:57" />
+				Time="2011-11-09T02:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1031,12 +1031,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　プラズマカードが　ないと
+			<Text>プラズマカードが　ないと
 パスワードは　入力できない▼
 あとは　自分で　がんばりなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T03:53:22" />
+				Time="2011-11-09T02:42:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1084,11 +1084,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュレム……　むりやり
-こきつかわれて　かなしかっただろうな</Text>
+			<Text>キュレム……　無理矢理
+こきつかわれて　悲しかっただろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:56:52" />
+				Time="2011-11-09T02:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1123,15 +1123,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　プラズマフリゲートは
+			<Text>プラズマフリゲートは
 キュレムの　こおりエネルギー　とか▼
 ソーラーパネル　とか
 エコロジーな　ふね　なんだ▼
 まあね　イッシュを　ボロボロにしちゃ
-しはいするときに　こまるけどさ</Text>
+しはいするときに　こまるからさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:59:03" />
+				Time="2011-11-09T02:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1139,15 +1139,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　プラズマフリゲートは
+			<Text>プラズマフリゲートは
 キュレムの　こおりエネルギー　とか▼
 ソーラーパネル　とか
-エコロジーな　ふね　なんだ▼
+エコロジーな　船なんだ▼
 まあね　イッシュを　ボロボロにしちゃ
-しはいするときに　こまるけどさ</Text>
+支配するときに　こまるからさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:59:07" />
+				Time="2011-11-09T02:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

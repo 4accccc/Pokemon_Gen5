@@ -12,10 +12,10 @@
 ココでなら　キュレムは
 さいだいげんの　パワーを　はっきし▼
 イッシュぜんどを　いともたやすく
-こおりづけに　できます！</Text>
+こおりづけに　できます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:19:51" />
+				Time="2011-11-09T02:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,10 +29,10 @@
 ココでなら　キュレムは
 最大限の　パワーを　発揮し▼
 イッシュ全土を　いともたやすく
-氷漬けに　できます！</Text>
+氷漬けに　できます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:20:26" />
+				Time="2011-11-09T02:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66,10 +66,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いでよ　キュレム！</Text>
+			<Text>いでよ　キュレム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:26:26" />
+				Time="2011-11-09T02:59:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +77,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いでよ　キュレム！</Text>
+			<Text>いでよ　キュレム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:20:32" />
+				Time="2011-11-09T02:59:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -173,10 +173,10 @@
 ですが　ここまで　きたことに
 けいいを　あらわし　プレゼントです▼
 ここで　こおりづけ　となり
-イッシュの　ゆくすえを　みるがいい！</Text>
+イッシュの　ゆくすえを　みるがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:21:33" />
+				Time="2011-11-09T02:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -192,10 +192,10 @@
 ですが　ここまで　きたことに
 敬意を　表し　プレゼントです▼
 ここで　氷漬け　となり
-イッシュの　行く末を　みるがいい！</Text>
+イッシュの　行く末を　みるがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:22:20" />
+				Time="2011-11-09T02:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -231,10 +231,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>キュレム！
-こごえるせかい　です！</Text>
+こごえるせかい　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:29:38" />
+				Time="2011-11-09T02:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -243,10 +243,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キュレム！
-こごえるせかい　です！</Text>
+こごえるせかい　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:22:25" />
+				Time="2011-11-09T02:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -340,10 +340,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:31:04" />
+				Time="2011-11-09T02:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -351,10 +351,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:31:07" />
+				Time="2011-11-09T02:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -392,10 +392,10 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:31:15" />
+				Time="2011-11-09T02:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -403,10 +403,10 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:31:18" />
+				Time="2011-11-09T02:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -446,10 +446,10 @@ N</Text>
 			Language="JPN">
 			<Text>ゲーチス『……きましたか▼
 ヒトの　こころを　もたぬ　ばけもの
-Ｎ（エヌ）　よ</Text>
+Ｎ（エヌ）　よ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:23:23" />
+				Time="2011-11-09T02:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -459,10 +459,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>ゲーチス『……来ましたか▼
 ヒトの　心を　持たぬ　化け物
-Ｎ（エヌ）　よ</Text>
+Ｎ（エヌ）　よ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:23:18" />
+				Time="2011-11-09T02:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -502,10 +502,10 @@ N</Text>
 かなでる　ハーモニーが　あると▽
 きづかせてくれた　ばしょ……！▼
 そこに　くらす　ポケモンや　ヒトを
-ボクは　まもる！！[Ctrl2:CtrlSpeed ]</Text>
+ボクは　まもる！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:28:01" />
+				Time="2011-11-09T02:59:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -523,10 +523,10 @@ N</Text>
 奏でる　ハーモニーが　あると▽
 気づかせてくれた　場所……！▼
 そこに　暮らす　ポケモンや　ヒトを
-ボクは　守る！！[Ctrl2:CtrlSpeed ]</Text>
+ボクは　守る！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:27:48" />
+				Time="2011-11-09T02:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -572,10 +572,10 @@ N</Text>
 かなでる　ハーモニーが　あると▽
 おしえてくれた　ばしょ　イッシュ！▼
 そこに　くらす　ポケモンや　ヒトを
-ボクは　まもる！！[Ctrl2:CtrlSpeed ]</Text>
+ボクは　まもる！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:26:02" />
+				Time="2011-11-09T02:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -593,10 +593,10 @@ N</Text>
 奏でる　ハーモニーが　あると▽
 気づかせてくれた　場所……！▼
 そこに　暮らす　ポケモンや　ヒトを
-ボクは　守る！！[Ctrl2:CtrlSpeed ]</Text>
+ボクは　守る！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:28:08" />
+				Time="2011-11-09T02:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -736,10 +736,10 @@ N</Text>
 むねを　うつ　けついの　あらわれ！▼
 ワタクシが　ほどこした
 おう　としての　きょういく▽
-けっして　むだでは　なかったか</Text>
+けっして　むだでは　なかったか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:30:13" />
+				Time="2011-11-09T02:59:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -751,10 +751,10 @@ N</Text>
 胸を　打つ　決意の　表れ！▼
 ワタクシが　施した
 王としての　教育▽
-決して　無駄では　なかったか</Text>
+決して　無駄では　なかったか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:30:06" />
+				Time="2011-11-09T02:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -789,10 +789,10 @@ N</Text>
 ワタクシの　けいかくを　くるわせたこと
 いまだに　わすれていませんよ▼
 アナタの　のうりょくを　りようして
-イッシュを　しはいする　はずだったのに！</Text>
+イッシュを　しはいする　はずだった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:56:28" />
+				Time="2011-11-09T02:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -807,10 +807,10 @@ N</Text>
 ワタクシの　計画を　狂わせたこと
 いまだに　忘れていませんよ▼
 アナタの　能力を　利用して
-イッシュを　支配する　はずだったのに！</Text>
+イッシュを　支配する　はずだった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:33:32" />
+				Time="2011-11-09T02:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -846,10 +846,10 @@ N</Text>
 さがす　てまが　はぶけたというもの▼
 もっとも　ソウリュウに　こおりを
 うちこめば　いへんを　さっちし▽
-すがたを　あらわすと　よんでいましたが</Text>
+すがたを　あらわすと　よんでいましたが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:36:54" />
+				Time="2011-11-09T02:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -863,10 +863,10 @@ N</Text>
 探す　手間が　省けたというもの▼
 もっとも　ソウリュウに　氷を
 撃ちこめば　異変を　察知し▽
-姿を　現すと　読んでいましたが</Text>
+姿を　現すと　読んでいましたが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:35:29" />
+				Time="2011-11-09T02:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -900,10 +900,10 @@ N</Text>
 さがす　てまが　はぶけたというもの▼
 もっとも　ソウリュウに　こおりを
 うちこめば　いへんを　さっちし▽
-すがたを　あらわすと　よんでいましたが</Text>
+すがたを　あらわすと　よんでいましたが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:36:57" />
+				Time="2011-11-09T02:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -917,10 +917,10 @@ N</Text>
 探す　手間が　省けたというもの▼
 もっとも　ソウリュウに　氷を
 撃ちこめば　異変を　察知し▽
-姿を　現すと　読んでいましたが</Text>
+姿を　現すと　読んでいましたが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:35:23" />
+				Time="2011-11-09T02:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -949,10 +949,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そんな　すうしきは　とけない
-すこしも　うつくしく　ない！[Ctrl2:CtrlSpeed ]</Text>
+うつくしさが　ない！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:37:31" />
+				Time="2011-11-09T03:00:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -961,10 +961,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そんな　数式は　解けない
-少しも　美しく　ない！[Ctrl2:CtrlSpeed ]</Text>
+美しさが　ない！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:37:57" />
+				Time="2011-11-09T03:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1001,10 +1001,10 @@ N</Text>
 			Language="JPN">
 			<Text>ゲーチス『できますとも！▼
 この！▼
-いでんしのくさびを　つかえばな</Text>
+いでんしのくさびを　つかえばな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:38:06" />
+				Time="2011-11-09T02:58:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1014,10 +1014,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>ゲーチス『できますとも！▼
 この！▼
-いでんしのくさびを　使えばな</Text>
+いでんしのくさびを　使えばな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:38:13" />
+				Time="2011-11-09T02:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1049,10 +1049,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>キュレムよ！
-ゼクロムを　きゅうしゅう　なさい！！</Text>
+ゼクロムを　きゅうしゅう　なさい！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:39:56" />
+				Time="2011-11-09T02:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1061,10 +1061,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キュレムよ！
-ゼクロムを　吸収なさい！！</Text>
+ゼクロムを　吸収なさい！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:40:05" />
+				Time="2011-11-09T02:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1094,10 +1094,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>キュレムよ！
-レシラムを　きゅうしゅう　なさい！！</Text>
+レシラムを　きゅうしゅう　なさい！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:39:51" />
+				Time="2011-11-09T02:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1106,10 +1106,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キュレムよ！
-レシラムを　吸収なさい！！！！</Text>
+レシラムを　吸収なさい！！！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:40:19" />
+				Time="2011-11-09T02:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1140,10 +1140,10 @@ N</Text>
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……！▼
 まさか　ポケモンが　がったいだなんて
-そんな　すうしき　あるものか……[Ctrl2:CtrlSpeed ]</Text>
+そんな　すうしき　あるものか……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:53:34" />
+				Time="2011-11-09T02:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1153,10 +1153,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……！▼
 まさか　ポケモンが　合体だなんて
-そんな　数式　あるものか……[Ctrl2:CtrlSpeed ]</Text>
+そんな　数式　あるものか……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:42:26" />
+				Time="2011-11-09T02:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1201,10 +1201,10 @@ N</Text>
 それで　イッシュを　しはいする！▼
 わかるか？
 オマエが　おうに　なっていれば▽
-イッシュは　うつくしい　ままだった！</Text>
+イッシュは　うつくしい　ままだった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:50:09" />
+				Time="2011-11-09T02:58:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1212,8 +1212,8 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲーチス『愚か者　め！▼
-前回は　オマエを　つかい
+			<Text>ゲーチス『愚か者め！▼
+前回は　オマエを　利用し
 民どもの　心を　たぶらかし▽
 掌握する　はず　だった！▼
 だが！
@@ -1221,10 +1221,10 @@ N</Text>
 それで　イッシュを　支配する！▼
 わかるか？
 オマエが　王に　なっていれば▽
-イッシュは　美しい　ままだった！</Text>
+イッシュは　美しい　ままだった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:50:03" />
+				Time="2011-11-09T02:58:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1258,10 +1258,10 @@ N</Text>
 くりかえすのは　おもしろみに　かける▼
 そこでだ　アナタが
 この　キュレムを　とめられるかどうか▽
-みせて　もらいましょう！</Text>
+みせて　もらいましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:52:21" />
+				Time="2011-11-09T02:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1275,10 +1275,10 @@ N</Text>
 繰り返すのは　おもしろみに　欠ける▼
 そこでだ　アナタが
 この　キュレムを　止められるかどうか▽
-みせて　もらいましょう！</Text>
+みせて　もらいましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:56:25" />
+				Time="2011-11-09T02:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1288,10 +1288,10 @@ N</Text>
 			Language="JPN">
 			<Comment>♂
 ・主人公に向けて
-・続けて</Comment>
+・続けてswsage01_13</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T02:52:29" />
+				Time="2011-11-09T02:58:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1791,10 +1791,10 @@ N</Text>
 せかいを　かえる
 かんぜんな　しはいしゃ　だぞッ！？▼
 いちどならず　にどまでも
-むめいの　トレーナーごときに……！</Text>
+むめいの　トレーナーごときに……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:31:01" />
+				Time="2011-11-09T03:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1809,10 +1809,10 @@ N</Text>
 世界を　変える
 完全な　支配者だぞッ！？▼
 一度ならず　二度までも
-無名の　トレーナーごときに……！</Text>
+無名の　トレーナーごときに……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:35:42" />
+				Time="2011-11-09T03:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1846,10 +1846,10 @@ N</Text>
 ポケモンなる
 どうぐを　つかいこなせぬ▼
 おろかな　ものたちに
-おくれを　とるとは！</Text>
+おくれを　とるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:57:50" />
+				Time="2011-11-09T03:01:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1862,10 +1862,10 @@ N</Text>
 ポケモンなる
 道具を　使いこなせぬ▼
 愚かな　者たちに
-遅れを　とるとは！</Text>
+遅れを　とるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:36:07" />
+				Time="2011-11-09T03:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1905,10 +1905,10 @@ N</Text>
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
-だのに！[Ctrl2:CtrlSpeed ]</Text>
+だのに！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:24:59" />
+				Time="2011-11-09T03:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1926,10 +1926,10 @@ N</Text>
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
-だのに！[Ctrl2:CtrlSpeed ]</Text>
+だのに！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:25:05" />
+				Time="2011-11-09T03:01:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1967,10 +1967,10 @@ N</Text>
 			Language="JPN">
 			<Text>ゲーチス『だまれ！▼
 ポケモンと　はなす　ばけものが！
-にんげんの　ことばを　かたるな！！</Text>
+にんげんの　ことばを　かたるな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:23:17" />
+				Time="2011-11-09T03:01:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1980,10 +1980,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>ゲーチス『だまれ！▼
 ポケモンと　話す　化け物が！
-人間の　言葉を　語るな！！</Text>
+人間の　言葉を　語るな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:23:23" />
+				Time="2011-11-09T03:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2014,10 +2014,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ダークトリニティ『Ｎさま
-ゲーチスさまの　ことは　わたしたちが</Text>
+ゲーチスさまの　ことは　わたしたちが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:08:23" />
+				Time="2011-11-09T03:01:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2026,10 +2026,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ダークトリニティ『Ｎさま
-ゲーチスさまの　ことは　わたしたちが</Text>
+ゲーチスさまの　ことは　わたしたちが▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:08:27" />
+				Time="2011-11-09T03:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2065,10 +2065,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
-よろしく　たのむ[Ctrl2:CtrlSpeed ]</Text>
+よろしく　たのむ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:07:58" />
+				Time="2011-11-09T03:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2077,10 +2077,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
-よろしく　頼む[Ctrl2:CtrlSpeed ]</Text>
+よろしく　頼む[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:08:06" />
+				Time="2011-11-09T03:01:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2115,11 +2115,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……はい
+			<Text>ダークトリニティ『……はい▼
 </Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:45:30" />
+				Time="2011-11-09T03:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2127,11 +2127,10 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……はい
-</Text>
+			<Text>ダークトリニティ『……はい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:08:09" />
+				Time="2011-11-09T03:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2171,10 +2170,10 @@ N</Text>
 アリガトウ！▼
 キュレムだけど　だいじょうぶ　だよ▼
 いまは　ちからを　うしなっているが
-また　ここに　あらわれる……！[Ctrl2:CtrlSpeed ]</Text>
+また　ここに　あらわれる……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:10:59" />
+				Time="2011-11-09T03:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2187,10 +2186,10 @@ N</Text>
 アリガトウ！▼
 キュレムだけど　大丈夫だよ▼
 今は　力を　失っているが
-また　ここに　現れる……！[Ctrl2:CtrlSpeed ]</Text>
+また　ここに　現れる……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:13:19" />
+				Time="2011-11-09T03:02:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2329,12 +2328,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
-キミに　ありがとう　って！▼
+キミに　ありがとう　と！▼
 そうなんだ
-ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:19:20" />
+				Time="2011-11-09T03:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2343,12 +2342,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
-キミに　ありがとう　って！▼
+キミに　ありがとう　と！▼
 そうなんだ
-ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:19:39" />
+				Time="2011-11-09T03:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2387,12 +2386,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
-キミに　ありがとう　って！▼
+キミに　ありがとう　と！▼
 そうなんだ
-ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:25:34" />
+				Time="2011-11-09T03:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2401,12 +2400,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
-キミに　ありがとう　って！▼
+キミに　ありがとう　と！▼
 そうなんだ
-ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]</Text>
+ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:25:38" />
+				Time="2011-11-09T03:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2453,10 +2452,10 @@ N</Text>
 ことなる　かんがえを　うけいれて
 せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
-しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]</Text>
+しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:56:12" />
+				Time="2011-11-09T03:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2471,10 +2470,10 @@ N</Text>
 異なる　考えを　受け入れて
 世界は　化学反応を　起こす▼
 そうして　ボクの　世界は
-静かに　広がったんだ……[Ctrl2:CtrlSpeed ]</Text>
+静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:55:47" />
+				Time="2011-11-09T03:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2517,10 +2516,10 @@ N</Text>
 ことなる　かんがえを　うけいれて
 せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
-しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]</Text>
+しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:56:05" />
+				Time="2011-11-09T03:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2535,10 +2534,10 @@ N</Text>
 異なる　考えを　受け入れて
 世界は　化学反応を　起こす▼
 そうして　ボクの　世界は
-静かに　広がったんだ……[Ctrl2:CtrlSpeed ]</Text>
+静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:55:58" />
+				Time="2011-11-09T03:02:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2580,10 +2579,10 @@ N</Text>
 ヒトと　いることで　ポケモンは
 ほんらいの　ちからを　はっきする……▼
 それが　ゼクロムが　おしえてくれた
-ポケモンと　ボクの　りそう……[Ctrl2:CtrlSpeed ]</Text>
+ポケモンと　ボクの　りそう……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:22" />
+				Time="2011-11-09T03:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2596,10 +2595,10 @@ N</Text>
 ヒトと　いることで　ポケモンは
 真の　力を　発揮する……▼
 それが　ゼクロムが　教えてくれた
-ポケモンと　ボクの　理想……[Ctrl2:CtrlSpeed ]</Text>
+ポケモンと　ボクの　理想……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:40:56" />
+				Time="2011-11-09T03:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2641,10 +2640,10 @@ N</Text>
 ヒトと　いることで　ポケモンは
 ほんらいの　ちからを　はっきする……▼
 それが　レシラムが　おしえてくれた
-ポケモンと　ボクの　しんじつ……[Ctrl2:CtrlSpeed ]</Text>
+ポケモンと　ボクの　しんじつ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:25" />
+				Time="2011-11-09T03:03:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2657,10 +2656,10 @@ N</Text>
 ヒトと　いることで　ポケモンは
 真の　力を　発揮する……▼
 それが　レシラムが　教えてくれた
-ポケモンと　ボクの　真実……[Ctrl2:CtrlSpeed ]</Text>
+ポケモンと　ボクの　真実……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:41:03" />
+				Time="2011-11-09T03:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2700,10 +2699,10 @@ N</Text>
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　りそうを　たしかめるため
-ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
+ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T05:10:59" />
+				Time="2011-11-09T03:03:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2714,10 +2713,10 @@ N</Text>
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その理想を　確かめるため
-ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
+ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T05:11:11" />
+				Time="2011-11-09T03:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2757,10 +2756,10 @@ N</Text>
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　しんじつを　たしかめるため
-ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
+ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T05:11:05" />
+				Time="2011-11-09T03:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2771,10 +2770,10 @@ N</Text>
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その理想を　確かめるため
-ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
+ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-02T05:11:08" />
+				Time="2011-11-09T03:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
