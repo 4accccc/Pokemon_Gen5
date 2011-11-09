@@ -94,6 +94,7 @@ FS_EXTERN_OVERLAY(debug_data);
 
 #include "palace_warp_check.h"
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_
+#include "../../../resource/fldmapdata/script/c12_def.h" // for SCRID_C12_
 
 #include "../../../resource/fldmapdata/mm_list/mmlist_def.h"  //for MMLID_NOENTRY
 
@@ -371,23 +372,64 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
   case 2:
     //フィールドマップを開始待ち
     GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
+
+#ifdef PM_DEBUG
+    if ( fmw->isDebugModeFlag == TRUE ) {
+      (*seq) = 4; // デモ後スクリプトは実行しない
+    } else {
+      (*seq)++;
+    }
+#else
     (*seq)++;
+#endif
     break;
 
   case 3:
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
-    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gsys, fieldmap, FIELD_FADE_WAIT ) );
+
+    //デモ後のスクリプトのため主人公非表示
+    {
+      const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( fieldmap );
+      MMDL *mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+      MMDL_OnStatusBit( mmdl, MMDL_STABIT_VANISH );
+    }
+
+    // デモ後スクリプトの初期化
+    SCRIPT_CallScript( event, SCRID_C12_GAME_START_INIT, NULL, NULL, GFL_HEAPID_APP );
     (*seq)++;
     break;
 
   case 4:
+    fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gsys, fieldmap, FIELD_FADE_WAIT ) );
+
+#ifdef PM_DEBUG
+    if ( fmw->isDebugModeFlag == TRUE ) {
+      (*seq) = 6; // デモ後スクリプトは実行しない
+    } else {
+      (*seq)++;
+    }
+#else
+    (*seq)++;
+#endif
+    break;
+
+  case 5:
+    // デモ後スクリプト
+    SCRIPT_CallScript( event, SCRID_C12_GAME_START, NULL, NULL, GFL_HEAPID_APP );
+    (*seq)++;
+    break;
+
+  case 6:
+#if 0
     // 地名を表示する
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     if( FIELDMAP_GetPlaceNameSys(fieldmap) )
     {
       FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id );
     }
+#endif
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -547,7 +589,7 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
         int list_area_id;
         MMDLSYS *fmmdlsys;
         list_area_id = ZONEDATA_GetMvMdlID( cmw->continue_zone_id );
-        NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",
+        OS_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",
             cmw->continue_zone_id, list_area_id);
         fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
         if ( list_area_id < MMLID_MAX ) MMDLSYS_SetSysOBJCodeParam(fmmdlsys, list_area_id);
@@ -2996,7 +3038,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
     int list_area_id;
     MMDLSYS *fmmdlsys;
     list_area_id = ZONEDATA_GetMvMdlID( loc.zone_id );
-    NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",loc.zone_id, list_area_id);
+    OS_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",loc.zone_id, list_area_id);
     fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
     if ( list_area_id < MMLID_MAX ) MMDLSYS_SetSysOBJCodeParam(fmmdlsys, list_area_id);
     else MMDLSYS_ClearSysOBJCodeParam( fmmdlsys );

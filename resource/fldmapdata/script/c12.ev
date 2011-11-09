@@ -58,6 +58,8 @@ _EVENT_DATA	ev_c12_middleman1_02
 _EVENT_DATA	ev_c12_girl1_01
 _EVENT_DATA	ev_c12_woman1_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_stop_02a
+_EVENT_DATA    ev_c12_game_start_init
+_EVENT_DATA    ev_c12_game_start
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -120,6 +122,7 @@ _DEBUG_PRINT_WK(1)
     _OBJ_POS_CHANGE( C12_SWSISTER_01, 45, 1, 763, DIR_RIGHT )
 
   ENDIF
+
 INIT_EVENT_END
 
 /**************************************************************/
@@ -1937,6 +1940,44 @@ EVENT_START   ev_scene_c12_rivalsister_end_01
 
 EVENT_END
 
+/************************************************************/
+/*  SCENE_CHANGE：物語開始デモ後イベント　初期化 */
+/************************************************************/
+EVENT_START   ev_c12_game_start_init
+
+  //C12R0101ママを表示
+  _FLAG_RESET( FV_C12_SWMAMA )
+  _OBJ_ADD( C12_SWMAMA_01 )
+  _OBJ_POS_CHANGE( C12_SWMAMA_01, 43, 1, 761, DIR_RIGHT )
+
+EVENT_END
+/************************************************************/
+/*  SCENE_CHANGE：物語開始デモ後イベント */
+/************************************************************/
+EVENT_START   ev_c12_game_start
+
+  //【仮】
+  _OBJ_ANIME( C12_SWMAMA_01, anm_game_start_01 )
+  _OBJ_ANIME_WAIT()
+
+  // 花びら舞う
+  _DEMO_GIMMICK_INTRO_ANM_START()
+  //【仮】
+  // ここで演技
+
+  _TIME_WAIT(20)
+
+  // 部屋に移動
+  _MAP_CHANGE_DEFAULT_POS( ZONE_ID_C12R0101, DIR_DOWN )
+
+  //========================================//
+	//C12R0101ママを非表示
+	_FLAG_SET( FV_C12_SWMAMA )
+  //========================================//
+
+EVENT_END
+
+
 //--------------------------------------------------------------------
 //  ライバルの妹：歩きa（クリア後イベント用）
 //--------------------------------------------------------------------
@@ -2011,6 +2052,14 @@ _ANIME_LABEL	anm_townmap_bell_bye
   _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_WALK_R_8F,6
   _ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆物語開始デモ後：ママ歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_game_start_01
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
