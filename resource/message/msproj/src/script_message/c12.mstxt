@@ -67,7 +67,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『おい！▼
-ポケモンを　つれていなのに
+ポケモンを　つれていないのに
 どこ　いくんだよ？▼
 ……　……　……
 ……　……　……▼
@@ -76,7 +76,7 @@ GIRL2</Text>
 それは　すごいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:15:06" />
+				Time="2011-11-09T09:17:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85,7 +85,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『おい！▼
-ポケモンを　連れていなのに
+ポケモンを　連れていないのに
 どこ　行くんだよ？▼
 ……　……　……
 ……　……　……▼
@@ -94,7 +94,7 @@ GIRL2</Text>
 それは　すごいな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:47:48" />
+				Time="2011-11-09T09:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
