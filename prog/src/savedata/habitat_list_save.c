@@ -28,18 +28,12 @@
 //=====================================
 typedef struct {
   // 参照、設定用データ
-  u32 ground_status:2;
-  u32 waterside_status:2;
-  u32 fishing_status:2;
-  u32 zone_complete_flg:1;
-  u32 pad:1;
+  u8 ground_status:2;
+  u8 waterside_status:2;
+  u8 fishing_status:2;
+  u8 zone_complete_flg:1;
+  u8 pad:1;
 } HABITAT_ZONE_STATUS_DATA;
-
-// 取得用共用体
-typedef union{
-  HABITAT_ZONE_STATUS_DATA data;
-  u8 data_pack;
-}HABITAT_ZONE_STATUS_DATA_PACK;
 
 //-------------------------------------
 ///	生息地状態構造体
@@ -65,7 +59,7 @@ struct _HABITATLIST_SAVE
   //HABITATLIST_SAVE_WORK_SIZEの大きさで足りなかったら増やしてください
   //あと100byte程度は増やせるはず…。詳しくはblock 70のalignを見てください。
   u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX-6];
-  u8  zone_status[HABITATLIST_ZONE_ID_MAX];
+  HABITAT_ZONE_STATUS_DATA  zone_status[HABITATLIST_ZONE_ID_MAX];
   HABITAT_ZONE_DATA list_data;
   u8 look_tutorial_flag;
   u8 get_tutorial_flag;
@@ -78,8 +72,6 @@ SDK_COMPILER_ASSERT( sizeof(HABITATLIST_SAVE) == HABITATLIST_SAVE_WORK_SIZE );
  *					プロトタイプ宣言
 */
 //=============================================================================
-static HABITAT_ZONE_STATUS_DATA_PACK GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id );
-static void SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_ZONE_STATUS_DATA_PACK data );
 
 //----------------------------------------------------------------------------
 /**
@@ -133,18 +125,15 @@ HABITATLIST_SAVE* SaveData_GetHabitatListSave( SAVE_CONTROL_WORK *p_sv )
 //-----------------------------------------------------------------------------
 HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type)
 {
-  HABITAT_ZONE_STATUS_DATA_PACK status;
-  status  = GetZoneStatus( p_sv ,habitat_zone_id );
-
   // タイプごとに返す
   switch( type )
   {
   case HABITAT_GROUND_LAND:
-    return status.data.ground_status;
+    return p_sv->zone_status[habitat_zone_id].ground_status;
   case HABITAT_GROUND_WATERSIDE:
-    return status.data.waterside_status;
+    return p_sv->zone_status[habitat_zone_id].waterside_status;
   case HABITAT_GROUND_FISHING:
-    return status.data.fishing_status;
+    return p_sv->zone_status[habitat_zone_id].fishing_status;
   default:
     GF_ASSERT(0);
     return HABITAT_ZONE_STATUS_NONE;
@@ -163,9 +152,7 @@ HABITATLIST_STATUS HABITATLIST_SAVE_GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 ha
 //-----------------------------------------------------------------------------
 u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
 {
-  HABITAT_ZONE_STATUS_DATA_PACK status;
-  status  = GetZoneStatus( p_sv ,habitat_zone_id );
-  return status.data.zone_complete_flg;
+  return p_sv->zone_status[habitat_zone_id].zone_complete_flg;
 }
 
 //----------------------------------------------------------------------------
@@ -180,12 +167,8 @@ u8 HABITATLIST_SAVE_GetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone
 //-----------------------------------------------------------------------------
 void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
 {
-  HABITAT_ZONE_STATUS_DATA_PACK set_data;
-  set_data  = GetZoneStatus( p_sv ,habitat_zone_id );
-
   // フラグ設定
-  set_data.data.zone_complete_flg = TRUE;
-  SetZoneStatus( p_sv,habitat_zone_id , set_data );
+  p_sv->zone_status[habitat_zone_id].zone_complete_flg = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -202,65 +185,25 @@ void HABITATLIST_SAVE_SetZoneCompleteFlag( HABITATLIST_SAVE *p_sv ,u8 habitat_zo
 //-----------------------------------------------------------------------------
 void HABITATLIST_SAVE_SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_GROUND_TYPE type ,HABITATLIST_STATUS status)
 {
-  HABITAT_ZONE_STATUS_DATA_PACK set_data;
-  set_data = GetZoneStatus( p_sv ,habitat_zone_id );
-
   // タイプごとに設定
   switch( type )
   {
   case HABITAT_GROUND_LAND:
-    set_data.data.ground_status    = status;
-    ONOUE_Printf("草地書き換え:%d->%d\n",set_data.data.ground_status,status);
+    p_sv->zone_status[habitat_zone_id].ground_status    = status;
+    ONOUE_Printf("草地書き換え:%d->%d\n",p_sv->zone_status[habitat_zone_id].ground_status,status);
     break;
   case HABITAT_GROUND_WATERSIDE:
-    set_data.data.waterside_status = status;
-    ONOUE_Printf("水辺書き換え:%d->%d\n",set_data.data.waterside_status,status);
+    p_sv->zone_status[habitat_zone_id].waterside_status = status;
+    ONOUE_Printf("水辺書き換え:%d->%d\n",p_sv->zone_status[habitat_zone_id].waterside_status,status);
     break;
   case HABITAT_GROUND_FISHING:
-    set_data.data.fishing_status   = status;
-    ONOUE_Printf("釣り書き換え:%d->%d\n",set_data.data.fishing_status,status);
+    p_sv->zone_status[habitat_zone_id].fishing_status   = status;
+    ONOUE_Printf("釣り書き換え:%d->%d\n",p_sv->zone_status[habitat_zone_id].fishing_status,status);
     break;
   default:
     GF_ASSERT(0);
     return;
   }
-
-  // セット
-  SetZoneStatus( p_sv,habitat_zone_id , set_data );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  地形データを取得する
- *
- *	@param	*p_wk 
- *	@param	habitat_zone_id 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static HABITAT_ZONE_STATUS_DATA_PACK GetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id )
-{
-  HABITAT_ZONE_STATUS_DATA_PACK data;
-  data.data_pack = p_sv->zone_status[habitat_zone_id];
-  return data;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  地形データを設定する
- *
- *	@param	*p_wk 
- *	@param	habitat_zone_id 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void SetZoneStatus( HABITATLIST_SAVE *p_sv ,u8 habitat_zone_id ,HABITAT_ZONE_STATUS_DATA_PACK data )
-{
-  HABITAT_ZONE_STATUS_DATA_PACK *p_dest;
-  p_dest = (HABITAT_ZONE_STATUS_DATA_PACK*)&p_sv->zone_status[habitat_zone_id];
-  p_dest->data_pack = data.data_pack;
 }
 
 //----------------------------------------------------------------------------
