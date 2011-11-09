@@ -6977,6 +6977,92 @@ GIRL2</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12_demo_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>りょうかい！　うちのコなら
+ぜったい　ひきうけてくれるわよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>了解！　うちのコなら
+絶対　引き受けてくれるわよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・オープニングデモ用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:51:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAMA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:51:04" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_demo_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うん！　ベルちゃんね！
+だいじょうぶ！　だいじょうぶ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:54:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うん！　ベルちゃんね！
+大丈夫！　大丈夫！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:55:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・オープニングデモ用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:51:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAMA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-09T05:51:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12_sign1_01"
 		Style="Large">
 		<LanguageCell
