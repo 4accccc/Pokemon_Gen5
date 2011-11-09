@@ -1896,11 +1896,12 @@ BACKPACKERM</Text>
 			<Text>トレーナーさん！　あたしが
 あつめた　きのみを　かわない？▼
 きょう　もっているのは
-[Name:Item Idx="0" ]が　５コ　よ！▽
+[Name:Item Idx="0" ]が　５コで▽
+たったの　２００円　よ！▽
 ねっ　ほしいでしょ？　かうでしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1911,11 +1912,12 @@ BACKPACKERM</Text>
 			<Text>トレーナーさん！　あたしが
 集めた　きのみを　買わない？▼
 今日　持っているのは
-[Name:Item Idx="0" ]が　５コ　よ！▽
+[Name:Item Idx="0" ]が　５コで▽
+たったの　２００円　よ！▽
 ねっ　ほしいでしょ？　買うでしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:28:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2032,8 +2034,8 @@ BACKPACKERM</Text>
 			<Text>[Name:Item Idx="0" ]　５コで　２００円！
 あなた　かいものじょうず　よね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:27:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2044,8 +2046,8 @@ BACKPACKERM</Text>
 			<Text>[Name:Item Idx="0" ]　５コで　２００円！
 あなた　買い物上手　よね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2260,11 +2262,12 @@ BACKPACKERM</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしが　もっている　きのみは
-[Name:Item Idx="0" ]　５コが　よ！▽
+[Name:Item Idx="0" ]　５コで▽
+たったの　２００円　よ！▽
 ねっ　ほしいでしょ？　かうでしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:28:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2273,11 +2276,12 @@ BACKPACKERM</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしが　持っている　きのみは
-[Name:Item Idx="0" ]　５コが　よ！▽
+[Name:Item Idx="0" ]　５コで▽
+たったの　２００円　よ！▽
 ねっ　ほしいでしょ？　買うでしょ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

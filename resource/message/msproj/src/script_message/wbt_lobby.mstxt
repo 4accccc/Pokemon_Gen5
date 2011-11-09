@@ -3960,12 +3960,12 @@ msg_wbt_info_11へ</Comment>
 			<Text>さんかできる　じょうけんを
 みたして　いません！▼
 さんかするときに　じょうけんを
-くわしくみることが　できますので▼
+くわしく　みることが　できますので▼
 ダウンロードトーナメントの
 ルールを　ごかくにんください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:41:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -3976,12 +3976,12 @@ msg_wbt_info_11へ</Comment>
 			<Text>参加できる　条件を
 満たして　いません！▼
 参加時に　条件を
-詳しくみることが　できますので▼
+詳しく　みることが　できますので▼
 ダウンロードトーナメントの
 ルールを　ご確認ください▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:41:43" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -4299,11 +4299,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　てもちが　きまる
-ドキドキな　くじを　えらんでください</Text>
+			<Text>ともに　たたかう　ポケモンを　きめる
+ドキドキな　クジを　えらんでください</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:04:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:02:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4311,11 +4311,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　てもちが　きまる
-ドキドキな　くじを　えらんでください</Text>
+			<Text>ともに　戦う　ポケモンを　決める
+ドキドキな　クジを　選んでください</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:04:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4842,11 +4842,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みごと　トーナメントを　制した
-[Name:TrainerName ]様に　バトルポイントを▽
+[Name:TrainerName ]さまに　バトルポイントを▽
 贈らせて　いただきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:47:46" />
+				Time="2011-11-09T10:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4855,10 +4855,10 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・仮　ごほうび入手</Comment>
+・ごほうび入手</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-22T07:55:49" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:56:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4929,10 +4929,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　参加の記念にこれをどうぞ▼</Text>
+			<Text>おつかれさまでした！
+さんかきねんに　これを！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:44:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4940,10 +4941,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　参加の記念にこれをどうぞ▼</Text>
+			<Text>おつかれさまでした！
+参加記念に　これを！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:44:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T10:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4952,10 +4954,10 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・仮　残念賞　入手</Comment>
+・残念賞入手</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:56:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5132,14 +5134,13 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地方　すべての
-リーダーズトーナメントと▼
-レンタルトーナメントに
-優勝すると▼
+リーダーズトーナメントと▽
+レンタルトーナメントに　優勝すると▼
 レンタルマスタートーナメントに
 参加できるように　なります！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:00:05" />
+				Time="2011-11-09T09:57:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -5178,14 +5179,13 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地方　すべての
-リーダーズトーナメントと▼
-ミックストーナメントに
-優勝すると▼
+リーダーズトーナメントと▽
+ミックストーナメントに　優勝すると▼
 ミックスマスタートーナメントに
 参加できるように　なります！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:00:10" />
+				Time="2011-11-09T09:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -6373,11 +6373,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Wi-Fiコネクションを　しようして
+			<Text>Ｗｉ－Ｆｉコネクションを　しようして
 トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T06:54:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6388,8 +6388,8 @@ msg_wbt_info_11へ</Comment>
 			<Text>Ｗｉ－Ｆｉコネクションを　使用して
 トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:51:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:55:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6630,10 +6630,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメント優勝記録を
-呼び出した！▼</Text>
+呼びだした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6672,10 +6672,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントダウンロードシステムを
-呼び出した！▼</Text>
+呼びだした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6746,7 +6746,7 @@ msg_wbt_notice_02に
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6757,10 +6757,10 @@ msg_wbt_notice_02に
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　あかのくじ</Text>
+			<Text>みぎのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6768,10 +6768,10 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　あかのくじ</Text>
+			<Text>みぎのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6779,10 +6779,12 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮　レンタルトーナメント用くじ１</Comment>
+			<Comment>選択肢
+・レンタルトーナメント用クジ
+１</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:00:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:59:05" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -6804,10 +6806,10 @@ msg_wbt_notice_02に
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　あおのくじ</Text>
+			<Text>まんなかのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6815,10 +6817,10 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　あおのくじ</Text>
+			<Text>まんなかのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6826,10 +6828,11 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮　レンタルトーナメント用くじ2</Comment>
+			<Comment>選択肢
+・レンタルトーナメント用くじ２</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:02:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:44" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -6851,10 +6854,10 @@ msg_wbt_notice_02に
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　みどりのくじ</Text>
+			<Text>ひだりのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6862,10 +6865,10 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　みどりのくじ</Text>
+			<Text>ひだりのクジ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:01:52" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6873,10 +6876,11 @@ msg_wbt_notice_02に
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮　レンタルトーナメント用くじ3</Comment>
+			<Comment>選択肢
+・レンタルトーナメント用くじ３</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T04:02:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-09T09:58:46" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">

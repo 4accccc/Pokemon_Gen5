@@ -157,12 +157,12 @@
 			Language="JPN">
 			<Text>フン！　しんじて　うらぎられるのも
 うたがって　いきていくのも▽
-その　ひとの　じゆう▼
+そいつの　じゆう　だけど▼
 はなせて　たのしかったよ
 これは　ちょっとした　プレゼント▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:47:29" />
+				Time="2011-11-09T10:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -172,12 +172,12 @@
 			Language="JPN_KANJI">
 			<Text>フン！　信じて　裏切られるのも
 疑って　生きていくのも▽
-その　人の　自由▼
+そいつの　自由だけど▼
 話せて　楽しかったよ
 これは　ちょっとした　プレゼント▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:47:58" />
+				Time="2011-11-09T10:15:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -206,7 +206,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２ねんほどまえ
+			<Text>ゾロアークは　２ねんほどまえ
 ここらに　すみついていて▼
 イリュージョンって　とくせいで
 この　そうげんの　ようすを▼
@@ -217,7 +217,7 @@
 ゆめゆめ　うたがうことなかれ　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:45:13" />
+				Time="2011-11-09T10:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -225,18 +225,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２年ほど前
+			<Text>ゾロアークは　２年ほど前
 ここらに　すみついていて▼
-イリュージョンって　とくせいで
+イリュージョンって　特性で
 この草原の　様子を▼
 まるごと　変化させて
-ひとや　ポケモンを　化かしてたって▼
+人や　ポケモンを　化かしてたって▼
 とんでもないけど　ウワサには
 なにかしら　事実が　秘められている▼
 努々　疑うことなかれ　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:45:13" />
+				Time="2011-11-09T10:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
