@@ -124,6 +124,17 @@ EVENT_START  ev_pos_r04_swboss_02
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   */
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+  
+  //中央以外なら隣接
+  IF $LCW_POSX != 430 THEN
+    _OBJ_ANIME_AUTO( R04_SWBOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
 
   //アクロマ：まってましたよ！
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_01, R04_SWBOSS_01, POS_DEFAULT )
@@ -235,9 +246,9 @@ ev_vs_r04swboss:
     _OBJ_DEL( R04_BIGROCK_11 )
     
     //アクロマ隣接
-    IF $LCW_POSX == 433 THEN
-      $LCW_POSX -= 1
-      _OBJ_POS_CHANGE( R04_SWBOSS_01, LCW_POSX, 0, LCW_POSZ, DIR_RIGHT )
+    IF $LCW_POSX > 431 THEN
+      _OBJ_POS_CHANGE( R04_SWBOSS_01, 431, 0, 582, DIR_LEFT )
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 430, 0, 582, DIR_UP )
     ELSE
       $LCW_POSX += 1
       _OBJ_POS_CHANGE( R04_SWBOSS_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
@@ -250,12 +261,11 @@ ev_vs_r04swboss:
   
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
+  //アクロマテーマ曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
+  
   //アニメ：主人公アクロマの方を向く
-  IF $LCW_POSX == 433 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-  ELSE
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  ENDIF
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
   //【仮】リトライのリストに追加する必要あり。岩澤さんに報告
@@ -272,6 +282,10 @@ ev_vs_r04swboss:
   //捕まえた場合
     _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_06, R04_SWBOSS_01, POS_DEFAULT )
   ENDSWITCH
+  
+  //アニメ：アクロマ芝居
+  _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_act)
+  _OBJ_ANIME_WAIT()
   
   //アクロマ：なまえは？
   _PLAYER_NAME( 0 )
@@ -331,6 +345,9 @@ ev_vs_r04swboss:
   _OBJ_ANIME_AUTO( R04_SWBOSS_01, LCW_POSX,572, FORCE_TYPE_ALL, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
+  //イベント曲終了
+  _END_EVENT_BGM()
+  
   _OBJ_DEL( R04_SWBOSS_01 )
   
   //==================================//
@@ -344,6 +361,13 @@ ev_vs_r04swboss:
   
   //==================================//
 _RET
+
+//--------------------------------------------------------------------
+//☆アクロマ：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_act
+  _ANIME_DATA AC_SWBOSS_POINT_FINGER_L,1
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /*	R04		MAN2								  */
