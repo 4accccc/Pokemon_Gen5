@@ -394,6 +394,15 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   //ハイリンク通信ブロック処理
   _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
+  //ホワイトアウト
+  _DEMO_FADEOUT_WHITE_CALL()
+  
+  //デモ再生処理
+  _CALL_3D_DEMO( DEMO3D_ID_CITY_PLASMA_COME )
+  
+  //ホワイトイン
+  _DEMO_FADEIN_WHITE_CALL()
+  
   //シャガ：こおり……　だと？
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04 , C08_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
@@ -916,6 +925,9 @@ EVENT_START   ev_pos_c08_ninja_01
   _FLAG_SET( FV_C08_NINJA_01 )
   //T04R0101：ストッパー無効
   $WK_SCENE_T04R101_STOPPER_01 = 1
+  //T04R0101：ストッパー非表示
+  _FLAG_SET( FV_T04R101_STOPPER_01 )
+  _FLAG_RESET( FV_T04R101_STOPPER_02 )
   //C14 SCENE_CHANGE有効
   $WK_SCENE_C14_SWRIVAL_01 = 1
   //========================================//
