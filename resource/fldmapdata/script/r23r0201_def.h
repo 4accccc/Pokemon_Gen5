@@ -5,6 +5,6 @@
 #define _R23R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R23R0201 (1)
+#define SCRID_R23R0201_OLDMAN_01 (1)
 
 #endif //_R23R0201_DEF_H_

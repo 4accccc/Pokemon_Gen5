@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r23r0101.h"
-  //.include  "r23r0101.h"
+  .include  "r23r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r23r0101
+_EVENT_DATA	ev_r23r0101_trainerw_01
+_EVENT_DATA	ev_r23r0101_poke36_01
+_EVENT_DATA	ev_r23r0101_poke42_01
 _EVENT_DATA_END
 
 
@@ -29,10 +31,82 @@ _EVENT_DATA_END
 //ev_zone_r23r0101:
 //  _END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r23r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*		TRAINERW	回復処理							*/
+/************************************************************/
+EVENT_START	ev_r23r0101_trainerw_01
+  //体力の満タンではないポケモンのための変数定義
+  DEFINE_LOCAL LWK_PARTY_NUM  //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_RET_HP     //HPチェックの帰り値
+  DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
+  DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
 
+  _TALK_OBJ_START()
+
+  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+  //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのHPを取得
+    _CHECK_TEMOTI_HP( LWK_RET_HP, LWK_COUNT_NUM )
+
+    //指定POSのポケモンのPPを取得
+    _CHECK_TEMOTI_PP( LWK_RET_PP, LWK_COUNT_NUM )
+
+    //チェックしたポケモンのHP（またはPP）が満タンではないのならば
+    IF $LWK_RET_HP == FALSE || $LWK_RET_PP == FALSE THEN
+      //HPかPPが満タンではないポケモンの数に＋１
+      $LWK_DAME += 1
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちにHPかPPが満タンではないポケモンがいた場合
+  IF $LWK_DAME >= 1 THEN
+
+    //女性：あら　あなたの　ポケモン
+    _BALLOONWIN_TALKOBJ_MSG( msg_r23r0101_trainerw_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //暗転して手持ちポケモンを回復
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+    _TEMOTI_POKEMON_KAIFUKU()   //回復処理
+    _ME_PLAY( SEQ_ME_ASA )
+    _ME_WAIT()
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+  //手持ちのポケモンはHPもPPも満タン
+  ELSE
+
+    //女性：うん！　あなたと　ポケモンの
+    _BALLOONWIN_TALKOBJ_MSG( msg_r23r0101_trainerw_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  タブンネ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r23r0101_poke36_01
+  _EASY_TALK_POKEVOICE( MONSNO_TABUNNE, msg_r23r0101_poke36_01 )
+EVENT_END
+
+/**************************************************************/
+/*  キバゴ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r23r0101_poke42_01
+  _EASY_TALK_POKEVOICE( MONSNO_KIBAGO, msg_r23r0101_poke42_01 )
+EVENT_END
