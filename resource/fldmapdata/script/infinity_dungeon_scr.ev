@@ -1923,6 +1923,10 @@ all_area_clear:
 {
   // 自分のバージョンの色のエリアをクリアした判定
   IF $LWK_ROM_VERSION == $LWK_D_VERSION THEN
+
+    // クリアフラグをセット
+    $WK_SCENE_MUGENDUNGEON_CLEAR = 1
+
     // 自分の名前をセット
     _PLAYER_NAME( 0 )
 
