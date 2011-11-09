@@ -1017,6 +1017,10 @@ void GYM_WATER_SplashAnime( GAMESYS_WORK *gsys )
     FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // ÉAÉjÉÅçƒê∂ê›íË
   }
+
+  // SE
+  PMSND_PlaySE( GYM_WATER_SE_SPLASH );
+
 }
 
 //----------------------------------------------------------------------------
