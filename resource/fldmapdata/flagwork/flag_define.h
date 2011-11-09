@@ -833,7 +833,7 @@
 #define FV_T04_SWRIVAL_01                  944 /* 0x03b0 サザナミタウン：ライバル */
 #define FV_C03R0502_POKE38_01              945 /* 0x03b1 ヒウンシティ：ズルッグ */
 #define FV_D35R0101_POKE_01                946 /* 0x03b2 自然保護区：黒オノノクス */
-#define FV_T04R101_STOPPER_01              947 /* 0x03b3 サザナミタウンゲート：ストッパー */
+#define FV_T04R101_STOPPER_01              947 /* 0x03b3 サザナミタウンゲート：ストッパー（解除前） */
 #define FV_D29R0101_WORKMAN2_01            948 /* 0x03b4 ヤーコンロード：トロッコ用 */
 #define FV_D29R0101_WORKMAN2_02            949 /* 0x03b5 ヤーコンロード：トロッコ用 */
 #define FV_D29R0101_WORKMAN2_03            950 /* 0x03b6 ヤーコンロード：トロッコ用 */
@@ -872,7 +872,7 @@
 #define FV_C15R0301_BONUS_3                983 /* 0x03d7 ポケウッド：ファン（スターランク3） */
 #define FV_C15R0301_BONUS_4                984 /* 0x03d8 ポケウッド：ファン（スターランク4） */
 #define FV_C14_KAODASI_01                  985 /* 0x03d9 セイガイハシティ：顔出し看板イベントのカメラマン */
-		/* not used   986(0x03da) */
+#define FV_T04R101_STOPPER_02              986 /* 0x03da サザナミタウンゲート：ストッパー（解除後） */
 		/* not used   987(0x03db) */
 		/* not used   988(0x03dc) */
 		/* not used   989(0x03dd) */
