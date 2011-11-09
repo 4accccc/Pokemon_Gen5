@@ -1173,6 +1173,92 @@
 （ハハハ……　弱気に　なっている……
 よし……　今が　チャンスですね……</language>
 	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー……
+こざかしい　わざを　つかいますね……</language>
+		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー
+小賢しい　わざを　使いますね……</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">ミゲル『えっ！？　ここで　このわざ……？▼
+（マジかよ！？
+オレが　ドーブルに　もたせてる▽
+どうぐに　きが　ついてないのか？</language>
+		<language name="JPN_KANJI" width="256">ミゲル『えっ！？　ここで　このわざ……？▼
+（マジかよ！？
+オレが　ドーブルに　もたせてる▽
+どうぐに　きが　ついてないのか？</language>
+	</row>
+	<row id="pw_event7_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうでしょう？
+わたしの　かんがえた　さくせんは？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうでしょう？
+私の　考えた　作戦は？</language>
+	</row>
+	<row id="pw_event7_enemy_2">
+		<language name="JPN" width="256">ミゲル『や……　やるじゃないか！！
+こちらも　ゆだんして　いられないな！▼
+（んー　たかが　メロメロ　だろ？
+これが　どこが　さくせん　なんだよ？▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　むけてじゃなくて　オレへの
+かくれた　メッセージって　ことか……！？▼
+ということは　かのじょと　オレは……
+グフ　グフフ……　グヘヘヘ……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『や……　やるじゃないか！！
+こちらも　油断して　いられないな！▼
+（んー　たかが　メロメロ　だろ？
+これが　どこが　作戦　なんだよ？▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　向けてじゃなくて　オレへの
+隠れた　メッセージって　ことか……！？▼
+ということは　彼女と　オレは……
+グフ　グフフ……　グヘヘヘ……</language>
+	</row>
+	<row id="pw_event7_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの……▼
+ミゲルさん　だいじょうぶですか？▼
+なんだか　かおが　あかいのですが？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの……▼
+ミゲルさん　大丈夫ですか？▼
+なんだか　顔が　赤いのですが？</language>
+	</row>
+	<row id="pw_event7_enemy_3">
+		<language name="JPN" width="256">ミゲル『グへへへ……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『グへへへ……</language>
+	</row>
+	<row id="pw_event7_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ　ミゲルさん！
+きいてます？　だいじょうぶですか！？▽
+ねえ！　ミゲルさん！　ミゲルさん！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ　ミゲルさん！
+聞いてます？　大丈夫ですか！？▽
+ねえ！　ミゲルさん！　ミゲルさん！！</language>
+	</row>
+	<row id="pw_event7_enemy_4">
+		<language name="JPN" width="256">ミゲル『はっ　はいっ！！</language>
+		<language name="JPN_KANJI" width="256">ミゲル『はっ　はいっ！！</language>
+	</row>
+	<row id="pw_event7_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ミゲルさん？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ミゲルさん？</language>
+	</row>
+	<row id="pw_event7_enemy_5">
+		<language name="JPN" width="256">ミゲル『もっ　もんだいないっ！▼
+さあさあ！　しょうぶを　つづけようっ！▼
+（あー　ヤベえ！　ヤベえ！
+ぜったい　かのじょには　いえないこと▽
+ばかり　そうぞう　しちゃったぜ……</language>
+		<language name="JPN_KANJI" width="256">ミゲル『もっ　問題ないっ！▼
+さあさあ！　勝負を　続けようっ！▼
+（あー　ヤベえ！　ヤベえ！
+絶対　彼女には　言えないこと▽
+ばかり　想像　しちゃったぜ……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

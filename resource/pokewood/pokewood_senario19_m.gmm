@@ -1167,6 +1167,92 @@
 （ハハハ……　弱気に　なっている……
 よし……　今が　チャンスですね……</language>
 	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー……
+こざかしい　わざを　つかいますね……</language>
+		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー
+小賢しい　わざを　使いますね……</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">ペネロペ『えっ！？　ここで　このわざ……？▼
+（マジで！？
+アタシが　ドーブルに　もたせてる▽
+どうぐに　きが　ついてないのかしら……</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『えっ！？　ここで　このわざ……？▼
+（マジで！？
+アタシが　ドーブルに　持たせてる▽
+どうぐに　気が　ついてないのかしら……</language>
+	</row>
+	<row id="pw_event7_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうでしょうか！
+ぼくの　かんがえた　さくせんは！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうでしょうか！
+僕の　考えた　作戦は！</language>
+	</row>
+	<row id="pw_event7_enemy_2">
+		<language name="JPN" width="256">ペネロペ『や……　やるじゃない！！
+こちらも　ゆだんして　いられないわ！▼
+（えー　たかが　メロメロ　でしょ？
+これが　さくせんだなんて　まさか……▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　むけてじゃなくて　わたしへの
+かくれた　メッセージ　なんじゃあ……▼
+ということは　かれと　わたしは……
+ウフ　ウヘ……　ウへヘヘ……</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『や……　やるじゃない！！
+こちらも　油断して　いられないわ！▼
+（えー　たかが　メロメロ　でしょ？
+これが　作戦だなんて　まさか……▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　向けてじゃなくて　私への
+隠れた　メッセージ　なんじゃあ……▼
+ということは　彼と　私は……
+ウフ　ウヘ……　ウへヘヘ……</language>
+	</row>
+	<row id="pw_event7_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの……▼
+ペネロペさん　だいじょうぶですか？▼
+なんだか　かおが　あかいですよ？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの……▼
+ペネロペさん　大丈夫ですか？▼
+なんだか　顔が　赤いですよ？</language>
+	</row>
+	<row id="pw_event7_enemy_3">
+		<language name="JPN" width="256">ペネロペ『ウへへへ……</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『ウへへへ……</language>
+	</row>
+	<row id="pw_event7_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ　ペネロペさん！
+きいてます？　だいじょうぶですか！？▽
+ちょっと！！　ペネロペさん！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ　ペネロペさん！
+聞いてます？　大丈夫ですか！？▽
+ちょっと！！　ペネロペさん！！</language>
+	</row>
+	<row id="pw_event7_enemy_4">
+		<language name="JPN" width="256">ペネロペ『はっ　はいっ！！</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『はっ　はいっ！！</language>
+	</row>
+	<row id="pw_event7_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ペネロペさん？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ペネロペさん？</language>
+	</row>
+	<row id="pw_event7_enemy_5">
+		<language name="JPN" width="256">ペネロペ『だっ　だいじょうぶ　だから！▼
+ホラホラ！　しょうぶを　つづけましょ！▼
+（あー　ヤバい！　ヤバい！
+ついつい　めくるめく　あれやこれを▽
+そうぞう　しまくっちゃったわ……</language>
+		<language name="JPN_KANJI" width="256">ペネロペ『だっ　大丈夫　だから！▼
+ホラホラ！　勝負を　つづけましょ！▼
+（あー　ヤバい！　ヤバい！
+ついつい　めくるめく　あれやこれを▽
+想像　しまくっちゃったわ……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

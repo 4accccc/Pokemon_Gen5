@@ -2930,4 +2930,300 @@
 				Time="2011-10-26T05:09:57" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー……
+こざかしい　わざを　つかいますね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドーブル『ブルッ！　ブールブルッ！▼
+（クッ……　このトレーナー
+小賢しい　わざを　使いますね……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
+（マジかよ！？
+オレが　ドーブルに　もたせてる▽
+どうぐに　きが　ついてないのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
+（マジかよ！？
+オレが　ドーブルに　もたせてる▽
+どうぐに　きが　ついてないのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『どうでしょう？
+わたしの　かんがえた　さくせんは？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『どうでしょう？
+私の　考えた　作戦は？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミゲル『や……　やるじゃないか！！
+こちらも　ゆだんして　いられないな！▼
+（んー　たかが　メロメロ　だろ？
+これが　どこが　さくせん　なんだよ？▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　むけてじゃなくて　オレへの
+かくれた　メッセージって　ことか……！？▼
+ということは　かのじょと　オレは……
+グフ　グフフ……　グヘヘヘ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミゲル『や……　やるじゃないか！！
+こちらも　油断して　いられないな！▼
+（んー　たかが　メロメロ　だろ？
+これが　どこが　作戦　なんだよ？▼
+あ……　ああ……　ああッ！！
+もしかして　このわざ……▼
+ドーブルに　向けてじゃなくて　オレへの
+隠れた　メッセージって　ことか……！？▼
+ということは　彼女と　オレは……
+グフ　グフフ……　グヘヘヘ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あの……▼
+ミゲルさん　だいじょうぶですか？▼
+なんだか　かおが　あかいのですが？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あの……▼
+ミゲルさん　大丈夫ですか？▼
+なんだか　顔が　赤いのですが？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミゲル『グへへへ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミゲル『グへへへ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ねえ　ミゲルさん！
+きいてます？　だいじょうぶですか！？▽
+ねえ！　ミゲルさん！　ミゲルさん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ねえ　ミゲルさん！
+聞いてます？　大丈夫ですか！？▽
+ねえ！　ミゲルさん！　ミゲルさん！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミゲル『はっ　はいっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミゲル『はっ　はいっ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ミゲルさん？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ミゲルさん？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミゲル『もっ　もんだいないっ！▼
+さあさあ！　しょうぶを　つづけようっ！▼
+（あー　ヤベえ！　ヤベえ！
+ぜったい　かのじょには　いえないこと▽
+ばかり　そうぞう　しちゃったぜ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミゲル『もっ　問題ないっ！▼
+さあさあ！　勝負を　続けようっ！▼
+（あー　ヤベえ！　ヤベえ！
+絶対　彼女には　言えないこと▽
+ばかり　想像　しちゃったぜ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-08T12:36:41" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
