@@ -10,7 +10,7 @@ C:\home\swan\resource\particle\wazaeffect\be_star_eff01.spa
 BGのパレットフェード	フィールド	0	12	0	0:0:0
 タイマーによるウエイト	15
 制御モード変更	継続
-SE再生	SEQ_SE_SW_NPOKE	デフォルト	右	0:0:127	0:0:0
+SE再生	SEQ_SE_SW_STARPOKE	デフォルト	右	0:0:127	0:0:0
 制御モード変更	逐次
 パーティクル再生（正射影）	be_star_eff01	BE_STAR_EFF01_STAR_EFF01	攻撃側+補正	方向無し	0:1:0	0.5:0:0.5	0
 パーティクル再生（正射影）	be_star_eff01	BE_STAR_EFF01_STAR_EFF02	攻撃側+補正	方向無し	0:1:0	0.5:0:0.5	0
@@ -27,7 +27,7 @@ BGのパレットフェード	フィールド	6	0	0	0:0:0
 BGのパレットフェード	フィールド	0	12	0	0:0:0
 タイマーによるウエイト	15
 制御モード変更	継続
-SE再生	SEQ_SE_SW_NPOKE	デフォルト	左	0:0:127	0:0:0
+SE再生	SEQ_SE_SW_STARPOKE	デフォルト	左	0:0:127	0:0:0
 制御モード変更	逐次
 パーティクル再生（正射影）	be_star_eff01	BE_STAR_EFF01_STAR_EFF01	攻撃側+補正	方向無し	0:1:0	0.5:0:0.5	0
 パーティクル再生（正射影）	be_star_eff01	BE_STAR_EFF01_STAR_EFF02	攻撃側+補正	方向無し	0:1:0	0.5:0:0.5	0
