@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/07 16:39:01
+#save date:2011/11/09 14:50:51
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -212,7 +212,7 @@ FV_C04_SWHEROINE_01
 #Event Script Name
 SCRID_C04_TBOSSBL_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -243,7 +243,7 @@ FV_C04_SWHEROINE_01
 #Event Script Name
 SCRID_C04_TBOSS_01
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number

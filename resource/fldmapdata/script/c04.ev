@@ -766,6 +766,12 @@ EVENT_START   ev_c04_swheroine_01
     _MSGWIN_CLOSE()
     
     //アニメ：ノボリ・クダリ振り向き
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_r )
+    _OBJ_ANIME( C04_TBOSS_01, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+    
+    _TIME_WAIT( 30 )
+    
     _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_d )
     _OBJ_ANIME( C04_TBOSS_01, anm_staystep_d )
     _OBJ_ANIME_WAIT()
@@ -787,7 +793,7 @@ EVENT_START   ev_c04_swheroine_01
 	_OBJ_POS_CHANGE( C04_TBOSSBL_01, 424, 1, 463, DIR_LEFT )
 	_OBJ_POS_CHANGE( C04_TBOSS_01, 424, 1, 461, DIR_LEFT )
 	
-	_TIME_WAIT( 20 )
+	_TIME_WAIT( 60 )
 	
 	//暗転復帰
 	_BLACK_IN()
@@ -846,10 +852,6 @@ EVENT_START   ev_c04_swheroine_01
   ENDIF
 
 	_TIME_WAIT( 30 )
-
-    //アニメ：ノボリとクダリ振り向き
-    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_l )
-    _OBJ_ANIME_WAIT()
 
     //勝利後メッセージ
     //ノボリ：ブラボー！！▼
@@ -959,10 +961,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_C04_tbossbl_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tbossbl_01 )
-  
-  _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
 EVENT_END
 
 /**************************************************************/
@@ -970,10 +968,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_C04_tboss_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tboss_01 )
-  
-  _OBJ_ANIME( C04_TBOSS_01, anm_staystep_l )
-  _OBJ_ANIME_WAIT()
-  
 EVENT_END
 
 /**************************************************************/
