@@ -1945,35 +1945,70 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_c12_game_start_init
 
-  //C12R0101ママを表示
-  _FLAG_RESET( FV_C12_SWMAMA )
-  _OBJ_ADD( C12_SWMAMA_01 )
-  _OBJ_POS_CHANGE( C12_SWMAMA_01, 43, 1, 761, DIR_RIGHT )
-
+   _OBJ_ADD_EX( 43, 761, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWMAMA2, MV_DMY )
+   
 EVENT_END
 /************************************************************/
 /*  SCENE_CHANGE：物語開始デモ後イベント */
 /************************************************************/
 EVENT_START   ev_c12_game_start
 
-  //【仮】
-  _OBJ_ANIME( C12_SWMAMA_01, anm_game_start_01 )
+  //ママ移動
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_01 )
   _OBJ_ANIME_WAIT()
 
   // 花びら舞う
   _DEMO_GIMMICK_INTRO_ANM_START()
-  //【仮】
-  // ここで演技
 
-  _TIME_WAIT(20)
+  //ママ・花びらを眼で追う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_02 )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT(60)
+  
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+  
+  //ママ・電話に出る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_03 )
+  _OBJ_ANIME_WAIT()
+
+  //メッセージ：りょうかい！　うちのコなら
+  _BALLOONWIN_OBJMSG_POS( msg_c12_demo_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 30 )
+
+  //メッセージ：うん！　ベルちゃんね
+  _BALLOONWIN_OBJMSG_POS( msg_c12_demo_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _TIME_WAIT( 30 )
+  
+  //ママ・電話をきる
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_04 )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 30 )
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 47, 762, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //ドア開ける
+  _BMODEL_ANIME_CREATE( SCWK_ANSWER, SCR_BMID_DOOR, 47, 761 )
+  _BMODEL_ANIME_SET( SCWK_ANSWER, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( SCWK_ANSWER )
+	
+  //ママ：家の中に入る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
   // 部屋に移動
   _MAP_CHANGE_DEFAULT_POS( ZONE_ID_C12R0101, DIR_DOWN )
-
-  //========================================//
-	//C12R0101ママを非表示
-	_FLAG_SET( FV_C12_SWMAMA )
-  //========================================//
 
 EVENT_END
 
@@ -2061,6 +2096,19 @@ _ANIME_LABEL	anm_game_start_01
   _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_game_start_02
+  _ANIME_DATA	AC_SWMAMA2_CHASE_PETAL,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_game_start_03
+  _ANIME_DATA	AC_SWMAMA2_ANSWER_PHONE,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_game_start_04
+  _ANIME_DATA	AC_SWMAMA2_HANG_UP_PHONE,1
+  _ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
