@@ -50,17 +50,6 @@ static const AT_OBJ_TYPE sc_obj_type_table[ANIMAL_TRAIL_TABLE_NUM] =
 //==============================================================================
 
 //-------------------------------------
-///	獣道セーブデータ
-//=====================================
-typedef struct {
-  u16 trail_data[ANIMAL_TRAIL_NUM];
-  u8 now_trail_id; // 現在のけものみち番号
-  u8 padding[3];
-}ANIMAL_TRAIL_SAVE;
-
-SDK_COMPILER_ASSERT( ANIMAL_TRAIL_WORK_SIZE == sizeof(ANIMAL_TRAIL_SAVE) );
-
-//-------------------------------------
 ///	獣道データ
 //=====================================
 typedef struct{
@@ -69,16 +58,18 @@ typedef struct{
   u16 data_index:3;     // データテーブルのインデックス
   u16 female_num:7;     // メスかどうか
   u16 pad:1;            // パディング
-  u16 dummy;
 }ANIMAL_TRAIL_DATA;
 
 //-------------------------------------
-///	データ格納用共用体
+///	獣道セーブデータ
 //=====================================
-typedef union{
-  ANIMAL_TRAIL_DATA at;
-  u16               data;
-}ANIMAL_TRAIL_UNION;
+typedef struct {
+  ANIMAL_TRAIL_DATA trail_data[ANIMAL_TRAIL_NUM];
+  u8 now_trail_id; // 現在のけものみち番号
+  u8 padding[3];
+}ANIMAL_TRAIL_SAVE;
+
+SDK_COMPILER_ASSERT( ANIMAL_TRAIL_WORK_SIZE == sizeof(ANIMAL_TRAIL_SAVE) );
 
 struct _ETC_SAVE_WORK{
   u32 acquaintance_trainer_id[ACQUAINTANCE_ID_MAX];
@@ -101,8 +92,6 @@ struct _ETC_SAVE_WORK{
  *					プロトタイプ宣言
 */
 //=============================================================================
-static void GetTrailData( const ANIMAL_TRAIL_SAVE *p_at ,ANIMAL_TRAIL_DATA *p_trail ,u8 index);
-static void SetTrailData( ANIMAL_TRAIL_SAVE *p_at ,const ANIMAL_TRAIL_DATA *p_trail ,u8 index);
 
 //==============================================================================
 //
@@ -358,48 +347,6 @@ void EtcSave_SetManualFlag( ETC_SAVE_WORK *etcsave, int id )
 
 //=============================================================================
 /**
- *					けものみち：非公開関数
-*/
-//=============================================================================
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  獣道データを取得する
- *
- *	@param	*p_at     獣道セーブデータ
- *	@param	*p_trail  獣道データ
- *	@param	index     獣道ID
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void GetTrailData( const ANIMAL_TRAIL_SAVE *p_at ,ANIMAL_TRAIL_DATA *p_trail ,u8 index)
-{
-  ANIMAL_TRAIL_UNION at_union;  
-  at_union.data = p_at->trail_data[index];
-  *p_trail = at_union.at;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  獣道データを保存する
- *
- *	@param	*p_at 
- *	@param	*p_trail 
- *	@param	index
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void SetTrailData( ANIMAL_TRAIL_SAVE *p_at ,const ANIMAL_TRAIL_DATA *p_trail ,u8 index)
-{
-  ANIMAL_TRAIL_UNION at_union;  
-  at_union.at   = *p_trail;
-  p_at->trail_data[index] = (u16)at_union.data;
-}
-
-//=============================================================================
-/**
  *					けものみち：公開関数
 */
 //=============================================================================
@@ -416,15 +363,16 @@ static void SetTrailData( ANIMAL_TRAIL_SAVE *p_at ,const ANIMAL_TRAIL_DATA *p_tr
 //-----------------------------------------------------------------------------
 AT_OBJ_TYPE ANIMAL_TRAIL_SAVE_GetObjType( const ETC_SAVE_WORK *p_save, u8 index)
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,index);
+  const ANIMAL_TRAIL_DATA *p_trail_data;
 
-  if( trail_data.is_set == FALSE )
+  p_trail_data = &p_save->animal_trail.trail_data[index];
+
+  if( p_trail_data->is_set == FALSE )
   {
     return AT_OBJ_TYPE_NONE;
   }
 
-  return sc_obj_type_table[trail_data.table_index];
+  return sc_obj_type_table[p_trail_data->table_index];
 }
 
 //----------------------------------------------------------------------------
@@ -440,10 +388,7 @@ AT_OBJ_TYPE ANIMAL_TRAIL_SAVE_GetObjType( const ETC_SAVE_WORK *p_save, u8 index)
 //-----------------------------------------------------------------------------
 void ANIMAL_TRAIL_SAVE_SetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index)
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  trail_data.table_index = table_index;
-  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  p_save->animal_trail.trail_data[trail_id].table_index = table_index;
 }
 
 //----------------------------------------------------------------------------
@@ -459,10 +404,7 @@ void ANIMAL_TRAIL_SAVE_SetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8
 //-----------------------------------------------------------------------------
 void ANIMAL_TRAIL_SAVE_SetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index)
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  trail_data.data_index = table_index;
-  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  p_save->animal_trail.trail_data[trail_id].data_index = table_index;
 }
 
 //----------------------------------------------------------------------------
@@ -478,10 +420,7 @@ void ANIMAL_TRAIL_SAVE_SetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8
 //-----------------------------------------------------------------------------
 void ANIMAL_TRAIL_SAVE_SetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id ,BOOL is_set)
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  trail_data.is_set = is_set;
-  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  p_save->animal_trail.trail_data[trail_id].is_set = is_set;
 }
 
 //----------------------------------------------------------------------------
@@ -496,9 +435,7 @@ void ANIMAL_TRAIL_SAVE_SetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id ,BOO
 //-----------------------------------------------------------------------------
 BOOL ANIMAL_TRAIL_SAVE_GetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id )
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  return trail_data.is_set;
+  return p_save->animal_trail.trail_data[trail_id].is_set;
 }
 
 //----------------------------------------------------------------------------
@@ -513,9 +450,7 @@ BOOL ANIMAL_TRAIL_SAVE_GetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id )
 //-----------------------------------------------------------------------------
 u8 ANIMAL_TRAIL_SAVE_GetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  return trail_data.table_index;
+  return p_save->animal_trail.trail_data[trail_id].table_index;
 }
 
 //----------------------------------------------------------------------------
@@ -530,9 +465,7 @@ u8 ANIMAL_TRAIL_SAVE_GetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
 //-----------------------------------------------------------------------------
 u8 ANIMAL_TRAIL_SAVE_GetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  return trail_data.data_index;
+  return p_save->animal_trail.trail_data[trail_id].data_index;
 }
 
 //----------------------------------------------------------------------------
@@ -547,9 +480,7 @@ u8 ANIMAL_TRAIL_SAVE_GetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
 //-----------------------------------------------------------------------------
 u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id )
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  return trail_data.female_num;
+  return p_save->animal_trail.trail_data[trail_id].female_num;
 }
 
 //----------------------------------------------------------------------------
@@ -565,10 +496,7 @@ u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id )
 //-----------------------------------------------------------------------------
 void ANIMAL_TRAIL_SAVE_SetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 female_num)
 {
-  ANIMAL_TRAIL_DATA trail_data;
-  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
-  trail_data.female_num = female_num;
-  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  p_save->animal_trail.trail_data[trail_id].female_num = female_num;
 }
 
 //----------------------------------------------------------------------------
