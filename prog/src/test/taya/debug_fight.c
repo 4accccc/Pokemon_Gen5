@@ -2711,7 +2711,7 @@ FS_EXTERN_OVERLAY(battle);
         //ポケウッドならばコンバートしてからセーブ
         if( wk->saveData.recBufID >= LOADDATA_MAX )
         {
-          POKEWOOD_REC_ConvertRecToShow( &(wk->setupParam), wk->heapID );
+          //POKEWOOD_REC_ConvertRecToShow( &(wk->setupParam), wk->heapID );
         }
 
         SaveRecordStart( wk, &(wk->setupParam), wk->saveData.recBufID );

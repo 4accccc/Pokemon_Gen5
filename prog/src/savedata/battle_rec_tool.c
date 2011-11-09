@@ -630,8 +630,6 @@ static void pokewood_store_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_
   //不正チェック用に未使用領域は全て0で埋める必要がある為、一旦バッファ全体を0クリアしておく
   GFL_STD_MemClear(rec->rec_party, sizeof(POKEWOOD_REC_POKEPARTY) * POKEWOOD_REC_CLIENT_MAX);
 
-  //TODO　今後、敵のデータはROMから読み込むかも。
-
   for(i=0; i<POKEWOOD_REC_CLIENT_MAX; ++i)
   {
     if( setup->party[i] ){
@@ -810,58 +808,5 @@ static void pokewood_restore_Subset( BATTLE_SETUP_PARAM* setup, const POKEWOOD_R
 {
   setup->audience_num = rec->audience_num;      // 上映開始時観客数
   setup->pokewoodRentalFlag = rec->rental_flag; // レンタルポケモンを使っているか？
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief ポケウッドの撮影データを上映データに変換
- */
-//-----------------------------------------------------------------------------
-void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
-{
-  enum
-  {
-    POKEWOOD_CONV_DATA_POKE_NUM = 6,
-  };
-  GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                                         NARC_message_pokewood_name_dat, 
-                                         GFL_HEAP_LOWID(heapID) );
-  POKEWOOD_PARTIES_DATA *ppd = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, 
-                               NARC_pokewood_party_pkwd_party01_bin+bsp->pokewoodSenario, 
-                               GFL_HEAP_LOWID(heapID) );
-
-  //敵ポケモンの設定
-  //置換するものがあったら変える
-  {
-    int i,j;
-
-    POKEPARTY *p_party = bsp->party[BTL_CLIENT_ENEMY1];
-
-    for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
-    {
-      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party, i );
-      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) == 0 )
-      {
-        continue;
-      }
-      for( j = 0; j < POKEWOOD_CONV_DATA_POKE_NUM; j++ )
-      {
-        POKEWOOD_POKE_DATA *poke = &ppd->data[j];
-        if( poke->rec_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
-        {
-          PP_Put( p_pp, ID_PARA_monsno, poke->show_monsno );
-          PP_Renew( p_pp );
-          if(poke->show_monsno>=MONSNO_ufo && poke->show_monsno<=MONSNO_KARATEOU){
-            STRBUF *strbuf = GFL_MSG_CreateString( msgdata, pw_boss_poke_name_652+(poke->show_monsno-MONSNO_ufo));
-            PP_Put( p_pp, ID_PARA_nickname, (u32)strbuf );
-            GFL_STR_DeleteBuffer(strbuf);
-          }
-        }
-      }
-    }
-  }
-  GFL_HEAP_FreeMemory( ppd );
-  GFL_MSG_Delete( msgdata );
-
 }
 

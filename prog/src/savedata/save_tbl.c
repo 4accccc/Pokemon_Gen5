@@ -702,6 +702,30 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
     SAVE_MAGIC_NUMBER,
   },
+  {//外部セーブパラメータテーブル：ポケウッド０５
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_05,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_05,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ポケウッド０６
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_06,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_06,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ポケウッド０７
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_07,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_07,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
   {//外部セーブパラメータテーブル：WBT0
     SaveDataTbl_Extra_Wbt_00,
     NELEMS(SaveDataTbl_Extra_Wbt_00),

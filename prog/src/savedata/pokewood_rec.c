@@ -210,7 +210,15 @@ SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOA
 
   switch(*p_seq){
   case SEQ_START:
-  
+    //日時設定
+    {
+      RTCDate date;
+      GFDATE  gfdate;
+      GFL_RTC_GetDate( &date );
+      gfdate = GFDATE_RTCDate2GFDate( &date );
+      POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM_DATE, gfdate );
+    }
+
     //CRC作成
     sp_pokewood_rec_sv->crc = GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) );
 
@@ -295,9 +303,33 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   // レンタルポケモンを使用しているか？
   case POKEWOOD_REC_PARAM_RENTAL_FLAG:
     return sp_pokewood_rec_sv->rec.rental_flag;
+  case POKEWOOD_REC_PARAM_DATE:
+    return sp_pokewood_rec_sv->rec.save_date;
   default:
     GF_ASSERT(0);
     return 0;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  値のセッテオ
+ *
+ *	@param	POKEWOOD_REC_PARAM
+ *	@param	data 
+ */
+//-----------------------------------------------------------------------------
+void POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM param, u32 data )
+{
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+  switch( param )
+  {
+  case POKEWOOD_REC_PARAM_DATE:
+    sp_pokewood_rec_sv->rec.save_date = data;
+    break;
+  default:
+    GF_ASSERT(0);
   }
 }
 
@@ -320,6 +352,9 @@ static SAVE_EXTRA_ID PokeWood_Rec_LoadDataNumToSaveExtraID( POKEWOOD_LOADDATA_NU
     SAVE_EXTRA_ID_POKEWOOD_02,
     SAVE_EXTRA_ID_POKEWOOD_03,
     SAVE_EXTRA_ID_POKEWOOD_04,
+    SAVE_EXTRA_ID_POKEWOOD_05,
+    SAVE_EXTRA_ID_POKEWOOD_06,
+    SAVE_EXTRA_ID_POKEWOOD_07,
   };
 
   if( num >= NELEMS(sc_loaddata_to_extra_id)

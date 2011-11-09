@@ -74,6 +74,8 @@
 //======================================================================
 //  proto
 //======================================================================
+static void dataMakePokewoodShowEnenyTrainer( BATTLE_SETUP_PARAM * bsp, HEAPID heapID );
+static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
 
 //============================================================================================
 //
@@ -393,11 +395,24 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
     BATTLE_PARAM_Init( bsp );
     BTL_SETUP_InitForRecordPlay( bsp, gamedata, heapID );
     BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+    senario_no  = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL );
     BattleRec_RestoreSetupParam( bsp, BTLREC_RESOTRE_MODE_POKEWOOD, heapID );
     BattleRec_UnloadToolModule();
 //    bsp->PokewoodMode = BTL_POKEWOOD_SHOW;  //RestoreSetupParamが入れてくれる
 //    bsp->pokewoodSenario = senario_no; 
     OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(bsp->playerStatus[0]));
+
+    //敵ポケモンはROMから読みだす
+    {
+      const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+      setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
+      saveDataConvertRecToShow( bsp, heapID );
+    }
+
+    //敵トレーナーもROMから読み出す
+    {
+      dataMakePokewoodShowEnenyTrainer( bsp, heapID );
+    }
 
     return bsp;
   }
@@ -515,15 +530,18 @@ static void rewritePokewoodRec( GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp, H
   PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
 
   BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+
+  //敵トレーナー情報はROMから読み出しセーブしないことにしたので、
+  //ここの処理はまるごといらない
+#if 0
   // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
   dataMakeEncountTrainer( bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, bsp->tr_data[BTL_CLIENT_ENEMY1], 
                           bsp->playerStatus[0], heapID );
+  bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
+#endif
   bsp->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
   dataMakeMyTrainer( bsp->pokewoodSenario, bsp->tr_data[BTL_CLIENT_PLAYER], bsp->playerStatus[0], heapID );
-  bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
   
-  // BATTLE_SETUP_PARAMをポケウッド録画データに変換
-  POKEWOOD_REC_ConvertRecToShow( bsp, heapID );
   BattleRec_StoreSetupParam( bsp );
 //  BattleRec_SetPokewoodRentalFlag( PKWDSYS_GetJoinMypoke(*pkwdsys)^1 );   //レンタルポケモンフラグを反映させる
   BattleRec_UnloadToolModule();
@@ -1774,5 +1792,78 @@ static GMEVENT_RESULT eventPkwdRecordMonitor( GMEVENT *p_event, int *p_seq, void
   }
 
   return GMEVENT_RES_CONTINUE ;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再生用に敵トレーナーをセットする
+ *
+ *	@param	BATTLE_SETUP_PARAM * bsp  バトルセットパラム
+ *	@param	heapID 
+ *
+ *	@note   (bspのpokewoodSenarioとplayerStatus[BTL_CLIENT_PLAYER]が設定されていること)
+ */
+//-----------------------------------------------------------------------------
+static void dataMakePokewoodShowEnenyTrainer( BATTLE_SETUP_PARAM * bsp, HEAPID heapID )
+{
+  // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
+  dataMakeEncountTrainer( bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, bsp->tr_data[BTL_CLIENT_ENEMY1], 
+                          bsp->playerStatus[BTL_CLIENT_PLAYER], heapID );
+  bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ポケウッドの撮影データを上映データに変換
+ */
+//-----------------------------------------------------------------------------
+static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
+{
+  enum
+  {
+    POKEWOOD_CONV_DATA_POKE_NUM = 6,
+  };
+  GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                         NARC_message_pokewood_name_dat, 
+                                         GFL_HEAP_LOWID(heapID) );
+  POKEWOOD_PARTIES_DATA *ppd = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, 
+                               NARC_pokewood_party_pkwd_party01_bin+bsp->pokewoodSenario, 
+                               GFL_HEAP_LOWID(heapID) );
+
+  //敵ポケモンの設定
+  //置換するものがあったら変える
+  {
+    int i,j;
+
+    POKEPARTY *p_party = bsp->party[BTL_CLIENT_ENEMY1];
+
+    for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+    {
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party, i );
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) == 0 )
+      {
+        continue;
+      }
+      for( j = 0; j < POKEWOOD_CONV_DATA_POKE_NUM; j++ )
+      {
+        POKEWOOD_POKE_DATA *poke = &ppd->data[j];
+        if( poke->rec_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
+        {
+          PP_Put( p_pp, ID_PARA_monsno, poke->show_monsno );
+          PP_Renew( p_pp );
+          if(poke->show_monsno>=MONSNO_ufo && poke->show_monsno<=MONSNO_KARATEOU){
+            STRBUF *strbuf = GFL_MSG_CreateString( msgdata, pw_boss_poke_name_652+(poke->show_monsno-MONSNO_ufo));
+            PP_Put( p_pp, ID_PARA_nickname, (u32)strbuf );
+            GFL_STR_DeleteBuffer(strbuf);
+          }
+        }
+      }
+    }
+  }
+  GFL_HEAP_FreeMemory( ppd );
+  GFL_MSG_Delete( msgdata );
+
 }
 

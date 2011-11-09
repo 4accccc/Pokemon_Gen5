@@ -20,7 +20,7 @@
 #define POKEWOOD_REC_OPERATION_BUFFER_SIZE  (356)//(0xc00) 
 
 //ポケウッドでセーブするクライアント数
-#define POKEWOOD_REC_CLIENT_MAX             (2)
+#define POKEWOOD_REC_CLIENT_MAX             (1) //自分だけ
 
 //ポケウッドでセーブする１クライアントあたりの手持ち数
 #define POKEWOOD_REC_TEMOTI_MAX             (6)
@@ -35,6 +35,9 @@ typedef enum
   LOADDATA_POKEWOOD2,
   LOADDATA_POKEWOOD3,
   LOADDATA_POKEWOOD4,
+  LOADDATA_POKEWOOD5,
+  LOADDATA_POKEWOOD6,
+  LOADDATA_POKEWOOD7,
 
   LOADDATA_POKEWOOD_MAX,
 }POKEWOOD_LOADDATA_NUM;
@@ -49,6 +52,7 @@ typedef enum
   POKEWOOD_REC_PARAM_POKE0,           ///< 自分の手持ち１匹目のPOKEMON_PARAM
   POKEWOOD_REC_PARAM_AUDIENCE_NUM,    ///< 初期観客数
   POKEWOOD_REC_PARAM_RENTAL_FLAG,     ///< レンタルポケモンを使用しているか？
+  POKEWOOD_REC_PARAM_DATE,            ///< 日時
 
 } POKEWOOD_REC_PARAM;
 
@@ -98,7 +102,9 @@ extern BOOL POKEWOOD_REC_IsExist( void );
 extern POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void );
 extern u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst );
 
+//設定
+extern void POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM param, u32 data );
+
 //撮影データを上映データへ変換
 //->battle_rec_tool.cにあるのでBattleRec_LoadToolModuleしてください
-extern void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
 extern void BattleRec_SetPokewoodRentalFlag( BOOL rental_flag );
