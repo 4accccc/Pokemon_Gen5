@@ -65,12 +65,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしも　いちねんまえ
-アララギはかせ　から　ポケモンを▽
-たくされて　たびに　でたんだよ！</Text>
+			<Text>あら！　ポケモンずかん！▼
+ねーねー　どれだけの
+ポケモンと　であったの！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:59:43" />
+				Time="2011-11-09T08:07:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,12 +78,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしも　一年前
-アララギ博士から　ポケモンを▽
-託されて　旅に　でたんだよ！</Text>
+			<Text>あら！　ポケモン図鑑！▼
+ねーねー　どれだけの
+ポケモンと　出会ったの！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:01:23" />
+				Time="2011-11-09T08:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
