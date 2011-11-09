@@ -15,6 +15,8 @@
 #include "field/field_comm/intrude_field.h"
 #include "field/field_comm/intrude_work.h"
 
+// sound
+#include "sound/pm_sndsys.h"
 
 //==============================================================================
 //  ’è”’è‹`
@@ -302,6 +304,10 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
       {
         work->bridge_flg = TRUE;
         ANM_EFFECT_02_Play( work );
+
+        // ”g–äSE
+        PMSND_PlaySE( SEQ_SE_SW_FES_14 );
+
       }
     }
     else
@@ -333,6 +339,9 @@ void PALACE_GMK_EffectStart( GAMESYS_WORK *gsys )
   PALACE_GMK_WORK *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
 
   ANM_EFFECT_03_Play( p_wk );
+
+  // ’ŒSE
+  PMSND_PlaySE( SEQ_SE_SW_FES_15 );
 }
 
 //==============================================================================
