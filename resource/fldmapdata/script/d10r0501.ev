@@ -314,7 +314,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // デモ呼び出し
 	_DEMO_FADEOUT_BLACK_CALL()
-	IF $LCWK_VERSION == VERSION_WHITE THEN
+	IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
   ELSE
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_01 )
@@ -330,15 +330,27 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // キュレムを表示し、ゲーチスを横に移動
   _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+
+  //ゼクロム・レシラム非表示
+  _FLAG_SET( FV_D10R0401_POKE_02 )
+  _OBJ_DEL( D10R0501_NPOKE_01 )
+
+  // ストーン状態のゼクロム(レシラム)を追加
+	IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ADD_EX( 15, 18, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BLACKSTONE, MV_DMY )
+  ELSE
+    _OBJ_ADD_EX( 15, 18, DIR_DOWN, MMDL_ID_EVENTOBJ_00, WHITESTONE, MV_DMY )
+  ENDIF
   //=======================================
+
+  //@TODO
+  //ストーン状態のゼクロム(レシラム)をふわふわさせる
+  _DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT( MMDL_ID_EVENTOBJ_00 )
 
 	//フェードインでフィールドに戻る
 	_DEMO_FADEIN_BLACK_CALL()
   
-  //@TODO
-  //いでしのくさびをふわふわさせる
-
-  _TIME_WAIT(10)
+  _TIME_WAIT(18)
 
   //ゲーチス：きゅうしゅうなさい！
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_10w, msg_d10r0501_swsage01_10b, D10R0501_SWSAGE1_01, POS_DEFAULT )
@@ -348,12 +360,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_DEMO_FADEOUT_BLACK_CALL()
 
   //========================================//
+  // ストーン状態のゼクロム(レシラム)を削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   // カメラ戻し
 	_CAMERA_BIND()	//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
   //========================================//
   
-	IF $LCWK_VERSION == VERSION_WHITE THEN
+	IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_02 )
   ELSE
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_02 )
@@ -363,11 +377,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //キュラム・キュロム表示
   _FLAG_RESET( FV_D10R0401_POKE_03 )
   _OBJ_ADD( D10R0501_POKE2_01 )
-  //キュレム・ゼクロム・レシラム非表示
+  //キュレム非表示
   _FLAG_SET( FV_D10R0401_POKE_01 )
-  _FLAG_SET( FV_D10R0401_POKE_02 )
   _OBJ_DEL( D10R0501_POKE1_01 )
-  _OBJ_DEL( D10R0501_NPOKE_01 )
   //ゲーチス移動
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
   //========================================//

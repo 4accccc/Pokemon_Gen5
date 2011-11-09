@@ -277,6 +277,26 @@ static GMEVENT_RESULT BrightnessBlackEvent( GMEVENT* event, int* seq, void* wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジャイアントホール　ストーンを浮遊させる
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGianthole_StoneFloat( VMHANDLE *core, void *wk )
+{
+  int obj_id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ストーンのOBJID
+  obj_id  = VMGetU16( core );
+
+  // ふわふわさせるタスクを作る
+  GIANTHOLE_GIMMICK_StoneFloat( gsys, obj_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  物語開始デモ  花びらアニメ再生
  */
 //-----------------------------------------------------------------------------

@@ -16278,6 +16278,25 @@
 
 //--------------------------------------------------------------
 /**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT
+ * @brief ストーン状態のゼクロム(レシラム)を浮遊させる
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ *        ※ジャイアントホールデモ専用のコマンドです。
+ *        　通常は使わないように！
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT( obj_id) \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT obj_id
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT obj_id
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT
+  .short  \obj_id
+  .endm
+
+
+//--------------------------------------------------------------
+/**
  * @def   _DEMO_GIMMICK_INTRO_ANM_START
  * @brief 花びらが舞うアニメスタート
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止

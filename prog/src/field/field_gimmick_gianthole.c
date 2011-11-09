@@ -178,6 +178,21 @@ static void EXPOBJ_ObjMain( GIANTHOLE_GIMMICK_TMP *p_wk );
 // アニメ再生
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx );
 
+
+// ストーンを浮遊させる処理
+// task
+static void STONE_FLOAT_TASK_Add( GIANTHOLE_GIMMICK_TMP *p_wk, MMDL* mmdl );
+// タスクワーク
+typedef struct {
+  fx32    now_sync;   // 現在シンク
+  MMDL    *mmdl;      // 対象モデル
+  GIANTHOLE_GIMMICK_TMP *p_parent;
+} TASK_WORK;
+static FIELD_TASK_RETVAL TaskFunc( void* wk );
+#define ONE_CYCLE_SYNC    ( 35 )    // 1周期のシンク数
+#define BASE_HEIGHT       ( 3 )     // ゆれ幅
+#define OFFSET_HEIGHT     ( 2 )     // 高さオフセット
+
 //=============================================================================
 /**
  *					外部公開関数
@@ -350,6 +365,26 @@ void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ストーン状態のゼクロム(レシラム)を浮遊させる
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void GIANTHOLE_GIMMICK_StoneFloat( GAMESYS_WORK *gsys, int obj_id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+
+  MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // カトレア
+  GF_ASSERT( mmdl );
+
+  // タスク追加
+  STONE_FLOAT_TASK_Add( p_wk, mmdl );
+}
+
 //=============================================================================
 /**
  *					static関数
@@ -491,4 +526,70 @@ static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx )
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
   }
 }
+
+
+//=============================================================================
+/**
+ *          ストーン浮遊
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ストーン浮遊タスク追加
+ */
+//-----------------------------------------------------------------------------
+static void STONE_FLOAT_TASK_Add( GIANTHOLE_GIMMICK_TMP *p_wk, MMDL* mmdl )
+{
+  FIELD_TASK      *task;
+  FIELD_TASK_MAN  *taskMan;
+  TASK_WORK       *work;
+  HEAPID heap_id  = FIELDMAP_GetHeapID( p_wk->p_fieldmap );
+
+  taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+  // タスク生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), TaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->mmdl     = mmdl;
+  work->now_sync = 0;
+  work->p_parent = p_wk;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+
+// タスク関数
+static FIELD_TASK_RETVAL TaskFunc( void* wk )
+{
+  TASK_WORK* work = (TASK_WORK*)wk;
+  fx32  h;  // ゆれ
+
+  // ゆれ計算
+  {
+    int   tmp;
+    u16   rad;
+
+    work->now_sync++;
+    tmp = (work->now_sync * 0x10000) / ONE_CYCLE_SYNC;
+    rad = tmp;
+
+    h = BASE_HEIGHT * FX_SinIdx(rad);
+  }
+
+  // モデル更新
+  {
+    VecFx32 offset;
+    offset.x = 0;
+    offset.y = OFFSET_HEIGHT + h;
+    offset.z = 0;
+    MMDL_SetVectorDrawOffsetPos( work->mmdl, &offset );
+  }
+
+  // 自分からタスクを終了させることはない
+  //
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
 

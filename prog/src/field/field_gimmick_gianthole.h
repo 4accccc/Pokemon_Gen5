@@ -23,3 +23,5 @@ extern void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 extern void GIANTHOLE_GIMMICK_Disp( GAMESYS_WORK *gsys, int id );
 extern void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id );
 
+extern void GIANTHOLE_GIMMICK_StoneFloat( GAMESYS_WORK *gsys, int obj_id );
+
