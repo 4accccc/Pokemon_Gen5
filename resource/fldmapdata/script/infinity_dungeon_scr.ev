@@ -61,6 +61,9 @@ DEFINE_LOCAL LWK_IS_BATTLE
 DEFINE_LOCAL LWK_HINT_MSG_ID
 DEFINE_LOCAL LWK_TRTYPE
 DEFINE_LOCAL LWK_ROM_VERSION
+DEFINE_LOCAL LWK_DRAW_FLOOR_NO
+DEFINE_LOCAL LWK_DRAW_AREA_NO
+DEFINE_LOCAL LWK_MOVE_ROOM_NUM
 
 //----------------------------------------------------------------------------
 //	リタイアイベント
@@ -68,7 +71,7 @@ DEFINE_LOCAL LWK_ROM_VERSION
 EVENT_START  ev_infinity_dungeon_retire
 {
   // 内部でフェードが呼ばれるので、後からエレベータ音を鳴らす
-  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
 
   // エレベータ移動音
   _CALL play_elevator_move_se
@@ -83,7 +86,7 @@ EVENT_END
 EVENT_START  ev_infinity_dungeon_gameover
 {
   // 内部でフェードが呼ばれるので、後からエレベータ音を鳴らす
-  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
 
   // エレベータ移動音
   _CALL play_elevator_move_se
@@ -106,7 +109,7 @@ EVENT_START  ev_infinity_dungeon_warp_up
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
   _CALL tutorial_event_boss_call
-  _INFINITY_DUNGEON_WARP(WARP_DIR_UP)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_UP,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
   _CALL tutorial_event_call
 EVENT_END
 
@@ -117,7 +120,7 @@ EVENT_START  ev_infinity_dungeon_warp_down
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_down_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
   _CALL tutorial_event_call
 EVENT_END
 
@@ -128,7 +131,7 @@ EVENT_START  ev_infinity_dungeon_warp_left
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_left_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
   _CALL tutorial_event_call
 EVENT_END
 
@@ -139,7 +142,7 @@ EVENT_START  ev_infinity_dungeon_warp_right
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_right_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
   _CALL tutorial_event_call
 EVENT_END
 
@@ -148,12 +151,10 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_elevator
 {
-  DEFINE_LOCAL LWK_SELECT_FLOOR
   DEFINE_LOCAL LWK_INDEX 
   DEFINE_LOCAL LWK_FLOOR_NUM
   DEFINE_LOCAL LWK_END_FLOOR
   DEFINE_LOCAL LWK_NOW_FLOOR
-  DEFINE_LOCAL LWK_DRAW_FLOOR_NO
   DEFINE_LOCAL LWK_NOW_FLOOR_NUM
  
   // ROMバージョンでの判断
@@ -204,7 +205,7 @@ EVENT_START  ev_infinity_dungeon_elevator
   _DEBUG_PRINT_WK( LWK_END_FLOOR )
 
   // リスト作成
-	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT_FLOOR )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MOVE_ROOM_NUM )
   WHILE $LWK_FLOOR_NUM != $LWK_END_FLOOR
     IF $LWK_NOW_FLOOR != $LWK_INDEX THEN
       // メニューに回数表示を追加
@@ -237,22 +238,26 @@ EVENT_START  ev_infinity_dungeon_elevator
   _SYSWIN_CLOSE()
  
   // 選択後処理
-  IF ($LWK_SELECT_FLOOR != EV_WIN_B_CANCEL)&&($LWK_SELECT_FLOOR != 0xff) THEN
-    IF $LWK_SELECT_FLOOR != 0xf0 THEN
+  IF ($LWK_MOVE_ROOM_NUM != EV_WIN_B_CANCEL)&&($LWK_MOVE_ROOM_NUM != 0xff) THEN
+    IF $LWK_MOVE_ROOM_NUM != 0xf0 THEN
       
-      IF $LWK_SELECT_FLOOR > $LWK_NOW_FLOOR_NUM THEN
+      IF $LWK_MOVE_ROOM_NUM > $LWK_NOW_FLOOR_NUM THEN
         // 上
         IF $LWK_D_VERSION == VERSION_B2 THEN
           _CAMERA_MOVE(3672,0,970752,425984,131072+500000,-131072, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 1
         ELSE
           _CAMERA_MOVE(4056,0,970752,425984,65536-500000,-77824, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 0
         ENDIF
       ELSE
         // 下
         IF $LWK_D_VERSION == VERSION_B2 THEN
           _CAMERA_MOVE(3672,0,970752,425984,131072-500000,-131072, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 0
         ELSE
           _CAMERA_MOVE(4056,0,970752,425984,65536+500000,-77824, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 1
         ENDIF
       ENDIF
 
@@ -263,7 +268,8 @@ EVENT_START  ev_infinity_dungeon_elevator
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
       // 選択フロアまで移動
-      _INFINITY_DUNGEON_MOVE_FLOOR( LWK_SELECT_FLOOR )
+      _INFINITY_DUNGEON_MOVE_FLOOR( LWK_MOVE_ROOM_NUM )
+  
       _SE_STOP()
       _CAMERA_WAIT_MOVE()
       _CAMERA_BIND()        // カメラバインド
@@ -289,7 +295,7 @@ EVENT_START  ev_infinity_dungeon_elevator
         // エレベータ移動音
         _CALL play_elevator_move_se
 
-        _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+        _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
         _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
         _SE_STOP()
 
@@ -334,6 +340,7 @@ EVENT_START  ev_infinity_dungeon_elevator
     _CAMERA_BIND()        // カメラバインド
     _CAMERA_END()
   ENDIF
+
 }
 EVENT_END
 
@@ -577,14 +584,18 @@ select_area:
       IF $LWK_D_VERSION == VERSION_B2 THEN
         IF $LWK_AREA_MENU < 5 THEN
           _CAMERA_MOVE(2776,0,970752,491520,139264+500000,94208, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 1
         ELSE
           _CAMERA_MOVE(2776,0,970752,491520+262144,139264+500000,94208, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 1
         ENDIF
       ELSE
         IF $LWK_AREA_MENU < 5 THEN
           _CAMERA_MOVE(3544,0,970752,491520,102400-500000,86016, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 0
         ELSE
           _CAMERA_MOVE(3544,0,970752,491520+262144,102400-500000,86016, 40 ) 
+          $WK_OTHER_INF_ELEVATOR_UP_MOVE = 0
         ENDIF
       ENDIF
 
@@ -666,11 +677,58 @@ EVENT_START  ev_infinity_dungeon_comeback
 
   // エレベータ移動音
   _CALL play_elevator_move_se
-  _TIME_WAIT( 50 )
-  _SE_STOP()
 
+  //　現在のフロアと比較して、カメラを動かす
+  _CAMERA_START()
+  _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+
+  // バージョンによって上下にカメラ移動
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    IF $LWK_NOW_AREA < 5 THEN
+      _CAMERA_MOVE(2776,0,970752,491520,139264+250000,94208, 1 ) 
+    ELSE
+      _CAMERA_MOVE(2776,0,970752,491520+262144,139264+250000,94208, 1 ) 
+    ENDIF
+  ELSE
+    IF $LWK_NOW_AREA < 5 THEN
+      _CAMERA_MOVE(3544,0,970752,491520,102400-250000,86016, 1 ) 
+    ELSE
+      _CAMERA_MOVE(3544,0,970752,491520+262144,102400-250000,86016, 1 ) 
+    ENDIF
+  ENDIF
+
+  // カメラ移動待ち
+  _CAMERA_WAIT_MOVE()
+  
+  // エレベーターにカメラを寄せる
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    IF $LWK_NOW_AREA < 5 THEN
+      _CAMERA_MOVE(2776,0,970752,491520,139264,94208, 25 ) 
+    ELSE
+      _CAMERA_MOVE(2776,0,970752,491520+262144,139264,94208, 25 ) 
+    ENDIF
+  ELSE
+    IF $LWK_NOW_AREA < 5 THEN
+      _CAMERA_MOVE(3544,0,970752,491520,102400,86016, 25 ) 
+    ELSE
+      _CAMERA_MOVE(3544,0,970752,491520+262144,102400,86016, 25 ) 
+    ENDIF
+  ENDIF
+
+  // ブラックイン
+  _BLACK_IN()
+  _CAMERA_WAIT_MOVE()
+  _SE_STOP()
+ 
   _CALL play_elevator_stop_se
   _SE_WAIT()
+ 
+  //フェード,カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _DISP_FADE_END_CHECK()
+
+  // カメラを戻す
+  _CAMERA_DEF_MOVE( 20 )
 
   // エレベータを開ける
   IF $LWK_NOW_AREA < 5 THEN
@@ -679,8 +737,15 @@ EVENT_START  ev_infinity_dungeon_comeback
     _INFINITY_DUNGEON_ACTION_ELEVATOR( 1 ,TRUE)
   ENDIF
 
+  // カメラバインド
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()        
+  _CAMERA_END()
+ 
    // エレベータから降りる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+
+  // カメラ、移動待ち
   _OBJ_ANIME_WAIT()
 
   // エリアによって降りてくる方向が違う
@@ -690,7 +755,7 @@ EVENT_START  ev_infinity_dungeon_comeback
     
     // 道をあける
     _OBJ_ANIME( LWK_INFOOBJ_ID, anm_move_make_room_l )
-    _OBJ_ANIME_WAIT()
+    //_OBJ_ANIME_WAIT()
 
     // 主人公をエレベータ受付まで移動
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out_reception_l )
@@ -705,7 +770,7 @@ EVENT_START  ev_infinity_dungeon_comeback
     
     // 道をあける
     _OBJ_ANIME( LWK_INFOOBJ_ID, anm_move_make_room_r )
-    _OBJ_ANIME_WAIT()
+    //_OBJ_ANIME_WAIT()
 
     // 主人公をエレベータ受付まで移動
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out_reception_r )
@@ -796,7 +861,7 @@ EVENT_START  ev_infinity_dungeon_comeback
       $LWK_DUNGEON_STATUS+=1
       _INFINITY_DUNGEON_SET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
-            //　現在のフロアと比較して、カメラを動かす
+      //　現在のフロアと比較して、カメラを動かす
       _CAMERA_START()
       _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
 
@@ -907,21 +972,67 @@ EVENT_START  ev_infinity_dungeon_out_elevator
   // 到着モデルをセットしておく
   _CALL add_arrival_model
   
-  
   // エリアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
 
   // 現在のフロア取得
-  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_FLOOR_NUM  ,LWK_NOW_AREA ,LWK_FLOOR_NUM )
   _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_START_FLOOR  ,LWK_NOW_AREA ,LWK_NOW_FLOOR_NUM )
-  $LWK_NOW_FLOOR_NUM+=$LWK_FLOOR_NUM
-  
+  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_NOW_LOCAL_FLOOR_ID  ,LWK_NOW_AREA ,LWK_FLOOR_NUM )
+
+ 
+  //　現在のフロアと比較して、カメラを動かす
+  _CAMERA_START()
+  _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+
+  // カメラの初期位置を設定
+  IF $WK_OTHER_INF_ELEVATOR_UP_MOVE == 1 THEN
+    // 下からきた
+    IF $LWK_D_VERSION == VERSION_B2 THEN
+      _CAMERA_MOVE(3672,0,970752,425984,131072-250000,-131072, 1 ) 
+    ELSE
+      _CAMERA_MOVE(4056,0,970752,425984,65536-250000,-77824, 1 ) 
+    ENDIF
+  ELSE
+    // 上から来た
+    IF $LWK_D_VERSION == VERSION_B2 THEN
+      _CAMERA_MOVE(3672,0,970752,425984,131072+250000,-131072, 1 ) 
+    ELSE
+      _CAMERA_MOVE(4056,0,970752,425984,65536+250000,-77824, 1 ) 
+    ENDIF
+  ENDIF
+
+  // カメラ移動待ち
+  _CAMERA_WAIT_MOVE()
+ 
+  // フェード
+  _BLACK_IN()
+ 
+   
+  // エレベータにカメラをを寄せる
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _CAMERA_MOVE(3672,0,970752,425984,131072,-131072, 20 ) 
+  ELSE
+    _CAMERA_MOVE(4056,0,970752,425984,65536,-77824, 20 ) 
+  ENDIF
+
+  //フェード,カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _DISP_FADE_END_CHECK()
+ 
+  // スタートフロア＋現在のフロア
+  $LWK_DRAW_FLOOR_NO=$LWK_NOW_FLOOR_NUM
+  $LWK_DRAW_FLOOR_NO+=$LWK_FLOOR_NUM
+  // ゼロオリジン修正
+  $LWK_DRAW_FLOOR_NO+=1
+
+  $LWK_DRAW_AREA_NO = $LWK_NOW_AREA
+  $LWK_DRAW_AREA_NO += 1
+ 
   // エリアID登録
-  $LWK_NOW_AREA+=1  // ゼロオリジン修正
-  _NUMBER( 0 ,LWK_NOW_AREA ,2 )
+  _NUMBER( 0 ,LWK_DRAW_AREA_NO ,2 )
 
   // フロア番号登録
-  _NUMBER( 1 ,LWK_NOW_FLOOR_NUM ,2)
+  _NUMBER( 1 ,LWK_DRAW_FLOOR_NO ,2)
   
   // エリアメッセージ
 	IF $LWK_D_VERSION == VERSION_B2 THEN
@@ -936,7 +1047,17 @@ EVENT_START  ev_infinity_dungeon_out_elevator
             
   // エレベータを開ける
   _SYSWIN_CLOSE()
+
+  // カメラを戻す
+  _CAMERA_DEF_MOVE( 20 )
+
+  //エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+  
+  // カメラバインド
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()        
+  _CAMERA_END()
 
   // 主人公をエレベータから降りる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
@@ -1172,7 +1293,7 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   _CALL play_floor_move_se
 
   // かえるしょり
-  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
   _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
 
   // SE止め
@@ -1287,7 +1408,6 @@ EVENT_START  ev_infinity_dungeon_area_arrival
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
      
   // エレベータ移動音
-  //_CALL play_elevator_move_se
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
    
   // 主人公が元の位置に

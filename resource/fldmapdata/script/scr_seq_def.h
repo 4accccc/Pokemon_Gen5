@@ -14683,15 +14683,23 @@
 /**
  * @def _INFINITY_DUNGEON_WARP
  * @brief 無限ダンジョン：出入口処理
- * @param dir   進行方向
+ * @param dir   移動指定（WARP_INFORMATION,WARP_DIR_DOWNなど）
+ * @param fade_out_param  フェードパラメータ（フェードアウト）
+ * @param fade_in_param   フェードパラメータ（フェードイン）
+ * @note  フェードパラメータ
+ *    SCR_INFDUNGEON_WARP_NO_FADE(フェードなし)
+ *    SCR_INFDUNGEON_WARP_FADE(フェードあり)
+ *    フェードありの場合はエレベータかどうかを内部で判断します
  */
 //--------------------------------------------------------------
-#define _INFINITY_DUNGEON_WARP( dir ) \
-    _ASM_INFINITY_DUNGEON_WARP dir
+#define _INFINITY_DUNGEON_WARP( dir  ,fade_out_param ,fade_in_param ) \
+    _ASM_INFINITY_DUNGEON_WARP dir ,fade_out_param ,fade_in_param
 
-    .macro  _ASM_INFINITY_DUNGEON_WARP dir
+    .macro  _ASM_INFINITY_DUNGEON_WARP dir ,fade_out_param ,fade_in_param
     .short  EV_SEQ_INFINITY_DUNGEON_WARP
     .short  \dir
+    .short  \fade_out_param
+    .short  \fade_in_param
     .endm
 
 //--------------------------------------------------------------
@@ -14774,6 +14782,7 @@
  * @def _INFINITY_DUNGEON_MOVE_FLOOR
  * @brief 無限ダンジョン：出入口処理
  * @param dir   進行方向
+ * @note フェードインをスクリプト側で実装する必要があります！
  */
 //--------------------------------------------------------------
 #define _INFINITY_DUNGEON_MOVE_FLOOR( floor_no ) \

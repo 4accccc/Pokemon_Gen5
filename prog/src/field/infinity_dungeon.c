@@ -34,6 +34,7 @@
 #include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 #include "infinity_dungeon_creator.h"
 #include "infinity_dungeon_field.h"
+#include "script_def.h"
 
 #ifdef PM_DEBUG
 
@@ -87,6 +88,10 @@ typedef struct {
   // 移動タイプ
   u8                    map_change_type;
 
+  // フェードタイプ
+  u8                    fade_in_param;
+  u8                    fade_out_param;
+
   // 移動データ
   u16                   warp_dir;
   NEXT_MAP_DATA         next_map_data;
@@ -136,6 +141,7 @@ static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area
 static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
 static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
+static void BGSettingRecover( FIELDMAP_WORK* p_fieldwork );
 
 // グリッド
 static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
@@ -262,22 +268,30 @@ u32 INF_GetDungeonDataSize()
  *
  *	@param	*p_scr_work
  *	@param	*p_gsys
- *	@param	warp_dir 
+ *	@param	INF_DUNGEON_DATA *p_dungeon_data
+ *	@param	warp_dir        ワープ方向  WARP_*
+ *	@param	fade_in_param   フェードインパラメータ    SCR_INFDUNGEON_WARP_*
+ *	@param	fade_out_param  フェードアウトパラメータ  SCR_INFDUNGEON_WARP_*
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys,const INF_DUNGEON_DATA *p_dungeon_data, u16 warp_dir )
+void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys,const INF_DUNGEON_DATA *p_dungeon_data, u16 warp_dir ,u8 fade_in_param ,u8 fade_out_param )
 {
 	GMEVENT *p_event = NULL;
   MAP_CHAGE_EVENT_WORK *p_wk;
  	
+  // イベントの呼び出し
   p_event = GMEVENT_Create( p_gsys, NULL,	MapWarpEvent, sizeof(MAP_CHAGE_EVENT_WORK));
   SCRIPT_CallEvent( p_scr_work, p_event );
+
+  // パラメータの設定
 	p_wk = GMEVENT_GetEventWork( p_event );
-  p_wk->p_dungeon_data = p_dungeon_data;
-  p_wk->warp_dir = warp_dir;
-  p_wk->map_change_type = MAP_CHAGE_TYPE_ROOM;
+  p_wk->p_dungeon_data    = p_dungeon_data;
+  p_wk->warp_dir          = warp_dir;
+  p_wk->map_change_type   = MAP_CHAGE_TYPE_ROOM;
+  p_wk->fade_in_param     = fade_in_param;
+  p_wk->fade_out_param    = fade_out_param;
 }
 
 //----------------------------------------------------------------------------
@@ -317,6 +331,8 @@ void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gs
     p_wk->map_change_type = MAP_CHAGE_TYPE_FOOR;
     p_wk->p_dungeon_data = p_dungeon_data;
     p_wk->warp_dir = WARP_DIR_DOWN;
+    p_wk->fade_out_param = SCR_INFDUNGEON_WARP_FADE;
+    p_wk->fade_in_param = SCR_INFDUNGEON_WARP_NO_FADE;
   }
   
   // データを生成するためにフロアを設定する
@@ -401,23 +417,24 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       InitWorkData( p_wk ,p_gsys );
 
  
-      // エレベーター移動の場合と、部屋移動でフェード方法を変える
-      if( IsMoveElevator( p_wk ) )
-      {
-        // フェードアウト
-        MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-        //GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+      // 動作モデル停止
+      MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
 
-        // 遅いフェードアウト
-        GFL_FADE_SetMasterBrightReq(
-            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
-
-      }
-      else
+      // フェード
+      if( p_wk->fade_out_param == SCR_INFDUNGEON_WARP_FADE )
       {
-        // フェードアウト
-        MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-        GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+        // エレベーター移動の場合と、部屋移動でフェード方法を変える
+        if( IsMoveElevator( p_wk ) )
+        {
+          // 遅いフェードアウト
+          GFL_FADE_SetMasterBrightReq(
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
+        }
+        else
+        {
+          // フェードアウト
+          GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+        }
       }
 
       (*seq)++;
@@ -477,13 +494,22 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       }
  
       // エレベーター移動の場合と、部屋移動でフェード方法を変える
-      if( IsMoveElevator( p_wk ) )
+      if( p_wk->fade_in_param == SCR_INFDUNGEON_WARP_FADE )
       {
-        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+
+        if( IsMoveElevator( p_wk ) )
+        {
+          GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+        }
+        else
+        {
+          GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+        }
       }
       else
       {
-        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+        //ＢＧ復帰
+        BGSettingRecover( p_wk->p_field_work );
       }
 
       (*seq)++;
@@ -2271,6 +2297,27 @@ BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG面の復帰処理
+ *
+ *	@param	p_fieldwork 
+ *
+ *	@retval
+ *
+ *	@note event_field_fade.cを参考に作成
+ */
+//-----------------------------------------------------------------------------
+static void BGSettingRecover( FIELDMAP_WORK* p_fieldwork )
+{
+  int MainVisiblePlane = GFL_DISP_GetMainVisible();
+  int	SubVisiblePlane = GFL_DISP_GetSubVisible();
+  FIELDMAP_InitBGMode();
+  GFL_DISP_GX_SetVisibleControlDirect( MainVisiblePlane );
+  GFL_DISP_GXS_SetVisibleControlDirect( SubVisiblePlane );
+  FIELDMAP_InitBG( p_fieldwork );
 }
 
 #ifdef PM_DEBUG

@@ -126,12 +126,14 @@ VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk )
   SCRCMD_WORK   *p_wk     = wk;
   GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
   u16           warp_dir  = SCRCMD_GetVMWorkValue( core, p_wk );
+  u16           fade_out_param  = SCRCMD_GetVMWorkValue( core, p_wk );
+  u16           fade_in_param  = SCRCMD_GetVMWorkValue( core, p_wk );
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
   INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
   ONOUE_Printf("warp_dir:%u\n",warp_dir);
-  INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,p_dungeon_data ,warp_dir );
+  INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,p_dungeon_data ,warp_dir ,fade_in_param ,fade_out_param );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -802,7 +804,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetAreaStartFloor( area_id );
     }
     break;
-  // 開始フロアを返す
+  // 何階数あるか返す
   case SCR_INFDUNGEON_PARAM_FLOOR_NUM:
     {
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetFloorNum( area_id );
@@ -811,6 +813,12 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
   case SCR_INFDUNGEON_PARAM_ROOM_ID:
     {
       *p_ret_wk = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
+    }
+    break;
+  // フロア内の何階にいるか返す
+  case SCR_INFDUNGEON_PARAM_NOW_LOCAL_FLOOR_ID:
+    {
+      *p_ret_wk = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
     }
     break;
   case SCR_INFDUNGEON_PARAM_TRAINER_COUNT:
