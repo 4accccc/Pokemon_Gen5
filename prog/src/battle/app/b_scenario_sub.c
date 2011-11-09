@@ -207,10 +207,10 @@ static const BS_CANVAS_DATA bs_canvas_00_tbl[] = {
 // SCENARIO
 static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// SCENARIO
-	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	8,},		// SCENE00
-	{ GFL_BG_FRAME1_S,	2,	10,	28,	2,	8,},		// SCENE01
-	{ GFL_BG_FRAME1_S,	3,	5,	28,	4,	8,},		// SCENE00_MES
-	{ GFL_BG_FRAME1_S,	3,	12,	28,	4,	8,},		// SCENE01_MES
+	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	9,},		// SCENE00
+	{ GFL_BG_FRAME1_S,	2,	10,	28,	2,	9,},		// SCENE01
+	{ GFL_BG_FRAME1_S,	3,	5,	28,	4,	9,},		// SCENE00_MES
+	{ GFL_BG_FRAME1_S,	3,	12,	28,	4,	9,},		// SCENE01_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ãrñ{
 	{ GFL_BG_FRAME1_S,	12,	17,	 2,	2,	8,},		// åªç›(test)
 	{ GFL_BG_FRAME1_S,	15,	17,	 2,	2,	8,},		// ç≈ëÂ(test)
@@ -221,17 +221,17 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 // INFO
 static const BS_CANVAS_DATA bs_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// CAST
-	{ GFL_BG_FRAME1_S,	1,	6,	8,	2,	8,},		// ñºëO
+	{ GFL_BG_FRAME1_S,	1,	6,	8,	2,	9,},		// ñºëO
 	{ GFL_BG_FRAME1_S,	9,	6,	1,	2,	8,},		// ê´ï 
-	{ GFL_BG_FRAME1_S,	2,	11,	10,	2,	8,},		// ÉåÉxÉã
-	{ GFL_BG_FRAME1_S,	1,	15,	12,	2,	8,},		// éùÇøï®(fix)
-	{ GFL_BG_FRAME1_S,	1,	17,	12,	2,	8,},		// éùÇøï®2
-	{ GFL_BG_FRAME1_S,	16,	4,	12,	2,	8,},		// ãZ00
-	{ GFL_BG_FRAME1_S,	16,	7,	12,	2,	8,},		// ãZ01
-	{ GFL_BG_FRAME1_S,	16,	10,	12,	2,	8,},		// ãZ02
-	{ GFL_BG_FRAME1_S,	16,	13,	12,	2,	8,},		// ãZ03
-	{ GFL_BG_FRAME1_S,	13,	15,	12,	2,	8,},		// ì¡ê´(fix)
-	{ GFL_BG_FRAME1_S,	13,	17,	12,	2,	8,},		// ì¡ê´2
+	{ GFL_BG_FRAME1_S,	2,	11,	10,	2,	9,},		// ÉåÉxÉã
+	{ GFL_BG_FRAME1_S,	4,	15,	12,	2,	9,},		// éùÇøï®(fix)
+	{ GFL_BG_FRAME1_S,	13,	15,	12,	2,	9,},		// éùÇøï®2
+	{ GFL_BG_FRAME1_S,	16,	4,	12,	2,	9,},		// ãZ00
+	{ GFL_BG_FRAME1_S,	16,	7,	12,	2,	9,},		// ãZ01
+	{ GFL_BG_FRAME1_S,	16,	10,	12,	2,	9,},		// ãZ02
+	{ GFL_BG_FRAME1_S,	16,	13,	12,	2,	9,},		// ãZ03
+	{ GFL_BG_FRAME1_S,	4,	17,	12,	2,	9,},		// ì¡ê´(fix)
+	{ GFL_BG_FRAME1_S,	13,	17,	12,	2,	9,},		// ì¡ê´2
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ãrñ{
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code

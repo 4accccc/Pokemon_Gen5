@@ -814,6 +814,8 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 10*16, 0x20*3 );
 	// フォントパレット(8)
 	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, 8*16 );
+	// フォントパレット2(9)
+	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_pkwd_scenario_d_font_NCLR, wk->dat->heap, FADE_SUB_BG, 0x20, 9*16 );
 	//
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );

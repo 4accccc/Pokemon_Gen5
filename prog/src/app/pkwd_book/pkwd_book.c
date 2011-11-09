@@ -121,13 +121,15 @@ enum{
 };
 
 // パレット
-// 上(MAIN)：BG  (0-4:下地),(10:font)
+// 上(MAIN)：BG  (0-4:下地),(5-7:font2)(10:font)
 // 上(MAIN)：OBJ (14:通信アイコン)
 //
-// 下(SUB) ：BG  (0-1:リストパネル),(6,7:下地),(8:cmn), (9:win), (10:font),(11,12:selwin)
+// 下(SUB) ：BG  (0-1:リストパネル),(6,7:下地),(8:cmn), (9:win), (10:font),(11,12:selwin),(13:font2)
 // 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-10:type),(11:trainer),(12:font),(13,14:obj)
 enum{
 	// 何本目か(bg)
+	PLTID_MAIN_BASE			= 0,
+	PLTID_MAIN_FONT2		= 5,		// font2
 	PLTID_MAIN_FONT			= 10,		// font
 	//
 	PLTID_SUB_BG_BASE		= 6,		// 通常bg
@@ -135,6 +137,7 @@ enum{
 	PLTID_SUB_MESWIN		= 9,		// meswin
 	PLTID_SUB_FONT			= 10,		// font
 	PLTID_SUB_SELWIN		= 11,		// selwin
+	PLTID_SUB_FONT2			= 13,		// font2
 	//
 	PLTID_SUB_OBJ_CMN		= 4,		// cmn
 	PLTID_SUB_OBJ_TYPE		= 8,		// type
@@ -456,6 +459,9 @@ typedef struct
 	//
 	void					*PalBuf[PKWD_BOOK_COLOR_NUM];		///< 上画面パレット(4本分)(こちらを破棄)
 	NNSG2dPaletteData		*PalBufData[PKWD_BOOK_COLOR_NUM];	///< 上画面パレット(4本分)
+    //
+	void					*FontPalBuf[PKWD_BOOK_COLOR_NUM];	  ///< フォント上画面パレット(4本分)(こちらを破棄)
+	NNSG2dPaletteData		*FontPalBufData[PKWD_BOOK_COLOR_NUM]; ///< フォント上画面パレット(4本分)
 	
 } PKWD_BOOK_MAIN_WORK;
 
@@ -714,14 +720,14 @@ static const PKWD_BOOK_BMPOAM_DATA pwb_bmpoam_tbl[] = {
 //---------------
 // CANVASの設定
 //---------------
-// 上画面
+// 上画面(パレット指定注意)
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_00_tbl[] = {
-	{ GFL_BG_FRAME1_M,	2,	1,	28,	2,	10,},		// TITLE
-	{ GFL_BG_FRAME1_M,	2,	5,	28,	2,	10,},		// PLOT
-	{ GFL_BG_FRAME1_M,	2,	12,	28,	2,	10,},		// GOAL
-	{ GFL_BG_FRAME1_M,	2,	3,	28,	2,	10,},		// TITLE_MES
-	{ GFL_BG_FRAME1_M,	3,	7,	28,	4,	10,},		// PLOT_MES
-	{ GFL_BG_FRAME1_M,	3,	14,	28,	4,	10,},		// GOAL_MES
+	{ GFL_BG_FRAME1_M,	2,	1,	28,	2,	5,},		// TITLE
+	{ GFL_BG_FRAME1_M,	2,	5,	28,	2,	6,},		// PLOT
+	{ GFL_BG_FRAME1_M,	2,	12,	28,	2,	6,},		// GOAL
+	{ GFL_BG_FRAME1_M,	2,	3,	28,	2,	7,},		// TITLE_MES
+	{ GFL_BG_FRAME1_M,	3,	7,	28,	4,	7,},		// PLOT_MES
+	{ GFL_BG_FRAME1_M,	3,	14,	28,	4,	7,},		// GOAL_MES
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -731,29 +737,29 @@ static const PKWD_BOOK_CANVAS_DATA pwb_canvas_01_tbl[] = {
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
-// トレーナー
+// トレーナー(パレット指定注意)
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	2,	10,},		// CAST
-	{ GFL_BG_FRAME0_S,	1,	15,	14,	2,	10,},		// 役名(fix)
-	{ GFL_BG_FRAME0_S,	1,	17,	14,	2,	10,},		// 職業名
-	{ GFL_BG_FRAME0_S,	1,	19,	14,	2,	10,},		// 職業
+	{ GFL_BG_FRAME0_S,	1,	15,	14,	2,	13,},		// 役名(fix)
+	{ GFL_BG_FRAME0_S,	1,	17,	14,	2,	13,},		// 職業名
+	{ GFL_BG_FRAME0_S,	1,	19,	14,	2,	13,},		// 職業
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 // ポケ情報
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_03_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	2,	10,},		// CAST
-	{ GFL_BG_FRAME0_S,	1,	6,	8,	2,	10,},		// 名前
+	{ GFL_BG_FRAME0_S,	1,	6,	8,	2,	13,},		// 名前
 	{ GFL_BG_FRAME0_S,	9,	6,	1,	2,	10,},		// 性別
-	{ GFL_BG_FRAME0_S,	2,	11,	10,	2,	10,},		// レベル
-	{ GFL_BG_FRAME0_S,	1,	15,	12,	2,	10,},		// 持ち物(fix)
-	{ GFL_BG_FRAME0_S,	1,	17,	12,	2,	10,},		// 持ち物2
-	{ GFL_BG_FRAME0_S,	16,	4,	12,	2,	10,},		// 技00
-	{ GFL_BG_FRAME0_S,	16,	7,	12,	2,	10,},		// 技01
-	{ GFL_BG_FRAME0_S,	16,	10,	12,	2,	10,},		// 技02
-	{ GFL_BG_FRAME0_S,	16,	13,	12,	2,	10,},		// 技03
-	{ GFL_BG_FRAME0_S,	13,	15,	12,	2,	10,},		// 特性(fix)
-	{ GFL_BG_FRAME0_S,	13,	17,	12,	2,	10,},		// 特性2
+	{ GFL_BG_FRAME0_S,	2,	11,	10,	2,	13,},		// レベル
+	{ GFL_BG_FRAME0_S,	4,	15,	12,	2,	13,},		// 持ち物(fix)
+	{ GFL_BG_FRAME0_S,	13,	15,	12,	2,	13,},		// 持ち物2
+	{ GFL_BG_FRAME0_S,	16,	4,	12,	2,	13,},		// 技00
+	{ GFL_BG_FRAME0_S,	16,	7,	12,	2,	13,},		// 技01
+	{ GFL_BG_FRAME0_S,	16,	10,	12,	2,	13,},		// 技02
+	{ GFL_BG_FRAME0_S,	16,	13,	12,	2,	13,},		// 技03
+	{ GFL_BG_FRAME0_S,	4,	17,	12,	2,	13,},		// 特性(fix)
+	{ GFL_BG_FRAME0_S,	13,	17,	12,	2,	13,},		// 特性2
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -957,7 +963,7 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
   0,    // フレーム内に表示するBMPWINの表示Ｙ座標
   26,   // フレーム内に表示するBMPWINの表示Ｘサイズ
   3,    // フレーム内に表示するBMPWINの表示Ｙサイズ(itemSizY)
-  0,    // フレーム内に表示するBMPWINのパレット
+  0,   // フレーム内に表示するBMPWINのパレット
   
   {24,12,8,6,4,3,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
    1,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
@@ -984,12 +990,12 @@ static const s16 pwb_winmes_tbl[] = {
 	pw_castindex_24,		// やめる
 };
 
-// 上画面のパレット
+// 上画面のパレット(bg + font)
 static const s16 pwb_up_pal_tbl[] = {
-	NARC_b_scenario_gra_pkwd_scenario2_u1_NCLR,
-	NARC_b_scenario_gra_pkwd_scenario2_u2_NCLR,
-	NARC_b_scenario_gra_pkwd_scenario2_u3_NCLR,
-	NARC_b_scenario_gra_pkwd_scenario2_u4_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario2_u1_NCLR, NARC_b_scenario_gra_pkwd_scenario_u1_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario2_u2_NCLR, NARC_b_scenario_gra_pkwd_scenario_u2_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario2_u3_NCLR, NARC_b_scenario_gra_pkwd_scenario_u3_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario2_u4_NCLR, NARC_b_scenario_gra_pkwd_scenario_u4_font_NCLR,
 };
 
 //---------------------
@@ -1503,6 +1509,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// 上画面パレット用バッファ
 	for(i=0;i<PKWD_BOOK_COLOR_NUM;i++){
 		wk->PalBuf[i] = 0;
+		wk->FontPalBuf[i] = 0;
 	}
 	//---------------------
 	// empty用バッファ取得
@@ -1539,15 +1546,17 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// フォントパレットセット
 	//------------------------
 	// パレットは10番に転送
+	// sub
 	{
 		ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_SUB_FONT*0x20,  0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
-	// main
+	// main&sub
 	{
 		ARCHANDLE* p_handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_b_scenario_gra_pkwd_list_fnt_NCLR, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
+//		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_b_scenario_gra_pkwd_list_fnt_NCLR, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_b_scenario_gra_pkwd_scenario_d_font_NCLR, PALTYPE_SUB_BG,  PLTID_SUB_FONT2*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 	
@@ -2918,6 +2927,7 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 	u16		buf[4];
 	const u16	*adr;
 	u16		col;
+	s32		tmp;
 	s32		i;
 	s32		offx;
 	u32		pmode;
@@ -2943,7 +2953,7 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		}
 		// 上画面
 		if(type == STR_MAIN){
-			col = PRINTSYS_LSB_Make(3,2,1);
+			col = PRINTSYS_LSB_Make(1,2,0);
 			if(i == 0){
 				pmode = PWB_CENTER_MODE;
 				offx  = PWB_CENTER_OFF_X;
@@ -3234,6 +3244,10 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 	//
 	// 上文字列更新
 	if(flg != 0){
+		//
+		// 固定文字列
+		pwb_disp_fix_string( wk, STR_MAIN, TMODE_BOOK );
+		//
 		pwb_disp_book_string( wk, 1 );
 		// カラーの変更
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
@@ -3280,7 +3294,7 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 			pmode = PWB_CENTER_MODE;
 			offx  = PWB_CENTER_OFF_X;
 		}
-		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 1, 2, 0 ) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
@@ -4338,11 +4352,15 @@ static void pwb_chg_up_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 num )
 	NNSG2dPaletteData *pltt;
 	u16		*adr;		// u16なので注意
 	
-	// 下画面の指定したキャラ番号
+	// パレット転送(bg)
 	pltt = wk->PalBufData[num];
 	adr  = (u16*)pltt->pRawData;
-	// パレット転送
 	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 0, &adr[0], 0x20*5 );
+	//
+	// パレット転送(font2)
+	pltt = wk->FontPalBufData[num];
+	adr  = (u16*)pltt->pRawData;
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN, 0x20*PLTID_MAIN_FONT2, &adr[0], 0x20*3 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -4358,9 +4376,13 @@ static void pwb_init_up_pal( PKWD_BOOK_MAIN_WORK * wk )
 {
 	s32			i;
 	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
-	
+	// 下地
 	for(i=0;i<PKWD_BOOK_COLOR_NUM;i++){
-		wk->PalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, pwb_up_pal_tbl[i], &wk->PalBufData[i], wk->heapID );
+		wk->PalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, pwb_up_pal_tbl[2*i], &wk->PalBufData[i], wk->heapID );
+	}
+	// フォント
+	for(i=0;i<PKWD_BOOK_COLOR_NUM;i++){
+		wk->FontPalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( p_handle, pwb_up_pal_tbl[2*i+1], &wk->FontPalBufData[i], wk->heapID );
 	}
 	GFL_ARC_CloseDataHandle( p_handle );
 }
@@ -4382,6 +4404,10 @@ static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk )
 		if(wk->PalBuf[i]){
  			GFL_HEAP_FreeMemory( wk->PalBuf[i] );
 			wk->PalBuf[i] = 0;
+		}
+		if(wk->FontPalBuf[i]){
+ 			GFL_HEAP_FreeMemory( wk->FontPalBuf[i] );
+			wk->FontPalBuf[i] = 0;
 		}
 	}
 }
@@ -4772,6 +4798,10 @@ static void PrintStrBuf( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_
 
 static void _strbuf_print( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param )
 {
+//	s32	tmp;
+	//
+//	tmp = wk->FlagBuffer[pos].color;
+//	PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(3+3*tmp, 14, 0), 4 );
 	PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(15,14,0), 4 );
 }
 
