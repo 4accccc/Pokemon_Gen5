@@ -645,7 +645,7 @@
 #define AC_OLD_NINJA_APPEAR (AC_NINJA_ACT0)       ///<セピア忍者専用 現れるアニメ
 #define AC_OLD_NINJA_DISAPPER (AC_NINJA_ACT1)     ///<セピア忍者専用 消えるアニメ
 #define AC_SWMAMA2_CHASE_PETAL (AC_ACT0_STOP)      ///<スワンママ専用 花びらを目で追うアニメ
-#define AC_SWMAMA2_ANSWER_PHONE (AC_ACT1_STOP)      ///<スワンママ専用 電話に出るアニメ
+#define AC_SWMAMA2_ANSWER_PHONE (AC_ACT1_LOOP)      ///<スワンママ専用 電話に出るアニメ
 #define AC_SWMAMA2_HANG_UP_PHONE (AC_ACT2_STOP)     ///<スワンママ専用 電話を切るアニメ
 
 #endif //MMDL_CODE_H_FILE
