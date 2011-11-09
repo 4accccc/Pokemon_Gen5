@@ -203,16 +203,22 @@ def convertScript( csv, hCsv, data, naix, sadl )
       exit(1)
     end
 
+    #if ARGV[0] == "pokewood_cutin_scr99.csv"
+      #puts "#{cmd}\n"
+    #end
+
     data.write_u16( cmd_d[:PG_VALUE] )
 
     next_param = -1
-    for col in SCR_COL_PARAM_START...SCR_COL_PARAM_END
+    col = SCR_COL_PARAM_START
+    max = SCR_COL_PARAM_END
+    while col < max do
       param = csv.get( row, col )
 
       if next_param != -1
         data.write_u16(next_param)
         next_param = -1
-        col -= 1
+        max -= 1
         next
       end
 
@@ -297,6 +303,7 @@ def convertScript( csv, hCsv, data, naix, sadl )
         data.write_u16( 0 )
       end
 
+    col += 1
     end
 
   end
