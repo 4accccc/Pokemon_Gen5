@@ -558,6 +558,8 @@
 				<ContentItem
 					Name="pw_briefing040.mstxt" />
 				<ContentItem
+					Name="pw_briefing041.mstxt" />
+				<ContentItem
 					Name="pw_director_adultw.mstxt" />
 				<ContentItem
 					Name="pw_director_gentleman.mstxt" />
