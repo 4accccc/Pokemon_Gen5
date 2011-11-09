@@ -5637,14 +5637,14 @@
 		<language name="JPN" width="256">BGM-KEMONOMICHI</language>
 		<language name="JPN_KANJI" width="256">BGM-KEMONOMICHI</language>
 	</row>
+	<row id="msg_seq_bgm_japarade">
+		<language name="JPN" width="256">BGM-JAPARADE</language>
+		<language name="JPN_KANJI" width="256">BGM-JAPARADE</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1299">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
 	<row id="msg_seq_me_asa">
 		<language name="JPN" width="256">ME-ASA</language>
 		<language name="JPN_KANJI" width="256">ME-ASA</language>
@@ -8765,6 +8765,10 @@
 		<language name="JPN" width="256">GYM-H07</language>
 		<language name="JPN_KANJI" width="256">GYM-H07</language>
 	</row>
+	<row id="msg_seq_se_gym_h08">
+		<language name="JPN" width="256">GYM-H08</language>
+		<language name="JPN_KANJI" width="256">GYM-H08</language>
+	</row>
 	<row id="msg_seq_se_lcg_01">
 		<language name="JPN" width="256">LCG-01</language>
 		<language name="JPN_KANJI" width="256">LCG-01</language>
@@ -8960,6 +8964,14 @@
 	<row id="msg_seq_se_sw_fes_13">
 		<language name="JPN" width="256">SW-FES-13</language>
 		<language name="JPN_KANJI" width="256">SW-FES-13</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_14">
+		<language name="JPN" width="256">SW-FES-14</language>
+		<language name="JPN_KANJI" width="256">SW-FES-14</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_15">
+		<language name="JPN" width="256">SW-FES-15</language>
+		<language name="JPN_KANJI" width="256">SW-FES-15</language>
 	</row>
 	<row id="msg_seq_se_sw_mdun_bl_01">
 		<language name="JPN" width="256">SW-MDUN-BL-01</language>
@@ -9492,6 +9504,14 @@
 	<row id="msg_seq_se_sw_gianthole_09">
 		<language name="JPN" width="256">SW-GIANTHOLE-09</language>
 		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-09</language>
+	</row>
+	<row id="msg_seq_se_sw_ja_exp">
+		<language name="JPN" width="256">SW-JA-EXP</language>
+		<language name="JPN_KANJI" width="256">SW-JA-EXP</language>
+	</row>
+	<row id="msg_seq_se_sw_shizui">
+		<language name="JPN" width="256">SW-SHIZUI</language>
+		<language name="JPN_KANJI" width="256">SW-SHIZUI</language>
 	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
