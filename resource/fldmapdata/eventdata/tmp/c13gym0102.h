@@ -14,6 +14,7 @@
 #define C13GYM0102_GUITARW_01              2
 #define C13GYM0102_SUNGLASSES_01           3
 #define C13GYM0102_SWLEADER2_01            4
+#define C13GYM0102_DANCER_01               5
 
 #endif //ZONE_C13GYM0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13gym0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

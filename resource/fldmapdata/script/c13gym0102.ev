@@ -31,6 +31,7 @@ _EVENT_DATA   ev_c13gym0102_heads_01      // スキンヘッド
 _EVENT_DATA   ev_c13gym0102_guitarw_01    // ギター
 _EVENT_DATA   ev_c13gym0102_sunglasses_01
 _EVENT_DATA   ev_pos_c13gym0102_pokewood
+_EVENT_DATA	ev_c13gym0102_dancer_01
 _EVENT_DATA_END
 
 
@@ -489,6 +490,13 @@ _RET
 /**************************************************************/
 EVENT_START		ev_c13gym0102_sunglasses_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_sunglasses_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C13GYM0102	DANCER	一言メッセージ			  */
+/**************************************************************/
+EVENT_START		ev_c13gym0102_dancer_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_dancer_01 )
 EVENT_END
 
 /**************************************************************/
