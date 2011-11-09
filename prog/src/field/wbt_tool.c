@@ -12,7 +12,7 @@
 #include <gflib.h>
 
 #include "wbt_system.h"
-//#include "app/wbt_list.h"
+
 
 #include "wbt_tool.h"
 //#include "wbt_trlist_struct.h"  //WBT_TRDATA
@@ -23,12 +23,9 @@
 
 #include "wbt_system_local.h"
 
-//#include "system/gfl_use.h" //GFUser_GetPublicRand0
-
 #include "poke_tool/poketype_def.h"
 
 #include "tr_tool/trtype_def.h"
-//#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"  //ARCID_～
 #include "arc/wbt/wbt_trlist.naix"
@@ -40,18 +37,6 @@ SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION );
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {
-  u16 title_id;       ///<トーナメント名のMsgID
-  u8 win_count_id;    ///<WBTSAVE::WBTWIN_COUNT
-  u8 reception_id;    ///<WBTRECEPT
-  u8 reg_type;        ///<WBTREG_ID
-  u8 btdata_id;       ///<WBTBTDATA
-
-  u8 reward[4];       ///<ごほうびのBP数
-}WBT_TOURNAMENT_DATA;
-
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -60,118 +45,6 @@ typedef struct {
   u8  need_pokemon_num; ///<必要なポケモン数
   BtlRule  btl_rule;        ///<対応するバトルルール定義
 }WBT_RULE_DATA;
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
-  { //WBTCUP_CHAMPION, //チャンピオントーナメント
-    msg_wbtsys_title_03,
-    WBTWIN_COUNT_CHAMPION,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_3,
-    { 0, 0, 0, 0 },
-  },
-  { //WBTCUP_POKETYPE, //タイプトーナメント
-    msg_wbtsys_title_02,
-    POKETYPE_NORMAL,   //ダミー
-    WBTRECEPT_2, WBTREG_POKETYPE,
-    WBTBTDATA_3,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_DOWNLOAD, //ダウンロードトーナメント
-    msg_wbtsys_title_04,
-    WBTWIN_COUNT_MAX,   //ダミー
-    WBTRECEPT_1, WBTREG_DOWNLOAD,
-    WBTBTDATA_3,        //ダミー
-    { 0, 0, 0, 0 },
-  },
-
-  {//WBTCUP_HODOMOE,     //ホドモエトーナメント           
-    msg_wbtsys_title_05,
-    WBTWIN_COUNT_HODOMOE,
-    WBTRECEPT_1, WBTREG_ALL,
-    WBTBTDATA_1,
-    { 1, 1, 2, 2 },
-  },
-  {//WBTCUP_ISSYU,       //イッシュリーダーズトーナメント 
-    msg_wbtsys_title_06,
-    WBTWIN_COUNT_ISSYU,
-    WBTRECEPT_2, WBTREG_ALL,
-    WBTBTDATA_2,
-    { 1, 1, 2, 2 },
-  },
-  {//WBTCUP_KANTO,       //カントーリーダーズトーナメント 
-    msg_wbtsys_title_07,
-    WBTWIN_COUNT_KANTO,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_2,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_JOUTO,       //ジョウトリーダーズトーナメント 
-    msg_wbtsys_title_08,
-    WBTWIN_COUNT_JOUTO,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_2,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_HOUEN,       //ホウエンリーダーズトーナメント 
-    msg_wbtsys_title_09,
-    WBTWIN_COUNT_HOUEN,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_2,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_SINOU,       //シンオウリーダーズトーナメント 
-    msg_wbtsys_title_10,
-    WBTWIN_COUNT_SINOU,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_2,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_WORLD,       //ワールドトーナメント     
-    msg_wbtsys_title_11,
-    WBTWIN_COUNT_WORLD,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_3,
-    { 0, 0, 0, 0 },
-  },
-  {//WBTCUP_HODOMOE_EVENT, //ホドモエトーナメント（イベント）           
-    msg_wbtsys_title_05,
-    WBTWIN_COUNT_HODOMOE,
-    WBTRECEPT_1, WBTREG_ALL,
-    WBTBTDATA_1,
-    { 1, 0, 0, 0 },
-  },
-  {//WBTCUP_RENTAL,         //レンタルトーナメント
-    msg_wbtsys_title_12,
-    WBTWIN_COUNT_RENTAL,
-    WBTRECEPT_1, WBTREG_SUBWAY,
-    WBTBTDATA_1,
-    { 1, 1, 2, 2 },
-  },
-  {//WBTCUP_RENTALMASTER,         //レンタルマスタートーナメント
-    msg_wbtsys_title_13,
-    WBTWIN_COUNT_RENTALMASTER,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_3,
-    { 2, 2, 3, 3 },
-  },
-  {//WBTCUP_MIX,                //ミックストーナメント
-    msg_wbtsys_title_14,
-    WBTWIN_COUNT_SHUFFLE,
-    WBTRECEPT_1, WBTREG_ALL,
-    WBTBTDATA_1,
-    { 1, 1, 2, 2 },
-  },
-  {//WBTCUP_MIXMASTER,         //ミックスマスタートーナメント
-    msg_wbtsys_title_15,
-    WBTWIN_COUNT_SHUFFLEMASTER,
-    WBTRECEPT_2, WBTREG_SUBWAY,
-    WBTBTDATA_3,
-    { 2, 2, 3, 3 },
-  },
-
-};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -197,42 +70,6 @@ static const WBT_RULE_DATA WBTRuleData[] =
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief トーナメント名文字列をセット
- * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
- */
-//------------------------------------------------------------------
-void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
-{
-  HEAPID heapID = HEAPID_FIELDMAP;
-  GFL_MSGDATA     *man;
-  u16 msg_id;
-
-  if ( wbtcup == WBTCUP_NULL || wbtcup >= WBTCUP_MAX )
-  {
-    GF_ASSERT( 0 );
-    wbtcup = WBTCUP_HODOMOE;
-  }
-  switch ( wbtcup )
-  {
-  case WBTCUP_DOWNLOAD:
-    //仮：ダウンロードタイトル名には未対応
-  case WBTCUP_NULL:
-    GF_ASSERT(0);
-    /* FALL THROUGH */
-  default:
-    msg_id = WBTTournamentData[ wbtcup - 1 ].title_id;
-    break;
-  }
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
-  if( man )
-  {
-    GFL_MSG_GetString( man, msg_id, strbuf );
-    GFL_MSG_Delete( man );
-  }
-}
-
 //------------------------------------------------------------------
 /**
  * @brief WBTロムトレーナー名を取得
@@ -680,16 +517,12 @@ WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype )
 {
   WBTWIN_COUNT id;
 
-  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
+  if ( wbtcup == WBTCUP_POKETYPE )
   {
-    if ( wbtcup == WBTCUP_POKETYPE )
-    {
-      //PokeTypeとWBTWIN_COUNT_が一致することはAssertで保障
-      return poketype;
-    }
-    return WBTTournamentData[ wbtcup - 1 ].win_count_id;
+    //PokeTypeとWBTWIN_COUNT_が一致することはAssertで保障
+    return poketype;
   }
-  GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
+  return WBTTOOL_GetTournamentData( wbtcup )->win_count_id;
   return WBTWIN_COUNT_MAX;
 }
 //-----------------------------------------------------------------------------
@@ -728,12 +561,7 @@ WBTCUP WBTTOOL_WBTWinCountToCup( WBTWIN_COUNT counter_id )
 //-----------------------------------------------------------------------------
 WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup )
 {
-  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
-  {
-    return WBTTournamentData[ wbtcup - 1 ].reg_type;
-  }
-  GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
-  return WBTREG_ALL;
+  return WBTTOOL_GetTournamentData( wbtcup )->reg_type;
 }
 
 //-----------------------------------------------------------------------------
@@ -745,12 +573,8 @@ WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup )
 //-----------------------------------------------------------------------------
 BOOL WBTTOOL_CheckReceptionID( WBTCUP wbtcup, WBTRECEPT reception_id )
 {
-  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
-  {
-    return ( WBTTournamentData[ wbtcup - 1 ].reception_id == reception_id );
-  }
-  GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
-  return FALSE;
+  const WBT_TOURNAMENT_DATA * target = WBTTOOL_GetTournamentData( wbtcup );
+  return ( target->reception_id == reception_id );
 }
 
 //-----------------------------------------------------------------------------
@@ -770,15 +594,7 @@ u32 WBTTOOL_GetRomArcID( WBTCUP wbtcup )
 
   u32 index;
 
-  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
-  {
-    index = WBTTournamentData[ wbtcup - 1 ].btdata_id;
-  }
-  else
-  {
-    GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
-    index = WBTBTDATA_1;
-  }
+  index = WBTTOOL_GetTournamentData( wbtcup ) ->btdata_id;
   return btdIdTable[ index ];
 }
 
@@ -792,13 +608,8 @@ u32 WBTTOOL_GetRomArcID( WBTCUP wbtcup )
 //-----------------------------------------------------------------------------
 u32 WBTTOOL_GetRewardCount( WBTCUP wbtcup, WBTRULE wbtrule )
 {
-  if ( wbtcup <= WBTCUP_NULL || wbtcup >= WBTCUP_MAX )
-  {
-    GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
-    wbtcup = WBTCUP_HODOMOE;
-  }
   wbtrule = checkWBTRuleRange( wbtrule );
-  return WBTTournamentData[ wbtcup - 1].reward[ wbtrule ];
+  return WBTTOOL_GetTournamentData( wbtcup )->reward[ wbtrule ];
 }
 
 

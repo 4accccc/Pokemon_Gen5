@@ -281,7 +281,7 @@ void WBTSYS_GetTournamentName( const WBTSYS * wbtsys, WBTCUP wbtcup, STRBUF * st
   }
   else
   {
-    WBTTOOL_GetTournamentName( wbtcup, strbuf );
+    WBTTOOL_GetTournamentName( wbtsys->heapID, wbtcup, strbuf );
   }
 }
 

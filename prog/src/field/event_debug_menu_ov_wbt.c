@@ -31,6 +31,8 @@
 #include "debug_message.naix"
 #include "msg/debug/msg_d_field.h"
 #include "event_mapchange.h"
+#include "savedata/regulation.h"
+#include "poke_tool/poke_regulation.h"
 
 //ƒAƒvƒŠ
 

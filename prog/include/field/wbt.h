@@ -133,35 +133,14 @@ typedef enum {
 }WBT_TRPRI;
 
 //------------------------------------------------------------------
-//  WBT対戦相手用のメッセージオフセット
+/// ROMトレーナーデータの不完全型
 //------------------------------------------------------------------
-enum {
-  WBT_TRMSG_1ST_FIGHT_START = 0,  ///<バトル前、対戦相手の1回戦時
-  WBT_TRMSG_2ND_FIGHT_START,      ///<バトル前、対戦相手の2回戦時
-  WBT_TRMSG_3RD_FIGHT_START,      ///<バトル前、対戦相手の決勝戦時
-  WBT_TRMSG_FIGHT_LOSE,           ///<バトル内、対戦相手の負けMSG
-  WBT_TRMSG_FIGHT_WIN,            ///<バトル内、対戦相手の勝ちMSG
-  WBT_TRMSG_PLAYER_WIN,           ///<バトル後、対戦相手の負けMSG
-  WBT_TRMSG_PLAYER_LOSE,          ///<バトル後、対戦相手の勝ちMSG
-  WBT_TRMSG_ANNOUNCE,             ///<バトル前、決勝戦の前口上
-
-  WBT_TRMSG_TYPE_NUM,
-};
+typedef struct _WBTROM_TRDATA WBTROM_TRDATA;
 
 //------------------------------------------------------------------
-//  WBT対戦相手のビット指定
+/// ROMトレーナー指定ID
 //------------------------------------------------------------------
-enum {
-  WBT_AI_ID_BASIC = 0,  ///<基本AI
-  WBT_AI_ID_STRONG,     ///<威力強AI
-  WBT_AI_ID_EXPERT,     ///<エキスパートAI
-  WBT_AI_ID_DOUBLE,     ///<ダブルバトルAI
-
-  WBT_AI_BIT_BASIC = 1 << WBT_AI_ID_BASIC,
-  WBT_AI_BIT_STRONG = 1 << WBT_AI_ID_STRONG,
-  WBT_AI_BIT_EXPERT = 1 << WBT_AI_ID_EXPERT,
-  WBT_AI_BIT_DOUBLE = 1 << WBT_AI_ID_DOUBLE,
-};
+typedef u8 WBTROM_TRID;
 
 //============================================================================================
 //============================================================================================

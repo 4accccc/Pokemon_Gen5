@@ -10,9 +10,9 @@
 //============================================================================================
 #pragma once
 
-#include "field/wbt.h"
-#include "wbt_system.h"
+#include <gflib.h>
 
+#include "field/wbt.h"
 
 #include "wbt_trlist_struct.h"  //WBT_TRDATA
 
@@ -30,6 +30,7 @@ enum {
 };
 
 //------------------------------------------------------------------
+//  トーナメント毎のルールのタイプ指定
 //------------------------------------------------------------------
 typedef enum {
   WBTREG_ALL = 0,
@@ -52,12 +53,27 @@ typedef enum {
   WBTBTDATA_MAX,
 }WBTBTDATA;
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef enum {
   WBTBTD_ARCOFS_TR_ACE = 0,
   WBTBTD_ARCOFS_PM_ACE,
   WBTBTD_ARCOFS_TR_NORMAL,
   WBTBTD_ARCOFS_PM_NORMAL,
 }WBTBTD_ARCOFS;
+
+//------------------------------------------------------------------
+/// トーナメント属性データ定義
+//------------------------------------------------------------------
+typedef struct {
+  u16 title_id;       ///<トーナメント名のMsgID
+  u8 win_count_id;    ///<WBTSAVE::WBTWIN_COUNT
+  u8 reception_id;    ///<WBTRECEPT
+  u8 reg_type;        ///<WBTREG_ID
+  u8 btdata_id;       ///<WBTBTDATA
+
+  u8 reward[4];       ///<ごほうびのBP数
+}WBT_TOURNAMENT_DATA;
 
 
 //============================================================================================
@@ -94,8 +110,15 @@ extern WBTRULE WBTTOOL_BtlRuleToWBTRule( BtlRule btl_rule );
 
 //------------------------------------------------------------------
 //  トーナメント関連データ
+//  以下はフィールド常駐（wbt_system_st.c）に存在
 //------------------------------------------------------------------
-extern void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf );
+extern const WBT_TOURNAMENT_DATA * WBTTOOL_GetTournamentData( WBTCUP wbtcup );
+extern void WBTTOOL_GetTournamentName( HEAPID heapID, WBTCUP wbtcup, STRBUF * strbuf );
+extern const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ];
+
+//------------------------------------------------------------------
+//  トーナメント関連データ
+//------------------------------------------------------------------
 extern WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype );
 extern WBTCUP WBTTOOL_WBTWinCountToCup( WBTWIN_COUNT counter_id );
 extern WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup );

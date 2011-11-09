@@ -21,7 +21,8 @@
 
 #include "font/font.naix"
 
-#include "field/wbt_tool.h"
+#include "src/field/wbt_system.h"
+#include "src/field/wbt_tool.h"
 
 #include "arc/wbt/wbt_subscreen.naix"
 #include "wbt_list_gra.naix"
