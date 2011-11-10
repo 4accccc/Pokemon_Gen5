@@ -131,10 +131,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　かいふくって
-こんな　かんじ　ですよ▼</Text>
+こんな　かんじ　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T12:33:00" />
+				Time="2011-11-10T02:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -143,10 +143,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　回復って
-こんな　感じ　ですよ▼</Text>
+こんな　感じ　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T12:33:12" />
+				Time="2011-11-10T02:51:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -543,13 +543,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『つぎは……▼
-そうだった！　そうでした！▼
+			<Text>ベル『つぎは！▼
 いま　あげた　モンスターボールの
 つかいかたを　せつめい　するね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:55:11" />
+				Time="2011-11-10T02:51:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -557,13 +556,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『次は……▼
-そうだった！　そうでした！▼
+			<Text>ベル『次は！▼
 いま　あげた　モンスターボールの
 使い方を　説明するね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:55:14" />
+				Time="2011-11-10T02:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

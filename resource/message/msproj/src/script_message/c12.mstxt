@@ -4497,13 +4497,15 @@ GIRL2</Text>
 ジムリーダーとの　ポケモンしょうぶ▼
 って！　それは
 ベーシックバッジ！▼
-すごい！　あなたには
-トレーナーの　さいのうが　あるのかも▼
+すごいすごーい！　ポケモンと
+たびを　はじめたばかり　なのに！▼
+あなたには　トレーナーの
+さいのうが　あるよ　ぜったい！！▼
 じゃあ　わたしからは　これ
 わざマシン「おんがえし」よ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T04:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4515,13 +4517,15 @@ GIRL2</Text>
 ジムリーダーとの　ポケモン勝負▼
 って！　それは
 ベーシックバッジ！▼
-すごい！　あなたには
-トレーナーの　才能が　あるのかも▼
+すごいすごーい！　ポケモンと
+旅を　はじめたばかり　なのに！▼
+あなたには　トレーナーの
+才能が　あるよ　絶対！！▼
 じゃあ　わたしからは　これ
 わざマシン「おんがえし」よ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T04:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4684,10 +4688,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『なにか　いった？▼</Text>
+			<Text>チェレン『ベル！▼
+２ねんぶり　だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T04:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4695,10 +4700,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『なにか　いった？▼</Text>
+			<Text>チェレン『ベル！▼
+２年ぶり　だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T04:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4798,10 +4804,10 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『どっ　どうしたの？▼</Text>
+			<Text>どっ　どうしたの？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:09:45" />
+				Time="2011-11-10T04:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4809,10 +4815,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『どっ　どうしたの？▼</Text>
+			<Text>どっ　どうしたの？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:09:48" />
+				Time="2011-11-10T04:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5604,15 +5610,15 @@ TVトランシーバー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-ベル『それじゃあ
+			<Text>それじゃあ
 Ｃギアを　つかえるように　するね！▼
 Ｃギアは　せきがいせんや
-むせん　Ｗｉ－Ｆｉなど▽
-つうしんに　かんけいする　デバイス！▼</Text>
+むせん　Ｗｉ－Ｆｉなど▼
+つうしんに　かんけいする
+デバイス　なんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:21:26" />
+				Time="2011-11-10T04:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5620,16 +5626,16 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-ベル『それじゃあ
+			<Text>それじゃあ
 Ｃ－ＧＥＡＲを▽
 使えるように　するね！▼
 Ｃ－ＧＥＡＲは　赤外線や
-無線　Ｗｉ－Ｆｉなど▽
-通信に　関係する　デバイス！▼</Text>
+無線　Ｗｉ－Ｆｉなど▼
+通信に　関係する
+デバイス　なんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:21:29" />
+				Time="2011-11-10T04:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6081,12 +6087,12 @@ TVトランシーバー</Text>
 			<Comment>♂：クリア後
 ・自宅でのイベントをおえて
 　フィールドに出ると発動
-・続けて
+・続けてrivalsister_end_01
 ・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:41:10" />
+				Time="2011-11-10T04:06:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6140,10 +6146,10 @@ TVトランシーバー</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・続けて</Comment>
+・続けてswrival_end_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:41:08" />
+				Time="2011-11-10T04:07:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6189,11 +6195,11 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・続けて
+・続けてrivalsister_end_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:41:05" />
+				Time="2011-11-10T04:07:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6251,12 +6257,12 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・続けて
+・続けてswrival_end_03
 ・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:57:09" />
+				Time="2011-11-10T04:07:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6744,10 +6750,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ぼうけんの　たび……　それは
+おとなに　なるための　みちだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:47" />
+				Time="2011-11-10T03:23:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6755,10 +6762,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>冒険の旅……　それは
+大人に　なるための　道だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:52" />
+				Time="2011-11-10T03:22:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6785,10 +6793,13 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>やせいの　ポケモンは
+ひとを　おそうことも　ある！▼
+だけど　そばに　いれば
+なかよくなれるのも　ポケモンよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:54" />
+				Time="2011-11-10T03:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6796,10 +6807,13 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>野生の　ポケモンは
+人を　襲うことも　ある！▼
+だけど　そばに　いれば
+仲良くなれるのも　ポケモンよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:54" />
+				Time="2011-11-10T03:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6826,10 +6840,12 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あなたの　ママなら
+ポケモンを　やすませて▽
+げんきに　するのも　じょうずよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:54" />
+				Time="2011-11-10T03:20:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6837,10 +6853,12 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あなたの　ママなら
+ポケモンを　休ませて▽
+元気に　するのも　上手よね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:41:54" />
+				Time="2011-11-10T03:20:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7121,11 +7139,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>トレーナーズ　スクールは
-ポケモンジム　ぞうちくの　ため▽
 ただいま　こうじちゅう　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:27:21" />
+				Time="2011-11-10T02:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7134,11 +7151,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トレーナーズ　スクールは
-ポケモンジム　併設のため▽
 ただいま　工事中です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T02:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたらしい　せんせい　というか
-ジムリーダーは　スクールの　おく！</Text>
+			<Text>ジムリーダーさん　ねっしんね！
+おくで　ポケモンを　おしえているわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:12:20" />
+				Time="2011-11-10T03:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>新しい　先生というか
-ジムリーダーは　スクールの　奥！</Text>
+			<Text>ジムリーダーさん　熱心ね！
+奥で　ポケモンを　教えているわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:12:24" />
+				Time="2011-11-10T03:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,11 +31,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・入り口付近
-※メッセージ要調整</Comment>
+・入り口付近</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:12:41" />
+				Time="2011-11-10T03:50:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
