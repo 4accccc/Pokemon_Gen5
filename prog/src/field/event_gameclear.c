@@ -361,6 +361,27 @@ static void SetupSequence( GAMECLEAR_WORK* work )
 {
   int pos = 0;
 
+  work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_DENDOU_DEMO;
+  work->seqArray[pos++] = GMCLEAR_SEQ_DENDOU_DEMO_WAIT;
+  if ( work->clear_mode == GAMECLEAR_MODE_FIRST )
+  {
+    work->seqArray[pos++] = GMCLEAR_SEQ_GET_CLEAR_KEY;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+  }
+  work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
+  work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
+  work->seqArray[pos++] = GMCLEAR_SEQ_END;
+
+#if 0
   switch( work->clear_mode ) {
   default: GF_ASSERT(0);
   case GAMECLEAR_MODE_FIRST:
@@ -397,6 +418,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     work->seqArray[pos++] = GMCLEAR_SEQ_END;
     break;
   }
+#endif
 
   work->nowSeq = work->seqArray[0];
 }
