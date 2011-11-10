@@ -179,17 +179,18 @@ typedef enum{
 //=========================================
 ///拡張パラメータ（隠し穴大調査用ポケモンINDEX）
 //=========================================
-#define  FMISSION_EXP_TRAIL_HUSIGIDANE  ( 0 )   ///<フシギダネ
-#define  FMISSION_EXP_TRAIL_HUSIGISOU  ( 1 )   ///<フシギソウ
-#define  FMISSION_EXP_TRAIL_HUSIGIBANA  ( 2 )   ///<フシギバナ
-#define  FMISSION_EXP_TRAIL_HITOKAGE  ( 3 )   ///<ヒトカゲ
-#define  FMISSION_EXP_TRAIL_RIZAADO  ( 4 )   ///<リザード
-#define  FMISSION_EXP_TRAIL_RIZAADON  ( 5 )   ///<リザードン
-#define  FMISSION_EXP_TRAIL_ZENIGAME  ( 6 )   ///<ゼニガメ
-#define  FMISSION_EXP_TRAIL_KAMEERU  ( 7 )   ///<カメール
-#define  FMISSION_EXP_TRAIL_KAMEKKUSU  ( 8 )   ///<カメックス
-#define  FMISSION_EXP_TRAIL_KYATAPII  ( 9 )   ///<キャタピー
-#define  FMISSION_EXP_TRAIL_MONS_MAX  ( 10 )   ///<
+#define  FMISSION_EXP_TRAIL_DUMMY  ( 0 )   ///<ダミーデータ
+#define  FMISSION_EXP_TRAIL_HUSIGIDANE  ( 1 )   ///<フシギダネ
+#define  FMISSION_EXP_TRAIL_HUSIGISOU  ( 2 )   ///<フシギソウ
+#define  FMISSION_EXP_TRAIL_HUSIGIBANA  ( 3 )   ///<フシギバナ
+#define  FMISSION_EXP_TRAIL_HITOKAGE  ( 4 )   ///<ヒトカゲ
+#define  FMISSION_EXP_TRAIL_RIZAADO  ( 5 )   ///<リザード
+#define  FMISSION_EXP_TRAIL_RIZAADON  ( 6 )   ///<リザードン
+#define  FMISSION_EXP_TRAIL_ZENIGAME  ( 7 )   ///<ゼニガメ
+#define  FMISSION_EXP_TRAIL_KAMEERU  ( 8 )   ///<カメール
+#define  FMISSION_EXP_TRAIL_KAMEKKUSU  ( 9 )   ///<カメックス
+#define  FMISSION_EXP_TRAIL_KYATAPII  ( 10 )   ///<キャタピー
+#define  FMISSION_EXP_TRAIL_MONS_MAX  ( 11 )   ///<
 
 
 

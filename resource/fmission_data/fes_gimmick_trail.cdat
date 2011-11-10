@@ -12,6 +12,7 @@
 
 static const FES_TRAIL_DATA_SET DATA_TrailMonsTbl[FMISSION_EXP_TRAIL_MONS_MAX] = {
   {   1 ,   0 },   // フシギダネ
+  {   1 ,   0 },   // フシギダネ
   {   2 ,   0 },   // フシギソウ
   {   3 ,   0 },   // フシギバナ
   {   4 ,   0 },   // ヒトカゲ
