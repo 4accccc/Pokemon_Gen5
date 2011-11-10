@@ -119,6 +119,8 @@ EVENT_START   ev_pos_c03P01_swboss_01
   //アクロマ：あなたの～
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_05, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  _TIME_WAIT( 8 )
 
   //アニメ：アクロマ1歩離れる
   IF $LCW_POSX ==18 THEN
@@ -440,7 +442,6 @@ _ANIME_LABEL  anm_swboss_16fw_x18
   _ANIME_DATA AC_WALK_L_16F,1
   _ANIME_DATA ACMD_END,0
 
-
 //--------------------------------------------------------------------
 //☆アクロマ：退場
 //--------------------------------------------------------------------
@@ -450,7 +451,7 @@ _ANIME_LABEL  anm_swboss_bye_x13
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_swboss_bye_x18
-  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_WALK_L_8F,2
   _ANIME_DATA AC_WALK_U_8F,12
   _ANIME_DATA ACMD_END,0
 

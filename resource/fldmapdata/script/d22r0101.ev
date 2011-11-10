@@ -11,7 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d22r0101.h"
   .include  "d22r0101.h"
-
+  
+  //@author Mizuguchi_Mai
   //@author fujimura_souichirou（回復処理）
 
 //--------------------------------------------------------------
@@ -31,6 +32,14 @@ _EVENT_DATA    ev_pos_d22r0101_pokesearch_05
 _EVENT_DATA    ev_d22r0101_swrival_01
 _EVENT_DATA    ev_d22r0101_breederm_01
 _EVENT_DATA    ev_d22r0101_breederw_01
+_EVENT_DATA    ev_d22r0101_poke31_01
+_EVENT_DATA    ev_d22r0101_poke31_02
+_EVENT_DATA    ev_d22r0101_meleep_01
+_EVENT_DATA    ev_d22r0101_meleep_02
+_EVENT_DATA    ev_d22r0101_meleep_03
+_EVENT_DATA    ev_d22r0101_meleep_04
+_EVENT_DATA    ev_d22r0101_meleep_05
+_EVENT_DATA    ev_d22r0101_meleep_06
 _EVENT_DATA_END
 
 //	！！！	イベントで　LOCALWORK15　を使用しています	！！！
@@ -59,7 +68,7 @@ INIT_EVENT_START ev_init_d22r0101
   IF $WK_SCENE_D22R0101 == 2 THEN
     _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 2, 32, DIR_DOWN )
   ELSIF $WK_SCENE_D22R0101 == 3 THEN
-    _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 3, 11, DIR_DOWN )
+    _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 3, 12, DIR_DOWN )
   ELSIF $WK_SCENE_D22R0101 == 4 THEN
     _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 47, 2, 13, DIR_DOWN )
   ELSE
@@ -322,16 +331,16 @@ EVENT_END
 //	ライバル退場z21
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pokeserch02_rivalbye_z21
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ライバル退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pokeserch02_rivalbye
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -478,12 +487,12 @@ _ANIME_LABEL	anm_pokeserch04_goto_kusa
 EVENT_START ev_pos_d22r0101_pokesearch_05
   
   //アニメ：ヨーテリー左右を見る
-  _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_lookpl )
+  _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_lookpl )
   _OBJ_ANIME_WAIT()
   
   //ヨーテリー鳴く
   _VOICE_PLAY(MONSNO_590,0)
-  _BALLOONWIN_OBJMSG_POS(msg_d22r0101_poke_01,D22R0101_POKE_01, POS_UR )
+  _BALLOONWIN_OBJMSG_POS(msg_d22r0101_poke_02,D22R0101_POKE31_01, POS_UR )
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
@@ -513,17 +522,17 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   
   //アニメ：ヨーテリーはしゃぐ
   IF $LCW_POSX == 50 THEN
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_x50 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x50 )
   ELSIF $LCW_POSX == 51 THEN
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_x51 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x51 )
   ELSE
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_x52 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x52 )
   ENDIF
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //メッセージ：わん！
-  _BALLOONWIN_OBJMSG_POS( msg_d22r0101_poke_03,D22R0101_POKE_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d22r0101_poke_03,D22R0101_POKE31_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //ライバルワープ
@@ -546,11 +555,11 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   
   //アニメ：ヨーテリーBREEDERMに隣接
   IF $LCW_POSX == 50 THEN
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_to_breeder_x50 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_to_breeder_x50 )
   ELSIF $LCW_POSX == 51 THEN
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_to_breeder_x51 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_to_breeder_x51 )
   ELSE
-    _OBJ_ANIME( D22R0101_POKE_01, anm_pokeserch05_poke_to_breeder_x52 )
+    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_to_breeder_x52 )
   ENDIF
   _OBJ_ANIME_WAIT()
   
@@ -587,7 +596,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
 	
 	//主人公・ヨーテリー・BREEDERMワープ
   _OBJ_POS_CHANGE(MMDL_ID_PLAYER,41,2,45,DIR_RIGHT)
-  _OBJ_POS_CHANGE(D22R0101_POKE_01,39,2,45,DIR_RIGHT)
+  _OBJ_POS_CHANGE(D22R0101_POKE31_01,39,2,45,DIR_RIGHT)
   _OBJ_POS_CHANGE(D22R0101_BREEDERM_01,44,2,45,DIR_LEFT)
 	
 	//暗転復帰
@@ -857,6 +866,72 @@ EVENT_START  ev_d22r0101_breederw_01
 
 }
 EVENT_END
+
+/**************************************************************/
+/* 話しかけ：ハーデリア（迷子じゃないほう）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_poke31_01
+  //迷子イベントクリア後
+  IF $WK_SCENE_D22R0101 == 5 THEN
+   _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke31_02 )
+  //クリア前
+  ELSE
+    _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke31_01 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/* 話しかけ：ハーデリア（迷子）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_poke31_02
+  _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke_04 )
+EVENT_END
+
+/**************************************************************/
+/* 話しかけ：メリープ（１）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_01
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 話しかけ：メリープ（２）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_02
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke2_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 話しかけ：メリープ（３）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_03
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke3_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 話しかけ：メリープ（４）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_04
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke4_01 )
+EVENT_END
+
+/**************************************************************/
+/* 話しかけ：メリープ（５）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_05
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke5_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 話しかけ：メリープ（６）                         */
+/**************************************************************/
+EVENT_START ev_d22r0101_meleep_06
+  _EASY_TALK_POKEVOICE( MONSNO_179, msg_d22r0101_tpoke6_01 )
+EVENT_END
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：下に1歩歩く

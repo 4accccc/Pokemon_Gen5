@@ -12,13 +12,14 @@
 #define D22R0101_SWRIVAL_01                0
 #define D22R0101_BREEDERM_01               1
 #define D22R0101_BREEDERW_01               2
-#define D22R0101_POKE_01                   3
+#define D22R0101_POKE31_01                 3
 #define TR_MINI_16                         4
 #define TR_CLEANING_03                     5
 #define TR_TANPAN_20                       6
 #define FLD_ITEM_13                        7
 #define FLD_ITEM_14                        8
 #define FLD_ITEM_15                        9
+#define D22R0101_POKE31_02                10
 
 #endif //ZONE_D22R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d22r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
