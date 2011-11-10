@@ -2681,6 +2681,89 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	道具・メールの移動
+ *
+ * @param   work		  PLIST_WORK
+ * @param   srcPoke		移動元のPOKEMON_PARAM
+ * @param   desPoke		移動先のPOKEMON_PARAM
+ * @param   srcItem		移動させるどうぐNO
+ */
+//----------------------------------------------------------------------------------
+static void _move_item_and_mail( PLIST_WORK *work, POKEMON_PARAM *srcPoke, POKEMON_PARAM *desPoke, u16 srcItem )
+{
+  // 通常アイテム
+  if(ITEM_CheckMail( srcItem )==FALSE){
+    PLIST_SetPokeItem( work , srcPoke , 0 );
+    PLIST_SetPokeItem( work , desPoke , srcItem );
+    
+  // メール
+  }else{
+    MAIL_DATA *srcMail   = MailData_CreateWork(work->heapId);
+    MAIL_DATA *clearMail = MailData_CreateWork(work->heapId);
+
+    PP_Get( srcPoke, ID_PARA_mail_data, srcMail );
+    PP_Put( desPoke, ID_PARA_mail_data, (u32)srcMail );
+    PP_Put( desPoke, ID_PARA_item, srcItem );
+    PP_Put( srcPoke, ID_PARA_mail_data, (u32)clearMail );
+    PP_Put( srcPoke, ID_PARA_item, 0 );
+    GFL_HEAP_FreeMemory( clearMail );
+    GFL_HEAP_FreeMemory( srcMail );
+    
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	道具・メールの入れ替え
+ *
+ * @param   work		  PLIST_WORK
+ * @param   srcPoke		移動元のPOKEMON_PARAM
+ * @param   desPoke		移動先のPOKEMON_PARAM
+ * @param   srcItem		移動元のどうぐNO
+ * @param   desItem		移動先のどうぐNO
+ */
+//----------------------------------------------------------------------------------
+static void _exchange_item_and_mail( PLIST_WORK *work, POKEMON_PARAM *srcPoke, POKEMON_PARAM *desPoke, u16 srcItem, u16 desItem )
+{
+  MAIL_DATA *srcMail   = MailData_CreateWork(work->heapId);
+  MAIL_DATA *desMail   = MailData_CreateWork(work->heapId);
+  MAIL_DATA *clearMail = MailData_CreateWork(work->heapId);
+  
+  if(ITEM_CheckMail( srcItem )==FALSE && ITEM_CheckMail( desItem )==FALSE){
+    // 両方ともアイテム
+    PP_Put( srcPoke, ID_PARA_item, desItem );
+    PP_Put( desPoke, ID_PARA_item, srcItem );
+  }else if(ITEM_CheckMail( srcItem )==TRUE && ITEM_CheckMail( desItem )==FALSE){
+    // srcがメール、desがアイテム
+    PP_Get( srcPoke, ID_PARA_mail_data, srcMail );
+    PP_Put( desPoke, ID_PARA_item, srcItem );
+    PP_Put( desPoke, ID_PARA_mail_data, (u32)srcMail);
+    PP_Put( srcPoke, ID_PARA_mail_data, (u32)clearMail );
+    PP_Put( srcPoke, ID_PARA_item, desItem );
+
+  }else if(ITEM_CheckMail( srcItem )==FALSE && ITEM_CheckMail( desItem )==TRUE){
+    // srcがアイテム、desがメール
+    PP_Get( desPoke, ID_PARA_mail_data, desMail );
+    PP_Put( srcPoke, ID_PARA_item, desItem );
+    PP_Put( srcPoke, ID_PARA_mail_data, (u32)desMail);
+    PP_Put( desPoke, ID_PARA_mail_data, (u32)clearMail );
+    PP_Put( desPoke, ID_PARA_item, srcItem );
+
+  }else if(ITEM_CheckMail( srcItem )==TRUE && ITEM_CheckMail( desItem )==TRUE){
+    // 両方ともメール
+    PP_Get( srcPoke, ID_PARA_mail_data, srcMail );
+    PP_Get( desPoke, ID_PARA_mail_data, desMail );
+    PP_Put( srcPoke, ID_PARA_item, desItem );
+    PP_Put( srcPoke, ID_PARA_mail_data, (u32)desMail );
+    PP_Put( desPoke, ID_PARA_item, srcItem );
+    PP_Put( desPoke, ID_PARA_mail_data, (u32)srcMail );
+  }
+  GFL_HEAP_FreeMemory( clearMail );
+  GFL_HEAP_FreeMemory( desMail );
+  GFL_HEAP_FreeMemory( srcMail );
+}
 static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
 {
   if( work->selectState == PSSEL_SELECT )
@@ -2706,14 +2789,14 @@ static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
     }else{
       // 通常移動処理
       if(desItemNo==0){
-        PLIST_SetPokeItem( work , srcPoke , 0 );
-        PLIST_SetPokeItem( work , desPoke , srcItemNo );
+//        PLIST_SetPokeItem( work , srcPoke , 0 );
+//        PLIST_SetPokeItem( work , desPoke , srcItemNo );
+        _move_item_and_mail( work, srcPoke, desPoke, srcItemNo );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , desPoke );
        
       }else{
         // 両方道具を持っていたので入れ替え処理になった
-        PLIST_SetPokeItem( work , srcPoke , desItemNo );
-        PLIST_SetPokeItem( work , desPoke , srcItemNo );
+        _exchange_item_and_mail( work, srcPoke, desPoke, srcItemNo, desItemNo );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , srcPoke );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 2 , desPoke );
         PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 3 , desItemNo );
@@ -3483,7 +3566,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     
   case PMIT_MAIL:
     {
-      PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_MAIL_READ,PMIT_MAIL_TAKE,PMIT_CLOSE,PMIT_END_LIST};
+      PLIST_MENU_ITEM_TYPE itemArr[] = {PMIT_MAIL_READ,PMIT_MAIL_TAKE,PMIT_MAIL_MOVE,PMIT_CLOSE,PMIT_END_LIST};
       PLIST_SelectMenuInit( work );
       //先にメニューを開くと、bmpの確保順がずれてゴミが見える・・・
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
@@ -3631,6 +3714,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     }
     break;
   case PMIT_MOVE_ITEM:
+  case PMIT_MAIL_MOVE:
     {
       const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
 

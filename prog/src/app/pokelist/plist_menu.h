@@ -19,40 +19,41 @@
 typedef enum
 {
   
-  PMIT_STATSU,  //強さを見る
-  PMIT_HIDEN,   //秘伝技。自動で個数分追加します
-  PMIT_WAZA,    //PP回復用技リスト。自動で個数分追加します
-  PMIT_CHANGE,  //入れ替え
-  PMIT_ITEM,    //持ち物
-  PMIT_MAIL,    //メール(持ち物の代わりに出る
-  PMIT_CLOSE,   //閉じる
-  PMIT_LEAVE,   //預ける(育てや
-  PMIT_SET_JOIN,    //参加する(参加しない)
-  PMIT_GIVE,    //持たせる
-  PMIT_TAKE,    //預かる
-  PMIT_ENTER,    //決定
+  PMIT_STATSU,  ///<強さを見る
+  PMIT_HIDEN,   ///<秘伝技。自動で個数分追加します
+  PMIT_WAZA,    ///<PP回復用技リスト。自動で個数分追加します
+  PMIT_CHANGE,  ///<入れ替え
+  PMIT_ITEM,    ///<持ち物
+  PMIT_MAIL,    ///<メール(持ち物の代わりに出る
+  PMIT_CLOSE,   ///<閉じる
+  PMIT_LEAVE,   ///<預ける(育てや
+  PMIT_SET_JOIN,    ///<参加する(参加しない)
+  PMIT_GIVE,    ///<持たせる
+  PMIT_TAKE,    ///<預かる
+  PMIT_ENTER,    ///<決定
 
-  PMIT_MAIL_READ,    //メールを読む
-  PMIT_MAIL_TAKE,    //メールを取る
+  PMIT_MAIL_READ,    ///<メールを読む
+  PMIT_MAIL_TAKE,    ///<メールを取る
   
-  PMIT_YES,    //はい
-  PMIT_NO,     //いいえ
+  PMIT_YES,    ///<はい
+  PMIT_NO,     ///<いいえ
 
-  PMIT_END_LIST,    //リスト終端用
+  PMIT_END_LIST,    ///<リスト終端用
   
   //以下戻り値専用
-  PMIT_WAZA_1 = PMIT_END_LIST,   //技スロット１(メニューの順ではなく、PPで何番目の技か？
-  PMIT_WAZA_2,   //技スロット２
-  PMIT_WAZA_3,   //技スロット３
-  PMIT_WAZA_4,   //技スロット４
+  PMIT_WAZA_1 = PMIT_END_LIST,   ///<技スロット１(メニューの順ではなく、PPで何番目の技か？
+  PMIT_WAZA_2,   ///<技スロット２
+  PMIT_WAZA_3,   ///<技スロット３
+  PMIT_WAZA_4,   ///<技スロット４
   
-  PMIT_RET_JOIN,      //参加する
-  PMIT_JOIN_CANCEL,   //参加しない
+  PMIT_RET_JOIN,      ///<参加する
+  PMIT_JOIN_CANCEL,   ///<参加しない
 
-  PMIT_MOVE_ITEM, // どうぐを移動する
+  PMIT_MOVE_ITEM, ///< どうぐを移動する swanで追加
+  PMIT_MAIL_MOVE, ///< メールを移動する swanで追加
   PMIT_MAX,
   
-  PMIT_NONE,    //選択中
+  PMIT_NONE,    ///<選択中
   
 }PLIST_MENU_ITEM_TYPE;
 
