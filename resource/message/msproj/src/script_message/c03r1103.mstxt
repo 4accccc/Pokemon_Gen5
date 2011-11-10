@@ -2,6 +2,68 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c03r1103_inventor_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤッホー！
+アタシは　マコモ▼
+アナタ　イッシュちほうに　いる
+すべての　ポケモンと　であうんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:20:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤッホー！
+アタシは　マコモ▼
+アナタ　イッシュちほうに　いる
+すべての　ポケモンと　であうんでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1103_inventor_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっ　いきなり　ゴメンね
+アタシ　アララギはかせの　ともだちよ▼
+・Ｃギアとの関係を説明▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっ　いきなり　ゴメンね
+アタシ　アララギはかせの　ともだちよ▼
+・Ｃギアとの関係を説明▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T13:21:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r1103_inventor_01"
 		Style="Large">
 		<LanguageCell
