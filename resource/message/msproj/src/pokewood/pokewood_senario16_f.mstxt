@@ -361,29 +361,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ストレンジ『たのしみ　ですね！
-[Name:TrainerName Idx="1" ]はかせ！▽
-まちに　まっていました！！</Text>
+			<Text>ストレンジ『はかせに　てんそうきを
+てのひらサイズの　カプセルに▽
+しゅうのう　できるように　しろと▽
+しじ　されたときは▽
+さすがに　ムリだと　おもいましたが▽
+なんとか　かんせい　しました！▼
+たのしみ　ですね！
+[Name:TrainerName Idx="1" ]はかせ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ストレンジ『楽しみですね！
-[Name:TrainerName Idx="1" ]博士！▽
-待ちに　待っていました！！</Text>
+			<Text>ストレンジ『博士に　時間転送機を
+てのひらサイズの　カプセルに▽
+収納　できるように　しろと▽
+指示　されたときは▽
+さすがに　無理だと　思いましたが▽
+なんとか　完成　しました！▼
+楽しみ　ですね！
+[Name:TrainerName Idx="1" ]博士！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -509,31 +519,32 @@
 			Language="JPN">
 			<Text>ストレンジ『[Name:TrainerName Idx="1" ]はかせ……
 はずかしながら　わたしの　メガネが▽
-じかん　てんそうきの▽
-ぶひんの　あいだに　はさまって▽
-ごさどうが　おきています！</Text>
+ぶひんに　はさまって　います！▼
+このままでは　ごさどうが
+おきて　しまいます！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ストレンジ『[Name:TrainerName Idx="1" ]博士……
 恥ずかしながら　わたしの　メガネが▽
 時間転送機の▽
-部品の　間に　はさまって▽
-誤作動が　起きています！</Text>
+部品に　はさまっています！▼
+このままでは　誤作動が
+起きて　しまいます！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:05:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

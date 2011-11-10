@@ -367,6 +367,22 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（はたして
 勝ち目は　あるの……？</language>
 	</row>
+	<row id="pw_turn_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1](そういえば　あいつら
+モンスターボールから　でてくるように▽
+みえたけど……▼
+よく　みると　にているけど　ちがう
+アレは……　タマゴ……！？▼
+あかいきりから　うまれる　みたいに
+つぎつぎと……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1](そういえば　あいつら
+モンスターボールから　出て来るように▽
+みえたけど……▼
+よく　みると　似ているけど　違う
+アレは……　タマゴ……！？▼
+赤い霧から　産まれる　みたいに
+次々と……</language>
+	</row>
 	<row id="pw_turn_enemy_3">
 		<language name="JPN" width="256">ひとがた『ガグググ！</language>
 		<language name="JPN_KANJI" width="256">ひとがた『ガグググ！</language>

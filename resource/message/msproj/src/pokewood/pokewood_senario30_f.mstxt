@@ -169,6 +169,43 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_turn_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ](そういえば　あいつら
+モンスターボールから　でてくるように▽
+みえたけど……▼
+よく　みると　にているけど　ちがう
+アレは……　タマゴ……！？▼
+あかいきりから　うまれる　みたいに
+つぎつぎと……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ](そういえば　あいつら
+モンスターボールから　出て来るように▽
+みえたけど……▼
+よく　みると　似ているけど　違う
+アレは……　タマゴ……！？▼
+赤い霧から　産まれる　みたいに
+次々と……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:11" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_turn_enemy_3"
 		Style="Large">
 		<LanguageCell

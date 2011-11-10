@@ -714,30 +714,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン（さあ……　[Name:TrainerName Idx="1" ]
-わたしの　カラテオーを　たおさずに▽
+じかん　てんそうきの　はいった▽
+カプセルは　わたしが　もっている▼
+カラテオーを　たおさずに
 どうやって　てんそうきに▽
 エネルギーを　チャージする？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:48:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン（さあ……　[Name:TrainerName Idx="1" ]
-わたしの　カラテオーを　倒さずに▽
+時間転送機の　入った▽
+カプセルは　わたしが　持っている▼
+カラテオーを　倒さずに
 どうやって　時間転送機に▽
 エネルギーを　チャージする？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:48:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -970,15 +974,15 @@
 みらいが　かわるか▽
 わかって　いるのか？▼
 ……▼
-ウワッ！　でんあつが……！
-まずい！　でんきが　もれている！</Text>
+ウワッ！　カプセルから　ひばなが！
+でんきが　ショートして　いるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -986,15 +990,15 @@
 未来が　変わるか▽
 分かって　いるのか？▼
 ……▼
-ウワッ！　電圧が……！
-まずい！　電気が　もれている！</Text>
+ウワッ！　カプセルから　火花が！
+電気が　ショートして　いるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1047,14 +1051,15 @@
 ポケモンの　じゆうを　うばうのか？▼
 ……▼
 ああっ！　たいへんだ！
-れいきゃくタンクが　はれつしたぞ！</Text>
+カプセルから　れいきゃくガスが▽
+もれだしている……！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1063,14 +1068,15 @@
 ポケモンの　自由を　奪うのか？▼
 ……▼
 ああっ！　大変だ！
-冷却タンクが　破裂したぞ！</Text>
+カプセルから　冷却ガスが▽
+もれ出している……！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T08:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T08:56:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1123,15 +1129,16 @@
 でも　なにか　できることは　ある▽
 それを　かこで　みつけてくれ……！▼
 ……▼
-クッ！　すごい　ねつだ……！
+クッ！　カプセル　ごしでも
+すごい　ねつだ……▽
 これほどの　エネルギーが　いるとは！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1140,15 +1147,16 @@
 でも　何か　できることは　ある▽
 それを　過去で　みつけてくれ……！▼
 ……▼
-クッ！　すごい　熱だ……！
+クッ！　カプセル　ごしでも
+すごい　熱だ……！▽
 これほどの　エネルギーが　必要とは！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T07:06:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
