@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/27 15:13:55
+#save date:2011/11/09 16:58:24
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -272,7 +272,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-33
+34
 #event number: 0
 #Pos Event Label
 POSID_C08GYM0101_BUTTON_UP_04
@@ -834,6 +834,23 @@ EVENTDATA_POSTYPE_GRID
 -8 96 -200
 #size
 1 1
+#event number: 33
+#Pos Event Label
+POS_C08GYM0101_GUIDE_01
+#Pos Script Name
+SCRID_POS_C08GYM0101_GUIDE_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C08GYM0101_GUIDE
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -584
+#size
+5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

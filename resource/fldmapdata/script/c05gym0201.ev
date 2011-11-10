@@ -143,8 +143,9 @@ EVENT_END
 EVENT_START	ev_bg_c05gym0201_statue_01
 	_TALK_START_SE_PLAY()
 
-
-	_PLAYER_NAME( 0 )		//主人公名取得
+  //主人公名・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
 
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )

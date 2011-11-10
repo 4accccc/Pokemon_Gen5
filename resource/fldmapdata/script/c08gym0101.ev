@@ -45,8 +45,14 @@ _EVENT_DATA    ev_tr_c08gym0101_guide             // ガイド
 _EVENT_DATA    ev_tr_c08gym0101_swleader7         // シャガ
 _EVENT_DATA    ev_tr_c08gym0101_up_button_turn_on // 上ボタン点灯
 _EVENT_DATA    ev_bg_c08gym0101_statue            // 像
+_EVENT_DATA    ev_pos_c08gym0101_guide_01
 _EVENT_DATA_END
 
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 /*					ジムギミック初期化						*/
 /************************************************************/
@@ -418,6 +424,56 @@ EVENT_START ev_tr_c08gym0101_foot_l
 }
 EVENT_END
 
+/**************************************************************/
+/*                    POS：ガイドー初回                        */
+/**************************************************************/
+EVENT_START   ev_pos_c08gym0101_guide_01
+
+  //アニメ：ダンペイ「！」
+  _OBJ_ANIME( C08GYM0101_DANPEI_01, anm_common_gyoe)
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  IF $LCW_POSX != 25 THEN
+    $LCW_POSZ -= 1
+    //アニメ：ダンペイ主人公前に
+    _OBJ_ANIME_AUTO( C08GYM0101_DANPEI_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_ALL, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C08GYM0101_DANPEI_01, anm_staystep_d)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //ダンペイ：初回会話
+  _BALLOONWIN_OBJMSG_POS( msg_c08gym0101_glasses_01 , C08GYM0101_DANPEI_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アイテム「おいしいみず」入手
+  _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+  
+  _CALL move_camera_start
+  _PLAINWIN_MSG_DOWN( msg_c08gym0101_glasses_02 )
+  _CALL move_camera_end
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+  
+  IF $LCW_POSX != 25 THEN
+    //アニメ：ダンペイ元の位置に
+    _OBJ_ANIME_AUTO( C08GYM0101_DANPEI_01, 25, 51, FORCE_TYPE_ALL, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C08GYM0101_DANPEI_01, anm_staystep_d)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //========================================//
+  //おいしい水入手済みセット
+  _FLAG_SET( FE_C08GYM_ITEM )
+  //ガイドPOS無効
+  $WK_SCENE_C08GYM0101_GUIDE = 1
+  //========================================//
+
+EVENT_END
+
 ///**************************************************************/
 ///*                    ガイド                                  */
 ///**************************************************************/
@@ -430,29 +486,12 @@ EVENT_START ev_tr_c08gym0101_guide
 
 	//バッジフラグで分岐
 	IF $SCWK_TEMP0 == 0 THEN
-		//バッジ入手前の処理
+    //バッジ入手前の処理
 
-		//アイテム入手フラグで分岐
-		IF FLAG_OFF( FE_C08GYM_ITEM ) THEN
-			//アイテム未入手なら、おいしいみず入手イベント
-			_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_glasses_01 )
-			_BALLOONWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
-
-      _CALL move_camera_start
-			_PLAINWIN_MSG_DOWN( msg_c08gym0101_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-      _CALL move_camera_end
-
-			_FLAG_SET( FE_C08GYM_ITEM )			//アイテム入手フラグをセット
-
-		ELSE
-			//入手済みならメッセージのみ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		ENDIF
+    //入手済み
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_glasses_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
 
 	ELSE
 		//バッジ入手後の処理
@@ -487,7 +526,7 @@ move_camera_end:
 _RET
 
 ///**************************************************************/
-///*                    【仮】シャガ                                  */
+///*                    シャガ                                  */
 ///**************************************************************/
 EVENT_START ev_tr_c08gym0101_swleader7
 {
@@ -501,11 +540,22 @@ EVENT_START ev_tr_c08gym0101_swleader7
 	
     // アニメーションヒープ開放
     _GYM_DRAGON_RELEASE_ANM_HEAP()
-			
-    // 【仮】引継ぎチェックを入れる必要がある
-		//会話
-		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_01 )
-		_BALLOONWIN_CLOSE()
+  
+  DEFINE_LOCAL	LWK_CONV
+  
+  //BWをクリアしているかチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LWK_CONV )
+  
+  //BWクリア済み
+  IF $LWK_CONV == TRUE THEN
+    //旧主人公名を代入
+    _DATACONV_SET_NAME(DATACONV_ID_SYSTEM,2)
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_01d )
+  //BWデータなし
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_01 )
+  ENDIF
+  _BALLOONWIN_CLOSE()
 
     //戦闘処理
 		_TRAINER_BTL_SET( TRID_SWLEADER7_01, 0 )
@@ -572,7 +622,6 @@ EVENT_START ev_tr_c08gym0101_swleader7
 
     // メッセージ
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_06 )
-		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_07 )
 	  _LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
     
@@ -615,26 +664,27 @@ EVENT_START ev_tr_c08gym0101_up_button_turn_on
 EVENT_END
 
 /**************************************************************/
-/*          【仮】像                                          */
+/*          ポケモン像                                          */
 /**************************************************************/
 EVENT_START	ev_bg_c08gym0101_statue
 
   _TALK_START_SE_PLAY()
 
   DEFINE_LOCAL	LWK_BADGE
+  
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
 
   //ジムバッジを持っているのかを判定
   _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
 
   //ジムバッジを取得していない場合
   IF $SCWK_TEMP0 == 0 THEN
-
-    _PLAYER_NAME( 0 )
     _PLAINWIN_MSG_DOWN( msg_c08gym0101_statue_01 )
 
-  //ジムバッジを取得している場合【仮】
+  //ジムバッジを取得している場合
   ELSE
-    _PLAYER_NAME( 0 )
     _PLAINWIN_MSG_DOWN( msg_c08gym0101_statue_02 )
   ENDIF
 
@@ -689,3 +739,28 @@ _ANIME_LABEL	anm_move_left
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
