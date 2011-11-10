@@ -6,7 +6,8 @@ SOUNDSRC =    sound/sound_manager.c \
         sound/pm_voice.c \
         sound/pm_wb_voice.c \
         sound/snd_mic.c \
-		    sound/bgm_info.c
+		    sound/bgm_info.c \
+        sound/snd_strm.c
 
 #セーブデータ関連
 SAVEDATASRC =   savedata/save_tbl.c \
