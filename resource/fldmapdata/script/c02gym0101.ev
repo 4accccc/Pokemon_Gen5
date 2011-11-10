@@ -17,6 +17,7 @@
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（リンクイベント）
+  //@author suginaka_katsunori（石配置）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -71,7 +72,18 @@ INIT_EVENT_START  ev_init_c02gym0101
     _OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 11, DIR_UP )
 
   ENDIF
+
+  //バージョンによって石の種類を変更
+  _GET_ROM_VERSION( SCWK_ANSWER )
+  _DEBUG_PRINT_WK(SCWK_ANSWER)
   
+  SWITCH $SCWK_ANSWER
+  CASE VERSION_B2 THEN
+	$OBJCHRWORK0 = BLACKSTONE
+  CASE VERSION_W2 THEN
+	$OBJCHRWORK0 = WHITESTONE
+  ENDSWITCH
+
 INIT_EVENT_END
 
 /************************************************************/

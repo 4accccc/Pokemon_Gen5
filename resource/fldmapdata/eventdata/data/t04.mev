@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/09 21:35:52
+#save date:2011/11/10 20:03:51
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t04.wms
 #SECTION START:OBJ_EVENT
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 -64 -88
+-168 -64 -104
 #event number: 6
 #type
 1
@@ -293,7 +293,7 @@ SCRID_BG_T04_SIGN1_02
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 -64 120
+232 -64 72
 #event number: 2
 #Bg Event Label
 BG_T04_DUMMY_FES_01
@@ -306,7 +306,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 -80 -88
+-72 -64 -40
 #event number: 3
 #Bg Event Label
 BG_T04_DUMMY_FES_02
@@ -332,7 +332,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 -64 184
+216 -64 120
 #event number: 5
 #Bg Event Label
 BG_T04_DUMMY_FES_04

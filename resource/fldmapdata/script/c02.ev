@@ -25,7 +25,7 @@
 _EVENT_DATA   ev_zone_c02
 _EVENT_DATA   ev_bg_c02_sign1_01
 _EVENT_DATA   ev_bg_c02_sign2_01
-_EVENT_DATA   ev_bg_c02_sign3_01
+_EVENT_DATA   ev_bg_c02_gymsign_01
 _EVENT_DATA   ev_pos_c02_sppoke1_01
 _EVENT_DATA   ev_c02_sppoke1_01
 _EVENT_DATA		ev_c02_woman2_01
@@ -35,6 +35,8 @@ _EVENT_DATA		ev_c02_backpackerw_01
 _EVENT_DATA		ev_c02_accordion_01
 _EVENT_DATA		ev_c02_girl3a_01
 _EVENT_DATA		ev_c02_girl3b_01
+_EVENT_DATA	ev_bg_c02_sign3_01
+_EVENT_DATA	ev_bg_c02_sign4_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -77,7 +79,7 @@ EVENT_END
 /**************************************************************/
 /*  C02 SIGN3用イベントスクリプト                             */
 /**************************************************************/
-EVENT_START   ev_bg_c02_sign3_01
+EVENT_START   ev_bg_c02_gymsign_01
   _EASY_BGWIN_MSG( msg_c02_gymsign_01, TYPE_POST )
 EVENT_END
 
@@ -286,4 +288,22 @@ _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*		C02	BGメッセージ							*/
+/************************************************************/
+EVENT_START	ev_bg_c02_sign3_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02_sign3_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
 
+/************************************************************/
+/*		C02	BGメッセージ							*/
+/************************************************************/
+EVENT_START	ev_bg_c02_sign4_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c02_sign4_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END

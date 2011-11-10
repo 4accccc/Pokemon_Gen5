@@ -15,6 +15,7 @@
 #define C02R0601_MIDDLEMAN2_01             3
 #define C02R0601_BIGMAN_01                 4
 #define C02R0601_MAN2_01                   5
+#define C02R0601_WOMAN3_01                 6
 
 #endif //ZONE_C02R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

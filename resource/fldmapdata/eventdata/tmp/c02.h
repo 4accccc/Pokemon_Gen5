@@ -37,6 +37,9 @@
 #define HIDE_ITEM_001                     0
 #define BG_C02_SIGN1_01                   1
 #define BG_C02_SIGN2_01                   2
-#define BG_C02_SIGN3_01                   3
+#define BG_C02_GYMSIGN_01                 3
+#define BG_C02_SIGN3_01                   4
+#define BG_C02_SIGN3_02                   5
+#define BG_C02_SIGN4_01                   6
 
 #endif //ZONE_C02_EVB_H

@@ -1562,10 +1562,8 @@ EVENT_START	ev_bg_c04gym0101_statue_01
 		//バッジ入手後なら
 		
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C05 ) THEN
-			//R05ライバル戦イベント前
 			_PLAINWIN_MSG_DOWN( msg_c04gym0101_statue_02 )
 		ELSE
-			//イベント後
 			_PLAINWIN_MSG_DOWN( msg_c04gym0101_statue_03 )
 		ENDIF
 

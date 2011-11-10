@@ -1945,17 +1945,13 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_c12_game_start_init
 
-   _OBJ_ADD_EX( 43, 761, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWMAMA2, MV_DMY )
+   _OBJ_ADD_EX( 45, 763, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWMAMA2, MV_DMY )
    
 EVENT_END
 /************************************************************/
 /*  SCENE_CHANGE：物語開始デモ後イベント */
 /************************************************************/
 EVENT_START   ev_c12_game_start
-
-  //ママ移動
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_01 )
-  _OBJ_ANIME_WAIT()
 
   // 花びら舞う
   _DEMO_GIMMICK_INTRO_ANM_START()
