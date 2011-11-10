@@ -607,10 +607,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おいッ！！▼</Text>
+			<Text>おいッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:55:12" />
+				Time="2011-11-10T12:29:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -618,10 +618,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『おいッ！！▼</Text>
+			<Text>おいッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:55:10" />
+				Time="2011-11-10T12:29:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -773,12 +773,11 @@
 			<Text>プラズマだん『なんだと？
 われわれは　プラズマだん　だぞ！▼
 こんどこそ　せかいを　てにするため
-にちや　かつどうを　つづけている！▼
-で　そんな　われわれと
-たたかおう　っていうのか？▼</Text>
+にちや　かつどうを　つづけている▽
+われわれの　ジャマを　するな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-29T08:47:58" />
+				Time="2011-11-10T10:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -789,12 +788,11 @@
 			<Text>プラズマ団『なんだと？
 われわれは　プラズマだ団　だぞ！▼
 今度こそ　世界を　手にするため
-日夜　活動を　続けている！▼
-で　そんな　われわれと
-戦おう　っていうのか？▼</Text>
+日夜　活動を　続けている▽
+われわれの　ジャマを　するな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-29T08:48:37" />
+				Time="2011-11-10T10:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -831,12 +829,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
 なにが　せかいを　しはいするだよ？▼
-おまえらは　ただの　ポケモンどろぼう
+おまえらは　ただの　ポケモンどろぼう▼
 しかも　うばった　ポケモンを
 どうぐとして　あつかってるだけだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:34:19" />
+				Time="2011-11-10T12:24:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -846,12 +844,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
 なにが　世界を　支配するだよ？▼
-おまえらは　ただの　ポケモンどろぼう
+おまえらは　ただの　ポケモンどろぼう▼
 しかも　奪った　ポケモンを
 道具として　扱ってるだけだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:34:19" />
+				Time="2011-11-10T12:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -894,13 +892,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『タチワキ？　そいつらは
-おれたちと　べつの　チームだな▼
-だが　おまえらは　ジャマ！
-ここで　かたづけておくか！▼</Text>
+			<Text>プラズマだん『うるさい！▼
+おまえら　ジャマだな！
+ここで　かたづけてやる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-29T08:47:53" />
+				Time="2011-11-10T12:25:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -908,13 +905,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『タチワキ？　そいつらは
-おれたちと　別の　チームだな▼
-だが　おまえらは　ジャマ！
-ここで　かたづけておくか！▼</Text>
+			<Text>プラズマ団『うるさい！▼
+おまえら　ジャマだな！
+ここで　かたづけてやる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-29T08:48:06" />
+				Time="2011-11-10T12:25:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1250,13 +1246,10 @@
 			<Text>アーティ『うん　そーだよー
 ボク　アーティ▼
 でね　このさき　だけど
-ほかには　だれも　いなかったよ▼
-ボクが　さいしょに　ここを　しらべてて
-つぎに　あいつらが　きてさ▽
-さいご　キミたちが　きたんだね▼</Text>
+あやしい　ひとは　いなかったよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:57:48" />
+				Time="2011-11-10T12:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1267,13 +1260,10 @@
 			<Text>アーティ『うん　そーだよー
 ボク　アーティ▼
 でね　この先だけど
-他には　だれも　いなかったよ▼
-ボクが　最初に　ここを　調査して
-次に　あいつらが　来てさ▽
-最後　キミたちが　来たんだね▼</Text>
+怪しい　人は　いなかったよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:58:00" />
+				Time="2011-11-10T12:37:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1319,10 +1309,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
 でも　プラズマだん　だぜ
-わるいヤツらは　ほっておけないだろ？▼</Text>
+わるいヤツらは　ほっておけないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:38" />
+				Time="2011-11-10T11:14:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1332,10 +1322,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
 でも　プラズマ団　だぜ
-悪いヤツらは　ほっておけないだろ？▼</Text>
+悪いヤツらは　ほっておけないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:38" />
+				Time="2011-11-10T11:14:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1379,15 +1369,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ『そうだねー▼
-それについては
-シャガさんや　ヤーコンさん　とか▽
+それについては　ほかの
 ジムリーダーたちに　れんらく　しておくよ▼
 それよりも　ここから　でないかい？
 げすいどうは　なんだか▽
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:12:00" />
+				Time="2011-11-10T12:38:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1396,15 +1385,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーティ『そうだねー▼
-それについては
-シャガさんや　ヤーコンさん含め▽
+それについては　他の
 他のジムリーダーに　連絡しておくよ▼
 それよりも　ここから　でないかい？
 下水道は　なんだか▽
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:11:43" />
+				Time="2011-11-10T12:38:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1447,11 +1435,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-ジムリーダーは　アイツらと
-たたかったことが　あるんだもんな……▼</Text>
+アーティさんたち　ジムリーダーは
+２ねんまえに　アイツら▽
+プラズマだんと　たたかったんだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:25" />
+				Time="2011-11-10T13:01:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1460,11 +1449,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-ジムリーダーは　アイツらと
-戦ったことが　あるんだもんな……▼</Text>
+アーティさんたち　ジムリーダーは
+２年前に　アイツら▽
+プラズマ団と　戦ったんだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:25" />
+				Time="2011-11-10T13:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1509,10 +1499,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
 これ！
-えんりょせずに　つかえ▼</Text>
+えんりょせずに　つかえよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:25" />
+				Time="2011-11-10T11:21:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1522,10 +1512,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さっきは　あんがと▼
 これ！
-遠慮せずに　使え▼</Text>
+遠慮せずに　使えよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:33:25" />
+				Time="2011-11-10T11:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1637,16 +1627,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『いっちゃった……▼
-きみは　どうする？▼
-ここで　ポケモンを
-きたえるのも　よし▼
-ジムリーダーである　ボクに
-ちょうせん　するのも▽
-いいと　おもうよ！　それじゃーねー▼</Text>
+			<Text>アーティ『いっちゃった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T12:06:09" />
+				Time="2011-11-10T12:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1654,16 +1638,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ『行っちゃった……▼
-きみは　どうする？▼
-ここで　ポケモンを
-鍛えるのも　よし▼
-ジムリーダーである　ボクに
-挑戦するのも▽
-いいと　思うよ！　それじゃーねー▼</Text>
+			<Text>アーティ『行っちゃった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T12:06:06" />
+				Time="2011-11-10T12:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1685,6 +1663,227 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-11T11:59:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swboss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『そこの　あなた！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:50:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『そこの　あなた！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:52:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:52:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面上からメッセージ表示
+・その後アクロマ登場し
+　主人公に隣接してアニメ再生
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:52:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:48:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swboss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん　あいてに
+みごとな　たたかいぶり　でしたね！▼
+いい！　ひじょうに　いい！
+そして　おもしろい！　なるほどです▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団　相手に
+みごとな　戦いぶり　でしたね！▼
+いい！　ひじょうに　いい！
+そして　おもしろい！　なるほどです▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:57:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:52:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面外（入口方向）に移動
+・続けてswleader3_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:57:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swleader3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アーティ『いまの……　だれ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アーティ『いまの……　だれ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:52:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アクロマが去った方をむいたまま
+　頭上に？マーク表示後にメッセージ
+・続けてswleader3_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:56:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER3
+ジムリーダー・アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:51:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swleader3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあ　いいや
+きみは　どうする？▼
+ここで　ポケモンを
+きたえるのも　よし▼
+ジムリーダーである　ボクに
+ちょうせん　するのも▽
+いいと　おもうよ！　それじゃーねー▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあ　いいや
+きみは　どうする？▼
+ここで　ポケモンを
+きたえるのも　よし▼
+ジムリーダーである　ボクに
+ちょうせん　するのも▽
+いいと　おもうよ！　それじゃーねー▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面外に退場したら
+　主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:56:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER3
+ジムリーダー・アーティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:55:44" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

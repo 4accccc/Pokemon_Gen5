@@ -110,12 +110,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミスターロック……
-なぞの　ひと……▼
-あら？　いま　わたくし
-なにか　いいましたっけ？</Text>
+なぞの　ひと……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T09:40:17" />
+				Time="2011-11-10T11:53:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -124,12 +122,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミスターロック……
-なぞの　ひと……▼
-あら？　いま　わたくし
-なにか　いいましたっけ？</Text>
+なぞの　人……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T09:40:20" />
+				Time="2011-11-10T11:54:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -139,11 +135,10 @@
 			Language="JPN">
 			<Comment>♀
 ・GRIDX=3、GRIDZ=3
-※swanでメッセージ修正
-※要調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T09:40:29" />
+				Time="2011-11-10T11:54:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -166,12 +161,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たびびと　よ▼
+			<Text>たびする　トレーナーよ▼
 きみが　えがおで　いられるよう
 これを　おまもりに　したまえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:17:59" />
+				Time="2011-11-10T11:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -179,12 +174,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅人よ▼
+			<Text>旅する　トレーナーよ▼
 君が　笑顔で　いられるよう
 これを　おまもりに　したまえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:18:59" />
+				Time="2011-11-10T11:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,6 +195,13 @@
 				User="matsumiya:W00224"
 				Time="2011-09-20T09:15:22" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:54:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -246,6 +248,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-20T09:28:36" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:54:19" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>

@@ -66,10 +66,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん
-こっちきてー！</Text>
+こっち　きてー！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:38:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,10 +78,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん
-こっちきてー！</Text>
+こっち　来てー！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:38:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:02:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -129,13 +129,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]さん　きましたね！
+			<Text>[Name:TrainerName ]さん　来ましたね！
 それでは　さっそく▼
-ひょうしょうしきを
+表彰式を
 はじめましょう！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:38:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:02:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -185,11 +185,11 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　あなたは
 メダルラリーに　おいて▼
-ゆうしゅうな
-せいせきを　おさめ……</Text>
+優秀な
+成績を　収め……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:38:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:03:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -236,12 +236,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……その　きねんとして
+			<Text>……その　記念として
 メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
-ぞうてい　いたします！</Text>
+贈呈いたします！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:39:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -279,11 +279,11 @@
 おわりでは　ありません！▼
 この　ちょうしで　これからも
 メダルを　じゃんじゃん▽
-かくとくしていってください！▼
+かくとくして　いってください！▼
 では！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:39:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -292,14 +292,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メダルラリーは　まだまだ
-おわりでは　ありません！▼
-この　ちょうしで　これからも
+終わりでは　ありません！▼
+この調子で　これからも
 メダルを　じゃんじゃん▽
-かくとくしていってください！▼
+獲得していってください！▼
 では！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:39:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -524,14 +524,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん　いらっしゃいませ！▼
-ついに　このときが
-きたのですね……▼
+ついに　このときが　きたのですね……▼
 あなたが　すべての
 メダリストの　ちょうてんに▽
 かがやく　この　しゅんかんが！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:41:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -540,14 +539,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん　いらっしゃいませ！▼
-ついに　このときが
-きたのですね……▼
+ついに　このときが　来たのですね……▼
 あなたが　すべての
-メダリストの　ちょうてんに▽
-かがやく　この　しゅんかんが！</Text>
+メダリストの　頂点に▽
+輝く　この瞬間が！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:41:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -645,12 +643,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……その　えいよの　あかし　として
+			<Text>……その栄誉の　証として
 メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
-ぞうていします！</Text>
+贈呈します！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:42:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -687,10 +685,10 @@
 			<Text>すべての　メダルを　あつめた
 [Name:TrainerName ]さんの　でんせつは▽
 えいえんに　かたりつがれるでしょう！▼
-よっ！　キングオブメダリスト！</Text>
+よっ！　キング・オブ・メダリスト！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:45:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -698,13 +696,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべての　メダルを　あつめた
-[Name:TrainerName ]さんの　でんせつは▽
-えいえんに　かたりつがれるでしょう！▼
-よっ！　キングオブメダリスト！</Text>
+			<Text>すべての　メダルを　集めた
+[Name:TrainerName ]さんの　伝説は▽
+永遠に　語り継がれるでしょう！▼
+よっ！　キング・オブ・メダリスト！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:43:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:05:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -901,15 +899,15 @@
 			<Text>キミの　メダルボックス
 みせてもらって　いいかしら？▼
 ……▼
-かくとくした　メダルは
+獲得した　メダルは
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
-いい　かんじ　ね！
+いい　感じ　ね！
 でも　メダルは　まだまだ　あるわよ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:52:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -969,16 +967,16 @@
 			<Text>キミの　メダルボックス
 みせてもらって　いいかしら？▼
 ……▼
-かくとくした　メダルは
+獲得した　メダルは
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
 わー　すごい！
-この　ちょうしで▽
+この　調子で▽
 どんどん　がんばってね！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:57:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1039,17 +1037,17 @@
 			<Text>キミの　メダルボックス
 みせてもらって　いいかしら？▼
 ……▼
-かくとくした　メダルは
+獲得した　メダルは
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
-ここまで　くるひと
+ここまで　くる人
 あんまり　いないのよ……！▼
 キミ　もしかして
-メダルの　てんさい　かもね！</Text>
+メダルの　天才かもね！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:57:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1111,7 +1109,7 @@
 			<Text>キミの　メダルボックス
 みせてもらって　いいかしら？▼
 ……▼
-かくとくした　メダルは
+獲得した　メダルは
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク！▼
@@ -1119,10 +1117,10 @@
 [Name:MedalistRank Idx="1" ]ランク　なんて▽
 みたの　はじめてよ！▼
 わたし　あなたの
-だいファンに　なっちゃった！</Text>
+大ファンに　なっちゃった！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:58:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1167,10 +1165,10 @@
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
 んー　なるほど
-まずは　５０こ　めざそっか！</Text>
+まずは　５０コ　めざそっか！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:51:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:16:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1181,15 +1179,15 @@
 			<Text>キミの　メダルボックス
 みせてもらって　いいかしら？▼
 ……▼
-かくとくした　メダルは
+獲得した　メダルは
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
 んー　なるほど
-まずは　５０こ　めざそっか！</Text>
+まずは　５０コ　めざそっか！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:51:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:17:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1559,20 +1557,20 @@
 			Language="JPN">
 			<Text>メダルラリーは　トレーナーの
 いろいろな　こうどうを▽
-ひょうかする　きょうぎかいだよ▼
+ひょうかする　きょうぎかい　だよ▼
 きみたち　メダルラリーの
-さんかしゃが　もっている▽
-メダルボックスから　おくられる▽
-データや　せいせきを▽
-わしら　メダルじむきょくの▽
+さんかしゃが　もっている▼
+メダルボックスから　おくられる
+データや　せいせきを▼
+わしら　メダルじむきょくの
 スタッフが　しゅうけいして▽
 ひょうか　するんだ▼
 まあ　きみたちは
 こまかいことは　きにせず▽
 ぼうけんを　たのしんでおくれ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:58:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1581,21 +1579,21 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メダルラリーは　トレーナーの
-いろいろな　こうどうを▽
-ひょうかする　きょうぎかいだよ▼
+いろいろな　行動を▽
+評価する　競技会だよ▼
 きみたち　メダルラリーの
-さんかしゃが　もっている▽
-メダルボックスから　おくられる▽
-データや　せいせきを▽
-わしら　メダルじむきょくの▽
-スタッフが　しゅうけいして▽
-ひょうか　するんだ▼
+参加者が　持っている▼
+メダルボックスから　送られる
+データや　成績を▼
+わしら　メダル事務局の
+スタッフが　集計して▽
+強化するんだ▼
 まあ　きみたちは
-こまかいことは　きにせず▽
-ぼうけんを　たのしんでおくれ</Text>
+細かいことは　気にせず▽
+冒険を　楽しんでおくれ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:58:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1604,11 +1602,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-メダルラリーとは</Comment>
+・メダルラリーとは</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:01:08" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1634,8 +1631,8 @@
 キミたち　ラリーさんかしゃに▽
 おくられる　プレゼントだ▼
 メダルを　もらえる　じょうけんを
-みたして　いれば▽
-ポケモンセンターで▽
+みたして　いれば▼
+ポケモンセンターで
 メダルおやじから　もらえるぞ▼
 ちなみに　メダルには
 オレンジいろの　『ぼうけん』メダル▽
@@ -1645,10 +1642,10 @@
 きんいろの　『とくべつ』メダル▽
 ……と　５つの　しゅるいが　あるよ▼
 あとは　むずかしい　メダルほど
-かざりがついて　ハデだね</Text>
+かざりが　ついて　ハデだね</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:10:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1656,25 +1653,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルは　メダルじむきょくから
-キミたち　ラリーさんかしゃに▽
-おくられる　プレゼントだ▼
-メダルを　もらえる　じょうけんを
-みたして　いれば▽
-ポケモンセンターで▽
+			<Text>メダルは　メダル事務局から
+キミたち　ラリー参加者に▽
+贈られる　プレゼントだ▼
+メダルを　もらえる　条件を
+満たして　いれば▼
+ポケモンセンターで
 メダルおやじから　もらえるぞ▼
 ちなみに　メダルには
-オレンジいろの　『ぼうけん』メダル▽
-あおいろの　『せんとう』メダル▽
-ピンクいろの　『おたのしみ』メダル▽
-むらさきいろの　『ちょうせん』メダル▽
-きんいろの　『とくべつ』メダル▽
-……と　５つの　しゅるいが　あるよ▼
-あとは　むずかしい　メダルほど
-かざりがついて　ハデだね</Text>
+オレンジ色の　『ぼうけん』メダル▽
+青色の　『せんとう』メダル▽
+ピンク色の　『おたのしみ』メダル▽
+紫色の　『ちょうせん』メダル▽
+金色の　『とくべつ』メダル▽
+……と　５つの　種類が　あるよ▼
+あとは　難しい　メダルほど
+飾りが　ついて　ハデだね</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1683,11 +1680,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-メダルとは</Comment>
+・メダルとは</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:01:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1717,12 +1713,12 @@
 やくめを　おえた　ヒントメダルは▽
 メダルおやじが　かいしゅうするぞ▼
 ヒントメダルを
-たくさん　もっていても▽
-メダルボックスに▽
-はいりきらない　からね▼</Text>
+たくさん　もっていても▼
+メダルボックスに
+おさまりきらない　からね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:11:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1731,19 +1727,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒントメダルは
-メダルを　てにいれる　ための▽
+メダルを　手に入れる　ための▽
 ヒントを　みることが　できる▽
-はいいろの　メダルだ▼
-メダルを　てにいれた　ときに
-やくめを　おえた　ヒントメダルは▽
-メダルおやじが　かいしゅうするぞ▼
+灰色の　メダルだ▼
+メダルを　手に入れた　ときに
+役目を　終えた　ヒントメダルは▽
+メダルおやじが　回収するぞ▼
 ヒントメダルを
-たくさん　もっていても▽
-メダルボックスに▽
-はいりきらない　からね▼</Text>
+たくさん　持っていても▼
+メダルボックスに
+収まりきらない　からね▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:11:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1752,11 +1748,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-ヒントメダルとは</Comment>
+・ヒントメダルとは</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1787,16 +1782,16 @@
 かくとくした　ひづけ　などを▽
 みることが　できるよ▼
 スタートボタンを　おすと
-ボックスを　へんけいさせて▽
-メダルを　たくさん▽
+ボックスを　へんけいさせて▼
+メダルを　たくさん
 みえるように　したり▼
 メダルの　ならびを
 かえることが　できるぞ▼
 ちなみに　メダルボックスを
 つくったのは　わし　だぞ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1805,24 +1800,24 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メダルボックスは
-メダルを　しゅうのう　する▽
-ハコがたの　きかいだ▼
-もっている　メダルのかず
-メダルの　なまえ▽
-どんな　メダルかの　せつめい▽
-かくとくした　ひづけ　などを▽
+メダルを　収納する▽
+ハコ型の　機械だ▼
+持っている　メダルの数
+メダルの　名前▽
+どんな　メダルかの　説明▽
+獲得した　日付などを▽
 みることが　できるよ▼
-スタートボタンを　おすと
-ボックスを　へんけいさせて▽
-メダルを　たくさん▽
+スタートボタンを　押すと
+ボックスを　変形させて▼
+メダルを　たくさん
 みえるように　したり▼
-メダルの　ならびを
-かえることが　できるぞ▼
+メダルの　並びを
+変えることが　できるぞ▼
 ちなみに　メダルボックスを
-つくったのは　わし　だぞ！</Text>
+造ったのは　わし　だぞ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:13:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1831,11 +1826,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-メダルボックスとは</Comment>
+・メダルボックスとは</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1863,14 +1857,14 @@
 すれちがいログや　ユニオンルームで
 であった　ひとに　おススメしたり▽
 じまんしたり　できるんだ▼
-メダルボックスで　メダルを　えらんで▽
+メダルボックスで　メダルを　えらんで
 Ａボタンを　おすと▽
 イチオシとうろく　できるぞ▼
 もう１ど　Ａボタンを　おすと
 とうろくが　かいじょ　されるぞ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:30" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1879,19 +1873,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イチオシとうろくは
-つうしんで　ひとに▽
-こうかいする　メダルのことだ▼
+通信で　人に▽
+公開する　メダルのことだ▼
 すれちがいログや　ユニオンルームで
-であった　ひとに　おススメしたり▽
-じまんしたり　できるんだ▼
-メダルボックスで　メダルを　えらんで▽
-Ａボタンを　おすと▽
+出会った　人に　おススメしたり▽
+自慢したり　できるんだ▼
+メダルボックスで　メダルを　選んで
+Ａボタンを　押すと▽
 イチオシとうろく　できるぞ▼
-もう１ど　Ａボタンを　おすと
-とうろくが　かいじょ　されるぞ</Text>
+もう１度　Ａボタンを　押すと
+登録が　解除されるぞ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:30" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:14:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1900,11 +1894,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-イチオシ登録とは</Comment>
+・イチオシ登録とは</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:06:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1926,18 +1919,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じつは　おじさん
-キミなら　きっと▽
+			<Text>じつは　おじさん▼
+キミなら　きっと
 すべての　メダルを▽
-あつめられるって▽
-しんじていたよ！▼
+あつめられるって　しんじていたよ！▼
 おじさんの　きたいに　みごと
 こたえて　くれたんだね！▼
 キミは　ほんとうに　スゴイ！
 かんどうを　ありがとう！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1945,18 +1937,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じつは　おじさん
-キミなら　きっと▽
+			<Text>じつは　おじさん▼
+キミなら　きっと
 すべての　メダルを▽
-あつめられるって▽
-しんじていたよ！▼
-おじさんの　きたいに　みごと
-こたえて　くれたんだね！▼
-キミは　ほんとうに　スゴイ！
-かんどうを　ありがとう！</Text>
+集められるって　信じていたよ！▼
+おじさんの　期待に　みごと
+応えて　くれたんだね！▼
+キミは　本当に　スゴイ！
+感動を　ありがとう！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1965,11 +1956,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
 コンプリートした</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:07:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1997,11 +1987,11 @@
 しんじていたよ！▼
 おじさんの　めに
 くるいは　なかった　わけだ！▼
-これからも　おうえんしてるよ
+これからも　おうえん　してるよ
 がんばってね！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:16:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2012,14 +2002,14 @@
 			<Text>じつは　おじさん
 キミなら　きっと▽
 ゴールイン　できるって▽
-しんじていたよ！▼
+信じていたよ！▼
 おじさんの　めに
-くるいは　なかった　わけだ！▼
-これからも　おうえんしてるよ
+狂いは　なかった　わけだ！▼
+これからも　応援してるよ
 がんばってね！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:15:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2028,11 +2018,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-ゴールインした</Comment>
+・ゴールインした</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:07:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2058,12 +2047,11 @@
 キミのこと　かげながら▽
 おうえん　してるんだよ！▼
 もちろん！
-メダルじむきょくの▽
-スタッフとして▽
+メダルじむきょくの　スタッフとして▽
 しんさは　こうせいに　するけどね</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2073,14 +2061,13 @@
 			Language="JPN_KANJI">
 			<Text>じつは　おじさん
 キミのこと　かげながら▽
-おうえん　してるんだよ！▼
+応援してるんだよ！▼
 もちろん！
-メダルじむきょくの▽
-スタッフとして▽
-しんさは　こうせいに　するけどね</Text>
+メダル事務局の　スタッフとして▽
+審査は　公正に　するけどね</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:59:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:16:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2089,11 +2076,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・NPC話しかけ
-
-ゴールインしてない</Comment>
+・ゴールインしてない</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T08:00:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T12:07:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
