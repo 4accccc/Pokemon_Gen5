@@ -8,10 +8,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]とつぜんの　きりに　みまわれ
 [Ctrl1:xcenter ]ある　やどやで　やすむことにした
-[Ctrl1:xcenter ]きままな　たびびと　[Name:TrainerName ]</Text>
+[Ctrl1:xcenter ]きままな　たびびと　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T11:59:19" />
+				Time="2011-11-10T05:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,11 +21,11 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]突然の　霧に　見舞われ
 [Ctrl1:xcenter ]ある　宿屋で　休むことにした
-[Ctrl1:xcenter ]気ままな　旅人　[Name:TrainerName ]
+[Ctrl1:xcenter ]気ままな　旅人　[Name:TrainerName Idx="1" ]
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T11:59:32" />
+				Time="2011-11-10T05:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,11 +294,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]とつぜんの　きりに　みまわれ
-[Ctrl1:xcenter ]ある　やまごやで　やすむことにした
-[Ctrl1:xcenter ]きままな　たびびと　[Name:TrainerName ]</Text>
+[Ctrl1:xcenter ]ある　やどやで　やすむことにした
+[Ctrl1:xcenter ]きままな　たびびと　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-20T09:41:04" />
+				Time="2011-11-10T05:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -308,11 +308,11 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]突然の　霧に　見舞われ
 [Ctrl1:xcenter ]ある　宿屋で　休むことにした
-[Ctrl1:xcenter ]気ままな　旅人　[Name:TrainerName ]
+[Ctrl1:xcenter ]気ままな　旅人　[Name:TrainerName Idx="1" ]
 </Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:01:00" />
+				Time="2011-11-10T05:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

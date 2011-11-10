@@ -9,10 +9,10 @@
 			<Text>[Ctrl1:xcenter ]みずから　はつめいした
 [Ctrl1:xcenter ]じかん　てんそうきに　のり
 [Ctrl1:xcenter ]みらいへ　たびだった
-[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:04:23" />
+				Time="2011-11-10T05:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,10 +23,10 @@
 			<Text>[Ctrl1:xcenter ]自ら　発明した
 [Ctrl1:xcenter ]時間転送機に　乗り
 [Ctrl1:xcenter ]未来へ　旅立った　
-[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:03:51" />
+				Time="2011-11-10T05:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,10 +293,10 @@
 			<Text>[Ctrl1:xcenter ]みずから　はつめいした
 [Ctrl1:xcenter ]じかん　てんそうきに　のり
 [Ctrl1:xcenter ]みらいへ　たびだった
-[Ctrl1:xcenter ][Name:TrainerName ]はかせ</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]はかせ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:05:13" />
+				Time="2011-11-10T05:53:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -307,10 +307,10 @@
 			<Text>[Ctrl1:xcenter ]自ら　発明した
 [Ctrl1:xcenter ]時間転送機に　乗り
 [Ctrl1:xcenter ]未来へ　旅立った　
-[Ctrl1:xcenter ][Name:TrainerName ]博士</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]博士</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:05:13" />
+				Time="2011-11-10T05:53:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -51,10 +51,10 @@
 			<Text>[Ctrl1:xcenter ]そんな　かのじょに
 [Ctrl1:xcenter ]ゆうきを　ふりしぼって
 [Ctrl1:xcenter ]あいを　こくはくした
-[Ctrl1:xcenter ][Name:TrainerName ]</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:18:51" />
+				Time="2011-11-10T05:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -65,10 +65,10 @@
 			<Text>[Ctrl1:xcenter ]そんな　彼女に
 [Ctrl1:xcenter ]勇気を　ふりしぼって
 [Ctrl1:xcenter ]愛を　告白した
-[Ctrl1:xcenter ][Name:TrainerName ]</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:18:48" />
+				Time="2011-11-10T05:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -111,10 +111,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]まるで
-[Ctrl1:xcenter ][Name:TrainerName ]を　ためすかの　ように……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　ためすかの　ように……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:25:12" />
+				Time="2011-11-10T05:53:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -123,10 +123,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]まるで
-[Ctrl1:xcenter ][Name:TrainerName ]を　試すかの　ように……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　試すかの　ように……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:21:39" />
+				Time="2011-11-10T05:53:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -332,10 +332,10 @@
 			<Text>[Ctrl1:xcenter ]そんな　かれに
 [Ctrl1:xcenter ]ゆうきを　ふりしぼって
 [Ctrl1:xcenter ]あいを　こくはくした
-[Ctrl1:xcenter ][Name:TrainerName ]</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:34:28" />
+				Time="2011-11-10T05:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -346,10 +346,10 @@
 			<Text>[Ctrl1:xcenter ]そんな　彼に
 [Ctrl1:xcenter ]勇気を　ふりしぼって
 [Ctrl1:xcenter ]愛を　告白した
-[Ctrl1:xcenter ][Name:TrainerName ]</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:34:30" />
+				Time="2011-11-10T05:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -392,10 +392,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]まるで
-[Ctrl1:xcenter ][Name:TrainerName ]を　ためすかの　ように……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　ためすかの　ように……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:25:42" />
+				Time="2011-11-10T05:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -404,10 +404,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]まるで
-[Ctrl1:xcenter ][Name:TrainerName ]を　試すかの　ように……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　試すかの　ように……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T05:25:42" />
+				Time="2011-11-10T05:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
