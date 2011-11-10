@@ -529,7 +529,7 @@ enum{
 };
 
 #define __AUDIENCE_PALCHG__
-#undef  __AUDIENCE_PALCHG__
+//#undef  __AUDIENCE_PALCHG__
 
 //============================================================================================
 /**
@@ -3342,7 +3342,8 @@ static void btlv_init_palchg( BTLV_INPUT_WORK *biw )
     GFL_HEAP_FreeMemory( buf );
   }
   //
-  biw->audience_palflag = TRUE;
+//  biw->audience_palflag = TRUE;
+  biw->audience_palflag = FALSE;
 }
 
 //----------------------------------------------------------------------------------
@@ -3378,13 +3379,16 @@ static void btlv_set_palchg( BTLV_INPUT_WORK *biw, const s32 num )
 static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
 {
 #if 1	// debug
-  // 停止
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-    btlv_set_mode( biw, AUDIENCE_STOP );
-  }
-  // 再開
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-    btlv_set_mode( biw, AUDIENCE_START );
+  // Lボタンを押しながら..
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    // 停止
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+      btlv_set_mode( biw, AUDIENCE_STOP );
+    }
+    // 再開
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+      btlv_set_mode( biw, AUDIENCE_START );
+    }
   }
 #endif
 
