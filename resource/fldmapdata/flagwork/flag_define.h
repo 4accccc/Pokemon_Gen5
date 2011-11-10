@@ -873,7 +873,7 @@
 #define FV_C15R0301_BONUS_4                984 /* 0x03d8 ポケウッド：ファン（スターランク4） */
 #define FV_C14_KAODASI_01                  985 /* 0x03d9 セイガイハシティ：顔出し看板イベントのカメラマン */
 #define FV_T04R101_STOPPER_02              986 /* 0x03da サザナミタウンゲート：ストッパー（解除後） */
-		/* not used   987(0x03db) */
+#define FV_R19_SWBELL_01                   987 /* 0x03db 19番道路：ベル */
 		/* not used   988(0x03dc) */
 		/* not used   989(0x03dd) */
 		/* not used   990(0x03de) */
