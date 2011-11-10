@@ -208,6 +208,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MEDAL_INFO , debugMenuCallProc_MedalInfo , FS_OVERLAY_ID(debugmenu_medalinfo) },    // メダル詳細画面
   { DEBUG_FIELD_INFINITY , debugMenuCallProc_InfinityDungeon , FS_OVERLAY_ID(debugmenu_infinity) },    // 無限ダンジョン
   { DEBUG_FIELD_ANIMAL_TRAIL , debugMenuCallProc_AnimalTrail , FS_OVERLAY_ID(debugmenu_animal_trail) },    // けものみち
+  { DEBUG_FIELD_INTRO_DEMO, debugMenuCallProc_IntroDemo, FS_OVERLAY_ID(debugmenu_app) },    // 物語開始デモ
   // ためしにデバック機能追加してみた
   { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi, FS_OVERLAY_ID(debugmenu_staff) },    // いちらくテスト
   { DEBUG_FIELD_TEST_ONOUE, debugMenuCallProc_DebugTest_Onoue, FS_OVERLAY_ID(debugmenu_staff) },    // おのうえテスト
@@ -275,6 +276,10 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_shiiyama_yukiko
 #define QuickJumpStart   DEBUG_FIELD_NUMINPUT
 #define QuickJumpSelect  DEBUG_FIELD_RESORT
+
+#elif defined DEBUG_ONLY_FOR_fuchino_hiroki
+#define QuickJumpStart   DEBUG_FIELD_INTRO_DEMO
+#define QuickJumpSelect  DEBUG_FIELD_INTRO_DEMO
 #endif
 
 //--------------------------------------------------------------

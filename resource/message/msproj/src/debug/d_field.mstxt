@@ -14368,4 +14368,29 @@ LR→補完"</Text>
 				Time="2011-06-02T07:59:18" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_INTRO_DEMO">
+		<LanguageCell
+			Language="JPN">
+			<Text>物語開始デモ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-10T02:50:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-10T02:50:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>物語開始デモ</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-10T02:50:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-10T02:50:13" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
