@@ -13,7 +13,7 @@
 #include "battle/pokewood.h"
 #include "pokeicon/pokeicon.h"
 
-#define POKEWOOD_BOXOFFICE_DATA_MAX   ( POKEWOOD_SENARIO_MAX )  ///< 記録として残す興行成績ランキングの数
+#define POKEWOOD_BOXOFFICE_DATA_MAX   ( 40 )  ///< 記録として残す興行成績ランキングの数
 #define POKEWOOD_MYPOKE_NUM           (  6 )                    ///< ポケモンアイコンで保存する自分の手持ちポケモンアイコンの数
 #define POKEWOOD_SHOWING_MAX          ( POKEWOOD_SAVEDATA_MAX ) ///< 同時に上映する最大数
 
@@ -118,7 +118,7 @@ extern void POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( POKEWOOD_SAVEDATA *sv, int 
 //=============================================================================================
 extern const POKEWOOD_BOXOFFICE_RECORD *POKEWOOD_SAVEDATA_GetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no );
 extern void  POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data );
-
+extern void  POKEWOOD_SAVEDATA_ClearUpdate( POKEWOOD_SAVEDATA *sv, int no );
 
 
 //=============================================================================================

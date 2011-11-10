@@ -257,6 +257,22 @@ void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD
 
 //=============================================================================================
 /**
+ * @brief	興行成績データの更新状態をOFFにする
+ *
+ * @param   sv		POKEWOOD_SAVEDATA
+ * @param   no		シナリオNO
+ */
+//=============================================================================================
+void  POKEWOOD_SAVEDATA_ClearUpdate( POKEWOOD_SAVEDATA *sv, int no )
+{
+  GF_ASSERT_MSG( no < POKEWOOD_BOXOFFICE_DATA_MAX, "ランキングの最大を超えています=%d\n",no);
+  sv->boxoffice_record[no].new_flag    = 0;
+  sv->boxoffice_record[no].update_flag = 0;
+}
+
+
+//=============================================================================================
+/**
  * @brief	興行成績上位者のデータを取得する
  *
  * @param   sv		POKEWOOD_SAVEDATA
@@ -464,8 +480,10 @@ int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
 {
-  GF_ASSERT_MSG( index<POKEWOOD_SHOWING_MAX, "上映映画のindexが4を超えている\n" );
-  sv->title_no[index] = title_no;
+  // セーブデータが４つ以上になるので、看板数以上の登録は無視するように変更
+//  if(index<POKEWOOD_SHOWING_MAX){
+    sv->title_no[index] = title_no;
+//  }
 }
 
 //=============================================================================================
