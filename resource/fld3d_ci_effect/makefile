@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	unno ibe_mana onoue_masayuki ichiraku_katsuhiko sato_hitomi sound_special02
+USERS	=	unno ibe_mana onoue_masayuki ichiraku_katsuhiko sato_hitomi sound_special02 kawamoto_yuki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
