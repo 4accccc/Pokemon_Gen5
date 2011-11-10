@@ -50,7 +50,9 @@ enum {
 	NARC_pokewood_pokewood_senario37_bin = 36,
 	NARC_pokewood_pokewood_senario38_bin = 37,
 	NARC_pokewood_pokewood_senario39_bin = 38,
-	NARC_pokewood_pokewood_senario40_bin = 39
+	NARC_pokewood_pokewood_senario40_bin = 39,
+	NARC_pokewood_pokewood_senario41_bin = 40,
+	NARC_pokewood_pokewood_rec01_bin = 41
 };
 
 /* NARC_POKEWOOD_NAIX_ */

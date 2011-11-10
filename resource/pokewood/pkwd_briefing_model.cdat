@@ -829,4 +829,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl7,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl7),   //オブジェクト数
   },
+  { // シナリオ41 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
 };

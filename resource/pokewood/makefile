@@ -53,6 +53,9 @@ mstxtfiles  = $(subst .gmm,.mstxt, $(gmmfiles))
 targetmstxt = $(subst poke,src/pokewood/poke, $(mstxtfiles))
 bgm_hashfile = bgm_hash.rb
 
+#手で作成する録画データファイル
+recdata = pokewood_rec01.bin
+
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
@@ -76,7 +79,7 @@ $(bgm_hashfile): ../sound/swan_sound_data.sadl
 	$(SENARIO_CONV) $(subst .xls,.txt,$<)
 	ruby pw_gmm2mstxt.rb $(subst .xls,_f.gmm, $<) $(subst .xls,_m.gmm, $<)
 
-$(targetname).narc: $(lsources) $(lbins) $(ltexts) 
+$(targetname).narc: $(lsources) $(lbins) $(ltexts) $(recdata)
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
 	$(NAIXCUT) $(targetname).naix
 	$(BRIEFING_CONV) $(BRIEFING_MODEL_CDAT)
@@ -99,7 +102,7 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 	rm *.txt
-	rm *.bin
+	rm pokewood_senario*.bin
 	rm *_f.gmm
 	rm *_m.gmm
 	rm bgm_hash.rb

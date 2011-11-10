@@ -20002,6 +20002,506 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_er_enemy_party_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマンぐんだん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-16T12:13:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマンぐんだん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-16T12:13:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ4１
+↓↓↓エンドロール記入欄スタート↓↓↓
+敵のパーティ名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_my_party_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいぎの　なかま</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>正義の　仲間</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>自分のパーティ名
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_my_role_m_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]キッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]キッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>自分役名♂</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_my_role_f_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]ガール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]ガール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>自分役名♀</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_role1_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんちの　きゃくＡ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地の　客Ａ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_acto1_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒロノブ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒロノブ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役者名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_role2_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうえんちの　きゃくＢ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊園地の　客Ｂ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_actor2_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メグミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メグミ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役者名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_role3_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エキストラ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エキストラ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_actor3_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライモンの　みなさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライモンの　みなさん</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役者名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_role4_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_actor4_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役者名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_role5_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_extra_actor5_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エキストラの役者名</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_er_writer_name_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ・スグル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ・スグル</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオライター名
+
+↑↑↑ここまで１シナリオ分↑↑↑</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:49:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_er_writer"
 		Style="Large">
 		<LanguageCell

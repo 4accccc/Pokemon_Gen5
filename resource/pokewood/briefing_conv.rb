@@ -15,7 +15,7 @@ $KECODE = 'SJIS'
 # データ定義
 #-----------------------------------------------------------------------------
 
-SCENARIO_NUM      = 40  #シナリオデータの数
+SCENARIO_NUM      = 41  #シナリオデータの数
 SCENARIO_CSV_NAME = "pokewood_senario%02d.txt"
 NOFILE_STRING     = "%sというファイルがありません\n"
 

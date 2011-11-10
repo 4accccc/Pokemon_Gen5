@@ -1598,6 +1598,43 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_plot_041"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プロット　ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T10:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T10:53:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プロット　ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T10:54:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T10:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本トップ画面
+
+あらすじ
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:55:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_title_00"
 		Style="Large">
 		<LanguageCell
@@ -3067,6 +3104,43 @@
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-03T05:51:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:55:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本トップ画面
+
+映画タイトル
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:55:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_tilte_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:41:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4579,6 +4653,43 @@
 	</TextRow>
 	<TextRow
 		Label="pw_goal_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まいカット　あいてを　たおせ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T10:18:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:59:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>毎カット　相手を　倒せ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-27T10:18:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:59:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本トップ画面
+
+ハチクマンの逆襲クリア条件
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-20T11:51:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_goal_40"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -7236,6 +7347,40 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_moviesubtitle_m_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:43:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-24T05:03:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-24T05:04:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チュートリアルシナリオ作品サブタイトル
+（主人公♂用）</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:44:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_moviesubtitle_f_01"
 		Style="Large">
 		<LanguageCell
@@ -8610,6 +8755,40 @@
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-25T09:44:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:43:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-24T05:05:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-24T05:05:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>チュートリアルシナリオ作品サブタイトル
+（主人公♀用）</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:43:47" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>

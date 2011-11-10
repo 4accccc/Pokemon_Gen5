@@ -50,7 +50,8 @@ enum {
 	NARC_pokewood_party_pkwd_party37_bin = 36,
 	NARC_pokewood_party_pkwd_party38_bin = 37,
 	NARC_pokewood_party_pkwd_party39_bin = 38,
-	NARC_pokewood_party_pkwd_party40_bin = 39
+	NARC_pokewood_party_pkwd_party40_bin = 39,
+	NARC_pokewood_party_pkwd_party41_bin = 40
 };
 
 /* NARC_POKEWOOD_PARTY_NAIX_ */

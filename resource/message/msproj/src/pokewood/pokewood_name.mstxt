@@ -1642,6 +1642,47 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="pw_rec_trainername_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ41
+撮影時の役者名前(主人公♂ )</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:44:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="pw_show_trainername_01"
 		Style="Large">
 		<LanguageCell
@@ -3562,6 +3603,54 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="pw_show_trainername_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ41
+上映時の役者名前(主人公♂ )</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:44:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-10-14T09:43:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="pw_rec_trainername_f_01">
 		<LanguageCell
 			Language="JPN">
@@ -4882,6 +4971,39 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="pw_rec_trainername_f_41">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチク</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ41
+撮影時の役者名前(主人公♀)</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:45:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_show_trainername_f_01">
 		<LanguageCell
 			Language="JPN">
@@ -6199,6 +6321,39 @@
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-25T09:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_show_trainername_f_41">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-25T09:28:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>シナリオ41
+上映時の役者名前(主人公♀)</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-08T10:45:17" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
