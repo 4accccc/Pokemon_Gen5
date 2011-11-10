@@ -328,6 +328,7 @@ enum{
 	//
 	FLG_PWRM_NEW		= (1<<3),	// NEW
 	FLG_PWRM_UP			= (1<<4),	// UP
+	FLG_PWRM_FINISH		= (1<<5),	// すでに見た
 };
 
 // 文字色
@@ -885,6 +886,7 @@ static s32  pwm_chk_tp( PKWD_RECORD_MONITOR_MAIN_WORK *wk, const s32 mode );
 
 // フラグチェック
 static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
+static void pwm_chk_endflag( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
 static s32  pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num );
 //
 static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode );
@@ -1282,6 +1284,9 @@ static void pwm_main( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 static void pwm_exit( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 {
 	s32		i;
+	
+	// 終了チェック(フラグ後処理)
+	pwm_chk_endflag( wk );
 	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
@@ -2379,6 +2384,7 @@ static void pwm_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	//
 	//
 	wk->Flag |= FLG_SET_INIT;
+	wk->Flag |= FLG_UPDATE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2536,8 +2542,16 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	// main
 	ret = pwm_main_framelist( wk );
 	listflg = pwm_is_main_framelist( wk, ret );
-	if(listflg != 0){
+//	if(listflg != 0){
+//		flg = 2;
+//	}
+	// カーソル移動=>STEPが変わる(更新は後)
+	if(listflg == 1){
 		flg = 2;
+	}
+	// キーにタッチ=>そのまま(更新)
+	else if(listflg == 2){
+		flg = 1;
 	}
 	
 	// 更新あり
@@ -2577,7 +2591,8 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	}
 	//
 	// 上文字列更新
-	if(flg != 0){
+//	if(flg != 0){
+	if(flg == 1){
 		//
 		// 画面に何も出ていない状態ならアニメ開始から入る
 		if( wk->first_anime_flag == FALSE )
@@ -2591,6 +2606,8 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 			pwm_disp_record_monitor_string( wk, 1 );
 			// poke icon 表示
 			pwm_disp_poke_obj( wk );
+			// フラグセット(すでに見た)
+			wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
 		}
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
@@ -3042,6 +3059,28 @@ static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	// 結果
 	for(i=0;i<wk->ScenarioMax;i++){
 		OS_Printf("flag :%d,%d,%d\n",wk->FlagBuffer[i].openid, wk->FlagBuffer[i].color, wk->FlagBuffer[i].stateflag );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	終了時時のチェック
+ *
+ * @param	PKWD_RECORD_MONITOR_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwm_chk_endflag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
+{
+	s32		i;
+	
+	// すでに見たかチェック
+	for(i=0;i<wk->ScenarioMax;i++){
+		if(wk->FlagBuffer[i].stateflag & FLG_PWRM_FINISH){
+			// NewとUpdateの両方を落としてくれる
+			POKEWOOD_SAVEDATA_ClearUpdate( wk->Param->pokewood_sv, wk->FlagBuffer[i].openid );
+		}
 	}
 }
 
