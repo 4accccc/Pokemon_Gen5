@@ -11,7 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d20.h"
   .include  "d20.h"
-
+  
+  //@author Mizuguchi_Mai
   //@author fujimura_souichirou（ブルンゲルイベント）
 
 //--------------------------------------------------------------
@@ -23,6 +24,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_zone_d20
 _EVENT_DATA   ev_d20_wkobjcode00_poke_01
+_EVENT_DATA   ev_pos_d20_localtvt_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -181,5 +183,36 @@ EVENT_START   ev_d20_wkobjcode00_poke_01
 EVENT_END
 
 
+/**************************************************************/
+/*		ライブキャスターイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_d20_localtvt_01
+	
+	//TVT着信音を再生
+	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_d20_tvt_01, POS_DOWN )
+	_ME_WAIT()
 
+	_PLAYER_NAME(0)
+	_SYSWIN_MSG( msg_d20_tvt_02, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//ライブキャスター起動
+	
+	//ライブキャスター起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _CALL_TVT_DEMO( 8 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+	
+	//========================================/
+	
+	//ライブキャスターイベント終了
+	$WK_SCENE_T04_D20_TVT = 2
+	
+	//========================================/
+	
+EVENT_END
 

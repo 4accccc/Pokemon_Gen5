@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_ZONE_D20 (1)
 #define SCRID_D20_WKOBJCODE00_POKE_01 (2)
+#define SCRID_POS_D20_LOCALTVT_01 (3)
 
 #endif //_D20_DEF_H_

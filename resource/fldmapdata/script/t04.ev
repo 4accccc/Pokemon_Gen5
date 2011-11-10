@@ -12,7 +12,8 @@
   .include  "../../message/dst/script/msg_t04.h"
   .include  "t04.h"
   .include  "t04r0101_def.h"
-
+  
+  //@author Mizuguchi_Mai
   //@author fujimura_souichirou（ライバル戦のトレーナーデータ差し替え・クリア後イベント）
   //@author suginaka_katsunori//海底遺跡イベント
 
@@ -34,6 +35,7 @@ _EVENT_DATA		ev_t04_ambrella_01
 _EVENT_DATA		ev_t04_babygirl1_01
 _EVENT_DATA   ev_t04_swrival_01
 _EVENT_DATA		ev_t04_sage7_01
+_EVENT_DATA		ev_pos_t04_localtvt_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -383,6 +385,38 @@ _ANIME_LABEL	anm_swrival_bye_753
 	_ANIME_DATA	ACMD_END,0
   
 
+/**************************************************************/
+/*		ライブキャスターイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_t04_localtvt_01
+	
+	//TVT着信音を再生
+	_ME_PLAY( SEQ_ME_CALL )
+	_SYSWIN_MSG( msg_t04_tvt_01, POS_DOWN )
+	_ME_WAIT()
+
+	_PLAYER_NAME(0)
+	_SYSWIN_MSG( msg_t04_tvt_02, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//ライブキャスター起動
+	
+	//ライブキャスター起動
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _CALL_TVT_DEMO( 7 )
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+	
+	//========================================/
+	
+	//ライブキャスターイベント終了
+	$WK_SCENE_T04_D20_TVT = 2
+	
+	//========================================/
+	
+EVENT_END
 
 /**************************************************************/
 /*			話しかけ：man3									  */

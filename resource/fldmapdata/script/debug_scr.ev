@@ -469,12 +469,9 @@ $SCWK_TEMP2 = 0
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_03, 2 )
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_04, 3 )
   _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 4 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 5 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 6 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 7 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 8 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 9 )
-  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 10 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_06, 5 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_07, 6 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_08, 7 )
   
   _BMPMENU_START()
   
@@ -507,6 +504,24 @@ $SCWK_TEMP2 = 0
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
       _CALL_TVT_DEMO( 5 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 5 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 6 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 6 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 7 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 7 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 8 )
       _MAP_FADE_BLACK_IN()
       _MAP_FADE_END_CHECK()
     ENDIF
@@ -544,6 +559,8 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_18, 17 )	//d24連れ歩き開始
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_19, 18 )	//c14イベント開始
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 19 )	//c15チュートリアル開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 20 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 21 )	//テスト
 		
 		//メニュー表示
 		_BMPMENU_START()
@@ -831,17 +848,16 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_C13R0501, 5, 3, DIR_UP)
 
     ELSIF $SCWK_TEMP2 == 20 THEN
-      //D05アジト船非表示
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, FALSE, FALSE )
-      //マップ遷移
-      _MAP_CHANGE( ZONE_ID_D05, 197, 493, DIR_RIGHT )
-    
+      //T04R0101：ストッパー無効
+       $WK_SCENE_T04R101_STOPPER_01 = 1
+       //T04R0101：ストッパー非表示
+       _FLAG_SET( FV_T04R101_STOPPER_01 )
+       _FLAG_RESET( FV_T04R101_STOPPER_02 )
     ELSIF $SCWK_TEMP2 == 21 THEN
-      //W21アジト船表示（タラップなし）
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
-      //マップ遷移
-      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+      //R20イベント起動
+      $WK_SCENE_R20 = 4
+      _FLAG_SET(FV_R20_SWRIVAL_01)
+      _FLAG_RESET(FV_R20_SWPLAZMA_01)
       
     ELSIF $SCWK_TEMP2 == 22 THEN
       //W21のイベント進行状態を進めて接続を作成

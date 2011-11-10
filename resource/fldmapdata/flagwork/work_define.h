@@ -318,6 +318,8 @@
 #define WK_SCENE_C04GYM0101_GUIDE        16706 /* 0x4142 ライモンシティジム：ジムガイドイベント用 */
 #define WK_SCENE_D22_BOY2                16707 /* 0x4143 サンギ牧場：誘導用POS制御ワーク */
 #define WK_SCENE_MUGENDUNGEON_CLEAR      16708 /* 0x4144 無限ダンジョン：自分のROMバージョンと同じダンジョンをクリアしたか */
+#define WK_SCENE_C08GYM0101_GUIDE        16709 /* 0x4145 ドラゴンジム：ジムガイドイベント用 */
+#define WK_SCENE_T04_D20_TVT             16710 /* 0x4146 サザナミタウン・サザナミ湾：ライブキャスターPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
