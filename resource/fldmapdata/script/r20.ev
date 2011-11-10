@@ -91,7 +91,7 @@ EVENT_START   ev_pos_r20_mountman_01
   ENDIF
   
   //メッセージ：おいおい！
-  _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_01, R20_MOUNTMAN_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_02, R20_MOUNTMAN_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：主人公1歩戻る・山男もとの位置に戻る
@@ -189,10 +189,10 @@ _ANIME_LABEL	anm_mountain_topl_z646
 /*POS：山男ストッパーはなしかけ                     */
 /**************************************************************/
 EVENT_START   ev_r20_mountman_01
-  IF  $WK_SCENE_R20 == 3 THEN
+  IF  $WK_SCENE_R20 >= 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_04 )
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_02 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_01 )
   ENDIF
 EVENT_END
 
