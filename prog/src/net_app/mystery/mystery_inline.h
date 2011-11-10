@@ -22,6 +22,7 @@
 
 #include "system/gfl_use.h"
 #include "print/global_msg.h"
+#include "gamesystem/fmission_data_id.h"
 
 #include "net_app/gts_tool.h"
 
@@ -391,5 +392,31 @@ static inline int Mystery_CreateGPower(const GIFT_PACK_DATA* pPack)
   else
   {
     return GPOWER_ID_NULL;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  不思議データからのフェスミッション作成
+ * @param  GIFT_PACK_DATA   セーブデータに格納されてる不思議データ
+ * @retval GPowerID
+ */
+//--------------------------------------------------------------
+static inline int Mystery_CreateFMission(const GIFT_PACK_DATA* pPack)
+{
+  const GIFT_PRESENT_FMISSION* pGift = &pPack->data.fmission;
+
+  if(pPack->gift_type != MYSTERYGIFT_TYPE_FMISSON){
+    return FMISSION_ID_NULL;
+  }
+
+  //配布データ以外が来たら不正
+  if( FMISSION_ID_ITEM_TUTORIAL_01 <= pGift->no && pGift->no < FMISSION_ID_MAX )
+  {
+    return pGift->no;
+  }
+  else
+  {
+    return FMISSION_ID_NULL;
   }
 }

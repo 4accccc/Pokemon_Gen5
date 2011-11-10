@@ -3136,6 +3136,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
       1,  //ポケモン
       2,  //道具
       6,  //Gパワー
+      6,    //フェスミッション
       3,   //映画
     };
     u16 plt_ofs;
@@ -3145,7 +3146,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
 
     if( cp_data->movie_flag )
     { 
-      plt_ofs = sc_type_to_back_fade[ 4 ];
+      plt_ofs = sc_type_to_back_fade[ NELEMS(sc_type_to_back_fade)-1 ];
     }
     else
     { 
@@ -3227,6 +3228,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
     }
     break;
 
+  case MYSTERYGIFT_TYPE_FMISSON:
   case MYSTERYGIFT_TYPE_POWER:
     {	
       ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );

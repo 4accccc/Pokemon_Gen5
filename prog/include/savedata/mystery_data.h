@@ -56,7 +56,8 @@
 #define MYSTERYGIFT_TYPE_POKEMON	(1)	// ポケモン
 #define MYSTERYGIFT_TYPE_ITEM		(2)	// どうぐ
 #define MYSTERYGIFT_TYPE_POWER		(3)	// パワー
-#define MYSTERYGIFT_TYPE_MAX	(4)	// 総数
+#define MYSTERYGIFT_TYPE_FMISSON		(4)	// フェスミッション
+#define MYSTERYGIFT_TYPE_MAX	    (5)	// 総数
 
 #define MYSTERYGIFT_TYPE_CLEAR		(255)	// ふしぎ領域の強制クリア
 
@@ -141,6 +142,11 @@ typedef struct {
   int type;        ///開放するパワータイプ一種類
 } GIFT_PRESENT_POWER;
 
+//  フェスミッション
+typedef struct {
+  int no;         ///ふしぎなおくりものでうけとるフェスミッションナンバー
+} GIFT_PRESENT_FMISSION;
+
 
 
 // ふしぎなおくりもの強制クリア
@@ -153,6 +159,7 @@ typedef union {
   GIFT_PRESENT_ITEM		  item;
   GIFT_PRESENT_POWER		gpower;
   GIFT_PRESENT_REMOVE		remove;
+  GIFT_PRESENT_FMISSION fmission;
 } GIFT_PRESENT;
 
 

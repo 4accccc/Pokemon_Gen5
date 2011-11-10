@@ -17,6 +17,7 @@
 //モジュール
 #include "item/itemsym.h"
 #include "field/gpower_id.h"
+#include "gamesystem/fmission_data_id.h"
 
 //自分のモジュール
 #include "net_app/mystery.h"
@@ -167,6 +168,16 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
         { 
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:Gパワーが不正でした\n" ); 
+        }
+      }
+      break;
+    case MYSTERYGIFT_TYPE_FMISSON:
+      {
+        int fmission  = Mystery_CreateFMission( p_data );
+        if( fmission == FMISSION_ID_NULL )
+        {
+          dirty++;
+          OS_TPrintf( "GIFT_PACK_DATA:Fミッションが不正でした\n" ); 
         }
       }
       break;

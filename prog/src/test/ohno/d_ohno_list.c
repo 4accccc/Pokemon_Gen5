@@ -215,15 +215,18 @@ static const D_MENULIST DebugMenuList[] = {
     NULL,
     FS_OVERLAY_ID(ohno_debugapp)
     },
-  {//
-    //		DEBUG_OHNO_MSG0003,
-    //		&DebugOhnoMainProcData,
-    //		DEBUG_OHNO_MSG0023,
-    //		&NetDeliveryRecvProcData,
+  {
+#if 1
+    DEBUG_OHNO_MSG0022,
+    &NetDeliverySendProcData,
+    NULL,
+    FS_OVERLAY_ID(ohno_debugapp)
+#else
     DEBUG_OHNO_MSG0026,
     &NetDeliveryTriSendProcData,
     _initTrial,
     FS_OVERLAY_ID(ohno_debugapp)
+#endif
     },
   {//
     //		DEBUG_OHNO_MSG0014,

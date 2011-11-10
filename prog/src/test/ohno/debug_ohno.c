@@ -61,7 +61,7 @@ struct _DEBUG_OHNO_CONTROL{
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvTalkData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
-
+static void DownloadGiftData_SetFMission( DEBUG_OHNO_CONTROL * pDOC );
 
 static BOOL NetTestNone(void* pCtl);
 static BOOL NetTestSendTiming(void* pCtl);
@@ -711,7 +711,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
   static const int sc_lang_tbl[sc_debug_data_max]  =
   { 
     LANG_JAPAN,
-    LANG_ENGLISH,
+    LANG_JAPAN,
   };
 
   static const u32 sc_version_tbl[sc_debug_data_max]  =
@@ -737,18 +737,18 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
     pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.data[i].pData;
 
     GFL_STD_MemClear( pDG, sizeof(DOWNLOAD_GIFT_DATA) );
-    DEBUG_MYSTERY_SetGiftItemData(&pDG->data, ITEM_RIBATHITIKETTO );
-    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, MYSTERY_DATA_EVENT_LIBERTY, TRUE );
+    DEBUG_MYSTERY_SetGiftFMissionData(&pDG->data );
+    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 0, TRUE );
     pDG->LangCode = pDOC->aInit.data[i].LangCode;
     pDG->version  = pDOC->aInit.data[i].version;
-    pDG->event_text[0] = L'リ';
-    pDG->event_text[1] = L'バ';
-    pDG->event_text[2] = L'テ';
-    pDG->event_text[3] = L'ィ';
-    pDG->event_text[4] = L'チ';
-    pDG->event_text[5] = L'ケ';
-    pDG->event_text[6] = L'ッ';
-    pDG->event_text[7] = L'ト';
+    pDG->event_text[0] = L'フ';
+    pDG->event_text[1] = L'ェ';
+    pDG->event_text[2] = L'ス';
+    pDG->event_text[3] = L'ミ';
+    pDG->event_text[4] = L'ッ';
+    pDG->event_text[5] = L'シ';
+    pDG->event_text[6] = L'ョ';
+    pDG->event_text[7] = L'ン';
     pDG->event_text[8] = L'が';
     pDG->event_text[9] = L'も';
     pDG->event_text[10] = L'ら';
@@ -790,7 +790,8 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
   GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
 
   {
-    _fushigiDataSet(pDOC);
+    DownloadGiftData_SetFMission( pDOC );
+
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
     GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
   }
@@ -985,7 +986,6 @@ static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
   pDOC->aInit.dataNum = 1;
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
-
 }
 
 //受信のために領域確保
@@ -1484,3 +1484,44 @@ const GFL_PROC_DATA SaveFriendProcData = {
   DebugOhnoMainProcMain,
   DebugOhnoMainProcEnd,
 };
+
+
+static void DownloadGiftData_SetFMission( DEBUG_OHNO_CONTROL * pDOC )
+{
+
+  pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
+
+  pDOC->aInit.dataNum = 1;
+  pDOC->aInit.ConfusionID = 12;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+  pDOC->aInit.data[0].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[0].datasize);     // データ
+  pDOC->aInit.data[0].LangCode  = CasetteLanguage;
+  pDOC->aInit.data[0].version   = 1<<GET_VERSION();
+
+  {
+    DOWNLOAD_GIFT_DATA  *pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.data[0].pData;
+    GFL_STD_MemClear( pDG, sizeof(DOWNLOAD_GIFT_DATA) );
+    DEBUG_MYSTERY_SetGiftFMissionData(&pDG->data );
+    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 0, TRUE );
+    pDG->LangCode = pDOC->aInit.data[0].LangCode;
+    pDG->version  = pDOC->aInit.data[0].version;
+    pDG->event_text[0] = L'フ';
+    pDG->event_text[1] = L'ェ';
+    pDG->event_text[2] = L'ス';
+    pDG->event_text[3] = L'ミ';
+    pDG->event_text[4] = L'ッ';
+    pDG->event_text[5] = L'シ';
+    pDG->event_text[6] = L'ョ';
+    pDG->event_text[7] = L'ン';
+    pDG->event_text[8] = L'が';
+    pDG->event_text[9] = L'も';
+    pDG->event_text[10] = L'ら';
+    pDG->event_text[11] = L'え';
+    pDG->event_text[12] = L'る';
+    pDG->event_text[13] = L'よ';
+    pDG->event_text[14] = 0xffff;
+    pDG->crc  = GFL_STD_CrcCalc( pDG, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
+  }
+}
+

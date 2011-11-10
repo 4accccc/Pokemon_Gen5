@@ -1884,6 +1884,7 @@ static u32 MYSTERY_CARD_DATA_GetThumbnailPltOfs( const MYSTERY_CARD_DATA *cp_wk 
     0,//ポケモン
     1,//道具
     2,//GPOWER
+    2,//フェスミッション
   };
 
   const u32 type      = MYSTERY_CARD_DATA_GetType( cp_wk );
@@ -1913,6 +1914,7 @@ static u32 MYSTERY_CARD_DATA_GetCardPltOfs( const MYSTERY_CARD_DATA *cp_wk )
     0,//ポケモン
     1,//道具
     2,//GPOWER
+    2,//フェスミッション
   };
 
   const u32 type      = MYSTERY_CARD_DATA_GetType( cp_wk );

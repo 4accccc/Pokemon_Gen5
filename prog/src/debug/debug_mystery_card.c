@@ -115,8 +115,19 @@ void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data )
     p_gpower->type  = GPOWER_ID_DISTRIBUTION_END - 1;  //GPOWER_ID_DISTRIBUTION_END - 10 からMAXまでが配布用
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
+}
+void DEBUG_MYSTERY_SetGiftFMissionData( GIFT_PACK_DATA *p_data )
+{ 
+  GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
+  //道具作成
+  { 
+    GIFT_PRESENT_FMISSION  *p_fmission = &p_data->data.fmission;
+    p_fmission->no = 1;
+  }
+  p_data->gift_type     = MYSTERYGIFT_TYPE_FMISSON;
 
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  共通部分のデータ作成

@@ -39,6 +39,9 @@ extern void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u16 itemno );
 //GPOWERデータ作成
 extern void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data );
 
+
+extern void DEBUG_MYSTERY_SetGiftFMissionData( GIFT_PACK_DATA *p_data );
+
 //実データ以外のものをセット
 extern void DEBUG_MYSTERY_SetGiftCommonData( GIFT_PACK_DATA *p_data, u32 event_id, BOOL only_one_flag );
 
