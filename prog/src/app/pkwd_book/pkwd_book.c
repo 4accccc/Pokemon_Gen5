@@ -174,7 +174,12 @@ enum{
 	PKWD_BOOK_LIST_MAX			= 7,	// 1画面のリスト最大数
 	//
 //	PKWD_BOOK_SCENARIO_MAX		= POKEWOOD_SENARIO_MAX,	// シナリオ最大値
+#ifdef PM_DEBUG
+	PKWD_BOOK_SCENARIO_MAX		= 41,	// シナリオ最大値
+#else
 	PKWD_BOOK_SCENARIO_MAX		= 40,	// シナリオ最大値
+#endif
+
 	//
 	PKWD_LIST_NEW_MAX			= 9,	// new登録数最大(PKWD_BOOK_LIST_MAX+2(上下))
 };
@@ -1046,6 +1051,7 @@ static const s16 pwb_name_tbl[] = {
 	NARC_message_pokewood_senario38_m_dat, NARC_message_pokewood_senario38_f_dat,
 	NARC_message_pokewood_senario39_m_dat, NARC_message_pokewood_senario39_f_dat,
 	NARC_message_pokewood_senario40_m_dat, NARC_message_pokewood_senario40_f_dat,
+	NARC_message_pokewood_senario41_m_dat, NARC_message_pokewood_senario41_f_dat,
 };
 
 static const s16 pwb_name_id[] = {

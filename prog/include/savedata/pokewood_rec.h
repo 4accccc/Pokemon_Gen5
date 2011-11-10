@@ -93,6 +93,7 @@ void POKEWOOD_REC_Restore( const void * backup_area );
 
 //セーブ　ロード
 extern LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num );
+extern LOAD_RESULT POKEWOOD_REC_Load_ROM( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num );
 extern SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOADDATA_NUM num, u16 *p_work );
 
 //存在チェック

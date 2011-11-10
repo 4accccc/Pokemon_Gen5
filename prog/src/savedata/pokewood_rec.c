@@ -14,7 +14,8 @@
 
 #include "pokewood_rec_local.h"
 #include "savedata/pokewood_rec.h"
-
+#include "arc_def.h"
+#include "pokewood.naix"
 
 //=============================================================================
 /**
@@ -154,6 +155,8 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
 
   SaveControl_Extra_Unload( p_sv, extraID );
 
+  OS_Printf("sp_pokewood_rec_sv=%08x\n", (u32)sp_pokewood_rec_sv);
+
   OS_Printf("extraID=%d\n",extraID);
   
   //ロード結果チェック
@@ -180,6 +183,30 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
   }
 
 }
+
+LOAD_RESULT POKEWOOD_REC_Load_ROM( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num )
+{
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+
+  GFL_STD_MemClear( sp_pokewood_rec_sv, SAVESIZE_EXTRA_POKEWOOD );
+
+  //読み込み
+  GFL_ARC_LoadData( sp_pokewood_rec_sv, ARCID_POKEWOOD, NARC_pokewood_pokewood_rec01_bin );
+
+  //整合性チェック
+  if( sp_pokewood_rec_sv->crc == GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) ) )
+  {
+    return LOAD_RESULT_OK;
+  }
+  else
+  {
+    POKEWOOD_REC_Printf("ポケウッド録画データが不正です\n");
+    return LOAD_RESULT_NG;
+  }
+
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  セーブ

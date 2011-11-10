@@ -76,6 +76,7 @@ static const u8 scenario_logo_tbl[]={
   7,  7,  7,  7,  // 29 - 32–{–Ú
   8,  8,  8,  8,  // 33 - 36–{–Ú  
   9,  9,  9,  9,  // 37 - 40–{–Ú
+  1,  
 };
 
 
@@ -123,6 +124,7 @@ static const s16 pkwd_subtitle_tbl[][2] = {
 	{ pw_moviesubtitle_m_38,	pw_moviesubtitle_f_38, },	// 38Í
 	{ pw_moviesubtitle_m_39,	pw_moviesubtitle_f_39, },	// 39Í
 	{ pw_moviesubtitle_m_40,	pw_moviesubtitle_f_40, },	// 40Í
+	{ pw_moviesubtitle_m_41,	pw_moviesubtitle_f_41, },	// 40Í
 
 };
 

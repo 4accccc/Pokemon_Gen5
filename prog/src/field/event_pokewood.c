@@ -110,15 +110,14 @@ typedef struct {
 
 
 //-----------------------------------------------------------------------------
+// define
 //-----------------------------------------------------------------------------
+
+/// チュートリアル再生を行わせるための録画ID
+#define POKEWOOD_TUTORIAL_MOVIE_NO  ( 8 )   
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static const int trainerData[][2]={
-  { TRTYPE_SCIENTISTW, TRTYPE_SCIENTISTW,   },     // 研究員
-  { TRTYPE_LEADER7,    TRTYPE_PKWD_VILLAIN, },     // ハチクマン
-  { TRTYPE_SCIENTISTW, TRTYPE_SCIENTISTW,   },     // 研究員
-};
 
 //定義した値がずれないようにしている
 SDK_COMPILER_ASSERT( PKWD_REC_POS_00 == LOADDATA_POKEWOOD0 );
@@ -311,8 +310,6 @@ static const audience_tbl[][2]={ {5,5}, {7,6}, {10,9}, {16,7}, {22,1} };
 //-----------------------------------------------------------------------------
 /**
  * @brief ポケウッド録画用セットアップ
- * @todo  録画への対応
- * @todo  シナリオへの対応
  */
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, int senario_no )
@@ -373,16 +370,33 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
 
 //-----------------------------------------------------------------------------
 /**
- * @brief ポケウッド再生用セットアップ
- * @todo  正式録画データへの対応
+ * @brief ポケウッド再生用敵トレーナー・ポケモン情報セットアップ
  */
 //-----------------------------------------------------------------------------
-static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id, int senario_no )
+static void _setup_enemyData( GAMEDATA *gamedata, BATTLE_SETUP_PARAM *bsp, int senario_no, HEAPID heapID )
+{
+  const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+
+  //敵ポケモンをROMから読みだす
+  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
+  saveDataConvertRecToShow( bsp, heapID );
+
+  //敵トレーナーもROMから読み出す
+  dataMakePokewoodShowEnenyTrainer( bsp, heapID );
+  
+}
+//-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッド再生用セットアップSUB(通常上映時のセットアップ）
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM *_createNormalShowBSP(
+                           GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id)
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
   LOAD_RESULT result;
+  int senario_no=0;
 
   OS_Printf("load id=%d\n", replay_id);
   //POKEWOOD_REC_Init( heapID );
@@ -398,28 +412,93 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
     senario_no  = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL );
     BattleRec_RestoreSetupParam( bsp, BTLREC_RESOTRE_MODE_POKEWOOD, heapID );
     BattleRec_UnloadToolModule();
-//    bsp->PokewoodMode = BTL_POKEWOOD_SHOW;  //RestoreSetupParamが入れてくれる
-//    bsp->pokewoodSenario = senario_no; 
     OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(bsp->playerStatus[0]));
-
-    //敵ポケモンはROMから読みだす
-    {
-      const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
-      setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
-      saveDataConvertRecToShow( bsp, heapID );
-    }
-
-    //敵トレーナーもROMから読み出す
-    {
-      dataMakePokewoodShowEnenyTrainer( bsp, heapID );
-    }
+  
+    // 敵トレーナー・ポケモン情報を格納
+    _setup_enemyData( gamedata, bsp, senario_no, heapID );
 
     return bsp;
   }
-  else
-  { //仮：再生データがない場合への対応
-    return createPokewoodRecBattleParam( gsys, fieldmap, heapID, senario_no );
+
+  GF_ASSERT_MSG( 0,"再生データが読み込めていないのに上映しようとしている!!!\n" );
+  return NULL;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッドチュートリアルムービー再生用セットアップSUB
+ *        外部セーブデータを読み込まずに、ROM内のデータを再生します。
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM *_createTutorialShowBSP(
+                           GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+  LOAD_RESULT result;
+  BATTLE_SETUP_PARAM * bsp;
+
+  result = POKEWOOD_REC_Load_ROM( sv, heapID, 0 );
+
+  // ROMから読み込むので、ロード結果は必ずLOAD_RESULT_OKになる
+  bsp = BATTLE_PARAM_Create( heapID );
+  BATTLE_PARAM_Init( bsp );
+  BTL_SETUP_InitForRecordPlay( bsp, gamedata, heapID );
+  BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+  BattleRec_RestoreSetupParam( bsp, BTLREC_RESOTRE_MODE_POKEWOOD, heapID );
+  BattleRec_UnloadToolModule();
+
+  // 敵トレーナー・ポケモン情報を格納
+  _setup_enemyData( gamedata, bsp, bsp->pokewoodSenario, heapID );
+  OS_Printf("tutorial senario_no = %d\n", bsp->pokewoodSenario);
+
+  return bsp;
+
+}
+//-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッド再生用セットアップ
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam( 
+                            GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id )
+{
+  // チュートリアル再生用のBSP作成
+  if(replay_id==POKEWOOD_TUTORIAL_MOVIE_NO){
+    return _createTutorialShowBSP( gsys, fieldmap, heapID);
   }
+  
+  // 通常時BSP作成
+  return _createNormalShowBSP( gsys, fieldmap, heapID, replay_id);
+
+  // ここでscenario_noが代入されます
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッドチュートリアルムービー再生用セットアップ
+ *        外部セーブデータを読み込まずに、ROM内のデータを再生します。
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM * createPokewoodTutorialShowBattleParam(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id, int senario_no )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+  LOAD_RESULT result;
+  BATTLE_SETUP_PARAM * bsp;
+
+  result = POKEWOOD_REC_Load_ROM( sv, heapID, replay_id );
+
+  // ROMから読み込むので、ロード結果は必ずLOAD_RESULT_OKになる
+  bsp = BATTLE_PARAM_Create( heapID );
+  BATTLE_PARAM_Init( bsp );
+  BTL_SETUP_InitForRecordPlay( bsp, gamedata, heapID );
+  BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+  BattleRec_RestoreSetupParam( bsp, BTLREC_RESOTRE_MODE_POKEWOOD, heapID );
+  BattleRec_UnloadToolModule();
+
+  return bsp;
 }
 
 
@@ -455,6 +534,8 @@ static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int
   GFL_MSG_Delete(msg);
 
 }
+
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodBSP(
@@ -479,7 +560,7 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     // 録画データ読み込み、BGM設定、敵トレーナータイプ名設定
     {
       POKEWOOD_SENARIO *senario;
-      bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->rec_id, prew->SenarioNo );
+      bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->rec_id );
       senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, bsp->pokewoodSenario, GetHeapLowID(heapID));
       bsp->musicDefault = senario->battle_bgm;
       bsp->musicWin     = senario->win_bgm;
@@ -489,8 +570,8 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
       GFL_HEAP_FreeMemory( senario );
     }
     
-    // 上映キャンセル可能にするか
-    {
+    // 上映キャンセル可能にするか?
+    if(bsp->pokewoodSenario<POKEWOOD_PLAY_MAX){   //チュートリアル上映は常にキャンセル禁止
       // この録画データは一度上映しているか？
       if(POKEWOOD_SAVEDATA_GetMovieShowed( ps, prew->rec_id )==0){
         OS_Printf("上映してない id=%d\n", prew->rec_id);
@@ -792,6 +873,9 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   case PW_SHOW_SEQ_FREE_BSP:
     // バトルで使用したトレーナータイプ名バッファを削除
     GFL_STR_DeleteBuffer( prew->TrainerTypeName );
+
+    // チュートリアル上映でなければ評価・キャンセル計算
+    if(pbew->bp->pokewoodSenario<POKEWOOD_PLAY_MAX)
     { //途中でキャンセルしてないかをスクリプトに返す
       PKWDSYS * pkwdsys = *(GAMEDATA_GetPKWDSysPointer( gamedata ) );
       u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
@@ -1053,6 +1137,31 @@ GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work )
 }
 
 
+//=============================================================================================
+/**
+ * @brief	チュートリアル上映
+ *
+ * @param   gsys		
+ * @param   parent_work		
+ *
+ * @retval  GMEVENT *		
+ */
+//=============================================================================================
+GMEVENT *POKEWOOD_EVENT_TutorialShow( GAMESYS_WORK *gsys, void * parent_work )
+{
+  GMEVENT * event;
+  PREW * prew;
+
+  event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
+  prew = GMEVENT_GetEventWork( event );
+  prew->gsys = gsys;
+  prew->heapID = HEAPID_PROC;
+  prew->rec_id = POKEWOOD_TUTORIAL_MOVIE_NO; // チュートリアルムービー指定
+  OS_Printf(" チュートリアルムービー再生開始 POKEWOOD EVENT Parent Value = %x\n", prew->rec_id);
+  prew->PokewoodMode = BTL_POKEWOOD_SHOW;
+
+  return event;
+}
 
 
 //============================================================================================
@@ -1662,7 +1771,7 @@ void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result,
   
   
   // i番目のシナリオがまだオープンしていないのであればチェック
-  for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+  for(i=0;i<POKEWOOD_PLAY_MAX;i++){
 
     if( POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_OPEN, i)==0){
       switch(ScenarioProvisionTbl[i].open_provision){

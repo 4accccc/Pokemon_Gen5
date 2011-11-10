@@ -46,6 +46,7 @@ extern void POKEWOOD_EVENT_setupPokemon( const MYSTATUS * mystat, POKEPARTY * pa
 
 extern GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * param );
 extern GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work );
+extern GMEVENT * POKEWOOD_EVENT_TutorialShow( GAMESYS_WORK *gsys, void * parent_work );
 
 
 extern GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );

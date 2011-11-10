@@ -840,7 +840,7 @@
 #define   SCR_PKWD_MOVIE_MAX        (4)
 
 ///最大シナリオナンバー
-#define   SCR_PKWD_SCENARIO_MAX     (40)
+#define   SCR_PKWD_SCENARIO_MAX     (41)
 
 //ポケウッドシナリオ情報の種別指定
 #define   SCR_PKWD_SCENARIO_OPEN_FLAG         (0) ///<オープンしているか（遊べるか）

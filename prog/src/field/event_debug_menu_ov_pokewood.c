@@ -124,6 +124,7 @@ static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_OpenScenario41(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series01_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series02_ready(POKEWOOD_FUNC_WORK *wk);
@@ -221,6 +222,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN38, (void*)debugMenu_OpenScenario38, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN39, (void*)debugMenu_OpenScenario39, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN40, (void*)debugMenu_OpenScenario40, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_OPEN41, (void*)debugMenu_OpenScenario41, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN_GRAPHIC, (void*)debugMenu_OpenScenario_for_Graphic, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES01,        (void*)debugMenu_series01_ready, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES02,        (void*)debugMenu_series02_ready, GFL_OVERLAY_BLANK_ID },
@@ -524,7 +526,7 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
     POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
     
-    for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+    for(i=0;i<POKEWOOD_PLAY_MAX;i++){
       if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(ps,i)){
         count ++;
       }
@@ -729,6 +731,7 @@ static BOOL debugMenu_OpenScenario37(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 3
 static BOOL debugMenu_OpenScenario38(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 37 );  return FALSE;}
 static BOOL debugMenu_OpenScenario39(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 38 );  return FALSE;}
 static BOOL debugMenu_OpenScenario40(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 39 );  return FALSE;}
+static BOOL debugMenu_OpenScenario41(POKEWOOD_FUNC_WORK *wk){  _open_flag( wk, 40 );  return FALSE;}
 
 static BOOL debugMenu_OpenScenario_for_Graphic(POKEWOOD_FUNC_WORK *wk)
 {

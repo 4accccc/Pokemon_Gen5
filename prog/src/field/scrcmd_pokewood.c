@@ -324,6 +324,11 @@ VMCMD_RESULT EvCmdPokewoodShow( VMHANDLE *core, void *wk )
 
   next_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)&rec_id );
+
+//  こっちはチュートリアル再生
+//  next_event = GMEVENT_CreateOverlayEventCall( gsys,
+//      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_TutorialShow, (void*)&rec_id );
+
   SCRIPT_CallEvent( scw, next_event );
   PKWDSYS_SetScriptAnswerWork( pkwdsys, ret_wk );
 
