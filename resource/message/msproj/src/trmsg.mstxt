@@ -25908,27 +25908,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　そだてかたの　ごくい
-ぬすめるまで　なんども　あいてするわ！</Text>
+			<Text>きみが　ここに　くるたび
+あいてを　してもらうんだから！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:47:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　育て方の　極意
-盗めるまで　なんども　相手するわ！</Text>
+			<Text>きみが　ここに　来るたび
+相手を　してもらうんだから！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-10T11:47:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
