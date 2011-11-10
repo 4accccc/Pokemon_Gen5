@@ -14,7 +14,7 @@
 #include "monolith.naix"
 #include "monolith_tool.h"
 #include "field/intrude_common.h"
-#include "intrude_work.h"
+//#include "intrude_work.h"
 #include "msg/msg_monolith.h"
 
 
@@ -671,7 +671,11 @@ void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr
 //==================================================================
 MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 {
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
+  return GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys));
+#else
   return Intrude_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
 }
 
 //==================================================================
@@ -685,7 +689,11 @@ MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 //==================================================================
 OCCUPY_INFO * MonolithTool_GetOccupyInfo(MONOLITH_APP_PARENT *appwk)
 {
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
+  return GAMEDATA_GetMyOccupyInfo( GAMESYSTEM_GetGameData(appwk->parent->gsys) );
+#else
   return Intrude_GetOccupyInfo(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
 }
 
 //==================================================================

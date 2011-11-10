@@ -23,8 +23,8 @@
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
 #include "system/net_err.h"
-#include "intrude_comm_command.h"
-#include "intrude_work.h"
+//#include "intrude_comm_command.h"
+//#include "intrude_work.h"
 
 
 
@@ -126,6 +126,8 @@ const GFL_PROC_DATA MonolithProcData = {
   MonolithProc_Main,
   MonolithProc_End,
 };
+
+SDK_COMPILER_ASSERT( NELEMS(MonolithProcTbl) == MONOLITH_MENU_END );
 
 //--------------------------------------------------------------
 //	BG
@@ -248,7 +250,9 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
   MONOLITH_SYSTEM *monosys = mywk;
   MONOLITH_PARENT_WORK *parent = pwk;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(parent->gsys);
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
   enum{
     SEQ_INIT,
     SEQ_MONOLITH_IN,
@@ -267,6 +271,9 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_IN:
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
+    (*seq)++;
+#else
     if(intcomm == NULL || NetErr_App_CheckError()){
       (*seq)++;
     }
@@ -275,6 +282,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
         (*seq)++;
       }
     }
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
     break;
   case SEQ_INIT_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){
@@ -282,10 +290,12 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     }
     break;
   case SEQ_PROC_MAIN:
+#ifndef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
     //N“ü‚ª‹N“®‚µ‚Ä‚¢‚½ó‘Ô‚ÅØ’fó‘Ô‚É‚È‚Á‚½‚çƒ‚ƒmƒŠƒX‰æ–Ê‚ğI—¹‚³‚¹‚é
     if(NetErr_App_CheckError() || (intcomm == NULL && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL) || (intcomm == NULL && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION)){
       monosys->app_parent.force_finish = TRUE;
     }
+#endif  //DISABLE_INTRUDE swan‚ÅN“ü‚ğíœ
     
     if(monosys->app_parent.force_finish == FALSE){
       //ã‰ºAŠePROC‚ª–³‚¢ê‡‚ÍŸ‚ÌPROC‚ğ¶¬
@@ -351,6 +361,9 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_OUT:
+#ifdef  DISABLE_INTRUDE // swan‚ÅN“ü‚ğíœ
+    (*seq)++;
+#else
     if(intcomm == NULL || NetErr_App_CheckError()){
       (*seq)++;
     }
@@ -359,6 +372,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
         (*seq)++;
       }
     }
+#endif
     break;
   case SEQ_END_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){
