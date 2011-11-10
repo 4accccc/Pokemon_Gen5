@@ -38,7 +38,8 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*   work     = (SCRCMD_WORK*)wk;
   u16            beacon_id  = SCRCMD_GetVMWorkValue( core, work );
-  u16            value      = SCRCMD_GetVMWorkValue( core, work );
+  u16            value1     = SCRCMD_GetVMWorkValue( core, work );
+  u16            value2     = SCRCMD_GetVMWorkValue( core, work );
   GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*      gamedata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
@@ -46,10 +47,10 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
 
   switch( beacon_id ){
   case SCR_BEACON_SET_REQ_ITEM_GET: //アイテム拾った
-    GAMEBEACON_Set_SpItemGet( value );
+    GAMEBEACON_Set_SpItemGet( value1 );
     break;
   case SCR_BEACON_SET_REQ_FSKILL_USE: //フィールド技を使った
-    GAMEBEACON_Set_FieldSkill( value );
+    GAMEBEACON_Set_FieldSkill( value1 );
     break;
   case SCR_BEACON_SET_REQ_UNION_COUNTER: //ユニオンカウンター処理開始
     GAMEBEACON_Set_UnionIn();
@@ -58,7 +59,7 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
     GAMEBEACON_Set_TrialHouse();
     break;
   case SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK: //トライアルハウスランクセット
-    GAMEBEACON_Set_TrialHouseRank( value );
+    GAMEBEACON_Set_TrialHouseRank( value1 );
     break;
   case SCR_BEACON_SET_REQ_POKE_SHIFTER_START: //ポケシフター挑戦開始
     GAMEBEACON_Set_PokeShifter();
@@ -67,10 +68,25 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
     GAMEBEACON_Set_Subway();
     break;
   case SCR_BEACON_SET_REQ_SUBWAY_WIN: //サブウェイ勝利
-    GAMEBEACON_Set_SubwayStraightVictories( value );
+    GAMEBEACON_Set_SubwayStraightVictories( value1 );
     break;
   case SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET:  //サブウェイトロフィーゲット
     GAMEBEACON_Set_SubwayTrophyGet();
+    break;
+  case SCR_BEACON_SET_REQ_WBT_ENTRY:  ///<WBTトーナメント挑戦開始
+    GAMEBEACON_Set_WBTEntry( (WBTCUP)value1 );
+    break;
+  case SCR_BEACON_SET_REQ_WBT_WIN:  ///<WBTトーナメントX回戦勝利
+    GAMEBEACON_Set_WBTWin( (WBTCUP)value1, (u8)value2 );
+    break;
+  case SCR_BEACON_SET_REQ_WBT_LOSE:  ///<WBTトーナメントX回戦敗退
+    GAMEBEACON_Set_WBTLose( (WBTCUP)value1, (u8)value2 );
+    break;
+  case SCR_BEACON_SET_REQ_INF_DUNGEON_ENTRY: ///<無限ダンジョン挑戦
+    GAMEBEACON_Set_InfinityDungeonEntry( (u8)value1 );
+    break;
+  case SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR:  ///<無限ダンジョンクリア
+    GAMEBEACON_Set_InfinityDungeonClear( (u8)value1 );
     break;
   }
   return VMCMD_RESULT_CONTINUE;

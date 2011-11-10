@@ -1358,8 +1358,6 @@ void BEACONINFO_Set_WBT(GAMEBEACON_INFO *info, WBTCUP tournament_id, u8 round, G
 //==================================================================
 /**
  * 送信ビーコンセット：ジョインアベニューで買い物中
- *
- * @param senario_no 
  */
 //==================================================================
 void GAMEBEACON_Set_JoinAvenueShopping( void )

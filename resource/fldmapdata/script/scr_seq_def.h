@@ -8616,10 +8616,11 @@
  *  ビーコンセットリクエスト共有マクロ
  */
 //--------------------------------------------------------------
-  .macro _ASM_BEACON_SET_REQ beacon_id, value
+  .macro _ASM_BEACON_SET_REQ beacon_id, value1, value2
   .short EV_SEQ_BEACON_SET_REQUEST
   .short \beacon_id
-  .short \value 
+  .short \value1 
+  .short \value2 
   .endm
 
 /**
@@ -8628,7 +8629,7 @@
  * @param itemno  取得したアイテムのナンバー
  */
 #define _BEACON_SET_REQ_ITEM_GET( itemno ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_ITEM_GET, itemno
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_ITEM_GET, itemno, 0
 
 /**
  * @def _BEACON_SET_REQ_FSKILL_USE
@@ -8636,63 +8637,103 @@
  * @param wazano  使用した技No
  */
 #define _BEACON_SET_REQ_FSKILL_USE( wazano ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FSKILL_USE, wazano
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FSKILL_USE, wazano, 0
 
 /**
  * @def _BEACON_SET_REQ_UNION_COUNTER
  * @brief ユニオンルームカウンター処理開始ビーコンセット
  */
 #define _BEACON_SET_REQ_UNION_COUNTER( ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_UNION_COUNTER, 0
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_UNION_COUNTER, 0, 0
 
 /**
  * @def _BEACON_SET_REQ_TRIAL_HOUSE_START
  * @brief トライアルハウス挑戦開始ビーコンセット
  */
 #define _BEACON_SET_REQ_TRIAL_HOUSE_START( ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_START, 0
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_START, 0, 0
 
 /**
  * @def _BEACON_SET_REQ_TRIAL_HOUSE_RANK
  * @brief トライアルハウスランクビーコンセット
  */
 #define _BEACON_SET_REQ_TRIAL_HOUSE_RANK( rank ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK, rank
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK, rank, 0
 
 /**
  * @def _BEACON_SET_REQ_POKE_SHIFTER_START
  * @brief ポケシフター挑戦開始ビーコンセット
  */
 #define _BEACON_SET_REQ_POKE_SHIFTER_START( ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_POKE_SHIFTER_START, 0
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_POKE_SHIFTER_START, 0, 0
 
 /**
  * @def _BEACON_SET_REQ_SUBWAY_START
  * @brief バトルサブウェイ挑戦開始ビーコンセット
  */
 #define _BEACON_SET_REQ_SUBWAY_START( ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_START, 0
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_START, 0, 0
 
 /**
  * @def _BEACON_SET_REQ_SUBWAY_WIN
  * @brief バトルサブウェイラウンド数ビーコンセット
  */
 #define _BEACON_SET_REQ_SUBWAY_WIN( round_num ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_WIN, round_num 
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_WIN, round_num, 0
 
 /**
  * @def _BEACON_SET_REQ_SUBWAY_TROPHY_GET
  * @brief バトルサブウェイトロフィー取得ビーコンセット
  */
 #define _BEACON_SET_REQ_SUBWAY_TROPHY_GET( ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET, 0
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET, 0, 0
 
 /**
- * @def _BEACON_SET_REQ_FMISSION_ITEM_GET
- * @brief ミッションアイテム取得ビーコンセット
+ * @def _BEACON_SET_REQ_WBT_ENTRY
+ * @brief WBT挑戦開始ビーコンセット
+ *
+ * @param トーナメントID WBTCUP型
  */
-#define _BEACON_SET_REQ_FMISSION_ITEM_GET( item_no ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FMISSION_ITEM_GET, item_no
+#define _BEACON_SET_REQ_WBT_ENTRY( tournament_id ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_WBT_ENTRY, tournament_id, 0
+
+/**
+ * @def _BEACON_SET_REQ_WBT_WIN
+ * @brief WBT対戦X回戦突破ビーコンセット
+ *
+ * @param トーナメントID WBTCUP型
+ * @param X回戦目(勝利数なので1オリジンになる。1回戦勝利なら1)
+ */
+#define _BEACON_SET_REQ_WBT_WIN( tournament_id, round ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_WBT_WIN, tournament_id, round
+
+/**
+ * @def _BEACON_SET_REQ_WBT_LOSE
+ * @brief WBT対戦X回戦敗退ビーコンセット
+ *
+ * @param トーナメントID WBTCUP型
+ * @param X回戦目で敗退(勝利数なので負けの場合0オリジン。1回戦敗退なら0)
+ */
+#define _BEACON_SET_REQ_WBT_LOSE( tournament_id, round ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_WBT_LOSE, tournament_id, round
+
+/**
+ * @def _BEACON_SET_REQ_INF_DUNGEON_ENTRY
+ * @brief 無限ダンジョンエリアX挑戦開始ビーコンセット
+ *
+ * @param 無限ダンジョンエリアNO 
+ */
+#define _BEACON_SET_REQ_INF_DUNGEON_ENTRY( area_no ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_INF_DUNGEON_ENTRY, area_no, 0
+
+/**
+ * @def _BEACON_SET_REQ_INF_DUNGEON_CLEAR
+ * @brief 無限ダンジョンエリアXクリアビーコンセット
+ *
+ * @param 無限ダンジョンエリアNO 
+ */
+#define _BEACON_SET_REQ_INF_DUNGEON_CLEAR( area_no ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR, area_no, 0
 
 //--------------------------------------------------------------
 /**
