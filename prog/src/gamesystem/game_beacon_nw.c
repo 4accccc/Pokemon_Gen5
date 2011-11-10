@@ -192,7 +192,7 @@ void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_START) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -206,7 +206,6 @@ void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_START;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_BattleTrainer(info, tr_no);
 }
@@ -227,7 +226,7 @@ void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -241,7 +240,6 @@ void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -262,7 +260,7 @@ void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_START) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -276,7 +274,6 @@ void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_START;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_BattleLeader(info, tr_no);
 }
@@ -297,7 +294,7 @@ void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -311,7 +308,6 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -332,7 +328,7 @@ void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -346,7 +342,6 @@ void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
 }
@@ -367,7 +362,7 @@ void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -381,7 +376,6 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -402,7 +396,7 @@ void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -416,7 +410,6 @@ void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
 }
@@ -437,7 +430,7 @@ void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
   BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
 }
 
@@ -451,7 +444,6 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
   info->action.tr_no = tr_no;
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワン以降だけ
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -1264,7 +1256,175 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 
 //==================================================================
 /**
- * 送信ビーコンセット：全滅した
+ * 送信ビーコンセット：ポケウッドで映画を撮影した
+ *
+ * @param senario_no 
+ */
+//==================================================================
+void GAMEBEACON_Set_PokewoodFilming( u8 senario_no )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKEWOOD_FILMING ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, senario_no, GAMEBEACON_ACTION_POKEWOOD_FILMING );
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ポケウッドで映画を観賞した
+ *
+ * @param senario_no 
+ */
+//==================================================================
+void GAMEBEACON_Set_PokewoodWatchMovie( u8 senario_no )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKEWOOD_WATCH_MOVIE ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, senario_no, GAMEBEACON_ACTION_POKEWOOD_WATCH_MOVIE );
+}
+
+//==================================================================
+/**
+ * ビーコンセット：ポケウッド詳細セット
+ */
+//==================================================================
+void BEACONINFO_Set_Pokewood(GAMEBEACON_INFO *info, u8 scenario_no, GAMEBEACON_ACTION action )
+{
+  info->action.action_no = action;
+  info->action.pokewood_senario_no = scenario_no;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：WBTに挑戦した
+ *
+ * @param tournament_id WBTのトーナメントID 
+ */
+//==================================================================
+void GAMEBEACON_Set_WBTEntry( WBTCUP tournament_id )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_WBT_ENTRY ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_WBT(&GameBeaconSys->send.info, tournament_id, 0, GAMEBEACON_ACTION_WBT_ENTRY );
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：WBTのX回戦を突破した
+ *
+ * @param tournament_id WBTのトーナメントID 
+ * @param round         勝利数を送るので1オリジン(1回戦突破なら1,優勝時が3=WBT_BATTLE_NUM)
+ */
+//==================================================================
+void GAMEBEACON_Set_WBTWin( WBTCUP tournament_id, u8 round )
+{
+  GAMEBEACON_ACTION action = ( (round==WBT_BATTLE_NUM)? GAMEBEACON_ACTION_WBT_WIN_CHAMPIONSHIP:GAMEBEACON_ACTION_WBT_WIN ); 
+  
+  if( GAMEBEACON_SUB_CheckPriority(action) == FALSE ){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_WBT(&GameBeaconSys->send.info, tournament_id, round, action );
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：WBTのX回戦で敗退した
+ *
+ * @param tournament_id WBTのトーナメントID 
+ * @param round         0オリジン(0回戦敗退なら0,決勝戦敗退なら2 勝利数を送る) 
+ */
+//==================================================================
+void GAMEBEACON_Set_WBTLose( WBTCUP tournament_id, u8 round )
+{
+  if( GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_WBT_LOSE) == FALSE ){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_WBT(&GameBeaconSys->send.info, tournament_id, round, GAMEBEACON_ACTION_WBT_LOSE );
+}
+
+//==================================================================
+/**
+ * ビーコンセット：WBT
+ */
+//==================================================================
+void BEACONINFO_Set_WBT(GAMEBEACON_INFO *info, WBTCUP tournament_id, u8 round, GAMEBEACON_ACTION action )
+{
+  info->action.action_no = action;
+  info->action.wbt.tournament_id = tournament_id;
+  info->action.wbt.round = round;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：ジョインアベニューで買い物中
+ *
+ * @param senario_no 
+ */
+//==================================================================
+void GAMEBEACON_Set_JoinAvenueShopping( void )
+{
+  if(GAMEBEACON_SUB_CheckPriority( GAMEBEACON_ACTION_JOIN_AVENUE_SHOPPING ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_JoinAvenueShopping(&GameBeaconSys->send.info );
+}
+
+//==================================================================
+/**
+ * ビーコンセット：ジョインアベニューで買い物中
+ */
+//==================================================================
+void BEACONINFO_Set_JoinAvenueShopping(GAMEBEACON_INFO *info )
+{
+  info->action.action_no = GAMEBEACON_ACTION_JOIN_AVENUE_SHOPPING;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：無限ダンジョンのエリアXに挑戦中
+ *
+ * @param senario_no 
+ */
+//==================================================================
+void GAMEBEACON_Set_InfinityDungeonEntry( u8 area_no )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, area_no, GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY );
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：無限ダンジョンのエリアXをクリアした
+ *
+ * @param senario_no 
+ */
+//==================================================================
+void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR ) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, area_no, GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR );
+}
+
+//==================================================================
+/**
+ * ビーコンセット：無限ダンジョン詳細セット
+ */
+//==================================================================
+void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, GAMEBEACON_ACTION action )
+{
+  info->action.action_no = action;
+  info->action.infinity_dungeon_area_no = area_no;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスミッション用 全滅した
  */
 //==================================================================
 void GAMEBEACON_Set_GameOver( void )

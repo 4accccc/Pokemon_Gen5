@@ -87,13 +87,23 @@ extern BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info);
 
 //--------------------------------------------------------------
 /**
- * 送信ビーコンをセットした時の共通処理
+ * 送信ビーコンをセットした時の共通処理(基本全バージョン受け取り可)
  *
  * @param   send		
  * @param   info		
  */
 //--------------------------------------------------------------
 extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
+
+//--------------------------------------------------------------
+/**
+ * 送信ビーコンをセットした時の共通処理(SWAN以降のみ受け取り可)
+ *
+ *以以降降 @param   send		
+ * @param   info		
+ */
+//--------------------------------------------------------------
+extern void GAMEBEACON_SUB_SendBeaconSetCommonSwan(GAMEBEACON_SEND_MANAGER *send);
 
 //--------------------------------------------------------------
 /**
@@ -209,6 +219,10 @@ void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word, u8 
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
+void BEACONINFO_Set_Pokewood(GAMEBEACON_INFO *info, u8 scenario_no, GAMEBEACON_ACTION action );
+void BEACONINFO_Set_WBT(GAMEBEACON_INFO *info, WBTCUP tournament_id, u8 round, GAMEBEACON_ACTION action );
+void BEACONINFO_Set_JoinAvenueShopping(GAMEBEACON_INFO *info );
+void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, GAMEBEACON_ACTION action );
 
 void BEACONINFO_Set_FMissionEventClear(GAMEBEACON_INFO *info, u16 ev_id );
 

@@ -3082,11 +3082,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:PokewoodScenarioName Idx="1" ]
+を　ポケウッドで　さつえいちゅうです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3094,11 +3095,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:PokewoodScenarioName Idx="1" ]
+を　ポケウッドで　撮影中です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3106,10 +3108,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FEST_MISSION</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：ポケウッドの映画タイトル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:37:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3120,7 +3124,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3131,11 +3135,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:PokewoodScenarioName Idx="1" ]
+を　ポケウッドで　かんしょうちゅうです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:40:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3143,11 +3148,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:PokewoodScenarioName Idx="1" ]
+を　ポケウッドで　観賞中です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:41:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3155,10 +3161,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_POKE_ENCOUNT</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：ポケウッドの映画タイトル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:37:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3169,7 +3177,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3180,11 +3188,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]に
+ちょうせんちゅうです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3192,11 +3201,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]に
+挑戦中です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3204,10 +3214,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_POKE_WIN</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：WBTのトーナメント名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:42:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3218,7 +3230,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3229,11 +3241,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+[Digit:1digit Idx="2" ]かいせんを　とっぱしました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3241,11 +3254,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+[Digit:1digit Idx="2" ]回戦を　突破しました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:43:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3253,10 +3267,13 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_POKE_CAPTURE</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：WBTのトーナメント名
+2：何回戦目か(1-2)</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:43:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3267,7 +3284,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3278,11 +3295,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+[Digit:1digit Idx="2" ]かいせんで　はいたいしました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:43:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3290,11 +3308,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+[Digit:1digit Idx="2" ]回戦で　敗退しました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:44:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3302,10 +3321,13 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_POKE_ESCAPE</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：WBTのトーナメント名
+2：何回戦目か(1-2)</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:43:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3316,7 +3338,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3327,11 +3349,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+ゆうしょう　しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3339,11 +3362,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:WBTTournament Idx="1" ]で
+優勝　しました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:44:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3351,10 +3375,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_TR_ENCOUNT</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：WBTのトーナメント名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:44:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3365,7 +3391,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3376,11 +3402,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+ジョインアベニューで
+かいものを　しています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:45:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3388,11 +3415,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+ジョインアベニューで
+買い物を　しています</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:45:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3400,10 +3428,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_GAMEOVER</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T09:45:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3414,7 +3444,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3425,11 +3455,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:Place Idx="1" ]の　エリア[Digit:2digits Idx="2" ]に
+ちょうせんちゅうです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3437,11 +3468,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:Place Idx="1" ]の　エリア[Digit:2digits Idx="2" ]に
+挑戦中です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3449,10 +3481,13 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_ITEM_USE</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：無限ダンジョン地名
+2：無限ダンジョンエリア数(1-10)</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:24:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3463,7 +3498,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3474,11 +3509,12 @@ msg_sys_gpower_use00～02が
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:Place Idx="1" ]の　エリア[Digit:2digits Idx="2" ]を
+クリアしました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3486,11 +3522,12 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+[Name:Place Idx="1" ]の　エリア[Digit:2digits Idx="2" ]を
+クリアしました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3498,10 +3535,13 @@ msg_sys_gpower_use00～02が
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>FMISSION_GPOWER</Comment>
+			<Comment>swan追加
+0：プレイヤー名
+1：無限ダンジョン地名
+2：無限ダンジョンエリア数(1-10)</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-11-08T11:24:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3512,203 +3552,7 @@ msg_sys_gpower_use00～02が
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_beacon_060"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>FMISSION_EVENT_CLEAR</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_beacon_061"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>FMISSION_FREEWORD</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_beacon_062"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>FMISSION_POKE_DOWN</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_beacon_063"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-じゅしん　しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　フェスミッションを
-受信しました</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>FMISSION_POKE_DOWN</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

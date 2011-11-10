@@ -82,6 +82,8 @@ typedef struct{
     u32 victory_count;                      ///<連勝数
     u8 trial_house_rank;                    ///<トライアルハウスのランク
     u16 gpower_id;                          ///<GパワーID
+    u8  pokewood_senario_no;                ///<[SWAN追加]ポケウッドシナリオNo
+    u8  infinity_dungeon_area_no;           ///<[SWAN追加]無限ダンジョンエリアNo
     struct{ //通常
       STRCODE nickname[MONS_NAME_SIZE];       ///<ポケモン名(ニックネーム) !! EOM除く !!
     }normal;
@@ -99,6 +101,10 @@ typedef struct{
       STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
       u8  shortcut_id;  ///<メッセージ入力時に使用したショートカットのID NAMEIN_SHORTCUT_RET in include/app/name_input.h
     }freeword;
+    struct{ //[SWAN追加]
+      u8  tournament_id;  ///<WBTトーナメントID
+      u8  round;          ///<何回戦か？
+    }wbt;
     FEST_BEACON  fmission;
     u8 extend_buff[20];   ///<２０バイトのフリーエリア  リゾートで使用
   };

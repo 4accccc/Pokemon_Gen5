@@ -524,7 +524,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 
   GFL_FONTSYS_SetDefaultColor();
  
-  wk->wordset = WORDSET_Create( wk->heap_sID);
+  wk->wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_DEFAULT_BUFLEN*2, wk->heap_sID);
 
 	wk->mm_status = GFL_MSG_Create(
 		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );

@@ -53,6 +53,8 @@
 #include "gamesystem/link_festival.h" //許可なく他でinclude禁止
 #include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
+#include "field/infinity_dungeon_def.h"
+#include "battle/pokewood.h"
 #include "event_debug_livecomm.h"
 
 //======================================================================
@@ -118,7 +120,7 @@ typedef enum{
   FAKE_VERSION,
   FAKE_LANG,
   FAKE_COLOR,
-  FAKE_CHAR,
+  FAKE_TR_VIEW,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -136,6 +138,8 @@ typedef enum{
   BPRM_WSET_VERSION,
   BPRM_WSET_LANG,
   BPRM_WSET_ZONE,
+  BPRM_WSET_POKEWOOD,
+  BPRM_WSET_WBT,
 }BPRM_WSET_TYPE;
 
 typedef enum{
@@ -154,6 +158,9 @@ typedef enum{
  BEACON_PSET_ID,          //プレイヤーID
  BEACON_PSET_FREEWORD,    //フリーワード8文字
  BEACON_PSET_SCORE,       //ミッションスコア
+ BEACON_PSET_POKEWOOD,    //ポケウッド
+ BEACON_PSET_WBT,         //WBT
+ BEACON_PSET_INF_DUNGEON, //無限ダンジョン
  BEACON_PSET_MAX,
 }BEACON_PSET_TYPE;
 
@@ -169,6 +176,8 @@ typedef enum{
  BEACON_ARG_GPOWER,
  BEACON_ARG_FWAZA,
  BEACON_ARG_FMISSION,
+ BEACON_ARG_ESCAPE,
+ BEACON_ARG_WBT,
 }BEACON_ARG_TYPE;
 
 typedef void (*BEACON_SET_FUNC_NONE)(void);
@@ -181,6 +190,8 @@ typedef void (*BEACON_SET_FUNC_GDATA_U32)(GAMEDATA* gdata,u32);
 typedef void (*BEACON_SET_FUNC_GDATA_STR)(GAMEDATA* gdata, const STRBUF*);
 typedef void (*BEACON_SET_FUNC_GPOWER)(GPOWER_ID);
 typedef void (*BEACON_SET_FUNC_FMISSION)( FEST_MISSION* mission );
+typedef void (*BEACON_SET_FUNC_ESCAPE)(u16,BOOL);
+typedef void (*BEACON_SET_FUNC_WBT)(u32,u8);
 
 //======================================================================
 //
@@ -401,7 +412,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_NORMAL_MAX] 
   ///<CRITICAL_DAMAGE 急所に攻撃を受けた 29
   { GAMEBEACON_Set_CriticalDamage,        BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<ESCAPE 戦闘から逃げ出した 30
-  { GAMEBEACON_Set_Escape,                BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
+  { GAMEBEACON_Set_Escape,                BEACON_PSET_MONSNO,	    BEACON_ARG_ESCAPE,	},
   ///<HP_LITTLE HPが残り少ない 31
   { GAMEBEACON_Set_HPLittle,              BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<PP_LITTLE PPが残り少ない 32
@@ -442,6 +453,28 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_NORMAL_MAX] 
   { GAMEBEACON_Set_FreeWord,              BEACON_PSET_FREEWORD,	  BEACON_ARG_FWORD,	},
   ///<DISTRIBUTION_GPOWER Gパワー配布中 50 
   { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
+  
+  //======================================================================================
+  //以下SWAN追加
+
+  ///<POKEWOOD_FILMING ポケウッド撮影中 51 
+  { GAMEBEACON_Set_PokewoodFilming,       BEACON_PSET_POKEWOOD,	  BEACON_ARG_U8,	},
+  ///<POKEWOOD_WATCH_MOVIE ポケウッド観賞中 52 
+  { GAMEBEACON_Set_PokewoodWatchMovie,    BEACON_PSET_POKEWOOD,	  BEACON_ARG_U8,	},
+  ///<WBT_ENTRY WBTに挑戦中 53 
+  { GAMEBEACON_Set_WBTEntry,              BEACON_PSET_WBT,	      BEACON_ARG_U32,	},
+  ///<WBT_WIN WBTでX回戦突破 54 
+  { GAMEBEACON_Set_WBTWin,                BEACON_PSET_WBT,	      BEACON_ARG_WBT,	},
+  ///<WBT_LOSE WBTでX回戦敗退 55 
+  { GAMEBEACON_Set_WBTLose,               BEACON_PSET_WBT,	      BEACON_ARG_WBT,	},
+  ///<WBT_WIN_CHAMPIONSHIP WBTで優勝 56 
+  { GAMEBEACON_Set_WBTWin,                BEACON_PSET_WBT,	      BEACON_ARG_WBT,	},
+  ///<JOIN_AVENUE_SHOPPING ジョインアベニューで買い物中 57 
+  { GAMEBEACON_Set_JoinAvenueShopping,    BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
+  ///<INFINITY_DUNGEON_ENTRY 無限ダンジョンに挑戦中 58 
+  { GAMEBEACON_Set_InfinityDungeonEntry,  BEACON_PSET_INF_DUNGEON,  BEACON_ARG_U8,	},
+  ///<INFINITY_DUNGEON_CLEAR 無限ダンジョンをクリア 59 
+  { GAMEBEACON_Set_InfinityDungeonClear,  BEACON_PSET_INF_DUNGEON,  BEACON_ARG_U8,	},
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
@@ -460,6 +493,9 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
  { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_SCORE,    ミッションスコア
+ { 0, POKEWOOD_SENARIO_MAX-1, BPRM_WSET_POKEWOOD }, //BEACON_PSET_POKEWOOD,  ポケウッド 
+ { 1, WBTCUP_MAX-1, BPRM_WSET_WBT }, //BEACON_PSET_WBT, WBTトーナメント
+ { 0, INFINITY_DUNGEON_AREA_ID_MAX-1, BPRM_WSET_NONE }, //BEACON_PSET_INF_DUNGEON, 無限ダンジョン
 };
 
 static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
@@ -470,7 +506,7 @@ static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_VERSION, 3, VERSION_WHITE, VERSION_B2,}, //FAKE_VERSION,
   { BPRM_WSET_LANG, 1, LANG_JAPAN, LANG_KOREA,}, //FAKE_LANG,
   { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_COLOR,
-  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_CHAR,
+  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_TR_VIEW,
 };
 
 ////////////////////////////////////////////////
@@ -668,7 +704,7 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     fake[FAKE_VERSION] = GET_VERSION();  //PM_VERSION;
     fake[FAKE_LANG] = PM_LANG;
     fake[FAKE_COLOR] = owner_info.favoriteColor;
-    fake[FAKE_CHAR] = MyStatus_GetTrainerView( wk->my_status );
+    fake[FAKE_TR_VIEW] = MyStatus_GetTrainerView( wk->my_status );
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -954,6 +990,12 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
     sub_GetZoneIDStr( wk->pAllZoneName, value, wk->str_tmp );
     GFL_STR_AddString( wk->str_tmp, wk->str_expand );
     break;
+  case BPRM_WSET_POKEWOOD:
+    WORDSET_RegisterPokewoodMovieTitle( wk->wset, idx, value );
+    return;
+  case BPRM_WSET_WBT:
+    WORDSET_RegisterWBTTournamentName( wk->wset, idx, value );
+    return;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
 }
@@ -983,7 +1025,7 @@ static void sub_GetStringCode( STRBUF* buf, STRCODE* code, int len )
  *  @brief  GAMEBEACON_INFOにパーソナルデータを展開
  */
 //----------------------------------------------------------
-static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
+static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat, GAMEBEACON_ACTION action )
 {
   int i;
   u8  old_detail;
@@ -1032,10 +1074,21 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
   //color
   info->favorite_color_index = fake[FAKE_COLOR];
   //tr_char
-  info->trainer_view = fake[FAKE_CHAR];
+  info->trainer_view = fake[FAKE_TR_VIEW];
   //rank
   if( fake[FAKE_COLOR] < 6 ){
     info->research_team_rank = fake[FAKE_COLOR];
+  }
+
+  //無限ダンジョンビーコンはゾーンを強制的に上書きする
+  if( action == GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY ||
+      action == GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR ){
+    if(info->pm_version == VERSION_W2){
+      info->zone_id = ZONE_ID_D31R0101;  
+    }else{
+      info->zone_id = ZONE_ID_D31R0201;  
+    }
+    info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID( wk->gdata, info->zone_id);
   }
 }
 
@@ -1659,8 +1712,9 @@ static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
 static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode )
 {
   int value = -1;
+  int* fake = &wk->fake_prm[evwk->type][0]; 
 
-  sub_BeaconInfoSet( wk, evwk->type );
+  sub_BeaconInfoSet( wk, evwk->type, evwk->action );
 
   if( evwk->b_prm_set->max >= 0 ){
     value = wk->beacon_prm[ evwk->b_prm->prm_type ];
@@ -1736,6 +1790,29 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
         mission.beacon.my_score = value;
         ((BEACON_SET_FUNC_FMISSION)evwk->b_prm->func)( &mission );
       }
+    }
+    break;
+  case	BEACON_ARG_ESCAPE:
+    GF_ASSERT( value >= 0 );
+    ((BEACON_SET_FUNC_ESCAPE)evwk->b_prm->func)( (u16)value, FALSE );
+    break;
+  case	BEACON_ARG_WBT:
+    GF_ASSERT( value >= 0 );
+    {
+      u8 round = 0;
+      
+      switch( evwk->action ){
+      case GAMEBEACON_ACTION_WBT_WIN_CHAMPIONSHIP:
+        round = WBT_BATTLE_NUM;
+        break;
+      case GAMEBEACON_ACTION_WBT_WIN:
+        round = fake[FAKE_TR_VIEW]%WBT_BATTLE_NUM+1;  //トレーナービューパラメータをround代わりにしてる
+        break;
+      case GAMEBEACON_ACTION_WBT_LOSE:
+        round = fake[FAKE_TR_VIEW]%WBT_BATTLE_NUM;
+        break;
+      }
+      ((BEACON_SET_FUNC_WBT)evwk->b_prm->func)( (u32)value, round  );
     }
     break;
   }

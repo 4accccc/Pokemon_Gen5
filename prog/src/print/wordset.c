@@ -15,10 +15,14 @@
 #include "tr_tool/trtype_def.h" // for TRTYPE_xxxx
 #include "savedata/th_rank_def.h" // for TH_RANK_xxxx
 #include "savedata/medalbox_rank_def.h" // for MEDALBOX_RANK_xxxx
+#include "battle/pokewood.h"
+#include "savedata/wbt_save.h"
+#include "field/wbt_tool.h"
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"  // for ANSWER_ID_xxxx
 #include "msg/script/msg_trialhouse.h"
+#include "msg/msg_pw_movietitle.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -923,6 +927,44 @@ void WORDSET_RegisterMedalCategoryName( WORDSET* wordset, u32 bufID, u8 catID )
   RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalcategory_dat, catID );
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定バッファにポケウッド映画タイトル名を登録
+ *
+ * @param   bufID        バッファID
+ * @param   senarioID    ポケウッドシナリオID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokewoodMovieTitle( WORDSET* wordset, u32 bufID, u32 senarioID )
+{
+  if( senarioID >= POKEWOOD_SENARIO_MAX ){
+    GF_ASSERT_MSG(0,"%d\n",senarioID);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_pw_movietitle_dat, pw_title_00+senarioID );
+}
+
+//------------------------------------------------------------------
+/**
+ * 指定バッファにWBTトーナメント名を登録
+ *
+ * @param   bufID          バッファID
+ * @param   tournamentID   トーナメントID WBTCUP型
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournamentID )
+{
+  if( tournamentID >= POKEWOOD_SENARIO_MAX ){
+    GF_ASSERT_MSG(0,"%d\n",tournamentID);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  WBTTOOL_GetTournamentName( wordset->heapID, tournamentID, wordset->tmpBuf );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
 
 //======================================================================================================
 // 文字列展開

@@ -1192,7 +1192,7 @@ static BOOL BeaconInfo_RecvResortDataMain( GAMEBEACON_SYSTEM *bsys )
  * @param   info		
  */
 //--------------------------------------------------------------
-void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
+static void sub_SendBeaconSetCommonCore(GAMEBEACON_SEND_MANAGER *send, u32 version_bit )
 {
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata);
   PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( GameBeaconSys->gamedata );
@@ -1204,11 +1204,36 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
   send->info.thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   send->info.suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
   
-  send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL;  //基本は全バージョン受け取り可
+  send->info.version_bit = version_bit;
 
   send->info.send_counter++;
   send->life = 0;
   send->beacon_update = TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 送信ビーコンをセットした時の共通処理(基本全バージョン受け取り可)
+ *
+ * @param   send		
+ * @param   info		
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
+{
+  sub_SendBeaconSetCommonCore( send, GAMEBEACON_RECV_VERSION_FULL );  //全バージョン受け取り可
+}
+//--------------------------------------------------------------
+/**
+ * 送信ビーコンをセットした時の共通処理(SWAN以降のみ受け取り可)
+ *
+ *以以降降 @param   send		
+ * @param   info		
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_SendBeaconSetCommonSwan(GAMEBEACON_SEND_MANAGER *send)
+{
+  sub_SendBeaconSetCommonCore( send, GAMEBEACON_RECV_VERSION_SWAN );  //SWAN以降のみ受け取り可
 }
 
 //--------------------------------------------------------------
@@ -1242,7 +1267,7 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
   tmp = *send;  //現時点での内容をコピー
 
   //パラメータ生成
-  GAMEBEACON_SUB_SendBeaconSetCommon( &tmp );
+  GAMEBEACON_SUB_SendBeaconSetCommonSwan( &tmp );
   
   switch( action ){
   case GAMEBEACON_ACTION_FMISSION_FREEWORD:
@@ -1262,7 +1287,6 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
     break;
   }
   info->action.action_no = action;  //アクションno上書き
-  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
   BEACONINFO_Set_Details_Walk( info );
 
   //生成したパラメータで、自分用のミッションログを生成

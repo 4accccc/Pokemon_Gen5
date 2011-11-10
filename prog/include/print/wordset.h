@@ -69,6 +69,8 @@ extern void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank
 extern void WORDSET_RegisterMedalName( WORDSET* wordset, u32 bufID, u8 medalID );
 extern void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID, u8 rom_version );
 extern void WORDSET_RegisterMedalCategoryName( WORDSET* wordset, u32 bufID, u8 catID );
+extern void WORDSET_RegisterPokewoodMovieTitle( WORDSET* wordset, u32 bufID, u32 senarioID );
+extern void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournamentID );
 
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );

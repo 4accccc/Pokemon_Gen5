@@ -28,6 +28,10 @@
 #include "savedata/th_rank_def.h"
 #include "app/research_radar/question_id.h"
 #include "field/research_team_def.h"
+#include "field/wbt.h"
+#include "field/zonedata.h"
+#include "field/infinity_dungeon_def.h"
+#include "battle/pokewood.h"
 
 enum{
  BEACON_WSET_DEFAULT,     //デフォルト(トレーナー名)  
@@ -46,6 +50,10 @@ enum{
  BEACON_WSET_GPOWER,      //Gパワー名
  BEACON_WSET_FREEWORD,    //フリーワード8文字
  BEACON_WSET_HAIHU_GPOWER,    //配布Gパワー名
+ //SWAN追加
+ BEACON_WSET_POKEWOOD,    //ポケウッド
+ BEACON_WSET_WBT,         //WBT
+ BEACON_WSET_INFINITY_DUNGEON,   //無限ダンジョン
  BEACON_WSET_MAX,
 };
 
@@ -110,9 +118,20 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_NORMAL_MAX][2] = {
   BEACON_WSET_NICKNAME,	  BEACON_ICON_INFO,	      ///<MUSICAL ミュージカル挑戦中 47
   BEACON_WSET_GPOWER,	    BEACON_ICON_GPOWER,	    ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
   BEACON_WSET_FREEWORD,	  BEACON_ICON_MSG,	      ///<FREEWORD 一言メッセージ 49
-  BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER,     ///<DISTRIBUTION_GPOWER Gパワー配布中 50
+  BEACON_WSET_HAIHU_GPOWER,	  BEACON_ICON_GPOWER, ///<DISTRIBUTION_GPOWER Gパワー配布中 50
 
   //スワンで追加されたビーコン
+  BEACON_WSET_POKEWOOD,   BEACON_ICON_INFO,     ///<POKEWOOD_FILMING ポケウッド撮影中 51
+  BEACON_WSET_POKEWOOD,   BEACON_ICON_INFO,     ///<POKEWOOD_WATCH_MOVIE ポケウッド観賞中 52
+  BEACON_WSET_WBT,        BEACON_ICON_INFO,     ///<WBT_ENTRY WBTに挑戦中 53
+  BEACON_WSET_WBT,        BEACON_ICON_INFO,     ///<WBT_WIN WBTでX回戦突破 54
+  BEACON_WSET_WBT,        BEACON_ICON_INFO,     ///<WBT_LOSE WBTでX回戦敗退 55
+  BEACON_WSET_WBT,        BEACON_ICON_INFO,     ///<WBT_WIN_CHAMPIONSHIP WBTで優勝 56
+  BEACON_WSET_DEFAULT,    BEACON_ICON_INFO,     ///<JOIN_AVENUE_SHOPPING ジョインアベニューで買い物中 57
+  BEACON_WSET_INFINITY_DUNGEON, BEACON_ICON_INFO,     ///<INFINITY_DUNGEON_ENTRY 無限ダンジョンに挑戦中 58
+  BEACON_WSET_INFINITY_DUNGEON, BEACON_ICON_INFO,     ///<INFINITY_DUNGEON_CLEAR 無限ダンジョンをクリア 59
+  
+  //フェスビーコンは別チェックなのでテーブルには入れない
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
@@ -132,6 +151,9 @@ static BOOL errchk_action_victory(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_haifu_gpower(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_pokewood(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_wbt(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_infinity_dungeon(const GAMEBEACON_INFO* info );
 
 static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX] = {
   errchk_action_default,
@@ -150,6 +172,9 @@ static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX
   errchk_action_gpower,
   errchk_action_default,
   errchk_action_haifu_gpower,
+  errchk_action_pokewood,
+  errchk_action_wbt,
+  errchk_action_infinity_dungeon,
 };
 
 //==============================================================================
@@ -1245,6 +1270,70 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_BEACON*
 
 //==================================================================
 /**
+ * 行動パラメータ取得：ポケウッドシナリオNo
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u8		  ポケウッドシナリオNo
+ */
+//==================================================================
+u8 GAMEBEACON_Get_Action_PokewoodSenarioNo(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_POKEWOOD_FILMING:
+  case GAMEBEACON_ACTION_POKEWOOD_WATCH_MOVIE:
+    return info->action.pokewood_senario_no;
+  }
+  GF_ASSERT(0);
+  return 0; //当たり障りないNo
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：WBT
+ * @param   info		ビーコン情報へのポインタ
+ * @param   tournament_id  トーナメントIDを返すバッファ
+ * @param   round  トーナメントの何回戦かを返すバッファ
+ */
+//==================================================================
+void GAMEBEACON_Get_Action_WBTParam(const GAMEBEACON_INFO *info, u8* tournament_id, u8* round )
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_WBT_ENTRY:
+  case GAMEBEACON_ACTION_WBT_WIN:
+  case GAMEBEACON_ACTION_WBT_WIN_CHAMPIONSHIP:
+    *tournament_id = info->action.wbt.tournament_id;
+    *round = info->action.wbt.round;  //勝利数は1～で送られてくるのでそのまま返す
+    return;
+  case GAMEBEACON_ACTION_WBT_LOSE:
+    *tournament_id = info->action.wbt.tournament_id;
+    *round = info->action.wbt.round+1;  //0オリジンで送られてきて1オリジンで表示したいので+1して返す
+    return;
+  }
+  GF_ASSERT(0);
+  *tournament_id = 0; //当たり障りないNo
+  *round = 0;
+}
+
+//==================================================================
+/**
+ * 行動パラメータ取得：無限ダンジョンエリアNo
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  u8		  無限ダンジョンエリアNo
+ */
+//==================================================================
+u8 GAMEBEACON_Get_Action_InfinityDungeonAreaNo(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY:
+  case GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR:
+    return info->action.infinity_dungeon_area_no+1; //0オリジンなので+1して返す
+  }
+  GF_ASSERT(0);
+  return 0; //当たり障りないNo
+}
+
+
+//==================================================================
+/**
  * ビーコン情報のデータタイプを取得
  *
  * @param   action          ビーコンのアクションNo
@@ -1350,6 +1439,21 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
   case BEACON_WSET_FREEWORD:
     GAMEBEACON_Get_FreeWordMessage( info, strbuf );
     WORDSET_RegisterWord( wordset, 1, strbuf, GAMEBEACON_Get_Sex(info), TRUE, PM_LANG);
+    break;
+  case BEACON_WSET_POKEWOOD:  //SWAN追加
+    WORDSET_RegisterPokewoodMovieTitle( wordset, 1, GAMEBEACON_Get_Action_PokewoodSenarioNo(info) );
+    break;
+  case BEACON_WSET_WBT:  //SWAN追加
+    {
+      u8  tournament_id, round;
+      GAMEBEACON_Get_Action_WBTParam( info, &tournament_id, &round );
+      WORDSET_RegisterWBTTournamentName( wordset, 1, tournament_id );
+      WORDSET_RegisterNumber( wordset, 2, round, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
+    break;
+  case BEACON_WSET_INFINITY_DUNGEON:  //SWAN追加
+    WORDSET_RegisterPlaceName( wordset, 1, ZONEDATA_GetPlaceNameID(GAMEBEACON_Get_ZoneID(info)) );
+    WORDSET_RegisterNumber( wordset, 2, GAMEBEACON_Get_Action_InfinityDungeonAreaNo(info),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
   case BEACON_WSET_HAIHU_GPOWER:
   case BEACON_WSET_DEFAULT:
@@ -1499,6 +1603,53 @@ static BOOL errchk_action_haifu_gpower(const GAMEBEACON_INFO* info )
 //  if( info->action.distribution.gpower_id >= GPOWER_ID_MAX ){
   if( GPOWER_IsEnableID( info->action.distribution.gpower_id ) == FALSE ) {
     GF_ASSERT_MSG(0,"%d\n",info->action.distribution.gpower_id);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック ポケウッドタイプ 
+static BOOL errchk_action_pokewood(const GAMEBEACON_INFO* info )
+{
+  if( info->action.pokewood_senario_no >= POKEWOOD_SENARIO_MAX ){
+    GF_ASSERT_MSG(0,"%d\n", info->action.pokewood_senario_no );
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック WBTタイプ 
+static BOOL errchk_action_wbt(const GAMEBEACON_INFO* info )
+{
+  u8 min, max;
+
+  if( info->action.wbt.tournament_id == WBTCUP_NULL ||
+      info->action.wbt.tournament_id >= WBTCUP_MAX ){
+    GF_ASSERT_MSG(0,"%d\n", info->action.wbt.tournament_id);
+    return TRUE;
+  }
+  if( info->action.action_no == GAMEBEACON_ACTION_WBT_ENTRY ){
+    min = max = 0;
+  }else if(info->action.action_no == GAMEBEACON_ACTION_WBT_LOSE){
+    min = 0;
+    max = WBT_BATTLE_NUM-1;
+  }else{
+    min = 1;
+    max = WBT_BATTLE_NUM;
+  }
+  if( info->action.wbt.round < min || info->action.wbt.round > max ){
+    GF_ASSERT_MSG(0,"%d\n", info->action.wbt.round );
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 無限ダンジョンタイプ 
+static BOOL errchk_action_infinity_dungeon(const GAMEBEACON_INFO* info )
+{
+  if( info->zone_id != ZONE_ID_D31R0101 && info->zone_id != ZONE_ID_D31R0201 ){
+    GF_ASSERT_MSG(0,"i_dun zone %d\n", info->zone_id );
+    return TRUE;
+  }
+  if( info->action.infinity_dungeon_area_no >= INFINITY_DUNGEON_AREA_ID_MAX ){
+    GF_ASSERT_MSG(0,"%d\n", info->action.infinity_dungeon_area_no );
     return TRUE;
   }
   return FALSE;

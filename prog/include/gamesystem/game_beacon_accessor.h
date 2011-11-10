@@ -106,6 +106,9 @@ extern u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Action_TrialHouseRank(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info);
 extern BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_BEACON* fbwk );
+extern u8 GAMEBEACON_Get_Action_PokewoodSenarioNo(const GAMEBEACON_INFO *info);
+extern void GAMEBEACON_Get_Action_WBTParam(const GAMEBEACON_INFO *info, u8* tournament_id, u8* round );
+extern u8 GAMEBEACON_Get_Action_InfinityDungeonAreaNo(const GAMEBEACON_INFO *info);
 
 extern u8 GAMEBEACON_GetActionDataType( GAMEBEACON_ACTION action );
 extern u8 GAMEBEACON_GetActionDataIconType( GAMEBEACON_ACTION action );
