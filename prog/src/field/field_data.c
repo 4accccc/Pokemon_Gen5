@@ -733,6 +733,27 @@ const SCENE_DATA resistMapTbl[] = {
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
+  //RSC_GRID_GIANTHOLE = 28,
+	{	//ジャイアントホール D10R0501 グリッド移動
+		{
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      1,2,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+      ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			GIANTHOLE_MAPPER_MAPMDL_SIZE,	// 1ブロックメモリサイズ
+      1,  // topフレームのブロック描画数
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
+	},
 };
 
 const unsigned int resistMapTblCount = NELEMS(resistMapTbl);

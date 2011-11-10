@@ -54,6 +54,7 @@ enum {
   RSC_GRID_JA = 25, //グリッド1x3ジョインアベニュー専用
   RSC_GRID_JA_ROOM = 26, //グリッド1x1ジョインアベニュー室内専用
   RSC_HYBRID_WFBC = 27, // WFBC専用
+  RSC_GRID_GIANTHOLE = 28,     // グリッド　D10R0501 ジャイアントホール
 
 	RSC_TYPE_END
 };
