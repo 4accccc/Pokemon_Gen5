@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="ohtani_mayo" host="W00238" date="2011-11-09T19:43:25" source="blizzard_nz.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="101"
+	tool_start_frame="0"
+	tool_end_frame="100"
+	compress_material="on" material_size="1 1"
+/>
+
+<tex_pattern_list_data image_size="5" palette_size="5">
+	<image_name index="0" name="bl_n.10"/>
+	<image_name index="1" name="bl_n.6"/>
+	<image_name index="2" name="bl_n.7"/>
+	<image_name index="3" name="bl_n.8"/>
+	<image_name index="4" name="bl_n.9"/>
+	<palette_name index="0" name="bl_n.10_pl"/>
+	<palette_name index="1" name="bl_n.6_pl"/>
+	<palette_name index="2" name="bl_n.7_pl"/>
+	<palette_name index="3" name="bl_n.8_pl"/>
+	<palette_name index="4" name="bl_n.9_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="21">
+		0 5 10 15 20 25 30 35 40 45
+		50 55 60 65 70 75 80 85 90 95
+		100
+	</frame_idx>
+	<image_idx size="21">
+		1 2 3 4 0 1 2 3 4 0
+		1 2 3 4 0 1 2 3 4 0
+		1
+	</image_idx>
+	<palette_idx size="21">
+		1 2 3 4 0 1 2 3 4 0
+		1 2 3 4 0 1 2 3 4 0
+		1
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="lambert2" data_size="21" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

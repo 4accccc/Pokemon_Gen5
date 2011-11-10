@@ -297,6 +297,22 @@ VMCMD_RESULT EvCmdGianthole_StoneFloat( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジャイアントホール　ゼクロム(レシラム)に乗ったNアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGianthole_NPokeAnmStart( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // 
+  GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  物語開始デモ  花びらアニメ再生
  */
 //-----------------------------------------------------------------------------

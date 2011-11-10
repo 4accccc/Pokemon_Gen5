@@ -4,4 +4,8 @@
 "blizzard_02.nsbmd"
 "blizzard_02.nsbca"
 "blizzard_02.nsbta"
+"blizzard_n.nsbmd"
+"blizzard_n.nsbca"
+"blizzard_nr.nsbtp"
+"blizzard_nz.nsbtp"
 
