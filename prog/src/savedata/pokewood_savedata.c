@@ -266,7 +266,7 @@ void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD
 void  POKEWOOD_SAVEDATA_ClearUpdate( POKEWOOD_SAVEDATA *sv, int no )
 {
   GF_ASSERT_MSG( no < POKEWOOD_BOXOFFICE_DATA_MAX, "ƒ‰ƒ“ƒLƒ“ƒO‚ÌÅ‘å‚ð’´‚¦‚Ä‚¢‚Ü‚·=%d\n",no);
-  sv->boxoffice_record[no].new_flag    = 0;
+  sv->boxoffice_record[no].new_flag    = 1;
   sv->boxoffice_record[no].update_flag = 0;
 }
 
