@@ -14,18 +14,24 @@
 
 #define EVT_MASIC_NUM_LOCKCAPSULE    (20100325)    //ロックカプセル
 #define EVT_MASIC_NUM_VICTYTICKET    (20100406)    //ビクティのチケット
+#define EVT_MASIC_NUM_FMISSION_00    (20111110)    //フェスミッション配信
+#define EVT_MASIC_NUM_FMISSION_01    (30111111)    //フェスミッション配信
+#define EVT_MASIC_NUM_FMISSION_02    (10116112)    //フェスミッション配信
+#define EVT_MASIC_NUM_FMISSION_03    (20112113)    //フェスミッション配信
+#define EVT_MASIC_NUM_EMPTY1         (70141519)    //空欄のマジックナンバー
+#define EVT_MASIC_NUM_EMPTY2         (24151171)    //空欄のマジックナンバー
 
 //マジックナンバーテーブル
 const u32 EvtMasicNumTbl[EVT_MAX] = 
 {
   EVT_MASIC_NUM_LOCKCAPSULE,
   EVT_MASIC_NUM_VICTYTICKET,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0
+  EVT_MASIC_NUM_FMISSION_00,
+  EVT_MASIC_NUM_FMISSION_01,
+  EVT_MASIC_NUM_FMISSION_02,
+  EVT_MASIC_NUM_FMISSION_03,
+  EVT_MASIC_NUM_EMPTY1,
+  EVT_MASIC_NUM_EMPTY2     
 };
 
 
