@@ -3201,9 +3201,17 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 	// main
 	ret = pwb_main_framelist( wk );
 	listflg = pwb_is_main_framelist( wk, ret );
-	if(listflg != 0){
+	// カーソル移動=>STEPが変わる(更新は後)
+	if(listflg == 1){
 		flg = 2;
 	}
+	// キーにタッチ=>そのまま(更新)
+	else if(listflg == 2){
+		flg = 1;
+	}
+//	if(listflg != 0){
+//		flg = 2;
+//	}
 //	OS_Printf("ret :%x\n",ret);
 	
 	// 更新あり
@@ -3243,7 +3251,8 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 	}
 	//
 	// 上文字列更新
-	if(flg != 0){
+//	if(flg != 0){
+	if(flg == 1){
 		//
 		// 固定文字列
 		pwb_disp_fix_string( wk, STR_MAIN, TMODE_BOOK );
