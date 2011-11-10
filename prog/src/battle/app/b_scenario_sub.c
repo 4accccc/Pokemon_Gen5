@@ -36,6 +36,8 @@
 #include "arc/app_menu_common.naix"
 #include "battle/battgra_wb.naix"
 
+#include "../../app/pkwd_book/pokewood_category.cdat"
+
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -131,7 +133,11 @@ typedef struct{
 //-------------------------------------
 // BGPAL
 static const BS_BGPAL_DATA bs_bgpal_00_tbl[] = {
-	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_NCLR,	0,	8,},	// 下、BG
+//	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_NCLR,	0,	8,},	// 下、BG
+	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d1_font_NCLR,	0,	8,},	// 色(00)
+	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d2_font_NCLR,	0,	8,},	// 色(01)
+	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d3_font_NCLR,	0,	8,},	// 色(02)
+	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d4_font_NCLR,	0,	8,},	// 色(03)
 	{ 0xff, 0, 0, 0,}, // end code
 };
 // BGCHR
@@ -193,12 +199,12 @@ static const s16 bs_timer_tbl[] = {
 //---------------
 // TOP
 static const BS_CANVAS_DATA bs_canvas_00_tbl[] = {
-	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// TITLE
-	{ GFL_BG_FRAME1_S,	2,	5,	28,	2,	8,},		// PLOT
-	{ GFL_BG_FRAME1_S,	2,	12,	28,	2,	8,},		// GOAL
-	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	8,},		// TITLE_MES
-	{ GFL_BG_FRAME1_S,	3,	7,	28,	4,	8,},		// PLOT_MES
-	{ GFL_BG_FRAME1_S,	3,	14,	28,	4,	8,},		// GOAL_MES
+	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	10,},		// TITLE
+	{ GFL_BG_FRAME1_S,	2,	5,	28,	2,	11,},		// PLOT
+	{ GFL_BG_FRAME1_S,	2,	12,	28,	2,	11,},		// GOAL
+	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	12,},		// TITLE_MES
+	{ GFL_BG_FRAME1_S,	3,	7,	28,	4,	12,},		// PLOT_MES
+	{ GFL_BG_FRAME1_S,	3,	14,	28,	4,	12,},		// GOAL_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// 脚本
 	{ GFL_BG_FRAME1_S,	14,	21,	10,	2,	8,},		// 共演者
 
@@ -496,6 +502,13 @@ static void bscmn_init_bg( BSCENARIO_WORK* wk )
 	//
 	handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, GFL_HEAP_LOWID(heapID) );
 	//
+#if 1	// 決めうち
+	// 対応したカラーのパレットを転送
+	tmp = PokewoodCategoryData[wk->dat->scenario_num];
+	tmp &= 0x03;	// 念のため
+	padr += tmp;
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, padr->offset, 0, heapID );
+#else
 	// パレット転送
 	for(i=0;i<BS_BG_MAXNUM;i++){
 		// 終了条件
@@ -507,6 +520,7 @@ static void bscmn_init_bg( BSCENARIO_WORK* wk )
 		GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, padr->offset, tmp, heapID );
 		padr++;
 	}
+#endif
 	//
 	// キャラ転送
 	for(i=0;i<BS_BG_MAXNUM;i++){

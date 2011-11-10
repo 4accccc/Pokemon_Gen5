@@ -32,6 +32,8 @@
 #include "msg/msg_pw_movietitle.h"
 #include "msg/msg_pw_hint001.h"
 
+#include "../../app/pkwd_book/pokewood_category.cdat"
+
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -181,9 +183,9 @@ static const s16 bs_info_tbl[] = {
 //-------------
 // TOP
 static const u16 bs_fmes00_tbl[] = {
-	MES_ID_TOP_01,	BS_CVS_TOP_TITLE, 	0, 0,		// タイトル
-	MES_ID_TOP_02,	BS_CVS_TOP_PLOT,  	0, 0,		// PLOT
-	MES_ID_TOP_03,	BS_CVS_TOP_GOAL,  	0, 0,		// GOAL
+	MES_ID_TOP_01,	BS_CVS_TOP_TITLE, 	1, 0,		// タイトル
+	MES_ID_TOP_02,	BS_CVS_TOP_PLOT,  	1, 0,		// PLOT
+	MES_ID_TOP_03,	BS_CVS_TOP_GOAL,  	1, 0,		// GOAL
 	MES_ID_ALL_01,	BS_CVS_TOP_LABEL00, 0, 0,		// 脚本
 	MES_ID_ALL_02,	BS_CVS_TOP_LABEL01, 0, 0,		// 共演者
 	//
@@ -219,6 +221,16 @@ static const u16 *bs_fmes_tbl[] = {
 //----------
 static const s16 bs_rate_tbl[] = {
 	8,3,		// blend
+};
+
+//------------------
+// フォントパレット(3本)
+//------------------
+static const s16 bs_font_pal_tbl[] = {
+	NARC_b_scenario_gra_pkwd_scenario_u1_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario_u2_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario_u3_font_NCLR,
+	NARC_b_scenario_gra_pkwd_scenario_u4_font_NCLR,
 };
 
 //============================================================================================
@@ -808,6 +820,11 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 {
 	// ここまでで、パレットの転送は終えておくこと
 	//
+	s32		tmp;
+	// カラーに対応したフォントを転送
+	tmp = PokewoodCategoryData[wk->dat->scenario_num];
+	tmp &= 0x03;	// 念のため
+	//
 	// BGのパレット(7本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*8 );
 	// BGのパレット(10番から3本分)
@@ -816,6 +833,8 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, 8*16 );
 	// フォントパレット2(9)
 	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_pkwd_scenario_d_font_NCLR, wk->dat->heap, FADE_SUB_BG, 0x20, 9*16 );
+	// フォントパレット2(10-12)
+	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, bs_font_pal_tbl[tmp], wk->dat->heap, FADE_SUB_BG, 0x20*3, 10*16 );
 	//
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
@@ -1200,7 +1219,7 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 				offx  = BS_CENTER_OFF_X;
 			}
 			strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[i]+id );
-			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(15,2,0), 0 );
+			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0), 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 		}
 		// 切り替え
