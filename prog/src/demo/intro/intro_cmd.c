@@ -1770,12 +1770,11 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
 //-----------------------------------------------------------------------------
 static void CMD_WORDSET_RIVAL( INTRO_CMD_WORK* wk, int bufID )
 {
-  ETC_SAVE_WORK *etcsave = SaveData_GetEtc( wk->init_param->sv_ctrl );
   WORDSET* wordset;
 
   wordset   = INTRO_MSG_GetWordSet( wk->wk_msg );
 
-  WORDSET_RegisterRivalName( wordset, bufID, EtcSave_GetRivalName( etcsave ) );
+  WORDSET_RegisterRivalName( wordset, bufID, wk->init_param->rival_name );
 }
 
 //=============================================================================

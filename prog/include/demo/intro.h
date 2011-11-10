@@ -77,7 +77,7 @@ typedef struct {
   INTRO_SCENE_ID      scene_id;
   INTR_SAVE_CONTROL*  intr_save;
   u32                 voice_load_id;
-  SAVE_CONTROL_WORK*  sv_ctrl;
+  STRCODE*            rival_name;
   // [OUT]
   INTRO_RETCODE       retcode;
 } INTRO_PARAM;

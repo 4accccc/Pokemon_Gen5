@@ -229,6 +229,7 @@ typedef struct
   MYSTATUS *mystatus;
   CONFIG *config;
   SAVE_CONTROL_WORK *sv_ctrl;   // swan追加
+  STRCODE rival_name[PERSON_NAME_SIZE + EOM_SIZE];    // 16 セーブする時までの保存用
 }GAMESTART_FIRST_WORK;
 
 #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
@@ -262,6 +263,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->sv_ctrl  = sv_ctrl;
   work->mystatus = MyStatus_AllocWork(GFL_HEAPID_APP);
   work->config = CONFIG_AllocWork(GFL_HEAPID_APP);
+  GFL_STD_MemClear( &work->rival_name, 16);
 
   // SELMODE 初期化
   work->selModeParam.type       = SMT_START_GAME;
@@ -310,7 +312,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->introParam.scene_id   = INTRO_SCENE_ID_00;
   work->introParam.intr_save  = work->intr_save;
   work->introParam.voice_load_id = work->voice_load_id;
-  work->introParam.sv_ctrl    = work->sv_ctrl;
+  work->introParam.rival_name = work->rival_name;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -438,12 +440,9 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
   // ライバル名が決定かどうかのシーン呼び出し
   case SEQ_INPUT_RIVAL_NAME_RETAKE_YESNO:
     {
-      // ライバル名セット
+      // ライバル名を保存しておく
       {
-        ETC_SAVE_WORK *etcsave = SaveData_GetEtc( work->sv_ctrl );
-        const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(work->nameInParam->strbuf);
-        // セーブデータに保存
-        EtcSave_SetRivalName( etcsave, cp_strcode );
+        GFL_STR_GetStringCode( work->nameInParam->strbuf, work->rival_name, PERSON_NAME_SIZE + EOM_SIZE );
       }
 
       //イントロデモ 名前入力の判定
@@ -506,6 +505,12 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
   {
     MyStatus_Copy(work->mystatus, SaveData_GetMyStatus(sv_ctrl));
     CONFIG_Copy(work->config, SaveData_GetConfig(sv_ctrl));
+  }
+  // ライバル名セット
+  {
+    ETC_SAVE_WORK *etcsave = SaveData_GetEtc( sv_ctrl );
+    // セーブデータに保存
+    EtcSave_SetRivalName( etcsave, work->rival_name );
   }
   GFL_HEAP_FreeMemory(work->mystatus);
   GFL_HEAP_FreeMemory(work->config);
