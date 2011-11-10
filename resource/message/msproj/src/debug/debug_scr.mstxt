@@ -4224,6 +4224,102 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_localtvt_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスター6</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスター6</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:51" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_localtvt_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスター7</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスター7</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:58" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_localtvt_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスター8</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:06:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:05:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスター8</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:06:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-10T03:06:05" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_masafumi_14_01"
 		Style="Large">
 		<LanguageCell
