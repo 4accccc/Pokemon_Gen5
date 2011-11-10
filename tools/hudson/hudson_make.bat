@@ -21,7 +21,7 @@ REM ================================
 REM ‰‰ñ make
 REM ================================
 @echo ***** make *****
-make
+make %1
 
 REM ³íI—¹”»’è
 if %ERRORLEVEL% == 0 goto END:
