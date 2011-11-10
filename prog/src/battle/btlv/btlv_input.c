@@ -514,6 +514,23 @@ enum{
   AUDIENCE_SEQ_APPLAUSE,      // 拍手
 };
 
+//
+enum{
+  AUDIENCE_CHAR_PALSIZE = 0x20*12, // 12パレット分(4色単位)
+  AUDIENCE_SEAT_PALSIZE = 0x20*15, // 15パレット分(5色単位)
+  //
+  AUDIENCE_TIMER   = 2,       // パターン切り替え時間
+};
+
+// パレットチェンジ
+enum{
+  AUDIENCE_STOP = 0,         // 停止
+  AUDIENCE_START,            // 再開
+};
+
+#define __AUDIENCE_PALCHG__
+#undef  __AUDIENCE_PALCHG__
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -615,6 +632,12 @@ struct _BTLV_INPUT_WORK
   GFL_CLUNIT*           audience_clunit;
   GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
   BOOL                  audience_flag;
+  //
+  u16                   *audience_char_pal;		// 観客のパレット
+  u16                   *audience_seat_pal;		// 座席のパレット
+  s32                   audience_palmode;       // パレットの段階
+  s32                   audience_timer;         // タイマ
+  BOOL                  audience_palflag;       // パレットチェンジの有無
 
   //フォント
   GFL_FONT*             font;
@@ -876,6 +899,11 @@ static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
 //
 static  void  btlv_init_audience_disp( BTLV_INPUT_WORK *biw );
 static  void  debug_btlv_audience( BTLV_INPUT_WORK* biw );
+//
+static  void  btlv_init_palchg( BTLV_INPUT_WORK *biw );
+static  void  btlv_set_palchg(  BTLV_INPUT_WORK *biw, const s32 num );
+static  void  btlv_main_palchg( BTLV_INPUT_WORK *biw );
+static  void  btlv_set_mode( BTLV_INPUT_WORK *biw, const s32 mode );
 
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  void  SePlaySelect( BTLV_INPUT_WORK* biw );
@@ -1019,6 +1047,11 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->hit = GFL_UI_TP_HIT_NONE;
   //
   biw->audience_flag = 0;
+  biw->audience_char_pal = 0;
+  biw->audience_seat_pal = 0;
+  biw->audience_palmode  = 0;
+  biw->audience_timer    = 0;
+  biw->audience_palflag  = FALSE;
   //
   BTLV_INPUT_InitBG( biw );
 
@@ -1088,6 +1121,9 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
   // debug
 #ifdef PM_DEBUG
   //debug_btlv_audience( biw );
+#ifdef __AUDIENCE_PALCHG__
+  btlv_main_palchg( biw );
+#endif
 #endif
 }
 
@@ -1261,7 +1297,16 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   if(biw->audience_clunit!=NULL){
     GFL_CLACT_UNIT_Delete( biw->audience_clunit );
   }
-
+  // palクリア
+  if(biw->audience_char_pal){
+    GFL_HEAP_FreeMemory( biw->audience_char_pal );
+    biw->audience_char_pal = 0;
+  }
+  // palクリア
+  if(biw->audience_seat_pal){
+    GFL_HEAP_FreeMemory( biw->audience_seat_pal );
+    biw->audience_seat_pal = 0;
+  }
 
   if( biw->bmp_win )
   {
@@ -3042,6 +3087,14 @@ static const GFL_CLWK_DATA audience_param[] =
   },
 };
 
+// 観客のパターン
+static const s16 audience_ptn[] = {
+  1,
+  2,
+  1,
+  0,
+};
+
 //--------------------------------------------------------------
 /**
  * @brief   ポケウッド画面観客OBJ初期化
@@ -3088,6 +3141,11 @@ static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw )
     GFL_CLACT_WK_SetPlttOffs( biw->audience_wk[ i ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
   biw->audience_flag = 1;
+  //
+  // 初期化
+#ifdef __AUDIENCE_PALCHG__
+  btlv_init_palchg( biw );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3243,6 +3301,144 @@ void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, con
 u32 BTLV_INPUT_GetAudienceBit( BTLV_INPUT_WORK *biw )
 {
   return biw->audienceBit;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ初期化
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_init_palchg( BTLV_INPUT_WORK *biw )
+{
+  // メモリ確保(最後に破棄をすること)
+  biw->audience_char_pal = GFL_HEAP_AllocMemory( biw->heapID, AUDIENCE_CHAR_PALSIZE );
+  GFL_STD_MemClear( biw->audience_char_pal, AUDIENCE_CHAR_PALSIZE );
+  //
+  biw->audience_seat_pal = GFL_HEAP_AllocMemory( biw->heapID, AUDIENCE_SEAT_PALSIZE );
+  GFL_STD_MemClear( biw->audience_seat_pal, AUDIENCE_SEAT_PALSIZE );
+  //
+  
+  // パレットセット(obj)
+  {
+    NNSG2dPaletteData* pal_data;
+    void* buf = GFL_ARCHDL_UTIL_LoadPalette( biw->handle, NARC_battgra_wb_pkwd_obj_NCLR, &pal_data, biw->heapID );
+    u16* raw_data = pal_data->pRawData;
+    // パレットをコピー
+    GFL_STD_MemCopy( &raw_data[0], biw->audience_char_pal, AUDIENCE_CHAR_PALSIZE );  // 12本分
+    // 破棄
+    GFL_HEAP_FreeMemory( buf );
+  }
+  //
+  // パレットセット(bg)
+  {
+    NNSG2dPaletteData* pal_data;
+    void* buf = GFL_ARCHDL_UTIL_LoadPalette( biw->handle, NARC_battgra_wb_pkwd_movie_c_NCLR, &pal_data, biw->heapID );
+    u16* raw_data = pal_data->pRawData;
+    // パレットをコピー
+    GFL_STD_MemCopy( &raw_data[0], biw->audience_seat_pal, AUDIENCE_SEAT_PALSIZE );  // 15本分
+    // 破棄
+    GFL_HEAP_FreeMemory( buf );
+  }
+  //
+  biw->audience_palflag = TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ
+ *
+ * @param   wk		
+ * @param   const s32		(0-2:段階)
+ */
+//----------------------------------------------------------------------------------
+static void btlv_set_palchg( BTLV_INPUT_WORK *biw, const s32 num )
+{
+  u16 *adr;
+  //
+  // objパレットをセット(4本単位)
+  adr = &biw->audience_char_pal[0];
+  adr += 0x10*4*num;
+  PaletteWorkSet( biw->pfd, adr, FADE_SUB_OBJ, 0, 0x20*4 );
+  //
+  // bgパレットをセット(5本単位)
+  adr = &biw->audience_seat_pal[0];
+  adr += 0x10*5*num;
+  PaletteWorkSet( biw->pfd, adr, FADE_SUB_BG, 0, 0x20*5 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ(main)
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
+{
+#if 1	// debug
+  // 停止
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+    btlv_set_mode( biw, AUDIENCE_STOP );
+  }
+  // 再開
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+    btlv_set_mode( biw, AUDIENCE_START );
+  }
+#endif
+
+  // フラグチェック
+  if(biw->audience_palflag == FALSE){
+    return;
+  }
+  
+  // タイマ
+  biw->audience_timer++;
+  if(biw->audience_timer > AUDIENCE_TIMER){
+    biw->audience_timer = 0;
+    //
+    biw->audience_palmode++;
+    if(biw->audience_palmode > 3){
+      biw->audience_palmode = 0;
+    }
+    // 切り替え
+    btlv_set_palchg( biw, audience_ptn[biw->audience_palmode] );
+  }
+  
+#if 0	// debug
+  // パレットチェンジ
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+    biw->audience_palmode++;
+    if(biw->audience_palmode > 2){
+      biw->audience_palmode = 0;
+    }
+    btlv_set_palchg( biw, biw->audience_palmode );
+  }
+#endif
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_set_mode( BTLV_INPUT_WORK *biw, const s32 mode )
+{
+  if(mode == AUDIENCE_STOP){
+    biw->audience_palflag = FALSE;
+    // 初期化
+    btlv_set_palchg( biw, 0 );
+  }
+  else if(mode == AUDIENCE_START){
+    biw->audience_palflag = TRUE;
+    biw->audience_palmode = 0;
+    biw->audience_timer = 0;
+    // 初期化
+    btlv_set_palchg( biw, 0 );
+  }
 }
 
 //=============================================================================================
