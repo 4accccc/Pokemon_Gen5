@@ -115,11 +115,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へっへっへ！　きになるだろうが
-ハイパーボール　つかってくれよ！</Text>
+			<Text>へっへっへ！　とにかく
+ハイパーボール　つかってみなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T06:42:44" />
+				Time="2011-11-10T05:23:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,11 +127,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へっへっへ！　気になるだろうが
-ハイパーボール　使ってくれよ！</Text>
+			<Text>へっへっへ！　とにかく
+ハイパーボール　使ってみなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T06:42:44" />
+				Time="2011-11-10T05:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -379,11 +379,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]を　譲って
+			<Text>[Name:Item Idx="0" ]を　ゆずって
 代わりに　[Name:Item Idx="2" ]を　もらった！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T06:42:44" />
+				Time="2011-11-10T05:23:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

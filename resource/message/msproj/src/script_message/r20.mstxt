@@ -370,10 +370,10 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！　あっちだ▼</Text>
+			<Text>[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:24:02" />
+				Time="2011-11-10T05:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -381,10 +381,10 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！　あっちだ▼</Text>
+			<Text>[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:24:08" />
+				Time="2011-11-10T05:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -477,10 +477,12 @@ ID：mount_14</Text>
 			Language="JPN">
 			<Text>いろの　こい　くさむらが　あるよね▼
 ここは　まれにだけど　ポケモンが
-２ひき　どうじに　とびだしてくるんだ▼</Text>
+２ひき　どうじに　とびだしてくるんだ▼
+だから　はいるときは
+ちゅうい　したほうが　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:42:45" />
+				Time="2011-11-10T05:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -490,10 +492,12 @@ ID：mount_14</Text>
 			Language="JPN_KANJI">
 			<Text>色の　濃い　草むらが　あるよね▼
 ここは　まれにだけど　ポケモンが
-２匹同時に　飛びだしてくるんだ▼</Text>
+２匹同時に　飛びだしてくるんだ▼
+だから　入るときは
+注意したほうが　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:03:20" />
+				Time="2011-11-10T05:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -529,14 +533,12 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そう！　いろのこい　くさむらに
-はいるなら　ちゅうい　してね▼
-じゃ　ぼくは
-ヒオウギに　もどります▽
-ふたりとも　きを　つけてね！▼</Text>
+			<Text>つぎに　ちょうせん　するなら
+タチワキジム　だね▽
+じゃあ　これを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:03:38" />
+				Time="2011-11-10T05:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -544,14 +546,12 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そう！　色の　濃い　草むらに
-はいるなら　注意してね▼
-じゃ　ぼくは
-ヒオウギに　戻ります▽
-二人とも　気を　つけてね！▼</Text>
+			<Text>次に　挑戦するなら
+タチワキジム　だね▽
+じゃあ　これを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:04:06" />
+				Time="2011-11-10T05:15:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -560,12 +560,12 @@ ID：mount_14</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・主人公たちを向いてメッセージ表示
-・表示後、画面上に移動
-　続けて</Comment>
+・アイテム入手処理
+　No151「モモンのみ」×３
+・続けてswleader1_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:44:04" />
+				Time="2011-11-10T05:19:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -574,6 +574,111 @@ ID：mount_14</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-13T12:42:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swleader1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]にも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:16:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:16:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]にも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:16:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:16:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ライバルに隣接して
+・続けてswleader1_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:17:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:13:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r20_swleader1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　ふたりとも　ファイトだよ！▼
+なにか　あれば
+ライブキャスターで　れんらくしてね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:17:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:17:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　二人とも　ファイトだよ！▼
+なにか　あれば
+ライブキャスターで　連絡してね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:17:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:17:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+
+・表示後、画面上に移動
+　続けてswrival_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:14:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:13:18" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -604,13 +709,13 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『へえ
-チェレンさんって　博識　だな▼
+チェレンさんって　博識だな▼
 しかも　世界征服を　ねらった
 あの　ひどい　連中……▽
 プラズマ団とも　戦かったもんな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T02:43:45" />
+				Time="2011-11-10T05:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

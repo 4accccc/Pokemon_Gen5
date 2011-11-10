@@ -248,11 +248,11 @@
 ・画面下に数歩歩くと
 　ゾロアークの動作モデルに差し替え
 　ダッシュで画面下に移動
-・画面外に消えると主人公操作可能に
+・続けてbackpackerm_06
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:45:13" />
+				Time="2011-11-10T05:43:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,6 +260,51 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-16T03:45:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r16r0201_backpackerm_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こきゅきゅきゅきゅーんっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:42:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:42:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こきゅきゅきゅきゅーんっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:42:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:42:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・動作モデルを変更
+・あわせて鳴き声再生
+・画面外に消えると主人公操作可能に
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:43:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE23
+ポケモン・ゾロアーク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-10T05:44:12" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

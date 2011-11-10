@@ -241,10 +241,10 @@ GRIDX=15、GRIDZ=26
 ・はい選択後
 　すべての新人作業員と会話した
 ・アイテム入手処理
-　No000「どくけし」×３</Comment>
+　No019「やけどなおし」×１</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T02:43:53" />
+				Time="2011-11-10T05:19:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,11 +260,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コンビナートぜんたいが
+			<Text>みんなの　やるきで　コンビナートが
 かっきで　あふれているよな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T02:44:06" />
+				Time="2011-11-10T05:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -272,11 +272,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コンビナート全体が
+			<Text>みんなの　やる気で　コンビナートが
 活気で　あふれているよな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T02:44:12" />
+				Time="2011-11-10T05:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
