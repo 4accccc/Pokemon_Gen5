@@ -439,29 +439,33 @@
 		Label="pw_event1_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『へえ……
-いがいと　やるんだな▽
-まあ　いがいと　だけどな</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+い……　いがいと　やるんだな▽
+まあ　いがいと　だけどな▼
+（なんだよ……　この　うでっぷし
+おんなの　ちからじゃ　ねえよ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『へえ……
-意外と　やるんだな▽
-まあ　意外と　だけどな</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+い……　意外と　やるんだな▽
+まあ　意外と　だけどな▼
+（何だよ……　この　腕っぷし
+女の　力じゃ　ねえよ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -643,27 +647,29 @@
 		Label="pw_event2_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+この……　バカぢから　おんな……▽
 ちょうしに　のるなよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+この……　怪力女……▽
 調子に　乗るなよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -919,27 +925,27 @@
 		Label="pw_event3_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
-こんな　おんなのこ　ひとりに……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+こんな　おんな　ひとりに……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
-こんな　女の子　ひとりに……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
+こんな　女　ひとりに……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1374,31 +1380,31 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
 オマエを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
+メカポリスを　おびきだし　たおす！▼
 オマエたちのいう　せいぎが
 こわれる　ところを　みせてやるぜ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
 オマエを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
+メカポリスを　おびきだし　倒す！▼
 オマエ達のいう　正義が
 壊れる所を　みせてやるぜ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T09:42:19" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1541,27 +1547,27 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『さあ
 むだな　ていこうは　やめて▽
-おとなしく　つかまりなさい……</Text>
+おとなしく　つかまりな……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:19:55" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:19:55" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『さあ
 無駄な　抵抗は　やめて▽
-おとなしく　捕まりなさい……</Text>
+おとなしく　捕まりな……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:19:55" />
+				Time="2011-11-10T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:19:55" />
+				Time="2011-11-10T11:48:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

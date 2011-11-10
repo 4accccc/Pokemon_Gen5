@@ -430,12 +430,16 @@
 みせてやるんだから！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『へえ……
-いがいと　やるんだな▽
-まあ　いがいと　だけどな</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『へえ……
-意外と　やるんだな▽
-まあ　意外と　だけどな</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+い……　いがいと　やるんだな▽
+まあ　いがいと　だけどな▼
+（なんだよ……　この　うでっぷし
+おんなの　ちからじゃ　ねえよ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+い……　意外と　やるんだな▽
+まあ　意外と　だけどな▼
+（何だよ……　この　腕っぷし
+女の　力じゃ　ねえよ……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『にいさんに
@@ -468,9 +472,11 @@
 みせてやるわ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+この……　バカぢから　おんな……▽
 ちょうしに　のるなよ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+この……　怪力女……▽
 調子に　乗るなよ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
@@ -520,10 +526,10 @@
 ウソだよね　兄さん……</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
-こんな　おんなのこ　ひとりに……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぐあっ！
-こんな　女の子　ひとりに……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+こんな　おんな　ひとりに……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+こんな　女　ひとりに……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">ポリアンナ『せいぎは　かつ！
@@ -665,12 +671,12 @@
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ！
 オマエを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
+メカポリスを　おびきだし　たおす！▼
 オマエたちのいう　せいぎが
 こわれる　ところを　みせてやるぜ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘヘヘ！
 オマエを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
+メカポリスを　おびきだし　倒す！▼
 オマエ達のいう　正義が
 壊れる所を　みせてやるぜ……</language>
 	</row>
@@ -727,10 +733,10 @@
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『さあ
 むだな　ていこうは　やめて▽
-おとなしく　つかまりなさい……</language>
+おとなしく　つかまりな……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『さあ
 無駄な　抵抗は　やめて▽
-おとなしく　捕まりなさい……</language>
+おとなしく　捕まりな……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
 		<language name="JPN" width="256">ポリアンナ（そういえば

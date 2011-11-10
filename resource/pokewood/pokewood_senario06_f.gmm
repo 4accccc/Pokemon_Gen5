@@ -355,9 +355,9 @@
 	</row>
 	<row id="pw_turn_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ずいぶんと
-かわいらしい　ポケモンね</language>
+かわいらしい　ポケモンねぇ</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ずいぶんと
-可愛らしい　ポケモンね</language>
+可愛らしい　ポケモンねぇ</language>
 	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『まけない……！</language>
@@ -397,13 +397,13 @@
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『だったら
-なんだって　いうのかしら！▼
-アナタは　いまから　アタシの
-ひとじちに　なるのよ！</language>
+なんだって　いうのよ！▼
+アンタは　いまから　アタシの
+ひとじちに　なるんだよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『だったら
-なんだって　いうのかしら！▼
-アナタは　今から　アタシの
-人質に　なるのよ！</language>
+なんだって　いうのよ！▼
+アンタは　今から　アタシの
+人質に　なるんだよ！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ポリアンナ『いっておくけど
@@ -415,9 +415,9 @@
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フン！
-こどもの　あそびじゃ　ないのよ！</language>
+こどもの　あそびじゃ　ないんだよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フン！
-子供の　遊びじゃ　ないのよ！</language>
+子供の　遊びじゃ　ないんだよ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ポリアンナ『あんたを　やっつけて
@@ -430,12 +430,16 @@
 みせてやるんだから！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『へえ……
-いがいと　やるのね▽
-まあ　いがいと　だけど</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『へえ……
-意外と　やるのね▽
-まあ　意外と　だけど</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
+い……　いがいと　やるのねぇ▽
+まあ　いがいと　だけど▼
+（なによ……　この　うでっぷし
+おんなの　ちからじゃ　ない……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
+い……　意外と　やるのねぇ▽
+まあ　意外と　だけど▼
+（何よ……　この　腕っぷし
+女の　力じゃ　ない……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『にいさんに
@@ -468,10 +472,12 @@
 みせてやるわ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
-ちょうしに　のっちゃってさ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
-調子に　乗っちゃってさ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
+この……　バカぢから　おんな……▽
+ちょうしに　のってんじゃ　ないよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
+この……　怪力女……▽
+調子に　乗ってんじゃ　ないよ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『あんたこそ！▼
@@ -520,10 +526,10 @@
 ウソだよね　兄さん……</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『きゃあっ！
-こんな　おんなのこ　ひとりに……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『きゃあっ！
-こんな　女の子　ひとりに……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+こんな　おんな　ひとりに……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+こんな　女　ひとりに……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">ポリアンナ『せいぎは　かつ！
@@ -664,15 +670,15 @@
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ！
-アナタを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
-アナタたちのいう　せいぎが
-こわれる　ところを　みせてやるわ……</language>
+アンタを　エサに▽
+メカポリスを　おびきだし　たおす！▼
+アンタたちのいう　せいぎが
+こわれる　ところを　みせてやるわぁ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ！
-アナタを　エサに▽
-メカポリスを　おびきだし　やっつける！▼
-アナタ達のいう　正義が
-壊れる所を　みせてやるわ……</language>
+アンタを　エサに▽
+メカポリスを　おびきだし　倒す！▼
+アンタ達のいう　正義が
+壊れる所を　みせてやるわぁ……</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">ポリアンナ『やめて！　はなして！
@@ -727,10 +733,10 @@
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『さあ
 むだな　ていこうは　やめて▽
-おとなしく　つかまりなさい……</language>
+おとなしく　つかまりな……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『さあ
 無駄な　抵抗は　やめて▽
-おとなしく　捕まりなさい……</language>
+おとなしく　捕まりな……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
 		<language name="JPN" width="256">ポリアンナ（そういえば

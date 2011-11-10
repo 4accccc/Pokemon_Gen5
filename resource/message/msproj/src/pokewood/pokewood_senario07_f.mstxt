@@ -133,26 +133,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『けいかんたい……
-もはや　これまでね……</Text>
+ちくしょう！　これまでか……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『警官隊……
-もはや　これまでね……</Text>
+畜生！　これまでか……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -188,27 +188,31 @@
 		Label="pw_event0_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ここまでか……▼
-ねえ　メカポリス！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『くそっ……▼
+ねえ　メカポリス……
+アタシの　さいごの　たのみ▽
+きいて　くれない……？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ここまでか……▼
-おい　メカポリス！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『くそっ……▼
+ねえ　メカポリス！
+アタシの　最後の　頼み▽
+聞いて　くれない……？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -242,56 +246,56 @@
 		Label="pw_event0_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『しょうぶよ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『しょうぶして</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『勝負よ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『勝負して</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event0_react_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>メカポリス『それでこそ
+			<Text>メカポリス『よかろう！　それでこそ
 わが　しゅくてき　[Name:PokemonNickname Idx="0" ]クノイチ▼
 いくぞ！
 スタートアップ！　せんとう　かいし！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メカポリス『それでこそ
+			<Text>メカポリス『よかろう！　それでこそ
 わが　宿敵　[Name:PokemonNickname Idx="0" ]クノイチ▼
 いくぞ！
 スタートアップ！　戦闘　開始！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -356,27 +360,27 @@
 		Label="pw_event1_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『まけないわよ
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『やってやるわ
 メカポリス！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『負けないわよ
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『やってやるわ
 メカポリス！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -412,27 +416,27 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 こんなに　たのしい　しょうぶ▽
-ひさしぶりね……！</Text>
+ひさしぶりねぇ……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:38" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:38" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 こんなに　楽しい　勝負▽
-久しぶりね……！</Text>
+久しぶりねぇ……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:38" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:38" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -585,30 +589,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『バカな！
-アナタは　こくさいコップで▽
+アンタは　こくさいコップで▽
 アタシは　どろぼう……▽
-てきどうし　なのよ！</Text>
+てきどうし　じゃないの！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『バカな！
-アナタは　国際コップで▽
+アンタは　国際コップで▽
 アタシは　泥棒……▽
-敵同士　なのよ！</Text>
+敵同士　じゃないの！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -652,29 +656,29 @@
 		Label="pw_event2_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ふざけないで！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ふざけんなよ！
 アタシの　ライバル　メカポリスは▽
-そんな　ヤワな　おとこじゃないわ！</Text>
+そんな　ヤワな　おとこじゃない！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ふざけないで！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ふざけんなよ！
 アタシの　ライバル　メカポリスは▽
 そんな　ヤワな　男じゃないわ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -830,27 +834,27 @@
 		Label="pw_event4_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『まって……
-どうでも　いいって　なによ……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『まちなよ……
+どうでも　いいって　なんなの……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『待って……
-どうでも　いいって　何よ……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『待ちなよ……
+どうでも　いいって　何なの……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -891,26 +895,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『オマエ……
-かわったのね……</Text>
+かわったのねぇ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『アナタ……
-変わったのね……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『アンタ……
+変わったのねぇ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1145,26 +1149,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『メカポリス！
-みそこなったわ！</Text>
+みそこなったよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『メカポリス！
-見損なったわ！</Text>
+見損なったよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1252,32 +1256,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ちょろい！
-ちょろいわ　こくさいコップ！▼
+ちょろいよ　こくさいコップ！▼
 ひみつけいじが　なんにん
 たばになって　やってきても▽
 アタシは　つかまらないよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ちょろい！
-ちょろいわ　国際コップ！▼
+ちょろいよ　国際コップ！▼
 秘密刑事が　何人
 束になって　やってきても▽
 アタシは　捕まらないよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:47" />
+				Time="2011-11-10T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

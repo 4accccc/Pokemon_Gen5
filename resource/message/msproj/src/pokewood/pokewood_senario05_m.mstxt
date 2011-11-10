@@ -72,14 +72,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
-やられはしないぜ！</Text>
+やってみやがれってんだ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -182,34 +182,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『オレは
-レインボーパールになど▽
-きょうみは　ない！▼
+レインボーパールになんざ▽
+きょうみは　ねえ！▼
 パールを　うばうと　よこくしたのは
 オマエを　おびきよせる　ための▽
 ワナだったんだよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『オレは
-レインボーパールになど▽
-興味は　ない！▼
+レインボーパールになんざ▽
+興味は　ねえ！▼
 パールを　奪うと　予告したのは
 オマエを　おびきよせる　ための▽
 ワナだったんだよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:47:39" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -313,26 +313,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メカポリス『な　なぜ
-ダゲキが　どくどくだまを！？</Text>
+ダゲキが　どくどくだまを！？▽
+おのれ　ゆるさん！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メカポリス『な　なぜ
-ダゲキが　どくどくだまを！？</Text>
+ダゲキが　どくどくだまを！？▽
+おのれ　許さん！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -340,26 +342,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
-スキをみて　すりかえておいたのさ！</Text>
+スキを　みて▽
+すりかえておいたんだよ！……って▽
+ぎゃあ！　いてえ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
-スキをみて　すり替えておいたのさ！</Text>
+スキをみて▽
+すり替えておいたんだよ！……って▽
+ぎゃあ！　痛てえ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -391,33 +397,35 @@
 		Label="pw_event1_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『どうだ？
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『いてて……▼
+ヘヘヘ　うろたえてやがるぜ
 つらいか？　メカポリスさんよ！▽
 こうさんするなら　いまのうちだぜ？▼
 ゲットダウン！　とうこうしろ！
 ……ってか？　ヘヘヘ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T07:36:47" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『どうだ？
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『いてて……▼
+ヘヘヘ　うろたえてやがるぜ
 辛いか？　メカポリスさんよ！▽
 降参するなら　今のうちだぜ？▼
 ゲットダウン！　投降しろ！
 ……ってか？　ヘヘヘ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T01:51:02" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-24T01:51:02" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -561,31 +569,33 @@
 		Label="pw_event2_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
 こんかいの　さくせんは▽
 カンペキだった　はずなのに……▼
-つ　つよすぎる……！</Text>
+ちくしょう！
+この……　クズてつが！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぐあっ！
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ぎゃあっ！
 今回の　作戦は▽
 カンペキだった　はずなのに……▼
-つ　強すぎる……！</Text>
+畜生！
+この……　クズ鉄が！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -746,30 +756,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ついに
-メカポリスを　やっつけたぞ！▼
+メカポリスを　やっつけたぜ！▼
 これで　どんな　おたからも
 ぬすみ　ほうだい　だぜ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ついに
-メカポリスを　やっつけたぞ！▼
+メカポリスを　やっつけたぜ！▼
 これで　どんな　お宝も
 盗み放題だぜ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:54" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -926,28 +936,28 @@
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
 きぶんは　どうだ？　メカポリス！▼
 からだが　サビついて
-みうごきが　とれないだろう？</Text>
+みうごきが　とれないだろ？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
 気分は　どうだ？　メカポリス！▼
 身体が　サビついて
-身動きが　取れないだろう？</Text>
+身動きが　取れないだろ？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1039,27 +1049,27 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ゴクリ……
 たったまま　きを　うしなっている……▼
-なんて　しゅうねん　なんだ……！</Text>
+なんという　しゅうねん……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ゴクリ……
 立ったまま　気を　失っている……▼
-なんて　執念　なんだ……！</Text>
+なんという　執念……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				Time="2011-11-10T11:48:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

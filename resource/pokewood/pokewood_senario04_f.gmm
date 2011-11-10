@@ -374,10 +374,10 @@
 ダイナミックエンジンは　渡さん！</language>
 	</row>
 	<row id="pw_turn_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『キャッ！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 あたり　かまわず……▽
 なんて　こうげきなの！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『キャッ！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 辺り　構わず……　なんて　攻撃なの！</language>
 	</row>
 	<row id="pw_turn_enemy_2">
@@ -409,13 +409,13 @@
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……！
-にんげんの　けいかんだわ！▼
+にんげんの　けいかんだ！▼
 ぜんしんを　メカで
-きょうかして　いるの！？</language>
+きょうか　して　いる！？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……！
-人間の　警官だわ！▼
+人間の　警官だ！▼
 全身を　メカで
-強化して　いるの！？</language>
+強化　して　いる！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">メカポリス『ていこう　したな……
@@ -424,10 +424,8 @@
 敵対行動と　みなす！</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
-だから　なんだと　いうの！？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
-だから　何だと　いうの！？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">メカポリス『はんざいは　ゆるさない
@@ -436,12 +434,14 @@
 実力行使で　制圧する！</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『アタシは
-せいきの　おおどろぼう▽
-[1:02:ポケモンニックネーム:0]クノイチ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『アタシは
-世紀の　大泥棒▽
-[1:02:ポケモンニックネーム:0]クノイチ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『く……
+くちより　さきに▽
+てが　うごくなんて！▼
+こんな　らんぼうな　けいじに……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『く……
+口より　先に▽
+手が　動くなんて！▼
+こんな　乱暴な　刑事に……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『やられはしない！</language>
@@ -469,9 +469,9 @@
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『アタシの
-ポケモンに　かなうかしら！？</language>
+ポケモンに　かなうのかい！？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『アタシの
-ポケモンに　敵うかしら！？</language>
+ポケモンに　敵うのかい！？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">メカポリス『シャットアップ　だまれ
@@ -504,12 +504,12 @@
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『まって！
 どろぼう　からは▽
-もう　あしを　あらうわ！▼
-だから　みのがしてちょうだい！</language>
+もう　あしを　あらう！▼
+だから　みのがしてよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『待って！
 泥棒からは▽
-もう　足を　洗うわ！▼
-だから　見逃がしてちょうだい！</language>
+もう　足を　洗う！▼
+だから　見逃がしてよ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">メカポリス『ムムム……</language>
@@ -518,14 +518,14 @@
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ（フン！
 せいぎの　みかたサン▽
-ゆだんしてるわね！▼
+ゆだんしてるね！▼
 スキを　ついて
-やっつけてやるわ！</language>
+スクラップに　してやるわ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ（ヘッ！
 正義の味方サン▽
-油断してるわね！▼
+油断してるね！▼
 スキを　ついて
-やっつけてやるわ！</language>
+スクラップに　してやるわ！</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">メカポリス『トゥーバッド　ざんねん
@@ -544,10 +544,10 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『！！</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『きゃあっ！
-つ　つよい……！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『きゃあっ！
-つ　強い……！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！▼
+ち　ちくしょう……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！▼
+ち　畜生……！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">メカポリス『ミッションコンプリート！
@@ -564,9 +564,9 @@
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『くそーっ！
-あと　もうすこし　だったのに……</language>
+こんな　クズてつ　けいじに……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『くそーっ！
-あと　もう少し　だったのに……</language>
+こんな　クズ鉄　刑事に……</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">じしょう　せいきの　おおどろぼう
@@ -596,15 +596,15 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
 ひみつけいじだか▽
 なんだか　しらないけど▽
-どうってこと　ないわね！▼
+どうってこと　ないね！▼
 この　ダイナミックエンジンは
-アタシのものよ！　じゃあね！</language>
+アタシのもの！　じゃあねぇ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
 秘密刑事だか▽
 なんだか　知らないけど▽
-どうってこと　ないわね！▼
+どうってこと　ないね！▼
 この　ダイナミックエンジンは
-アタシのものよ！　じゃあね！</language>
+アタシのもの！　じゃあねぇ！</language>
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">メカポリス『ストップ！　まてっ！
@@ -619,10 +619,10 @@
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
 アタシを　にがしたことを▽
-いっしょう　こうかい　するがいいわ！</language>
+いっしょう　こうかい　しなさい！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
 アタシを　逃がしたことを▽
-一生　後悔するがいいわ！</language>
+一生　後悔　しなさい！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">メカポリス『[1:02:ポケモンニックネーム:0]クノイチ……！</language>
@@ -668,9 +668,9 @@
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
-どういうことなの？　こたえなさい！</language>
+どういうこと？　こたえなさい！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『メカポリス！
-どういうことなの？　答えなさい！</language>
+どういうこと？　答えなさい！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">メカポリス『この　けんきゅうじょは
@@ -689,9 +689,9 @@
 作動するのだ！</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『なに！？
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『なにっ！？
 デストロ……　えっ？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『なに！？
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『なにっ！？
 デストロ……　えっ？</language>
 	</row>
 	<row id="pw_event6_enemy_2">
@@ -758,7 +758,7 @@
 アタシは　かって　にげきる！▼
 それが　アタシの　せいぎよ！▼
 もんくが　あるなら
-つかまえて　みなさい！</language>
+つかまえて　みな！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
 法律？　正義？▽
 知ったことですか！▼
@@ -766,7 +766,7 @@
 アタシは　勝って　逃げ切る！▼
 それが　アタシの　正義よ！▼
 文句が　あるなら
-捕まえて　みなさい！</language>
+捕まえて　みな！</language>
 	</row>
 	<row id="pw_event7_enemy_1">
 		<language name="JPN" width="256">メカポリス『ストップ！　まてっ！
@@ -779,10 +779,10 @@
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フフフッ！▼
 ダイナミックエンジンごと
-ふきとびなさい！　メカポリス！</language>
+ふきとびな！　メカポリス！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フフフッ！▼
 ダイナミックエンジンごと
-吹き飛びなさい！　メカポリス！</language>
+吹き飛びな！　メカポリス！</language>
 	</row>
 	<row id="pw_event7_enemy_2">
 		<language name="JPN" width="256">メカポリス『おのれ！
