@@ -6176,10 +6176,10 @@
 	</row>
 
 	<row id="TRID_BREEDERW_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">きみの　そだてかたの　ごくい
-ぬすめるまで　なんども　あいてするわ！</language>
-		<language name="JPN_KANJI" width="216">きみの　育て方の　極意
-盗めるまで　なんども　相手するわ！</language>
+		<language name="JPN" width="216">きみが　ここに　くるたび
+あいてを　してもらうんだから！</language>
+		<language name="JPN_KANJI" width="216">きみが　ここに　来るたび
+相手を　してもらうんだから！</language>
 	</row>
 
 	<row id="TRID_POLICE_03_TRMSG_FIGHT_START">
