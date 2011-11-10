@@ -2787,4 +2787,234 @@
 				Time="2011-10-14T09:40:18" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『ムムッ
+やっぱり　ダメなの……？▼
+じかんを　こえる　わざ　だと
+きいたのだけど……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『ムムッ
+やっぱり　ダメなの……？▼
+時間を　超える　技　だと
+聞いたのだけど……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン『[Name:TrainerName Idx="1" ]……
+なに　してるんだ……？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン『[Name:TrainerName Idx="1" ]……
+何　してるんだ……？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『え？　ああ
+ポケモンの　わざで　じかんを▽
+ゆがめられたら　ラクかな……って</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『え？　ああ
+ポケモンの　技で　時間を▽
+ゆがめられたら　ラクかな……って</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン『ラクって……！？
+てんそうきを　つくる　ために▽
+キミと　わたしが　どれほど▽
+くろうしたか　わすれたのか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン『ラクって……！？
+時間転送機を　作る　ために▽
+キミと　わたしが　どれほど▽
+苦労したか　忘れたのか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『それは　それ
+これは　これ　よ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『それは　それ
+これは　これ　よ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン『……　……▼
+もう　いい……
+すきに　するがいいさ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン『……　……▼
+もう　いい……
+好きに　するがいいさ……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『なによー
+みんな　こまかいこと▽
+きにしすぎ　なのよ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『なによー
+みんな　細かいこと▽
+気にしすぎ　なのよ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>レディアン『これだから
+ニンゲンは……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レディアン『これだから
+ニンゲンは……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:14" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

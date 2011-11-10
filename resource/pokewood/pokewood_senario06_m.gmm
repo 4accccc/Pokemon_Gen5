@@ -708,6 +708,78 @@
 報復せよ　メカポリスウーマン！
 １００倍返しだ　国際コップ！</language>
 	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">ポリアンナ『えっ！？
+（ウソでしょ？　みねうち？▼
+クルミルを　たおさないように
+てかげん　してるの？▼
+…………▼
+もしかして　かれ　ほんとうは
+やさしい　ひと　なのかも……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『えっ！？
+（ウソでしょ？　みねうち？▼
+クルミルを　倒さないように
+手加減　してるの？▼
+…………▼
+もしかして　彼　本当は
+優しい　人　なのかも……</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『さあ
+むだな　ていこうは　やめて▽
+おとなしく　つかまりなさい……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『さあ
+無駄な　抵抗は　やめて▽
+おとなしく　捕まりなさい……</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">ポリアンナ（そういえば
+あのころの　にいさん……▽
+とっても　やさしかったな……▼
+トラックに　はねられそうに　なった
+わたしを　かばって　おおケガして……▼
+それでも　けいじを　つづける　ために
+きょうか　かいぞう　しゅじゅつを……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ（そういえば
+あのころの　兄さん……▽
+とっても　優しかったな……▼
+トラックに　はねられそうに　なった
+私を　かばって　大ケガして……▼
+それでも　刑事を　続ける　ために
+強化改造手術を……</language>
+	</row>
+	<row id="pw_event7_enemy_2">
+		<language name="JPN" width="256">ポリアンナ（あれ……　おかしいな
+なんだか　かれが　すごく▽
+いいひとに　みえてきちゃった……▼
+それに　[1:02:ポケモンニックネーム:0]ニンジャって
+ちょっと　おとこまえかも……</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ（あれ……　おかしいな
+なんだか　彼が　すごく▽
+良い人に　みえてきちゃった……▼
+それに　[1:02:ポケモンニックネーム:0]ニンジャって
+ちょっと　男前かも……</language>
+	</row>
+	<row id="pw_event7_hero_3">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『すなおに
+したがえば　きずつけは　しないさ</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『素直に
+従えば　危害は　加えないさ</language>
+	</row>
+	<row id="pw_event7_enemy_3">
+		<language name="JPN" width="256">ポリアンナ『うっとり……▼
+ハッ！　い　いけない！
+わたしは　メカポリスの　いもうと！▽
+ハードボイルドに　きめないとっ！▼
+ポリアンナの　ポリは
+ポリスの　ポリなんだからっ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『うっとり……▼
+ハッ！　い　いけない！
+わたしは　メカポリスの　妹！▽
+ハードボイルドに　決めないとっ！▼
+ポリアンナの　ポリは
+ポリスの　ポリなんだからっ！</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

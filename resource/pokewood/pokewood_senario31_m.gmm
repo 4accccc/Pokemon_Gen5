@@ -358,7 +358,7 @@
 なきごえを　あげるだけで▽
 ちのうや　かんじょうが▽
 あるようには　おもえなかった……▼
-でも　この　こえの　ぬしは
+でも　あの　かいぶつは
 ぜんぜん　ちがう！▼
 ぼくたち　にんげんの
 りかいを　こえている……</language>
@@ -366,26 +366,22 @@
 鳴き声を　上げるだけで▽
 知能や　感情が▽
 あるようには　思えなかった……▼
-でも　この　声の　主は
+でも　あの　怪物は
 全然　違う！▼
 ぼくたち　人間の
 理解を　超えている……</language>
 	</row>
 	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">？？？『ブフォア……</language>
-		<language name="JPN_KANJI" width="256">？？？『ブフォア……</language>
+		<language name="JPN" width="256">かいぶつ『ブフォア……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『ブフォア……</language>
 	</row>
 	<row id="pw_turn_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きりが……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『霧が……</language>
-	</row>
-	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">かいぶつ『アカイキリ……▼
-ソチラノ　セカイ　ト
-コチラノ　セカイ　ツナグ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『アカイキリ……▼
-３ノ　セカイ　ト　１１ノ　セカイ
-ツナグ　ヒモ……　ユラギ……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あかいきりの
+こい　かたまり……▽
+あれが　あるかぎり……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『赤い霧の
+濃い　塊……▽
+あれが　ある限り……</language>
 	</row>
 	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウウ……
@@ -397,38 +393,23 @@
 		<language name="JPN" width="256">かいぶつ『タチムカウ……
 ユウキ？　リカイフノウ▽
 オロカ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『タチムカウ……
-ユウキ？　リカイフノウ▽
-オロカ……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『立チ向カウ……
+勇気？　理解不能▽
+愚カ……</language>
 	</row>
-	<row id="pw_turn_hero_4">
+	<row id="pw_turn_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はやく……
 はやく　かいぶつを　たおさないと▼
-あかい　きりが　ひろがって
+また　きりが　ひろがって
 てに　おえなく　なる……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『早く……
 早く　怪物を　倒さないと▼
-赤い　霧が　広がって
+また　霧が　広がって
 手に　負えなく　なる……</language>
 	</row>
-	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">かいぶつ『オワリ　チカイ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『シュウマツ　チカイ……</language>
-	</row>
-	<row id="pw_turn_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　のこされた
-じかんは　すくない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　残された
-時間は　少ない！</language>
-	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">かいぶつ『ジカン……
-ムイミ……▽
-ワレワレ　エイエン……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『ジカン……▼
-ダイ４ノ　ポテンシャル
-ムイミ……▽
-ワレワレ　エイエン……</language>
+		<language name="JPN" width="256">かいぶつ『オワリ　チカイ……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『終末　近イ……</language>
 	</row>
 	<row id="pw_turn_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　のこされた
@@ -439,11 +420,11 @@
 	<row id="pw_turn_enemy_7">
 		<language name="JPN" width="256">かいぶつ『ジカン……
 ムイミ……▽
-ワレワレ　エイエン……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『ジカン……▼
-ダイ４ノ　ポテンシャル
-ムイミ……▽
-ワレワレ　エイエン……</language>
+ワレ　エイエン……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『時間……▼
+第４ノ　ポテンシャル
+無意味……▽
+我　永遠……</language>
 	</row>
 	<row id="pw_turn_hero_9">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……
@@ -454,9 +435,9 @@
 	<row id="pw_turn_enemy_9">
 		<language name="JPN" width="256">かいぶつ『イノチ……　オワル
 スベテ……　ム……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『イノチ……　オワル▼
+		<language name="JPN_KANJI" width="256">かいぶつ『生命……　終ワル▼
 スベテ……
-チヘイメンノ　カナタ……</language>
+地平面ノ　彼方……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">？？？『ブボボボ……</language>
@@ -538,8 +519,8 @@
 ワガ　シモベ……▼
 ブルルン！　ブヒュルル　ブバア</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブルルル……
-ニンゲンドモ……▽
-ワガ　シモベト　ナルベシ……▼
+人間ドモ……▽
+我ガ　下僕ト　ナルベシ……▼
 ブルルン！　ブヒュルル　ブバア</language>
 	</row>
 	<row id="pw_event1_hero_4">
@@ -570,8 +551,8 @@
 アンコクセイウン　カラ……▽
 ブヒュー　バファッ　ブルル　ボルン……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブフー…… 
-コントンタル　シンエン▽
-イニシエノ　トバリヨリ　キタル……▽
+事象ノ　地平面ノ　奥底▽
+暗黒星雲　ヨリ　来タル……▽
 ブヒュー　バファッ　ブルル　ボルン……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
@@ -583,55 +564,70 @@
 コレガ　コノ　ホシノ
 イキモノノ……　ココロ……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『バヒュッ！▼
-コレガ　コノ　ホシノ
-イキモノノ……　カンジョウ……▼
-コタイトシテノ　レゾンデートルニ
-コシツスル　ユエノ……</language>
+コレガ　コノ　星ノ
+生命ノ……　感情……▼
+個体トシテノ　レゾンデートルニ
+固執スル　故ノ……</language>
+	</row>
+	<row id="pw_event2_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『よるが　あけた……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『夜が　明けた……？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">かいぶつ『ココロ……
-クダラナイ　モノ</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『ココロ……
-コセイ……　タヨウカ……▼
-トクイテンニ　イタレバ
-フヒツヨウナ　ガイネン</language>
+		<language name="JPN" width="256">かいぶつ『ヒカリ……
+アンコクセイウンノ▽
+チカラガ　ヨワマル……！</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『光量子ノ　波動
+コヒーレンス……▼
+ユラギ……　相殺　サレル……
+１１次元宇宙ガ……　閉ジル……！</language>
 	</row>
 	<row id="pw_event2_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『かいぶつが……
+くるしそうに　している……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かいぶつが……
+苦しそうに　している……？</language>
+	</row>
+	<row id="pw_event2_enemy_1">
+		<language name="JPN" width="256">かいぶつ『ココロ……　クダラヌ！</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『心……
+個性……　多様化……▼
+特異点ニ　到レバ
+不必要ナ　概念……！</language>
+	</row>
+	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かかってこい！
 おまえなんかに　まけないぞ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かかってこい！
 おまえなんかに　負けないぞ！</language>
 	</row>
-	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">かいぶつ『ビュフルル！
+	<row id="pw_event2_enemy_2">
+		<language name="JPN" width="256">かいぶつ『ビュフルル……
 チイサキ　ホシノ▽
-オロカナ　イキモノヨ</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『ビュフルル！
-トルニ　タラナイ　ホシノ▽
-ゲンシテキナ　チセイタイヨ</language>
+オロカナ　イキモノメ！</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『ビュフルル……
+取ルニ　足ラナイ　星ノ▽
+原始的ナ　知性体メ！</language>
 	</row>
-	<row id="pw_event2_hero_2">
+	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『にんげんを
 なめるな！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『人間を
 なめるな！</language>
 	</row>
 	<row id="pw_event2_enemy_3">
-		<language name="JPN" width="256">かいぶつ『アカイキリ……
-ノガレルコト　フカノウ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『アカイキリ……
-チセイタイノ　ツウカギレイ▽
-フカヒノ　シュクメイ</language>
+		<language name="JPN" width="256">かいぶつ『ブボァ……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『ブボァ……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">かいぶつ『ブルゥ　ブアア……▼
 コノ　ホシノ　イノチハ
 ヨワスギル……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブルゥ　ブアア……▼
-ゲレツナ　ブンメイ
-ヨウチナ　チセイ▽
-ゼイジャクナ　ニクタイ▼
-コノ　ホシハ……</language>
+下劣ナ　文明
+幼稚ナ　知性▽
+軟弱ナ　肉体▼
+コノ　星ハ……</language>
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
@@ -650,12 +646,12 @@
 トウ　トハ　オロカナ▼
 シレバ　ノミコマレル
 クラヤミノ　ソコニ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『ワレニ　コトヲ
-トウ　トハ　オロカナ▼
-キサマラハ　シルマイ
-シンエンヲ　ノゾク　トキ▽
-シンエンモ　マタ▽
-キサマヲ　ノゾイテイル　コトヲ</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『我ニ　事ヲ
+問ウ　トハ　愚カナ▼
+貴様ラハ　知ルマイ
+深キ　暗黒ヲ　ノゾク　時▽
+深キ　暗黒モ　マタ▽
+貴様ヲ　ノゾイテイル　事ヲ</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『い……　いみが
@@ -668,8 +664,8 @@
 サラバダ……
 オロカナ　イキモノヨ……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブヒュウルル！▼
-サラバダ……　ミセイジュクデ
-ゲンシテキナ　チセイタイヨ……</language>
+サラバダ……　未成熟デ
+原始的ナ　知性体ヨ……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">かいぶつ『ブシュウゥ……▼
@@ -704,9 +700,9 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">かいぶつ『ホロビノ
 ハジマリダ……</language>
-		<language name="JPN_KANJI" width="256">かいぶつ『イマ……
-３ノ　セカイノ　コトワリガ▽
-ヤブレ　シュウシュクスル……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『今……
+３次元宇宙ノ　物理法則ガ▽
+破レ　収縮スル……</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うぐっ……！
@@ -721,8 +717,8 @@
 スベテノ　サイゴノ　トキ……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブヒャヒャ！
 バヒフフフ！▼
-コノ　セカイノ　イノチ
-スベテノ　サイゴノ　トキ……</language>
+コノ　世界ノ　生命
+スベテノ　最期ノ　時……</language>
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『う……　うわあ！
@@ -739,9 +735,9 @@
 ナニモ　カモ
 アカク　ソマル……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブルブルブル……▼
-ナニモ　カモ……
-チョウハチョウノ　スペクトルニ▽
-シフトスル……</language>
+何モ　カモ……
+長波長ノ　スペクトルニ▽
+シフト　スル……</language>
 	</row>
 	<row id="pw_event5_hero_3">
 		<language name="JPN" width="256">そのひ　そのとき
@@ -762,15 +758,15 @@
 ワレニ　ヒッテキ　スル
 セイメイリョク　ヲ……？</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ナントイウ
-セイメイリョク……▼
-ヨモヤ　コノ　ホシノ
-イキモノ　トハ　オモエヌ……▼
-ムシロ　ワレニ　チカイ
-コウジゲンノ　ソンザイ……？</language>
+生命力……▼
+ヨモヤ　コノ　星ノ
+生命　トハ　思エヌ……▼
+ムシロ　我ニ　近イ
+高次元ノ　存在……？</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『こんとんだか
-しんえんだか　しらんが▽
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あんこくせいうんだか
+１１じげんだか　しらんが▽
 このほしは　オレのものだ！▼
 そう……　オレは！　オレこそが
 にんげんを　ちょうえつした▽
@@ -779,8 +775,8 @@
 およびじゃ　ないぜ！▼
 うちゅうの　かなたで
 ひきこもってな！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『混沌だか
-深淵だか　知らんが▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『暗黒星雲だか
+１１次元だか　知らんが▽
 この星は　オレのものだ！▼
 そう……　オレは！　オレこそが
 人間を　超越した▽
@@ -835,6 +831,48 @@
 新たな　ナゾを　生んだものの▽
 真夜中の　怪奇現象は▽
 終わりを　迎えた……</language>
+	</row>
+	<row id="pw_event7_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『この　きり……
+きりばらい　でも　はらえない……！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『この　霧……
+きりばらい　でも　払えない……！？</language>
+	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">かいぶつ『アカイキリ……
+ワレト　オナジ▽
+１１ジゲン　ウチュウノ　ソンザイ▼
+ヨッテ　キサマラ
+３ジケン　ウチュウノ　ソンザイハ▽
+フレル　コトモ　デキナイ……</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『赤イ霧……▼
+１１ノ　次元間ノ　対称性ヲ　破ル
+形而上宇宙ノ　ユラギ▼
+我ヲ　コノ　星ニ　導キシ
+スーパーストリングノ　力場▼
+故ニ　３次元世界ノ
+物理法則ニ　従ウ　知性体ガ▽
+干渉スル　コトハ　不可能……</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いったい　どうすれば……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『一体　どうすれば……</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">かいぶつ『カンガエテモ　ムダダ▼
+１１ジゲン　ウチュウノ　ソンザイニ
+３ジゲン　ウチュウノ　ジョウシキハ▽
+ツウヨウ　シナイ</language>
+		<language name="JPN_KANJI" width="256">かいぶつ『思考ハ　意味ヲ　為サナイ▼
+１１次元宇宙ノ　存在ニ
+３次元宇宙ノ　ポテンシャルハ▽
+コトゴトク　無力……</language>
+	</row>
+	<row id="pw_event7_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちがう……
+ムダなんかじゃ……　ない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『違う……
+無意味なんかじゃ……　ない！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

@@ -837,6 +837,40 @@
 恋する　気持ちを　あきらめない▽
 それもまた　愛の形！</language>
 	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">バルバラ『いまのは　なんですの？</language>
+		<language name="JPN_KANJI" width="256">バルバラ『今のは　何ですの？</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いや……　えと……
+メロメロ……　です……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いや……　えと……
+メロメロ……　です……</language>
+	</row>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">バルバラ『ハァ……▼
+メロメロなんかで　ワタクシが
+なびくとでも？▼
+ほんとうに　あきれた　とのがた……</language>
+		<language name="JPN_KANJI" width="256">バルバラ『ハァ……▼
+メロメロなんかで　ワタクシが
+なびくとでも？▼
+本当に　あきれた　殿方……</language>
+	</row>
+	<row id="pw_event6_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『す……
+すいま……せん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『す……
+すいま……せん……</language>
+	</row>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">バルバラ『……</language>
+		<language name="JPN_KANJI" width="256">バルバラ『……</language>
+	</row>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

@@ -887,6 +887,42 @@
 悪くはない……▽
 わたしは　そう　思うことにした</language>
 	</row>
+	<row id="pw_event7_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ムムッ
+やっぱり　ダメか……？▼
+じかんを　こえる　わざ　だと
+きいたのだが……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ムムッ
+やっぱり　ダメか……？▼
+時間を　超える　技　だと
+聞いたのだが……</language>
+	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！▼
+じかん　てんそうきの　かわりに
+ポケモンの　わざで▽
+じかんを　ゆがめようと　するなんて▽
+ズルイ……　というか▽
+かがくしゃとして　どうなんですか？</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！▼
+時間転送機の　代わりに
+ポケモンの　技で▽
+時間を　ゆがめようと　するなんて▽
+ズルイ……　というか▽
+科学者として　どうなんですか？</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『え？　ああ
+うまく　いけば　いいか……　って</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『え？　ああ
+上手く　いけば　いいか……　って</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">ストレンジ『ハァ……
+もう　すきに　してください……</language>
+		<language name="JPN_KANJI" width="256">ストレンジ『ハァ……
+もう　好きに　してください……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

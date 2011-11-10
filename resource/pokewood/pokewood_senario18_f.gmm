@@ -985,6 +985,68 @@
 わたしを　みつけた　ロボットが▽
 近づいて　くるのが　みえた……</language>
 	</row>
+	<row id="pw_event8_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ムムッ
+やっぱり　ダメなの……？▼
+じかんを　こえる　わざ　だと
+きいたのだけど……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ムムッ
+やっぱり　ダメなの……？▼
+時間を　超える　技　だと
+聞いたのだけど……</language>
+	</row>
+	<row id="pw_event8_enemy_0">
+		<language name="JPN" width="256">レディアン『[1:00:トレーナー名:1]……
+なに　してるんだ……？</language>
+		<language name="JPN_KANJI" width="256">レディアン『[1:00:トレーナー名:1]……
+何　してるんだ……？</language>
+	</row>
+	<row id="pw_event8_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『え？　ああ
+ポケモンの　わざで　じかんを▽
+ゆがめられたら　ラクかな……って</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『え？　ああ
+ポケモンの　技で　時間を▽
+ゆがめられたら　ラクかな……って</language>
+	</row>
+	<row id="pw_event8_enemy_1">
+		<language name="JPN" width="256">レディアン『ラクって……！？
+てんそうきを　つくる　ために▽
+キミと　わたしが　どれほど▽
+くろうしたか　わすれたのか？</language>
+		<language name="JPN_KANJI" width="256">レディアン『ラクって……！？
+時間転送機を　作る　ために▽
+キミと　わたしが　どれほど▽
+苦労したか　忘れたのか？</language>
+	</row>
+	<row id="pw_event8_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『それは　それ
+これは　これ　よ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『それは　それ
+これは　これ　よ</language>
+	</row>
+	<row id="pw_event8_enemy_2">
+		<language name="JPN" width="256">レディアン『……　……▼
+もう　いい……
+すきに　するがいいさ……</language>
+		<language name="JPN_KANJI" width="256">レディアン『……　……▼
+もう　いい……
+好きに　するがいいさ……</language>
+	</row>
+	<row id="pw_event8_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『なによー
+みんな　こまかいこと▽
+きにしすぎ　なのよ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『なによー
+みんな　細かいこと▽
+気にしすぎ　なのよ</language>
+	</row>
+	<row id="pw_event8_enemy_3">
+		<language name="JPN" width="256">レディアン『これだから
+ニンゲンは……</language>
+		<language name="JPN_KANJI" width="256">レディアン『これだから
+ニンゲンは……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

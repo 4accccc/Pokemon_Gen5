@@ -2370,4 +2370,124 @@
 				Time="2011-10-14T09:40:18" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『ムムッ
+やっぱり　ダメか……？▼
+じかんを　こえる　わざ　だと
+きいたのだが……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『ムムッ
+やっぱり　ダメか……？▼
+時間を　超える　技　だと
+聞いたのだが……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ストレンジ『[Name:TrainerName Idx="1" ]はかせ！▼
+じかん　てんそうきの　かわりに
+ポケモンの　わざで▽
+じかんを　ゆがめようと　するなんて▽
+ズルイ……　というか▽
+かがくしゃとして　どうなんですか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ストレンジ『[Name:TrainerName Idx="1" ]博士！▼
+時間転送機の　代わりに
+ポケモンの　技で▽
+時間を　ゆがめようと　するなんて▽
+ズルイ……　というか▽
+科学者として　どうなんですか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]はかせ『え？　ああ
+うまく　いけば　いいか……　って</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]博士『え？　ああ
+上手く　いけば　いいか……　って</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ストレンジ『ハァ……
+もう　すきに　してください……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ストレンジ『ハァ……
+もう　好きに　してください……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:20:05" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

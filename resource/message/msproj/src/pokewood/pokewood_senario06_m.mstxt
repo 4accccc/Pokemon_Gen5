@@ -1498,4 +1498,202 @@
 				Time="2011-10-25T02:02:41" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『えっ！？
+（ウソでしょ？　みねうち？▼
+クルミルを　たおさないように
+てかげん　してるの？▼
+…………▼
+もしかして　かれ　ほんとうは
+やさしい　ひと　なのかも……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『えっ！？
+（ウソでしょ？　みねうち？▼
+クルミルを　倒さないように
+手加減　してるの？▼
+…………▼
+もしかして　彼　本当は
+優しい　人　なのかも……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『さあ
+むだな　ていこうは　やめて▽
+おとなしく　つかまりなさい……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『さあ
+無駄な　抵抗は　やめて▽
+おとなしく　捕まりなさい……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-08T13:19:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ（そういえば
+あのころの　にいさん……▽
+とっても　やさしかったな……▼
+トラックに　はねられそうに　なった
+わたしを　かばって　おおケガして……▼
+それでも　けいじを　つづける　ために
+きょうか　かいぞう　しゅじゅつを……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ（そういえば
+あのころの　兄さん……▽
+とっても　優しかったな……▼
+トラックに　はねられそうに　なった
+私を　かばって　大ケガして……▼
+それでも　刑事を　続ける　ために
+強化改造手術を……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ（あれ……　おかしいな
+なんだか　かれが　すごく▽
+いいひとに　みえてきちゃった……▼
+それに　[Name:PokemonNickname Idx="0" ]ニンジャって
+ちょっと　おとこまえかも……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ（あれ……　おかしいな
+なんだか　彼が　すごく▽
+良い人に　みえてきちゃった……▼
+それに　[Name:PokemonNickname Idx="0" ]ニンジャって
+ちょっと　男前かも……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『すなおに
+したがえば　きずつけは　しないさ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『素直に
+従えば　危害は　加えないさ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポリアンナ『うっとり……▼
+ハッ！　い　いけない！
+わたしは　メカポリスの　いもうと！▽
+ハードボイルドに　きめないとっ！▼
+ポリアンナの　ポリは
+ポリスの　ポリなんだからっ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポリアンナ『うっとり……▼
+ハッ！　い　いけない！
+わたしは　メカポリスの　妹！▽
+ハードボイルドに　決めないとっ！▼
+ポリアンナの　ポリは
+ポリスの　ポリなんだからっ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T01:51:09" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
